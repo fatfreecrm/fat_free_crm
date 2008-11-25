@@ -1,0 +1,74 @@
+* (4 Oct 2007)
+
+Update for Edge rails: remove support for legacy #count args 
+
+* (2 Feb 2007)
+
+Add support for custom primary keys [Jeff Dean]
+
+* (2 July 2006)
+
+Add paranoid delete_all implementation [Marshall Roch]
+
+* (23 May 2006)
+
+Allow setting of future dates for content expiration.
+
+* (15 May 2006)
+
+Added support for dynamic finders
+
+* (28 Mar 2006)
+
+Updated for Rails 1.1.  I love removing code.
+
+  Refactored #find method
+  Nested Scopes
+
+*0.3.1* (20 Dec 2005)
+
+* took out deleted association code for 'chainsaw butchery of base classes' [sorry Erik Terpstra]
+* verified tests pass on Rails 1.0
+
+*0.3* (27 Nov 2005)
+
+* Deleted models will find deleted associations by default now [Erik Terpstra]
+* Added :group as valid option for find [Michael Dabney]
+* Changed the module namespace to Caboose::Acts::Paranoid
+
+*0.2.0* (6 Nov 2005)
+
+* Upgrade to Rails 1.0 RC4.  ActiveRecord::Base#constrain has been replaced with scope_with.
+
+*0.1.7* (22 Oct 2005)
+
+* Added :with_deleted as a valid option of ActiveRecord::Base#find
+
+*0.1.6* (25 Sep 2005)
+
+* Fixed bug where nested constrains would get clobbered after multiple queries
+
+*0.1.5* (22 Sep 2005)
+
+* Fixed bug where acts_as_paranoid would clobber other constrains
+* Simplified acts_as_paranoid mixin including.
+
+*0.1.4* (18 Sep 2005)
+
+* First RubyForge release
+
+*0.1.3* (18 Sep 2005)
+
+* ignore multiple calls to acts_as_paranoid on the same model
+
+*0.1.2* (18 Sep 2005)
+
+* fixed a bug that kept you from selecting the first deleted record
+
+*0.1.1* (18 Sep 2005)
+
+* Fixed bug that kept you from selecting deleted records by ID
+
+*0.1* (17 Sep 2005)
+
+* Initial gem

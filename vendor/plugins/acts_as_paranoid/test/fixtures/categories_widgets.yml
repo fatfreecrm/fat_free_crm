@@ -1,0 +1,12 @@
+cw_1:
+  category_id: 1
+  widget_id: 1
+cw_2:
+  category_id: 2
+  widget_id: 1
+cw_3:
+  category_id: 3
+  widget_id: 2
+cw_4:
+  category_id: 4
+  widget_id: 2
