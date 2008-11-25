@@ -1,0 +1,7 @@
+config/database.yml
+coverage/*
+db/schema.rb
+log/*.log
+tmp/**/*
+.DS_Store
+*~
