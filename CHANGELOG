@@ -1,4 +1,5 @@
 Mon, Nov 28, 2008
 ---------------------------------------------------------------------
-- Installed Rspec and acts_as_paranoid plugins.
+- Added [sessions] and [users] tables, created [User] model.
+- Installed Rspec and [acts_as_paranoid] plugins.
 - Created the project and posted it on GitHub.
