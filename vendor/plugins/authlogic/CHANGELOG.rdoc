@@ -1,0 +1,146 @@
+== 1.3.5 released 2008-11-24
+
+* :transition_from_crypto_provider now accepts an array to transition from multiple providers. Which solves the problem of a double transition.
+
+== 1.3.4 released 2008-11-24
+
+* Delegate human_attribute_name to the ActiveRecord class to take advantage of the I18n feature.
+* Fixed issue with passwords from older versions of restful_authentication, the passwords end with --
+
+== 1.3.3 released 2008-11-23
+
+* Updated :act_like_restful_authentication for those using the older version where no site wide key is preset (REST_AUTH_SITE_KEY), Authlogic will adjust automatically based on the presence of this constant.
+* Added :transition_from_crypto_provider option for acts_as_authentic to transition your user's passwords to a new algorithm.
+* Added :transition_from_restful_authentication for acts_as_authentic to transition your users from restful_authentication to the Authlogic password system. Now you can choose to keep your passwords the same by using :act_like_restful_authentication, which will *NOT* do any transitioning, or you can use :transition_from_crypto_provider which will update your users passwords as they login or new accounts are created, while still allowing users with the old password system to log in.
+* Modified the "interface" for the crypto providers to only provide a class level encrypt and matches? method, instead of a class level encrypt and decrypt method.
+
+== 1.3.2 released 2008-11-22
+
+* Updated code to work better with BCrypt, using root level class now.
+
+== 1.3.1 released 2008-11-22
+
+* Fixed typo in acts_as_authentic config when passing the :scope option.
+* Added :act_like_restful_authentication option for acts_as_authentic
+* Added a new crypto provider: BCrypt, this is for those storing the nuclear launch codes in their apps
+
+== 1.3.0 released 2008-11-21
+
+* BREAKS BACKWARDS COMPATIBILITY: changed the confirm_password field to password_confirmation for acts_as_authentic, since the rails validates_confirmation_of handles creating this attribute and there is no option to change the name of this.
+* BREAKS BACKWARDS COMPATIBILITY: Cleaned up all of the validation configuration for acts_as_authentic, as well as the documentation that goes with it, you can accomplish the same things as before, but this is much more flexible and much more organized. This is mainly for those implementing i18n support. Instead of :whatever_message, its now :login_field_validates_length_of_options => {:message => "your i18n friendly message"}. As a side note, with the new i18n support in rails I would not be surprised if this is already done for you since Authlogic uses the ActiveRecord validation methods.
+* Got rid of simple delegator for the abstract controller, apparently this has performance issues.
+* Cleaned up validations to assume ActiveRecord dirty attributes are present, I think this is a safe assumption.
+
+== 1.2.2 released 2008-11-20
+
+* Added allow_blank_login_and_password_field and allow_blank_email_field options to acts_as_authentic, which allows you to have alternative logins, such as OpenID
+* In the session Authlogic now also stores the record id. We use this id to find the record and then check the token against the record, thus allowing for quicker database lookups, while getting the same security.
+* Skip validation for reset_perishable_token!
+* Added checks for uniqueness validations to only perform if the values have changed, this cuts down on DB queries
+* Abstract controller adapter now uses ruby's simple delegator class
+* Allow to save with a block: user_session.save { |result| }, result will either be false or self, this is useful when implementing OpenID and other methods
+
+== 1.2.1 released 2008-11-19
+
+* Added build method to authenticates_many association to act like AR association collections.
+* Added validation boolean configuration options for acts_as_authentic: validate_field, validate_login_field, validate_password_field, validate_email_field. This turns on and off validations for their respective fields.
+* Renamed all password_reset_token terms to perishable_token, including configuration, etc. I still allow for the old configurations so this will not break compatibility, but perishable token is a better name and can be used for account confirmation as well as a password reset token, or anything else you want.
+* Renamed all remember_token instances to persistence_token, the term "remember token" doesn't really make sense. I still allow for the old configuration, so this will not break backwards compatibility: persistence_token fits better and makes more sense.
+
+== 1.2.0 released 2008-11-16
+
+* Added check for database set up in acts_as_authentic to prevent errors during migrations.
+* Forced logged_in and logged_out named scopes to use seconds.
+* Hardened valid_password? method to only allow raw passwords.
+* controllers and scopes are no longer stored in class variables but in the Thread.current hash so their instances die out with the thread, which frees up memory.
+* Removed single_access_token_field and remember_token_field from Sesson::Config, they are not needed there.
+* Added password_reset_token to assist in resetting passwords.
+* Added email_field, email_field_regex, email_field_regex_failed_message configuration options to acts_as_authentic. So that you can validate emails as well as a login, instead of the either-or approach.
+* Added configuration for all validation messages for the session so that you can modify them and provide I18n support.
+
+== 1.1.1 released 2008-11-13
+
+* Removed ActiveRecord dependency.
+* Removed loading shoulda macros by default, moved to shoulda_macros dir.
+* Modified how params access works. Added in single_access_token_field which params now uses. See the single access section in the README. Various configuration options added as well.
+* Cleaned up acts_as_authentic configuration, added new config module to do this.
+* Cleaned up acts_as_authentic tests
+* Moved acts_as_authentic sub modules into the proper name spaces
+
+== 1.1.0 released 2008-11-13
+
+* Moved Rack standards into abstract_adapter for the controllers.
+* Added authenticating_with_credentials?, authenticating_with_unauthorized_record?
+* Fixed typo in abstract_adapter, black to block.
+* Cleaned up / reorganized tests.
+* Moved ActiveRecord additions to ORM Adapters name space to make way for Data Mapper.
+* Reorganized and modified acts_as_authentic to be free standing and not get info from the related session.
+* The session now gets its configuration from the model, since determining which fields are present is ORM specific.
+* Extracted session and cookie logic into their own modules for Session.
+* Moved crypto providers into their own module and added a Sha1 provider to help with the restful_authentication transition.
+* Allow the unique_token method to use the alternate crypto_provider if it is a hash algorithm, otherwise default to Sha512.
+* Added last_request_at_threshold configuration option.
+* Changed Scoped class to AuthenticatesManyAssociation, like AR has HasManyAssociation, etc.
+* Added should_be_authentic shoulda macro.
+* Removed some magic from how sessions are initialized. See the initialize documentation, this method is a little more structured now, which was required for adding in openid.
+* Added in logging via a params token, which is friendly for feed URLs. Works just like cookies and sessions when persisting the session.
+* Added the option to use session.user, instead of session.record. This is based off of what model your session is authenticating with.
+
+== 1.0.0 released 2008-11-05
+
+* Checked for blank login counts, if a default wasnt set in the migrations.
+* Added check for database table in acts_as_authentic to avoid errors in initial setup.
+* Completely rewrote tests to be more conventional and thorough tests, removed test_app.
+* Modified how validations work so that a validate method was added as well as callbacks for that method.
+* Extracted scope support into its own module to help organize code better.
+* Added in salt for encryption, just like hashes and removed :crypto_provider_type option for acts_as_authentic.
+* Added merb adapters.
+* Improved documentation throughout.
+
+== 0.10.4 released 2008-10-31
+
+* Changed configuration to use inheritable attributes
+* Cleaned up requires to be in their proper files
+* Added in scope support.
+
+== 0.10.3 released 2008-10-31
+
+* Instead of raising an error when extra fields are passed in credentials=, just ignore them.
+* Added remember_me config option to set the default value.
+* Only call credential methods if an argument was passed.
+* More unit tests
+* Hardened automatic session updating. Also automatically log the user in if they change their password when logged out.
+
+== 0.10.2 released 2008-10-24
+
+* Added in stretches to the default Sha512 encryption algorithm.
+* Use column_names instead of columns when determining if a column is present.
+* Improved validation callbacks. after_validation should only be run if valid? = true. Also clear errors before the "before_validation" callback.
+
+== 0.10.1 released 2008-10-24
+
+* Sessions now store the "remember token" instead of the id. This is much safer and guarantees all "sessions" that are logged in are logged in with a valid password. This way stale sessions can't be persisted.
+* Bumped security to Sha512 from Sha256.
+* Remove attr_protected call in acts_as_authentic
+* protected_password should use pasword_field configuration value
+* changed magic state "inactive" to "active"
+
+== 0.10.0 released 2008-10-24
+
+* Do not allow instantiation if the session has not been activated with a controller object. Just like ActiveRecord won't let you do anything without a DB connection.
+* Abstracted controller implementation to allow for rails, merb, etc adapters. So this is not confined to the rails framework.
+* Removed create and update methods and added save, like ActiveRecord.
+* after_validation should be able to change the result if it adds errors on callbacks.
+* Completed tests.
+
+== 0.9.1 released 2008-10-24
+
+* Changed scope to id. Makes more sense to call it an id and fits better with the ActiveRecord model.
+* Removed saving_from_session flag, apparently it is not needed.
+* Fixed updating sessions to make more sense and be stricter.
+* change last_click_at to last_request_at
+* Only run "after" callbacks if the result is successful.
+
+== 0.9.0 released 2008-10-24
+
+* Initial release.

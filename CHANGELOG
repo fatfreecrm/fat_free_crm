@@ -1,5 +1,9 @@
 Mon, Nov 28, 2008
 ---------------------------------------------------------------------
+- Installed plugins: [authlogic], [searchlogic], [calendar_date_select], [auto_complete], [in_place_editor], and [haml].
+
+Mon, Nov 28, 2008
+---------------------------------------------------------------------
 - Added [sessions] and [users] tables, created [User] model.
 - Installed Rspec and [acts_as_paranoid] plugins.
 - Created the project and posted it on GitHub.

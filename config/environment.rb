@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
+  config.gem "haml", :version => "2.1.0"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -55,7 +56,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_fat-free-crm_session',
+    :session_key => '_fat_free_crm_session',
     :secret      => 'f12e4853b601f05a5287dbe5cf340ed4fd4374b683b29c6ca6a1983555f5b07e5b6f28d416ca78a88087def507ea2d9d5a915cc00b95c90413d0ce0c8af2fecb'
   }
 
@@ -67,7 +68,7 @@ Rails::Initializer.run do |config|
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
-  # config.active_record.schema_format = :sql
+  config.active_record.schema_format = :sql
 
   # Activate observers that should always be running
   # Please note that observers generated using script/generate observer need to have an _observer suffix

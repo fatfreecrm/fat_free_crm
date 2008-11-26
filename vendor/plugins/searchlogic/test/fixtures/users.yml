@@ -1,0 +1,30 @@
+ben:
+  account: binary_logic
+  first_name: Ben
+  last_name: Johnson
+  active: true
+  bio: Totally awesome!
+  
+drew:
+  account: neco
+  parent: ben
+  first_name: Drew
+  last_name: Mills
+  active: false
+  bio: Totally not awesome!
+  
+jennifer:
+  account: binary_logic
+  parent: drew
+  first_name: Jennifer
+  last_name: Hopkins
+  active: false
+  bio: Totally not awesome at all!
+  
+tren:
+  parent: ben
+  first_name: Tren
+  last_name: Garfield
+  active: false
+  bio: Rocks a little too hard
+  
