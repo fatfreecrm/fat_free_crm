@@ -1,8 +1,13 @@
-Mon, Nov 28, 2008
+Wed, Nov 26, 2008
+---------------------------------------------------------------------
+- Installed [open_id_authentication] plugin.
+- Modified [users] table to work with [authlogic] plugin, added tables for openid authentication.
+
+Tue, Nov 25, 2008
 ---------------------------------------------------------------------
 - Installed plugins: [authlogic], [searchlogic], [calendar_date_select], [auto_complete], [in_place_editor], and [haml].
 
-Mon, Nov 28, 2008
+Mon, Nov 24, 2008
 ---------------------------------------------------------------------
 - Added [sessions] and [users] tables, created [User] model.
 - Installed Rspec and [acts_as_paranoid] plugins.
