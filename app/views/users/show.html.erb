@@ -1,0 +1,52 @@
+<!--
+  The following is for OpenID, if you are not using OpenID in your app remove
+  the OpenID if statement and field below.
+-->
+<% if @user.openid_identifier.blank? %>
+  <p>
+    <b>Login:</b>
+    <%=h @user.username %>
+  </p>
+<% else %>
+  <p>
+    <b>OpenID:</b>
+    <%=h @user.openid_identifier %>
+  </p>
+<% end %>
+<p>
+  <b>Email:</b>
+  <%=h @user.email %>
+</p>
+
+<p>
+  <b>Login count:</b>
+  <%=h @user.login_count %>
+</p>
+
+<p>
+  <b>Last request at:</b>
+  <%=h @user.last_request_at %>
+</p>
+
+<p>
+  <b>Last login at:</b>
+  <%=h @user.last_login_at %>
+</p>
+
+<p>
+  <b>Current login at:</b>
+  <%=h @user.current_login_at %>
+</p>
+
+<p>
+  <b>Last login ip:</b>
+  <%=h @user.last_login_ip %>
+</p>
+
+<p>
+  <b>Current login ip:</b>
+  <%=h @user.current_login_ip %>
+</p>
+
+
+<%= link_to 'Edit', edit_profile_path %>

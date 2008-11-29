@@ -1,0 +1,206 @@
+/* Standard tags 
+-------------------------------------------------------- */
+html, body {
+  background: whitesmoke;/*#e5e5e5;*/
+  font-size-adjust: none;
+  font-stretch: normal;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  height: 100%;
+  line-height: normal;
+  /*text-align: center;*/
+  /*background: #fffddb;*/
+}
+body, ol, ul, li, dt, tt, label, input, select, textarea {
+  font-size: 12px;
+  font-family: "Lucida Grande", Arial, Helvetica, sans-serif;
+}
+body, h1, h2, h3, h4, h5, h6, ol, ul, li {
+  margin: 0px;
+  padding: 0px;
+}
+
+input, select, textarea {
+  padding: 3px;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:link {
+  color: navy;
+}
+
+a:hover { 
+  background: steelblue; 
+  color: #fff; 
+  text-decoration: none; 
+}
+
+a img {
+  background-color: white; 
+  border: none;
+  color: white; 
+  text-decoration: none; 
+}
+
+small {
+  font-size: 10px;
+}
+
+dt {
+  font-size: 11px;
+}
+
+tt {
+  font-size: 12px;
+}
+
+/* Page header and tabs
+-------------------------------------------------------- */
+#header {
+  background: #153358; 
+  padding: 8px 10px 18px 15px
+}       
+ 
+#header img {
+  float: right;
+}
+
+#header h3,
+#header h3 a:link, #header h3 a:visited, #header h3 a:hover {
+  background: #153358; 
+  color: gold;
+  font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
+  text-decoration: none;
+}
+
+#tabs {
+  background: #153358; 
+  height: 25px;
+  padding: 0px;
+  text-align: center;
+  width: 100%;
+}
+
+#tabs ul {
+  margin: 0px 25%; /* 18% for 5th tab */
+}
+
+#tabs li {
+  float: left;
+  font-size: 13px;
+  list-style: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 80px;
+}
+
+#tabs a:link,
+#tabs a:visited {
+  background: #466bb1;
+  color: white;
+  float: left;
+  padding: 4px 8px 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  width: 80px;
+}
+
+#tabs a:hover {
+  /*background: #ffdb97;*/
+  background: #97baff;
+  color: navy;
+}
+
+#tabs a:link.active,
+#tabs a:visited.active {
+  /*background:#97baff;*/
+  background: white;
+  color:navy;
+  text-decoration:none;
+}
+
+#menu {
+  color: cadetblue;
+  float: right;
+  font-size: 12px;
+}
+
+#menu a:link, #menu a:visited {
+  color: lightyellow;
+  text-decoration: none; 
+}
+
+#footer {
+  background: whitesmoke;/*#e5e5e5;*/
+  margin: 4px auto 4px auto;
+  text-align: center;
+  width: 800px;
+}
+
+/* Form validation messages
+-------------------------------------------------------- */
+.errorExplanation {
+  background-color: seashell;
+  border: 2px solid lightpink;
+  font-size: 12px;
+  padding: 8px;
+  margin: 10px 0px 10px 0px;
+}
+
+.errorExplanation h2 {
+  background: salmon;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  margin: -8px;
+  padding: 5px;
+}
+
+.errorExplanation p {
+  color: #333;
+  padding: 14px 0px 2px 0px;
+}
+
+.errorExplanation ul {
+  margin-left: 30px;
+}
+
+.errorExplanation ul li {
+  font-size: 12px;
+  list-style-type: disc;
+  padding: 0px;
+}
+
+.fieldWithErrors {
+  display:inline;
+}
+
+.fieldWithErrors input,
+.fieldWithErrors textarea,
+.fieldWithErrors select {
+  background: lightpink;
+}
+
+/* Flash messages
+-------------------------------------------------------- */
+p.flash_error {
+  background: lightpink;
+  color: maroon;
+  margin: 0px;
+  padding: 5px 0px 5px 15px;
+}
+
+p.flash_message {
+  background: #df9;
+  color: darkgreen;
+  margin: 0px;
+  padding: 5px 0px 5px 15px;
+}

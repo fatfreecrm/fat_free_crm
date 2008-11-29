@@ -1,3 +1,7 @@
+Fri, Nov 28, 2008
+---------------------------------------------------------------------
+- Implemented login, logout, and forgotten password using [authlogic] plugin.
+
 Wed, Nov 26, 2008
 ---------------------------------------------------------------------
 - Installed [open_id_authentication] plugin.

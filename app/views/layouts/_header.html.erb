@@ -1,0 +1,25 @@
+<div id="header">
+    <div id="menu">
+    <% if current_user %>
+        Logged in as <%= current_user.username %> |
+        <%= link_to "Profile", profile_path %> |
+        <%= link_to "Logout", logout_path, :method => :delete %>
+    <% else %>
+        <%= link_to "Login", login_path %> |
+        <%= link_to "Sign Up", signup_path %>
+    <% end %>
+        <%# link_to 'Help', '/' %>
+    </div>
+    <h3><%= link_to "Fat Free CRM", home_path %></h3>
+</div>
+
+
+<!-- <% if !current_user %>
+  <%= link_to "Register", signup_path %> |
+  <%= link_to "Log In", login_path %> |
+  <%= link_to "Forgot password", new_password_path %>
+<% else %>
+  <%= link_to "My Account", profile_path %> |
+  <%= link_to "Logout", logout_path, :method => :delete %>
+<% end %>
+-->

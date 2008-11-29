@@ -1,0 +1,27 @@
+<h1>Login</h1>
+
+<% form_for @authentication, :url => authentication_path do |f| %>
+  <%= f.error_messages.blank? ? "" : "Invalid username or password" %>
+  <div id="login_container"<% unless @authentication.openid_identifier.blank? %> style="display: none;"<% end %>>
+    <%= f.label :username %> (or <%= link_to_function "login using OpenID", "$('login_container').toggle(); $('openid_container').toggle();" %>)<br />
+    <%= f.text_field :username %><br />
+    <br />
+    <%= f.label :password %><br />
+    <%= f.password_field :password %><br />
+  </div>
+  <!--
+    Notice the following is for OpenID. If you are not implementing OpenID in your app, simply remove the following <div> block.
+    Also, notice the <div id="login_container"> above, those fields do not need to be wrapped in a <div>, you can remove that as well.
+    I apologize if this makes it a little confusing, I have been building this app with a number of tutorials and one of them has been
+    OpenID integration.
+  -->
+  <div id="openid_container"<% if @authentication.openid_identifier.blank? %> style="display: none;"<% end %>>
+    <%= f.label :openid_identifier, "OpenID" %> (or <%= link_to_function "login using a standard username / password", "$('login_container').toggle(); $('openid_container').toggle();" %>)<br /><br />
+    <%= f.text_field :openid_identifier %><br />
+  </div>
+  <br />
+  <%= f.check_box :remember_me %><%= f.label :remember_me %><br />
+  <br />
+  <%= f.submit "Login" %> 
+  <%= link_to "Forgot password?", new_password_path %>
+<% end %>
