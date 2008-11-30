@@ -1,7 +1,7 @@
 /* Standard tags 
 -------------------------------------------------------- */
 html, body {
-  background: whitesmoke;/*#e5e5e5;*/
+  background: #e5e5e5;
   font-size-adjust: none;
   font-stretch: normal;
   font-style: normal;
@@ -62,7 +62,7 @@ tt {
   font-size: 12px;
 }
 
-/* Page header and tabs
+/* Page header and tabs.
 -------------------------------------------------------- */
 #header {
   background: #153358; 
@@ -71,7 +71,7 @@ tt {
 
 #header h3 a {
   background: #153358; 
-  color: gold;
+  color: greenyellow;
   font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
@@ -98,15 +98,14 @@ tt {
 }
 
 #tabs ul {
-  margin: 0px 25%; /* 18% for 5th tab */
+  /*margin: 0px 25%;*/ /* 18% for 5th tab */
 }
 
 #tabs li {
   float: left;
   font-size: 12px;
   list-style: none;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 0px 4px 0px 16px;
   width: 80px;
 }
 
@@ -136,11 +135,9 @@ tt {
 }
 
 #footer {
-  border-top: 1px silver dotted;
   color: grey;
   font-size: 10px;
-  padding: 4px;
-  text-align: right;
+  padding: 0px 0px 0px 16px;
 }
 
 /* Common page elements 
@@ -229,13 +226,29 @@ tt {
 /* Main area (page and form)
 -------------------------------------------------------- */
 .standalone {
-  border:20px lightsteelblue solid; 
+  background: whitesmoke;
+  border: 20px lightsteelblue solid; 
   margin: 50px auto; 
-  padding:20px;
-  width:400px; 
+  padding: 20px;
+  width: 400px; 
 }
 
-.main,
+.two_column_layout {
+  padding: 12px 16px 12px 16px;
+}
+
+.main {
+  background: white;
+  border-right: 3px lightgrey solid;
+  border-bottom: 3px lightgrey solid;
+}
+
+.sidebar {
+  /*border: 1px blue dotted;*/
+  width: 280px;
+  padding: 0px 12px 0px 12px;
+}
+
 .mainform {
   background: white;
   margin: 15px 250px 10px 15px;
