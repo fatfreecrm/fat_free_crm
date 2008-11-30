@@ -2,6 +2,8 @@ Sat, Nov 29, 2008
 ---------------------------------------------------------------------
 - Added tabbed and tabless layouts, implemented tabs and current tab tracking.
 - Applied CSS styles to all tabless forms (login, sign up, and forgot password).
+- Created two column layout for the main contents area.
+- Created [Accounts] scaffold and added [Accounts] tab.
 
 Fri, Nov 28, 2008
 ---------------------------------------------------------------------

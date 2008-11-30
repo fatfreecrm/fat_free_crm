@@ -1,0 +1,18 @@
+<h1>Listing accounts</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for account in @accounts %>
+  <tr>
+    <td><%= link_to 'Show', account %></td>
+    <td><%= link_to 'Edit', edit_account_path(account) %></td>
+    <td><%= link_to 'Destroy', account, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New account', new_account_path %>
