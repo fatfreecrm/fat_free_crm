@@ -1,7 +1,52 @@
-<h1>Sign Up</h1>
+<div class="standalone">
 
-<% form_for @user, :url => profile_path do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => "form", :object => f %>
-  <%= f.submit "Register" %>
-<% end %>
+  <% form_for @user, :url => profile_path do |f| %>
+    <div class="tlink">
+      Already signed up? <%= link_to "Login Now!", login_path %>
+    </div>
+    <div class="title">
+      Sign Up
+    </div>
+
+    <%= f.error_messages %>
+    <div class="section">
+  
+      <div class="label">
+        Email:
+      </div>
+      <%= f.text_field :email, :style => "width:355px" %>
+
+      <!-- Username/password Sign up Form -->
+      <div id="login">
+        <div class="label">
+          Username:
+          or <%= link_to_function "use your OpenID", %/$("login").toggle(); $("openid").toggle();/ %>
+        </div>
+        <%= f.text_field :username, :style => "width:355px" %>
+        <div class="label">
+          Password:
+        </div>
+        <%= f.password_field :password, :style => "width:355px" %>
+        <div class="label">
+          Password confirmation:
+        </div>
+        <%= f.password_field :password_confirmation, :style => "width:355px" %>
+      </div>
+
+      <!-- OpenID Sign up Form -->
+      <div id="openid" style="display:none;">
+        <div class="label">
+          OpenID:
+          or <%= link_to_function "use username and password", %/$("login").toggle(); $("openid").toggle();/ %>
+        </div>
+        <%= f.text_field :openid_identifier, :style => "width:355px" %>
+      </div>
+
+    </div>
+
+    <div class="buttonbar">
+      <%= f.submit "Sign Up" %>
+    </div>
+
+  <% end -%>
+</div>

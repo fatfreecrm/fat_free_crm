@@ -17,11 +17,12 @@
 
 <body>
   <%= render :partial => "layouts/header" %>
-
-  <p style="color: green"><%= flash[:notice] %></p>
-
-  <%= yield %>
-
-  <%# render :partial => "layouts/footer" %>
+  <% if tabless_layout? -%>
+    <%= render :partial => "layouts/tabless" %>
+  <% else -%>
+    <%= render :partial => "layouts/tabbed" %>
+    <%= render :partial => "layouts/footer" %>
+  <% end -%>
+  
 </body>
 </html>

@@ -1,6 +1,11 @@
+Sat, Nov 29, 2008
+---------------------------------------------------------------------
+- Added tabbed and tabless layouts, implemented tabs and current tab tracking.
+- Applied CSS styles to all tabless forms (login, sign up, and forgot password).
+
 Fri, Nov 28, 2008
 ---------------------------------------------------------------------
-- Implemented login, logout, and forgotten password using [authlogic] plugin.
+- Implemented sign up, login, logout, and forgotten password using [authlogic] plugin.
 
 Wed, Nov 26, 2008
 ---------------------------------------------------------------------

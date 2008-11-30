@@ -1,11 +1,25 @@
-<h1>Forgot Password</h1>
+<div class="standalone">
+  <% form_tag passwords_path do %>
+    <div class="title">
+      Forgot Password
+    </div>
 
-Fill out the form below and instructions to reset your password will be emailed to you:<br />
-<br />
+    <%= flash[:notice] %>
 
-<% form_tag passwords_path do %>
-  <label>Email:</label><br />
-  <%= text_field_tag "email" %><br />
-  <br />
-  <%= submit_tag "Reset my password" %>
-<% end %>
+    <div class="intro">
+      Please specify your email address and the instructions to reset your password will be sent to you.
+    </div>
+
+    <div class="section">
+      <div class="label">
+        Email address:
+      </div>
+      <%= text_field_tag :email, "", :style => "width:355px" %>
+    </div>
+
+    <div class="buttonbar">
+      <%= submit_tag "Reset Password" %>
+    </div>
+
+  <% end -%>
+</div>

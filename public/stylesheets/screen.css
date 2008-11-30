@@ -66,24 +66,32 @@ tt {
 -------------------------------------------------------- */
 #header {
   background: #153358; 
-  padding: 8px 10px 18px 15px
+  padding: 8px 16px 8px 16px;
 }       
- 
-#header img {
-  float: right;
-}
 
-#header h3,
-#header h3 a:link, #header h3 a:visited, #header h3 a:hover {
+#header h3 a {
   background: #153358; 
   color: gold;
   font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 
+#header div {
+  color: cadetblue;
+  float: right;
+  font-size: 12px;
+}
+
+#header div a:link,
+#header div a:visited {
+  color: lightyellow;
+  padding: 1px 4px 1px 4px;
+  text-decoration: none; 
+}
+
 #tabs {
   background: #153358; 
-  height: 25px;
+  height: 24px;
   padding: 0px;
   text-align: center;
   width: 100%;
@@ -95,7 +103,7 @@ tt {
 
 #tabs li {
   float: left;
-  font-size: 13px;
+  font-size: 12px;
   list-style: none;
   margin-left: 10px;
   margin-right: 10px;
@@ -127,22 +135,232 @@ tt {
   text-decoration:none;
 }
 
-#menu {
-  color: cadetblue;
-  float: right;
-  font-size: 12px;
-}
-
-#menu a:link, #menu a:visited {
-  color: lightyellow;
-  text-decoration: none; 
-}
-
 #footer {
-  background: whitesmoke;/*#e5e5e5;*/
-  margin: 4px auto 4px auto;
-  text-align: center;
+  border-top: 1px silver dotted;
+  color: grey;
+  font-size: 10px;
+  padding: 4px;
+  text-align: right;
+}
+
+/* Common page elements 
+-------------------------------------------------------- */
+.wrap {
+  background-color: white;
+  min-height: 90%;
+  margin: 0px auto;
+  padding: 0px 0px 5px 0px;
+  text-align: left;
   width: 800px;
+}
+
+.title {
+  border-bottom: 1px gray solid;
+  color: #342D7E;
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 3px;
+}
+
+.title #name {
+  height: 55px;
+}
+
+.title #info {
+  color: dimgray;
+  font-size: 12px;
+  font-weight: normal;
+  vertical-align: top;
+}
+
+.subtitle {
+  border-bottom: 1px gray solid;
+  color: dimgray;
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 3px;
+}   
+
+.headline { /* within title with avatar */
+  display: block;
+  text-align: left;
+  vertical-align: top;
+}
+
+.tlink,
+.subtlink {
+  color: dimgray;
+  font-size: 12px;
+  /*font-weight: bold;*/
+  float: right;
+}
+.money {
+  /*color: black;*/
+  float: right;
+  /*font-weight: bold;*/
+  margin-left: 10px;
+}
+.odd {
+  border-bottom: 1px silver dotted;
+  float: left;
+  width: 100%;
+  /*background: whitesmoke;*/
+}
+
+.even {
+  border-bottom: 1px silver dotted;
+  float: left;
+  width: 100%;
+}
+
+.todo {
+  color: gray;
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+.odd img,
+.even img,
+.title img {
+  float: left;
+  margin: 0px 10px 0px 0px;
+}
+
+/* Main area (page and form)
+-------------------------------------------------------- */
+.standalone {
+  border:20px lightsteelblue solid; 
+  margin: 50px auto; 
+  padding:20px;
+  width:400px; 
+}
+
+.main,
+.mainform {
+  background: white;
+  margin: 15px 250px 10px 15px;
+  /*padding: 0px 0px 10px 0px;*/
+  /*border:1px red dotted;*/
+}
+
+.main li dt {
+  /*margin: 0px 0px 0px 58px;*/
+  text-align: right;
+}
+
+.main a:link, 
+.main a:visited, 
+.mainform a:link, 
+.mainform a:visited {
+  color: green;
+  text-decoration: none;
+}
+
+.main a:hover, 
+.mainform a:hover {
+  background: seagreen;
+  color: white;
+  text-decoration: none;
+}
+
+.main p {
+  color: #413839;
+  margin: 4px 0px 0px 0px;
+}
+
+.mainform p {
+  margin: 0px 0px 5px 0px;
+}
+
+.main h4,
+.mainform h4 {
+  font: normal 18px 'Lucida Grande', Arial, Helvetica, sans-serif;
+  height: 30px;
+}
+
+.main li {
+  font-size: 14px;
+  padding: 8px 0px 8px 0px;
+}
+
+.main li a:link, 
+.main li a:visited {
+  color: steelblue;
+}
+
+.main li a:hover {
+  background: steelblue;
+  color: white;
+}
+
+.main li tt {
+  color: #555555;
+}
+
+.main li dt a:link,
+.main li dt a:visited {
+  color: green;
+}
+
+.main li dt a:hover {
+  background: seagreen;
+  color: white;
+}
+
+/*
+.main li tt a:link,
+.main li tt a:visited {
+  color: steelblue;
+  text-decoration: none;
+}
+
+.main li tt a:hover {
+  background: steelblue;
+  color: white;
+  text-decoration: none;
+}
+*/
+label {
+  clear: left;
+  color: #3f3f3f;
+  float: left;
+  margin: 6px 4px 0px 0px;
+  text-align: right;
+  white-space: nowrap;
+  width: 120px;
+}
+
+.label {
+  color: #3f3f3f;
+  font-size: 12px;
+  margin: 6px 0px 0px 0px;
+}
+
+.intro {
+  /*background: white;*/
+  color: dimgray;
+  font-size: 12px;
+  padding-top: 5px;
+}
+
+.section {
+  background: whitesmoke;
+  margin: 5px auto;
+  padding: 15px;
+}
+
+.buttonbar {
+  border-top: 1px gray solid;
+  margin: 10px auto;
+  padding-top: 6px;
+}
+
+.section input,
+.section select,
+.section textarea {
+  margin: 3px;
+  padding: 3px;
+  vertical-align: middle;
 }
 
 /* Form validation messages
@@ -191,16 +409,18 @@ tt {
 
 /* Flash messages
 -------------------------------------------------------- */
+p.flash_warning,
 p.flash_error {
   background: lightpink;
   color: maroon;
   margin: 0px;
-  padding: 5px 0px 5px 15px;
+  padding: 5px 0px 5px 16px;
 }
 
+p.flash_notice,
 p.flash_message {
   background: #df9;
   color: darkgreen;
   margin: 0px;
-  padding: 5px 0px 5px 15px;
+  padding: 5px 0px 5px 16px;
 }

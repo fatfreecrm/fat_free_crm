@@ -1,9 +1,42 @@
-<h1>Edit My Account</h1>
+<div class="mainform">
 
-<% form_for @user, :url => profile_path do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => "form", :object => f %>
-  <%= f.submit "Update" %>
-<% end %>
+  <% form_for @user, :url => profile_path do |f| %>
+    <div class="tlink">
+      <%= link_to_function "Change Password", %/alert("Not implemeneted yet.")/ %>
+    </div>
+    <div class="title">
+      Edit Profile
+    </div>
 
-<br /><%= link_to "My Profile", profile_path %>
+    <%= f.error_messages %>
+    <div class="section">
+  
+      <%= f.label :email, "Email:" %>
+      <%= f.text_field :email %>
+
+      <!-- Username/password Profile Form -->
+      <div id="login">
+        <%= f.label :username, "Username:" %>
+        <%= f.text_field :username %>
+        <br />
+        <%= f.label :password, "Password:" %>
+        <%= f.password_field :password %>
+        <br />
+        <%= f.label :password_confirmation, "Confirm password:" %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+
+      <!-- OpenID Profile Form -->
+      <div id="openid" style="display:none;">
+        <label for="openid_identifier">OpenID:</label>
+        <%= f.text_field :openid_identifier %>
+      </div>
+
+    </div>
+
+    <div class="buttonbar">
+      <%= f.submit "Save" %> or <%= link_to_function "Cancel", "history.go(-1)" %>
+    </div>
+
+  <% end -%>
+</div>
