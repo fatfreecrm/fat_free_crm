@@ -12,16 +12,18 @@ html, body {
   /*text-align: center;*/
   /*background: #fffddb;*/
 }
+
 body, ol, ul, li, dt, tt, label, input, select, textarea {
   font-size: 12px;
   font-family: "Lucida Grande", Arial, Helvetica, sans-serif;
 }
+
 body, h1, h2, h3, h4, h5, h6, ol, ul, li {
   margin: 0px;
   padding: 0px;
 }
 
-input, select, textarea {
+input, textarea {
   padding: 3px;
 }
 
@@ -170,12 +172,17 @@ tt {
   vertical-align: top;
 }
 
-.subtitle {
-  border-bottom: 1px gray solid;
-  color: dimgray;
-  font-size: 14px;
+.subtitle,
+div .subtitle a:link,
+div .subtitle a:visited,
+div .subtitle a:hover {
+  background: white;
+  border-bottom: 1px silver solid;
+  color: darkslateblue;/*#3f3f3f*/;
+  font-size: 13px;
   font-weight: bold;
-  padding-bottom: 3px;
+  padding: 0px 3px 0px 0px;
+  text-decoration: none;
 }   
 
 .headline { /* within title with avatar */
@@ -191,12 +198,7 @@ tt {
   /*font-weight: bold;*/
   float: right;
 }
-.money {
-  /*color: black;*/
-  float: right;
-  /*font-weight: bold;*/
-  margin-left: 10px;
-}
+
 .odd {
   border-bottom: 1px silver dotted;
   float: left;
@@ -208,12 +210,6 @@ tt {
   border-bottom: 1px silver dotted;
   float: left;
   width: 100%;
-}
-
-.todo {
-  color: gray;
-  font-size: 10px;
-  margin-top: 10px;
 }
 
 .odd img,
@@ -358,8 +354,9 @@ label {
 
 .section {
   background: whitesmoke;
+  color: #3f3f3f;
   margin: 5px auto;
-  padding: 15px;
+  padding: 5px 15px 15px 15px;
 }
 
 .buttonbar {
@@ -371,8 +368,8 @@ label {
 .section input,
 .section select,
 .section textarea {
-  margin: 3px;
-  padding: 3px;
+  margin: 3px 0px 0px 0px;
+  padding: 2px;
   vertical-align: middle;
 }
 

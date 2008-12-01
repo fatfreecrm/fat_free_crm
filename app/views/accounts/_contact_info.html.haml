@@ -1,0 +1,37 @@
+.subtitle= link_to_function "Add Contact Information", %w/$("contact_intro").toggle(); $("contact").toggle()/
+.section
+  #contact_intro You can add contact information later.
+  #contact{ :style => "display: none;" }
+    %table{ :width => "500" }
+      %tr
+        %td{ :width => "50%", :valign => "top" }
+          .label Website:
+          = f.text_field :website, :style => "width:100%"
+        %td
+          &nbsp;&nbsp;&nbsp;
+        %td{ :width => "50%", :valign => "top" }
+          .label Phone:
+          = f.text_field :phone, :style => "width:100%"
+      %tr
+        %td{ :width => "50%", :valign => "top" }
+          .label Fax:
+          = f.text_field :fax, :style => "width:100%"
+        %td
+          &nbsp;&nbsp;&nbsp;
+        %td{ :width => "50%", :valign => "top" }
+          .label Fax:
+          = f.text_field :fax, :style => "width:100%"
+      %tr
+        %td{ :width => "50%", :valign => "top" }
+          .label Billing address:
+          = f.text_area :billing_address, :style =>"width:100%", :rows => 4
+        %td
+          &nbsp;&nbsp;&nbsp;
+        %td{ :width => "50%", :valign => "top" }
+          .label
+            Shipping address:
+            = link_to_function "same as billing", %/$("account_shipping_address").value = $("account_billing_address").value/
+          = f.text_area :shipping_address, :style =>"width:100%", :rows => 4
+
+
+

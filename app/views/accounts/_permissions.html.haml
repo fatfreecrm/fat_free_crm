@@ -1,0 +1,7 @@
+.subtitle= link_to_function "Add Permissions", %/$("permissions_intro").toggle(); $("permissions").toggle()/
+.section
+  #permissions_intro Only you will have access to the account. You can change permissions later.
+  #permissions{ :style => "display: none;" }
+    <input type="radio" checked> Private
+    <input type="radio"> Public
+    <input type="radio"> Shared
