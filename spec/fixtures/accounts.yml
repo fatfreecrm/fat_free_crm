@@ -1,7 +1,65 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+first:
+  id: 1
+  uuid: 123456789-123456789-123456789-111111
+  user_id: 1
+  name: Astalavista Artists, Inc.
+  access: Private
+  notes: Met them at convention center last fall.
+  website: http://www.astalavista-artists.com
+  phone: +1(09)555-1212
+  fax: +1(09)555-1213
+  billing_address: 100 Artistic Ave., Amberlake, 1234 Australia
+  shipping_address: 100 Artistic Ave., Amberlake, 1234 Australia
+  deleted_at:
+  created_at:
+  updated_at:
+
+second:
+  id: 2
+  uuid: 123456789-123456789-123456789-222222
+  user_id: 1
+  name: Ballpark Brands LLC
+  access: Private
+  notes: These guys have been running their network marketing firm since 1990.
+  website: http://www.ballparkbrands.com
+  phone: +1(17)555-2233
+  fax: +1(17)555-2234
+  billing_address: P.O.Box 1290, Balsamic, B-1234 Bahamas
+  shipping_address: 1927 Big Brother St., Balsamic, B-1234 Bahamas
+  deleted_at:
+  created_at:
+  updated_at:
+
+third:
+  id: 3
+  uuid: 123456789-123456789-123456789-333333
+  user_id: 2
+  name: Creative Cravings Corp.
+  access: Shared
+  notes: They have over 200 people working for them all over the world.
+  website: http://www.creativecravings.com
+  phone: (727)555-3412
+  fax: (727)555-7741
+  billing_address: P.O.Box 22A, Cassandra, ONT, 55678 Canada
+  shipping_address: P.O.Box 22A, Cassandra, ONT, 55678 Canada
+  deleted_at:
+  created_at:
+  updated_at:
+
+fourth:
+  id: 4
+  uuid: 123456789-123456789-123456789-444444
+  user_id: 2
+  name: Daemon Desktop Designs
+  access: Shared
+  notes: Design firm from Denmark that builds beautiful desktops. Very well known in northern Europe.
+  website: http://www.ddd.dk
+  phone: +1(25)55-34-12
+  fax: +1(25)55-34-13
+  billing_address: P.O.Box D-55, Dropp, 5672 Denmark
+  shipping_address: P.O.Box D-55, Dropp, 5672 Denmark
+  deleted_at:
+  created_at:
+  updated_at:

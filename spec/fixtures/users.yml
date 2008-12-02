@@ -1,7 +1,68 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+first:
+  id: 1
+  username: mike
+  email: mike@dvorkin.net
+  first_name: Michael
+  last_name: Dvorkin
+  uuid: d2b75c7a-1166-102c-8a8c-c27a1c204c1f
+  password_hash: 04474de214dd9a5e5facd0327a47cfd930e5c75592d7689fe60d8b3e2c9175709facf15cf9612f1a6573256bf238dc7ee01ae2da91e7bc8fa4d60464fed31f43
+  password_salt: 7e66f4f1f74ad964c15d163a46200b0efccdc7246c05dfd2986a05608bc54db8a961a703baf24cbc0ed0ea6953f12010a44ad30d6dad8b7158b6a7e80cb5e35b
+  remember_token: 7395477a61e55e25dbfb6b6ee36ac60904e9865402dedd74c8bca9133d0dda68aa7a737a90c0ea346ded651f3d768c354253be3b071d68858ae572eaae7d6dc4
+  perishable_token: uELQ4pctnNwKpadmpJZT
+  openid_identifier: 
+  last_request_at: 2008-12-02 02:12:16
+  last_login_at: NULL
+  current_login_at: 2008-12-02 02:12:16
+  last_login_ip: NULL
+  current_login_ip: 127.0.0.1
+  login_count: 1
+  deleted_at: NULL
+  created_at: 2008-12-02 02:12:16
+  updated_at: 2008-12-02 02:12:16
+
+second:
+  id: 2
+  username: diana
+  email: diana@dvorkin.net
+  first_name: Diana
+  last_name: Dvorkin
+  uuid: 1238a0f2-1167-102c-8a8c-c27a1c204c1f
+  password_hash: 0ca3af7c8da27d6218eabd5588bf1c859fa3cfd97e1479347c7f5f8ad1609baab86e76210a2dcc4d85c961bceb4806a7b06a65f3669f53129ad5454419d29c40
+  password_salt: 1bed2fa3d406f452ce76bdeba7b2d7647a4101113ca995fd8c291b42db0af8d119e8d561a9be52cab520d0cd002926eac528e8f54d47398cc84b868413e40993
+  remember_token: 9f32a2e393b49a206a279ca91959abe6231ccbc92615ce6e19035411bf7098d7cf1eed5fc9c5346b85894740907ebbffa4d81c06cc64a24691ed3f4a4347e0a0
+  perishable_token: BTDypN7DUfPuAIxKJplH
+  openid_identifier: 
+  last_request_at: 2008-12-02 02:14:03
+  last_login_at: NULL
+  current_login_at: 2008-12-02 02:14:03
+  last_login_ip: NULL
+  current_login_ip: 127.0.0.1
+  login_count: 1
+  deleted_at: NULL
+  created_at: 2008-12-02 02:14:03
+  updated_at: 2008-12-02 02:14:03
+
+
+third:
+  id: 3
+  username: laura
+  email: laura@dvorkin.net
+  first_name: Laura
+  last_name: Dvorkin
+  uuid: 458399ee-1167-102c-8a8c-c27a1c204c1f
+  password_hash: f02c13259cbe47e91196f96231a612f9dec9d6fe38291e045ef41b700e0a3be8c68af37eefabe5313815c850e520cf75fcf5d5a22e71c2e07da82be7d10af791
+  password_salt: 471faebc1d83151d8ad21b9e1fcf712357f797194a16834209fd16bb5d85b57315f451d314dbc2f41439824cac5dd65d0669125c3adcab553c4d7a17150b8317
+  remember_token: fe8db0680008d74388468e01f47ef69b715e9eda23b890ca1deaa1b949926101fd252f0a6dc5ccf2c453da7627d11733c26895700856b031362256814509d344
+  perishable_token: 340MK5Z0komKxO7cVeqK
+  openid_identifier: 
+  last_request_at: 2008-12-02 02:15:29
+  last_login_at: NULL
+  current_login_at: 2008-12-02 02:15:29
+  last_login_ip: NULL
+  current_login_ip: 127.0.0.1
+  login_count: 1
+  deleted_at: NULL
+  created_at: 2008-12-02 02:15:29
+  updated_at: 2008-12-02 02:15:29

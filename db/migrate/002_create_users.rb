@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string   :first_name,       :limit => 32
       t.string   :last_name,        :limit => 32
       t.string   :uuid,             :limit => 36
-      # The rest of the fields are required and maintained by [authlogic] plugin.
+      # >>> The following fields are required and maintained by [authlogic] plugin.
       t.string   :password_hash,    :null => false, :default => ""
       t.string   :password_salt,    :null => false, :default => ""
       t.string   :remember_token,   :null => false, :default => ""
@@ -18,6 +18,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string   :last_login_ip
       t.string   :current_login_ip
       t.integer  :login_count,      :null => false, :default => 0
+      # >>> End of [authlogic] maintained fields.
+      t.datetime :deleted_at
       t.timestamps
     end     
 

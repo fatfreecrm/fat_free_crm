@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+creative_cravings_mike:
+  user_id: 1
+  asset_id: 3
+  asset_type: Account
+
+creative_cravings_laura:
+  user_id: 3
+  asset_id: 3
+  asset_type: Account
+
+daemon_desktop_designs_mike:
+  user_id: 1
+  asset_id: 4
+  asset_type: Account

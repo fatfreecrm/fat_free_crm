@@ -1,4 +1,8 @@
-Sat, Nov 30, 2008
+Mon, Dec 1, 2008
+---------------------------------------------------------------------
+- Created [Permission] polymorphic model, added fixtures to load sample users, accounts, and permissions.
+
+Sun, Nov 30, 2008
 ---------------------------------------------------------------------
 - More work on [accounts] model, CSS styles, and [add account] form.
 
