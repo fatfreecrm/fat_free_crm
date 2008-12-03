@@ -1,0 +1,12 @@
+<h1>Editing lead</h1>
+
+<% form_for(@lead) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @lead %> |
+<%= link_to 'Back', leads_path %>

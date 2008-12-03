@@ -1,6 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :accounts
-
   # The priority is based upon order of creation: first created -> highest priority.
   map.home "",  :controller => "home", :action => "index"
   map.resource  :profile, :controller => "users"
@@ -8,6 +6,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :authentication
   map.resources :passwords
   map.resources :accounts
+  map.resources :campaigns
+  map.resources :leads
+  map.resources :contacts
 
   map.signup "signup", :controller => "users",           :action => "new"
   map.login  "login",  :controller => "authentications", :action => "new"

@@ -15,7 +15,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :accounts, [ :user_id, :name ], :unique => true
+    add_index :accounts, [ :user_id, :name, :deleted_at ], :unique => true
     add_index :accounts, :uuid
     ActiveRecord::Base.connection.execute("CREATE TRIGGER accounts_uuid BEFORE INSERT ON accounts FOR EACH ROW SET NEW.uuid = UUID()");
   end

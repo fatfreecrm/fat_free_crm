@@ -1,3 +1,7 @@
+Tue, Dec 2, 2008
+---------------------------------------------------------------------
+- Added [settings], [preferences], [campaigns], [leads], and [contacts].
+
 Mon, Dec 1, 2008
 ---------------------------------------------------------------------
 - Created [Permission] polymorphic model, added fixtures to load sample users, accounts, and permissions.

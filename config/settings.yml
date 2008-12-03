@@ -1,0 +1,21 @@
+# Defaul applications settings to be loaded during installation:
+#
+#   rake db:settings:load
+#
+:tabs:
+  - :active: true
+    :text: Home
+    :url: /
+  - :active: false
+    :text: Accounts
+    :url: /accounts
+  - :active: false
+    :text: Campaigns
+    :url: /campaigns
+  - :active: false
+    :text: Leads
+    :url: /leads
+  - :active: false
+    :text: Contacts
+    :url: /contacts
+  

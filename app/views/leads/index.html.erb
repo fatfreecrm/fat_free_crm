@@ -1,0 +1,18 @@
+<h1>Listing leads</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for lead in @leads %>
+  <tr>
+    <td><%= link_to 'Show', lead %></td>
+    <td><%= link_to 'Edit', edit_lead_path(lead) %></td>
+    <td><%= link_to 'Destroy', lead, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New lead', new_lead_path %>
