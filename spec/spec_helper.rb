@@ -45,3 +45,42 @@ Spec::Runner.configure do |config|
   # 
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
 end
+
+#----------------------------------------------------------------------------
+def login(session_stubs = {}, user_stubs = {})
+  @current_user = mock_model(User, user_stubs)
+  @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
+  Authentication.stub!(:find).and_return(@current_user_session)
+end
+ 
+#----------------------------------------------------------------------------
+def logout
+  @current_user = nil
+  @current_user_session = nil
+  Authentication.stub!(:find).and_return(nil)
+end
+  
+#----------------------------------------------------------------------------
+def current_user
+  @current_user
+end
+ 
+#----------------------------------------------------------------------------
+def current_user_session
+  @current_user_session
+end
+
+#----------------------------------------------------------------------------
+def require_user
+  login
+end
+
+#----------------------------------------------------------------------------
+def require_no_user
+  logout
+end
+
+#----------------------------------------------------------------------------
+def set_current_tab(tab)
+  controller.session[:current_tab] = tab
+end

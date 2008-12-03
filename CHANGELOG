@@ -1,6 +1,15 @@
+Wed, Dec 3, 2008
+---------------------------------------------------------------------
+- Added LICENSE file with the GNU Affero General Public License.
+- Fixed auto-generated specs to make them all pass.
+
 Tue, Dec 2, 2008
 ---------------------------------------------------------------------
-- Added [settings], [preferences], [campaigns], [leads], and [contacts].
+- Added [Setting] and [Preference] models.
+- Added [campaigns], [leads], and [contacts] scaffolds.
+- Added [config/settings.yml] with default application settings.
+- Created [lib/tasks/settings.rake] to load default settings to the database.
+- Implemented [Setting] model.
 
 Mon, Dec 1, 2008
 ---------------------------------------------------------------------
