@@ -2,6 +2,7 @@ Wed, Dec 3, 2008
 ---------------------------------------------------------------------
 - Added LICENSE file with the GNU Affero General Public License.
 - Fixed auto-generated specs to make them all pass.
+- Implemented hash methods for user preferences.
 
 Tue, Dec 2, 2008
 ---------------------------------------------------------------------

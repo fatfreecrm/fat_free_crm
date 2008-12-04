@@ -2,8 +2,14 @@ class User < ActiveRecord::Base
   
   has_many :accounts
   has_many :permissions
+  has_many :preferences
   has_many :shared_accounts, :through => :permissions, :source => :asset, :source_type => "Account", :class_name => "Account"
   acts_as_paranoid
+
+  #----------------------------------------------------------------------------
+  def preference
+    Preference.new(:user => self)
+  end
 
   # Selects accounts owned by the user plus all accounts shared with the user.
   #----------------------------------------------------------------------------
