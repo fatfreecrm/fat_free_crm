@@ -7,7 +7,8 @@ class Preference < ActiveRecord::Base
       preference = Preference.find_by_name_and_user_id(name.to_s, self.user.id)
       preference ? Marshal.load(Base64.decode64(preference.value)) : nil
     else
-      Marshal.load(Base64.decode64(super(name)))
+      value = super(name)
+      name.to_s == "value" ? Marshal.load(Base64.decode64(value)) : value
     end
   end
 
