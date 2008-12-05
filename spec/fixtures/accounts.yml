@@ -13,8 +13,8 @@ first:
   billing_address: 100 Artistic Ave., Amberlake, 1234 Australia
   shipping_address: 100 Artistic Ave., Amberlake, 1234 Australia
   deleted_at:
-  created_at:
-  updated_at:
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
 
 second:
   id: 2
@@ -29,8 +29,8 @@ second:
   billing_address: P.O.Box 1290, Balsamic, B-1234 Bahamas
   shipping_address: 1927 Big Brother St., Balsamic, B-1234 Bahamas
   deleted_at:
-  created_at:
-  updated_at:
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
 
 third:
   id: 3
@@ -45,8 +45,8 @@ third:
   billing_address: P.O.Box 22A, Cassandra, ONT, 55678 Canada
   shipping_address: P.O.Box 22A, Cassandra, ONT, 55678 Canada
   deleted_at:
-  created_at:
-  updated_at:
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
 
 fourth:
   id: 4
@@ -61,5 +61,5 @@ fourth:
   billing_address: P.O.Box D-55, Dropp, 5672 Denmark
   shipping_address: P.O.Box D-55, Dropp, 5672 Denmark
   deleted_at:
-  created_at:
-  updated_at:
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>

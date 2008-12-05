@@ -237,6 +237,7 @@ div .subtitle a:hover {
   background: white;
   border-right: 3px lightgrey solid;
   border-bottom: 3px lightgrey solid;
+  padding: 15px 15px 15px 15px;
 }
 
 .sidebar {
@@ -247,7 +248,7 @@ div .subtitle a:hover {
 
 .mainform {
   background: white;
-  margin: 15px 15px 15px 15px;
+  /*margin: 15px 15px 15px 15px;*/
   /*padding: 0px 0px 10px 0px;*/
   /*border:1px red dotted;*/
 }

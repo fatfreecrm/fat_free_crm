@@ -2,7 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ContactsController do
 
-  def mock_contact(stubs={})
+  before(:each) do
+    require_user
+    set_current_tab(:contacts)
+  end
+
+  def mock_contact(stubs = { :user => mock_model(User) } )
     @mock_contact ||= mock_model(Contact, stubs)
   end
   

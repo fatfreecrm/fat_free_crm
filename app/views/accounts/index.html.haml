@@ -1,0 +1,39 @@
+.title
+  Accounts
+%br
+%table{ :width => "100%", :cellpadding => 0, :cellspacing => 0 }
+  - unless @accounts.empty?
+    - for account in @accounts
+      %tr
+        %td{ :style => "border-bottom: 1px silver dotted; padding: 3px 0px 3px 0px" }
+          = link_to account.name, account
+        %td{ :style => "border-bottom: 1px silver dotted; padding: 3px 0px 3px 0px", :align => :right }
+          = time_ago_in_words(account.created_at) + " ago"
+  - else
+    %tr
+      %td
+        You don't have any accounts set up. Please
+        = link_to "create new account", new_account_path
+        first.
+%br
+%hr{ :size => 1 }
+= link_to "Create New Account", new_account_path
+
+-# Not implemented yet.
+-# 
+-# <table>
+-#   <tr>
+-#   </tr>
+-# 
+-# <% for account in @accounts %>
+-#   <tr>
+-#     <td><%= link_to 'Show', account %></td>
+-#     <td><%= link_to 'Edit', edit_account_path(account) %></td>
+-#     <td><%= link_to 'Destroy', account, :confirm => 'Are you sure?', :method => :delete %></td>
+-#   </tr>
+-# <% end %>
+-# </table>
+-# 
+-# <br />
+-# 
+-# <%= link_to 'New account', new_account_path %>

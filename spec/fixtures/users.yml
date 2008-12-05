@@ -1,68 +1,128 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-first:
+aaron:
   id: 1
-  username: mike
-  email: mike@dvorkin.net
-  first_name: Michael
-  last_name: Dvorkin
+  username: aaron
+  email: aaron@example.com
+  first_name: Aaron
+  last_name: Assembler
   uuid: d2b75c7a-1166-102c-8a8c-c27a1c204c1f
-  password_hash: 04474de214dd9a5e5facd0327a47cfd930e5c75592d7689fe60d8b3e2c9175709facf15cf9612f1a6573256bf238dc7ee01ae2da91e7bc8fa4d60464fed31f43
-  password_salt: 7e66f4f1f74ad964c15d163a46200b0efccdc7246c05dfd2986a05608bc54db8a961a703baf24cbc0ed0ea6953f12010a44ad30d6dad8b7158b6a7e80cb5e35b
-  remember_token: 7395477a61e55e25dbfb6b6ee36ac60904e9865402dedd74c8bca9133d0dda68aa7a737a90c0ea346ded651f3d768c354253be3b071d68858ae572eaae7d6dc4
-  perishable_token: uELQ4pctnNwKpadmpJZT
+  password_hash: 56d91c9f1a9c549304768982fd4e2d8bc2700b403b4524c0f14136dbbe2ce4cd923156ad69f9acce8305dba4e63faa884e61fb7a256cf8f5fc7c2ce176e68e8f
+  password_salt: ce6e0200c96f4dd326b91f3967115a31421a0e7dcddc9ffb63a77f598a9fcb5326fe532dbd9836a2446e46840d398fa32c81f8f4da1a0fcfe931989e9639a013
+  remember_token: d7cdeffd3625f7cb265b21126b85da7c930d47c4a708365c20eb857560055a6b57c9775becb8a957dfdb46df8aee17eb120a011b380e9cc0882f9dfaa2b7ba26
+  perishable_token: TarXlrOPfaokNOzls2U8
   openid_identifier: 
-  last_request_at: 2008-12-02 02:12:16
-  last_login_at: NULL
-  current_login_at: 2008-12-02 02:12:16
-  last_login_ip: NULL
+  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  current_login_at: 
+  last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
-  login_count: 1
-  deleted_at: NULL
-  created_at: 2008-12-02 02:12:16
-  updated_at: 2008-12-02 02:12:16
+  login_count: <%= 1 + rand(100) %>
+  deleted_at: 
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
 
-second:
+eve:
   id: 2
-  username: diana
-  email: diana@dvorkin.net
-  first_name: Diana
-  last_name: Dvorkin
+  username: eve
+  email: eve@example.com
+  first_name: Eve
+  last_name: Escape
   uuid: 1238a0f2-1167-102c-8a8c-c27a1c204c1f
-  password_hash: 0ca3af7c8da27d6218eabd5588bf1c859fa3cfd97e1479347c7f5f8ad1609baab86e76210a2dcc4d85c961bceb4806a7b06a65f3669f53129ad5454419d29c40
-  password_salt: 1bed2fa3d406f452ce76bdeba7b2d7647a4101113ca995fd8c291b42db0af8d119e8d561a9be52cab520d0cd002926eac528e8f54d47398cc84b868413e40993
-  remember_token: 9f32a2e393b49a206a279ca91959abe6231ccbc92615ce6e19035411bf7098d7cf1eed5fc9c5346b85894740907ebbffa4d81c06cc64a24691ed3f4a4347e0a0
-  perishable_token: BTDypN7DUfPuAIxKJplH
+  password_hash: 4fa78596defcf96d56d6f50db42efd3c2bd8d1e6232e95c65555e8b49d2a623df928b521ffcacd36e0701f687fdf1c703009bddc01c6bfad0dfdd352965fa405
+  password_salt: 4b93e8adb8d932fb782c6dfa56fbb60b08e979b75ada5b57e6aed0d65b5959dc9f5e7a9ecae123efbb9cd1d8fa08f6cb6bbc7aae1e8959aa7b42b0cfddca76a7
+  remember_token: 118e8def0afada013b6b5b0bdb96548fc0ce546b667ee5bbe43b92a8c13156f88649cac0227beffbf49ec00525904441675da0463dadb6e4d249c12b2e88ac4a
+  perishable_token: vmhxuJSALQyI766WAtnT
   openid_identifier: 
-  last_request_at: 2008-12-02 02:14:03
-  last_login_at: NULL
-  current_login_at: 2008-12-02 02:14:03
-  last_login_ip: NULL
+  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  current_login_at: 
+  last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
-  login_count: 1
-  deleted_at: NULL
-  created_at: 2008-12-02 02:14:03
-  updated_at: 2008-12-02 02:14:03
+  login_count: <%= 1 + rand(100) %>
+  deleted_at: 
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
 
-
-third:
+isabel:
   id: 3
-  username: laura
-  email: laura@dvorkin.net
-  first_name: Laura
-  last_name: Dvorkin
+  username: isabel
+  email: isabel@example.com
+  first_name: Isabel
+  last_name: Installer
   uuid: 458399ee-1167-102c-8a8c-c27a1c204c1f
-  password_hash: f02c13259cbe47e91196f96231a612f9dec9d6fe38291e045ef41b700e0a3be8c68af37eefabe5313815c850e520cf75fcf5d5a22e71c2e07da82be7d10af791
-  password_salt: 471faebc1d83151d8ad21b9e1fcf712357f797194a16834209fd16bb5d85b57315f451d314dbc2f41439824cac5dd65d0669125c3adcab553c4d7a17150b8317
-  remember_token: fe8db0680008d74388468e01f47ef69b715e9eda23b890ca1deaa1b949926101fd252f0a6dc5ccf2c453da7627d11733c26895700856b031362256814509d344
-  perishable_token: 340MK5Z0komKxO7cVeqK
+  password_hash: 03ff2c3054be743d2d42d742f2a599911d16fb7455e367d1bdb25c75a7370113976530ad78bbb6923855886d1e8a391d836498fdcad9c57c5f97b2a7c5fafeac
+  password_salt: 6bd098381b5864d8162596376f1722b2871e2db715142064fdefb241212254f04b1878de50973364280348862cd9f87c8b7f4dde7ece59bef9bf448d545e6835
+  remember_token: 2f820f2ba13b0a80794081e5f03a54fab6c758944f89e22760257ec059ea159f7d9fff62956cf3aa9b21a53cdd30d46a526b2e0fb9d43af641d57c2baf483b1c
+  perishable_token: lbxUKZm0oYTkUB1Nm5Jq
   openid_identifier: 
-  last_request_at: 2008-12-02 02:15:29
-  last_login_at: NULL
-  current_login_at: 2008-12-02 02:15:29
-  last_login_ip: NULL
+  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  current_login_at: 
+  last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
-  login_count: 1
-  deleted_at: NULL
-  created_at: 2008-12-02 02:15:29
-  updated_at: 2008-12-02 02:15:29
+  login_count: <%= 1 + rand(100) %>
+  deleted_at: 
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+
+olga:
+  id: 4
+  username: olga
+  email: olga@example.com
+  first_name: Olga
+  last_name: Operand
+  uuid: 757f6790-13ba-102c-bba6-85b80a0a154c
+  password_hash: b2274fc3f214c5a9b55ac586a946a1eaf211dd181358c564a93c391284afeec6bda8812d0e9c383d3765cc8a69540c56d3a9673f47013ee85efee4938969831d
+  password_salt: 1dbf332112d567416a5cb0e16a6e6cbcf8618475c741dce2ad15dce58e8a1e466f4b01ba7113537bd94444f103f73948142101ff964621f02be64b9814ed672a
+  remember_token: 763c86b94d7d8a9b25392910e90f041d8f181fe7cbb2412ede576a37aab93cb2a5201285c5a9b202f6bde3a8ac78a2ec3f00f63c764e90e0a051e76066c309ce
+  perishable_token: L2q74fwAeRNePvCyguBl
+  openid_identifier: 
+  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  current_login_at: 
+  last_login_ip: 127.0.0.1
+  current_login_ip: 127.0.0.1
+  login_count: <%= 1 + rand(100) %>
+  deleted_at: 
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+
+ulrich:
+  id: 5
+  username: ulrich
+  email: ulrich@example.com
+  first_name: Ulrich
+  last_name: Uploader
+  uuid: 041908c6-13bb-102c-bba6-85b80a0a154c
+  password_hash: e3938e92b4447c9f6b4fa4024a1cc961e1bdcd4f5457643c9bc49a83dee99e8799cea35500e0fdb4a9992600e2f137e7da66dbc487534ca53c4f82cc29ff856d
+  password_salt: 811278ac5c88a4c79ec6f4e041f0bad5e32e65f5f6abf96788d9b0c997d36d2f50ab315679e2c140b87eef023eaa44cbec070dc4bf97384b71553352553f3f36
+  remember_token: abcdbc3fe2ae724a97289c38422124ae256a6ae42e754fc41e4d85bf55229a67665d92e0bd01ff0c754d80b9996ffee33b9354808b9306d6095f2b552b60d05e
+  perishable_token: Yurv5MDtDZqAPpS3lG8e
+  openid_identifier: 
+  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  current_login_at: 
+  last_login_ip: 127.0.0.1
+  current_login_ip: 127.0.0.1
+  login_count: <%= 1 + rand(100) %>
+  deleted_at: 
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+
+yvette:
+  id: 6
+  username: yvette
+  email: yvette@example.com
+  first_name: Yvette
+  last_name: Yottabyte
+  uuid: 4e027980-13bc-102c-bba6-85b80a0a154c
+  password_hash: 4e0568fb9e313cb2a67a124030d5b971f329fa4d3813aa5f072bf778a29b9298090d1ec01c15fdd7ef51cad83b7b744f133a63f888059a5103abef4ffc37cabf
+  password_salt: f60ab90e93567b43ae8a72e98d4c70cd04ff996442baa07c28ba6705076fbc2e8c2180cba2a76aef774369cabf331819d6af2d694e55907cdbb493359837c7e2
+  remember_token: 5d07a342b4c1649e5eff62178c28b77c921ba9c17caa78dac114a390a8d2883a6d838126aad4ec42518de81b54dfa5460492ba085ce7d1cd00e48c3635bb09c1
+  perishable_token: lK0ySLJ07Kwx47HX2Qou
+  openid_identifier: 
+  last_request_at: 
+  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  current_login_at: 
+  last_login_ip: 127.0.0.1
+  current_login_ip: 127.0.0.1
+  login_count: <%= 1 + rand(100) %>
+  deleted_at: 
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>

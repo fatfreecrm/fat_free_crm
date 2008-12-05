@@ -1,0 +1,2 @@
+module PreferencesHelper
+end

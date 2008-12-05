@@ -2,7 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe LeadsController do
 
-  def mock_lead(stubs={})
+  before(:each) do
+    require_user
+    set_current_tab(:leads)
+  end
+
+  def mock_lead(stubs = { :user => mock_model(User) } )
     @mock_lead ||= mock_model(Lead, stubs)
   end
   

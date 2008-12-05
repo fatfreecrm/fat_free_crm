@@ -7,17 +7,6 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   # protect_from_forgery # :secret => '165eb65bfdacf95923dad9aea10cc64a'
 
-  #-------------------------------------------------------------------
-  def tabs
-    session[:current_tab] = :home unless session[:current_tab]
-    [ # array of hashes
-      { :active => (session[:current_tab] == :home),     :text => "Home",     :url => home_path },
-      { :active => (session[:current_tab] == :accounts), :text => "Accounts", :url => accounts_path },
-      { :active => (session[:current_tab] == :tab3),     :text => "Tab 3",    :url => "/" },
-      { :active => (session[:current_tab] == :tab4),     :text => "Tab 4",    :url => "/" }
-    ]
-  end
-
   private
   #----------------------------------------------------------------------------
   def set_current_tab(tab = :none)

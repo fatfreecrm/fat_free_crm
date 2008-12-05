@@ -3,15 +3,15 @@
     .title Create Account
     .section
       .label Account name:
-      = f.text_field :name, :style =>"width:500px"
+      = f.text_field :name, :style => "width:500px"
       .label Notes:
-      = f.text_area :notes, :style =>"width:500px", :rows => 2
-      .label Tags:
-      = f.text_field :tags, :style =>"width:500px"
-    = render :partial => "permissions",  :locals => { :f => f }
+      = f.text_area :notes, :style => "width:500px", :rows => 2
+      -### .label Tags:
+      -### =f.text_field :tags, :style =>"width:500px"
     = render :partial => "contact_info", :locals => { :f => f }
+    = render :partial => "permissions",  :locals => { :f => f }
     .buttonbar
-      = f.submit"Create Account" 
+      = f.submit "Create Account" 
       or 
       = link_to_function "Cancel", "history.go(-1)"
       

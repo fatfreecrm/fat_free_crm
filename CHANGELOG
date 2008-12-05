@@ -1,3 +1,10 @@
+Thu, Dec 4, 2008
+---------------------------------------------------------------------
+- Added Preferences controller stub and header link.
+- Updated tabs helper to use global settings to show tabs.
+- Updated spec fixtures to use randomly generated dates and counts.
+- Converted all layouts to haml.
+
 Wed, Dec 3, 2008
 ---------------------------------------------------------------------
 - Added LICENSE file with the GNU Affero General Public License.

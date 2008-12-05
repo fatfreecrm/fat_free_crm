@@ -1,8 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe CampaignsController do
+  before(:each) do
+    require_user
+    set_current_tab(:campaigns)
+  end
 
-  def mock_campaign(stubs={})
+  def mock_campaign(stubs = { :user => mock_model(User) } )
     @mock_campaign ||= mock_model(Campaign, stubs)
   end
   

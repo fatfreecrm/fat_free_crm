@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   
   has_many :accounts
+  has_many :campaigns
+  has_many :leads
+  has_many :contacts
   has_many :permissions
   has_many :preferences
   has_many :shared_accounts, :through => :permissions, :source => :asset, :source_type => "Account", :class_name => "Account"

@@ -1,4 +1,7 @@
 class LeadsController < ApplicationController
+  before_filter :require_user
+  before_filter { |filter| filter.send(:set_current_tab, :leads) }
+
   # GET /leads
   # GET /leads.xml
   def index

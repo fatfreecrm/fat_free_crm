@@ -1,4 +1,7 @@
 class CampaignsController < ApplicationController
+  before_filter :require_user
+  before_filter { |filter| filter.send(:set_current_tab, :campaigns) }
+
   # GET /campaigns
   # GET /campaigns.xml
   def index

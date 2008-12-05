@@ -1,5 +1,11 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  #-------------------------------------------------------------------
+  def tabs
+    session[:current_tab] = :home unless session[:current_tab]
+    Setting[:tabs].each { |tab| tab[:active] = (tab[:text].downcase.intern == session[:current_tab]) }
+  end
   
   #----------------------------------------------------------------------------
   def tabless_layout?
