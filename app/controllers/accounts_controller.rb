@@ -31,6 +31,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @account = Account.new
+    @users = User.all_except(@current_user) # to manage account permissions
 
     respond_to do |format|
       format.html # new.html.erb

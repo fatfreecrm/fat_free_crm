@@ -142,17 +142,8 @@ tt {
   padding: 0px 0px 0px 16px;
 }
 
-/* Common page elements 
+/* Common page elements.
 -------------------------------------------------------- */
-.wrap {
-  background-color: white;
-  min-height: 90%;
-  margin: 0px auto;
-  padding: 0px 0px 5px 0px;
-  text-align: left;
-  width: 800px;
-}
-
 .title {
   border-bottom: 1px gray solid;
   color: #342D7E;
@@ -219,7 +210,25 @@ div .subtitle a:hover {
   margin: 0px 10px 0px 0px;
 }
 
-/* Main area (page and form)
+.radio_box {
+  line-height: 20px;
+}
+
+.radio_box input {
+  position: relative;
+  top: -2px;
+}
+
+.check_box {
+  line-height: 20px;
+}
+
+.check_box input {
+  position: relative;
+  top: -3px;
+}
+
+/* Main area (page and form).
 -------------------------------------------------------- */
 .standalone {
   background: whitesmoke;

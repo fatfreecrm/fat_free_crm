@@ -7,7 +7,13 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :preferences
   has_many :shared_accounts, :through => :permissions, :source => :asset, :source_type => "Account", :class_name => "Account"
+  named_scope :all_except, lambda { | user | { :conditions => "id != #{user.id}" } }
   acts_as_paranoid
+
+  #----------------------------------------------------------------------------
+  def full_name
+    self.first_name && self.last_name ? "#{self.first_name} #{self.last_name}" : self.email
+  end
 
   #----------------------------------------------------------------------------
   def preference
