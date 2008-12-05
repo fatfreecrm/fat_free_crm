@@ -7,6 +7,7 @@ describe "/accounts/new.html.erb" do
     assigns[:account] = stub_model(Account,
       :new_record? => true
     )
+    assigns[:users] = [ stub_model(User) ]
   end
 
   it "should render new form" do

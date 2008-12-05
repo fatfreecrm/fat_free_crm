@@ -13,7 +13,7 @@ describe AccountsController do
   describe "responding to GET index" do
 
     it "should expose all accounts as @accounts" do
-      Account.should_receive(:find).with(:all).and_return([mock_account])
+      @current_user.should_receive(:owned_and_shared_accounts).and_return([mock_account])
       get :index
       assigns[:accounts].should == [mock_account]
     end
@@ -22,7 +22,7 @@ describe AccountsController do
   
       it "should render all accounts as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Account.should_receive(:find).with(:all).and_return(accounts = mock("Array of Accounts"))
+        @current_user.should_receive(:owned_and_shared_accounts).and_return(accounts = mock("Array of Accounts"))
         accounts.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"
@@ -57,9 +57,12 @@ describe AccountsController do
   describe "responding to GET new" do
   
     it "should expose a new account as @account" do
+      mock_users = [ mock_model(User) ]
       Account.should_receive(:new).and_return(mock_account)
+      User.should_receive(:all_except).with(@current_user).and_return(mock_users)
       get :new
       assigns[:account].should equal(mock_account)
+      assigns[:users].should equal(mock_users)
     end
   
   end

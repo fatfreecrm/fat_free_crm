@@ -5,8 +5,8 @@ describe "/accounts/index.html.erb" do
   
   before(:each) do
     assigns[:accounts] = [
-      stub_model(Account),
-      stub_model(Account)
+      stub_model(Account, :created_at => Time.now()),
+      stub_model(Account, :created_at => Time.now())
     ]
   end
 
