@@ -195,14 +195,15 @@ td.head {
   border-bottom: 1px silver solid;
   border-top: 1px azure solid;
   color: #3f3f3f;
-  font: bold 10px "Lucida Grande", Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
   padding: 3px;
 }
 
 td.cell {
   border-bottom: 1px gainsboro dotted; 
   color: #3f3f3f;
-  font: normal 11px "Lucida Grande", Arial, Helvetica, sans-serif;
+  font-size: 11px;
   height: 22px;
   padding: 3px 0px 3px 3px;
 }
@@ -409,6 +410,11 @@ label {
   margin: 3px 0px 0px 0px;
   padding: 2px;
   vertical-align: middle;
+}
+
+.warn {
+  color: maroon;
+  font-weight: bold;
 }
 
 /* Form validation messages

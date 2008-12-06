@@ -37,4 +37,12 @@ module ApplicationHelper
     }
   end
 
+  #----------------------------------------------------------------------------
+  def confirm_delete(model)
+    question = %(<span class="warn">Are you sure you want to delete this #{model.class.to_s.downcase}?</span>)
+    yes = link_to("<b>Yes</b>", model, :method => :delete)
+    no = link_to_function("<b>No</b>", "$$('.tlink')[0].update($('confirm').innerHTML)")
+    "$('confirm').update($$('.tlink')[0].innerHTML); $$('.tlink')[0].update('#{question} #{escape_javascript(yes)} : #{escape_javascript(no)}');"
+  end
+
 end
