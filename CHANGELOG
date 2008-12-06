@@ -1,3 +1,9 @@
+Fri, Dec 5, 2008
+---------------------------------------------------------------------
+- Installed [advanced_errors] plugin to have full control over the message text.
+- Implemented [Account/New] validating account data and preserving submitted form values.
+- More work on polishing accounts index page.
+
 Thu, Dec 4, 2008
 ---------------------------------------------------------------------
 - Added Preferences controller stub and header link.

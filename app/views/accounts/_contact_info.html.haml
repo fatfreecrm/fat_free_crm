@@ -1,7 +1,8 @@
 .subtitle= link_to_function "Add Contact Information", %w/$("contact_intro").toggle(); $("contact").toggle()/
 .section
-  #contact_intro You can add contact information later.
-  #contact{ :style => "display: none;" }
+  #contact_intro{ hidden_if(!@account.errors.empty?) }
+    You can add contact information later.
+  #contact{ hidden_if(@account.errors.empty?) }
     %table{ :width => "500" }
       %tr
         %td{ :width => "50%", :valign => "top" }

@@ -4,9 +4,8 @@ describe "/accounts/new.html.erb" do
   include AccountsHelper
   
   before(:each) do
-    assigns[:account] = stub_model(Account,
-      :new_record? => true
-    )
+    assigns[:current_user] = stub_model(User)
+    assigns[:account] = stub_model(Account, :new_record? => true)
     assigns[:users] = [ stub_model(User) ]
   end
 

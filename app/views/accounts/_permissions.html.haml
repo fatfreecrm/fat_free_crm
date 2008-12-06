@@ -1,19 +1,22 @@
+- logger.info("params[:users] #{params[:users].inspect}")
 .subtitle= link_to_function "Add Permissions", %/$("permissions_intro").toggle(); $("permissions").toggle()/
 .section
-  #permissions_intro Only you will have access to the account. You can change permissions later.
-  #permissions{ :style => "display: none;" }
+  #permissions_intro{ hidden_if(!@account.errors.empty?) }
+    Only you will have access to the account. You can change permissions later.
+  #permissions{ hidden_if(@account.errors.empty?) }
     .radio_box
-      = radio_button_tag :permissions, "Private", true, :onclick => "$('people').hide()"
+      = radio_button_tag "account[access]", "Private", @account.access == "Private", :onclick => "$('people').hide()"
       Keep it private, do not share with others
     .radio_box
-      = radio_button_tag :permissions, "Public", false, :onclick => "$('people').hide()"
+      = radio_button_tag "account[access]", "Public",  @account.access == "Public", :onclick => "$('people').hide()"
       Share it with everyone
     .radio_box
-      = radio_button_tag :permissions, "Shared", false, :onclick => "$('people').show()"
+      = radio_button_tag "account[access]", "Shared",  @account.access == "Shared", :onclick => "$('people').show()"
       Share it with the following people
-    #people{ :style => "display: none;" }
+    #people{ hidden_if(@account.access != "Shared") }
       %div{ :style => "padding: 6px 0px 0px 20px" }
         - for user in @users
           .check_box
-            = check_box_tag :users, user.id, false
+            -# Preserve state of the checkboxes if the form gets redrawn on errors.
+            = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s)
             = user.full_name

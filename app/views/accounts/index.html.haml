@@ -2,16 +2,25 @@
   Accounts
 %br
 %table{ :width => "100%", :cellpadding => 0, :cellspacing => 0 }
+  %tr
+    %td.head Name
+    %td.head Location
+    %td.head Phone
+    %td.head Created
   - unless @accounts.empty?
     - for account in @accounts
-      %tr
-        %td{ :style => "border-bottom: 1px silver dotted; padding: 3px 0px 3px 0px" }
+      %tr{ highlightable }
+        %td.cell
           = link_to account.name, account
-        %td{ :style => "border-bottom: 1px silver dotted; padding: 3px 0px 3px 0px", :align => :right }
+        %td.cell
+          = account.location
+        %td.cell
+          = account.phone
+        %td.cell
           = time_ago_in_words(account.created_at) + " ago"
   - else
     %tr
-      %td
+      %td{ :colspan => 4 }
         You don't have any accounts set up. Please
         = link_to "create new account", new_account_path
         first.

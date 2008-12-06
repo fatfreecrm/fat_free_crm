@@ -50,9 +50,10 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @account = Account.new(params[:account])
+    @users = User.all_except(@current_user)
 
     respond_to do |format|
-      if @account.save
+      if @account.save_with_permissions(params[:users])
         flash[:notice] = 'Account was successfully created.'
         format.html { redirect_to(@account) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }

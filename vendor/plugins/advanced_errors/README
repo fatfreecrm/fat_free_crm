@@ -1,0 +1,14 @@
+AdvancedErrors
+==============
+
+Extentions to ActiveRecord's error handling features which I find useful.
+
+
+Features
+========
+
+Disabling the rendering of the attribute name for errors by the error_messages_for helper.
+Simply place a caret as the first character in the message.
+
+
+Copyright (c) 2008 Mark Catley, released under the MIT license

@@ -82,15 +82,21 @@ describe AccountsController do
     describe "with valid params" do
       
       it "should expose a newly created account as @account" do
-        Account.should_receive(:new).with({'these' => 'params'}).and_return(mock_account(:save => true))
-        post :create, :account => {:these => 'params'}
-        assigns(:account).should equal(mock_account)
+        @account = mock_account(:save => true)
+        @users = [ mock_model(User) ]
+        Account.should_receive(:new).with({'these' => 'params'}).and_return(@account)
+        User.should_receive(:all_except).with(@current_user).and_return(@users)
+        @account.should_receive(:save_with_permissions).with(%w(1 2 3)).and_return(true)
+        post :create, :account => {:these => 'params'}, :users => %w(1 2 3)
+        assigns(:account).should equal(@account)
+        assigns[:users].should equal(@users)
       end
   
       it "should redirect to the created account" do
-        Account.stub!(:new).and_return(mock_account(:save => true))
+        Account.stub!(:new).and_return(@account = mock_account(:save => true))
+        @account.should_receive(:save_with_permissions).with(nil).and_return(true)
         post :create, :account => {}
-        response.should redirect_to(account_url(mock_account))
+        response.should redirect_to(account_url(@account))
       end
       
     end
@@ -98,13 +104,19 @@ describe AccountsController do
     describe "with invalid params" do
   
       it "should expose a newly created but unsaved account as @account" do
-        Account.stub!(:new).with({'these' => 'params'}).and_return(mock_account(:save => false))
-        post :create, :account => {:these => 'params'}
-        assigns(:account).should equal(mock_account)
+        @account = mock_account(:save => false)
+        @users = [ mock_model(User) ]
+        Account.should_receive(:new).with({'these' => 'params'}).and_return(@account)
+        User.should_receive(:all_except).with(@current_user).and_return(@users)
+        @account.should_receive(:save_with_permissions).with(%w(1 2 3)).and_return(false)
+        post :create, :account => {:these => 'params'}, :users => %w(1 2 3)
+        assigns(:account).should equal(@account)
+        assigns[:users].should equal(@users)
       end
   
       it "should re-render the 'new' template" do
-        Account.stub!(:new).and_return(mock_account(:save => false))
+        Account.stub!(:new).and_return(@account = mock_account(:save => false))
+        @account.should_receive(:save_with_permissions).with(nil).and_return(false)
         post :create, :account => {}
         response.should render_template('new')
       end

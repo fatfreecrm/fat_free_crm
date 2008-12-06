@@ -190,6 +190,32 @@ div .subtitle a:hover {
   float: right;
 }
 
+td.head {
+  background: gainsboro;
+  border-bottom: 1px silver solid;
+  border-top: 1px azure solid;
+  color: #3f3f3f;
+  font: bold 10px "Lucida Grande", Arial, Helvetica, sans-serif;
+  padding: 3px;
+}
+
+td.cell {
+  border-bottom: 1px gainsboro dotted; 
+  color: #3f3f3f;
+  padding: 3px 0px 3px 3px;
+}
+
+td.cell a:link,
+td.cell a:visited {
+  color: navy;
+  text-decoration: underline;
+}
+
+td.cell a:hover {
+  color: white;
+  background: #0033cc;
+}
+
 .odd {
   border-bottom: 1px silver dotted;
   float: left;

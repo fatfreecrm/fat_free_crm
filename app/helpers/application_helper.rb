@@ -19,5 +19,14 @@ module ApplicationHelper
     end
     nil
   end
-  
+
+  #----------------------------------------------------------------------------
+  def hidden_if(you_ask)
+    { :style => "display: #{you_ask ? 'none' : 'block' };" }
+  end
+
+  #----------------------------------------------------------------------------
+  def highlightable
+    { :onmouseover => "this.style.background='seashell'", :onmouseout => "this.style.background='white'" }
+  end
 end

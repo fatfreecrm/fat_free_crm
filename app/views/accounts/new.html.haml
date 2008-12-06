@@ -1,6 +1,8 @@
 .mainform
   - form_for(@account) do |f|
+    = hidden_field_tag "account[user_id]", @current_user.id
     .title Create Account
+    = f.error_messages
     .section
       .label Account name:
       = f.text_field :name, :style => "width:500px"
@@ -13,5 +15,5 @@
     .buttonbar
       = f.submit "Create Account" 
       or 
-      = link_to_function "Cancel", "history.go(-1)"
+      = link_to "Cancel", accounts_url
       
