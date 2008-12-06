@@ -21,12 +21,20 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
+  def hidden;  { :style => "display:none;"  }; end
+  def visible; { :style => "display:block;" }; end
+
+  #----------------------------------------------------------------------------
   def hidden_if(you_ask)
-    { :style => "display: #{you_ask ? 'none' : 'block' };" }
+    you_ask ? hidden : visible
   end
 
   #----------------------------------------------------------------------------
-  def highlightable
-    { :onmouseover => "this.style.background='seashell'", :onmouseout => "this.style.background='white'" }
+  def highlightable(id = nil)
+    {
+      :onmouseover => "this.style.background='seashell';" << (id ? "$('#{id}').show()" : ""),
+      :onmouseout  => "this.style.background='white';"    << (id ? "$('#{id}').hide()" : "")
+    }
   end
+
 end

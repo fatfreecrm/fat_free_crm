@@ -3,13 +3,17 @@
 %br
 %table{ :width => "100%", :cellpadding => 0, :cellspacing => 0 }
   %tr
+    %td.head{ :width => 12, :align => :center }
     %td.head Name
     %td.head Location
     %td.head Phone
     %td.head Created
   - unless @accounts.empty?
     - for account in @accounts
-      %tr{ highlightable }
+      %tr{ highlightable(dom_id(account)) }
+        %td.cell
+          %span[account]{ hidden }
+            = link_to(image_tag("edit_12x12.png", :title => "Edit #{h(account.name)} account"), edit_account_path(account))
         %td.cell
           = link_to account.name, account
         %td.cell

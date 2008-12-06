@@ -203,6 +203,7 @@ td.cell {
   border-bottom: 1px gainsboro dotted; 
   color: #3f3f3f;
   font: normal 11px "Lucida Grande", Arial, Helvetica, sans-serif;
+  height: 22px;
   padding: 3px 0px 3px 3px;
 }
 
