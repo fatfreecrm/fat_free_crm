@@ -9,7 +9,8 @@ module ApplicationHelper
   
   #----------------------------------------------------------------------------
   def tabless_layout?
-    %w(authentications passwords).include?(controller.controller_name) || ((controller.controller_name == "users") && (controller.action_name == "new"))
+    %w(authentications passwords).include?(controller.controller_name) ||
+    ((controller.controller_name == "users") && (%w(create new).include?(controller.action_name)))
   end
 
   #----------------------------------------------------------------------------

@@ -1,0 +1,7 @@
+#confirm{ hidden }
+.tlink
+  = link_to("Back to List of Leads", leads_path) + " | "
+  = link_to("Edit", edit_lead_path(@lead)) + " | "
+  = link_to_function("Delete?", confirm_delete(@lead))
+.title= @lead.full_name
+

@@ -1,0 +1,21 @@
+.title Campaigns
+%br
+Not implemented yet.
+%br
+
+-#<table>
+-#  <tr>
+-#  </tr>
+-#
+-#<% for campaign in @campaigns %>
+-#  <tr>
+-#    <td><%= link_to 'Show', campaign %></td>
+-#    <td><%= link_to 'Edit', edit_campaign_path(campaign) %></td>
+-#    <td><%= link_to 'Destroy', campaign, :confirm => 'Are you sure?', :method => :delete %></td>
+-#  </tr>
+-#<% end %>
+-#</table>
+
+%br
+%hr{ :size => 1}
+= link_to "Create New Campaign", new_campaign_path

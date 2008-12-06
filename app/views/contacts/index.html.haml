@@ -1,0 +1,22 @@
+.title Contacts
+%br
+Not implemented yet.
+%br
+
+
+-#<table>
+-#  <tr>
+-#  </tr>
+-#
+-#<% for contact in @contacts %>
+-#  <tr>
+-#    <td><%= link_to 'Show', contact %></td>
+-#    <td><%= link_to 'Edit', edit_contact_path(contact) %></td>
+-#    <td><%= link_to 'Destroy', contact, :confirm => 'Are you sure?', :method => :delete %></td>
+-#  </tr>
+-#<% end %>
+-#</table>
+
+%br
+%hr{ :size => 1 }
+= link_to "Create New Contact", new_contact_path
