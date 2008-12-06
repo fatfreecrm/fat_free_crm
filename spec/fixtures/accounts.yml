@@ -1,54 +1,54 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-first:
+a:
   id: 1
   uuid: 123456789-123456789-123456789-111111
   user_id: 1
-  name: Astalavista Artists, Inc.
+  name: Australian Arts and Crafts
   access: Private
   notes: Met them at convention center last fall.
   website: http://www.astalavista-artists.com
   phone: +1(09)555-1212
   fax: +1(09)555-1213
-  billing_address: 100 Artistic Ave., Amberlake, 1234 Australia
-  shipping_address: 100 Artistic Ave., Amberlake, 1234 Australia
+  billing_address: "Floor 5, 240 Wandalo Esp.\nNew Canberra WA\n1234 Australia"
+  shipping_address: "Floor 5, 240 Wandalo Esp.\nNew Canberra WA\n1234 Australia"
   deleted_at:
   created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
   updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
 
-second:
+b:
   id: 2
   uuid: 123456789-123456789-123456789-222222
   user_id: 1
-  name: Ballpark Brands LLC
+  name: Boveri Brands S.A.
   access: Private
   notes: These guys have been running their network marketing firm since 1990.
   website: http://www.ballparkbrands.com
   phone: +1(17)555-2233
   fax: +1(17)555-2234
-  billing_address: P.O.Box 1290, Balsamic, B-1234 Bahamas
-  shipping_address: 1927 Big Brother St., Balsamic, B-1234 Bahamas
+  billing_address: "Rue du Cornet 6\nB-4800 Verviers, Belgium"
+  shipping_address: "Rue du Cornet 6\nB-4800 Verviers, Belgium"
   deleted_at:
   created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
   updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
 
-third:
+c:
   id: 3
   uuid: 123456789-123456789-123456789-333333
   user_id: 2
-  name: Creative Cravings Corp.
+  name: Creative Cravings
   access: Shared
   notes: They have over 200 people working for them all over the world.
   website: http://www.creativecravings.com
   phone: (727)555-3412
   fax: (727)555-7741
-  billing_address: P.O.Box 22A, Cassandra, ONT, 55678 Canada
-  shipping_address: P.O.Box 22A, Cassandra, ONT, 55678 Canada
+  billing_address: "Prujezdna 9\n225 99 Praha 3\nCzech Republic"
+  shipping_address: "Prujezdna 9\n225 99 Praha 3\nCzech Republic"
   deleted_at:
   created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
   updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
 
-fourth:
+d:
   id: 4
   uuid: 123456789-123456789-123456789-444444
   user_id: 2
@@ -58,8 +58,56 @@ fourth:
   website: http://www.ddd.dk
   phone: +1(25)55-34-12
   fax: +1(25)55-34-13
-  billing_address: P.O.Box D-55, Dropp, 5672 Denmark
-  shipping_address: P.O.Box D-55, Dropp, 5672 Denmark
+  billing_address: "Niels Bohrs Alle 23, 1330\n5230 Odense, Denmark"
+  shipping_address: "Niels Bohrs Alle 23, 1330\n5230 Odense, Denmark"
+  deleted_at:
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+
+e:
+  id: 5
+  uuid: 123456789-123456789-123456789-55555
+  user_id: 2
+  name: Eesti Esquire Group
+  access: Public
+  notes: 
+  website: http://www.eestiesq.com
+  phone: +1(205)25-43-44
+  fax: +1(205)25-43-44
+  billing_address: "Rahukohtu 3\n15161 Tallinn\nEstonia"
+  shipping_address: "Rahukohtu 3\n15161 Tallinn\nEstonia"
+  deleted_at:
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+
+f:
+  id: 6
+  uuid: 123456789-123456789-123456789-66666
+  user_id: 2
+  name: Finn Travel Ltd.
+  access: Public
+  notes: One of the best travel agencies in Finland.
+  website: http://www.eestiesq.com
+  phone: (888)555-8768
+  fax: (888)555-8766
+  billing_address: "Albertinkatu 36 B\n00180 Helsinki\nFinland"
+  shipping_address: "Albertinkatu 36 B\n00180 Helsinki\nFinland"
+  deleted_at:
+  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+
+g:
+  id: 7
+  uuid: 123456789-123456789-123456789-77777
+  user_id: 2
+  name: Gunter Gross Group
+  access: Public
+  notes: 
+  website: http://www.guntergross.de
+  phone: (888)555-4477
+  fax: (888)555-4478
+  billing_address: "Schulstrasse 4\n32547 Bad Oyenhausen\nGermany"
+  shipping_address: "Schulstrasse 4\n32547 Bad Oyenhausen\nGermany"
   deleted_at:
   created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
   updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>

@@ -202,12 +202,13 @@ td.head {
 td.cell {
   border-bottom: 1px gainsboro dotted; 
   color: #3f3f3f;
+  font: normal 11px "Lucida Grande", Arial, Helvetica, sans-serif;
   padding: 3px 0px 3px 3px;
 }
 
 td.cell a:link,
 td.cell a:visited {
-  color: navy;
+  color: darkblue;
   text-decoration: underline;
 }
 

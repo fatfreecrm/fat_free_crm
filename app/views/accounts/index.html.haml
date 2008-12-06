@@ -17,7 +17,8 @@
         %td.cell
           = account.phone
         %td.cell
-          = time_ago_in_words(account.created_at) + " ago"
+          = time_ago_in_words(account.created_at) + " ago by "
+          = (account.user.id == @current_user.id ? "me" : account.user.full_name)
   - else
     %tr
       %td{ :colspan => 4 }
