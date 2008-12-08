@@ -5,9 +5,12 @@
     %title
       = controller.controller_name + " : " + controller.action_name
     = stylesheet_link_tag "screen"
+    = yield :stylesheet_link
     %stlyles
       = yield :styles
+
     = javascript_include_tag :defaults, :cache => true
+    = yield :javascript_include
     %script{ :type => "text/javascript" }
       = yield :javascript
 

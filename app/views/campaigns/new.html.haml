@@ -1,0 +1,40 @@
+- content_for :stylesheet_link do
+  = stylesheet_link_tag "calendar_date_select/default.css", :cache => true
+- content_for :javascript_include do
+  = javascript_include_tag "calendar_date_select/calendar_date_select.js", :cache => true
+  = javascript_include_tag "calendar_date_select/format_american.js", :cache => true
+
+.mainform
+  - form_for(@campaign) do |f|
+    = hidden_field_tag "campaign[user_id]", @current_user.id
+    .title Create Campaign
+    = f.error_messages
+    .section
+      .label Campaign name:
+      = f.text_field :name, :style => "width:500px"
+      %table{ :width => "500" }
+        %tr
+          %td{ :width => "25%", :valign => "top" }
+            .label Start date:
+            = f.text_field :starts_on, :style => "width:100%", :onclick => "new CalendarDateSelect(this, { month_year:'label',  year_range:10 });"
+          %td
+            &nbsp;&nbsp;&nbsp;
+          %td{ :width => "25%", :valign => "top" }
+            .label End date:
+            = f.text_field :ends_on, :style => "width:100%", :onclick => "new CalendarDateSelect(this, { month_year:'label', year_range:10} );"
+          %td
+            &nbsp;&nbsp;&nbsp;
+          %td{ :width => "25%", :valign => "top" }
+            .label Type:
+            = f.text_field :type, :style => "width:100%"
+          %td
+            &nbsp;&nbsp;&nbsp;
+          %td{ :width => "25%", :valign => "top" }
+            .label Stage:
+            = f.text_field :stage, :style => "width:100%"
+
+
+      .buttonbar
+        = f.submit "Create Campaign" 
+        or 
+        = link_to "Cancel", campaigns_path

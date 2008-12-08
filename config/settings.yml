@@ -18,4 +18,25 @@
   - :active: false
     :text: Contacts
     :url: /contacts
-  
+
+:campaign_types:
+  - 
+  - Email
+  - Webinar
+  - Newsletter
+  - Conference
+  - Trade Show
+  - Direct Mail
+  - Telemarketing
+  - Web Advertisiment
+  - Print Advertisiment
+  - Radio Advertisiment
+  - Other
+
+campaign_stages:
+  - 
+  - Planned
+  - Started
+  - Completed
+  - On Hold
+  - Called Off

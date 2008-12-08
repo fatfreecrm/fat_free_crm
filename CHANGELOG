@@ -1,5 +1,12 @@
+Sun, Dec 7, 2008
+---------------------------------------------------------------------
+- Work on [campaigns] database schema and model.
+- Started with [Campaigns/New], integrated calendar_date_select for start/end dates.
+
 Sat, Dec 6, 2008
 ---------------------------------------------------------------------
+- Implemented account deletion.
+- Fixes for header and signup page layout.
 
 Fri, Dec 5, 2008
 ---------------------------------------------------------------------
