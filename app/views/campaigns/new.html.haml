@@ -10,31 +10,22 @@
     .title Create Campaign
     = f.error_messages
     .section
-      .label Campaign name:
-      = f.text_field :name, :style => "width:500px"
-      %table{ :width => "500" }
+      %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
         %tr
-          %td{ :width => "25%", :valign => "top" }
+          %td{ :colspan => 4, :valign => :top }
+            .label Campaign name:
+            = f.text_field :name, :style => "width:500px"
+        %tr
+          %td{ :valign => :top }
             .label Start date:
-            = f.text_field :starts_on, :style => "width:100%", :onclick => "new CalendarDateSelect(this, { month_year:'label',  year_range:10 });"
-          %td
-            &nbsp;&nbsp;&nbsp;
-          %td{ :width => "25%", :valign => "top" }
+            = f.text_field :starts_on, :style => "width:110px", :onclick => "new CalendarDateSelect(this, { month_year:'label',  year_range:10 });"
+          %td= spacer
+          %td{ :valign => :top }
             .label End date:
-            = f.text_field :ends_on, :style => "width:100%", :onclick => "new CalendarDateSelect(this, { month_year:'label', year_range:10} );"
-          %td
-            &nbsp;&nbsp;&nbsp;
-          %td{ :width => "25%", :valign => "top" }
-            .label Type:
-            = f.text_field :type, :style => "width:100%"
-          %td
-            &nbsp;&nbsp;&nbsp;
-          %td{ :width => "25%", :valign => "top" }
-            .label Stage:
-            = f.text_field :stage, :style => "width:100%"
-
-
-      .buttonbar
-        = f.submit "Create Campaign" 
-        or 
-        = link_to "Cancel", campaigns_path
+            = f.text_field :ends_on, :style => "width:110px", :onclick => "new CalendarDateSelect(this, { month_year:'label', year_range:10} );"
+          %td= spacer(260)
+    = render :partial => "objectives", :locals => { :f => f }
+    .buttonbar
+      = f.submit "Create Campaign"
+      or
+      = link_to "Cancel", campaigns_path

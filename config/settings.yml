@@ -19,22 +19,7 @@
     :text: Contacts
     :url: /contacts
 
-:campaign_types:
-  - 
-  - Email
-  - Webinar
-  - Newsletter
-  - Conference
-  - Trade Show
-  - Direct Mail
-  - Telemarketing
-  - Web Advertisiment
-  - Print Advertisiment
-  - Radio Advertisiment
-  - Other
-
-campaign_stages:
-  - 
+campaign_status:
   - Planned
   - Started
   - Completed

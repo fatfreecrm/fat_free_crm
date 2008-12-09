@@ -41,9 +41,17 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def confirm_delete(model)
     question = %(<span class="warn">Are you sure you want to delete this #{model.class.to_s.downcase}?</span>)
-    yes = link_to("<b>Yes</b>", model, :method => :delete)
-    no = link_to_function("<b>No</b>", "$$('.tlink')[0].update($('confirm').innerHTML)")
-    "$('confirm').update($$('.tlink')[0].innerHTML); $$('.tlink')[0].update('#{question} #{escape_javascript(yes)} : #{escape_javascript(no)}');"
+    yes = link_to("Yes", model, :method => :delete)
+    no = link_to_function("No", "$('menu').update($('confirm').innerHTML)")
+    update_page do |page|
+      page << "$('confirm').update($('menu').innerHTML)"
+      page[:menu].replace_html "#{question} #{yes} : #{no}"
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def spacer(width = 10)
+    image_tag "1x1.gif", :width => width, :height => 1, :alt => nil
   end
 
 end

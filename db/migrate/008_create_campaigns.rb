@@ -4,15 +4,14 @@ class CreateCampaigns < ActiveRecord::Migration
       t.string      :uuid,   :limit => 36
       t.references  :user
       t.string      :name,   :limit => 64, :null => false, :default => ""
-      t.string      :type,   :limit => 64
-      t.string      :stage,  :limit => 64
+      t.string      :status, :limit => 64
       t.decimal     :budget,           :precision => 12, :scale => 2
-      t.decimal     :actual_cost,      :precision => 12, :scale => 2
-      t.decimal     :expected_revenue, :precision => 12, :scale => 2
       t.integer     :expected_leads
+      t.float       :expected_conversion
+      t.decimal     :expected_revenue, :precision => 12, :scale => 2
       t.date        :starts_on
       t.date        :ends_on
-      t.text        :objective
+      t.text        :objectives
       t.datetime    :deleted_at
       t.timestamps
     end

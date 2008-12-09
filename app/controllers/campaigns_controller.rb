@@ -4,6 +4,7 @@ class CampaignsController < ApplicationController
 
   # GET /campaigns
   # GET /campaigns.xml
+  #----------------------------------------------------------------------------
   def index
     @campaigns = Campaign.find(:all)
 
@@ -15,6 +16,7 @@ class CampaignsController < ApplicationController
 
   # GET /campaigns/1
   # GET /campaigns/1.xml
+  #----------------------------------------------------------------------------
   def show
     @campaign = Campaign.find(params[:id])
 
@@ -26,6 +28,7 @@ class CampaignsController < ApplicationController
 
   # GET /campaigns/new
   # GET /campaigns/new.xml
+  #----------------------------------------------------------------------------
   def new
     @campaign = Campaign.new
 
@@ -36,12 +39,14 @@ class CampaignsController < ApplicationController
   end
 
   # GET /campaigns/1/edit
+  #----------------------------------------------------------------------------
   def edit
     @campaign = Campaign.find(params[:id])
   end
 
   # POST /campaigns
   # POST /campaigns.xml
+  #----------------------------------------------------------------------------
   def create
     @campaign = Campaign.new(params[:campaign])
 
@@ -59,6 +64,7 @@ class CampaignsController < ApplicationController
 
   # PUT /campaigns/1
   # PUT /campaigns/1.xml
+  #----------------------------------------------------------------------------
   def update
     @campaign = Campaign.find(params[:id])
 
@@ -76,6 +82,7 @@ class CampaignsController < ApplicationController
 
   # DELETE /campaigns/1
   # DELETE /campaigns/1.xml
+  #----------------------------------------------------------------------------
   def destroy
     @campaign = Campaign.find(params[:id])
     @campaign.destroy

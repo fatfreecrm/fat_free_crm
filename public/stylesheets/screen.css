@@ -163,6 +163,13 @@ tt {
   vertical-align: top;
 }
 
+.title_menu {
+  color: dimgray;
+  font-size: 12px;
+  /*font-weight: bold;*/
+  float: right;
+}
+
 .subtitle,
 div .subtitle a:link,
 div .subtitle a:visited,
@@ -182,14 +189,6 @@ div .subtitle a:hover {
   vertical-align: top;
 }
 
-.tlink,
-.subtlink {
-  color: dimgray;
-  font-size: 12px;
-  /*font-weight: bold;*/
-  float: right;
-}
-
 td.head {
   background: gainsboro;
   border-bottom: 1px silver solid;
@@ -204,7 +203,7 @@ td.cell {
   border-bottom: 1px gainsboro dotted; 
   color: #3f3f3f;
   font-size: 11px;
-  height: 22px;
+  line-height: 15px;
   padding: 3px 0px 3px 3px;
 }
 
@@ -414,7 +413,6 @@ label {
 
 .warn {
   color: maroon;
-  font-weight: bold;
 }
 
 /* Form validation messages

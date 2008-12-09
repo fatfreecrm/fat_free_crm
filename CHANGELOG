@@ -1,3 +1,8 @@
+Mon, Dec 8, 2008
+---------------------------------------------------------------------
+- More work polishing campaigns.
+- Added rake task to reset the application (rake app:reset).
+
 Sun, Dec 7, 2008
 ---------------------------------------------------------------------
 - Work on [campaigns] database schema and model.
