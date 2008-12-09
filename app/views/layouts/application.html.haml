@@ -11,8 +11,7 @@
 
     = javascript_include_tag :defaults, :cache => true
     = yield :javascript_include
-    %script{ :type => "text/javascript" }
-      = yield :javascript
+    = yield :javascript
 
   %body
     = render :partial => "layouts/header"
@@ -21,3 +20,4 @@
     - else
       = render :partial => "layouts/tabbed"
       = render :partial => "layouts/footer"
+    = yield(:javascript_epilogue) || render(:partial => "common/set_focus")
