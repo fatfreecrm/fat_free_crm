@@ -4,6 +4,11 @@
   = javascript_include_tag "calendar_date_select/calendar_date_select.js", :cache => true
   = javascript_include_tag "calendar_date_select/format_american.js", :cache => true
 
+- if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?
+  - content_for :javascript_epilogue do
+    :javascript
+      $("campaign_ends_on").focus();
+
 .mainform
   - form_for(@campaign) do |f|
     = hidden_field_tag "campaign[user_id]", @current_user.id
@@ -18,11 +23,11 @@
         %tr
           %td{ :valign => :top }
             .label Start date:
-            = f.text_field :starts_on, :style => "width:110px", :onclick => "new CalendarDateSelect(this, { month_year:'label',  year_range:10 });"
+            = f.text_field :starts_on, :style => "width:110px", :autocomplete => :off, :onclick => "new CalendarDateSelect(this, { month_year:'label',  year_range:10 })"
           %td= spacer
           %td{ :valign => :top }
             .label End date:
-            = f.text_field :ends_on, :style => "width:110px", :onclick => "new CalendarDateSelect(this, { month_year:'label', year_range:10} );"
+            = f.text_field :ends_on, :style => "width:110px", :autocomplete => :off, :onclick => "new CalendarDateSelect(this, { month_year:'label', year_range:10 });"
           %td= spacer(260)
     = render :partial => "objectives", :locals => { :f => f }
     .buttonbar
