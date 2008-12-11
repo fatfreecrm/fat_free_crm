@@ -1,7 +1,13 @@
 .title Campaigns
 %br
-Not implemented yet.
-%br
+- unless @campaigns.empty?
+  - for campaign in @campaigns
+    %div{ :style => "line-height:20px;/*padding:0px 0px 4px 0px*/"}
+      = link_to(image_tag("edit_12x12.png", :title => "Edit #{h(campaign.name)} campaign"), edit_campaign_path(campaign))
+      = link_to(campaign.name, campaign)
+      %small== (#{campaign.status})
+- else
+  %div== You don't have any campaigns set up. Please #{link_to("create new campaign", new_campaign_path)} first.
 
 -#<table>
 -#  <tr>
