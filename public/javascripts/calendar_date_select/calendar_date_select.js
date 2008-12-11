@@ -436,7 +436,7 @@ CalendarDateSelect.prototype = {
     if (! $(Event.element(e)).descendantOf(this.calendar_div) ) this.close();
   },
   keyPress: function(e) {
-    if (e.keyCode==Event.KEY_ESC) this.close();
+    if (e.keyCode==Event.KEY_ESC || e.keyCode==Event.KEY_TAB) this.close(); // MiD: Tab acts as Esc
   },
   callback: function(name, param) { if (this.options.get(name)) { this.options.get(name).bind(this.target_element)(param); } }
 }

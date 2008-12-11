@@ -1,3 +1,7 @@
+Wed, Dec 10, 2008
+---------------------------------------------------------------------
+- Made calendar_date_select work with field getting focus (campaign/new).
+
 Tue, Dec 9, 2008
 ---------------------------------------------------------------------
 - Implemented [Campaing/New] with dates validation and status set.
