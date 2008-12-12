@@ -100,7 +100,7 @@ CalendarDateSelect.prototype = {
       this.positionCalendarDiv()
       // set the click handler to check if a user has clicked away from the document
       Event.observe(document, "mousedown", this.closeIfClickedOut_handler = this.closeIfClickedOut.bindAsEventListener(this));
-      Event.observe(document, "keypress", this.keyPress_handler = this.keyPress.bindAsEventListener(this));
+      Event.observe(document, "keydown", this.keyPress_handler = this.keyPress.bindAsEventListener(this)); // MiD "keydown" makes it work with Safari.
     }
     this.callback("after_show")
   },

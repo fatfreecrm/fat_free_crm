@@ -152,22 +152,11 @@ tt {
   padding-bottom: 3px;
 }
 
-.title #name {
-  height: 55px;
-}
-
-.title #info {
-  color: dimgray;
-  font-size: 12px;
-  font-weight: normal;
-  vertical-align: top;
-}
-
 .title_menu {
   color: dimgray;
   font-size: 12px;
-  /*font-weight: bold;*/
   float: right;
+  margin: 4px 0px 0px 0px;
 }
 
 .subtitle,
@@ -202,20 +191,21 @@ td.head {
 td.cell {
   border-bottom: 1px gainsboro dotted; 
   color: #3f3f3f;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 15px;
   padding: 3px 0px 3px 3px;
 }
 
 td.cell a:link,
 td.cell a:visited {
-  color: darkblue;
+  color: #0033cc;
   text-decoration: underline;
 }
 
 td.cell a:hover {
-  color: white;
   background: #0033cc;
+  color: white;
+  text-decoration: none;
 }
 
 .odd {
@@ -277,91 +267,99 @@ td.cell a:hover {
   padding: 15px 15px 15px 15px;
 }
 
+.main a:link, 
+.main a:visited {
+  color: green;
+  text-decoration: none;
+}
+
+.main a:hover {
+  background: seagreen;
+  color: white;
+  text-decoration: none;
+}
+
 .sidebar {
   /*border: 1px blue dotted;*/
   width: 280px;
   padding: 0px 12px 0px 12px;
 }
 
-.mainform {
+.form {
   background: white;
   /*margin: 15px 15px 15px 15px;*/
   /*padding: 0px 0px 10px 0px;*/
-  /*border:1px red dotted;*/
 }
 
-.main li dt {
-  /*margin: 0px 0px 0px 58px;*/
-  text-align: right;
+.list {
+  padding: 8px 0px 0px 0px;
 }
 
-.main a:link, 
-.main a:visited, 
-.mainform a:link, 
-.mainform a:visited {
-  color: green;
-  text-decoration: none;
-}
-
-.main a:hover, 
-.mainform a:hover {
-  background: seagreen;
-  color: white;
-  text-decoration: none;
-}
-
-.main p {
+.list p {
   color: #413839;
   margin: 4px 0px 0px 0px;
 }
 
-.mainform p {
-  margin: 0px 0px 5px 0px;
-}
-
-.main h4,
-.mainform h4 {
-  font: normal 18px 'Lucida Grande', Arial, Helvetica, sans-serif;
+.list h4,
+.form h4 {
+  font: normal 18px "Lucida Grande", Arial, Helvetica, sans-serif;
   height: 30px;
 }
 
-.main li {
-  font-size: 14px;
-  padding: 8px 0px 8px 0px;
+.list li {
+  border-bottom: 1px silver dotted; 
+  color: #3f3f3f;
+  font-size: 12px;
+  list-style: none;
+  /*margin: 0px 0px 3px 0px;*/
+  padding: 6px 0px 6px 0px;
 }
 
-.main li a:link, 
-.main li a:visited {
-  color: steelblue;
+.list li a:link, 
+.list li a:visited {
+  color: #0033cc;
+  text-decoration: underline;
 }
 
-.main li a:hover {
-  background: steelblue;
+.list li a:hover {
+  background: #0033cc;
   color: white;
+  text-decoration: none;
 }
 
-.main li tt {
+.list li tt {
+  color: dimgray;
+  font-size: 11px;
+}
+
+.list li dt {
+  color: #3f3f3f;
+  font-size: 11px;
+  padding: 2px 0px 0px 0px;
+}
+
+/*
+.list li tt {
   color: #555555;
 }
 
-.main li dt a:link,
-.main li dt a:visited {
+.list li dt a:link,
+.list li dt a:visited {
   color: green;
 }
 
-.main li dt a:hover {
+.list li dt a:hover {
   background: seagreen;
   color: white;
 }
 
-/*
-.main li tt a:link,
-.main li tt a:visited {
+.list li tt a:link,
+.list li tt a:visited {
   color: steelblue;
   text-decoration: none;
 }
 
-.main li tt a:hover {
+.list li tt a:hover {
   background: steelblue;
   color: white;
   text-decoration: none;
@@ -380,7 +378,7 @@ label {
 .label {
   color: #3f3f3f;
   font-size: 12px;
-  margin: 6px 0px 0px 0px;
+  margin: 8px 0px 0px 0px;
 }
 
 .intro {
@@ -409,6 +407,10 @@ label {
   margin: 3px 0px 0px 0px;
   padding: 2px;
   vertical-align: middle;
+}
+
+.cool {
+  color: darkgreen;
 }
 
 .warn {

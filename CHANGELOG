@@ -1,3 +1,9 @@
+Wed, Dec 11, 2008
+---------------------------------------------------------------------
+- New tableless design for campaign index page.
+- Added new .list CSS styles.
+- Made select date popup work with Safari.
+
 Wed, Dec 10, 2008
 ---------------------------------------------------------------------
 - Made calendar_date_select work with field getting focus (campaign/new).

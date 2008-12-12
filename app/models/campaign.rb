@@ -9,7 +9,7 @@ class Campaign < ActiveRecord::Base
   # Make sure end date > start date.
   #----------------------------------------------------------------------------
   def validate
-    if (self[:starts_on] && self[:ends_on]) && (self[:starts_on] > self[:ends_on])
+    if (self.starts_on && self.ends_on) && (self.starts_on > self.ends_on)
       errors.add(:ends_on, "^Please make sure the campaign end date is after the start date.")
     end
   end
@@ -17,7 +17,11 @@ class Campaign < ActiveRecord::Base
   private
   #----------------------------------------------------------------------------
   def set_campaign_status
-    self[:status] = self[:starts_on] && (self[:starts_on] <= Date.today) ? "Started" : "Planned"
+    if self.ends_on and (self.ends_on < Date.today)
+      self.status = "Completed"
+    else
+      self.status = self.starts_on && (self.starts_on <= Date.today) ? "Started" : "Planned"
+    end
   end
 
 end

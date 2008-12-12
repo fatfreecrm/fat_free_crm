@@ -1,18 +1,25 @@
-.title Campaigns
-%br
-- unless @campaigns.empty?
-  - for campaign in @campaigns
-    %div{ :style => "line-height:20px;/*padding:0px 0px 4px 0px*/"}
-      = link_to(image_tag("edit_12x12.png", :title => "Edit #{h(campaign.name)} campaign"), edit_campaign_path(campaign))
-      = link_to(campaign.name, campaign)
-      %small== (#{campaign.status})
-- else
-  %div== You don't have any campaigns set up. Please #{link_to("create new campaign", new_campaign_path)} first.
+- content_for :styles do
+  %style
+    \.started   { padding:0px 3px 1px 3px; color:#3f3f3f; background:palegreen; }
+    \.planned   { padding:0px 3px 1px 3px; color:#3f3f3f; background:paleturquoise; }
+    \.completed { padding:0px 3px 1px 3px; color:#3f3f3f; background:bisque; }
+    \.onhold    { padding:0px 3px 1px 3px; color:#3f3f3f; background:pink; }
+    \.calledoff { padding:0px 3px 1px 3px; color:#3f3f3f; background:thistle; }
 
--#<table>
--#  <tr>
--#  </tr>
--#
+.title_menu= link_to "Create New Campaign", new_campaign_path
+.title Campaigns
+
+.list
+  - unless @campaigns.empty?
+    - for campaign in @campaigns
+      %li
+        -### = link_to(image_tag("edit_12x12.png", :title => "Edit #{h(campaign.name)} campaign"), edit_campaign_path(campaign))
+        = link_to(campaign.name, campaign) + " &ndash;"
+        = render :partial => "status", :locals => { :campaign => campaign }
+        = render :partial => "metrics", :locals => { :campaign => campaign }
+  - else
+    %div== You don't have any campaigns set up. Please #{link_to("create new campaign", new_campaign_path)} first.
+
 -#<% for campaign in @campaigns %>
 -#  <tr>
 -#    <td><%= link_to 'Show', campaign %></td>
@@ -20,8 +27,3 @@
 -#    <td><%= link_to 'Destroy', campaign, :confirm => 'Are you sure?', :method => :delete %></td>
 -#  </tr>
 -#<% end %>
--#</table>
-
-%br
-%hr{ :size => 1}
-= link_to "Create New Campaign", new_campaign_path

@@ -14,7 +14,7 @@
   crm.date_select_popup("campaign_ends_on");
   </script>
 
-.mainform
+.form
   - form_for(@campaign) do |f|
     = hidden_field_tag "campaign[user_id]", @current_user.id
     .title Create Campaign

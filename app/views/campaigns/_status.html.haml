@@ -1,0 +1,25 @@
+%tt
+  == <span class="#{campaign.status.downcase.gsub(" ", "")}">#{campaign.status.downcase}</span>
+  - case campaign.status
+    - when "Started"
+      - if campaign.starts_on
+        = time_ago_in_words(campaign.starts_on) << " ago"
+        - if campaign.ends_on
+          - if campaign.ends_on > Date.today
+            %span>= ", finishes in " << distance_of_time_in_words(Date.today, campaign.ends_on)
+          - else
+            %span.warn= "(was supposed to end on #{campaign.starts_on.strftime('%b %e, %Y')})"
+      - else
+        %span.warn> no start date specified
+    - when "Planned"
+      - if campaign.starts_on
+        - if campaign.starts_on > Date.today
+          = " starts in " << distance_of_time_in_words(Date.today, campaign.starts_on)
+        - elsif campaign.starts_on < Date.today
+          %span.warn= "(was supposed to start on " << distance_of_time_in_words(campaign.starts_on, Date.today) << " ago #{campaign.starts_on.strftime('%b %e, %Y')})"
+        - else
+          %span.cool starts today!
+      - else
+        %span.warn no start date specified
+    - when "Completed"
+      = "on #{campaign.ends_on.strftime('%b %e, %Y')}" if campaign.ends_on
