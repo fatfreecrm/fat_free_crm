@@ -25,3 +25,9 @@ campaign_status:
   - Completed
   - On Hold
   - Called Off
+
+lead_status:
+  - :new: Not contacted
+  - :contacted: Contacted
+  - :converted: Converted
+  - :dead: Dead
