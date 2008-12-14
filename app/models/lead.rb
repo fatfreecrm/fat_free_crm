@@ -10,4 +10,8 @@
 
 class Lead < ActiveRecord::Base
   belongs_to :user
+
+  def full_name
+    "Full Name"
+  end
 end

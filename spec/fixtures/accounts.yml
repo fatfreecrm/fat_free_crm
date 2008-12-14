@@ -23,7 +23,6 @@
 
 a:
   id: 1
-  uuid: 123456789-123456789-123456789-111111
   user_id: 1
   name: Australian Arts and Crafts
   access: Private
@@ -34,12 +33,11 @@ a:
   billing_address: "Floor 5, 240 Wandalo Esp.\nNew Canberra WA\n1234 Australia"
   shipping_address: "Floor 5, 240 Wandalo Esp.\nNew Canberra WA\n1234 Australia"
   deleted_at:
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 b:
   id: 2
-  uuid: 123456789-123456789-123456789-222222
   user_id: 1
   name: Boveri Brands S.A.
   access: Private
@@ -50,12 +48,11 @@ b:
   billing_address: "Rue du Cornet 6\nB-4800 Verviers, Belgium"
   shipping_address: "Rue du Cornet 6\nB-4800 Verviers, Belgium"
   deleted_at:
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 c:
   id: 3
-  uuid: 123456789-123456789-123456789-333333
   user_id: 2
   name: Creative Cravings
   access: Shared
@@ -66,12 +63,11 @@ c:
   billing_address: "Prujezdna 9\n225 99 Praha 3\nCzech Republic"
   shipping_address: "Prujezdna 9\n225 99 Praha 3\nCzech Republic"
   deleted_at:
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 d:
   id: 4
-  uuid: 123456789-123456789-123456789-444444
   user_id: 2
   name: Daemon Desktop Designs
   access: Shared
@@ -82,12 +78,11 @@ d:
   billing_address: "Niels Bohrs Alle 23, 1330\n5230 Odense, Denmark"
   shipping_address: "Niels Bohrs Alle 23, 1330\n5230 Odense, Denmark"
   deleted_at:
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 e:
   id: 5
-  uuid: 123456789-123456789-123456789-55555
   user_id: 2
   name: Eesti Esquire Group
   access: Public
@@ -98,12 +93,11 @@ e:
   billing_address: "Rahukohtu 3\n15161 Tallinn\nEstonia"
   shipping_address: "Rahukohtu 3\n15161 Tallinn\nEstonia"
   deleted_at:
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 f:
   id: 6
-  uuid: 123456789-123456789-123456789-66666
   user_id: 2
   name: Finn Travel Ltd.
   access: Public
@@ -114,12 +108,11 @@ f:
   billing_address: "Albertinkatu 36 B\n00180 Helsinki\nFinland"
   shipping_address: "Albertinkatu 36 B\n00180 Helsinki\nFinland"
   deleted_at:
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 g:
   id: 7
-  uuid: 123456789-123456789-123456789-77777
   user_id: 2
   name: Gunter Gross Group
   access: Public
@@ -130,5 +123,5 @@ g:
   billing_address: "Schulstrasse 4\n32547 Bad Oyenhausen\nGermany"
   shipping_address: "Schulstrasse 4\n32547 Bad Oyenhausen\nGermany"
   deleted_at:
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>

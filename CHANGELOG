@@ -4,6 +4,7 @@ Sat, Dec 13, 2008
 - Generated campaign fixtures.
 - Updated [Campaign] model to include actual vs. targets.
 - Added permissions to [Campaign/New].
+- Cleaned up specs and fixtures.
 
 Thu, Dec 11, 2008
 ---------------------------------------------------------------------

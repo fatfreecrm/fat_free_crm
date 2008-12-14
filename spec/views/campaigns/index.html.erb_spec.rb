@@ -5,8 +5,8 @@ describe "/campaigns/index.html.erb" do
   
   before(:each) do
     assigns[:campaigns] = [
-      stub_model(Campaign),
-      stub_model(Campaign)
+      stub_model(Campaign, :status => "Planned"),
+      stub_model(Campaign, :status => "Started")
     ]
   end
 

@@ -89,7 +89,7 @@ describe AccountsController do
         @account.should_receive(:save_with_permissions).with(%w(1 2 3)).and_return(true)
         post :create, :account => {:these => 'params'}, :users => %w(1 2 3)
         assigns(:account).should equal(@account)
-        assigns[:users].should equal(@users)
+        assigns(:users).should equal(@users)
       end
   
       it "should redirect to the created account" do
@@ -111,7 +111,7 @@ describe AccountsController do
         @account.should_receive(:save_with_permissions).with(%w(1 2 3)).and_return(false)
         post :create, :account => {:these => 'params'}, :users => %w(1 2 3)
         assigns(:account).should equal(@account)
-        assigns[:users].should equal(@users)
+        assigns(:users).should equal(@users)
       end
   
       it "should re-render the 'new' template" do

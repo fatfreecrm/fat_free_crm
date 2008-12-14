@@ -33,7 +33,6 @@ aaron:
   email: aaron@example.com
   first_name: Aaron
   last_name: Assembler
-  uuid: d2b75c7a-1166-102c-8a8c-c27a1c204c1f
   password_hash: 56d91c9f1a9c549304768982fd4e2d8bc2700b403b4524c0f14136dbbe2ce4cd923156ad69f9acce8305dba4e63faa884e61fb7a256cf8f5fc7c2ce176e68e8f
   password_salt: ce6e0200c96f4dd326b91f3967115a31421a0e7dcddc9ffb63a77f598a9fcb5326fe532dbd9836a2446e46840d398fa32c81f8f4da1a0fcfe931989e9639a013
   remember_token: d7cdeffd3625f7cb265b21126b85da7c930d47c4a708365c20eb857560055a6b57c9775becb8a957dfdb46df8aee17eb120a011b380e9cc0882f9dfaa2b7ba26
@@ -45,8 +44,8 @@ aaron:
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 eve:
   id: 2
@@ -54,7 +53,6 @@ eve:
   email: eve@example.com
   first_name: Eve
   last_name: Escape
-  uuid: 1238a0f2-1167-102c-8a8c-c27a1c204c1f
   password_hash: 4fa78596defcf96d56d6f50db42efd3c2bd8d1e6232e95c65555e8b49d2a623df928b521ffcacd36e0701f687fdf1c703009bddc01c6bfad0dfdd352965fa405
   password_salt: 4b93e8adb8d932fb782c6dfa56fbb60b08e979b75ada5b57e6aed0d65b5959dc9f5e7a9ecae123efbb9cd1d8fa08f6cb6bbc7aae1e8959aa7b42b0cfddca76a7
   remember_token: 118e8def0afada013b6b5b0bdb96548fc0ce546b667ee5bbe43b92a8c13156f88649cac0227beffbf49ec00525904441675da0463dadb6e4d249c12b2e88ac4a
@@ -66,8 +64,8 @@ eve:
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 isabel:
   id: 3
@@ -75,7 +73,6 @@ isabel:
   email: isabel@example.com
   first_name: Isabel
   last_name: Installer
-  uuid: 458399ee-1167-102c-8a8c-c27a1c204c1f
   password_hash: 03ff2c3054be743d2d42d742f2a599911d16fb7455e367d1bdb25c75a7370113976530ad78bbb6923855886d1e8a391d836498fdcad9c57c5f97b2a7c5fafeac
   password_salt: 6bd098381b5864d8162596376f1722b2871e2db715142064fdefb241212254f04b1878de50973364280348862cd9f87c8b7f4dde7ece59bef9bf448d545e6835
   remember_token: 2f820f2ba13b0a80794081e5f03a54fab6c758944f89e22760257ec059ea159f7d9fff62956cf3aa9b21a53cdd30d46a526b2e0fb9d43af641d57c2baf483b1c
@@ -87,8 +84,8 @@ isabel:
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 olga:
   id: 4
@@ -96,7 +93,6 @@ olga:
   email: olga@example.com
   first_name: Olga
   last_name: Operand
-  uuid: 757f6790-13ba-102c-bba6-85b80a0a154c
   password_hash: b2274fc3f214c5a9b55ac586a946a1eaf211dd181358c564a93c391284afeec6bda8812d0e9c383d3765cc8a69540c56d3a9673f47013ee85efee4938969831d
   password_salt: 1dbf332112d567416a5cb0e16a6e6cbcf8618475c741dce2ad15dce58e8a1e466f4b01ba7113537bd94444f103f73948142101ff964621f02be64b9814ed672a
   remember_token: 763c86b94d7d8a9b25392910e90f041d8f181fe7cbb2412ede576a37aab93cb2a5201285c5a9b202f6bde3a8ac78a2ec3f00f63c764e90e0a051e76066c309ce
@@ -108,8 +104,8 @@ olga:
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 ulrich:
   id: 5
@@ -117,7 +113,6 @@ ulrich:
   email: ulrich@example.com
   first_name: Ulrich
   last_name: Uploader
-  uuid: 041908c6-13bb-102c-bba6-85b80a0a154c
   password_hash: e3938e92b4447c9f6b4fa4024a1cc961e1bdcd4f5457643c9bc49a83dee99e8799cea35500e0fdb4a9992600e2f137e7da66dbc487534ca53c4f82cc29ff856d
   password_salt: 811278ac5c88a4c79ec6f4e041f0bad5e32e65f5f6abf96788d9b0c997d36d2f50ab315679e2c140b87eef023eaa44cbec070dc4bf97384b71553352553f3f36
   remember_token: abcdbc3fe2ae724a97289c38422124ae256a6ae42e754fc41e4d85bf55229a67665d92e0bd01ff0c754d80b9996ffee33b9354808b9306d6095f2b552b60d05e
@@ -129,8 +124,8 @@ ulrich:
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
 
 yvette:
   id: 6
@@ -138,7 +133,6 @@ yvette:
   email: yvette@example.com
   first_name: Yvette
   last_name: Yottabyte
-  uuid: 4e027980-13bc-102c-bba6-85b80a0a154c
   password_hash: 4e0568fb9e313cb2a67a124030d5b971f329fa4d3813aa5f072bf778a29b9298090d1ec01c15fdd7ef51cad83b7b744f133a63f888059a5103abef4ffc37cabf
   password_salt: f60ab90e93567b43ae8a72e98d4c70cd04ff996442baa07c28ba6705076fbc2e8c2180cba2a76aef774369cabf331819d6af2d694e55907cdbb493359837c7e2
   remember_token: 5d07a342b4c1649e5eff62178c28b77c921ba9c17caa78dac114a390a8d2883a6d838126aad4ec42518de81b54dfa5460492ba085ce7d1cd00e48c3635bb09c1
@@ -151,5 +145,5 @@ yvette:
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: 2008-0<%= 1 + rand(9) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
-  updated_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>

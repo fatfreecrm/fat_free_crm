@@ -13,7 +13,7 @@ describe CampaignsController do
   describe "responding to GET index" do
 
     it "should expose all campaigns as @campaigns" do
-      Campaign.should_receive(:find).with(:all).and_return([mock_campaign])
+      Campaign.should_receive(:find).with(:all, { :order => "id DESC" }).and_return([mock_campaign])
       get :index
       assigns[:campaigns].should == [mock_campaign]
     end
@@ -22,7 +22,7 @@ describe CampaignsController do
   
       it "should render all campaigns as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Campaign.should_receive(:find).with(:all).and_return(campaigns = mock("Array of Campaigns"))
+        Campaign.should_receive(:find).with(:all, { :order => "id DESC" }).and_return(campaigns = mock("Array of Campaigns"))
         campaigns.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"
@@ -79,13 +79,19 @@ describe CampaignsController do
     describe "with valid params" do
       
       it "should expose a newly created campaign as @campaign" do
-        Campaign.should_receive(:new).with({'these' => 'params'}).and_return(mock_campaign(:save => true))
-        post :create, :campaign => {:these => 'params'}
+        @campaign = mock_campaign(:save => true)
+        @users = [ mock_model(User) ]
+        Campaign.should_receive(:new).with({'these' => 'params'}).and_return(@campaign)
+        User.should_receive(:all_except).with(@current_user).and_return(@users)
+        @campaign.should_receive(:save_with_permissions).with(%w(1 2 3)).and_return(true)
+        post :create, :campaign => {:these => 'params'}, :users => %w(1 2 3)
         assigns(:campaign).should equal(mock_campaign)
+        assigns(:users).should equal(@users)
       end
 
       it "should redirect to the created campaign" do
-        Campaign.stub!(:new).and_return(mock_campaign(:save => true))
+        Campaign.stub!(:new).and_return(@campaign = mock_campaign(:save => true))
+        @campaign.should_receive(:save_with_permissions).with(nil).and_return(true)
         post :create, :campaign => {}
         response.should redirect_to(campaign_url(mock_campaign))
       end
@@ -95,13 +101,19 @@ describe CampaignsController do
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved campaign as @campaign" do
-        Campaign.stub!(:new).with({'these' => 'params'}).and_return(mock_campaign(:save => false))
-        post :create, :campaign => {:these => 'params'}
+        @campaign = mock_campaign(:save => false)
+        @users = [ mock_model(User) ]
+        Campaign.stub!(:new).with({'these' => 'params'}).and_return(@campaign)
+        User.should_receive(:all_except).with(@current_user).and_return(@users)
+        @campaign.should_receive(:save_with_permissions).with(%w(1 2 3)).and_return(false)
+        post :create, :campaign => {:these => 'params'}, :users => %w(1 2 3)
         assigns(:campaign).should equal(mock_campaign)
+        assigns(:users).should equal(@users)
       end
 
       it "should re-render the 'new' template" do
-        Campaign.stub!(:new).and_return(mock_campaign(:save => false))
+        Campaign.stub!(:new).and_return(@campaign = mock_campaign(:save => false))
+        @campaign.should_receive(:save_with_permissions).with(nil).and_return(false)
         post :create, :campaign => {}
         response.should render_template('new')
       end

@@ -4,9 +4,9 @@ describe "/campaigns/new.html.erb" do
   include CampaignsHelper
   
   before(:each) do
-    assigns[:campaign] = stub_model(Campaign,
-      :new_record? => true
-    )
+    assigns[:current_user] = stub_model(User)
+    assigns[:campaign] = stub_model(Campaign, :new_record? => true)
+    assigns[:users] = [ stub_model(User) ]
   end
 
   it "should render new form" do

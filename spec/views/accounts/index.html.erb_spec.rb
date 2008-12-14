@@ -4,9 +4,10 @@ describe "/accounts/index.html.erb" do
   include AccountsHelper
   
   before(:each) do
+    assigns[:current_user] = mock_model(User)
     assigns[:accounts] = [
-      stub_model(Account, :created_at => Time.now()),
-      stub_model(Account, :created_at => Time.now())
+      stub_model(Account, :created_at => Time.now(), :user => mock_model(User, :full_name => "Full Name")),
+      stub_model(Account, :created_at => Time.now(), :user => mock_model(User, :full_name => "Full Name"))
     ]
   end
 
