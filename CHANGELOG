@@ -1,4 +1,10 @@
-Wed, Dec 11, 2008
+Sat, Dec 13, 2008
+---------------------------------------------------------------------
+- Insalled [annotate_models] plugin and generated model annotations.
+- Generated campaign fixtures.
+- Updated [Campaign] model to include actual vs. targets.
+
+Thu, Dec 11, 2008
 ---------------------------------------------------------------------
 - New tableless design for campaign index page.
 - Added new .list CSS styles.

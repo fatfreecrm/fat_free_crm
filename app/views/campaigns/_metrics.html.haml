@@ -1,13 +1,13 @@
 - objectives = []
-- objectives << (number_to_currency(campaign.expected_revenue, :precision => 0) << " revenue") if campaign.expected_revenue
-- objectives << pluralize(campaign.expected_leads, "lead") if campaign.expected_leads
-- objectives << (number_to_percentage(campaign.expected_conversion) << " conversion") if campaign.expected_conversion
+- objectives << (number_to_currency(campaign.target_revenue, :precision => 0) << " in revenue") if campaign.target_revenue
+- objectives << pluralize(campaign.target_leads, "lead") if campaign.target_leads
+- objectives << (number_to_percentage(campaign.target_conversion, :precision => 1) << " conversion") if campaign.target_conversion
 - unless objectives.empty?
   %dt
     %b Target:
     = objectives.join(" | ")
   %dt
     %b Actual:
-    = number_to_currency(rand(10_000), :precision => 0) << " revenue | "
-    = pluralize(rand(20), "lead") << " | "
-    = number_to_percentage(rand(25), :precision => 1) << " conversion"
+    = number_to_currency(campaign.actual_revenue || 0, :precision => 0) << " revenue | "
+    = pluralize(campaign.actual_leads || 0, "lead") << " | "
+    = number_to_percentage(campaign.actual_conversion || 0, :precision => 1) << " conversion"

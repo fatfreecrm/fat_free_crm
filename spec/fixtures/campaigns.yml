@@ -1,7 +1,62 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
+# == Schema Information
+# Schema version: 10
 #
-# two:
-#   column: value
+# Table name: campaigns
+#
+#  id                :integer(4)      not null, primary key
+#  uuid              :string(36)
+#  user_id           :integer(4)
+#  name              :string(64)      default(""), not null
+#  status            :string(64)
+#  budget            :decimal(12, 2)
+#  target_leads      :integer(4)
+#  target_conversion :float
+#  target_revenue    :decimal(12, 2)
+#  actual_leads      :integer(4)
+#  actual_conversion :float
+#  actual_revenue    :decimal(12, 2)
+#  starts_on         :date
+#  ends_on           :date
+#  objectives        :text
+#  deleted_at        :datetime
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+<%
+  status = %w(Planned Started Completed Planned Started Completed On\ Hold Called\ Off)
+
+  names = []
+  names << "Email blast to newsletter subscribers"
+  names << "Telemarketing using Christmas gift purchase list"
+  names << "Late night FM radio ads with the special offer"
+  names << "Google AdWords campaign with optimized keywords"
+  names << "Banner ads on partner websites"
+  names << "Co-marketing with wholesale distributors on East Coast"
+  names << "Direct mail campaign with 10% off coupon"
+  names << "Co-marketing with wholesale distributors on East Coast"
+  names << "Family Sweepstakes"
+  names << "Customer satisfaction survey featuring special offer"
+  names << "Billboard ads"
+
+  for i in (1 .. names.size) do
+    starts = starts = Date.today + (rand(15) * (rand(2) * 2 - 1)).days
+    future = (starts > Date.today)
+%>
+campaign<%= i %>:
+  id: <%= i %>
+  user_id: 1
+  name: <%= names[i-1] %>
+  status: <%= status[rand(status.size)] %>
+  budget: <%= rand(500) * 1000 %>
+  target_leads: <%= rand(200) + 100 %>
+  target_conversion: <%= rand(20) + 5 %>
+  target_revenue: <%= rand(1000) * 1000 %>
+  actual_leads: <%= future ? "" : rand(200) + 100 %>
+  actual_conversion: <%= future ? "" : rand(20) + 5 * rand %>
+  actual_revenue: <%= future ? "" : rand(1000) * 1000 %>
+  starts_on: <%= starts %>
+  ends_on: <%= starts + rand(50).days %>
+  objectives:
+  created_at: <%= starts - 10.days %>
+  updated_at: <%= starts - 10.days %>
+<% end %>

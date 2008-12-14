@@ -5,10 +5,13 @@ class CreateCampaigns < ActiveRecord::Migration
       t.references  :user
       t.string      :name,   :limit => 64, :null => false, :default => ""
       t.string      :status, :limit => 64
-      t.decimal     :budget,           :precision => 12, :scale => 2
-      t.integer     :expected_leads
-      t.float       :expected_conversion
-      t.decimal     :expected_revenue, :precision => 12, :scale => 2
+      t.decimal     :budget, :precision => 12, :scale => 2
+      t.integer     :target_leads
+      t.float       :target_conversion
+      t.decimal     :target_revenue, :precision => 12, :scale => 2
+      t.integer     :actual_leads
+      t.float       :actual_conversion
+      t.decimal     :actual_revenue, :precision => 12, :scale => 2
       t.date        :starts_on
       t.date        :ends_on
       t.text        :objectives
