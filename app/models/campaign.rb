@@ -7,6 +7,7 @@
 #  uuid              :string(36)
 #  user_id           :integer(4)
 #  name              :string(64)      default(""), not null
+#  access            :string(8)       default("Private")
 #  status            :string(64)
 #  budget            :decimal(12, 2)
 #  target_leads      :integer(4)
@@ -25,6 +26,7 @@
 
 class Campaign < ActiveRecord::Base
   belongs_to :user
+  has_many :permissions, :as => :asset, :include => :user
   acts_as_paranoid
 
   validates_presence_of :name, :message => "^Please specify campaign name."
@@ -37,6 +39,15 @@ class Campaign < ActiveRecord::Base
     if (self.starts_on && self.ends_on) && (self.starts_on > self.ends_on)
       errors.add(:ends_on, "^Please make sure the campaign end date is after the start date.")
     end
+  end
+
+  # Save the campaign along with its permissions if any.
+  #----------------------------------------------------------------------------
+  def save_with_permissions(users)
+    if users && self[:access] == "Shared"
+      users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
+    end
+    save
   end
 
   private

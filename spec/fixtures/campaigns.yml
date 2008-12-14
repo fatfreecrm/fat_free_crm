@@ -7,6 +7,7 @@
 #  uuid              :string(36)
 #  user_id           :integer(4)
 #  name              :string(64)      default(""), not null
+#  access            :string(8)       default("Private")
 #  status            :string(64)
 #  budget            :decimal(12, 2)
 #  target_leads      :integer(4)
@@ -22,6 +23,7 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #
+
 <%
   status = %w(Planned Started Completed Planned Started Completed On\ Hold Called\ Off)
 
@@ -46,6 +48,7 @@ campaign<%= i %>:
   id: <%= i %>
   user_id: 1
   name: <%= names[i-1] %>
+  access: Public
   status: <%= status[rand(status.size)] %>
   budget: <%= rand(500) * 1000 %>
   target_leads: <%= rand(200) + 100 %>

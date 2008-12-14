@@ -1,0 +1,21 @@
+.subtitle= link_to_function "Add Permissions", %/$("permissions_intro").toggle(); $("permissions").toggle()/
+.section
+  #permissions_intro{ hidden_if(!@campaign.errors.empty?) }
+    Only you will have access to the campaign and its leads. You can change permissions later.
+  #permissions{ hidden_if(@campaign.errors.empty?) }
+    .radio_box
+      = radio_button_tag "campaign[access]", "Private", @campaign.access == "Private", :onclick => "$('people').hide()"
+      Keep it private, do not share with others
+    .radio_box
+      = radio_button_tag "campaign[access]", "Public",  @campaign.access == "Public", :onclick => "$('people').hide()"
+      Share it with everyone
+    .radio_box
+      = radio_button_tag "campaign[access]", "Shared",  @campaign.access == "Shared", :onclick => "$('people').show()"
+      Share it with the following people
+    #people{ hidden_if(@campaign.access != "Shared") }
+      %div{ :style => "padding: 6px 0px 0px 20px" }
+        - for user in @users
+          .check_box
+            -# Preserve state of the checkboxes if the form gets redrawn on errors.
+            = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s)
+            = user.full_name

@@ -31,6 +31,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @campaign = Campaign.new
+    @users = User.all_except(@current_user) # to manage campaign permissions
 
     respond_to do |format|
       format.html # new.html.erb
@@ -49,9 +50,10 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @campaign = Campaign.new(params[:campaign])
+    @users = User.all_except(@current_user)
 
     respond_to do |format|
-      if @campaign.save
+      if @campaign.save_with_permissions(params[:users])
         flash[:notice] = 'Campaign was successfully created.'
         format.html { redirect_to(@campaign) }
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }

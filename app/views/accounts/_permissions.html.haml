@@ -1,4 +1,3 @@
-- logger.info("params[:users] #{params[:users].inspect}")
 .subtitle= link_to_function "Add Permissions", %/$("permissions_intro").toggle(); $("permissions").toggle()/
 .section
   #permissions_intro{ hidden_if(!@account.errors.empty?) }

@@ -14,16 +14,19 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 creative_cravings_mike:
+  id: 1
   user_id: 1
   asset_id: 3
   asset_type: Account
 
 creative_cravings_laura:
+  id: 2
   user_id: 3
   asset_id: 3
   asset_type: Account
 
 daemon_desktop_designs_mike:
+  id: 3
   user_id: 1
   asset_id: 4
   asset_type: Account

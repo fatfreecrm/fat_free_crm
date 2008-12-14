@@ -7,6 +7,7 @@
 #  uuid              :string(36)
 #  user_id           :integer(4)
 #  name              :string(64)      default(""), not null
+#  access            :string(8)       default("Private")
 #  status            :string(64)
 #  budget            :decimal(12, 2)
 #  target_leads      :integer(4)

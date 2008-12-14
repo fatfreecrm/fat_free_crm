@@ -4,6 +4,7 @@ class CreateCampaigns < ActiveRecord::Migration
       t.string      :uuid,   :limit => 36
       t.references  :user
       t.string      :name,   :limit => 64, :null => false, :default => ""
+      t.string      :access, :limit => 8, :default => "Private" # %w(Private Public Shared)
       t.string      :status, :limit => 64
       t.decimal     :budget, :precision => 12, :scale => 2
       t.integer     :target_leads

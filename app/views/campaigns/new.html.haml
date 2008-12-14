@@ -35,6 +35,7 @@
             = f.text_field :ends_on, :style => "width:110px", :autocomplete => :off
           %td= spacer(260)
     = render :partial => "objectives", :locals => { :f => f }
+    = render :partial => "permissions",  :locals => { :f => f }
     .buttonbar
       = f.submit "Create Campaign"
       or
