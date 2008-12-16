@@ -1,12 +1,32 @@
-.title Leads
-%br
-Not implemented yet.
-%br
+- content_for :styles do
+  %style
+    - @status.each do |key, value|
+      == .#{key} { padding:0px 3px 1px 3px; color:#3f3f3f; background:#{value[:color]}; }
 
--#<table>
--#  <tr>
--#  </tr>
--#
+.title_menu= link_to "Create New Lead", new_lead_path
+.title Leads
+
+.list
+  - unless @leads.empty?
+    - for lead in @leads
+      %li
+        -### = link_to(image_tag("edit_12x12.png", :title => "Edit #{h(lead.name)} lead"), edit_lead_path(lead))
+        = link_to(lead.full_name, lead) # + " &ndash;"
+        %tt
+          - if lead.status
+            %span{:class => lead.status}<
+              = @status[lead.status.intern][:label].downcase
+          - if lead.company && lead.title
+            = lead.title << " at " << lead.company
+          - else
+            = lead.company if lead.company
+          /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
+          = "&ndash; referred by #{lead.referred_by}" if lead.referred_by
+        %dt== #{link_to(lead.email, "mailto:" << lead.email)} | #{lead.phone} | #{lead.mobile} | added #{time_ago_in_words(lead.created_at)} ago
+  - else
+    %div== You don't have any leads yet. Feel free to #{link_to("create new lead", new_lead_path)}.
+
+
 -#<% for lead in @leads %>
 -#  <tr>
 -#    <td><%= link_to 'Show', lead %></td>
@@ -14,8 +34,3 @@ Not implemented yet.
 -#    <td><%= link_to 'Destroy', lead, :confirm => 'Are you sure?', :method => :delete %></td>
 -#  </tr>
 -#<% end %>
--#</table>
-
-%br
-%hr{ :size => 1 }
-= link_to "Create New Lead", new_lead_path

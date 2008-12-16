@@ -25,7 +25,7 @@
 #
 
 <%
-  status = %w(Planned Started Completed Planned Started Completed On\ Hold Called\ Off)
+  status = %w(planned started completed planned started completed on_hold called_off)
 
   names = []
   names << "Email blast to newsletter subscribers"

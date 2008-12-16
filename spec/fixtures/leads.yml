@@ -3,15 +3,68 @@
 #
 # Table name: leads
 #
-#  id         :integer(4)      not null, primary key
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer(4)      not null, primary key
+#  uuid        :string(36)
+#  user_id     :integer(4)
+#  campaign_id :integer(4)
+#  assigned_to :integer(4)
+#  salutation  :string(16)
+#  first_name  :string(64)      default(""), not null
+#  last_name   :string(64)      default(""), not null
+#  access      :string(8)       default("Private")
+#  company     :string(64)
+#  title       :string(64)
+#  source      :string(32)
+#  status      :string(32)
+#  rating      :integer(4)
+#  referred_by :string(64)
+#  website     :string(64)
+#  email       :string(64)
+#  phone       :string(32)
+#  mobile      :string(32)
+#  fax         :string(32)
+#  address     :string(255)
+#  do_not_call :boolean(1)      not null
+#  notes       :text
+#  deleted_at  :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+<%
+  require "faker"
+  title = [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ]
+  source = %w(campaign cold_call conference online referral self web word_of_mouth other) << ""
+  status = %w(new contacted converted dead) << ""
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+  for i in (1..20) do
+%>
+lead<%= i %>:
+  id: <%= i %>
+  user_id: <%= rand(5) + 1 %>
+  campaign_id: <%= rand(5) + 1 %>
+  assigned_to: <%= rand(5) + 1 %>
+  salutation: <%= Faker::Name.prefix if rand(10) < 5 %>
+  first_name: <%= first_name = Faker::Name.first_name %>
+  last_name: <%= last_name = Faker::Name.last_name %>
+  access: Public
+  company: <%= Faker::Company.name %>
+  title: <%= title[rand(title.size)] %>
+  source: <%= source[rand(source.size)] %>
+  status: <%= status[rand(status.size)] %>
+  rating: <%= rand(5) + 1 %>
+  referred_by: <%= Faker::Name.first_name + " " + Faker::Name.last_name if rand(10) < 5 %>
+  website:
+  email: <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
+  phone: <%= Faker::PhoneNumber.phone_number %>
+  mobile: <%= Faker::PhoneNumber.phone_number %>
+  fax: <%= Faker::PhoneNumber.phone_number if rand(10) < 5 %>
+  address: |
+    <%= Faker::Address.street_address + " " + Faker::Address.secondary_address %>
+    <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
+  do_not_call: false
+  notes:
+  deleted_at:
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
+<% end %>

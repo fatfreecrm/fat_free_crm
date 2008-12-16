@@ -20,14 +20,43 @@
     :url: /contacts
 
 campaign_status:
-  - Planned
-  - Started
-  - Completed
-  - On Hold
-  - Called Off
+  :planned:
+    :label: Planned
+    :color: palegreen
+  :started:
+    :label: Started
+    :color: paleturquoise
+  :completed:
+    :label: Completed
+    :color: bisque
+  :on_hold:
+    :label: On Hold
+    :color: pink
+  :called_off:
+    :label: Called Off
+    :color: thistle
 
 lead_status:
-  - :new: Not contacted
-  - :contacted: Contacted
-  - :converted: Converted
-  - :dead: Dead
+  :new:
+    :label: Not contacted
+    :color: palegreen
+  :contacted:
+    :label: Contacted
+    :color: paleturquoise
+  :converted:
+    :label: Converted
+    :color: bisque
+  :dead:
+    :label: Dead
+    :color: thistle
+
+lead_source:
+  - :campaign: Campaign
+  - :cold_call: Cold Call
+  - :campaign: Conference
+  - :online: Online Marketing
+  - :referral: Referral
+  - :self: Self Generated
+  - :web: Web Site
+  - :word_of_mouth: Word of Mouth
+  - :other: Other

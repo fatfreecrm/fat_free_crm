@@ -1,10 +1,7 @@
 - content_for :styles do
   %style
-    \.started   { padding:0px 3px 1px 3px; color:#3f3f3f; background:palegreen; }
-    \.planned   { padding:0px 3px 1px 3px; color:#3f3f3f; background:paleturquoise; }
-    \.completed { padding:0px 3px 1px 3px; color:#3f3f3f; background:bisque; }
-    \.onhold    { padding:0px 3px 1px 3px; color:#3f3f3f; background:pink; }
-    \.calledoff { padding:0px 3px 1px 3px; color:#3f3f3f; background:thistle; }
+    - @status.each do |key, value|
+      == .#{key} { padding:0px 3px 1px 3px; color:#3f3f3f; background:#{value[:color]}; }
 
 .title_menu= link_to "Create New Campaign", new_campaign_path
 .title Campaigns
@@ -14,7 +11,7 @@
     - for campaign in @campaigns
       %li
         -### = link_to(image_tag("edit_12x12.png", :title => "Edit #{h(campaign.name)} campaign"), edit_campaign_path(campaign))
-        = link_to(campaign.name, campaign) + " &ndash;"
+        = link_to(campaign.name, campaign)
         = render :partial => "status", :locals => { :campaign => campaign }
         = render :partial => "metrics", :locals => { :campaign => campaign }
   - else

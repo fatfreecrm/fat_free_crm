@@ -26,6 +26,7 @@
 
 class Campaign < ActiveRecord::Base
   belongs_to :user
+  has_many   :leads
   has_many :permissions, :as => :asset, :include => :user
   acts_as_paranoid
 
@@ -54,9 +55,9 @@ class Campaign < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def set_campaign_status
     if self.ends_on and (self.ends_on < Date.today)
-      self.status = "Completed"
+      self.status = "completed"
     else
-      self.status = self.starts_on && (self.starts_on <= Date.today) ? "Started" : "Planned"
+      self.status = self.starts_on && (self.starts_on <= Date.today) ? "started" : "planned"
     end
   end
 

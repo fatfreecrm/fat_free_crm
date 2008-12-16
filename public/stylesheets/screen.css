@@ -281,7 +281,7 @@ td.cell a:hover {
 
 .sidebar {
   /*border: 1px blue dotted;*/
-  width: 280px;
+  width: 175px;
   padding: 0px 12px 0px 12px;
 }
 
@@ -338,33 +338,23 @@ td.cell a:hover {
   padding: 2px 0px 0px 0px;
 }
 
-/*
-.list li tt {
-  color: #555555;
-}
-
+.list li tt a:link,
+.list li tt a:visited,
 .list li dt a:link,
 .list li dt a:visited {
-  color: green;
+  color: #3f3f3f;
+  font-weight: bold;
+  text-decoration: none;
 }
 
+.list li tt a:hover,
 .list li dt a:hover {
-  background: seagreen;
+  background: dimgray;
   color: white;
-}
-
-.list li tt a:link,
-.list li tt a:visited {
-  color: steelblue;
+  font-weight: bold;
   text-decoration: none;
 }
 
-.list li tt a:hover {
-  background: steelblue;
-  color: white;
-  text-decoration: none;
-}
-*/
 label {
   clear: left;
   color: #3f3f3f;

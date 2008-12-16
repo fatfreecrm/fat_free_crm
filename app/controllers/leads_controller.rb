@@ -4,8 +4,10 @@ class LeadsController < ApplicationController
 
   # GET /leads
   # GET /leads.xml
+  #----------------------------------------------------------------------------
   def index
     @leads = Lead.find(:all)
+    @status = Setting.lead_status
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +17,7 @@ class LeadsController < ApplicationController
 
   # GET /leads/1
   # GET /leads/1.xml
+  #----------------------------------------------------------------------------
   def show
     @lead = Lead.find(params[:id])
 
@@ -26,6 +29,7 @@ class LeadsController < ApplicationController
 
   # GET /leads/new
   # GET /leads/new.xml
+  #----------------------------------------------------------------------------
   def new
     @lead = Lead.new
 
@@ -36,12 +40,14 @@ class LeadsController < ApplicationController
   end
 
   # GET /leads/1/edit
+  #----------------------------------------------------------------------------
   def edit
     @lead = Lead.find(params[:id])
   end
 
   # POST /leads
   # POST /leads.xml
+  #----------------------------------------------------------------------------
   def create
     @lead = Lead.new(params[:lead])
 
@@ -59,6 +65,7 @@ class LeadsController < ApplicationController
 
   # PUT /leads/1
   # PUT /leads/1.xml
+  #----------------------------------------------------------------------------
   def update
     @lead = Lead.find(params[:id])
 
@@ -76,6 +83,7 @@ class LeadsController < ApplicationController
 
   # DELETE /leads/1
   # DELETE /leads/1.xml
+  #----------------------------------------------------------------------------
   def destroy
     @lead = Lead.find(params[:id])
     @lead.destroy

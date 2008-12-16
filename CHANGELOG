@@ -1,4 +1,10 @@
-Sat, Dec 14, 2008
+Mon, Dec 15, 2008
+---------------------------------------------------------------------
+- More work on leads index page.
+- Added leads fixture that uses [faker] gem.
+- Restructured status settings to use :label and :color.
+
+Sun, Dec 14, 2008
 ---------------------------------------------------------------------
 - Work on leads schema, model, and fixtures.
 

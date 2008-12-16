@@ -12,7 +12,7 @@ class CreateLeads < ActiveRecord::Migration
       t.string      :company,     :limit => 64
       t.string      :title,       :limit => 64
       t.string      :source,      :limit => 32
-      t.string      :status,      :limit => 32, :null => false, :default => "new"
+      t.string      :status,      :limit => 32
       t.integer     :rating
       t.string      :referred_by, :limit => 64
       t.string      :website,     :limit => 64
