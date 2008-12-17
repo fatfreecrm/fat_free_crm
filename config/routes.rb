@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :passwords
   map.resources :accounts
   map.resources :campaigns
-  map.resources :leads
+  map.resources :leads, :member => { :convert => :post }
   map.resources :contacts
 
   map.signup "signup", :controller => "users",           :action => "new"

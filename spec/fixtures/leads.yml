@@ -33,6 +33,7 @@
 
 <%
   require "faker"
+  Faker::PhoneNumber::Formats = ["(###)###-####"]
   title = [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ]
   source = %w(campaign cold_call conference online referral self web word_of_mouth other) << ""
   status = %w(new contacted converted dead) << ""

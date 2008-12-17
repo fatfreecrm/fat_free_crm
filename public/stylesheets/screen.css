@@ -355,6 +355,20 @@ td.cell a:hover {
   text-decoration: none;
 }
 
+.strip {
+  color: black;
+  float: left;
+  font-size: 11px;
+  margin: 2px 5px 20px 0px;
+  padding: 1px 3px 1px 3px;
+  text-align: right;
+  width: 75px;
+}
+
+.tools {
+  float: right;
+}
+
 label {
   clear: left;
   color: #3f3f3f;

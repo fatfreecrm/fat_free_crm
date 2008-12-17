@@ -1,32 +1,37 @@
+- content_for :styles do
+  %style
+    \.none { background:pink; }
+    \.some { background:palegreen; }
+
 .title_menu= link_to "Create New Account", new_account_path
-.title
-  Accounts
-%br
-%table{ :width => "100%", :cellpadding => 0, :cellspacing => 0 }
-  %tr
-    %td.head{ :width => 12, :align => :center }
-    %td.head Name
-    %td.head Location
-    %td.head Phone
-    %td.head Created
+.title Accounts
+
+.list
   - unless @accounts.empty?
     - for account in @accounts
-      %tr{ highlightable(dom_id(account)) }
-        %td.cell
-          %span[account]{ hidden }
-            = link_to(image_tag("edit_12x12.png", :title => "Edit #{h(account.name)} account"), edit_account_path(account))
-        %td.cell
-          = link_to account.name, account
-        %td.cell
-          = account.location
-        %td.cell
-          = account.phone
-        %td.cell
-          = time_ago_in_words(account.created_at) + " ago by "
-          = (account.user.id == @current_user.id ? "me" : account.user.full_name)
+      :ruby
+        amount = rand(1_000_000);  amount = nil if amount % 2 == 0
+        leads = rand(100)
+        contacts = rand(100)
+        opportunities = rand(10)
+      %li{ highlightable(dom_id(account)) }
+        - if amount
+          .strip.some= number_to_currency(amount, :precision => 0)
+        - else
+          .strip.none None
+        %div
+          .tools[account]{ hidden }
+            = link_to(image_tag("edit_12x12.png", :title => "Edit account: #{h(account.name)}"), edit_account_path(account))
+          = link_to(account.name, account) << " &ndash; "
+          %tt
+            = account.location << ", " if account.location
+            == added #{time_ago_in_words(account.created_at)} ago by 
+            == #{account.user.id == @current_user.id ? "me" : account.user.full_name}
+          %dt
+            = link_to(account.website, account.website) << " | " if account.website
+            = account.phone << " | " if account.phone
+            = pluralize(leads, "lead") << " | "
+            = pluralize(contacts, "contact") << " | "
+            = pluralize(opportunities, "opportunity")
   - else
-    %tr
-      %td{ :colspan => 4 }
-        You don't have any accounts set up. Please
-        = link_to "create new account", new_account_path
-        first.
+    %div== You don't have any accounts set up yet. Feel free to #{link_to("create new account", new_account_path)} now.

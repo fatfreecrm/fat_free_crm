@@ -1,7 +1,7 @@
 - content_for :styles do
   %style
     - @status.each do |key, value|
-      == .#{key} { padding:0px 3px 1px 3px; color:#3f3f3f; background:#{value[:color]}; }
+      == .#{key} { background:#{value[:color]}; }
 
 .title_menu= link_to "Create New Lead", new_lead_path
 .title Leads
@@ -9,20 +9,25 @@
 .list
   - unless @leads.empty?
     - for lead in @leads
-      %li
-        -### = link_to(image_tag("edit_12x12.png", :title => "Edit #{h(lead.name)} lead"), edit_lead_path(lead))
-        = link_to(lead.full_name, lead) # + " &ndash;"
-        %tt
-          - if lead.status
-            %span{:class => lead.status}<
-              = @status[lead.status.intern][:label].downcase
-          - if lead.company && lead.title
-            = lead.title << " at " << lead.company
-          - else
-            = lead.company if lead.company
-          /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
-          = "&ndash; referred by #{lead.referred_by}" if lead.referred_by
-        %dt== #{link_to(lead.email, "mailto:" << lead.email)} | #{lead.phone} | #{lead.mobile} | added #{time_ago_in_words(lead.created_at)} ago
+      %li{ highlightable(dom_id(lead)) }
+        - if lead.status
+          .strip{:class => lead.status}= @status[lead.status.intern][:label]
+        - else
+          .strip &nbsp;
+        %div
+          .tools[lead]{ hidden }
+            = link_to(image_tag("edit_12x12.png", :title => "Edit lead: #{h(lead.full_name)}"), edit_lead_path(lead))
+          = link_to(lead.full_name, lead)
+          %tt
+            - if lead.company && lead.title
+              = lead.title << " at " << lead.company
+            - else
+              = lead.company if lead.company
+            /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
+            = "&ndash; referred by #{lead.referred_by}" if lead.referred_by
+          %dt
+            == #{link_to(lead.email, "mailto:" << lead.email)} | #{lead.phone} | #{lead.mobile}
+            == | added #{time_ago_in_words(lead.created_at)} ago
   - else
     %div== You don't have any leads yet. Feel free to #{link_to("create new lead", new_lead_path)}.
 

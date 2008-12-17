@@ -93,4 +93,11 @@ class LeadsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # POST /leads/1
+  # POST /leads/1.xml
+  #----------------------------------------------------------------------------
+  def convert
+  end
+
 end
