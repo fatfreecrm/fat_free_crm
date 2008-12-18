@@ -1,0 +1,54 @@
+/ first_name last_name
+/ assigned_to campaign
+/ 
+/ ---contact---
+/ company     title
+/ email       website
+/ phone       mobile
+/ 
+/ address     fax
+/             do not call
+/ 
+/ -- additional --            
+/ source[V]   status[V]
+/ referred_by rating
+/ notes
+
+.form
+  - form_for(@lead) do |f|
+    = hidden_field_tag "lead[user_id]", @current_user.id
+    .title Create Lead
+    = f.error_messages
+    .section
+      %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+        %tr
+          %td{ :valign => :top }
+            .label First name:
+            = f.text_field :first_name, :style => "width:240px"
+          %td= spacer
+          %td{ :valign => :top }
+            .label Last name:
+            = f.text_field :last_name, :style => "width:240px"
+        %tr
+          %td{ :valign => :top }
+            .label Assigned to:
+            = f.text_field :assigned_to, :style => "width:240px"
+          %td= spacer
+          %td{ :valign => :top }
+            .label Campaign:
+            = f.text_field :campaign_id, :style => "width:240px"
+    = render :partial => "contact", :locals => { :f => f }
+    = render :partial => "extra",   :locals => { :f => f }
+
+
+/ <h1>New lead</h1>
+/ 
+/ <% form_for(@lead) do |f| %>
+/   <%= f.error_messages %>
+/ 
+/   <p>
+/     <%= f.submit "Create" %>
+/   </p>
+/ <% end %>
+/ 
+/ <%= link_to 'Back', leads_path %>

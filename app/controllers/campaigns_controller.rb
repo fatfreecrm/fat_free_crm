@@ -90,6 +90,7 @@ class CampaignsController < ApplicationController
     @campaign = Campaign.find(params[:id])
     @campaign.destroy
 
+    flash[:notice] = "Campaign #{@campaign.name} was successfully deleted."
     respond_to do |format|
       format.html { redirect_to(campaigns_url) }
       format.xml  { head :ok }
