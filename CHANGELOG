@@ -1,3 +1,8 @@
+Thu, Dec 18, 2008
+---------------------------------------------------------------------
+- Implemented ratings JavaScript library to show star ratings.
+- Updated [leads] schema, more polishing for [Leads/New] form.
+
 Wed, Dec 17, 2008
 ---------------------------------------------------------------------
 - Added flash confirmation messages for deletes.

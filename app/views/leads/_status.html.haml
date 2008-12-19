@@ -1,0 +1,29 @@
+.subtitle= link_to_function "Add Status Information", %w/$("status_intro").toggle(); $("status").toggle()/
+.section
+  #status_intro{ hidden_if(!@lead.errors.empty?) }
+    You can add lead status information later.
+  #status{ hidden_if(@lead.errors.empty?) }
+    %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td{ :valign => :top, :width => "40%" }
+          .label Status:
+          = f.text_field :status, :style => "width:170px"
+        %td= spacer
+        %td{ :valign => :top, :width => "40%" }
+          .label Source:
+          = f.text_field :source, :style => "width:170px"
+        %td= spacer
+        %td{ :valign => :top, :width => "20%" }
+          .label Rating:
+          = f.hidden_field :rating
+          .rating
+            .stars
+              .star
+              .star
+              .star
+              .star
+              .star
+      %tr
+        %td{ :valign => :top, :colspan => 5 }
+          .label Notes:
+          = f.text_area :notes, :style => "width:500px", :rows => 2

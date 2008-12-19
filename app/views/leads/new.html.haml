@@ -14,6 +14,17 @@
 / referred_by rating
 / notes
 
+- content_for :stylesheet_link do
+  = stylesheet_link_tag "rating.css", :cache => true
+- content_for :javascript_include do
+  = javascript_include_tag "rating.js", :cache => true
+- content_for :javascript_epilogue do
+  <script type="text/javascript">
+  document.observe('dom:loaded', function(event) {
+  new Rating(".rating", { callback: function(el, rating) { console.log(el.id + " : " + rating) } });
+  });
+  </script>
+
 .form
   - form_for(@lead) do |f|
     = hidden_field_tag "lead[user_id]", @current_user.id
@@ -37,8 +48,9 @@
           %td{ :valign => :top }
             .label Campaign:
             = f.text_field :campaign_id, :style => "width:240px"
+    = render :partial => "status",  :locals => { :f => f }
     = render :partial => "contact", :locals => { :f => f }
-    = render :partial => "extra",   :locals => { :f => f }
+    = render :partial => "web",     :locals => { :f => f }
 
 
 / <h1>New lead</h1>

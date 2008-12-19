@@ -8,22 +8,24 @@
 #  user_id     :integer(4)
 #  campaign_id :integer(4)
 #  assigned_to :integer(4)
-#  salutation  :string(16)
 #  first_name  :string(64)      default(""), not null
 #  last_name   :string(64)      default(""), not null
 #  access      :string(8)       default("Private")
-#  company     :string(64)
 #  title       :string(64)
+#  company     :string(64)
 #  source      :string(32)
 #  status      :string(32)
-#  rating      :integer(4)
 #  referred_by :string(64)
-#  website     :string(64)
 #  email       :string(64)
+#  alt_email   :string(64)
 #  phone       :string(32)
 #  mobile      :string(32)
-#  fax         :string(32)
+#  blog        :string(128)
+#  linkedin    :string(128)
+#  facebook    :string(128)
+#  twitter     :string(128)
 #  address     :string(255)
+#  rating      :integer(4)      default(0), not null
 #  do_not_call :boolean(1)      not null
 #  notes       :text
 #  deleted_at  :datetime
