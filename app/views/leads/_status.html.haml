@@ -7,7 +7,7 @@
       %tr
         %td{ :valign => :top, :width => "40%" }
           .label Status:
-          = f.text_field :status, :style => "width:170px"
+          = text_field_with_auto_complete :lead, :status, :style => "width:170px"
         %td= spacer
         %td{ :valign => :top, :width => "40%" }
           .label Source:
@@ -18,11 +18,8 @@
           = f.hidden_field :rating
           .rating
             .stars
-              .star
-              .star
-              .star
-              .star
-              .star
+              - 5.times do
+                .star
       %tr
         %td{ :valign => :top, :colspan => 5 }
           .label Notes:

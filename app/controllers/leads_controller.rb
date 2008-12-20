@@ -101,4 +101,24 @@ class LeadsController < ApplicationController
   def convert
   end
 
+  #----------------------------------------------------------------------------
+  def auto_complete_for_lead_assigned_to
+    @users = User.find(:all).each do |user|
+      user[:full_name] = user.full_name
+    end
+    render :inline => "<%= auto_complete_result @users, :full_name, params[:lead][:assigned_to] %>"
+  end
+
+  #----------------------------------------------------------------------------
+  def auto_complete_for_lead_campaign
+    @campaigns = Campaign.find(:all)
+    render :inline => "<%= auto_complete_result @campaigns, :name, params[:lead][:campaign] %>"
+  end
+
+  #----------------------------------------------------------------------------
+  def auto_complete_for_lead_status
+    @status = Setting.lead_status.values.map { |s| s[:label] }
+    render :inline => "<%= '<ul><li>' << @status.join('</li><li>') << '</li></ul>' %>"
+  end
+
 end

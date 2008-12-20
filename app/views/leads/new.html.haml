@@ -43,11 +43,11 @@
         %tr
           %td{ :valign => :top }
             .label Assigned to:
-            = f.text_field :assigned_to, :style => "width:240px"
+            = text_field_with_auto_complete :lead, :assigned_to, :style => "width:240px"
           %td= spacer
           %td{ :valign => :top }
             .label Campaign:
-            = f.text_field :campaign_id, :style => "width:240px"
+            = text_field_with_auto_complete :lead, :campaign, :style => "width:240px"
     = render :partial => "status",  :locals => { :f => f }
     = render :partial => "contact", :locals => { :f => f }
     = render :partial => "web",     :locals => { :f => f }
