@@ -1,25 +1,33 @@
-.subtitle= link_to_function "Add Status Information", %w/$("status_intro").toggle(); $("status").toggle()/
+.subtitle= link_to_function "<small>&#9658;</small> Status Information", %w/$("status_intro").toggle(); $("status").toggle()/
 .section
   #status_intro{ hidden_if(!@lead.errors.empty?) }
     You can add lead status information later.
   #status{ hidden_if(@lead.errors.empty?) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
-        %td{ :valign => :top, :width => "40%" }
+        %td{ :valign => :top }
+          .label Assigned to:
+          = collection_select :lead, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+        %td= spacer
+        %td{ :valign => :top }
           .label Status:
-          = text_field_with_auto_complete :lead, :status, :style => "width:170px"
+          = f.select :status, Setting.lead_status.invert.sort, { :selected => :new }, { :style => "width:160px" }
         %td= spacer
-        %td{ :valign => :top, :width => "40%" }
+        %td{ :valign => :top }
           .label Source:
-          = f.text_field :source, :style => "width:170px"
-        %td= spacer
-        %td{ :valign => :top, :width => "20%" }
+          = f.select :source, Setting.lead_source.invert.sort, { :include_blank => "-- None --" }, { :style => "width:160px" }
+      %tr
+        %td{ :valign => :top }
           .label Rating:
-          = f.hidden_field :rating
-          .rating
-            .stars
-              - 5.times do
-                .star
+          = rating_select "lead[rating]", { :id => :lead_rating, :style => "width:100%" }
+        %td= spacer
+        %td{ :valign => :top, :colspan => 3 }
+          .label Campaign:
+          = collection_select :lead, :campaign, @campaigns, :id, :name, { :include_blank => "-- None --" }, { :style => "width:100%" }
+          / 
+          / <select style="width:100%;">
+          / <option id="1">-- None --
+          / </select>
       %tr
         %td{ :valign => :top, :colspan => 5 }
           .label Notes:

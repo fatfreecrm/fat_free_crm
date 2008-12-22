@@ -1,4 +1,4 @@
-.subtitle= link_to_function "Add Contact Information", %w/$("contact_intro").toggle(); $("contact").toggle()/
+.subtitle= link_to_function "<small>&#9660;</small> Contact Information", %w/$("contact_intro").toggle(); $("contact").toggle()/
 .section
   #contact_intro{ hidden_if(!@lead.errors.empty?) }
     You can add contact information later.
@@ -14,16 +14,8 @@
           = f.text_field :company, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label Email:
-          = f.text_field :email, :style => "width:240px"
-        %td= spacer
-        %td{ :valign => :top }
           .label Alternative Email:
           = f.text_field :alt_email, :style => "width:240px"
-      %tr
-        %td{ :valign => :top }
-          .label Phone:
-          = f.text_field :phone, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
           .label Mobile:

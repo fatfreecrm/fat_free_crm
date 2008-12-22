@@ -1,7 +1,7 @@
 - content_for :styles do
   %style
-    - @status.each do |key, value|
-      == .#{key} { background:#{value[:color]}; }
+    - Setting.campaign_status_color.each do |key, value|
+      == .#{key} { background:#{value}; }
 
 .title_menu= link_to "Create New Campaign", new_campaign_path
 .title Campaigns
@@ -10,7 +10,7 @@
   - unless @campaigns.empty?
     - for campaign in @campaigns
       %li{ highlightable(dom_id(campaign)) }
-        .strip{:class => campaign.status}= @status[campaign.status.intern][:label]
+        .strip{:class => campaign.status}= Setting.campaign_status[campaign.status.intern]
         %div
           .tools[campaign]{ hidden }
             = link_to(image_tag("edit_12x12.png", :title => "Edit campaign: #{h(campaign.name)}"), edit_campaign_path(campaign))

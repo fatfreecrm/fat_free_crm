@@ -15,16 +15,12 @@ html, body {
 
 body, ol, ul, li, dt, tt, label, input, select, textarea {
   font-size: 12px;
-  font-family: "Lucida Grande", Arial, Helvetica, sans-serif;
+  font-family: "Lucida Grande", Geneva, Arial, Helvetica, sans-serif;
 }
 
 body, h1, h2, h3, h4, h5, h6, ol, ul, li {
   margin: 0px;
   padding: 0px;
-}
-
-input, textarea {
-  padding: 3px;
 }
 
 ul li {
@@ -396,7 +392,7 @@ label {
   background: whitesmoke;
   color: #3f3f3f;
   margin: 5px auto;
-  padding: 5px 15px 15px 15px;
+  padding: 0px 15px 15px 15px;
 }
 
 .buttonbar {
@@ -409,7 +405,6 @@ label {
 .section select,
 .section textarea {
   margin: 3px 0px 0px 0px;
-  padding: 2px;
   vertical-align: middle;
 }
 
@@ -481,4 +476,34 @@ p.flash_message {
   color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px;
+}
+
+/* Autocomplete.
+-------------------------------------------------------- */
+div.autocomplete {
+  background: #fff;
+  border: 1px solid #888;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  width: 250px;
+}
+
+div.autocomplete ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+div.autocomplete ul li.selected {
+  background-color: #ffb;
+}
+
+div.autocomplete ul li {
+  cursor: pointer;
+  display: block;
+  /*height:32px;*/
+  list-style-type: none;
+  margin: 0px;
+  padding: 2px;
 }

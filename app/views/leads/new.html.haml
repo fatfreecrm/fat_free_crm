@@ -1,30 +1,3 @@
-/ first_name last_name
-/ assigned_to campaign
-/ 
-/ ---contact---
-/ company     title
-/ email       website
-/ phone       mobile
-/ 
-/ address     fax
-/             do not call
-/ 
-/ -- additional --            
-/ source[V]   status[V]
-/ referred_by rating
-/ notes
-
-- content_for :stylesheet_link do
-  = stylesheet_link_tag "rating.css", :cache => true
-- content_for :javascript_include do
-  = javascript_include_tag "rating.js", :cache => true
-- content_for :javascript_epilogue do
-  <script type="text/javascript">
-  document.observe('dom:loaded', function(event) {
-  new Rating(".rating", { callback: function(el, rating) { console.log(el.id + " : " + rating) } });
-  });
-  </script>
-
 .form
   - form_for(@lead) do |f|
     = hidden_field_tag "lead[user_id]", @current_user.id
@@ -42,12 +15,12 @@
             = f.text_field :last_name, :style => "width:240px"
         %tr
           %td{ :valign => :top }
-            .label Assigned to:
-            = text_field_with_auto_complete :lead, :assigned_to, :style => "width:240px"
+            .label Email:
+            = f.text_field :email, :style => "width:240px"
           %td= spacer
           %td{ :valign => :top }
-            .label Campaign:
-            = text_field_with_auto_complete :lead, :campaign, :style => "width:240px"
+            .label Phone:
+            = f.text_field :phone, :style => "width:240px"
     = render :partial => "status",  :locals => { :f => f }
     = render :partial => "contact", :locals => { :f => f }
     = render :partial => "web",     :locals => { :f => f }

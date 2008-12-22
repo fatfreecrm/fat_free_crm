@@ -1,7 +1,7 @@
 - content_for :styles do
   %style
-    - @status.each do |key, value|
-      == .#{key} { background:#{value[:color]}; }
+    - Setting.lead_status_color.each do |key, value|
+      == .#{key} { background:#{value}; }
 
 .title_menu= link_to "Create New Lead", new_lead_path
 .title Leads
@@ -11,7 +11,7 @@
     - for lead in @leads
       %li{ highlightable(dom_id(lead)) }
         - if lead.status
-          .strip{:class => lead.status}= @status[lead.status.intern][:label]
+          .strip{:class => lead.status}= Setting.lead_status[lead.status.intern]
         - else
           .strip &nbsp;
         %div

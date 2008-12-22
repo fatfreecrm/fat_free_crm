@@ -7,7 +7,6 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @campaigns = Campaign.find(:all, :order => "id DESC")
-    @status = Setting.campaign_status
 
     respond_to do |format|
       format.html # index.html.erb
