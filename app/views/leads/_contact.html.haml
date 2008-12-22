@@ -1,4 +1,4 @@
-.subtitle= link_to_function "<small>&#9660;</small> Contact Information", %w/$("contact_intro").toggle(); $("contact").toggle()/
+.subtitle= subtitle :contact, "Contact Information"
 .section
   #contact_intro{ hidden_if(!@lead.errors.empty?) }
     You can add contact information later.

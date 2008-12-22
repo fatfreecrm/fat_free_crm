@@ -1,4 +1,4 @@
-.subtitle= link_to_function "Add Web Presence Information", %w/$("presence_intro").toggle(); $("presence").toggle()/
+.subtitle= subtitle :presence, "Web Presence"
 .section
   #presence_intro{ hidden_if(!@lead.errors.empty?) }
     You can add web presence information later.

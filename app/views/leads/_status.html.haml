@@ -1,4 +1,4 @@
-.subtitle= link_to_function "<small>&#9658;</small> Status Information", %w/$("status_intro").toggle(); $("status").toggle()/
+.subtitle= subtitle :status, "Lead Status"
 .section
   #status_intro{ hidden_if(!@lead.errors.empty?) }
     You can add lead status information later.

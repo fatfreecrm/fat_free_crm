@@ -2,6 +2,8 @@ Sat, Dec 21, 2008
 ---------------------------------------------------------------------
 - Redesigned [Lead/New] and revamped related CSS styles.
 - Reorganized global settings to make it easier to access them at runtime.
+- Toggle sections using link_to_remote() to be able to store toggle status in a session.
+- Reveal/hide form sections using toggle/slide visual effect.
 
 Sat, Dec 20, 2008
 ---------------------------------------------------------------------
