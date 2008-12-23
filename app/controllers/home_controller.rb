@@ -9,11 +9,16 @@ class HomeController < ApplicationController
   # Ajax PUT /toggle_form_section
   #----------------------------------------------------------------------------
   def toggle_form_section
+    uri = URI.parse(request.env["HTTP_REFERER"])
+    key = (params[:id] + uri.path).gsub("/", "_").intern
+
     render :update do |page|
-      if params[:visible] == "false"
+      if params[:visible] == "false"                          # show
+        session[key] = true
         page["#{params[:id]}_arrow"].replace_html "&#9660;"
         callback = "beforeStart"
-      else
+      else                                                    # hide
+        session[key] = nil
         page["#{params[:id]}_arrow"].replace_html "&#9658;"
         callback = "afterFinish"
       end

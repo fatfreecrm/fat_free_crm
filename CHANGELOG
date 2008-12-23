@@ -4,6 +4,7 @@ Mon, Dec 22, 2008
 - Implemented section toggling in account and campaign forms.
 - Added [toll_free_phone] field to accounts.
 - Added .top and .req styles for field labels.
+- Show/hide form sections based on session where we now store expand/collapse state.
 
 Sun, Dec 21, 2008
 ---------------------------------------------------------------------

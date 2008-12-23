@@ -22,8 +22,12 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def subtitle(id, text = id.to_s.capitalize)
-    link_to_remote "<small id='#{id}_arrow'>&#9658;</small> #{text}", :url => url_for(:controller => :home, :action => :toggle_form_section, :id => id), :with => "'visible=' + Element.visible('#{id}')"
+  def subtitle(id, hidden = true, text = id.to_s.capitalize)
+    content_tag("div",
+      link_to_remote("<small id='#{id}_arrow'>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}", 
+        :url => url_for(:controller => :home, :action => :toggle_form_section, :id => id), 
+        :with => "'visible=' + Element.visible('#{id}')"
+      ), :class => "subtitle")
   end
 
   #----------------------------------------------------------------------------

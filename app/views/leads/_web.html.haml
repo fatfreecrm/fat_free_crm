@@ -1,8 +1,9 @@
-.subtitle= subtitle :presence, "Web Presence"
+- collapsed = (@lead.errors.empty? && session[:presence_leads_new].nil?)
+= subtitle :presence, collapsed, "Web Presence"
 .section
-  #presence_intro{ hidden_if(!@lead.errors.empty?) }
-    %small You can add web presence information later.
-  #presence{ hidden_if(@lead.errors.empty?) }
+  %small#presence_intro{ hidden_if(!collapsed) }
+    You can add web presence information later.
+  #presence{ hidden_if(collapsed) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }

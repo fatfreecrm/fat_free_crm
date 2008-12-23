@@ -1,8 +1,9 @@
-.subtitle= subtitle :objectives, "Campaign Objectives"
+- collapsed = (@campaign.errors.empty? && session[:objectives_campaigns_new].nil?)
+= subtitle :objectives, collapsed, "Campaign Objectives"
 .section
-  #objectives_intro{ hidden_if(!@campaign.errors.empty?) }
-    %small You can add campaign objectives later.
-  #objectives{ hidden_if(@campaign.errors.empty?) }
+  %small#objectives_intro{ hidden_if(!collapsed) }
+    You can add campaign objectives later.
+  #objectives{ hidden_if(collapsed) }
     %small
       Please specify target number of leads, expected conversion ratio, target revenue, and 
       campaign budget. These numbers will let you track actual campaign performance.

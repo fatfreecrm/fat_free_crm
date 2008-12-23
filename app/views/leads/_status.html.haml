@@ -1,8 +1,9 @@
-.subtitle= subtitle :status, "Lead Status"
+- collapsed = (@lead.errors.empty? && session[:status_leads_new].nil?)
+= subtitle :status, collapsed, "Lead Status"
 .section
-  #status_intro{ hidden_if(!@lead.errors.empty?) }
-    %small You can add lead status information later.
-  #status{ hidden_if(@lead.errors.empty?) }
+  %small#status_intro{ hidden_if(!collapsed) }
+    You can add lead status information later.
+  #status{ hidden_if(collapsed) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
