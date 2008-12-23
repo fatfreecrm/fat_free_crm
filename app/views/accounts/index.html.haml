@@ -29,7 +29,7 @@
             == #{account.user.id == @current_user.id ? "me" : account.user.full_name}
           %dt
             = link_to(account.website, account.website) << " | " if account.website
-            = account.phone << " | " if account.phone
+            = (account.tall_free_phone || account.phone) << " | " if account.tall_free_phone || account.phone
             = pluralize(leads, "lead") << " | "
             = pluralize(contacts, "contact") << " | "
             = pluralize(opportunities, "opportunity")

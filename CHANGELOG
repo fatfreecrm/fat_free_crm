@@ -1,4 +1,11 @@
-Sat, Dec 21, 2008
+Mon, Dec 22, 2008
+---------------------------------------------------------------------
+- Moved form section toggling to application helper and home controller.
+- Implemented section toggling in account and campaign forms.
+- Added [toll_free_phone] field to accounts.
+- Added .top and .req styles for field labels.
+
+Sun, Dec 21, 2008
 ---------------------------------------------------------------------
 - Redesigned [Lead/New] and revamped related CSS styles.
 - Reorganized global settings to make it easier to access them at runtime.

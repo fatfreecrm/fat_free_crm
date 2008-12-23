@@ -4,7 +4,7 @@
     .title Create Account
     = f.error_messages
     .section
-      .label Account name:
+      .label.top.req Account name:
       = f.text_field :name, :style => "width:500px"
       .label Notes:
       = f.text_area :notes, :style => "width:500px", :rows => 2

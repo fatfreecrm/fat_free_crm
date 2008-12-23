@@ -10,6 +10,7 @@
 #  access           :string(8)       default("Private")
 #  notes            :string(255)
 #  website          :string(64)
+#  tall_free_phone  :string(32)
 #  phone            :string(32)
 #  fax              :string(32)
 #  billing_address  :string(255)

@@ -1,20 +1,20 @@
 .subtitle= subtitle :status, "Lead Status"
 .section
   #status_intro{ hidden_if(!@lead.errors.empty?) }
-    You can add lead status information later.
+    %small You can add lead status information later.
   #status{ hidden_if(@lead.errors.empty?) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label Assigned to:
+          .label.top Assigned to:
           = collection_select :lead, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
-          .label Status:
+          .label.top Status:
           = f.select :status, Setting.lead_status.invert.sort, { :selected => :new }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
-          .label Source:
+          .label.top Source:
           = f.select :source, Setting.lead_source.invert.sort, { :include_blank => "-- None --" }, { :style => "width:160px" }
       %tr
         %td{ :valign => :top }

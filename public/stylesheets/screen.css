@@ -365,24 +365,21 @@ td.cell a:hover {
   float: right;
 }
 
-label {
-  clear: left;
-  color: #3f3f3f;
-  float: left;
-  margin: 6px 4px 0px 0px;
-  text-align: right;
-  white-space: nowrap;
-  width: 120px;
-}
-
 .label {
   color: #3f3f3f;
   font-size: 12px;
   margin: 8px 0px 0px 0px;
 }
 
+.top {
+  margin: 2px 0px 0px 0px;
+}
+
+.req {
+  color: navy;
+}
+
 .intro {
-  /*background: white;*/
   color: dimgray;
   font-size: 12px;
   padding-top: 5px;
@@ -392,7 +389,7 @@ label {
   background: whitesmoke;
   color: #3f3f3f;
   margin: 5px auto;
-  padding: 0px 15px 15px 15px;
+  padding: 5px 15px 15px 15px;
 }
 
 .buttonbar {

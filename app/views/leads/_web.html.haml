@@ -1,16 +1,16 @@
 .subtitle= subtitle :presence, "Web Presence"
 .section
   #presence_intro{ hidden_if(!@lead.errors.empty?) }
-    You can add web presence information later.
+    %small You can add web presence information later.
   #presence{ hidden_if(@lead.errors.empty?) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label Blog:
+          .label.top Website/Blog:
           = f.text_field :blog, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label Twitter:
+          .label.top Twitter:
           = f.text_field :twitter, :style => "width:240px"
       %tr
         %td{ :valign => :top }

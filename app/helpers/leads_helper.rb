@@ -9,9 +9,4 @@ module LeadsHelper
     select_tag name, options_for_select, options
   end
 
-  #----------------------------------------------------------------------------
-  def subtitle(id, text)
-    link_to_remote "<small id='#{id}_arrow'>&#9658;</small> #{text}", :url => url_for(:action => :toggle, :id => id), :with => "'visible=' + Element.visible('#{id}')"
-  end
-
 end

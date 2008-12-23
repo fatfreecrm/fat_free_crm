@@ -1,14 +1,15 @@
-.subtitle= link_to_function "Campaign Objectives", %w/$("campaign_intro").toggle(); $("campaign").toggle()/
+.subtitle= subtitle :objectives, "Campaign Objectives"
 .section
-  #campaign_intro{ hidden_if(!@campaign.errors.empty?) }
-    You can add campaign objectives later.
-  #campaign{ hidden_if(@campaign.errors.empty?) }
-    Please specify target number of leads, expected conversion ratio, target revenue, and 
-    campaign budget. These numbers will let you track actual campaign performance.
+  #objectives_intro{ hidden_if(!@campaign.errors.empty?) }
+    %small You can add campaign objectives later.
+  #objectives{ hidden_if(@campaign.errors.empty?) }
+    %small
+      Please specify target number of leads, expected conversion ratio, target revenue, and 
+      campaign budget. These numbers will let you track actual campaign performance.
     %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label Leads:
+          .label Number of leads:
           = f.text_field :target_leads, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
@@ -16,11 +17,11 @@
           = f.text_field :target_conversion, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label Revenue:
+          .label Revenue ($):
           = f.text_field :target_revenue, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label Budget:
+          .label Budget ($):
           = f.text_field :budget, :style => "width:110px; text-align:right;"
       %tr
         %td{ :colspan => 7, :valign => :top }

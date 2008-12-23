@@ -1,7 +1,7 @@
-.subtitle= link_to_function "Add Permissions", %/$("permissions_intro").toggle(); $("permissions").toggle()/
+.subtitle= subtitle :permissions
 .section
   #permissions_intro{ hidden_if(!@campaign.errors.empty?) }
-    Only you will have access to the campaign and its leads. You can change permissions later.
+    %small By default only you will have access to the campaign and its leads. You can change permissions later.
   #permissions{ hidden_if(@campaign.errors.empty?) }
     .radio_box
       = radio_button_tag "campaign[access]", "Private", @campaign.access == "Private", :onclick => "$('people').hide()"

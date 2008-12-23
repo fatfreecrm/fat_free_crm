@@ -10,6 +10,7 @@
 #  access           :string(8)       default("Private")
 #  notes            :string(255)
 #  website          :string(64)
+#  tall_free_phone  :string(32)
 #  phone            :string(32)
 #  fax              :string(32)
 #  billing_address  :string(255)
@@ -30,6 +31,7 @@ account1:
   access: Private
   notes: Met them at convention center last fall.
   website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
+  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
   phone: <%= Faker::PhoneNumber.phone_number %>
   fax: <%= Faker::PhoneNumber.phone_number %>
   billing_address: |
@@ -49,6 +51,7 @@ account2:
   access: Private
   notes: These guys have been running their network marketing firm since 1990.
   website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
+  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
   phone: <%= Faker::PhoneNumber.phone_number %>
   fax: <%= Faker::PhoneNumber.phone_number %>
   billing_address: |
@@ -68,6 +71,7 @@ account3:
   access: Shared
   notes: They have over 200 people working for them all over the world.
   website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
+  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
   phone: <%= Faker::PhoneNumber.phone_number %>
   fax: <%= Faker::PhoneNumber.phone_number %>
   billing_address: |
@@ -87,6 +91,7 @@ account4:
   access: Shared
   notes: Design firm from Denmark that builds beautiful desktops. Very well known in northern Europe.
   website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
+  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
   phone: <%= Faker::PhoneNumber.phone_number %>
   fax: <%= Faker::PhoneNumber.phone_number %>
   billing_address: |
@@ -109,6 +114,7 @@ account<%= i %>:
   access: Public
   notes: 
   website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
+  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
   phone: <%= Faker::PhoneNumber.phone_number %>
   fax: <%= Faker::PhoneNumber.phone_number %>
   billing_address: |

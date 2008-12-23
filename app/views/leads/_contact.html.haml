@@ -1,16 +1,16 @@
 .subtitle= subtitle :contact, "Contact Information"
 .section
   #contact_intro{ hidden_if(!@lead.errors.empty?) }
-    You can add contact information later.
+    %small You can add account contact information later.
   #contact{ hidden_if(@lead.errors.empty?) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label Title:
+          .label.top Title:
           = f.text_field :title, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label Company:
+          .label.top Company:
           = f.text_field :company, :style => "width:240px"
       %tr
         %td{ :valign => :top }
