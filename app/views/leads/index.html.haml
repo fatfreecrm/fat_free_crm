@@ -26,8 +26,10 @@
             /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
             = "&ndash; referred by #{lead.referred_by}" if lead.referred_by
           %dt
-            == #{link_to(lead.email, "mailto:" << lead.email.to_s)} | #{lead.phone} | #{lead.mobile}
-            == | added #{time_ago_in_words(lead.created_at)} ago
+            = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " unless lead.email.empty?
+            = lead.phone  << " | " unless lead.phone.empty?
+            = lead.mobile << " | " unless lead.mobile.empty?
+            == added #{time_ago_in_words(lead.created_at)} ago
   - else
     %div== You don't have any leads yet. Feel free to #{link_to("create new lead", new_lead_path)}.
 

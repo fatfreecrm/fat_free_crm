@@ -39,6 +39,28 @@ class Lead < ActiveRecord::Base
   has_many :permissions, :as => :asset, :include => :user
   acts_as_paranoid
 
+  validates_presence_of :first_name, :message => "^Please specify first name."
+  validates_presence_of :last_name, :message => "^Please specify last name."
+
+  # Save the lead along with its permissions.
+  #----------------------------------------------------------------------------
+  def save_with_permissions(users)
+    if self[:access] == "Campaign"  # Copy campaign permissions.
+      campaign = Campaign.find(self[:campaign_id])
+      self[:access] = campaign[:access]
+      if campaign[:access] == "Shared"
+        campaign.permissions.each do |permission|
+          logger.info permission.inspect
+          self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
+        end
+        logger.info self.permissions.inspect
+      end
+    elsif self[:access] == "Shared"
+      users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
+    end
+    save
+  end
+
   #----------------------------------------------------------------------------
   def full_name
     "#{self.first_name} #{self.last_name}"

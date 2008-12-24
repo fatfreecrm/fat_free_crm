@@ -2,6 +2,7 @@ Tue, Dec 23, 2008
 ---------------------------------------------------------------------
 - Updated controller and view specs.
 - Added permissions section to [Lead/New] form.
+- Added validation and saving to [Lead] model to actually create new leads.
 
 Mon, Dec 22, 2008
 ---------------------------------------------------------------------

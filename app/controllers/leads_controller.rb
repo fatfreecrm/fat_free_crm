@@ -6,7 +6,7 @@ class LeadsController < ApplicationController
   # GET /leads.xml
   #----------------------------------------------------------------------------
   def index
-    @leads = Lead.find(:all)
+    @leads = Lead.find(:all, :order => "id DESC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -51,9 +51,11 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @lead = Lead.new(params[:lead])
+    @users = User.all_except(@current_user)
+    @campaigns = Campaign.find(:all)
 
     respond_to do |format|
-      if @lead.save
+      if @lead.save_with_permissions(params[:users])
         flash[:notice] = 'Lead was successfully created.'
         format.html { redirect_to(@lead) }
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
