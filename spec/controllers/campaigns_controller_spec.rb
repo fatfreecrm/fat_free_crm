@@ -175,11 +175,13 @@ describe CampaignsController do
     it "should destroy the requested campaign" do
       Campaign.should_receive(:find).with("37").and_return(mock_campaign)
       mock_campaign.should_receive(:destroy)
+      mock_campaign.should_receive(:name).and_return("Joe Spec")
       delete :destroy, :id => "37"
     end
   
     it "should redirect to the campaigns list" do
       Campaign.stub!(:find).and_return(mock_campaign(:destroy => true))
+      mock_campaign.should_receive(:name).and_return("Joe Spec")
       delete :destroy, :id => "1"
       response.should redirect_to(campaigns_url)
     end

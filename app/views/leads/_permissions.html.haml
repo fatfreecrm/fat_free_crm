@@ -1,0 +1,25 @@
+- collapsed = (@lead.errors.empty? && session[:permissions_leads_new].nil?)
+= subtitle :permissions, collapsed
+.section
+  %small#permissions_intro{ hidden_if(!collapsed) }
+    By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  #permissions{ hidden_if(collapsed) }
+    .radio_box
+      = radio_button_tag "lead[access]", "Private", @lead.access == "Private", :onclick => "$('people').hide()"
+      Keep it private, do not share with others
+    .radio_box
+      = radio_button_tag "lead[access]", "Public",  @lead.access == "Public", :onclick => "$('people').hide()"
+      Share it with everyone
+    .radio_box
+      = radio_button_tag "lead[access]", "Shared",  @lead.access == "Shared", :onclick => "$('people').show()"
+      Share it with the following people
+    #people{ hidden_if(@lead.access != "Shared") }
+      %div{ :style => "padding: 6px 0px 0px 20px" }
+        - for user in @users
+          .check_box
+            -# Preserve state of the checkboxes if the form gets redrawn on errors.
+            = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s)
+            = user.full_name
+    .radio_box
+      = radio_button_tag "lead[access]", "Campaign", @lead.access == "Campaign", { :onclick => "$('people').hide()", :disabled => true }
+      %font{ :id => :copy_permissions, :color => :grey } Copy campaign permissions

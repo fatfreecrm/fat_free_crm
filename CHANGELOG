@@ -1,3 +1,8 @@
+Tue, Dec 23, 2008
+---------------------------------------------------------------------
+- Updated controller and view specs.
+- Added permissions section to [Lead/New] form.
+
 Mon, Dec 22, 2008
 ---------------------------------------------------------------------
 - Moved form section toggling to application helper and home controller.

@@ -4,9 +4,12 @@ describe "/leads/new.html.erb" do
   include LeadsHelper
   
   before(:each) do
-    assigns[:lead] = stub_model(Lead,
-      :new_record? => true
-    )
+    assigns[:current_user] = stub_model(User)
+    assigns[:lead] = stub_model(Lead, :new_record? => true)
+    assigns[:users] = [ stub_model(User) ]
+    assigns[:campaigns] = [ stub_model(Campaign) ]
+    Setting.stub!(:lead_status).and_return({ :key => "value" })
+    Setting.stub!(:lead_source).and_return({ :key => "value" })
   end
 
   it "should render new form" do

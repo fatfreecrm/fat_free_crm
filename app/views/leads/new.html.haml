@@ -21,9 +21,12 @@
           %td{ :valign => :top }
             .label Phone:
             = f.text_field :phone, :style => "width:240px"
-    = render :partial => "status",  :locals => { :f => f }
-    = render :partial => "contact", :locals => { :f => f }
-    = render :partial => "web",     :locals => { :f => f }
+    - for partial in %w(status contact web permissions)
+      = render :partial => partial, :locals => { :f => f }
+    .buttonbar
+      = f.submit "Create Lead"
+      or
+      = link_to "Cancel", accounts_url
 
 
 / <h1>New lead</h1>

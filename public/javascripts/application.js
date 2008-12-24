@@ -12,7 +12,19 @@ var crm = {
     $(id).observe("blur", function() {
       $(id).calendar_was_shown = null;    // Get the calendar ready if we loose focus.
     });
-  }
+  },
 
   //----------------------------------------------------------------------------
+  flip_campaign_permissions: function(value) {
+    if (value) {
+      $("lead_access_campaign").enable();
+      $("lead_access_campaign").checked = 1;
+      $("copy_permissions").style.color = "#3f3f3f";
+    } else {
+      $("lead_access_campaign").disable();
+      $("copy_permissions").style.color = "grey";
+      $("lead_access_private").checked = 1;
+    }
+  }
+
 }

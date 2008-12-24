@@ -24,7 +24,7 @@
         %td= spacer
         %td{ :valign => :top, :colspan => 3 }
           .label Campaign:
-          = collection_select :lead, :campaign, @campaigns, :id, :name, { :include_blank => "-- None --" }, { :style => "width:100%" }
+          = collection_select :lead, :campaign, @campaigns, :id, :name, { :include_blank => "-- None --" }, { :style => "width:100%", :onchange => "crm.flip_campaign_permissions(this.value)" }
           / 
           / <select style="width:100%;">
           / <option id="1">-- None --
