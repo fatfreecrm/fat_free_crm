@@ -10,6 +10,7 @@
 
 class Contact < ActiveRecord::Base
   belongs_to :user
+  uses_mysql_uuid
   
   def full_name
     "Full Name"

@@ -37,6 +37,7 @@ class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :campaign
   has_many :permissions, :as => :asset, :include => :user
+  uses_mysql_uuid
   acts_as_paranoid
 
   validates_presence_of :first_name, :message => "^Please specify first name."

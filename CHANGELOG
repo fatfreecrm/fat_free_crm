@@ -1,3 +1,10 @@
+Wed, Dec 24, 2008
+---------------------------------------------------------------------
+- Created [uses_mysql_uuid] plugin.
+- Converted account, campaign, contact, lead, and user models to use UUIDs.
+- Updated controllers to use find_by_uuid() instead of find().
+- Updated routes to recognize and extract UUID from URLs.
+
 Tue, Dec 23, 2008
 ---------------------------------------------------------------------
 - Updated controller and view specs.
