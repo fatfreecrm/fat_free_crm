@@ -30,11 +30,11 @@ module MySQL_UUID
       self.uuid
     end
 
-    # Reload newly saved record since named routes rely on uuid being present.
+    # Make sure we reload :uuid attribute that gets created by MySQL.
     #--------------------------------------------------------------------------
     def save(*args)
       success = super(*args)
-      self.reload unless self.uuid
+      self.uuid = self.class.find(self.id, :select => :uuid).uuid unless self.uuid?
       success
     end
 

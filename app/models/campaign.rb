@@ -54,7 +54,7 @@ class Campaign < ActiveRecord::Base
 
   private
   #----------------------------------------------------------------------------
-  def set_campaign_status
+  def set_campaign_status # before_create
     if self.ends_on and (self.ends_on < Date.today)
       self.status = "completed"
     else

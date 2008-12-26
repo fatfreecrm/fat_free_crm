@@ -56,7 +56,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
-        flash[:notice] = 'Lead was successfully created.'
+        flash[:notice] = "Lead #{@lead.full_name} was successfully created."
         format.html { redirect_to(@lead) }
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
       else
@@ -74,7 +74,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.update_attributes(params[:lead])
-        flash[:notice] = 'Lead was successfully updated.'
+        flash[:notice] = "Lead #{@lead.full_name}was successfully updated."
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }
       else

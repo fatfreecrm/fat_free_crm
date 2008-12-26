@@ -19,16 +19,16 @@
             = link_to(image_tag("edit_12x12.png", :title => "Edit lead: #{h(lead.full_name)}"), edit_lead_path(lead))
           = link_to(lead.full_name, lead)
           %tt
-            - if lead.company && lead.title
+            - if lead.company? && lead.title?
               = lead.title << " at " << lead.company
             - else
-              = lead.company if lead.company
+              = lead.company if lead.company?
             /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
-            = "&ndash; referred by #{lead.referred_by}" if lead.referred_by
+            = "&ndash; referred by #{lead.referred_by}" if lead.referred_by?
           %dt
-            = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " unless lead.email.empty?
-            = lead.phone  << " | " unless lead.phone.empty?
-            = lead.mobile << " | " unless lead.mobile.empty?
+            = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
+            = lead.phone  << " | " if lead.phone?
+            = lead.mobile << " | " if lead.mobile?
             == added #{time_ago_in_words(lead.created_at)} ago
   - else
     %div== You don't have any leads yet. Feel free to #{link_to("create new lead", new_lead_path)}.

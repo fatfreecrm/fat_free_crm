@@ -28,8 +28,8 @@
             == added #{time_ago_in_words(account.created_at)} ago by 
             == #{account.user.id == @current_user.id ? "me" : account.user.full_name}
           %dt
-            = link_to(account.website, account.website) << " | " if account.website
-            = (account.tall_free_phone || account.phone) << " | " if account.tall_free_phone || account.phone
+            = link_to(account.website, account.website) << " | " if account.website?
+            = (account.tall_free_phone || account.phone) << " | " if account.tall_free_phone? || account.phone?
             = pluralize(leads, "lead") << " | "
             = pluralize(contacts, "contact") << " | "
             = pluralize(opportunities, "opportunity")

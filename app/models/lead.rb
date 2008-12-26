@@ -37,6 +37,7 @@ class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :campaign
   has_many :permissions, :as => :asset, :include => :user
+  named_scope :converted, :conditions => "status='converted'"
   uses_mysql_uuid
   acts_as_paranoid
 
@@ -59,7 +60,12 @@ class Lead < ActiveRecord::Base
     elsif self[:access] == "Shared"
       users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
     end
-    save
+    success = save
+    if success && self.campaign_id
+      Campaign.increment_counter(:actual_leads, self.campaign_id)
+      Campaign.update(self.campaign_id, { :actual_conversion => Lead.converted.count * 100.0 / Lead.count })
+    end
+    success
   end
 
   #----------------------------------------------------------------------------
