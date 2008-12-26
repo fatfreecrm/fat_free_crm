@@ -4,11 +4,20 @@
 # Table name: users
 #
 #  id                :integer(4)      not null, primary key
+#  uuid              :string(36)
 #  username          :string(32)      default(""), not null
 #  email             :string(64)      default(""), not null
 #  first_name        :string(32)
 #  last_name         :string(32)
-#  uuid              :string(36)
+#  title             :string(64)
+#  company           :string(64)
+#  alt_email         :string(64)
+#  phone             :string(32)
+#  mobile            :string(32)
+#  aim               :string(32)
+#  yahoo             :string(32)
+#  google            :string(32)
+#  skype             :string(32)
 #  password_hash     :string(255)     default(""), not null
 #  password_salt     :string(255)     default(""), not null
 #  remember_token    :string(255)     default(""), not null
@@ -37,6 +46,11 @@ class User < ActiveRecord::Base
   named_scope :all_except, lambda { | user | { :conditions => "id != #{user.id}" } }
   uses_mysql_uuid
   acts_as_paranoid
+
+  validates_presence_of   :username, :message => "^Please specify the username."
+  validates_presence_of   :email,    :message => "^Please specify your email address."
+  validates_uniqueness_of :username, :message => "^This username has been already taken."
+  validates_uniqueness_of :email,    :message => "^There is another user with the same email."
 
   #----------------------------------------------------------------------------
   def full_name

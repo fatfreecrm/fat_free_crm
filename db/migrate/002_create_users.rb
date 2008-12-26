@@ -1,11 +1,20 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users, :force => true do |t|
+      t.string   :uuid,             :limit => 36
       t.string   :username,         :null => false, :default => "", :limit => 32
       t.string   :email,            :null => false, :default => "", :limit => 64
       t.string   :first_name,       :limit => 32
       t.string   :last_name,        :limit => 32
-      t.string   :uuid,             :limit => 36
+      t.string   :title,            :limit => 64
+      t.string   :company,          :limit => 64
+      t.string   :alt_email,        :limit => 64
+      t.string   :phone,            :limit => 32
+      t.string   :mobile,           :limit => 32
+      t.string   :aim,              :limit => 32
+      t.string   :yahoo,            :limit => 32
+      t.string   :google,           :limit => 32
+      t.string   :skype,            :limit => 32
       # >>> The following fields are required and maintained by [authlogic] plugin.
       t.string   :password_hash,    :null => false, :default => ""
       t.string   :password_salt,    :null => false, :default => ""

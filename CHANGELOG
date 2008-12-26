@@ -2,6 +2,7 @@ Thu, Dec 25, 2008
 ---------------------------------------------------------------------
 - Update campaign lead count and conversion ratio when creating a new lead.
 - Make sure :uuid gets reloaded from the database and not from cached attributes.
+- Added extra fields to [User] model and implemented [User/Edit profile].
 
 Wed, Dec 24, 2008
 ---------------------------------------------------------------------
