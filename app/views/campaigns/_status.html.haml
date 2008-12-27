@@ -15,7 +15,7 @@
         - if campaign.starts_on > Date.today
           = "starts in " << distance_of_time_in_words(Date.today, campaign.starts_on)
         - elsif campaign.starts_on < Date.today
-          %span.warn= "(was supposed to start on " << distance_of_time_in_words(campaign.starts_on, Date.today) << " ago #{campaign.starts_on.strftime('%b %e, %Y')})"
+          %span.warn= "(was supposed to start " << distance_of_time_in_words(campaign.starts_on, Date.today) << " ago on #{campaign.starts_on.strftime('%b %e, %Y')})"
         - else
           %span.cool starts today!
       - else

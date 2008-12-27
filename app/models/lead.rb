@@ -44,6 +44,8 @@ class Lead < ActiveRecord::Base
   validates_presence_of :first_name, :message => "^Please specify first name."
   validates_presence_of :last_name, :message => "^Please specify last name."
 
+  after_create :update_campaign_counters
+
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
   def save_with_permissions(users)
@@ -60,17 +62,21 @@ class Lead < ActiveRecord::Base
     elsif self[:access] == "Shared"
       users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
     end
-    success = save
-    if success && self.campaign_id
-      Campaign.increment_counter(:actual_leads, self.campaign_id)
-      Campaign.update(self.campaign_id, { :actual_conversion => Lead.converted.count * 100.0 / Lead.count })
-    end
-    success
+    save
   end
 
   #----------------------------------------------------------------------------
   def full_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def update_campaign_counters
+    if self.campaign_id
+      Campaign.increment_counter(:actual_leads, self.campaign_id)
+      Campaign.update(self.campaign_id, { :actual_conversion => Lead.converted.count * 100.0 / Lead.count })
+    end
   end
 
 end

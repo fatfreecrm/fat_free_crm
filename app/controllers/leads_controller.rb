@@ -32,7 +32,7 @@ class LeadsController < ApplicationController
   def new
     @lead = Lead.new
     @users = User.all_except(@current_user)
-    @campaigns = Campaign.find(:all)
+    @campaigns = Campaign.find(:all, :order => "name")
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,7 +52,7 @@ class LeadsController < ApplicationController
   def create
     @lead = Lead.new(params[:lead])
     @users = User.all_except(@current_user)
-    @campaigns = Campaign.find(:all)
+    @campaigns = Campaign.find(:all, :order => "name")
 
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
