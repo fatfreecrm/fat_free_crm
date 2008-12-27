@@ -5,6 +5,7 @@ describe "/contacts/edit.html.erb" do
   
   before(:each) do
     assigns[:contact] = @contact = stub_model(Contact,
+      :uuid => "12345678-0123-5678-0123-567890123456",
       :new_record? => false
     )
   end

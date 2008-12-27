@@ -1,6 +1,7 @@
 Fri, Dec 26, 2008
 ---------------------------------------------------------------------
 - Some model and javascript refactoring.
+- Another sweep at specs to make them pass with the introduction of UUIDs.
 
 Thu, Dec 25, 2008
 ---------------------------------------------------------------------

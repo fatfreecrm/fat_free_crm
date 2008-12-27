@@ -4,7 +4,7 @@ describe "/leads/index.html.erb" do
   include LeadsHelper
   
   before(:each) do
-    assigns[:leads] = [ stub_model(Lead, :created_at => Time.now) ]
+    assigns[:leads] = [ stub_model(Lead, :created_at => Time.now, :uuid => "12345678-0123-5678-0123-567890123456") ]
     Setting.stub!(:lead_status_color).and_return({ :key => "value" })
   end
 

@@ -5,6 +5,7 @@ describe "/leads/edit.html.erb" do
   
   before(:each) do
     assigns[:lead] = @lead = stub_model(Lead,
+      :uuid => "12345678-0123-5678-0123-567890123456",
       :new_record? => false
     )
   end
