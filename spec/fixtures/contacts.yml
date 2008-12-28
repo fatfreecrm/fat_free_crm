@@ -1,17 +1,68 @@
 # == Schema Information
-# Schema version: 10
+# Schema version: 11
 #
 # Table name: contacts
 #
-#  id         :integer(4)      not null, primary key
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer(4)      not null, primary key
+#  uuid        :string(36)
+#  user_id     :integer(4)
+#  assigned_to :integer(4)
+#  reports_to  :integer(4)
+#  first_name  :string(64)      default(""), not null
+#  last_name   :string(64)      default(""), not null
+#  access      :string(8)       default("Private")
+#  title       :string(64)
+#  department  :string(64)
+#  source      :string(32)
+#  email       :string(64)
+#  alt_email   :string(64)
+#  phone       :string(32)
+#  mobile      :string(32)
+#  blog        :string(128)
+#  linkedin    :string(128)
+#  facebook    :string(128)
+#  twitter     :string(128)
+#  address     :string(255)
+#  born_on     :date
+#  do_not_call :boolean(1)      not null
+#  notes       :text
+#  deleted_at  :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+<% 
+  title = [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ]
+  source = %w(campaign cold_call conference online referral self web word_of_mouth other) << ""
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+  for i in (1..20) do
+%>
+opportunity_<%= i %>:
+  id          : <%= i %>
+  user_id     : <%= rand(5) + 1 %>
+  assigned_to : <%= rand(5) + 1 %>
+  reports_to  : <%= (rand(5) + 1) if i > 10 %>
+  first_name  : <%= first_name = Faker::Name.first_name %>
+  last_name   : <%= last_name = Faker::Name.last_name %>
+  access      : Public
+  title       : <%= title[rand(title.size)] %>
+  department  :
+  source      : <%= source[rand(source.size)] %>
+  email       : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
+  alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) %>
+  phone       : <%= Faker::PhoneNumber.phone_number %>
+  mobile      : <%= Faker::PhoneNumber.phone_number %>
+  blog        : <%= "http://#{(first_name + last_name.first).downcase}.blogger.com" if rand(10) < 5 %>
+  linkedin    : <%= "http://www.linkedin.com/#{(first_name + last_name.first).downcase}" if rand(10) < 4 %>
+  facebook    : <%= "http://www.facebook.com/#{(first_name + last_name.first).downcase}" if rand(10) < 5 %>
+  twitter     : <%= "http://www.twitter.com/#{(first_name + last_name.first).downcase}" if rand(10) < 3 %>
+  address     : |
+                <%= Faker::Address.street_address + " " + Faker::Address.secondary_address %>
+                <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
+  born_on     : <%= Date.today - (rand(20) + 20).years - rand(200).days %>
+  do_not_call : false
+  notes       :
+  deleted_at  :
+  created_at  : <%= starts = Date.today - rand(15).days %>
+  updated_at  : <%= starts + rand(5).days %>
+<% end %>

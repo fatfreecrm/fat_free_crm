@@ -1,36 +1,38 @@
 # == Schema Information
 # Schema version: 11
 #
-# Table name: accounts
+# Table name: opportunities
 #
 #  id               :integer(4)      not null, primary key
 #  uuid             :string(36)
 #  user_id          :integer(4)
+#  account_id       :integer(4)      not null
+#  campaign_id      :integer(4)
 #  name             :string(64)      default(""), not null
-#  access           :string(8)       default("Private")
-#  notes            :string(255)
-#  website          :string(64)
-#  tall_free_phone  :string(32)
-#  phone            :string(32)
-#  fax              :string(32)
-#  billing_address  :string(255)
-#  shipping_address :string(255)
+#  source           :string(32)
+#  stage            :string(32)
+#  probability      :integer(4)
+#  amount           :decimal(12, 2)
+#  expected_revenue :decimal(12, 2)
+#  close_on         :date
 #  deleted_at       :datetime
+#  notes            :text
 #  created_at       :datetime
 #  updated_at       :datetime
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Account do
+describe Opportunity do
   before(:each) do
+    @account = mock_model(Account)
     @valid_attributes = {
-      :name => "Test Account",
-      :user => mock_model(User)
+      :account_id => @account.id,
+      :name => "Excellent Opportunity"
     }
   end
 
   it "should create a new instance given valid attributes" do
-    Account.create!(@valid_attributes)
+    Opportunity.create!(@valid_attributes)
   end
 end

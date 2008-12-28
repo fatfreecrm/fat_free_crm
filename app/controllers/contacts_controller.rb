@@ -1,9 +1,10 @@
 class ContactsController < ApplicationController
   before_filter :require_user
-  before_filter { |filter| filter.send(:set_current_tab, :contacts) }
+  before_filter "set_current_tab(:contacts)"
 
   # GET /contacts
   # GET /contacts.xml
+  #----------------------------------------------------------------------------
   def index
     @contacts = Contact.find(:all)
 
@@ -15,6 +16,7 @@ class ContactsController < ApplicationController
 
   # GET /contacts/1
   # GET /contacts/1.xml
+  #----------------------------------------------------------------------------
   def show
     @contact = Contact.find(params[:id])
 
@@ -26,6 +28,7 @@ class ContactsController < ApplicationController
 
   # GET /contacts/new
   # GET /contacts/new.xml
+  #----------------------------------------------------------------------------
   def new
     @contact = Contact.new
 
@@ -36,12 +39,14 @@ class ContactsController < ApplicationController
   end
 
   # GET /contacts/1/edit
+  #----------------------------------------------------------------------------
   def edit
     @contact = Contact.find(params[:id])
   end
 
   # POST /contacts
   # POST /contacts.xml
+  #----------------------------------------------------------------------------
   def create
     @contact = Contact.new(params[:contact])
 
@@ -59,6 +64,7 @@ class ContactsController < ApplicationController
 
   # PUT /contacts/1
   # PUT /contacts/1.xml
+  #----------------------------------------------------------------------------
   def update
     @contact = Contact.find(params[:id])
 
@@ -76,6 +82,7 @@ class ContactsController < ApplicationController
 
   # DELETE /contacts/1
   # DELETE /contacts/1.xml
+  #----------------------------------------------------------------------------
   def destroy
     @contact = Contact.find(params[:id])
     @contact.destroy

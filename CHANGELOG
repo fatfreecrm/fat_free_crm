@@ -2,6 +2,7 @@ Sat, Dec 27, 2008
 ---------------------------------------------------------------------
 - Added find() override in [uses_mysql_uuid] plugin to make it possible to use find() instead of find_by_uuid().
 - Added [contacts] and [opportunities] database migrations.
+- Generated [opportunity] scaffold, added [contacts] fixtures.
 
 Fri, Dec 26, 2008
 ---------------------------------------------------------------------

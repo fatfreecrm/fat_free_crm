@@ -7,17 +7,20 @@
     :text: Home
     :url: /
   - :active: false
-    :text: Accounts
-    :url: /accounts
-  - :active: false
     :text: Campaigns
     :url: /campaigns
   - :active: false
     :text: Leads
     :url: /leads
   - :active: false
+    :text: Accounts
+    :url: /accounts
+  - :active: false
     :text: Contacts
     :url: /contacts
+  - :active: false
+    :text: Opportunities
+    :url: /opportunities
 
 campaign_status:
   :planned: Planned
