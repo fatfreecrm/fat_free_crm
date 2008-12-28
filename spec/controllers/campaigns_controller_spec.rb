@@ -36,7 +36,7 @@ describe CampaignsController do
   describe "responding to GET show" do
 
     it "should expose the requested campaign as @campaign" do
-      Campaign.should_receive(:find_by_uuid).with(@uuid).and_return(mock_campaign)
+      Campaign.should_receive(:find).with(@uuid).and_return(mock_campaign)
       get :show, :id => @uuid
       assigns[:campaign].should equal(mock_campaign)
     end
@@ -45,7 +45,7 @@ describe CampaignsController do
 
       it "should render the requested campaign as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Campaign.should_receive(:find_by_uuid).with(@uuid).and_return(mock_campaign)
+        Campaign.should_receive(:find).with(@uuid).and_return(mock_campaign)
         mock_campaign.should_receive(:to_xml).and_return("generated XML")
         get :show, :id => @uuid
         response.body.should == "generated XML"
@@ -68,7 +68,7 @@ describe CampaignsController do
   describe "responding to GET edit" do
   
     it "should expose the requested campaign as @campaign" do
-      Campaign.should_receive(:find_by_uuid).with(@uuid).and_return(mock_campaign)
+      Campaign.should_receive(:find).with(@uuid).and_return(mock_campaign)
       get :edit, :id => @uuid
       assigns[:campaign].should equal(mock_campaign)
     end
@@ -128,19 +128,19 @@ describe CampaignsController do
     describe "with valid params" do
 
       it "should update the requested campaign" do
-        Campaign.should_receive(:find_by_uuid).with(@uuid).and_return(mock_campaign)
+        Campaign.should_receive(:find).with(@uuid).and_return(mock_campaign)
         mock_campaign.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => @uuid, :campaign => {:these => 'params'}
       end
 
       it "should expose the requested campaign as @campaign" do
-        Campaign.stub!(:find_by_uuid).with(@uuid).and_return(mock_campaign(:update_attributes => true))
+        Campaign.stub!(:find).with(@uuid).and_return(mock_campaign(:update_attributes => true))
         put :update, :id => @uuid
         assigns(:campaign).should equal(mock_campaign)
       end
 
       it "should redirect to the campaign" do
-        Campaign.stub!(:find_by_uuid).with(@uuid).and_return(mock_campaign(:update_attributes => true))
+        Campaign.stub!(:find).with(@uuid).and_return(mock_campaign(:update_attributes => true))
         put :update, :id => @uuid
         response.should redirect_to(campaign_url(mock_campaign))
       end
@@ -150,19 +150,19 @@ describe CampaignsController do
     describe "with invalid params" do
 
       it "should update the requested campaign" do
-        Campaign.should_receive(:find_by_uuid).with(@uuid).and_return(mock_campaign)
+        Campaign.should_receive(:find).with(@uuid).and_return(mock_campaign)
         mock_campaign.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => @uuid, :campaign => {:these => 'params'}
       end
 
       it "should expose the campaign as @campaign" do
-        Campaign.stub!(:find_by_uuid).with(@uuid).and_return(mock_campaign(:update_attributes => false))
+        Campaign.stub!(:find).with(@uuid).and_return(mock_campaign(:update_attributes => false))
         put :update, :id => @uuid
         assigns(:campaign).should equal(mock_campaign)
       end
 
       it "should re-render the 'edit' template" do
-        Campaign.stub!(:find_by_uuid).with(@uuid).and_return(mock_campaign(:update_attributes => false))
+        Campaign.stub!(:find).with(@uuid).and_return(mock_campaign(:update_attributes => false))
         put :update, :id => @uuid
         response.should render_template('edit')
       end
@@ -174,14 +174,14 @@ describe CampaignsController do
   describe "responding to DELETE destroy" do
 
     it "should destroy the requested campaign" do
-      Campaign.should_receive(:find_by_uuid).with(@uuid).and_return(mock_campaign)
+      Campaign.should_receive(:find).with(@uuid).and_return(mock_campaign)
       mock_campaign.should_receive(:destroy)
       mock_campaign.should_receive(:name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
     end
   
     it "should redirect to the campaigns list" do
-      Campaign.stub!(:find_by_uuid).with(@uuid).and_return(mock_campaign(:destroy => true))
+      Campaign.stub!(:find).with(@uuid).and_return(mock_campaign(:destroy => true))
       mock_campaign.should_receive(:name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
       response.should redirect_to(campaigns_url)

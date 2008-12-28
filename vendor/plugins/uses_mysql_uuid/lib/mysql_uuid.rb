@@ -38,6 +38,13 @@ module MySQL_UUID
       success
     end
 
+    # Determine whether to call regular find() or find_by_uuid().
+    #--------------------------------------------------------------------------
+    def find(*args)
+      finder = (args.first =~ /\A[a-f\d\-]{36}\Z/ ? :fin_by_uuid : :find)
+      send(finder, *args)
+    end
+
   end
 
 end

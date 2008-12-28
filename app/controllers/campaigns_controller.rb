@@ -18,7 +18,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns/1.xml
   #----------------------------------------------------------------------------
   def show
-    @campaign = Campaign.find_by_uuid(params[:id])
+    @campaign = Campaign.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,7 +42,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns/1/edit
   #----------------------------------------------------------------------------
   def edit
-    @campaign = Campaign.find_by_uuid(params[:id])
+    @campaign = Campaign.find(params[:id])
   end
 
   # POST /campaigns
@@ -68,7 +68,7 @@ class CampaignsController < ApplicationController
   # PUT /campaigns/1.xml
   #----------------------------------------------------------------------------
   def update
-    @campaign = Campaign.find_by_uuid(params[:id])
+    @campaign = Campaign.find(params[:id])
 
     respond_to do |format|
       if @campaign.update_attributes(params[:campaign])
@@ -86,7 +86,7 @@ class CampaignsController < ApplicationController
   # DELETE /campaigns/1.xml
   #----------------------------------------------------------------------------
   def destroy
-    @campaign = Campaign.find_by_uuid(params[:id])
+    @campaign = Campaign.find(params[:id])
     @campaign.destroy
 
     flash[:notice] = "Campaign #{@campaign.name} was successfully deleted."

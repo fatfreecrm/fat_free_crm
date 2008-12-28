@@ -37,7 +37,7 @@ describe LeadsController do
   describe "responding to GET show" do
 
     it "should expose the requested lead as @lead" do
-      Lead.should_receive(:find_by_uuid).with(@uuid).and_return(mock_lead)
+      Lead.should_receive(:find).with(@uuid).and_return(mock_lead)
       get :show, :id => @uuid
       assigns[:lead].should equal(mock_lead)
     end
@@ -46,7 +46,7 @@ describe LeadsController do
 
       it "should render the requested lead as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Lead.should_receive(:find_by_uuid).with(@uuid).and_return(mock_lead)
+        Lead.should_receive(:find).with(@uuid).and_return(mock_lead)
         mock_lead.should_receive(:to_xml).and_return("generated XML")
         get :show, :id => @uuid
         response.body.should == "generated XML"
@@ -69,7 +69,7 @@ describe LeadsController do
   describe "responding to GET edit" do
   
     it "should expose the requested lead as @lead" do
-      Lead.should_receive(:find_by_uuid).with(@uuid).and_return(mock_lead)
+      Lead.should_receive(:find).with(@uuid).and_return(mock_lead)
       get :edit, :id => @uuid
       assigns[:lead].should equal(mock_lead)
     end
@@ -139,20 +139,20 @@ describe LeadsController do
     describe "with valid params" do
 
       it "should update the requested lead" do
-        Lead.should_receive(:find_by_uuid).with(@uuid).and_return(mock_lead)
+        Lead.should_receive(:find).with(@uuid).and_return(mock_lead)
         mock_lead.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => @uuid, :lead => {:these => 'params'}
       end
 
       it "should expose the requested lead as @lead" do
-        Lead.stub!(:find_by_uuid).with(@uuid).and_return(@lead = mock_lead(:update_attributes => true))
+        Lead.stub!(:find).with(@uuid).and_return(@lead = mock_lead(:update_attributes => true))
         @lead.should_receive(:full_name).and_return("Joe Spec")
         put :update, :id => @uuid
         assigns(:lead).should equal(mock_lead)
       end
 
       it "should redirect to the lead" do
-        Lead.stub!(:find_by_uuid).with(@uuid).and_return(@lead = mock_lead(:update_attributes => true))
+        Lead.stub!(:find).with(@uuid).and_return(@lead = mock_lead(:update_attributes => true))
         @lead.should_receive(:full_name).and_return("Joe Spec")
         put :update, :id => @uuid
         response.should redirect_to(lead_url(mock_lead))
@@ -163,19 +163,19 @@ describe LeadsController do
     describe "with invalid params" do
 
       it "should update the requested lead" do
-        Lead.should_receive(:find_by_uuid).with(@uuid).and_return(mock_lead)
+        Lead.should_receive(:find).with(@uuid).and_return(mock_lead)
         mock_lead.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => @uuid, :lead => {:these => 'params'}
       end
 
       it "should expose the lead as @lead" do
-        Lead.stub!(:find_by_uuid).with(@uuid).and_return(mock_lead(:update_attributes => false))
+        Lead.stub!(:find).with(@uuid).and_return(mock_lead(:update_attributes => false))
         put :update, :id => @uuid
         assigns(:lead).should equal(mock_lead)
       end
 
       it "should re-render the 'edit' template" do
-        Lead.stub!(:find_by_uuid).with(@uuid).and_return(mock_lead(:update_attributes => false))
+        Lead.stub!(:find).with(@uuid).and_return(mock_lead(:update_attributes => false))
         put :update, :id => @uuid
         response.should render_template('edit')
       end
@@ -187,14 +187,14 @@ describe LeadsController do
   describe "responding to DELETE destroy" do
 
     it "should destroy the requested lead" do
-      Lead.should_receive(:find_by_uuid).with(@uuid).and_return(mock_lead)
+      Lead.should_receive(:find).with(@uuid).and_return(mock_lead)
       mock_lead.should_receive(:destroy)
       mock_lead.should_receive(:full_name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
     end
   
     it "should redirect to the leads list" do
-      Lead.stub!(:find_by_uuid).with(@uuid).and_return(mock_lead(:destroy => true))
+      Lead.stub!(:find).with(@uuid).and_return(mock_lead(:destroy => true))
       mock_lead.should_receive(:full_name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
       response.should redirect_to(leads_url)

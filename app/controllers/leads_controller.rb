@@ -18,7 +18,7 @@ class LeadsController < ApplicationController
   # GET /leads/1.xml
   #----------------------------------------------------------------------------
   def show
-    @lead = Lead.find_by_uuid(params[:id])
+    @lead = Lead.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -43,7 +43,7 @@ class LeadsController < ApplicationController
   # GET /leads/1/edit
   #----------------------------------------------------------------------------
   def edit
-    @lead = Lead.find_by_uuid(params[:id])
+    @lead = Lead.find(params[:id])
   end
 
   # POST /leads
@@ -70,7 +70,7 @@ class LeadsController < ApplicationController
   # PUT /leads/1.xml
   #----------------------------------------------------------------------------
   def update
-    @lead = Lead.find_by_uuid(params[:id])
+    @lead = Lead.find(params[:id])
 
     respond_to do |format|
       if @lead.update_attributes(params[:lead])
@@ -88,7 +88,7 @@ class LeadsController < ApplicationController
   # DELETE /leads/1.xml
   #----------------------------------------------------------------------------
   def destroy
-    @lead = Lead.find_by_uuid(params[:id])
+    @lead = Lead.find(params[:id])
     @lead.destroy
 
     flash[:notice] = "Lead #{@lead.full_name} was successfully deleted."

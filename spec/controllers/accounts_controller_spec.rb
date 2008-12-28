@@ -36,7 +36,7 @@ describe AccountsController do
   describe "responding to GET show" do
   
     it "should expose the requested account as @account" do
-      Account.should_receive(:find_by_uuid).with(@uuid).and_return(mock_account)
+      Account.should_receive(:find).with(@uuid).and_return(mock_account)
       get :show, :id => @uuid
       assigns[:account].should equal(mock_account)
     end
@@ -45,7 +45,7 @@ describe AccountsController do
   
       it "should render the requested account as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Account.should_receive(:find_by_uuid).with(@uuid).and_return(mock_account)
+        Account.should_receive(:find).with(@uuid).and_return(mock_account)
         mock_account.should_receive(:to_xml).and_return("generated XML")
         get :show, :id => @uuid
         response.body.should == "generated XML"
@@ -71,7 +71,7 @@ describe AccountsController do
   describe "responding to GET edit" do
   
     it "should expose the requested account as @account" do
-      Account.should_receive(:find_by_uuid).with(@uuid).and_return(mock_account)
+      Account.should_receive(:find).with(@uuid).and_return(mock_account)
       get :edit, :id => @uuid
       assigns[:account].should equal(mock_account)
     end
@@ -131,19 +131,19 @@ describe AccountsController do
     describe "with valid params" do
   
       it "should update the requested account" do
-        Account.should_receive(:find_by_uuid).with(@uuid).and_return(mock_account)
+        Account.should_receive(:find).with(@uuid).and_return(mock_account)
         mock_account.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => @uuid, :account => {:these => 'params'}
       end
   
       it "should expose the requested account as @account" do
-        Account.stub!(:find_by_uuid).with(@uuid).and_return(mock_account(:update_attributes => true))
+        Account.stub!(:find).with(@uuid).and_return(mock_account(:update_attributes => true))
         put :update, :id => @uuid
         assigns(:account).should equal(mock_account)
       end
   
       it "should redirect to the account" do
-        Account.stub!(:find_by_uuid).with(@uuid).and_return(mock_account(:update_attributes => true))
+        Account.stub!(:find).with(@uuid).and_return(mock_account(:update_attributes => true))
         put :update, :id => @uuid
         response.should redirect_to(account_url(mock_account))
       end
@@ -153,19 +153,19 @@ describe AccountsController do
     describe "with invalid params" do
   
       it "should update the requested account" do
-        Account.should_receive(:find_by_uuid).with(@uuid).and_return(mock_account)
+        Account.should_receive(:find).with(@uuid).and_return(mock_account)
         mock_account.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => @uuid, :account => {:these => 'params'}
       end
   
       it "should expose the account as @account" do
-        Account.stub!(:find_by_uuid).with(@uuid).and_return(mock_account(:update_attributes => false))
+        Account.stub!(:find).with(@uuid).and_return(mock_account(:update_attributes => false))
         put :update, :id => @uuid
         assigns(:account).should equal(mock_account)
       end
   
       it "should re-render the 'edit' template" do
-        Account.stub!(:find_by_uuid).with(@uuid).and_return(mock_account(:update_attributes => false))
+        Account.stub!(:find).with(@uuid).and_return(mock_account(:update_attributes => false))
         put :update, :id => @uuid
         response.should render_template('edit')
       end
@@ -177,14 +177,14 @@ describe AccountsController do
   describe "responding to DELETE destroy" do
   
     it "should destroy the requested account" do
-      Account.should_receive(:find_by_uuid).with(@uuid).and_return(mock_account)
+      Account.should_receive(:find).with(@uuid).and_return(mock_account)
       mock_account.should_receive(:destroy)
       mock_account.should_receive(:name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
     end
   
     it "should redirect to the accounts list" do
-      Account.stub!(:find_by_uuid).with(@uuid).and_return(mock_account(:destroy => true))
+      Account.stub!(:find).with(@uuid).and_return(mock_account(:destroy => true))
       mock_account.should_receive(:name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
       response.should redirect_to(accounts_url)

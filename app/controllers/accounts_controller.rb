@@ -18,7 +18,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1.xml
   #----------------------------------------------------------------------------
   def show
-    @account = Account.find_by_uuid(params[:id])
+    @account = Account.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,7 +42,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1/edit
   #----------------------------------------------------------------------------
   def edit
-    @account = Account.find_by_uuid(params[:id])
+    @account = Account.find(params[:id])
   end
 
   # POST /accounts
@@ -68,7 +68,7 @@ class AccountsController < ApplicationController
   # PUT /accounts/1.xml
   #----------------------------------------------------------------------------
   def update
-    @account = Account.find_by_uuid(params[:id])
+    @account = Account.find(params[:id])
 
     respond_to do |format|
       if @account.update_attributes(params[:account])
@@ -86,7 +86,7 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1.xml
   #----------------------------------------------------------------------------
   def destroy
-    @account = Account.find_by_uuid(params[:id])
+    @account = Account.find(params[:id])
     @account.destroy
 
     flash[:notice] = "Account #{@account.name} was successfully deleted."
