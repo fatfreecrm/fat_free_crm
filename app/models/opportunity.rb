@@ -30,4 +30,10 @@ class Opportunity < ActiveRecord::Base
 
   validates_presence_of :name, :message => "^Please specify the opportunity name."
   validates_uniqueness_of :name, :scope => :user_id
+
+  #----------------------------------------------------------------------------
+  def weighted_amount
+    (amount * probability) / 100
+  end
+
 end

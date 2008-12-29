@@ -1,0 +1,35 @@
+- content_for :styles do
+  %style
+    - Setting.opportunity_stage_color.each do |key, value|
+      == .#{key} { background:#{value}; }
+
+.title_menu= link_to "Create New Opportunity", new_opportunity_path
+.title Opportunities
+
+.list
+  - unless @opportunities.empty?
+    - for opportunity in @opportunities
+      %li{ highlightable(dom_id(opportunity)) }
+        - if opportunity.stage
+          .strip{:class => opportunity.stage}= Setting.opportunity_stage[opportunity.stage.intern]
+        - else
+          .strip &nbsp;
+        %div
+          .tools[opportunity]{ hidden }
+            = link_to(image_tag("edit_12x12.png", :title => "Edit opportunity: #{h(opportunity.name)}"), edit_opportunity_path(opportunity))
+          = link_to(opportunity.name, opportunity)
+          %tt
+            &ndash; not yet
+          %dt
+            = "not yet | "
+            == added #{time_ago_in_words(opportunity.created_at)} ago
+  - else
+    %div== You don't have any opportunities yet. Feel free to #{link_to("create new opportunity", new_opportunity_path)}.
+
+/ # <% for opportunity in @opportunities %>
+/ #   <tr>
+/ #     <td><%= link_to 'Show', opportunity %></td>
+/ #     <td><%= link_to 'Edit', edit_opportunity_path(opportunity) %></td>
+/ #     <td><%= link_to 'Destroy', opportunity, :confirm => 'Are you sure?', :method => :delete %></td>
+/ #   </tr>
+/ # <% end %>

@@ -105,7 +105,7 @@ account4:
   updated_at: <%= starts + rand(5).days %>
 
 <% 
-  for i in (5..15) do 
+  for i in (5 .. rand(10) + 15) do 
 %>
 account<%= i %>:
   id: <%= i %>
