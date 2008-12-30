@@ -10,7 +10,7 @@ class CreateOpportunities < ActiveRecord::Migration
       t.string      :stage,   :limit => 32
       t.integer     :probability
       t.decimal     :amount,           :precision => 12, :scale => 2
-      t.date        :close_on
+      t.date        :closes_on
       t.text        :notes
       t.datetime    :deleted_at
       t.timestamps

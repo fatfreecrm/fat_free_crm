@@ -19,10 +19,14 @@
             = link_to(image_tag("edit_12x12.png", :title => "Edit opportunity: #{h(opportunity.name)}"), edit_opportunity_path(opportunity))
           = link_to(opportunity.name, opportunity)
           %tt
-            &ndash; not yet
+            &ndash;
+            == added #{time_ago_in_words(opportunity.created_at)} ago by
+            == #{opportunity.user.id == @current_user.id ? "me" : opportunity.user.full_name}
           %dt
-            = "not yet | "
-            == added #{time_ago_in_words(opportunity.created_at)} ago
+            %b= number_to_currency(opportunity.weighted_amount, :precision => 0) << " | "
+            - unless %w(won lost).include?(opportunity.stage)
+              =  number_to_currency(opportunity.amount, :precision => 0) << " with #{opportunity.probability}% probability |"
+            == expected to close in #{distance_of_time_in_words(Date.today, opportunity.closes_on)}
   - else
     %div== You don't have any opportunities yet. Feel free to #{link_to("create new opportunity", new_opportunity_path)}.
 

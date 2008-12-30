@@ -1,14 +1,11 @@
 module MySQL_UUID
 
-  #----------------------------------------------------------------------------
   def self.included(base)
     base.extend(ClassMethods)
   end
 
-  #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   module ClassMethods
 
-    #--------------------------------------------------------------------------
     def uses_mysql_uuid
       # Don't let ActiveRecord call this twice.
       include InstanceMethods unless already_uses_mysql_uuid?
@@ -24,6 +21,10 @@ module MySQL_UUID
   #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   module InstanceMethods
 
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+
     # Override default :id with :uuid for the model so it shows up in URLs.
     #--------------------------------------------------------------------------
     def to_param
@@ -38,11 +39,17 @@ module MySQL_UUID
       success
     end
 
-    # Determine whether to call regular find() or find_by_uuid().
-    #--------------------------------------------------------------------------
-    def find(*args)
-      finder = (args.first =~ /\A[a-f\d\-]{36}\Z/ ? :fin_by_uuid : :find)
-      send(finder, *args)
+    module ClassMethods
+      # Determine whether to call regular find() or find_by_uuid().
+      #--------------------------------------------------------------------------
+      def find(*args)
+        if args.first =~ /\A[a-f\d\-]{36}\Z/
+          send(:find_by_uuid, *args)
+        else
+          super(*args)
+        end
+      end
+
     end
 
   end

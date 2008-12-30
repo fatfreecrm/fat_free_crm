@@ -1,3 +1,8 @@
+Mon, Dec 29, 2008
+---------------------------------------------------------------------
+- More work on opportunity index page.
+- Fixed find() class override in [uses_mysql_uuid] plugin.
+
 Sun, Dec 28, 2008
 ---------------------------------------------------------------------
 - Added opportunity stage settings and colors.

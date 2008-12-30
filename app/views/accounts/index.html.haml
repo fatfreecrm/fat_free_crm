@@ -10,7 +10,7 @@
   - unless @accounts.empty?
     - for account in @accounts
       :ruby
-        amount = rand(1_000_000);  amount = nil if amount % 2 == 0
+        amount = (rand(100) + 20) * 10_000;  amount = nil if amount / 10_000 % 2 == 0
         leads = rand(100)
         contacts = rand(100)
         opportunities = rand(10)
