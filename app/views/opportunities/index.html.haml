@@ -16,7 +16,9 @@
           .strip &nbsp;
         %div
           .tools[opportunity]{ hidden }
-            = link_to(image_tag("edit_12x12.png", :title => "Edit opportunity: #{h(opportunity.name)}"), edit_opportunity_path(opportunity))
+            = link_to(image_tag("information.png", :title => "View #{h(opportunity.name)}"), opportunity_path(opportunity))
+            = link_to(image_tag("tick_circle.png", :title => "Edit #{h(opportunity.name)}"), edit_opportunity_path(opportunity))
+            = link_to(image_tag("cross_circle.png", :title => "Delete #{h(opportunity.name)}"), "#")
           = link_to(opportunity.name, opportunity)
           %tt
             &ndash;

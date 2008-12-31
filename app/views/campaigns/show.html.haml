@@ -1,6 +1,6 @@
 #confirm{ hidden }
 .title_menu#menu
-  = link_to("Back to List of Campaigns", campaigns_path) + " | "
+  = link_to("List", campaigns_path) + " | "
   = link_to("Edit", edit_campaign_path(@campaign)) + " | "
   = link_to_function("Delete?", confirm_delete(@campaign))
 .title= @campaign.name

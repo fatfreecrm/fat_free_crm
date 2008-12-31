@@ -21,7 +21,9 @@
           .strip.none None
         %div
           .tools[account]{ hidden }
-            = link_to(image_tag("edit_12x12.png", :title => "Edit account: #{h(account.name)}"), edit_account_path(account))
+            = link_to(image_tag("information.png", :title => "View #{h(account.name)}"), account_path(account))
+            = link_to(image_tag("tick_circle.png", :title => "Edit #{h(account.name)}"), edit_account_path(account))
+            = link_to(image_tag("cross_circle.png", :title => "Delete #{h(account.name)}"), "#")
           = link_to(account.name, account) << " &ndash; "
           %tt
             = account.location << ", " if account.location

@@ -98,10 +98,11 @@ class LeadsController < ApplicationController
     end
   end
 
-  # POST /leads/1
-  # POST /leads/1.xml
+  # GET /leads/1/convert
+  # GET /leads/1/convert.xml
   #----------------------------------------------------------------------------
   def convert
+    @lead = Lead.find(params[:id])
   end
 
 end

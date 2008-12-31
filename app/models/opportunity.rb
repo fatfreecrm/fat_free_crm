@@ -8,12 +8,13 @@
 #  user_id     :integer(4)
 #  account_id  :integer(4)      not null
 #  campaign_id :integer(4)
+#  assigned_to :integer(4)
 #  name        :string(64)      default(""), not null
 #  source      :string(32)
 #  stage       :string(32)
 #  probability :integer(4)
 #  amount      :decimal(12, 2)
-#  close_on    :date
+#  closes_on   :date
 #  notes       :text
 #  deleted_at  :datetime
 #  created_at  :datetime
