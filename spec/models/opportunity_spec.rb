@@ -24,9 +24,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Opportunity do
   before(:each) do
-    @account = mock_model(Account)
     @valid_attributes = {
-      :account_id => @account.id,
       :name => "Excellent Opportunity"
     }
   end

@@ -4,6 +4,8 @@ describe "/contacts/new.html.erb" do
   include ContactsHelper
   
   before(:each) do
+    assigns[:current_user] = mock_model(User)
+    assigns[:users] = [ mock_model(User, :full_name => "Joe Spec") ]
     assigns[:contact] = stub_model(Contact,
       :new_record? => true
     )
