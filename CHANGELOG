@@ -1,3 +1,12 @@
+Thu, Jan 1, 2009 -- Happy New Year!
+---------------------------------------------------------------------
+- Created [account_contacts], [account_opportunities], and [contact_opportunities] join tables.
+- Implemented HTML designs and JavaScript for [Lead/Convert] and [Contact/New] forms (with backend stubs).
+
+Wed, Dec 31, 2008
+---------------------------------------------------------------------
+- More design work on [Lead/Convert] and [Contact/New] forms.
+
 Tue, Dec 30, 2008
 ---------------------------------------------------------------------
 - Added new view/edit/delete icons, started with [Lead/Convert].

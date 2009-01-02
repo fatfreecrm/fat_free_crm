@@ -10,7 +10,8 @@ class HomeController < ApplicationController
   #----------------------------------------------------------------------------
   def toggle_form_section
     uri = URI.parse(request.env["HTTP_REFERER"])
-    key = (params[:id] + uri.path).gsub("/", "_").intern
+    path = uri.path.split("/")
+    key = "#{params[:id]}_#{path[1]}_#{path[-1]}".intern
 
     render :update do |page|
       if params[:visible] == "false"                          # show

@@ -1,12 +1,11 @@
 # == Schema Information
-# Schema version: 11
+# Schema version: 14
 #
 # Table name: opportunities
 #
 #  id          :integer(4)      not null, primary key
 #  uuid        :string(36)
 #  user_id     :integer(4)
-#  account_id  :integer(4)      not null
 #  campaign_id :integer(4)
 #  assigned_to :integer(4)
 #  name        :string(64)      default(""), not null
@@ -32,7 +31,6 @@
 opportunity_<%= i %>:
   id          : <%= i %>
   user_id     : <%= rand(5) + 1 %>
-  account_id  : <%= rand(5) + 1 %>
   campaign_id : <%= (rand(5) + 1) if i > 10 %>
   assigned_to : <%= rand(5) + 1 %>
   name        : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "") %>

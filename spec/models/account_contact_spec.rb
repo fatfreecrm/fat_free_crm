@@ -1,27 +1,25 @@
 # == Schema Information
 # Schema version: 14
 #
-# Table name: permissions
+# Table name: account_contacts
 #
 #  id         :integer(4)      not null, primary key
-#  user_id    :integer(4)
-#  asset_id   :integer(4)
-#  asset_type :string(255)
+#  account_id :integer(4)
+#  contact_id :integer(4)
+#  deleted_at :datetime
 #  created_at :datetime
 #  updated_at :datetime
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Permission do
+describe AccountContact do
   before(:each) do
     @valid_attributes = {
-      :user => mock_model(User),
-      :asset => mock_model(Account)
     }
   end
 
   it "should create a new instance given valid attributes" do
-    Permission.create!(@valid_attributes)
+    AccountContact.create!(@valid_attributes)
   end
 end

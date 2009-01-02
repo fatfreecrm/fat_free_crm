@@ -31,6 +31,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @contact = Contact.new
+    @users = User.all_except(@current_user) # to manage account permissions
 
     respond_to do |format|
       format.html # new.html.erb
@@ -49,6 +50,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @contact = Contact.new(params[:contact])
+    @users = User.all_except(@current_user)
 
     respond_to do |format|
       if @contact.save

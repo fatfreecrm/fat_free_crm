@@ -74,7 +74,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.update_attributes(params[:lead])
-        flash[:notice] = "Lead #{@lead.full_name}was successfully updated."
+        flash[:notice] = "Lead #{@lead.full_name} was successfully updated."
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }
       else
@@ -103,6 +103,28 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def convert
     @lead = Lead.find(params[:id])
+    @users = User.all_except(@current_user)
+    @accounts = Account.find(:all, :order => "name")
+  end
+
+  # PUT /leads/1/convert
+  # PUT /leads/1/convert.xml
+  #----------------------------------------------------------------------------
+  def promote
+    @lead = Lead.find(params[:id])
+    @users = User.all_except(@current_user)
+    @accounts = Account.find(:all, :order => "name")
+
+    respond_to do |format|
+      if @lead.update_attributes(params[:lead])
+        flash[:notice] = "Lead #{@lead.full_name} was successfully converted."
+        format.html { redirect_to(@lead) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "convert" }
+        format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
 end

@@ -15,6 +15,7 @@ class CreateContacts < ActiveRecord::Migration
       t.string      :alt_email,   :limit => 64
       t.string      :phone,       :limit => 32
       t.string      :mobile,      :limit => 32
+      t.string      :fax,         :limit => 32
       t.string      :blog,        :limit => 128
       t.string      :linkedin,    :limit => 128
       t.string      :facebook,    :limit => 128

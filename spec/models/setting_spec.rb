@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 11
+# Schema version: 14
 #
 # Table name: settings
 #

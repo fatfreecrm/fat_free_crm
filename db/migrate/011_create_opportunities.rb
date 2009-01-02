@@ -3,7 +3,6 @@ class CreateOpportunities < ActiveRecord::Migration
     create_table :opportunities, :force => true do |t|
       t.string      :uuid,    :limit => 36
       t.references  :user
-      t.references  :account, :null => false
       t.references  :campaign
       t.integer     :assigned_to
       t.string      :name,    :limit => 64, :null => false, :default => ""

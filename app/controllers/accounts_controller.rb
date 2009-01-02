@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_filter :require_user
-  before_filter { |filter| filter.send(:set_current_tab, :accounts) }
+  before_filter "set_current_tab(:accounts)"
 
   # GET /accounts
   # GET /accounts.xml

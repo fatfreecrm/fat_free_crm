@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 11
+# Schema version: 14
 #
 # Table name: accounts
 #
@@ -22,7 +22,8 @@
 
 class Account < ActiveRecord::Base
   belongs_to :user
-  has_many :opportunities
+  has_many :contacts, :through => :account_contacts
+  has_many :opportunities, :through => :account_opportunities
   has_many :permissions, :as => :asset, :include => :user
   uses_mysql_uuid
   acts_as_paranoid

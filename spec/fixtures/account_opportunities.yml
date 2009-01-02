@@ -1,0 +1,20 @@
+# == Schema Information
+# Schema version: 14
+#
+# Table name: account_opportunities
+#
+#  id             :integer(4)      not null, primary key
+#  account_id     :integer(4)
+#  opportunity_id :integer(4)
+#  deleted_at     :datetime
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value

@@ -1,12 +1,11 @@
 # == Schema Information
-# Schema version: 11
+# Schema version: 14
 #
 # Table name: opportunities
 #
 #  id          :integer(4)      not null, primary key
 #  uuid        :string(36)
 #  user_id     :integer(4)
-#  account_id  :integer(4)      not null
 #  campaign_id :integer(4)
 #  assigned_to :integer(4)
 #  name        :string(64)      default(""), not null
@@ -25,6 +24,7 @@ class Opportunity < ActiveRecord::Base
   belongs_to :user
   belongs_to :account
   belongs_to :campaign
+  has_many :contacts, :through => :contact_opportunities
   uses_mysql_uuid
   acts_as_paranoid
 

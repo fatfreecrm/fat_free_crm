@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 11
+# Schema version: 14
 #
 # Table name: contacts
 #
@@ -18,6 +18,7 @@
 #  alt_email   :string(64)
 #  phone       :string(32)
 #  mobile      :string(32)
+#  fax         :string(32)
 #  blog        :string(128)
 #  linkedin    :string(128)
 #  facebook    :string(128)
