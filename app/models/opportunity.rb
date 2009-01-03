@@ -13,6 +13,7 @@
 #  stage       :string(32)
 #  probability :integer(4)
 #  amount      :decimal(12, 2)
+#  discount    :decimal(12, 2)
 #  closes_on   :date
 #  notes       :text
 #  deleted_at  :datetime
@@ -30,6 +31,7 @@ class Opportunity < ActiveRecord::Base
 
   validates_presence_of :name, :message => "^Please specify the opportunity name."
   validates_uniqueness_of :name, :scope => :user_id
+  validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
 
   #----------------------------------------------------------------------------
   def weighted_amount

@@ -37,6 +37,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Contact do
   before(:each) do
     @valid_attributes = {
+      :first_name => "Joe",
+      :last_name => "Spec"
     }
   end
 

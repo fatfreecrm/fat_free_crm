@@ -1,15 +1,16 @@
 class CreateOpportunities < ActiveRecord::Migration
   def self.up
     create_table :opportunities, :force => true do |t|
-      t.string      :uuid,    :limit => 36
+      t.string      :uuid,     :limit => 36
       t.references  :user
       t.references  :campaign
       t.integer     :assigned_to
-      t.string      :name,    :limit => 64, :null => false, :default => ""
-      t.string      :source,  :limit => 32
-      t.string      :stage,   :limit => 32
+      t.string      :name,     :limit => 64, :null => false, :default => ""
+      t.string      :source,   :limit => 32
+      t.string      :stage,    :limit => 32
       t.integer     :probability
-      t.decimal     :amount,           :precision => 12, :scale => 2
+      t.decimal     :amount,   :precision => 12, :scale => 2
+      t.decimal     :discount, :precision => 12, :scale => 2
       t.date        :closes_on
       t.text        :notes
       t.datetime    :deleted_at

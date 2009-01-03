@@ -5,7 +5,7 @@
     Contact permissions will be copied from the lead being converted. You can change contact permissions later.
   #permissions{ hidden_if(collapsed) }
     .radio_box
-      = radio_button_tag "lead[access]", "Convert", true, { :onclick => "$('people').hide()" }
+      = radio_button_tag "lead[access]", "Lead", true, { :onclick => "$('people').hide()" }
       Copy lead permissions
     .radio_box
       = radio_button_tag "lead[access]", "Private", false, :onclick => "$('people').hide()"

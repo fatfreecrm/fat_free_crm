@@ -29,7 +29,7 @@ class Account < ActiveRecord::Base
   acts_as_paranoid
 
   validates_presence_of :name, :message => "^Please specify account name."
-  validates_uniqueness_of :name, :scope => :user_id
+  validates_uniqueness_of :name
 
   # Make sure at least one user has been selected if the account is being shared.
   #----------------------------------------------------------------------------
@@ -52,6 +52,33 @@ class Account < ActiveRecord::Base
     return "" unless self[:billing_address]
     location = self[:billing_address].strip.split("\n").last
     location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ") if location
+  end
+
+  # Class methods.
+  #----------------------------------------------------------------------------
+  def self.create_for_lead(lead, params)
+    if params[:request] == "select"                   # Select existing account.
+      account = Account.find(params[:account])
+    elsif params[:request] == "create"                # Create new account.
+      account = Account.new(
+        :name    => params[:account_name],
+        :user_id => params[:lead][:user_id],
+        :access  => params[:lead][:access] == "Lead" ? lead.access : params[:lead][:access]
+      )
+      if params[:access] == "Shared"
+        params[:users].each do |id|
+          account.permissions << Permission.new(:user_id => id, :asset => account)
+        end
+      else
+        if params[:access] == "Lead" && lead.access == "Shared" # Copy lead permissions.
+          lead.permissions.each do |permission|
+            account.permissions << Permission.new(:user_id => permission.user_id, :asset => account)
+          end
+        end
+      end
+      account.save
+    end
+    account
   end
 
 end

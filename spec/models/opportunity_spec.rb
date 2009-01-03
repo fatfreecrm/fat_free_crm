@@ -13,6 +13,7 @@
 #  stage       :string(32)
 #  probability :integer(4)
 #  amount      :decimal(12, 2)
+#  discount    :decimal(12, 2)
 #  closes_on   :date
 #  notes       :text
 #  deleted_at  :datetime

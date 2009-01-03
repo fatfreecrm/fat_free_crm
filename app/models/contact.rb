@@ -34,13 +34,47 @@
 
 class Contact < ActiveRecord::Base
   belongs_to :user
+  has_many :permissions, :as => :asset, :include => :user
   has_many :accounts, :through => :account_contacts
   uses_mysql_uuid
   acts_as_paranoid
-  
+
+  validates_presence_of :first_name, :message => "^Please specify first name."
+  validates_presence_of :last_name, :message => "^Please specify last name."
+
   #----------------------------------------------------------------------------
   def full_name
     self.first_name << " " << self.last_name
+  end
+
+  # Class methods.
+  #----------------------------------------------------------------------------
+  def self.convert_from_lead(lead, account, params)
+    attributes = {
+      :user_id     => params[:lead][:user_id],
+      :assigned_to => params[:lead][:assigned_to],
+      :access      => params[:lead][:access] == "Lead" ? lead.access : params[:lead][:access]
+    }
+    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter address do_not_call notes).each do |name|
+      attributes[name] = lead.send(name.intern)
+    end
+    contact = Contact.new(attributes)
+
+    if params[:access] == "Shared"
+      params[:users].each do |id|
+        contact.permissions << Permission.new(:user_id => id, :asset => contact)
+      end
+    else
+      if params[:access] == "Lead" && lead.access == "Shared" # Copy lead permissions.
+        lead.permissions.each do |permission|
+          contact.permissions << Permission.new(:user_id => permission.user_id, :asset => contact)
+        end
+      end
+    end
+    contact.save
+
+    AccountContact.create(:account => account, :contact => contact)
+    contact
   end
 
 end

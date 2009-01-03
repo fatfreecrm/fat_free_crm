@@ -116,7 +116,7 @@ class LeadsController < ApplicationController
     @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
-      if @lead.update_attributes(params[:lead])
+      if @lead.promote(params)
         flash[:notice] = "Lead #{@lead.full_name} was successfully converted."
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }

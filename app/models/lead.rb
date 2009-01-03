@@ -54,15 +54,39 @@ class Lead < ActiveRecord::Base
       self[:access] = campaign[:access]
       if campaign[:access] == "Shared"
         campaign.permissions.each do |permission|
-          logger.info permission.inspect
           self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
         end
-        logger.info self.permissions.inspect
       end
     elsif self[:access] == "Shared"
       users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
     end
     save
+  end
+
+  # Promote the lead by creating contact and optional opportunity. Upon
+  # successful promotion Lead status gets set to :converted.
+  #----------------------------------------------------------------------------
+  def promote(params)
+    account = Account.create_for_lead(self, params)
+    return false if validation_errors(account)
+
+    if !params[:opportunity].blank?
+      opportunity = Opportunity.create(
+        :name        => params[:opportunity],
+        :stage       => params[:stage],
+        :closes_on   => params[:closes_on],
+        :probability => params[:probability],
+        :amount      => params[:amount],
+        :discount    => params[:discount],
+        :user_id     => params[:lead][:user_id]
+      )
+      return false if validation_errors(opportunity)
+    end
+
+    contact = Contact.convert_from_lead(self, account, params)
+    return false if validation_errors(contact)
+
+    self.update_attributes(:status => "converted")
   end
 
   #----------------------------------------------------------------------------
@@ -77,6 +101,16 @@ class Lead < ActiveRecord::Base
       Campaign.increment_counter(:actual_leads, self.campaign_id)
       Campaign.update(self.campaign_id, { :actual_conversion => Lead.converted.count * 100.0 / Lead.count })
     end
+  end
+
+  # Copies validation errors from other object to self. Returns true if there
+  # are errors, false otherwise.
+  #----------------------------------------------------------------------------
+  def validation_errors(model)
+    model.errors.each do |key, value|
+      self.errors.add(key, value)
+    end
+    self.errors.size > 0
   end
 
 end

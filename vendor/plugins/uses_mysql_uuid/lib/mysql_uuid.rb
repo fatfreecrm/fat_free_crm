@@ -35,7 +35,7 @@ module MySQL_UUID
     #--------------------------------------------------------------------------
     def save(*args)
       success = super(*args)
-      self.uuid = self.class.find(self.id, :select => :uuid).uuid unless self.uuid?
+      self.uuid = self.class.find(self.id, :select => :uuid).uuid if self.id && !self.uuid?
       success
     end
 

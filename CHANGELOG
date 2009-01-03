@@ -1,3 +1,9 @@
+Fri, Jan 2, 2009
+---------------------------------------------------------------------
+- Implemented backend for [Lead/Convert] - create contact along with optional account and opportunity.
+- Fixed [uses_mysql_uuid] to work with AR validations.
+- Minor database schema changes.
+
 Thu, Jan 1, 2009 -- Happy New Year!
 ---------------------------------------------------------------------
 - Created [account_contacts], [account_opportunities], and [contact_opportunities] join tables.

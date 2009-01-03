@@ -17,8 +17,12 @@
     }
 
 - content_for :javascript_epilogue do
-  :javascript
+  <script type="text/javascript">
+  - if @lead.errors && @lead.errors.on(:name)
+    create_account();
+  - else
     select_account();
+  </script>
 
 .form
   - form_for(@lead, :url => promote_lead_path(@lead)) do |f|
