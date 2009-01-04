@@ -1,3 +1,7 @@
+Sat, Jan 3, 2009
+---------------------------------------------------------------------
+- Refactoring of [Lead/Convert] using [fields_for].
+
 Fri, Jan 2, 2009
 ---------------------------------------------------------------------
 - Implemented backend for [Lead/Convert] - create contact along with optional account and opportunity.

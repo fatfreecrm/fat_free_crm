@@ -67,6 +67,7 @@ class Lead < ActiveRecord::Base
   # successful promotion Lead status gets set to :converted.
   #----------------------------------------------------------------------------
   def promote(params)
+    return true # stub
     account = Account.create_for_lead(self, params)
     return false if validation_errors(account)
 

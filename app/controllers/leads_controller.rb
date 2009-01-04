@@ -105,6 +105,8 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
     @accounts = Account.find(:all, :order => "name")
+    @account = Account.new
+    @opportunity = Opportunity.new
   end
 
   # PUT /leads/1/convert

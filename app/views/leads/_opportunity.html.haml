@@ -5,37 +5,38 @@
   = javascript_include_tag "calendar_date_select/format_american.js", :cache => true
 - content_for :javascript_epilogue do
   :javascript
-    crm.date_select_popup("closes_on");
+    crm.date_select_popup("opportunity_closes_on");
 
-.subtitle Opportunity
-.section
-  %small
-    == You can optionally create an opportunity for the #{@lead.full_name} contact by specifying the name, 
-    current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
-    %tr
-      %td{ :valign => :top }
-        .label Name:
-        = text_field_tag :opportunity, "", :style => "width:325px"
-      %td= spacer
-      %td{ :valign => :top }
-        .label Stage:
-        = select_tag :stage, options_for_select(Setting.opportunity_stage.invert.sort), { :style => "width:160px" }
+- fields_for(@opportunity) do |o|
+  .subtitle Opportunity
+  .section
+    %small
+      == You can optionally create an opportunity for the #{@lead.full_name} contact by specifying the name, 
+      current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+    %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td{ :valign => :top }
+          .label Name:
+          = o.text_field :name, :style => "width:325px"
+        %td= spacer
+        %td{ :valign => :top }
+          .label Stage:
+          = o.select :stage, Setting.opportunity_stage.invert.sort, { :selected => :prospecting }, { :style => "width:160px" }
 
-  %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
-    %tr
-      %td{ :valign => :top }
-        .label Close date:
-        = text_field_tag :closes_on, "", :style => "width:110px;", :autocomplete => :off
-      %td= spacer
-      %td{ :valign => :top }
-        .label Probability (%):
-        = text_field_tag :probability, "", :style => "width:110px; text-align:right;"
-      %td= spacer
-      %td{ :valign => :top }
-        .label Amount ($):
-        = text_field_tag :amount, "", :style => "width:110px; text-align:right;"
-      %td= spacer
-      %td{ :valign => :top }
-        .label Discount ($):
-        = text_field_tag :discount, "", :style => "width:110px; text-align:right;"
+    %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td{ :valign => :top }
+          .label Close date:
+          = o.text_field :closes_on, :style => "width:110px;", :autocomplete => :off
+        %td= spacer
+        %td{ :valign => :top }
+          .label Probability (%):
+          = o.text_field :probability, :style => "width:110px; text-align:right;"
+        %td= spacer
+        %td{ :valign => :top }
+          .label Amount ($):
+          = o.text_field :amount, :style => "width:110px; text-align:right;"
+        %td= spacer
+        %td{ :valign => :top }
+          .label Discount ($):
+          = o.text_field :discount, :style => "width:110px; text-align:right;"
