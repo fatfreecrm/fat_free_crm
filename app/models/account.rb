@@ -46,6 +46,18 @@ class Account < ActiveRecord::Base
     save
   end
 
+  # Save the account copying lead permissions.
+  #----------------------------------------------------------------------------
+  def save_with_lead_permissions(lead)
+    self.access = lead.access
+    if lead.access == "Shared"
+      lead.permissions.each do |permission|
+        self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
+      end
+    end
+    save
+  end
+
   # Extract last line of billing address and get rid of numeric zipcode.
   #----------------------------------------------------------------------------
   def location
@@ -56,27 +68,16 @@ class Account < ActiveRecord::Base
 
   # Class methods.
   #----------------------------------------------------------------------------
-  def self.create_for_lead(lead, params)
-    if params[:request] == "select"                   # Select existing account.
-      account = Account.find(params[:account])
-    elsif params[:request] == "create"                # Create new account.
-      account = Account.new(
-        :name    => params[:account_name],
-        :user_id => params[:lead][:user_id],
-        :access  => params[:lead][:access] == "Lead" ? lead.access : params[:lead][:access]
-      )
-      if params[:access] == "Shared"
-        params[:users].each do |id|
-          account.permissions << Permission.new(:user_id => id, :asset => account)
-        end
+  def self.create_or_select_for_lead(lead, params, users)
+    if !params[:id].blank?
+      account = Account.find(params[:id])
+    else
+      account = Account.new(params)
+      if account.access != "Lead"
+        account.save_with_permissions(users)
       else
-        if params[:access] == "Lead" && lead.access == "Shared" # Copy lead permissions.
-          lead.permissions.each do |permission|
-            account.permissions << Permission.new(:user_id => permission.user_id, :asset => account)
-          end
-        end
+        account.save_with_lead_permissions(lead)
       end
-      account.save
     end
     account
   end

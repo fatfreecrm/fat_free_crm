@@ -106,7 +106,8 @@ class LeadsController < ApplicationController
     @users = User.all_except(@current_user)
     @accounts = Account.find(:all, :order => "name")
     @account = Account.new(:user => @current_user, :access => "Lead")
-    @opportunity = Opportunity.new(:user => @current_user, :access => "Lead")
+    @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
+    @contact = Contact.new
   end
 
   # PUT /leads/1/convert
@@ -115,16 +116,18 @@ class LeadsController < ApplicationController
   def promote
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
-    @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
-      if @lead.promote(params)
+      @account, @opportunity, @contact = @lead.promote(params)
+      @accounts = Account.find(:all, :order => "name")
+      if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
+        @lead.update_attributes(:status => "converted")
         flash[:notice] = "Lead #{@lead.full_name} was successfully converted."
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }
       else
         format.html { render :action => "convert" }
-        format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
       end
     end
   end

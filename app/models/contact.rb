@@ -47,33 +47,47 @@ class Contact < ActiveRecord::Base
     self.first_name << " " << self.last_name
   end
 
+  # Save the contact along with its permissions if any.
+  #----------------------------------------------------------------------------
+  def save_with_permissions(users)
+    if users && self[:access] == "Shared"
+      users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
+    end
+    save
+  end
+
+  # Save the contact copying lead permissions.
+  #----------------------------------------------------------------------------
+  def save_with_lead_permissions(lead)
+    self.access = lead.access
+    if lead.access == "Shared"
+      lead.permissions.each do |permission|
+        self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
+      end
+    end
+    save
+  end
+
   # Class methods.
   #----------------------------------------------------------------------------
   def self.convert_from_lead(lead, account, params)
     attributes = {
-      :user_id     => params[:lead][:user_id],
-      :assigned_to => params[:lead][:assigned_to],
-      :access      => params[:lead][:access] == "Lead" ? lead.access : params[:lead][:access]
+      :user_id     => params[:account][:user_id],
+      :assigned_to => params[:account][:assigned_to],
+      :access      => params[:access]
     }
     %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter address do_not_call notes).each do |name|
       attributes[name] = lead.send(name.intern)
     end
     contact = Contact.new(attributes)
 
-    if params[:access] == "Shared"
-      params[:users].each do |id|
-        contact.permissions << Permission.new(:user_id => id, :asset => contact)
-      end
+    if contact.access != "Lead"
+      contact.save_with_permissions(params[:users])
     else
-      if params[:access] == "Lead" && lead.access == "Shared" # Copy lead permissions.
-        lead.permissions.each do |permission|
-          contact.permissions << Permission.new(:user_id => permission.user_id, :asset => contact)
-        end
-      end
+      contact.save_with_lead_permissions(lead)
     end
-    contact.save
-
     AccountContact.create(:account => account, :contact => contact)
+    # TODO : save ContactOpportunity
     contact
   end
 
