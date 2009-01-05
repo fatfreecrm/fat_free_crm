@@ -3,6 +3,7 @@ class CreateAccounts < ActiveRecord::Migration
     create_table :accounts, :force => true do |t|
       t.string      :uuid, :limit => 36
       t.references  :user
+      t.integer     :assigned_to
       t.string      :name, :limit => 64, :null => false, :default => ""
       t.string      :access, :limit => 8, :default => "Private" # %w(Private Public Shared)
       t.string      :notes

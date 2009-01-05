@@ -5,16 +5,16 @@
     Contact permissions will be copied from the lead being converted. You can change contact permissions later.
   #permissions{ hidden_if(collapsed) }
     .radio_box
-      = radio_button_tag "lead[access]", "Lead", true, { :onclick => "$('people').hide()" }
+      = radio_button_tag "access", "Lead",    true,  :onclick => "$('people').hide(); $('account_access').value = 'Lead'"
       Copy lead permissions
     .radio_box
-      = radio_button_tag "lead[access]", "Private", false, :onclick => "$('people').hide()"
+      = radio_button_tag "access", "Private", false, :onclick => "$('people').hide(); $('account_access').value = 'Private'"
       Keep it private, do not share with others
     .radio_box
-      = radio_button_tag "lead[access]", "Public",  false, :onclick => "$('people').hide()"
+      = radio_button_tag "access", "Public",  false, :onclick => "$('people').hide(); $('account_access').value = 'Public'"
       Share it with everyone
     .radio_box
-      = radio_button_tag "lead[access]", "Shared",  false, :onclick => "$('people').show()"
+      = radio_button_tag "access", "Shared",  false, :onclick => "$('people').show(); $('account_access').value = 'Shared'"
       Share it with the following people
     #people{ hidden_if(@lead.access != "Shared") }
       %div{ :style => "padding: 6px 0px 0px 20px" }

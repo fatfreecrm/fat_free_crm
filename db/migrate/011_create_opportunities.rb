@@ -6,6 +6,7 @@ class CreateOpportunities < ActiveRecord::Migration
       t.references  :campaign
       t.integer     :assigned_to
       t.string      :name,     :limit => 64, :null => false, :default => ""
+      t.string      :access, :limit => 8, :default => "Private" # %w(Private Public Shared)
       t.string      :source,   :limit => 32
       t.string      :stage,    :limit => 32
       t.integer     :probability

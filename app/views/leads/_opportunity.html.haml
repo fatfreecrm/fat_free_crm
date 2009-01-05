@@ -8,6 +8,9 @@
     crm.date_select_popup("opportunity_closes_on");
 
 - fields_for(@opportunity) do |o|
+  = o.hidden_field :user_id
+  = o.hidden_field :access
+  = o.hidden_field :assigned_to
   .subtitle Opportunity
   .section
     %small

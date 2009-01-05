@@ -68,6 +68,7 @@ class Lead < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def promote(params)
     return true # stub
+
     account = Account.create_for_lead(self, params)
     return false if validation_errors(account)
 

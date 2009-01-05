@@ -27,6 +27,7 @@
 account1:
   id: 1
   user_id: 1
+  assigned_to : <%= rand(5) + 1 %>
   name: <%= company = Faker::Company.name %>
   access: Private
   notes: Met them at convention center last fall.
@@ -47,6 +48,7 @@ account1:
 account2:
   id: 2
   user_id: 1
+  assigned_to : <%= rand(5) + 1 %>
   name: <%= company = Faker::Company.name %>
   access: Private
   notes: These guys have been running their network marketing firm since 1990.
@@ -67,6 +69,7 @@ account2:
 account3:
   id: 3
   user_id: 2
+  assigned_to : <%= rand(5) + 1 %>
   name: <%= company = Faker::Company.name %>
   access: Shared
   notes: They have over 200 people working for them all over the world.
@@ -87,6 +90,7 @@ account3:
 account4:
   id: 4
   user_id: 2
+  assigned_to : <%= rand(5) + 1 %>
   name: <%= company = Faker::Company.name %>
   access: Shared
   notes: Design firm from Denmark that builds beautiful desktops. Very well known in northern Europe.
@@ -110,6 +114,7 @@ account4:
 account<%= i %>:
   id: <%= i %>
   user_id: 1
+  assigned_to : <%= rand(5) + 1 %>
   name: <%= company = Faker::Company.name %>
   access: Public
   notes: 

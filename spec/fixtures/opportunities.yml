@@ -35,6 +35,7 @@ opportunity_<%= i %>:
   campaign_id : <%= (rand(5) + 1) if i > 10 %>
   assigned_to : <%= rand(5) + 1 %>
   name        : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "") %>
+  access      : Public
   source      : <%= source[rand(source.size)] %>
   stage       : <%= the_stage = stage[rand(stage.size)] %>
   probability : <%= %w(won lost).include?(the_stage) ? 100 : (rand(8) + 1) * 10 %>
