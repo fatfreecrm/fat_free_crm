@@ -304,6 +304,7 @@ td.cell a:hover {
 
 .list li {
   border-bottom: 1px silver dotted; 
+  clear: both;
   color: #3f3f3f;
   font-size: 12px;
   list-style: none;
@@ -359,6 +360,16 @@ td.cell a:hover {
   padding: 1px 3px 1px 3px;
   text-align: right;
   width: 75px;
+}
+
+.longstrip {
+  color: black;
+  float: left;
+  font-size: 11px;
+  margin: 0px 5px 5px 0px;
+  padding: 1px 3px 1px 3px;
+  text-align: right;
+  width: 120px;
 }
 
 .tools {

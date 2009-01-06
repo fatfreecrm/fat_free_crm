@@ -48,7 +48,7 @@ class Contact < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def full_name
-    self.first_name << " " << self.last_name
+    self.first_name + " " + self.last_name
   end
 
   # Save the contact along with its permissions if any.
