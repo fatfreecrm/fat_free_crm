@@ -14,7 +14,7 @@ describe ContactsController do
   describe "responding to GET index" do
 
     it "should expose all contacts as @contacts" do
-      Contact.should_receive(:find).with(:all).and_return([mock_contact])
+      Contact.should_receive(:find).with(:all, :order => "id DESC").and_return([mock_contact])
       get :index
       assigns[:contacts].should == [mock_contact]
     end
@@ -23,7 +23,7 @@ describe ContactsController do
   
       it "should render all contacts as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Contact.should_receive(:find).with(:all).and_return(contacts = mock("Array of Contacts"))
+        Contact.should_receive(:find).with(:all, :order => "id DESC").and_return(contacts = mock("Array of Contacts"))
         contacts.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"

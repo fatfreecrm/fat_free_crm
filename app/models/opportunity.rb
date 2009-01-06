@@ -25,7 +25,10 @@ class Opportunity < ActiveRecord::Base
   belongs_to :user
   belongs_to :account
   belongs_to :campaign
-  has_many :contacts, :through => :contact_opportunities
+  has_many :account_opportunities
+  has_many :contact_opportunities
+  has_many :accounts, :through => :account_opportunities, :uniq => true
+  has_many :contacts, :through => :contact_opportunities, :uniq => true
   uses_mysql_uuid
   acts_as_paranoid
 
@@ -61,18 +64,18 @@ class Opportunity < ActiveRecord::Base
 
   # Class methods.
   #----------------------------------------------------------------------------
-  def self.create_for_lead(lead, params, users)
+  def self.create_for_lead(lead, account, params, users)
     opportunity = Opportunity.new(params)
 
-    unless opportunity.name.blank?
-      logger.info(">>>>SAVING opportunity")
+    # Save the opportunity if its name was specified and account has no errors.
+    if opportunity.name? && account.errors.empty?
+      opportunity.accounts << account unless account.id.blank?
       if opportunity.access != "Lead"
         opportunity.save_with_permissions(users)
       else
         opportunity.save_with_lead_permissions(lead)
       end
     end
-    # TODO : save AccountOpportunity
     opportunity
   end
 

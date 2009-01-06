@@ -68,11 +68,9 @@ class Lead < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def promote(params)
     account     = Account.create_or_select_for_lead(self, params[:account], params[:users])
-    opportunity = Opportunity.create_for_lead(self, params[:opportunity], params[:users])
-    contact     = Contact.convert_from_lead(self, account, params)
+    opportunity = Opportunity.create_for_lead(self, account, params[:opportunity], params[:users])
+    contact     = Contact.create_for_lead(self, account, opportunity, params)
 
-    # TODO : save ContactOpportunity
-    # TODO : save AccountOpportunity
     return account, opportunity, contact
   end
 
@@ -88,16 +86,6 @@ class Lead < ActiveRecord::Base
       Campaign.increment_counter(:actual_leads, self.campaign_id)
       Campaign.update(self.campaign_id, { :actual_conversion => Lead.converted.count * 100.0 / Lead.count })
     end
-  end
-
-  # Copies validation errors from other object to self. Returns true if there
-  # are errors, false otherwise.
-  #----------------------------------------------------------------------------
-  def validation_errors(model)
-    model.errors.each do |key, value|
-      self.errors.add(key, value)
-    end
-    self.errors.size > 0
   end
 
 end

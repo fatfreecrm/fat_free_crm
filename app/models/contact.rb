@@ -34,8 +34,11 @@
 
 class Contact < ActiveRecord::Base
   belongs_to :user
+  has_many :account_contacts
+  has_many :contact_opportunities
+  has_many :accounts, :through => :account_contacts, :uniq => true
+  has_many :opportunities, :through => :contact_opportunities, :uniq => true
   has_many :permissions, :as => :asset, :include => :user
-  has_many :accounts, :through => :account_contacts
   uses_mysql_uuid
   acts_as_paranoid
 
@@ -70,7 +73,7 @@ class Contact < ActiveRecord::Base
 
   # Class methods.
   #----------------------------------------------------------------------------
-  def self.convert_from_lead(lead, account, params)
+  def self.create_for_lead(lead, account, opportunity, params)
     attributes = {
       :user_id     => params[:account][:user_id],
       :assigned_to => params[:account][:assigned_to],
@@ -81,13 +84,16 @@ class Contact < ActiveRecord::Base
     end
     contact = Contact.new(attributes)
 
-    if contact.access != "Lead"
-      contact.save_with_permissions(params[:users])
-    else
-      contact.save_with_lead_permissions(lead)
+    # Save the contact only if the account and the opportunity have no errors.
+    if account.errors.empty? && opportunity.errors.empty?
+      contact.accounts << account unless account.id.blank?
+      contact.opportunities << opportunity unless opportunity.id.blank?
+      if contact.access != "Lead"
+        contact.save_with_permissions(params[:users])
+      else
+        contact.save_with_lead_permissions(lead)
+      end
     end
-    AccountContact.create(:account => account, :contact => contact)
-    # TODO : save ContactOpportunity
     contact
   end
 

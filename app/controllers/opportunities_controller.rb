@@ -6,7 +6,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities.xml
   #----------------------------------------------------------------------------
   def index
-    @opportunities = Opportunity.find(:all)
+    @opportunities = Opportunity.find(:all, :order => "id DESC")
 
     respond_to do |format|
       format.html # index.html.erb

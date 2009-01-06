@@ -1,3 +1,7 @@
+Mon, Jan 5, 2009
+---------------------------------------------------------------------
+- Finished refatoring [Lead/Convert].
+
 Sun, Jan 4, 2009
 ---------------------------------------------------------------------
 - Streamlined [Lead/Convert] to make it use objects and default values.

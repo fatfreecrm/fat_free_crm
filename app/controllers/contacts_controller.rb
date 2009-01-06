@@ -6,7 +6,7 @@ class ContactsController < ApplicationController
   # GET /contacts.xml
   #----------------------------------------------------------------------------
   def index
-    @contacts = Contact.find(:all)
+    @contacts = Contact.find(:all, :order => "id DESC")
 
     respond_to do |format|
       format.html # index.html.erb

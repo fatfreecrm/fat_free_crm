@@ -27,7 +27,7 @@
 
 - content_for :javascript_epilogue do
   <script type="text/javascript">
-  - if !@account.id.blank? # errors && @lead.errors.on(:name)
+  - if !@account.id.blank?
     select_account();
   - else
     create_account();
