@@ -9,6 +9,7 @@
 #  campaign_id :integer(4)
 #  assigned_to :integer(4)
 #  name        :string(64)      default(""), not null
+#  access      :string(8)       default("Private")
 #  source      :string(32)
 #  stage       :string(32)
 #  probability :integer(4)

@@ -36,6 +36,7 @@
 class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :campaign
+  has_one :contact
   has_many :permissions, :as => :asset, :include => :user
   named_scope :converted, :conditions => "status='converted'"
   uses_mysql_uuid

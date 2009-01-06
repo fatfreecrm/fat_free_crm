@@ -3,6 +3,7 @@ class CreateContacts < ActiveRecord::Migration
     create_table :contacts, :force => true do |t|
       t.string      :uuid,   :limit => 36
       t.references  :user
+      t.references  :lead
       t.integer     :assigned_to
       t.integer     :reports_to
       t.string      :first_name,  :limit => 64, :null => false, :default => ""

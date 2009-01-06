@@ -34,6 +34,7 @@
 
 class Contact < ActiveRecord::Base
   belongs_to :user
+  belongs_to :lead
   has_many :account_contacts
   has_many :contact_opportunities
   has_many :accounts, :through => :account_contacts, :uniq => true

@@ -1,7 +1,33 @@
+.title_menu= link_to "Create New Contact", new_contact_path
 .title Contacts
-%br
-Not implemented yet.
-%br
+
+.list
+  - unless @contacts.empty?
+    - for contact in @contacts
+      %li{ highlightable(dom_id(contact)) }
+        - if contact.accounts.first && contact.accounts.first.name?
+          .strip{:class => ""}= contact.accounts.first.name
+        - else
+          .strip &nbsp;
+        %div
+          .tools[contact]{ hidden }
+            = link_to(image_tag("information.png", :title => "View #{h(contact.full_name)}"), contact_path(contact))
+            = link_to(image_tag("tick_circle.png", :title => "Edit #{h(contact.full_name)}"), edit_contact_path(contact))
+            = link_to(image_tag("cross_circle.png", :title => "Delete #{h(contact.full_name)}"), "#")
+          = link_to(contact.full_name, contact)
+          %tt
+            - if contact.title? && contact.department?
+              = contact.title << ", " << contact.department
+            - else
+              = contact.title if contact.title?
+            = "&ndash; referred by #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
+          %dt
+            = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
+            = contact.phone  << " | " if contact.phone?
+            = contact.mobile << " | " if contact.mobile?
+            == added #{time_ago_in_words(contact.created_at)} ago
+  - else
+    %div== You don't have any contacts yet. Feel free to #{link_to("create new contact", new_contact_path)}.
 
 
 -#<table>
@@ -16,7 +42,3 @@ Not implemented yet.
 -#  </tr>
 -#<% end %>
 -#</table>
-
-%br
-%hr{ :size => 1 }
-= link_to "Create New Contact", new_contact_path
