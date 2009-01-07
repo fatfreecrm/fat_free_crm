@@ -12,6 +12,23 @@ var crm = {
     $(id).observe("blur", function() {
       $(id).calendar_was_shown = null;    // Get the calendar ready if we loose focus.
     });
+  },
+
+  //----------------------------------------------------------------------------
+  create_account: function() {
+    $("account_selector").update("(create new or <a href='#' onclick='crm.select_account(); return false;'>select existing</a>):");
+    $("account_id").hide();
+    $("account_name").show();
+    $("account_name").focus();
+  },
+
+  //----------------------------------------------------------------------------
+  select_account: function() {
+    $("account_selector").update("(<a href='#' onclick='crm.create_account(); return false;'>create new</a> or select existing):");
+    $("account_id").show();
+    $("account_name").hide();
+    $("account_id").focus();
   }
+
 
 }

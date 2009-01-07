@@ -5,8 +5,8 @@
   - unless @contacts.empty?
     - for contact in @contacts
       %li{ highlightable(dom_id(contact)) }
-        - if contact.accounts.first && contact.accounts.first.name?
-          .longstrip= link_to contact.accounts.first.name, account_path(contact.accounts.first)
+        - if contact.account && contact.account.name?
+          .longstrip= link_to contact.account.name, account_path(contact.account)
         - else
           .longstrip &nbsp;
         %div

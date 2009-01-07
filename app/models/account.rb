@@ -23,9 +23,9 @@
 
 class Account < ActiveRecord::Base
   belongs_to :user
-  has_many :account_contacts
-  has_many :account_opportunities
+  has_many :account_contacts, :dependent => :destroy
   has_many :contacts, :through => :account_contacts, :uniq => true
+  has_many :account_opportunities, :dependent => :destroy
   has_many :opportunities, :through => :account_opportunities, :uniq => true
   has_many :permissions, :as => :asset, :include => :user
   uses_mysql_uuid

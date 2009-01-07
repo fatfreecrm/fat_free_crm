@@ -1,3 +1,12 @@
+- content_for :javascript_epilogue do
+  <script type="text/javascript">
+  - if !@account.id.blank?
+    crm.select_account();
+  - else
+    crm.create_account();
+    $("contact_first_name").focus();
+  </script>
+
 .form
   - form_for(@contact) do |f|
     = hidden_field_tag "contact[user_id]", @current_user.id
@@ -15,41 +24,29 @@
             = f.text_field :last_name, :style => "width:240px"
         %tr
           %td{ :valign => :top }
-            .label Title:
-            = f.text_field :title, :style => "width:240px"
-          %td= spacer
-          %td{ :valign => :top }
-            .label Department:
-            = text_field_tag :department, "", :style => "width:240px"
-        %tr
-          %td{ :valign => :top }
             .label Email:
             = f.text_field :email, :style => "width:240px"
           %td= spacer
           %td{ :valign => :top }
-            .label Alternative email:
-            = f.text_field :alt_email, :style => "width:240px"
-        %tr
-          %td{ :valign => :top }
             .label Phone:
             = f.text_field :phone, :style => "width:240px"
-          %td= spacer
-          %td{ :valign => :top }
-            .label Mobile:
-            = f.text_field :mobile, :style => "width:240px"
-        %tr
-          %td{ :valign => :top }
-            .label Address:
-            = f.text_area :address, :style =>"width:240px", :rows => 3
-          %td= spacer
-          %td{ :valign => :top }
-            .label Fax:
-            = text_field_tag :fax, "", :style => "width:240px"
-            %div{:style => "margin-top:6px"}
-              .check_box
-                = f.check_box :do_not_call, {}, true
-                Do not call
-    = render :partial => "permissions",  :locals => { :f => f }
+      %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+        - fields_for(@account) do |a|
+          = a.hidden_field :user_id
+          = a.hidden_field :access
+          %tr
+            %td{ :valign => :top }
+              .label.top
+                Account
+                %span#account_selector
+              = collection_select :account, :id, @accounts, :id, :name, { :selected => @account.id || 0 }, { :style => "width:330px; display:none;" }
+              = a.text_field :name, :style => "width:324px; display:none;"
+            %td= spacer
+            %td{ :valign => :top }
+              .label.top Assigned to:
+              = collection_select :account, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+    - %w(extra web permissions).each do |partial|
+      = render :partial => partial, :locals => { :f => f }
     .buttonbar
       = f.submit "Create Contact"
       or

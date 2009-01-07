@@ -35,9 +35,9 @@
 class Contact < ActiveRecord::Base
   belongs_to :user
   belongs_to :lead
-  has_many :account_contacts
-  has_many :contact_opportunities
-  has_many :accounts, :through => :account_contacts, :uniq => true
+  has_one :account_contact, :dependent => :destroy
+  has_one :account, :through => :account_contact
+  has_many :contact_opportunities, :dependent => :destroy
   has_many :opportunities, :through => :contact_opportunities, :uniq => true
   has_many :permissions, :as => :asset, :include => :user
   uses_mysql_uuid
@@ -87,7 +87,8 @@ class Contact < ActiveRecord::Base
 
     # Save the contact only if the account and the opportunity have no errors.
     if account.errors.empty? && opportunity.errors.empty?
-      contact.accounts << account unless account.id.blank?
+      # Note: contact.account = account doesn't seem to work here.
+      contact.account_contact = AccountContact.new(:account => account, :contact => contact) unless account.id.blank?
       contact.opportunities << opportunity unless opportunity.id.blank?
       if contact.access != "Lead"
         contact.save_with_permissions(params[:users])

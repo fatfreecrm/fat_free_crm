@@ -1,3 +1,11 @@
+Tue, Jan 6, 2009
+---------------------------------------------------------------------
+- Figured out how to make [has_one :through] work and save the join record.
+- Restructured [uses_mysql_uuid] to use proper module nesting and extend base with SingletonMethods.
+- Fixes in opportunity/index and contact/delete.
+- Created [Contact/New] form (with backend stub).
+- Moved common JavaScript functions to application namespace.
+
 Mon, Jan 5, 2009
 ---------------------------------------------------------------------
 - Finished refatoring [Lead/Convert].

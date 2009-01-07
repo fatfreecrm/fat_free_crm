@@ -1,57 +1,61 @@
-module MySQL_UUID
+module ActiveRecord
+  module Uses
+    module MySQL_UUID
 
-  def self.included(base)
-    base.extend(ClassMethods)
-  end
+      def self.included(base)
+        base.extend(ClassMethods)
+      end
 
-  module ClassMethods
+      #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+      module ClassMethods
 
-    def uses_mysql_uuid
-      # Don't let ActiveRecord call this twice.
-      include InstanceMethods unless already_uses_mysql_uuid?
-    end
+        #--------------------------------------------------------------------------
+        def uses_mysql_uuid
+          unless already_uses_mysql_uuid?
+            include ActiveRecord::Uses::MySQL_UUID::InstanceMethods
+            extend ActiveRecord::Uses::MySQL_UUID::SingletonMethods
+          end
+        end
 
-    #--------------------------------------------------------------------------
-    def already_uses_mysql_uuid?
-      self.included_modules.include?(InstanceMethods)
-    end
+        #--------------------------------------------------------------------------
+        def already_uses_mysql_uuid?
+          self.included_modules.include?(InstanceMethods)
+        end
 
-  end
+      end
 
-  #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-  module InstanceMethods
+      #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+      module InstanceMethods
 
-    def self.included(base)
-      base.extend(ClassMethods)
-    end
+        # Override default :id with :uuid for the model so it shows up in URLs.
+        #--------------------------------------------------------------------------
+        def to_param
+          self.uuid
+        end
 
-    # Override default :id with :uuid for the model so it shows up in URLs.
-    #--------------------------------------------------------------------------
-    def to_param
-      self.uuid
-    end
+        # Make sure we reload :uuid attribute that gets created by MySQL.
+        #--------------------------------------------------------------------------
+        def save(*args)
+          success = super(*args)
+          self.uuid = self.class.find(self.id, :select => :uuid).uuid if self.id && !self.uuid?
+          success
+        end
+      end
 
-    # Make sure we reload :uuid attribute that gets created by MySQL.
-    #--------------------------------------------------------------------------
-    def save(*args)
-      success = super(*args)
-      self.uuid = self.class.find(self.id, :select => :uuid).uuid if self.id && !self.uuid?
-      success
-    end
+      #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+      module SingletonMethods
 
-    module ClassMethods
-      # Determine whether to call regular find() or find_by_uuid().
-      #--------------------------------------------------------------------------
-      def find(*args)
-        if args.first =~ /\A[a-f\d\-]{36}\Z/
-          send(:find_by_uuid, *args)
-        else
-          super(*args)
+        # Determine whether to call regular find() or find_by_uuid().
+        #--------------------------------------------------------------------------
+        def find(*args)
+          if args.first =~ /\A[a-f\d\-]{36}\Z/
+            send(:find_by_uuid, *args)
+          else
+            super(*args)
+          end
         end
       end
 
     end
-
   end
-
 end

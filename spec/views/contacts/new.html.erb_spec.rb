@@ -4,11 +4,11 @@ describe "/contacts/new.html.erb" do
   include ContactsHelper
   
   before(:each) do
-    assigns[:current_user] = mock_model(User)
-    assigns[:users] = [ mock_model(User, :full_name => "Joe Spec") ]
-    assigns[:contact] = stub_model(Contact,
-      :new_record? => true
-    )
+    assigns[:contact] = stub_model(Contact, :new_record? => true, :access => "Private")
+    assigns[:current_user] = user = mock_model(User, :full_name => "Joe Spec")
+    assigns[:users] = [ user ]
+    assigns[:account] = stub_model(Account, :user => user, :access => "Private")
+    assigns[:accounts] = [ stub_model(Account) ]
   end
 
   it "should render new form" do

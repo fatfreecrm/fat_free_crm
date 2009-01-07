@@ -1,6 +1,6 @@
 #confirm{ hidden }
-.title_menu
-  = link_to("Back to List of Contacts", contacts_path) + " | "
+.title_menu#menu
+  = link_to("List", contacts_path) + " | "
   = link_to("Edit", edit_contact_path(@contact)) + " | "
   = link_to_function("Delete?", confirm_delete(@contact))
 .title= @contact.full_name

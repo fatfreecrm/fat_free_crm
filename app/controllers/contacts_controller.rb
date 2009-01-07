@@ -30,8 +30,10 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml
   #----------------------------------------------------------------------------
   def new
-    @contact = Contact.new
+    @contact = Contact.new(:access => "Private")
     @users = User.all_except(@current_user) # to manage account permissions
+    @account = Account.new(:user => @current_user, :access => "Private")
+    @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,7 +52,9 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @contact = Contact.new(params[:contact])
+    @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
+    @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
       if @contact.save

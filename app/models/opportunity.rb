@@ -26,9 +26,9 @@ class Opportunity < ActiveRecord::Base
   belongs_to :user
   belongs_to :account
   belongs_to :campaign
-  has_many :account_opportunities
-  has_many :contact_opportunities
-  has_many :accounts, :through => :account_opportunities, :uniq => true
+  has_one :account_opportunity, :dependent => :destroy
+  has_one :account, :through => :account_opportunity
+  has_many :contact_opportunities, :dependent => :destroy
   has_many :contacts, :through => :contact_opportunities, :uniq => true
   uses_mysql_uuid
   acts_as_paranoid
@@ -39,7 +39,7 @@ class Opportunity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def weighted_amount
-    (amount * probability) / 100
+    (amount || 0) * (probability || 0) / 100.0
   end
 
   # Save the opportunity along with its permissions if any.
@@ -70,7 +70,8 @@ class Opportunity < ActiveRecord::Base
 
     # Save the opportunity if its name was specified and account has no errors.
     if opportunity.name? && account.errors.empty?
-      opportunity.accounts << account unless account.id.blank?
+      # Note: opportunity.account = account doesn't seem to work here.
+      opportunity.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => opportunity) unless account.id.blank?
       if opportunity.access != "Lead"
         opportunity.save_with_permissions(users)
       else
