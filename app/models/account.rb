@@ -49,12 +49,12 @@ class Account < ActiveRecord::Base
     save
   end
 
-  # Save the account copying lead permissions.
+  # Save the account copying other model permissions (Lead).
   #----------------------------------------------------------------------------
-  def save_with_lead_permissions(lead)
-    self.access = lead.access
-    if lead.access == "Shared"
-      lead.permissions.each do |permission|
+  def save_with_model_permissions(model)
+    self.access = model.access
+    if model.access == "Shared"
+      model.permissions.each do |permission|
         self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
       end
     end
@@ -71,15 +71,15 @@ class Account < ActiveRecord::Base
 
   # Class methods.
   #----------------------------------------------------------------------------
-  def self.create_or_select_for_lead(lead, params, users)
+  def self.create_or_select_for(model, params, users)
     if !params[:id].blank?
       account = Account.find(params[:id])
     else
-      account = Account.new(params)
+      account = Account.new(params.except("id"))
       if account.access != "Lead"
         account.save_with_permissions(users)
       else
-        account.save_with_lead_permissions(lead)
+        account.save_with_model_permissions(model)
       end
     end
     account

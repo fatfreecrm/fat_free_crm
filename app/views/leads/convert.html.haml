@@ -4,7 +4,7 @@
       // Empty selected account value if the dropdown is not visible.
       if (!$("account_id").visible()) {
         var index = $("account_id").selectedIndex;
-        $('account_id')[index].value = "";
+        $("account_id")[index].value = "";
       }
       // Propagate contact[access] to the account and account[assigned_to] to the contact.
       $("account_assigned_to").value = $F("contact_assigned_to");

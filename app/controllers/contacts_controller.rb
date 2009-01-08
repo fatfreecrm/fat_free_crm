@@ -30,9 +30,9 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml
   #----------------------------------------------------------------------------
   def new
-    @contact = Contact.new(:access => "Private")
-    @users = User.all_except(@current_user) # to manage account permissions
+    @contact = Contact.new(:user => @current_user, :access => "Private")
     @account = Account.new(:user => @current_user, :access => "Private")
+    @users = User.all_except(@current_user) # to manage account permissions
     @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
@@ -57,7 +57,7 @@ class ContactsController < ApplicationController
     @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
-      if @contact.save
+      if @contact.save_with_account_and_permissions(params)
         flash[:notice] = 'Contact was successfully created.'
         format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }

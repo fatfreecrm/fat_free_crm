@@ -1,3 +1,15 @@
+- content_for :javascript do
+  :javascript
+    function submit_form() {
+      // Empty selected account value if the dropdown is not visible.
+      if (!$("account_id").visible()) {
+        var index = $("account_id").selectedIndex;
+        $("account_id")[index].value = "";
+      }
+      // Propagate account[assigned_to] to the contact.
+      $("contact_assigned_to").value = $F("account_assigned_to");
+    }
+
 - content_for :javascript_epilogue do
   <script type="text/javascript">
   - if !@account.id.blank?
@@ -9,7 +21,8 @@
 
 .form
   - form_for(@contact) do |f|
-    = hidden_field_tag "contact[user_id]", @current_user.id
+    = f.hidden_field :user_id
+    = f.hidden_field :assigned_to
     .title Create Contact
     = f.error_messages
     .section
@@ -48,6 +61,6 @@
     - %w(extra web permissions).each do |partial|
       = render :partial => partial, :locals => { :f => f }
     .buttonbar
-      = f.submit "Create Contact"
+      = f.submit "Create Contact", :onclick => "submit_form()"
       or
       = link_to "Cancel", contacts_url

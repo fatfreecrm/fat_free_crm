@@ -68,9 +68,9 @@ class Lead < ActiveRecord::Base
   # successful promotion Lead status gets set to :converted.
   #----------------------------------------------------------------------------
   def promote(params)
-    account     = Account.create_or_select_for_lead(self, params[:account], params[:users])
-    opportunity = Opportunity.create_for_lead(self, account, params[:opportunity], params[:users])
-    contact     = Contact.create_for_lead(self, account, opportunity, params)
+    account     = Account.create_or_select_for(self, params[:account], params[:users])
+    opportunity = Opportunity.create_for(self, account, params[:opportunity], params[:users])
+    contact     = Contact.create_for(self, account, opportunity, params)
 
     return account, opportunity, contact
   end

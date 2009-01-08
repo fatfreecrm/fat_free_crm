@@ -1,3 +1,8 @@
+Wed, Jan 7, 2009
+---------------------------------------------------------------------
+- Implemented backend for [Contact/New].
+- Made model functions more general for better code reuse.
+
 Tue, Jan 6, 2009
 ---------------------------------------------------------------------
 - Figured out how to make [has_one :through] work and save the join record.

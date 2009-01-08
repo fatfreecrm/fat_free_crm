@@ -51,12 +51,12 @@ class Opportunity < ActiveRecord::Base
     save
   end
 
-  # Save the opportunity copying lead permissions.
+  # Save the opportunity copying model permissions (Lead).
   #----------------------------------------------------------------------------
-  def save_with_lead_permissions(lead)
-    self.access = lead.access
-    if lead.access == "Shared"
-      lead.permissions.each do |permission|
+  def save_with_model_permissions(model)
+    self.access = model.access
+    if model.access == "Shared"
+      model.permissions.each do |permission|
         self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
       end
     end
@@ -65,7 +65,7 @@ class Opportunity < ActiveRecord::Base
 
   # Class methods.
   #----------------------------------------------------------------------------
-  def self.create_for_lead(lead, account, params, users)
+  def self.create_for(model, account, params, users)
     opportunity = Opportunity.new(params)
 
     # Save the opportunity if its name was specified and account has no errors.
@@ -75,7 +75,7 @@ class Opportunity < ActiveRecord::Base
       if opportunity.access != "Lead"
         opportunity.save_with_permissions(users)
       else
-        opportunity.save_with_lead_permissions(lead)
+        opportunity.save_with_model_permissions(model)
       end
     end
     opportunity

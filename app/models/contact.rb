@@ -46,9 +46,23 @@ class Contact < ActiveRecord::Base
   validates_presence_of :first_name, :message => "^Please specify first name."
   validates_presence_of :last_name, :message => "^Please specify last name."
 
+  # Make sure at least one user has been selected if the contact is being shared.
+  #----------------------------------------------------------------------------
+  def validate
+    errors.add(:access, "^Please specify users to share the contact with.") if self[:access] == "Shared" && self.permissions.size <= 0
+  end
+
   #----------------------------------------------------------------------------
   def full_name
     self.first_name + " " + self.last_name
+  end
+
+  # Backend handler for [Create New Contact] form (see contact/create).
+  #----------------------------------------------------------------------------
+  def save_with_account_and_permissions(params)
+    account = Account.create_or_select_for(self, params[:account], params[:users])
+    self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
+    save_with_permissions(params[:users])
   end
 
   # Save the contact along with its permissions if any.
@@ -60,12 +74,12 @@ class Contact < ActiveRecord::Base
     save
   end
 
-  # Save the contact copying lead permissions.
+  # Save the contact copying model permissions (Lead).
   #----------------------------------------------------------------------------
-  def save_with_lead_permissions(lead)
-    self.access = lead.access
-    if lead.access == "Shared"
-      lead.permissions.each do |permission|
+  def save_with_model_permissions(model)
+    self.access = model.access
+    if model.access == "Shared"
+      model.permissions.each do |permission|
         self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
       end
     end
@@ -74,14 +88,14 @@ class Contact < ActiveRecord::Base
 
   # Class methods.
   #----------------------------------------------------------------------------
-  def self.create_for_lead(lead, account, opportunity, params)
+  def self.create_for(model, account, opportunity, params)
     attributes = {
       :user_id     => params[:account][:user_id],
       :assigned_to => params[:account][:assigned_to],
       :access      => params[:access]
     }
     %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter address do_not_call notes).each do |name|
-      attributes[name] = lead.send(name.intern)
+      attributes[name] = model.send(name.intern)
     end
     contact = Contact.new(attributes)
 
@@ -93,7 +107,7 @@ class Contact < ActiveRecord::Base
       if contact.access != "Lead"
         contact.save_with_permissions(params[:users])
       else
-        contact.save_with_lead_permissions(lead)
+        contact.save_with_model_permissions(model)
       end
     end
     contact
