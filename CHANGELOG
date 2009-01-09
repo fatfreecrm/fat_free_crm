@@ -2,6 +2,9 @@ Thu, Jan 8, 2009
 ---------------------------------------------------------------------
 - Simplified submission for forms with account create/select.
 - Added app-specific rake tasks -- app:setup, app:demo, and app:reset.
+- Updated [uses_mysql_uuid] plugin to explicitly check for MySQL v5 or later.
+- Updated database migrations and rake tasks to make them database-type neutral.
+- Fat Free CRM now works with MySQL v4 and SQLite!
 
 Wed, Jan 7, 2009
 ---------------------------------------------------------------------

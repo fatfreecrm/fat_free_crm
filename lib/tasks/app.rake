@@ -4,10 +4,14 @@ namespace :app do
     desc "Load default application settings"
     task :load => :environment do
       ActiveRecord::Base.establish_connection(Rails.env)
-      ActiveRecord::Base.connection.execute("TRUNCATE settings")
+      if ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
+        ActiveRecord::Base.connection.execute("TRUNCATE settings")
+      else
+        ActiveRecord::Base.connection.execute("DELETE FROM settings")
+      end
       settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
       settings.keys.each do |key|
-        sql = [ "INSERT INTO settings SET name=?, default_value=?", key.to_s, Base64.encode64(Marshal.dump(settings[key])) ]
+        sql = [ "INSERT INTO settings (name, default_value) VALUES(?, ?)", key.to_s, Base64.encode64(Marshal.dump(settings[key])) ]
         ActiveRecord::Base.connection.execute(ActiveRecord::Base.send(:sanitize_sql, sql))
       end
     end

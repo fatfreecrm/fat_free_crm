@@ -39,7 +39,11 @@ class CreateUsers < ActiveRecord::Migration
     add_index :users, :remember_token
     add_index :users, :perishable_token
 
-    ActiveRecord::Base.connection.execute("CREATE TRIGGER users_uuid BEFORE INSERT ON users FOR EACH ROW SET NEW.uuid = UUID()");
+    if adapter_name.downcase == "mysql"
+      if select_value("select version()").to_i >= 5
+        execute("CREATE TRIGGER users_uuid BEFORE INSERT ON users FOR EACH ROW SET NEW.uuid = UUID()")
+      end
+    end
   end
 
   def self.down
