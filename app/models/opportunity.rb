@@ -72,7 +72,7 @@ class Opportunity < ActiveRecord::Base
     if opportunity.name? && account.errors.empty?
       # Note: opportunity.account = account doesn't seem to work here.
       opportunity.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => opportunity) unless account.id.blank?
-      if opportunity.access != "Lead"
+      if opportunity.access != "Lead" || model.nil?
         opportunity.save_with_permissions(users)
       else
         opportunity.save_with_model_permissions(model)

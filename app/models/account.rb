@@ -72,11 +72,11 @@ class Account < ActiveRecord::Base
   # Class methods.
   #----------------------------------------------------------------------------
   def self.create_or_select_for(model, params, users)
-    if !params[:id].blank?
+    if params[:id]
       account = Account.find(params[:id])
     else
-      account = Account.new(params.except("id"))
-      if account.access != "Lead"
+      account = Account.new(params)
+      if account.access != "Lead" || model.nil?
         account.save_with_permissions(users)
       else
         account.save_with_model_permissions(model)

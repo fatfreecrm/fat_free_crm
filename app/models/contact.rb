@@ -104,7 +104,7 @@ class Contact < ActiveRecord::Base
       # Note: contact.account = account doesn't seem to work here.
       contact.account_contact = AccountContact.new(:account => account, :contact => contact) unless account.id.blank?
       contact.opportunities << opportunity unless opportunity.id.blank?
-      if contact.access != "Lead"
+      if contact.access != "Lead" || model.nil?
         contact.save_with_permissions(params[:users])
       else
         contact.save_with_model_permissions(model)

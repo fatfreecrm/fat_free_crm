@@ -1,23 +1,11 @@
-- content_for :javascript do
-  :javascript
-    function submit_form() {
-      // Empty selected account value if the dropdown is not visible.
-      if (!$("account_id").visible()) {
-        var index = $("account_id").selectedIndex;
-        $("account_id")[index].value = "";
-      }
-      // Propagate account[assigned_to] to the contact.
-      $("contact_assigned_to").value = $F("account_assigned_to");
-    }
-
 - content_for :javascript_epilogue do
-  <script type="text/javascript">
-  - if !@account.id.blank?
-    crm.select_account();
-  - else
-    crm.create_account();
+  %script{:type => "text/javascript"}
+    :plain
+      function submit_form() {
+        $("contact_assigned_to").value = $F("account_assigned_to");
+      }
+    = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
     $("contact_first_name").focus();
-  </script>
 
 .form
   - form_for(@contact) do |f|

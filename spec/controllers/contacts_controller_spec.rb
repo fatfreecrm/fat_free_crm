@@ -80,13 +80,28 @@ describe ContactsController do
     describe "with valid params" do
       
       it "should expose a newly created contact as @contact" do
-        Contact.should_receive(:new).with({'these' => 'params'}).and_return(mock_contact(:save => true))
-        post :create, :contact => {:these => 'params'}
-        assigns(:contact).should equal(mock_contact)
+        @contact  = mock_contact(:save => true)
+        @account  = mock_model(Account)
+        @users    = [ mock_model(User) ]
+        @accounts = [ mock_model(Account) ]
+
+        Contact.should_receive(:new).with({'contact' => 'params'}).and_return(@contact)
+        Account.should_receive(:new).with({'account' => 'params'}).and_return(@account)
+        User.should_receive(:all_except).with(@current_user).and_return(@users)
+        Account.should_receive(:find).with(:all, :order => "name").and_return(@accounts)
+        @contact.should_receive(:save_with_account_and_permissions).with({"account"=>{"account"=>"params"}, "contact"=>{"contact"=>"params"}, "action"=>"create", "controller"=>"contacts", "users"=>["1", "2", "3"]}).and_return(true)
+        @contact.should_receive(:full_name).and_return("Joe Spec")
+        post :create, :contact => {:contact => "params"}, :account => {:account => "params"}, :users => %w(1 2 3)
+        assigns(:contact).should equal(@contact)
+        assigns(:account).should equal(@account)
+        assigns(:users).should equal(@users)
+        assigns(:accounts).should equal(@accounts)
       end
 
       it "should redirect to the created contact" do
-        Contact.stub!(:new).and_return(mock_contact(:save => true))
+        Contact.stub!(:new).and_return(@contact = mock_contact(:save => true))
+        @contact.should_receive(:save_with_account_and_permissions).with({"contact"=>{}, "action"=>"create", "controller"=>"contacts"}).and_return(true)
+        @contact.should_receive(:full_name).and_return("Joe Spec")
         post :create, :contact => {}
         response.should redirect_to(contact_url(mock_contact))
       end
@@ -96,13 +111,27 @@ describe ContactsController do
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved contact as @contact" do
-        Contact.stub!(:new).with({'these' => 'params'}).and_return(mock_contact(:save => false))
-        post :create, :contact => {:these => 'params'}
-        assigns(:contact).should equal(mock_contact)
+        @contact  = mock_contact(:save => false)
+        @account  = mock_model(Account)
+        @users    = [ mock_model(User) ]
+        @accounts = [ mock_model(Account) ]
+
+        Contact.should_receive(:new).with({'contact' => 'params'}).and_return(@contact)
+        Account.should_receive(:new).with({'account' => 'params'}).and_return(@account)
+        User.should_receive(:all_except).with(@current_user).and_return(@users)
+        Account.should_receive(:find).with(:all, :order => "name").and_return(@accounts)
+        @contact.should_receive(:save_with_account_and_permissions).with({"account"=>{"account"=>"params"}, "contact"=>{"contact"=>"params"}, "action"=>"create", "controller"=>"contacts", "users"=>["1", "2", "3"]}).and_return(true)
+        @contact.should_receive(:full_name).and_return("Joe Spec")
+        post :create, :contact => {:contact => "params"}, :account => {:account => "params"}, :users => %w(1 2 3)
+        assigns(:contact).should equal(@contact)
+        assigns(:account).should equal(@account)
+        assigns(:users).should equal(@users)
+        assigns(:accounts).should equal(@accounts)
       end
 
       it "should re-render the 'new' template" do
-        Contact.stub!(:new).and_return(mock_contact(:save => false))
+        Contact.stub!(:new).and_return(@contact = mock_contact(:save => false))
+        @contact.should_receive(:save_with_account_and_permissions).with({"contact"=>{}, "action"=>"create", "controller"=>"contacts"}).and_return(false)
         post :create, :contact => {}
         response.should render_template('new')
       end

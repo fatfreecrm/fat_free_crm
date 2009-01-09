@@ -47,6 +47,12 @@ class Lead < ActiveRecord::Base
 
   after_create :update_campaign_counters
 
+  # Make sure at least one user has been selected if the contact is being shared.
+  #----------------------------------------------------------------------------
+  def validate
+    errors.add(:access, "^Please specify users to share the lead with.") if self[:access] == "Shared" && self.permissions.size <= 0
+  end
+
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
   def save_with_permissions(users)
@@ -58,7 +64,7 @@ class Lead < ActiveRecord::Base
           self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
         end
       end
-    elsif self[:access] == "Shared"
+    elsif self[:access] == "Shared" && users
       users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
     end
     save

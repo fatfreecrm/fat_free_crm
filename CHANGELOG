@@ -1,3 +1,8 @@
+Thu, Jan 8, 2009
+---------------------------------------------------------------------
+- Simplified submission for forms with account create/select.
+- Added app-specific rake tasks -- app:setup, app:demo, and app:reset.
+
 Wed, Jan 7, 2009
 ---------------------------------------------------------------------
 - Implemented backend for [Contact/New].
