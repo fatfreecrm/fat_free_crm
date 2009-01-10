@@ -4,9 +4,12 @@ describe "/opportunities/new.html.erb" do
   include OpportunitiesHelper
   
   before(:each) do
-    assigns[:opportunity] = stub_model(Opportunity,
-      :new_record? => true
-    )
+    assigns[:current_user] = stub_model(User)
+    assigns[:opportunity] = stub_model(Opportunity, :stage => "prospecting", :new_record? => true)
+    assigns[:account] = stub_model(Account)
+    assigns[:users] = [ stub_model(User) ]
+    assigns[:accounts] = [ stub_model(Account) ]
+    Setting.stub!(:opportunity_stage).and_return({ :key => "value" })
   end
 
   it "should render new form" do

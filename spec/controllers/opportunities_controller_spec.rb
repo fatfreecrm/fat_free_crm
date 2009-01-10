@@ -103,7 +103,8 @@ describe OpportunitiesController do
       end
 
       it "should re-render the 'new' template" do
-        Opportunity.stub!(:new).and_return(mock_opportunity(:save => false))
+        Opportunity.stub!(:new).and_return(@opp = mock_opportunity(:save => false))
+        @opp.should_receive(:save).and_return(false)
         post :create, :opportunity => {}
         response.should render_template('new')
       end

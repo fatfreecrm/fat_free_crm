@@ -52,9 +52,12 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @opportunity = Opportunity.new(params[:opportunity])
+    @account = Account.new(params[:account])
+    @users = User.all_except(@current_user)
+    @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
-      if 1 ### @opportunity.save
+      if @opportunity.save
         flash[:notice] = 'Opportunity was successfully created.'
         format.html { redirect_to(@opportunity) }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
