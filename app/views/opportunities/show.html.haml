@@ -1,0 +1,6 @@
+#confirm{ hidden }
+.title_menu#menu
+  = link_to("List", opportunities_path) + " | "
+  = link_to("Edit", edit_opportunity_path(@opportunity)) + " | "
+  = link_to_function("Delete?", confirm_delete(@opportunity))
+.title= @opportunity.name

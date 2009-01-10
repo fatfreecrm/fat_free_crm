@@ -30,7 +30,10 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new.xml
   #----------------------------------------------------------------------------
   def new
-    @opportunity = Opportunity.new
+    @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
+    @account = Account.new(:user => @current_user, :access => "Private")
+    @users = User.all_except(@current_user)
+    @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,7 +54,7 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.new(params[:opportunity])
 
     respond_to do |format|
-      if @opportunity.save
+      if 1 ### @opportunity.save
         flash[:notice] = 'Opportunity was successfully created.'
         format.html { redirect_to(@opportunity) }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }

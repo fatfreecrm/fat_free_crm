@@ -1,11 +1,5 @@
 - content_for :javascript_epilogue do
   %script{:type => "text/javascript"}
-    :plain
-      function submit_form() {
-        // Propagate contact[access] to the account and account[assigned_to] to the contact.
-        $("account_assigned_to").value = $F("contact_assigned_to");
-        $("contact_access").value = $F("account_access");
-      }
     = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
 
 .form
@@ -34,7 +28,7 @@
     = render :partial => "opportunity"
     = render :partial => "convert_permissions"
     .buttonbar
-      = f.submit "Convert Lead", :onclick => "submit_form()"
+      = f.submit "Convert Lead"
       or
       = link_to "Cancel", leads_url
 

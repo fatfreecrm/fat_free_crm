@@ -1,3 +1,7 @@
+Fri, Jan 9, 2009
+---------------------------------------------------------------------
+- Implemented [Opportunity/Show] and created [Opportunity/New] form (with backend stub).
+
 Thu, Jan 8, 2009
 ---------------------------------------------------------------------
 - Simplified submission for forms with account create/select.
