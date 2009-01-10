@@ -57,7 +57,7 @@ class OpportunitiesController < ApplicationController
     @accounts = Account.find(:all, :order => "name")
 
     respond_to do |format|
-      if @opportunity.save
+      if @opportunity.save_with_account_and_permissions(params)
         flash[:notice] = 'Opportunity was successfully created.'
         format.html { redirect_to(@opportunity) }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }

@@ -44,14 +44,9 @@ class Lead < ActiveRecord::Base
 
   validates_presence_of :first_name, :message => "^Please specify first name."
   validates_presence_of :last_name, :message => "^Please specify last name."
+  validate :users_for_shared_access
 
   after_create :update_campaign_counters
-
-  # Make sure at least one user has been selected if the contact is being shared.
-  #----------------------------------------------------------------------------
-  def validate
-    errors.add(:access, "^Please specify users to share the lead with.") if self[:access] == "Shared" && self.permissions.size <= 0
-  end
 
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
@@ -93,6 +88,12 @@ class Lead < ActiveRecord::Base
       Campaign.increment_counter(:actual_leads, self.campaign_id)
       Campaign.update(self.campaign_id, { :actual_conversion => Lead.converted.count * 100.0 / Lead.count })
     end
+  end
+
+  # Make sure at least one user has been selected if the lead is being shared.
+  #----------------------------------------------------------------------------
+  def users_for_shared_access
+    errors.add(:access, "^Please specify users to share the lead with.") if self[:access] == "Shared" && !self.permissions.any?
   end
 
 end

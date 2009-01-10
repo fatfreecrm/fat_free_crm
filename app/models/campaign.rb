@@ -34,15 +34,10 @@ class Campaign < ActiveRecord::Base
 
   validates_presence_of :name, :message => "^Please specify campaign name."
   validates_uniqueness_of :name, :scope => :user_id
-  before_create :set_campaign_status
+  validate :start_and_end_dates
+  validate :users_for_shared_access
 
-  # Make sure end date > start date.
-  #----------------------------------------------------------------------------
-  def validate
-    if (self.starts_on && self.ends_on) && (self.starts_on > self.ends_on)
-      errors.add(:ends_on, "^Please make sure the campaign end date is after the start date.")
-    end
-  end
+  before_create :set_campaign_status
 
   # Save the campaign along with its permissions if any.
   #----------------------------------------------------------------------------
@@ -61,6 +56,20 @@ class Campaign < ActiveRecord::Base
     else
       self.status = self.starts_on && (self.starts_on <= Date.today) ? "started" : "planned"
     end
+  end
+
+  # Make sure end date > start date.
+  #----------------------------------------------------------------------------
+  def start_and_end_dates
+    if (self.starts_on && self.ends_on) && (self.starts_on > self.ends_on)
+      errors.add(:ends_on, "^Please make sure the campaign end date is after the start date.")
+    end
+  end
+
+  # Make sure at least one user has been selected if the campaign is being shared.
+  #----------------------------------------------------------------------------
+  def users_for_shared_access
+    errors.add(:access, "^Please specify users to share the campaign with.") if self[:access] == "Shared" && !self.permissions.any?
   end
 
 end

@@ -81,13 +81,26 @@ describe OpportunitiesController do
     describe "with valid params" do
       
       it "should expose a newly created opportunity as @opportunity" do
-        Opportunity.should_receive(:new).with({'these' => 'params'}).and_return(mock_opportunity(:save => true))
-        post :create, :opportunity => {:these => 'params'}
-        assigns(:opportunity).should equal(mock_opportunity)
+        @opportunity = mock_opportunity(:save => true)
+        @account     = mock_model(Account)
+        @users       = [ mock_model(User) ]
+        @accounts    = [ mock_model(Account) ]
+
+        Opportunity.should_receive(:new).with({'opportunity' => 'params'}).and_return(@opportunity)
+        Account.should_receive(:new).with({'account' => 'params'}).and_return(@account)
+        User.should_receive(:all_except).with(@current_user).and_return(@users)
+        Account.should_receive(:find).with(:all, :order => "name").and_return(@accounts)
+        @opportunity.should_receive(:save_with_account_and_permissions).with({"account"=>{"account"=>"params"}, "opportunity"=>{"opportunity"=>"params"}, "action"=>"create", "controller"=>"opportunities", "users"=>["1", "2", "3"]}).and_return(true)
+        post :create, :opportunity => {:opportunity => "params"}, :account => {:account => "params"}, :users => %w(1 2 3)
+        assigns(:opportunity).should equal(@opportunity)
+        assigns(:account).should equal(@account)
+        assigns(:users).should equal(@users)
+        assigns(:accounts).should equal(@accounts)
       end
 
       it "should redirect to the created opportunity" do
-        Opportunity.stub!(:new).and_return(mock_opportunity(:save => true))
+        Opportunity.stub!(:new).and_return(@opportunity = mock_opportunity(:save => true))
+        @opportunity.should_receive(:save_with_account_and_permissions).with({"opportunity"=>{}, "action"=>"create", "controller"=>"opportunities"}).and_return(true)
         post :create, :opportunity => {}
         response.should redirect_to(opportunity_url(mock_opportunity))
       end
@@ -97,14 +110,26 @@ describe OpportunitiesController do
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved opportunity as @opportunity" do
-        Opportunity.stub!(:new).with({'these' => 'params'}).and_return(mock_opportunity(:save => false))
-        post :create, :opportunity => {:these => 'params'}
-        assigns(:opportunity).should equal(mock_opportunity)
+        @opportunity = mock_opportunity(:save => false)
+        @account     = mock_model(Account)
+        @users       = [ mock_model(User) ]
+        @accounts    = [ mock_model(Account) ]
+
+        Opportunity.should_receive(:new).with({'opportunity' => 'params'}).and_return(@opportunity)
+        Account.should_receive(:new).with({'account' => 'params'}).and_return(@account)
+        User.should_receive(:all_except).with(@current_user).and_return(@users)
+        Account.should_receive(:find).with(:all, :order => "name").and_return(@accounts)
+        @opportunity.should_receive(:save_with_account_and_permissions).with({"opportunity"=>{"opportunity"=>"params"}, "account"=>{"account"=>"params"}, "action"=>"create", "controller"=>"opportunities", "users"=>["1", "2", "3"]}).and_return(true)
+        post :create, :opportunity => {:opportunity => "params"}, :account => {:account => "params"}, :users => %w(1 2 3)
+        assigns(:opportunity).should equal(@opportunity)
+        assigns(:account).should equal(@account)
+        assigns(:users).should equal(@users)
+        assigns(:accounts).should equal(@accounts)
       end
 
       it "should re-render the 'new' template" do
         Opportunity.stub!(:new).and_return(@opp = mock_opportunity(:save => false))
-        @opp.should_receive(:save).and_return(false)
+        @opp.should_receive(:save_with_account_and_permissions).with({"opportunity"=>{}, "action"=>"create", "controller"=>"opportunities"}).and_return(false)
         post :create, :opportunity => {}
         response.should render_template('new')
       end

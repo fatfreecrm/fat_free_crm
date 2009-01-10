@@ -45,12 +45,7 @@ class Contact < ActiveRecord::Base
 
   validates_presence_of :first_name, :message => "^Please specify first name."
   validates_presence_of :last_name, :message => "^Please specify last name."
-
-  # Make sure at least one user has been selected if the contact is being shared.
-  #----------------------------------------------------------------------------
-  def validate
-    errors.add(:access, "^Please specify users to share the contact with.") if self[:access] == "Shared" && self.permissions.size <= 0
-  end
+  validate :users_for_shared_access
 
   #----------------------------------------------------------------------------
   def full_name
@@ -111,6 +106,13 @@ class Contact < ActiveRecord::Base
       end
     end
     contact
+  end
+
+  private
+  # Make sure at least one user has been selected if the contact is being shared.
+  #----------------------------------------------------------------------------
+  def users_for_shared_access
+    errors.add(:access, "^Please specify users to share the contact with.") if self[:access] == "Shared" && !self.permissions.any?
   end
 
 end

@@ -1,6 +1,11 @@
+Sun, Jan 10, 2009
+---------------------------------------------------------------------
+- Implemented backend for [Opportunity/New].
+- Refactored models validation code.
+
 Fri, Jan 9, 2009
 ---------------------------------------------------------------------
-- Implemented [Opportunity/Show] and created [Opportunity/New] form (with backend stub).
+- Converted [Opportunity/Show] to HAML and created [Opportunity/New] form (with backend stub).
 
 Thu, Jan 8, 2009
 ---------------------------------------------------------------------

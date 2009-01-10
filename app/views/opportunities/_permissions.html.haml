@@ -1,4 +1,4 @@
-- collapsed = (@opportunity.errors.empty? && session[:permissions_opportunitys_new].nil?)
+- collapsed = (@opportunity.errors.empty? && session[:permissions_opportunities_new].nil?)
 = subtitle :permissions, collapsed
 .section
   %small#permissions_intro{ hidden_if(!collapsed) }
@@ -8,10 +8,10 @@
       = f.radio_button :access, "Private", :onclick => "$('people').hide(); $('account_access').value = 'Private'"
       Keep it private, do not share with others
     .radio_box
-      = f.radio_button :access, "Public", :onclick => "$('people').hide(); $('account_access').value = 'Public'"
+      = f.radio_button :access, "Public",  :onclick => "$('people').hide(); $('account_access').value = 'Public'"
       Share it with everyone
     .radio_box
-      = f.radio_button :access, "Shared", :onclick => "$('people').show(); $('account_access').value = 'Shared'"
+      = f.radio_button :access, "Shared",  :onclick => "$('people').show(); $('account_access').value = 'Shared'"
       Share it with the following people
     #people{ hidden_if(@opportunity.access != "Shared") }
       %div{ :style => "padding: 6px 0px 0px 20px" }

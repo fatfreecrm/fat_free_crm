@@ -33,12 +33,7 @@ class Account < ActiveRecord::Base
 
   validates_presence_of :name, :message => "^Please specify account name."
   validates_uniqueness_of :name
-
-  # Make sure at least one user has been selected if the account is being shared.
-  #----------------------------------------------------------------------------
-  def validate
-    errors.add(:access, "^Please specify users to share the account with.") if self[:access] == "Shared" && self.permissions.size <= 0
-  end
+  validate :users_for_shared_access
 
   # Save the account along with its permissions if any.
   #----------------------------------------------------------------------------
@@ -83,6 +78,13 @@ class Account < ActiveRecord::Base
       end
     end
     account
+  end
+
+  private
+  # Make sure at least one user has been selected if the account is being shared.
+  #----------------------------------------------------------------------------
+  def users_for_shared_access
+    errors.add(:access, "^Please specify users to share the account with.") if self[:access] == "Shared" && !self.permissions.any?
   end
 
 end
