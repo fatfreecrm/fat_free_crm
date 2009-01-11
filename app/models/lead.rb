@@ -39,6 +39,7 @@ class Lead < ActiveRecord::Base
   has_one :contact
   has_many :permissions, :as => :asset, :include => :user
   named_scope :converted, :conditions => "status='converted'"
+  named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }
   uses_mysql_uuid
   acts_as_paranoid
 
@@ -77,6 +78,16 @@ class Lead < ActiveRecord::Base
   end
 
   #----------------------------------------------------------------------------
+  def convert
+    update_attributes(:status => "converted")
+    if self.campaign_id
+      total = Lead.for_campaign(self.campaign_id).count # this can't be zero
+      converted = Lead.for_campaign(self.campaign_id).converted.count
+      Campaign.update(self.campaign_id, { :actual_conversion =>  converted * 100.0 / total })
+    end
+  end
+
+  #----------------------------------------------------------------------------
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
@@ -86,7 +97,6 @@ class Lead < ActiveRecord::Base
   def update_campaign_counters
     if self.campaign_id
       Campaign.increment_counter(:actual_leads, self.campaign_id)
-      Campaign.update(self.campaign_id, { :actual_conversion => Lead.converted.count * 100.0 / Lead.count })
     end
   end
 
