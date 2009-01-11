@@ -24,93 +24,8 @@
 <%
   require "faker"
   Faker::PhoneNumber::Formats = ["(###)###-####"]
-%>
-account1:
-  id: 1
-  user_id: 1
-  assigned_to : <%= rand(5) + 1 %>
-  name: <%= company = Faker::Company.name %>
-  access: Private
-  notes: Met them at convention center last fall.
-  website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
-  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
-  phone: <%= Faker::PhoneNumber.phone_number %>
-  fax: <%= Faker::PhoneNumber.phone_number %>
-  billing_address: |
-    <%= addr1 = Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-    <%= addr2 = Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
-  shipping_address: |
-    <%= addr1 %>
-    <%= addr2 %>
-  deleted_at:
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
 
-account2:
-  id: 2
-  user_id: 1
-  assigned_to : <%= rand(5) + 1 %>
-  name: <%= company = Faker::Company.name %>
-  access: Private
-  notes: These guys have been running their network marketing firm since 1990.
-  website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
-  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
-  phone: <%= Faker::PhoneNumber.phone_number %>
-  fax: <%= Faker::PhoneNumber.phone_number %>
-  billing_address: |
-    <%= addr1 = Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-    <%= addr2 = Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
-  shipping_address: |
-    <%= addr1 %>
-    <%= addr2 %>
-  deleted_at:
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
-
-account3:
-  id: 3
-  user_id: 2
-  assigned_to : <%= rand(5) + 1 %>
-  name: <%= company = Faker::Company.name %>
-  access: Shared
-  notes: They have over 200 people working for them all over the world.
-  website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
-  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
-  phone: <%= Faker::PhoneNumber.phone_number %>
-  fax: <%= Faker::PhoneNumber.phone_number %>
-  billing_address: |
-    <%= addr1 = Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-    <%= addr2 = Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
-  shipping_address: |
-    <%= addr1 %>
-    <%= addr2 %>
-  deleted_at:
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
-
-account4:
-  id: 4
-  user_id: 2
-  assigned_to : <%= rand(5) + 1 %>
-  name: <%= company = Faker::Company.name %>
-  access: Shared
-  notes: Design firm from Denmark that builds beautiful desktops. Very well known in northern Europe.
-  website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
-  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
-  phone: <%= Faker::PhoneNumber.phone_number %>
-  fax: <%= Faker::PhoneNumber.phone_number %>
-  billing_address: |
-    <%= addr1 = Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-    <%= addr2 = Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
-  shipping_address: |
-    <%= addr1 %>
-    <%= addr2 %>
-  deleted_at:
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
-
-<% 
-  for i in (5 .. rand(10) + 15) do 
+  for i in (1 .. rand(10) + 20) do 
 %>
 account<%= i %>:
   id: <%= i %>
@@ -132,5 +47,4 @@ account<%= i %>:
   deleted_at:
   created_at: <%= starts = Date.today - rand(15).days %>
   updated_at: <%= starts + rand(5).days %>
-
 <% end %>

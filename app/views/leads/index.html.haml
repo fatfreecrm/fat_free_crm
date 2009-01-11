@@ -30,8 +30,8 @@
             = "&ndash; referred by #{lead.referred_by}" if lead.referred_by?
           %dt
             = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
-            = lead.phone  << " | " if lead.phone?
-            = lead.mobile << " | " if lead.mobile?
+            = "phone: " + lead.phone  << " | " if lead.phone?
+            = "mobile: " + lead.mobile << " | " if lead.mobile?
             == added #{time_ago_in_words(lead.created_at)} ago
   - else
     %div== You don't have any leads yet. Feel free to #{link_to("create new lead", new_lead_path)}.

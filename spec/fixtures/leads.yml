@@ -61,9 +61,9 @@ lead<%= i %>:
   facebook    : <%= "http://www.facebook.com/#{(first_name + last_name.first).downcase}" if rand(10) < 5 %>
   twitter     : <%= "http://www.twitter.com/#{(first_name + last_name.first).downcase}" if rand(10) < 3 %>
   email       : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
-  alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) %>
-  phone       : <%= Faker::PhoneNumber.phone_number %>
-  mobile      : <%= Faker::PhoneNumber.phone_number %>
+  alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) if rand(10) < 3 %>
+  phone       : <%= Faker::PhoneNumber.phone_number if rand(10) < 5 %>
+  mobile      : <%= Faker::PhoneNumber.phone_number if rand(10) < 3 %>
   address     : |
                 <%= Faker::Address.street_address + " " + Faker::Address.secondary_address %>
                 <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>

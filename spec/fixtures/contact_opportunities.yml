@@ -11,11 +11,15 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
-
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
+<%
+  for i in (1 .. 20) do
+    random = rand(20)
+%>
+contact_opportunities<%= i %>:
+  id: <%= i %>
+  contact_id: <%= i if random < 15 %>
+  opportunity_id: <%= (i + random) if random < 15 %>
+  deleted_at:
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
+<% end %>

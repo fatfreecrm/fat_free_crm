@@ -23,8 +23,8 @@
             = "&ndash; referred by #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
           %dt
             = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
-            = contact.phone  << " | " if contact.phone?
-            = contact.mobile << " | " if contact.mobile?
+            = "phone: " + contact.phone << " | " if contact.phone?
+            = "mobile: " + contact.mobile << " | " if contact.mobile?
             == added #{time_ago_in_words(contact.created_at)} ago
   - else
     %div== You don't have any contacts yet. Feel free to #{link_to("create new contact", new_contact_path)}.

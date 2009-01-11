@@ -2,6 +2,7 @@ Sun, Jan 10, 2009
 ---------------------------------------------------------------------
 - Implemented backend for [Opportunity/New].
 - Refactored models validation code.
+- Added fixtures for join tables.
 
 Fri, Jan 9, 2009
 ---------------------------------------------------------------------
