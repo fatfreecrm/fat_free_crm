@@ -1,4 +1,8 @@
-Sun, Jan 10, 2009
+Sun, Jan 11, 2009
+---------------------------------------------------------------------
+- Made campaign and lead models track lead-to-opportunity conversion ratio.
+
+Sat, Jan 10, 2009
 ---------------------------------------------------------------------
 - Implemented backend for [Opportunity/New].
 - Refactored models validation code.

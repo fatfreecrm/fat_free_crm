@@ -121,7 +121,7 @@ class LeadsController < ApplicationController
       @account, @opportunity, @contact = @lead.promote(params)
       @accounts = Account.find(:all, :order => "name")
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
-        @lead.convert
+        @lead.convert(!@opportunity.id.nil?)
         flash[:notice] = "Lead #{@lead.full_name} was successfully converted."
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }

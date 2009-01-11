@@ -47,7 +47,7 @@ class Lead < ActiveRecord::Base
   validates_presence_of :last_name, :message => "^Please specify last name."
   validate :users_for_shared_access
 
-  after_create :update_campaign_counters
+  after_create :increment_leads_count
 
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
@@ -78,13 +78,9 @@ class Lead < ActiveRecord::Base
   end
 
   #----------------------------------------------------------------------------
-  def convert
+  def convert(with_opportunity = true)
     update_attributes(:status => "converted")
-    if self.campaign_id
-      total = Lead.for_campaign(self.campaign_id).count # this can't be zero
-      converted = Lead.for_campaign(self.campaign_id).converted.count
-      Campaign.update(self.campaign_id, { :actual_conversion =>  converted * 100.0 / total })
-    end
+    increment_opportunities_count if with_opportunity
   end
 
   #----------------------------------------------------------------------------
@@ -94,9 +90,16 @@ class Lead < ActiveRecord::Base
 
   private
   #----------------------------------------------------------------------------
-  def update_campaign_counters
+  def increment_leads_count
     if self.campaign_id
-      Campaign.increment_counter(:actual_leads, self.campaign_id)
+      Campaign.increment_counter(:leads_count, self.campaign_id)
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def increment_opportunities_count
+    if self.campaign_id
+      Campaign.increment_counter(:opportunities_count, self.campaign_id)
     end
   end
 

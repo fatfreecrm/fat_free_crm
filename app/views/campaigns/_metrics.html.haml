@@ -9,6 +9,8 @@
 %dt
   - unless objectives.empty?
     %b Actual:
-  = number_to_currency(campaign.actual_revenue || 0, :precision => 0) << " in revenue | "
-  = pluralize(campaign.actual_leads || 0, "lead") << " | "
-  = number_to_percentage(campaign.actual_conversion || 0, :precision => 1) << " conversion"
+  = number_to_currency(campaign.revenue || 0, :precision => 0) << " in revenue | "
+  = pluralize(campaign.leads_count || 0, "lead") << " | "
+  = pluralize(campaign.opportunities_count || 0, "opportunity")
+  - if campaign.opportunities_count? && campaign.leads_count? && campaign.leads_count != 0
+    = " | " << number_to_percentage(campaign.opportunities_count * 100 / campaign.leads_count, :precision => 1) << " conversion"

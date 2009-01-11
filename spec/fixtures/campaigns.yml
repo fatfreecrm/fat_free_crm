@@ -3,25 +3,25 @@
 #
 # Table name: campaigns
 #
-#  id                :integer(4)      not null, primary key
-#  uuid              :string(36)
-#  user_id           :integer(4)
-#  name              :string(64)      default(""), not null
-#  access            :string(8)       default("Private")
-#  status            :string(64)
-#  budget            :decimal(12, 2)
-#  target_leads      :integer(4)
-#  target_conversion :float
-#  target_revenue    :decimal(12, 2)
-#  actual_leads      :integer(4)
-#  actual_conversion :float
-#  actual_revenue    :decimal(12, 2)
-#  starts_on         :date
-#  ends_on           :date
-#  objectives        :text
-#  deleted_at        :datetime
-#  created_at        :datetime
-#  updated_at        :datetime
+#  id                  :integer(4)      not null, primary key
+#  uuid                :string(36)
+#  user_id             :integer(4)
+#  name                :string(64)      default(""), not null
+#  access              :string(8)       default("Private")
+#  status              :string(64)
+#  budget              :decimal(12, 2)
+#  target_leads        :integer(4)
+#  target_conversion   :float
+#  target_revenue      :decimal(12, 2)
+#  leads_count         :integer(4)
+#  opportunities_count :integer(4)
+#  revenue             :decimal(12, 2)
+#  starts_on           :date
+#  ends_on             :date
+#  objectives          :text
+#  deleted_at          :datetime
+#  created_at          :datetime
+#  updated_at          :datetime
 #
 
 <%
@@ -39,6 +39,10 @@
   names << "Family Sweepstakes"
   names << "Customer satisfaction survey featuring special offer"
   names << "Billboard ads"
+  names << "Whitepaper download requests"
+  names << "Free t-shirt offer"
+  names << "Free USB flash drive offer"
+  names << "Online refer-a-friend program"
 
   for i in (1 .. names.size) do
     starts = starts = Date.today + (rand(15) * (rand(2) * 2 - 1)).days
@@ -54,9 +58,9 @@ campaign<%= i %>:
   target_leads: <%= rand(200) + 100 %>
   target_conversion: <%= rand(20) + 5 %>
   target_revenue: <%= rand(1000) * 1000 %>
-  actual_leads: <%= future ? "" : rand(200) + 100 %>
-  actual_conversion: <%= future ? "" : rand(20) + 5 * rand %>
-  actual_revenue: <%= future ? "" : rand(1000) * 1000 %>
+  leads_count: <%= future ? "" : rand(200) + 100 %>
+  opportunities_count: <%= future ? "" : rand(20) + 5 * rand %>
+  revenue: <%= future ? "" : rand(1000) * 1000 %>
   starts_on: <%= starts %>
   ends_on: <%= starts + rand(50).days %>
   objectives:
