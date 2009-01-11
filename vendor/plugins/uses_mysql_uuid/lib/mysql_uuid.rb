@@ -14,8 +14,8 @@ module ActiveRecord
           #--------------------------------------------------------------------------
           def uses_mysql_uuid
             if mysql5_or_later? && !already_uses_mysql_uuid?
-              include ActiveRecord::Uses::MySQL_UUID::InstanceMethods
-              extend ActiveRecord::Uses::MySQL_UUID::SingletonMethods
+              include ActiveRecord::Uses::MySQL::UUID::InstanceMethods
+              extend ActiveRecord::Uses::MySQL::UUID::SingletonMethods
             end
           end
 
