@@ -9,13 +9,9 @@
 .list
   - unless @accounts.empty?
     - for account in @accounts
-      :ruby
-        amount = (rand(100) + 20) * 10_000;  amount = nil if amount / 10_000 % 2 == 0
-        leads = rand(100)
-        contacts = rand(100)
-        opportunities = rand(10)
+      - amount = account.opportunities.sum(:amount)
       %li{ highlightable(dom_id(account)) }
-        - if amount
+        - if amount != 0.0
           .strip.some= number_to_currency(amount, :precision => 0)
         - else
           .strip.none None
@@ -26,14 +22,13 @@
             = link_to(image_tag("cross_circle.png", :title => "Delete #{h(account.name)}"), "#")
           = link_to(account.name, account) << " &ndash; "
           %tt
-            = account.location << ", " if account.location
+            = account.location << ", " unless account.location.blank?
             == added #{time_ago_in_words(account.created_at)} ago by 
             == #{account.user.id == @current_user.id ? "me" : account.user.full_name}
           %dt
             = link_to(account.website, account.website) << " | " if account.website?
-            = (account.tall_free_phone || account.phone) << " | " if account.tall_free_phone? || account.phone?
-            = pluralize(leads, "lead") << " | "
-            = pluralize(contacts, "contact") << " | "
-            = pluralize(opportunities, "opportunity")
+            = "phone: " << (account.tall_free_phone || account.phone) << " | " if account.tall_free_phone? || account.phone?
+            = pluralize(account.contacts.count, "contact") << " | "
+            = pluralize(account.opportunities.count, "opportunity")
   - else
     %div== You don't have any accounts set up yet. Feel free to #{link_to("create new account", new_account_path)} now.

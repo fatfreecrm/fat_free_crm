@@ -1,3 +1,7 @@
+Mon, Jan 12, 2009
+---------------------------------------------------------------------
+- Replaced account template stubs with actual contact and opportunity numbers.
+
 Sun, Jan 11, 2009
 ---------------------------------------------------------------------
 - Made campaign and lead models track lead-to-opportunity conversion ratio.
