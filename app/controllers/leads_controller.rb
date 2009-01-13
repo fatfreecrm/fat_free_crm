@@ -1,4 +1,5 @@
 class LeadsController < ApplicationController
+  before_filter :handle_web_to_lead_submission, :only => :create
   before_filter :require_user
   before_filter "set_current_tab(:leads)"
 
@@ -57,11 +58,23 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
         flash[:notice] = "Lead #{@lead.full_name} was successfully created."
-        format.html { redirect_to(@lead) }
-        format.xml  { render :xml => @lead, :status => :created, :location => @lead }
+        format.html {
+          if params[:on_success].blank? # web-to-lead form can set this...
+            redirect_to(@lead)
+          else
+            redirect_to(params[:on_success])
+          end
+        }
+        format.xml { render :xml => @lead, :status => :created, :location => @lead }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
+        format.html {
+          if params[:on_failure].blank? # .. and this one
+            render :action => "new"
+          else
+            redirect_to(params[:on_failure])
+          end
+        }
+        format.xml { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -129,6 +142,14 @@ class LeadsController < ApplicationController
         format.html { render :action => "convert" }
         format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def handle_web_to_lead_submission
+    if request.post? && !params[:authorization].blank? && !params[:token].blank?
+      @current_user = User.find_by_password_hash_and_password_salt(params[:authorization], params[:token])
     end
   end
 

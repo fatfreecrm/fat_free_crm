@@ -1,6 +1,7 @@
 Mon, Jan 12, 2009
 ---------------------------------------------------------------------
 - Replaced account template stubs with actual contact and opportunity numbers.
+- Added web-to-lead submission hook to Leads controller (thanks bitdigital)!
 
 Sun, Jan 11, 2009
 ---------------------------------------------------------------------
