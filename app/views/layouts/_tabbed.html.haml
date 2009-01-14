@@ -9,4 +9,4 @@
     %td{ :class => :main, :valign => :top }
       = yield
     %td{ :class => :sidebar, :valign => :top }
-      = yield(:sidebar)
+      = yield(:sidebar) || render(:partial => "sidebar_" << controller.action_name) rescue nil

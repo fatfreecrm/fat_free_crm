@@ -9,4 +9,9 @@ module LeadsHelper
     select_tag name, options_for_select, options
   end
 
+  #----------------------------------------------------------------------------
+  def status_checbox(status)
+    check_box_tag("status[]", status, session["lead_filter_#{status.to_s}".to_sym], :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+  end
+
 end

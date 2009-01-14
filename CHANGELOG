@@ -1,3 +1,8 @@
+Tue, Jan 13, 2009
+---------------------------------------------------------------------
+- Added rendering of local sidebar template if it's available.
+- Added sidebar for Leads and implemented initial version of leads filtering by status.
+
 Mon, Jan 12, 2009
 ---------------------------------------------------------------------
 - Replaced account template stubs with actual contact and opportunity numbers.

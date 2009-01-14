@@ -1,10 +1,8 @@
+- logger.info "RENDERING FILTER " + @leads.size.to_s
 - content_for :styles do
   %style
     - Setting.lead_status_color.each do |key, value|
       == .#{key} { background:#{value}; }
-
-.title_menu= link_to "Create New Lead", new_lead_path
-.title Leads
 
 .list#list
   - unless @leads.empty?
@@ -35,12 +33,3 @@
             == added #{time_ago_in_words(lead.created_at)} ago
   - else
     %div== You don't have any leads yet. Feel free to #{link_to("create new lead", new_lead_path)}.
-
-
--#<% for lead in @leads %>
--#  <tr>
--#    <td><%= link_to 'Show', lead %></td>
--#    <td><%= link_to 'Edit', edit_lead_path(lead) %></td>
--#    <td><%= link_to 'Destroy', lead, :confirm => 'Are you sure?', :method => :delete %></td>
--#  </tr>
--#<% end %>

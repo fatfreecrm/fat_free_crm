@@ -277,8 +277,10 @@ td.cell a:hover {
 
 .sidebar {
   /*border: 1px blue dotted;*/
-  width: 175px;
+  color: #3f3f3f;
+  font-size: 11px;
   padding: 0px 12px 0px 12px;
+  width: 175px;
 }
 
 .form {
@@ -409,9 +411,9 @@ td.cell a:hover {
   padding-top: 6px;
 }
 
-.section input,
-.section select,
-.section textarea {
+.section input, .sidebar input,
+.section select, .sidebar select,
+.section textarea, .sidebar textarea {
   margin: 3px 0px 0px 0px;
   vertical-align: middle;
 }
