@@ -14,8 +14,12 @@ describe LeadsController do
   
   describe "responding to GET index" do
 
+    before(:each) do
+      get_data_for_sidebar
+    end
+
     it "should expose all leads as @leads" do
-      Lead.should_receive(:find).with(:all, :order => "id DESC").and_return([mock_lead])
+      Lead.stub!(:my).with(@current_user).and_return([mock_lead])
       get :index
       assigns[:leads].should == [mock_lead]
     end
@@ -24,7 +28,7 @@ describe LeadsController do
   
       it "should render all leads as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Lead.should_receive(:find).with(:all, :order => "id DESC").and_return(leads = mock("Array of Leads"))
+        Lead.stub!(:my).with(@current_user).and_return(leads = mock("Array of Leads"))
         leads.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"

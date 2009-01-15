@@ -30,10 +30,11 @@ class CreateContacts < ActiveRecord::Migration
     end
 
     add_index :contacts, [ :user_id, :last_name, :deleted_at ], :unique => true
-    add_index :contacts, :uuid
+    add_index :contacts, :assigned_to
 
     if adapter_name.downcase == "mysql"
-      if select_value("select version()").to_i >= 5
+      if select_value("SELECT VERSION()").to_i >= 5
+        add_index :contacts, :uuid
         execute("CREATE TRIGGER contacts_uuid BEFORE INSERT ON contacts FOR EACH ROW SET NEW.uuid = UUID()")
       end
     end

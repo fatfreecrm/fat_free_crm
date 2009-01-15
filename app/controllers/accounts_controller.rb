@@ -6,7 +6,7 @@ class AccountsController < ApplicationController
   # GET /accounts.xml
   #----------------------------------------------------------------------------
   def index
-    @accounts = @current_user.owned_and_shared_accounts
+    @accounts = Account.my(@current_user)
 
     respond_to do |format|
       format.html # index.html.erb

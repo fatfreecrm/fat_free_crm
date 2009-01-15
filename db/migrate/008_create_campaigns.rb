@@ -3,6 +3,7 @@ class CreateCampaigns < ActiveRecord::Migration
     create_table :campaigns, :force => true do |t|
       t.string      :uuid,   :limit => 36
       t.references  :user
+      t.integer     :assigned_to
       t.string      :name,   :limit => 64, :null => false, :default => ""
       t.string      :access, :limit => 8, :default => "Private" # %w(Private Public Shared)
       t.string      :status, :limit => 64
@@ -24,6 +25,7 @@ class CreateCampaigns < ActiveRecord::Migration
     end
 
     add_index :campaigns, [ :user_id, :name, :deleted_at ], :unique => true
+    add_index :campaigns, :assigned_to
     add_index :campaigns, :uuid
 
     if adapter_name.downcase == "mysql"

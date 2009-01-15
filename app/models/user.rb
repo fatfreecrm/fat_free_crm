@@ -63,12 +63,6 @@ class User < ActiveRecord::Base
     Preference.new(:user => self)
   end
 
-  # Selects accounts owned by the user plus all accounts shared with the user.
-  #----------------------------------------------------------------------------
-  def owned_and_shared_accounts
-    Account.find_by_sql [ 'SELECT * FROM accounts WHERE deleted_at IS NULL AND (user_id=? OR id IN (SELECT asset_id FROM permissions WHERE asset_type="Account" AND user_id=?)) ORDER BY id DESC', self.id, self.id ]
-  end
-
   # All of the following code is for OpenID integration.
   #----------------------------------------------------------------------------
   acts_as_authentic(

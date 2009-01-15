@@ -6,7 +6,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns.xml
   #----------------------------------------------------------------------------
   def index
-    @campaigns = Campaign.find(:all, :order => "id DESC")
+    @campaigns = Campaign.my(@current_user)
 
     respond_to do |format|
       format.html # index.html.erb

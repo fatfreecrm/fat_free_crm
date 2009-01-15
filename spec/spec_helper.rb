@@ -84,3 +84,10 @@ end
 def set_current_tab(tab)
   controller.session[:current_tab] = tab
 end
+
+#----------------------------------------------------------------------------
+def get_data_for_sidebar
+  Setting.stub!(:lead_status).and_return({ :key => "value" })
+  Lead.should_receive(:my).twice.and_return(leads = [ mock_model(Lead) ])
+  leads.should_receive(:count).twice.and_return(42)
+end

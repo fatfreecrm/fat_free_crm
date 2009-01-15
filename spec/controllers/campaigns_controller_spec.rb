@@ -14,7 +14,7 @@ describe CampaignsController do
   describe "responding to GET index" do
 
     it "should expose all campaigns as @campaigns" do
-      Campaign.should_receive(:find).with(:all, { :order => "id DESC" }).and_return([mock_campaign])
+      Campaign.should_receive(:my).with(@current_user).and_return([mock_campaign])
       get :index
       assigns[:campaigns].should == [mock_campaign]
     end
@@ -23,7 +23,7 @@ describe CampaignsController do
   
       it "should render all campaigns as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Campaign.should_receive(:find).with(:all, { :order => "id DESC" }).and_return(campaigns = mock("Array of Campaigns"))
+        Campaign.should_receive(:my).with(@current_user).and_return(campaigns = mock("Array of Campaigns"))
         campaigns.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"

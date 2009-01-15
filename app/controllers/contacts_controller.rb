@@ -6,7 +6,7 @@ class ContactsController < ApplicationController
   # GET /contacts.xml
   #----------------------------------------------------------------------------
   def index
-    @contacts = Contact.find(:all, :order => "id DESC")
+    @contacts = Contact.my(@current_user)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -33,7 +33,7 @@ class ContactsController < ApplicationController
     @contact = Contact.new(:user => @current_user, :access => "Private")
     @account = Account.new(:user => @current_user, :access => "Private")
     @users = User.all_except(@current_user) # to manage account permissions
-    @accounts = Account.find(:all, :order => "name")
+    @accounts = Account.my(@current_user).all(:order => "name")
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,7 +54,7 @@ class ContactsController < ApplicationController
     @contact = Contact.new(params[:contact])
     @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
-    @accounts = Account.find(:all, :order => "name")
+    @accounts = Account.my(@current_user).all(:order => "name")
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)

@@ -1,3 +1,10 @@
+Wed, Jan 14, 2009
+---------------------------------------------------------------------
+- Added :my named scope for main models to support permissions.
+- Refactored all controllers to use :my permission-based scopes.
+- Refactored [Leads/Index] and [Leads/Filter] to use collection partial.
+- Added missing database indices.
+
 Tue, Jan 13, 2009
 ---------------------------------------------------------------------
 - Added rendering of local sidebar template if it's available.

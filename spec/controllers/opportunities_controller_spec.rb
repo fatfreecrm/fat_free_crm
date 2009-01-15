@@ -15,7 +15,7 @@ describe OpportunitiesController do
   describe "responding to GET index" do
 
     it "should expose all opportunities as @opportunities" do
-      Opportunity.should_receive(:find).with(:all, :order => "id DESC").and_return([mock_opportunity])
+      Opportunity.should_receive(:my).with(@current_user).and_return([mock_opportunity])
       get :index
       assigns[:opportunities].should == [mock_opportunity]
     end
@@ -24,7 +24,7 @@ describe OpportunitiesController do
   
       it "should render all opportunities as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Opportunity.should_receive(:find).with(:all, :order => "id DESC").and_return(opportunities = mock("Array of Opportunities"))
+        Opportunity.should_receive(:my).with(@current_user).and_return(opportunities = mock("Array of Opportunities"))
         opportunities.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"

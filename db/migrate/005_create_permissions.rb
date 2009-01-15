@@ -5,6 +5,8 @@ class CreatePermissions < ActiveRecord::Migration
       t.references :asset, :polymorphic => true   # Creates asset_id and asset_type.
       t.timestamps
     end
+
+    add_index :permissions, :user_id
   end
 
   def self.down

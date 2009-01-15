@@ -1,0 +1,24 @@
+%li{ highlightable(dom_id(lead)) }
+  - if lead.status
+    .strip{:class => lead.status}= Setting.lead_status[lead.status.intern]
+  - else
+    .strip &nbsp;
+  %div
+    .tools[lead]{ hidden }
+      = link_to(image_tag("information.png", :title => "View #{h(lead.full_name)}"), lead_path(lead))
+      = link_to(image_tag("arrow_circle_225.png", :title => "Convert #{h(lead.full_name)}"), convert_lead_path(lead)) if lead.status != "converted"
+      = link_to(image_tag("tick_circle.png", :title => "Edit #{h(lead.full_name)}"), edit_lead_path(lead))
+      = link_to(image_tag("cross_circle.png", :title => "Delete #{h(lead.full_name)}"), "#")
+    = link_to(lead.full_name, lead)
+    %tt
+      - if lead.company? && lead.title?
+        = lead.title << " at " << lead.company
+      - else
+        = lead.company if lead.company?
+      /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
+      = "&ndash; referred by #{lead.referred_by}" if lead.referred_by?
+    %dt
+      = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
+      = "phone: " + lead.phone  << " | " if lead.phone?
+      = "mobile: " + lead.mobile << " | " if lead.mobile?
+      == added #{time_ago_in_words(lead.created_at)} ago

@@ -6,7 +6,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities.xml
   #----------------------------------------------------------------------------
   def index
-    @opportunities = Opportunity.find(:all, :order => "id DESC")
+    @opportunities = Opportunity.my(@current_user)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -33,7 +33,7 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
     @account = Account.new(:user => @current_user, :access => "Private")
     @users = User.all_except(@current_user)
-    @accounts = Account.find(:all, :order => "name")
+    @accounts = Account.my(@current_user).all(:order => "name")
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,7 +54,7 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.new(params[:opportunity])
     @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
-    @accounts = Account.find(:all, :order => "name")
+    @accounts = Account.my(@current_user).all(:order => "name")
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)

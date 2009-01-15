@@ -41,6 +41,7 @@ class Contact < ActiveRecord::Base
   has_many :contact_opportunities, :dependent => :destroy
   has_many :opportunities, :through => :contact_opportunities, :uniq => true
   has_many :permissions, :as => :asset, :include => :user
+  named_scope :my, lambda { |user| { :joins => :permissions, :conditions => ["contacts.user_id=? OR contacts.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "id DESC" } }
   uses_mysql_uuid
   acts_as_paranoid
 

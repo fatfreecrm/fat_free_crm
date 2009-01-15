@@ -14,7 +14,7 @@ describe AccountsController do
   describe "responding to GET index" do
 
     it "should expose all accounts as @accounts" do
-      @current_user.should_receive(:owned_and_shared_accounts).and_return([mock_account])
+      Account.should_receive(:my).with(@current_user).and_return([mock_account])
       get :index
       assigns[:accounts].should == [mock_account]
     end
@@ -23,7 +23,7 @@ describe AccountsController do
   
       it "should render all accounts as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        @current_user.should_receive(:owned_and_shared_accounts).and_return(accounts = mock("Array of Accounts"))
+        Account.should_receive(:my).with(@current_user).and_return(accounts = mock("Array of Accounts"))
         accounts.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"

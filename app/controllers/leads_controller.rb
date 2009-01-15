@@ -8,7 +8,11 @@ class LeadsController < ApplicationController
   # GET /leads.xml
   #----------------------------------------------------------------------------
   def index
-    @leads = Lead.find(:all, :order => "id DESC")
+    unless session[:filter_by_lead_status]
+      @leads = Lead.my(@current_user)
+    else
+      @leads = Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,7 +38,7 @@ class LeadsController < ApplicationController
   def new
     @lead = Lead.new
     @users = User.all_except(@current_user)
-    @campaigns = Campaign.find(:all, :order => "name")
+    @campaigns = Campaign.my(@current_user).all(:order => "name")
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,7 +58,7 @@ class LeadsController < ApplicationController
   def create
     @lead = Lead.new(params[:lead])
     @users = User.all_except(@current_user)
-    @campaigns = Campaign.find(:all, :order => "name")
+    @campaigns = Campaign.my(@current_user).all(:order => "name")
 
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
@@ -118,7 +122,7 @@ class LeadsController < ApplicationController
   def convert
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
-    @accounts = Account.find(:all, :order => "name")
+    @accounts = Account.my(@current_user).all(:order => "name")
     @account = Account.new(:user => @current_user, :access => "Lead")
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
     @contact = Contact.new
@@ -133,7 +137,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       @account, @opportunity, @contact = @lead.promote(params)
-      @accounts = Account.find(:all, :order => "name")
+      @accounts = Account.my(@current_user).all(:order => "name")
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
         @lead.convert(!@opportunity.id.nil?)
         flash[:notice] = "Lead #{@lead.full_name} was successfully converted."
@@ -149,17 +153,11 @@ class LeadsController < ApplicationController
   # Ajax request to filter out list of leads.
   #----------------------------------------------------------------------------
   def filter
-    checked = params[:status].split(",")
-    Setting.lead_status.keys.each do |key|
-      session["lead_filter_#{key}".to_sym] = (checked.include?(key.to_s) ? true : nil)
-    end
-    session[:lead_filter_other] = (checked.include?("other") ? true : nil)
-
-    @leads = Lead.find(:all, :conditions => ["status IN (?)", checked], :order => "id DESC")
-    # logger.info ">>> @leads.size = " + @leads.size.to_s
+    session[:filter_by_lead_status] = params[:status]
+    @leads = Lead.my(@current_user).only(params[:status].split(","))
 
     render :update do |page|
-      page[:list].replace_html render(:partial => "filter")
+      page[:list].replace_html render(:partial => "lead", :collection => @leads)
     end
   end
 
@@ -173,9 +171,9 @@ class LeadsController < ApplicationController
 
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
-    @lead_status_total = { :all => Lead.count, :other => 0 }
+    @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }
     Setting.lead_status.keys.each do |key|
-      @lead_status_total[key] = Lead.count(:conditions => [ "status=?", key.to_s ])
+      @lead_status_total[key] = Lead.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
       @lead_status_total[:other] -= @lead_status_total[key]
     end
     @lead_status_total[:other] += @lead_status_total[:all]
