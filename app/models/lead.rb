@@ -38,7 +38,7 @@ class Lead < ActiveRecord::Base
   belongs_to :campaign
   has_one :contact
   has_many :permissions, :as => :asset, :include => :user
-  named_scope :my, lambda { |user| { :joins => :permissions, :conditions => ["leads.user_id=? OR leads.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "id DESC" } }
+  named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["leads.user_id=? OR leads.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "leads.id DESC" } }
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR STATUS IS NULL" : ""), filters ] } }
   named_scope :converted, :conditions => "status='converted'"
   named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }

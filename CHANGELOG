@@ -1,3 +1,16 @@
+Sat, Jan 17, 2009
+---------------------------------------------------------------------
+- Uninstalled Searchlogic plugin and added Rails Engines.
+- Fixed :my scope to use LEFT OUTER JOINs with permissions.
+
+Fri, Jan 16, 2009
+---------------------------------------------------------------------
+- Experimenting with application plugins.
+
+Thu, Jan 15, 2009
+---------------------------------------------------------------------
+- Exploring infrastructure for application plugins.
+
 Wed, Jan 14, 2009
 ---------------------------------------------------------------------
 - Added :my named scope for main models to support permissions.
