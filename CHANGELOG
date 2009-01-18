@@ -1,5 +1,6 @@
 Sat, Jan 17, 2009
 ---------------------------------------------------------------------
+- Created first sample Fat Free CRM plugin!
 - Uninstalled Searchlogic plugin and added Rails Engines.
 - Fixed :my scope to use LEFT OUTER JOINs with permissions.
 
