@@ -1,9 +1,12 @@
 class HomeController < ApplicationController
   before_filter :require_user, :except => [ :toggle_form_section ]
   before_filter "set_current_tab(:home)", :except => [ :toggle_form_section ]
-  
+  before_filter "hook(:home_before_filter, self, :amazing => true)"
+
   #----------------------------------------------------------------------------
   def index
+    @hello = "world"
+    hook(:home_controller, self, :params => "it works!")
   end
   
   # Ajax PUT /toggle_form_section

@@ -17,10 +17,10 @@ module FatFreeCRM
 
     # Invokes hook method(s) and captures the output.
     #------------------------------------------------------------------------------
-    def self.hook(method, context = {} )
+    def self.hook(method, caller, context = {})
       response = ""
       responder(method).each do |m|
-        response << m.send(method, context).to_s
+        response << m.send(method, caller, context)
       end
       response
     end
@@ -36,5 +36,16 @@ module FatFreeCRM
       
     end # class Base
 
+    # This makes it possible to call hook() without FatFreeCRM::Callback prefix.
+    #------------------------------------------------------------------------------
+    module Helper
+      def hook(method, caller, context = {})
+        FatFreeCRM::Callback.hook(method, caller, context)
+      end
+    end # module Helper
+
   end # module Callback
 end # module FatFreeCRM
+
+ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
+ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)

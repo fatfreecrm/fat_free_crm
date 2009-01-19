@@ -1,3 +1,8 @@
+Sun, Jan 18, 2008
+---------------------------------------------------------------------
+- More fine tuning of plugins and callback hooks.
+- Sample plugin now implements view, controller, and controller filter hooks.
+
 Sat, Jan 17, 2009
 ---------------------------------------------------------------------
 - Implemented FatFreeCRM::Plugin and FatFreeCRM::Callback modules.
