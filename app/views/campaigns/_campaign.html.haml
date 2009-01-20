@@ -1,0 +1,10 @@
+%li{ highlightable(dom_id(campaign)) }
+  .strip{:class => campaign.status}= Setting.campaign_status[campaign.status.intern]
+  %div
+    .tools[campaign]{ hidden }
+      = link_to(image_tag("information.png", :title => "View #{h(campaign.name)}"), campaign_path(campaign))
+      = link_to(image_tag("tick_circle.png", :title => "Edit #{h(campaign.name)}"), edit_campaign_path(campaign))
+      = link_to(image_tag("cross_circle.png", :title => "Delete #{h(campaign.name)}"), "#")
+    = link_to(campaign.name, campaign)
+    = render :partial => "status", :locals => { :campaign => campaign }
+    = render :partial => "metrics", :locals => { :campaign => campaign }

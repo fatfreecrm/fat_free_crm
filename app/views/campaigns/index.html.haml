@@ -8,24 +8,6 @@
 
 .list
   - unless @campaigns.empty?
-    - for campaign in @campaigns
-      %li{ highlightable(dom_id(campaign)) }
-        .strip{:class => campaign.status}= Setting.campaign_status[campaign.status.intern]
-        %div
-          .tools[campaign]{ hidden }
-            = link_to(image_tag("information.png", :title => "View #{h(campaign.name)}"), campaign_path(campaign))
-            = link_to(image_tag("tick_circle.png", :title => "Edit #{h(campaign.name)}"), edit_campaign_path(campaign))
-            = link_to(image_tag("cross_circle.png", :title => "Delete #{h(campaign.name)}"), "#")
-          = link_to(campaign.name, campaign)
-          = render :partial => "status", :locals => { :campaign => campaign }
-          = render :partial => "metrics", :locals => { :campaign => campaign }
+    = render :partial => "campaign", :collection => @campaigns
   - else
     %div== You don't have any campaigns set up. Please #{link_to("create new campaign", new_campaign_path)} first.
-
--#<% for campaign in @campaigns %>
--#  <tr>
--#    <td><%= link_to 'Show', campaign %></td>
--#    <td><%= link_to 'Edit', edit_campaign_path(campaign) %></td>
--#    <td><%= link_to 'Destroy', campaign, :confirm => 'Are you sure?', :method => :delete %></td>
--#  </tr>
--#<% end %>

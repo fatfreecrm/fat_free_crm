@@ -3,42 +3,6 @@
 
 .list
   - unless @contacts.empty?
-    - for contact in @contacts
-      %li{ highlightable(dom_id(contact)) }
-        - if contact.account && contact.account.name?
-          .longstrip= link_to contact.account.name, account_path(contact.account)
-        - else
-          .longstrip &nbsp;
-        %div
-          .tools[contact]{ hidden }
-            = link_to(image_tag("information.png", :title => "View #{h(contact.full_name)}"), contact_path(contact))
-            = link_to(image_tag("tick_circle.png", :title => "Edit #{h(contact.full_name)}"), edit_contact_path(contact))
-            = link_to(image_tag("cross_circle.png", :title => "Delete #{h(contact.full_name)}"), "#")
-          = link_to(contact.full_name, contact)
-          %tt
-            - if contact.title? && contact.department?
-              = contact.title << ", " << contact.department
-            - else
-              = contact.title if contact.title?
-            = "&ndash; referred by #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
-          %dt
-            = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
-            = "phone: " + contact.phone << " | " if contact.phone?
-            = "mobile: " + contact.mobile << " | " if contact.mobile?
-            == added #{time_ago_in_words(contact.created_at)} ago
+    = render :partial => "contact", :collection => @contacts
   - else
     %div== You don't have any contacts yet. Feel free to #{link_to("create new contact", new_contact_path)}.
-
-
--#<table>
--#  <tr>
--#  </tr>
--#
--#<% for contact in @contacts %>
--#  <tr>
--#    <td><%= link_to 'Show', contact %></td>
--#    <td><%= link_to 'Edit', edit_contact_path(contact) %></td>
--#    <td><%= link_to 'Destroy', contact, :confirm => 'Are you sure?', :method => :delete %></td>
--#  </tr>
--#<% end %>
--#</table>
