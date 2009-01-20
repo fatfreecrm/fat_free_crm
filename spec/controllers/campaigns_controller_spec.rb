@@ -1,6 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe CampaignsController do
+
+  def get_data_for_sidebar
+    Setting.stub!(:campaign_status).and_return({ :key => "value" })
+    Campaign.should_receive(:my).twice.and_return(campaigns = [ mock_model(Campaign) ])
+    campaigns.should_receive(:count).twice.and_return(42)
+  end
+
   before(:each) do
     require_user
     set_current_tab(:campaigns)
@@ -13,8 +20,12 @@ describe CampaignsController do
   
   describe "responding to GET index" do
 
+    before(:each) do
+      get_data_for_sidebar
+    end
+
     it "should expose all campaigns as @campaigns" do
-      Campaign.should_receive(:my).with(@current_user).and_return([mock_campaign])
+      Campaign.stub!(:my).with(@current_user).and_return([mock_campaign])
       get :index
       assigns[:campaigns].should == [mock_campaign]
     end
@@ -23,7 +34,7 @@ describe CampaignsController do
   
       it "should render all campaigns as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Campaign.should_receive(:my).with(@current_user).and_return(campaigns = mock("Array of Campaigns"))
+        Campaign.stub!(:my).with(@current_user).and_return(campaigns = mock("Array of Campaigns"))
         campaigns.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"

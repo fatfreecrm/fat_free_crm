@@ -1,6 +1,7 @@
 class CampaignsController < ApplicationController
   before_filter :require_user
-  before_filter { |filter| filter.send(:set_current_tab, :campaigns) }
+  before_filter :get_data_for_sidebar, :only => :index
+  before_filter "set_current_tab(:campaigns)", :except => :filter
 
   # GET /campaigns
   # GET /campaigns.xml
@@ -95,4 +96,27 @@ class CampaignsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # Ajax request to filter out list of campaigns.
+  #----------------------------------------------------------------------------
+  def filter
+    session[:filter_by_campaign_status] = params[:status]
+    @campaigns = Campaign.my(@current_user).only(params[:status].split(","))
+
+    render :update do |page|
+      page[:list].replace_html render(:partial => "campaign", :collection => @campaigns)
+    end
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def get_data_for_sidebar
+    @campaign_status_total = { :all => Campaign.my(@current_user).count, :other => 0 }
+    Setting.campaign_status.keys.each do |key|
+      @campaign_status_total[key] = Campaign.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
+      @campaign_status_total[:other] -= @campaign_status_total[key]
+    end
+    @campaign_status_total[:other] += @campaign_status_total[:all]
+  end
+
 end

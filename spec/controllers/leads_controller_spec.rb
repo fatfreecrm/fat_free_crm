@@ -2,6 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe LeadsController do
 
+  def get_data_for_sidebar
+    Setting.stub!(:lead_status).and_return({ :key => "value" })
+    Lead.should_receive(:my).twice.and_return(leads = [ mock_model(Lead) ])
+    leads.should_receive(:count).twice.and_return(42)
+  end
+
   before(:each) do
     require_user
     set_current_tab(:leads)

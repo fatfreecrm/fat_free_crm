@@ -6,7 +6,7 @@
 .title_menu= link_to "Create New Campaign", new_campaign_path
 .title Campaigns
 
-.list
+.list#list
   - unless @campaigns.empty?
     = render :partial => "campaign", :collection => @campaigns
   - else

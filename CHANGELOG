@@ -2,6 +2,7 @@ Mon, Jan 19, 2008
 ---------------------------------------------------------------------
 - Improved login/logout flash messages.
 - Refactored list templates to use collection partials.
+- Added sidebar for Campaigns to filter them out by status.
 
 Sun, Jan 18, 2008
 ---------------------------------------------------------------------
