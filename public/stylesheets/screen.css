@@ -116,6 +116,10 @@ tt {
   text-align: center;
   text-decoration: none;
   width: 80px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
 }
 
 #tabs a:hover {
@@ -126,9 +130,8 @@ tt {
 
 #tabs a:link.active,
 #tabs a:visited.active {
-  /*background:#97baff;*/
-  background: white;
-  color:navy;
+  background: azure;
+  color: navy;
   text-decoration:none;
 }
 

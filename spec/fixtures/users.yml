@@ -47,14 +47,14 @@ aaron:
   remember_token: d7cdeffd3625f7cb265b21126b85da7c930d47c4a708365c20eb857560055a6b57c9775becb8a957dfdb46df8aee17eb120a011b380e9cc0882f9dfaa2b7ba26
   perishable_token: TarXlrOPfaokNOzls2U8
   openid_identifier: 
-  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
 
 eve:
   id: 2
@@ -67,14 +67,14 @@ eve:
   remember_token: 118e8def0afada013b6b5b0bdb96548fc0ce546b667ee5bbe43b92a8c13156f88649cac0227beffbf49ec00525904441675da0463dadb6e4d249c12b2e88ac4a
   perishable_token: vmhxuJSALQyI766WAtnT
   openid_identifier: 
-  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
 
 isabel:
   id: 3
@@ -87,14 +87,14 @@ isabel:
   remember_token: 2f820f2ba13b0a80794081e5f03a54fab6c758944f89e22760257ec059ea159f7d9fff62956cf3aa9b21a53cdd30d46a526b2e0fb9d43af641d57c2baf483b1c
   perishable_token: lbxUKZm0oYTkUB1Nm5Jq
   openid_identifier: 
-  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
 
 olga:
   id: 4
@@ -107,14 +107,14 @@ olga:
   remember_token: 763c86b94d7d8a9b25392910e90f041d8f181fe7cbb2412ede576a37aab93cb2a5201285c5a9b202f6bde3a8ac78a2ec3f00f63c764e90e0a051e76066c309ce
   perishable_token: L2q74fwAeRNePvCyguBl
   openid_identifier: 
-  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
 
 ulrich:
   id: 5
@@ -127,14 +127,14 @@ ulrich:
   remember_token: abcdbc3fe2ae724a97289c38422124ae256a6ae42e754fc41e4d85bf55229a67665d92e0bd01ff0c754d80b9996ffee33b9354808b9306d6095f2b552b60d05e
   perishable_token: Yurv5MDtDZqAPpS3lG8e
   openid_identifier: 
-  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
 
 yvette:
   id: 6
@@ -148,11 +148,11 @@ yvette:
   perishable_token: lK0ySLJ07Kwx47HX2Qou
   openid_identifier: 
   last_request_at: 
-  last_login_at: 2008-<%= 10 + rand(3) %>-<%= 10 + rand(15) %> <%= 10 + rand(14) %>:<%= 10 + rand(50) %>:<%= 10 + rand(50) %>
+  last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
   deleted_at: 
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>

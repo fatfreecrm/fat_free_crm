@@ -21,8 +21,11 @@ class AuthenticationsController < ApplicationController
     #   end
     @authentication.save do |result|
       if result
-        flash[:notice] = "Successful login."
-        redirect_back_or_default profile_url
+        flash[:notice] = "Welcome to Fat Free CRM!"
+        if @authentication.record.login_count > 1 && @authentication.record.last_login_at?
+          flash[:notice] << " Your last login was on " << @authentication.record.last_login_at.strftime("%A, %B %e at %I:%M %p.")
+        end
+        redirect_back_or_default home_url
       else
         render :action => :new
       end
@@ -32,7 +35,7 @@ class AuthenticationsController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     current_user_session.destroy
-    flash[:notice] = "Successful logout."
+    flash[:notice] = "You have been logged out. Thank you for using Fat Free CRM!"
     redirect_back_or_default login_url
   end
 
