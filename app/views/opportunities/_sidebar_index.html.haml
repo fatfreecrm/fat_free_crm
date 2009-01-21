@@ -1,0 +1,15 @@
+- Setting.opportunity_stage.each do |key, value|
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @opportunity_stage_total[value]
+    = opportunity_stage_checbox(value, @opportunity_stage_total[value]) << " " << key
+
+.check_box{:style => "border-bottom: 1px silver dotted;"}
+  %div{:style => "float:right;"}
+    = @opportunity_stage_total[:other]
+  = opportunity_stage_checbox("other", @opportunity_stage_total[:other]) << " Other"
+
+.check_box{:style => "border-bottom: 1px silver dotted;"}
+  %div{:style => "float:right;"}
+    %b= @opportunity_stage_total[:all]
+  %b Total Opportunities

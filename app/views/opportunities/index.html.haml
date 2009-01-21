@@ -6,7 +6,7 @@
 .title_menu= link_to "Create New Opportunity", new_opportunity_path
 .title Opportunities
 
-.list
+.list#list
   - unless @opportunities.empty?
     = render :partial => "opportunity", :collection => @opportunities
   - else

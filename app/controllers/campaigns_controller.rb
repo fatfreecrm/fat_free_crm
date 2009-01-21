@@ -7,7 +7,11 @@ class CampaignsController < ApplicationController
   # GET /campaigns.xml
   #----------------------------------------------------------------------------
   def index
-    @campaigns = Campaign.my(@current_user)
+    unless session[:filter_by_campaign_status]
+      @campaigns = Campaign.my(@current_user)
+    else
+      @campaigns = Campaign.my(@current_user).only(session[:filter_by_campaign_status].split(","))
+    end
 
     respond_to do |format|
       format.html # index.html.erb

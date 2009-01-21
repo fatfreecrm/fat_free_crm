@@ -2,6 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe OpportunitiesController do
 
+  def get_data_for_sidebar
+    Setting.stub!(:opportunity_stage).and_return({ :key => "value" })
+    Opportunity.should_receive(:my).twice.and_return(opportunities = [ mock_model(Opportunity) ])
+    opportunities.should_receive(:count).twice.and_return(42)
+  end
+
   before(:each) do
     require_user
     set_current_tab(:opportunities)
@@ -14,8 +20,12 @@ describe OpportunitiesController do
   
   describe "responding to GET index" do
 
+    before(:each) do
+      get_data_for_sidebar
+    end
+
     it "should expose all opportunities as @opportunities" do
-      Opportunity.should_receive(:my).with(@current_user).and_return([mock_opportunity])
+      Opportunity.stub!(:my).with(@current_user).and_return([mock_opportunity])
       get :index
       assigns[:opportunities].should == [mock_opportunity]
     end
@@ -24,7 +34,7 @@ describe OpportunitiesController do
   
       it "should render all opportunities as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Opportunity.should_receive(:my).with(@current_user).and_return(opportunities = mock("Array of Opportunities"))
+        Opportunity.stub!(:my).with(@current_user).and_return(opportunities = mock("Array of Opportunities"))
         opportunities.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"

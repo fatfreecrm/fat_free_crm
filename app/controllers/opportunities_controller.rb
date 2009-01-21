@@ -1,12 +1,17 @@
 class OpportunitiesController < ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab(:opportunities)"
+  before_filter :get_data_for_sidebar, :only => :index
+  before_filter "set_current_tab(:opportunities)", :except => :filter
 
   # GET /opportunities
   # GET /opportunities.xml
   #----------------------------------------------------------------------------
   def index
-    @opportunities = Opportunity.my(@current_user)
+    unless session[:filter_by_opportunity_stage]
+      @opportunities = Opportunity.my(@current_user)
+    else
+      @opportunities = Opportunity.my(@current_user).only(session[:filter_by_opportunity_stage].split(","))
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -98,4 +103,29 @@ class OpportunitiesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # Ajax request to filter out list of opportunities.
+  #----------------------------------------------------------------------------
+  def filter
+    session[:filter_by_opportunity_stage] = params[:stage]
+    @opportunities = Opportunity.my(@current_user).only(params[:stage].split(","))
+    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+
+    render :update do |page|
+      page[:list].replace_html render(:partial => "opportunity", :collection => @opportunities)
+    end
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def get_data_for_sidebar
+    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
+    @stage.keys.each do |key|
+      @opportunity_stage_total[key] = Opportunity.my(@current_user).count(:conditions => [ "stage=?", key.to_s ])
+      @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
+    end
+    @opportunity_stage_total[:other] += @opportunity_stage_total[:all]
+  end
+
 end

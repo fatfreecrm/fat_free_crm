@@ -31,7 +31,7 @@ class Campaign < ActiveRecord::Base
   has_many :opportunities
   has_many :permissions, :as => :asset, :include => :user
   named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["campaigns.user_id=? OR campaigns.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "campaigns.id DESC" } }
-  named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR STATUS IS NULL" : ""), filters ] } }
+  named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
   uses_mysql_uuid
   acts_as_paranoid
 
