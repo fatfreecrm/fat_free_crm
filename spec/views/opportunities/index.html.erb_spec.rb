@@ -15,6 +15,7 @@ describe "/opportunities/index.html.erb" do
       :user => mock_model(User, :full_name => "Joe Spec"),
       :uuid => "12345678-0123-5678-0123-567890123456")
     ]
+    Setting.stub!(:opportunity_stage).and_return({ :key => "value" })
     Setting.stub!(:opportunity_stage_color).and_return({ :key => "value" })
   end
 

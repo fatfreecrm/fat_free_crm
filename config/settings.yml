@@ -59,16 +59,27 @@ lead_source:
   :word_of_mouth : Word of Mouth
   :other         : Other
 
+# Use array of hashes for now to preserve sort order. For Ruby 1.9 or later
+# we can use regular hash since its insertion order will be preserved.
 opportunity_stage:
-  :prospecting   : Prospecting
-  :qualification : Qualification
-  :analysis      : Analysis
-  :presentation  : Presentation
-  :proposal      : Proposal
-  :negotiation   : Negotiation
-  :final_review  : Final Review
-  :won           : Closed/Won
-  :lost          : Closed/Lost
+  - - Prospecting
+    - :prospecting
+  - - Qualification
+    - :qualification
+  - - Analysis
+    - :analysis
+  - - Presentation
+    - :presentation
+  - - Proposal
+    - :proposal
+  - - Negotiation
+    - :negotiation
+  - - Final Review
+    - :final_review
+  - - Closed/Won
+    - :won
+  - - Closed/Lost
+    - :lost
 
 opportunity_stage_color:
   :prospecting   : lavender

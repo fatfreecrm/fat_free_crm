@@ -1,3 +1,8 @@
+Tue, Jan 20, 2008
+---------------------------------------------------------------------
+- Refactored Setting.opportunity_stage to make sure the insertion order is preserved.
+- Welcome, Mr. President.
+
 Mon, Jan 19, 2008
 ---------------------------------------------------------------------
 - Improved login/logout flash messages.

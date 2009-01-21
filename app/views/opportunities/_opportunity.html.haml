@@ -1,6 +1,7 @@
+- stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
 %li{ highlightable(dom_id(opportunity)) }
   - if opportunity.stage
-    .strip{:class => opportunity.stage}= Setting.opportunity_stage[opportunity.stage.intern]
+    .strip{:class => opportunity.stage}= stage[opportunity.stage.intern]
   - else
     .strip &nbsp;
   %div
