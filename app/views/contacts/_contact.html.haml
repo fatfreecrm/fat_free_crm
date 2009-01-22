@@ -1,13 +1,14 @@
-%li{ highlightable(dom_id(contact)) }
+%li[contact]{ highlightable(dom_id(contact, :tools)) }
   - if contact.account && contact.account.name?
     .longstrip= link_to contact.account.name, account_path(contact.account)
   - else
     .longstrip &nbsp;
   %div
-    .tools[contact]{ hidden }
-      = link_to(image_tag("information.png", :title => "View #{h(contact.full_name)}"), contact_path(contact))
-      = link_to(image_tag("tick_circle.png", :title => "Edit #{h(contact.full_name)}"), edit_contact_path(contact))
-      = link_to(image_tag("cross_circle.png", :title => "Delete #{h(contact.full_name)}"), "#")
+    .tools{hidden, :id => dom_id(contact, :tools) }
+      %small
+        = link_to("Edit", contact_path(contact)) << " | "
+        = link_to_remote("Delete!", :url => contact_path(contact), :method => :delete, :before => visual_effect(:highlight, dom_id(contact), :startcolor => "#afeeee"))
+      &nbsp;
     = link_to(contact.full_name, contact)
     %tt
       - if contact.title? && contact.department?
@@ -17,6 +18,6 @@
       = "&ndash; referred by #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
     %dt
       = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
-      = "phone: " + contact.phone << " | " if contact.phone?
-      = "mobile: " + contact.mobile << " | " if contact.mobile?
+      = "phone: <b>" + contact.phone << "</b> | " if contact.phone?
+      = "mobile: <b>" + contact.mobile << "</b> | " if contact.mobile?
       == added #{time_ago_in_words(contact.created_at)} ago

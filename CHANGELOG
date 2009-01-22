@@ -1,3 +1,7 @@
+Wed, Jan 21, 2008
+---------------------------------------------------------------------
+- Implemented list delete for contacts.
+
 Tue, Jan 20, 2008
 ---------------------------------------------------------------------
 - Refactored Setting.opportunity_stage to make sure the insertion order is preserved.
