@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   before_filter :require_user, :except => [ :toggle_form_section ]
-  before_filter "set_current_tab(:home)", :except => [ :toggle_form_section ]
+  before_filter "set_current_tab(:dashboard)", :except => [ :toggle_form_section ]
   before_filter "hook(:home_before_filter, self, :amazing => true)"
 
   #----------------------------------------------------------------------------

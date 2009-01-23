@@ -4,8 +4,11 @@
 #
 :tabs:
   - :active: true
-    :text: Home
+    :text: Dashboard
     :url: /
+  - :active: false
+    :text: Tasks
+    :url: /tasks
   - :active: false
     :text: Campaigns
     :url: /campaigns

@@ -1,6 +1,8 @@
 Thu, Jan 22, 2008
 ---------------------------------------------------------------------
 - Implemented list delete for accounts, campaigns, leads, and opportunities.
+- Generated Tasks scaffold.
+- Added [Tasks] tab to default settings, renamed [Home] tab to [Dashboard].
 
 Wed, Jan 21, 2008
 ---------------------------------------------------------------------
