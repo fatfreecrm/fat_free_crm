@@ -1,13 +1,14 @@
-%li{ highlightable(dom_id(opportunity)) }
+%li[opportunity]{ highlightable(dom_id(opportunity, :tools)) }
   - if opportunity.stage
     .strip{:class => opportunity.stage}= @stage[opportunity.stage.intern]
   - else
     .strip &nbsp;
   %div
-    .tools[opportunity]{ hidden }
-      = link_to(image_tag("information.png", :title => "View #{h(opportunity.name)}"), opportunity_path(opportunity))
-      = link_to(image_tag("tick_circle.png", :title => "Edit #{h(opportunity.name)}"), edit_opportunity_path(opportunity))
-      = link_to(image_tag("cross_circle.png", :title => "Delete #{h(opportunity.name)}"), "#")
+    .tools{ hidden, :id => dom_id(opportunity, :tools) }
+      %small
+        = link_to("Edit", opportunity_path(opportunity)) << " | "
+        = link_to_remote("Delete!", :url => opportunity_path(opportunity), :method => :delete, :before => visual_effect(:highlight, dom_id(opportunity), :startcolor => "#afeeee"))
+      &nbsp;
     = link_to(opportunity.name, opportunity)
     %tt
       &ndash;

@@ -109,10 +109,10 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
     @lead.destroy
 
-    flash[:notice] = "Lead #{@lead.full_name} was successfully deleted."
     respond_to do |format|
       format.html { redirect_to(leads_url) }
       format.xml  { head :ok }
+      format.js   { get_data_for_sidebar; render }
     end
   end
 

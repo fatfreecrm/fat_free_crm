@@ -101,6 +101,7 @@ class OpportunitiesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(opportunities_url) }
       format.xml  { head :ok }
+      format.js   { get_data_for_sidebar; render }
     end
   end
 

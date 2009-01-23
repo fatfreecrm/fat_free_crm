@@ -199,13 +199,11 @@ describe LeadsController do
     it "should destroy the requested lead" do
       Lead.should_receive(:find).with(@uuid).and_return(mock_lead)
       mock_lead.should_receive(:destroy)
-      mock_lead.should_receive(:full_name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
     end
   
     it "should redirect to the leads list" do
       Lead.stub!(:find).with(@uuid).and_return(mock_lead(:destroy => true))
-      mock_lead.should_receive(:full_name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
       response.should redirect_to(leads_url)
     end

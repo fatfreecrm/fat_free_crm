@@ -1,15 +1,16 @@
-- Setting.lead_status.invert.sort.each do |key, value|
+#filters
+  - Setting.lead_status.invert.sort.each do |key, value|
+    .check_box{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = @lead_status_total[value]
+      = lead_status_checbox(value, @lead_status_total[value]) << " " << key
+
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}
-      = @lead_status_total[value]
-    = lead_status_checbox(value, @lead_status_total[value]) << " " << key
+      = @lead_status_total[:other]
+    = lead_status_checbox("other", @lead_status_total[:other]) << " Other"
 
-.check_box{:style => "border-bottom: 1px silver dotted;"}
-  %div{:style => "float:right;"}
-    = @lead_status_total[:other]
-  = lead_status_checbox("other", @lead_status_total[:other]) << " Other"
-
-.check_box{:style => "border-bottom: 1px silver dotted;"}
-  %div{:style => "float:right;"}
-    %b= @lead_status_total[:all]
-  %b Total Leads
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      %b= @lead_status_total[:all]
+    %b Total Leads

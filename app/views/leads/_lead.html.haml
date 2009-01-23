@@ -1,14 +1,15 @@
-%li{ highlightable(dom_id(lead)) }
+%li[lead]{ highlightable(dom_id(lead, :tools)) }
   - if lead.status
     .strip{:class => lead.status}= Setting.lead_status[lead.status.intern]
   - else
     .strip &nbsp;
   %div
-    .tools[lead]{ hidden }
-      = link_to(image_tag("information.png", :title => "View #{h(lead.full_name)}"), lead_path(lead))
-      = link_to(image_tag("arrow_circle_225.png", :title => "Convert #{h(lead.full_name)}"), convert_lead_path(lead)) if lead.status != "converted"
-      = link_to(image_tag("tick_circle.png", :title => "Edit #{h(lead.full_name)}"), edit_lead_path(lead))
-      = link_to(image_tag("cross_circle.png", :title => "Delete #{h(lead.full_name)}"), "#")
+    .tools{ hidden, :id => dom_id(lead, :tools) }
+      %small
+        = (link_to("Convert", convert_lead_path(lead)) << " | ") if lead.status != "converted"
+        = link_to("Edit", lead_path(lead)) << " | "
+        = link_to_remote("Delete!", :url => lead_path(lead), :method => :delete, :before => visual_effect(:highlight, dom_id(lead), :startcolor => "#afeeee"))
+      &nbsp;
     = link_to(lead.full_name, lead)
     %tt
       - if lead.company? && lead.title?
