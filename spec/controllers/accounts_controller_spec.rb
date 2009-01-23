@@ -179,13 +179,11 @@ describe AccountsController do
     it "should destroy the requested account" do
       Account.should_receive(:find).with(@uuid).and_return(mock_account)
       mock_account.should_receive(:destroy)
-      mock_account.should_receive(:name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
     end
   
     it "should redirect to the accounts list" do
       Account.stub!(:find).with(@uuid).and_return(mock_account(:destroy => true))
-      mock_account.should_receive(:name).and_return("Joe Spec")
       delete :destroy, :id => @uuid
       response.should redirect_to(accounts_url)
     end

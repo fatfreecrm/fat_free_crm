@@ -4,7 +4,7 @@
   - else
     .longstrip &nbsp;
   %div
-    .tools{hidden, :id => dom_id(contact, :tools) }
+    .tools{ hidden, :id => dom_id(contact, :tools) }
       %small
         = link_to("Edit", contact_path(contact)) << " | "
         = link_to_remote("Delete!", :url => contact_path(contact), :method => :delete, :before => visual_effect(:highlight, dom_id(contact), :startcolor => "#afeeee"))

@@ -89,10 +89,10 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
     @account.destroy
 
-    flash[:notice] = "Account #{@account.name} was successfully deleted."
     respond_to do |format|
       format.html { redirect_to(accounts_url) }
       format.xml  { head :ok }
+      format.js   { }
     end
   end
 

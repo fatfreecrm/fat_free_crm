@@ -1,14 +1,15 @@
 - amount = account.opportunities.sum(:amount)
-%li{ highlightable(dom_id(account)) }
+%li[account]{ highlightable(dom_id(account, :tools)) }
   - if amount != 0.0
     .strip.some= number_to_currency(amount, :precision => 0)
   - else
     .strip.none None
   %div
-    .tools[account]{ hidden }
-      = link_to(image_tag("information.png", :title => "View #{h(account.name)}"), account_path(account))
-      = link_to(image_tag("tick_circle.png", :title => "Edit #{h(account.name)}"), edit_account_path(account))
-      = link_to(image_tag("cross_circle.png", :title => "Delete #{h(account.name)}"), "#")
+    .tools{ hidden, :id => dom_id(account, :tools) }
+      %small
+        = link_to("Edit", account_path(account)) << " | "
+        = link_to_remote("Delete!", :url => account_path(account), :method => :delete, :before => visual_effect(:highlight, dom_id(account), :startcolor => "#afeeee"))
+      &nbsp;
     = link_to(account.name, account) << " &ndash; "
     %tt
       = account.location << ", " unless account.location.blank?
