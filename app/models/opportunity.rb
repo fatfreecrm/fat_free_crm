@@ -30,10 +30,11 @@ class Opportunity < ActiveRecord::Base
   has_one :account, :through => :account_opportunity
   has_many :contact_opportunities, :dependent => :destroy
   has_many :contacts, :through => :contact_opportunities, :uniq => true
-  has_many :permissions, :as => :asset, :include => :user
   named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["opportunities.user_id=? OR opportunities.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "opportunities.id DESC" } }
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
+
   uses_mysql_uuid
+  uses_user_permissions
   acts_as_paranoid
 
   validates_presence_of :name, :message => "^Please specify the opportunity name."
@@ -52,27 +53,6 @@ class Opportunity < ActiveRecord::Base
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
     save_with_permissions(params[:users])
-  end
-
-  # Save the opportunity along with its permissions if any.
-  #----------------------------------------------------------------------------
-  def save_with_permissions(users)
-    if users && self[:access] == "Shared"
-      users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
-    end
-    save
-  end
-
-  # Save the opportunity copying model permissions (Lead).
-  #----------------------------------------------------------------------------
-  def save_with_model_permissions(model)
-    self.access = model.access
-    if model.access == "Shared"
-      model.permissions.each do |permission|
-        self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
-      end
-    end
-    save
   end
 
   # Class methods.

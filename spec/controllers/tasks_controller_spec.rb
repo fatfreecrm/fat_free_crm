@@ -2,6 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TasksController do
 
+  before(:each) do
+    require_user
+    set_current_tab(:tasks)
+    @uuid = "12345678-0123-5678-0123-567890123456"
+  end
+
   def mock_task(stubs={})
     @mock_task ||= mock_model(Task, stubs)
   end

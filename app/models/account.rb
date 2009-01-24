@@ -27,35 +27,15 @@ class Account < ActiveRecord::Base
   has_many :contacts, :through => :account_contacts, :uniq => true
   has_many :account_opportunities, :dependent => :destroy
   has_many :opportunities, :through => :account_opportunities, :uniq => true
-  has_many :permissions, :as => :asset, :include => :user
   named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["accounts.user_id=? OR accounts.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "accounts.id DESC" } }
+
   uses_mysql_uuid
+  uses_user_permissions
   acts_as_paranoid
 
   validates_presence_of :name, :message => "^Please specify account name."
   validates_uniqueness_of :name
   validate :users_for_shared_access
-
-  # Save the account along with its permissions if any.
-  #----------------------------------------------------------------------------
-  def save_with_permissions(users)
-    if users && self[:access] == "Shared"
-      users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
-    end
-    save
-  end
-
-  # Save the account copying other model permissions (Lead).
-  #----------------------------------------------------------------------------
-  def save_with_model_permissions(model)
-    self.access = model.access
-    if model.access == "Shared"
-      model.permissions.each do |permission|
-        self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
-      end
-    end
-    save
-  end
 
   # Extract last line of billing address and get rid of numeric zipcode.
   #----------------------------------------------------------------------------

@@ -1,3 +1,8 @@
+Fri, Jan 23, 2008
+---------------------------------------------------------------------
+- Moved permissions related code to [uses_user_permissions] Rails plugin.
+- Refactored models to make use of [uses_user_permissions] plugin.
+
 Thu, Jan 22, 2008
 ---------------------------------------------------------------------
 - Implemented list delete for accounts, campaigns, leads, and opportunities.

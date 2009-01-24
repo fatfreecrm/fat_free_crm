@@ -29,10 +29,11 @@ class Campaign < ActiveRecord::Base
   belongs_to :user
   has_many :leads
   has_many :opportunities
-  has_many :permissions, :as => :asset, :include => :user
   named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["campaigns.user_id=? OR campaigns.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "campaigns.id DESC" } }
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
+
   uses_mysql_uuid
+  uses_user_permissions
   acts_as_paranoid
 
   validates_presence_of :name, :message => "^Please specify campaign name."
@@ -41,15 +42,6 @@ class Campaign < ActiveRecord::Base
   validate :users_for_shared_access
 
   before_create :set_campaign_status
-
-  # Save the campaign along with its permissions if any.
-  #----------------------------------------------------------------------------
-  def save_with_permissions(users)
-    if users && self[:access] == "Shared"
-      users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
-    end
-    save
-  end
 
   private
   #----------------------------------------------------------------------------

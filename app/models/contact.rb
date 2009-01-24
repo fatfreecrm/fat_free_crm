@@ -40,9 +40,10 @@ class Contact < ActiveRecord::Base
   has_one :account, :through => :account_contact
   has_many :contact_opportunities, :dependent => :destroy
   has_many :opportunities, :through => :contact_opportunities, :uniq => true
-  has_many :permissions, :as => :asset, :include => :user
   named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["contacts.user_id=? OR contacts.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "contacts.id DESC" } }
+
   uses_mysql_uuid
+  uses_user_permissions
   acts_as_paranoid
 
   validates_presence_of :first_name, :message => "^Please specify first name."
@@ -60,27 +61,6 @@ class Contact < ActiveRecord::Base
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
     save_with_permissions(params[:users])
-  end
-
-  # Save the contact along with its permissions if any.
-  #----------------------------------------------------------------------------
-  def save_with_permissions(users)
-    if users && self[:access] == "Shared"
-      users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
-    end
-    save
-  end
-
-  # Save the contact copying model permissions (Lead).
-  #----------------------------------------------------------------------------
-  def save_with_model_permissions(model)
-    self.access = model.access
-    if model.access == "Shared"
-      model.permissions.each do |permission|
-        self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
-      end
-    end
-    save
   end
 
   # Class methods.

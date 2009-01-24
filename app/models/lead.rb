@@ -37,12 +37,13 @@ class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :campaign
   has_one :contact
-  has_many :permissions, :as => :asset, :include => :user
   named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["leads.user_id=? OR leads.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "leads.id DESC" } }
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
   named_scope :converted, :conditions => "status='converted'"
   named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }
+
   uses_mysql_uuid
+  uses_user_permissions
   acts_as_paranoid
 
   validates_presence_of :first_name, :message => "^Please specify first name."
@@ -54,18 +55,11 @@ class Lead < ActiveRecord::Base
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
   def save_with_permissions(users)
-    if self[:access] == "Campaign"  # Copy campaign permissions.
-      campaign = Campaign.find(self[:campaign_id])
-      self[:access] = campaign[:access]
-      if campaign[:access] == "Shared"
-        campaign.permissions.each do |permission|
-          self.permissions << Permission.new(:user_id => permission.user_id, :asset => self)
-        end
-      end
-    elsif self[:access] == "Shared" && users
-      users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
+    if self[:access] == "Campaign" &&self[:campaign_id] # Copy campaign permissions.
+      save_with_model_permissions(Campaign.find(self[:campaign_id]))
+    else
+      super(users) # invoke :save_with_permissions in plugin.
     end
-    save
   end
 
   # Promote the lead by creating contact and optional opportunity. Upon
