@@ -2,6 +2,8 @@ Fri, Jan 23, 2008
 ---------------------------------------------------------------------
 - Moved permissions related code to [uses_user_permissions] Rails plugin.
 - Refactored models to make use of [uses_user_permissions] plugin.
+- Moved permission model to [uses_user_permissions] plugin.
+- Updated [Task] model and database schema for [Tasks] table.
 
 Thu, Jan 22, 2008
 ---------------------------------------------------------------------

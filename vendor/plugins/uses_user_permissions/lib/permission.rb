@@ -1,6 +1,3 @@
-# == Schema Information
-# Schema version: 14
-#
 # Table name: permissions
 #
 #  id         :integer(4)      not null, primary key
