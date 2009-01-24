@@ -27,7 +27,6 @@ class Account < ActiveRecord::Base
   has_many :contacts, :through => :account_contacts, :uniq => true
   has_many :account_opportunities, :dependent => :destroy
   has_many :opportunities, :through => :account_opportunities, :uniq => true
-  named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["accounts.user_id=? OR accounts.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "accounts.id DESC" } }
 
   uses_mysql_uuid
   uses_user_permissions

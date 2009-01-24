@@ -30,7 +30,6 @@ class Opportunity < ActiveRecord::Base
   has_one :account, :through => :account_opportunity
   has_many :contact_opportunities, :dependent => :destroy
   has_many :contacts, :through => :contact_opportunities, :uniq => true
-  named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["opportunities.user_id=? OR opportunities.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "opportunities.id DESC" } }
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
 
   uses_mysql_uuid

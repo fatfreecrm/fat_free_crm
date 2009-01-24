@@ -40,7 +40,6 @@ class Contact < ActiveRecord::Base
   has_one :account, :through => :account_contact
   has_many :contact_opportunities, :dependent => :destroy
   has_many :opportunities, :through => :contact_opportunities, :uniq => true
-  named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["contacts.user_id=? OR contacts.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "contacts.id DESC" } }
 
   uses_mysql_uuid
   uses_user_permissions
