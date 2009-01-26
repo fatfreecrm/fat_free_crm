@@ -7,8 +7,9 @@ class CreateTasks < ActiveRecord::Migration
       t.string      :name, :null => false, :default => ""
       t.references  :asset, :polymorphic => true
       t.string      :priority, :limit => 32
-      t.string      :status,   :limit => 32
+      t.string      :category, :limit => 32
       t.datetime    :due_at
+      t.datetime    :completed_at
       t.datetime    :deleted_at
       t.timestamps
     end

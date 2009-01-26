@@ -1,3 +1,13 @@
+Sun, Jan 25, 2008
+---------------------------------------------------------------------
+- Added task categories and due dates to system settings.
+- Completed first implementation of Tasks index page.
+
+Sat, Jan 24, 2008
+---------------------------------------------------------------------
+- Added named scopes for tasks model, created tasks fixtures.
+- Two months anniversary ;-).
+
 Fri, Jan 23, 2008
 ---------------------------------------------------------------------
 - Moved permissions related code to [uses_user_permissions] Rails plugin.

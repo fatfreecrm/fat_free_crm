@@ -94,3 +94,37 @@ opportunity_stage_color:
   :final_review  : aquamarine
   :won           : lightgreen
   :lost          : pink
+
+task_category:
+  :call          : Call
+  :email         : Email
+  :folowup       : Follow-up
+  :lunch         : Lunch
+  :meeting       : Meeting
+  :money         : Money
+  :presentation  : Presentation
+  :trip          : Trip
+
+task_category_color:
+  :call          : lavender
+  :email         : paleturquoise
+  :folowup       : mistyrose
+  :lunch         : wheat
+  :meeting       : thistle
+  :money         : lightgreen
+  :presentation  : aquamarine
+  :trip          : skyblue
+
+task_due_date:
+  - - Overdue
+    - :overdue
+  - - Today
+    - :due_today
+  - - Tomorrow
+    - :due_tomorrow
+  - - This week
+    - :due_this_week
+  - - Next week
+    - :due_next_week
+  - - Later
+    - :due_later

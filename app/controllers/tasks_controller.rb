@@ -6,7 +6,10 @@ class TasksController < ApplicationController
   # GET /tasks.xml
   #----------------------------------------------------------------------------
   def index
-    @tasks = Task.find(:all)
+    @tasks = {}
+    Setting.task_due_date.each do |value, key|
+      @tasks[key] = Task.send(key)
+    end
 
     respond_to do |format|
       format.html # index.html.erb

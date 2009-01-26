@@ -1,5 +1,19 @@
-.title_menu Not implemented yet.
+- content_for :styles do
+  %style
+    - Setting.task_category_color.each do |key, value|
+      == .#{key} { background:#{value}; }
+
+.title_menu= link_to "Create New Task", new_task_path
 .title Tasks
+
+.list#list
+  - unless @tasks.empty?
+    - Setting.task_due_date.each do |value, key|
+      - unless @tasks[key].empty?
+        %h3= value
+        = render :partial => "task", :collection => @tasks[key]
+  - else
+    %div== You don't have any tasks yes. Please #{link_to("create new task", new_task_path)} first.
 
 / <% for task in @tasks %>
 /   <tr>
