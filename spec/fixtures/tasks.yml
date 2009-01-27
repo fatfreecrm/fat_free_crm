@@ -24,6 +24,7 @@
   category = %w(call email folowup lunch meeting money presentation trip) << ""
 
   for i in (1..30) do
+    seed = rand(5)
 %>
 task<%= i %>:
   id           : <%= i %>
@@ -34,7 +35,7 @@ task<%= i %>:
   asset_type   : <%=  %>
   priority     :
   category     : <%= category[rand(category.size)] %>
-  due_at       : <%= rand(2) == 1 ? Date.today + rand(15).days : Date.today - rand(15).days %>
+  due_at       : <%= seed == 0 ? "'#{Task::ASAP}'" : (seed == 1 ? Date.today - rand(15).days : Date.today + rand(15).days) %>
   completed_at :
   deleted_at   :
   created_at   : <%= starts = Date.today - rand(15).days %>

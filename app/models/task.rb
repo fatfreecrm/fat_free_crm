@@ -20,14 +20,15 @@
 #
 
 class Task < ActiveRecord::Base
+  ASAP = '2000-01-01 00:00:00'
   belongs_to :user
   belongs_to :asset, :polymorphic => true
-  named_scope :overdue,       :conditions => [ "due_at < ?", Date.today ], :order => "due_at, id"
-  named_scope :due_asap,      :conditions => [ "due_at = '0000-00-00 00:00:00'" ]
-  named_scope :due_today,     :conditions => [ "due_at = ?", Date.today ]
-  named_scope :due_tomorrow,  :conditions => [ "due_at = ?", Date.tomorrow ]
-  named_scope :due_this_week, :conditions => [ "due_at BETWEEN ? AND ?", Date.tomorrow, Date.tomorrow ]
-  named_scope :due_next_week, :conditions => [ "due_at BETWEEN ? AND ?", Date.tomorrow, Date.tomorrow ]
+  named_scope :overdue,       lambda { { :conditions => [ "due_at < ? AND due_at != '#{ASAP}'", Date.today ], :order => "due_at, id" } }
+  named_scope :due_today,     lambda { { :conditions => [ "due_at = ?", Date.today ] } }
+  named_scope :due_tomorrow,  lambda { { :conditions => [ "due_at = ?", Date.tomorrow ] } }
+  named_scope :due_this_week, lambda { { :conditions => [ "due_at > ? AND (due_at BETWEEN ? AND ?)", Date.tomorrow, [Date.tomorrow + 1.day, Date.today.end_of_week].min, [Date.tomorrow + 1.day, Date.today.end_of_week].max ], :order => "due_at, id" } }
+  named_scope :due_next_week, lambda { { :conditions => [ "due_at BETWEEN ? AND ?", Date.today.end_of_week + 7.days, Date.today.end_of_week + 14.days ], :order => "due_at, id" } }
+  named_scope :due_asap,      :conditions => [ "due_at = '#{ASAP}'" ]
   named_scope :due_later,     :conditions => "due_at IS NULL"
   named_scope :pending,       :conditions => "completed_at IS NULL"
   named_scope :completed,     :conditions => "completed_at IS NOT NULL"

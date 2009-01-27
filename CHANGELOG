@@ -1,6 +1,7 @@
 Mon, Jan 26, 2008
 ---------------------------------------------------------------------
-- Added inline [Create New Task] form.
+- Added support for inline forms and added [Create New Task] form.
+- Updated task named scopes to evaluate them on each request rather than on server startup.
 
 Sun, Jan 25, 2008
 ---------------------------------------------------------------------
