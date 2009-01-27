@@ -31,6 +31,15 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
+  def inline(text, url, options)
+    content_tag("div",
+      link_to_remote("<small id='#{options[:id].to_s}_arrow'>#{ options[:collapsed] ? "&#9658;" : "&#9660;" }</small> #{text}", 
+        :url => url,
+        :with => "'visible=' + Element.visible('#{options[:id].to_s}')"
+      ), :class => options[:class] || "title_menu")
+  end
+
+  #----------------------------------------------------------------------------
   def hidden;  { :style => "display:none;"  }; end
   def visible; { :style => "display:block;" }; end
 

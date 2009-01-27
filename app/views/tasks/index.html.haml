@@ -3,9 +3,10 @@
     - Setting.task_category_color.each do |key, value|
       == .#{key} { background:#{value}; }
 
-.title_menu= link_to "Create New Task", new_task_path
+=inline "Create New Task", new_task_path, { :id => :inline, :collapsed => true }
 .title Tasks
 
+= render :partial => "new"
 .list#list
   - unless @tasks.empty?
     - Setting.task_due_date.each do |value, key|

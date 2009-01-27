@@ -412,15 +412,23 @@ td.cell a:hover {
   padding: 5px 15px 15px 15px;
 }
 
+.inline {
+  background: lavender;
+  border-bottom: 1px silver solid;;
+  color: #3f3f3f;
+  margin: 0px;
+  padding: 5px 15px 15px 15px;
+}
+
 .buttonbar {
   border-top: 1px gray solid;
   margin: 10px auto;
   padding-top: 6px;
 }
 
-.section input, .sidebar input,
-.section select, .sidebar select,
-.section textarea, .sidebar textarea {
+.section input, .sidebar input, .inline input,
+.section select, .sidebar select, .inline select,
+.section textarea, .sidebar textarea, .inline textarea {
   margin: 3px 0px 0px 0px;
   vertical-align: middle;
 }

@@ -23,11 +23,14 @@ class Task < ActiveRecord::Base
   belongs_to :user
   belongs_to :asset, :polymorphic => true
   named_scope :overdue,       :conditions => [ "due_at < ?", Date.today ], :order => "due_at, id"
+  named_scope :due_asap,      :conditions => [ "due_at = '0000-00-00 00:00:00'" ]
   named_scope :due_today,     :conditions => [ "due_at = ?", Date.today ]
   named_scope :due_tomorrow,  :conditions => [ "due_at = ?", Date.tomorrow ]
   named_scope :due_this_week, :conditions => [ "due_at BETWEEN ? AND ?", Date.tomorrow, Date.tomorrow ]
   named_scope :due_next_week, :conditions => [ "due_at BETWEEN ? AND ?", Date.tomorrow, Date.tomorrow ]
   named_scope :due_later,     :conditions => "due_at IS NULL"
+  named_scope :pending,       :conditions => "completed_at IS NULL"
+  named_scope :completed,     :conditions => "completed_at IS NOT NULL"
 
   uses_mysql_uuid
   acts_as_paranoid

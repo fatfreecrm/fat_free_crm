@@ -118,6 +118,8 @@ task_category_color:
 task_due_date:
   - - Overdue
     - :overdue
+  - - ASAP
+    - :due_asap
   - - Today
     - :due_today
   - - Tomorrow

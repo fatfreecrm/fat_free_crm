@@ -1,0 +1,9 @@
+if params[:visible] == "false"                          # show
+  session[:task_new] = true
+  page["inline_arrow"].replace_html "&#9660;"
+  page << "Effect.toggle('inline', 'slide', { duration: 0.25, afterFinish: function() { $('task_name').focus(); } });"
+else                                                    # hide
+  session[:task_new] = nil
+  page["inline_arrow"].replace_html "&#9658;"
+  page << "Effect.toggle('inline', 'slide', { duration: 0.25 });"
+end
