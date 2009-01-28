@@ -279,7 +279,7 @@ td.cell a:hover {
   color: #3f3f3f;
   font-size: 11px;
   padding: 0px 12px 0px 12px;
-  width: 175px;
+  width: 200px;
 }
 
 .form {
@@ -432,17 +432,23 @@ td.cell a:hover {
 .cool { color: darkgreen; }
 .warn { color: maroon; }
 
-/* Selectors.
+/* Filter and selectors.
 -------------------------------------------------------- */
+.filters {
+  background: aliceblue;
+  padding: 6px 8px 6px 8px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
 .selector {
   cursor: pointer;
   font: bold 10px 'Lucida Grande', Geneva, Arial, Helvetica, sans-serif;
   text-align: center;
-  width: 70px;
 }
 
 .on {
-  background: lightblue;
+  background: paleturquoise; /*lightskyblue;*/
   border: 1px silver inset;
   color: black;
 }
