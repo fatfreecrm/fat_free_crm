@@ -1,0 +1,4 @@
+%div{ :id => "list_#{key}" }
+  - unless @tasks[key].empty?
+    %h3= value
+    = render :partial => "task", :collection => @tasks[key]

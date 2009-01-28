@@ -10,9 +10,7 @@
 .list#list
   - unless @tasks.empty?
     - Setting.task_due_date.each do |value, key|
-      - unless @tasks[key].empty?
-        %h3= value
-        = render :partial => "task", :collection => @tasks[key]
+      = render :partial => "list", :locals => { :key => key, :value => value }
   - else
     %div== You don't have any tasks yes. Please #{link_to("create new task", new_task_path)} first.
 

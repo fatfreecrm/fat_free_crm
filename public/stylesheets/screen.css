@@ -1,4 +1,4 @@
-/* Standard tags 
+/* Standard tags.
 -------------------------------------------------------- */
 html, body {
   background: #e5e5e5;
@@ -21,6 +21,10 @@ body, ol, ul, li, dt, tt, label, input, select, textarea {
 body, h1, h2, h3, h4, h5, h6, ol, ul, li {
   margin: 0px;
   padding: 0px;
+}
+
+form {
+  margin: 0px;
 }
 
 ul li {
@@ -48,17 +52,9 @@ a img {
   text-decoration: none; 
 }
 
-small {
-  font-size: 10px;
-}
-
-dt {
-  font-size: 11px;
-}
-
-tt {
-  font-size: 12px;
-}
+small { font-size: 10px; }
+dt    { font-size: 11px; }
+tt    { font-size: 12px; }
 
 /* Page header and tabs.
 -------------------------------------------------------- */
@@ -433,15 +429,45 @@ td.cell a:hover {
   vertical-align: middle;
 }
 
-.cool {
-  color: darkgreen;
+.cool { color: darkgreen; }
+.warn { color: maroon; }
+
+/* Selectors.
+-------------------------------------------------------- */
+.selector {
+  cursor: pointer;
+  font: bold 10px 'Lucida Grande', Geneva, Arial, Helvetica, sans-serif;
+  text-align: center;
+  width: 70px;
 }
 
-.warn {
-  color: maroon;
+.on {
+  background: lightblue;
+  border: 1px silver inset;
+  color: black;
 }
 
-/* Form validation messages
+.off {
+  background: lightgrey;
+  border: 1px silver outset;
+  color: #3f3f3f;
+}
+
+.left {
+  -moz-border-radius-bottomleft: 8px;
+  -moz-border-radius-topleft: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+  -webkit-border-top-left-radius: 8px;
+}
+
+.right {
+  -moz-border-radius-bottomright: 8px;
+  -moz-border-radius-topright: 8px;
+  -webkit-border-bottom-right-radius: 8px;
+  -webkit-border-top-right-radius: 8px;
+}
+
+/* Form validation messages.
 -------------------------------------------------------- */
 .errorExplanation {
   background-color: seashell;
@@ -485,7 +511,7 @@ td.cell a:hover {
   background: lightpink;
 }
 
-/* Flash messages
+/* Flash messages.
 -------------------------------------------------------- */
 p.flash_warning,
 p.flash_error {

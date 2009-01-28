@@ -1,3 +1,8 @@
+Tue, Jan 27, 2008
+---------------------------------------------------------------------
+- Added sidebar tasks filtering by due date.
+- Added CSS styles for selector control.
+
 Mon, Jan 26, 2008
 ---------------------------------------------------------------------
 - Added support for inline forms and added [Create New Task] form.

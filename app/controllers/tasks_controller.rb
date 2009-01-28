@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_filter :require_user
+  before_filter :get_data_for_sidebar, :only => :index
   before_filter "set_current_tab(:tasks)"
 
   # GET /tasks
@@ -100,4 +101,39 @@ class TasksController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # Ajax request to filter out list of tasks.
+  #----------------------------------------------------------------------------
+  def filter
+    @tasks = {}
+    @category = Setting.task_category.invert.sort
+
+    old_filters = (session[:filter_by_task_due_date].nil? ? [] : session[:filter_by_task_due_date].split(","))
+    new_filters = params[:due_date].split(",")
+    if new_filters.size > old_filters.size # checked: show
+      filter = (new_filters - old_filters).first.intern
+      @tasks[filter] = Task.send(filter)
+    else # unchecked: hide
+      filter = (old_filters - new_filters).first.intern
+      @tasks[filter] = []
+    end
+    session[:filter_by_task_due_date] = params[:due_date]
+    
+    render :update do |page|
+      Setting.task_due_date.each do |value, key|
+        next if key != filter
+        page["list_#{filter}"].replace_html render(:partial => "list", :locals => { :key => key, :value => value })
+      end
+    end
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def get_data_for_sidebar
+    @task_due_date_total = { :all => Task.pending.count, :other => 0 }
+    Setting.task_due_date.each do |value, key|
+      @task_due_date_total[key] = Task.send(key).count
+    end
+  end
+
 end
