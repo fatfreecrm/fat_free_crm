@@ -39,6 +39,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @users = User.all_except(@current_user) # to assign the task
+    session[:tasks_new] = (params[:visible] == "false" ? true : nil)
 
     respond_to do |format|
       format.html # new.html.erb

@@ -3,7 +3,7 @@
     - Setting.task_category_color.each do |key, value|
       == .#{key} { background:#{value}; }
 
-=inline "Create New Task", new_task_path, { :id => :inline, :collapsed => true }
+=inline "Create New Task", new_task_path, { :id => :inline, :collapsed => session[:tasks_new].nil? }
 .title Tasks
 
 = render :partial => "new"
@@ -13,12 +13,3 @@
       = render :partial => "list", :locals => { :key => key, :value => value }
   - else
     %div== You don't have any tasks yes. Please #{link_to("create new task", new_task_path)} first.
-
-/ <% for task in @tasks %>
-/   <tr>
-/     <td><%= link_to 'Show', task %></td>
-/     <td><%= link_to 'Edit', edit_task_path(task) %></td>
-/     <td><%= link_to 'Destroy', task, :confirm => 'Are you sure?', :method => :delete %></td>
-/   </tr>
-/ <% end %>
-/ <%= link_to 'New task', new_task_path %>
