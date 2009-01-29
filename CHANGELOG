@@ -2,6 +2,7 @@ Wed, Jan 28, 2008
 ---------------------------------------------------------------------
 - Implemented task selector to switch between pending, assigned, and completed tasks.
 - Major overhaul of task templates to support three task views.
+- Changed rake's namespace from [app] to [crm].
 
 Tue, Jan 27, 2008
 ---------------------------------------------------------------------

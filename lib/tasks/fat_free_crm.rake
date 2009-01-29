@@ -1,4 +1,4 @@
-namespace :app do
+namespace :crm do
 
   namespace :settings do
     desc "Load default application settings"
@@ -20,18 +20,20 @@ namespace :app do
   desc "Prepare the database and load default application settings"
   task :setup => :environment do
     Rake::Task["db:migrate:reset"].invoke
-    Rake::Task["app:settings:load"].invoke
+    Rake::Task["crm:settings:load"].invoke
   end
 
-  desc "Load randomly generated demo data and restore default application settings"
-  task :demo => :environment do
-    Rake::Task["spec:db:fixtures:load"].invoke      # loading fixtures truncates settings!
-    Rake::Task["app:settings:load"].invoke
-  end
+  namespace :demo do
+    desc "Load demo data and default application settings"
+    task :load => :environment do
+      Rake::Task["spec:db:fixtures:load"].invoke      # loading fixtures truncates settings!
+      Rake::Task["crm:settings:load"].invoke
+    end
 
-  desc "Reset the database and reload default application settings and demo data"
-  task :reset => :environment do
-    Rake::Task["db:migrate:reset"].invoke
-    Rake::Task["app:demo"].invoke
+    desc "Reset the database and reload demo data along with default application settings"
+    task :reload => :environment do
+      Rake::Task["db:migrate:reset"].invoke
+      Rake::Task["crm:demo:load"].invoke
+    end
   end
 end
