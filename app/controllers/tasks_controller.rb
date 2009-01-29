@@ -8,9 +8,12 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @task = Task.new
-    @tasks = {}
-    Setting.task_due_date.each do |value, key|
-      @tasks[key] = Task.send(key)
+    if @view == "completed"
+      @tasks = Task.completed
+    elsif @view == "assigned"
+      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.send(key).assigned; hash }
+    else
+      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.send(key); hash }
     end
     @due_date = Setting.task_due_date[1..-1] << [ "On specific date...", :on_specific_date ]
     @category = Setting.task_category.invert.sort
@@ -131,6 +134,7 @@ class TasksController < ApplicationController
   private
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
+    @view = params[:view] || "pending"
     @task_due_date_total = { :all => Task.pending.count, :other => 0 }
     Setting.task_due_date.each do |value, key|
       @task_due_date_total[key] = Task.send(key).count

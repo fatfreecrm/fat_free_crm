@@ -1,0 +1,20 @@
+%li[assigned]{ highlightable(dom_id(assigned, :tools)) }
+  .strip= assigned.assigned_to
+  %div
+    .tools{ hidden, :id => dom_id(assigned, :tools) }
+      %small
+        = link_to("Edit", task_path(assigned)) << " | "
+        = link_to_remote("Delete!", :url => task_path(assigned), :method => :delete, :before => visual_effect(:highlight, dom_id(assigned), :startcolor => "#afeeee"))
+      &nbsp;
+    = assigned.name
+    %dt
+      - if assigned.due_at < Date.today
+        - if assigned.due_at.utc == Task::ASAP.to_date
+          Due now!
+        - else
+          %span.warn= distance_of_time_in_words(assigned.due_at, Date.today) << " late, was due on #{assigned.due_at.strftime('%b %e')}"
+      - elsif assigned.due_at > Date.today
+        = "Due in " << distance_of_time_in_words(Date.today, assigned.due_at)
+      - else
+        %span.cool Due today!
+      

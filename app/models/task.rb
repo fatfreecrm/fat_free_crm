@@ -20,7 +20,7 @@
 #
 
 class Task < ActiveRecord::Base
-  ASAP = '2000-01-01 00:00:00'
+  ASAP = '1992-10-10 12:30:00'
   belongs_to :user
   belongs_to :asset, :polymorphic => true
   named_scope :overdue,       lambda { { :conditions => [ "due_at < ? AND due_at != '#{ASAP}'", Date.today ], :order => "due_at, id" } }
@@ -31,6 +31,7 @@ class Task < ActiveRecord::Base
   named_scope :due_asap,      :conditions => [ "due_at = '#{ASAP}'" ]
   named_scope :due_later,     :conditions => "due_at IS NULL"
   named_scope :pending,       :conditions => "completed_at IS NULL"
+  named_scope :assigned,      :conditions => "assigned_to IS NOT NULL"
   named_scope :completed,     :conditions => "completed_at IS NOT NULL"
 
   uses_mysql_uuid

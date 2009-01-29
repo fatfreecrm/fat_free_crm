@@ -442,35 +442,34 @@ td.cell a:hover {
 }
 
 .selector {
+  color: black;
   cursor: pointer;
-  font: bold 10px 'Lucida Grande', Geneva, Arial, Helvetica, sans-serif;
+  font: normal 10px 'Lucida Grande', Geneva, Arial, Helvetica, sans-serif;
   text-align: center;
 }
 
 .on {
   background: paleturquoise; /*lightskyblue;*/
   border: 1px silver inset;
-  color: black;
 }
 
 .off {
   background: lightgrey;
   border: 1px silver outset;
-  color: #3f3f3f;
 }
 
 .left {
-  -moz-border-radius-bottomleft: 8px;
-  -moz-border-radius-topleft: 8px;
-  -webkit-border-bottom-left-radius: 8px;
-  -webkit-border-top-left-radius: 8px;
+  -moz-border-radius-bottomleft: 9px;
+  -moz-border-radius-topleft: 9px;
+  -webkit-border-bottom-left-radius: 9px;
+  -webkit-border-top-left-radius: 9px;
 }
 
 .right {
-  -moz-border-radius-bottomright: 8px;
-  -moz-border-radius-topright: 8px;
-  -webkit-border-bottom-right-radius: 8px;
-  -webkit-border-top-right-radius: 8px;
+  -moz-border-radius-bottomright: 9px;
+  -moz-border-radius-topright: 9px;
+  -webkit-border-bottom-right-radius: 9px;
+  -webkit-border-top-right-radius: 9px;
 }
 
 /* Form validation messages.

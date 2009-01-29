@@ -9,4 +9,4 @@
   .check_box
     %div{:style => "float:right;"}
       %b= @task_due_date_total[:all]
-    %b Total Tasks
+    %b== Total #{@view.capitalize} Tasks

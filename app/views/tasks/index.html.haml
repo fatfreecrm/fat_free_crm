@@ -3,13 +3,23 @@
     - Setting.task_category_color.each do |key, value|
       == .#{key} { background:#{value}; }
 
-=inline "Create New Task", new_task_path, { :id => :inline, :collapsed => session[:tasks_new].nil? }
-.title Tasks
+- if @view == "completed"
+  .title Completed Tasks
+- elsif @view == "assigned"
+  =inline "Assign New Task", new_task_path, { :id => :inline, :collapsed => session[:tasks_new_assigned].nil? }
+  .title Assigned Tasks
+  = render :partial => "assign"
+- else # pending
+  =inline "Create New Task", new_task_path, { :id => :inline, :collapsed => session[:tasks_new_pending].nil? }
+  .title Tasks
+  = render :partial => "create"
 
-= render :partial => "new"
 .list#list
   - unless @tasks.empty?
-    - Setting.task_due_date.each do |value, key|
-      = render :partial => "list", :locals => { :key => key, :value => value }
+    - if @view == "completed"
+      = render :partial => "completed", :collection => @tasks
+    - else
+      - Setting.task_due_date.each do |value, key|
+        = render :partial => "list", :locals => { :key => key, :value => value }
   - else
     %div== You don't have any tasks yes. Please #{link_to("create new task", new_task_path)} first.

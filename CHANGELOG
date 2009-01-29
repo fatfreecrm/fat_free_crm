@@ -1,7 +1,13 @@
+Wed, Jan 28, 2008
+---------------------------------------------------------------------
+- Implemented task selector to switch between pending, assigned, and completed tasks.
+- Major overhaul of task templates to support three task views.
+
 Tue, Jan 27, 2008
 ---------------------------------------------------------------------
 - Added sidebar tasks filtering by due date.
 - Added CSS styles for selector control.
+- Added prototype selector control for tasks.
 
 Mon, Jan 26, 2008
 ---------------------------------------------------------------------

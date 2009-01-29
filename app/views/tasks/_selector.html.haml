@@ -1,8 +1,8 @@
-%table{ :cellpadding => 2, :cellspacing => 0, :style => "width: 100%; margin: 0px 0px 10px 0px" }
+%table{ :cellpadding => 3, :cellspacing => 0, :style => "width: 100%; margin: 0px 0px 10px 0px" }
   %tr
-    %td{ :class => "selector left on", :width => "33%" }
+    %td{ :class => "selector left " + (@view == "pending" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{tasks_path}') }
       Pending
-    %td{ :class => "selector off", :width => "33%" }
+    %td{ :class => "selector " + (@view == "assigned" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{url_for(:view => "assigned")}') }
       Assigned
-    %td{ :class => "selector right off", :width => "33%" }
+    %td{ :class => "selector right " + (@view == "completed" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{url_for(:view => "completed")}') }
       Completed
