@@ -5,7 +5,7 @@ module ActiveRecord
 
         def self.included(base)
           base.extend(ClassMethods)
-          puts "** UUID support is only available for MySQL 5 or later" unless base.mysql5_or_later?
+          puts "** UUID support is only available for MySQL v5 or later" if ActiveRecord::Base.connected? and !base.mysql5_or_later?
         end
 
         #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -23,8 +23,11 @@ module ActiveRecord
           # so for MySQL 4 or SQLite we don't hook into ActiveRecord.
           #--------------------------------------------------------------------------
           def mysql5_or_later?
+            # First check whether the connection exists. This lets [rake db:create] run without complains.
+            return false unless ActiveRecord::Base.connected?
+
             if ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
-              if ActiveRecord::Base.connection.select_value("select version()").to_i >= 5
+              if ActiveRecord::Base.connection.select_value("SELECT VERSION()").to_i >= 5
                 return true
               end
             end

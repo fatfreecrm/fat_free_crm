@@ -1,6 +1,7 @@
 Thu, Jan 28, 2008
 ---------------------------------------------------------------------
 - Unpacked gem dependencies to /vendor/gems (ruby-openid, haml, and faker).
+- Check whether database connection is available in [uses_mysql_uuid].
 
 Wed, Jan 28, 2008
 ---------------------------------------------------------------------
