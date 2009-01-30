@@ -23,7 +23,17 @@
   require "faker"
   category = %w(call email folowup lunch meeting money presentation trip) << ""
 
-  for i in (1..30) do
+  for i in (1 .. 50) do
+    due_at = case rand(12)
+      when 1                            # ASAP
+        Task::ASAP.strftime('%Y-%m-%d %H:%M:%S')
+      when 2..8                         # tomorrow/next week
+        Date.today + rand(15).days
+      when 9..11                        # overdue
+        Date.today - rand(15).days
+      else                              # later
+        nil
+      end
 %>
 task<%= i %>:
   id           : <%= i %>
@@ -34,7 +44,7 @@ task<%= i %>:
   asset_type   : <%=  %>
   priority     :
   category     : <%= category[rand(category.size)] %>
-  due_at       : <%= seed = rand(5); seed == 0 ? "'#{Task::ASAP}'" : (seed == 1 ? Date.today - rand(15).days : Date.today + rand(15).days) %>
+  due_at       : <%= due_at %>
   completed_at : <%= rand(5) == 0 ? Date.today - rand(5).days : "" %>
   deleted_at   :
   created_at   : <%= starts = Date.today - rand(15).days %>

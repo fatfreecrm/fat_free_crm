@@ -11,15 +11,15 @@ class TasksController < ApplicationController
     if @view == "completed"
       @tasks = Task.completed
     elsif @view == "assigned"
-      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.send(key).assigned; hash }
+      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.send(key).assigned.pending; hash }
     else
-      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.send(key); hash }
+      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.send(key).pending; hash }
     end
     @due_date = Setting.task_due_date[1..-1] << [ "On specific date...", :on_specific_date ]
     @category = Setting.task_category.invert.sort
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render :template => "tasks/index_#{@view}.html.haml" }
       format.xml  { render :xml => @tasks }
     end
   end
@@ -133,11 +133,16 @@ class TasksController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_data_for_sidebar
+  def get_data_for_sidebar # pending and assigned only...
     @view = params[:view] || "pending"
-    @task_due_date_total = { :all => Task.pending.count, :other => 0 }
+    @task_due_date_total = { :all => 0 }
     Setting.task_due_date.each do |value, key|
-      @task_due_date_total[key] = Task.send(key).count
+      if @view == "pending"
+        @task_due_date_total[key] = Task.send(key).pending.count
+      else
+        @task_due_date_total[key] = Task.send(key).assigned.pending.count
+      end
+      @task_due_date_total[:all] += @task_due_date_total[key]
     end
   end
 

@@ -11,11 +11,12 @@
       &nbsp;
     = pending.name
     %dt
-      - if pending.due_at < Date.today
-        - if pending.due_at.utc == Task::ASAP.to_date
-          Due now!
-        - else
-          %span.warn= distance_of_time_in_words(pending.due_at, Date.today) << " late, was due on #{pending.due_at.strftime('%b %e')}"
+      - if pending.due_at.nil?
+        Due sometime soon.
+      - elsif pending.due_at.utc == Task::ASAP
+        Due now!
+      - elsif pending.due_at < Date.today
+        %span.warn= distance_of_time_in_words(pending.due_at, Date.today) << " late, was due on #{pending.due_at.strftime('%b %e')}"
       - elsif pending.due_at > Date.today
         = "Due in " << distance_of_time_in_words(Date.today, pending.due_at)
       - else
