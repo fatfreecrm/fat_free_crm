@@ -33,7 +33,7 @@ class Task < ActiveRecord::Base
   named_scope :due_asap,      :conditions => [ "due_at = ?", ASAP ]
   named_scope :pending,       :conditions => "completed_at IS NULL"
   named_scope :assigned,      :conditions => "assigned_to IS NOT NULL", :include => :assignee
-  named_scope :completed,     :conditions => "completed_at IS NOT NULL"
+  named_scope :completed,     :conditions => "completed_at IS NOT NULL", :order => "completed_at DESC"
 
   uses_mysql_uuid
   acts_as_paranoid

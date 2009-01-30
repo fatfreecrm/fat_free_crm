@@ -109,19 +109,26 @@ class TasksController < ApplicationController
   # Ajax request to filter out list of tasks.
   #----------------------------------------------------------------------------
   def filter
+    @view = params[:view]
+    @view = "pending" unless %w(pending assigned).include?(@view)
     @tasks = {}
-    @category = Setting.task_category.invert.sort
 
-    old_filters = (session[:filter_by_task_due_date].nil? ? [] : session[:filter_by_task_due_date].split(","))
+    name = "filter_by_task_#{@view}".intern
+    old_filters = (session[name].nil? ? [] : session[name].split(","))
     new_filters = params[:due_date].split(",")
-    if new_filters.size > old_filters.size # checked: show
+    if new_filters.size > old_filters.size                      # Checked => Show
       filter = (new_filters - old_filters).first.intern
-      @tasks[filter] = Task.send(filter)
-    else # unchecked: hide
+      if @view == "pending"
+        @tasks[filter] = Task.send(filter).pending
+      else
+        @tasks[filter] = Task.send(filter).assigned.pending
+      end
+    else                                                        # Unchecked => Hide
       filter = (old_filters - new_filters).first.intern
       @tasks[filter] = []
     end
-    session[:filter_by_task_due_date] = params[:due_date]
+    session[name] = params[:due_date]
+    @category = Setting.task_category.invert.sort
     
     render :update do |page|
       Setting.task_due_date.each do |value, key|
@@ -132,18 +139,41 @@ class TasksController < ApplicationController
   end
 
   private
+
+  # Dispatch to appropriate sidebar handler, then save filters with non-zero
+  # task counts in a session.
   #----------------------------------------------------------------------------
-  def get_data_for_sidebar # pending and assigned only...
-    @view = params[:view] || "pending"
-    @task_due_date_total = { :all => 0 }
-    Setting.task_due_date.each do |value, key|
-      if @view == "pending"
-        @task_due_date_total[key] = Task.send(key).pending.count
-      else
-        @task_due_date_total[key] = Task.send(key).assigned.pending.count
-      end
-      @task_due_date_total[:all] += @task_due_date_total[key]
+  def get_data_for_sidebar
+    @view = params[:view]
+    @view = "pending" unless %w(pending assigned completed).include?(@view)
+    send("sidebar_for_#{@view}")
+
+    name = "filter_by_task_#{@view}".intern
+    unless session[name]
+      filters = @task_total.keys.select { |key| key != :all && @task_total[key] != 0 }.join(",")
+      session[name] = (filters.blank? ? nil : filters)
     end
+  end
+
+  #----------------------------------------------------------------------------
+  def sidebar_for_pending
+    @task_total = { :all => 0 }
+    Setting.task_due_date.each do |value, key|
+      @task_total[:all] += @task_total[key] = Task.send(key).pending.count
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def sidebar_for_assigned
+    @task_total = { :all => 0 }
+    Setting.task_due_date.each do |value, key|
+      @task_total[:all] += @task_total[key] = Task.send(key).assigned.pending.count
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def sidebar_for_completed
+    @task_total = { :all => 0 }
   end
 
 end
