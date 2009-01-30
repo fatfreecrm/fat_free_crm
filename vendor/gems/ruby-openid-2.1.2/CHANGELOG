@@ -1,0 +1,78 @@
+Fri Jun 27 15:39:14 PDT 2008  Kevin Turner <kevin@janrain.com>
+  tagged 2.1.2
+
+Fri Jun 27 15:38:05 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * update version to 2.1.2
+
+Fri Jun 27 15:01:35 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * util: remove call to srand
+  
+  From the Ruby FAQ:
+  
+  9.2 How do random number seeds work?
+  
+  It depends. In Ruby versions prior to 1.5.2, the random number generator had
+  (by default) a constant seed, and so would produce the same series of numbers
+  each time a program was run. If you needed less deterministic behaviors, you
+  called srand to set up a less predictable seed.
+  
+  Newer Rubys (Rubies?) have a different behavior. If rand is called without a
+  prior call to srand, Ruby will generate its own random(ish) seed. Successive
+  runs of a program that does not use srand will generate different sequences of
+  random numbers. To get the old, predictable, behavior (perhaps for testing),
+  call srand with a constant seed. 
+
+Fri Jun 27 13:34:43 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * LICENSE: htmltokenizer is (c) 2004 Ben Giddings
+
+Fri Jun 27 13:32:09 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * Yadis.html_yadis_location: catch HTMLTokenizerError
+
+Fri Jun 27 13:24:13 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * htmltokenizer: define HTMLTokenizerError to raise
+
+Fri Jun 27 13:18:38 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * htmltokenizer: Don't raise OpenIDError from htmltokenizer (it's not in the OpenID module namespace) #255
+
+Wed Jun 25 17:31:26 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * OpenID::Server::CheckIDRequest.answer: document return type
+
+Wed Jun 25 17:06:35 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * TrustRoot.check_sanity: don't fail if the trust root is not parseable
+
+Wed Jun 25 16:31:30 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * Message.from_http_response: accept 206 code
+
+Wed Jun 25 14:14:05 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * move OpenID::VERSION definition in openid.rb, for #256
+
+Wed Jun 25 13:55:18 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * Add admin/gettlds.py to ease updating of TLD list in trust root validation
+
+Wed Jun 25 13:50:22 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * TrustRoot.TOP_LEVEL_DOMAINS: updated
+
+Fri Jun 13 14:18:04 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * xrds.rb: fix stray colon
+
+Fri Jun 13 13:41:58 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * Yadis::get_canonical_id: case-insensitive comparison
+  
+  Porting a patch from =wil:
+  
+  1. There should only be a single CanonicalID in each XRD (in the latest XRI
+  resolution spec), so I made it use the first CID found instead of the last.
+  
+  2. Use case-insensitive comparison when comparing CanonicalIDs.
+
+Wed Jun 11 15:24:12 PDT 2008  Kevin Turner <kevin@janrain.com>
+  * Accept response code 206 from fetcher results.  Fixes #260
+
+Wed Jun 11 11:27:25 PDT 2008  cygnus@janrain.com
+  * admin/fixperms: Fix stale entries
+
+Wed Jun 11 11:08:11 PDT 2008  cygnus@janrain.com
+  * Add test cases for trust roots with non-ASCII characters in path or hostname
+
+Fri Jun  6 15:50:12 PDT 2008  cygnus@janrain.com
+  tagged 2.1.1
