@@ -2,6 +2,7 @@ Thu, Jan 28, 2008
 ---------------------------------------------------------------------
 - Unpacked gem dependencies to /vendor/gems (ruby-openid, haml, and faker).
 - Check whether database connection is available in [uses_mysql_uuid] plugin.
+- Made task filters work for pending and assigned tasks.
 
 Wed, Jan 28, 2008
 ---------------------------------------------------------------------
