@@ -1,4 +1,11 @@
-Thu, Jan 28, 2008
+Fri, Jan 30, 2008
+---------------------------------------------------------------------
+- Ruby 1.9.1 final was released today!
+- Added new named scopes to support assignments and completed tasks.
+- Added sidebar filters for completed tasks.
+- Added CSS styles for single-line lists and redesigned task templates.
+
+Thu, Jan 29, 2008
 ---------------------------------------------------------------------
 - Unpacked gem dependencies to /vendor/gems (ruby-openid, haml, and faker).
 - Check whether database connection is available in [uses_mysql_uuid] plugin.

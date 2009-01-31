@@ -23,10 +23,10 @@
   require "faker"
   category = %w(call email folowup lunch meeting money presentation trip) << ""
 
-  for i in (1 .. 50) do
+  for i in (1 .. 150) do
     due_at = case rand(12)
       when 1                            # ASAP
-        Task::ASAP.strftime('%Y-%m-%d %H:%M:%S')
+        Task::ASAP.to_s(:db)
       when 2..8                         # tomorrow/next week
         Date.today + rand(15).days
       when 9..11                        # overdue

@@ -2,9 +2,9 @@
 .title Assigned Tasks
 = render :partial => "assign"
 
-.list#list
+.log#log
   - unless @tasks.values.flatten.empty?
     - Setting.task_due_date.each do |value, key|
       = render :partial => "list", :locals => { :key => key, :value => value }
   - else
-    %div== You don't have any assigned tasks that are unfinished.
+    %div You don't have any assigned tasks that are unfinished.

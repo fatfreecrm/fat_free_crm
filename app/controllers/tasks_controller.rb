@@ -8,12 +8,12 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @task = Task.new
-    if @view == "completed"
-      @tasks = Task.completed
+    if @view == "pending"
+      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.my(@current_user).send(key).pending; hash }
     elsif @view == "assigned"
-      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.send(key).assigned.pending; hash }
-    else
-      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.send(key).pending; hash }
+      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.assigned_by(@current_user).send(key).pending; hash }
+    else # @view == "completed"
+      @tasks = Setting.task_completed.inject({}) { |hash, (value, key)| hash[key] = Task.my(@current_user).send(key).completed; hash }
     end
     @due_date = Setting.task_due_date[1..-1] << [ "On specific date...", :on_specific_date ]
     @category = Setting.task_category.invert.sort
@@ -119,9 +119,9 @@ class TasksController < ApplicationController
     if new_filters.size > old_filters.size                      # Checked => Show
       filter = (new_filters - old_filters).first.intern
       if @view == "pending"
-        @tasks[filter] = Task.send(filter).pending
+        @tasks[filter] = Task.my(@current_user).send(filter).pending
       else
-        @tasks[filter] = Task.send(filter).assigned.pending
+        @tasks[filter] = Task.assigned_by(@current_user).send(filter).pending
       end
     else                                                        # Unchecked => Hide
       filter = (old_filters - new_filters).first.intern
@@ -159,7 +159,7 @@ class TasksController < ApplicationController
   def sidebar_for_pending
     @task_total = { :all => 0 }
     Setting.task_due_date.each do |value, key|
-      @task_total[:all] += @task_total[key] = Task.send(key).pending.count
+      @task_total[:all] += @task_total[key] = Task.my(@current_user).send(key).pending.count
     end
   end
 
@@ -167,13 +167,16 @@ class TasksController < ApplicationController
   def sidebar_for_assigned
     @task_total = { :all => 0 }
     Setting.task_due_date.each do |value, key|
-      @task_total[:all] += @task_total[key] = Task.send(key).assigned.pending.count
+      @task_total[:all] += @task_total[key] = Task.assigned_by(@current_user).send(key).pending.count
     end
   end
 
   #----------------------------------------------------------------------------
   def sidebar_for_completed
     @task_total = { :all => 0 }
+    Setting.task_completed.each do |value, key|
+      @task_total[:all] += @task_total[key] = Task.my(@current_user).send(key).completed.count
+    end
   end
 
 end

@@ -130,3 +130,15 @@ task_due_date:
     - :due_next_week
   - - Later
     - :due_later
+
+task_completed:
+  - - Today
+    - :completed_today
+  - - Yesterday
+    - :completed_yesterday
+  - - Last week
+    - :completed_last_week
+  - - This month
+    - :completed_this_month
+  - - Last month
+    - :completed_last_month

@@ -264,12 +264,12 @@ td.cell a:hover {
 
 .main a:link, 
 .main a:visited {
-  color: green;
+  color: #0033cc;
   text-decoration: none;
 }
 
 .main a:hover {
-  background: seagreen;
+  background: #0033cc;
   color: white;
   text-decoration: none;
 }
@@ -288,6 +288,73 @@ td.cell a:hover {
   /*padding: 0px 0px 10px 0px;*/
 }
 
+.strip {
+  background: gainsboro;
+  color: black;
+  float: left;
+  font-size: 11px;
+  padding: 1px 4px 1px 3px;
+  text-align: right;
+  width: 75px;
+  -moz-border-radius-topleft: 7px;
+  -moz-border-radius-bottomleft: 7px;
+  -webkit-border-top-left-radius: 7px;
+  -webkit-border-bottom-left-radius: 7px;
+}
+
+.longstrip {
+  background: gainsboro;
+  color: black;
+  float: left;
+  font-size: 11px;
+  margin: 0px 5px 5px 0px;
+  padding: 1px 3px 1px 3px;
+  text-align: right;
+  width: 120px;
+}
+
+/* Single-row lists.
+-------------------------------------------------------- */
+.log {
+  padding: 8px 0px 0px 0px;
+}
+
+.log h3 {
+  background: whitesmoke;
+  border-bottom: 1px silver dotted;
+  color: #2f2f2f;
+  margin: 0px 0px 4px 0px;
+  padding: 2px 0px 2px 86px;
+}
+
+.log li {
+  color: #3f3f3f;
+  font-size: 12px;
+  list-style: none;
+  padding: 3px 0px 3px 0px;
+}
+
+.log li tt {
+  color: dimgray;
+  font-size: 11px;
+}
+
+.log .bucket {
+  margin: 0px 0px 10px 0px;
+}
+
+.log input {
+  float: left;
+  margin: 0px 4px 0px 0px;
+}
+
+.log .strip {
+  margin: 0px 5px 0px 0px;
+}
+
+
+/* Two-row lists.
+-------------------------------------------------------- */
 .list {
   padding: 8px 0px 0px 0px;
 }
@@ -309,21 +376,25 @@ td.cell a:hover {
   color: #3f3f3f;
   font-size: 12px;
   list-style: none;
-  /*margin: 0px 0px 3px 0px;*/
   padding: 6px 0px 6px 0px;
 }
 
+/*
+.log li a:link,
+.log li a:visited,
 .list li a:link, 
 .list li a:visited {
   color: #0033cc;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
+.log li a:hover,
 .list li a:hover {
   background: #0033cc;
   color: white;
   text-decoration: none;
 }
+*/
 
 .list li tt {
   color: dimgray;
@@ -353,28 +424,8 @@ td.cell a:hover {
   text-decoration: none;
 }
 
-.strip {
-  color: black;
-  float: left;
-  font-size: 11px;
+.list .strip {
   margin: 2px 5px 20px 0px;
-  padding: 1px 4px 1px 3px;
-  text-align: right;
-  width: 75px;
-  -moz-border-radius-topleft: 7px;
-  -moz-border-radius-bottomleft: 7px;
-  -webkit-border-top-left-radius: 7px;
-  -webkit-border-bottom-left-radius: 7px;
-}
-
-.longstrip {
-  color: black;
-  float: left;
-  font-size: 11px;
-  margin: 0px 5px 5px 0px;
-  padding: 1px 3px 1px 3px;
-  text-align: right;
-  width: 120px;
 }
 
 .tools {
@@ -562,4 +613,13 @@ div.autocomplete ul li {
   list-style-type: none;
   margin: 0px;
   padding: 2px;
+}
+
+/* Safari-specific overrides.
+-------------------------------------------------------- */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .log input {
+    float: left;
+    margin: 1px 4px 0px 0px;
+  }
 }
