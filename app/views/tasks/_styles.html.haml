@@ -1,0 +1,4 @@
+- content_for :styles do
+  %style
+    - Setting.task_category_color.each do |key, value|
+      == .#{key} { background:#{value}; }

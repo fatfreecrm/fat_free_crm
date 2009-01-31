@@ -1,6 +1,9 @@
-=inline "Assign New Task", new_task_path, { :id => :inline, :collapsed => session[:tasks_new_assigned].nil? }
+= render :partial => "styles"
+
+- collapsed = session[:tasks_new_assigned].nil?
+=inline "Assign New Task", url_for(:action => :new, :view => @view), { :id => :inline, :collapsed => collapsed }
 .title Assigned Tasks
-= render :partial => "assign"
+= render :partial => "assign", :locals => { :collapsed => collapsed }
 
 .log#log
   - unless @tasks.values.flatten.empty?

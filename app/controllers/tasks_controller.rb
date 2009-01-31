@@ -17,6 +17,7 @@ class TasksController < ApplicationController
     end
     @due_date = Setting.task_due_date[1..-1] << [ "On specific date...", :on_specific_date ]
     @category = Setting.task_category.invert.sort
+    @users = User.all_except(@current_user) if @view == "assigned"
 
     respond_to do |format|
       format.html { render :template => "tasks/index_#{@view}.html.haml" }
@@ -40,9 +41,9 @@ class TasksController < ApplicationController
   # GET /tasks/new.xml
   #----------------------------------------------------------------------------
   def new
+    @view = params[:view] || "pending"
     @task = Task.new
-    @users = User.all_except(@current_user) # to assign the task
-    session[:tasks_new] = (params[:visible] == "false" ? true : nil)
+    session["tasks_new_#{@view}".intern] = (params[:visible] == "false" ? true : nil)
 
     respond_to do |format|
       format.html # new.html.erb

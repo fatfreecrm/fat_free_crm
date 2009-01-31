@@ -1,3 +1,7 @@
+Sat, Jan 31, 2008
+---------------------------------------------------------------------
+- [Create new task] and [Assign new task] forms now save/restore their display state.
+
 Fri, Jan 30, 2008
 ---------------------------------------------------------------------
 - Ruby 1.9.1 final was released today!

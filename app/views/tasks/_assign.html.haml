@@ -1,4 +1,4 @@
-.inline#inline{ hidden_if(session[:task_new].nil?) }
+.inline#inline{ hidden_if(collapsed) }
   - form_for(@task) do |f|
     = hidden_field_tag "task[user_id]", @current_user.id
     %table{ :align => :center, :cellpadding => 0, :cellspacing => 0 }
@@ -12,8 +12,9 @@
           = f.select :due_at, @due_date, {}, { :style => "width:120px" }
         %td= spacer
         %td{ :valign => :top }
-          .label.top.req Category:
-          = f.select :category, @category, { :include_blank => "-- None --" }, { :style => "width:120px" }
+          .label.top.req Assign to:
+          = collection_select :task, :assigned_to, @users, :id, :full_name, {}, { :style => "width:120px" } 
+          /= f.select :category, @category, { :include_blank => "-- None --" }, 
         %td= spacer
         %td{ :valign => :top }
           .label.top.req &nbsp;
