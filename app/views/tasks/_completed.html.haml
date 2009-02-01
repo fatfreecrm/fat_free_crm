@@ -2,13 +2,12 @@
   - if completed.category
     .strip{:class => completed.category}= Setting.task_category[completed.category.intern]
   - else
-    .strip &nbsp;
+    .strip{:style => "color:white"} Other
   %div
     .tools{ hidden, :id => dom_id(completed, :tools) }
       %small
         = link_to_remote("Delete!", :url => task_path(completed), :method => :delete, :before => visual_effect(:highlight, dom_id(completed), :startcolor => "#afeeee"))
-    %strike= completed.name
-    &ndash;
+    = completed.name << " &ndash; "
     %tt
       %span.cool= "completed " << distance_of_time_in_words(completed.completed_at, Date.today) << " ago"
       

@@ -1,4 +1,3 @@
-%div{ :id => "list_#{key}" }
-  - unless @tasks[key].empty?
-    %h3= value
-    .bucket= render :partial => @view, :collection => @tasks[key]
+- if @tasks[key] && !@tasks[key].empty?
+  %h3= value
+  .bucket= render :partial => @view, :collection => @tasks[key]

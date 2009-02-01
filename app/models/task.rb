@@ -53,4 +53,20 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :user_id
   validates_presence_of :name, :message => "^Please specify task name."
+
+  # Returns filtered list of tasks as required by tasks/index.
+  #----------------------------------------------------------------------------
+  def self.list(user, view, filters)
+    filters = (filters ? filters.split(",").map(&:intern) : [])
+
+    tasks = case view
+      when "completed"
+        Setting.task_completed.inject({}) { |hash, (value, key)| hash[key] = my(user).send(key).completed if filters.include?(key); hash }
+      when "assigned"
+        Setting.task_due_date.inject({})  { |hash, (value, key)| hash[key] = assigned_by(user).send(key).pending if filters.include?(key); hash }
+      else # "pending"
+        Setting.task_due_date.inject({})  { |hash, (value, key)| hash[key] = my(user).send(key).pending if filters.include?(key); hash }
+    end
+  end
+
 end

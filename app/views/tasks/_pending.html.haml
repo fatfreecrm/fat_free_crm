@@ -2,7 +2,7 @@
   - if pending.category
     .strip{:class => pending.category}= Setting.task_category[pending.category.intern]
   - else
-    .strip Other
+    .strip{:style => "color:white"} Other
   %div
     .tools{ hidden, :id => dom_id(pending, :tools) }
       %small

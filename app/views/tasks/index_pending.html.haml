@@ -6,8 +6,8 @@
 = render :partial => "create", :locals => { :collapsed => collapsed }
 
 .log#log
-  - unless @tasks.values.flatten.empty?
+  - if !@tasks.values.flatten.empty? || all_filtered_out?(:pending)
     - Setting.task_due_date.each do |value, key|
-      = render :partial => "list", :locals => { :key => key, :value => value }
+      %div{ :id => "list_#{key}" }= render :partial => "list", :locals => { :key => key, :value => value }
   - else
     %div You don't have any pending tasks.

@@ -486,7 +486,7 @@ td.cell a:hover {
 /* Filter and selectors.
 -------------------------------------------------------- */
 .filters {
-  background: aliceblue;
+  background: snow;
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -500,7 +500,7 @@ td.cell a:hover {
 }
 
 .on {
-  background: paleturquoise; /*lightskyblue;*/
+  background: lightgoldenrodyellow;
   border: 1px silver inset;
 }
 

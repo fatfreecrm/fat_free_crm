@@ -8,13 +8,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @task = Task.new
-    if @view == "pending"
-      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.my(@current_user).send(key).pending; hash }
-    elsif @view == "assigned"
-      @tasks = Setting.task_due_date.inject({}) { |hash, (value, key)| hash[key] = Task.assigned_by(@current_user).send(key).pending; hash }
-    else # @view == "completed"
-      @tasks = Setting.task_completed.inject({}) { |hash, (value, key)| hash[key] = Task.my(@current_user).send(key).completed; hash }
-    end
+    @tasks = Task.list(@current_user, @view, session["filter_by_task_#{@view}".intern])
     @due_date = Setting.task_due_date[1..-1] << [ "On specific date...", :on_specific_date ]
     @category = Setting.task_category.invert.sort
     @users = User.all_except(@current_user) if @view == "assigned"
@@ -111,32 +105,15 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def filter
     @view = params[:view]
-    @view = "pending" unless %w(pending assigned).include?(@view)
-    @tasks = {}
+    @view = "pending" unless %w(pending assigned completed).include?(@view)
+    @category = Setting.task_category.invert.sort
 
     name = "filter_by_task_#{@view}".intern
-    old_filters = (session[name].nil? ? [] : session[name].split(","))
-    new_filters = params[:due_date].split(",")
-    if new_filters.size > old_filters.size                      # Checked => Show
-      filter = (new_filters - old_filters).first.intern
-      if @view == "pending"
-        @tasks[filter] = Task.my(@current_user).send(filter).pending
-      else
-        @tasks[filter] = Task.assigned_by(@current_user).send(filter).pending
-      end
-    else                                                        # Unchecked => Hide
-      filter = (old_filters - new_filters).first.intern
-      @tasks[filter] = []
-    end
-    session[name] = params[:due_date]
-    @category = Setting.task_category.invert.sort
-    
-    render :update do |page|
-      Setting.task_due_date.each do |value, key|
-        next if key != filter
-        page["list_#{filter}"].replace_html render(:partial => "list", :locals => { :key => key, :value => value })
-      end
-    end
+    old_filters   = (session[name].nil? ? [] : session[name].split(","))
+    new_filters   = params[:filters].split(",")
+    session[name] = params[:filters]
+
+    send("filter_#{@view}", old_filters, new_filters)
   end
 
   private
@@ -152,7 +129,7 @@ class TasksController < ApplicationController
     name = "filter_by_task_#{@view}".intern
     unless session[name]
       filters = @task_total.keys.select { |key| key != :all && @task_total[key] != 0 }.join(",")
-      session[name] = (filters.blank? ? nil : filters)
+      session[name] = filters unless filters.blank?
     end
   end
 
@@ -177,6 +154,49 @@ class TasksController < ApplicationController
     @task_total = { :all => 0 }
     Setting.task_completed.each do |value, key|
       @task_total[:all] += @task_total[key] = Task.my(@current_user).send(key).completed.count
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def filter_pending(old_filters, new_filters)
+    @tasks = {}
+    if new_filters.size > old_filters.size                      # Checked => Show
+      filter = (new_filters - old_filters).first.intern
+      if @view == "pending"
+        @tasks[filter] = Task.my(@current_user).send(filter).pending
+      else
+        @tasks[filter] = Task.assigned_by(@current_user).send(filter).pending
+      end
+    else                                                        # Unchecked => Hide
+      filter = (old_filters - new_filters).first.intern
+      @tasks[filter] = []
+    end
+
+    render :update do |page|
+      Setting.task_due_date.each do |value, key|
+        next if key != filter
+        page["list_#{filter}"].replace_html render(:partial => "list", :locals => { :key => key, :value => value })
+      end
+    end
+  end
+  alias :filter_assigned :filter_pending
+
+  #----------------------------------------------------------------------------
+  def filter_completed(old_filters, new_filters)
+    @tasks = {}
+    if new_filters.size > old_filters.size                      # Checked => Show
+      filter = (new_filters - old_filters).first.intern
+      @tasks[filter] = Task.my(@current_user).send(filter).completed
+    else                                                        # Unchecked => Hide
+      filter = (old_filters - new_filters).first.intern
+      @tasks[filter] = []
+    end
+
+    render :update do |page|
+      Setting.task_completed.each do |value, key|
+        next if key != filter
+        page["list_#{filter}"].replace_html render(:partial => "list", :locals => { :key => key, :value => value })
+      end
     end
   end
 
