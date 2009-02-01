@@ -9,7 +9,8 @@
         = link_to("Edit", task_path(assigned)) << " | "
         = link_to_remote("Delete!", :url => task_path(assigned), :method => :delete, :before => visual_effect(:highlight, dom_id(assigned), :startcolor => "#afeeee"))
       &nbsp;
-    = link_to(assigned.assignee.full_name, "mailto:" + assigned.assignee.email) << ": " << assigned.name << " &ndash; "
+    == To #{link_to(assigned.assignee.full_name, "mailto:" + assigned.assignee.email)}:
+    = assigned.name << " &ndash; "
     %tt
       - if assigned.due_at.nil?
         due sometime soon.

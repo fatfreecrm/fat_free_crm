@@ -1,0 +1,2 @@
+page[dom_id(@task, :tools)].hide
+page[dom_id(@task)].visual_effect :fade, :duration => 1.5 # afterFinish: update sidebar

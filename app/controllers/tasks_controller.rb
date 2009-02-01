@@ -101,6 +101,19 @@ class TasksController < ApplicationController
     end
   end
 
+  # PUT /tasks/1/complete
+  # PUT /leads/1/complete.xml
+  #----------------------------------------------------------------------------
+  def complete
+    @task = Task.find(params[:id])
+
+    respond_to do |format|
+      format.html { redirect_to(@task) }
+      format.xml  { head :ok }
+      format.js   # complete.js.rjs
+    end
+  end
+
   # Ajax request to filter out list of tasks.
   #----------------------------------------------------------------------------
   def filter

@@ -2,6 +2,7 @@ Sat, Jan 31, 2008
 ---------------------------------------------------------------------
 - [Create new task] and [Assign new task] forms now save/restore their display state.
 - Implemented task filtering for all three views.
+- Added completion checkboxes and created initial implementation.
 
 Fri, Jan 30, 2008
 ---------------------------------------------------------------------

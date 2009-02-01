@@ -9,8 +9,11 @@
         = link_to("Edit", task_path(pending)) << " | "
         = link_to_remote("Delete!", :url => task_path(pending), :method => :delete, :before => visual_effect(:highlight, dom_id(pending), :startcolor => "#afeeee"))
       &nbsp;
-    <input type="checkbox">
-    = pending.name << " &ndash; "
+    = check_box_tag :complete, 1, false, :onclick => complete(pending)
+    %label{ :id => dom_id(pending, :name) }
+      - if pending.user.id != @current_user.id
+        == From #{link_to(pending.user.full_name, "mailto:" + pending.user.email)}:
+      = pending.name << " &ndash; "
     %tt
       - if pending.due_at.nil?
         due sometime soon.

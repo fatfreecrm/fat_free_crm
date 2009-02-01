@@ -15,4 +15,11 @@ module TasksHelper
     session["filter_by_task_#{view}".intern].blank?
   end
 
+  #----------------------------------------------------------------------------
+  def complete(pending)
+    onclick = "this.disable();"
+    onclick << %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
+    onclick << remote_function(:url => complete_task_path(pending), :method => :put)
+  end
+
 end
