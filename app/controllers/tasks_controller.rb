@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @task = Task.new
-    @tasks = Task.list(@current_user, @view, session["filter_by_task_#{@view}".intern])
+    @tasks = Task.list(@current_user, @view, session["filter_by_task_#{@view}"])
     @due_date = Setting.task_due_date[1..-1] << [ "On specific date...", :on_specific_date ]
     @category = Setting.task_category.invert.sort
     @users = User.all_except(@current_user) if @view == "assigned"
@@ -37,7 +37,7 @@ class TasksController < ApplicationController
   def new
     @view = params[:view] || "pending"
     @task = Task.new
-    session["tasks_new_#{@view}".intern] = (params[:visible] == "false" ? true : nil)
+    session["tasks_new_#{@view}"] = (params[:visible] == "false" ? true : nil)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -121,7 +121,7 @@ class TasksController < ApplicationController
     @view = "pending" unless %w(pending assigned completed).include?(@view)
     @category = Setting.task_category.invert.sort
 
-    name = "filter_by_task_#{@view}".intern
+    name = "filter_by_task_#{@view}"
     old_filters   = (session[name].nil? ? [] : session[name].split(","))
     new_filters   = params[:filters].split(",")
     session[name] = params[:filters]
@@ -139,7 +139,7 @@ class TasksController < ApplicationController
     @view = "pending" unless %w(pending assigned completed).include?(@view)
     @task_total = Task.totals(@current_user, @view)
 
-    name = "filter_by_task_#{@view}".intern
+    name = "filter_by_task_#{@view}"
     unless session[name]
       filters = @task_total.keys.select { |key| key != :all && @task_total[key] != 0 }.join(",")
       session[name] = filters unless filters.blank?

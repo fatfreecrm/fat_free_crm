@@ -1,6 +1,6 @@
 = render :partial => "styles"
 
-- collapsed = session[:tasks_new_pending].nil?
+- collapsed = session["tasks_new_pending"].nil?
 =inline "Create New Task", url_for(:action => :new, :view => @view), { :id => :inline, :collapsed => collapsed }
 .title Tasks
 = render :partial => "create", :locals => { :collapsed => collapsed }
