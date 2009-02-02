@@ -16,10 +16,10 @@ module TasksHelper
   end
 
   #----------------------------------------------------------------------------
-  def complete(pending)
+  def complete(pending, bucket)
     onclick = "this.disable();"
     onclick << %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => complete_task_path(pending), :method => :put)
+    onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => %Q/"bucket=#{bucket}"/)
   end
 
 end

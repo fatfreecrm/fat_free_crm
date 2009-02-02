@@ -1,5 +1,6 @@
 Sun, Feb 1, 2008
 ---------------------------------------------------------------------
+- SuperBowl!!
 - Refactored tasks controller to offload most of sidebar and filter processing to task model.
 - Impletented tasks/complete for pending tasks.
 

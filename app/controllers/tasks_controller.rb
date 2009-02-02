@@ -108,6 +108,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.update_attributes(:completed_at => Time.now)
 
+    # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
+    @bucket = (Task.my(@current_user).send(params[:bucket]).pending.count == 0 ? params[:bucket] : nil)
+
     respond_to do |format|
       format.js   # complete.js.rjs
       format.html { redirect_to(@task) }
