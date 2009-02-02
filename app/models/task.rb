@@ -20,7 +20,7 @@
 #
 
 class Task < ActiveRecord::Base
-  ASAP = '1992-10-10 12:30:00'.to_time
+  ASAP = '1992-10-10 12:30:00'.to_time.localtime
   belongs_to :user
   belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
   belongs_to :asset, :polymorphic => true
