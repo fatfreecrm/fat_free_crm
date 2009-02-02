@@ -2,7 +2,7 @@
   %tr
     %td{ :class => "selector left " + (@view == "pending" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{tasks_path}') }
       Pending
-    %td{ :class => "selector " + (@view == "assigned" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{url_for(:view => "assigned")}') }
+    %td{ :class => "selector " + (@view == "assigned" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{url_for(:action => :index, :view => "assigned")}') }
       Assigned
-    %td{ :class => "selector right " + (@view == "completed" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{url_for(:view => "completed")}') }
+    %td{ :class => "selector right " + (@view == "completed" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{url_for(:action => :index, :view => "completed")}') }
       Completed

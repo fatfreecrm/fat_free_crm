@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_filter :require_user
-  before_filter :get_data_for_sidebar, :only => :index
+  before_filter :get_data_for_sidebar, :only => [ :index, :destroy, :complete ]
   before_filter "set_current_tab(:tasks)"
 
   # GET /tasks
@@ -106,11 +106,12 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def complete
     @task = Task.find(params[:id])
+    @task.update_attributes(:completed_at => Time.now)
 
     respond_to do |format|
+      format.js   # complete.js.rjs
       format.html { redirect_to(@task) }
       format.xml  { head :ok }
-      format.js   # complete.js.rjs
     end
   end
 

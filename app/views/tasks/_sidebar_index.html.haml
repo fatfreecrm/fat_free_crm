@@ -1,5 +1,5 @@
-= render :partial => "selector"
 .filters#filters
+  = render :partial => "selector"
   - if @view == "pending" || @view == "assigned"
     - Setting.task_due_date.each do |value, key|
       .check_box{:style => "border-bottom: 1px silver dotted;"}
