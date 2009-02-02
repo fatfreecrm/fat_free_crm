@@ -2,7 +2,7 @@
   - if lead.status
     .strip{:class => lead.status}= Setting.lead_status[lead.status.intern]
   - else
-    .strip &nbsp;
+    .strip{:style => "color:white;"} Other
   %div
     .tools{ hidden, :id => dom_id(lead, :tools) }
       %small

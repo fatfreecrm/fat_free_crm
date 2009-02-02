@@ -7,6 +7,8 @@
     .tools{ hidden, :id => dom_id(completed, :tools) }
       %small
         = link_to_remote("Delete!", :url => task_path(completed), :method => :delete, :before => visual_effect(:highlight, dom_id(completed), :startcolor => "#afeeee"))
+    - if completed.user.id != @current_user.id
+      == From #{link_to(completed.user.full_name, "mailto:" + completed.user.email)}:
     = completed.name << " &ndash; "
     %tt
       %span.cool= "completed " << distance_of_time_in_words(completed.completed_at, Date.today) << " ago"

@@ -303,7 +303,7 @@ td.cell a:hover {
 }
 
 .longstrip {
-  background: gainsboro;
+  /*background: gainsboro;*/
   color: black;
   float: left;
   font-size: 11px;

@@ -2,7 +2,7 @@
   - if opportunity.stage
     .strip{:class => opportunity.stage}= @stage[opportunity.stage.intern]
   - else
-    .strip &nbsp;
+    .strip{:style => "color:white;"} Other
   %div
     .tools{ hidden, :id => dom_id(opportunity, :tools) }
       %small

@@ -69,4 +69,44 @@ class Task < ActiveRecord::Base
     end
   end
 
+  # Returns list of tasks for single filter as required by tasks/filter.
+  #----------------------------------------------------------------------------
+  def self.filter(user, view, old_filters, new_filters)
+    tasks = {}
+    if new_filters.size > old_filters.size                      # Checked => Show
+      filter = (new_filters - old_filters).first.intern
+      tasks[filter] = case view
+      when "completed"
+        my(user).send(filter).completed
+      when "assigned"
+        assigned_by(user).send(filter).pending
+      else # "pending"
+        my(user).send(filter).pending
+      end
+    else                                                        # Unchecked => Hide
+      filter = (old_filters - new_filters).first.intern
+      tasks[filter] = []
+    end
+    tasks
+  end
+
+  # Returns task totals for each of the views as needed by tasks sidebar.
+  #----------------------------------------------------------------------------
+  def self.totals(user, view)
+    totals = { :all => 0 }
+    settings = (view == "completed" ? Setting.task_completed : Setting.task_due_date)
+    settings.each do |value, key|
+      totals[key] = case view
+      when "completed"
+        my(user).send(key).completed.count
+      when "assigned"
+        assigned_by(user).send(key).pending.count
+      else # "pending"
+        my(user).send(key).pending.count
+      end
+      totals[:all] += totals[key]
+    end
+    totals
+  end
+
 end

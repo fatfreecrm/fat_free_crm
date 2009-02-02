@@ -1,3 +1,7 @@
+Sun, Feb 1, 2008
+---------------------------------------------------------------------
+- Refactored tasks controller to offload most of sidebar and filter processing to task model.
+
 Sat, Jan 31, 2008
 ---------------------------------------------------------------------
 - [Create new task] and [Assign new task] forms now save/restore their display state.

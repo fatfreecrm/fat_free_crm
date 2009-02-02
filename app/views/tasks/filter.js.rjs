@@ -1,0 +1,7 @@
+filter = @tasks.keys.first
+settings = (@view == "completed" ? Setting.task_completed : Setting.task_due_date)
+
+settings.each do |value, key|
+  next if key != filter
+  page["list_#{filter}"].replace_html render(:partial => "list", :locals => { :key => key, :value => value })
+end
