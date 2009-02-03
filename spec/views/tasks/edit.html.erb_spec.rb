@@ -5,6 +5,7 @@ describe "/tasks/edit.html.erb" do
   
   before(:each) do
     assigns[:task] = @task = stub_model(Task,
+      :uuid => "12345678-0123-5678-0123-567890123456",
       :new_record? => false
     )
   end

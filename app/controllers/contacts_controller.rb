@@ -58,7 +58,7 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
-        flash[:notice] = "Contact #{h @contact.full_name} was successfully created."
+        flash[:notice] = "Contact #{@contact.full_name} was successfully created."
         format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else

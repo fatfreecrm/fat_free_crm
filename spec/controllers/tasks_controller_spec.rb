@@ -2,6 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TasksController do
 
+  def get_data_for_sidebar
+    @task_total = Task.stub!(:totals).and_return({ :key => :value })
+  end
+
   before(:each) do
     require_user
     set_current_tab(:tasks)
@@ -14,8 +18,15 @@ describe TasksController do
   
   describe "responding to GET index" do
 
+    before(:each) do
+      get_data_for_sidebar
+    end
+
     it "should expose all tasks as @tasks" do
-      Task.should_receive(:find).with(:all).and_return([mock_task])
+      Task.should_receive(:list).and_return([mock_task])
+      Setting.should_receive(:task_due_date).and_return([[ "key", :value ]])
+      Setting.should_receive(:task_category).and_return({ :key => :value })
+      User.should_receive(:all_except).with(@current_user) if @view == "assigned"
       get :index
       assigns[:tasks].should == [mock_task]
     end
@@ -24,7 +35,10 @@ describe TasksController do
   
       it "should render all tasks as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Task.should_receive(:find).with(:all).and_return(tasks = mock("Array of Tasks"))
+        Task.should_receive(:list).and_return(tasks = mock("Array of Tasks"))
+        Setting.should_receive(:task_due_date).and_return([[ "key", :value ]])
+        Setting.should_receive(:task_category).and_return({ :key => :value })
+        User.should_receive(:all_except).with(@current_user) if @view == "assigned"
         tasks.should_receive(:to_xml).and_return("generated XML")
         get :index
         response.body.should == "generated XML"
@@ -161,6 +175,10 @@ describe TasksController do
   end
 
   describe "responding to DELETE destroy" do
+
+    before(:each) do
+      get_data_for_sidebar
+    end
 
     it "should destroy the requested task" do
       Task.should_receive(:find).with("37").and_return(mock_task)
