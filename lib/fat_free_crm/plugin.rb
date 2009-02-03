@@ -17,22 +17,22 @@ module FatFreeCRM
 
     # Class methods.
     #----------------------------------------------------------------------------
-    def self.add(id, &block)
-      plugin = new(id)
-      plugin.instance_eval(&block)            # Grab plugin properties.
-      plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
-      @@list[id] = plugin
-    end
-
-    #----------------------------------------------------------------------------
-    def self.list
-      @@list.values
-    end
-
-    #----------------------------------------------------------------------------
     class << self
       private :new  # For the outside world new plugins can only be created through self.add.
+
+      def add(id, &block)
+        plugin = new(id)
+        plugin.instance_eval(&block)            # Grab plugin properties.
+        plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
+        @@list[id] = plugin
+      end
       alias_method :<<, :add
+
+      #----------------------------------------------------------------------------
+      def list
+        @@list.values
+      end
+
     end
 
   end # class Plugin

@@ -1,6 +1,7 @@
 Mon, Feb 2, 2008
 ---------------------------------------------------------------------
 - Updated task related controller and view specs.
+- Extracted sample plugin and moved it into separate Git repository.
 
 Sun, Feb 1, 2008
 ---------------------------------------------------------------------
