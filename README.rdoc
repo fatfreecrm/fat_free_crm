@@ -1,0 +1,108 @@
+=== Welcome to Fat Free CRM!
+
+Fat Free CRM is next generation open source CRM platform. Active development
+has started in November 2008; new features, enhancements, and updates appear
+on daily basis.
+
+Here are the steps to get Fat Free CRM up and running on your system.
+
+
+=== System Requirements
+
+* Ruby v1.8.6 or later
+* Ruby on Rails v2.2 or later
+* MySQL v4.1.1 or later (v5+ is recommended) or SQLite v3.4 or later
+
+
+=== Getting The Source Code
+
+The source code of Fat Free CRM is maintained using Git version control
+system. To clone the source from the official repository use the following
+command:
+
+   $ git clone git://github.com/michaeldv/fat_free_crm.git
+
+This will download the latest code snapshot and unpack it on your local machine.
+
+
+=== Gem Dependencies
+
+Fat Free CRM requires three external gems: +ruby+-+openid+, +haml+, and +faker+.
+Ruby-openid library is needed for OpenID authentcation, HAML is used as
+primary templating engine, and Faker helps to generate demo data that you can
+optionally load. All the required games have been packaged in +vendor+/+gems+
+subidirectory, so no additional setup is required.
+
+
+=== Setting Up The Database
+
+Fat Free CRM supports MySQL and SQLite databases. The source code comes with
+two sample database configuration files: +config+/+database+.+mysql+.+yml+
+for MySQL and +config+/+database+.+sqlite+.+yml+ for SQLite. Based on your choice
+of the database create the actual database configuration file, for example:
+
+   $ cp config/database.mysql.yml config/database.yml
+
+Edit config/database.yml and specify database names and authentication
+details. Once you have database configuration file ready run rake to create
+the database:
+
+   $ rake db:create
+
+
+=== Setting Up The Application
+
+The next step is to load default Fat Free CRM settings, such as menu structure,
+default colors, etc. This is done by running the following rake task:
+
+   $ rake crm:setup
+
+
+=== Loading Demo Data
+
+You can test drive Fat Free CRM by loading sample records that are generated
+on the fly mimic the actual use:
+
+   $ rake crm:demo:load
+
+Among other things the demo generator creates 8 sample user records with the
+following usernames: +aaron+, +ben+, +cindy+, +dan+, +emily+, +frank+, +george+,
+and +heather+. You can login with any of these names using the name as password.
+
+You can reset the database and reload demo data at any time by using:
+
+   $ rake crm:demo:reload
+
+
+=== Running The App
+
+Now you should be able to launch the Rails server and point your web browser
+to http://localhost:3000
+
+   $ ./script/server
+
+
+=== Writing Plugins
+
+Fat Free CRM can be customized and extended by the use of plugins. Please
+see http://github.com/michaeldv/crm_sample_plugin/tree/master and
+http://github.com/michaeldv/crm_web_to_lead/tree/master for sample plugins.
+
+
+=== License
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.
+
+See LICENSE file for more details.
+
+
+=== Copyright
+Copyright (c) 2008-2009 by Michael Dvorkin. All rights reserved.
+

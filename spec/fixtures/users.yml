@@ -56,16 +56,16 @@ aaron:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
-eve:
+ben:
   id: 2
-  username: eve
-  email: eve@example.com
-  first_name: Eve
-  last_name: Escape
-  password_hash: 4fa78596defcf96d56d6f50db42efd3c2bd8d1e6232e95c65555e8b49d2a623df928b521ffcacd36e0701f687fdf1c703009bddc01c6bfad0dfdd352965fa405
-  password_salt: 4b93e8adb8d932fb782c6dfa56fbb60b08e979b75ada5b57e6aed0d65b5959dc9f5e7a9ecae123efbb9cd1d8fa08f6cb6bbc7aae1e8959aa7b42b0cfddca76a7
-  remember_token: 118e8def0afada013b6b5b0bdb96548fc0ce546b667ee5bbe43b92a8c13156f88649cac0227beffbf49ec00525904441675da0463dadb6e4d249c12b2e88ac4a
-  perishable_token: vmhxuJSALQyI766WAtnT
+  username: ben
+  email: ben@example.com
+  first_name: Ben
+  last_name: Bootloader
+  password_hash: 3b23bde6e4f766450a36f30c5076db4164ab4edf957fe602858086feb833251149a2505b8ec00330fa6d9b531ff32ec7619b2b413b5c5380007c4a021f3546c2
+  password_salt: fce13d8b784003b4fb8d030866b5c3a003a914b9d52832d02b5f85db53413bcc8dd078d3e57e6c50b9bb8e8eb520e04a5f79cfb089a8bbe224e15e840b0dc594
+  remember_token: 8d3789d1486d8aa421d5e7ca0c670badecf0e3b876dab5cf6de21fa867023d379f79e2d823cbdfc2a512d12e62b5343a62c4fc69f065c7c4850de424880399c5
+  perishable_token: VyiXHtZ4HsFS62xCnK4I
   openid_identifier: 
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
@@ -76,16 +76,16 @@ eve:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
-isabel:
+cindy:
   id: 3
-  username: isabel
-  email: isabel@example.com
-  first_name: Isabel
-  last_name: Installer
-  password_hash: 03ff2c3054be743d2d42d742f2a599911d16fb7455e367d1bdb25c75a7370113976530ad78bbb6923855886d1e8a391d836498fdcad9c57c5f97b2a7c5fafeac
-  password_salt: 6bd098381b5864d8162596376f1722b2871e2db715142064fdefb241212254f04b1878de50973364280348862cd9f87c8b7f4dde7ece59bef9bf448d545e6835
-  remember_token: 2f820f2ba13b0a80794081e5f03a54fab6c758944f89e22760257ec059ea159f7d9fff62956cf3aa9b21a53cdd30d46a526b2e0fb9d43af641d57c2baf483b1c
-  perishable_token: lbxUKZm0oYTkUB1Nm5Jq
+  username: cindy
+  email: cindy@example.com
+  first_name: Cindy
+  last_name: Cluster
+  password_hash: f323dc706086eeffee9997239f6fdfbd13ef0f62b0817cea1ef199912a64601e05e3a6c9074d2248b22e9e4ce5c817a9d9339839c2ae9502c9c1350f267f7b1f
+  password_salt: bc41b1a96c66ac155c79cf68ff3a16dd97d4730bc3476575fcab3c2ae7751776cc48e6faa036961be40ed04a27690b6f5189234968d4a6fff981105f040d9014
+  remember_token: 3f391c651f5f7edca17a34b044b7e1ac866625903dd9567bfbfe5eea74c9f571d502cae8fae83ca29eba7df2f2cd1ed0d71d380f680eaaeabaaf194a4009cba1
+  perishable_token: eRGJ2agxeuuds5qlJSqY
   openid_identifier: 
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
@@ -96,16 +96,16 @@ isabel:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
-olga:
+dan:
   id: 4
-  username: olga
-  email: olga@example.com
-  first_name: Olga
-  last_name: Operand
-  password_hash: b2274fc3f214c5a9b55ac586a946a1eaf211dd181358c564a93c391284afeec6bda8812d0e9c383d3765cc8a69540c56d3a9673f47013ee85efee4938969831d
-  password_salt: 1dbf332112d567416a5cb0e16a6e6cbcf8618475c741dce2ad15dce58e8a1e466f4b01ba7113537bd94444f103f73948142101ff964621f02be64b9814ed672a
-  remember_token: 763c86b94d7d8a9b25392910e90f041d8f181fe7cbb2412ede576a37aab93cb2a5201285c5a9b202f6bde3a8ac78a2ec3f00f63c764e90e0a051e76066c309ce
-  perishable_token: L2q74fwAeRNePvCyguBl
+  username: dan
+  email: dan@example.com
+  first_name: Dan
+  last_name: Debugger
+  password_hash: 508f242629443dae3777e945d59213e7f81084be9f8c71b6d06b81295e9ffac145a3c2a8870cc17598e2a7908e2107f838d29ae275cfbe4a135c67c4f27e2e58
+  password_salt: e01633b1b2396fa3be0f689b87d68a55a831c043faffba0401131338e6aab5a8492a0b47a6947f0d96dd7188f51ecc530a2d72603802c7b409f1c42ce138de0b
+  remember_token: a521f06f9a3ebacf0bab032cd46544d17d6bdbb9c2d1b413d9aa7c663da563e51a447e63f6af2d852d58d0c126411935ffea446fbad77549b77b99645c0b488d
+  perishable_token: fniVMOjbZLRnKhd2DLIx
   openid_identifier: 
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
@@ -116,16 +116,16 @@ olga:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
-ulrich:
+elizabeth:
   id: 5
-  username: ulrich
-  email: ulrich@example.com
-  first_name: Ulrich
-  last_name: Uploader
-  password_hash: e3938e92b4447c9f6b4fa4024a1cc961e1bdcd4f5457643c9bc49a83dee99e8799cea35500e0fdb4a9992600e2f137e7da66dbc487534ca53c4f82cc29ff856d
-  password_salt: 811278ac5c88a4c79ec6f4e041f0bad5e32e65f5f6abf96788d9b0c997d36d2f50ab315679e2c140b87eef023eaa44cbec070dc4bf97384b71553352553f3f36
-  remember_token: abcdbc3fe2ae724a97289c38422124ae256a6ae42e754fc41e4d85bf55229a67665d92e0bd01ff0c754d80b9996ffee33b9354808b9306d6095f2b552b60d05e
-  perishable_token: Yurv5MDtDZqAPpS3lG8e
+  username: elizabeth
+  email: elizabeth@example.com
+  first_name: Elizabeth
+  last_name: Emulator
+  password_hash: 5e90a6f2f5be66010c8a0eb6f2089780f453d1400e3aa4d271520f8e2a2e26d00d98d3ae2ba36854b897cbbe1f51343f4e9ce96dd4da8705ba3db5bd8b0ed0e7
+  password_salt: 80caf26a2981892f70acbc0ddb8fdd19c789163bfdefa3809355aef4bd989c8c6aa251c05b0923ef307e7b5269b6efdca380b0c28b8bf8f72ee5385a8557ed9b
+  remember_token: f60bf40210246af4e7f85f1010e1b592a9862827015f506328b54afd7e487f760e3b382231dfc25dee3353f014cce419705f0453aa96b9b566065b2db7b93c1c
+  perishable_token: EtPRtOAiXBm2XDYHtjMC
   openid_identifier: 
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
@@ -136,16 +136,58 @@ ulrich:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
-yvette:
+frank:
   id: 6
-  username: yvette
-  email: yvette@example.com
-  first_name: Yvette
-  last_name: Yottabyte
-  password_hash: 4e0568fb9e313cb2a67a124030d5b971f329fa4d3813aa5f072bf778a29b9298090d1ec01c15fdd7ef51cad83b7b744f133a63f888059a5103abef4ffc37cabf
-  password_salt: f60ab90e93567b43ae8a72e98d4c70cd04ff996442baa07c28ba6705076fbc2e8c2180cba2a76aef774369cabf331819d6af2d694e55907cdbb493359837c7e2
-  remember_token: 5d07a342b4c1649e5eff62178c28b77c921ba9c17caa78dac114a390a8d2883a6d838126aad4ec42518de81b54dfa5460492ba085ce7d1cd00e48c3635bb09c1
-  perishable_token: lK0ySLJ07Kwx47HX2Qou
+  username: frank
+  email: frank@example.com
+  first_name: Frank
+  last_name: Formatter
+  password_hash: 1471e9dc79b636f465a529d89460fcefc8dbb0d2a14308349bd060d00dab4d35f1d91d201dbe37da4aa8c18a4430a09a6bca5babe05fb18ef3f02342dcf4e4ca
+  password_salt: 805983077fdba9438de1d84007e093f658620211e1d0087d33662a5ca387b04206d098e152aeea896ab65aa026ac1fb9ce69dbe22a45fb9b21c3b6dcad4909f3
+  remember_token: 6158edf71b5cdd674f9d86082f7c580ac27277fcaa9ea6732d2eefdaac09f20fa4554307c028fa294c2f2d4fbb6035f118048dffa351768d8cb9125285d06baf
+  perishable_token: SnxgLcY4wRMVKoa1jPLK
+  openid_identifier:
+  last_request_at:
+  last_login_at: <%= login = Date.today - rand(15).days %>
+  current_login_at:
+  last_login_ip: 127.0.0.1
+  current_login_ip: 127.0.0.1
+  login_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+
+george:
+  id: 7
+  username: george
+  email: george@example.com
+  first_name: George
+  last_name: Globals
+  password_hash: 23ed19767095ab24c1c560393b5a577455ab49d595781f931905f0df072533c485b1902337ffb426dae1e70889557f5b531da8e7b782a0575cc7bd419d6a91b9
+  password_salt: 80b5c87fb4c9fa5c50815016bc0160eb08c4e22e88fee558b5e739557d5178c61b06fcbebf6c4c62f37f0f7984ccc0d025e2f073880cd655b57542343e4981b6
+  remember_token: 5eaccdebf683a87050df34e45c5e3aa9d884b132be4e1bc1d759924814518fa9d29adfe8556ad6e7223ec692a481d4f96772796ee835f3b14a7e86cba222abd6
+  perishable_token: SYFLlZ466jZ04ylTnvXv
+  openid_identifier:
+  last_request_at:
+  last_login_at: <%= login = Date.today - rand(15).days %>
+  current_login_at:
+  last_login_ip: 127.0.0.1
+  current_login_ip: 127.0.0.1
+  login_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+
+heather:
+  id: 8
+  username: heather
+  email: heather@example.com
+  first_name: Heather
+  last_name: Hash
+  password_hash: cdd2e9ec69c553c1f690b885c1cd1fd4e976c94a28693b793eba41796b0a96ce6f7cdd05ded8a84b30a96a37d18ad7fddd7435314bd612d033ead1c43bcde4d2
+  password_salt: 729ab318245afa827a8c29e36c885c7b0d07e15193727b68a7cf5edac517e4d6fcafa4e5ddfff9c9305d3ccd37ef735823ba66ba8e2876fd2b06c7c27f3c9482
+  remember_token: 6fd550c1ec1d422c3077f497fb3a886dbd9e24b10d0148ef1d8a0e477395594c7217857906fcab5deedadda246c932e39131837ff023c28d4902cb5990e6c87a
+  perishable_token: a0HA6LWqvfc1h0aj0wqG
   openid_identifier: 
   last_request_at: 
   last_login_at: <%= login = Date.today - rand(15).days %>
