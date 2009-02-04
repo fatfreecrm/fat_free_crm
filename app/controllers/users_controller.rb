@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      flash[:notice] = "Successfull registration."
+      flash[:notice] = "Successfull signup, welcome to Fat Free CRM!"
       redirect_back_or_default profile_url
     else
       render :action => :new

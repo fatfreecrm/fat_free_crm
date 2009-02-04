@@ -2,6 +2,7 @@ Mon, Feb 3, 2008
 ---------------------------------------------------------------------
 - Added README.rdoc and sample database configuration files, updated sample users.
 - Added :app_before_filter hook, extracted [web-to-lead] code and moved it to plugin.
+- Tweaks to login and signup forms (to be converted to HAML soon).
 
 Mon, Feb 2, 2008
 ---------------------------------------------------------------------

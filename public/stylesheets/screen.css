@@ -245,10 +245,14 @@ td.cell a:hover {
 -------------------------------------------------------- */
 .standalone {
   background: whitesmoke;
-  border: 20px lightsteelblue solid; 
-  margin: 50px auto; 
+  border: 20px lightsteelblue solid;
+  margin: 75px auto 6px auto; 
   padding: 20px;
   width: 400px; 
+  -moz-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -webkit-border-radius: 6px;
 }
 
 .two_column_layout {

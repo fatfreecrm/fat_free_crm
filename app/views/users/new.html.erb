@@ -1,5 +1,5 @@
+<div style="width:480px; margin: auto;">
 <div class="standalone">
-
   <% form_for @user, :url => profile_path do |f| %>
     <div class="title_menu">
       Already signed up? <%= link_to "Login Now!", login_path %>
@@ -14,39 +14,44 @@
       <div class="label">
         Email:
       </div>
-      <%= f.text_field :email, :style => "width:355px" %>
+      <%= f.text_field :email, :style => "width:355px; font-size:1.3em" %>
 
       <!-- Username/password Sign up Form -->
       <div id="login">
         <div class="label">
           Username:
-          or <%= link_to_function "use your OpenID", %/$("login").toggle(); $("openid").toggle();/ %>
         </div>
-        <%= f.text_field :username, :style => "width:355px" %>
+        <%= f.text_field :username, :style => "width:355px; font-size:1.3em" %>
         <div class="label">
           Password:
         </div>
-        <%= f.password_field :password, :style => "width:355px" %>
+        <%= f.password_field :password, :style => "width:355px; font-size:1.3em" %>
         <div class="label">
           Password confirmation:
         </div>
-        <%= f.password_field :password_confirmation, :style => "width:355px" %>
+        <%= f.password_field :password_confirmation, :style => "width:355px; font-size:1.3em" %>
       </div>
 
       <!-- OpenID Sign up Form -->
       <div id="openid" style="display:none;">
         <div class="label">
           OpenID:
-          or <%= link_to_function "use username and password", %/$("login").toggle(); $("openid").toggle();/ %>
         </div>
-        <%= f.text_field :openid_identifier, :style => "width:355px" %>
+        <%= f.text_field :openid_identifier, :style => "width:355px; font-size:1.3em" %>
       </div>
 
     </div>
 
     <div class="buttonbar">
-      <%= f.submit "Sign Up" %>
+      <%= f.submit "Sign Up", :style => "font-size:1.2em;" %>
     </div>
 
   <% end -%>
 </div>
+<small id="login_link">
+  <%= link_to_function "Use your OpenID", %/$("login").toggle(); $("openid").toggle(); $("login_link").toggle(); $("openid_link").toggle(); $('user_email').focus()/ %>
+</small>
+<small id="openid_link" style="display:none">
+  <%= link_to_function "Use username and password", %/$("login").toggle(); $("openid").toggle(); $("login_link").toggle(); $("openid_link").toggle(); $('user_email').focus()/ %>
+</small>
+<div>
