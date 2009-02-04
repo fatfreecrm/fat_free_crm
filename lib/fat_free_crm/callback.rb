@@ -20,7 +20,7 @@ module FatFreeCRM
     def self.hook(method, caller, context = {})
       response = ""
       responder(method).each do |m|
-        response << m.send(method, caller, context)
+        response << m.send(method, caller, context).to_s
       end
       response
     end

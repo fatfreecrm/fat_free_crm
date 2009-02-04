@@ -1,5 +1,4 @@
 class LeadsController < ApplicationController
-  before_filter :handle_web_to_lead_submission, :only => :create
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
   before_filter "set_current_tab(:leads)", :except => :filter
@@ -162,13 +161,6 @@ class LeadsController < ApplicationController
   end
 
   private
-  #----------------------------------------------------------------------------
-  def handle_web_to_lead_submission
-    if request.post? && !params[:authorization].blank? && !params[:token].blank?
-      @current_user = User.find_by_password_hash_and_password_salt(params[:authorization], params[:token])
-    end
-  end
-
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }
