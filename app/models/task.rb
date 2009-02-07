@@ -90,9 +90,23 @@ class Task < ActiveRecord::Base
     tasks
   end
 
+  # Returns bucket if it's empty (i.e. we have to hide it), nil otherwise.
+  #----------------------------------------------------------------------------
+  def self.bucket(user, bucket, view = "pending")
+    count = case view
+    when "completed"
+      my(user).send(bucket.intern).completed.count
+    when "assigned"
+      assigned_by(user).send(bucket.intern).pending.count
+    else # "pending"
+      my(user).send(bucket.intern).pending.count
+    end
+    count == 0 ? bucket : nil
+  end
+
   # Returns task totals for each of the views as needed by tasks sidebar.
   #----------------------------------------------------------------------------
-  def self.totals(user, view)
+  def self.totals(user, view = "pending")
     totals = { :all => 0 }
     settings = (view == "completed" ? Setting.task_completed : Setting.task_due_date)
     settings.each do |value, key|

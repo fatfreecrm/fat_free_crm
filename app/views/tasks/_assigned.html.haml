@@ -7,7 +7,7 @@
     .tools{ hidden, :id => dom_id(assigned, :tools) }
       %small
         = link_to("Edit", task_path(assigned)) << " | "
-        = link_to_remote("Delete!", :url => task_path(assigned), :method => :delete, :before => visual_effect(:highlight, dom_id(assigned), :startcolor => "#afeeee"))
+        = remote_delete(assigned, bucket)
       &nbsp;
     == To #{link_to(assigned.assignee.full_name, "mailto:" + assigned.assignee.email)}:
     = assigned.name << " &ndash; "

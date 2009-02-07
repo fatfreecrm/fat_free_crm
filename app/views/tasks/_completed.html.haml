@@ -5,8 +5,7 @@
     .strip{:style => "color:white"} Other
   %div
     .tools{ hidden, :id => dom_id(completed, :tools) }
-      %small
-        = link_to_remote("Delete!", :url => task_path(completed), :method => :delete, :before => visual_effect(:highlight, dom_id(completed), :startcolor => "#afeeee"))
+      %small= remote_delete(completed, bucket)
     - if completed.user.id != @current_user.id
       == From #{link_to(completed.user.full_name, "mailto:" + completed.user.email)}:
     = completed.name << " &ndash; "

@@ -16,10 +16,15 @@ module TasksHelper
   end
 
   #----------------------------------------------------------------------------
-  def complete(pending, bucket)
+  def remote_complete(pending, bucket)
     onclick = "this.disable();"
     onclick << %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
     onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => %Q/"bucket=#{bucket}"/)
+  end
+
+  #----------------------------------------------------------------------------
+  def remote_delete(task, bucket)
+    onclick = link_to_remote("Delete!", :url => task_path(task), :method => :delete, :with => %Q/{bucket: "#{bucket}", view: "#{@view}"}/, :before => visual_effect(:highlight, dom_id(task), :startcolor => "#afeeee"))
   end
 
 end

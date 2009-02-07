@@ -95,7 +95,11 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
 
+    # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
+    @bucket = Task.bucket(@current_user, params[:bucket],  params[:view])
+
     respond_to do |format|
+      format.js   # destroy.js.rjs
       format.html { redirect_to(tasks_url) }
       format.xml  { head :ok }
     end
@@ -109,7 +113,7 @@ class TasksController < ApplicationController
     @task.update_attributes(:completed_at => Time.now)
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
-    @bucket = (Task.my(@current_user).send(params[:bucket]).pending.count == 0 ? params[:bucket] : nil)
+    @bucket = Task.bucket(@current_user, params[:bucket])
 
     respond_to do |format|
       format.js   # complete.js.rjs

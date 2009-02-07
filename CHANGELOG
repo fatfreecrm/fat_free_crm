@@ -3,6 +3,7 @@ It does not matter how slowly you go as long as you do not stop. -- Confucius
 Fri, Feb 6, 2008
 ---------------------------------------------------------------------
 - Finished implementing after_filter callback hook in [web-to-lead] plugin.
+- Implemented tasks deletion for all three views.
 
 Thu, Feb 5, 2008
 ---------------------------------------------------------------------

@@ -1,0 +1,4 @@
+page[dom_id(@task)].visual_effect :blind_up, :duration => 0.25
+page["list_#{@bucket}"].visual_effect :fade, :duration => 0.5 if @bucket # hide empty bucket
+page[:sidebar].replace_html :partial => "sidebar_index"
+page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
