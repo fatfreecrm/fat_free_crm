@@ -59,21 +59,21 @@ tt    { font-size: 12px; }
 /* Page header and tabs.
 -------------------------------------------------------- */
 #header {
-  background: #153358; 
+  background: #1e4262; /*#153358;*/
   padding: 8px 16px 8px 16px;
 }       
 
 #header h3 a {
-  background: #153358; 
+  background: #1e4262; /*#153358;*/
   color: greenyellow;
   font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 
 #header div {
-  color: cadetblue;
+  color: skyblue;
   float: right;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 #header div a:link,
@@ -84,7 +84,7 @@ tt    { font-size: 12px; }
 }
 
 #tabs {
-  background: #153358; 
+  background: #1e4262; /*#153358;*/
   height: 24px;
   padding: 0px;
   text-align: center;

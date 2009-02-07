@@ -1,13 +1,13 @@
 #header
   %div
     - if current_user
-      Logged in as
-      = @current_user.username + " | "
-      = link_to("Preferences", url_for(:controller => "preferences")) + " | "
-      = link_to("Profile", profile_path) + " | "
+      Welcome,
+      = current_user.first_name << "! | "
+      = link_to("Preferences", url_for(:controller => "preferences")) << " | "
+      = link_to("Profile", profile_path) << " | "
       = link_to("Logout", logout_path, :method => :delete)
     - else
-      = link_to("Login", login_path) + " | "
+      = link_to("Login", login_path) << " | "
       = link_to("Sign Up", signup_path)
       -# link_to("Help", "/")
   %h3

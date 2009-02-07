@@ -62,22 +62,10 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
         flash[:notice] = "Lead #{@lead.full_name} was successfully created."
-        format.html {
-          if params[:on_success].blank? # web-to-lead form can set this...
-            redirect_to(@lead)
-          else
-            redirect_to(params[:on_success])
-          end
-        }
+        format.html { redirect_to(@lead) }
         format.xml { render :xml => @lead, :status => :created, :location => @lead }
       else
-        format.html {
-          if params[:on_failure].blank? # .. and this one
-            render :action => "new"
-          else
-            redirect_to(params[:on_failure])
-          end
-        }
+        format.html { render :action => "new" }
         format.xml { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
     end

@@ -4,7 +4,7 @@ module FatFreeCRM
     @@responder = {}  # Class instances that respond to (i.e. implement) hook methods.
 
     # Adds a class inherited from from FatFreeCRM::Callback::Base.
-    #------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     def self.add(klass)
       @@classes << klass
     end
@@ -16,7 +16,7 @@ module FatFreeCRM
     end
 
     # Invokes hook method(s) and captures the output.
-    #------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     def self.hook(method, caller, context = {})
       response = ""
       responder(method).each do |m|
@@ -25,7 +25,7 @@ module FatFreeCRM
       response
     end
 
-    #------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     class Base
       include Singleton
 
@@ -37,7 +37,7 @@ module FatFreeCRM
     end # class Base
 
     # This makes it possible to call hook() without FatFreeCRM::Callback prefix.
-    #------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     module Helper
       def hook(method, caller, context = {})
         FatFreeCRM::Callback.hook(method, caller, context)

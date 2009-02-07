@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   filter_parameter_logging :password, :password_confirmation
   before_filter "hook(:app_before_filter, self)"
+  after_filter "hook(:app_after_filter, self)"
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store

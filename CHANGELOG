@@ -1,4 +1,19 @@
-Mon, Feb 3, 2008
+It does not matter how slowly you go as long as you do not stop. -- Confucius
+
+Fri, Feb 6, 2008
+---------------------------------------------------------------------
+- Finished implementing after_filter callback hook in [web-to-lead] plugin.
+
+Thu, Feb 5, 2008
+---------------------------------------------------------------------
+- More work researching application's after_filter and making it work right.
+
+Wed, Feb 4, 2008
+---------------------------------------------------------------------
+- Added [app_after_filter] hook and moved the rest of [web-to-lead] code to plugin.
+- Started converting CSS to SASS.
+
+Tue, Feb 3, 2008
 ---------------------------------------------------------------------
 - Added README.rdoc and sample database configuration files, updated sample users.
 - Added :app_before_filter hook, extracted [web-to-lead] code and moved it to plugin.
