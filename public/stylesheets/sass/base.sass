@@ -1,0 +1,62 @@
+!color_body                  = #e5e5e5
+!color_link                  = navy
+!color_link_hover            = white
+!color_link_hover_background = steelblue
+!color_link_image            = white
+!color_link_image_background = white
+
+// Main page elements.
+//------------------------------------------------------------------------------
+html, body
+  :background = !color_body
+  :font
+    :size-adjust none
+    :stretch normal
+    :style normal
+    :variant normal
+    :weight normal
+  :height 100%
+  :line-height normal
+
+body, ol, ul, li, dt, tt, label, input, select, textarea
+  :font
+    :size 12px
+    :family "Lucida Grande", Geneva, Arial, Helvetica, sans-serif
+
+body, h1, h2, h3, h4, h5, h6, ol, ul, li
+  :margin 0px
+  :padding 0px
+
+form
+  :margin 0px
+
+ul li
+  :list-style-type none
+
+// Links.
+//------------------------------------------------------------------------------
+a
+  :text-decoration underline
+  &:link
+    :color = !color_link
+  &:hover 
+    :background = !color_link_hover_background
+    :color = !color_link_hover
+    :text-decoration none 
+
+a img
+  :background-color = !color_link_image_background
+  :border none
+  :color = !color_link_image
+  :text-decoration none 
+
+// Smaller fonts.
+//------------------------------------------------------------------------------
+small
+  :font-size 10px 
+
+dt
+  :font-size 11px 
+
+tt
+  :font-size 12px 

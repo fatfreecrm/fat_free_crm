@@ -4,6 +4,7 @@ Fri, Feb 6, 2008
 ---------------------------------------------------------------------
 - Finished implementing after_filter callback hook in [web-to-lead] plugin.
 - Implemented tasks deletion for all three views.
+- More fun with SASS stylesheets -- pretty cool stuff.
 
 Thu, Feb 5, 2008
 ---------------------------------------------------------------------

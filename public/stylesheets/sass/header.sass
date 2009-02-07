@@ -1,0 +1,85 @@
+!color_header                = skyblue
+!color_header_background     = #1e4262
+!color_logo                  = "greenyellow"
+
+!color_tab                   = white
+!color_tab_background        = #466bb1
+!color_active_tab            = navy
+!color_active_tab_background = azure
+!color_hover_tab             = navy
+!color_hover_tab_background  = #97baff
+
+!size_tab_height             = 24px
+!size_tab_width              = 80px
+
+!color_footer                = grey
+
+// Header, tabs, and footer.
+//------------------------------------------------------------------------------
+#header
+  // :background #153358;
+  :background = !color_header_background
+  :color = !color_header
+  :padding 8px 16px 8px 16px
+
+  h3 a
+    :background = !color_header_background
+    :color = !color_logo
+    :font normal 15px "Lucida Grande", Arial, Helvetica, sans-serif
+    :text-decoration none
+
+  div
+    :float right
+    :font-size 11px
+
+  div a
+    :color lightyellow
+    :padding 1px 4px 1px 4px
+    :text-decoration none 
+
+#tabs
+  :background = !color_header_background
+  :height = !size_tab_height
+  :padding 0px
+  :text-align center
+  :width 100%
+
+  ul
+    // :margin 0px 25%,  18% for 5th tab
+
+  li
+    :float left
+    :font-size 12px
+    :list-style none
+    :margin 0px 4px 0px 16px
+    :width !size_tab_width
+
+  a:link, a:visited
+    :background = !color_tab_background
+    :color white
+    :float left
+    :padding 4px 8px 5px 8px
+    :text-align center
+    :text-decoration none
+    :width !size_tab_width
+    :-moz-border-radius-topleft 3px
+    :-moz-border-radius-topright 3px
+    :-webkit-border-top-left-radius 3px
+    :-webkit-border-top-right-radius 3px
+
+  a:hover
+    // :background #ffdb97
+    :background = !color_hover_tab_background
+    :color = !color_hover_tab
+
+  a:link.active, a:visited.active
+    :background = !color_active_tab_background
+    :color = !color_active_tab
+    :text-decoration none
+
+#footer
+  :color = !color_footer
+  :font-size 10px
+  :padding 0px 0px 0px 16px
+
+
