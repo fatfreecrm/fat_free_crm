@@ -1,5 +1,5 @@
 %li[completed]{ highlightable(dom_id(completed, :tools)) }
-  - if completed.category
+  - unless completed.category.blank?
     .strip{:class => completed.category}= Setting.task_category[completed.category.intern]
   - else
     .strip{:style => "color:white"} Other

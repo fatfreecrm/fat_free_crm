@@ -1,0 +1,8 @@
+if @task.valid?
+  page.insert_html :top, @task.due_date, :partial => @view, :collection => [@task], :locals => { :bucket => @task.due_date }
+  page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
+  page[:sidebar].replace_html :partial => "sidebar_index"
+  page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+end
+page["task_name"].value = ""
+page["task_name"].focus

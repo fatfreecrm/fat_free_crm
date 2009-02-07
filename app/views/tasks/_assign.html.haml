@@ -1,5 +1,6 @@
 .inline#inline{ hidden_if(collapsed) }
-  - form_for(@task) do |f|
+  - remote_form_for(@task) do |f|
+    = hidden_field_tag :view, @view
     = hidden_field_tag "task[user_id]", @current_user.id
     %table{ :align => :center, :cellpadding => 0, :cellspacing => 0 }
       %tr
@@ -9,13 +10,12 @@
         %td= spacer
         %td{ :valign => :top }
           .label.top.req Due:
-          = f.select :due_at, @due_date, {}, { :style => "width:120px" }
+          = f.select :due_date, @due_date, {}, { :style => "width:120px" }
         %td= spacer
         %td{ :valign => :top }
           .label.top.req Assign to:
           = collection_select :task, :assigned_to, @users, :id, :full_name, {}, { :style => "width:120px" } 
-          /= f.select :category, @category, { :include_blank => "-- None --" }, 
         %td= spacer
         %td{ :valign => :top }
           .label.top.req &nbsp;
-          = f.submit "Assign Task", :onclick => "alert('Not implemented yet.'); return false;" 
+          = f.submit "Assign Task"

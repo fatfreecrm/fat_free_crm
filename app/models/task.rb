@@ -21,6 +21,8 @@
 
 class Task < ActiveRecord::Base
   ASAP = '1992-10-10 12:30:00'.to_time.localtime
+  attr_accessor :due_date
+
   belongs_to :user
   belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
   belongs_to :asset, :polymorphic => true
@@ -35,9 +37,9 @@ class Task < ActiveRecord::Base
   named_scope :due_asap,      :conditions => [ "due_at = ?", ASAP ]
   named_scope :due_today,     lambda { { :conditions => [ "due_at = ?", Date.today ] } }
   named_scope :due_tomorrow,  lambda { { :conditions => [ "due_at = ?", Date.tomorrow ] } }
-  named_scope :due_this_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.tomorrow + 1.day, Date.today.end_of_week + 1.day ], :order => "due_at, id" } }
-  named_scope :due_next_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.today.end_of_week + 1.day, Date.today.end_of_week + 8.days ], :order => "due_at, id" } }
-  named_scope :due_later,     lambda { { :conditions => [ "due_at IS NULL OR due_at >= ?", Date.today.end_of_week + 8.days ] } }
+  named_scope :due_this_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.tomorrow + 1.day, Date.today.next_week ], :order => "due_at, id" } }
+  named_scope :due_next_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.today.next_week, Date.today.next_week.end_of_week + 1.day ], :order => "due_at, id" } }
+  named_scope :due_later,     lambda { { :conditions => [ "due_at IS NULL OR due_at >= ?", Date.today.next_week.end_of_week + 1.day ] } }
   named_scope :overdue,       lambda { { :conditions => [ "due_at < ? AND due_at != ?", Date.today, ASAP ], :order => "due_at, id" } }
 
   # Completion time scopes.
@@ -53,6 +55,7 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :user_id
   validates_presence_of :name, :message => "^Please specify task name."
+  before_create :set_due_at, :notify_assignee
 
   # Returns filtered list of tasks as required by tasks/index.
   #----------------------------------------------------------------------------
@@ -121,6 +124,33 @@ class Task < ActiveRecord::Base
       totals[:all] += totals[key]
     end
     totals
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def set_due_at
+    logger.debug "\n\ndue_date: " + self.due_date.to_s
+    self.due_at = case self.due_date
+    when "due_asap"
+      ASAP
+    when "due_today"
+      Date.today
+    when "due_tomorrow"
+      Date.tomorrow
+    when "due_this_week"
+      Date.today.end_of_week
+    when "due_next_week"
+      Date.today.next_week.end_of_week
+    when "due_later"
+      Date.today + 1.year
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def notify_assignee
+    if self.assigned_to
+      # Notify assignee.
+    end
   end
 
 end

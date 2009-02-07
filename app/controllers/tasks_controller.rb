@@ -40,9 +40,9 @@ class TasksController < ApplicationController
     session["tasks_new_#{@view}"] = (params[:visible] == "false" ? true : nil)
 
     respond_to do |format|
+      format.js   # new.js.rjs
       format.html # new.html.erb
       format.xml  { render :xml => @task }
-      format.js   # new.js.rjs
     end
   end
 
@@ -57,13 +57,16 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @task = Task.new(params[:task])
+    @view = params[:view] || "pending"
 
     respond_to do |format|
       if @task.save
-        flash[:notice] = 'Task was successfully created.'
+        get_data_for_sidebar
+        format.js   # create.js.rjs
         format.html { redirect_to(@task) }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
       else
+        format.js   # create.js.rjs
         format.html { render :action => "new" }
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
