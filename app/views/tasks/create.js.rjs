@@ -1,4 +1,5 @@
 if @task.valid?
+  page["list_#{@task.due_date}"].show
   page.insert_html :top, @task.due_date, :partial => @view, :collection => [@task], :locals => { :bucket => @task.due_date }
   page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
   page[:sidebar].replace_html :partial => "sidebar_index"
