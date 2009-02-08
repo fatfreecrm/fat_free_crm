@@ -7,6 +7,7 @@ class HomeController < ApplicationController
   def index
     @hello = "world"
     hook(:home_controller, self, :params => "it works!")
+    logger.p "Hello, #{@hello}!"
   end
   
   # Ajax PUT /toggle_form_section
