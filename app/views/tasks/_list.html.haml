@@ -1,3 +1,0 @@
-- if @tasks[key] && !@tasks[key].empty?
-  %h3= value
-  .bucket{:id => key}= render :partial => @view, :collection => @tasks[key], :locals => { :bucket => key }

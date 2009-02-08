@@ -6,8 +6,10 @@
 = render :partial => "assign", :locals => { :collapsed => collapsed }
 
 .log#log
-  - if !@tasks.values.flatten.empty? || all_filtered_out?(:assigned)
+  - if !@tasks.values.flatten.empty? || filtered_out?(@view)
     - Setting.task_due_date.each do |value, key|
-      %div{ :id => "list_#{key}" }= render :partial => "list", :locals => { :key => key, :value => value }
+      %div{ hidden_if(filtered_out?(@view, key)), :id => "list_#{key}" }
+        %h3= value
+        .bucket{:id => key}= render :partial => @view, :collection => @tasks[key] || [], :locals => { :bucket => key }
   - else
     %div You don't have any assigned tasks that are unfinished.

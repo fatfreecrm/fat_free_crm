@@ -3,6 +3,7 @@ It does not matter how slowly you go as long as you do not stop. -- Confucius
 Sat, Feb 7, 2008
 ---------------------------------------------------------------------
 - Created initial implementation of adding a new task.
+- Refactored tasks code to simplify filtering.
 
 Fri, Feb 6, 2008
 ---------------------------------------------------------------------

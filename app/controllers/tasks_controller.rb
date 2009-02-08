@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @task = Task.new
-    @tasks = Task.list(@current_user, @view, session["filter_by_task_#{@view}"])
+    @tasks = Task.find_all_grouped(@current_user, @view)
     @due_date = Setting.task_due_date[1..-1] << [ "On specific date...", :on_specific_date ]
     @category = Setting.task_category.invert.sort
     @users = User.all_except(@current_user) if @view == "assigned"
@@ -128,16 +128,14 @@ class TasksController < ApplicationController
   # Ajax request to filter out list of tasks.
   #----------------------------------------------------------------------------
   def filter
-    @view = params[:view]
-    @view = "pending" unless %w(pending assigned completed).include?(@view)
-    @category = Setting.task_category.invert.sort
-
-    name = "filter_by_task_#{@view}"
-    old_filters   = (session[name].nil? ? [] : session[name].split(","))
-    new_filters   = params[:filters].split(",")
-    session[name] = params[:filters]
-
-    @tasks = Task.filter(@current_user, @view, old_filters, new_filters)
+    name = "filter_by_task_#{params[:view]}"
+    filters = (session[name].nil? ? [] : session[name].split(","))
+    if params[:checked] == "true"
+      filters << params[:filter]
+    else
+      filters.delete(params[:filter])
+    end
+    session[name] = filters.join(",")
   end
 
   private

@@ -57,40 +57,17 @@ class Task < ActiveRecord::Base
   validates_presence_of :name, :message => "^Please specify task name."
   before_create :set_due_at, :notify_assignee
 
-  # Returns filtered list of tasks as required by tasks/index.
+  # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
-  def self.list(user, view, filters)
-    filters = (filters ? filters.split(",").map(&:intern) : [])
-
+  def self.find_all_grouped(user, view)
     tasks = case view
       when "completed"
-        Setting.task_completed.inject({}) { |hash, (value, key)| hash[key] = my(user).send(key).completed if filters.include?(key); hash }
+        Setting.task_completed.inject({}) { |hash, (value, key)| hash[key] = my(user).send(key).completed; hash }
       when "assigned"
-        Setting.task_due_date.inject({})  { |hash, (value, key)| hash[key] = assigned_by(user).send(key).pending if filters.include?(key); hash }
+        Setting.task_due_date.inject({})  { |hash, (value, key)| hash[key] = assigned_by(user).send(key).pending; hash }
       else # "pending"
-        Setting.task_due_date.inject({})  { |hash, (value, key)| hash[key] = my(user).send(key).pending if filters.include?(key); hash }
+        Setting.task_due_date.inject({})  { |hash, (value, key)| hash[key] = my(user).send(key).pending; hash }
     end
-  end
-
-  # Returns list of tasks for single filter as required by tasks/filter.
-  #----------------------------------------------------------------------------
-  def self.filter(user, view, old_filters, new_filters)
-    tasks = {}
-    if new_filters.size > old_filters.size                      # Checked => Show
-      filter = (new_filters - old_filters).first.intern
-      tasks[filter] = case view
-      when "completed"
-        my(user).send(filter).completed
-      when "assigned"
-        assigned_by(user).send(filter).pending
-      else # "pending"
-        my(user).send(filter).pending
-      end
-    else                                                        # Unchecked => Hide
-      filter = (old_filters - new_filters).first.intern
-      tasks[filter] = []
-    end
-    tasks
   end
 
   # Returns bucket if it's empty (i.e. we have to hide it), nil otherwise.
