@@ -1,3 +1,4 @@
+= render :partial => "calendar"
 .inline#inline{ hidden_if(collapsed) }
   - remote_form_for(@task) do |f|
     = hidden_field_tag :view, @view
@@ -10,7 +11,8 @@
         %td= spacer
         %td{ :valign => :top }
           .label.top.req Due:
-          = f.select :due_date, @due_date, {}, { :style => "width:120px" }
+          = f.select :due_date, @due_date, {}, { :style => "width:120px", :onchange => "flip_calendar(this.value)" }
+          = f.text_field :calendar, :style => "width:110px; display:none;", :autocomplete => :off
         %td= spacer
         %td{ :valign => :top }
           .label.top.req Category:

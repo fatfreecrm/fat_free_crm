@@ -1,0 +1,16 @@
+- content_for :stylesheet_link do
+  = stylesheet_link_tag "calendar_date_select/default.css", :cache => true
+- content_for :javascript_include do
+  = javascript_include_tag "calendar_date_select/calendar_date_select.js", :cache => true
+  = javascript_include_tag "calendar_date_select/format_american.js", :cache => true
+
+- content_for :javascript_epilogue do
+  :javascript
+    function flip_calendar(value) {
+      if (value == "on_specific_date") {
+        $("task_due_date").toggle();  // Hide dropdown.
+        $("task_calendar").toggle();  // Show editable date field.
+        $("task_calendar").focus();   // Focus to invoke calendar popup.
+      }
+    }
+    crm.date_select_popup_with_dropdown("task_calendar", "task_due_date");
