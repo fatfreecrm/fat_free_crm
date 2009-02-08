@@ -8,7 +8,9 @@ describe "/tasks/index.html.erb" do
       :name => "Lorem ipsum",
       :user => mock_model(User),
       :category => nil,
-      :due_at => nil
+      :due_at => nil,
+      :due_date => nil,
+      :calendar => nil
     )
     assigns[:tasks] = { :key => [ stub_model(Task), stub_model(Task) ] }
     assigns[:current_user] = mock_model(User)

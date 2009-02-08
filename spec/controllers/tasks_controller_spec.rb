@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TasksController do
 
-  def get_data_for_sidebar
+  def update_sidebar
     @task_total = Task.stub!(:totals).and_return({ :key => :value })
   end
 
@@ -19,15 +19,15 @@ describe TasksController do
   describe "responding to GET index" do
 
     before(:each) do
-      get_data_for_sidebar
+      update_sidebar
     end
 
     it "should expose all tasks as @tasks" do
-      Task.should_receive(:list).and_return([mock_task])
+      Task.should_receive(:find_all_grouped).with(@current_user, "pending").and_return([mock_task])
       Setting.should_receive(:task_due_date).and_return([[ "key", :value ]])
       Setting.should_receive(:task_category).and_return({ :key => :value })
       User.should_receive(:all_except).with(@current_user) if @view == "assigned"
-      get :index
+      get :index, :view => "pending"
       assigns[:tasks].should == [mock_task]
     end
 
@@ -35,12 +35,12 @@ describe TasksController do
   
       it "should render all tasks as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        Task.should_receive(:list).and_return(tasks = mock("Array of Tasks"))
+        Task.should_receive(:find_all_grouped).with(@current_user, "assigned").and_return(tasks = mock("Array of Tasks"))
         Setting.should_receive(:task_due_date).and_return([[ "key", :value ]])
         Setting.should_receive(:task_category).and_return({ :key => :value })
         User.should_receive(:all_except).with(@current_user) if @view == "assigned"
         tasks.should_receive(:to_xml).and_return("generated XML")
-        get :index
+        get :index, :view => "assigned"
         response.body.should == "generated XML"
       end
     
@@ -94,16 +94,22 @@ describe TasksController do
 
     describe "with valid params" do
       
+      before(:each) do
+        update_sidebar
+      end
+
       it "should expose a newly created task as @task" do
-        Task.should_receive(:new).with({'these' => 'params'}).and_return(mock_task(:save => true))
+        @task = mock_task(:save => true, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+        Task.should_receive(:new).with({'these' => 'params'}).and_return(@task)
         post :create, :task => {:these => 'params'}
         assigns(:task).should equal(mock_task)
       end
 
-      it "should redirect to the created task" do
-        Task.stub!(:new).and_return(mock_task(:save => true))
+      it "should render 'create' template" do
+        @task = mock_task(:save => true, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+        Task.stub!(:new).and_return(@task)
         post :create, :task => {}
-        response.should redirect_to(task_url(mock_task))
+        response.should render_template('create')
       end
       
     end
@@ -111,15 +117,17 @@ describe TasksController do
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved task as @task" do
-        Task.stub!(:new).with({'these' => 'params'}).and_return(mock_task(:save => false))
+        @task = mock_task(:save => false, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+        Task.stub!(:new).with({'these' => 'params'}).and_return(@task)
         post :create, :task => {:these => 'params'}
         assigns(:task).should equal(mock_task)
       end
 
-      it "should re-render the 'new' template" do
-        Task.stub!(:new).and_return(mock_task(:save => false))
+      it "should re-render the 'create' template" do
+        @task = mock_task(:save => false, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+        Task.stub!(:new).and_return(@task)
         post :create, :task => {}
-        response.should render_template('new')
+        response.should render_template('create')
       end
       
     end
@@ -177,19 +185,23 @@ describe TasksController do
   describe "responding to DELETE destroy" do
 
     before(:each) do
-      get_data_for_sidebar
+      update_sidebar
     end
 
     it "should destroy the requested task" do
-      Task.should_receive(:find).with("37").and_return(mock_task)
+      @task = mock_task(:deleted_at => nil, :completed_at => nil, :due_date => nil)
+      Task.should_receive(:find).with("42").and_return(@task)
+      Task.should_receive(:bucket).with(@current_user, "due_asap", "pending").and_return(nil)
       mock_task.should_receive(:destroy)
-      delete :destroy, :id => "37"
+      delete :destroy, :id => "42", :bucket => "due_asap", :view => "pending"
     end
   
-    it "should redirect to the tasks list" do
-      Task.stub!(:find).and_return(mock_task(:destroy => true))
-      delete :destroy, :id => "1"
-      response.should redirect_to(tasks_url)
+    it "should render 'destroy' template" do
+      @task = mock_task(:destroy => true, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+      Task.should_receive(:find).with("42").and_return(@task)
+      Task.should_receive(:bucket).with(@current_user, "due_today", "assigned").and_return(nil)
+      delete :destroy, :id => "42", :bucket => "due_today", :view => "assigned"
+      response.should render_template('destroy')
     end
 
   end
