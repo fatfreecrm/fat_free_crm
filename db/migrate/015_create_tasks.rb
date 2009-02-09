@@ -8,6 +8,7 @@ class CreateTasks < ActiveRecord::Migration
       t.references  :asset, :polymorphic => true
       t.string      :priority, :limit => 32
       t.string      :category, :limit => 32
+      t.string      :due_at_hint, :limit => 32
       t.datetime    :due_at
       t.datetime    :completed_at
       t.datetime    :deleted_at

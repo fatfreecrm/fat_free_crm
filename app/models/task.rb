@@ -20,8 +20,7 @@
 #
 
 class Task < ActiveRecord::Base
-  ASAP = '1992-10-10 12:30:00'.to_time.localtime
-  attr_accessor :due_date, :calendar
+  attr_accessor :calendar
 
   belongs_to :user
   belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -34,13 +33,13 @@ class Task < ActiveRecord::Base
   named_scope :completed,     :conditions => "completed_at IS NOT NULL", :order => "completed_at DESC"
 
   # Due date scopes.
-  named_scope :due_asap,      :conditions => [ "due_at = ?", ASAP ]
+  named_scope :due_asap,      :conditions => "due_at IS NULL AND due_at_hint = 'due_asap'", :order => "id DESC"
+  named_scope :due_later,     :conditions => "due_at IS NULL AND due_at_hint = 'due_later'", :order => "id DESC"
   named_scope :due_today,     lambda { { :conditions => [ "due_at = ?", Date.today ] } }
   named_scope :due_tomorrow,  lambda { { :conditions => [ "due_at = ?", Date.tomorrow ] } }
   named_scope :due_this_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.tomorrow + 1.day, Date.today.next_week ], :order => "due_at, id" } }
   named_scope :due_next_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.today.next_week, Date.today.next_week.end_of_week + 1.day ], :order => "due_at, id" } }
-  named_scope :due_later,     lambda { { :conditions => [ "due_at IS NULL OR due_at >= ?", Date.today.next_week.end_of_week + 1.day ] } }
-  named_scope :overdue,       lambda { { :conditions => [ "due_at < ? AND due_at != ?", Date.today, ASAP ], :order => "due_at, id" } }
+  named_scope :overdue,       lambda { { :conditions => [ "due_at IS NOT NULL AND due_at < ?", Date.today ], :order => "due_at, id" } }
 
   # Completion time scopes.
   named_scope :completed_today,      lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Date.today, Date.tomorrow ] } }
@@ -64,9 +63,9 @@ class Task < ActiveRecord::Base
       when "completed"
         Setting.task_completed.inject({}) { |hash, (value, key)| hash[key] = my(user).send(key).completed; hash }
       when "assigned"
-        Setting.task_due_date.inject({})  { |hash, (value, key)| hash[key] = assigned_by(user).send(key).pending; hash }
+        Setting.task_due_at_hint.inject({})  { |hash, (value, key)| hash[key] = assigned_by(user).send(key).pending; hash }
       else # "pending"
-        Setting.task_due_date.inject({})  { |hash, (value, key)| hash[key] = my(user).send(key).pending; hash }
+        Setting.task_due_at_hint.inject({})  { |hash, (value, key)| hash[key] = my(user).send(key).pending; hash }
     end
   end
 
@@ -88,7 +87,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.totals(user, view = "pending")
     totals = { :all => 0 }
-    settings = (view == "completed" ? Setting.task_completed : Setting.task_due_date)
+    settings = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint)
     settings.each do |value, key|
       totals[key] = case view
       when "completed"
@@ -106,10 +105,7 @@ class Task < ActiveRecord::Base
   private
   #----------------------------------------------------------------------------
   def set_due_at
-    logger.debug "\n\ndue_date: " + self.due_date.to_s
-    self.due_at = case self.due_date
-    when "due_asap"
-      ASAP
+    self.due_at = case self.due_at_hint
     when "due_today"
       Date.today
     when "due_tomorrow"
@@ -118,8 +114,11 @@ class Task < ActiveRecord::Base
       Date.today.end_of_week
     when "due_next_week"
       Date.today.next_week.end_of_week
-    when "due_later"
       Date.today + 1.year
+    when "specific_time"
+      self.calendar
+    else # due_later or due_asap
+      nil
     end
   end
 

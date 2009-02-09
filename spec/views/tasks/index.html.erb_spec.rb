@@ -8,15 +8,15 @@ describe "/tasks/index.html.erb" do
       :name => "Lorem ipsum",
       :user => mock_model(User),
       :category => nil,
+      :due_at_hint => nil,
       :due_at => nil,
-      :due_date => nil,
       :calendar => nil
     )
     assigns[:tasks] = { :key => [ stub_model(Task), stub_model(Task) ] }
     assigns[:current_user] = mock_model(User)
-    assigns[:due_date] = assigns[:category] = [[ :key, "value" ]]
+    assigns[:due_at_hint] = assigns[:category] = [[ :key, "value" ]]
     Setting.stub!(:task_category_color).and_return({ :key => "value" })
-    Setting.stub!(:task_due_date).and_return({ :key => "value" })
+    Setting.stub!(:task_due_at_hint).and_return({ :key => "value" })
   end
 
   it "should render list of tasks" do

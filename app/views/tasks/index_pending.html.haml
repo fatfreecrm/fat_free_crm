@@ -7,7 +7,7 @@
 
 .log#log
   - if !@tasks.values.flatten.empty? || filtered_out?(@view)
-    - Setting.task_due_date.each do |value, key|
+    - Setting.task_due_at_hint.each do |value, key|
       %div{ hidden_if(filtered_out?(@view, key)), :id => "list_#{key}" }
         %h3= value
         .bucket{:id => key}= render :partial => @view, :collection => @tasks[key] || [], :locals => { :bucket => key }

@@ -3,6 +3,7 @@ It does not matter how slowly you go as long as you do not stop. -- Confucius
 Sun, Feb 8, 2008
 ---------------------------------------------------------------------
 - Added custom logger to highlight logged messages.
+- Added [task_at_hint] field to [tasks] table to capture due date request.
 
 Sat, Feb 7, 2008
 ---------------------------------------------------------------------

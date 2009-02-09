@@ -24,15 +24,19 @@
   category = %w(call email folowup lunch meeting money presentation trip) << ""
 
   for i in (1 .. 250) do
-    due_at = case rand(12)
+    case rand(12)
       when 1                            # ASAP
-        Task::ASAP.to_s(:db)
+        due_at = nil
+        due_at_hint = "due_asap"
       when 2..8                         # tomorrow/next week
-        Date.today + rand(15).days
+        due_at = Date.today + rand(15).days
+        due_at_hint = (due_at == Date.tomorrow ? "due_tomorrow" : "due_next_week")
       when 9..11                        # overdue
-        Date.today - rand(15).days
+        due_at = Date.today - rand(15).days
+        due_at_hint = "due_tomorrow"
       else                              # later
-        nil
+        due_at = nil
+        due_at_hint = "due_later"
       end
 %>
 task<%= i %>:
@@ -44,6 +48,7 @@ task<%= i %>:
   asset_type   : <%=  %>
   priority     :
   category     : <%= category[rand(category.size)] %>
+  due_at_hint  : <%= due_at_hint %>
   due_at       : <%= due_at %>
   completed_at : <%= rand(4) == 0 ? Date.today - rand(5).days : "" %>
   deleted_at   :

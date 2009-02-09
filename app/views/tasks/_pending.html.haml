@@ -15,10 +15,10 @@
         == From #{link_to(pending.user.full_name, "mailto:" + pending.user.email)}:
       = pending.name << " &ndash; "
     %tt
-      - if pending.due_at.nil?
+      - if pending.due_at_hint == "due_asap"
+        due as soon as possible.
+      - elsif pending.due_at_hint == "due_later"
         due sometime soon.
-      - elsif pending.due_at == Task::ASAP
-        due now!
       - elsif pending.due_at < Date.today
         %span.warn= distance_of_time_in_words(pending.due_at, Date.today) << " late, was due on #{pending.due_at.strftime('%b %e')}"
       - elsif pending.due_at > Date.today

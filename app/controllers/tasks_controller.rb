@@ -10,7 +10,7 @@ class TasksController < ApplicationController
   def index
     @task = Task.new
     @tasks = Task.find_all_grouped(@current_user, @view)
-    @due_date = Setting.task_due_date[1..-1] << [ "On specific date...", :on_specific_date ]
+    @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "Specific date...", :specific_time ]
     @category = Setting.task_category.invert.sort
     @users = User.all_except(@current_user) if @view == "assigned"
 
@@ -162,7 +162,7 @@ class TasksController < ApplicationController
     if @task
       update_session do |filters|
         if !@task.deleted_at && !@task.completed_at # created new task
-          filters << @task.due_date
+          filters << @task.due_at_hint
         elsif @bucket # deleted or completed and need to hide a bucket
           filters.delete(params[:bucket])
         end

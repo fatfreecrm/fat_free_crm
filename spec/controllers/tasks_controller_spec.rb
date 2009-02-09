@@ -24,7 +24,7 @@ describe TasksController do
 
     it "should expose all tasks as @tasks" do
       Task.should_receive(:find_all_grouped).with(@current_user, "pending").and_return([mock_task])
-      Setting.should_receive(:task_due_date).and_return([[ "key", :value ]])
+      Setting.should_receive(:task_due_at_hint).and_return([[ "key", :value ]])
       Setting.should_receive(:task_category).and_return({ :key => :value })
       User.should_receive(:all_except).with(@current_user) if @view == "assigned"
       get :index, :view => "pending"
@@ -36,7 +36,7 @@ describe TasksController do
       it "should render all tasks as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
         Task.should_receive(:find_all_grouped).with(@current_user, "assigned").and_return(tasks = mock("Array of Tasks"))
-        Setting.should_receive(:task_due_date).and_return([[ "key", :value ]])
+        Setting.should_receive(:task_due_at_hint).and_return([[ "key", :value ]])
         Setting.should_receive(:task_category).and_return({ :key => :value })
         User.should_receive(:all_except).with(@current_user) if @view == "assigned"
         tasks.should_receive(:to_xml).and_return("generated XML")
@@ -99,14 +99,14 @@ describe TasksController do
       end
 
       it "should expose a newly created task as @task" do
-        @task = mock_task(:save => true, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+        @task = mock_task(:save => true, :deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
         Task.should_receive(:new).with({'these' => 'params'}).and_return(@task)
         post :create, :task => {:these => 'params'}
         assigns(:task).should equal(mock_task)
       end
 
       it "should render 'create' template" do
-        @task = mock_task(:save => true, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+        @task = mock_task(:save => true, :deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
         Task.stub!(:new).and_return(@task)
         post :create, :task => {}
         response.should render_template('create')
@@ -117,14 +117,14 @@ describe TasksController do
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved task as @task" do
-        @task = mock_task(:save => false, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+        @task = mock_task(:save => false, :deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
         Task.stub!(:new).with({'these' => 'params'}).and_return(@task)
         post :create, :task => {:these => 'params'}
         assigns(:task).should equal(mock_task)
       end
 
       it "should re-render the 'create' template" do
-        @task = mock_task(:save => false, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+        @task = mock_task(:save => false, :deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
         Task.stub!(:new).and_return(@task)
         post :create, :task => {}
         response.should render_template('create')
@@ -189,7 +189,7 @@ describe TasksController do
     end
 
     it "should destroy the requested task" do
-      @task = mock_task(:deleted_at => nil, :completed_at => nil, :due_date => nil)
+      @task = mock_task(:deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
       Task.should_receive(:find).with("42").and_return(@task)
       Task.should_receive(:bucket).with(@current_user, "due_asap", "pending").and_return(nil)
       mock_task.should_receive(:destroy)
@@ -197,7 +197,7 @@ describe TasksController do
     end
   
     it "should render 'destroy' template" do
-      @task = mock_task(:destroy => true, :deleted_at => nil, :completed_at => nil, :due_date => nil)
+      @task = mock_task(:destroy => true, :deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
       Task.should_receive(:find).with("42").and_return(@task)
       Task.should_receive(:bucket).with(@current_user, "due_today", "assigned").and_return(nil)
       delete :destroy, :id => "42", :bucket => "due_today", :view => "assigned"

@@ -1,7 +1,7 @@
 .filters#filters
   = render :partial => "selector"
   - if @view == "pending" || @view == "assigned"
-    - Setting.task_due_date.each do |value, key|
+    - Setting.task_due_at_hint.each do |value, key|
       .check_box{:style => "border-bottom: 1px silver dotted;"}
         %div{:style => "float:right;"}
           = @task_total[key]
