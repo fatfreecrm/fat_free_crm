@@ -4,6 +4,7 @@ Sun, Feb 8, 2008
 ---------------------------------------------------------------------
 - Added custom logger to highlight logged messages.
 - Added [task_at_hint] field to [tasks] table to capture due date request.
+- Refactored task model and crm.date_select_popup() in application.js.
 
 Sat, Feb 7, 2008
 ---------------------------------------------------------------------

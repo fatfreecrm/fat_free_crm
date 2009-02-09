@@ -59,47 +59,29 @@ class Task < ActiveRecord::Base
   # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
-    tasks = case view
-      when "completed"
-        Setting.task_completed.inject({}) { |hash, (value, key)| hash[key] = my(user).send(key).completed; hash }
-      when "assigned"
-        Setting.task_due_at_hint.inject({})  { |hash, (value, key)| hash[key] = assigned_by(user).send(key).pending; hash }
-      else # "pending"
-        Setting.task_due_at_hint.inject({})  { |hash, (value, key)| hash[key] = my(user).send(key).pending; hash }
+    settings = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint)
+    settings.inject({}) do |hash, (value, key)|
+      hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending : my(user).send(key).send(view))
+      hash
     end
   end
 
   # Returns bucket if it's empty (i.e. we have to hide it), nil otherwise.
   #----------------------------------------------------------------------------
   def self.bucket(user, bucket, view = "pending")
-    count = case view
-    when "completed"
-      my(user).send(bucket.intern).completed.count
-    when "assigned"
-      assigned_by(user).send(bucket.intern).pending.count
-    else # "pending"
-      my(user).send(bucket.intern).pending.count
-    end
+    count = (view == "assigned" ? assigned_by(user).send(bucket).pending.count : my(user).send(bucket).send(view).count)
     count == 0 ? bucket : nil
   end
 
   # Returns task totals for each of the views as needed by tasks sidebar.
   #----------------------------------------------------------------------------
   def self.totals(user, view = "pending")
-    totals = { :all => 0 }
     settings = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint)
-    settings.each do |value, key|
-      totals[key] = case view
-      when "completed"
-        my(user).send(key).completed.count
-      when "assigned"
-        assigned_by(user).send(key).pending.count
-      else # "pending"
-        my(user).send(key).pending.count
-      end
-      totals[:all] += totals[key]
+    settings.inject({ :all => 0 }) do |hash, (value, key)|
+      hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)
+      hash[:all] += hash[key]
+      hash
     end
-    totals
   end
 
   private
