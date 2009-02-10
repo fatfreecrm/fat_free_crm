@@ -1,5 +1,9 @@
 It does not matter how slowly you go as long as you do not stop. -- Confucius
 
+Feb, Feb 9, 2008
+---------------------------------------------------------------------
+- Converted remaining forms to HAML and the stylesheet to SASS.
+
 Sun, Feb 8, 2008
 ---------------------------------------------------------------------
 - Added custom logger to highlight logged messages.

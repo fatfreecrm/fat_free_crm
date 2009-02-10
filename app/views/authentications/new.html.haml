@@ -1,0 +1,27 @@
+.standalone
+  - form_for @authentication, :url => authentication_path do |f|
+    .title_menu== Don't have an account? #{link_to 'Sign Up Now!', signup_path}
+    .title Login
+    = "Invalid username or password" unless f.error_messages.blank?
+    .section
+      #login{ hidden_if(!@authentication.openid_identifier.blank?) }
+        .label Username:
+        = f.text_field :username
+        .label Password:
+        = f.password_field :password
+      #openid{ hidden_if(@authentication.openid_identifier.blank?) }
+        .label OpenID: 
+        = f.text_field :openid_identifier
+      .label
+        .check_box
+          = f.check_box(:remember_me) << " Remember me"
+    .buttonbar
+      = f.submit "Login"
+      or 
+      = link_to "Forgot password?", new_password_path
+
+%small#login_link
+  = link_to_function "Login using OpenID", toggle_open_id_login
+
+%small#openid_link{ hidden }
+  = link_to_function "Login using username and password", toggle_open_id_login("authentication_username")

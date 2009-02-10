@@ -1,0 +1,69 @@
+// Form validation messages.
+//------------------------------------------------------------------------------
+.errorExplanation
+  :background-color seashell
+  :border 2px solid lightpink
+  :font-size 12px
+  :padding 8px
+  :margin 10px 0px 10px 0px
+  h2
+    :background salmon
+    :color white
+    :font-size 12px
+    :font-weight bold
+    :margin -8px
+    :padding 5px
+  p
+    :color #333
+    :padding 14px 0px 2px 0px
+  ul
+    :margin-left 30px
+    li
+      :font-size 12px
+      :list-style-type disc
+      :padding 0px
+
+.fieldWithErrors
+  :display inline
+  input, textarea, select
+    :background lightpink
+
+
+// Flash messages.
+//------------------------------------------------------------------------------
+p
+  &.flash_warning, &.flash_error
+    :background lightpink
+    :color maroon
+    :margin 0px
+    :padding 5px 0px 5px 16px
+
+  &.flash_notice, &.flash_message
+    :background #df9
+    :color darkgreen
+    :margin 0px
+    :padding 5px 0px 5px 16px
+
+// Autocomplete.
+//------------------------------------------------------------------------------
+div
+  &.autocomplete
+    :background #fff
+    :border 1px solid #888
+    :margin 0px
+    :padding 0px
+    :position absolute
+    :width 250px
+    ul
+      :list-style-type none
+      :margin 0px
+      :padding 0px
+      li
+        :cursor pointer
+        :display block
+        /:height 32px
+        :list-style-type none
+        :margin 0px
+        :padding 2px
+        &.selected
+          :background-color #ffb

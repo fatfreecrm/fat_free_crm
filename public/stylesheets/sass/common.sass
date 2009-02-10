@@ -1,0 +1,289 @@
+!color_title = #342d7e
+!color_subtitle = darkslateblue
+
+// Common page elements.
+//------------------------------------------------------------------------------
+.title
+  :border-bottom 1px gray solid
+  :color = !color_title
+  :font
+    :size 16px
+    :weight bold
+  :padding-bottom 3px
+
+  img
+    float left
+    margin 0px 10px 0px 0px
+
+.title_menu
+  :font-size 12px
+  :float right
+  :margin 4px 0px 0px 0px
+
+div
+  .subtitle
+    :border-bottom 1px silver solid
+    :padding 0px 3px 0px 0px
+    a:link, a:visited, a:hover
+      :background white
+      :color = !color_subtitle
+      :font
+        :size 13px
+        :weight bold
+      :text-decoration none
+   
+.radio_box
+  :line-height 20px
+
+  input
+    :position relative
+    :top -2px
+
+.check_box
+  :line-height 20px
+
+  input
+    :position relative
+    :top -3px
+
+// Main area (page and form).
+//------------------------------------------------------------------------------
+.tabless
+  :margin auto
+  :width 480px
+
+.standalone
+  :background whitesmoke
+  :border 20px lightsteelblue solid
+  :margin 75px auto 6px auto 
+  :padding 20px
+  :width 400px 
+  :-moz-border-radius 6px
+  :-webkit-border-radius 6px
+
+  input[type="text"], input[type="password"]
+    :font-size 16px
+    :padding 2px
+    :width 355px
+
+  input[type="submit"]
+    :font-size 14px
+
+.tabbed
+  :padding 12px 16px 12px 16px
+
+.main
+  :background white
+  :border
+    :right 3px lightgrey solid
+    :bottom 3px lightgrey solid
+  :padding 15px 15px 15px 15px
+  
+  a:link, a:visited
+    :color #0033cc
+    :text-decoration none
+
+  a:hover
+    :background #0033cc
+    :color white
+    :text-decoration none
+
+.sidebar
+  /:border 1px blue dotted
+  :color #3f3f3f
+  :font-size 11px
+  :padding 0px 12px 0px 12px
+  :width 200px
+
+.form
+  :background white
+  /:margin 15px 15px 15px 15px
+  /:padding 0px 0px 10px 0px
+
+  h4
+    :font-size 18px
+    :height 30px
+
+.tools
+  :float right
+
+.label
+  :color #3f3f3f
+  :font-size 12px
+  :margin 8px 0px 0px 0px
+
+.top
+  :margin 2px 0px 0px 0px
+
+.req
+  :color navy
+
+.intro
+  :color dimgray
+  :font-size 12px
+  :padding-top 5px
+
+.section
+  :background whitesmoke
+  :color #3f3f3f
+  :margin 5px auto
+  :padding 5px 15px 15px 15px
+
+.inline
+  :background lavender
+  :border-bottom 1px silver solid
+  :color #3f3f3f
+  :margin 0px
+  :padding 5px 15px 15px 15px
+
+.buttonbar
+  :border-top 1px gray solid
+  :margin 10px auto
+  :padding-top 6px
+
+.section input, .sidebar input, .inline input,
+.section select, .sidebar select, .inline select,
+.section textarea, .sidebar textarea, .inline textarea
+  :margin 3px 0px 0px 0px
+  :vertical-align middle
+
+.cool
+  :color darkgreen 
+
+.warn
+  :color maroon 
+
+.strip
+  :background gainsboro
+  :color black
+  :float left
+  :font-size 11px
+  :padding 1px 4px 1px 3px
+  :text-align right
+  :width 75px
+  :-moz-border-radius
+    :topleft 7px
+    :bottomleft 7px
+  :-webkit-border
+    :top-left-radius 7px
+    :bottom-left-radius 7px
+
+.longstrip
+  /:background gainsboro
+  :color black
+  :float left
+  :font-size 11px
+  :margin 0px 5px 5px 0px
+  :padding 1px 3px 1px 3px
+  :text-align right
+  :width 120px
+
+.bucket
+  :margin 0px 0px 10px 0px
+
+// Single-row lists.
+//------------------------------------------------------------------------------
+.log
+  :padding 8px 0px 0px 0px
+
+  h3
+    :background whitesmoke
+    :border-bottom 1px silver dotted
+    :color #2f2f2f
+    :margin 0px 0px 4px 0px
+    :padding 2px 0px 2px 86px
+
+  li
+    :color #3f3f3f
+    :font-size 12px
+    :list-style none
+    :padding 3px 0px 3px 0px
+
+    tt
+      :color dimgray
+      :font-size 11px
+
+  input
+    :float left
+    :margin 0px 4px 0px 0px
+
+  .strip
+    :margin 0px 5px 0px 0px
+
+// Two-row lists.
+//------------------------------------------------------------------------------
+.list
+  :padding 8px 0px 0px 0px
+
+  p
+    :color #413839
+    :margin 4px 0px 0px 0px
+
+  li
+    :border-bottom 1px silver dotted 
+    :clear both
+    :color #3f3f3f
+    :font-size 12px
+    :list-style none
+    :padding 6px 0px 6px 0px
+
+    tt
+      :color dimgray
+      :font-size 11px
+
+    dt
+      :color #3f3f3f
+      :font-size 11px
+      :padding 2px 0px 0px 0px
+
+    tt a:link, tt a:visited, dt a:link, dt a:visited
+      :color #3f3f3f
+      :font-weight bold
+      :text-decoration none
+
+    tt a:hover, dt a:hover
+      :background dimgray
+      :color white
+      :font-weight bold
+      :text-decoration none
+
+  .strip
+    :margin 2px 5px 20px 0px
+
+// Filter and selectors.
+//------------------------------------------------------------------------------
+.filters
+  :background snow
+  :padding 6px 8px 6px 8px
+  :-moz-border-radius 4px
+  :-webkit-border-radius 4px
+
+.selector
+  :color black
+  :cursor pointer
+  :font-size 10px
+  :text-align center
+
+.on
+  :background lightgoldenrodyellow
+  :border 1px silver inset
+
+.off
+  :background lightgrey
+  :border 1px silver outset
+
+.left
+  :-moz-border-radius
+    :bottomleft 9px
+    :topleft 9px
+  :-webkit-border
+    :bottom-left-radius 9px
+    :top-left-radius 9px
+
+.right
+  :-moz-border-radius
+    :bottomright 9px
+    :topright 9px
+  :-webkit-border
+    :bottom-right-radius 9px
+    :top-right-radius 9px

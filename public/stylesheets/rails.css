@@ -1,0 +1,58 @@
+.errorExplanation {
+  background-color: seashell;
+  border: 2px solid lightpink;
+  font-size: 12px;
+  padding: 8px;
+  margin: 10px 0px 10px 0px; }
+  .errorExplanation h2 {
+    background: salmon;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    margin: -8px;
+    padding: 5px; }
+  .errorExplanation p {
+    color: #333;
+    padding: 14px 0px 2px 0px; }
+  .errorExplanation ul {
+    margin-left: 30px; }
+    .errorExplanation ul li {
+      font-size: 12px;
+      list-style-type: disc;
+      padding: 0px; }
+
+.fieldWithErrors {
+  display: inline; }
+  .fieldWithErrors input, .fieldWithErrors textarea, .fieldWithErrors select {
+    background: lightpink; }
+
+p.flash_warning, p.flash_error {
+  background: lightpink;
+  color: maroon;
+  margin: 0px;
+  padding: 5px 0px 5px 16px; }
+p.flash_notice, p.flash_message {
+  background: #df9;
+  color: darkgreen;
+  margin: 0px;
+  padding: 5px 0px 5px 16px; }
+
+div.autocomplete {
+  background: #fff;
+  border: 1px solid #888;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  width: 250px; }
+  div.autocomplete ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px; }
+    div.autocomplete ul li {
+      cursor: pointer;
+      display: block;
+      list-style-type: none;
+      margin: 0px;
+      padding: 2px; }
+      div.autocomplete ul li.selected {
+        background-color: #ffb; }

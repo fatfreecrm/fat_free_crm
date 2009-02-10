@@ -30,12 +30,11 @@ a {
     background: steelblue;
     color: white;
     text-decoration: none; }
-
-a img {
-  background-color: white;
-  border: none;
-  color: white;
-  text-decoration: none; }
+  a img {
+    background-color: white;
+    border: none;
+    color: white;
+    text-decoration: none; }
 
 small {
   font-size: 10px; }

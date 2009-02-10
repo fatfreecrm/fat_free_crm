@@ -1,0 +1,28 @@
+.standalone
+  - form_for @user, :url => profile_path do |f|
+    .title_menu== Already signed up? #{link_to "Login Now!", login_path}
+    .title Sign Up
+    = f.error_messages
+    .section
+      .label Email:
+      = f.text_field :email
+      #login
+        .label Username:
+        = f.text_field :username
+        .label Password:
+        = f.password_field :password
+        .label Password confirmation:
+        = f.password_field :password_confirmation
+
+      #openid{ hidden }
+        .label OpenID:
+        = f.text_field :openid_identifier
+
+    .buttonbar
+      = f.submit "Sign Up"
+
+%small#login_link
+  = link_to_function "Use your OpenID", toggle_open_id_signup
+
+%small#openid_link{ hidden }
+  = link_to_function "Use username and password", toggle_open_id_signup

@@ -1,0 +1,7 @@
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .log input {
+    float: left;
+    margin: 1px 4px 0px 0px; }
+
+  .standalone input[type="submit"] {
+    font-size: 3em; } }
