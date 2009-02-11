@@ -101,6 +101,7 @@ describe TasksController do
       it "should expose a newly created task as @task" do
         @task = mock_task(:save => true, :deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
         Task.should_receive(:new).with({'these' => 'params'}).and_return(@task)
+        @task.should_receive(:hint).and_return("due_later")
         post :create, :task => {:these => 'params'}
         assigns(:task).should equal(mock_task)
       end
@@ -108,6 +109,7 @@ describe TasksController do
       it "should render 'create' template" do
         @task = mock_task(:save => true, :deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
         Task.stub!(:new).and_return(@task)
+        @task.should_receive(:hint).and_return("due_later")
         post :create, :task => {}
         response.should render_template('create')
       end
@@ -192,6 +194,7 @@ describe TasksController do
       @task = mock_task(:deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
       Task.should_receive(:find).with("42").and_return(@task)
       Task.should_receive(:bucket).with(@current_user, "due_asap", "pending").and_return(nil)
+      @task.should_receive(:hint).and_return("due_later")
       mock_task.should_receive(:destroy)
       delete :destroy, :id => "42", :bucket => "due_asap", :view => "pending"
     end
@@ -200,6 +203,7 @@ describe TasksController do
       @task = mock_task(:destroy => true, :deleted_at => nil, :completed_at => nil, :due_at_hint => nil)
       Task.should_receive(:find).with("42").and_return(@task)
       Task.should_receive(:bucket).with(@current_user, "due_today", "assigned").and_return(nil)
+      @task.should_receive(:hint).and_return("due_later")
       delete :destroy, :id => "42", :bucket => "due_today", :view => "assigned"
       response.should render_template('destroy')
     end
