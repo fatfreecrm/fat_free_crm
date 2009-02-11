@@ -1,9 +1,11 @@
 if @task.valid?
-  page["list_#{@task.due_at_hint}"].show
-  page.insert_html :top, @task.due_at_hint, :partial => @view, :collection => [@task], :locals => { :bucket => @task.due_at_hint }
+  hint = @task.hint
+  page["list_#{hint}"].show
+  page.insert_html :top, hint, :partial => @view, :collection => [@task], :locals => { :bucket => hint }
   page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
   page[:sidebar].replace_html :partial => "sidebar_index"
   page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
 end
+page["task_calendar"].value = ""
 page["task_name"].value = ""
 page["task_name"].focus

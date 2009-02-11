@@ -11,12 +11,16 @@
         %td= spacer
         %td{ :valign => :top }
           .label.top.req Due:
-          = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:120px", :onchange => "flip_calendar(this.value)" }
-          = f.text_field :calendar, :style => "width:110px; display:none;", :autocomplete => :off
+          - if @task.due_at_hint != "specific_time"
+            = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:120px;", :onchange => "flip_calendar(this.value)" }
+            = f.text_field :calendar, :style => "width:110px; display:none;", :autocomplete => :off
+          - else
+            = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:120px; display:none;", :onchange => "flip_calendar(this.value)" }
+            = f.text_field :calendar, :style => "width:110px;", :autocomplete => :off
         %td= spacer
         %td{ :valign => :top }
           .label.top.req Category:
-          = f.select :category, @category, { :include_blank => "-- None --" }, { :style => "width:120px" }
+          = f.select :category, @category, { :include_blank => "-- Select --" }, { :style => "width:120px" }
         %td= spacer
         %td{ :valign => :top }
           .label.top.req &nbsp;

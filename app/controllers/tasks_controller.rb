@@ -131,6 +131,7 @@ class TasksController < ApplicationController
   # Ajax request to filter out list of tasks.
   #----------------------------------------------------------------------------
   def filter
+    @view = params[:view]
     update_session do |filters|
       if params[:checked] == "true"
         filters << params[:filter]
@@ -148,7 +149,7 @@ class TasksController < ApplicationController
     name = "filter_by_task_#{@view}"
     filters = (session[name].nil? ? [] : session[name].split(","))
     yield filters
-    session[name] = filters.join(",")
+    session[name] = filters.uniq.join(",")
   end
 
   # Collect data necessary to render filters sidebar.
@@ -162,7 +163,7 @@ class TasksController < ApplicationController
     if @task
       update_session do |filters|
         if !@task.deleted_at && !@task.completed_at # created new task
-          filters << @task.due_at_hint
+          filters << @task.hint
         elsif @bucket # deleted or completed and need to hide a bucket
           filters.delete(params[:bucket])
         end

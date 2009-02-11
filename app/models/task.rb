@@ -34,12 +34,12 @@ class Task < ActiveRecord::Base
 
   # Due date scopes.
   named_scope :due_asap,      :conditions => "due_at IS NULL AND due_at_hint = 'due_asap'", :order => "id DESC"
-  named_scope :due_later,     :conditions => "due_at IS NULL AND due_at_hint = 'due_later'", :order => "id DESC"
-  named_scope :due_today,     lambda { { :conditions => [ "due_at = ?", Date.today ] } }
-  named_scope :due_tomorrow,  lambda { { :conditions => [ "due_at = ?", Date.tomorrow ] } }
-  named_scope :due_this_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.tomorrow + 1.day, Date.today.next_week ], :order => "due_at, id" } }
-  named_scope :due_next_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.today.next_week, Date.today.next_week.end_of_week + 1.day ], :order => "due_at, id" } }
-  named_scope :overdue,       lambda { { :conditions => [ "due_at IS NOT NULL AND due_at < ?", Date.today ], :order => "due_at, id" } }
+  named_scope :overdue,       lambda { { :conditions => [ "due_at IS NOT NULL AND due_at < ?", Date.today ], :order => "id DESC" } }
+  named_scope :due_today,     lambda { { :conditions => [ "due_at = ?", Date.today ], :order => "id DESC" } }
+  named_scope :due_tomorrow,  lambda { { :conditions => [ "due_at = ?", Date.tomorrow ], :order => "id DESC" } }
+  named_scope :due_this_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.tomorrow + 1.day, Date.today.next_week ], :order => "id DESC" } }
+  named_scope :due_next_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.today.next_week, Date.today.next_week.end_of_week + 1.day ], :order => "id DESC" } }
+  named_scope :due_later,     lambda { { :conditions => [ "(due_at IS NULL AND due_at_hint = 'due_later') OR due_at >= ?", Date.today.next_week.end_of_week + 1.day ], :order => "id DESC" } }
 
   # Completion time scopes.
   named_scope :completed_today,      lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Date.today, Date.tomorrow ] } }
@@ -54,7 +54,30 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :user_id
   validates_presence_of :name, :message => "^Please specify task name."
+  validates_presence_of :calendar, :if => "self.due_at_hint == 'specific_time'"
+  validate              :specific_time
+
   before_create :set_due_at, :notify_assignee
+
+  # Convert specific due_date to one of due_today, due_tomorrow, etc. hints.
+  #----------------------------------------------------------------------------
+  def hint
+    return self.due_at_hint if self.due_at_hint != "specific_time"
+    case
+    when self.due_at < Date.today.to_time
+      "overdue"
+    when self.due_at == Date.today.to_time
+      "due_today"
+    when self.due_at == Date.tomorrow.to_time
+      "due_tomorrow"
+    when self.due_at >= (Date.tomorrow + 1.day).to_time && self.due_at < Date.today.next_week.to_time
+      "due_this_week"
+    when self.due_at >= Date.today.next_week.to_time && self.due_at < (Date.today.next_week.end_of_week + 1.day).to_time
+      "due_next_week"
+    else
+      "due_later"
+    end
+  end
 
   # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
@@ -96,11 +119,19 @@ class Task < ActiveRecord::Base
       Date.today.end_of_week
     when "due_next_week"
       Date.today.next_week.end_of_week
-      Date.today + 1.year
+    when "due_later"
+      Date.today + 100.years
     when "specific_time"
       self.calendar
     else # due_later or due_asap
       nil
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def specific_time
+    if (self.due_at_hint == "specific_time") && (self.calendar !~ %r[\d{2}/\d{2}/\d{4}])
+      errors.add(:calendar, "^Please specify valid date.")
     end
   end
 
