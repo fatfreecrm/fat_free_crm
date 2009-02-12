@@ -1,8 +1,14 @@
 #confirm{ hidden }
 .title_menu#menu
-  = link_to("List", leads_path) + " | "
   = link_to("Convert", convert_lead_path(@lead)) + " | "
   = link_to("Edit", edit_lead_path(@lead)) + " | "
   = link_to_function("Delete?", confirm_delete(@lead))
-.title= @lead.full_name
+.title
+  = @lead.full_name
+  / %div{:style => "font-size:12px; font-weight:normal; color:#6f6f6f; padding-left: 16px"}
+  /   Sales Manager at Lehner Corkery, Inc.
+  / %div{:style => "font-size:12px; font-weight:normal; color:#6f6f6f; padding-left: 16px"}
+  /   = link_to "johndoe@example.com", "#"
+  /   <br>Phone: (408)555-1212<br>
+  /   Mobile: (408)555-1213
 
