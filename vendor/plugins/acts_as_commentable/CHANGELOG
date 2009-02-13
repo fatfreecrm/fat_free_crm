@@ -1,0 +1,7 @@
+* revision 8: Changed has_many :dependent => true to :dependent => :destroy for Rails 1.2.2
+                 + Thanks Josh Martin
+              Added an order clause in the has_many relationship.
+              Made comment column type to text from string in migration example in README
+                 + Thanks Patrick Crowley
+              Added this CHANGELOG file.
+              
