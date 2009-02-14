@@ -1,0 +1,81 @@
+
+.panel#summary
+  .caption Campaign Summary
+  %li
+    %dt= @campaign.starts_on.strftime("%b %e")
+    %tt Start date:
+  %li
+    %dt= @campaign.ends_on.strftime("%b %e")
+    %tt End date:
+  %li
+    %dt= Setting.campaign_status[@campaign.status.intern] || "N/A"
+    %tt Status:
+  %li
+    %dt= number_to_currency(@campaign.budget, :precision => 0) || "N/A"
+    %tt Budget:
+  %br
+  .caption Campaign Targets
+  
+  -# Target Leads.
+  -#---------------------------------------------------------------------------
+  %li
+    %dt= @campaign.target_leads || "N/A"
+    %tt Leads:
+    
+  -# Target Conversion Ratio.
+  -#---------------------------------------------------------------------------
+  %li
+    %dt= number_to_percentage(@campaign.target_conversion, :precision => 1) || "N/A"
+    %tt Conversion:
+    
+  -# Target Opportunities: calculated based on target number of leads and
+  -# expected conversion ratio.
+  -#---------------------------------------------------------------------------
+  %li
+    - if @campaign.target_leads.to_i > 0 && @campaign.target_conversion.to_i > 0
+      - opportunities = @campaign.target_leads * @campaign.target_conversion / 100
+      %dt= opportunities.to_i
+    - else
+      %dt N/A
+    %tt Opportunities:
+
+  -# Target Revenue.
+  -#---------------------------------------------------------------------------
+  %li
+    %dt= number_to_currency(@campaign.target_revenue, :precision => 0) || "N/A"
+    %tt Revenue:
+
+  %br
+  .caption Actual Performance
+
+  -# Actual Number of Leads.
+  -#---------------------------------------------------------------------------
+  %li
+    %dt= @campaign.leads_count || "N/A"
+    %tt== Leads: #{performance(@campaign.leads_count, @campaign.target_leads)}
+
+  -# Actual Conversion Ratio: calculated based on actual number of leads
+  -# and opportunities.
+  -#---------------------------------------------------------------------------
+  %li
+    - if @campaign.opportunities_count.to_i > 0 && @campaign.leads_count.to_i > 0
+      - conversion = @campaign.opportunities_count * 100 / @campaign.leads_count
+      %dt= number_to_percentage(conversion, :precision => 1)
+      %tt== Conversion: #{performance(conversion, @campaign.target_conversion)}
+    - else
+      %dt N/A
+      %tt Conversion:
+
+  -# Actual Opportunities.
+  -#---------------------------------------------------------------------------
+  %li
+    %dt= @campaign.opportunities_count || "N/A"
+    %tt
+      Opportunities:
+      = performance(@campaign.opportunities_count, opportunities)
+
+  -# Actual Revenue.
+  -#---------------------------------------------------------------------------
+  %li
+    %dt= number_to_currency(@campaign.revenue, :precision => 0) || "N/A"
+    %tt== Revenue: #{performance(@campaign.revenue, @campaign.target_revenue)}

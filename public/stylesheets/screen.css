@@ -153,7 +153,7 @@ div .subtitle {
     font-size: 14px; }
 
 .tabbed {
-  padding: 12px 16px 12px 16px; }
+  padding: 12px 0px 12px 16px; }
 
 .main {
   background: white;
@@ -172,7 +172,7 @@ div .subtitle {
   color: #3f3f3f;
   font-size: 11px;
   padding: 0px 12px 0px 12px;
-  width: 200px; }
+  width: 210px; }
 
 .form {
   background: white; }
@@ -307,11 +307,32 @@ div .subtitle {
   .list .strip {
     margin: 2px 5px 20px 0px; }
 
-.filters {
+.filters, .panel {
   background: snow;
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px; }
+
+.panel li {
+  border-bottom: 1px silver dotted;
+  font-size: 12px;
+  list-style: none;
+  padding: 3px 0px 3px 0px; }
+  .panel li tt {
+    font-size: 11px; }
+  .panel li dt {
+    float: right;
+    font-size: 11px;
+    font-weight: bold; }
+
+.caption {
+  background: #D9D9F3;
+  border-bottom: 1px silver solid;
+  color: #344152;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0px 0px 5px 0px;
+  padding: 2px 0px 2px 0px; }
 
 .selector {
   color: black;
