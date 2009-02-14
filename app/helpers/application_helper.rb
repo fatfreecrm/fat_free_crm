@@ -40,19 +40,33 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def hidden;  { :style => "display:none;"  }; end
-  def visible; { :style => "display:block;" }; end
+  def hidden;    { :style => "display:none;"       }; end
+  def exposed;   { :style => "display:block;"      }; end
+  def invisible; { :style => "visibility:hidden;"  }; end
+  def visible;   { :style => "visibility:visible;" }; end
 
   #----------------------------------------------------------------------------
   def hidden_if(you_ask)
-    you_ask ? hidden : visible
+    you_ask ? hidden : exposed
   end
 
   #----------------------------------------------------------------------------
-  def highlightable(id = nil)
+  def invisible_if(you_ask)
+    you_ask ? invisible : visible
+  end
+
+  #----------------------------------------------------------------------------
+  def highlightable(id = nil, use_hide_and_show = true)
+    if use_hide_and_show
+      show = (id ? "$('#{id}').show()" : "")
+      hide = (id ? "$('#{id}').hide()" : "")
+    else
+      show = (id ? "$('#{id}').style.visibility='visible'" : "")
+      hide = (id ? "$('#{id}').style.visibility='hidden'" : "")
+    end
     {
-      :onmouseover => "this.style.background='seashell';" << (id ? "$('#{id}').show()" : ""),
-      :onmouseout  => "this.style.background='white';"    << (id ? "$('#{id}').hide()" : "")
+      :onmouseover => "this.style.background='seashell'; #{show}",
+      :onmouseout  => "this.style.background='white'; #{hide}"
     }
   end
 

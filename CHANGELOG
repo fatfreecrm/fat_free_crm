@@ -5,6 +5,7 @@ Fri, Feb 13, 2008
 - Implemented Campaign Summary sidebar for the campaign landing page.
 - Generated [Comment] scaffold and created database migration.
 - Added [acts_as_commentable] to core models.
+- Added visible/invisible helpers to flip element's visibility style.
 
 Thu, Feb 12, 2008
 ---------------------------------------------------------------------

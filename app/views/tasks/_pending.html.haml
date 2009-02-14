@@ -1,10 +1,10 @@
-%li[pending]{ highlightable(dom_id(pending, :tools)) }
+%li[pending]{ highlightable(dom_id(pending, :tools), false) }
   - unless pending.category.blank?
     .strip{:class => pending.category}= Setting.task_category[pending.category.intern]
   - else
     .strip{:style => "color:white"} Other
   %div
-    .tools{ hidden, :id => dom_id(pending, :tools) }
+    .tools{ invisible, :id => dom_id(pending, :tools) }
       %small
         = link_to("Edit", task_path(pending)) << " | "
         = remote_delete(pending, bucket)
