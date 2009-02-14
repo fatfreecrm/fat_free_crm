@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :leads, :member => { :convert => :get, :promote => :put }
   map.resources :contacts
   map.resources :opportunities
+  map.resources :comments
 
   map.signup "signup", :controller => "users",           :action => "new"
   map.login  "login",  :controller => "authentications", :action => "new"

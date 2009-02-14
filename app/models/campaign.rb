@@ -33,6 +33,7 @@ class Campaign < ActiveRecord::Base
 
   uses_mysql_uuid
   uses_user_permissions
+  acts_as_commentable
   acts_as_paranoid
 
   validates_presence_of :name, :message => "^Please specify campaign name."

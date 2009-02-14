@@ -50,6 +50,7 @@ class Task < ActiveRecord::Base
   named_scope :completed_last_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", (Date.today.beginning_of_month - 1.day).beginning_of_month, Date.today.beginning_of_month ] } }
 
   uses_mysql_uuid
+  acts_as_commentable
   acts_as_paranoid
 
   validates_presence_of :user_id

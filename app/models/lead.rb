@@ -43,6 +43,7 @@ class Lead < ActiveRecord::Base
 
   uses_mysql_uuid
   uses_user_permissions
+  acts_as_commentable
   acts_as_paranoid
 
   validates_presence_of :first_name, :message => "^Please specify first name."
