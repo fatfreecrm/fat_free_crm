@@ -4,25 +4,36 @@
   = link_to_function("Delete?", confirm_delete(@campaign))
 .title
   = @campaign.name
-  / %div{:style => "font-size:12px; font-weight:normal; color:#6f6f6f; padding-left: 16px"}
-  /   Raise the awareness of decision-makers at local, regional, state, and federal level.
-  / %div{:style => "font-size:12px; font-weight:normal; color:#6f6f6f; padding-left: 16px"}
-  /   Started on Jan 15, ends on Feb 30, 10 days left
-/     
-/ .log
-/   %li== User: #{@campaign.user_id}
-/   %li== Assiged to: #{@campaign.assigned_to}
-/   %li== Start date: #{@campaign.starts_on}
-/   %li== End date: #{@campaign.ends_on}
-/   %li== Access: #{@campaign.access}
-/   %li== Status: #{@campaign.status}
-/   %li== Budget: #{@campaign.budget}
-/   %li== Target leads: #{@campaign.target_leads}
-/   %li== Target conversion: #{@campaign.target_conversion}
-/   %li== Target revenue: #{@campaign.target_revenue}
-/   %li== Leads: #{@campaign.leads_count}
-/   %li== Opportunities: #{@campaign.opportunities_count}
-/   %li== Revenue: #{@campaign.revenue}
-/   %li== Objectives: #{@campaign.objectives}
-/ 
-/ 
+
+.comment
+  .avatar
+    = link_to(image_tag("1x1.gif", :size => "30x30", :style => "border: 1px silver solid;"), "#")
+  #post{ hidden }
+    <textarea style="width:500px; height:30px;"></textarea>
+    %div{:style=>"padding:6px 0px 0px 40px;"}
+      <input type="button" value="Post Comment">
+      or
+      = link_to("Cancel", "#")
+  #ask{:style => "font-size:11px; display:inline;"}
+    = link_to_remote("Post new comment...", :url => new_campaign_comment_url(@campaign), :method => :get)
+
+.comment
+  .avatar
+    = link_to(image_tag("1x1.gif", :size => "30x30", :style => "border: 1px silver solid;"), "#")
+  .body
+    = link_to "Aaron Assembler", "#"
+    %tt at 2:33pm February 12
+    %dt
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac justo id enim tincidunt
+      accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
+      turpis egestas.
+
+.comment
+  .avatar
+    = link_to(image_tag("1x1.gif", :size => "30x30", :style => "border: 1px silver solid;"), "#")
+  .body
+    = link_to "Ben Bootloader", "#"
+    %tt at 1:45pm February 11
+    %dt
+      Integer quam augue, porta non, hendrerit a, tristique ut, justo. Duis sit amet enim sed 
+      tortor lacinia elementum. Nulla pede. 

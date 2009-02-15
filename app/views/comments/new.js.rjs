@@ -1,0 +1,2 @@
+page[:post].toggle
+page[:ask].toggle

@@ -31,6 +31,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new
 
     respond_to do |format|
+      format.js   # new.js.rjs
       format.html # new.html.erb
       format.xml  { render :xml => @comment }
     end
