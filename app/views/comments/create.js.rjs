@@ -1,3 +1,6 @@
-logger.p "comment: " + @comment.inspect
+if @comment.valid?
+  page.insert_html :after, :comment_new, :partial => "common/comment", @collection => [ @comment ]
+  page[dom_id(@comment)].visual_effect :highlight, :duration => 1.5
+end
 page[:comment_comment].clear
 page[:comment_comment].focus
