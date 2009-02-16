@@ -29,6 +29,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @comment = Comment.new
+    # class_name = params[:commentable_type].downcase
     session["campaign_new_comment"] = (params[:cancel] == "true" ? nil : true)
 
     respond_to do |format|

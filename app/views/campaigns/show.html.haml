@@ -2,22 +2,7 @@
 .title_menu#menu
   = link_to("Edit", edit_campaign_path(@campaign)) + " | "
   = link_to_function("Delete?", confirm_delete(@campaign))
-.title
-  = @campaign.name
+.title= @campaign.name
 
-.comment#comment_new
-  .avatar
-    = link_to(image_tag("1x1.gif", :size => "30x30", :style => "border: 1px silver solid;"), "#")
-  #post{ hidden_if(session["campaign_new_comment"].nil?) }
-    - remote_form_for(@comment) do |f|
-      = hidden_field_tag "comment[user_id]", @current_user.id
-      = hidden_field_tag "comment[commentable_id]", @campaign.id
-      = hidden_field_tag "comment[commentable_type]", @campaign.class.name
-      = f.text_area :comment, :style => "width:500px; height:30px;"
-      %div{:style => "padding:6px 0px 0px 40px;"}
-        = f.submit "Post Note"
-        or
-        = link_to_remote("Cancel", :url => new_campaign_comment_url(@campaign), :method => :get, :with => "'cancel=true'")
-  #ask{ hidden_if(session["campaign_new_comment"])}
-    = link_to_remote("Post new note...", :url => new_campaign_comment_url(@campaign), :method => :get)
+= render :partial => "common/new_comment", :locals => { :commentable => @campaign }
 = render :partial => "common/comment", :collection => @campaign.comments

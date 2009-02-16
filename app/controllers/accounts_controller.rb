@@ -19,6 +19,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @account = Account.find(params[:id])
+    @comment = Comment.new
 
     respond_to do |format|
       format.html # show.html.erb

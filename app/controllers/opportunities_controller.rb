@@ -24,6 +24,7 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @opportunity = Opportunity.find(params[:id])
+    @comment = Comment.new
 
     respond_to do |format|
       format.html # show.html.erb

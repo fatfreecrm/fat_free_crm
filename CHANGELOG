@@ -6,7 +6,8 @@ then you win. –- Mahatma Gandhi
 
 Sun, Feb 15, 2008
 ---------------------------------------------------------------------
-- Implemented adding comments for campaign.
+- Implemented adding notes for campaign.
+- Added notes for other core models (Account, Contact, Lead, and Opportunity).
 
 Sat, Feb 14, 2008
 ---------------------------------------------------------------------
