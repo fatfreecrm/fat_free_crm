@@ -1,2 +1,8 @@
-page[:post].toggle
-page[:ask].toggle
+if session["campaign_new_comment"]
+  page[:ask].hide
+  page[:post].show
+  page[:comment_comment].focus
+else
+  page[:post].hide
+  page[:ask].show
+end

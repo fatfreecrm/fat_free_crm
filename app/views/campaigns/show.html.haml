@@ -8,32 +8,16 @@
 .comment
   .avatar
     = link_to(image_tag("1x1.gif", :size => "30x30", :style => "border: 1px silver solid;"), "#")
-  #post{ hidden }
-    <textarea style="width:500px; height:30px;"></textarea>
-    %div{:style=>"padding:6px 0px 0px 40px;"}
-      <input type="button" value="Post Comment">
-      or
-      = link_to("Cancel", "#")
-  #ask{:style => "font-size:11px; display:inline;"}
-    = link_to_remote("Post new comment...", :url => new_campaign_comment_url(@campaign), :method => :get)
-
-.comment
-  .avatar
-    = link_to(image_tag("1x1.gif", :size => "30x30", :style => "border: 1px silver solid;"), "#")
-  .body
-    = link_to "Aaron Assembler", "#"
-    %tt at 2:33pm February 12
-    %dt
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac justo id enim tincidunt
-      accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-      turpis egestas.
-
-.comment
-  .avatar
-    = link_to(image_tag("1x1.gif", :size => "30x30", :style => "border: 1px silver solid;"), "#")
-  .body
-    = link_to "Ben Bootloader", "#"
-    %tt at 1:45pm February 11
-    %dt
-      Integer quam augue, porta non, hendrerit a, tristique ut, justo. Duis sit amet enim sed 
-      tortor lacinia elementum. Nulla pede. 
+  #post{ hidden_if(session["campaign_new_comment"].nil?) }
+    - remote_form_for(@comment) do |f|
+      = hidden_field_tag "comment[user_id]", @current_user.id
+      = hidden_field_tag "comment[commentable_id]", @campaign.id
+      = hidden_field_tag "comment[commentable_type]", @campaign.class.name
+      = f.text_area :comment, :style => "width:500px; height:30px;"
+      %div{:style => "padding:6px 0px 0px 40px;"}
+        = f.submit "Post Note"
+        or
+        = link_to_remote("Cancel", :url => new_campaign_comment_url(@campaign), :method => :get, :with => "'cancel=true'")
+  #ask{ hidden_if(session["campaign_new_comment"])}
+    = link_to_remote("Post new note...", :url => new_campaign_comment_url(@campaign), :method => :get)
+= render :partial => "common/comment", :collection => @campaign.comments

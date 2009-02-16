@@ -29,6 +29,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @comment = Comment.new
+    session["campaign_new_comment"] = (params[:cancel] == "true" ? nil : true)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -51,10 +52,11 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        flash[:notice] = 'Comment was successfully created.'
+        format.js   # create.js.rjs
         format.html { redirect_to(@comment) }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
       else
+        format.js   # create.js.rjs
         format.html { render :action => "new" }
         format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
       end

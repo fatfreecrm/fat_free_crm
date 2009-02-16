@@ -24,6 +24,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @campaign = Campaign.find(params[:id])
+    @comment = Comment.new
 
     respond_to do |format|
       format.html # show.html.erb

@@ -1,0 +1,3 @@
+logger.p "comment: " + @comment.inspect
+page[:comment_comment].clear
+page[:comment_comment].focus

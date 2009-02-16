@@ -86,4 +86,9 @@ module ApplicationHelper
     image_tag "1x1.gif", :width => width, :height => 1, :alt => nil
   end
 
+  #----------------------------------------------------------------------------
+  def time_ago(whenever)
+    distance_of_time_in_words(Time.now, whenever) << " ago"
+  end
+
 end
