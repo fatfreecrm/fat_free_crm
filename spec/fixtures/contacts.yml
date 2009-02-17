@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 15
+# Schema version: 16
 #
 # Table name: contacts
 #
@@ -43,9 +43,9 @@
 %>
 contact_<%= i %>:
   id          : <%= i %>
-  user_id     : <%= rand(5) + 1 %>
-  assigned_to : <%= rand(5) + 1 %>
-  reports_to  : <%= (rand(5) + 1) if i > 10 %>
+  user_id     : <%= rand(8) + 1 %>
+  assigned_to : <%= rand(8) + 1 %>
+  reports_to  : <%= (rand(8) + 1) if i > 10 %>
   first_name  : <%= first_name = Faker::Name.first_name %>
   last_name   : <%= last_name = Faker::Name.last_name %>
   access      : Public

@@ -83,7 +83,7 @@ describe CommentsController do
       it "should redirect to the created comment" do
         Comment.stub!(:new).and_return(mock_comment(:save => true))
         post :create, :comment => {}
-        response.should redirect_to(comment_url(mock_comment))
+        response.should render_template("create")
       end
       
     end
@@ -99,7 +99,7 @@ describe CommentsController do
       it "should re-render the 'new' template" do
         Comment.stub!(:new).and_return(mock_comment(:save => false))
         post :create, :comment => {}
-        response.should render_template('new')
+        response.should render_template("create")
       end
       
     end

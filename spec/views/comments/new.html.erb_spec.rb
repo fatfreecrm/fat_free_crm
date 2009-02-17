@@ -10,10 +10,10 @@ describe "/comments/new.html.erb" do
   end
 
   it "should render new form" do
-    render "/comments/new.html.erb"
+    render "/comments/new.js.rjs"
     
-    response.should have_tag("form[action=?][method=post]", comments_path) do
-    end
+    response.should include_text("hide()")
+    response.should include_text("show()")
   end
 end
 

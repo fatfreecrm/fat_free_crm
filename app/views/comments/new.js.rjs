@@ -1,4 +1,4 @@
-if session["campaign_new_comment"]
+if session["#{@commentable}_new_comment"]
   page[:ask].hide
   page[:post].show
   page[:comment_comment].focus

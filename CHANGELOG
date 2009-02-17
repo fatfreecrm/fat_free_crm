@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Feb 16, 2008
+---------------------------------------------------------------------
+- Save shown/hidden state of [post a note] form for all commentable models.
+- Updated controller and view specs to support commentables.
+- Added comments fixture to generate sample comments for all the core models.
+
 Sun, Feb 15, 2008
 ---------------------------------------------------------------------
 - Implemented adding notes for campaign.

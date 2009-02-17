@@ -1,7 +1,32 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
+# == Schema Information
+# Schema version: 16
 #
-# two:
-#   column: value
+# Table name: comments
+#
+#  id               :integer(4)      not null, primary key
+#  user_id          :integer(4)
+#  commentable_id   :integer(4)
+#  commentable_type :string(255)
+#  private          :boolean(1)
+#  title            :string(255)     default("")
+#  comment          :text
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+<% 
+  require "faker"
+
+  commentable = %w(Account Campaign Contact Lead Opportunity) # Task
+  time = Time.now - (rand(30) + 30).minutes
+
+  for i in (1 .. rand(200) + 200) do
+    time -= i.minutes
+%>
+comment_<%= i %>:
+  id                : <%= i %>
+  user_id           : <%= rand(8) + 1 %>
+  commentable_id    : <%= rand(30) + 1 %>
+  commentable_type  : <%= commentable[rand(commentable.size)] %>
+  comment           : <%= Faker::Lorem::paragraph(rand(3) + 1) %>
+  created_at        : <%= time.to_s(:db) %>
+<% end %>

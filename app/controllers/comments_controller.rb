@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id).freeze
 
   # GET /comments
   # GET /comments.xml
@@ -29,8 +30,8 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @comment = Comment.new
-    # class_name = params[:commentable_type].downcase
-    session["campaign_new_comment"] = (params[:cancel] == "true" ? nil : true)
+    @commentable = extract_commentable_name(params)
+    session["#{@commentable}_new_comment"] = (params[:cancel] == "true" ? nil : true) if @commentable
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -94,4 +95,12 @@ class CommentsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+  #----------------------------------------------------------------------------
+  def extract_commentable_name(params)
+    commentable = (params.keys & COMMENTABLE).first
+    commentable.sub("_id", "") if commentable
+  end
+
 end

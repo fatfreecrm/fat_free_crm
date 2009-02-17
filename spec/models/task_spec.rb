@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 15
+# Schema version: 16
 #
 # Table name: tasks
 #
@@ -12,6 +12,7 @@
 #  asset_type   :string(255)
 #  priority     :string(32)
 #  category     :string(32)
+#  due_at_hint  :string(32)
 #  due_at       :datetime
 #  completed_at :datetime
 #  deleted_at   :datetime
