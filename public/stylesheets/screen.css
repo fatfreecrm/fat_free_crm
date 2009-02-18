@@ -24,10 +24,10 @@ ul li {
 
 a {
   text-decoration: underline; }
-  a:link {
-    color: navy; }
+  a:link, a:visited {
+    color: #0033cc; }
   a:hover {
-    background: steelblue;
+    background: #0033cc;
     color: white;
     text-decoration: none; }
   a img {
@@ -61,6 +61,8 @@ tt {
       color: lightyellow;
       padding: 1px 4px 1px 4px;
       text-decoration: none; }
+      #header div a:hover {
+        background: steelblue; }
 
 #tabs {
   background: #1e4262;
@@ -111,14 +113,15 @@ tt {
   float: right;
   margin: 4px 0px 0px 0px; }
 
-div .subtitle {
+.subtitle {
   border-bottom: 1px silver solid;
+  color: #2f2f2f;
+  font-size: 13px;
+  font-weight: bold;
   padding: 0px 3px 0px 0px; }
-  div .subtitle a:link, div .subtitle a:visited, div .subtitle a:hover {
+  .subtitle a:link, .subtitle a:visited, .subtitle a:hover {
     background: white;
     color: darkslateblue;
-    font-size: 13px;
-    font-weight: bold;
     text-decoration: none; }
 
 .radio_box {
@@ -160,13 +163,6 @@ div .subtitle {
   border-right: 3px lightgrey solid;
   border-bottom: 3px lightgrey solid;
   padding: 15px 15px 15px 15px; }
-  .main a:link, .main a:visited {
-    color: #0033cc;
-    text-decoration: none; }
-  .main a:hover {
-    background: #0033cc;
-    color: white;
-    text-decoration: none; }
 
 .sidebar {
   color: #3f3f3f;

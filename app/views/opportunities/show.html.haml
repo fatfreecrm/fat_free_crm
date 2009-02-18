@@ -1,3 +1,8 @@
+- content_for :styles do
+  %style
+    - Setting.campaign_status_color.each do |key, value|
+      == .#{key} { background:#{value}; }
+
 #confirm{ hidden }
 .title_menu#menu
   = link_to("Edit", edit_opportunity_path(@opportunity)) + " | "
@@ -6,3 +11,6 @@
 
 = render :partial => "common/new_comment", :locals => { :commentable => @opportunity }
 = render :partial => "common/comment", :collection => @opportunity.comments
+.list
+  .subtitle Campaign
+  = render :partial => "campaigns/campaign", :collection => [ @opportunity.campaign ]

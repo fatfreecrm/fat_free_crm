@@ -24,10 +24,10 @@ ul li {
 
 a {
   text-decoration: underline; }
-  a:link {
-    color: navy; }
+  a:link, a:visited {
+    color: #0033cc; }
   a:hover {
-    background: steelblue;
+    background: #0033cc;
     color: white;
     text-decoration: none; }
   a img {

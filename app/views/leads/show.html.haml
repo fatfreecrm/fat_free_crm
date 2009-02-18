@@ -1,3 +1,8 @@
+- content_for :styles do
+  %style
+    - Setting.campaign_status_color.each do |key, value|
+      == .#{key} { background:#{value}; }
+
 #confirm{ hidden }
 .title_menu#menu
   = link_to("Convert", convert_lead_path(@lead)) + " | "
@@ -7,3 +12,6 @@
 
 = render :partial => "common/new_comment", :locals => { :commentable => @lead }
 = render :partial => "common/comment", :collection => @lead.comments
+.list
+  .subtitle Campaign
+  = render :partial => "campaigns/campaign", :collection => [ @lead.campaign ]

@@ -14,6 +14,8 @@
       color: lightyellow;
       padding: 1px 4px 1px 4px;
       text-decoration: none; }
+      #header div a:hover {
+        background: steelblue; }
 
 #tabs {
   background: #1e4262;

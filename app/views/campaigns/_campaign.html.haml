@@ -7,5 +7,5 @@
         = link_to_remote("Delete!", :url => campaign_path(campaign), :method => :delete, :before => visual_effect(:highlight, dom_id(campaign), :startcolor => "#afeeee"))
       &nbsp;
     = link_to(campaign.name, campaign)
-    = render :partial => "status", :locals => { :campaign => campaign }
-    = render :partial => "metrics", :locals => { :campaign => campaign }
+    = render :partial => "campaigns/status", :locals => { :campaign => campaign }
+    = render :partial => "campaigns/metrics", :locals => { :campaign => campaign }
