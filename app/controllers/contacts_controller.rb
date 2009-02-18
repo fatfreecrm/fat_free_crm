@@ -19,6 +19,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @contact = Contact.find(params[:id])
+    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
     @comment = Comment.new
 
     respond_to do |format|

@@ -14,4 +14,7 @@
 = render :partial => "common/comment", :collection => @lead.comments
 .list
   .subtitle Campaign
-  = render :partial => "campaigns/campaign", :collection => [ @lead.campaign ]
+  - if @lead.campaign
+    = render :partial => "campaigns/campaign", :collection => [ @lead.campaign ]
+  - else
+    %small Select or Create Campaign (not implemented yet).

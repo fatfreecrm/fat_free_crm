@@ -1,5 +1,7 @@
 - content_for :styles do
   %style
+    \.none { background:pink; }
+    \.some { background:palegreen; }
     - Setting.campaign_status_color.each do |key, value|
       == .#{key} { background:#{value}; }
 
@@ -12,5 +14,14 @@
 = render :partial => "common/new_comment", :locals => { :commentable => @opportunity }
 = render :partial => "common/comment", :collection => @opportunity.comments
 .list
+  .subtitle Account
+  - if @opportunity.account
+    = render :partial => "accounts/account", :collection => [ @opportunity.account ]
+  - else
+    %small Select or Create Account (not implemented yet).
+.list
   .subtitle Campaign
-  = render :partial => "campaigns/campaign", :collection => [ @opportunity.campaign ]
+  - if @opportunity.campaign
+    = render :partial => "campaigns/campaign", :collection => [ @opportunity.campaign ]
+  - else
+    %small Select or Create Opportunity (not implemented yet).

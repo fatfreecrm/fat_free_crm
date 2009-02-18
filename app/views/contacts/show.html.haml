@@ -1,3 +1,10 @@
+- content_for :styles do
+  %style
+    \.none { background:pink; }
+    \.some { background:palegreen; }
+    - Setting.opportunity_stage_color.each do |key, value|
+      == .#{key} { background:#{value}; }
+
 #confirm{ hidden }
 .title_menu#menu
   = link_to("Edit", edit_contact_path(@contact)) + " | "
@@ -6,3 +13,12 @@
 
 = render :partial => "common/new_comment", :locals => { :commentable => @contact }
 = render :partial => "common/comment", :collection => @contact.comments
+.list
+  .subtitle Account
+  - if @contact.account
+    = render :partial => "accounts/account", :collection => [ @contact.account ]
+  - else
+    %small Select or Create Account (not implemented yet).
+.list
+  .subtitle Opportunities
+  = render :partial => "opportunities/opportunity", :collection => @contact.opportunities
