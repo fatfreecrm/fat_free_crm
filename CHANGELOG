@@ -10,6 +10,7 @@ Tue, Feb 17, 2008
 - Added [Contacts] and [Opportunities] to [Account] landing page.
 - Added [Accounts] and [Opportunities] to [Contact] landing page.
 - Added [Accounts] and [Campaigns] to [Opportunity] landing page.
+- Refactored JavaScript code to automatically set focus on first form field.
 
 Mon, Feb 16, 2008
 ---------------------------------------------------------------------

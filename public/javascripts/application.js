@@ -25,6 +25,17 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  focus_on_first_field: function() {
+    if ($$("form") != "") {
+      var first_element = $$("form")[0].findFirstElement();
+      if (first_element) {
+        first_element.focus();
+        first_element.value = first_element.value;
+      }
+    }
+  },
+
+  //----------------------------------------------------------------------------
   create_account: function() {
     $("account_selector").update("(create new or <a href='#' onclick='crm.select_account(); return false;'>select existing</a>):");
     $("account_id").hide();  $("account_id").disable();
@@ -37,6 +48,6 @@ var crm = {
     $("account_name").hide();  $("account_name").disable();
     $("account_id").enable();  $("account_id").show();  $("account_id").focus();
   }
-
-
 }
+
+Event.observe(window, "load", function() { crm.focus_on_first_field() })
