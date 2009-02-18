@@ -23,13 +23,12 @@ ul li {
   list-style-type: none; }
 
 a {
-  text-decoration: underline; }
+  text-decoration: none; }
   a:link, a:visited {
     color: #0033cc; }
   a:hover {
     background: #0033cc;
-    color: white;
-    text-decoration: none; }
+    color: white; }
   a img {
     background-color: white;
     border: none;
