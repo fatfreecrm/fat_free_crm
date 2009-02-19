@@ -1,0 +1,10 @@
+if params[:visible] == "false"                          # show
+  page[:create_opportunity_arrow].replace_html "&#9660;"
+  page[:create_opportunity].replace_html :partial => "create"
+  page << "Effect.toggle('create_opportunity', 'slide', { duration: 0.25, afterFinish: function() { $('opportunity_name').focus(); } });"
+  page[:opportunity].replace_html "Create Opportunity"
+else                                                    # hide
+  page[:create_opportunity_arrow].replace_html "&#9658;"
+  page << "Effect.toggle('create_opportunity', 'slide', { duration: 0.25 });"
+  page[:opportunity].replace_html "Opportunities"
+end

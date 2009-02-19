@@ -1,7 +1,4 @@
-- content_for :styles do
-  %style
-    - Setting.opportunity_stage_color.each do |key, value|
-      == .#{key} { background:#{value}; }
+= styles_for :contact, :opportunity
 
 #confirm{ hidden }
 .title_menu#menu
@@ -11,10 +8,13 @@
 
 = render :partial => "common/new_comment", :locals => { :commentable => @account }
 = render :partial => "common/comment", :collection => @account.comments
-.list
-  .subtitle Contacts
+
+%br
+.subtitle#contact Contacts
+.list#contacts
   = render :partial => "contacts/contact", :collection => @account.contacts
-.list
-  .subtitle Opportunities
-  - logger.p @stage.inspect
+
+%br
+.subtitle#opportunity Opportunities
+.list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @account.opportunities

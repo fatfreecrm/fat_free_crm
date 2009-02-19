@@ -1,12 +1,11 @@
-- content_for :styles do
-  %style
-    \.none { background:pink; }
-    \.some { background:palegreen; }
+= styles_for :account
 
-.title_menu= link_to "Create New Account", new_account_path
-.title Accounts
+= inline "Create Account", new_account_path, :id => :create_account
+.title#account Accounts
 
-.list
+.remote#create_account{ hidden }
+
+.list#accounts
   - unless @accounts.empty?
     = render :partial => "account", :collection => @accounts
   - else

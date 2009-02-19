@@ -1,0 +1,27 @@
+- remote_form_for(@account) do |f|
+  = hidden_field_tag "account[user_id]", @current_user.id
+  = f.error_messages
+  .section
+    %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td{ :valign => :top }
+          .label.top.req Account name:
+          = f.text_field :name, :style => "width:324px"
+        %td= spacer
+        %td{ :valign => :top }
+          .label.top.req Assigned to:
+          = collection_select :account, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+      %tr
+        %td{ :valign => :top, :colspan => 3 }
+          .label Notes:
+          = f.text_area :notes, :style => "width:500px", :rows => 2
+
+    -### .label Tags:
+    -### =f.text_field :tags, :style =>"width:500px"
+  = render :partial => "contact_info", :locals => { :f => f }
+  = render :partial => "permissions",  :locals => { :f => f }
+  .buttonbar
+    = f.submit "Create Account" 
+    or 
+    = link_to_remote "Cancel", { :url => new_account_path, :with => "visible=true" }
+    

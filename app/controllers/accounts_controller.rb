@@ -29,13 +29,14 @@ class AccountsController < ApplicationController
   end
 
   # GET /accounts/new
-  # GET /accounts/new.xml
+  # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
     @account = Account.new
     @users = User.all_except(@current_user) # to manage account permissions
 
     respond_to do |format|
+      format.js   # new.js.rjs
       format.html # new.html.erb
       format.xml  { render :xml => @account }
     end
@@ -48,7 +49,7 @@ class AccountsController < ApplicationController
   end
 
   # POST /accounts
-  # POST /accounts.xml
+  # POST /accounts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
     @account = Account.new(params[:account])
@@ -56,10 +57,11 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
-        flash[:notice] = 'Account was successfully created.'
+        format.js   # create.js.rjs
         format.html { redirect_to(@account) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
+        format.js   # create.js.rjs
         format.html { render :action => "new" }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end

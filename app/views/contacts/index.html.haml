@@ -1,7 +1,9 @@
-.title_menu= link_to "Create New Contact", new_contact_path
-.title Contacts
+= inline "Create Contact", new_contact_path, :id => :create_contact
+.title#contact Contacts
 
-.list
+.remote#create_contact{ hidden }
+
+.list#contacts
   - unless @contacts.empty?
     = render :partial => "contact", :collection => @contacts
   - else

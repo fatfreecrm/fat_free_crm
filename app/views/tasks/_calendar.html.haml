@@ -1,11 +1,5 @@
-- content_for :stylesheet_link do
-  = stylesheet_link_tag "calendar_date_select/default.css", :cache => true
-- content_for :javascript_include do
-  = javascript_include_tag "calendar_date_select/calendar_date_select.js", :cache => true
-  = javascript_include_tag "calendar_date_select/format_american.js", :cache => true
-
 - content_for :javascript_epilogue do
-  :javascript
+  :plain
     function flip_calendar(value) {
       if (value == "specific_time") {
         $("task_due_at_hint").toggle(); // Hide dropdown.

@@ -1,7 +1,4 @@
-- content_for :styles do
-  %style
-    - Setting.campaign_status_color.each do |key, value|
-      == .#{key} { background:#{value}; }
+= styles_for :campaign
 
 #confirm{ hidden }
 .title_menu#menu
@@ -12,8 +9,10 @@
 
 = render :partial => "common/new_comment", :locals => { :commentable => @lead }
 = render :partial => "common/comment", :collection => @lead.comments
-.list
-  .subtitle Campaign
+
+%br
+.subtitle#campaign Campaign
+.list#campaigns
   - if @lead.campaign
     = render :partial => "campaigns/campaign", :collection => [ @lead.campaign ]
   - else

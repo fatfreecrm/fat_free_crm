@@ -1,11 +1,5 @@
-- content_for :stylesheet_link do
-  = stylesheet_link_tag "calendar_date_select/default.css", :cache => true
-- content_for :javascript_include do
-  = javascript_include_tag "calendar_date_select/calendar_date_select.js", :cache => true
-  = javascript_include_tag "calendar_date_select/format_american.js", :cache => true
 - content_for :javascript_epilogue do
-  :javascript
-    crm.date_select_popup("opportunity_closes_on");
+  crm.date_select_popup("opportunity_closes_on");
 
 - fields_for(@opportunity) do |o|
   = o.hidden_field :user_id

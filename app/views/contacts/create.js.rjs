@@ -1,0 +1,11 @@
+if @contact.valid?
+  page[:create_contact_arrow].replace_html "&#9658;"
+  page << "Effect.toggle('create_contact', 'slide', { duration: 0.1 });"
+  page[:contact].replace_html "Contacts"
+  page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
+  page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
+else
+  page[:create_contact].replace_html :partial => "create"
+  page[:contact_first_name].focus
+  page[:create_contact].visual_effect :shake, :duration => 0.25, :distance => 6
+end

@@ -1,12 +1,11 @@
-- content_for :styles do
-  %style
-    - Setting.campaign_status_color.each do |key, value|
-      == .#{key} { background:#{value}; }
+= styles_for :campaign
 
-.title_menu= link_to "Create New Campaign", new_campaign_path
-.title Campaigns
+= inline "Create Campaign", new_campaign_path, :id => :create_campaign
+.title#campaign Campaigns
 
-.list#list
+.remote#create_campaign{ hidden }
+
+.list#campaigns
   - unless @campaigns.empty?
     = render :partial => "campaign", :collection => @campaigns
   - else

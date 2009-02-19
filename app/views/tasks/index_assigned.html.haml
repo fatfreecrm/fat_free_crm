@@ -1,7 +1,7 @@
-= render :partial => "styles"
+= styles_for :task
 
 - collapsed = session["tasks_new_assigned"].nil?
-=inline "Assign New Task", url_for(:action => :new, :view => @view), { :id => :inline, :collapsed => collapsed }
+=inline "Assign Task", url_for(:action => :new, :view => @view), { :id => :inline, :collapsed => collapsed }
 .title Assigned Tasks
 = render :partial => "assign", :locals => { :collapsed => collapsed }
 

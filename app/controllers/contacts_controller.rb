@@ -29,7 +29,7 @@ class ContactsController < ApplicationController
   end
 
   # GET /contacts/new
-  # GET /contacts/new.xml
+  # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
     @contact = Contact.new(:user => @current_user, :access => "Private")
@@ -38,6 +38,7 @@ class ContactsController < ApplicationController
     @accounts = Account.my(@current_user).all(:order => "name")
 
     respond_to do |format|
+      format.js   # new.js.rjs
       format.html # new.html.erb
       format.xml  { render :xml => @contact }
     end
@@ -50,7 +51,7 @@ class ContactsController < ApplicationController
   end
 
   # POST /contacts
-  # POST /contacts.xml
+  # POST /contacts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
     @contact = Contact.new(params[:contact])
@@ -60,10 +61,11 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
-        flash[:notice] = "Contact #{@contact.full_name} was successfully created."
+        format.js   # create.js.rjs
         format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
+        format.js   # create.js.rjs
         format.html { render :action => "new" }
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end

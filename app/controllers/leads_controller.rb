@@ -33,7 +33,7 @@ class LeadsController < ApplicationController
   end
 
   # GET /leads/new
-  # GET /leads/new.xml
+  # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
     @lead = Lead.new
@@ -41,6 +41,7 @@ class LeadsController < ApplicationController
     @campaigns = Campaign.my(@current_user).all(:order => "name")
 
     respond_to do |format|
+      format.js   # new.js.rjs
       format.html # new.html.erb
       format.xml  { render :xml => @lead }
     end
@@ -53,7 +54,7 @@ class LeadsController < ApplicationController
   end
 
   # POST /leads
-  # POST /leads.xml
+  # POST /leads.xml                                                        AJAX
   #----------------------------------------------------------------------------
   def create
     @lead = Lead.new(params[:lead])
@@ -62,12 +63,13 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
-        flash[:notice] = "Lead #{@lead.full_name} was successfully created."
+        format.js   # create.js.rjs
         format.html { redirect_to(@lead) }
-        format.xml { render :xml => @lead, :status => :created, :location => @lead }
+        format.xml  { render :xml => @lead, :status => :created, :location => @lead }
       else
+        format.js   # create.js.rjs
         format.html { render :action => "new" }
-        format.xml { render :xml => @lead.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -145,7 +147,7 @@ class LeadsController < ApplicationController
     @leads = Lead.my(@current_user).only(params[:status].split(","))
 
     render :update do |page|
-      page[:list].replace_html render(:partial => "lead", :collection => @leads)
+      page[:leads].replace_html render(:partial => "lead", :collection => @leads)
     end
   end
 

@@ -1,9 +1,4 @@
-- content_for :styles do
-  %style
-    \.none { background:pink; }
-    \.some { background:palegreen; }
-    - Setting.opportunity_stage_color.each do |key, value|
-      == .#{key} { background:#{value}; }
+= styles_for :account, :opportunity
 
 #confirm{ hidden }
 .title_menu#menu
@@ -13,12 +8,16 @@
 
 = render :partial => "common/new_comment", :locals => { :commentable => @contact }
 = render :partial => "common/comment", :collection => @contact.comments
-.list
-  .subtitle Account
+
+%br
+.subtitle#account Account
+.list#accounts
   - if @contact.account
     = render :partial => "accounts/account", :collection => [ @contact.account ]
   - else
     %small Select or Create Account (not implemented yet).
-.list
-  .subtitle Opportunities
+
+%br
+.subtitle#opportunity Opportunities
+.list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @contact.opportunities

@@ -1,6 +1,5 @@
 - content_for :javascript_epilogue do
-  %script{:type => "text/javascript"}
-    = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
+  = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
 
 .form
   - form_for(@lead, :url => promote_lead_path(@lead)) do |f|

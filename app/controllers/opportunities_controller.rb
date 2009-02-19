@@ -33,7 +33,7 @@ class OpportunitiesController < ApplicationController
   end
 
   # GET /opportunities/new
-  # GET /opportunities/new.xml
+  # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
     @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
@@ -42,6 +42,7 @@ class OpportunitiesController < ApplicationController
     @accounts = Account.my(@current_user).all(:order => "name")
 
     respond_to do |format|
+      format.js   # new.js.rjs
       format.html # new.html.erb
       format.xml  { render :xml => @opportunity }
     end
@@ -54,20 +55,22 @@ class OpportunitiesController < ApplicationController
   end
 
   # POST /opportunities
-  # POST /opportunities.xml
+  # POST /opportunities.xml                                                AJAX
   #----------------------------------------------------------------------------
   def create
     @opportunity = Opportunity.new(params[:opportunity])
     @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
+    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
-        flash[:notice] = 'Opportunity was successfully created.'
+        format.js   # create.js.rjs
         format.html { redirect_to(@opportunity) }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
+        format.js   # create.js.rjs
         format.html { render :action => "new" }
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
@@ -114,7 +117,7 @@ class OpportunitiesController < ApplicationController
     @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
 
     render :update do |page|
-      page[:list].replace_html render(:partial => "opportunity", :collection => @opportunities)
+      page[:opportunities].replace_html render(:partial => "opportunity", :collection => @opportunities)
     end
   end
 

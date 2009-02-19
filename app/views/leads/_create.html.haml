@@ -1,0 +1,27 @@
+- remote_form_for(@lead) do |f|
+  = hidden_field_tag "lead[user_id]", @current_user.id
+  = f.error_messages
+  .section
+    %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td{ :valign => :top }
+          .label.top.req First name:
+          = f.text_field :first_name, :style => "width:240px"
+        %td= spacer
+        %td{ :valign => :top }
+          .label.top.req Last name:
+          = f.text_field :last_name, :style => "width:240px"
+      %tr
+        %td{ :valign => :top }
+          .label Email:
+          = f.text_field :email, :style => "width:240px"
+        %td= spacer
+        %td{ :valign => :top }
+          .label Phone:
+          = f.text_field :phone, :style => "width:240px"
+  - for partial in %w(status contact web permissions)
+    = render :partial => partial, :locals => { :f => f }
+  .buttonbar
+    = f.submit "Create Lead"
+    or
+    = link_to_remote "Cancel", { :url => new_lead_path, :with => "visible=true" }

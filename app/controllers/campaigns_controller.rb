@@ -14,7 +14,7 @@ class CampaignsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
       format.xml  { render :xml => @campaigns }
     end
   end
@@ -27,20 +27,21 @@ class CampaignsController < ApplicationController
     @comment = Comment.new
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # show.html.haml
       format.xml  { render :xml => @campaign }
     end
   end
 
   # GET /campaigns/new
-  # GET /campaigns/new.xml
+  # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
     @campaign = Campaign.new
     @users = User.all_except(@current_user) # to manage campaign permissions
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.js   # new.js.rjs
+      format.html # new.html.haml
       format.xml  { render :xml => @campaign }
     end
   end
@@ -52,7 +53,7 @@ class CampaignsController < ApplicationController
   end
 
   # POST /campaigns
-  # POST /campaigns.xml
+  # POST /campaigns.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def create
     @campaign = Campaign.new(params[:campaign])
@@ -60,10 +61,11 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
-        flash[:notice] = 'Campaign was successfully created.'
+        format.js   # create.js.rjs
         format.html { redirect_to(@campaign) }
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
       else
+        format.js   # create.js.rjs
         format.html { render :action => "new" }
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
@@ -89,16 +91,16 @@ class CampaignsController < ApplicationController
   end
 
   # DELETE /campaigns/1
-  # DELETE /campaigns/1.xml
+  # DELETE /campaigns/1.xml                                                AJAX
   #----------------------------------------------------------------------------
   def destroy
     @campaign = Campaign.find(params[:id])
     @campaign.destroy
 
     respond_to do |format|
+      format.js   { get_data_for_sidebar; render }
       format.html { redirect_to(campaigns_url) }
       format.xml  { head :ok }
-      format.js   { get_data_for_sidebar; render }
     end
   end
 
@@ -109,7 +111,7 @@ class CampaignsController < ApplicationController
     @campaigns = Campaign.my(@current_user).only(params[:status].split(","))
 
     render :update do |page|
-      page[:list].replace_html render(:partial => "campaign", :collection => @campaigns)
+      page[:campaigns].replace_html render(:partial => "campaign", :collection => @campaigns)
     end
   end
 

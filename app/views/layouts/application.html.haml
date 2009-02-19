@@ -2,15 +2,17 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => :en,  :lang => :en }
   %head
     %meta{ "http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
-    %title
-      = controller.controller_name + " : " + controller.action_name
-    = stylesheet_link_tag "screen"
-    = yield :stylesheet_link
-    = yield :styles
+    %title= controller.controller_name + " : " + controller.action_name
+    = stylesheet_link_tag "screen", :cache => true
+    - unless tabless_layout?
+      = stylesheet_link_tag "calendar_date_select/default.css", :cache => true
+    %style= yield :styles
 
     = javascript_include_tag :defaults, :cache => true
-    = yield :javascript_include
-    = yield :javascript
+    - unless tabless_layout?
+      = javascript_include_tag "calendar_date_select/calendar_date_select.js", :cache => true
+      = javascript_include_tag "calendar_date_select/format_american.js", :cache => true
+    %script{:type => "text/javascript"}= yield :javascript
 
   %body
     = render :partial => "layouts/header"
@@ -19,4 +21,4 @@
     - else
       = render :partial => "layouts/tabbed"
       = render :partial => "layouts/footer"
-    = yield(:javascript_epilogue)
+    %script{:type => "text/javascript"}= yield :javascript_epilogue

@@ -1,0 +1,10 @@
+if params[:visible] == "false"                          # show
+  page[:create_contact_arrow].replace_html "&#9660;"
+  page[:create_contact].replace_html :partial => "create"
+  page << "Effect.toggle('create_contact', 'slide', { duration: 0.25, afterFinish: function() { $('contact_first_name').focus(); } });"
+  page[:contact].replace_html "Create Contact"
+else                                                    # hide
+  page[:create_contact_arrow].replace_html "&#9658;"
+  page << "Effect.toggle('create_contact', 'slide', { duration: 0.25 });"
+  page[:contact].replace_html "Contacts"
+end

@@ -1,0 +1,10 @@
+if params[:visible] == "false"                          # show
+  page[:create_campaign_arrow].replace_html "&#9660;"
+  page[:create_campaign].replace_html :partial => "create"
+  page << "Effect.toggle('create_campaign', 'slide', { duration: 0.25, afterFinish: function() { $('campaign_name').focus(); } });"
+  page[:campaign].replace_html "Create Campaign"
+else                                                    # hide
+  page[:create_campaign_arrow].replace_html "&#9658;"
+  page << "Effect.toggle('create_campaign', 'slide', { duration: 0.25 });"
+  page[:campaign].replace_html "Campaigns"
+end

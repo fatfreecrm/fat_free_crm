@@ -1,0 +1,10 @@
+if params[:visible] == "false"                          # show
+  page[:create_account_arrow].replace_html "&#9660;"
+  page[:create_account].replace_html :partial => "create"
+  page << "Effect.toggle('create_account', 'slide', { duration: 0.25, afterFinish: function() { $('account_name').focus(); } });"
+  page[:account].replace_html "Create Account"
+else                                                    # hide
+  page[:create_account_arrow].replace_html "&#9658;"
+  page << "Effect.toggle('create_account', 'slide', { duration: 0.25 });"
+  page[:account].replace_html "Account"
+end

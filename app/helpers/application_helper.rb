@@ -32,11 +32,17 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def inline(text, url, options)
+    options[:collapsed] = true unless options[:collapsed] == false
     content_tag("div",
       link_to_remote("<small id='#{options[:id].to_s}_arrow'>#{ options[:collapsed] ? "&#9658;" : "&#9660;" }</small> #{text}", 
         :url => url,
         :with => "'visible=' + Element.visible('#{options[:id].to_s}')"
       ), :class => options[:class] || "title_menu")
+  end
+
+  #----------------------------------------------------------------------------
+  def styles_for(*models)
+    render :partial => "common/inline_styles", :locals => { :models => models }
   end
 
   #----------------------------------------------------------------------------
