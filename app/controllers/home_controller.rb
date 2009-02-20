@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  before_filter :require_user, :except => [ :toggle_form_section ]
-  before_filter "set_current_tab(:dashboard)", :except => [ :toggle_form_section ]
+  before_filter :require_user, :except => [ :toggle ]
+  before_filter "set_current_tab(:dashboard)", :except => [ :toggle ]
   before_filter "hook(:home_before_filter, self, :amazing => true)"
 
   #----------------------------------------------------------------------------
@@ -10,20 +10,16 @@ class HomeController < ApplicationController
     logger.p "Hello, #{@hello}!"
   end
   
-  # Ajax PUT /toggle_form_section
+  # Save expand/collapse state in the session.                             AJAX
   #----------------------------------------------------------------------------
-  def toggle_form_section
-    uri = URI.parse(request.env["HTTP_REFERER"])
-    path = uri.path.split("/")
-    key = "#{params[:id]}_#{path[1]}_#{path[-1]}".intern
-
+  def toggle
     render :update do |page|
       if params[:visible] == "false"                          # show
-        session[key] = true
+        session[params[:id].intern] = true
         page["#{params[:id]}_arrow"].replace_html "&#9660;"
         callback = "beforeStart"
       else                                                    # hide
-        session[key] = nil
+        session[params[:id].intern] = nil
         page["#{params[:id]}_arrow"].replace_html "&#9658;"
         callback = "afterFinish"
       end

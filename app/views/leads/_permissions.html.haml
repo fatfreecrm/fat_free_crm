@@ -1,9 +1,9 @@
-- collapsed = (@lead.errors.empty? && session[:permissions_leads_new].nil?)
-= subtitle :permissions, collapsed
+- collapsed = (@lead.errors.empty? && session[:lead_permissions].nil?)
+= subtitle :lead_permissions, collapsed
 .section
-  %small#permissions_intro{ hidden_if(!collapsed) }
+  %small#lead_permissions_intro{ hidden_if(!collapsed) }
     By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  #permissions{ hidden_if(collapsed) }
+  #lead_permissions{ hidden_if(collapsed) }
     .radio_box
       = radio_button_tag "lead[access]", "Private", @lead.access == "Private", :onclick => "$('people').hide()"
       Keep it private, do not share with others

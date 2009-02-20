@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Thu, Feb 19, 2008
+---------------------------------------------------------------------
+- Simplified storing expand/collapse state for form sections
+
 Wed, Feb 18, 2008
 ---------------------------------------------------------------------
 - Converted [Create...] forms to remote to be able to reuse them inline.

@@ -1,9 +1,9 @@
-- collapsed = (@opportunity.errors.empty? && session[:permissions_opportunities_new].nil?)
-= subtitle :permissions, collapsed
+- collapsed = (@opportunity.errors.empty? && session[:opportunity_permissions].nil?)
+= subtitle :opportunity_permissions, collapsed
 .section
-  %small#permissions_intro{ hidden_if(!collapsed) }
+  %small#opportunity_permissions_intro{ hidden_if(!collapsed) }
     By default only you will have access to the opportunity. You can change opportunity permissions later.
-  #permissions{ hidden_if(collapsed) }
+  #opportunity_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide(); $('account_access').value = 'Private'"
       Keep it private, do not share with others

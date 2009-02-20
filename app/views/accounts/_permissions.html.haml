@@ -1,9 +1,9 @@
-- collapsed = (@account.errors.empty? && session[:permissions_accounts_new].nil?)
-= subtitle :permissions, collapsed
+- collapsed = (@account.errors.empty? && session[:account_permissions].nil?)
+= subtitle :account_permissions, collapsed
 .section
-  %small#permissions_intro{ hidden_if(!collapsed) }
+  %small#account_permissions_intro{ hidden_if(!collapsed) }
     By default only you will have access to the account. You can change account permissions later.
-  #permissions{ hidden_if(collapsed) }
+  #account_permissions{ hidden_if(collapsed) }
     .radio_box
       = radio_button_tag "account[access]", "Private", @account.access == "Private", :onclick => "$('people').hide()"
       Keep it private, do not share with others
