@@ -1,7 +1,7 @@
 class LeadsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:leads)", :except => :filter
+  before_filter "set_current_tab(:leads)", :except => [ :new, :create, :destroy, :filter ]
 
   # GET /leads
   # GET /leads.xml
@@ -12,6 +12,8 @@ class LeadsController < ApplicationController
     else
       @leads = Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
     end
+
+    make_new_lead if session["create_lead"]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -36,9 +38,10 @@ class LeadsController < ApplicationController
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
-    @lead = Lead.new
-    @users = User.all_except(@current_user)
-    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    make_new_lead
+
+    @context = (params[:context].blank? ? "create_lead" : params[:context])
+    session[@context] = (params[:visible] == "true" ? nil : true)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -60,9 +63,11 @@ class LeadsController < ApplicationController
     @lead = Lead.new(params[:lead])
     @users = User.all_except(@current_user)
     @campaigns = Campaign.my(@current_user).all(:order => "name")
+    @context = (params[:context].blank? ? "create_lead" : params[:context])
 
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
+        session[@context] = nil
         format.js   # create.js.rjs
         format.html { redirect_to(@lead) }
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
@@ -93,16 +98,16 @@ class LeadsController < ApplicationController
   end
 
   # DELETE /leads/1
-  # DELETE /leads/1.xml
+  # DELETE /leads/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def destroy
     @lead = Lead.find(params[:id])
     @lead.destroy
 
     respond_to do |format|
+      format.js   { get_data_for_sidebar; render }
       format.html { redirect_to(leads_url) }
       format.xml  { head :ok }
-      format.js   { get_data_for_sidebar; render }
     end
   end
 

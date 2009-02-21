@@ -1,9 +1,12 @@
 = styles_for :campaign
 
-= inline "Create Campaign", new_campaign_path, :id => :create_campaign
-.title#campaign Campaigns
-
-.remote#create_campaign{ hidden }
+= inline :create_campaign, new_campaign_path
+- unless @campaign
+  .title#create_campaign_title Campaigns
+  .remote#create_campaign{ hidden }
+- else
+  .title#create_campaign_title Create Campaign
+  .remote#create_campaign= render :partial => "create"
 
 .list#campaigns
   - unless @campaigns.empty?

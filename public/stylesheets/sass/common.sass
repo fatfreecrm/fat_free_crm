@@ -16,7 +16,7 @@
     float left
     margin 0px 10px 0px 0px
 
-.title_menu
+.title_tools
   :font-size 12px
   :float right
   :margin 4px 0px 0px 0px
@@ -27,11 +27,15 @@
   :font
     :size 13px
     :weight bold
-  :padding 0px 3px 0px 0px
-  a:link, a:visited, a:hover
-    :background white
+  a:link, a:visited
     :color = !color_subtitle
     :text-decoration none
+  a:hover
+    :background none
+
+.subtitle_tools
+  :font-size 11px
+  :float right
    
 .radio_box
   :line-height 20px
@@ -81,7 +85,6 @@
   :padding 15px 15px 15px 15px
   
 .sidebar
-  //:border 1px blue dotted
   :color #3f3f3f
   :font-size 11px
   :padding 0px 12px 0px 12px
@@ -120,7 +123,7 @@
   :background whitesmoke
   :color #3f3f3f
   :margin 5px auto
-  :padding 5px 15px 15px 15px
+  :padding 5px 15px 10px 15px
 
 .inline
   :background lavender
@@ -131,8 +134,9 @@
 
 .remote
   :border 5px lavender solid
+  :background whitesmoke
   :margin 0px
-  :padding 5px 10px 0px 10px
+  :padding 0px 10px 0px 10px
 
 .buttonbar
   :border-top 1px gray solid
@@ -167,7 +171,6 @@
     :bottom-left-radius 7px
 
 .longstrip
-  /:background gainsboro
   :color black
   :float left
   :font-size 11px

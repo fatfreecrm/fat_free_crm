@@ -1,7 +1,7 @@
 = styles_for :account, :campaign
 
 #confirm{ hidden }
-.title_menu#menu
+.title_tools#menu
   = link_to("Edit", edit_opportunity_path(@opportunity)) + " | "
   = link_to_function("Delete?", confirm_delete(@opportunity))
 .title= @opportunity.name
@@ -18,10 +18,15 @@
     %small Select or Create Account (not implemented yet).
 
 %br
-= inline "Create Campaign", new_campaign_path, :id => :create_campaign
-.subtitle#campaign Campaign
 
-.remote#create_campaign{ hidden }
+- @context = :create_opportunity_campaign
+= inline @context, new_campaign_path, "Create Campaign", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Campaigns
+
+- unless @campaign
+  .remote{ hidden, :id => @context }
+- else
+  .remote{:id => @context }= render :partial => "campaigns/create"
 
 .list#campaigns
   - if @opportunity.campaign

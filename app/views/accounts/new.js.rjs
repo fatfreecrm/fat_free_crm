@@ -1,10 +1,10 @@
 if params[:visible] == "false"                          # show
-  page[:create_account_arrow].replace_html "&#9660;"
-  page[:create_account].replace_html :partial => "create"
-  page << "Effect.toggle('create_account', 'slide', { duration: 0.25, afterFinish: function() { $('account_name').focus(); } });"
-  page[:account].replace_html "Create Account"
+  page["#{@context}_arrow"].replace_html "&#9660;"
+  page["#{@context}_title"].replace_html "Create Account"
+  page[@context].replace_html :partial => "create"
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25, afterFinish: function() { $('account_name').focus(); } });"
 else                                                    # hide
-  page[:create_account_arrow].replace_html "&#9658;"
-  page << "Effect.toggle('create_account', 'slide', { duration: 0.25 });"
-  page[:account].replace_html "Account"
+  page["#{@context}_arrow"].replace_html "&#9658;"
+  page["#{@context}_title"].replace_html "Account"
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25 });"
 end

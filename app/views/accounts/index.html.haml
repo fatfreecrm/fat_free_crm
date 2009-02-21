@@ -1,9 +1,12 @@
 = styles_for :account
 
-= inline "Create Account", new_account_path, :id => :create_account
-.title#account Accounts
-
-.remote#create_account{ hidden }
+= inline :create_account, new_account_path
+- unless @account
+  .title#create_account_title Accounts
+  .remote#create_account{ hidden }
+- else
+  .title#create_account_title Create Account
+  .remote#create_account= render :partial => "create"
 
 .list#accounts
   - unless @accounts.empty?

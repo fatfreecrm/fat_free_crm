@@ -1,4 +1,5 @@
 - remote_form_for(@account) do |f|
+  = hidden_field_tag "context", "#{@context}"
   = hidden_field_tag "account[user_id]", @current_user.id
   = f.error_messages
   .section
@@ -18,10 +19,10 @@
 
     -### .label Tags:
     -### =f.text_field :tags, :style =>"width:500px"
-  = render :partial => "contact_info", :locals => { :f => f }
-  = render :partial => "permissions",  :locals => { :f => f }
+  = render :partial => "accounts/contact_info", :locals => { :f => f }
+  = render :partial => "accounts/permissions",  :locals => { :f => f }
   .buttonbar
     = f.submit "Create Account" 
     or 
-    = link_to_remote "Cancel", { :url => new_account_path, :with => "visible=true" }
+    = link_to_remote "Cancel", { :url => new_account_path, :with => "{ visible: true, context: '#{@context}' }" }
     

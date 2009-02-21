@@ -1,9 +1,12 @@
 = styles_for :opportunity
 
-= inline "Create Opportunity", new_opportunity_path, :id => :create_opportunity
-.title#opportunity Opportunities
-
-.remote#create_opportunity{ hidden }
+= inline :create_opportunity, new_opportunity_path
+- unless @opportunity
+  .title#create_opportunity_title Opportunities
+  .remote#create_opportunity{ hidden }
+- else
+  .title#create_opportunity_title Create Opportunity
+  .remote#create_opportunity= render :partial => "create"
 
 .list#opportunities
   - unless @opportunities.empty?

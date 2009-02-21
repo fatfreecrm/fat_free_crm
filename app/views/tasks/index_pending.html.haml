@@ -1,9 +1,8 @@
 = styles_for :task
 
-- collapsed = session["tasks_new_pending"].nil?
-=inline "Create Task", url_for(:action => :new, :view => @view), { :id => :inline, :collapsed => collapsed }
+= inline :create_pending_task, url_for(:action => :new, :view => @view), "Create Task"
 .title Tasks
-= render :partial => "create", :locals => { :collapsed => collapsed }
+= render :partial => "create"
 
 .log#log
   - if !@tasks.values.flatten.empty? || filtered_out?(@view)

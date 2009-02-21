@@ -3,7 +3,7 @@ module ApplicationHelper
 
   #-------------------------------------------------------------------
   def tabs
-    session[:current_tab] = :home unless session[:current_tab]
+    session[:current_tab] ||= :home
     Setting[:tabs].each { |tab| tab[:active] = (tab[:text].downcase.intern == session[:current_tab]) }
   end
   
@@ -31,13 +31,13 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def inline(text, url, options)
-    options[:collapsed] = true unless options[:collapsed] == false
+  def inline(id, url, text = id.to_s.titleize, options = {})
+    collapsed = session[id.to_s].nil?
     content_tag("div",
-      link_to_remote("<small id='#{options[:id].to_s}_arrow'>#{ options[:collapsed] ? "&#9658;" : "&#9660;" }</small> #{text}", 
+      link_to_remote("<small id='#{id}_arrow'>#{ collapsed ? "&#9658;" : "&#9660;" }</small> #{text}",
         :url => url,
-        :with => "'visible=' + Element.visible('#{options[:id].to_s}')"
-      ), :class => options[:class] || "title_menu")
+        :with => "{ visible: Element.visible('#{id}'), context: '#{id}' }"
+      ), :class => options[:class] || "title_tools")
   end
 
   #----------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 = render :partial => "calendar"
-.inline#inline{ hidden_if(collapsed) }
+
+.inline#create_assigned_task{ hidden_if(session["create_assigned_task"].nil?) }
   - remote_form_for(@task) do |f|
     = hidden_field_tag :view, @view
     = hidden_field_tag "task[user_id]", @current_user.id

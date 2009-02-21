@@ -1,10 +1,10 @@
 if params[:visible] == "false"                          # show
-  page[:create_opportunity_arrow].replace_html "&#9660;"
-  page[:create_opportunity].replace_html :partial => "create"
-  page << "Effect.toggle('create_opportunity', 'slide', { duration: 0.25, afterFinish: function() { $('opportunity_name').focus(); } });"
-  page[:opportunity].replace_html "Create Opportunity"
+  page["#{@context}_arrow"].replace_html "&#9660;"
+  page["#{@context}_title"].replace_html "Create Opportunity"
+  page[@context].replace_html :partial => "create"
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25, afterFinish: function() { $('opportunity_name').focus(); } });"
 else                                                    # hide
-  page[:create_opportunity_arrow].replace_html "&#9658;"
-  page << "Effect.toggle('create_opportunity', 'slide', { duration: 0.25 });"
-  page[:opportunity].replace_html "Opportunities"
+  page["#{@context}_arrow"].replace_html "&#9658;"
+  page["#{@context}_title"].replace_html "Opportunities"
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25 });"
 end

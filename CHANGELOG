@@ -4,9 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Fri, Feb 20, 2008
+---------------------------------------------------------------------
+- Major refactoring to fully support inline form embedding throughout the system.
+
 Thu, Feb 19, 2008
 ---------------------------------------------------------------------
-- Simplified storing expand/collapse state for form sections
+- Simplified storing expand/collapse state for form sections.
+- Started refactoring to support inline form embedding.
 
 Wed, Feb 18, 2008
 ---------------------------------------------------------------------

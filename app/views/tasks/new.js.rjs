@@ -1,7 +1,7 @@
 if params[:visible] == "false"                          # show
-  page[:inline_arrow].replace_html "&#9660;"
-  page << "Effect.toggle('inline', 'slide', { duration: 0.25, afterFinish: function() { $('task_name').focus(); } });"
+  page["#{@context}_arrow"].replace_html "&#9660;"
+  page << "Effect.toggle('#{@context}', 'slide', { duration: 0.25, afterFinish: function() { $('task_name').focus(); } });"
 else                                                    # hide
-  page[:inline_arrow].replace_html "&#9658;"
-  page << "Effect.toggle('inline', 'slide', { duration: 0.25 });"
+  page["#{@context}_arrow"].replace_html "&#9658;"
+  page << "Effect.toggle('#{@context}', 'slide', { duration: 0.25 });"
 end

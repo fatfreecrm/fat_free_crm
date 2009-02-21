@@ -1,7 +1,7 @@
 class CampaignsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:campaigns)", :except => :filter
+  before_filter "set_current_tab(:campaigns)", :except => [ :new, :create, :destroy, :filter ]
 
   # GET /campaigns
   # GET /campaigns.xml
@@ -12,6 +12,9 @@ class CampaignsController < ApplicationController
     else
       @campaigns = Campaign.my(@current_user).only(session[:filter_by_campaign_status].split(","))
     end
+
+    # If [Create Campaign] form is visible get the data to render it.
+    make_new_campaign if session["create_campaign"]
 
     respond_to do |format|
       format.html # index.html.haml
@@ -36,8 +39,11 @@ class CampaignsController < ApplicationController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    @campaign = Campaign.new
-    @users = User.all_except(@current_user) # to manage campaign permissions
+    make_new_campaign
+
+    # Save [Create Campaign] visiblity for given context.
+    @context = (params[:context].blank? ? "create_campaign" : params[:context])
+    session[@context] = (params[:visible] == "true" ? nil : true)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -58,9 +64,11 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(params[:campaign])
     @users = User.all_except(@current_user)
+    @context = (params[:context].blank? ? "create_campaign" : params[:context])
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
+        session[@context] = nil
         format.js   # create.js.rjs
         format.html { redirect_to(@campaign) }
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
@@ -104,7 +112,7 @@ class CampaignsController < ApplicationController
     end
   end
 
-  # Ajax request to filter out list of campaigns.
+  # Ajax request to filter out list of campaigns.                          AJAX
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_campaign_status] = params[:status]
@@ -115,7 +123,6 @@ class CampaignsController < ApplicationController
     end
   end
 
-  private
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @campaign_status_total = { :all => Campaign.my(@current_user).count, :other => 0 }

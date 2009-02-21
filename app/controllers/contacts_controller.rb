@@ -1,12 +1,13 @@
 class ContactsController < ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab(:contacts)"
+  before_filter "set_current_tab(:contacts)", :except => [ :new, :create, :destroy ]
 
   # GET /contacts
   # GET /contacts.xml
   #----------------------------------------------------------------------------
   def index
     @contacts = Contact.my(@current_user)
+    make_new_contact if session["create_contact"]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -32,10 +33,9 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @contact = Contact.new(:user => @current_user, :access => "Private")
-    @account = Account.new(:user => @current_user, :access => "Private")
-    @users = User.all_except(@current_user) # to manage account permissions
-    @accounts = Account.my(@current_user).all(:order => "name")
+    make_new_contact
+    @context = (params[:context].blank? ? "create_contact" : params[:context])
+    session[@context] = (params[:visible] == "true" ? nil : true)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -58,9 +58,11 @@ class ContactsController < ApplicationController
     @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
+    @context = (params[:context].blank? ? "create_contact" : params[:context])
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
+        session[@context] = nil
         format.js   # create.js.rjs
         format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
@@ -91,16 +93,16 @@ class ContactsController < ApplicationController
   end
 
   # DELETE /contacts/1
-  # DELETE /contacts/1.xml
+  # DELETE /contacts/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def destroy
     @contact = Contact.find(params[:id])
     @contact.destroy
 
     respond_to do |format|
+      format.js
       format.html { redirect_to(contacts_url) }
       format.xml  { head :ok }
-      format.js   { }
     end
   end
 end

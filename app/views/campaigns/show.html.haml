@@ -1,5 +1,5 @@
 #confirm{ hidden }
-.title_menu#menu
+.title_tools#menu
   = link_to("Edit", edit_campaign_path(@campaign)) + " | "
   = link_to_function("Delete?", confirm_delete(@campaign))
 .title= @campaign.name

@@ -1,12 +1,13 @@
 class AccountsController < ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab(:accounts)"
+  before_filter "set_current_tab(:accounts)", :except => [ :new, :create, :destroy ]
 
   # GET /accounts
   # GET /accounts.xml
   #----------------------------------------------------------------------------
   def index
     @accounts = Account.my(@current_user)
+    make_new_account if session["create_account"]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -32,8 +33,9 @@ class AccountsController < ApplicationController
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @account = Account.new
-    @users = User.all_except(@current_user) # to manage account permissions
+    make_new_account
+    @context = (params[:context].blank? ? "create_account" : params[:context])
+    session[@context] = (params[:visible] == "true" ? nil : true)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -54,9 +56,11 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
+    @context = (params[:context].blank? ? "create_account" : params[:context])
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
+        session[@context] = nil
         format.js   # create.js.rjs
         format.html { redirect_to(@account) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
@@ -94,9 +98,9 @@ class AccountsController < ApplicationController
     @account.destroy
 
     respond_to do |format|
+      format.js
       format.html { redirect_to(accounts_url) }
       format.xml  { head :ok }
-      format.js   { }
     end
   end
 

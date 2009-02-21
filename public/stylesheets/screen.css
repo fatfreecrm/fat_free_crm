@@ -107,7 +107,7 @@ tt {
   font-weight: bold;
   padding-bottom: 3px; }
 
-.title_menu {
+.title_tools {
   font-size: 12px;
   float: right;
   margin: 4px 0px 0px 0px; }
@@ -116,12 +116,16 @@ tt {
   border-bottom: 1px silver solid;
   color: #2f2f2f;
   font-size: 13px;
-  font-weight: bold;
-  padding: 0px 3px 0px 0px; }
-  .subtitle a:link, .subtitle a:visited, .subtitle a:hover {
-    background: white;
+  font-weight: bold; }
+  .subtitle a:link, .subtitle a:visited {
     color: darkslateblue;
     text-decoration: none; }
+  .subtitle a:hover {
+    background: none; }
+
+.subtitle_tools {
+  font-size: 11px;
+  float: right; }
 
 .radio_box {
   line-height: 20px; }
@@ -199,7 +203,7 @@ tt {
   background: whitesmoke;
   color: #3f3f3f;
   margin: 5px auto;
-  padding: 5px 15px 15px 15px; }
+  padding: 5px 15px 10px 15px; }
 
 .inline {
   background: lavender;
@@ -210,8 +214,9 @@ tt {
 
 .remote {
   border: 5px lavender solid;
+  background: whitesmoke;
   margin: 0px;
-  padding: 5px 10px 0px 10px; }
+  padding: 0px 10px 0px 10px; }
 
 .buttonbar {
   border-top: 1px gray solid;

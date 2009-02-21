@@ -1,8 +1,5 @@
-%script{:type => "text/javascript"}
-  crm.date_select_popup("opportunity_closes_on");
-  = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
-
 - remote_form_for(@opportunity) do |f|
+  = hidden_field_tag "context", "#{@context}"
   = f.hidden_field :user_id
   = f.hidden_field :assigned_to
   = f.error_messages
@@ -55,4 +52,8 @@
   .buttonbar
     = f.submit "Create Opportunity", :onclick => %/$("opportunity_assigned_to").value = $F("account_assigned_to");/
     or
-    = link_to_remote "Cancel", { :url => new_opportunity_path, :with => "visible=true" }
+    = link_to_remote "Cancel", { :url => new_opportunity_path, :with => "{ visible: true, context: '#{@context}' }" }
+
+%script{:type => "text/javascript"}
+  crm.date_select_popup("opportunity_closes_on");
+  = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"

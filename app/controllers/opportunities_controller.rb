@@ -1,7 +1,7 @@
 class OpportunitiesController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:opportunities)", :except => :filter
+  before_filter "set_current_tab(:opportunities)", :except => [ :new, :create, :destroy, :filter ]
 
   # GET /opportunities
   # GET /opportunities.xml
@@ -12,6 +12,7 @@ class OpportunitiesController < ApplicationController
     else
       @opportunities = Opportunity.my(@current_user).only(session[:filter_by_opportunity_stage].split(","))
     end
+    make_new_opportunity if session["create_opportunity"]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,6 +27,8 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.find(params[:id])
     @comment = Comment.new
 
+    make_new_campaign if session["create_opportunity_campaign"]
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @opportunity }
@@ -36,10 +39,9 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
-    @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
-    @account = Account.new(:user => @current_user, :access => "Private")
-    @users = User.all_except(@current_user)
-    @accounts = Account.my(@current_user).all(:order => "name")
+    make_new_opportunity
+    @context = (params[:context].blank? ? "create_opportunity" : params[:context])
+    session[@context] = (params[:visible] == "true" ? nil : true)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -63,9 +65,11 @@ class OpportunitiesController < ApplicationController
     @users = User.all_except(@current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
     @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @context = (params[:context].blank? ? "create_opportunity" : params[:context])
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
+        session[@context] = nil
         format.js   # create.js.rjs
         format.html { redirect_to(@opportunity) }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
@@ -96,20 +100,20 @@ class OpportunitiesController < ApplicationController
   end
 
   # DELETE /opportunities/1
-  # DELETE /opportunities/1.xml
+  # DELETE /opportunities/1.xml                                            AJAX
   #----------------------------------------------------------------------------
   def destroy
     @opportunity = Opportunity.find(params[:id])
     @opportunity.destroy
 
     respond_to do |format|
+      format.js   { get_data_for_sidebar; render }
       format.html { redirect_to(opportunities_url) }
       format.xml  { head :ok }
-      format.js   { get_data_for_sidebar; render }
     end
   end
 
-  # Ajax request to filter out list of opportunities.
+  # Ajax request to filter out list of opportunities.                      AJAX
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_opportunity_stage] = params[:stage]

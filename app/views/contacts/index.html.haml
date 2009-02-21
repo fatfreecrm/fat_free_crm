@@ -1,7 +1,11 @@
-= inline "Create Contact", new_contact_path, :id => :create_contact
-.title#contact Contacts
+= inline :create_contact, new_contact_path
 
-.remote#create_contact{ hidden }
+- unless @contact
+  .title#create_contact_title Contacts
+  .remote#create_contact{ hidden }
+- else
+  .title#create_contact_title Create Contact
+  .remote#create_contact= render :partial => "create"
 
 .list#contacts
   - unless @contacts.empty?

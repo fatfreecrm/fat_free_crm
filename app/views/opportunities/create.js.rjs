@@ -1,11 +1,11 @@
 if @opportunity.valid?
-  page[:create_opportunity_arrow].replace_html "&#9658;"
-  page << "Effect.toggle('create_opportunity', 'slide', { duration: 0.1 });"
-  page[:opportunity].replace_html "Opportunities"
+  page["#{@context}_arrow"].replace_html "&#9658;"
+  page["#{@context}_title"].replace_html "Opportunities"
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
   page.insert_html :top, :opportunities, :partial => "opportunity", :collection => [ @opportunity ]
   page[dom_id(@opportunity)].visual_effect :highlight, :duration => 1.5
 else
-  page[:create_opportunity].replace_html :partial => "create"
+  page[@context].replace_html :partial => "create"
+  page[@context].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:opportunity_name].focus
-  page[:create_opportunity].visual_effect :shake, :duration => 0.25, :distance => 6
 end

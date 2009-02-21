@@ -1,9 +1,8 @@
 = styles_for :task
 
-- collapsed = session["tasks_new_assigned"].nil?
-=inline "Assign Task", url_for(:action => :new, :view => @view), { :id => :inline, :collapsed => collapsed }
+=inline :create_assigned_task, url_for(:action => :new, :view => @view), "Assign Task"
 .title Assigned Tasks
-= render :partial => "assign", :locals => { :collapsed => collapsed }
+= render :partial => "assign"
 
 .log#log
   - if !@tasks.values.flatten.empty? || filtered_out?(@view)

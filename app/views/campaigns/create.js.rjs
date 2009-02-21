@@ -1,11 +1,11 @@
 if @campaign.valid?
-  page[:create_campaign_arrow].replace_html "&#9658;"
-  page << "Effect.toggle('create_campaign', 'slide', { duration: 0.1 });"
-  page[:campaign].replace_html "Campaigns"
+  page["#{@context}_arrow"].replace_html "&#9658;"
+  page["#{@context}_title"].replace_html "Campaigns"
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
   page.insert_html :top, :campaigns, :partial => "campaign", :collection => [ @campaign ]
   page[dom_id(@campaign)].visual_effect :highlight, :duration => 1.5
 else
-  page[:create_campaign].replace_html :partial => "create"
+  page[@context].replace_html :partial => "create"
+  page[@context].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:campaign_name].focus
-  page[:create_campaign].visual_effect :shake, :duration => 0.25, :distance => 6
 end

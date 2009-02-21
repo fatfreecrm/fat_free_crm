@@ -38,7 +38,8 @@ class TasksController < ApplicationController
   def new
     @view = params[:view] || "pending"
     @task = Task.new
-    session["tasks_new_#{@view}"] = (params[:visible] == "false" ? true : nil)
+    @context = "create_#{@view}_task"
+    session[@context] = (params[:visible] == "false" ? true : nil)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -59,6 +60,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(params[:task])
     @view = params[:view] || "pending"
+    @context = "create_#{@view}_task"
 
     respond_to do |format|
       if @task.save

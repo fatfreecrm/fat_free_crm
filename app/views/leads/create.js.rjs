@@ -1,11 +1,11 @@
 if @lead.valid?
-  page[:create_lead_arrow].replace_html "&#9658;"
-  page << "Effect.toggle('create_lead', 'slide', { duration: 0.1 });"
-  page[:lead].replace_html "Leads"
+  page["#{@context}_arrow"].replace_html "&#9658;"
+  page["#{@context}_title"].replace_html "Leads"
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
   page.insert_html :top, :leads, :partial => "lead", :collection => [ @lead ]
   page[dom_id(@lead)].visual_effect :highlight, :duration => 1.5
 else
-  page[:create_lead].replace_html :partial => "create"
+  page[@context].replace_html :partial => "create"
+  page[@context].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:lead_first_name].focus
-  page[:create_lead].visual_effect :shake, :duration => 0.25, :distance => 6
 end
