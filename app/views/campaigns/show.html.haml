@@ -6,3 +6,15 @@
 
 = render :partial => "common/new_comment", :locals => { :commentable => @campaign }
 = render :partial => "common/comment", :collection => @campaign.comments
+
+%br
+- @context = "create_lead_campaign_#{@campaign.id}"
+- session[@context] = nil
+= inline @context, new_lead_path, "Create Lead", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Leads
+
+.remote{ hidden, :id => @context }
+
+.list#leads
+  - unless @campaign.leads.empty?
+    = render :partial => "leads/lead", :collection => @campaign.leads

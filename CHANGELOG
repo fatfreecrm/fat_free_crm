@@ -4,9 +4,17 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Feb 23, 2008
+---------------------------------------------------------------------
+- Implemented adding leads from within campaign landing page.
+
+Sun, Feb 22, 2008
+---------------------------------------------------------------------
+- Adding parent object support for inline forms.
+
 Fri, Feb 20, 2008
 ---------------------------------------------------------------------
-- Major refactoring to fully support inline form embedding throughout the system.
+- Major refactoring to support inline form embedding throughout the system.
 
 Thu, Feb 19, 2008
 ---------------------------------------------------------------------

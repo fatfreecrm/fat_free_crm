@@ -27,7 +27,7 @@
 
 class Campaign < ActiveRecord::Base
   belongs_to :user
-  has_many :leads
+  has_many :leads, :order => "id DESC"
   has_many :opportunities
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
 

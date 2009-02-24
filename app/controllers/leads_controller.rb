@@ -38,10 +38,9 @@ class LeadsController < ApplicationController
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_lead
-
     @context = (params[:context].blank? ? "create_lead" : params[:context])
     session[@context] = (params[:visible] == "true" ? nil : true)
+    make_new_lead(@context)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -68,6 +67,7 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
         session[@context] = nil
+        get_data_for_sidebar if request.referer =~ /leads$/
         format.js   # create.js.rjs
         format.html { redirect_to(@lead) }
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
@@ -104,8 +104,11 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
     @lead.destroy
 
+    # Update sidebar only when deleting a lead from /leads page.
+    get_data_for_sidebar if request.referer =~ /leads$/
+
     respond_to do |format|
-      format.js   { get_data_for_sidebar; render }
+      format.js   # destroy.js.rjs
       format.html { redirect_to(leads_url) }
       format.xml  { head :ok }
     end
