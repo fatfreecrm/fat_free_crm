@@ -33,9 +33,9 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_contact
     @context = (params[:context].blank? ? "create_contact" : params[:context])
     session[@context] = (params[:visible] == "true" ? nil : true)
+    make_new_lead(@context)
 
     respond_to do |format|
       format.js   # new.js.rjs

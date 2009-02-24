@@ -10,11 +10,21 @@
 = render :partial => "common/comment", :collection => @account.comments
 
 %br
-.subtitle#contact Contacts
+- @context = "create_contact_account_#{@account.id}"
+- session[@context] = nil
+//= inline @context, new_contact_path, "Create Contact", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Contacts
+
+//.remote{ hidden, :id => @context }
 .list#contacts
   = render :partial => "contacts/contact", :collection => @account.contacts
 
 %br
-.subtitle#opportunity Opportunities
+- @context = "create_opportunity_account_#{@account.id}"
+- session[@context] = nil
+= inline @context, new_opportunity_path, "Create Opportunity", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Opportunities
+
+.remote{ hidden, :id => @context }
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @account.opportunities

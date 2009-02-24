@@ -39,9 +39,9 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_opportunity
     @context = (params[:context].blank? ? "create_opportunity" : params[:context])
     session[@context] = (params[:visible] == "true" ? nil : true)
+    make_new_opportunity(@context)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -70,6 +70,7 @@ class OpportunitiesController < ApplicationController
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
         session[@context] = nil
+        get_data_for_sidebar if request.referer =~ /opportunities$/
         format.js   # create.js.rjs
         format.html { redirect_to(@opportunity) }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
@@ -105,6 +106,7 @@ class OpportunitiesController < ApplicationController
   def destroy
     @opportunity = Opportunity.find(params[:id])
     @opportunity.destroy
+    get_data_for_sidebar if request.referer =~ /opportunities$/
 
     respond_to do |format|
       format.js   { get_data_for_sidebar; render }

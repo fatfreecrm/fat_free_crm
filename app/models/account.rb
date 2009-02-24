@@ -26,7 +26,7 @@ class Account < ActiveRecord::Base
   has_many :account_contacts, :dependent => :destroy
   has_many :contacts, :through => :account_contacts, :uniq => true
   has_many :account_opportunities, :dependent => :destroy
-  has_many :opportunities, :through => :account_opportunities, :uniq => true
+  has_many :opportunities, :through => :account_opportunities, :uniq => true, :order => "id DESC"
 
   uses_mysql_uuid
   uses_user_permissions
