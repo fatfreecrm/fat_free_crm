@@ -35,7 +35,7 @@ class ContactsController < ApplicationController
   def new
     @context = (params[:context].blank? ? "create_contact" : params[:context])
     session[@context] = (params[:visible] == "true" ? nil : true)
-    make_new_lead(@context)
+    make_new_contact(@context)
 
     respond_to do |format|
       format.js   # new.js.rjs

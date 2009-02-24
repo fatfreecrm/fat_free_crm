@@ -12,10 +12,10 @@
 %br
 - @context = "create_contact_account_#{@account.id}"
 - session[@context] = nil
-//= inline @context, new_contact_path, "Create Contact", { :class => "subtitle_tools" }
+= inline @context, new_contact_path, "Create Contact", { :class => "subtitle_tools" }
 .subtitle{ :id => "#{@context}_title"} Contacts
 
-//.remote{ hidden, :id => @context }
+.remote{ hidden, :id => @context }
 .list#contacts
   = render :partial => "contacts/contact", :collection => @account.contacts
 
