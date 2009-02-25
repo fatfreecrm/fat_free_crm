@@ -50,7 +50,8 @@ class Lead < ActiveRecord::Base
   validates_presence_of :last_name, :message => "^Please specify last name."
   validate :users_for_shared_access
 
-  after_create :increment_leads_count
+  after_create  :increment_leads_count
+  after_destroy :decrement_leads_count
 
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
@@ -76,7 +77,6 @@ class Lead < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def convert(with_opportunity = true)
     update_attributes(:status => "converted")
-    increment_opportunities_count if with_opportunity
   end
 
   #----------------------------------------------------------------------------
@@ -93,9 +93,9 @@ class Lead < ActiveRecord::Base
   end
 
   #----------------------------------------------------------------------------
-  def increment_opportunities_count
+  def decrement_leads_count
     if self.campaign_id
-      Campaign.increment_counter(:opportunities_count, self.campaign_id)
+      Campaign.decrement_counter(:leads_count, self.campaign_id)
     end
   end
 

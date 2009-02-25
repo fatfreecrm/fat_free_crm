@@ -42,6 +42,9 @@ class Opportunity < ActiveRecord::Base
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
 
+  after_create  :increment_opportunities_count
+  after_destroy :decrement_opportunities_count
+
   #----------------------------------------------------------------------------
   def weighted_amount
     (amount || 0) * (probability || 0) / 100.0
@@ -78,6 +81,20 @@ class Opportunity < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, "^Please specify users to share the opportunity with.") if self[:access] == "Shared" && !self.permissions.any?
+  end
+
+  #----------------------------------------------------------------------------
+  def increment_opportunities_count
+    if self.campaign_id
+      Campaign.increment_counter(:opportunities_count, self.campaign_id)
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def decrement_opportunities_count
+    if self.campaign_id
+      Campaign.decrement_counter(:opportunities_count, self.campaign_id)
+    end
   end
 
 end

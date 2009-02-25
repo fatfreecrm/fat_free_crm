@@ -18,3 +18,13 @@
 .list#leads
   - unless @campaign.leads.empty?
     = render :partial => "leads/lead", :collection => @campaign.leads
+
+%br
+- @context = "create_opportunity_campaign_#{@campaign.id}"
+- session[@context] = nil
+= inline @context, new_opportunity_path, "Create Opportunity", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Opportunities
+
+.remote{ hidden, :id => @context }
+.list#opportunities
+  = render :partial => "opportunities/opportunity", :collection => @campaign.opportunities

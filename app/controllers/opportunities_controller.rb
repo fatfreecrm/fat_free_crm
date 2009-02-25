@@ -61,8 +61,8 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @opportunity = Opportunity.new(params[:opportunity])
-    @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
+    @account = Account.new(params[:account])
     @accounts = Account.my(@current_user).all(:order => "name")
     @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
     @context = (params[:context].blank? ? "create_opportunity" : params[:context])
