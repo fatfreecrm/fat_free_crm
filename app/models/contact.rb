@@ -39,7 +39,7 @@ class Contact < ActiveRecord::Base
   has_one :account_contact, :dependent => :destroy
   has_one :account, :through => :account_contact
   has_many :contact_opportunities, :dependent => :destroy
-  has_many :opportunities, :through => :contact_opportunities, :uniq => true
+  has_many :opportunities, :through => :contact_opportunities, :uniq => true, :order => "id DESC"
 
   uses_mysql_uuid
   uses_user_permissions
@@ -60,6 +60,7 @@ class Contact < ActiveRecord::Base
   def save_with_account_and_permissions(params)
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
+    self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
     save_with_permissions(params[:users])
   end
 

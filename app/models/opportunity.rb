@@ -29,7 +29,7 @@ class Opportunity < ActiveRecord::Base
   has_one :account_opportunity, :dependent => :destroy
   has_one :account, :through => :account_opportunity
   has_many :contact_opportunities, :dependent => :destroy
-  has_many :contacts, :through => :contact_opportunities, :uniq => true
+  has_many :contacts, :through => :contact_opportunities, :uniq => true, :order => "id DESC"
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
 
   uses_mysql_uuid
@@ -55,6 +55,7 @@ class Opportunity < ActiveRecord::Base
   def save_with_account_and_permissions(params)
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
+    self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
     save_with_permissions(params[:users])
   end
 

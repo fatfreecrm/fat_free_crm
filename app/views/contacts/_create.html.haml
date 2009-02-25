@@ -1,5 +1,6 @@
 - remote_form_for(@contact) do |f|
   = hidden_field_tag "context", "#{@context}"
+  = hidden_field_tag "opportunity", "#{@opportunity.id if @opportunity}"
   = f.hidden_field :user_id
   = f.hidden_field :assigned_to
   = f.error_messages

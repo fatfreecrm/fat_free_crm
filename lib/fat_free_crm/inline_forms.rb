@@ -46,7 +46,14 @@ module FatFreeCRM
     def find_parent_object_for(model, context)
       return if context !~ /\d+$/
       parent, id = context.split("_")[-2, 2]
-      model.attributes = { parent => instance_variable_set("@#{parent}", parent.capitalize.constantize.find(id)) }
+      if parent.pluralize != parent
+        # One-to-one or one-to-many -- assign found object instance to the model.
+        model.send("#{parent}=", instance_variable_set("@#{parent}", parent.capitalize.constantize.find(id)))
+      else
+        # Many-to-many -- find the instance but don't assign it.
+        parent = parent.singularize
+        instance_variable_set("@#{parent}", parent.capitalize.constantize.find(id))
+      end
     end
 
   end
