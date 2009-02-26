@@ -45,8 +45,8 @@ module FatFreeCRM
     #--------------------------------------------------------------------------
     def make_new_task(context = nil)
       @task = Task.new
-      @users = User.find(:all)
-      @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "Specific date...", :specific_time ]
+      @users = User.all_except(@current_user)
+      @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.task_category.invert.sort
       find_related_asset_for(@task, context) if context =~ /\d+$/
     end

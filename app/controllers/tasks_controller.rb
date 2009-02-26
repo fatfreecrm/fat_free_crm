@@ -62,8 +62,9 @@ class TasksController < ApplicationController
     @context = (params[:context].blank? ? "create_task" : params[:context])
 
     respond_to do |format|
-      if @task.save_for(@current_user)
+      if @task.save
         update_sidebar if @context == "create_task"
+        session[@context] = nil
         format.js   # create.js.rjs
         format.html { redirect_to(@task) }
         format.xml  { render :xml => @task, :status => :created, :location => @task }

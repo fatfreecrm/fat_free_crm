@@ -62,12 +62,6 @@ class Task < ActiveRecord::Base
 
   before_create :set_due_at, :notify_assignee
 
-  #----------------------------------------------------------------------------
-  def save_for(current_user)
-    self.assigned_to = nil if self.assigned_to == current_user.id
-    save
-  end
-
   # Convert specific due_date to one of due_today, due_tomorrow, etc. hints.
   #----------------------------------------------------------------------------
   def hint

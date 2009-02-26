@@ -19,7 +19,7 @@
       &ndash;
     %tt
       - if pending.due_at_hint == "due_asap"
-        due as soon as possible.
+        due now.
       - elsif pending.due_at_hint == "due_later"
         due sometime soon.
       - elsif pending.due_at < Date.today

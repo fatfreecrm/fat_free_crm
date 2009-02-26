@@ -1,19 +1,40 @@
 if @task.valid?
+  page["#{@context}_arrow"].replace_html "&#9658;"
+  page["#{@context}_title"].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
+
+  # "Classic" [Create Task] form requested from the Tasks page.
   if @context == "create_task"
-    hint = @task.hint
-    page["list_#{hint}"].show
-    page.insert_html :top, hint, :partial => @view, :collection => [@task], :locals => { :bucket => hint }
-    page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
-    page[:sidebar].replace_html :partial => "sidebar_index"
-    page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+
+    # Show flash if assigned to somebody else from the [Pending Tasks] page.
+    if @view == "pending" && @task.assigned_to?
+      page[:flash].update "The task has been created and assigned to #{@task.assignee.full_name} (" << link_to("view assigned tasks", url_for(:view => "assigned")) << ")."
+      page[:flash].show
+
+    # Show flash if assigned to current user from the [Assigned Tasks] page.
+    elsif @view == "assigned" && !@task.assigned_to?
+      page[:flash].update "The task has been created (" << link_to("view pending tasks", tasks_url) << ")."
+      page[:flash].show
+
+    # Show newly created task by inserting its div into appropriate bucket
+    # then update tasks sidebar.
+    else
+      hint = @task.hint
+      page["list_#{hint}"].show
+      page.insert_html :top, hint, :partial => @view, :collection => [@task], :locals => { :bucket => hint }
+      page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
+      page[:sidebar].replace_html :partial => "sidebar_index"
+      page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+    end
+
+  # Inline [Create Task] form reqested from any of the core asset landing pages.
   else
     partial = (@task.assigned_to ? "assigned" : "pending")
     page.insert_html :top, :tasks, :partial => partial, :collection => [@task], :locals => { :bucket => nil }
     page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
   end
-  page["#{@context}_arrow"].replace_html "&#9658;"
-  page["#{@context}_title"].replace_html (@view == "assigned" ? "Assigned Tasks" : "Tasks")
-  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
+
+# Couldn't create the task -- validation failed.
 else
-  page[:create_task].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[@context].visual_effect :shake, :duration => 0.25, :distance => 6
 end

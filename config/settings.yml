@@ -118,17 +118,17 @@ task_category_color:
 task_due_at_hint:
   - - Overdue
     - :overdue
-  - - ASAP
+  - - As Soon As Possible
     - :due_asap
   - - Today
     - :due_today
   - - Tomorrow
     - :due_tomorrow
-  - - This week
+  - - This Week
     - :due_this_week
-  - - Next week
+  - - Next Week
     - :due_next_week
-  - - Later
+  - - Sometime Later
     - :due_later
 
 task_completed:

@@ -1,5 +1,3 @@
-= render :partial => "calendar"
-
 - context = "create_task"
 = inline context, url_for(:action => :new, :view => @view), (@view == "assigned" ? "Assign Task" : "Create Task")
 - unless @task

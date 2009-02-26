@@ -47,7 +47,16 @@ var crm = {
     $("account_selector").update("(<a href='#' onclick='crm.create_account(); return false;'>create new</a> or select existing):");
     $("account_name").hide();  $("account_name").disable();
     $("account_id").enable();  $("account_id").show();  $("account_id").focus();
+  },
+
+  flip_calendar: function(value) {
+    if (value == "specific_time") {
+      $("task_due_at_hint").toggle(); // Hide dropdown.
+      $("task_calendar").toggle();    // Show editable date field.
+      $("task_calendar").focus();     // Focus to invoke calendar popup.
+    }
   }
+
 }
 
 Event.observe(window, "load", function() { crm.focus_on_first_field() })
