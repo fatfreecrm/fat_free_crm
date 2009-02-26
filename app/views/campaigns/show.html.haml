@@ -1,3 +1,5 @@
+= styles_for :lead, :opportunity, :task
+
 #confirm{ hidden }
 .title_tools#menu
   = link_to("Edit", edit_campaign_path(@campaign)) + " | "
@@ -7,6 +9,24 @@
 = render :partial => "common/new_comment", :locals => { :commentable => @campaign }
 = render :partial => "common/comment", :collection => @campaign.comments
 
+-#-----------------------------------------------------------------------------
+%br
+- @context = "create_task_campaigns_#{@campaign.id}" # NOTE: plural campaigns
+- session[@context] = nil
+= inline @context, new_task_path, "Create Task", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Tasks
+
+.remote{ hidden, :id => @context }
+
+.log#tasks
+  - if @campaign.tasks.my(@current_user).pending.any?
+    = render :partial => "tasks/pending", :collection => @campaign.tasks.my(@current_user).pending, :locals => { :bucket => nil }
+  - if @campaign.tasks.assigned.any?
+    = render :partial => "tasks/assigned", :collection => @campaign.tasks.assigned, :locals => { :bucket => nil }
+  - if @campaign.tasks.completed.any?
+    = render :partial => "tasks/completed", :collection => @campaign.tasks.completed, :locals => { :bucket => nil }
+
+-#-----------------------------------------------------------------------------
 %br
 - @context = "create_lead_campaign_#{@campaign.id}"
 - session[@context] = nil
@@ -16,9 +36,9 @@
 .remote{ hidden, :id => @context }
 
 .list#leads
-  - unless @campaign.leads.empty?
-    = render :partial => "leads/lead", :collection => @campaign.leads
+  = render :partial => "leads/lead", :collection => @campaign.leads
 
+-#-----------------------------------------------------------------------------
 %br
 - @context = "create_opportunity_campaign_#{@campaign.id}"
 - session[@context] = nil

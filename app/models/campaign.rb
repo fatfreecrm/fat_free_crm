@@ -27,8 +27,9 @@
 
 class Campaign < ActiveRecord::Base
   belongs_to :user
-  has_many :leads, :order => "id DESC", :dependent => :destroy
-  has_many :opportunities, :order => "id DESC", :dependent => :destroy
+  has_many :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
+  has_many :leads, :dependent => :destroy, :order => "id DESC"
+  has_many :opportunities, :dependent => :destroy, :order => "id DESC"
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
 
   uses_mysql_uuid

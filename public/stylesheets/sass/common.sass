@@ -125,13 +125,6 @@
   :margin 5px auto
   :padding 5px 15px 10px 15px
 
-.inline
-  :background lavender
-  :border-bottom 1px silver solid
-  :color #3f3f3f
-  :margin 0px
-  :padding 5px 15px 15px 15px
-
 .remote
   :border 5px lavender solid
   :background whitesmoke
@@ -183,10 +176,16 @@
   :margin 0px 0px 10px 0px
 
 .comment
-  :background #eeeeee
-  :margin 5px 0px 0px 0px
+  :background #efefef
+  :margin 2px 0px 0px 0px
   :overflow hidden
   :padding 5px
+  :-moz-border-radius
+    :bottomleft 8px
+    :bottomright 8px
+  :-webkit-border-radius
+    :bottom-left-radius 8px
+    :bottom-right-radius 8px
 
   .avatar
     :float left
@@ -201,7 +200,7 @@
     :color #666666
 
   dt
-    :padding 2px 0px 0px 0px
+    :padding 0px
 
 // Single-row lists.
 //------------------------------------------------------------------------------

@@ -31,6 +31,7 @@ class Task < ActiveRecord::Base
   named_scope :my,            lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   named_scope :assigned_by,   lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL", user.id ], :include => :assignee } }
   named_scope :pending,       :conditions => "completed_at IS NULL", :order => "due_at, id"
+  named_scope :assigned,      :conditions => "completed_at IS NULL AND assigned_to IS NOT NULL", :order => "due_at, id"
   named_scope :completed,     :conditions => "completed_at IS NOT NULL", :order => "completed_at DESC"
 
   # Due date scopes.
@@ -60,6 +61,12 @@ class Task < ActiveRecord::Base
   validate              :specific_time
 
   before_create :set_due_at, :notify_assignee
+
+  #----------------------------------------------------------------------------
+  def save_for(current_user)
+    self.assigned_to = nil if self.assigned_to == current_user.id
+    save
+  end
 
   # Convert specific due_date to one of due_today, due_tomorrow, etc. hints.
   #----------------------------------------------------------------------------
@@ -94,6 +101,8 @@ class Task < ActiveRecord::Base
   # Returns bucket if it's empty (i.e. we have to hide it), nil otherwise.
   #----------------------------------------------------------------------------
   def self.bucket(user, bucket, view = "pending")
+    logger.p bucket.inspect
+    return if bucket.blank?
     count = (view == "assigned" ? assigned_by(user).send(bucket).pending.count : my(user).send(bucket).send(view).count)
     count == 0 ? bucket : nil
   end

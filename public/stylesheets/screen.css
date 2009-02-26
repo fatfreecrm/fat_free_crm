@@ -205,13 +205,6 @@ tt {
   margin: 5px auto;
   padding: 5px 15px 10px 15px; }
 
-.inline {
-  background: lavender;
-  border-bottom: 1px silver solid;
-  color: #3f3f3f;
-  margin: 0px;
-  padding: 5px 15px 15px 15px; }
-
 .remote {
   border: 5px lavender solid;
   background: whitesmoke;
@@ -261,10 +254,14 @@ tt {
   margin: 0px 0px 10px 0px; }
 
 .comment {
-  background: #eeeeee;
-  margin: 5px 0px 0px 0px;
+  background: #efefef;
+  margin: 2px 0px 0px 0px;
   overflow: hidden;
-  padding: 5px; }
+  padding: 5px;
+  -moz-border-radius-bottomleft: 8px;
+  -moz-border-radius-bottomright: 8px;
+  -webkit-border-radius-bottom-left-radius: 8px;
+  -webkit-border-radius-bottom-right-radius: 8px; }
   .comment .avatar {
     float: left;
     padding: 0px 10px 5px 0px; }
@@ -275,7 +272,7 @@ tt {
     font-size: 10px;
     color: #666666; }
   .comment dt {
-    padding: 2px 0px 0px 0px; }
+    padding: 0px; }
 
 .log {
   padding: 8px 0px 0px 0px; }

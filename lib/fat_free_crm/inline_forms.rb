@@ -6,14 +6,14 @@ module FatFreeCRM
     def make_new_account(context = nil)
       @account = Account.new
       @users = User.all_except(@current_user)
-      find_parent_object_for(@account, context) if context
+      find_related_asset_for(@account, context) if context =~ /\d+$/
     end
 
     #--------------------------------------------------------------------------
     def make_new_campaign(context = nil)
       @campaign = Campaign.new
       @users = User.all_except(@current_user)
-      find_parent_object_for(@campaign, context) if context
+      find_related_asset_for(@campaign, context) if context =~ /\d+$/
     end
 
     #--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ module FatFreeCRM
       @users = User.all_except(@current_user)
       @account = Account.new(:user => @current_user, :access => "Private")
       @accounts = Account.my(@current_user).all(:order => "name")
-      find_parent_object_for(@contact, context) if context
+      find_related_asset_for(@contact, context) if context =~ /\d+$/
     end
 
     #--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ module FatFreeCRM
       @lead = Lead.new
       @users = User.all_except(@current_user)
       @campaigns = Campaign.my(@current_user).all(:order => "name")
-      find_parent_object_for(@lead, context) if context
+      find_related_asset_for(@lead, context) if context =~ /\d+$/
     end
 
     #--------------------------------------------------------------------------
@@ -39,21 +39,30 @@ module FatFreeCRM
       @users = User.all_except(@current_user)
       @account = Account.new(:user => @current_user, :access => "Private")
       @accounts = Account.my(@current_user).all(:order => "name")
-      find_parent_object_for(@opportunity, context) if context
+      find_related_asset_for(@opportunity, context) if context =~ /\d+$/
     end
 
     #--------------------------------------------------------------------------
-    def find_parent_object_for(model, context)
-      return if context !~ /\d+$/
+    def make_new_task(context = nil)
+      @task = Task.new
+      @users = User.find(:all)
+      @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "Specific date...", :specific_time ]
+      @category = Setting.task_category.invert.sort
+      find_related_asset_for(@task, context) if context =~ /\d+$/
+    end
+
+    #--------------------------------------------------------------------------
+    def find_related_asset_for(model, context)
       parent, id = context.split("_")[-2, 2]
       if parent.pluralize != parent
         # One-to-one or one-to-many -- assign found object instance to the model.
-        model.send("#{parent}=", instance_variable_set("@#{parent}", parent.capitalize.constantize.find(id)))
+        model.send("#{parent}=", @asset = parent.capitalize.constantize.find(id))
       else
         # Many-to-many -- find the instance but don't assign it.
         parent = parent.singularize
-        instance_variable_set("@#{parent}", parent.capitalize.constantize.find(id))
+        @asset = parent.capitalize.constantize.find(id)
       end
+      instance_variable_set("@#{parent}", @asset)
     end
 
   end

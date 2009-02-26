@@ -40,11 +40,11 @@ class CampaignsController < ApplicationController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_campaign
-
     # Save [Create Campaign] visiblity for given context.
     @context = (params[:context].blank? ? "create_campaign" : params[:context])
     session[@context] = (params[:visible] == "true" ? nil : true)
+
+    make_new_campaign(@context)
 
     respond_to do |format|
       format.js   # new.js.rjs

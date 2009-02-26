@@ -1,14 +1,17 @@
 = styles_for :task
 
-= inline :create_pending_task, url_for(:action => :new, :view => @view), "Create Task"
-.title Tasks
-= render :partial => "create"
+- if @view == "completed"
+  - buckets = Setting.task_completed
+  .title Completed Tasks
+- else
+  - buckets = Setting.task_due_at_hint
+  = render :partial => "title"
 
-.log#log
+.log#tasks
   - if !@tasks.values.flatten.empty? || filtered_out?(@view)
-    - Setting.task_due_at_hint.each do |value, key|
+    - buckets.each do |value, key|
       %div{ hidden_if(filtered_out?(@view, key)), :id => "list_#{key}" }
         %h3= value
         .bucket{:id => key}= render :partial => @view, :collection => @tasks[key] || [], :locals => { :bucket => key }
   - else
-    %div You don't have any pending tasks.
+    %div== You don't have any #{@view} tasks.

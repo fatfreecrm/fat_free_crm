@@ -8,14 +8,12 @@ class TasksController < ApplicationController
   # GET /tasks.xml
   #----------------------------------------------------------------------------
   def index
-    @task = Task.new
     @tasks = Task.find_all_grouped(@current_user, @view)
-    @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "Specific date...", :specific_time ]
-    @category = Setting.task_category.invert.sort
-    @users = User.all_except(@current_user) if @view == "assigned"
+    @context = "create_task"
+    make_new_task if session[@context]
 
     respond_to do |format|
-      format.html { render :template => "tasks/index_#{@view}.html.haml" }
+      format.html # index.html.haml
       format.xml  { render :xml => @tasks }
     end
   end
@@ -27,19 +25,20 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # show.html.haml
       format.xml  { render :xml => @task }
     end
   end
 
   # GET /tasks/new
-  # GET /tasks/new.xml
+  # GET /tasks/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
     @view = params[:view] || "pending"
-    @task = Task.new
-    @context = "create_#{@view}_task"
-    session[@context] = (params[:visible] == "false" ? true : nil)
+    @context = (params[:context].blank? ? "create_task" : params[:context])
+    session[@context] = (params[:visible] == "true" ? nil : true)
+
+    make_new_task(@context)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -55,16 +54,16 @@ class TasksController < ApplicationController
   end
 
   # POST /tasks
-  # POST /tasks.xml
+  # POST /tasks.xml                                                        AJAX
   #----------------------------------------------------------------------------
   def create
     @task = Task.new(params[:task])
     @view = params[:view] || "pending"
-    @context = "create_#{@view}_task"
+    @context = (params[:context].blank? ? "create_task" : params[:context])
 
     respond_to do |format|
-      if @task.save
-        update_sidebar
+      if @task.save_for(@current_user)
+        update_sidebar if @context == "create_task"
         format.js   # create.js.rjs
         format.html { redirect_to(@task) }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
@@ -95,7 +94,7 @@ class TasksController < ApplicationController
   end
 
   # DELETE /tasks/1
-  # DELETE /tasks/1.xml
+  # DELETE /tasks/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def destroy
     @task = Task.find(params[:id])
@@ -104,7 +103,7 @@ class TasksController < ApplicationController
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
     @bucket = Task.bucket(@current_user, params[:bucket],  params[:view])
 
-    update_sidebar
+    update_sidebar unless params[:bucket].blank?
     respond_to do |format|
       format.js   # destroy.js.rjs
       format.html { redirect_to(tasks_url) }
@@ -113,7 +112,7 @@ class TasksController < ApplicationController
   end
 
   # PUT /tasks/1/complete
-  # PUT /leads/1/complete.xml
+  # PUT /leads/1/complete.xml                                              AJAX
   #----------------------------------------------------------------------------
   def complete
     @task = Task.find(params[:id])
@@ -122,7 +121,7 @@ class TasksController < ApplicationController
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
     @bucket = Task.bucket(@current_user, params[:bucket])
 
-    update_sidebar
+    update_sidebar unless params[:bucket].blank?
     respond_to do |format|
       format.js   # complete.js.rjs
       format.html { redirect_to(@task) }
@@ -130,7 +129,7 @@ class TasksController < ApplicationController
     end
   end
 
-  # Ajax request to filter out list of tasks.
+  # Ajax request to filter out list of tasks.                              AJAX
   #----------------------------------------------------------------------------
   def filter
     @view = params[:view]

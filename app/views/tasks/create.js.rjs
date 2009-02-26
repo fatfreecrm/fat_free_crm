@@ -1,13 +1,19 @@
 if @task.valid?
-  hint = @task.hint
-  page["list_#{hint}"].show
-  page.insert_html :top, hint, :partial => @view, :collection => [@task], :locals => { :bucket => hint }
-  page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
-  page[:sidebar].replace_html :partial => "sidebar_index"
-  page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+  if @context == "create_task"
+    hint = @task.hint
+    page["list_#{hint}"].show
+    page.insert_html :top, hint, :partial => @view, :collection => [@task], :locals => { :bucket => hint }
+    page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
+    page[:sidebar].replace_html :partial => "sidebar_index"
+    page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+  else
+    partial = (@task.assigned_to ? "assigned" : "pending")
+    page.insert_html :top, :tasks, :partial => partial, :collection => [@task], :locals => { :bucket => nil }
+    page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
+  end
+  page["#{@context}_arrow"].replace_html "&#9658;"
+  page["#{@context}_title"].replace_html (@view == "assigned" ? "Assigned Tasks" : "Tasks")
+  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
 else
-  page[@context].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:create_task].visual_effect :shake, :duration => 0.25, :distance => 6
 end
-page["task_calendar"].value = ""
-page["task_name"].value = ""
-page["task_name"].focus

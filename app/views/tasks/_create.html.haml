@@ -1,28 +1,33 @@
-= render :partial => "calendar"
-
-.inline#create_pending_task{ hidden_if(session["create_pending_task"].nil?) }
-  - remote_form_for(@task) do |f|
-    = hidden_field_tag :view, @view
-    = hidden_field_tag "task[user_id]", @current_user.id
-    %table{ :align => :center, :cellpadding => 0, :cellspacing => 0 }
+- remote_form_for(@task) do |f|
+  = hidden_field_tag :view, @view
+  = hidden_field_tag "context", "#{@context}"
+  = hidden_field_tag "task[user_id]", @current_user.id
+  = hidden_field_tag "task[asset_id]", "#{@asset.id if @asset}"
+  = hidden_field_tag "task[asset_type]", "#{@asset.class if @asset}"
+  .section
+    %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td{ :valign => :top, :colspan => 5 }
+          .label.top.req Task name:
+          = f.text_field :name, :style => "width:500px"
       %tr
         %td{ :valign => :top }
-          .label.top.req Task name:
-          = f.text_field :name, :style => "width:320px"
-        %td= spacer
-        %td{ :valign => :top }
-          .label.top.req Due:
+          .label.req Due:
           - if @task.due_at_hint != "specific_time"
-            = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:120px;", :onchange => "flip_calendar(this.value)" }
+            = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:160px;", :onchange => "flip_calendar(this.value)" }
             = f.text_field :calendar, :style => "width:110px; display:none;", :autocomplete => :off
           - else
-            = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:120px; display:none;", :onchange => "flip_calendar(this.value)" }
+            = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:160px; display:none;", :onchange => "flip_calendar(this.value)" }
             = f.text_field :calendar, :style => "width:110px;", :autocomplete => :off
         %td= spacer
         %td{ :valign => :top }
-          .label.top.req Category:
-          = f.select :category, @category, { :include_blank => "-- Select --" }, { :style => "width:120px" }
+          .label.req Assign to:
+          = collection_select :task, :assigned_to, @users, :id, :full_name, { :selected => @current_user.id }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
-          .label.top.req &nbsp;
-          = f.submit "Create Task"
+          .label.req Category:
+          = f.select :category, @category, { :include_blank => "-- Select --" }, { :style => "width:160px" }
+  .buttonbar
+    = f.submit "Create Task"
+    or
+    = link_to_remote "Cancel", { :url => new_task_path, :with => "{ visible: true, context: '#{@context}' }" }

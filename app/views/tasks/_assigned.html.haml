@@ -9,8 +9,11 @@
         = link_to("Edit", task_path(assigned)) << " | "
         = remote_delete(assigned, bucket)
       &nbsp;
-    == To #{link_to(assigned.assignee.full_name, "mailto:" + assigned.assignee.email)}:
-    = assigned.name << " &ndash; "
+    = link_to(assigned.assignee.full_name, "mailto:" + assigned.assignee.email) + ": "
+    = assigned.name
+    - if assigned.asset_id?
+      == (re: #{link_to(assigned.asset.name, polymorphic_url(assigned.asset))})
+    &ndash;
     %tt
       - if assigned.due_at_hint == "due_asap"
         due as soon as possible.
