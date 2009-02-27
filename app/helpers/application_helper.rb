@@ -34,7 +34,7 @@ module ApplicationHelper
   def inline(id, url, text = id.to_s.titleize, options = {})
     collapsed = session[id].nil?
     content_tag("div",
-      link_to_remote("<small id='#{id}_arrow'>#{ collapsed ? "&#9658;" : "&#9660;" }</small> #{text}",
+      link_to_remote("<abbr id='#{id}_arrow'>#{ collapsed ? "&#9658;" : "&#9660;" }</abbr> #{text}",
         :url => url,
         :with => "{ visible: Element.visible('#{id}'), context: '#{id}' }"
       ), :class => options[:class] || "title_tools")

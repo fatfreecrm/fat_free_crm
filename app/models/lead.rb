@@ -37,6 +37,7 @@ class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :campaign
   has_one :contact
+  has_many :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
   named_scope :converted, :conditions => "status='converted'"
   named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }
@@ -83,6 +84,7 @@ class Lead < ActiveRecord::Base
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
+  alias :name :full_name
 
   private
   #----------------------------------------------------------------------------

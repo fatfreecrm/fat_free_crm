@@ -10,6 +10,24 @@
 = render :partial => "common/new_comment", :locals => { :commentable => @lead }
 = render :partial => "common/comment", :collection => @lead.comments
 
+-#-----------------------------------------------------------------------------
+%br
+- @context = "create_task_leads_#{@lead.id}" # NOTE: plural leads
+- session[@context] = nil
+= inline @context, new_task_path, "Create Task", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Tasks
+
+.remote{ hidden, :id => @context }
+
+.log#tasks
+  - if @lead.tasks.my(@current_user).pending.any?
+    = render :partial => "tasks/pending", :collection => @lead.tasks.my(@current_user).pending, :locals => { :bucket => nil }
+  - if @lead.tasks.assigned.any?
+    = render :partial => "tasks/assigned", :collection => @lead.tasks.assigned, :locals => { :bucket => nil }
+  - if @lead.tasks.completed.any?
+    = render :partial => "tasks/completed", :collection => @lead.tasks.completed, :locals => { :bucket => nil }
+
+-#-----------------------------------------------------------------------------
 %br
 .subtitle#campaign Campaign
 .list#campaigns

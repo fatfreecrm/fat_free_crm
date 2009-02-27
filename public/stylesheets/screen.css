@@ -35,6 +35,9 @@ a {
     color: white;
     text-decoration: none; }
 
+abbr {
+  font-size: 9px; }
+
 small {
   font-size: 10px; }
 
