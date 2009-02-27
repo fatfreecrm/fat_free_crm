@@ -74,8 +74,10 @@ class ApplicationController < ActionController::Base
 
   #----------------------------------------------------------------------------
   def find_related_asset_for(model)
-    return if @context !~ /\d+$/
-    parent, id = @context.split("_")[-2, 2]
+    context = @context.to_s
+    return if context !~ /\d+$/
+
+    parent, id = context.split("_")[-2, 2]
     if parent.pluralize != parent
       # One-to-one or one-to-many -- assign found object instance to the model.
       model.send("#{parent}=", @asset = parent.capitalize.constantize.find(id))

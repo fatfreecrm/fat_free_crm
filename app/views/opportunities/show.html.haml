@@ -21,7 +21,7 @@
 .subtitle Campaign
 .list#campaigns
   - if @opportunity.campaign
-    = render :partial => "campaign/campaign", :collection => [ @opportunity.campaign ]
+    = render :partial => "campaigns/campaign", :collection => [ @opportunity.campaign ]
   - else
     %small Select or Create Campaign (not implemented yet).
 
