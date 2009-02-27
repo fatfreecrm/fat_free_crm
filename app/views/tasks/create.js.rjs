@@ -4,7 +4,7 @@ if @task.valid?
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
 
   # "Classic" [Create Task] form requested from the Tasks page.
-  if @context == "create_task"
+  if @context == :create_task
 
     # Show flash if assigned to somebody else from the [Pending Tasks] page.
     if @view == "pending" && @task.assigned_to?

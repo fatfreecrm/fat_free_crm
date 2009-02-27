@@ -1,4 +1,4 @@
-- context = "create_task"
+- context = :create_task
 = inline context, url_for(:action => :new, :view => @view), (@view == "assigned" ? "Assign Task" : "Create Task")
 - unless @task
   .title{:id => "#{context}_title"}= (@view == "assigned" ? "Assigned Tasks" : "Tasks")

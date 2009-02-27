@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"
 
-  include FatFreeCRM::InlineForms
-
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   # protect_from_forgery # :secret => '165eb65bfdacf95923dad9aea10cc64a'
@@ -56,6 +54,37 @@ class ApplicationController < ActionController::Base
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
+  end
+
+  #----------------------------------------------------------------------------
+  def preserve_visibility(name)
+    @context = (params[:context].blank? ? name : params[:context].intern)
+    session[@context] = (params[:visible] == "true" ? nil : true)
+  end
+
+  #----------------------------------------------------------------------------
+  def drop_visibility(name)
+    session[name] = nil
+  end
+
+  #----------------------------------------------------------------------------
+  def visible?(name)
+    session[name]
+  end
+
+  #----------------------------------------------------------------------------
+  def find_related_asset_for(model)
+    return if @context !~ /\d+$/
+    parent, id = @context.split("_")[-2, 2]
+    if parent.pluralize != parent
+      # One-to-one or one-to-many -- assign found object instance to the model.
+      model.send("#{parent}=", @asset = parent.capitalize.constantize.find(id))
+    else
+      # Many-to-many -- find the instance but don't assign it.
+      parent = parent.singularize
+      @asset = parent.capitalize.constantize.find(id)
+    end
+    instance_variable_set("@#{parent}", @asset)
   end
 
 end

@@ -9,8 +9,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @tasks = Task.find_all_grouped(@current_user, @view)
-    @context = "create_task"
-    make_new_task if session[@context]
+    make_new_task if visible?(:create_task)
 
     respond_to do |format|
       format.html # index.html.haml
@@ -35,10 +34,8 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @view = params[:view] || "pending"
-    @context = (params[:context].blank? ? "create_task" : params[:context])
-    session[@context] = (params[:visible] == "true" ? nil : true)
-
-    make_new_task(@context)
+    preserve_visibility(:create_task)
+    make_new_task
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -57,14 +54,14 @@ class TasksController < ApplicationController
   # POST /tasks.xml                                                        AJAX
   #----------------------------------------------------------------------------
   def create
-    @task = Task.new(params[:task])
+    @task = Task.new(params[:task]) # NOTE: we don't display validation messages for tasks.
     @view = params[:view] || "pending"
-    @context = (params[:context].blank? ? "create_task" : params[:context])
+    preserve_visibility(:create_task)
 
     respond_to do |format|
       if @task.save
-        update_sidebar if @context == "create_task"
-        session[@context] = nil
+        drop_visibility(:create_task)
+        update_sidebar if @context == :create_task
         format.js   # create.js.rjs
         format.html { redirect_to(@task) }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
@@ -144,6 +141,14 @@ class TasksController < ApplicationController
   end
 
   private
+  #--------------------------------------------------------------------------
+  def make_new_task
+    @task = Task.new
+    @users = User.all_except(@current_user)
+    @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
+    @category = Setting.task_category.invert.sort
+    find_related_asset_for(@task)
+  end
 
   # Yields array of current filters and updates the session using new values.
   #----------------------------------------------------------------------------

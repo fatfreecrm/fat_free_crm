@@ -1,4 +1,4 @@
-page[:flash].hide if @context == "create_task"
+page[:flash].hide if @context == :create_task
 if params[:visible] == "false"                          # show
   page["#{@context}_arrow"].replace_html "&#9660;"
   page["#{@context}_title"].replace_html(@view == "assigned" ? "Assign Task" : "Create Task")

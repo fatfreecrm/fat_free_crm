@@ -7,7 +7,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @accounts = Account.my(@current_user)
-    make_new_account if session["create_account"]
+    make_new_account if visible?(:create_account)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,8 +34,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     make_new_account
-    @context = (params[:context].blank? ? "create_account" : params[:context])
-    session[@context] = (params[:visible] == "true" ? nil : true)
+    preserve_visibility(:create_account)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -56,11 +55,11 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
-    @context = (params[:context].blank? ? "create_account" : params[:context])
+    preserve_visibility(:create_account)
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
-        session[@context] = nil
+        drop_visibility(:create_account)
         format.js   # create.js.rjs
         format.html { redirect_to(@account) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
@@ -103,5 +102,14 @@ class AccountsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+  #----------------------------------------------------------------------------
+  def make_new_account
+    @account = Account.new
+    @users = User.all_except(@current_user)
+    find_related_asset_for(@account)
+  end
+
 
 end

@@ -95,7 +95,6 @@ class Task < ActiveRecord::Base
   # Returns bucket if it's empty (i.e. we have to hide it), nil otherwise.
   #----------------------------------------------------------------------------
   def self.bucket(user, bucket, view = "pending")
-    logger.p bucket.inspect
     return if bucket.blank?
     count = (view == "assigned" ? assigned_by(user).send(bucket).pending.count : my(user).send(bucket).send(view).count)
     count == 0 ? bucket : nil

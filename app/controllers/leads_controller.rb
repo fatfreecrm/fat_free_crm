@@ -13,7 +13,7 @@ class LeadsController < ApplicationController
       @leads = Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
     end
 
-    make_new_lead if session["create_lead"]
+    make_new_lead if visible?(:create_lead)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,9 +38,8 @@ class LeadsController < ApplicationController
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
-    @context = (params[:context].blank? ? "create_lead" : params[:context])
-    session[@context] = (params[:visible] == "true" ? nil : true)
-    make_new_lead(@context)
+    preserve_visibility(:create_lead)
+    make_new_lead
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -62,11 +61,11 @@ class LeadsController < ApplicationController
     @lead = Lead.new(params[:lead])
     @users = User.all_except(@current_user)
     @campaigns = Campaign.my(@current_user).all(:order => "name")
-    @context = (params[:context].blank? ? "create_lead" : params[:context])
+    preserve_visibility(:create_lead)
 
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
-        session[@context] = nil
+        drop_visibility(:create_lead)
         get_data_for_sidebar if request.referer =~ /leads$/
         format.js   # create.js.rjs
         format.html { redirect_to(@lead) }
@@ -160,6 +159,14 @@ class LeadsController < ApplicationController
   end
 
   private
+  #----------------------------------------------------------------------------
+  def make_new_lead
+    @lead = Lead.new
+    @users = User.all_except(@current_user)
+    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    find_related_asset_for(@lead)
+  end
+
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }

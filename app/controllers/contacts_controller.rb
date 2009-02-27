@@ -7,7 +7,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @contacts = Contact.my(@current_user)
-    make_new_contact if session["create_contact"]
+    make_new_contact if visible?(:create_contact)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,7 +20,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @contact = Contact.find(params[:id])
-    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @stage   = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
     @comment = Comment.new
 
     respond_to do |format|
@@ -33,9 +33,8 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @context = (params[:context].blank? ? "create_contact" : params[:context])
-    session[@context] = (params[:visible] == "true" ? nil : true)
-    make_new_contact(@context)
+    preserve_visibility(:create_contact)
+    make_new_contact
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -54,15 +53,15 @@ class ContactsController < ApplicationController
   # POST /contacts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    @contact = Contact.new(params[:contact])
-    @account = Account.new(params[:account])
-    @users = User.all_except(@current_user)
+    @contact  = Contact.new(params[:contact])
+    @users    = User.all_except(@current_user)
+    @account  = Account.new(params[:account])
     @accounts = Account.my(@current_user).all(:order => "name")
-    @context = (params[:context].blank? ? "create_contact" : params[:context])
+    preserve_visibility(:create_contact)
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
-        session[@context] = nil
+        drop_visibility(:create_contact)
         format.js   # create.js.rjs
         format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
@@ -105,4 +104,15 @@ class ContactsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+  #----------------------------------------------------------------------------
+  def make_new_contact
+    @contact  = Contact.new(:user => @current_user, :access => "Private")
+    @users    = User.all_except(@current_user)
+    @account  = Account.new(:user => @current_user, :access => "Private")
+    @accounts = Account.my(@current_user).all(:order => "name")
+    find_related_asset_for(@contact)
+  end
+
 end

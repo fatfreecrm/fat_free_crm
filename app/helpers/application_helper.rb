@@ -32,7 +32,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def inline(id, url, text = id.to_s.titleize, options = {})
-    collapsed = session[id.to_s].nil?
+    collapsed = session[id].nil?
     content_tag("div",
       link_to_remote("<small id='#{id}_arrow'>#{ collapsed ? "&#9658;" : "&#9660;" }</small> #{text}",
         :url => url,
