@@ -9,6 +9,24 @@
 = render :partial => "common/new_comment", :locals => { :commentable => @opportunity }
 = render :partial => "common/comment", :collection => @opportunity.comments
 
+-#-----------------------------------------------------------------------------
+%br
+- @context = "create_task_opportunities_#{@opportunity.id}" # NOTE: plural opportunities
+- session[@context] = nil
+= inline @context, new_task_path, "Create Task", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Tasks
+
+.remote{ hidden, :id => @context }
+
+.log#tasks
+  - if @opportunity.tasks.my(@current_user).pending.any?
+    = render :partial => "tasks/pending", :collection => @opportunity.tasks.my(@current_user).pending, :locals => { :bucket => nil }
+  - if @opportunity.tasks.assigned.any?
+    = render :partial => "tasks/assigned", :collection => @opportunity.tasks.assigned, :locals => { :bucket => nil }
+  - if @opportunity.tasks.completed.any?
+    = render :partial => "tasks/completed", :collection => @opportunity.tasks.completed, :locals => { :bucket => nil }
+
+-#-----------------------------------------------------------------------------
 %br
 .subtitle Account
 .list#accounts
@@ -17,6 +35,7 @@
   - else
     %small Select or Create Account (not implemented yet).
 
+-#-----------------------------------------------------------------------------
 %br
 .subtitle Campaign
 .list#campaigns
@@ -25,6 +44,7 @@
   - else
     %small Select or Create Campaign (not implemented yet).
 
+-#-----------------------------------------------------------------------------
 %br
 - @context = "create_contact_opportunities_#{@opportunity.id}" # NOTE: pluralized opportunities
 = inline @context, new_contact_path, "Create Contact", { :class => "subtitle_tools" }

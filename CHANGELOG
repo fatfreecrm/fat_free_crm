@@ -8,7 +8,7 @@ Wed, Feb 26, 2008
 ---------------------------------------------------------------------
 - Github commits are up on Twitter at http://twitter.com/fatfreecrm
 - More refactoring to simplify handling of inline forms.
-- Implemented adding related tasks for Leads.
+- Implemented adding related tasks for Leads, Accounts, Contacts, and Opportunities.
 
 Wed, Feb 25, 2008
 ---------------------------------------------------------------------

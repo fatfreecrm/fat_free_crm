@@ -40,6 +40,7 @@ class Contact < ActiveRecord::Base
   has_one :account, :through => :account_contact
   has_many :contact_opportunities, :dependent => :destroy
   has_many :opportunities, :through => :contact_opportunities, :uniq => true, :order => "id DESC"
+  has_many :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
 
   uses_mysql_uuid
   uses_user_permissions
@@ -54,6 +55,7 @@ class Contact < ActiveRecord::Base
   def full_name
     self.first_name + " " + self.last_name
   end
+  alias :name :full_name
 
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------

@@ -9,6 +9,24 @@
 = render :partial => "common/new_comment", :locals => { :commentable => @contact }
 = render :partial => "common/comment", :collection => @contact.comments
 
+-#-----------------------------------------------------------------------------
+%br
+- @context = "create_task_contacts_#{@contact.id}" # NOTE: plural contacts
+- session[@context] = nil
+= inline @context, new_task_path, "Create Task", { :class => "subtitle_tools" }
+.subtitle{ :id => "#{@context}_title"} Tasks
+
+.remote{ hidden, :id => @context }
+
+.log#tasks
+  - if @contact.tasks.my(@current_user).pending.any?
+    = render :partial => "tasks/pending", :collection => @contact.tasks.my(@current_user).pending, :locals => { :bucket => nil }
+  - if @contact.tasks.assigned.any?
+    = render :partial => "tasks/assigned", :collection => @contact.tasks.assigned, :locals => { :bucket => nil }
+  - if @contact.tasks.completed.any?
+    = render :partial => "tasks/completed", :collection => @contact.tasks.completed, :locals => { :bucket => nil }
+
+-#-----------------------------------------------------------------------------
 %br
 .subtitle#account Account
 .list#accounts
@@ -17,6 +35,7 @@
   - else
     %small Select or Create Account (not implemented yet).
 
+-#-----------------------------------------------------------------------------
 %br
 - @context = "create_opportunity_contacts_#{@contact.id}" # NOTE: pluralized contacts
 - session[@context] = nil
