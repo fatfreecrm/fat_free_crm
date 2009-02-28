@@ -4,7 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Wed, Feb 26, 2008
+Fri, Feb 27, 2008
+---------------------------------------------------------------------
+- Added [gravatar] plugin and implemented gravatars for notes.
+
+Thu, Feb 26, 2008
 ---------------------------------------------------------------------
 - Github commits are up on Twitter at http://twitter.com/fatfreecrm
 - More refactoring to simplify handling of inline forms.

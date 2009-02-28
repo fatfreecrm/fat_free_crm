@@ -164,7 +164,18 @@
   -moz-border-radius-bottomright: 8px;
   -webkit-border-radius-bottom-left-radius: 8px;
   -webkit-border-radius-bottom-right-radius: 8px; }
-  .comment .avatar {
+  .comment input[type=text] {
+    border: 1px #cfcfcf solid;
+    color: grey;
+    font-size: 11px;
+    padding: 3px;
+    width: 500px; }
+  .comment textarea {
+    font-size: 11px;
+    height: 30px;
+    padding: 3px;
+    width: 500px; }
+  .comment .gravatar {
     float: left;
     padding: 0px 10px 5px 0px; }
   .comment .body {
