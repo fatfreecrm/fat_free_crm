@@ -3,6 +3,7 @@
     .strip{:class => lead.status}= Setting.lead_status[lead.status.intern]
   - else
     .strip{:style => "color:white;"} Other
+  = gravatar_for(lead, :size => "30x30", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
   %div
     .tools{ hidden, :id => dom_id(lead, :tools) }
       %small

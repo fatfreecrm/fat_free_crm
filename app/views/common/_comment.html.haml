@@ -1,5 +1,6 @@
 .comment[comment]
-  = gravatar_for(comment.user, :size => "25x25")
+  = gravatar_for(comment.user, :size => "25x25", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
+  /= image_tag "avatar.jpg", :size => "25x25"
   .body
     = link_to comment.user.full_name, "mailto:" + comment.user.email
     %tt= time_ago(comment.created_at)

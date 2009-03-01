@@ -1,8 +1,5 @@
 %li[contact]{ highlightable(dom_id(contact, :tools)) }
-  - if contact.account && contact.account.name?
-    .longstrip= link_to contact.account.name, account_path(contact.account)
-  - else
-    .longstrip &nbsp;
+  = gravatar_for(contact, :size => "30x30", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
   %div
     .tools{ hidden, :id => dom_id(contact, :tools) }
       %small
@@ -15,6 +12,8 @@
         = contact.title << ", " << contact.department
       - else
         = contact.title if contact.title?
+      - if contact.account && contact.account.name?
+        == at #{link_to contact.account.name, account_path(contact.account)}
       = "&ndash; referred by #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
     %dt
       = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?

@@ -312,7 +312,7 @@ tt {
     float: left;
     margin: 0px 4px 0px 0px; }
   .log .strip {
-    margin: 0px 5px 0px 0px; }
+    margin: 0px 6px 0px 0px; }
 
 .list {
   padding: 8px 0px 0px 0px; }
@@ -326,6 +326,9 @@ tt {
     font-size: 12px;
     list-style: none;
     padding: 6px 0px 6px 0px; }
+    .list li .gravatar {
+      float: left;
+      padding: 0px 10px 5px 0px; }
     .list li tt {
       color: dimgray;
       font-size: 11px; }
@@ -333,17 +336,17 @@ tt {
       color: #3f3f3f;
       font-size: 11px;
       padding: 2px 0px 0px 0px; }
-    .list li tt a:link, .list li tt a:visited, .list li dt a:link, .list li dt a:visited {
+    .list li dt a:link, .list li dt a:visited {
       color: #3f3f3f;
       font-weight: bold;
       text-decoration: none; }
-    .list li tt a:hover, .list li dt a:hover {
+    .list li dt a:hover {
       background: dimgray;
       color: white;
       font-weight: bold;
       text-decoration: none; }
   .list .strip {
-    margin: 2px 5px 20px 0px; }
+    margin: 2px 11px 20px 0px; }
 
 .filters, .panel {
   background: snow;
