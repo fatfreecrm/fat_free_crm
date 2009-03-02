@@ -1,11 +1,10 @@
-
 .panel#summary
   .caption Campaign Summary
   %li
-    %dt= @campaign.starts_on.strftime("%b %e")
+    %dt= @campaign.starts_on ? @campaign.starts_on.strftime("%b %e") : "N/A"
     %tt Start date:
   %li
-    %dt= @campaign.ends_on.strftime("%b %e")
+    %dt= @campaign.ends_on ? @campaign.ends_on.strftime("%b %e") : "N/A"
     %tt End date:
   %li
     %dt= Setting.campaign_status[@campaign.status.intern] || "N/A"

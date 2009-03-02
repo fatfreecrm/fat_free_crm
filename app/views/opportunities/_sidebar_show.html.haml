@@ -1,0 +1,48 @@
+.panel#summary
+  .caption Opportunity Summary
+  %li
+    %dt= @stage[@opportunity.stage.intern] || "N/A"
+    %tt Stage:
+  %li
+    %dt= @opportunity.closes_on ? @opportunity.closes_on.strftime("%b %e") : "N/A"
+    %tt Close date:
+  - if @opportunity.closes_on && @opportunity.stage !~ /lost|won/
+    %li
+      - days_left = @opportunity.closes_on - Date.today
+      - if days_left >= 0
+        %dt= days_left
+      - else
+        %dt.warn== #{pluralize(days_left * -1, "day")} late
+      %tt Days left:
+  %li
+    %dt= @opportunity.probability ? @opportunity.probability.to_s + "%" : "N/A"
+    %tt Probability:
+  %li
+    %dt= @opportunity.amount ? number_to_currency(@opportunity.amount || 0, :precision => 0) : "N/A"
+    %tt Amount:
+  %li
+    %dt= @opportunity.discount ? number_to_currency(@opportunity.discount || 0, :precision => 0) : "N/A"
+    - if @opportunity.amount && @opportunity.discount
+      %tt== Discount (#{number_to_percentage(@opportunity.discount / @opportunity.amount * 100, :precision => 1)}):
+    - else
+      %tt Discount:
+  %li
+    %dt= @opportunity.amount ? number_to_currency(@opportunity.weighted_amount || 0, :precision => 0) : "N/A"
+    %tt Weighted amount:
+  %li
+    %dt= (@opportunity.assigned_to ? @opportunity.assignee.full_name : @opportunity.user.full_name).abbreviate
+    %tt Assigned to:
+  %li
+    %dt
+      - if @opportunity.account
+        = link_to(@opportunity.account.name.abbreviate, @opportunity.account, :title => @opportunity.account.name)
+      - else
+        N/A
+    %tt Account:
+  %li.last
+    %dt
+      - if @opportunity.campaign
+        = link_to(@opportunity.campaign.name.abbreviate, @opportunity.campaign, :title => @opportunity.campaign.name)
+      - else
+        N/A
+    %tt Campaign:

@@ -26,6 +26,7 @@ class Opportunity < ActiveRecord::Base
   belongs_to :user
   belongs_to :account
   belongs_to :campaign
+  belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_one :account_opportunity, :dependent => :destroy
   has_one :account, :through => :account_opportunity
   has_many :contact_opportunities, :dependent => :destroy
@@ -48,7 +49,7 @@ class Opportunity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def weighted_amount
-    (amount || 0) * (probability || 0) / 100.0
+    ((amount || 0) - (discount || 0)) * (probability || 0) / 100.0
   end
 
   # Backend handler for [Create New Opportunity] form (see opportunity/create).

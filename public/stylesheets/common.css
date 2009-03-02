@@ -207,7 +207,7 @@
     float: left;
     margin: 0px 4px 0px 0px; }
   .log .strip {
-    margin: 0px 6px 0px 0px; }
+    margin: 0px 5px 0px 0px; }
 
 .list {
   padding: 8px 0px 0px 0px; }
@@ -241,7 +241,7 @@
       font-weight: bold;
       text-decoration: none; }
   .list .strip {
-    margin: 2px 11px 20px 0px; }
+    margin: 2px 6px 20px 0px; }
 
 .filters, .panel {
   background: snow;
@@ -260,6 +260,8 @@
     float: right;
     font-size: 11px;
     font-weight: bold; }
+  .panel li.last {
+    border-bottom: none; }
 
 .caption {
   background: #dfdfdf;
