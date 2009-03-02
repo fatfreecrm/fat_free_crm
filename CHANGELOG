@@ -4,6 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, Mar 1, 2008
+---------------------------------------------------------------------
+- Added core extension library.
+- Implemented Opportunity summary sidebar on the Opportunity landing page.
+
 Sat, Feb 28, 2008
 ---------------------------------------------------------------------
 - Added gravatar support for leads and contacts.
