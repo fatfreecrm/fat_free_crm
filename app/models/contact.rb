@@ -36,6 +36,7 @@
 class Contact < ActiveRecord::Base
   belongs_to :user
   belongs_to :lead
+  belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_one :account_contact, :dependent => :destroy
   has_one :account, :through => :account_contact
   has_many :contact_opportunities, :dependent => :destroy

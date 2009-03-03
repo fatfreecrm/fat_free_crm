@@ -28,15 +28,6 @@
 
 -#-----------------------------------------------------------------------------
 %br
-.subtitle#account Account
-.list#accounts
-  - if @contact.account
-    = render :partial => "accounts/account", :collection => [ @contact.account ]
-  - else
-    %small Select or Create Account (not implemented yet).
-
--#-----------------------------------------------------------------------------
-%br
 - @context = "create_opportunity_contacts_#{@contact.id}" # NOTE: pluralized contacts
 - session[@context] = nil
 = inline @context, new_opportunity_path, "Create Opportunity", { :class => "subtitle_tools" }

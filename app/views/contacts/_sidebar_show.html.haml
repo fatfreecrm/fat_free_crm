@@ -1,0 +1,25 @@
+.panel
+  %span{:style => "float:right"}= gravatar_for(@contact, :size => "50x50", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
+  %h4= @contact.full_name
+  - if @contact.title && @contact.account
+    %div== #{@contact.title} at #{link_to(@contact.account.name, account_path(@contact.account))}
+  - elsif @contact.title || @contact.account.name
+    %div= @contact.title || @contact.account.name
+  - if @contact.department
+    = @contact.department + " department"
+
+  - if @contact.address
+    %div= @contact.address.n2br
+
+  %div
+    - if @contact.phone
+      == Phone: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.phone) : @contact.phone}</b><br />
+    - if @contact.mobile
+      == Mobile: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.mobile) : @contact.mobile}</b><br />
+    - if @contact.fax
+      == Fax: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.fax) : @contact.fax}</b><br />
+  %div
+    - if @contact.email
+      == Email: <b>#{link_to(@contact.email, "mailto:" + @contact.email)}</b><br />
+    - if @contact.alt_email
+      == Alt: <b>#{link_to(@contact.alt_email, "mailto:" + @contact.alt_email)}</b><br />
