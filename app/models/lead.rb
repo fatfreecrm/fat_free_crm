@@ -36,6 +36,7 @@
 class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :campaign
+  belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_one :contact
   has_many :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
@@ -85,6 +86,11 @@ class Lead < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
   alias :name :full_name
+
+  #----------------------------------------------------------------------------
+  def stars
+    self.rating && self.rating > 0 ?  "&#9733;" * self.rating : nil
+  end
 
   private
   #----------------------------------------------------------------------------

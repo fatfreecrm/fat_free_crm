@@ -1,0 +1,47 @@
+.panel
+  %h4= @lead.full_name
+  - if @lead.title && @lead.company
+    %div== #{@lead.title} at #{@lead.company}
+  - elsif @lead.title || @lead.company
+    %div= @lead.title || @lead.company
+
+  - if @lead.address
+    %div= @lead.address.n2br
+
+  %div
+    - if @lead.phone
+      == Phone: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : @lead.phone}</b><br />
+    - if @lead.mobile
+      == Mobile: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : @lead.mobile}</b><br />
+    - if @lead.email
+      == Email: <b>#{link_to(@lead.email, "mailto:" + @lead.email)}</b><br />
+    - if @lead.alt_email
+      == Alt: <b>#{link_to(@lead.alt_email, "mailto:" + @lead.alt_email)}</b><br />
+
+  .caption Lead Summary
+  %li
+    %dt= @lead.status ? Setting.lead_status[@lead.status.intern] : "N/A"
+    %tt Status:
+  %li
+    %dt= @lead.source ? Setting.lead_source[@lead.source.intern] : "N/A"
+    %tt Source:
+  %li
+    - if @lead.stars
+      %span{:style => "float:right;"}= @lead.stars
+    - else
+      %dt N/A
+    %tt Rating:
+  %li
+    %dt= @lead.referred_by ? @lead.referred_by.abbreviate : "N/A"
+    %tt Referred by:
+  %li
+    %dt= (@lead.assigned_to ? @lead.assignee.full_name : @lead.user.full_name).abbreviate
+    %tt Assigned to:
+  %li.last
+    %dt
+      - if @lead.campaign
+        = link_to(@lead.campaign.name.abbreviate, @lead.campaign, :title => @lead.campaign.name)
+      - else
+        N/A
+    %tt Campaign:
+

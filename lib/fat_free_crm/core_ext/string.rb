@@ -10,4 +10,8 @@ class String
     end
   end
 
+  def n2br
+    self.strip.gsub("\n", "<br />")
+  end
+
 end

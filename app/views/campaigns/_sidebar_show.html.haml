@@ -9,10 +9,10 @@
   %li
     %dt= Setting.campaign_status[@campaign.status.intern] || "N/A"
     %tt Status:
-  %li
+  %li.last
     %dt= number_to_currency(@campaign.budget, :precision => 0) || "N/A"
     %tt Budget:
-  %br
+
   .caption Campaign Targets
   
   -# Target Leads.
@@ -40,11 +40,10 @@
 
   -# Target Revenue.
   -#---------------------------------------------------------------------------
-  %li
+  %li.last
     %dt= number_to_currency(@campaign.target_revenue, :precision => 0) || "N/A"
     %tt Revenue:
 
-  %br
   .caption Actual Performance
 
   -# Actual Number of Leads.
@@ -75,6 +74,6 @@
 
   -# Actual Revenue.
   -#---------------------------------------------------------------------------
-  %li
+  %li.last
     %dt= number_to_currency(@campaign.revenue, :precision => 0) || "N/A"
     %tt== Revenue: #{performance(@campaign.revenue, @campaign.target_revenue)}

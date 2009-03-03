@@ -26,12 +26,3 @@
     = render :partial => "tasks/assigned", :collection => @lead.tasks.assigned, :locals => { :bucket => nil }
   - if @lead.tasks.completed.any?
     = render :partial => "tasks/completed", :collection => @lead.tasks.completed, :locals => { :bucket => nil }
-
--#-----------------------------------------------------------------------------
-%br
-.subtitle#campaign Campaign
-.list#campaigns
-  - if @lead.campaign
-    = render :partial => "campaigns/campaign", :collection => [ @lead.campaign ]
-  - else
-    %small Select or Create Campaign (not implemented yet).
