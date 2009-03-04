@@ -29,7 +29,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def remote_delete(task, bucket)
-    onclick = link_to_remote("Delete!", :url => task_path(task), :method => :delete, :with => %Q/{bucket: "#{bucket}", view: "#{@view}"}/, :before => visual_effect(:highlight, dom_id(task), :startcolor => "#afeeee"))
+    onclick = link_to_remote("Delete!", :url => task_path(task), :method => :delete, :with => %Q/{bucket: "#{bucket}", view: "#{@view}"}/, :before => visual_effect(:highlight, dom_id(task), :startcolor => "#ffe4e1"))
   end
 
 end

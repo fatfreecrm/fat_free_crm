@@ -4,10 +4,10 @@
   - else
     .strip{:style => "color:white;"} Other
   %div
-    .tools{ hidden, :id => dom_id(opportunity, :tools) }
+    .tools{ invisible, :id => dom_id(opportunity, :tools) }
       %small
         = link_to("Edit", opportunity_path(opportunity)) << " | "
-        = link_to_remote("Delete!", :url => opportunity_path(opportunity), :method => :delete, :before => visual_effect(:highlight, dom_id(opportunity), :startcolor => "#afeeee"))
+        = link_to_remote("Delete!", :url => opportunity_path(opportunity), :method => :delete, :before => visual_effect(:highlight, dom_id(opportunity), :startcolor => "#ffe4e1"))
       &nbsp;
     = link_to(opportunity.name, opportunity)
     %tt

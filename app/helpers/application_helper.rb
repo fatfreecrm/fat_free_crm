@@ -62,7 +62,7 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def highlightable(id = nil, use_hide_and_show = true)
+  def highlightable(id = nil, use_hide_and_show = false)
     if use_hide_and_show
       show = (id ? "$('#{id}').show()" : "")
       hide = (id ? "$('#{id}').hide()" : "")

@@ -1,4 +1,4 @@
-%li[pending]{ highlightable(dom_id(pending, :tools), false) }
+%li[pending]{ highlightable(dom_id(pending, :tools)) }
   - unless pending.category.blank?
     .strip{:class => pending.category}= Setting.task_category[pending.category.intern]
   - else

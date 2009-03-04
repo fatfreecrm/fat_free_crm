@@ -1,10 +1,10 @@
 %li[contact]{ highlightable(dom_id(contact, :tools)) }
   = gravatar_for(contact, :size => "30x30", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
   %div
-    .tools{ hidden, :id => dom_id(contact, :tools) }
+    .tools{ invisible, :id => dom_id(contact, :tools) }
       %small
         = link_to("Edit", contact_path(contact)) << " | "
-        = link_to_remote("Delete!", :url => contact_path(contact), :method => :delete, :before => visual_effect(:highlight, dom_id(contact), :startcolor => "#afeeee"))
+        = link_to_remote("Delete!", :url => contact_path(contact), :method => :delete, :before => visual_effect(:highlight, dom_id(contact), :startcolor => "#ffe4e1"))
       &nbsp;
     = link_to(contact.full_name, contact)
     %tt

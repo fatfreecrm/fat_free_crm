@@ -4,12 +4,16 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Mar 4, 2008
+---------------------------------------------------------------------
+- Refactored tools menu in lists to use block div.
+
 Tue, Mar 3, 2008
 ---------------------------------------------------------------------
 - Refactored lead star rating to always show 5 stars (grayed out or not).
 - Removed [notes] field from core models and forms.
 - Created v0.1 "Steinitz" milestone and tickets for "Steinitz" release.
-- Set up GitHub service hook to integrate commits with the Lighthouse [#21 state:resolved].
+- Set up GitHub service hook to integrate commits with the Lighthouse.
 
 Mon, Mar 2, 2008
 ---------------------------------------------------------------------

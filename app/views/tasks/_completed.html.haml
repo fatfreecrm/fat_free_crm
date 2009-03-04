@@ -4,11 +4,11 @@
   - else
     .strip{:style => "color:white"} Other
   %div
-    .tools{ hidden, :id => dom_id(completed, :tools) }
+    .tools{ invisible, :id => dom_id(completed, :tools) }
       %small= remote_delete(completed, bucket)
     - if completed.user.id != @current_user.id
       == From #{link_to(completed.user.full_name, "mailto:" + completed.user.email)}:
-    = completed.name
+    %strike= completed.name
     - if completed.asset_id?
       == (re: #{link_to(completed.asset.name, polymorphic_url(completed.asset))})
     &ndash;

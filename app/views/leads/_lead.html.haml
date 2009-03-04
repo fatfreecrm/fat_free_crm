@@ -4,11 +4,11 @@
   - else
     .strip{:style => "color:white;"} Other
   %div
-    .tools{ hidden, :id => dom_id(lead, :tools) }
+    .tools{ invisible, :id => dom_id(lead, :tools) }
       %small
         = (link_to("Convert", convert_lead_path(lead)) << " | ") if lead.status != "converted"
         = link_to("Edit", lead_path(lead)) << " | "
-        = link_to_remote("Delete!", :url => lead_path(lead), :method => :delete, :before => visual_effect(:highlight, dom_id(lead), :startcolor => "#afeeee"))
+        = link_to_remote("Delete!", :url => lead_path(lead), :method => :delete, :before => visual_effect(:highlight, dom_id(lead), :startcolor => "#ffe4e1"))
       &nbsp;
     = link_to(lead.full_name, lead)
     %tt
