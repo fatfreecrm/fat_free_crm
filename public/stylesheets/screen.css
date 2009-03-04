@@ -209,15 +209,15 @@ tt {
   padding: 5px 15px 10px 15px; }
 
 .remote {
-  border: 5px lavender solid;
+  border: 5px lightblue solid;
   background: whitesmoke;
   margin: 0px;
   padding: 0px 10px 0px 10px; }
 
 .buttonbar {
   border-top: 1px gray solid;
-  margin: 10px auto;
-  padding-top: 6px; }
+  margin: 8px auto;
+  padding-top: 8px; }
 
 .section input, .sidebar input, .inline input,
 .section select, .sidebar select, .inline select,
@@ -316,9 +316,6 @@ tt {
 
 .list {
   padding: 8px 0px 0px 0px; }
-  .list p {
-    color: #413839;
-    margin: 4px 0px 0px 0px; }
   .list li {
     border-bottom: 1px silver dotted;
     clear: both;
@@ -423,6 +420,7 @@ tt {
   .errorExplanation ul {
     margin-left: 30px; }
     .errorExplanation ul li {
+      border: none;
       font-size: 12px;
       list-style-type: disc;
       padding: 0px; }

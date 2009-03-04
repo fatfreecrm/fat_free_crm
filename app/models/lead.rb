@@ -76,7 +76,7 @@ class Lead < ActiveRecord::Base
   end
 
   #----------------------------------------------------------------------------
-  def convert(with_opportunity = true)
+  def convert
     update_attributes(:status => "converted")
   end
 

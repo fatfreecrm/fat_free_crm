@@ -6,7 +6,8 @@
   %div
     .tools{ invisible, :id => dom_id(lead, :tools) }
       %small
-        = (link_to("Convert", convert_lead_path(lead)) << " | ") if lead.status != "converted"
+        - if lead.status != "converted"
+          = link_to_remote("Convert", :url => convert_lead_path(lead), :method => :get) << " | "
         = link_to("Edit", lead_path(lead)) << " | "
         = link_to_remote("Delete!", :url => lead_path(lead), :method => :delete, :before => visual_effect(:highlight, dom_id(lead), :startcolor => "#ffe4e1"))
       &nbsp;

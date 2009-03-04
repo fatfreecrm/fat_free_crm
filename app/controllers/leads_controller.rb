@@ -1,7 +1,7 @@
 class LeadsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:leads)", :except => [ :new, :create, :destroy, :filter ]
+  before_filter "set_current_tab(:leads)", :except => [ :new, :create, :destroy, :convert, :promote, :filter ]
 
   # GET /leads
   # GET /leads.xml
@@ -114,19 +114,21 @@ class LeadsController < ApplicationController
   end
 
   # GET /leads/1/convert
-  # GET /leads/1/convert.xml
+  # GET /leads/1/convert.xml                                               AJAX
   #----------------------------------------------------------------------------
   def convert
     @lead = Lead.find(params[:id])
-    @users = User.all_except(@current_user)
-    @accounts = Account.my(@current_user).all(:order => "name")
-    @account = Account.new(:user => @current_user, :access => "Lead")
-    @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
-    @contact = Contact.new
+    if params[:cancel].blank?
+      @users = User.all_except(@current_user)
+      @accounts = Account.my(@current_user).all(:order => "name")
+      @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
+      @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
+      @contact = Contact.new
+    end
   end
 
   # PUT /leads/1/convert
-  # PUT /leads/1/convert.xml
+  # PUT /leads/1/convert.xml                                               AJAX
   #----------------------------------------------------------------------------
   def promote
     @lead = Lead.find(params[:id])
@@ -136,11 +138,13 @@ class LeadsController < ApplicationController
       @account, @opportunity, @contact = @lead.promote(params)
       @accounts = Account.my(@current_user).all(:order => "name")
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
-        @lead.convert(!@opportunity.id.nil?)
-        flash[:notice] = "Lead #{@lead.full_name} was successfully converted."
+        @lead.convert
+        get_data_for_sidebar if request.referer =~ /leads$/ # Update sidebar only if converting from Leads page.
+        format.js   # promote.js.rjs
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }
       else
+        format.js   # promote.js.rjs
         format.html { render :action => "convert" }
         format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
       end

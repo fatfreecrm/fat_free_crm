@@ -1,16 +1,13 @@
-- content_for :javascript_epilogue do
-  = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
-
-.form
-  - form_for(@lead, :url => promote_lead_path(@lead)) do |f|
+.remote
+  - remote_form_for(@lead, :url => promote_lead_path(@lead)) do |f|
     - fields_for(@account) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :access
-      .title== Convert #{@lead.full_name}
+      / .subtitle== Convert #{@lead.full_name}
       = error_messages_for :account, :opportunity
       .section
         %small
-          == Congratulations! By converting the lead #{@lead.full_name} will become a contact associated with 
+          == Congratulations! By converting the lead <b>#{@lead.full_name}</b> will become a contact associated with 
           the existing or newly created account. Lead status will be automatically set to converted.
         %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
           %tr
@@ -29,5 +26,9 @@
     .buttonbar
       = f.submit "Convert Lead"
       or
-      = link_to "Cancel", leads_url
+      = link_to_remote "Cancel", { :url => convert_lead_path(@lead), :method => :get, :with => "{ cancel: true }" }
 
+%script{:type => "text/javascript"}
+  = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
+  crm.date_select_popup("opportunity_closes_on");
+  

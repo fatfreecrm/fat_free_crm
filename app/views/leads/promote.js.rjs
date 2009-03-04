@@ -1,0 +1,13 @@
+id = dom_id(@lead)
+if @lead.status == "converted"
+  page[id].replace :partial => "lead", :collection => [ @lead ]
+  # Update sidebar only when converting a lead from /leads page.
+  if request.referer =~ /leads$/
+    page[:sidebar].replace_html :partial => "sidebar_index"
+    page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+  end
+else
+  page[id].replace_html :partial => "convert"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:account_name].focus
+end
