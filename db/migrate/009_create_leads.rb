@@ -24,7 +24,6 @@ class CreateLeads < ActiveRecord::Migration
       t.string      :address
       t.integer     :rating,      :null => false, :default => 0
       t.boolean     :do_not_call, :null => false, :default => false
-      t.text        :notes
       t.datetime    :deleted_at
       t.timestamps
     end

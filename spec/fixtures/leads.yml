@@ -27,7 +27,6 @@
 #  address     :string(255)
 #  rating      :integer(4)      default(0), not null
 #  do_not_call :boolean(1)      not null
-#  notes       :text
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
@@ -68,7 +67,6 @@ lead<%= i %>:
                 <%= Faker::Address.street_address + " " + Faker::Address.secondary_address %>
                 <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
   do_not_call : false
-  notes       :
   deleted_at  :
   created_at  : <%= starts = Date.today - rand(15).days %>
   updated_at  : <%= starts + rand(5).days %>

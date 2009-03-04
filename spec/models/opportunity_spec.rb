@@ -16,7 +16,6 @@
 #  amount      :decimal(12, 2)
 #  discount    :decimal(12, 2)
 #  closes_on   :date
-#  notes       :text
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime

@@ -39,7 +39,3 @@
         %td{ :valign => :top, :colspan => 3 }
           .label Campaign:
           = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :include_blank => "-- None --" }, { :style => "width:100%", :onchange => "flip_campaign_permissions(this.value)" }
-      %tr
-        %td{ :valign => :top, :colspan => 5 }
-          .label Notes:
-          = f.text_area :notes, :style => "width:500px", :rows => 2

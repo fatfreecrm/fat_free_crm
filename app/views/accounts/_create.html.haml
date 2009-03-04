@@ -12,11 +12,6 @@
         %td{ :valign => :top }
           .label.top.req Assigned to:
           = collection_select :account, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
-      %tr
-        %td{ :valign => :top, :colspan => 3 }
-          .label Notes:
-          = f.text_area :notes, :style => "width:500px", :rows => 2
-
     -### .label Tags:
     -### =f.text_field :tags, :style =>"width:500px"
   = render :partial => "accounts/contact_info", :locals => { :f => f }

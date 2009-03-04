@@ -27,7 +27,6 @@
 #  address     :string(255)
 #  born_on     :date
 #  do_not_call :boolean(1)      not null
-#  notes       :text
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime

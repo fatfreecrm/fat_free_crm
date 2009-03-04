@@ -16,7 +16,6 @@
 #  amount      :decimal(12, 2)
 #  discount    :decimal(12, 2)
 #  closes_on   :date
-#  notes       :text
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
@@ -42,7 +41,6 @@ opportunity_<%= i %>:
   probability : <%= %w(won lost).include?(the_stage) ? 100 : (rand(8) + 1) * 10 %>
   amount      : <%= (rand(8) + 1) * 100_000 %>
   closes_on   : <%= Date.today + (rand(100) + 10).days %>
-  notes       :
   deleted_at  :
   created_at  : <%= starts = Date.today - rand(15).days %>
   updated_at  : <%= starts + rand(5).days %>

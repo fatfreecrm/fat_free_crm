@@ -13,7 +13,6 @@ class CreateOpportunities < ActiveRecord::Migration
       t.decimal     :amount,   :precision => 12, :scale => 2
       t.decimal     :discount, :precision => 12, :scale => 2
       t.date        :closes_on
-      t.text        :notes
       t.datetime    :deleted_at
       t.timestamps
     end

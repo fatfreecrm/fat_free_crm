@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Tue, Mar 3, 2008
 ---------------------------------------------------------------------
 - Refactored lead star rating to always show 5 stars (grayed out or not).
+- Removed [notes] field from core models and forms.
 
 Mon, Mar 2, 2008
 ---------------------------------------------------------------------

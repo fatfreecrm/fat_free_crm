@@ -6,7 +6,6 @@ class CreateAccounts < ActiveRecord::Migration
       t.integer     :assigned_to
       t.string      :name, :limit => 64, :null => false, :default => ""
       t.string      :access, :limit => 8, :default => "Private" # %w(Private Public Shared)
-      t.string      :notes
       t.string      :website, :limit => 64
       t.string      :tall_free_phone, :limit => 32
       t.string      :phone, :limit => 32

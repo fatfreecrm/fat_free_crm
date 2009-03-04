@@ -27,7 +27,6 @@
 #  address     :string(255)
 #  born_on     :date
 #  do_not_call :boolean(1)      not null
-#  notes       :text
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
@@ -66,7 +65,6 @@ contact_<%= i %>:
                 <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
   born_on     : <%= Date.today - (rand(20) + 20).years - rand(200).days %>
   do_not_call : false
-  notes       :
   deleted_at  :
   created_at  : <%= starts = Date.today - rand(15).days %>
   updated_at  : <%= starts + rand(5).days %>

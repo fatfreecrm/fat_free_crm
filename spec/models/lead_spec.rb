@@ -27,7 +27,6 @@
 #  address     :string(255)
 #  rating      :integer(4)      default(0), not null
 #  do_not_call :boolean(1)      not null
-#  notes       :text
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime

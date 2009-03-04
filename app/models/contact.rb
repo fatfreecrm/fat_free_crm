@@ -27,7 +27,6 @@
 #  address     :string(255)
 #  born_on     :date
 #  do_not_call :boolean(1)      not null
-#  notes       :text
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
@@ -75,7 +74,7 @@ class Contact < ActiveRecord::Base
       :assigned_to => params[:account][:assigned_to],
       :access      => params[:access]
     }
-    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter address do_not_call notes).each do |name|
+    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter address do_not_call).each do |name|
       attributes[name] = model.send(name.intern)
     end
     contact = Contact.new(attributes)

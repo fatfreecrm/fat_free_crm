@@ -24,7 +24,6 @@ class CreateContacts < ActiveRecord::Migration
       t.string      :address
       t.date        :born_on
       t.boolean     :do_not_call, :null => false, :default => false
-      t.text        :notes
       t.datetime    :deleted_at
       t.timestamps
     end
