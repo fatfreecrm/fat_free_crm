@@ -19,6 +19,7 @@
       /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
       = "&ndash; referred by #{lead.referred_by}" if lead.referred_by?
     %dt
+      = stars_for(lead) + " | "
       = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
       = "phone: " + lead.phone  << " | " if lead.phone?
       = "mobile: " + lead.mobile << " | " if lead.mobile?

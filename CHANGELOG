@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Mar 3, 2008
+---------------------------------------------------------------------
+- Refactored lead star rating to always show 5 stars (grayed out or not).
+
 Mon, Mar 2, 2008
 ---------------------------------------------------------------------
 - Implemented Lead and Contact summary sidebar for individual Leads and Contacts.

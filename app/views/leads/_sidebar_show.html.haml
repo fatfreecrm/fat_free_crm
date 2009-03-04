@@ -27,10 +27,7 @@
     %dt= @lead.source ? Setting.lead_source[@lead.source.intern] : "N/A"
     %tt Source:
   %li
-    - if @lead.stars
-      %span{:style => "float:right;"}= @lead.stars
-    - else
-      %dt N/A
+    %span{:style => "float:right;"}= stars_for(@lead)
     %tt Rating:
   %li
     %dt= @lead.referred_by ? @lead.referred_by.abbreviate : "N/A"

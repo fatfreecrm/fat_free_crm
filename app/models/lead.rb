@@ -87,11 +87,6 @@ class Lead < ActiveRecord::Base
   end
   alias :name :full_name
 
-  #----------------------------------------------------------------------------
-  def stars
-    self.rating && self.rating > 0 ?  "&#9733;" * self.rating : nil
-  end
-
   private
   #----------------------------------------------------------------------------
   def increment_leads_count

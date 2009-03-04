@@ -1,4 +1,17 @@
 module LeadsHelper
+  RATING_STARS = 5
+
+  #----------------------------------------------------------------------------
+  def stars_for(lead)
+    if lead.rating == RATING_STARS
+      "&#9733;" * RATING_STARS
+    elsif lead.rating.nil? || lead.rating == 0
+      %(<font color="gainsboro">#{"&#9733;" * RATING_STARS}</font>)
+    else
+      "&#9733;" * lead.rating + %(<font color="gainsboro">#{"&#9733;" * (RATING_STARS - lead.rating)}</font>)
+    end
+  end
+
 
   # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
   #----------------------------------------------------------------------------
