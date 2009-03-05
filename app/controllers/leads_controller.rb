@@ -1,7 +1,7 @@
 class LeadsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:leads)", :except => [ :new, :create, :destroy, :convert, :promote, :filter ]
+  before_filter "set_current_tab(:leads)", :except => [ :new, :edit, :create, :destroy, :convert, :promote, :filter ]
 
   # GET /leads
   # GET /leads.xml
@@ -48,10 +48,13 @@ class LeadsController < ApplicationController
     end
   end
 
-  # GET /leads/1/edit
+  # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
     @lead = Lead.find(params[:id])
+    @users = User.all_except(@current_user)
+    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    preserve_visibility(:edit_lead)
   end
 
   # POST /leads

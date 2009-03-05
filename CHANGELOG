@@ -8,6 +8,7 @@ Wed, Mar 4, 2008
 ---------------------------------------------------------------------
 - Refactored tools menu in lists to use block div.
 - Refactored lead conversion to use remote form.
+- Started with the [Edit Lead] inline form.
 
 Tue, Mar 3, 2008
 ---------------------------------------------------------------------
