@@ -21,7 +21,7 @@
 
   .caption Lead Summary
   %li
-    %dt= @lead.status ? Setting.lead_status[@lead.status.intern] : "N/A"
+    %dt#lead_status= @lead.status ? Setting.lead_status[@lead.status.intern] : "N/A"
     %tt Status:
   %li
     %dt= @lead.source ? Setting.lead_source[@lead.source.intern] : "N/A"

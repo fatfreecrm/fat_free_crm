@@ -118,7 +118,9 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def convert
     @lead = Lead.find(params[:id])
-    if params[:cancel].blank?
+    preserve_visibility(:convert_lead)
+
+    if visible?(@context)
       @users = User.all_except(@current_user)
       @accounts = Account.my(@current_user).all(:order => "name")
       @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
@@ -131,8 +133,10 @@ class LeadsController < ApplicationController
   # PUT /leads/1/convert.xml                                               AJAX
   #----------------------------------------------------------------------------
   def promote
+    @context = params[:context]
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
+    preserve_visibility(:create_lead)
 
     respond_to do |format|
       @account, @opportunity, @contact = @lead.promote(params)
@@ -140,6 +144,7 @@ class LeadsController < ApplicationController
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
         @lead.convert
         get_data_for_sidebar if request.referer =~ /leads$/ # Update sidebar only if converting from Leads page.
+        drop_visibility(@context)
         format.js   # promote.js.rjs
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }

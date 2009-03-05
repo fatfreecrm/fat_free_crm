@@ -32,12 +32,16 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def inline(id, url, text = id.to_s.titleize, options = {})
-    collapsed = session[id].nil?
-    content_tag("div",
-      link_to_remote("<abbr id='#{id}_arrow'>#{ collapsed ? "&#9658;" : "&#9660;" }</abbr> #{text}",
-        :url => url,
-        :with => "{ visible: Element.visible('#{id}'), context: '#{id}' }"
-      ), :class => options[:class] || "title_tools")
+    content_tag("div", link_to_inline(id, url, text), :class => options[:class] || "title_tools")
+  end
+
+  #----------------------------------------------------------------------------
+  def link_to_inline(id, url, text = id.to_s.titleize)
+    link_to_remote("<abbr id='#{id}_arrow'>#{ session[id].nil? ? "&#9658;" : "&#9660;" }</abbr> #{text}",
+      :url => url,
+      :method => :get,
+      :with => "{ visible: Element.visible('#{id}'), context: '#{id}' }"
+    )
   end
 
   #----------------------------------------------------------------------------

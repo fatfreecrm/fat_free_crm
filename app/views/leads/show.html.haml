@@ -2,10 +2,13 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to("Convert", convert_lead_path(@lead)) + " | "
+  - if @lead.status != "converted"
+    = link_to_inline(dom_id(@lead), convert_lead_path(@lead), "Convert") + " | "
   = link_to("Edit", edit_lead_path(@lead)) + " | "
   = link_to_function("Delete?", confirm_delete(@lead))
-.title= @lead.full_name
+.title{:id => dom_id(@lead) + "_title"}= @lead.full_name
+
+%div[@lead]{ hidden }
 
 = render :partial => "common/new_comment", :locals => { :commentable => @lead }
 = render :partial => "common/comment", :collection => @lead.comments
