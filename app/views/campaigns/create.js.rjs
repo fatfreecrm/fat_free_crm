@@ -1,5 +1,4 @@
 if @campaign.valid?
-  page["#{@context}_arrow"].replace_html "&#9658;"
   page["#{@context}_title"].replace_html "Campaigns"
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
   page.insert_html :top, :campaigns, :partial => "campaign", :collection => [ @campaign ]

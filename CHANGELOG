@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Thu, Mar 5, 2008
 ---------------------------------------------------------------------
 - Moved some JavaScript code from helpers to application.js.
+- Greatly simplified handling of inline form links by moving more logic to JavaScript.
 
 Wed, Mar 4, 2008
 ---------------------------------------------------------------------

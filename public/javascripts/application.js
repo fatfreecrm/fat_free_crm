@@ -72,6 +72,15 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  flip_arrow: function(ctrl) {
+    var arrow = 9658; // left arrow
+    if (ctrl.innerHTML.charCodeAt(6) == arrow) {
+      arrow = 9660;   // down arrow
+    }
+    ctrl.innerHTML = ctrl.innerHTML.substring(0, 6) + String.fromCharCode(arrow) + ctrl.innerHTML.substring(7);
+  },
+
+  //----------------------------------------------------------------------------
   toggle_open_id_login: function(first_field) {
     if (arguments.length == 0) {
       first_field = "authentication_openid_identifier";

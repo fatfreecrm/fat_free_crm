@@ -4,7 +4,6 @@ if @lead.status == "converted"
     page[id].replace :partial => "lead", :collection => [ @lead ]
   else
     page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
-    page["#{id}_arrow"].replace_html "&#9658;"
     page["#{id}_title"].replace_html @lead.full_name
     page[:lead_status].replace_html "Converted"
   end

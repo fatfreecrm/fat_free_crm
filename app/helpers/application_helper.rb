@@ -37,11 +37,17 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_inline(id, url, text = id.to_s.titleize)
-    link_to_remote("<abbr id='#{id}_arrow'>#{ session[id].nil? ? "&#9658;" : "&#9660;" }</abbr> #{text}",
-      :url => url,
+    link_to_remote(arrow_for(id) << "&nbsp;" << text,
+      :url    => url,
+      :after  => "crm.flip_arrow(this)",
       :method => :get,
-      :with => "{ visible: Element.visible('#{id}'), context: '#{id}' }"
+      :with   => "{ visible: Element.visible('#{id}'), context: '#{id}' }"
     )
+  end
+
+  #----------------------------------------------------------------------------
+  def arrow_for(id)
+    content_tag(:abbr, session[id].nil? ? "&#9658;" : "&#9660;")
   end
 
   #----------------------------------------------------------------------------

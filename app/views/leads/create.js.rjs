@@ -1,5 +1,4 @@
 if @lead.valid?
-  page["#{@context}_arrow"].replace_html "&#9658;"
   page["#{@context}_title"].replace_html "Leads"
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
   page.insert_html :top, :leads, :partial => "lead", :collection => [ @lead ]
