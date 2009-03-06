@@ -8,6 +8,7 @@ Thu, Mar 5, 2008
 ---------------------------------------------------------------------
 - Moved some JavaScript code from helpers to application.js.
 - Added support for showing interchangeable inline forms (Convert and Edit).
+- Refactored saving/restoring context for inline forms.
 
 Wed, Mar 4, 2008
 ---------------------------------------------------------------------

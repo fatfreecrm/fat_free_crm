@@ -12,7 +12,7 @@ class OpportunitiesController < ApplicationController
     else
       @opportunities = Opportunity.my(@current_user).only(session[:filter_by_opportunity_stage].split(","))
     end
-    make_new_opportunity if visible?(:create_opportunity)
+    make_new_opportunity if context_exists?(:create_opportunity)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,8 +38,8 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
-    preserve_visibility(:create_opportunity)
     make_new_opportunity
+    @context = save_context(:create_opportunity)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -63,11 +63,11 @@ class OpportunitiesController < ApplicationController
     @account     = Account.new(params[:account])
     @accounts    = Account.my(@current_user).all(:order => "name")
     @stage       = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
-    preserve_visibility(:create_opportunity)
+    @context     = save_context(:create_opportunity)
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
-        drop_visibility(:create_opportunity)
+        drop_context(@context)
         get_data_for_sidebar if request.referer =~ /opportunities$/
         format.js   # create.js.rjs
         format.html { redirect_to(@opportunity) }

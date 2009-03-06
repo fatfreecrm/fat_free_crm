@@ -7,7 +7,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @contacts = Contact.my(@current_user)
-    make_new_contact if visible?(:create_contact)
+    make_new_contact if context_exists?(:create_contact)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -33,8 +33,8 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    preserve_visibility(:create_contact)
     make_new_contact
+    @context = save_context(:create_contact)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -57,11 +57,11 @@ class ContactsController < ApplicationController
     @users    = User.all_except(@current_user)
     @account  = Account.new(params[:account])
     @accounts = Account.my(@current_user).all(:order => "name")
-    preserve_visibility(:create_contact)
+    @context = save_context(:create_contact)
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
-        drop_visibility(:create_contact)
+        drop_context(@context)
         format.js   # create.js.rjs
         format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }

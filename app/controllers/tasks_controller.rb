@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @tasks = Task.find_all_grouped(@current_user, @view)
-    make_new_task if visible?(:create_task)
+    make_new_task if context_exists?(:create_task)
 
     respond_to do |format|
       format.html # index.html.haml
@@ -34,7 +34,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @view = params[:view] || "pending"
-    preserve_visibility(:create_task)
+    @context = save_context(:create_task)
     make_new_task
 
     respond_to do |format|
@@ -56,11 +56,11 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(params[:task]) # NOTE: we don't display validation messages for tasks.
     @view = params[:view] || "pending"
-    preserve_visibility(:create_task)
+    @context = save_context(:create_task)
 
     respond_to do |format|
       if @task.save
-        drop_visibility(:create_task)
+        drop_context(@context)
         update_sidebar if @context == :create_task
         format.js   # create.js.rjs
         format.html { redirect_to(@task) }

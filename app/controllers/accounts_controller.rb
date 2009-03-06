@@ -7,7 +7,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @accounts = Account.my(@current_user)
-    make_new_account if visible?(:create_account)
+    make_new_account if context_exists?(:create_account)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,7 +34,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     make_new_account
-    preserve_visibility(:create_account)
+    @context = save_context(:create_account)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -55,11 +55,11 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
-    preserve_visibility(:create_account)
+    @context = save_context(:create_account)
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
-        drop_visibility(:create_account)
+        drop_context(@context)
         format.js   # create.js.rjs
         format.html { redirect_to(@account) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }

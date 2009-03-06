@@ -13,7 +13,7 @@ class LeadsController < ApplicationController
       @leads = Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
     end
 
-    make_new_lead if visible?(:create_lead)
+    make_new_lead if context_exists?(:create_lead)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,8 +38,8 @@ class LeadsController < ApplicationController
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
-    preserve_visibility(:create_lead)
     make_new_lead
+    @context = save_context(:create_lead)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -55,8 +55,8 @@ class LeadsController < ApplicationController
     @users = User.all_except(@current_user)
     @campaigns = Campaign.my(@current_user).all(:order => "name")
 
-    @context = save_context(params[:context] || :edit_lead)
-    save_context(:edit_lead) if @context != :edit_lead # Make [Convert] aware that the Edit form is on.
+    @context = save_context(:edit_lead)
+    mark_context(:edit_lead) if @context != :edit_lead # Make [Convert] aware that the Edit form is up.
   end
 
   # POST /leads
@@ -66,11 +66,11 @@ class LeadsController < ApplicationController
     @lead = Lead.new(params[:lead])
     @users = User.all_except(@current_user)
     @campaigns = Campaign.my(@current_user).all(:order => "name")
-    preserve_visibility(:create_lead)
+    @context = save_context(:create_lead)
 
     respond_to do |format|
       if @lead.save_with_permissions(params[:users])
-        drop_visibility(:create_lead)
+        drop_context(@context)
         get_data_for_sidebar if request.referer =~ /leads$/
         format.js   # create.js.rjs
         format.html { redirect_to(@lead) }
@@ -123,8 +123,8 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def convert
     @lead = Lead.find(params[:id])
-    @context = save_context(params[:context] || :convert_lead)
-    save_context(:convert_lead) if @context != :convert_lead # Make [Edit] aware that the Convert form is on.
+    @context = save_context(:convert_lead)
+    mark_context(:convert_lead) if @context != :convert_lead # Make [Edit] aware that the Convert form is up.
 
     if context_exists?(@context) || context_exists?(:edit_lead)
       @users = User.all_except(@current_user)
@@ -142,7 +142,7 @@ class LeadsController < ApplicationController
     @context = params[:context]
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
-    preserve_visibility(:create_lead)
+    @context = save_context(:create_lead)
 
     respond_to do |format|
       @account, @opportunity, @contact = @lead.promote(params)
@@ -150,7 +150,7 @@ class LeadsController < ApplicationController
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
         @lead.convert
         get_data_for_sidebar if request.referer =~ /leads$/ # Update sidebar only if converting from Leads page.
-        drop_visibility(@context)
+        drop_context(@context)
         format.js   # promote.js.rjs
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }

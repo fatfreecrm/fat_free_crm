@@ -13,8 +13,7 @@ class CampaignsController < ApplicationController
       @campaigns = Campaign.my(@current_user).only(session[:filter_by_campaign_status].split(","))
     end
 
-    # If [Create Campaign] form is visible get the data to render it.
-    make_new_campaign if visible?(:create_campaign)
+    make_new_campaign if context_exists?(:create_campaign)
 
     respond_to do |format|
       format.html # index.html.haml
@@ -40,9 +39,8 @@ class CampaignsController < ApplicationController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    # Save [Create Campaign] visiblity for given context.
-    preserve_visibility(:create_campaign)
     make_new_campaign
+    @context = save_context(:create_campaign)
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -63,11 +61,11 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(params[:campaign])
     @users = User.all_except(@current_user)
-    preserve_visibility(:create_campaign)
+    @context = save_context(:create_campaign)
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
-        drop_visibility(:create_campaign)
+        drop_context(@context)
         format.js   # create.js.rjs
         format.html { redirect_to(@campaign) }
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
