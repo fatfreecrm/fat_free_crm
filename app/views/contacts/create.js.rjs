@@ -1,4 +1,5 @@
 if @contact.valid?
+  page["#{@context}_arrow"].replace_html "&#9658;"
   page["#{@context}_title"].replace_html "Contacts"
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
   page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]

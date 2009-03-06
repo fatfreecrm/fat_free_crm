@@ -1,4 +1,5 @@
 if @task.valid?
+  page["#{@context}_arrow"].replace_html "&#9658;"
   page["#{@context}_title"].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
 

@@ -1,8 +1,10 @@
 if params[:visible] == "false"                          # show
+  page["#{@context}_arrow"].replace_html "&#9660;"
   page["#{@context}_title"].replace_html "Create Lead"
   page[@context].replace_html :partial => "create"
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25, afterFinish: function() { $('lead_first_name').focus(); } });"
 else                                                    # hide
+  page["#{@context}_arrow"].replace_html "&#9658;"
   page["#{@context}_title"].replace_html "Leads"
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25 });"
 end
