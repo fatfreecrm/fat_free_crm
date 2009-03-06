@@ -3,8 +3,8 @@
 #confirm{ hidden }
 .title_tools#menu
   - if @lead.status != "converted"
-    = link_to_inline(dom_id(@lead), convert_lead_path(@lead), "Convert") + " | "
-  = link_to_inline(dom_id(@lead), edit_lead_path(@lead), "Edit") + " | "
+    = link_to_inline(dom_id(@lead), convert_lead_path(@lead), "Convert", :convert_lead) + " | "
+  = link_to_inline(dom_id(@lead), edit_lead_path(@lead), "Edit", :edit_lead) + " | "
   = link_to_function("Delete?", confirm_delete(@lead))
 .title{:id => dom_id(@lead, :title)}= @lead.full_name
 

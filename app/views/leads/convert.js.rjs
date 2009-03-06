@@ -1,5 +1,5 @@
-# logger.p "cvt context: " + @context.inspect
 id = dom_id(@lead)
+
 if @context == :convert_lead # Regular inline form called from Leads index.
   if session[@context]
     page[id].replace_html :partial => "convert"
@@ -7,15 +7,21 @@ if @context == :convert_lead # Regular inline form called from Leads index.
   else # Restore <LI> with the original properties and lead info.
     page[id].replace :partial => "lead", :collection => [ @lead ]
   end
+
 else # Inline form called from Lead landing page or somewehere else.
-  if session[@context]
-    page["#{id}_arrow"].replace_html "&#9660;"
+
+  if session[@context] || session[:edit_lead]
+    page[:convert_lead_arrow].replace_html "&#9660;"
+    page[:edit_lead_arrow].replace_html "&#9658;"
     page[dom_id(@lead, :title)].replace_html "Convert #{@lead.full_name}"
     page[id].replace_html :partial => "convert"
-    page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25, afterFinish: function() { $('account_name').focus(); } });"
+    page[id].hide
+    page << "Effect.toggle('#{id}', 'blind', { duration: 0.25, afterFinish: function() { $('account_name').focus(); } });"
+    session[:edit_lead] = nil
+    session[:convert_lead] = true
   else
-    page["#{id}_arrow"].replace_html "&#9658;"
+    page[:convert_lead_arrow].replace_html "&#9658;"
     page[dom_id(@lead, :title)].replace_html @lead.full_name
-    page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
+    page << "Effect.toggle('#{id}', 'blind', { duration: 0.1 });"
   end
 end

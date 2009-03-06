@@ -54,7 +54,9 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
     @campaigns = Campaign.my(@current_user).all(:order => "name")
-    preserve_visibility(:edit_lead)
+
+    @context = save_context(params[:context] || :edit_lead)
+    save_context(:edit_lead) if @context != :edit_lead # Make [Convert] aware that the Edit form is on.
   end
 
   # POST /leads
@@ -121,9 +123,10 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def convert
     @lead = Lead.find(params[:id])
-    preserve_visibility(:convert_lead)
+    @context = save_context(params[:context] || :convert_lead)
+    save_context(:convert_lead) if @context != :convert_lead # Make [Edit] aware that the Convert form is on.
 
-    if visible?(@context)
+    if context_exists?(@context) || context_exists?(:edit_lead)
       @users = User.all_except(@current_user)
       @accounts = Account.my(@current_user).all(:order => "name")
       @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")

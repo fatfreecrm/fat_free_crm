@@ -63,14 +63,22 @@ class ApplicationController < ActionController::Base
   end
 
   #----------------------------------------------------------------------------
+  def save_context(name)
+    session[context = name.to_sym] = (params[:visible] == "true" ? nil : true)
+    context
+  end
+
+  #----------------------------------------------------------------------------
   def drop_visibility(name)
     session[name] = nil
   end
+  alias :drop_context :drop_visibility
 
   #----------------------------------------------------------------------------
   def visible?(name)
     session[name]
   end
+  alias :context_exists? :visible?
 
   #----------------------------------------------------------------------------
   def find_related_asset_for(model)
