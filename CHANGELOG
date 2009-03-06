@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Thu, Mar 5, 2008
+---------------------------------------------------------------------
+- Moved some JavaScript code from helpers to application.js.
+
 Wed, Mar 4, 2008
 ---------------------------------------------------------------------
 - Refactored tools menu in lists to use block div.

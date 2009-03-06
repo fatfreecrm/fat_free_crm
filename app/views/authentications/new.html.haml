@@ -21,7 +21,7 @@
       = link_to "Forgot password?", new_password_path
 
 %small#login_link
-  = link_to_function "Login using OpenID", toggle_open_id_login
+  = link_to_function "Login using OpenID", "crm.toggle_open_id_login()"
 
 %small#openid_link{ hidden }
-  = link_to_function "Login using username and password", toggle_open_id_login("authentication_username")
+  = link_to_function "Login using username and password", "crm.toggle_open_id_login('authentication_username')"

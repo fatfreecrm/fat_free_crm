@@ -1,17 +1,3 @@
-- content_for :javascript_epilogue do
-  :plain
-    function flip_campaign_permissions(value) {
-      if (value) {
-        $("lead_access_campaign").enable();
-        $("lead_access_campaign").checked = 1;
-        $("copy_permissions").style.color = "#3f3f3f";
-      } else {
-        $("lead_access_campaign").disable();
-        $("copy_permissions").style.color = "grey";
-        $("lead_access_private").checked = 1;
-      }
-    }
-
 - collapsed = (@lead.errors.empty? && session[:lead_status].nil?)
 = subtitle :lead_status, collapsed
 .section
@@ -38,4 +24,4 @@
         %td= spacer
         %td{ :valign => :top, :colspan => 3 }
           .label Campaign:
-          = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :include_blank => "-- None --" }, { :style => "width:100%", :onchange => "flip_campaign_permissions(this.value)" }
+          = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :include_blank => "-- None --" }, { :style => "width:100%", :onchange => "crm.flip_campaign_permissions(this.value)" }

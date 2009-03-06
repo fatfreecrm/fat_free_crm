@@ -22,7 +22,7 @@
       = f.submit "Sign Up"
 
 %small#login_link
-  = link_to_function "Use your OpenID", toggle_open_id_signup
+  = link_to_function "Use your OpenID", "crm.toggle_open_id_signup()"
 
 %small#openid_link{ hidden }
-  = link_to_function "Use username and password", toggle_open_id_signup
+  = link_to_function "Use username and password", "crm.toggle_open_id_signup()"

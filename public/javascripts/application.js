@@ -49,14 +49,48 @@ var crm = {
     $("account_id").enable();  $("account_id").show();  $("account_id").focus();
   },
 
+  //----------------------------------------------------------------------------
   flip_calendar: function(value) {
     if (value == "specific_time") {
       $("task_due_at_hint").toggle(); // Hide dropdown.
       $("task_calendar").toggle();    // Show editable date field.
       $("task_calendar").focus();     // Focus to invoke calendar popup.
     }
-  }
+  },
 
+  //----------------------------------------------------------------------------
+  flip_campaign_permissions: function(value) {
+    if (value) {
+      $("lead_access_campaign").enable();
+      $("lead_access_campaign").checked = 1;
+      $("copy_permissions").style.color = "#3f3f3f";
+    } else {
+      $("lead_access_campaign").disable();
+      $("copy_permissions").style.color = "grey";
+      $("lead_access_private").checked = 1;
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  toggle_open_id_login: function(first_field) {
+    if (arguments.length == 0) {
+      first_field = "authentication_openid_identifier";
+    }
+    $("login").toggle();
+    $("openid").toggle();
+    $("login_link").toggle();
+    $("openid_link").toggle();
+    $(first_field).focus();
+  },
+
+  //----------------------------------------------------------------------------
+  toggle_open_id_signup: function() {
+    $("login").toggle();
+    $("openid").toggle();
+    $("login_link").toggle();
+    $("openid_link").toggle();
+    $('user_email').focus();
+  }
 }
 
 Event.observe(window, "load", function() { crm.focus_on_first_field() })
