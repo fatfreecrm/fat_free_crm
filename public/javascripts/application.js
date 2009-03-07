@@ -25,6 +25,12 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  find_form: function(class_name) {
+    var forms = $$('form.' + class_name);
+    return (forms.length > 0 ? forms[0].id : null);
+  },
+
+  //----------------------------------------------------------------------------
   focus_on_first_field: function() {
     if ($$("form") != "") {
       var first_element = $$("form")[0].findFirstElement();

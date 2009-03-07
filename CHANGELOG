@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Fri, Mar 6, 2008
+---------------------------------------------------------------------
+- Implemented [Edit Account] form.
+
 Thu, Mar 5, 2008
 ---------------------------------------------------------------------
 - Moved some JavaScript code from helpers to application.js.

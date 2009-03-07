@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab(:accounts)", :except => [ :new, :create, :destroy ]
+  before_filter "set_current_tab(:accounts)", :except => [ :new, :edit, :create, :update, :destroy ]
 
   # GET /accounts
   # GET /accounts.xml
@@ -43,10 +43,15 @@ class AccountsController < ApplicationController
     end
   end
 
-  # GET /accounts/1/edit
+  # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
     @account = Account.find(params[:id])
+    @users   = User.all_except(@current_user)
+    @context = save_context(dom_id(@account))
+    if params[:open] =~ /(\d+)\z/
+      @previous = Account.find($1)
+    end
   end
 
   # POST /accounts
@@ -72,17 +77,19 @@ class AccountsController < ApplicationController
   end
 
   # PUT /accounts/1
-  # PUT /accounts/1.xml
+  # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
     @account = Account.find(params[:id])
 
     respond_to do |format|
       if @account.update_attributes(params[:account])
-        flash[:notice] = 'Account was successfully updated.'
+        format.js
         format.html { redirect_to(@account) }
         format.xml  { head :ok }
       else
+        @users = User.all_except(@current_user) # Need ir to redraw [Edit Account] form.
+        format.js
         format.html { render :action => "edit" }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end

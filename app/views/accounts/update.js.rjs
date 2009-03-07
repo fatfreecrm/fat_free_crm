@@ -1,0 +1,10 @@
+id = dom_id(@account)
+if @account.errors.empty?
+  page[id].replace :partial => "account", :collection => [ @account ]
+  page[id].visual_effect :highlight, :duration => 1.0
+  session.data.delete(id)
+else  
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:account_name].focus
+end

@@ -7,7 +7,7 @@
   %div
     .tools{ invisible, :id => dom_id(account, :tools) }
       %small
-        = link_to("Edit", account_path(account)) << " | "
+        = link_to_remote("Edit", :url => edit_account_path(account), :method => :get, :with => "{ open: crm.find_form('edit_account') }") << " | "
         = link_to_remote("Delete!", :url => account_path(account), :method => :delete, :before => visual_effect(:highlight, dom_id(account), :startcolor => "#ffe4e1"))
       &nbsp;
     = link_to(account.name, account) << " &ndash; "
