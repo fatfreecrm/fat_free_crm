@@ -4,91 +4,95 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Fri, Mar 6, 2008
+Sat, Mar 7, 2009
+---------------------------------------------------------------------
+- Moved context code to module and made it available to controllers and views.
+
+Fri, Mar 6, 2009
 ---------------------------------------------------------------------
 - Implemented [Edit Account] form.
 - Implemented basic functions of [Edit Campaign].
 
-Thu, Mar 5, 2008
+Thu, Mar 5, 2009
 ---------------------------------------------------------------------
 - Moved some JavaScript code from helpers to application.js.
 - Added support for showing interchangeable inline forms (Convert and Edit).
 - Refactored saving/restoring context for inline forms.
 
-Wed, Mar 4, 2008
+Wed, Mar 4, 2009
 ---------------------------------------------------------------------
 - Refactored tools menu in lists to use block div.
 - Refactored lead conversion to use remote form.
 - Started with the [Edit Lead] inline form.
 
-Tue, Mar 3, 2008
+Tue, Mar 3, 2009
 ---------------------------------------------------------------------
 - Refactored lead star rating to always show 5 stars (grayed out or not).
 - Removed [notes] field from core models and forms.
 - Created v0.1 "Steinitz" milestone and tickets for "Steinitz" release.
 - Set up GitHub service hook to integrate commits with the Lighthouse.
 
-Mon, Mar 2, 2008
+Mon, Mar 2, 2009
 ---------------------------------------------------------------------
 - Implemented Lead and Contact summary sidebar for individual Leads and Contacts.
 
-Sun, Mar 1, 2008
+Sun, Mar 1, 2009
 ---------------------------------------------------------------------
 - Added core extension library.
 - Implemented Opportunity summary sidebar for individual Opportunity.
 
-Sat, Feb 28, 2008
+Sat, Feb 28, 2009
 ---------------------------------------------------------------------
 - Added gravatar support for leads and contacts.
 
-Fri, Feb 27, 2008
+Fri, Feb 27, 2009
 ---------------------------------------------------------------------
 - Added [gravatar] plugin and implemented gravatars for notes.
 
-Thu, Feb 26, 2008
+Thu, Feb 26, 2009
 ---------------------------------------------------------------------
 - Github commits are up on Twitter at http://twitter.com/fatfreecrm
 - More refactoring to simplify handling of inline forms.
 - Implemented adding related tasks for Leads, Accounts, Contacts, and Opportunities.
 
-Wed, Feb 25, 2008
+Wed, Feb 25, 2009
 ---------------------------------------------------------------------
 - Refactored tasks, added ability to create related tasks (Campaigns only so far).
 
-Tue, Feb 24, 2008
+Tue, Feb 24, 2009
 ---------------------------------------------------------------------
 - Implemented adding opportunities from the [Campaign] landing page.
 - Implemented adding opportunities from [Contact] landing page.
 - Implemented adding contacts from [Opportunity] landing page.
 - Three months anniversary ;-).
 
-Mon, Feb 23, 2008
+Mon, Feb 23, 2009
 ---------------------------------------------------------------------
 - Implemented adding leads from the [Campaign] landing page.
 - Implemented adding contacts from the [Account] landing page.
 - Implemented adding opportunities from the [Account] landing page.
 - Updated README file.
 
-Sun, Feb 22, 2008
+Sun, Feb 22, 2009
 ---------------------------------------------------------------------
 - Adding parent object support for inline forms.
 
-Fri, Feb 20, 2008
+Fri, Feb 20, 2009
 ---------------------------------------------------------------------
 - Major refactoring to support inline form embedding throughout the system.
 
-Thu, Feb 19, 2008
+Thu, Feb 19, 2009
 ---------------------------------------------------------------------
 - Simplified storing expand/collapse state for form sections.
 - Started refactoring to support inline form embedding.
 
-Wed, Feb 18, 2008
+Wed, Feb 18, 2009
 ---------------------------------------------------------------------
 - Converted [Create...] forms to remote to be able to reuse them inline.
 - Refactored javascript and stylesheet includes for popup calendar control.
 - Consolidated scattered inline stylesheets into single shared partial.
 
-Tue, Feb 17, 2008
+Tue, Feb 17, 2009
 ---------------------------------------------------------------------
 - Refactored styles, added [Campaign] to [Lead] and [Opportunity] landing pages.
 - Added [Contacts] and [Opportunities] to [Account] landing page.
@@ -96,166 +100,166 @@ Tue, Feb 17, 2008
 - Added [Accounts] and [Campaigns] to [Opportunity] landing page.
 - Refactored JavaScript code to automatically set focus on first form field.
 
-Mon, Feb 16, 2008
+Mon, Feb 16, 2009
 ---------------------------------------------------------------------
 - Save shown/hidden state of [post a note] form for all commentable models.
 - Updated controller and view specs to support commentables.
 - Added comments fixture to generate sample comments for all the core models.
 
-Sun, Feb 15, 2008
+Sun, Feb 15, 2009
 ---------------------------------------------------------------------
 - Implemented adding notes for campaign.
 - Added notes for other core models (Account, Contact, Lead, and Opportunity).
 
-Sat, Feb 14, 2008
+Sat, Feb 14, 2009
 ---------------------------------------------------------------------
 - More design work on campaign landing page (adding comments, etc.)
 
-Fri, Feb 13, 2008
+Fri, Feb 13, 2009
 ---------------------------------------------------------------------
 - Implemented Campaign Summary sidebar for the campaign landing page.
 - Generated [Comment] scaffold and created database migration.
 - Added [acts_as_commentable] to core models.
 - Added visible/invisible helpers to flip element's visibility style.
 
-Thu, Feb 12, 2008
+Thu, Feb 12, 2009
 ---------------------------------------------------------------------
 - Installed [acts_as_commentable] plugin.
 - More work designing simple and consistent landing pages.
 
-Wed, Feb 11, 2008
+Wed, Feb 11, 2009
 ---------------------------------------------------------------------
 - Researching and mocking up landing pages for campaigns and leads.
 
-Tue, Feb 10, 2008
+Tue, Feb 10, 2009
 ---------------------------------------------------------------------
 - Implemented creating and assigning tasks for the specific date from the calendar.
 
-Mon, Feb 9, 2008
+Mon, Feb 9, 2009
 ---------------------------------------------------------------------
 - Converted remaining forms to HAML and the stylesheet to SASS.
 
-Sun, Feb 8, 2008
+Sun, Feb 8, 2009
 ---------------------------------------------------------------------
 - Added custom logger to highlight logged messages.
 - Added [task_at_hint] field to [tasks] table to capture due date request.
 - Refactored task model and crm.date_select_popup() in application.js.
 
-Sat, Feb 7, 2008
+Sat, Feb 7, 2009
 ---------------------------------------------------------------------
 - Created initial implementation of adding a new task (all except specific date).
 - Refactored tasks code to simplify filtering.
 - Implemented flipping between dropdown and calendar popup.
 - Updated task related controller and view specs.
 
-Fri, Feb 6, 2008
+Fri, Feb 6, 2009
 ---------------------------------------------------------------------
 - Finished implementing after_filter callback hook in [web-to-lead] plugin.
 - Implemented tasks deletion for all three views.
 - More fun with SASS stylesheets -- pretty cool stuff.
 
-Thu, Feb 5, 2008
+Thu, Feb 5, 2009
 ---------------------------------------------------------------------
 - More work researching application's after_filter and making it work right.
 
-Wed, Feb 4, 2008
+Wed, Feb 4, 2009
 ---------------------------------------------------------------------
 - Added [app_after_filter] hook and moved the rest of [web-to-lead] code to plugin.
 - Started converting CSS to SASS.
 
-Tue, Feb 3, 2008
+Tue, Feb 3, 2009
 ---------------------------------------------------------------------
 - Added README.rdoc and sample database configuration files, updated sample users.
 - Added :app_before_filter hook, extracted [web-to-lead] code and moved it to plugin.
 - Tweaks to login and signup forms (to be converted to HAML soon).
 
-Mon, Feb 2, 2008
+Mon, Feb 2, 2009
 ---------------------------------------------------------------------
 - Updated task related controller and view specs.
 - Extracted sample plugin and moved it into separate Git repository.
 
-Sun, Feb 1, 2008
+Sun, Feb 1, 2009
 ---------------------------------------------------------------------
 - SuperBowl!!
 - Refactored tasks controller to offload most of sidebar and filter processing to task model.
 - Impletented tasks/complete for pending tasks.
 
-Sat, Jan 31, 2008
+Sat, Jan 31, 2009
 ---------------------------------------------------------------------
 - [Create new task] and [Assign new task] forms now save/restore their display state.
 - Implemented task filtering for all three views.
 - Added completion checkboxes and created initial implementation.
 
-Fri, Jan 30, 2008
+Fri, Jan 30, 2009
 ---------------------------------------------------------------------
 - Ruby 1.9.1 final was released today!
 - Added new named scopes to support assignments and completed tasks.
 - Added sidebar filters for completed tasks.
 - Added CSS styles for single-line lists and redesigned task templates.
 
-Thu, Jan 29, 2008
+Thu, Jan 29, 2009
 ---------------------------------------------------------------------
 - Unpacked gem dependencies to /vendor/gems (ruby-openid, haml, and faker).
 - Check whether database connection is available in [uses_mysql_uuid] plugin.
 - Made task filters work for pending and assigned tasks.
 
-Wed, Jan 28, 2008
+Wed, Jan 28, 2009
 ---------------------------------------------------------------------
 - Implemented task selector to switch between pending, assigned, and completed tasks.
 - Major overhaul of task templates to support three task views.
 - Changed rake's namespace from [app] to [crm].
 
-Tue, Jan 27, 2008
+Tue, Jan 27, 2009
 ---------------------------------------------------------------------
 - Added sidebar tasks filtering by due date.
 - Added CSS styles for selector control.
 - Added prototype selector control for tasks.
 
-Mon, Jan 26, 2008
+Mon, Jan 26, 2009
 ---------------------------------------------------------------------
 - Added support for inline forms and added [Create New Task] form.
 - Updated task named scopes to evaluate them on each request rather than on server startup.
 
-Sun, Jan 25, 2008
+Sun, Jan 25, 2009
 ---------------------------------------------------------------------
 - Added task categories and due dates to system settings.
 - Completed first implementation of Tasks index page.
 
-Sat, Jan 24, 2008
+Sat, Jan 24, 2009
 ---------------------------------------------------------------------
 - Added named scopes for tasks model, created tasks fixtures.
 - Two months anniversary ;-).
 
-Fri, Jan 23, 2008
+Fri, Jan 23, 2009
 ---------------------------------------------------------------------
 - Moved permissions related code to [uses_user_permissions] Rails plugin.
 - Refactored models to make use of [uses_user_permissions] plugin.
 - Moved permission model to [uses_user_permissions] plugin.
 - Updated [Task] model and database schema for [Tasks] table.
 
-Thu, Jan 22, 2008
+Thu, Jan 22, 2009
 ---------------------------------------------------------------------
 - Implemented list delete for accounts, campaigns, leads, and opportunities.
 - Generated Tasks scaffold.
 - Added [Tasks] tab to default settings, renamed [Home] tab to [Dashboard].
 
-Wed, Jan 21, 2008
+Wed, Jan 21, 2009
 ---------------------------------------------------------------------
 - Implemented list delete for contacts.
 
-Tue, Jan 20, 2008
+Tue, Jan 20, 2009
 ---------------------------------------------------------------------
 - Refactored Setting.opportunity_stage to make sure the insertion order is preserved.
 - Implemented opportunities filtering by stage.
 - Welcome, Mr. President.
 
-Mon, Jan 19, 2008
+Mon, Jan 19, 2009
 ---------------------------------------------------------------------
 - Improved login/logout flash messages.
 - Refactored list templates to use collection partials.
 - Added sidebar for Campaigns to filter them out by status.
 
-Sun, Jan 18, 2008
+Sun, Jan 18, 2009
 ---------------------------------------------------------------------
 - More fine tuning of plugins and callback hooks.
 - Sample plugin now implements view, controller, and controller filter hooks.

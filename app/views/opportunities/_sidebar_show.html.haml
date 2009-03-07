@@ -30,19 +30,19 @@
     %dt= @opportunity.amount ? number_to_currency(@opportunity.weighted_amount || 0, :precision => 0) : "N/A"
     %tt Weighted amount:
   %li
-    %dt= (@opportunity.assigned_to ? @opportunity.assignee.full_name : @opportunity.user.full_name).abbreviate
+    %dt= truncate((@opportunity.assigned_to ? @opportunity.assignee.full_name : @opportunity.user.full_name), 16)
     %tt Assigned to:
   %li
     %dt
       - if @opportunity.account
-        = link_to(@opportunity.account.name.abbreviate, @opportunity.account, :title => @opportunity.account.name)
+        = link_to(truncate(@opportunity.account.name, 16), @opportunity.account, :title => @opportunity.account.name)
       - else
         N/A
     %tt Account:
   %li.last
     %dt
       - if @opportunity.campaign
-        = link_to(@opportunity.campaign.name.abbreviate, @opportunity.campaign, :title => @opportunity.campaign.name)
+        = link_to(truncate(@opportunity.campaign.name, 16), @opportunity.campaign, :title => @opportunity.campaign.name)
       - else
         N/A
     %tt Campaign:

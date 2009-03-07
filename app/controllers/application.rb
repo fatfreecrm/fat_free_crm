@@ -57,29 +57,6 @@ class ApplicationController < ActionController::Base
   end
 
   #----------------------------------------------------------------------------
-  def save_context(name)
-    context = (params[:context].blank? ? name : params[:context].intern)
-    session[context] = (params[:visible] == "true" ? nil : true)
-    context
-  end
-
-  #----------------------------------------------------------------------------
-  def mark_context(name)
-    session[context = name.to_sym] = (params[:visible] == "true" ? nil : true)
-    context
-  end
-
-  #----------------------------------------------------------------------------
-  def drop_context(name)
-    session[name] = nil
-  end
-
-  #----------------------------------------------------------------------------
-  def context_exists?(name)
-    session[name]
-  end
-
-  #----------------------------------------------------------------------------
   def find_related_asset_for(model)
     context = @context.to_s
     return if context !~ /\d+$/
