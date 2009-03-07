@@ -3,9 +3,8 @@
   %div
     .tools{ invisible, :id => dom_id(contact, :tools) }
       %small
-        = link_to("Edit", contact_path(contact)) << " | "
-        = link_to_remote("Delete!", :url => contact_path(contact), :method => :delete, :before => visual_effect(:highlight, dom_id(contact), :startcolor => "#ffe4e1"))
-      &nbsp;
+        = link_to_edit(contact) + " | "
+        = link_to_delete(contact) + "&nbsp;"
     = link_to(contact.full_name, contact)
     %tt
       - if contact.title? && contact.department?

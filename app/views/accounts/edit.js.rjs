@@ -1,21 +1,17 @@
-# Hide [Create Account] for if it's up.
-page << "if (Element.visible('create_account')) {"
-  page[:create_account_arrow].replace_html "&#9658;"
-  page[:create_account_title].replace_html "Account"
-  page << "Effect.toggle('create_account', 'blind', { duration: 0.25 });"
-page << "}"
-
 # Hide open [Edit Account] form if any.
 if @previous
   page[dom_id(@previous)].replace :partial => "account", :collection => [ @previous ]
 end
 
-# Now show or hide currently requested [Edit Account] form.  
-if session[@context]
-  page[@context].replace_html :partial => "edit"
-  page << %Q/$("#{@context}").onmouseover = $("#{@context}").onmouseout = null; $("#{@context}").style.background = "white";/
+# Show requested [Edit Account] form.
+if context_exists?(@context)
+  page.call "crm.hide_form", :create_account      # Hide [Create Account] for if it's up to avoid name clashes.
+  drop_context(:create_account)                   # Drop context so that refresh won't show [Create Account] again.
+  page.call "crm.highlight_off", @context         # Disable onMouseOver for the list item.
+  page[@context].replace_html :partial => "edit"  # Show [Edit Account] form.
 
-else # Hide the form and restore <li> with the original account list item.
+# Hide [Edit Account] and restore <li> with the original account list item.
+else
   page[@context].replace :partial => "account", :collection => [ @account ]
-  session.data.delete(@context)
+  drop_context(@context)
 end

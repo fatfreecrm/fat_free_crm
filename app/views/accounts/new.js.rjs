@@ -5,6 +5,6 @@ if params[:visible] == "false"                          # show
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25, afterFinish: function() { $('account_name').focus(); } });"
 else                                                    # hide
   page["#{@context}_arrow"].replace_html "&#9658;"
-  page["#{@context}_title"].replace_html "Account"
+  page["#{@context}_title"].replace_html "Accounts"
   page << "Effect.toggle('#{@context}', 'blind', { duration: 0.25 });"
 end

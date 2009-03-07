@@ -1,22 +1,17 @@
-# Hide [Create Campaign] for if it's up.
-page << "if (Element.visible('create_campaign')) {"
-  page[:create_campaign_arrow].replace_html "&#9658;"
-  page[:create_campaign_title].replace_html "Campaign"
-  page[:create_campaign].update ""
-  page << "Effect.toggle('create_campaign', 'blind', { duration: 0.25 });"
-page << "}"
-
 # Hide open [Edit Campaign] form if any.
 if @previous
   page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
 end
 
-# Now show or hide currently requested [Edit Campaign] form.
-if session[@context]
-  page[@context].replace_html :partial => "edit"
-  page << %Q/$("#{@context}").onmouseover = $("#{@context}").onmouseout = null; $("#{@context}").style.background = "white";/
+# Show requested [Edit Campaign] form.
+if context_exists?(@context)
+  page.call "crm.hide_form", :create_campaign     # Hide [Create Campaign] for if it's up to avoid name clashes.
+  drop_context(:create_campaign)                  # Drop context so that refresh won't show [Create Campaign] again.
+  page.call "crm.highlight_off", @context         # Disable onMouseOver for the list item.
+  page[@context].replace_html :partial => "edit"  # Show [Edit Campaign] form.
 
-else # Hide the form and restore <li> with the original campaign list item.
+# Hide [Edit Campaign] and restore <li> with the original campaign list item.
+else
   page[@context].replace :partial => "campaign", :collection => [ @campaign ]
-  session.data.delete(@context)
+  drop_context(@context)
 end

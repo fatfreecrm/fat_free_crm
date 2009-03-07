@@ -31,6 +31,26 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  hide_form: function(id) {
+    if (Element.visible(id)) {
+      var title = id.split("_")[1];
+      title = title.capitalize() + "s";
+      if (title.endsWith("ys")) {
+        title.sub(/ys$/, "ies");
+      }
+      $(id + "_arrow").update("&#9658;");
+      $(id + "_title").update(title);
+      Effect.toggle(id, "blind", { duration: 0.25, afterFinish: function() { $(id).update("") } });
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  highlight_off: function(id) {
+    $(id).onmouseover = $(id).onmouseout = null;
+    $(id).style.background = "white";
+  },
+
+  //----------------------------------------------------------------------------
   focus_on_first_field: function() {
     if ($$("form") != "") {
       var first_element = $$("form")[0].findFirstElement();

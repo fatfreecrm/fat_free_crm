@@ -1,6 +1,6 @@
 class ContactsController < ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab(:contacts)", :except => [ :new, :create, :destroy ]
+  before_filter "set_current_tab(:contacts)", :only => [ :index, :show ]
 
   # GET /contacts
   # GET /contacts.xml
@@ -43,10 +43,17 @@ class ContactsController < ApplicationController
     end
   end
 
-  # GET /contacts/1/edit
+  # GET /contacts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @contact = Contact.find(params[:id])
+    @contact  = Contact.find(params[:id])
+    @users    = User.all_except(@current_user)
+      @account  = Account.new
+    @accounts = Account.my(@current_user).all(:order => "name")
+    ### @context = save_context(dom_id(@contact))
+    if params[:open] =~ /(\d+)\z/
+      @previous = Contact.find($1)
+    end
   end
 
   # POST /contacts
@@ -74,7 +81,7 @@ class ContactsController < ApplicationController
   end
 
   # PUT /contacts/1
-  # PUT /contacts/1.xml
+  # PUT /contacts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
     @contact = Contact.find(params[:id])

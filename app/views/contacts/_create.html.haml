@@ -4,41 +4,10 @@
   = f.hidden_field :user_id
   = f.hidden_field :assigned_to
   = f.error_messages
-  .section
-    %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
-      %tr
-        %td{ :valign => :top }
-          .label.top.req First name:
-          = f.text_field :first_name, :style => "width:240px"
-        %td= spacer
-        %td{ :valign => :top }
-          .label.top.req Last name:
-          = f.text_field :last_name, :style => "width:240px"
-      %tr
-        %td{ :valign => :top }
-          .label Email:
-          = f.text_field :email, :style => "width:240px"
-        %td= spacer
-        %td{ :valign => :top }
-          .label Phone:
-          = f.text_field :phone, :style => "width:240px"
-    %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
-      - fields_for(@account) do |a|
-        = a.hidden_field :user_id
-        = a.hidden_field :access
-        %tr
-          %td{ :valign => :top }
-            .label.top
-              Account
-              %span#account_selector
-            = collection_select :account, :id, @accounts, :id, :name, { :selected => @account.id || 0 }, { :style => "width:330px; display:none;" }
-            = a.text_field :name, :style => "width:324px; display:none;"
-          %td= spacer
-          %td{ :valign => :top }
-            .label.top Assigned to:
-            = collection_select :account, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
-  - %w(extra web permissions).each do |partial|
-    = render :partial => "contacts/#{partial}", :locals => { :f => f }
+  = render :partial => "contacts/top_section", :locals => { :f => f }
+  = render :partial => "contacts/extra",       :locals => { :f => f }
+  = render :partial => "contacts/web",         :locals => { :f => f }
+  = render :partial => "contacts/permissions", :locals => { :f => f }
   .buttonbar
     = f.submit "Create Contact", :onclick => %/$("contact_assigned_to").value = $F("account_assigned_to")/
     or

@@ -50,6 +50,26 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
+  def link_to_edit(model)
+    name = model.class.name.downcase
+    link_to_remote("Edit",
+      :method => :get,
+      :url    => send("edit_#{name}_path", model),
+      :with   => "{ open: crm.find_form('edit_#{name}') }"
+    )
+  end
+
+  #----------------------------------------------------------------------------
+  def link_to_delete(model)
+    name = model.class.name.downcase
+    link_to_remote("Delete!",
+      :method => :delete,
+      :url    => send("#{name}_path", model),
+      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+    )
+  end
+
+  #----------------------------------------------------------------------------
   def styles_for(*models)
     render :partial => "common/inline_styles", :locals => { :models => models }
   end
