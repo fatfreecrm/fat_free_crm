@@ -1,7 +1,7 @@
 class CampaignsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:campaigns)", :except => [ :new, :create, :destroy, :filter ]
+  before_filter "set_current_tab(:campaigns)", :except => [ :new, :create, :edit, :update, :destroy, :filter ]
 
   # GET /campaigns
   # GET /campaigns.xml
@@ -49,10 +49,15 @@ class CampaignsController < ApplicationController
     end
   end
 
-  # GET /campaigns/1/edit
+  # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
     @campaign = Campaign.find(params[:id])
+    @users    = User.all_except(@current_user)
+    @context  = save_context(dom_id(@campaign))
+    if params[:open] =~ /(\d+)\z/
+      @previous = Campaign.find($1)
+    end
   end
 
   # POST /campaigns
@@ -78,17 +83,19 @@ class CampaignsController < ApplicationController
   end
 
   # PUT /campaigns/1
-  # PUT /campaigns/1.xml
+  # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def update
     @campaign = Campaign.find(params[:id])
 
     respond_to do |format|
       if @campaign.update_attributes(params[:campaign])
-        flash[:notice] = 'Campaign was successfully updated.'
+        format.js
         format.html { redirect_to(@campaign) }
         format.xml  { head :ok }
       else
+        @users = User.all_except(@current_user) # Need it to redraw [Edit Campaign] form.
+        format.js
         format.html { render :action => "edit" }
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end

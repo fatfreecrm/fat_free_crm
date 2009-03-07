@@ -1,0 +1,22 @@
+# Hide [Create Campaign] for if it's up.
+page << "if (Element.visible('create_campaign')) {"
+  page[:create_campaign_arrow].replace_html "&#9658;"
+  page[:create_campaign_title].replace_html "Campaign"
+  page[:create_campaign].update ""
+  page << "Effect.toggle('create_campaign', 'blind', { duration: 0.25 });"
+page << "}"
+
+# Hide open [Edit Campaign] form if any.
+if @previous
+  page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
+end
+
+# Now show or hide currently requested [Edit Campaign] form.
+if session[@context]
+  page[@context].replace_html :partial => "edit"
+  page << %Q/$("#{@context}").onmouseover = $("#{@context}").onmouseout = null; $("#{@context}").style.background = "white";/
+
+else # Hide the form and restore <li> with the original campaign list item.
+  page[@context].replace :partial => "campaign", :collection => [ @campaign ]
+  session.data.delete(@context)
+end

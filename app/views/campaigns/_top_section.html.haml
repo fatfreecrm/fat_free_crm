@@ -1,0 +1,15 @@
+.section
+  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %tr
+      %td{ :colspan => 4, :valign => :top }
+        .label.top.req Campaign name:
+        = f.text_field :name, :style => "width:500px"
+    %tr
+      %td{ :valign => :top }
+        .label Start date:
+        = f.text_field :starts_on, :style => "width:110px", :autocomplete => :off
+      %td= spacer
+      %td{ :valign => :top }
+        .label End date:
+        = f.text_field :ends_on, :style => "width:110px", :autocomplete => :off
+      %td= spacer(260)

@@ -3,7 +3,7 @@
   %div
     .tools{ invisible, :id => dom_id(campaign, :tools) }
       %small
-        = link_to("Edit", campaign_path(campaign)) << " | "
+        = link_to_remote("Edit", :url => edit_campaign_path(campaign), :method => :get, :with => "{ open: crm.find_form('edit_campaign') }") << " | "
         = link_to_remote("Delete!", :url => campaign_path(campaign), :method => :delete, :before => visual_effect(:highlight, dom_id(campaign), :startcolor => "#ffe4e1"))
       &nbsp;
     = link_to(campaign.name, campaign)

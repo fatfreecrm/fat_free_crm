@@ -88,7 +88,7 @@ class AccountsController < ApplicationController
         format.html { redirect_to(@account) }
         format.xml  { head :ok }
       else
-        @users = User.all_except(@current_user) # Need ir to redraw [Edit Account] form.
+        @users = User.all_except(@current_user) # Need it to redraw [Edit Account] form.
         format.js
         format.html { render :action => "edit" }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
