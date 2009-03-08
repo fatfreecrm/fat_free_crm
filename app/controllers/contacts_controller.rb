@@ -122,14 +122,4 @@ class ContactsController < ApplicationController
     end
   end
 
-  private
-  #----------------------------------------------------------------------------
-  def make_new_contact
-    @contact  = Contact.new(:user => @current_user, :access => "Private")
-    @users    = User.all_except(@current_user)
-    @account  = Account.new(:user => @current_user, :access => "Private")
-    @accounts = Account.my(@current_user).all(:order => "name")
-    find_related_asset_for(@contact)
-  end
-
 end

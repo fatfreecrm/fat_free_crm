@@ -1,15 +1,13 @@
 class TasksController < ApplicationController
-  AJAX_REQUESTS = [ :new, :create, :destroy, :complete, :filter ]
   before_filter :require_user
   before_filter :update_sidebar, :only => :index
-  before_filter "set_current_tab(:tasks)", :except => AJAX_REQUESTS
+  before_filter "set_current_tab(:tasks)", :only => [ :index, :show ]
 
   # GET /tasks
   # GET /tasks.xml
   #----------------------------------------------------------------------------
   def index
     @tasks = Task.find_all_grouped(@current_user, @view)
-    make_new_task if context_exists?(:create_task)
 
     respond_to do |format|
       format.html # index.html.haml
@@ -34,8 +32,14 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @view = params[:view] || "pending"
-    @context = save_context(:create_task)
-    make_new_task
+    @task = Task.new
+    @users = User.all_except(@current_user)
+    @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
+    @category = Setting.task_category.invert.sort
+    if params[:related]
+      model, id = params[:related].split("_")
+      instance_variable_set("@asset", model.classify.constantize.find(id))
+    end
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -44,10 +48,13 @@ class TasksController < ApplicationController
     end
   end
 
-  # GET /tasks/1/edit
+  # GET /tasks/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
     @task = Task.find(params[:id])
+    if params[:previous] =~ /(\d+)\z/
+      @previous = Task.find($1)
+    end
   end
 
   # POST /tasks
@@ -56,12 +63,10 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(params[:task]) # NOTE: we don't display validation messages for tasks.
     @view = params[:view] || "pending"
-    @context = save_context(:create_task)
 
     respond_to do |format|
       if @task.save
-        drop_context(@context)
-        update_sidebar if @context == :create_task
+        update_sidebar if request.referer =~ /\/tasks\?*/
         format.js   # create.js.rjs
         format.html { redirect_to(@task) }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
@@ -74,17 +79,19 @@ class TasksController < ApplicationController
   end
 
   # PUT /tasks/1
-  # PUT /tasks/1.xml
+  # PUT /tasks/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   def update
     @task = Task.find(params[:id])
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
-        flash[:notice] = 'Task was successfully updated.'
+        update_sidebar if request.referer =~ /\/tasks\?*/
+        format.js
         format.html { redirect_to(@task) }
         format.xml  { head :ok }
       else
+        format.js
         format.html { render :action => "edit" }
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
@@ -101,9 +108,9 @@ class TasksController < ApplicationController
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
     @bucket = Task.bucket(@current_user, params[:bucket],  params[:view])
 
-    update_sidebar unless params[:bucket].blank?
+    update_sidebar if request.referer =~ /\/tasks\?*/ && !params[:bucket].blank?
     respond_to do |format|
-      format.js   # destroy.js.rjs
+      format.js
       format.html { redirect_to(tasks_url) }
       format.xml  { head :ok }
     end
@@ -141,15 +148,6 @@ class TasksController < ApplicationController
   end
 
   private
-  #--------------------------------------------------------------------------
-  def make_new_task
-    @task = Task.new
-    @users = User.all_except(@current_user)
-    @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
-    @category = Setting.task_category.invert.sort
-    find_related_asset_for(@task)
-  end
-
   # Yields array of current filters and updates the session using new values.
   #----------------------------------------------------------------------------
   def update_session
