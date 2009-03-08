@@ -6,9 +6,8 @@
   %div
     .tools{ invisible, :id => dom_id(opportunity, :tools) }
       %small
-        = link_to("Edit", opportunity_path(opportunity)) << " | "
-        = link_to_remote("Delete!", :url => opportunity_path(opportunity), :method => :delete, :before => visual_effect(:highlight, dom_id(opportunity), :startcolor => "#ffe4e1"))
-      &nbsp;
+        = link_to_edit(opportunity) + " | "
+        = link_to_delete(opportunity) + "&nbsp;"
     = link_to(opportunity.name, opportunity)
     %tt
       &ndash;

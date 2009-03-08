@@ -1,0 +1,16 @@
+.remote
+  - remote_form_for(@opportunity) do |f|
+    = f.hidden_field :user_id
+    = f.hidden_field :assigned_to
+    = f.hidden_field :campaign_id
+    = f.error_messages
+    = render :partial => "opportunities/top_section", :locals => { :f => f }
+    = render :partial => "opportunities/permissions", :locals => { :f => f }
+    .buttonbar
+      = f.submit "Save Opportunity", :onclick => %/$("opportunity_assigned_to").value = $F("account_assigned_to");/
+      or
+      = link_to_remote("Cancel", :url => edit_opportunity_path(@opportunity), :method => :get, :with => "{ cancel: true }")
+
+%script{:type => "text/javascript"}
+  crm.date_select_popup("opportunity_closes_on");
+  = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"

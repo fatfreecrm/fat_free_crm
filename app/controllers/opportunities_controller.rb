@@ -1,7 +1,7 @@
 class OpportunitiesController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:opportunities)", :except => [ :new, :create, :destroy, :filter ]
+  before_filter "set_current_tab(:opportunities)", :only => [ :index, :show ]
 
   # GET /opportunities
   # GET /opportunities.xml
@@ -12,7 +12,6 @@ class OpportunitiesController < ApplicationController
     else
       @opportunities = Opportunity.my(@current_user).only(session[:filter_by_opportunity_stage].split(","))
     end
-    make_new_opportunity if context_exists?(:create_opportunity)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,8 +37,14 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_opportunity
-    @context = save_context(:create_opportunity)
+    @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
+    @users       = User.all_except(@current_user)
+    @account     = Account.new(:user => @current_user, :access => "Private")
+    @accounts    = Account.my(@current_user).all(:order => "name")
+    if params[:related]
+      model, id = params[:related].split("_")
+      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+    end
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -48,10 +53,17 @@ class OpportunitiesController < ApplicationController
     end
   end
 
-  # GET /opportunities/1/edit
+  # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
     @opportunity = Opportunity.find(params[:id])
+    @users       = User.all_except(@current_user)
+       @account  = Account.new
+    @stage       = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @accounts    = Account.my(@current_user).all(:order => "name")
+    if params[:previous] =~ /(\d+)\z/
+      @previous = Opportunity.find($1)
+    end
   end
 
   # POST /opportunities
@@ -59,20 +71,22 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @opportunity = Opportunity.new(params[:opportunity])
-    @users       = User.all_except(@current_user)
-    @account     = Account.new(params[:account])
-    @accounts    = Account.my(@current_user).all(:order => "name")
-    @stage       = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
-    @context     = save_context(:create_opportunity)
+    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
-        drop_context(@context)
         get_data_for_sidebar if request.referer =~ /opportunities$/
         format.js   # create.js.rjs
         format.html { redirect_to(@opportunity) }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
+        @users = User.all_except(@current_user)
+        @accounts = Account.my(@current_user).all(:order => "name")
+        if params[:account][:id].blank?
+          @account = Account.new(:user => @current_user, :access => "Private")
+        else
+          @account = Account.find(params[:account][:id])
+        end
         format.js   # create.js.rjs
         format.html { render :action => "new" }
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
@@ -81,17 +95,20 @@ class OpportunitiesController < ApplicationController
   end
 
   # PUT /opportunities/1
-  # PUT /opportunities/1.xml
+  # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
   def update
     @opportunity = Opportunity.find(params[:id])
+    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
 
     respond_to do |format|
       if @opportunity.update_attributes(params[:opportunity])
-        flash[:notice] = 'Opportunity was successfully updated.'
+        get_data_for_sidebar if request.referer =~ /opportunities$/
+        format.js
         format.html { redirect_to(@opportunity) }
         format.xml  { head :ok }
       else
+        format.js
         format.html { render :action => "edit" }
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
@@ -107,7 +124,7 @@ class OpportunitiesController < ApplicationController
     get_data_for_sidebar if request.referer =~ /opportunities$/
 
     respond_to do |format|
-      format.js   { get_data_for_sidebar; render }
+      format.js
       format.html { redirect_to(opportunities_url) }
       format.xml  { head :ok }
     end
@@ -126,15 +143,6 @@ class OpportunitiesController < ApplicationController
   end
 
   private
-  #--------------------------------------------------------------------------
-  def make_new_opportunity
-    @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
-    @users       = User.all_except(@current_user)
-    @account     = Account.new(:user => @current_user, :access => "Private")
-    @accounts    = Account.my(@current_user).all(:order => "name")
-    find_related_asset_for(@opportunity)
-  end
-
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }

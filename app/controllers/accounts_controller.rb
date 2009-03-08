@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab(:accounts)", :except => [ :new, :edit, :create, :update, :destroy ]
+  before_filter "set_current_tab(:accounts)", :only => [ :index, :show ]
 
   # GET /accounts
   # GET /accounts.xml
@@ -32,7 +32,7 @@ class AccountsController < ApplicationController
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @account = Account.new
+    @account = Account.new(:user => @current_user)
     @users = User.all_except(@current_user)
     if params[:related]
       model, id = params[:related].split("_")
@@ -51,7 +51,7 @@ class AccountsController < ApplicationController
   def edit
     @account = Account.find(params[:id])
     @users = User.all_except(@current_user)
-    if params[:open] =~ /(\d+)\z/
+    if params[:previous] =~ /(\d+)\z/
       @previous = Account.find($1)
     end
   end

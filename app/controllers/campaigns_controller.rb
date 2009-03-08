@@ -1,7 +1,7 @@
 class CampaignsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:campaigns)", :except => [ :new, :create, :edit, :update, :destroy, :filter ]
+  before_filter "set_current_tab(:campaigns)", :only => [ :index, :show ]
 
   # GET /campaigns
   # GET /campaigns.xml
@@ -12,8 +12,6 @@ class CampaignsController < ApplicationController
     else
       @campaigns = Campaign.my(@current_user).only(session[:filter_by_campaign_status].split(","))
     end
-
-    make_new_campaign if context_exists?(:create_campaign)
 
     respond_to do |format|
       format.html # index.html.haml
@@ -39,8 +37,12 @@ class CampaignsController < ApplicationController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_campaign
-    @context = save_context(:create_campaign)
+    @campaign = Campaign.new(:user => @current_user)
+    @users = User.all_except(@current_user)
+    if params[:related]
+      model, id = params[:related].split("_")
+      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+    end
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -53,9 +55,8 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @campaign = Campaign.find(params[:id])
-    @users    = User.all_except(@current_user)
-    @context  = save_context(dom_id(@campaign))
-    if params[:open] =~ /(\d+)\z/
+    @users = User.all_except(@current_user)
+    if params[:previous] =~ /(\d+)\z/
       @previous = Campaign.find($1)
     end
   end
@@ -66,11 +67,10 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(params[:campaign])
     @users = User.all_except(@current_user)
-    @context = save_context(:create_campaign)
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
-        drop_context(@context)
+        get_data_for_sidebar if request.referer =~ /campaigns$/
         format.js   # create.js.rjs
         format.html { redirect_to(@campaign) }
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
@@ -90,6 +90,7 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.update_attributes(params[:campaign])
+        get_data_for_sidebar if request.referer =~ /campaigns$/
         format.js
         format.html { redirect_to(@campaign) }
         format.xml  { head :ok }
@@ -110,7 +111,8 @@ class CampaignsController < ApplicationController
     @campaign.destroy
 
     respond_to do |format|
-      format.js   { get_data_for_sidebar; render }
+      get_data_for_sidebar if request.referer =~ /campaigns$/
+      format.js
       format.html { redirect_to(campaigns_url) }
       format.xml  { head :ok }
     end
@@ -128,13 +130,6 @@ class CampaignsController < ApplicationController
   end
 
   private
-  #----------------------------------------------------------------------------
-  def make_new_campaign
-    @campaign = Campaign.new
-    @users = User.all_except(@current_user)
-    find_related_asset_for(@campaign)
-  end
-
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @campaign_status_total = { :all => Campaign.my(@current_user).count, :other => 0 }

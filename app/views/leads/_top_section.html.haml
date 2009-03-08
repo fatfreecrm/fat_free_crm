@@ -1,0 +1,18 @@
+.section
+  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %tr
+      %td{ :valign => :top }
+        .label.top.req First name:
+        = f.text_field :first_name, :style => "width:240px"
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top.req Last name:
+        = f.text_field :last_name, :style => "width:240px"
+    %tr
+      %td{ :valign => :top }
+        .label Email:
+        = f.text_field :email, :style => "width:240px"
+      %td= spacer
+      %td{ :valign => :top }
+        .label Phone:
+        = f.text_field :phone, :style => "width:240px"

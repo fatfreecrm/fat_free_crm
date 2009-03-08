@@ -11,13 +11,9 @@
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_task_campaigns_#{@campaign.id}" # NOTE: plural campaigns
-- session[@context] = nil
-= inline @context, new_task_path, "Create Task", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Tasks
-
-.remote{ hidden, :id => @context }
-
+= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@campaign) }
+.subtitle#create_task_title Tasks
+.remote#create_task{ hidden }
 .log#tasks
   - if @campaign.tasks.my(@current_user).pending.any?
     = render :partial => "tasks/pending", :collection => @campaign.tasks.my(@current_user).pending, :locals => { :bucket => nil }
@@ -28,23 +24,16 @@
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_lead_campaign_#{@campaign.id}"
-- session[@context] = nil
-= inline @context, new_lead_path, "Create Lead", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Leads
-
-.remote{ hidden, :id => @context }
-
+= inline :create_lead, new_lead_path, { :class => "subtitle_tools", :related => dom_id(@campaign) }
+.subtitle#create_lead_title Leads
+.remote#create_lead{ hidden }
 .list#leads
   = render :partial => "leads/lead", :collection => @campaign.leads
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_opportunity_campaign_#{@campaign.id}"
-- session[@context] = nil
-= inline @context, new_opportunity_path, "Create Opportunity", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Opportunities
-
-.remote{ hidden, :id => @context }
+= inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@campaign) }
+.subtitle#create_opportunity_title Opportunities
+.remote#create_opportunity{ hidden }
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @campaign.opportunities

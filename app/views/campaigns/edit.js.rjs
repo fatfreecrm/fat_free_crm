@@ -4,14 +4,13 @@ if @previous
 end
 
 # Show requested [Edit Campaign] form.
-if context_exists?(@context)
+id = dom_id(@campaign)
+if params[:cancel].blank?
   page.call "crm.hide_form", :create_campaign     # Hide [Create Campaign] for if it's up to avoid name clashes.
-  drop_context(:create_campaign)                  # Drop context so that refresh won't show [Create Campaign] again.
-  page.call "crm.highlight_off", @context         # Disable onMouseOver for the list item.
-  page[@context].replace_html :partial => "edit"  # Show [Edit Campaign] form.
+  page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
+  page[id].replace_html :partial => "edit"        # Show [Edit Campaign] form.
 
 # Hide [Edit Campaign] and restore <li> with the original campaign list item.
 else
-  page[@context].replace :partial => "campaign", :collection => [ @campaign ]
-  drop_context(@context)
+  page[id].replace :partial => "campaign", :collection => [ @campaign ]
 end

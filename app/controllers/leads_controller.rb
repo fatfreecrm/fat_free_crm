@@ -13,8 +13,6 @@ class LeadsController < ApplicationController
       @leads = Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
     end
 
-    make_new_lead if context_exists?(:create_lead)
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @leads }
@@ -38,7 +36,14 @@ class LeadsController < ApplicationController
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_lead
+    @lead = Lead.new
+    @users = User.all_except(@current_user)
+    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    if params[:related]
+      model, id = params[:related].split("_")
+      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+    end
+
     @context = save_context(:create_lead)
 
     respond_to do |format|
@@ -69,7 +74,7 @@ class LeadsController < ApplicationController
     @context = save_context(:create_lead)
 
     respond_to do |format|
-      if @lead.save_with_permissions(params[:users])
+      if @lead.save_with_permissions(params)
         drop_context(@context)
         get_data_for_sidebar if request.referer =~ /leads$/
         format.js   # create.js.rjs
@@ -174,14 +179,6 @@ class LeadsController < ApplicationController
   end
 
   private
-  #----------------------------------------------------------------------------
-  def make_new_lead
-    @lead = Lead.new
-    @users = User.all_except(@current_user)
-    @campaigns = Campaign.my(@current_user).all(:order => "name")
-    find_related_asset_for(@lead)
-  end
-
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }

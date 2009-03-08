@@ -1,6 +1,5 @@
 .remote
   - remote_form_for(@lead, :url => promote_lead_path(@lead)) do |f|
-    = hidden_field_tag("context", "#{@context}") if @context
     - fields_for(@account) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :access
@@ -27,7 +26,7 @@
     .buttonbar
       = f.submit "Convert Lead"
       or
-      = link_to_remote "Cancel", { :url => convert_lead_path(@lead), :method => :get, :with => "{ visible: true, context: '#{@context}' }" }
+      = link_to_remote("Cancel", :url => convert_lead_path(@lead), :method => :get, :with => "{ cancel: true }")
 
 %script{:type => "text/javascript"}
   = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"

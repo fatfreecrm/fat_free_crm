@@ -57,6 +57,7 @@ class Opportunity < ActiveRecord::Base
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
     self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
+    self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
     save_with_permissions(params[:users])
   end
 

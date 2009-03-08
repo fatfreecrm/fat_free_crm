@@ -8,4 +8,4 @@
     .buttonbar
       = f.submit "Save Account" 
       or 
-      = link_to_remote "Cancel", { :url => edit_account_path(@account), :method => :get, :with => "{ cancel: true" }
+      = link_to_remote("Cancel", :url => edit_account_path(@account), :method => :get, :with => "{ cancel: true }")

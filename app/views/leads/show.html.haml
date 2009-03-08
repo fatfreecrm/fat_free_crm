@@ -15,13 +15,9 @@
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_task_leads_#{@lead.id}" # NOTE: plural leads
-- session[@context] = nil
-= inline @context, new_task_path, "Create Task", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Tasks
-
-.remote{ hidden, :id => @context }
-
+= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@lead) }
+.subtitle#create_task_title Tasks
+.remote#create_task{ hidden }
 .log#tasks
   - if @lead.tasks.my(@current_user).pending.any?
     = render :partial => "tasks/pending", :collection => @lead.tasks.my(@current_user).pending, :locals => { :bucket => nil }

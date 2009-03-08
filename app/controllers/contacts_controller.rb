@@ -55,7 +55,7 @@ class ContactsController < ApplicationController
     @users    = User.all_except(@current_user)
       @account  = Account.new
     @accounts = Account.my(@current_user).all(:order => "name")
-    if params[:open] =~ /(\d+)\z/
+    if params[:previous] =~ /(\d+)\z/
       @previous = Contact.find($1)
     end
   end
@@ -72,7 +72,7 @@ class ContactsController < ApplicationController
         format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
-        @users    = User.all_except(@current_user)
+        @users = User.all_except(@current_user)
         @accounts = Account.my(@current_user).all(:order => "name")
         if params[:account][:id].blank?
           @account = Account.new(:user => @current_user, :access => "Private")
@@ -97,10 +97,11 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.update_attributes(params[:contact])
-        flash[:notice] = 'Contact was successfully updated.'
+        format.js
         format.html { redirect_to(@contact) }
         format.xml  { head :ok }
       else
+        format.js
         format.html { render :action => "edit" }
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end

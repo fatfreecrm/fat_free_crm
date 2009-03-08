@@ -1,11 +1,11 @@
-page[:flash].hide if @context == :create_task
-if params[:visible] == "false"                          # show
-  page["#{@context}_arrow"].replace_html "&#9660;"
-  page["#{@context}_title"].replace_html(@view == "assigned" ? "Assign Task" : "Create Task")
-  page[@context].replace_html :partial => "create"
-  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.3, afterFinish: function() { $('task_name').focus(); } });"
+page[:flash].hide if params[:related].blank?
+if params[:cancel] != "true"
+  page[:create_task_arrow].replace_html "&#9660;"
+  page[:create_task_title].replace_html(@view == "assigned" ? "Assign Task" : "Create Task")
+  page[:create_task].replace_html :partial => "create"
+  page << "Effect.toggle('create_task', 'blind', { duration: 0.3, afterFinish: function() { $('task_name').focus(); } });"
 else                                                    # hide
-  page["#{@context}_arrow"].replace_html "&#9658;"
-  page["#{@context}_title"].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
-  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.3 });"
+  page[:create_task_arrow].replace_html "&#9658;"
+  page[:create_task_title].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
+  page << "Effect.toggle('create_task', 'blind', { duration: 0.3 });"
 end

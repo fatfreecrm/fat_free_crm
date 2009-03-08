@@ -56,11 +56,12 @@ class Lead < ActiveRecord::Base
 
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
-  def save_with_permissions(users)
-    if self[:access] == "Campaign" &&self[:campaign_id] # Copy campaign permissions.
-      save_with_model_permissions(Campaign.find(self[:campaign_id]))
+  def save_with_permissions(params)
+    self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
+    if self.access == "Campaign" && self.campaign # Copy campaign permissions.
+      save_with_model_permissions(Campaign.find(self.campaign_id))
     else
-      super(users) # invoke :save_with_permissions in plugin.
+      super(params[:users]) # invoke :save_with_permissions in plugin.
     end
   end
 

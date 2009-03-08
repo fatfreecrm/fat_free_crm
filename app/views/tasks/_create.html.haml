@@ -1,6 +1,5 @@
 - remote_form_for(@task) do |f|
   = hidden_field_tag :view, @view
-  = hidden_field_tag "context", "#{@context}"
   = hidden_field_tag "task[user_id]", @current_user.id
   = hidden_field_tag "task[asset_id]", "#{@asset.id if @asset}"
   = hidden_field_tag "task[asset_type]", "#{@asset.class if @asset}"
@@ -30,7 +29,7 @@
   .buttonbar
     = f.submit "Create Task"
     or
-    = link_to_remote "Cancel", { :url => new_task_path, :with => "{ visible: true, context: '#{@context}' }" }
+    = link_to_remote("Cancel", :url => new_task_path, :with => "{ cancel: true }")
 
 %script{:type => "text/javascript"}
   crm.date_select_popup("task_calendar", "task_due_at_hint");

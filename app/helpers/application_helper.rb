@@ -58,7 +58,7 @@ module ApplicationHelper
     link_to_remote("Edit",
       :method => :get,
       :url    => send("edit_#{name}_path", model),
-      :with   => "{ open: crm.find_form('edit_#{name}') }"
+      :with   => "{ previous: crm.find_form('edit_#{name}') }"
     )
   end
 

@@ -1,11 +1,15 @@
 if @campaign.valid?
-  page["#{@context}_arrow"].replace_html "&#9658;"
-  page["#{@context}_title"].replace_html "Campaigns"
-  page << "Effect.toggle('#{@context}', 'blind', { duration: 0.1 });"
+  page[:create_campaign_arrow].replace_html "&#9658;"
+  page[:create_campaign_title].replace_html "Campaigns"
+  page << "Effect.toggle('create_campaign', 'blind', { duration: 0.1 });"
   page.insert_html :top, :campaigns, :partial => "campaign", :collection => [ @campaign ]
   page[dom_id(@campaign)].visual_effect :highlight, :duration => 1.5
+  if request.referer =~ /campaigns$/
+    page[:sidebar].replace_html :partial => "sidebar_index"
+    page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+  end
 else
-  page[@context].replace_html :partial => "create"
-  page[@context].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:create_campaign].replace_html :partial => "create"
+  page[:create_campaign].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:campaign_name].focus
 end
