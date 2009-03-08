@@ -11,13 +11,9 @@
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_task_opportunities_#{@opportunity.id}" # NOTE: plural opportunities
-- session[@context] = nil
-= inline @context, new_task_path, "Create Task", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Tasks
-
-.remote{ hidden, :id => @context }
-
+= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@opportunity) }
+.subtitle#create_task_title Tasks
+.remote#create_task{ hidden }
 .log#tasks
   - if @opportunity.tasks.my(@current_user).pending.any?
     = render :partial => "tasks/pending", :collection => @opportunity.tasks.my(@current_user).pending, :locals => { :bucket => nil }
@@ -28,10 +24,8 @@
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_contact_opportunities_#{@opportunity.id}" # NOTE: pluralized opportunities
-= inline @context, new_contact_path, "Create Contact", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Contacts
-
-.remote{ hidden, :id => @context }
+= inline :create_contact, new_contact_path, { :class => "subtitle_tools", :related => dom_id(@opportunity) }
+.subtitle#create_contact_title Contacts
+.remote#create_contact{ hidden }
 .list#contacts
   = render :partial => "contacts/contact", :collection => @opportunity.contacts

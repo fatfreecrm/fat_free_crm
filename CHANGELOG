@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Sat, Mar 7, 2009
 ---------------------------------------------------------------------
 - Moved context code to module and made it available to controllers and views.
+- Started with [Edit Contact] form.
 
 Fri, Mar 6, 2009
 ---------------------------------------------------------------------

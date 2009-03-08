@@ -7,7 +7,6 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @accounts = Account.my(@current_user)
-    make_new_account if context_exists?(:create_account)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -33,8 +32,12 @@ class AccountsController < ApplicationController
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_account
-    @context = save_context(:create_account)
+    @account = Account.new
+    @users = User.all_except(@current_user)
+    if params[:related]
+      model, id = params[:related].split("_")
+      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+    end
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -47,8 +50,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @account = Account.find(params[:id])
-    @users   = User.all_except(@current_user)
-    @context = save_context(dom_id(@account))
+    @users = User.all_except(@current_user)
     if params[:open] =~ /(\d+)\z/
       @previous = Account.find($1)
     end
@@ -60,11 +62,9 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(params[:account])
     @users = User.all_except(@current_user)
-    @context = save_context(:create_account)
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
-        drop_context(@context)
         format.js   # create.js.rjs
         format.html { redirect_to(@account) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
@@ -109,14 +109,5 @@ class AccountsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
-  private
-  #----------------------------------------------------------------------------
-  def make_new_account
-    @account = Account.new
-    @users = User.all_except(@current_user)
-    find_related_asset_for(@account)
-  end
-
 
 end

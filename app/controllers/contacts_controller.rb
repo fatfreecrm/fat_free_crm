@@ -7,7 +7,6 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def index
     @contacts = Contact.my(@current_user)
-    make_new_contact if context_exists?(:create_contact)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -33,8 +32,14 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    make_new_contact
-    @context = save_context(:create_contact)
+    @contact  = Contact.new(:user => @current_user, :access => "Private")
+    @account  = Account.new(:user => @current_user, :access => "Private")
+    @users    = User.all_except(@current_user)
+    @accounts = Account.my(@current_user).all(:order => "name")
+    if params[:related]
+      model, id = params[:related].split("_")
+      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+    end
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -50,7 +55,6 @@ class ContactsController < ApplicationController
     @users    = User.all_except(@current_user)
       @account  = Account.new
     @accounts = Account.my(@current_user).all(:order => "name")
-    ### @context = save_context(dom_id(@contact))
     if params[:open] =~ /(\d+)\z/
       @previous = Contact.find($1)
     end
@@ -60,19 +64,24 @@ class ContactsController < ApplicationController
   # POST /contacts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    @contact  = Contact.new(params[:contact])
-    @users    = User.all_except(@current_user)
-    @account  = Account.new(params[:account])
-    @accounts = Account.my(@current_user).all(:order => "name")
-    @context = save_context(:create_contact)
+    @contact = Contact.new(params[:contact])
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
-        drop_context(@context)
         format.js   # create.js.rjs
         format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
+        @users    = User.all_except(@current_user)
+        @accounts = Account.my(@current_user).all(:order => "name")
+        if params[:account][:id].blank?
+          @account = Account.new(:user => @current_user, :access => "Private")
+        else
+          @account = Account.find(params[:account][:id])
+        end
+        unless params[:opportunity].blank?
+          @opportunity = Opportunity.find(params[:opportunity])
+        end
         format.js   # create.js.rjs
         format.html { render :action => "new" }
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }

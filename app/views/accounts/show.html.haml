@@ -11,13 +11,9 @@
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_task_accounts_#{@account.id}" # NOTE: plural accounts
-- session[@context] = nil
-= inline @context, new_task_path, "Create Task", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Tasks
-
-.remote{ hidden, :id => @context }
-
+= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@account) }
+.subtitle#create_task_title Tasks
+.remote#create_task{ hidden }
 .log#tasks
   - if @account.tasks.my(@current_user).pending.any?
     = render :partial => "tasks/pending", :collection => @account.tasks.my(@current_user).pending, :locals => { :bucket => nil }
@@ -28,22 +24,16 @@
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_contact_account_#{@account.id}"
-- session[@context] = nil
-= inline @context, new_contact_path, "Create Contact", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Contacts
-
-.remote{ hidden, :id => @context }
+= inline :create_contact, new_contact_path, { :class => "subtitle_tools", :related => dom_id(@account) }
+.subtitle#create_contact_title Contacts
+.remote#create_contact{ hidden }
 .list#contacts
   = render :partial => "contacts/contact", :collection => @account.contacts
 
 -#-----------------------------------------------------------------------------
 %br
-- @context = "create_opportunity_account_#{@account.id}"
-- session[@context] = nil
-= inline @context, new_opportunity_path, "Create Opportunity", { :class => "subtitle_tools" }
-.subtitle{ :id => "#{@context}_title"} Opportunities
-
-.remote{ hidden, :id => @context }
+= inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@account) }
+.subtitle#create_opportunity_title Opportunities
+.remote#create_opportunity{ hidden }
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @account.opportunities

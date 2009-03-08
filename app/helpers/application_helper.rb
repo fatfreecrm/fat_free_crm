@@ -31,22 +31,25 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def inline(id, url, text = id.to_s.titleize, options = {})
-    content_tag("div", link_to_inline(id, url, text), :class => options[:class] || "title_tools")
+  def inline(id, url, options = {})
+    content_tag("div", link_to_inline(id, url, options), :class => options[:class] || "title_tools")
   end
 
   #----------------------------------------------------------------------------
-  def link_to_inline(id, url, text = id.to_s.titleize, arrow_id = id)
-    link_to_remote(arrow_for(arrow_id) << "&nbsp;" << text,
+  def link_to_inline(id, url, options = {})
+    text    = options[:text] || id.to_s.titleize
+    related = (options[:related] ? ", related: '#{options[:related]}'" : "")
+
+    link_to_remote(arrow_for(id) << "&nbsp;" << text,
       :url    => url,
       :method => :get,
-      :with   => "{ visible: Element.visible('#{id}'), context: '#{id}' }"
+      :with   => "{ cancel: Element.visible('#{id}')#{related} }"
     )
   end
 
   #----------------------------------------------------------------------------
   def arrow_for(id)
-    content_tag(:abbr, session[id].nil? ? "&#9658;" : "&#9660;", :id => "#{id}_arrow")
+    content_tag(:abbr, "&#9658;", :id => "#{id}_arrow")
   end
 
   #----------------------------------------------------------------------------

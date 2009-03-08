@@ -32,7 +32,7 @@ var crm = {
 
   //----------------------------------------------------------------------------
   hide_form: function(id) {
-    if (Element.visible(id)) {
+    if ($(id) && Element.visible(id)) {
       var title = id.split("_")[1];
       title = title.capitalize() + "s";
       if (title.endsWith("ys")) {

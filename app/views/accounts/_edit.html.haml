@@ -1,6 +1,5 @@
 .remote
   - remote_form_for(@account) do |f|
-    = hidden_field_tag "context", "#{@context}"
     = hidden_field_tag "account[user_id]", @current_user.id
     = f.error_messages
     = render :partial => "accounts/top_section",  :locals => { :f => f }
@@ -9,4 +8,4 @@
     .buttonbar
       = f.submit "Save Account" 
       or 
-      = link_to_remote "Cancel", { :url => edit_account_path(@account), :method => :get, :with => "{ visible: true, context: '#{@context}' }" }
+      = link_to_remote "Cancel", { :url => edit_account_path(@account), :method => :get, :with => "{ cancel: true" }
