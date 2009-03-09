@@ -2,9 +2,11 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to("Edit", edit_contact_path(@contact)) + " | "
+  = link_to_inline(:edit_contact, edit_contact_path(@contact), :text => "Edit") + " | "
   = link_to_function("Delete?", confirm_delete(@contact))
-.title= @contact.full_name
+.title#edit_contact_title= @contact.full_name
+
+%div#edit_contact{ hidden }
 
 = render :partial => "common/new_comment", :locals => { :commentable => @contact }
 = render :partial => "common/comment", :collection => @contact.comments

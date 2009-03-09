@@ -76,7 +76,7 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @lead.save_with_permissions(params)
         drop_context(@context)
-        get_data_for_sidebar if request.referer =~ /leads$/
+        get_data_for_sidebar if request.referer =~ /\/leads$/
         format.js   # create.js.rjs
         format.html { redirect_to(@lead) }
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }

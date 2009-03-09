@@ -24,9 +24,9 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-      link_to_remote("<small id='#{id}_arrow'>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}",
+      link_to_remote("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}",
         :url => url_for(:controller => :home, :action => :toggle, :id => id),
-        :with => "'visible=' + Element.visible('#{id}')"
+        :before => "crm.flip_subtitle(this)"
       ), :class => "subtitle")
   end
 

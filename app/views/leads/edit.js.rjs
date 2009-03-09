@@ -1,16 +1,19 @@
 id = dom_id(@lead)
 
-if @context == :edit_lead # Regular inline form called from Leads index.
-  if session[@context]
-    page[id].replace_html :partial => "edit"
-    page << %Q/$("#{id}").onmouseover = $("#{id}").onmouseout = null; $("#{id}").style.background = "white";/
-  else # Restore <LI> with the original properties and lead info.
+if request.referer =~ /\/leads$/ # Regular inline form called from Leads index.
+  if params[:cancel].blank?
+    page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
+    page[id].replace_html :partial => "edit"        # Show [Edit Lead] form.
+
+  # Hide [Edit Lead] and restore <li> with the original account list item.
+  else
     page[id].replace :partial => "lead", :collection => [ @lead ]
   end
 
-else # Inline form called from Lead landing page or somewehere else.
+# Inline form called from Lead landing page or somewehere else.
+else
 
-  if session[@context] || session[:convert_lead]
+  if params[:cancel].blank?
     page[:edit_lead_arrow].replace_html "&#9660;"
     page[:convert_lead_arrow].replace_html "&#9658;"
     page[dom_id(@lead, :title)].replace_html "Edit #{@lead.full_name}"

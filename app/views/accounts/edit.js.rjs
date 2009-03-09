@@ -6,7 +6,6 @@ end
 # Show requested [Edit Account] form.
 id = dom_id(@account)
 if params[:cancel].blank?
-  page.call "crm.hide_form", :create_account      # Hide [Create Account] for if it's up to avoid name clashes.
   page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
   page[id].replace_html :partial => "edit"        # Show [Edit Account] form.
 

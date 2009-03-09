@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, Mar 7, 2009
+---------------------------------------------------------------------
+- More work on inline edit and create forms.
+
 Sat, Mar 7, 2009
 ---------------------------------------------------------------------
 - Moved context code to module and made it available to controllers and views.

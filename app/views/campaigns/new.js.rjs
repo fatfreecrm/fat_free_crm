@@ -1,10 +1,4 @@
 if params[:cancel] != "true"
-  page[:create_campaign_arrow].replace_html "&#9660;"
-  page[:create_campaign_title].replace_html "Create Campaign"
   page[:create_campaign].replace_html :partial => "create"
-  page << "Effect.toggle('create_campaign', 'blind', { duration: 0.25, afterFinish: function() { $('campaign_name').focus(); } });"
-else
-  page[:create_campaign_arrow].replace_html "&#9658;"
-  page[:create_campaign_title].replace_html "Campaigns"
-  page << "Effect.toggle('create_campaign', 'blind', { duration: 0.25 });"
 end
+page.call "crm.flip_form", :create_campaign

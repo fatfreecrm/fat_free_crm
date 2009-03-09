@@ -31,16 +31,28 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  hide_form: function(id) {
-    if ($(id) && Element.visible(id)) {
-      var title = id.split("_")[1];
-      title = title.capitalize() + "s";
-      if (title.endsWith("ys")) {
-        title.sub(/ys$/, "ies");
+  flip_form: function(id, title) {
+    if ($(id)) {
+      if (Element.visible(id)) {
+        if (arguments.length < 2) {
+          title = id.split("_")[1];
+          title = title.capitalize() + "s";
+          if (title.endsWith("ys")) {
+            title = title.sub(/ys$/, "ies");
+          }
+        }
+        $(id + "_arrow").update("&#9658;");
+        $(id + "_title").update(title);
+        Effect.toggle(id, "blind", { duration: 0.25, afterFinish: function() { $(id).update("") } });
+      } else {
+        if (arguments.length < 2) {
+          var words = id.split("_");
+          title = words[0].capitalize() + " " + words[1].capitalize();
+        }
+        $(id + "_arrow").update("&#9660;");
+        $(id + "_title").update(title);
+        Effect.toggle(id, "blind", { duration: 0.25, afterFinish: function() { $(id).down("input[type=text]").focus() } });
       }
-      $(id + "_arrow").update("&#9658;");
-      $(id + "_title").update(title);
-      Effect.toggle(id, "blind", { duration: 0.25, afterFinish: function() { $(id).update("") } });
     }
   },
 
@@ -94,6 +106,21 @@ var crm = {
       $("lead_access_campaign").disable();
       $("copy_permissions").style.color = "grey";
       $("lead_access_private").checked = 1;
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  flip_subtitle: function(el) {
+    var arrow = el.down("small");
+    var intro = el.up().next().down("small");
+    var section = el.up().next().down("div");
+
+    if (Element.visible(section)) {
+      arrow.update("&#9658;");
+      Effect.toggle(section, 'slide', { duration: 0.25, afterFinish: function() { intro.toggle(); } });
+    } else {
+      arrow.update("&#9660;");
+      Effect.toggle(section, 'slide', { duration: 0.25, beforeStart: function() { intro.toggle(); } });
     }
   },
 

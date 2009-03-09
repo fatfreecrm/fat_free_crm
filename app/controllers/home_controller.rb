@@ -13,18 +13,12 @@ class HomeController < ApplicationController
   # Save expand/collapse state in the session.                             AJAX
   #----------------------------------------------------------------------------
   def toggle
-    render :update do |page|
-      if params[:visible] == "false"                          # show
-        session[params[:id].intern] = true
-        page["#{params[:id]}_arrow"].replace_html "&#9660;"
-        callback = "beforeStart"
-      else                                                    # hide
-        session[params[:id].intern] = nil
-        page["#{params[:id]}_arrow"].replace_html "&#9658;"
-        callback = "afterFinish"
-      end
-      page << "Effect.toggle('#{params[:id]}', 'slide', { duration: 0.25, #{callback}: function() { $('#{params[:id]}_intro').toggle(); } });"
+    if session[params[:id].to_sym]
+      session.data.delete(params[:id].to_sym)
+    else
+      session[params[:id].to_sym] = true
     end
+    render :nothing => true
   end
 
 end

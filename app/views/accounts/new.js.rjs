@@ -1,10 +1,4 @@
 if params[:cancel] != "true"
-  page[:create_account_arrow].replace_html "&#9660;"
-  page[:create_account_title].replace_html "Create Account"
   page[:create_account].replace_html :partial => "create"
-  page << "Effect.toggle('create_account', 'blind', { duration: 0.25, afterFinish: function() { $('account_name').focus(); } });"
-else                                                    # hide
-  page[:create_account_arrow].replace_html "&#9658;"
-  page[:create_account_title].replace_html "Accounts"
-  page << "Effect.toggle('create_account', 'blind', { duration: 0.25 });"
 end
+page.call "crm.flip_form", :create_account
