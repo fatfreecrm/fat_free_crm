@@ -1,11 +1,10 @@
-# Hide open [Edit Contact] form if any.
-if @previous
-  page[dom_id(@previous)].replace :partial => "contact", :collection => [ @previous ]
-end
+id = dom_id(@contact)
 
 # Show requested [Edit Contact] form.
-id = dom_id(@contact)
 if params[:cancel].blank?                       # Called from contacts list item...
+  if @previous                                    # Hide open [Edit Contact] form if any.
+    page[dom_id(@previous)].replace :partial => "contact", :collection => [ @previous ]
+  end
   page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
   page[id].replace_html :partial => "edit"        # Show [Edit Contact] form.
 
@@ -15,7 +14,7 @@ elsif params[:cancel] == "false"                # Called from title of the conta
 
 # Hide [Edit Contact]
 else
-  if request.referer =~ /\/contacts\//          # Called from title of the contact landing page...
+  if request.referer =~ /\/contacts\/\w+/       # Called from title of the contact landing page...
     page.call "crm.flip_form", :edit_contact, "#{@contact.full_name}"
   else                                          # Called from contacts list item...
     page[id].replace :partial => "contact", :collection => [ @contact ]

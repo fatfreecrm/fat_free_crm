@@ -2,9 +2,11 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to("Edit", edit_opportunity_path(@opportunity)) + " | "
+  = link_to_inline(:edit_opportunity, edit_opportunity_path(@opportunity), :text => "Edit") + " | "
   = link_to_function("Delete?", confirm_delete(@opportunity))
-.title= @opportunity.name
+.title#edit_opportunity_title= @opportunity.name
+
+%div#edit_opportunity{ hidden }
 
 = render :partial => "common/new_comment", :locals => { :commentable => @opportunity }
 = render :partial => "common/comment", :collection => @opportunity.comments

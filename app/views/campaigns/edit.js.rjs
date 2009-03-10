@@ -1,15 +1,22 @@
-# Hide open [Edit Campaign] form if any.
-if @previous
-  page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
-end
+id = dom_id(@campaign)
 
 # Show requested [Edit Campaign] form.
-id = dom_id(@campaign)
-if params[:cancel].blank?
+if params[:cancel].blank?                       # Called from campaigns list item...
+  if @previous                                    # Hide open [Edit Campaign] form if any.
+    page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
+  end
   page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
   page[id].replace_html :partial => "edit"        # Show [Edit Campaign] form.
 
+elsif params[:cancel] == "false"                # Called from title of the campaign landing page...
+  page[:edit_campaign].replace_html :partial => "edit"
+  page.call "crm.flip_form", :edit_campaign, "Edit #{@campaign.name}"
+
 # Hide [Edit Campaign] and restore <li> with the original campaign list item.
 else
-  page[id].replace :partial => "campaign", :collection => [ @campaign ]
+  if request.referer =~ /\/campaigns\/\w+/      # Called from title of the campaign landing page...
+    page.call "crm.flip_form", :edit_campaign, "#{@campaign.name}"
+  else                                          # Called from campaigns list item...
+    page[id].replace :partial => "campaign", :collection => [ @campaign ]
+  end
 end

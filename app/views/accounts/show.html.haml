@@ -2,9 +2,11 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to("Edit", edit_account_path(@account)) + " | "
+  = link_to_inline(:edit_account, edit_account_path(@account), :text => "Edit") + " | "
   = link_to_function("Delete?", confirm_delete(@account))
-.title= @account.name
+.title#edit_account_title= @account.name
+
+%div#edit_account{ hidden }
 
 = render :partial => "common/new_comment", :locals => { :commentable => @account }
 = render :partial => "common/comment", :collection => @account.comments

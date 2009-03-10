@@ -2,9 +2,11 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to("Edit", edit_campaign_path(@campaign)) + " | "
+  = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), :text => "Edit") + " | "
   = link_to_function("Delete?", confirm_delete(@campaign))
-.title= @campaign.name
+.title#edit_campaign_title= @campaign.name
+
+%div#edit_campaign{ hidden }
 
 = render :partial => "common/new_comment", :locals => { :commentable => @campaign }
 = render :partial => "common/comment", :collection => @campaign.comments

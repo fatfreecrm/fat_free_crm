@@ -1,4 +1,4 @@
-.panel
+.panel#summary
   %span{:style => "float:right"}= gravatar_for(@contact, :size => "50x50", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
   %h4= @contact.full_name
   - if @contact.title && @contact.account
