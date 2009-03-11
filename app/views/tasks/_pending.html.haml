@@ -6,10 +6,9 @@
   %div
     .tools{ invisible, :id => dom_id(pending, :tools) }
       %small
-        = link_to("Edit", task_path(pending)) << " | "
-        = remote_delete(pending, bucket)
-      &nbsp;
-    = check_box_tag :complete, 1, false, :onclick => remote_complete(pending, bucket)
+        = link_to_task_edit(pending, bucket) + " | "
+        = link_to_task_delete(pending, bucket) + "&nbsp;"
+    = check_box_tag :complete, 1, false, :onclick => link_to_task_complete(pending, bucket)
     %label{ :id => dom_id(pending, :name) }
       - if pending.user.id != @current_user.id
         == From #{link_to(pending.user.full_name, "mailto:" + pending.user.email)}:

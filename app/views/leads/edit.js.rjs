@@ -1,30 +1,22 @@
 id = dom_id(@lead)
 
-if request.referer =~ /\/leads$/ # Regular inline form called from Leads index.
-  if params[:cancel].blank?
-    page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
-    page[id].replace_html :partial => "edit"        # Show [Edit Lead] form.
-
-  # Hide [Edit Lead] and restore <li> with the original account list item.
-  else
-    page[id].replace :partial => "lead", :collection => [ @lead ]
+if params[:cancel].blank?                       # Called from leads list item...
+  if @previous                                    # Hide open [Edit Lead] form if any.
+    page[dom_id(@previous)].replace :partial => "lead", :collection => [ @previous ]
   end
+  page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
+  page[id].replace_html :partial => "edit"        # Show [Edit Lead] form.
 
-# Inline form called from Lead landing page or somewehere else.
+elsif params[:cancel] == "false"                # Called from title of the lead landing page...
+  page[:edit_lead].replace_html :partial => "edit"
+  page.call "crm.hide_form", :convert_lead, "Convert #{@lead.full_name}"
+  page.call "crm.flip_form", :edit_lead,    "Edit #{@lead.full_name}"
+
+# Hide [Edit Lead]
 else
-
-  if params[:cancel].blank?
-    page[:edit_lead_arrow].replace_html "&#9660;"
-    page[:convert_lead_arrow].replace_html "&#9658;"
-    page[dom_id(@lead, :title)].replace_html "Edit #{@lead.full_name}"
-    page[id].replace_html :partial => "edit"
-    page[id].hide
-    page << "Effect.toggle('#{id}', 'blind', { duration: 0.25, afterFinish: function() { $('lead_first_name').focus(); } });"
-    session[:convert_lead] = nil
-    session[:edit_lead] = true
-  else
-    page[:edit_lead_arrow].replace_html "&#9658;"
-    page[dom_id(@lead, :title)].replace_html @lead.full_name
-    page << "Effect.toggle('#{id}', 'blind', { duration: 0.1 });"
+  if request.referer =~ /\/leads\/\w+/          # Called from title of the lead landing page...
+    page.call "crm.flip_form", :edit_lead, "#{@lead.full_name}"
+  else                                          # Called from leads list item...
+    page[id].replace :partial => "lead", :collection => [ @lead ]
   end
 end

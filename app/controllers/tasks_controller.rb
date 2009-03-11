@@ -51,7 +51,12 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
+    @view = params[:view] || "pending"
     @task = Task.find(params[:id])
+    @users = User.all_except(@current_user)
+    @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
+    @category = Setting.task_category.invert.sort
+    @asset = @task.asset
     if params[:previous] =~ /(\d+)\z/
       @previous = Task.find($1)
     end
@@ -83,6 +88,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @task = Task.find(params[:id])
+    @view = params[:view] || "pending"
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
@@ -134,7 +140,7 @@ class TasksController < ApplicationController
     end
   end
 
-  # Ajax request to filter out list of tasks.                              AJAX
+  # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------
   def filter
     @view = params[:view]

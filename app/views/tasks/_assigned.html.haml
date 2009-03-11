@@ -6,9 +6,8 @@
   %div
     .tools{ invisible, :id => dom_id(assigned, :tools) }
       %small
-        = link_to("Edit", task_path(assigned)) << " | "
-        = remote_delete(assigned, bucket)
-      &nbsp;
+        = link_to_task_edit(assigned, bucket) + " | "
+        = link_to_task_delete(assigned, bucket) + "&nbsp;"
     = link_to(assigned.assignee.full_name, "mailto:" + assigned.assignee.email) + ": "
     = assigned.name
     - if assigned.asset_id?

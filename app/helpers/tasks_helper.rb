@@ -21,15 +21,29 @@ module TasksHelper
   end
 
   #----------------------------------------------------------------------------
-  def remote_complete(pending, bucket)
-    onclick = "this.disable();"
-    onclick << %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => %Q/"bucket=#{bucket}"/)
+  def link_to_task_edit(task, bucket)
+    link_to_remote("Edit",
+      :url    => edit_task_path(task),
+      :method => :get,
+      :with   => "{ bucket: '#{bucket}', view: '#{@view}', previous: crm.find_form('edit_task') }"
+    )
   end
 
   #----------------------------------------------------------------------------
-  def remote_delete(task, bucket)
-    onclick = link_to_remote("Delete!", :url => task_path(task), :method => :delete, :with => %Q/{bucket: "#{bucket}", view: "#{@view}"}/, :before => visual_effect(:highlight, dom_id(task), :startcolor => "#ffe4e1"))
+  def link_to_task_delete(task, bucket)
+    link_to_remote("Delete!",
+      :url    => task_path(task),
+      :method => :delete,
+      :with   => "{ bucket: '#{bucket}', view: '#{@view}' }",
+      :before => visual_effect(:highlight, dom_id(task), :startcolor => "#ffe4e1")
+    )
+  end
+
+  #----------------------------------------------------------------------------
+  def link_to_task_complete(pending, bucket)
+    onclick = "this.disable();"
+    onclick << %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
+    onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "{ bucket: '#{bucket}' }")
   end
 
 end

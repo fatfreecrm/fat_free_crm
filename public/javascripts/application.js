@@ -1,4 +1,9 @@
 var crm = {
+
+  EXPANDED:  "&#9660;",
+  COLLAPSED: "&#9658;",
+
+  //----------------------------------------------------------------------------
   date_select_popup: function(id, dropdown_id) {
     $(id).observe("focus", function() {
       if (!$(id).calendar_was_shown) {    // The field recieved initial focus, show the calendar.
@@ -31,27 +36,41 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  flip_form: function(id, title) {
+  hide_form: function(id, caption) {
+    var title = $(id + "_title") || $("title");
+    var arrow = $(id + "_arrow") || $("arrow");
+    if (typeof(caption) == "undefined") {
+      caption = id.split("_")[1];
+      caption = caption.capitalize() + "s";
+      if (caption.endsWith("ys")) {
+        caption = caption.sub(/ys$/, "ies");
+      }
+    }
+    title.update(caption);
+    arrow.update(this.COLLAPSED);
+    Effect.BlindUp(id, { duration: 0.25, afterFinish: function() { $(id).update("") } });
+  },
+
+  //----------------------------------------------------------------------------
+  show_form: function(id, caption) {
+    var title = $(id + "_title") || $("title");
+    var arrow = $(id + "_arrow") || $("arrow");
+    if (typeof(caption) == "undefined") {
+      var words = id.split("_");
+      caption = words[0].capitalize() + " " + words[1].capitalize();
+    }
+    title.update(caption);
+    arrow.update(this.EXPANDED);
+    Effect.BlindDown(id, { duration: 0.25, afterFinish: function() { $(id).down("input[type=text]").focus() } });
+  },
+
+  //----------------------------------------------------------------------------
+  flip_form: function(id, caption) {
     if ($(id)) {
       if (Element.visible(id)) {
-        if (arguments.length < 2) {
-          title = id.split("_")[1];
-          title = title.capitalize() + "s";
-          if (title.endsWith("ys")) {
-            title = title.sub(/ys$/, "ies");
-          }
-        }
-        $(id + "_arrow").update("&#9658;");
-        $(id + "_title").update(title);
-        Effect.toggle(id, "blind", { duration: 0.25, afterFinish: function() { $(id).update("") } });
+        this.hide_form(id, caption);
       } else {
-        if (arguments.length < 2) {
-          var words = id.split("_");
-          title = words[0].capitalize() + " " + words[1].capitalize();
-        }
-        $(id + "_arrow").update("&#9660;");
-        $(id + "_title").update(title);
-        Effect.toggle(id, "blind", { duration: 0.25, afterFinish: function() { $(id).down("input[type=text]").focus() } });
+        this.show_form(id, caption);
       }
     }
   },
@@ -116,10 +135,10 @@ var crm = {
     var section = el.up().next().down("div");
 
     if (Element.visible(section)) {
-      arrow.update("&#9658;");
+      arrow.update(this.COLLAPSED);
       Effect.toggle(section, 'slide', { duration: 0.25, afterFinish: function() { intro.toggle(); } });
     } else {
-      arrow.update("&#9660;");
+      arrow.update(this.EXPANDED);
       Effect.toggle(section, 'slide', { duration: 0.25, beforeStart: function() { intro.toggle(); } });
     }
   },

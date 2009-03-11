@@ -1,14 +1,11 @@
 = inline :create_contact, new_contact_path
-
-- unless @contact
-  .title#create_contact_title Contacts
-  .remote#create_contact{ hidden }
-- else
-  .title#create_contact_title Create Contact
-  .remote#create_contact= render :partial => "create"
+.title#create_contact_title Contacts
+.remote#create_contact{ hidden }
 
 .list#contacts
   - unless @contacts.empty?
     = render :partial => "contact", :collection => @contacts
   - else
     %div== You don't have any contacts yet. Feel free to #{link_to("create new contact", new_contact_path)}.
+
+

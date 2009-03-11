@@ -12,6 +12,5 @@
     or
     = link_to_remote("Cancel", :url => new_contact_path, :with => "{ cancel: true }")
 
-- logger.p @account.inspect
 %script{:type => "text/javascript"}
   = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"

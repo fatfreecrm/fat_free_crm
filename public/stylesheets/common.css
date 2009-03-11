@@ -203,7 +203,7 @@
     .log li tt {
       color: dimgray;
       font-size: 11px; }
-  .log input {
+  .log input[type=checkbox] {
     float: left;
     margin: 0px 4px 0px 0px; }
   .log .strip {

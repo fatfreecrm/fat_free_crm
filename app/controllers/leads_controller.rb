@@ -1,7 +1,7 @@
 class LeadsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:leads)", :except => [ :new, :edit, :create, :destroy, :convert, :promote, :filter ]
+  before_filter "set_current_tab(:leads)", :only => [ :index, :show ]
 
   # GET /leads
   # GET /leads.xml
@@ -44,8 +44,6 @@ class LeadsController < ApplicationController
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
     end
 
-    @context = save_context(:create_lead)
-
     respond_to do |format|
       format.js   # new.js.rjs
       format.html # new.html.erb
@@ -59,9 +57,9 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
     @campaigns = Campaign.my(@current_user).all(:order => "name")
-
-    @context = save_context(:edit_lead)
-    mark_context(:edit_lead) if @context != :edit_lead # Make [Convert] aware that the Edit form is up.
+    if params[:previous] =~ /(\d+)\z/
+      @previous = Lead.find($1)
+    end
   end
 
   # POST /leads
@@ -71,11 +69,9 @@ class LeadsController < ApplicationController
     @lead = Lead.new(params[:lead])
     @users = User.all_except(@current_user)
     @campaigns = Campaign.my(@current_user).all(:order => "name")
-    @context = save_context(:create_lead)
 
     respond_to do |format|
       if @lead.save_with_permissions(params)
-        drop_context(@context)
         get_data_for_sidebar if request.referer =~ /\/leads$/
         format.js   # create.js.rjs
         format.html { redirect_to(@lead) }
@@ -96,10 +92,14 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.update_attributes(params[:lead])
-        flash[:notice] = "Lead #{@lead.full_name} was successfully updated."
+        get_data_for_sidebar if request.referer =~ /\/leads$/
+        format.js
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }
       else
+        @users = User.all_except(@current_user)
+        @campaigns = Campaign.my(@current_user).all(:order => "name")
+        format.js
         format.html { render :action => "edit" }
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
@@ -128,26 +128,19 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def convert
     @lead = Lead.find(params[:id])
-    @context = save_context(:convert_lead)
-    mark_context(:convert_lead) if @context != :convert_lead # Make [Edit] aware that the Convert form is up.
-
-    if context_exists?(@context) || context_exists?(:edit_lead)
-      @users = User.all_except(@current_user)
-      @accounts = Account.my(@current_user).all(:order => "name")
-      @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
-      @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
-      @contact = Contact.new
-    end
+    @users = User.all_except(@current_user)
+    @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
+    @accounts = Account.my(@current_user).all(:order => "name")
+    @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
+    @contact = Contact.new
   end
 
   # PUT /leads/1/convert
   # PUT /leads/1/convert.xml                                               AJAX
   #----------------------------------------------------------------------------
   def promote
-    @context = params[:context]
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
-    @context = save_context(:create_lead)
 
     respond_to do |format|
       @account, @opportunity, @contact = @lead.promote(params)
@@ -155,7 +148,6 @@ class LeadsController < ApplicationController
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
         @lead.convert
         get_data_for_sidebar if request.referer =~ /leads$/ # Update sidebar only if converting from Leads page.
-        drop_context(@context)
         format.js   # promote.js.rjs
         format.html { redirect_to(@lead) }
         format.xml  { head :ok }

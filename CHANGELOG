@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Mar 10, 2009
+---------------------------------------------------------------------
+- Put in place inline for Lead editing and conversion.
+- Started with inline forms for Task editing.
+- Depreciated contexts, refactored application's JavaScript.
+
 Mon, Mar 9, 2009
 ---------------------------------------------------------------------
 - Put in place inline edit forms for Campaigns, Accounts, Contacts, and Opportunities.

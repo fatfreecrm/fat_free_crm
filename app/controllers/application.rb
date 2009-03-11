@@ -56,21 +56,4 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
-  #----------------------------------------------------------------------------
-  # def find_related_asset_for(model)
-  #   context = @context.to_s
-  #   return if context !~ /\d+$/
-  #
-  #   parent, id = context.split("_")[-2, 2]
-  #   if parent.pluralize != parent
-  #     # One-to-one or one-to-many -- assign found object instance to the model.
-  #     model.send("#{parent}=", @asset = parent.capitalize.constantize.find(id))
-  #   else
-  #     # Many-to-many -- find the instance but don't assign it.
-  #     parent = parent.singularize
-  #     @asset = parent.capitalize.constantize.find(id)
-  #   end
-  #   instance_variable_set("@#{parent}", @asset)
-  # end
-
 end
