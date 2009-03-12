@@ -35,7 +35,7 @@ class TasksController < ApplicationController
     @task = Task.new
     @users = User.all_except(@current_user)
     @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
-    @category = Setting.task_category.invert.sort
+    @category = Setting.invert(:task_category)
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@asset", model.classify.constantize.find(id))
@@ -55,7 +55,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @users = User.all_except(@current_user)
     @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
-    @category = Setting.task_category.invert.sort
+    @category = Setting.invert(:task_category)
     @asset = @task.asset
     if params[:previous] =~ /(\d+)\z/
       @previous = Task.find($1)

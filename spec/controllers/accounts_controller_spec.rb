@@ -38,7 +38,7 @@ describe AccountsController do
 
     it "should expose the requested account as @account and render [show] template" do
       @account = Factory(:account, :id => 42)
-      @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+      @stage = Setting.as_hash(:opportunity_stage)
       @comment = Comment.new
 
       get :show, :id => 42
@@ -52,7 +52,7 @@ describe AccountsController do
 
       it "should render the requested account as xml" do
         @account = Factory(:account, :id => 42)
-        @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+        @stage = Setting.as_hash(:opportunity_stage)
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42

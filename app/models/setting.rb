@@ -39,5 +39,15 @@ class Setting < ActiveRecord::Base
     setting.value = Base64.encode64(Marshal.dump(value))
     setting.save
   end
-    
+
+  #-------------------------------------------------------------------
+  def self.as_hash(setting)
+    send(setting).inject({}) { |hash, item| hash[item.last] = item.first; hash }
+  end
+
+  #-------------------------------------------------------------------
+  def self.invert(setting)
+    send(setting).invert.sort
+  end
+
 end

@@ -24,7 +24,7 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @opportunity = Opportunity.find(params[:id])
-    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @stage = Setting.as_hash(:opportunity_stage)
     @comment = Comment.new
 
     respond_to do |format|
@@ -57,10 +57,10 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @opportunity = Opportunity.find(params[:id])
-    @users       = User.all_except(@current_user)
+    @users = User.all_except(@current_user)
        @account  = Account.new
-    @stage       = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
-    @accounts    = Account.my(@current_user).all(:order => "name")
+    @stage = Setting.as_hash(:opportunity_stage)
+    @accounts = Account.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
       @previous = Opportunity.find($1)
     end
@@ -71,7 +71,7 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @opportunity = Opportunity.new(params[:opportunity])
-    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @stage = Setting.as_hash(:opportunity_stage)
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
@@ -99,7 +99,7 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @opportunity = Opportunity.find(params[:id])
-    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @stage = Setting.as_hash(:opportunity_stage)
 
     respond_to do |format|
       if @opportunity.update_attributes(params[:opportunity])
@@ -135,7 +135,7 @@ class OpportunitiesController < ApplicationController
   def filter
     session[:filter_by_opportunity_stage] = params[:stage]
     @opportunities = Opportunity.my(@current_user).only(params[:stage].split(","))
-    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @stage = Setting.as_hash(:opportunity_stage)
 
     render :update do |page|
       page[:opportunities].replace_html render(:partial => "opportunity", :collection => @opportunities)
@@ -145,7 +145,7 @@ class OpportunitiesController < ApplicationController
   private
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
-    @stage = Setting.opportunity_stage.inject({}) { |hash, item| hash[item.last] = item.first; hash }
+    @stage = Setting.as_hash(:opportunity_stage)
     @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
     @stage.keys.each do |key|
       @opportunity_stage_total[key] = Opportunity.my(@current_user).count(:conditions => [ "stage=?", key.to_s ])

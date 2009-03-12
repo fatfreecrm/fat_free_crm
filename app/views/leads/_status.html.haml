@@ -12,11 +12,11 @@
         %td= spacer
         %td{ :valign => :top }
           .label.top Status:
-          = f.select :status, Setting.lead_status.invert.sort, { :selected => :new }, { :style => "width:160px" }
+          = f.select :status, Setting.invert(:lead_status), { :selected => :new }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
           .label.top Source:
-          = f.select :source, Setting.lead_source.invert.sort, { :include_blank => "-- None --" }, { :style => "width:160px" }
+          = f.select :source, Setting.invert(:lead_source), { :include_blank => "-- None --" }, { :style => "width:160px" }
       %tr
         %td{ :valign => :top }
           .label Rating:

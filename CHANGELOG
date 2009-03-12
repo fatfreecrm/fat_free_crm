@@ -10,6 +10,7 @@ Wed, Mar 11, 2009
 - Created model factories for all core models.
 - Rewrote account controller specs to use factories instead of mocks.
 - Started refactoring opportunity controller specs to use factories instead of mocks
+- Added #as_hash and #invert class methods to Settings
 
 Tue, Mar 10, 2009
 ---------------------------------------------------------------------
