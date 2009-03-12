@@ -8,7 +8,8 @@ Wed, Mar 11, 2009
 ---------------------------------------------------------------------
 - Installed [factory_girl] plugin.
 - Created model factories for all core models.
-- Rewrote account controller specs to use factories instead of mocks and expectations.
+- Rewrote account controller specs to use factories instead of mocks.
+- Started refactoring opportunity controller specs to use factories instead of mocks
 
 Tue, Mar 10, 2009
 ---------------------------------------------------------------------

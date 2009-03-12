@@ -21,6 +21,10 @@ Factory.sequence :time do |x|
   Time.now - x.hours
 end
 
+Factory.sequence :date do |x|
+  Date.today - x.days
+end
+
 #----------------------------------------------------------------------------
 Factory.define :account do |a|
   # a.uuid                { Factory.next(:uuid) }
@@ -65,13 +69,13 @@ Factory.define :campaign do |c|
   c.assigned_to         1
   c.access              "Public"
   c.status              { %w(planned started completed planned started completed on_hold called_off).rand }
-  c.budget              { rand(500) * 1000 }
-  c.target_leads        { rand(200) + 100 }
-  c.target_conversion   { rand(20) + 5 }
-  c.target_revenue      { rand(1000) * 1000 }
-  c.leads_count         { rand(200) + 100 }
-  c.opportunities_count { rand(20) + 10 }
-  c.revenue             { rand(1000) * 1000 }
+  c.budget              { rand(500) }
+  c.target_leads        { rand(200) }
+  c.target_conversion   { rand(20) }
+  c.target_revenue      { rand(1000) }
+  c.leads_count         { rand(200) }
+  c.opportunities_count { rand(20) }
+  c.revenue             { rand(1000) }
   c.ends_on             { Factory.next(:time) }
   c.starts_on           { Factory.next(:time) }
   c.objectives          { Faker::Lorem::paragraph }
@@ -172,10 +176,10 @@ Factory.define :opportunity do |o|
   o.access              "Public"
   o.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).rand }
   o.stage               { %w(prospecting qualification analysis presentation proposal negotiation final_review won lost).rand }
-  o.probability         { rand(50) + 50 }
-  o.amount              { rand(1000) * 1000 }
-  o.discount            { rand(100) * 100 }
-  o.closes_on           { Factory.next(:time) }
+  o.probability         { rand(50) }
+  o.amount              { rand(1000) }
+  o.discount            { rand(100) }
+  o.closes_on           { Factory.next(:date) }
   o.deleted_at          nil
   o.updated_at          { Factory.next(:time) }
   o.created_at          { Factory.next(:time) }
@@ -242,7 +246,7 @@ Factory.define :user do |u|
   u.last_login_at       { Factory.next(:time) }
   u.last_login_ip       "127.0.0.1"
   u.current_login_ip    "127.0.0.1"
-  u.login_count         { rand(100) + 100 }
+  u.login_count         { rand(100) }
   u.deleted_at          nil
   u.updated_at          { Factory.next(:time) }
   u.created_at          { Factory.next(:time) }
