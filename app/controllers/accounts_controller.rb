@@ -23,7 +23,7 @@ class AccountsController < ApplicationController
     @comment = Comment.new
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # show.html.haml
       format.xml  { render :xml => @account }
     end
   end
@@ -66,11 +66,9 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
         format.js   # create.js.rjs
-        format.html { redirect_to(@account) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
         format.js   # create.js.rjs
-        format.html { render :action => "new" }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
@@ -85,19 +83,17 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.update_attributes(params[:account])
         format.js
-        format.html { redirect_to(@account) }
         format.xml  { head :ok }
       else
         @users = User.all_except(@current_user) # Need it to redraw [Edit Account] form.
         format.js
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # DELETE /accounts/1
-  # DELETE /accounts/1.xml
+  # DELETE /accounts/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def destroy
     @account = Account.find(params[:id])
@@ -105,7 +101,6 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.html { redirect_to(accounts_url) }
       format.xml  { head :ok }
     end
   end

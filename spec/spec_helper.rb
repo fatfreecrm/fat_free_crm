@@ -2,8 +2,10 @@
 # from the project root directory.
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'spec'
-require 'spec/rails'
+require "spec"
+require "factory_girl"
+require "spec/rails"
+require RAILS_ROOT + "/spec/factories"
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
@@ -46,9 +48,14 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
 end
 
+
+# Load default settings from config/settings.yml
+Factory(:default_settings)
+
+# Note: Authentication is NOT ActiveRecord model, so we mock and stub it using RSpec.
 #----------------------------------------------------------------------------
 def login(session_stubs = {}, user_stubs = {})
-  @current_user = mock_model(User, user_stubs)
+  @current_user = Factory(:user, user_stubs)
   @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
 end
