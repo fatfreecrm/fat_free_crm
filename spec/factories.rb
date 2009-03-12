@@ -1,7 +1,7 @@
 require "faker"
 
 Factory.sequence :uuid do |x|
-  "%08x-%04x-%04x-%04x-%012x" % [rand(12345678), rand(1234), rand(1234), rand(1234), rand(123456789012) ] 
+  "%08x-%04x-%04x-%04x-%012x" % [ rand(12345678), rand(1234), rand(1234), rand(1234), rand(123456789012) ]
 end
 
 Factory.sequence :address do |x|
@@ -193,8 +193,8 @@ end
 #----------------------------------------------------------------------------
 Factory.define :setting do |s|
   s.name                "foo"
-  s.value               "bar"
-  s.default_value       "bar"
+  s.value               nil
+  s.default_value       nil
   s.updated_at          { Factory.next(:time) }
   s.created_at          { Factory.next(:time) }
 end
@@ -250,15 +250,23 @@ Factory.define :user do |u|
   u.password_confirmation "aaron"
 end
 
-
+# Load default settings from config/settings.yml file.
 #----------------------------------------------------------------------------
 Factory.define :default_settings, :parent => :setting do |s|
+
+  # Truncate settings so that we always start with empty table.
+  if ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
+    ActiveRecord::Base.connection.execute("TRUNCATE settings")
+  else # sqlite
+    ActiveRecord::Base.connection.execute("DELETE FROM settings")
+  end
+
   settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
   settings.keys.each do |key|
     Factory.define key.to_sym, :parent => :setting do |factory|
       factory.name key
       factory.default_value Base64.encode64(Marshal.dump(settings[key]))
     end
-    Factory(key.to_sym)
+    Factory(key.to_sym) # <--- That's where the data gets loaded.
   end
 end
