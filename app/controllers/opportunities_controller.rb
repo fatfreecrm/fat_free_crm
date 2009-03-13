@@ -48,7 +48,6 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
-      format.html # new.html.erb
       format.xml  { render :xml => @opportunity }
     end
   end
@@ -77,7 +76,6 @@ class OpportunitiesController < ApplicationController
       if @opportunity.save_with_account_and_permissions(params)
         get_data_for_sidebar if request.referer =~ /opportunities$/
         format.js   # create.js.rjs
-        format.html { redirect_to(@opportunity) }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
         @users = User.all_except(@current_user)
@@ -88,7 +86,6 @@ class OpportunitiesController < ApplicationController
           @account = Account.find(params[:account][:id])
         end
         format.js   # create.js.rjs
-        format.html { render :action => "new" }
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
     end
@@ -105,11 +102,9 @@ class OpportunitiesController < ApplicationController
       if @opportunity.update_attributes(params[:opportunity])
         get_data_for_sidebar if request.referer =~ /opportunities$/
         format.js
-        format.html { redirect_to(@opportunity) }
         format.xml  { head :ok }
       else
         format.js
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
     end
@@ -125,7 +120,6 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.html { redirect_to(opportunities_url) }
       format.xml  { head :ok }
     end
   end
@@ -136,10 +130,6 @@ class OpportunitiesController < ApplicationController
     session[:filter_by_opportunity_stage] = params[:stage]
     @opportunities = Opportunity.my(@current_user).only(params[:stage].split(","))
     @stage = Setting.as_hash(:opportunity_stage)
-
-    render :update do |page|
-      page[:opportunities].replace_html render(:partial => "opportunity", :collection => @opportunities)
-    end
   end
 
   private

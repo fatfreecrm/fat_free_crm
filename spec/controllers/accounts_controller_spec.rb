@@ -173,7 +173,7 @@ describe AccountsController do
       it "should not update the requested account but still expose the requested account as @account, and render [update] template" do
         @account = Factory(:account, :id => 42, :name => "Hello people")
 
-        xhr :put, :update, :id => 42, :account => {}
+        xhr :put, :update, :id => 42, :account => { :name => nil }
         @account.reload.name.should == "Hello people"
         assigns(:account).should == @account
         response.should render_template("accounts/update")

@@ -43,7 +43,6 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
-      format.html # new.html.erb
       format.xml  { render :xml => @contact }
     end
   end
@@ -69,7 +68,6 @@ class ContactsController < ApplicationController
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
         format.js   # create.js.rjs
-        format.html { redirect_to(@contact) }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
         @users = User.all_except(@current_user)
@@ -83,7 +81,6 @@ class ContactsController < ApplicationController
           @opportunity = Opportunity.find(params[:opportunity])
         end
         format.js   # create.js.rjs
-        format.html { render :action => "new" }
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end
     end
@@ -98,11 +95,9 @@ class ContactsController < ApplicationController
     respond_to do |format|
       if @contact.update_attributes(params[:contact])
         format.js
-        format.html { redirect_to(@contact) }
         format.xml  { head :ok }
       else
         format.js
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end
     end
@@ -117,7 +112,6 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.html { redirect_to(contacts_url) }
       format.xml  { head :ok }
     end
   end
