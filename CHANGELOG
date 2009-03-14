@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Thu, Mar 12, 2009
+---------------------------------------------------------------------
+- 100% spec code coverage for Accounts, Contacts, and Opportunities.
+
 Wed, Mar 11, 2009
 ---------------------------------------------------------------------
 - Installed [factory_girl] plugin.
