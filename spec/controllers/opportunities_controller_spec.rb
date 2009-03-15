@@ -77,6 +77,7 @@ describe OpportunitiesController do
       assigns[:opportunity].should == @opportunity
       assigns[:stage].should == @stage
       assigns[:comment].attributes.should == @comment.attributes
+      response.should render_template("opportunities/show")
     end
 
     describe "with mime type of xml" do
@@ -275,7 +276,7 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
 
-    it "should destroy the requested opportunity" do
+    it "should destroy the requested opportunity and render [destroy] template" do
       @opportunity = Factory(:opportunity, :id => 42)
 
       xhr :delete, :destroy, :id => 42
@@ -299,13 +300,13 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do
 
-    it "should update page[:opportunities] using inline RJS" do
+    it "should expose filtered opportunities as @opportunity and render [filter] template" do
       session[:filter_by_opportunity_stage] = params[:stage]
-      @opportunities = [ Factory(:opportunity, :user => @current_user) ]
+      @opportunities = [ Factory(:opportunity, :stage => "prospecting", :user => @current_user) ]
       @stage = Setting.as_hash(:opportunity_stage)
 
       xhr :get, :filter, :stage => "prospecting"
-      assigns(:opportunity).should == @opportunity
+      assigns(:opportunities).should == @opportunities
       assigns[:stage].should == @stage
       response.should render_template("opportunities/filter")
     end

@@ -76,8 +76,8 @@ Factory.define :campaign do |c|
   c.leads_count         { rand(200) }
   c.opportunities_count { rand(20) }
   c.revenue             { rand(1000) }
-  c.ends_on             { Factory.next(:time) }
-  c.starts_on           { Factory.next(:time) }
+  c.ends_on             { Factory.next(:date) }
+  c.starts_on           { Factory.next(:date) }
   c.objectives          { Faker::Lorem::paragraph }
   c.deleted_at          nil
   c.updated_at          { Factory.next(:time) }

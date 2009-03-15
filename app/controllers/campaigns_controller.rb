@@ -46,7 +46,6 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
-      format.html # new.html.haml
       format.xml  { render :xml => @campaign }
     end
   end
@@ -70,13 +69,11 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
-        get_data_for_sidebar if request.referer =~ /campaigns$/
+        get_data_for_sidebar if request.referer =~ /\/campaigns$/
         format.js   # create.js.rjs
-        format.html { redirect_to(@campaign) }
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
       else
         format.js   # create.js.rjs
-        format.html { render :action => "new" }
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
     end
@@ -90,14 +87,12 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.update_attributes(params[:campaign])
-        get_data_for_sidebar if request.referer =~ /campaigns$/
+        get_data_for_sidebar if request.referer =~ /\/campaigns$/
         format.js
-        format.html { redirect_to(@campaign) }
         format.xml  { head :ok }
       else
         @users = User.all_except(@current_user) # Need it to redraw [Edit Campaign] form.
         format.js
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
     end
@@ -111,9 +106,8 @@ class CampaignsController < ApplicationController
     @campaign.destroy
 
     respond_to do |format|
-      get_data_for_sidebar if request.referer =~ /campaigns$/
+      get_data_for_sidebar if request.referer =~ /\/campaigns$/
       format.js
-      format.html { redirect_to(campaigns_url) }
       format.xml  { head :ok }
     end
   end
@@ -123,10 +117,6 @@ class CampaignsController < ApplicationController
   def filter
     session[:filter_by_campaign_status] = params[:status]
     @campaigns = Campaign.my(@current_user).only(params[:status].split(","))
-
-    render :update do |page|
-      page[:campaigns].replace_html render(:partial => "campaign", :collection => @campaigns)
-    end
   end
 
   private
