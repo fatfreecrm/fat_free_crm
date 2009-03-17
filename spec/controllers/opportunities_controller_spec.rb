@@ -175,7 +175,7 @@ describe OpportunitiesController do
         response.should render_template("opportunities/create")
       end
 
-      it "should get sidebar data if request.referer =~ /opportunities$/" do
+      it "should get sidebar data if called from opportunities index" do
         @opportunity = Factory.build(:opportunity, :name => "Hello world", :user => @current_user)
         Opportunity.stub!(:new).and_return(@opportunity)
 
@@ -233,7 +233,7 @@ describe OpportunitiesController do
 
     describe "with valid params" do
 
-      it "should update the requested opportunity and render [update] template" do
+      it "should update the requested opportunity, expose it as @opportunity, and render [update] template" do
         @opportunity = Factory(:opportunity, :id => 42)
         @stage = Setting.as_hash(:opportunity_stage)
 
@@ -245,7 +245,7 @@ describe OpportunitiesController do
         response.should render_template("opportunities/update")
       end
 
-      it "should get sidebar data if request.referer =~ /\/opportunities$/" do
+      it "should get sidebar data if called from opportunities index" do
         @oppportunity = Factory(:opportunity, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
@@ -285,7 +285,7 @@ describe OpportunitiesController do
       response.should render_template("opportunities/destroy")
     end
 
-    it "should get sidebar data if request.referer =~ /\/opportunities$/" do
+    it "should get sidebar data if called from opportunities index" do
       @oppportunity = Factory(:opportunity, :id => 42)
 
       request.env["HTTP_REFERER"] = "http://localhost/opportunities"
@@ -301,7 +301,7 @@ describe OpportunitiesController do
   describe "responding to GET filter" do
 
     it "should expose filtered opportunities as @opportunity and render [filter] template" do
-      session[:filter_by_opportunity_stage] = params[:stage]
+      session[:filter_by_opportunity_stage] = "qualification,analysis"
       @opportunities = [ Factory(:opportunity, :stage => "prospecting", :user => @current_user) ]
       @stage = Setting.as_hash(:opportunity_stage)
 

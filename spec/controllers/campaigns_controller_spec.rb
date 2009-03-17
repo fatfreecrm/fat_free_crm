@@ -243,9 +243,6 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
 
-    # @campaign = Campaign.find(params[:id])
-    # @campaign.destroy
-
     it "should destroy the requested campaign and render [destroy] template" do
       @campaign = Factory(:campaign, :id => 42)
 
@@ -271,7 +268,7 @@ describe CampaignsController do
   describe "responding to GET filter" do
 
     it "should expose filtered campaigns as @campaigns and render [filter] template" do
-      session[:filter_by_campaign_status] = params[:status]
+      session[:filter_by_campaign_status] = "planned,started"
       @campaigns = [ Factory(:campaign, :status => "completed", :ends_on => Date.yesterday, :user => @current_user) ]
 
       xhr :get, :filter, :status => "completed"

@@ -4,6 +4,23 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Mar 15, 2009
+---------------------------------------------------------------------
+- Refactored leads controller specs using factories.
+
+Sun, Mar 15, 2009
+---------------------------------------------------------------------
+- Started refactoring leads controller specs.
+
+Sat, Mar 14, 2009
+---------------------------------------------------------------------
+- Implemented specs for Account views and Home controller.
+- Implemented specs for Campaigns controller.
+
+Fri, Mar 13, 2009
+---------------------------------------------------------------------
+- Implemented specs for Settings model.
+
 Thu, Mar 12, 2009
 ---------------------------------------------------------------------
 - 100% spec code coverage for Accounts, Contacts, and Opportunities.

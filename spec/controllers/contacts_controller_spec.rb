@@ -200,20 +200,6 @@ describe ContactsController do
 
     describe "with valid params" do
 
-      # @contact = Contact.find(params[:id])
-      # 
-      # respond_to do |format|
-      #   if @contact.update_attributes(params[:contact])
-      #     format.js
-      #     format.html { redirect_to(@contact) }
-      #     format.xml  { head :ok }
-      #   else
-      #     format.js
-      #     format.html { render :action => "edit" }
-      #     format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
-      #   end
-      # end
-
       it "should update the requested contact and render [update] template" do
         @contact = Factory(:contact, :id => 42, :first_name => "Billy")
 

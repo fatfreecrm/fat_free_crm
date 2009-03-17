@@ -46,7 +46,6 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
-      format.html # new.html.erb
       format.xml  { render :xml => @lead }
     end
   end
@@ -74,11 +73,9 @@ class LeadsController < ApplicationController
       if @lead.save_with_permissions(params)
         get_data_for_sidebar if request.referer =~ /\/leads$/
         format.js   # create.js.rjs
-        format.html { redirect_to(@lead) }
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
       else
         format.js   # create.js.rjs
-        format.html { render :action => "new" }
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
     end
@@ -94,13 +91,11 @@ class LeadsController < ApplicationController
       if @lead.update_attributes(params[:lead])
         get_data_for_sidebar if request.referer =~ /\/leads$/
         format.js
-        format.html { redirect_to(@lead) }
         format.xml  { head :ok }
       else
         @users = User.all_except(@current_user)
         @campaigns = Campaign.my(@current_user).all(:order => "name")
         format.js
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
     end
@@ -114,11 +109,10 @@ class LeadsController < ApplicationController
     @lead.destroy
 
     # Update sidebar only when deleting a lead from /leads page.
-    get_data_for_sidebar if request.referer =~ /leads$/
+    get_data_for_sidebar if request.referer =~ /\/leads$/
 
     respond_to do |format|
       format.js   # destroy.js.rjs
-      format.html { redirect_to(leads_url) }
       format.xml  { head :ok }
     end
   end
@@ -135,25 +129,23 @@ class LeadsController < ApplicationController
     @contact = Contact.new
   end
 
-  # PUT /leads/1/convert
-  # PUT /leads/1/convert.xml                                               AJAX
+  # PUT /leads/1/promote
+  # PUT /leads/1/promote.xml                                               AJAX
   #----------------------------------------------------------------------------
   def promote
     @lead = Lead.find(params[:id])
     @users = User.all_except(@current_user)
+    @account, @opportunity, @contact = @lead.promote(params)
+    @accounts = Account.my(@current_user).all(:order => "name")
 
     respond_to do |format|
-      @account, @opportunity, @contact = @lead.promote(params)
-      @accounts = Account.my(@current_user).all(:order => "name")
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
         @lead.convert
-        get_data_for_sidebar if request.referer =~ /leads$/ # Update sidebar only if converting from Leads page.
+        get_data_for_sidebar if request.referer =~ /\/leads$/ # Update sidebar only if converting from Leads page.
         format.js   # promote.js.rjs
-        format.html { redirect_to(@lead) }
         format.xml  { head :ok }
       else
         format.js   # promote.js.rjs
-        format.html { render :action => "convert" }
         format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
       end
     end
@@ -164,10 +156,6 @@ class LeadsController < ApplicationController
   def filter
     session[:filter_by_lead_status] = params[:status]
     @leads = Lead.my(@current_user).only(params[:status].split(","))
-
-    render :update do |page|
-      page[:leads].replace_html render(:partial => "lead", :collection => @leads)
-    end
   end
 
   private
