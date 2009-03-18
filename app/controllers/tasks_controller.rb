@@ -11,7 +11,8 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.haml
-      format.xml  { render :xml => @tasks }
+      # Hash keys must be strings... symbols generate "undefined method 'singularize' error"
+      format.xml  { render :xml => @tasks.inject({}) { |tasks, (k,v)| tasks[k.to_s] = v; tasks } }
     end
   end
 

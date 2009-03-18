@@ -115,6 +115,8 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def set_due_at
     self.due_at = case self.due_at_hint
+    when "overdue"
+      self.due_at || Date.yesterday
     when "due_today"
       Date.today
     when "due_tomorrow"
