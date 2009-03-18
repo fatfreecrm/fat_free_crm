@@ -27,7 +27,7 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :account do |a|
-  # a.uuid                { Factory.next(:uuid) }
+  a.uuid                { Factory.next(:uuid) }
   a.user                { |a| a.association(:user) } 
   a.assigned_to         { rand(5) + 1 }
   a.name                { Faker::Company.name }
@@ -63,9 +63,9 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :campaign do |c|
-  # c.uuid                { Factory.next(:uuid) }
+  c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
-  c.name                { Faker::Lorem.sentence }
+  c.name                { Faker::Lorem.sentence[0..63] }
   c.assigned_to         1
   c.access              "Public"
   c.status              { %w(planned started completed planned started completed on_hold called_off).rand }
@@ -86,7 +86,7 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :comment do |c|
-  # c.uuid                { Factory.next(:uuid) }
+  c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
   c.commentable         { raise "Please specify :commentable for the comment" }
   c.title               { Factory.next(:title) }
@@ -98,7 +98,7 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :contact do |c|
-  # c.uuid                { Factory.next(:uuid) }
+  c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
   c.lead                { |a| a.association(:lead) }
   c.assigned_to         1
@@ -138,7 +138,7 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :lead do |l|
-  # l.uuid                { Factory.next(:uuid) }
+  l.uuid                { Factory.next(:uuid) }
   l.user                { |a| a.association(:user) }
   l.campaign            { |a| a.association(:campaign) }
   l.assigned_to         1
@@ -168,11 +168,11 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :opportunity do |o|
-  # o.uuid                { Factory.next(:uuid) }
+  o.uuid                { Factory.next(:uuid) }
   o.user                { |a| a.association(:user) }
   o.campaign            { |a| a.association(:campaign) }
   o.assigned_to         1
-  o.name                { Faker::Lorem.sentence }
+  o.name                { Faker::Lorem.sentence[0..63] }
   o.access              "Public"
   o.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).rand }
   o.stage               { %w(prospecting qualification analysis presentation proposal negotiation final_review won lost).rand }
@@ -205,11 +205,11 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :task do |t|
-  # t.uuid                { Factory.next(:uuid) }
+  t.uuid                { Factory.next(:uuid) }
   t.user                { |a| a.association(:user) }
   t.asset               { raise "Please specify :asset for the task" }
   t.assigned_to         1
-  t.name                { Faker::Lorem.sentence }
+  t.name                { Faker::Lorem.sentence[0..63] }
   t.priority            nil
   t.category            { %w(call email folowup lunch meeting money presentation trip).rand }
   t.due_at_hint         { raise "Please specify :due_at_hint for the task" }
@@ -222,7 +222,7 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :user do |u|
-  # u.uuid                { Factory.next(:uuid) }
+  u.uuid                { Factory.next(:uuid) }
   u.username            { Faker::Internet.user_name }
   u.email               { Faker::Internet.email }
   u.first_name          { Faker::Name.first_name }

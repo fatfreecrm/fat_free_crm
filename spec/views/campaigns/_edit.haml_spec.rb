@@ -1,20 +1,20 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/_edit.html.haml" do
-  include AccountsHelper
-  
+describe "/campaigns/_edit.html.haml" do
+  include CampaignsHelper
+
   before(:each) do
     @current_user = Factory(:user)
-    assigns[:account] = Factory(:account)
+    assigns[:campaign] = Factory(:campaign)
     assigns[:users] = [ @current_user ]
     assigns[:current_user] = @current_user
   end
 
-  it "should render [edit account] form" do
+  it "should render [edit campaign] form" do
     @form = mock("form")
-    render "/accounts/_edit.html.haml"
+    render "/campaigns/_edit.html.haml"
 
-    response.should have_tag("form[class=edit_account]")
+    response.should have_tag("form[class=edit_campaign]")
   end
 end
 
