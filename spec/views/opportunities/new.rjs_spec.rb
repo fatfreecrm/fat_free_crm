@@ -6,7 +6,7 @@ describe "/opportunities/new.html.erb" do
   before(:each) do
     @current_user = Factory(:user)
     @account = Factory(:account)
-    assigns[:opportunity] = Contact.new(:user => @current_user)
+    assigns[:opportunity] = Opportunity.new(:user => @current_user)
     assigns[:users] = [ @current_user ]
     assigns[:current_user] = @current_user
     assigns[:account] = @account
