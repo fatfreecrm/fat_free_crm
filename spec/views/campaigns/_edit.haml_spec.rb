@@ -16,6 +16,7 @@ describe "/campaigns/_edit.html.haml" do
 
     response.should have_tag("form[class=edit_campaign]")
   end
+
 end
 
 

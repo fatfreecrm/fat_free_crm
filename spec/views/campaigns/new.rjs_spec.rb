@@ -17,8 +17,8 @@ describe "/campaigns/new.html.erb" do
     response.should have_rjs("create_campaign") do |rjs|
       with_tag("form[class=new_campaign]")
     end
- 
   end
+
 end
 
 
