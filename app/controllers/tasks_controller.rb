@@ -20,11 +20,9 @@ class TasksController < ApplicationController
   # GET /tasks/1.xml
   #----------------------------------------------------------------------------
   def show
-    @task = Task.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.haml
-      format.xml  { render :xml => @task }
+      format.html { render :action => :index }
+      format.xml  { @task = Task.find(params[:id]);  render :xml => @task }
     end
   end
 
@@ -44,7 +42,6 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
-      format.html # new.html.erb
       format.xml  { render :xml => @task }
     end
   end
@@ -74,11 +71,9 @@ class TasksController < ApplicationController
       if @task.save
         update_sidebar if request.referer =~ /\/tasks\?*/
         format.js   # create.js.rjs
-        format.html { redirect_to(@task) }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
       else
         format.js   # create.js.rjs
-        format.html { render :action => "new" }
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
@@ -95,11 +90,9 @@ class TasksController < ApplicationController
       if @task.update_attributes(params[:task])
         update_sidebar if request.referer =~ /\/tasks\?*/
         format.js
-        format.html { redirect_to(@task) }
         format.xml  { head :ok }
       else
         format.js
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
@@ -111,14 +104,14 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
+    @view = params[:view] || "pending"
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    @bucket = Task.bucket(@current_user, params[:bucket],  params[:view])
+    @bucket = Task.bucket(@current_user, params[:bucket],  @view)
 
     update_sidebar if request.referer =~ /\/tasks\?*/ && !params[:bucket].blank?
     respond_to do |format|
       format.js
-      format.html { redirect_to(tasks_url) }
       format.xml  { head :ok }
     end
   end
@@ -136,7 +129,6 @@ class TasksController < ApplicationController
     update_sidebar unless params[:bucket].blank?
     respond_to do |format|
       format.js   # complete.js.rjs
-      format.html { redirect_to(@task) }
       format.xml  { head :ok }
     end
   end
@@ -144,7 +136,8 @@ class TasksController < ApplicationController
   # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------
   def filter
-    @view = params[:view]
+    @view = params[:view] || "pending"
+
     update_session do |filters|
       if params[:checked] == "true"
         filters << params[:filter]

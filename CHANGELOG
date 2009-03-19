@@ -7,6 +7,8 @@ then you win. –- Mahatma Gandhi
 Wed, Mar 18, 2009
 ---------------------------------------------------------------------
 - Updated view specs to use Factories, 100% pass.
+- Updated task controller specs to use Factories.
+- A week of transition to [factory_girl] is over: 317 specs, all green.
 
 Mon, Mar 16, 2009
 ---------------------------------------------------------------------

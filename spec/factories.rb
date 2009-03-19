@@ -207,12 +207,12 @@ end
 Factory.define :task do |t|
   t.uuid                { Factory.next(:uuid) }
   t.user                { |a| a.association(:user) }
-  t.asset               { raise "Please specify :asset for the task" }
-  t.assigned_to         1
+  t.asset               nil
+  t.assigned_to         nil
   t.name                { Faker::Lorem.sentence[0..63] }
   t.priority            nil
   t.category            { %w(call email folowup lunch meeting money presentation trip).rand }
-  t.due_at_hint         { raise "Please specify :due_at_hint for the task" }
+  t.due_at_hint         "due_asap"
   t.due_at              { Factory.next(:time) }
   t.completed_at        nil
   t.deleted_at          nil
