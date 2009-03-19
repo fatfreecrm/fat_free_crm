@@ -181,7 +181,6 @@ describe OpportunitiesController do
 
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
-        assigns(:opportunity_stage_total).should_not be_empty
         assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
       end
 
@@ -250,7 +249,6 @@ describe OpportunitiesController do
 
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }
-        assigns(:opportunity_stage_total).should_not be_empty
         assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
       end
 
@@ -290,7 +288,6 @@ describe OpportunitiesController do
 
       request.env["HTTP_REFERER"] = "http://localhost/opportunities"
       xhr :delete, :destroy, :id => 42
-      assigns(:opportunity_stage_total).should_not be_empty
       assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
     end
 

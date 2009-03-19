@@ -175,7 +175,6 @@ describe LeadsController do
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
-        assigns[:lead_status_total].should_not be_empty
         assigns[:lead_status_total].should be_an_instance_of(Hash)
       end
 

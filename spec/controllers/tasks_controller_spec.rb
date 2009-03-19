@@ -196,10 +196,10 @@ describe TasksController do
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved task as @lead and still render [create] template" do
-        @task = Factory.build(:task, :user => @current_user)
+        @task = Factory.build(:task, :name => nil, :user => @current_user)
         Task.stub!(:new).and_return(@task)
 
-        xhr :post, :create, :task => { :name => nil }
+        xhr :post, :create, :task => {}
         assigns(:task).should == @task
         assigns(:view).should == "pending"
         assigns[:task_total].should == nil

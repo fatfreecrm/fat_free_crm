@@ -171,7 +171,6 @@ describe CampaignsController do
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
-        assigns[:campaign_status_total].should_not be_empty
         assigns[:campaign_status_total].should be_instance_of(Hash)
       end
 
@@ -217,7 +216,6 @@ describe CampaignsController do
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
         xhr :put, :update, :id => 42
         assigns(:campaign).should == @campaign
-        assigns[:campaign_status_total].should_not be_empty
         assigns[:campaign_status_total].should be_instance_of(Hash)
       end
 
@@ -257,7 +255,6 @@ describe CampaignsController do
 
       request.env["HTTP_REFERER"] = "http://localhost/campaigns"
       xhr :delete, :destroy, :id => 42
-      assigns[:campaign_status_total].should_not be_empty
       assigns[:campaign_status_total].should be_instance_of(Hash)
     end
 
