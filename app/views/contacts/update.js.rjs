@@ -1,15 +1,27 @@
-id = dom_id(@contact)
+if request.referer =~ /\/contacts\/\w+/
+  id = :edit_contact
+else
+  id = dom_id(@contact)
+end
+
 if @contact.errors.empty?
-  if request.referer =~ /\/contacts\/\w+/ # Contact landing page.
+  if id == :edit_contact
     page[:sidebar].replace_html :partial => "sidebar_show"
     page[:summary].visual_effect :shake, :duration => 0.4, :distance => 3
-    page.call "crm.flip_form", :edit_contact, @contact.full_name
+    page.call "crm.flip_form", id, @contact.full_name
   else
     page[id].replace :partial => "contact", :collection => [ @contact ]
     page[id].visual_effect :highlight, :duration => 1.0
   end
 else  
   page[id].replace_html :partial => "edit"
+  if @account.id.blank?
+    page.call "crm.create_account"
+  elsif request.referer !~ /\/accounts\//
+    page.call "crm.select_account"
+  else
+    page.call "crm.select_existing_account"
+  end
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
-  page[:contact_name].focus
+  page[:contact_first_name].focus
 end

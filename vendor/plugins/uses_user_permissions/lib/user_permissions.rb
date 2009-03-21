@@ -38,7 +38,7 @@ module ActiveRecord
           #--------------------------------------------------------------------------
           def update_with_permissions(attributes, users)
             if users && self[:access] == "Shared"
-              self.permissions.destroy
+              self.permissions.delete_all
               users.each do |id|
                 self.permissions << Permission.new(:user_id => id, :asset => self)
               end
