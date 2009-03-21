@@ -7,6 +7,7 @@ if params[:cancel].blank?                       # Called from contacts list item
   end
   page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
   page[id].replace_html :partial => "edit"        # Show [Edit Contact] form.
+  page[:contact_first_name].focus
 
 elsif params[:cancel] == "false"                # Called from title of the contact landing page...
   page[:edit_contact].replace_html :partial => "edit"

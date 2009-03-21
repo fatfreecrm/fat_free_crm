@@ -1,8 +1,9 @@
-- collapsed = (@contact.errors.empty? && session[:contact_permissions].nil?)
+- edit ||= false
+- collapsed = session[:contact_permissions].nil? # && @contact.errors.empty?
 = subtitle :contact_permissions, collapsed
 .section
   %small#contact_permissions_intro{ hidden_if(!collapsed) }
-    By default only you will have access to the contact. You can change contact permissions later.
+    = "By default only you will have access to the contact. You can change contact permissions later." unless edit
   #contact_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide(); $('account_access').value = 'Private'"

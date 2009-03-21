@@ -1,8 +1,9 @@
-- collapsed = (@contact.errors.empty? && session[:contact_presence].nil?)
+- edit ||= false
+- collapsed = session[:contact_presence].nil? # && @contact.errors.empty?
 = subtitle :contact_presence, collapsed, "Web Presence"
 .section
   %small#contact_presence_intro{ hidden_if(!collapsed) }
-    You can add web presence information later.
+    = "You can add web presence information later." unless edit
   #contact_presence{ hidden_if(collapsed) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
@@ -19,5 +20,5 @@
           = f.text_field :linkedin, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label FaceBook:
+          .label Facebook:
           = f.text_field :facebook, :style => "width:240px"

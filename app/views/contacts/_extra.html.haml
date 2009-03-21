@@ -1,8 +1,9 @@
-- collapsed = (@contact.errors.empty? && session[:contact_extra].nil?)
+- edit ||= false
+- collapsed = session[:contact_extra].nil? # && @contact.errors.empty?
 = subtitle :contact_extra, collapsed, "Extra Information"
 .section
   %small#contact_extra_intro{ hidden_if(!collapsed) }
-    You can add extra contact information later.
+    = "You can add extra contact information later." unless edit
   #contact_extra{ hidden_if(collapsed) }
     %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr

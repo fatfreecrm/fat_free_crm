@@ -4,10 +4,10 @@
     = f.hidden_field :user_id
     = f.hidden_field :assigned_to
     = f.error_messages
-    = render :partial => "contacts/top_section", :locals => { :f => f }
-    = render :partial => "contacts/extra",       :locals => { :f => f }
-    = render :partial => "contacts/web",         :locals => { :f => f }
-    = render :partial => "contacts/permissions", :locals => { :f => f }
+    = render :partial => "contacts/top_section", :locals => { :f => f, :edit => true }
+    = render :partial => "contacts/extra",       :locals => { :f => f, :edit => true }
+    = render :partial => "contacts/web",         :locals => { :f => f, :edit => true }
+    = render :partial => "contacts/permissions", :locals => { :f => f, :edit => true }
     .buttonbar
       = f.submit "Save Contact", :onclick => %/$("contact_assigned_to").value = $F("account_assigned_to")/
       or
