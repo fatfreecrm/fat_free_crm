@@ -12,7 +12,7 @@ module ActiveRecord
 
           #--------------------------------------------------------------------------
           def uses_user_permissions
-            unless already_uses_user_permissions?
+            unless included_modules.include?(InstanceMethods)
               has_many :permissions, :as => :asset, :include => :user
               named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["#{self.table_name}.user_id=? OR #{self.table_name}.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "#{self.table_name}.id DESC" } }
               include ActiveRecord::Uses::User::Permissions::InstanceMethods
@@ -20,23 +20,30 @@ module ActiveRecord
             end
           end
 
-          #--------------------------------------------------------------------------
-          def already_uses_user_permissions?
-            self.included_modules.include?(InstanceMethods)
-          end
-
         end
 
         #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         module InstanceMethods
 
-          # Save the account along with its permissions if any.
+          # Save the model along with its permissions if any.
           #--------------------------------------------------------------------------
           def save_with_permissions(users)
             if users && self[:access] == "Shared"
               users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
             end
             save
+          end
+
+          # Update the model along with its permissions if any.
+          #--------------------------------------------------------------------------
+          def update_with_permissions(attributes, users)
+            if users && self[:access] == "Shared"
+              self.permissions.destroy
+              users.each do |id|
+                self.permissions << Permission.new(:user_id => id, :asset => self)
+              end
+            end
+            update_attributes(attributes)
           end
 
           # Save the model copying other model's permissions.

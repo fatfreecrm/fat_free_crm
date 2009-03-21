@@ -14,4 +14,9 @@
       = link_to_remote("Cancel", :url => edit_contact_path(@contact), :method => :get, :with => "{ cancel: true }")
 
 %script{:type => "text/javascript"}
-  = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
+  - if @account.id.blank?
+    crm.create_account();
+  - elsif request.referer !~ /\/accounts\//
+    crm.select_account();
+  - else
+    crm.select_existing_account();

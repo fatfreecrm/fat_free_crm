@@ -63,7 +63,15 @@ class Contact < ActiveRecord::Base
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
-    save_with_permissions(params[:users])
+    self.save_with_permissions(params[:users])
+  end
+
+  # Backend handler for [Update Contact] form (see contact/update).
+  #----------------------------------------------------------------------------
+  def update_with_account_and_permissions(params)
+    account = Account.create_or_select_for(self, params[:account], params[:users])
+    self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
+    self.update_with_permissions(params[:contact], params[:users])
   end
 
   # Class methods.

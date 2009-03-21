@@ -32,8 +32,8 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @contact  = Contact.new(:user => @current_user, :access => "Private")
-    @account  = Account.new(:user => @current_user, :access => "Private")
+    @contact  = Contact.new(:user => @current_user)
+    @account  = Account.new(:user => @current_user)
     @users    = User.all_except(@current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:related]
@@ -52,7 +52,7 @@ class ContactsController < ApplicationController
   def edit
     @contact  = Contact.find(params[:id])
     @users    = User.all_except(@current_user)
-      @account  = Account.new
+    @account  = @contact.account || Account.new(:user => @current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
       @previous = Contact.find($1)
@@ -73,12 +73,9 @@ class ContactsController < ApplicationController
         @users = User.all_except(@current_user)
         @accounts = Account.my(@current_user).all(:order => "name")
         if params[:account][:id].blank?
-          @account = Account.new(:user => @current_user, :access => "Private")
+          @account = Account.new(:user => @current_user)
         else
           @account = Account.find(params[:account][:id])
-        end
-        unless params[:opportunity].blank?
-          @opportunity = Opportunity.find(params[:opportunity])
         end
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
@@ -93,10 +90,17 @@ class ContactsController < ApplicationController
     @contact = Contact.find(params[:id])
 
     respond_to do |format|
-      if @contact.update_attributes(params[:contact])
+      if @contact.update_with_account_and_permissions(params)
         format.js
         format.xml  { head :ok }
       else
+        @users = User.all_except(@current_user)
+        @accounts = Account.my(@current_user).all(:order => "name")
+        if params[:account][:id].blank?
+          @account = Account.new(:user => @current_user)
+        else
+          @account = Account.find(params[:account][:id])
+        end
         format.js
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end

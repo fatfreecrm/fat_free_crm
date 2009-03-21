@@ -101,7 +101,7 @@ describe ContactsController do
     it "should expose the requested contact as @contact and render [edit] template" do
       @contact = Factory(:contact, :id => 42, :user => @current_user, :lead => nil)
       @users = [ Factory(:user) ]
-      @account = Account.new
+      @account = Account.new(:user => @current_user)
 
       xhr :get, :edit, :id => 42
       assigns[:contact].should == @contact
@@ -109,6 +109,16 @@ describe ContactsController do
       assigns[:account].attributes.should == @account.attributes
       assigns[:previous].should == nil
       response.should render_template("contacts/edit")
+    end
+
+    it "should expose the requested contact as @contact and linked account as @account" do
+      @account = Factory(:account, :id => 99)
+      @contact = Factory(:contact, :id => 42, :user => @current_user, :lead => nil)
+      Factory(:account_contact, :account => @account, :contact => @contact)
+
+      xhr :get, :edit, :id => 42
+      assigns[:contact].should == @contact
+      assigns[:account].should == @account
     end
 
     it "should expose previous contact as @previous when necessary" do
@@ -174,21 +184,6 @@ describe ContactsController do
         response.should render_template("contacts/create")
       end
 
-      # Expect to redraw [create] form with previously saved opportunity.
-      it "should expose a newly created but unsaved contact as @contact with existing opportunity" do
-        @opportunity = Factory(:opportunity, :id => 42, :user => @current_user)
-        @contact = Factory.build(:contact, :first_name => nil, :user => @current_user, :lead => nil)
-        Contact.stub!(:new).and_return(@contact)
-        @users = [ Factory(:user) ]
-        @account = Factory(:account, :id => 42, :user => @current_user)
-
-        # This redraws [create] form with previously saved opportunity.
-        xhr :post, :create, :contact => {}, :opportunity => 42, :account => { :id => 42, :user_id => @current_user.id }
-        assigns(:contact).should == @contact
-        assigns(:opportunity).should == @opportunity
-        response.should render_template("contacts/create")
-      end
-
     end
 
   end
@@ -203,23 +198,52 @@ describe ContactsController do
       it "should update the requested contact and render [update] template" do
         @contact = Factory(:contact, :id => 42, :first_name => "Billy")
 
-        xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }
+        xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => {}
         @contact.reload.first_name.should == "Bones"
         assigns(:contact).should == @contact
         response.should render_template("contacts/update")
+      end
+
+      it "should be able to create a new account and link it to the contact" do
+        @contact = Factory(:contact, :id => 42, :first_name => "Billy")
+
+        xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => { :name => "new account" }
+        @contact.reload.first_name.should == "Bones"
+        @contact.account.name.should == "new account"
+      end
+
+      it "should be able to link existing account with the contact" do
+        @account = Factory(:account, :id => 99, :name => "Hello world")
+        @contact = Factory(:contact, :id => 42, :first_name => "Billy")
+
+        xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => { :id => 99 }
+        @contact.reload.first_name.should == "Bones"
+        @contact.account.id.should == 99
       end
 
     end
 
     describe "with invalid params" do
 
-      it "should not update the requested contact, but still expose it as @contact amd render [update] template" do
-        @contact = Factory(:contact, :id => 42, :first_name => "Billy")
+      it "should not update the contact, but still expose it as @contact and render [update] template" do
+        @contact = Factory(:contact, :id => 42, :user => @current_user, :first_name => "Billy", :lead => nil)
+        @account = Account.new(:user => @current_user)
+        @users = [ Factory(:user) ]
 
-        xhr :put, :update, :id => 42, :contact => { :first_name => nil }
+        xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => {}
         @contact.reload.first_name.should == "Billy"
         assigns(:contact).should == @contact
+        assigns(:account).attributes.should == @account.attributes
+        assigns(:users).should == @users
         response.should render_template("contacts/update")
+      end
+
+      it "should existing account as @account if selected" do
+        @account = Factory(:account, :id => 99)
+        @contact = Factory(:contact, :id => 42)
+
+        xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => { :id => 99 }
+        assigns(:account).should == @account
       end
 
     end
