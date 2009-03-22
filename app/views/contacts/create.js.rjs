@@ -6,6 +6,7 @@ if @contact.valid?
   page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
 else
   page[:create_contact].replace_html :partial => "create"
+  page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
   page[:create_contact].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:contact_first_name].focus
 end

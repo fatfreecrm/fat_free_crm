@@ -151,29 +151,15 @@ describe ContactsController do
 
     describe "with invalid params" do
 
-      # Expect to redraw [create] form with blank account.
-      it "should expose a newly created but unsaved contact as @contact with blank account and still render [create] template" do
+      before(:each) do
         @contact = Factory.build(:contact, :first_name => nil, :user => @current_user, :lead => nil)
         Contact.stub!(:new).and_return(@contact)
         @users = [ Factory(:user) ]
-        @accounts = [ Factory(:account, :user => @current_user) ]
-        @account = Account.new(:user => @current_user)
-
-        # This redraws [create] form with blank account.
-        xhr :post, :create, :contact => { :first_name => nil }, :account => { :name => nil, :user_id => @current_user.id }
-        assigns(:contact).should == @contact
-        assigns(:users).should == @users
-        assigns(:account).attributes.should == @account.attributes
-        assigns(:accounts).should == @accounts
-        response.should render_template("contacts/create")
       end
 
-      # Expect to redraw [create] form with selected account.
-      it "should expose a newly created but unsaved contact as @contact with selected account and still render [create] template" do
+      # Redraw [create] form with selected account.
+      it "should redraw [Create Contact] form with selected account" do
         @account = Factory(:account, :id => 42, :user => @current_user)
-        @contact = Factory.build(:contact, :first_name => nil, :user => @current_user, :lead => nil)
-        Contact.stub!(:new).and_return(@contact)
-        @users = [ Factory(:user) ]
 
         # This redraws [create] form with blank account.
         xhr :post, :create, :contact => {}, :account => { :id => 42, :user_id => @current_user.id }
@@ -181,6 +167,31 @@ describe ContactsController do
         assigns(:users).should == @users
         assigns(:account).should == @account
         assigns(:accounts).should == [ @account ]
+        response.should render_template("contacts/create")
+      end
+
+      # Redraw [create] form with related account.
+      it "should redraw [Create Contact] form with related account" do
+        @account = Factory(:account, :id => 123, :user => @current_user)
+
+        request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+        xhr :post, :create, :contact => { :first_name => nil }, :account => { :name => nil, :user_id => @current_user.id }
+        assigns(:contact).should == @contact
+        assigns(:users).should == @users
+        assigns(:account).should == @account
+        assigns(:accounts).should == [ @account ]
+        response.should render_template("contacts/create")
+      end
+
+      it "should redraw [Create Contact] form with blank account" do
+        @accounts = [ Factory(:account, :user => @current_user) ]
+        @account = Account.new(:user => @current_user)
+
+        xhr :post, :create, :contact => { :first_name => nil }, :account => { :name => nil, :user_id => @current_user.id }
+        assigns(:contact).should == @contact
+        assigns(:users).should == @users
+        assigns(:account).attributes.should == @account.attributes
+        assigns(:accounts).should == @accounts
         response.should render_template("contacts/create")
       end
 
@@ -238,9 +249,9 @@ describe ContactsController do
         response.should render_template("contacts/update")
       end
 
-      it "should existing account as @account if selected" do
+      it "should expose existing account as @account if selected" do
         @account = Factory(:account, :id => 99)
-        @contact = Factory(:contact, :id => 42)
+        @contact = Factory(:contact, :id => 42, :account => @account)
 
         xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => { :id => 99 }
         assigns(:account).should == @account

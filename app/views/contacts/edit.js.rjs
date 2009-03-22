@@ -1,6 +1,5 @@
 id = dom_id(@contact)
 
-
 if params[:cancel] == "true" # <----------------- Hide [Edit Contact]
 
   if request.referer =~ /\/contacts\/\w+/         # Called from title of the contact landing page...
@@ -23,13 +22,7 @@ else # <----------------------------------------- Show [Edit Contact] form.
     page.call "crm.flip_form", :edit_contact, "Edit #{@contact.full_name}"
   end
 
-  if @account.id.blank?
-    page.call "crm.create_account"
-  elsif request.referer !~ /\/accounts\//
-    page.call "crm.select_account"
-  else
-    page.call "crm.select_existing_account"
-  end
+  page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
   page[:contact_first_name].focus
 
 end

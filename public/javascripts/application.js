@@ -129,6 +129,18 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  create_or_select_account: function(selector) {
+    console.log("selector: " + selector);
+    if (selector !== true && selector > 0) {
+      this.select_existing_account(); // disabled accounts dropdown
+    } else if (selector) {
+      this.create_account();          // create account edit field
+    } else {
+      this.select_account();          // accounts dropdown
+    }
+  },
+
+  //----------------------------------------------------------------------------
   flip_calendar: function(value) {
     if (value == "specific_time") {
       $("task_due_at_hint").toggle(); // Hide dropdown.
