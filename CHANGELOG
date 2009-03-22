@@ -9,6 +9,7 @@ Sat, Mar 21, 2009
 - More work on [Edit Contact] form (spec coverage pending).
 - Fixed task controller specs when due tomorrow == due this week.
 - Added spec coverage for [Edit Contact].
+- Added [x] form control, link_to_cancel and link_to_close helpers.
 
 Fri, Mar 20, 2009
 ---------------------------------------------------------------------

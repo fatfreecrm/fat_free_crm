@@ -73,6 +73,21 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
+  def link_to_cancel(url)
+    link_to_remote("Cancel", url, :method => :get, :with => "{ cancel: true }")
+  end
+
+  #----------------------------------------------------------------------------
+  def link_to_close(url)
+    content_tag("div", "x",
+      :class => "close", :title => "Close form",
+      :onmouseover => "this.style.background='lightskyblue'",
+      :onmouseout => "this.style.background='lightblue'",
+      :onclick => remote_function(:url => url, :method => :get, :with => "{ cancel: true }")
+    )
+  end
+
+  #----------------------------------------------------------------------------
   def styles_for(*models)
     render :partial => "common/inline_styles", :locals => { :models => models }
   end

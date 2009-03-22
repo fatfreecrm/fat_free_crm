@@ -1,4 +1,5 @@
 .remote
+  = link_to_close edit_contact_path(@contact)
   - remote_form_for(@contact) do |f|
     = hidden_field_tag "opportunity", "#{@opportunity.id if @opportunity}"
     = f.hidden_field :user_id
@@ -11,12 +12,4 @@
     .buttonbar
       = f.submit "Save Contact", :onclick => %/$("contact_assigned_to").value = $F("account_assigned_to")/
       or
-      = link_to_remote("Cancel", :url => edit_contact_path(@contact), :method => :get, :with => "{ cancel: true }")
-
-/ %script{:type => "text/javascript"}
-/   - if @account.id.blank?
-/     crm.create_account();
-/   - elsif request.referer !~ /\/accounts\//
-/     crm.select_account();
-/   - else
-/     crm.select_existing_account();
+      = link_to_cancel edit_contact_path(@contact)

@@ -212,7 +212,19 @@ tt {
   border: 5px lightblue solid;
   background: whitesmoke;
   margin: 0px;
-  padding: 0px 10px 0px 10px; }
+  padding: 0px 10px 0px 10px;
+  position: relative; }
+  .remote .close {
+    background: lightblue;
+    color: navy;
+    cursor: pointer;
+    height: 18px;
+    margin: 2px;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    top: 0px;
+    width: 18px; }
 
 .buttonbar {
   border-top: 1px gray solid;
