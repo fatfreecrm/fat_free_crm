@@ -147,6 +147,16 @@ describe ContactsController do
         response.should render_template("contacts/create")
       end
 
+      it "should be able to associate ewly created contact with the opportunity" do
+        @opportunity = Factory(:opportunity, :id => 987);
+        @contact = Factory.build(:contact)
+        Contact.stub!(:new).and_return(@contact)
+
+        xhr :post, :create, :contact => { :first_name => "Billy"}, :account => {}, :opportunity => 987
+        assigns(:contact).opportunities.should include(@opportunity)
+        response.should render_template("contacts/create")
+      end
+
     end
 
     describe "with invalid params" do
@@ -192,6 +202,14 @@ describe ContactsController do
         assigns(:users).should == @users
         assigns(:account).attributes.should == @account.attributes
         assigns(:accounts).should == @accounts
+        response.should render_template("contacts/create")
+      end
+
+      it "should preserve Opportunity when called from Oppotyunity page" do
+        @opportunity = Factory(:opportunity, :id => 987);
+
+        xhr :post, :create, :contact => {}, :account => {}, :opportunity => 987
+        assigns(:opportunity).should == @opportunity
         response.should render_template("contacts/create")
       end
 

@@ -74,7 +74,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_cancel(url)
-    link_to_remote("Cancel", url, :method => :get, :with => "{ cancel: true }")
+    link_to_remote("Cancel", :url => url, :method => :get, :with => "{ cancel: true }")
   end
 
   #----------------------------------------------------------------------------

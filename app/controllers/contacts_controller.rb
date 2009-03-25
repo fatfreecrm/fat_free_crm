@@ -81,6 +81,7 @@ class ContactsController < ApplicationController
             @account = Account.new(:user => @current_user)
           end
         end
+        @opportunity = Opportunity.find(params[:opportunity]) if params[:opportunity]
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end
