@@ -1,4 +1,5 @@
 - remote_form_for(@account) do |f|
+  = link_to_close new_account_path
   = hidden_field_tag "account[user_id]", @current_user.id
   = f.error_messages
   = render :partial => "accounts/top_section",  :locals => { :f => f }
@@ -7,5 +8,5 @@
   .buttonbar
     = f.submit "Create Account" 
     or 
-    = link_to_remote("Cancel", :url => new_account_path, :with => "{ cancel: true }")
+    = link_to_cancel new_account_path
     

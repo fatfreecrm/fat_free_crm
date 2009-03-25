@@ -1,4 +1,5 @@
 - remote_form_for(@campaign) do |f|
+  = link_to_close new_campaign_path
   = hidden_field_tag "campaign[user_id]", @current_user.id
   = f.error_messages
   = render :partial => "campaigns/top_section", :locals => { :f => f }
@@ -7,7 +8,7 @@
   .buttonbar
     = f.submit "Create Campaign"
     or
-    = link_to_remote("Cancel", :url => new_campaign_path, :with => "{ cancel: true }")
+    = link_to_cancel new_campaign_path
 
 %script{:type => "text/javascript"}
   - if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?

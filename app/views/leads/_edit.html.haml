@@ -1,5 +1,6 @@
 .remote
   - remote_form_for(@lead) do |f|
+    = link_to_close edit_lead_path(@lead)
     = hidden_field_tag "lead[user_id]", @current_user.id
     = f.error_messages
     = render :partial => "leads/top_section", :locals => { :f => f }
@@ -10,4 +11,4 @@
     .buttonbar
       = f.submit "Save Lead"
       or
-      = link_to_remote("Cancel", :url => edit_lead_path(@lead), :method => :get, :with => "{ cancel: true }" )
+      = link_to_cancel edit_lead_path(@lead)

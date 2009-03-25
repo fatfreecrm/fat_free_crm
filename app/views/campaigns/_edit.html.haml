@@ -1,5 +1,6 @@
 .remote
   - remote_form_for(@campaign) do |f|
+    = link_to_close edit_campaign_path(@campaign)
     = hidden_field_tag "campaign[user_id]", @current_user.id
     = f.error_messages
     = render :partial => "campaigns/top_section", :locals => { :f => f }
@@ -8,7 +9,7 @@
     .buttonbar
       = f.submit "Save Campaign"
       or
-      = link_to_remote("Cancel", :url => edit_campaign_path(@campaign), :method => :get, :with => "{ cancel: true }")
+      = link_to_cancel edit_campaign_path(@campaign)
 
 %script{:type => "text/javascript"}
   - if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?
