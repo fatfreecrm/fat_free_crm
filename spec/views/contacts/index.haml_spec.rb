@@ -12,5 +12,11 @@ describe "/contacts/index.html.erb" do
     render "/contacts/index.html.haml"
   end
 
+  it "should render a message if there're no contacts" do
+    assigns[:contacts] = []
+    template.should_not_receive(:render).with(hash_including(:partial => "contact"))
+    render "/contacts/index.html.haml"
+  end
+
 end
 

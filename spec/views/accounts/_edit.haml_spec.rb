@@ -11,9 +11,11 @@ describe "/accounts/_edit.html.haml" do
   end
 
   it "should render [edit account] form" do
-    @form = mock("form")
-    render "/accounts/_edit.html.haml"
+    template.should_receive(:render).with(hash_including(:partial => "accounts/top_section"))
+    template.should_receive(:render).with(hash_including(:partial => "accounts/contact_info"))
+    template.should_receive(:render).with(hash_including(:partial => "accounts/permissions"))
 
+    render "/accounts/_edit.html.haml"
     response.should have_tag("form[class=edit_account]")
   end
 end

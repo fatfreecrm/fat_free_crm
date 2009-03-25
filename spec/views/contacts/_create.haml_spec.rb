@@ -1,28 +1,27 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/edit.html.erb" do
+describe "/contacts/_create.html.haml" do
   include ContactsHelper
   
   before(:each) do
     @current_user = Factory(:user)
     @account = Factory(:account)
-    assigns[:contact] = Factory(:contact)
+    assigns[:contact] = Contact.new
     assigns[:users] = [ @current_user ]
     assigns[:current_user] = @current_user
     assigns[:account] = @account
-    assigns[:accounts] = [ @account ]
+    assigns[:contacts] = [ @account ]
   end
 
-  it "should render [edit contact] form" do
+  it "should render [create contact] form" do
     template.should_receive(:render).with(hash_including(:partial => "contacts/top_section"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/extra"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/web"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/permissions"))
 
-    render "/contacts/_edit.html.haml"
-    response.should have_tag("form[class=edit_contact]")
+    render "/contacts/_create.html.haml"
+    response.should have_tag("form[class=new_contact]")
   end
-
 end
 
 
