@@ -81,7 +81,7 @@ module ApplicationHelper
   def link_to_close(url)
     content_tag("div", "x",
       :class => "close", :title => "Close form",
-      :onmouseover => "this.style.background='lightskyblue'",
+      :onmouseover => "this.style.background='lightsalmon'",
       :onmouseout => "this.style.background='lightblue'",
       :onclick => remote_function(:url => url, :method => :get, :with => "{ cancel: true }")
     )
