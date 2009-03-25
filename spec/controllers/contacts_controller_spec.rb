@@ -144,10 +144,11 @@ describe ContactsController do
 
         xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => { :name => "Hello world" }, :users => %w(1 2 3)
         assigns(:contact).should == @contact
+        assigns(:contact).account.name.should == "Hello world"
         response.should render_template("contacts/create")
       end
 
-      it "should be able to associate ewly created contact with the opportunity" do
+      it "should be able to associate newly created contact with the opportunity" do
         @opportunity = Factory(:opportunity, :id => 987);
         @contact = Factory.build(:contact)
         Contact.stub!(:new).and_return(@contact)
@@ -205,7 +206,7 @@ describe ContactsController do
         response.should render_template("contacts/create")
       end
 
-      it "should preserve Opportunity when called from Oppotyunity page" do
+      it "should preserve Opportunity when called from Oppotuunity page" do
         @opportunity = Factory(:opportunity, :id => 987);
 
         xhr :post, :create, :contact => {}, :account => {}, :opportunity => 987

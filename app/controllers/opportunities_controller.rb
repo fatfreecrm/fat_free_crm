@@ -37,9 +37,9 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
-    @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
+    @opportunity = Opportunity.new(:user => @current_user, :stage => "prospecting")
     @users       = User.all_except(@current_user)
-    @account     = Account.new(:user => @current_user, :access => "Private")
+    @account     = Account.new(:user => @current_user)
     @accounts    = Account.my(@current_user).all(:order => "name")
     if params[:related]
       model, id = params[:related].split("_")
@@ -57,7 +57,7 @@ class OpportunitiesController < ApplicationController
   def edit
     @opportunity = Opportunity.find(params[:id])
     @users = User.all_except(@current_user)
-       @account  = Account.new
+    @account  = @opportunity.account || Account.new(:user => @current_user)
     @stage = Setting.as_hash(:opportunity_stage)
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
@@ -74,17 +74,23 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
-        get_data_for_sidebar if request.referer =~ /opportunities$/
+        get_data_for_sidebar if request.referer =~ /\/opportunities$/
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
         @users = User.all_except(@current_user)
         @accounts = Account.my(@current_user).all(:order => "name")
-        if params[:account][:id].blank?
-          @account = Account.new(:user => @current_user, :access => "Private")
-        else
+        unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
+        else
+          if request.referer =~ /\/accounts\/(.+)$/
+            @account = Account.find($1) # related account
+          else
+            @account = Account.new(:user => @current_user)
+          end
         end
+        @contact = Contact.find(params[:contact]) unless params[:contact].blank?
+        @campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
@@ -99,11 +105,19 @@ class OpportunitiesController < ApplicationController
     @stage = Setting.as_hash(:opportunity_stage)
 
     respond_to do |format|
-      if @opportunity.update_attributes(params[:opportunity])
-        get_data_for_sidebar if request.referer =~ /opportunities$/
+      if @opportunity.update_with_account_and_permissions(params)
+        get_data_for_sidebar if request.referer =~ /\/opportunities$/
         format.js
         format.xml  { head :ok }
       else
+        @users = User.all_except(@current_user)
+        @stage = Setting.as_hash(:opportunity_stage)
+        @accounts = Account.my(@current_user).all(:order => "name")
+        if @opportunity.account
+          @account = Account.find(@opportunity.account.id)
+        else
+          @account = Account.new(:user => @current_user)
+        end
         format.js
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
@@ -116,7 +130,7 @@ class OpportunitiesController < ApplicationController
   def destroy
     @opportunity = Opportunity.find(params[:id])
     @opportunity.destroy
-    get_data_for_sidebar if request.referer =~ /opportunities$/
+    get_data_for_sidebar if request.referer =~ /\/opportunities$/
 
     respond_to do |format|
       format.js

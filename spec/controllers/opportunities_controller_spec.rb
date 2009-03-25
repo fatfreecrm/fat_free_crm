@@ -131,7 +131,7 @@ describe OpportunitiesController do
       # Note: campaign => nil makes sure campaign factory is not invoked which has a side
       # effect of creating an extra (campaign) user.
       @opportunity = Factory(:opportunity, :id => 42, :user => @current_user, :campaign => nil)
-      @account  = Account.new
+      @account  = Account.new(:user => @current_user)
       @users = [ Factory(:user) ]
       @stage = Setting.as_hash(:opportunity_stage)
       @accounts = [ Factory(:account, :user => @current_user) ]
@@ -163,12 +163,14 @@ describe OpportunitiesController do
 
     describe "with valid params" do
 
-      it "should expose a newly created opportunity as @opportunity and render [create] template" do
-        @opportunity = Factory.build(:opportunity, :name => "Hello world", :user => @current_user)
+      before(:each) do
+        @opportunity = Factory.build(:opportunity, :user => @current_user)
         Opportunity.stub!(:new).and_return(@opportunity)
         @stage = Setting.as_hash(:opportunity_stage)
+      end
 
-        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+      it "should expose a newly created opportunity as @opportunity and render [create] template" do
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
         assigns(:opportunity).should == @opportunity
         assigns(:stage).should == @stage
         assigns(:opportunity_stage_total).should == nil # No sidebar data unless called from /opportunies page.
@@ -176,12 +178,43 @@ describe OpportunitiesController do
       end
 
       it "should get sidebar data if called from opportunities index" do
-        @opportunity = Factory.build(:opportunity, :name => "Hello world", :user => @current_user)
-        Opportunity.stub!(:new).and_return(@opportunity)
-
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
         assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
+      end
+
+      it "should associate opportunity with the campaign when called from campaign landing page" do
+        @campaign = Factory(:campaign, :id => 42)
+
+        request.env["HTTP_REFERER"] = "http://localhost/campaign/42"
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => 42, :account => {}, :users => []
+        assigns(:opportunity).should == @opportunity
+        @opportunity.campaign.should == @campaign
+      end
+
+      it "should associate opportunity with the contact when called from contact landing page" do
+        @contact = Factory(:contact, :id => 42)
+
+        request.env["HTTP_REFERER"] = "http://localhost/contact/42"
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :contact => 42, :account => {}, :users => []
+        assigns(:opportunity).should == @opportunity
+        @opportunity.contacts.should include(@contact)
+        @contact.opportunities.should include(@opportunity)
+      end
+
+      it "should create new account and associate it with the opportunity" do
+        xhr :put, :create, :opportunity => { :name => "Hello" }, :account => { :name => "new account" }
+        assigns(:opportunity).should == @opportunity
+        @opportunity.account.name.should == "new account"
+      end
+
+      it "should associate opportunity with the existing account" do
+        @account = Factory(:account, :id => 42)
+
+        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => { :id => 42 }, :users => []
+        assigns(:opportunity).should == @opportunity
+        @opportunity.account.should == @account
+        @account.opportunities.should include(@opportunity)
       end
 
     end
@@ -221,6 +254,24 @@ describe OpportunitiesController do
         response.should render_template("opportunities/create")
       end
 
+      it "should preserve the campaign when called from campaign landing page" do
+        @campaign = Factory(:campaign, :id => 42)
+
+        request.env["HTTP_REFERER"] = "http://localhost/campaign/42"
+        xhr :post, :create, :opportunity => { :name => nil }, :campaign => 42, :account => {}, :users => []
+        assigns(:campaign).should == @campaign
+        response.should render_template("opportunities/create")
+      end
+
+      it "should preserve the contact when called from contact landing page" do
+        @contact = Factory(:contact, :id => 42)
+
+        request.env["HTTP_REFERER"] = "http://localhost/contact/42"
+        xhr :post, :create, :opportunity => { :name => nil }, :contact => 42, :account => {}, :users => []
+        assigns(:contact).should == @contact
+        response.should render_template("opportunities/create")
+      end
+
     end
 
   end
@@ -236,7 +287,7 @@ describe OpportunitiesController do
         @opportunity = Factory(:opportunity, :id => 42)
         @stage = Setting.as_hash(:opportunity_stage)
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}, :users => %w(1 2 3)
         @opportunity.reload.name.should == "Hello world"
         assigns(:opportunity).should == @opportunity
         assigns(:stage).should == @stage
@@ -248,8 +299,28 @@ describe OpportunitiesController do
         @oppportunity = Factory(:opportunity, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}
         assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
+      end
+
+      it "should be able to create an account and associate it with updated opportunity" do
+        @opportunity = Factory(:opportunity, :id => 42)
+
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello" }, :account => { :name => "new account" }
+        assigns[:opportunity].should == @opportunity
+        @opportunity.account.should_not be_nil
+        @opportunity.account.name.should == "new account"
+      end
+
+      it "should be able to create an account and associate it with updated opportunity" do
+        @old_account = Factory(:account, :id => 111)
+        @new_account = Factory(:account, :id => 999)
+        @opportunity = Factory(:opportunity, :id => 42)
+        Factory(:account_opportunity, :account => @old_account, :opportunity => @opportunity)
+
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello" }, :account => { :id => 999 }
+        assigns[:opportunity].should == @opportunity
+        @opportunity.account.should == @new_account
       end
 
     end
@@ -259,10 +330,20 @@ describe OpportunitiesController do
       it "should not update the requested opportunity but still expose it as @opportunity, and render [update] template" do
         @opportunity = Factory(:opportunity, :id => 42, :name => "Hello people")
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => nil }
+        xhr :put, :update, :id => 42, :opportunity => { :name => nil }, :account => {}
         @opportunity.reload.name.should == "Hello people"
         assigns(:opportunity).should == @opportunity
+        assigns(:opportunity_stage_total).should == nil
         response.should render_template("opportunities/update")
+      end
+
+      it "should expose existing account as @account if selected" do
+        @account = Factory(:account, :id => 99)
+        @opportunity = Factory(:opportunity, :id => 42)
+        Factory(:account_opportunity, :account => @account, :opportunity => @opportunity)
+
+        xhr :put, :update, :id => 42, :opportunity => { :name => nil }, :account => { :id => 99 }
+        assigns(:account).should == @account
       end
 
     end

@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Mar 25, 2009
+---------------------------------------------------------------------
+- More work on [Edit Opportunity] and its specs.
+
 Tue, Mar 24, 2009
 ---------------------------------------------------------------------
 - Finished with [Edit Contacts] including full controller and views specs.
@@ -12,6 +16,7 @@ Mon, Mar 23, 2009
 ---------------------------------------------------------------------
 - Finishing touches for [Edit Contacts] forms.
 - Moved sidebar to the lefthand column, changes location of Sass templates.
+- Added [x] close button to all inline forms.
 
 Sat, Mar 21, 2009
 ---------------------------------------------------------------------

@@ -72,7 +72,7 @@ class ContactsController < ApplicationController
       else
         @users = User.all_except(@current_user)
         @accounts = Account.my(@current_user).all(:order => "name")
-        if params[:account][:id]
+        unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
         else
           if request.referer =~ /\/accounts\/(.+)$/
@@ -81,7 +81,7 @@ class ContactsController < ApplicationController
             @account = Account.new(:user => @current_user)
           end
         end
-        @opportunity = Opportunity.find(params[:opportunity]) if params[:opportunity]
+        @opportunity = Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end
