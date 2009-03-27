@@ -2,6 +2,7 @@ class OpportunitiesController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
   before_filter "set_current_tab(:opportunities)", :only => [ :index, :show ]
+  before_filter "load_settings", :only => [ :show,  :edit, :create, :update, :filter ]
 
   # GET /opportunities
   # GET /opportunities.xml
@@ -24,7 +25,6 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @opportunity = Opportunity.find(params[:id])
-    @stage = Setting.as_hash(:opportunity_stage)
     @comment = Comment.new
 
     respond_to do |format|
@@ -58,7 +58,6 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.find(params[:id])
     @users = User.all_except(@current_user)
     @account  = @opportunity.account || Account.new(:user => @current_user)
-    @stage = Setting.as_hash(:opportunity_stage)
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
       @previous = Opportunity.find($1)
@@ -70,7 +69,6 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @opportunity = Opportunity.new(params[:opportunity])
-    @stage = Setting.as_hash(:opportunity_stage)
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
@@ -102,7 +100,6 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @opportunity = Opportunity.find(params[:id])
-    @stage = Setting.as_hash(:opportunity_stage)
 
     respond_to do |format|
       if @opportunity.update_with_account_and_permissions(params)
@@ -111,7 +108,6 @@ class OpportunitiesController < ApplicationController
         format.xml  { head :ok }
       else
         @users = User.all_except(@current_user)
-        @stage = Setting.as_hash(:opportunity_stage)
         @accounts = Account.my(@current_user).all(:order => "name")
         if @opportunity.account
           @account = Account.find(@opportunity.account.id)
@@ -143,19 +139,23 @@ class OpportunitiesController < ApplicationController
   def filter
     session[:filter_by_opportunity_stage] = params[:stage]
     @opportunities = Opportunity.my(@current_user).only(params[:stage].split(","))
-    @stage = Setting.as_hash(:opportunity_stage)
   end
 
   private
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
-    @stage = Setting.as_hash(:opportunity_stage)
+    load_settings
     @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
     @stage.keys.each do |key|
       @opportunity_stage_total[key] = Opportunity.my(@current_user).count(:conditions => [ "stage=?", key.to_s ])
       @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
     end
     @opportunity_stage_total[:other] += @opportunity_stage_total[:all]
+  end
+
+  #----------------------------------------------------------------------------
+  def load_settings
+    @stage = Setting.as_hash(:opportunity_stage)
   end
 
 end

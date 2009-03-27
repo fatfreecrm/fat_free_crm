@@ -12,4 +12,4 @@ Sass::Plugin.options[:template_location] = File.join(RAILS_ROOT, "app/stylesheet
 Sass::Plugin.options[:css_location] = File.join(RAILS_ROOT, "public/stylesheets")
 
 #---------------------------------------------------------------------
-Date::DATE_FORMATS[:mmddyyy] = "%m/%d/Y"
+Date::DATE_FORMATS[:mmddyyyy] = "%m/%d/%Y"

@@ -2,6 +2,7 @@ if @contact.valid?
   page[:create_contact_arrow].replace_html "&#9658;"
   page[:create_contact_title].replace_html "Contacts"
   page << "Effect.toggle('create_contact', 'blind', { duration: 0.1 });"
+  page[:create_contact].update ""
   page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
   page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
 else

@@ -99,6 +99,7 @@ var crm = {
     $("account_id").hide();
     $("account_id").disable();
     $("account_name").enable();
+    $("account_name").clear();
     $("account_name").show();
     if (and_focus) {
       $("account_name").focus();
@@ -130,7 +131,6 @@ var crm = {
 
   //----------------------------------------------------------------------------
   create_or_select_account: function(selector) {
-    console.log("selector: " + selector);
     if (selector !== true && selector > 0) {
       this.select_existing_account(); // disabled accounts dropdown
     } else if (selector) {
