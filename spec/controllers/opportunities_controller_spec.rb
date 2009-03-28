@@ -323,6 +323,17 @@ describe OpportunitiesController do
         @opportunity.account.should == @new_account
       end
 
+      it "should update opportunity permissions when sharing with specific users" do
+        @opportunity = Factory(:opportunity, :id => 42, :access => "Public")
+        he  = Factory(:user, :id => 7)
+        she = Factory(:user, :id => 8)
+
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello", :access => "Shared" }, :users => %w(7 8), :account => {}
+        @opportunity.reload.access.should == "Shared"
+        @opportunity.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        assigns[:opportunity].should == @opportunity
+      end
+
     end
 
     describe "with invalid params" do

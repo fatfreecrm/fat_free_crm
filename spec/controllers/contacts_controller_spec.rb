@@ -251,6 +251,17 @@ describe ContactsController do
         @contact.account.id.should == 99
       end
 
+      it "should update contact permissions when sharing with specific users" do
+        @contact = Factory(:contact, :id => 42, :access => "Public")
+        he  = Factory(:user, :id => 7)
+        she = Factory(:user, :id => 8)
+
+        xhr :put, :update, :id => 42, :contact => { :first_name => "Hello", :access => "Shared" }, :users => %w(7 8), :account => {}
+        @contact.reload.access.should == "Shared"
+        @contact.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        assigns[:contact].should == @contact
+      end
+
     end
 
     describe "with invalid params" do

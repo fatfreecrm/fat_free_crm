@@ -7,10 +7,8 @@ module ActiveRecord
           base.extend(ClassMethods)
         end
 
-        #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         module ClassMethods
 
-          #--------------------------------------------------------------------------
           def uses_user_permissions
             unless included_modules.include?(InstanceMethods)
               has_many :permissions, :as => :asset, :include => :user
@@ -22,7 +20,6 @@ module ActiveRecord
 
         end
 
-        #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         module InstanceMethods
 
           # Save the model along with its permissions if any.
@@ -37,10 +34,15 @@ module ActiveRecord
           # Update the model along with its permissions if any.
           #--------------------------------------------------------------------------
           def update_with_permissions(attributes, users)
-            if users && self[:access] == "Shared"
+            if attributes[:access] != "Shared"
               self.permissions.delete_all
-              users.each do |id|
-                self.permissions << Permission.new(:user_id => id, :asset => self)
+            elsif !users.blank? # Check if we have the same users this time around.
+              existing_users = self.permissions.map(&:user_id)
+              if (existing_users.size != users.size) || (existing_users - users != [])
+                self.permissions.delete_all
+                users.each do |id|
+                  self.permissions << Permission.new(:user_id => id, :asset => self)
+                end
               end
             end
             update_attributes(attributes)
@@ -60,7 +62,6 @@ module ActiveRecord
 
         end
 
-        #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         module SingletonMethods
         end
 

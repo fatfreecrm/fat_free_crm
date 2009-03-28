@@ -4,14 +4,18 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Wed, Mar 26, 2009
+Fri, Mar 28, 2009
+---------------------------------------------------------------------
+- Fixed editing shared permissions bug.
+
+Thu, Mar 26, 2009
 ---------------------------------------------------------------------
 - Refactored custom Rails initializers and added custom date format.
 - Finished with [Edit Opportunity] including full controller and views specs.
 - Fixed JavaScript bug caused by not wiping out hidden create form.
 - Use String#shorten instead of truncate() helper.
 
-Tue, Mar 25, 2009
+Wed, Mar 25, 2009
 ---------------------------------------------------------------------
 - More work on [Edit Opportunity] and its specs.
 
