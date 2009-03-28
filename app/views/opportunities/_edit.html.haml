@@ -5,8 +5,8 @@
     = f.hidden_field :assigned_to
     = f.hidden_field :campaign_id
     = f.error_messages
-    = render :partial => "opportunities/top_section", :locals => { :f => f }
-    = render :partial => "opportunities/permissions", :locals => { :f => f }
+    = render :partial => "opportunities/top_section", :locals => { :f => f, :edit => true }
+    = render :partial => "opportunities/permissions", :locals => { :f => f, :edit => true }
     .buttonbar
       = f.submit "Save Opportunity", :onclick => %/$("opportunity_assigned_to").value = $F("account_assigned_to");/
       or

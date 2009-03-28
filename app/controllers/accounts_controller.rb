@@ -80,7 +80,7 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
 
     respond_to do |format|
-      if @account.update_attributes(params[:account])
+      if @account.update_with_permissions(params[:account], params[:users])
         format.js
         format.xml  { head :ok }
       else

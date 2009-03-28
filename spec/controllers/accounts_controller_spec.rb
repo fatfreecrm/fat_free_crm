@@ -166,6 +166,17 @@ describe AccountsController do
         response.should render_template("accounts/update")
       end
 
+      it "should update account permissions when sharing with specific users" do
+        @account = Factory(:account, :id => 42, :access => "Public")
+        he  = Factory(:user, :id => 7)
+        she = Factory(:user, :id => 8)
+
+        xhr :put, :update, :id => 42, :account => { :name => "Hello", :access => "Shared" }, :users => %w(7 8)
+        @account.reload.access.should == "Shared"
+        @account.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        assigns[:account].should == @account
+      end
+
     end
   
     describe "with invalid params" do

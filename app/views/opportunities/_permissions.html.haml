@@ -1,8 +1,9 @@
-- collapsed = (@opportunity.errors.empty? && session[:opportunity_permissions].nil?)
+- edit ||= false
+- collapsed = session[:opportunity_permissions].nil? # && @opportunity.errors.empty?
 = subtitle :opportunity_permissions, collapsed
 .section
   %small#opportunity_permissions_intro{ hidden_if(!collapsed) }
-    By default only you will have access to the opportunity. You can change opportunity permissions later.
+    = "By default only you will have access to the opportunity. You can change opportunity permissions later." unless edit
   #opportunity_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide(); $('account_access').value = 'Private'"
@@ -18,5 +19,5 @@
         - for user in @users
           .check_box
             -# Preserve state of the checkboxes if the form gets redrawn on errors.
-            = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s)
+            = check_box_tag "users[]", user.id, @opportunity.permissions.map(&:user_id).include?(user.id) || (params[:users] && params[:users].include?(user.id.to_s))
             = user.full_name

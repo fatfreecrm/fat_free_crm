@@ -1,8 +1,9 @@
-- collapsed = (@account.errors.empty? && session[:account_permissions].nil?)
+- edit ||= false
+- collapsed = session[:account_permissions].nil? # && @account.errors.empty?
 = subtitle :account_permissions, collapsed
 .section
   %small#account_permissions_intro{ hidden_if(!collapsed) }
-    By default only you will have access to the account. You can change account permissions later.
+    = "By default only you will have access to the account. You can change account permissions later." unless edit
   #account_permissions{ hidden_if(collapsed) }
     .radio_box
       = radio_button_tag "account[access]", "Private", @account.access == "Private", :onclick => "$('people').hide()"
@@ -18,5 +19,5 @@
         - for user in @users
           .check_box
             -# Preserve state of the checkboxes if the form gets redrawn on errors.
-            = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s)
+            = check_box_tag "users[]", user.id, @account.permissions.map(&:user_id).include?(user.id) || (params[:users] && params[:users].include?(user.id.to_s))
             = user.full_name
