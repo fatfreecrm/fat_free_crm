@@ -9,11 +9,3 @@
     = f.submit "Create Campaign"
     or
     = link_to_cancel new_campaign_path
-
-%script{:type => "text/javascript"}
-  - if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?
-    $("campaign_ends_on").focus();
-  - else
-    $("campaign_name").focus();
-  crm.date_select_popup("campaign_starts_on");
-  crm.date_select_popup("campaign_ends_on");

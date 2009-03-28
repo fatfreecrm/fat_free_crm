@@ -42,18 +42,7 @@ class Campaign < ActiveRecord::Base
   validate :start_and_end_dates
   validate :users_for_shared_access
 
-  before_create :set_campaign_status
-
   private
-  #----------------------------------------------------------------------------
-  def set_campaign_status # before_create
-    if self.ends_on and (self.ends_on < Date.today)
-      self.status = "completed"
-    else
-      self.status = self.starts_on && (self.starts_on <= Date.today) ? "started" : "planned"
-    end
-  end
-
   # Make sure end date > start date.
   #----------------------------------------------------------------------------
   def start_and_end_dates

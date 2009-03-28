@@ -3,18 +3,10 @@
     = link_to_close edit_campaign_path(@campaign)
     = hidden_field_tag "campaign[user_id]", @current_user.id
     = f.error_messages
-    = render :partial => "campaigns/top_section", :locals => { :f => f }
-    = render :partial => "campaigns/objectives",  :locals => { :f => f }
-    = render :partial => "campaigns/permissions", :locals => { :f => f }
+    = render :partial => "campaigns/top_section", :locals => { :f => f, :edit => true }
+    = render :partial => "campaigns/objectives",  :locals => { :f => f, :edit => true }
+    = render :partial => "campaigns/permissions", :locals => { :f => f, :edit => true }
     .buttonbar
       = f.submit "Save Campaign"
       or
       = link_to_cancel edit_campaign_path(@campaign)
-
-%script{:type => "text/javascript"}
-  - if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?
-    $("campaign_ends_on").focus();
-  - else
-    $("campaign_name").focus();
-  crm.date_select_popup("campaign_starts_on");
-  crm.date_select_popup("campaign_ends_on");

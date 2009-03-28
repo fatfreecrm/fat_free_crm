@@ -1,15 +1,18 @@
 .section
   %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
     %tr
-      %td{ :colspan => 4, :valign => :top }
+      %td{ :colspan => 5, :valign => :top }
         .label.top.req Campaign name:
         = f.text_field :name, :style => "width:500px"
     %tr
       %td{ :valign => :top }
         .label Start date:
-        = f.text_field :starts_on, :style => "width:110px", :autocomplete => :off
+        = f.text_field :starts_on, :value => f.object.starts_on ? f.object.starts_on.to_s(:mmddyyyy) : "", :style => "width:110px", :autocomplete => :off
       %td= spacer
       %td{ :valign => :top }
         .label End date:
-        = f.text_field :ends_on, :style => "width:110px", :autocomplete => :off
-      %td= spacer(260)
+        = f.text_field :ends_on, :value => f.object.ends_on ? f.object.ends_on.to_s(:mmddyyyy) : "", :style => "width:110px", :autocomplete => :off
+      %td= spacer
+      %td{ :valign => :top }
+        .label Status:
+        = f.select :status, Setting.invert(:campaign_status), { :selected => @campaign.status ? @campaign.status.to_sym : :planned }, { :style => "width:250px" }

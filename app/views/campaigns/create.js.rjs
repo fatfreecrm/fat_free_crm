@@ -2,6 +2,7 @@ if @campaign.valid?
   page[:create_campaign_arrow].replace_html "&#9658;"
   page[:create_campaign_title].replace_html "Campaigns"
   page << "Effect.toggle('create_campaign', 'blind', { duration: 0.1 });"
+  page[:create_campaign].update ""
   page.insert_html :top, :campaigns, :partial => "campaign", :collection => [ @campaign ]
   page[dom_id(@campaign)].visual_effect :highlight, :duration => 1.5
   if request.referer =~ /campaigns$/
@@ -10,6 +11,12 @@ if @campaign.valid?
   end
 else
   page[:create_campaign].replace_html :partial => "create"
+  page.call "crm.date_select_popup", :campaign_starts_on
+  page.call "crm.date_select_popup", :campaign_ends_on
   page[:create_campaign].visual_effect :shake, :duration => 0.25, :distance => 6
-  page[:campaign_name].focus
+  if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?
+    page[:campaign_ends_on].focus
+  else
+    page[:campaign_name].focus
+  end
 end

@@ -86,7 +86,7 @@ class CampaignsController < ApplicationController
     @campaign = Campaign.find(params[:id])
 
     respond_to do |format|
-      if @campaign.update_attributes(params[:campaign])
+      if @campaign.update_with_permissions(params[:campaign], params[:users])
         get_data_for_sidebar if request.referer =~ /\/campaigns$/
         format.js
         format.xml  { head :ok }

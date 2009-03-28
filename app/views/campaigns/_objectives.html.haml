@@ -1,8 +1,9 @@
-- collapsed = (@campaign.errors.empty? && session[:campaign_objectives].nil?)
+- edit ||= false
+- collapsed = session[:campaign_objectives].nil? # && @campaign.errors.empty?
 = subtitle :campaign_objectives, collapsed
 .section
   %small#campaign_objectives_intro{ hidden_if(!collapsed) }
-    You can add campaign objectives later.
+    = "You can add campaign objectives later." unless edit
   #campaign_objectives{ hidden_if(collapsed) }
     %small
       Please specify target number of leads, expected leads-to-opportunities conversion ratio, target 
@@ -19,11 +20,11 @@
         %td= spacer
         %td{ :valign => :top }
           .label Revenue ($):
-          = f.text_field :target_revenue, :style => "width:110px; text-align:right;"
+          = f.text_field :target_revenue, :value => @campaign.target_revenue ? @campaign.target_revenue.to_i : "", :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
           .label Budget ($):
-          = f.text_field :budget, :style => "width:110px; text-align:right;"
+          = f.text_field :budget, :value => @campaign.budget ? @campaign.budget.to_i : "", :style => "width:110px; text-align:right;"
       %tr
         %td{ :colspan => 7, :valign => :top }
           .label Objectives:

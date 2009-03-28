@@ -1,22 +1,35 @@
 id = dom_id(@campaign)
 
-# Show requested [Edit Campaign] form.
-if params[:cancel].blank?                       # Called from campaigns list item...
-  if @previous                                    # Hide open [Edit Campaign] form if any.
-    page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
-  end
-  page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
-  page[id].replace_html :partial => "edit"        # Show [Edit Campaign] form.
+if params[:cancel] == "true" # <----------------- Hide [Edit Campaign]
 
-elsif params[:cancel] == "false"                # Called from title of the campaign landing page...
-  page[:edit_campaign].replace_html :partial => "edit"
-  page.call "crm.flip_form", :edit_campaign, "Edit #{@campaign.name}"
-
-# Hide [Edit Campaign] and restore <li> with the original campaign list item.
-else
   if request.referer =~ /\/campaigns\/\w+/      # Called from title of the campaign landing page...
     page.call "crm.flip_form", :edit_campaign, "#{@campaign.name}"
   else                                          # Called from campaigns list item...
     page[id].replace :partial => "campaign", :collection => [ @campaign ]
   end
+
+else # <----------------------------------------  Show [Edit Campaign] form.
+
+  if params[:cancel].blank?                       # Called from campaigns list item...
+    if @previous                                  # Hide open [Edit Campaign] form if any.
+      page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page[id].replace_html :partial => "edit"      # Show [Edit Campaign] form.
+
+  elsif params[:cancel] == "false"                # Called from title of the campaign landing page...
+    page[:edit_campaign].replace_html :partial => "edit"
+    page.call "crm.flip_form", :edit_campaign, "Edit #{@campaign.name}"
+  end
+
+  page.call "crm.date_select_popup", :campaign_starts_on
+  page.call "crm.date_select_popup", :campaign_ends_on
+  page[:campaign_name].focus
+
+  # if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?
+  #   page[:campaign_ends_on].focus
+  # else
+  #   page[:campaign_name].focus
+  # end
+
 end
