@@ -12,5 +12,11 @@ describe "/campaigns/index.html.haml" do
     render "/campaigns/index.html.haml"
   end
 
+  it "should render a message if there're no campaigns" do
+    assigns[:campaigns] = []
+    template.should_not_receive(:render).with(hash_including(:partial => "campaigns"))
+    render "/campaigns/index.html.haml"
+  end
+
 end
 

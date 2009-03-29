@@ -19,6 +19,15 @@ describe "/campaigns/new.html.erb" do
     end
   end
 
+  it "should call JavaScript functions to load Calendar popup" do
+    params[:cancel] = nil
+    render "campaigns/new.js.rjs"
+
+    response.should include_text('crm.flip_form("create_campaign")')
+    response.should include_text('crm.date_select_popup("campaign_starts_on")')
+    response.should include_text('crm.date_select_popup("campaign_ends_on")')
+  end
+
 end
 
 

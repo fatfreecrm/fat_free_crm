@@ -2,9 +2,9 @@ id = dom_id(@campaign)
 
 if params[:cancel] == "true" # <----------------- Hide [Edit Campaign]
 
-  if request.referer =~ /\/campaigns\/\w+/      # Called from title of the campaign landing page...
+  if request.referer =~ /\/campaigns\/\w+/        # Called from title of the campaign landing page...
     page.call "crm.flip_form", :edit_campaign, "#{@campaign.name}"
-  else                                          # Called from campaigns list item...
+  else                                            # Called from campaigns list item...
     page[id].replace :partial => "campaign", :collection => [ @campaign ]
   end
 
@@ -25,11 +25,5 @@ else # <----------------------------------------  Show [Edit Campaign] form.
   page.call "crm.date_select_popup", :campaign_starts_on
   page.call "crm.date_select_popup", :campaign_ends_on
   page[:campaign_name].focus
-
-  # if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?
-  #   page[:campaign_ends_on].focus
-  # else
-  #   page[:campaign_name].focus
-  # end
 
 end

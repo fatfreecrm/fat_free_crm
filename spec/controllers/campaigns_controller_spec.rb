@@ -38,12 +38,12 @@ describe CampaignsController do
     it "should filter out campaigns by status" do
       controller.session[:filter_by_campaign_status] = "planned,started"
       @campaigns = [
-        Factory(:campaign, :user => @current_user, :ends_on => Date.tomorrow), # started
-        Factory(:campaign, :user => @current_user, :starts_on => Date.tomorrow, :ends_on => Date.tomorrow), # planned
+        Factory(:campaign, :user => @current_user, :status => "started"),
+        Factory(:campaign, :user => @current_user, :status => "planned")
       ]
 
       # This one should be filtered out.
-      Factory(:campaign, :user => @current_user, :ends_on => Date.yesterday) # completed
+      Factory(:campaign, :user => @current_user, :status => "completed")
 
       get :index
       # Note: can't compare campaigns directly because of BigDecimal objects.
@@ -134,7 +134,7 @@ describe CampaignsController do
       response.should render_template("campaigns/edit")
     end
 
-    it "should expose the requested campaign as @campaign and render [edit] template" do
+    it "should find previous campaign as necessary" do
       @campaign = Factory(:campaign, :id => 42)
       @previous = Factory(:campaign, :id => 99)
 
@@ -203,7 +203,7 @@ describe CampaignsController do
       it "should update the requested campaign and render [update] template" do
         @campaign = Factory(:campaign, :id => 42, :name => "Bye")
 
-        xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }
+        xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
         @campaign.reload.name.should == "Hello"
         assigns(:campaign).should == @campaign
         assigns[:campaign_status_total].should be_nil
@@ -214,9 +214,20 @@ describe CampaignsController do
         @campaign = Factory(:campaign, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
-        xhr :put, :update, :id => 42
+        xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
         assigns(:campaign).should == @campaign
         assigns[:campaign_status_total].should be_instance_of(Hash)
+      end
+
+      it "should update campaign permissions when sharing with specific users" do
+        @campaign = Factory(:campaign, :id => 42, :access => "Public")
+        he  = Factory(:user, :id => 7)
+        she = Factory(:user, :id => 8)
+
+        xhr :put, :update, :id => 42, :campaign => { :name => "Hello", :access => "Shared" }, :users => %w(7 8)
+        @campaign.reload.access.should == "Shared"
+        @campaign.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        assigns[:campaign].should == @campaign
       end
 
     end
@@ -224,11 +235,13 @@ describe CampaignsController do
     describe "with invalid params" do
 
       it "should not update the requested campaign, but still expose it as @campaign and still render [update] template" do
-        @campaign = Factory(:campaign, :id => 42, :name => "Hello")
+        @campaign = Factory(:campaign, :id => 42, :name => "Hello", :user => @current_user)
+        @users = [ Factory(:user) ]
 
         xhr :put, :update, :id => 42, :campaign => { :name => nil }
         @campaign.reload.name.should == "Hello"
         assigns(:campaign).should == @campaign
+        assigns(:users).should == @users
         response.should render_template("campaigns/update")
       end
 
@@ -266,7 +279,7 @@ describe CampaignsController do
 
     it "should expose filtered campaigns as @campaigns and render [filter] template" do
       session[:filter_by_campaign_status] = "planned,started"
-      @campaigns = [ Factory(:campaign, :status => "completed", :ends_on => Date.yesterday, :user => @current_user) ]
+      @campaigns = [ Factory(:campaign, :status => "completed", :user => @current_user) ]
 
       xhr :get, :filter, :status => "completed"
       assigns(:campaigns).should == @campaigns

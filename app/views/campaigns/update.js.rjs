@@ -1,5 +1,5 @@
 if request.referer =~ /\/campaigns\/\w+/
-  id = :edit_contact
+  id = :edit_campaign
 else
   id = dom_id(@campaign)
 end
