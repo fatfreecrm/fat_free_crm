@@ -169,6 +169,19 @@ describe LeadsController do
         response.should render_template("leads/create")
       end
 
+      it "should copy selected campaign permissions unless asked otherwise" do
+        campaign = Factory.build(:campaign, :access => "Shared")
+        campaign.permissions << Factory(:permission, :user => @current_user, :asset_id => campaign.id, :asset_type => "Campaign")
+        campaign.save
+        @lead = Factory.build(:lead, :campaign => campaign, :user => @current_user)
+        @lead.permissions = campaign.permissions
+        Lead.stub!(:new).and_return(@lead)
+
+        xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :campaign_id => campaign.id, :access => "Campaign" }
+        @lead.reload.campaign.should == campaign
+        @lead.permissions.should == campaign.permissions
+      end
+
       it "should get the data to update leads sidebar if called from leads index" do
         @lead = Factory.build(:lead, :user => @current_user, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
@@ -215,6 +228,38 @@ describe LeadsController do
         assigns[:lead].should == @lead
         assigns[:lead_status_total].should == nil
         response.should render_template("leads/update")
+      end
+
+      it "should update lead status" do
+        @lead = Factory(:lead, :id => 42, :status => "new", :user => @current_user)
+
+        xhr :put, :update, :id => 42, :lead => { :status => "rejected" }
+        @lead.reload.status.should == "rejected"
+      end
+
+      it "should update lead source" do
+        @lead = Factory(:lead, :id => 42, :source => "campaign", :user => @current_user)
+
+        xhr :put, :update, :id => 42, :lead => { :source => "cald_call" }
+        @lead.reload.source.should == "cald_call"
+      end
+
+      it "should update lead campaign" do
+        old_campaign = Factory(:campaign)
+        new_campaign = Factory(:campaign)
+        @lead = Factory(:lead, :id => 42, :campaign => old_campaign, :user => @current_user)
+
+        xhr :put, :update, :id => 42, :lead => { :campaign_id => new_campaign.id }
+        @lead.reload.campaign.should == new_campaign
+      end
+
+      it "should update shared permissions for the campaign" do
+        @lead = Factory(:lead, :user => @current_user)
+        he  = Factory(:user, :id => 7)
+        she = Factory(:user, :id => 8)
+
+        xhr :put, :update, :id => @lead.id, :lead => { :access => "Shared" }, :users => %w(7 8)
+        @lead.permissions.map(&:user_id).sort.should == [ 7, 8 ]
       end
 
       it "should get the data for leads sidebar when called from leads index" do
@@ -319,6 +364,9 @@ describe LeadsController do
       assigns[:opportunity].should == @opportunity
       assigns[:contact].should == @contact
       response.should render_template("leads/promote")
+    end
+
+    it "should copy lead permissions when asked so" do
     end
 
     it "on failure: should not change lead's status and still render [promote] template" do

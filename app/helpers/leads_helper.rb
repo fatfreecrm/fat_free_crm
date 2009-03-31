@@ -25,8 +25,8 @@ module LeadsHelper
   #----------------------------------------------------------------------------
   def rating_select(name, options = {})
     stars = (1..5).inject({}) { |hash, star| hash[star] = "&#9733;" * star; hash }.sort
-    options_for_select = %(<option value="0">-- None --</option>)
-    options_for_select << stars.inject([]) {|array, star| array << %(<option value="#{star.first}">#{star.last}</option>); array }.join
+    options_for_select = %Q(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>-- None --</option>)
+    options_for_select << stars.inject([]) {|array, star| array << %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>); array }.join
     select_tag name, options_for_select, options
   end
 

@@ -204,10 +204,20 @@ Factory.define :setting do |s|
 end
 
 #----------------------------------------------------------------------------
+Factory.define :permission do |t|
+  t.user                { |a| a.association(:user) }
+  t.asset_id            nil
+  t.asset_type          nil
+  t.updated_at          { Factory.next(:time) }
+  t.created_at          { Factory.next(:time) }
+end
+
+#----------------------------------------------------------------------------
 Factory.define :task do |t|
   t.uuid                { Factory.next(:uuid) }
   t.user                { |a| a.association(:user) }
-  t.asset               nil
+  t.asset_id            nil
+  t.asset_type          nil
   t.assigned_to         nil
   t.name                { Faker::Lorem.sentence[0..63] }
   t.priority            nil

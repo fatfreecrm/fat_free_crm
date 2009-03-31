@@ -1,8 +1,10 @@
+- edit ||= false
 - collapsed = (@lead.errors.empty? && session[:lead_status].nil?)
 = subtitle :lead_status, collapsed
+- logger.p @lead.inspect
 .section
   %small#lead_status_intro{ hidden_if(!collapsed) }
-    You can add lead status information later.
+    = "You can add lead status information later." unless edit
   #lead_status{ hidden_if(collapsed) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
@@ -12,16 +14,16 @@
         %td= spacer
         %td{ :valign => :top }
           .label.top Status:
-          = f.select :status, Setting.invert(:lead_status), { :selected => :new }, { :style => "width:160px" }
+          = f.select :status, Setting.invert(:lead_status), { :selected => @lead.status.blank? ? :new : @lead.status.to_sym }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
           .label.top Source:
-          = f.select :source, Setting.invert(:lead_source), { :include_blank => "-- None --" }, { :style => "width:160px" }
+          = f.select :source, Setting.invert(:lead_source), { :selected => @lead.source.blank? ? :campaign : @lead.source.to_sym }, { :style => "width:160px" }
       %tr
         %td{ :valign => :top }
           .label Rating:
-          = rating_select "lead[rating]", { :id => :lead_rating, :style => "width:100%" }
+          = rating_select "lead[rating]", { :id => :lead_rating, :selected => @lead.rating, :style => "width:100%" }
         %td= spacer
         %td{ :valign => :top, :colspan => 3 }
           .label Campaign:
-          = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :include_blank => "-- None --" }, { :style => "width:100%", :onchange => "crm.flip_campaign_permissions(this.value)", :disabled => !@campaign.nil? }
+          = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :selected => @lead.campaign_id, :include_blank => "-- None --" }, { :style => "width:100%", :onchange => "crm.flip_campaign_permissions(this.value)", :disabled => !@campaign.nil? }

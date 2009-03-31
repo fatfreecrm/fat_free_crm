@@ -88,7 +88,7 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
 
     respond_to do |format|
-      if @lead.update_attributes(params[:lead])
+      if @lead.update_with_permissions(params[:lead], params[:users])
         get_data_for_sidebar if request.referer =~ /\/leads$/
         format.js
         format.xml  { head :ok }
