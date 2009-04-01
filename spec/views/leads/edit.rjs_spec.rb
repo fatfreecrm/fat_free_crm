@@ -28,7 +28,7 @@ describe "/leads/edit.js.rjs" do
     response.body.should include_text('crm.flip_form("edit_lead"')
   end
 
-  it "edit: should hide previously open [Edit Lead] for and replace it with lead partial" do
+  it "edit: should hide previously open [Edit Lead] and replace it with lead partial" do
     params[:cancel] = nil
     assigns[:previous] = Factory(:lead, :id => 41, :user => @current_user)
     
@@ -48,7 +48,7 @@ describe "/leads/edit.js.rjs" do
     end
   end
   
-  it "edit from lead landing page: should show [Edit Lead] form" do
+  it "edit from lead landing page: should hide [Convert Lead] and show [Edit Lead] form" do
     params[:cancel] = "false"
     
     render "leads/edit.js.rjs"

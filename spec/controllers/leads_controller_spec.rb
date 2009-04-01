@@ -332,7 +332,6 @@ describe LeadsController do
       @accounts = [ Factory(:account, :user => @current_user) ]
       @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
       @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
-      @contact = Contact.new
 
       xhr :get, :convert, :id => 42
       assigns[:lead].should == @lead
@@ -340,7 +339,6 @@ describe LeadsController do
       assigns[:accounts].should == @accounts
       assigns[:account].attributes.should == @account.attributes
       assigns[:opportunity].attributes.should == @opportunity.attributes
-      assigns[:contact].attributes.should == @contact.attributes
       response.should render_template("leads/convert")
     end
 

@@ -126,7 +126,6 @@ class LeadsController < ApplicationController
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my(@current_user).all(:order => "name")
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
-    @contact = Contact.new
   end
 
   # PUT /leads/1/promote

@@ -61,7 +61,7 @@ describe "/opportunities/edit.js.rjs" do
     response.body.should include_text('crm.flip_form("edit_opportunity"')
   end
   
-  it "should show handle new or existing account for the opportunity" do
+  it "edit: should handle new or existing account for the opportunity" do
 
     render "opportunities/edit.js.rjs"
     response.body.should include_text("crm.create_or_select_account")

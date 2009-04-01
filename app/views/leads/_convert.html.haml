@@ -4,7 +4,6 @@
     - fields_for(@account) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :access
-      / .subtitle== Convert #{@lead.full_name}
       = error_messages_for :account, :opportunity
       .section
         %small
@@ -28,8 +27,4 @@
       = f.submit "Convert Lead"
       or
       = link_to_cancel convert_lead_path(@lead)
-
-%script{:type => "text/javascript"}
-  = @account.id.blank? ? "crm.create_account();" : "crm.select_account();"
-  crm.date_select_popup("opportunity_closes_on");
   
