@@ -7,6 +7,8 @@ require "factory_girl"
 require "spec/rails"
 require RAILS_ROOT + "/spec/factories"
 
+VIEWS = %w(pending assigned completed).freeze
+
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record

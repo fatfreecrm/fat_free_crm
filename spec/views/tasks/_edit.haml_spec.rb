@@ -13,7 +13,7 @@ describe "/tasks/edit.html.erb" do
   end
 
   it "should render [edit task] form" do
-    @form = mock("form")
+    template.should_receive(:render).with(hash_including(:partial => "tasks/top_section"))
     render "/tasks/_edit.html.haml"
 
     response.should have_tag("form[class=edit_task]")

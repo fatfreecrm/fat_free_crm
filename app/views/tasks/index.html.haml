@@ -7,7 +7,7 @@
   - buckets = Setting.task_due_at_hint
   = render :partial => "title"
 
-%p.flash_message#flash{ hidden }
+%p.flash_message#tasks_flash{ hidden }
 
 .log#tasks
   - if !@tasks.values.flatten.empty? || filtered_out?(@view)

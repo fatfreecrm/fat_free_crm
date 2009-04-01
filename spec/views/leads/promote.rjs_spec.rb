@@ -3,11 +3,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/leads/promote.js.rjs" do
   include LeadsHelper
 
-  # @lead = Lead.find(params[:id])
-  # @users = User.all_except(@current_user)
-  # @account, @opportunity, @contact = @lead.promote(params)
-  # @accounts = Account.my(@current_user).all(:order => "name")
-  
   before(:each) do
     @current_user = Factory(:user)
     @account = Factory(:account)

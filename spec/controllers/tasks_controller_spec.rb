@@ -2,8 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TasksController do
 
-  VIEWS = %w(pending assigned completed).freeze
-
   def update_sidebar
     @task_total = { :key => :value, :pairs => :etc }
     Task.stub!(:totals).and_return(@task_total)
