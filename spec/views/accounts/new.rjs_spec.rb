@@ -17,7 +17,7 @@ describe "/accounts/new.js.rjs" do
     response.should have_rjs("create_account") do |rjs|
       with_tag("form[class=new_account]")
     end
- 
+    response.body.should include_text('crm.flip_form("create_account");')
   end
  
   it "cancel: should call crm.flip_form()" do

@@ -1,20 +1,28 @@
-id = dom_id(@lead)
+if request.referer =~ /\/leads\/\w+/
+  id = :edit_lead
+else
+  id = dom_id(@lead)
+end
+
 if @lead.errors.empty?
-  if request.referer =~ /\/leads\/\w+/ # Lead landing page.
+  if id == :edit_lead # Lead landing page.
+    page[:sidebar].replace_html :partial => "sidebar_show"
+    page[:summary].visual_effect :shake, :duration => 0.4, :distance => 3
     page.call "crm.flip_form", :edit_lead, @lead.full_name
   else
     page[id].replace :partial => "lead", :collection => [ @lead ]
     page[id].visual_effect :highlight, :duration => 1.0
-  end
-  if request.referer =~ /\/leads$/
-    page[:sidebar].replace_html :partial => "sidebar_index"
-    page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
-  elsif request.referer =~ /\/leads\/\w+/
-    page[:sidebar].replace_html :partial => "sidebar_show"
-    page[:summary].visual_effect :shake, :duration => 0.4, :distance => 3
+    if request.referer =~ /\/leads$/
+      page[:sidebar].replace_html :partial => "sidebar_index"
+      page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+    end
   end
 else  
   page[id].replace_html :partial => "edit"
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
-  page[:lead_first_name].focus
+  if error_message_on(@lead, :first_name).blank? and !error_message_on(@lead, :last_name).blank?
+    page[:lead_last_name].focus
+  else
+    page[:lead_first_name].focus
+  end
 end

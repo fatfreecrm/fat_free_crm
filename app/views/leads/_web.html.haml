@@ -1,5 +1,5 @@
 - edit ||= false
-- collapsed = (@lead.errors.empty? && session[:lead_presence].nil?)
+- collapsed = session[:lead_presence].nil? # && @lead.errors.empty?
 = subtitle :lead_presence, collapsed, "Web Presence"
 .section
   %small#lead_presence_intro{ hidden_if(!collapsed) }

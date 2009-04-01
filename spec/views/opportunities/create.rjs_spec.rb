@@ -43,9 +43,9 @@ describe "/opportunities/create.js.rjs" do
     response.should have_rjs("create_opportunity") do |rjs|
       with_tag("form[class=new_opportunity]")
     end
+    response.should include_text('visualEffect("shake"')
     response.should include_text("crm.create_or_select_account")
     response.should include_text("crm.date_select_popup")
-
   end
 
 end

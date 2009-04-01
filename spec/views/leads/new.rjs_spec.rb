@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/new.html.erb" do
+describe "/leads/new.html.haml" do
   include LeadsHelper
   
   before(:each) do
@@ -16,10 +16,19 @@ describe "/leads/new.html.erb" do
   it "create: should render [new.html.haml] template into :create_lead div" do
     params[:cancel] = nil
     render "leads/new.js.rjs"
-    
+
     response.should have_rjs("create_lead") do |rjs|
       with_tag("form[class=new_lead]")
     end
+    response.should include_text('crm.flip_form("create_lead")')
+  end
+
+  it "cancel: should render [new.html.haml] template into :create_lead div" do
+    params[:cancel] = "true"
+    render "leads/new.js.rjs"
+
+    response.should_not have_rjs("create_lead")
+    response.should have_text('crm.flip_form("create_lead");')
   end
 
 end

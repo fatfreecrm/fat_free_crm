@@ -39,6 +39,7 @@ describe "/campaigns/create.js.rjs" do
     response.should have_rjs("create_campaign") do |rjs|
       with_tag("form[class=new_campaign]")
     end
+    response.should include_text('visualEffect("shake"')
     response.should include_text('crm.date_select_popup("campaign_starts_on")')
     response.should include_text('crm.date_select_popup("campaign_ends_on")')
 

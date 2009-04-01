@@ -1,5 +1,5 @@
 - edit ||= false
-- collapsed = (@lead.errors.empty? && session[:lead_status].nil?)
+- collapsed = session[:lead_status].nil? # && @lead.errors.empty?
 = subtitle :lead_status, collapsed
 - logger.p @lead.inspect
 .section

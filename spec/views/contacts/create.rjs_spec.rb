@@ -27,6 +27,7 @@ describe "/contacts/create.js.rjs" do
     response.should have_rjs("create_contact") do |rjs|
       with_tag("form[class=new_contact]")
     end
+    response.should include_text('visualEffect("shake"')
   end
 
 end

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/show.html.erb" do
+describe "/leads/show.html.haml" do
   include LeadsHelper
 
   before(:each) do
@@ -16,7 +16,6 @@ describe "/leads/show.html.erb" do
     template.should_receive(:render).with(hash_including(:partial => "common/comment"))
 
     render "/leads/show.html.haml"
-
     response.should have_tag("div[id=edit_lead]")
   end
 
