@@ -9,6 +9,10 @@ Factory.sequence :address do |x|
   Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code
 end
 
+Factory.sequence :username do |x|
+  Faker::Internet.user_name + x.to_s  # make sure it's unique by appending sequence number
+end
+
 Factory.sequence :website do |x|
   "http://www." + Faker::Internet.domain_name
 end
@@ -206,8 +210,7 @@ end
 #----------------------------------------------------------------------------
 Factory.define :permission do |t|
   t.user                { |a| a.association(:user) }
-  t.asset_id            nil
-  t.asset_type          nil
+  t.asset               { raise "Please specify :asset for the permission" }
   t.updated_at          { Factory.next(:time) }
   t.created_at          { Factory.next(:time) }
 end
@@ -233,7 +236,7 @@ end
 #----------------------------------------------------------------------------
 Factory.define :user do |u|
   u.uuid                { Factory.next(:uuid) }
-  u.username            { Faker::Internet.user_name }
+  u.username            { Factory.next(:username) }
   u.email               { Faker::Internet.email }
   u.first_name          { Faker::Name.first_name }
   u.last_name           { Faker::Name.last_name }

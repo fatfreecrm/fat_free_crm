@@ -170,16 +170,21 @@ describe LeadsController do
       end
 
       it "should copy selected campaign permissions unless asked otherwise" do
-        campaign = Factory.build(:campaign, :access => "Shared")
-        campaign.permissions << Factory(:permission, :user => @current_user, :asset_id => campaign.id, :asset_type => "Campaign")
-        campaign.save
-        @lead = Factory.build(:lead, :campaign => campaign, :user => @current_user)
-        @lead.permissions = campaign.permissions
+        he  = Factory(:user, :id => 7)
+        she = Factory(:user, :id => 8)
+        @campaign = Factory.build(:campaign, :access => "Shared")
+        @campaign.permissions << Factory.build(:permission, :user => he,  :asset => @campaign)
+        @campaign.permissions << Factory.build(:permission, :user => she, :asset => @campaign)
+        @campaign.save
+
+        @lead = Factory.build(:lead, :campaign => @campaign, :user => @current_user, :access => "Shared")
         Lead.stub!(:new).and_return(@lead)
 
-        xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :campaign_id => campaign.id, :access => "Campaign" }
-        @lead.reload.campaign.should == campaign
-        @lead.permissions.should == campaign.permissions
+        xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :campaign_id => @campaign.id, :access => "Campaign" }, :users => %w(7 8)
+        @lead.reload.access.should == "Shared"
+        @lead.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        @lead.permissions.map(&:asset_id).should == [ @lead.id, @lead.id ]
+        @lead.permissions.map(&:asset_type).should == %w(Lead Lead)
       end
 
       it "should get the data to update leads sidebar if called from leads index" do
@@ -366,7 +371,31 @@ describe LeadsController do
       response.should render_template("leads/promote")
     end
 
-    it "should copy lead permissions when asked so" do
+    it "should copy lead permissions to newly created account and opportunity when asked so" do
+      he  = Factory(:user, :id => 7)
+      she = Factory(:user, :id => 8)
+      @lead = Factory.build(:lead, :access => "Shared")
+      @lead.permissions << Factory.build(:permission, :user => he,  :asset => @lead)
+      @lead.permissions << Factory.build(:permission, :user => she, :asset => @lead)
+      @lead.save
+      @account = Factory.build(:account, :user => @current_user, :access => "Shared")
+      @account.permissions << Factory(:permission, :user => he,  :asset => @account)
+      @account.permissions << Factory(:permission, :user => she, :asset => @account)
+      @account.stub!(:new).and_return(@account)
+      @opportunity = Factory.build(:opportunity, :user => @current_user, :access => "Shared")
+      @opportunity.permissions << Factory(:permission, :user => he,  :asset => @opportunity)
+      @opportunity.permissions << Factory(:permission, :user => she, :asset => @opportunity)
+      @opportunity.stub!(:new).and_return(@opportunity)
+
+      xhr :put, :promote, :id => @lead.id, :access => "Lead", :account => { :name => "Hello", :access => "Lead", :user_id => @current_user.id }, :opportunity => { :name => "World", :access => "Lead", :user_id => @current_user.id }
+      @account.access.should == "Shared"
+      @account.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+      @account.permissions.map(&:asset_id).should == [ @account.id, @account.id ]
+      @account.permissions.map(&:asset_type).should == %w(Account Account)
+      @opportunity.access.should == "Shared"
+      @opportunity.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+      @opportunity.permissions.map(&:asset_id).should == [ @opportunity.id, @opportunity.id ]
+      @opportunity.permissions.map(&:asset_type).should == %w(Opportunity Opportunity)
     end
 
     it "on failure: should not change lead's status and still render [promote] template" do
