@@ -8,6 +8,7 @@ Wed, Apr 1, 2009
 ---------------------------------------------------------------------
 - Finished [Edit Lead] views and view specs.
 - Started with [Edit Task] form and related views.
+- Refactored create, edit, and complete task views and created the specs.
 
 Tue, Mar 31, 2009
 ---------------------------------------------------------------------

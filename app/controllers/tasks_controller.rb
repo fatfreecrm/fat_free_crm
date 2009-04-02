@@ -54,7 +54,7 @@ class TasksController < ApplicationController
     @users = User.all_except(@current_user)
     @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
     @category = Setting.invert(:task_category)
-    @asset = @task.asset
+    @asset = @task.asset if @task.asset_id?
     if params[:previous] =~ /(\d+)\z/
       @previous = Task.find($1)
     end

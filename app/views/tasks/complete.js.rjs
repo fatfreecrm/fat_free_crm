@@ -1,7 +1,13 @@
-page[dom_id(@task, :tools)].hide
-page[dom_id(@task)].visual_effect :fade, :duration => 0.5
-page["list_#{@bucket}"].visual_effect :fade, :duration => 0.5 if @bucket # hide empty bucket
-unless params[:bucket].blank?
+if params[:bucket].blank? # Completing from the Asset page -- replace task partial with completed one.
+
+  page[dom_id(@task)].replace_html :partial => "tasks/completed", :collection => [ @task ], :locals => { :bucket => nil }
+
+else # Completing from pending tasks view -- fade out task partial and update sidebar.
+
+  page[dom_id(@task, :tools)].hide
+  page[dom_id(@task)].visual_effect :fade, :duration => 0.5
+  page["list_#{@bucket}"].visual_effect :fade, :duration => 0.5 if @bucket # hide empty bucket
   page[:sidebar].replace_html :partial => "sidebar_index"
   page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+
 end
