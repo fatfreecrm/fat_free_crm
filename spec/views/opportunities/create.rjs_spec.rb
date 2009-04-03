@@ -4,9 +4,7 @@ describe "/opportunities/create.js.rjs" do
   include OpportunitiesHelper
 
   before(:each) do
-    @current_user = Factory(:user)
-    @current_user.stub!(:full_name).and_return("Billy Bones")
-    assigns[:current_user] = @current_user
+    assigns[:current_user] = Factory(:user)
     assigns[:stage] = {}
   end
 
@@ -34,7 +32,7 @@ describe "/opportunities/create.js.rjs" do
   it "create (failure): should re-render [create.html.haml] template in :create_opportunity div" do
     assigns[:opportunity] = Factory.build(:opportunity, :name => nil) # make it invalid
     @account = Factory(:account)
-    assigns[:users] = [ @current_user ]
+    assigns[:users] = [ Factory(:user) ]
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]
   

@@ -4,9 +4,7 @@ describe "/leads/create.js.rjs" do
   include LeadsHelper
 
   before(:each) do
-    @current_user = Factory(:user)
-    @current_user.stub!(:full_name).and_return("Billy Bones")
-    assigns[:current_user] = @current_user
+    assigns[:current_user] = Factory(:user)
     assigns[:campaigns] = [ Factory(:campaign) ]
   end
 
@@ -33,7 +31,7 @@ describe "/leads/create.js.rjs" do
 
   it "create (failure): should re-render [create.html.haml] template in :create_lead div" do
     assigns[:lead] = Factory.build(:lead, :first_name => nil) # make it invalid
-    assigns[:users] = [ @current_user ]
+    assigns[:users] = [ Factory(:user) ]
   
     render "leads/create.js.rjs"
   

@@ -4,9 +4,7 @@ describe "/campaigns/create.js.rjs" do
   include CampaignsHelper
 
   before(:each) do
-    @current_user = Factory(:user)
-    @current_user.stub!(:full_name).and_return("Billy Bones")
-    assigns[:current_user] = @current_user
+    assigns[:current_user] = Factory(:user)
   end
 
   it "create (success): should hide [Create Campaign] form and insert campaign partial" do
@@ -32,7 +30,7 @@ describe "/campaigns/create.js.rjs" do
 
   it "create (failure): should re-render [create.html.haml] template in :create_campaign div" do
     assigns[:campaign] = Factory.build(:campaign, :name => nil) # make it invalid
-    assigns[:users] = [ @current_user ]
+    assigns[:users] = [ Factory(:user) ]
   
     render "campaigns/create.js.rjs"
   

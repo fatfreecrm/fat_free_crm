@@ -8,16 +8,7 @@ describe "/tasks/destroy.js.rjs" do
     settings.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
   end
 
-  # @task = Task.find(params[:id])
-  # @task.destroy
-  # @view = params[:view] || "pending"
-  # 
-  # # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-  # @bucket = Task.bucket(@current_user, params[:bucket],  @view)
-  # 
-  # update_sidebar if request.referer =~ /\/tasks\?*/ && !params[:bucket].blank?
-
-  for view in VIEWS do
+  VIEWS.each do |view|
     describe "destroy from Tasks tab (#{view} view)" do
       before(:each) do
         @task = Factory(:task)

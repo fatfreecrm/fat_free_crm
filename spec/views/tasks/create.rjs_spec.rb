@@ -3,31 +3,21 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/create.js.rjs" do
   include TasksHelper
 
-  def stub_task_total(view = "pending")
-    settings = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint)
-    settings.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
-  end
-
   before(:each) do
-    @current_user = Factory(:user)
-    @current_user.stub!(:full_name).and_return("Billy Bones")
-    assigns[:current_user] = @current_user
+    assigns[:current_user] = Factory(:user)
   end
 
-  for view in VIEWS do
+  VIEWS.each do |view|
     it "create from #{view} tasks page: should hide [Create Task] form and insert task partial" do
+      @task = stub_task(view)
       assigns[:view] = view
-      if view != "completed"
-        assigns[:task] = Factory(:task, :id => 42)
-      else
-        assigns[:task] = Factory(:task, :id => 42, :completed_at => Time.now - 1.minute)
-      end
+      assigns[:task] = @task
       assigns[:task_total] = stub_task_total(view)
       request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{view}"
+
       render "tasks/create.js.rjs"
-  
       response.should have_rjs(:insert, :top) do |rjs|
-        with_tag("li[id=task_42]")
+        with_tag("li[id=task_#{@task.id}]")
       end
       response.should include_text('visualEffect("highlight"')
     end
@@ -35,7 +25,7 @@ describe "/tasks/create.js.rjs" do
 
   it "create: should show flash message when assigning a task from pending tasks view" do
     assigns[:view] = "pending"
-    assigns[:task] = Factory(:task, :id => 42, :assignee => @current_user)
+    assigns[:task] = Factory(:task, :id => 42, :assignee => Factory(:user))
     request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render "tasks/create.js.rjs"
     
@@ -53,14 +43,15 @@ describe "/tasks/create.js.rjs" do
     response.should include_text('$("tasks_flash").show()')
   end
 
-  for view in VIEWS - %w(assigned)
+  (VIEWS - %w(assigned)).each do |view|
     it "create from outside the Tasks tab: should insert #{view} partial and highlight it" do
+      @task = Factory(:task, :id => 42)
       assigns[:view] = view
-      assigns[:task] = Factory(:task, :id => 42)
+      assigns[:task] = @task
       render "tasks/create.js.rjs"
 
       response.should have_rjs(:insert, :top) do |rjs|
-        with_tag("li[id=task_42]")
+        with_tag("li[id=task_#{@task.id}]")
       end
       response.should include_text('visualEffect("highlight"')
     end

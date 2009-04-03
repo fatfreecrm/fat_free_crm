@@ -6,7 +6,6 @@ describe "/leads/promote.js.rjs" do
   before(:each) do
     @current_user = Factory(:user)
     @account = Factory(:account)
-    # @current_user.stub!(:full_name).and_return("Billy Bones")
     assigns[:users] = [ @current_user ]
     assigns[:current_user] = @current_user
     assigns[:account] = @account

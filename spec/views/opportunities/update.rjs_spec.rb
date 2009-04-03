@@ -5,9 +5,8 @@ describe "/opportunities/update.js.rjs" do
   
   before(:each) do
     @current_user = Factory(:user)
-    @current_user.stub!(:full_name).and_return("Billy Bones")
     @account = Factory(:account, :id => 987654)
-    @opportunity = Factory(:opportunity, :id => 42, :user => @current_user, :assignee => @current_user)
+    @opportunity = Factory(:opportunity, :id => 42, :user => @current_user, :assignee => Factory(:user))
     assigns[:opportunity] = @opportunity
     assigns[:users] = [ @current_user ]
     assigns[:current_user] = @current_user

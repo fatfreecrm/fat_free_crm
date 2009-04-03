@@ -3,14 +3,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/edit.js.rjs" do
   include TasksHelper
 
-  def make_a_task(view)
-    if view != "completed"
-      Factory(:task)
-    else
-      Factory(:task, :completed_at => Time.now - 1.minute)
-    end
-  end
-
   before(:each) do
     @current_user = Factory(:user)
     assigns[:current_user] = @current_user
@@ -19,10 +11,11 @@ describe "/tasks/edit.js.rjs" do
     assigns[:category] = Setting.invert(:task_category)
   end
 
-  for view in VIEWS do
+
+  VIEWS.each do |view|
     it "cancel for #{view} view: should replace [Edit Task] form with the task partial" do
       params[:cancel] = "true"
-      @task = make_a_task(view)
+      @task = stub_task(view)
       assigns[:view] = view
       assigns[:task] = @task
     
@@ -30,21 +23,26 @@ describe "/tasks/edit.js.rjs" do
       response.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
+      if view == "pending"
+        response.body.should include_text('type=\\"checkbox\\"')
+      else
+        response.body.should_not include_text('type=\\"checkbox\\"')
+      end
     end
 
     it "edit: should hide [Create Task] form" do
       assigns[:view] = view
-      assigns[:task] = make_a_task(view)
+      assigns[:task] = stub_task(view)
 
       render "tasks/edit.js.rjs"
       response.body.should include_text('crm.hide_form("create_task"')
     end
 
     it "edit: should hide previously open [Edit Task] form" do
-      @previous = make_a_task(view)
+      @previous = stub_task(view)
       assigns[:previous] = @previous
       assigns[:view] = view
-      assigns[:task] = make_a_task(view)
+      assigns[:task] = stub_task(view)
       
       render "tasks/edit.js.rjs"
       response.should have_rjs("task_#{@previous.id}") do |rjs|
@@ -53,7 +51,7 @@ describe "/tasks/edit.js.rjs" do
     end
 
     it "edit: should turn off highlight and replace current task with [Edit Task] form" do
-      @task = make_a_task(view)
+      @task = stub_task(view)
       assigns[:view] = view
       assigns[:task] = @task
 

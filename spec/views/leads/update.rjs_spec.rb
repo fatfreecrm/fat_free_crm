@@ -5,8 +5,7 @@ describe "/leads/update.js.rjs" do
   
   before(:each) do
     @current_user = Factory(:user)
-    @current_user.stub!(:full_name).and_return("Billy Bones")
-    @lead = Factory(:lead, :id => 42, :user => @current_user, :assignee => @current_user)
+    @lead = Factory(:lead, :id => 42, :user => @current_user, :assignee => Factory(:user))
     assigns[:lead] = @lead
     assigns[:users] = [ @current_user ]
     assigns[:current_user] = @current_user

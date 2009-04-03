@@ -93,3 +93,20 @@ end
 def set_current_tab(tab)
   controller.session[:current_tab] = tab
 end
+
+#----------------------------------------------------------------------------
+def stub_task(view)
+  if view == "completed"
+    assigns[:task] = Factory(:task, :completed_at => Time.now - 1.minute)
+  elsif view == "assigned"
+    assigns[:task] = Factory(:task, :assignee => Factory(:user))
+  else
+    assigns[:task] = Factory(:task)
+  end
+end
+
+#----------------------------------------------------------------------------
+def stub_task_total(view = "pending")
+  settings = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint)
+  settings.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
+end

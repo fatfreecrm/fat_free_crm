@@ -5,7 +5,6 @@ describe "/campaigns/update.js.rjs" do
   
   before(:each) do
     @current_user = Factory(:user)
-    @current_user.stub!(:full_name).and_return("Billy Bones")
     @campaign = Factory(:campaign, :id => 42, :user => @current_user)
     assigns[:campaign] = @campaign
     assigns[:current_user] = @current_user

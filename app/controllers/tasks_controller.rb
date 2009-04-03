@@ -49,8 +49,11 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @view = params[:view] || "pending"
     @task = Task.find(params[:id])
+    @view = "pending"
+    if @task.assigned_to && @task.assigned_to != @current_user.id
+      @view = "assigned"
+    end
     @users = User.all_except(@current_user)
     @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
     @category = Setting.invert(:task_category)

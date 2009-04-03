@@ -8,7 +8,7 @@ describe "/tasks/index.html.haml" do
     @today = Factory(:task, :asset => Factory(:account), :due_at_hint => "due_today")
   end
 
-  for view in VIEWS do
+  VIEWS.each do |view|
     it "should render list of #{view} tasks if list of tasks is not empty" do
       assigns[:view] = view
       assigns[:tasks] = { :due_asap => [ @asap ], :due_today => [ @today ] }

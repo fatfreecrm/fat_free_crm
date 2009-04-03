@@ -2,7 +2,7 @@ id = dom_id(@task)
 
 if params[:cancel] == "true" # <----------------- Hide [Edit Task]
 
-  page[id].replace :partial => @view, :collection => [ @task ], :locals => { :bucket => @task.hint }
+  page[id].replace_html :partial => @view, :collection => [ @task ], :locals => { :bucket => @task.due_at_hint }
 
 else # <----------------------------------------  Show [Edit Task] form.
 

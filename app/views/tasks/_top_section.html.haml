@@ -7,17 +7,18 @@
     %tr
       %td{ :valign => :top }
         .label.req Due:
+        - hint = (params[:bucket].blank? ? @task.due_at_hint : params[:bucket]) || "due_asap"
         - if @task.due_at_hint != "specific_time"
-          = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:160px;", :onchange => "crm.flip_calendar(this.value)" }
+          = f.select :due_at_hint, @due_at_hint, { :selected => hint.to_sym }, { :style => "width:160px;", :onchange => "crm.flip_calendar(this.value)" }
           = f.text_field :calendar, :style => "width:160px; display:none;", :autocomplete => :off
         - else
-          = f.select :due_at_hint, @due_at_hint, {}, { :style => "width:160px; display:none;", :onchange => "crm.flip_calendar(this.value)" }
+          = f.select :due_at_hint, @due_at_hint, { :selected => :specific_time }, { :style => "width:160px; display:none;", :onchange => "crm.flip_calendar(this.value)" }
           = f.text_field :calendar, :style => "width:160px;", :autocomplete => :off
       %td= spacer
       %td{ :valign => :top }
         .label.req Assign to:
-        = collection_select :task, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+        = collection_select :task, :assigned_to, @users, :id, :full_name, { :include_blank => "Me" }, { :style => "width:160px", :disabled => @task.assigned_to == @current_user.id }
       %td= spacer
       %td{ :valign => :top }
         .label.req Category:
-        = f.select :category, @category, { :include_blank => "-- Select --" }, { :style => "width:160px" }
+        = f.select :category, @category, { :selected => @task.category.blank? ? nil : @task.category.to_sym, :include_blank => "-- Select --" }, { :style => "width:160px" }
