@@ -1,6 +1,8 @@
 if params[:bucket].blank? # Completing from the Asset page -- replace task partial with completed one.
 
+  page[dom_id(@task)].hide
   page[dom_id(@task)].replace_html :partial => "tasks/completed", :collection => [ @task ], :locals => { :bucket => nil }
+  page[dom_id(@task)].visual_effect :appear, :duration => 0.5
 
 else # Completing from pending tasks view -- fade out task partial and update sidebar.
 

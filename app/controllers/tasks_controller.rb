@@ -107,7 +107,7 @@ class TasksController < ApplicationController
     @view = params[:view] || "pending"
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    @bucket = Task.bucket(@current_user, params[:bucket],  @view)
+    @bucket = Task.bucket(@current_user, params[:bucket], @view)
 
     update_sidebar if request.referer =~ /\/tasks\?*/ && !params[:bucket].blank?
     respond_to do |format|
