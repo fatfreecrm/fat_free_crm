@@ -12,7 +12,7 @@
 #  asset_type   :string(255)
 #  priority     :string(32)
 #  category     :string(32)
-#  due_at_hint  :string(32)
+#  bucket       :string(32)
 #  due_at       :datetime
 #  completed_at :datetime
 #  deleted_at   :datetime
@@ -28,16 +28,16 @@
     case rand(12)
       when 1                            # ASAP
         due_at = nil
-        due_at_hint = "due_asap"
+        bucket = "due_asap"
       when 2..8                         # tomorrow/next week
         due_at = Date.today + rand(15).days
-        due_at_hint = (due_at == Date.tomorrow ? "due_tomorrow" : "due_next_week")
+        bucket = (due_at == Date.tomorrow ? "due_tomorrow" : "due_next_week")
       when 9..11                        # overdue
         due_at = Date.today - rand(15).days
-        due_at_hint = "due_tomorrow"
+        bucket = "due_tomorrow"
       else                              # later
         due_at = nil
-        due_at_hint = "due_later"
+        bucket = "due_later"
       end
 %>
 task<%= i %>:
@@ -49,7 +49,7 @@ task<%= i %>:
   asset_type   : <%=  %>
   priority     :
   category     : <%= category[rand(category.size)] %>
-  due_at_hint  : <%= due_at_hint %>
+  bucket  : <%= bucket %>
   due_at       : <%= due_at %>
   completed_at : <%= rand(4) == 0 ? Date.today - rand(5).days : "" %>
   deleted_at   :

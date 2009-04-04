@@ -7,7 +7,7 @@ describe "/tasks/edit.js.rjs" do
     @current_user = Factory(:user)
     assigns[:current_user] = @current_user
     assigns[:users] = [ @current_user ]
-    assigns[:due_at_hint] = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
+    assigns[:bucket] = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
     assigns[:category] = Setting.invert(:task_category)
   end
 

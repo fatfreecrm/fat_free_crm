@@ -7,12 +7,12 @@
     %tr
       %td{ :valign => :top }
         .label.req Due:
-        - hint = (params[:bucket].blank? ? @task.due_at_hint : params[:bucket]) || "due_asap"
-        - if @task.due_at_hint != "specific_time"
-          = f.select :due_at_hint, @due_at_hint, { :selected => hint.to_sym }, { :style => "width:160px;", :onchange => "crm.flip_calendar(this.value)" }
+        - bucket = (params[:bucket].blank? ? @task.bucket : params[:bucket]) || "due_asap"
+        - if @task.bucket != "specific_time"
+          = f.select :bucket, @bucket, { :selected => bucket.to_sym }, { :style => "width:160px;", :onchange => "crm.flip_calendar(this.value)" }
           = f.text_field :calendar, :style => "width:160px; display:none;", :autocomplete => :off
         - else
-          = f.select :due_at_hint, @due_at_hint, { :selected => :specific_time }, { :style => "width:160px; display:none;", :onchange => "crm.flip_calendar(this.value)" }
+          = f.select :bucket, @bucket, { :selected => :specific_time }, { :style => "width:160px; display:none;", :onchange => "crm.flip_calendar(this.value)" }
           = f.text_field :calendar, :style => "width:160px;", :autocomplete => :off
       %td= spacer
       %td{ :valign => :top }

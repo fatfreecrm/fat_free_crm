@@ -2,7 +2,8 @@ id = dom_id(@task)
 if @task.errors.empty?
   partial = (@task.assigned_to ? "assigned" : "pending")
   if request.referer =~ /\/tasks\?*/
-    page[id].replace :partial => partial, :collection => [ @task ], :locals => { :bucket => @task.hint }
+    bucket = @task.computed_bucket
+    page[id].replace :partial => partial, :collection => [ @task ], :locals => { :bucket => bucket }
     page[id].visual_effect :highlight, :duration => 1.0
     page[:sidebar].replace_html :partial => "sidebar_index"
     page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3

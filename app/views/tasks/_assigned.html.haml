@@ -14,9 +14,9 @@
       == (re: #{link_to(assigned.asset.name, polymorphic_url(assigned.asset))})
     &ndash;
     %tt
-      - if assigned.due_at_hint == "due_asap"
+      - if assigned.bucket == "due_asap"
         due now.
-      - elsif assigned.due_at_hint == "due_later"
+      - elsif assigned.bucket == "due_later"
         due sometime soon.
       - elsif assigned.due_at < Date.today
         %span.warn= distance_of_time_in_words(assigned.due_at, Date.today) << " late, was due on #{assigned.due_at.strftime('%b %e')}"

@@ -33,7 +33,7 @@ class TasksController < ApplicationController
     @view = params[:view] || "pending"
     @task = Task.new
     @users = User.all_except(@current_user)
-    @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
+    @bucket = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
     @category = Setting.invert(:task_category)
     if params[:related]
       model, id = params[:related].split("_")
@@ -52,7 +52,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @view = params[:view] || "pending"
     @users = User.all_except(@current_user)
-    @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
+    @bucket = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
     @category = Setting.invert(:task_category)
     @asset = @task.asset if @task.asset_id?
     if params[:previous] =~ /(\d+)\z/
@@ -168,7 +168,7 @@ class TasksController < ApplicationController
     if @task
       update_session do |filters|
         if !@task.deleted_at && !@task.completed_at # created new task
-          filters << @task.hint
+          filters << @task.computed_bucket
         elsif @bucket # deleted or completed and need to hide a bucket
           filters.delete(params[:bucket])
         end

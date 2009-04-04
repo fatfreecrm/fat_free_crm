@@ -17,9 +17,9 @@
         == (re: #{link_to(pending.asset.name, polymorphic_url(pending.asset))})
       &ndash;
     %tt
-      - if pending.due_at_hint == "due_asap"
+      - if pending.bucket == "due_asap"
         due now.
-      - elsif pending.due_at_hint == "due_later"
+      - elsif pending.bucket == "due_later"
         due sometime soon.
       - elsif pending.due_at < Date.today
         %span.warn= distance_of_time_in_words(pending.due_at, Date.today) << " late, was due on #{pending.due_at.strftime('%b %e')}"

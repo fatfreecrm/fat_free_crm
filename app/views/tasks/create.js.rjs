@@ -18,8 +18,9 @@ if @task.valid?
 
     # Show newly created task by inserting its div into appropriate bucket; then update tasks sidebar.
     else
-      page["list_#{@task.hint}"].show
-      page.insert_html :top, @task.hint, :partial => @view, :collection => [ @task ], :locals => { :bucket => @task.hint }
+      bucket = @task.computed_bucket
+      page["list_#{bucket}"].show
+      page.insert_html :top, bucket, :partial => @view, :collection => [ @task ], :locals => { :bucket => bucket }
       page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
       page[:sidebar].replace_html :partial => "sidebar_index"
       page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3

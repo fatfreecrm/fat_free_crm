@@ -8,7 +8,7 @@ describe TasksController do
   end
 
   def produce_tasks(user, view)
-    settings = (view != "completed" ? Setting.as_hash(:task_due_at_hint) : Setting.as_hash(:task_completed))
+    settings = (view != "completed" ? Setting.as_hash(:task_bucket) : Setting.as_hash(:task_completed))
 
     settings.keys.inject({}) do | hash, due |
       hash[due] ||= []
@@ -18,9 +18,9 @@ describe TasksController do
       end
       hash[due] << case view
       when "pending"
-        Factory(:task, :user => user, :due_at_hint => due.to_s)
+        Factory(:task, :user => user, :bucket => due.to_s)
       when "assigned"
-        Factory(:task, :user => user, :due_at_hint => due.to_s, :assigned_to => 1)
+        Factory(:task, :user => user, :bucket => due.to_s, :assigned_to => 1)
       when "completed"
         completed_at = case due
           when :completed_today
@@ -34,7 +34,7 @@ describe TasksController do
           when :completed_last_month
             Date.today.beginning_of_month - 1.day
         end
-        Factory(:task, :user => user, :due_at_hint => due.to_s, :completed_at => completed_at)
+        Factory(:task, :user => user, :bucket => due.to_s, :completed_at => completed_at)
       end
       hash
     end
@@ -114,13 +114,13 @@ describe TasksController do
       @task = Factory.build(:task, :user => @current_user, :asset => account)
       Task.stub!(:new).and_return(@task)
       @users = [ Factory(:user) ]
-      @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
+      @bucket = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.invert(:task_category)
 
       xhr :get, :new
       assigns[:task].should == @task
       assigns[:users].should == @users
-      assigns[:due_at_hint].should == @due_at_hint
+      assigns[:bucket].should == @bucket
       assigns[:category].should == @category
       response.should render_template("tasks/new")
     end
@@ -143,13 +143,13 @@ describe TasksController do
       @asset = Factory(:account, :user => @current_user)
       @task = Factory(:task, :id => 42, :user => @current_user, :asset => @asset)
       @users = [ Factory(:user) ]
-      @due_at_hint = Setting.task_due_at_hint[1..-1] << [ "On Specific Date...", :specific_time ]
+      @bucket = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.invert(:task_category)
 
       xhr :get, :edit, :id => 42
       assigns[:task].should == @task
       assigns[:users].should == @users
-      assigns[:due_at_hint].should == @due_at_hint
+      assigns[:bucket].should == @bucket
       assigns[:category].should == @category
       assigns[:asset].should == @asset
       response.should render_template("tasks/edit")

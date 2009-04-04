@@ -115,7 +115,7 @@ task_category_color:
   :presentation  : aquamarine
   :trip          : skyblue
 
-task_due_at_hint:
+task_bucket:
   - - Overdue
     - :overdue
   - - As Soon As Possible

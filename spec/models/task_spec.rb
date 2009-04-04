@@ -12,7 +12,7 @@
 #  asset_type   :string(255)
 #  priority     :string(32)
 #  category     :string(32)
-#  due_at_hint  :string(32)
+#  bucket       :string(32)
 #  due_at       :datetime
 #  completed_at :datetime
 #  deleted_at   :datetime
@@ -61,17 +61,17 @@ describe Task do
       task.assignee.should == nil
     end
 
-    it "should update due date based on hint" do
-      task = Factory(:task, :due_at => Date.tomorrow, :due_at_hint => "due_tomorrow")
-      task.update_attributes( { :due_at_hint => "due_this_week" } )
-      task.due_at_hint.should == "due_this_week"
+    it "should update due date based on selected bucket" do
+      task = Factory(:task, :due_at => Date.tomorrow, :bucket => "due_tomorrow")
+      task.update_attributes( { :bucket => "due_this_week" } )
+      task.bucket.should == "due_this_week"
       task.due_at.should == Date.today.end_of_week
     end
 
-    it "should update due date based on specific date hint" do
-      task = Factory(:task, :due_at => Date.tomorrow, :due_at_hint => "due_tomorrow")
-      task.update_attributes( { :due_at_hint => "specific_time", :calendar => "01/31/2020" } )
-      task.due_at_hint.should == "specific_time"
+    it "should update due date if specific calendar date selected" do
+      task = Factory(:task, :due_at => Date.tomorrow, :bucket => "due_tomorrow")
+      task.update_attributes( { :bucket => "specific_time", :calendar => "01/31/2020" } )
+      task.bucket.should == "specific_time"
       task.due_at.should == Time.parse("01/31/2020")
     end
 

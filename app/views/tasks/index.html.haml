@@ -4,7 +4,7 @@
   - buckets = Setting.task_completed
   .title Completed Tasks
 - else
-  - buckets = Setting.task_due_at_hint
+  - buckets = Setting.task_bucket
   = render :partial => "title"
 
 %p.flash_message#tasks_flash{ hidden }

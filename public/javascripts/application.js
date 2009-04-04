@@ -143,7 +143,7 @@ var crm = {
   //----------------------------------------------------------------------------
   flip_calendar: function(value) {
     if (value == "specific_time") {
-      $("task_due_at_hint").toggle(); // Hide dropdown.
+      $("task_bucket").toggle(); // Hide dropdown.
       $("task_calendar").toggle();    // Show editable date field.
       $("task_calendar").focus();     // Focus to invoke calendar popup.
     }

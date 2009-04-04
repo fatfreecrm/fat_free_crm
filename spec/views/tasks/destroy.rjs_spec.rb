@@ -4,7 +4,7 @@ describe "/tasks/destroy.js.rjs" do
   include TasksHelper
 
   def stub_task_total(view = "pending")
-    settings = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint)
+    settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     settings.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
   end
 

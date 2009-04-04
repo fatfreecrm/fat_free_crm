@@ -225,7 +225,7 @@ Factory.define :task do |t|
   t.name                { Faker::Lorem.sentence[0..63] }
   t.priority            nil
   t.category            { %w(call email folowup lunch meeting money presentation trip).rand }
-  t.due_at_hint         "due_asap"
+  t.bucket         "due_asap"
   t.due_at              { Factory.next(:time) }
   t.completed_at        nil
   t.deleted_at          nil

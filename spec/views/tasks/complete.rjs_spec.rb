@@ -9,7 +9,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:task] = @task
       assigns[:view] = "pending"
       assigns[:bucket] = params[:bucket] = :due_asap
-      assigns[:task_total] = Setting.task_due_at_hint.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
+      assigns[:task_total] = Setting.task_bucket.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
     end
 
     it "should fade out completed task partial" do

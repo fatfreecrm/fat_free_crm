@@ -4,8 +4,8 @@ describe "/tasks/index.html.haml" do
   include TasksHelper
   
   before(:each) do
-    @asap  = Factory(:task, :asset => Factory(:account), :due_at_hint => "due_asap")
-    @today = Factory(:task, :asset => Factory(:account), :due_at_hint => "due_today")
+    @asap  = Factory(:task, :asset => Factory(:account), :bucket => "due_asap")
+    @today = Factory(:task, :asset => Factory(:account), :bucket => "due_today")
   end
 
   VIEWS.each do |view|
@@ -13,7 +13,7 @@ describe "/tasks/index.html.haml" do
       assigns[:view] = view
       assigns[:tasks] = { :due_asap => [ @asap ], :due_today => [ @today ] }
       
-      number_of_buckets = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint).size
+      number_of_buckets = (view == "completed" ? Setting.task_completed : Setting.task_bucket).size
       template.should_receive(:render).with(hash_including(:partial => view)).exactly(number_of_buckets).times
 
       render "/tasks/index.html.haml"

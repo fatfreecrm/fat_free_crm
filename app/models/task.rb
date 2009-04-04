@@ -12,7 +12,7 @@
 #  asset_type   :string(255)
 #  priority     :string(32)
 #  category     :string(32)
-#  due_at_hint  :string(32)
+#  bucket       :string(32)
 #  due_at       :datetime
 #  completed_at :datetime
 #  deleted_at   :datetime
@@ -35,13 +35,13 @@ class Task < ActiveRecord::Base
   named_scope :completed,     :conditions => "completed_at IS NOT NULL", :order => "completed_at DESC"
 
   # Due date scopes.
-  named_scope :due_asap,      :conditions => "due_at IS NULL AND due_at_hint = 'due_asap'", :order => "id DESC"
+  named_scope :due_asap,      :conditions => "due_at IS NULL AND bucket = 'due_asap'", :order => "id DESC"
   named_scope :overdue,       lambda { { :conditions => [ "due_at IS NOT NULL AND due_at < ?", Date.today ], :order => "id DESC" } }
   named_scope :due_today,     lambda { { :conditions => [ "due_at = ?", Date.today ], :order => "id DESC" } }
   named_scope :due_tomorrow,  lambda { { :conditions => [ "due_at = ?", Date.tomorrow ], :order => "id DESC" } }
   named_scope :due_this_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.tomorrow + 1.day, Date.today.next_week ], :order => "id DESC" } }
   named_scope :due_next_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Date.today.next_week, Date.today.next_week.end_of_week + 1.day ], :order => "id DESC" } }
-  named_scope :due_later,     lambda { { :conditions => [ "(due_at IS NULL AND due_at_hint = 'due_later') OR due_at >= ?", Date.today.next_week.end_of_week + 1.day ], :order => "id DESC" } }
+  named_scope :due_later,     lambda { { :conditions => [ "(due_at IS NULL AND bucket = 'due_later') OR due_at >= ?", Date.today.next_week.end_of_week + 1.day ], :order => "id DESC" } }
 
   # Completion time scopes.
   named_scope :completed_today,      lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Date.today, Date.tomorrow ] } }
@@ -57,16 +57,16 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :user_id
   validates_presence_of :name, :message => "^Please specify task name."
-  validates_presence_of :calendar, :if => "self.due_at_hint == 'specific_time'"
+  validates_presence_of :calendar, :if => "self.bucket == 'specific_time'"
   validate              :specific_time
 
   before_create :set_due_date, :notify_assignee
   before_update :set_due_date, :notify_assignee
 
-  # Convert specific due_date to one of due_today, due_tomorrow, etc. hints.
+  # Convert specific due_date to "due_today", "due_tomorrow", etc. bucket name.
   #----------------------------------------------------------------------------
-  def hint
-    return self.due_at_hint if self.due_at_hint != "specific_time"
+  def computed_bucket
+    return self.bucket if self.bucket != "specific_time"
     case
     when self.due_at < Date.today.to_time
       "overdue"
@@ -86,7 +86,7 @@ class Task < ActiveRecord::Base
   # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
-    settings = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint)
+    settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     settings.inject({}) do |hash, (value, key)|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending : my(user).send(key).send(view))
       hash
@@ -107,7 +107,7 @@ class Task < ActiveRecord::Base
   # Returns task totals for each of the views as needed by tasks sidebar.
   #----------------------------------------------------------------------------
   def self.totals(user, view = "pending")
-    settings = (view == "completed" ? Setting.task_completed : Setting.task_due_at_hint)
+    settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     settings.inject({ :all => 0 }) do |hash, (value, key)|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)
       hash[:all] += hash[key]
@@ -118,7 +118,7 @@ class Task < ActiveRecord::Base
   private
   #----------------------------------------------------------------------------
   def set_due_date
-    self.due_at = case self.due_at_hint
+    self.due_at = case self.bucket
     when "overdue"
       self.due_at || Date.yesterday
     when "due_today"
@@ -148,7 +148,7 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def specific_time
-    if (self.due_at_hint == "specific_time") && (self.calendar !~ %r[\d{2}/\d{2}/\d{4}])
+    if (self.bucket == "specific_time") && (self.calendar !~ %r[\d{2}/\d{2}/\d{4}])
       errors.add(:calendar, "^Please specify valid date.")
     end
   end
