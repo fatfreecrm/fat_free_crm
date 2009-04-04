@@ -86,8 +86,16 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @view = params[:view] || "pending"
 
+    # Preserve old bucket so we could tell whether the due date has been changed.
+    if @task.due_at && (@task.due_at < Date.today.to_time)
+      @old_bucket = "overdue"
+    else
+      @old_bucket = @task.computed_bucket
+    end
+
     respond_to do |format|
       if @task.update_attributes(params[:task])
+        @new_bucket = @task.computed_bucket
         update_sidebar if request.referer =~ /\/tasks\?*/
         format.js   # update.js.rjs
         format.xml  { head :ok }
@@ -102,9 +110,9 @@ class TasksController < ApplicationController
   # DELETE /tasks/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def destroy
+    @view = params[:view] || "pending"
     @task = Task.find(params[:id])
     @task.destroy
-    @view = params[:view] || "pending"
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
     @bucket = Task.bucket_empty?(params[:bucket], @current_user, @view) ? params[:bucket] : nil

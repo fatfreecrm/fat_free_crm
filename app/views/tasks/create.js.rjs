@@ -28,8 +28,8 @@ if @task.valid?
 
   else # Inline [Create Task] form reqested from any of the core asset landing pages.
 
-    partial = (@task.assigned_to ? "assigned" : "pending")
-    page.insert_html :top, :tasks, :partial => partial, :collection => [@task], :locals => { :bucket => nil }
+    partial = (@task.assigned_to && @task.assigned_to != @current_user.id) ? "assigned" : "pending"
+    page.insert_html :top, :tasks, :partial => "tasks/#{partial}", :collection => [@task], :locals => { :bucket => nil }
     page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
   end
 

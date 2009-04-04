@@ -1,18 +1,50 @@
 id = dom_id(@task)
 if @task.errors.empty?
-  partial = (@task.assigned_to ? "assigned" : "pending")
-  if request.referer =~ /\/tasks\?*/
-    bucket = @task.computed_bucket
-    page[id].replace :partial => partial, :collection => [ @task ], :locals => { :bucket => bucket }
-    page[id].visual_effect :highlight, :duration => 1.0
-    page[:sidebar].replace_html :partial => "sidebar_index"
-    page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
-  else
-    page[id].replace :partial => partial, :collection => [ @task ], :locals => { :bucket => nil }
-    page[id].visual_effect :highlight, :duration => 1.0
+
+  if @new_bucket != @old_bucket # Due date has changed.
+
+    if request.referer =~ /\/tasks\?*/
+      # Remove the task from the old bucket.
+      page[id].replace ""
+
+      # Check whether the old bucket is empty now. If yes, hide it.
+      if Task.bucket_empty?(@old_bucket, @current_user, @view)
+        page["list_#{@old_bucket}"].visual_effect :fade, :duration => 0.5
+      end
+
+      # Show the task in the new bucket.
+      page["list_#{@new_bucket}"].show
+      page.insert_html :top, @new_bucket, :partial => @view, :collection => [ @task ], :locals => { :bucket => @new_bucket }
+      page[id].visual_effect :highlight, :duration => 1.5
+
+      page[:sidebar].replace_html :partial => "sidebar_index"
+      page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+
+    else # Update task partial in place since asset landing page has no task buckets.
+      partial = (@task.assigned_to && @task.assigned_to != @current_user.id) ? "assigned" : "pending"
+      page[id].replace_html :partial => "tasks/#{partial}", :collection => [ @task ], :locals => { :bucket => nil }
+    end
+
+  else # Due date hasn't changed.
+
   end
-else  
-  ### page[id].replace_html :partial => "edit"
+
+else # Errors
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:task_name].focus
 end
+
+#   partial = (@task.assigned_to && @task.assigned_to != @current_user.id) ? "assigned" : "pending"
+#     bucket = @task.computed_bucket
+#     page[id].replace :partial => partial, :collection => [ @task ], :locals => { :bucket => bucket }
+#     page[id].visual_effect :highlight, :duration => 1.0
+#     page[:sidebar].replace_html :partial => "sidebar_index"
+#     page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+#   else
+#     page[id].replace :partial => partial, :collection => [ @task ], :locals => { :bucket => nil }
+#     page[id].visual_effect :highlight, :duration => 1.0
+#   end
+# else
+#   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+#   page[:task_name].focus
+# end

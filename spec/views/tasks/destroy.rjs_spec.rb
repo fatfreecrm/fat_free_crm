@@ -3,11 +3,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/destroy.js.rjs" do
   include TasksHelper
 
-  def stub_task_total(view = "pending")
-    settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
-  end
-
   VIEWS.each do |view|
     describe "destroy from Tasks tab (#{view} view)" do
       before(:each) do
@@ -18,7 +13,7 @@ describe "/tasks/destroy.js.rjs" do
         assigns[:task_total] = stub_task_total(view)
       end
 
-      it "should blind up out destroyd task partial" do
+      it "should blind up out destroyed task partial" do
         render "tasks/destroy.js.rjs"
         response.body.should include_text(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
         response.body.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)

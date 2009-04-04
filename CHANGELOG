@@ -4,6 +4,16 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, Apr 4, 2009
+---------------------------------------------------------------------
+- Added :before_update hooks for task along with related model specs.
+- Renamed [task.due_at_hint] to [task.bucket] to simplify naming conventions.
+- Implemented task updates with the new due date.
+
+Fri, Apr 3, 2009
+---------------------------------------------------------------------
+- Moved [Edit Task] cancellation logic from controller to view.
+
 Thu, Apr 2, 2009
 ---------------------------------------------------------------------
 - Added view specs for task#destroy, fixed a couple task related bugs.

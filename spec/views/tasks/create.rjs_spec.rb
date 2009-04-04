@@ -8,18 +8,29 @@ describe "/tasks/create.js.rjs" do
   end
 
   VIEWS.each do |view|
-    it "create from #{view} tasks page: should hide [Create Task] form and insert task partial" do
+    before(:each) do
       @task = stub_task(view)
       assigns[:view] = view
       assigns[:task] = @task
       assigns[:task_total] = stub_task_total(view)
-      request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{view}"
+    end
 
+    it "create from #{view} tasks page: should hide [Create Task] form and insert task partial" do
+      request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{view}"
       render "tasks/create.js.rjs"
       response.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
       response.should include_text('visualEffect("highlight"')
+    end
+
+    it "should update tasks sidebar" do
+      request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{view}"
+      render "tasks/create.js.rjs"
+      response.body.should have_rjs("sidebar") do |rjs|
+        with_tag("div[id=filters]")
+      end
+      response.body.should include_text(%Q/$("filters").visualEffect("shake"/)
     end
   end
 
