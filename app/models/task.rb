@@ -60,7 +60,8 @@ class Task < ActiveRecord::Base
   validates_presence_of :calendar, :if => "self.due_at_hint == 'specific_time'"
   validate              :specific_time
 
-  before_create :set_due_at, :notify_assignee
+  before_create :set_due_date, :notify_assignee
+  before_update :set_due_date, :notify_assignee
 
   # Convert specific due_date to one of due_today, due_tomorrow, etc. hints.
   #----------------------------------------------------------------------------
@@ -94,10 +95,13 @@ class Task < ActiveRecord::Base
 
   # Returns bucket if it's empty (i.e. we have to hide it), nil otherwise.
   #----------------------------------------------------------------------------
-  def self.bucket(user, bucket, view = "pending")
-    return if bucket.blank?
-    count = (view == "assigned" ? assigned_by(user).send(bucket).pending.count : my(user).send(bucket).send(view).count)
-    count == 0 ? bucket : nil
+  def self.bucket_empty?(bucket, user, view = "pending")
+    return false if bucket.blank?
+    if view == "assigned"
+      assigned_by(user).send(bucket).pending.count
+    else
+      my(user).send(bucket).send(view).count
+    end == 0
   end
 
   # Returns task totals for each of the views as needed by tasks sidebar.
@@ -113,7 +117,7 @@ class Task < ActiveRecord::Base
 
   private
   #----------------------------------------------------------------------------
-  def set_due_at
+  def set_due_date
     self.due_at = case self.due_at_hint
     when "overdue"
       self.due_at || Date.yesterday
@@ -135,16 +139,17 @@ class Task < ActiveRecord::Base
   end
 
   #----------------------------------------------------------------------------
-  def specific_time
-    if (self.due_at_hint == "specific_time") && (self.calendar !~ %r[\d{2}/\d{2}/\d{4}])
-      errors.add(:calendar, "^Please specify valid date.")
+  def notify_assignee
+    # logger.p self.new_record? ? "create" : "update"
+    if self.assigned_to
+      # Notify assignee.
     end
   end
 
   #----------------------------------------------------------------------------
-  def notify_assignee
-    if self.assigned_to
-      # Notify assignee.
+  def specific_time
+    if (self.due_at_hint == "specific_time") && (self.calendar !~ %r[\d{2}/\d{2}/\d{4}])
+      errors.add(:calendar, "^Please specify valid date.")
     end
   end
 

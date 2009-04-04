@@ -89,10 +89,10 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.update_attributes(params[:task])
         update_sidebar if request.referer =~ /\/tasks\?*/
-        format.js
+        format.js   # update.js.rjs
         format.xml  { head :ok }
       else
-        format.js
+        format.js   # update.js.rjs
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
@@ -107,7 +107,7 @@ class TasksController < ApplicationController
     @view = params[:view] || "pending"
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    @bucket = Task.bucket(@current_user, params[:bucket], @view)
+    @bucket = Task.bucket_empty?(params[:bucket], @current_user, @view) ? params[:bucket] : nil
 
     update_sidebar if request.referer =~ /\/tasks\?*/ && !params[:bucket].blank?
     respond_to do |format|
@@ -124,7 +124,7 @@ class TasksController < ApplicationController
     @task.update_attributes(:completed_at => Time.now)
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
-    @bucket = Task.bucket(@current_user, params[:bucket])
+    @bucket = Task.bucket_empty?(params[:bucket], @current_user) ? params[:bucket] : nil
 
     update_sidebar unless params[:bucket].blank?
     respond_to do |format|
