@@ -2,18 +2,15 @@ id = dom_id(@task)
 
 if params[:cancel] == "true" # <----------------- Hide [Edit Task]
 
-  page[id].replace_html :partial => @view, :collection => [ @task ], :locals => { :bucket => @task.due_at_hint }
+  partial = (@task.assigned_to && @task.assigned_to != @current_user.id) ? "assigned" : "pending"
+  page[id].replace_html :partial => partial, :collection => [ @task ], :locals => { :bucket => @task.due_at_hint }
 
 else # <----------------------------------------  Show [Edit Task] form.
 
   page.call "crm.hide_form", :create_task         # Hide [Create Task] form if it's open.
   if @previous                                    # Hide open [Edit Lead] form if any.
-    if request.referer =~ /\/tasks\?*/
-      page[dom_id(@previous)].replace :partial => @view, :collection => [ @previous ], :locals => { :bucket => @task.hint }
-    else
-      partial = (@previous.assigned_to ? "assigned" : "pending")
-      page[dom_id(@previous)].replace :partial => partial, :collection => [ @previous ], :locals => { :bucket => nil }
-    end
+    partial = (@previous.assigned_to && @previous.assigned_to != @current_user.id) ? "assigned" : "pending"
+    page[dom_id(@previous)].replace :partial => partial, :collection => [ @previous ], :locals => { :bucket => nil }
   end
   page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
   page[id].replace_html :partial => "edit"        # Show [Edit Task] form.
