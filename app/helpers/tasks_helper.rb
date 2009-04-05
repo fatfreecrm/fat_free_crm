@@ -46,4 +46,65 @@ module TasksHelper
     onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "{ bucket: '#{bucket}' }")
   end
 
+  #----------------------------------------------------------------------------
+  def hide_task_and_possibly_bucket(id, bucket)
+    update_page do |page|
+      page[id].replace ""
+
+      if Task.bucket_empty?(bucket, @current_user, @view)
+        page["list_#{bucket}"].visual_effect :fade, :duration => 0.5
+      end
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def replace_content(task, bucket = nil)
+    partial = (task.assigned_to && task.assigned_to != @current_user.id) ? "assigned" : "pending"
+    update_page do |page|
+      page[dom_id(task)].replace_html :partial => "tasks/#{partial}", :collection => [ task ], :locals => { :bucket => bucket }
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def insert_content(task, bucket, view)
+    update_page do |page|
+      page["list_#{bucket}"].show
+      page.insert_html :top, bucket, :partial => view, :collection => [ task ], :locals => { :bucket => bucket }
+      page[dom_id(task)].visual_effect :highlight, :duration => 1.5
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def tasks_flash(message)
+    update_page do |page|
+      page[:tasks_flash].update message
+      page[:tasks_flash].show
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def reassign(id)
+    update_page do |page|
+      if @view == "pending" && @task.assigned_to != @current_user.id
+        page << hide_task_and_possibly_bucket(id, @old_bucket)
+        page << tasks_flash("The task has been assigned to #{@task.assignee.full_name} (" << link_to("view assigned tasks", url_for(:view => "assigned")) << ").")
+      elsif @view == "assigned" && @task.assigned_to.blank?
+        page << hide_task_and_possibly_bucket(id, @old_bucket)
+        page << tasks_flash("The task has been moved to pending tasks (" << link_to("view pending tasks", tasks_url) << ").")
+      else
+        page << replace_content(@task, @new_bucket)
+      end
+      page << update_sidebar
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def reschedule(id)
+    update_page do |page|
+      page << hide_task_and_possibly_bucket(id, @old_bucket)
+      page << insert_content(@task, @new_bucket, @view)
+      page << update_sidebar
+    end
+  end
+
 end

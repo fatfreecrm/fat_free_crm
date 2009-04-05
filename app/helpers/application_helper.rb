@@ -144,4 +144,12 @@ module ApplicationHelper
     distance_of_time_in_words(Time.now, whenever) << " ago"
   end
 
+  #----------------------------------------------------------------------------
+  def update_sidebar
+    update_page do |page|
+      page[:sidebar].replace_html :partial => "sidebar_index"
+      page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+    end
+  end
+
 end

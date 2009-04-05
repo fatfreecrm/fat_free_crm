@@ -7,12 +7,12 @@ if @task.valid?
   if request.referer =~ /\/tasks\?*/  # "Classic" [Create Task] form requested from the Tasks page.
 
     # Show flash if assigned to somebody else from the [Pending Tasks] page.
-    if @view == "pending" && @task.assigned_to?
+    if @view == "pending" && @task.assigned_to != @current_user.id
       page[:tasks_flash].update "The task has been created and assigned to #{@task.assignee.full_name} (" << link_to("view assigned tasks", url_for(:view => "assigned")) << ")."
       page[:tasks_flash].show
 
     # Show flash if assigned to current user from the [Assigned Tasks] page.
-    elsif @view == "assigned" && !@task.assigned_to?
+    elsif @view == "assigned" && @task.assigned_to.blank?
       page[:tasks_flash].update "The task has been created (" << link_to("view pending tasks", tasks_url) << ")."
       page[:tasks_flash].show
 

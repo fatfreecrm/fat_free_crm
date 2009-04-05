@@ -92,10 +92,13 @@ class TasksController < ApplicationController
     else
       @old_bucket = @task.computed_bucket
     end
+    # Preserve assignee so we could tell whether the task has been reassigned.
+    @old_assigned_to = @task.assigned_to
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
         @new_bucket = @task.computed_bucket
+        @new_assigned_to = @task.assigned_to
         update_sidebar if request.referer =~ /\/tasks\?*/
         format.js   # update.js.rjs
         format.xml  { head :ok }

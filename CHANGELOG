@@ -8,7 +8,7 @@ Sat, Apr 4, 2009
 ---------------------------------------------------------------------
 - Added :before_update hooks for task along with related model specs.
 - Renamed [task.due_at_hint] to [task.bucket] to simplify naming conventions.
-- Implemented task updates with the new due date.
+- Initial implementation of task rescheduling and reassigning.
 
 Fri, Apr 3, 2009
 ---------------------------------------------------------------------
