@@ -278,21 +278,20 @@ describe TasksController do
     end
 
     [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
-      it "should update sidebar when [destroy] is being called from [/tasks#{view}] page and bucket is not empty" do
+      it "should update sidebar when [destroy] is being called from [/tasks#{view}]" do
         @task = Factory(:task, :id => 42, :user => @current_user)
 
         request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
         xhr :delete, :destroy, :id => 42, :bucket => "due_asap"
         assigns[:task_total].should be_an_instance_of(Hash)
       end
+    end
 
-      it "should not update sidebar when [destroy] is being called from [/tasks#{view}] page but the bucket is empty" do
-        @task = Factory(:task, :id => 42, :user => @current_user)
+    it "should not update sidebar when [destroy] is being called from asset page" do
+      @task = Factory(:task, :id => 42, :user => @current_user)
 
-        request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
-        xhr :delete, :destroy, :id => 42
-        assigns[:task_total].should == nil
-      end
+      xhr :delete, :destroy, :id => 42
+      assigns[:task_total].should == nil
     end
 
   end

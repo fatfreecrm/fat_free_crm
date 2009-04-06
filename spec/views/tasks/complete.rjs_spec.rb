@@ -8,11 +8,13 @@ describe "/tasks/edit.js.rjs" do
       @task = Factory(:task)
       assigns[:task] = @task
       assigns[:view] = "pending"
-      assigns[:bucket] = params[:bucket] = :due_asap
+      assigns[:empty_bucket] = :due_asap
       assigns[:task_total] = Setting.task_bucket.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
     end
 
     it "should fade out completed task partial" do
+      request.env["HTTP_REFERER"] = "http://localhost/tasks"
+
       render "tasks/complete.js.rjs"
       response.body.should include_text(%Q/$("task_#{@task.id}").visualEffect("fade"/)
       response.body.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
@@ -21,7 +23,8 @@ describe "/tasks/edit.js.rjs" do
     it "should update tasks sidebar" do
       assigns[:task] = Factory(:task)
       assigns[:view] = "pending"
-      assigns[:bucket] = params[:bucket] = :due_asap
+      assigns[:empty_bucket] = :due_asap
+      request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render "tasks/complete.js.rjs"
       response.should have_rjs("sidebar") do |rjs|

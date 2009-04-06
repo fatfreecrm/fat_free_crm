@@ -86,6 +86,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @view = params[:view] || "pending"
 
+    # TODO: @task_before_saving = @task.clone
     # Preserve old bucket so we could tell whether the due date has been changed.
     if @task.due_at && (@task.due_at < Date.today.to_time)
       @old_bucket = "overdue"
@@ -118,9 +119,11 @@ class TasksController < ApplicationController
     @task.destroy
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    @bucket = Task.bucket_empty?(params[:bucket], @current_user, @view) ? params[:bucket] : nil
+    if Task.bucket_empty?(params[:bucket], @current_user, @view)
+      @empty_bucket = params[:bucket]
+    end
 
-    update_sidebar if request.referer =~ /\/tasks\?*/ && !params[:bucket].blank?
+    update_sidebar if request.referer =~ /\/tasks\?*/
     respond_to do |format|
       format.js
       format.xml  { head :ok }
@@ -135,7 +138,9 @@ class TasksController < ApplicationController
     @task.update_attributes(:completed_at => Time.now)
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
-    @bucket = Task.bucket_empty?(params[:bucket], @current_user) ? params[:bucket] : nil
+    if Task.bucket_empty?(params[:bucket], @current_user)
+      @empty_bucket = params[:bucket]
+    end
 
     update_sidebar unless params[:bucket].blank?
     respond_to do |format|
@@ -180,8 +185,8 @@ class TasksController < ApplicationController
       update_session do |filters|
         if !@task.deleted_at && !@task.completed_at # created new task
           filters << @task.computed_bucket
-        elsif @bucket # deleted or completed and need to hide a bucket
-          filters.delete(params[:bucket])
+        elsif @empty_bucket # deleted or completed and need to hide a bucket
+          filters.delete(@empty_bucket)
         end
       end
     end

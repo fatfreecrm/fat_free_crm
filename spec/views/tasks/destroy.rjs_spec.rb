@@ -9,17 +9,21 @@ describe "/tasks/destroy.js.rjs" do
         @task = Factory(:task)
         assigns[:task] = @task
         assigns[:view] = view
-        assigns[:bucket] = params[:bucket] = :due_asap
+        assigns[:empty_bucket] = :due_asap
         assigns[:task_total] = stub_task_total(view)
       end
 
       it "should blind up out destroyed task partial" do
+        request.env["HTTP_REFERER"] = "http://localhost/tasks"
+
         render "tasks/destroy.js.rjs"
         response.body.should include_text(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
         response.body.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
       end
   
       it "should update tasks sidebar" do
+        request.env["HTTP_REFERER"] = "http://localhost/tasks"
+
         render "tasks/destroy.js.rjs"
         response.body.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
