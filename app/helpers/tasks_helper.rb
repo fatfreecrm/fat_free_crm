@@ -86,13 +86,13 @@ module TasksHelper
   def reassign(id)
     update_page do |page|
       if @view == "pending" && @task.assigned_to != @current_user.id
-        page << hide_task_and_possibly_bucket(id, @old_bucket)
-        page << tasks_flash("The task has been assigned to #{@task.assignee.full_name} (" << link_to("view assigned tasks", url_for(:view => "assigned")) << ").")
+        page << hide_task_and_possibly_bucket(id, @task_before_update.bucket)
+        page << tasks_flash("The task has been assigned to #{@task.assignee.full_name} (" << link_to("view assigned tasks", url_for(:controller => :tasks, :view => :assigned)) << ").")
       elsif @view == "assigned" && @task.assigned_to.blank?
-        page << hide_task_and_possibly_bucket(id, @old_bucket)
+        page << hide_task_and_possibly_bucket(id, @task_before_update.bucket)
         page << tasks_flash("The task has been moved to pending tasks (" << link_to("view pending tasks", tasks_url) << ").")
       else
-        page << replace_content(@task, @new_bucket)
+        page << replace_content(@task, @task.bucket)
       end
       page << update_sidebar
     end
@@ -101,8 +101,8 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def reschedule(id)
     update_page do |page|
-      page << hide_task_and_possibly_bucket(id, @old_bucket)
-      page << insert_content(@task, @new_bucket, @view)
+      page << hide_task_and_possibly_bucket(id, @task_before_update.bucket)
+      page << insert_content(@task, @task.bucket, @view)
       page << update_sidebar
     end
   end

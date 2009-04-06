@@ -29,7 +29,7 @@ class Task < ActiveRecord::Base
 
   # Base scopes to be combined with the due date and completion time.
   named_scope :my,            lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
-  named_scope :assigned_by,   lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL", user.id ], :include => :assignee } }
+  named_scope :assigned_by,   lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?", user.id, user.id ], :include => :assignee } }
   named_scope :pending,       :conditions => "completed_at IS NULL", :order => "due_at, id"
   named_scope :assigned,      :conditions => "completed_at IS NULL AND assigned_to IS NOT NULL", :order => "due_at, id"
   named_scope :completed,     :conditions => "completed_at IS NOT NULL", :order => "completed_at DESC"

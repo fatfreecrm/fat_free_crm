@@ -4,13 +4,13 @@ if @task.errors.empty?
   if request.referer !~ /\/tasks\?*/                # If it's not Tasks tab then we just reload appropriate
     page << replace_content(@task)                  # partial with the new task.
 
-  else                                              # Tasks tab:
-    if @new_assigned_to != @old_assigned_to         # - task assignee has been changed.
+  else
+    if @task.assigned_to != @task_before_update.assigned_to
       page << reassign(id)
-    elsif @new_bucket != @old_bucket                # - task due date has been changed.
+    elsif @task.bucket != @task_before_update.bucket
       page << reschedule(id)
     else
-      page << replace_content(@task, @new_bucket)   # - neither assignee nor due date have been changed.
+      page << replace_content(@task, @task.bucket)
     end
   end
 

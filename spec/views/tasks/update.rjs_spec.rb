@@ -9,10 +9,8 @@ describe "/tasks/update.js.rjs" do
 
   describe "Changing due date" do
     before(:each) do
-      assigns[:old_bucket] = "due_asap"
-      assigns[:new_bucket] = "due_tomorrow"
-      @task = Factory(:task, :bucket => "due_tomorrow")
-      assigns[:task] = @task
+      assigns[:task_before_update] = Factory(:task, :bucket => "due_asap")
+      assigns[:task] = @task       = Factory(:task, :bucket => "due_tomorrow")
       assigns[:view] = "pending"
       assigns[:task_total] = stub_task_total("pending")
     end
@@ -60,10 +58,8 @@ describe "/tasks/update.js.rjs" do
 
     it "pending task to somebody from Tasks tab: should remove the task and show flash message (assigned)" do
       assignee = Factory(:user)
-      @task = Factory(:task, :assignee => assignee)
-      assigns[:old_assigned_to] = nil
-      assigns[:new_assigned_to] = assignee.id
-      assigns[:task] = @task
+      assigns[:task_before_update] = Factory(:task, :assignee => nil)
+      assigns[:task] = @task       = Factory(:task, :assignee => assignee)
       assigns[:view] = "pending"
       request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
@@ -74,10 +70,9 @@ describe "/tasks/update.js.rjs" do
     end
 
     it "assigned tasks to me from Tasks tab: should remove the task and show flash message (pending)" do
-      @task = Factory(:task, :assigned_to => nil)
-      assigns[:old_assigned_to] = 42
-      assigns[:new_assigned_to] = nil
-      assigns[:task] = @task
+      assignee = Factory(:user)
+      assigns[:task_before_update] = Factory(:task, :assignee => assignee)
+      assigns[:task] = @task       = Factory(:task, :assignee => nil)
       assigns[:view] = "assigned"
       request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
@@ -88,12 +83,8 @@ describe "/tasks/update.js.rjs" do
     end
 
     it "assigned tasks to somebody else from Tasks tab: should re-render task partial" do
-      him = Factory(:user)
-      her = Factory(:user)
-      @task = Factory(:task, :assignee => him)
-      assigns[:old_assigned_to] = him.id
-      assigns[:new_assigned_to] = her.id
-      assigns[:task] = @task
+      assigns[:task_before_update] = Factory(:task, :assignee => Factory(:user))
+      assigns[:task] = @task       = Factory(:task, :assignee => Factory(:user))
       assigns[:view] = "assigned"
       request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
@@ -104,10 +95,8 @@ describe "/tasks/update.js.rjs" do
     end
 
     it "from asset page: should should re-render task partial" do
-      @task = Factory(:task, :assignee => Factory(:user))
-      assigns[:task] = @task
-      assigns[:old_assigned_to] = nil
-      assigns[:new_assigned_to] = @task.assigned_to
+      assigns[:task_before_update] = Factory(:task, :assignee => nil)
+      assigns[:task] = @task       = Factory(:task, :assignee => Factory(:user))
 
       render "tasks/update.js.rjs"
       response.should have_rjs("task_#{@task.id}") do |rjs|
@@ -118,9 +107,9 @@ describe "/tasks/update.js.rjs" do
   end
 
   it "error: should re-disiplay [Edit Task] form and shake it" do
-    @task = Factory(:task)
+    assigns[:task_before_update] = Factory(:task)
+    assigns[:task] = @task = Factory(:task)
     @task.errors.add(:error)
-    assigns[:task] = @task
 
     render "tasks/update.js.rjs"
     response.should include_text(%Q/$("task_#{@task.id}").visualEffect("shake"/)

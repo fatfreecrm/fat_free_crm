@@ -7,6 +7,7 @@ class TasksController < ApplicationController
   # GET /tasks.xml
   #----------------------------------------------------------------------------
   def index
+    @view = params[:view] || "pending"
     @tasks = Task.find_all_grouped(@current_user, @view)
 
     respond_to do |format|
@@ -83,23 +84,22 @@ class TasksController < ApplicationController
   # PUT /tasks/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   def update
-    @task = Task.find(params[:id])
     @view = params[:view] || "pending"
+    @task = Task.find(params[:id])
+    @task_before_update = @task.clone
 
-    # TODO: @task_before_saving = @task.clone
-    # Preserve old bucket so we could tell whether the due date has been changed.
     if @task.due_at && (@task.due_at < Date.today.to_time)
-      @old_bucket = "overdue"
+      @task_before_update.bucket = "overdue"
     else
-      @old_bucket = @task.computed_bucket
+      @task_before_update.bucket = @task.computed_bucket
     end
-    # Preserve assignee so we could tell whether the task has been reassigned.
-    @old_assigned_to = @task.assigned_to
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
-        @new_bucket = @task.computed_bucket
-        @new_assigned_to = @task.assigned_to
+        @task.bucket = @task.computed_bucket
+        if Task.bucket_empty?(@task_before_update.bucket, @current_user, @view)
+          @empty_bucket = @task_before_update.bucket
+        end
         update_sidebar if request.referer =~ /\/tasks\?*/
         format.js   # update.js.rjs
         format.xml  { head :ok }
@@ -183,10 +183,10 @@ class TasksController < ApplicationController
     # Update filters session if we added, deleted, or completed a task.
     if @task
       update_session do |filters|
-        if !@task.deleted_at && !@task.completed_at # created new task
-          filters << @task.computed_bucket
-        elsif @empty_bucket # deleted or completed and need to hide a bucket
+        if @empty_bucket  # deleted, completed, rescheduled, or reassigned and need to hide a bucket
           filters.delete(@empty_bucket)
+        elsif !@task.deleted_at && !@task.completed_at # created new task
+          filters << @task.computed_bucket
         end
       end
     end
