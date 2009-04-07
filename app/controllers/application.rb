@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   helper :all
   helper_method :current_user_session, :current_user
+  helper_method :called_from_index_page?, :called_from_landing_page?
+
   filter_parameter_logging :password, :password_confirmation
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"
@@ -12,7 +14,7 @@ class ApplicationController < ActionController::Base
   private
   #----------------------------------------------------------------------------
   def set_current_tab(tab = :none)
-    session[:current_tab] = tab
+    @current_tab = tab
   end
   
   #----------------------------------------------------------------------------
@@ -54,6 +56,18 @@ class ApplicationController < ActionController::Base
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
+  end
+
+  #----------------------------------------------------------------------------
+  def called_from_index_page?(controller = controller_name)
+    #logger.p "controller: " + controller.inspect
+    request.referer =~ %r(/#{controller}$)
+  end
+
+  #----------------------------------------------------------------------------
+  def called_from_landing_page?(controller = controller_name)
+    #logger.p "controller: " + controller.inspect
+    request.referer =~ %r(/#{controller}/\w+)
   end
 
 end

@@ -69,7 +69,7 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
-        get_data_for_sidebar if request.referer =~ /\/campaigns$/
+        get_data_for_sidebar if called_from_index_page?
         format.js   # create.js.rjs
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
       else
@@ -87,7 +87,7 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.update_with_permissions(params[:campaign], params[:users])
-        get_data_for_sidebar if request.referer =~ /\/campaigns$/
+        get_data_for_sidebar if called_from_index_page?
         format.js
         format.xml  { head :ok }
       else
@@ -106,7 +106,7 @@ class CampaignsController < ApplicationController
     @campaign.destroy
 
     respond_to do |format|
-      get_data_for_sidebar if request.referer =~ /\/campaigns$/
+      get_data_for_sidebar if called_from_index_page?
       format.js
       format.xml  { head :ok }
     end

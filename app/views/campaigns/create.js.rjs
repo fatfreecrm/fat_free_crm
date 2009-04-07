@@ -5,10 +5,7 @@ if @campaign.valid?
   page[:create_campaign].update ""
   page.insert_html :top, :campaigns, :partial => "campaign", :collection => [ @campaign ]
   page[dom_id(@campaign)].visual_effect :highlight, :duration => 1.5
-  if request.referer =~ /campaigns$/
-    page[:sidebar].replace_html :partial => "sidebar_index"
-    page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
-  end
+  page << update_sidebar if called_from_index_page?
 else
   page[:create_campaign].replace_html :partial => "create"
   page.call "crm.date_select_popup", :campaign_starts_on

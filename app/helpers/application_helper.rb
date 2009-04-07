@@ -3,8 +3,8 @@ module ApplicationHelper
 
   #-------------------------------------------------------------------
   def tabs
-    session[:current_tab] ||= :home
-    Setting[:tabs].each { |tab| tab[:active] = (tab[:text].downcase.intern == session[:current_tab]) }
+    @current_tab ||= :home
+    Setting[:tabs].each { |tab| tab[:active] = (tab[:text].downcase.to_sym == @current_tab) }
   end
   
   #----------------------------------------------------------------------------
