@@ -70,7 +70,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        update_sidebar if request.referer =~ /\/tasks\?*/
+        update_sidebar if called_from_index_page?
         format.js   # create.js.rjs
         format.xml  { render :xml => @task, :status => :created, :location => @task }
       else
@@ -100,7 +100,7 @@ class TasksController < ApplicationController
         if Task.bucket_empty?(@task_before_update.bucket, @current_user, @view)
           @empty_bucket = @task_before_update.bucket
         end
-        update_sidebar if request.referer =~ /\/tasks\?*/
+        update_sidebar if called_from_index_page?
         format.js   # update.js.rjs
         format.xml  { head :ok }
       else
@@ -123,7 +123,7 @@ class TasksController < ApplicationController
       @empty_bucket = params[:bucket]
     end
 
-    update_sidebar if request.referer =~ /\/tasks\?*/
+    update_sidebar if called_from_index_page?
     respond_to do |format|
       format.js
       format.xml  { head :ok }

@@ -4,7 +4,7 @@ if @task.valid?
   page << "Effect.toggle('create_task', 'blind', { duration: 0.1 });"
   page[:create_task].update ""
 
-  if request.referer =~ /\/tasks\?*/  # "Classic" [Create Task] form requested from the Tasks page.
+  if called_from_index_page?  # "Classic" [Create Task] form requested from the Tasks page.
 
     # Show flash if assigned to somebody else from the [Pending Tasks] page.
     if @view == "pending" && @task.assigned_to && @task.assigned_to != @current_user.id
@@ -22,8 +22,7 @@ if @task.valid?
       page["list_#{bucket}"].show
       page.insert_html :top, bucket, :partial => @view, :collection => [ @task ], :locals => { :bucket => bucket }
       page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
-      page[:sidebar].replace_html :partial => "sidebar_index"
-      page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
+      page << update_sidebar
     end
 
   else # Inline [Create Task] form reqested from any of the core asset landing pages.
@@ -36,5 +35,5 @@ if @task.valid?
 else # Couldn't create the task -- validation failed.
 
   page[:create_task].visual_effect :shake, :duration => 0.25, :distance => 6
-
+  page[:task_name].focus
 end

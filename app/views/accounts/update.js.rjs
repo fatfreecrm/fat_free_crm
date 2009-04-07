@@ -1,6 +1,6 @@
 id = dom_id(@account)
 if @account.errors.empty?
-  if request.referer =~ /\/accounts\/\w+/ # Account landing page.
+  if called_from_landing_page?
     page.call "crm.flip_form", :edit_account, @account.name
   else
     page[id].replace :partial => "account", :collection => [ @account ]

@@ -14,7 +14,7 @@ elsif params[:cancel] == "false"                # Called from title of the accou
 
 # Hide [Edit Account] and restore <li> with the original account list item.
 else
-  if request.referer =~ /\/accounts\/\w+/       # Called from title of the account landing page...
+  if called_from_landing_page?
     page.call "crm.flip_form", :edit_account, "#{@account.name}"
   else                                          # Called from accounts list item...
     page[id].replace :partial => "account", :collection => [ @account ]

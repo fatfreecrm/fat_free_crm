@@ -72,7 +72,7 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
-        get_data_for_sidebar if request.referer =~ /\/opportunities$/
+        get_data_for_sidebar if called_from_index_page?
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
@@ -103,7 +103,7 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       if @opportunity.update_with_account_and_permissions(params)
-        get_data_for_sidebar if request.referer =~ /\/opportunities$/
+        get_data_for_sidebar if called_from_index_page?
         format.js
         format.xml  { head :ok }
       else
@@ -126,7 +126,8 @@ class OpportunitiesController < ApplicationController
   def destroy
     @opportunity = Opportunity.find(params[:id])
     @opportunity.destroy
-    get_data_for_sidebar if request.referer =~ /\/opportunities$/
+
+    get_data_for_sidebar if called_from_index_page?
 
     respond_to do |format|
       format.js

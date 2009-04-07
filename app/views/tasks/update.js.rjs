@@ -1,8 +1,8 @@
 id = dom_id(@task)
 if @task.errors.empty?
 
-  if request.referer !~ /\/tasks\?*/                # If it's not Tasks tab then we just reload appropriate
-    page << replace_content(@task)                  # partial with the new task.
+  if !called_from_index_page?       # If it's not Tasks tab then we just reload appropriate
+    page << replace_content(@task)  # partial with the new task.
 
   else
     if @task.assigned_to != @task_before_update.assigned_to

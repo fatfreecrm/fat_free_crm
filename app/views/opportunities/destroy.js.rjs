@@ -1,6 +1,2 @@
 page[dom_id(@opportunity)].visual_effect "BlindUp", :duration => 0.25
-
-if request.referer =~ /opportunities$/
-  page[:sidebar].replace_html :partial => "sidebar_index"
-  page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
-end
+page << update_sidebar if called_from_index_page?

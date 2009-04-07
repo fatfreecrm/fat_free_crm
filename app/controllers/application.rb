@@ -60,13 +60,15 @@ class ApplicationController < ActionController::Base
 
   #----------------------------------------------------------------------------
   def called_from_index_page?(controller = controller_name)
-    #logger.p "controller: " + controller.inspect
-    request.referer =~ %r(/#{controller}$)
+    if controller != "tasks"
+      request.referer =~ %r(/#{controller}$)
+    else
+      request.referer =~ /tasks\?*/
+    end
   end
 
   #----------------------------------------------------------------------------
   def called_from_landing_page?(controller = controller_name)
-    #logger.p "controller: " + controller.inspect
     request.referer =~ %r(/#{controller}/\w+)
   end
 

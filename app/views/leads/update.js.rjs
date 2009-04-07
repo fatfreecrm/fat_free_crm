@@ -1,4 +1,4 @@
-if request.referer =~ /\/leads\/\w+/
+if called_from_landing_page?
   id = :edit_lead
 else
   id = dom_id(@lead)
@@ -12,10 +12,7 @@ if @lead.errors.empty?
   else
     page[id].replace :partial => "lead", :collection => [ @lead ]
     page[id].visual_effect :highlight, :duration => 1.0
-    if request.referer =~ /\/leads$/
-      page[:sidebar].replace_html :partial => "sidebar_index"
-      page[:filters].visual_effect :shake, :duration => 0.4, :distance => 3
-    end
+    page << update_sidebar if called_from_index_page?
   end
 else  
   page[id].replace_html :partial => "edit"

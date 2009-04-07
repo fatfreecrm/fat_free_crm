@@ -2,7 +2,7 @@ id = dom_id(@lead)
 
 if params[:cancel] == "true" # <----------------- Hide [Edit Campaign]
 
-  if request.referer =~ /\/leads\/\w+/            # Called from title of the lead landing page...
+  if called_from_landing_page?
     page.call "crm.flip_form", :edit_lead, "#{@lead.full_name}"
   else                                            # Called from leads list item...
     page[id].replace :partial => "lead", :collection => [ @lead ]

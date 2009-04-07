@@ -71,7 +71,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save_with_permissions(params)
-        get_data_for_sidebar if request.referer =~ /\/leads$/
+        get_data_for_sidebar if called_from_index_page?
         format.js   # create.js.rjs
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
       else
@@ -89,7 +89,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
-        get_data_for_sidebar if request.referer =~ /\/leads$/
+        get_data_for_sidebar if called_from_index_page?
         format.js
         format.xml  { head :ok }
       else
@@ -108,8 +108,7 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
     @lead.destroy
 
-    # Update sidebar only when deleting a lead from /leads page.
-    get_data_for_sidebar if request.referer =~ /\/leads$/
+    get_data_for_sidebar if called_from_index_page?
 
     respond_to do |format|
       format.js   # destroy.js.rjs
@@ -140,7 +139,7 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
         @lead.convert
-        get_data_for_sidebar if request.referer =~ /\/leads$/ # Update sidebar only if converting from Leads page.
+        get_data_for_sidebar if called_from_index_page?
         format.js   # promote.js.rjs
         format.xml  { head :ok }
       else

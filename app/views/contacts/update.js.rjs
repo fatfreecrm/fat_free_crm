@@ -1,4 +1,4 @@
-if request.referer =~ /\/contacts\/\w+/
+if called_from_landing_page?
   id = :edit_contact
 else
   id = dom_id(@contact)

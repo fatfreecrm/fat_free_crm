@@ -2,7 +2,7 @@ id = dom_id(@opportunity)
 
 if params[:cancel] == "true" # <----------------- Hide [Edit Opportunity]
 
-  if request.referer =~ /\/opportunities\/\w+/    # Called from title of the opportunity landing page...
+  if called_from_landing_page?
     page.call "crm.flip_form", :edit_opportunity, "#{@opportunity.name}"
   else                                            # Called from opportunities list item...
     page[id].replace :partial => "opportunity", :collection => [ @opportunity ]
