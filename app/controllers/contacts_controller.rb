@@ -113,14 +113,15 @@ class ContactsController < ApplicationController
   end
 
   # DELETE /contacts/1
-  # DELETE /contacts/1.xml                                                 AJAX
+  # DELETE /contacts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @contact = Contact.find(params[:id])
     @contact.destroy
 
     respond_to do |format|
-      format.js
+      format.html { flash[:notice] = "#{@contact.full_name} has beed deleted."; redirect_to(contacts_path) }
+      format.js   # destroy.js.rjs
       format.xml  { head :ok }
     end
   end

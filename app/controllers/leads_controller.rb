@@ -102,7 +102,7 @@ class LeadsController < ApplicationController
   end
 
   # DELETE /leads/1
-  # DELETE /leads/1.xml                                                    AJAX
+  # DELETE /leads/1.xml                                           HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @lead = Lead.find(params[:id])
@@ -111,6 +111,7 @@ class LeadsController < ApplicationController
     get_data_for_sidebar if called_from_index_page?
 
     respond_to do |format|
+      format.html { flash[:notice] = "#{@lead.full_name} has beed deleted."; redirect_to(leads_path) }
       format.js   # destroy.js.rjs
       format.xml  { head :ok }
     end

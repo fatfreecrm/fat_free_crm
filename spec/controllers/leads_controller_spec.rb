@@ -423,6 +423,15 @@ describe LeadsController do
       response.should render_template("leads/filter")
     end
 
+    it "should redirect to Leads index when a lead gets deleted from its landing page" do
+      @lead = Factory(:lead)
+
+      delete :destroy, :id => @lead.id
+
+      flash[:notice].should_not == nil
+      response.should redirect_to(leads_path)
+    end
+
   end
 
 end

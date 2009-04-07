@@ -99,7 +99,7 @@ class CampaignsController < ApplicationController
   end
 
   # DELETE /campaigns/1
-  # DELETE /campaigns/1.xml                                                AJAX
+  # DELETE /campaigns/1.xml                                       HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @campaign = Campaign.find(params[:id])
@@ -107,7 +107,8 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       get_data_for_sidebar if called_from_index_page?
-      format.js
+      format.html { flash[:notice] = "#{@campaign.name} has beed deleted."; redirect_to(campaigns_path) }
+      format.js   # destroy.js.rjs
       format.xml  { head :ok }
     end
   end

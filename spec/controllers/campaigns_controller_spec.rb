@@ -286,6 +286,15 @@ describe CampaignsController do
       response.should render_template("campaigns/filter")
     end
 
+    it "should redirect to Campaigns index when a campaign gets deleted from its landing page" do
+      @campaign = Factory(:campaign)
+
+      delete :destroy, :id => @campaign.id
+
+      flash[:notice].should_not == nil
+      response.should redirect_to(campaigns_path)
+    end
+
   end
 
 end

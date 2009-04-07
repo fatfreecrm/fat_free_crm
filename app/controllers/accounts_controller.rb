@@ -92,14 +92,15 @@ class AccountsController < ApplicationController
   end
 
   # DELETE /accounts/1
-  # DELETE /accounts/1.xml                                                 AJAX
+  # DELETE /accounts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @account = Account.find(params[:id])
     @account.destroy
 
     respond_to do |format|
-      format.js
+      format.html { flash[:notice] = "#{@account.name} has beed deleted."; redirect_to(accounts_path) }
+      format.js   # destroy.js.rjs
       format.xml  { head :ok }
     end
   end

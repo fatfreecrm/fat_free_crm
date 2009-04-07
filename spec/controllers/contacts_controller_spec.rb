@@ -304,6 +304,15 @@ describe ContactsController do
       response.should render_template("contacts/destroy")
     end
 
+    it "should redirect to Contacts index when a contact gets deleted from its landing page" do
+      @contact = Factory(:contact)
+
+      delete :destroy, :id => @contact.id
+
+      flash[:notice].should_not == nil
+      response.should redirect_to(contacts_path)
+    end
+
   end
 
 end

@@ -400,6 +400,15 @@ describe OpportunitiesController do
       response.should render_template("opportunities/filter")
     end
 
+    it "should redirect to Opportunities index when an opportunity gets deleted from its landing page" do
+      @opportunity = Factory(:opportunity)
+
+      delete :destroy, :id => @opportunity.id
+
+      flash[:notice].should_not == nil
+      response.should redirect_to(opportunities_path)
+    end
+
   end
 
 end

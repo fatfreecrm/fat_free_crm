@@ -121,7 +121,7 @@ class OpportunitiesController < ApplicationController
   end
 
   # DELETE /opportunities/1
-  # DELETE /opportunities/1.xml                                            AJAX
+  # DELETE /opportunities/1.xml                                   HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @opportunity = Opportunity.find(params[:id])
@@ -130,7 +130,8 @@ class OpportunitiesController < ApplicationController
     get_data_for_sidebar if called_from_index_page?
 
     respond_to do |format|
-      format.js
+      format.html { flash[:notice] = "#{@opportunity.name} has beed deleted."; redirect_to(opportunities_path) }
+      format.js   # destroy.js.rjs
       format.xml  { head :ok }
     end
   end

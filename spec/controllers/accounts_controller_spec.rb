@@ -206,7 +206,16 @@ describe AccountsController do
       lambda { @account.reload }.should raise_error(ActiveRecord::RecordNotFound)
       response.should render_template("accounts/destroy")
     end
-  
+
+    it "should redirect to Accounts index when an account gets deleted from its landing page" do
+      @account = Factory(:account)
+
+      delete :destroy, :id => @account.id
+
+      flash[:notice].should_not == nil
+      response.should redirect_to(accounts_path)
+    end
+
   end
 
 end
