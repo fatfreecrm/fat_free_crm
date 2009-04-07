@@ -19,7 +19,9 @@ else # <----------------------------------------  Show [Edit Campaign] form.
 
   elsif params[:cancel] == "false"                # Called from title of the campaign landing page...
     page[:edit_lead].replace_html :partial => "edit"
-    page.call "crm.hide_form", :convert_lead, "Convert #{@lead.full_name}"
+    unless @lead.status == "converted"
+      page.call "crm.hide_form", :convert_lead, "Convert #{@lead.full_name}"
+    end
     page.call "crm.flip_form", :edit_lead,    "Edit #{@lead.full_name}"
   end
   page[:lead_first_name].focus

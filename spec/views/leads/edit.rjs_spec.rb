@@ -59,4 +59,12 @@ describe "/leads/edit.js.rjs" do
     response.body.should include_text('crm.flip_form("edit_lead"')
   end
 
+  it "edit from lead landing page: should not attempt to hide [Convert Lead] if the lead is already converted" do
+    params[:cancel] = "false"
+    assigns[:lead] = Factory(:lead, :status => "converted", :user => @current_user)
+
+    render "leads/edit.js.rjs"
+    response.body.should_not include_text('crm.hide_form("convert_lead"')
+  end
+
 end
