@@ -66,6 +66,17 @@ Factory.define :account_opportunity do |a|
 end
 
 #----------------------------------------------------------------------------
+Factory.define :activity do |a|
+  a.user                { |a| a.association(:user) } 
+  a.asset               { raise "Please specify :asset for the activity" }
+  a.action              nil
+  a.info                nil
+  a.private             false
+  a.updated_at          { Factory.next(:time) }
+  a.created_at          { Factory.next(:time) }
+end
+
+#----------------------------------------------------------------------------
 Factory.define :campaign do |c|
   c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
