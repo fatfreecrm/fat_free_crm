@@ -5,7 +5,7 @@ describe "/leads/edit.js.rjs" do
   
   before(:each) do
     @current_user = Factory(:user)
-    assigns[:lead] = Factory(:lead, :id => 42, :user => @current_user)
+    assigns[:lead] = Factory(:lead, :id => 42, :status => "new", :user => @current_user)
     assigns[:current_user] = @current_user
     assigns[:users] = [ @current_user ]
     assigns[:campaigns] = [ Factory(:campaign) ]
