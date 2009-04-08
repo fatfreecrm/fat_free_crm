@@ -1,5 +1,11 @@
-.title_tools Not implemented yet.
-.title Dashboard
+.title Recent Activity
+.list#activities
+  - unless @activities.empty?
+    = render :partial => "activity", :collection => @activities
+  - else
+    %div There are no recorded activities yet.
+
+
 /
   Check out HTML source to view the output of the hook if you have sample plugin installed
   http://github.com/michaeldv/crm_sample_plugin/tree/master

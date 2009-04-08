@@ -26,10 +26,11 @@
 #
 
 class Campaign < ActiveRecord::Base
-  belongs_to :user
-  has_many :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
-  has_many :leads, :dependent => :destroy, :order => "id DESC"
-  has_many :opportunities, :dependent => :destroy, :order => "id DESC"
+  belongs_to  :user
+  has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
+  has_many    :leads, :dependent => :destroy, :order => "id DESC"
+  has_many    :opportunities, :dependent => :destroy, :order => "id DESC"
+  has_many    :activities, :as => :subject, :order => 'created_at DESC'
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
 
   uses_mysql_uuid

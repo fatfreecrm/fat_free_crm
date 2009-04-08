@@ -5,9 +5,10 @@ class HomeController < ApplicationController
 
   #----------------------------------------------------------------------------
   def index
-    @hello = "world"
+    @hello = "Hello world" # The hook below can access controller's instance variables.
     hook(:home_controller, self, :params => "it works!")
-    logger.p "Hello, #{@hello}!"
+
+    @activities = Activity.latest
   end
   
   # Save expand/collapse state in the session.                             AJAX

@@ -23,9 +23,10 @@
 class Task < ActiveRecord::Base
   attr_accessor :calendar
 
-  belongs_to :user
-  belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
-  belongs_to :asset, :polymorphic => true
+  belongs_to  :user
+  belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
+  belongs_to  :asset, :polymorphic => true
+  has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
   # Base scopes to be combined with the due date and completion time.
   named_scope :my,            lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }

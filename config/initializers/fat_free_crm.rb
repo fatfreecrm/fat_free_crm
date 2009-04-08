@@ -13,3 +13,5 @@ Sass::Plugin.options[:css_location] = File.join(RAILS_ROOT, "public/stylesheets"
 
 #---------------------------------------------------------------------
 Date::DATE_FORMATS[:mmddyyyy] = "%m/%d/%Y"
+Date::DATE_FORMATS[:mmdd] = "%b %e"
+Date::DATE_FORMATS[:mmddhhss] = "%b %e at %I:%M%p"

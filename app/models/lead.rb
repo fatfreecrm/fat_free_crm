@@ -33,11 +33,12 @@
 #
 
 class Lead < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :campaign
-  belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_one :contact
-  has_many :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
+  belongs_to  :user
+  belongs_to  :campaign
+  belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
+  has_one     :contact
+  has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
+  has_many    :activities, :as => :subject, :order => 'created_at DESC'
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
   named_scope :converted, :conditions => "status='converted'"
   named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }

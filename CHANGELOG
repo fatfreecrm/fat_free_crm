@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Wed, Apr 8, 2009
 ---------------------------------------------------------------------
 - Created Activity model, related table, and factory.
+- Basic initial implementation of activity observers and recent activity.
 
 Tue, Apr 7, 2009
 ---------------------------------------------------------------------

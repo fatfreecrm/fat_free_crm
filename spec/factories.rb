@@ -68,7 +68,7 @@ end
 #----------------------------------------------------------------------------
 Factory.define :activity do |a|
   a.user                { |a| a.association(:user) } 
-  a.asset               { raise "Please specify :asset for the activity" }
+  a.subject             { raise "Please specify :subject for the activity" }
   a.action              nil
   a.info                nil
   a.private             false

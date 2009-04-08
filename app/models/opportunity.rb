@@ -22,15 +22,16 @@
 #
 
 class Opportunity < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :account
-  belongs_to :campaign
-  belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_one :account_opportunity, :dependent => :destroy
-  has_one :account, :through => :account_opportunity
-  has_many :contact_opportunities, :dependent => :destroy
-  has_many :contacts, :through => :contact_opportunities, :uniq => true, :order => "id DESC"
-  has_many :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
+  belongs_to  :user
+  belongs_to  :account
+  belongs_to  :campaign
+  belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
+  has_one     :account_opportunity, :dependent => :destroy
+  has_one     :account, :through => :account_opportunity
+  has_many    :contact_opportunities, :dependent => :destroy
+  has_many    :contacts, :through => :contact_opportunities, :uniq => true, :order => "id DESC"
+  has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
+  has_many    :activities, :as => :subject, :order => 'created_at DESC'
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
 
   uses_mysql_uuid
