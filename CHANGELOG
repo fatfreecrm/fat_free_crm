@@ -8,6 +8,7 @@ Wed, Apr 8, 2009
 ---------------------------------------------------------------------
 - Created Activity model, related table, and factory.
 - Basic initial implementation of activity observers and recent activity.
+- Created specs for activity observers.
 
 Tue, Apr 7, 2009
 ---------------------------------------------------------------------

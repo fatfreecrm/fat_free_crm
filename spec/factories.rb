@@ -101,7 +101,6 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :comment do |c|
-  c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
   c.commentable         { raise "Please specify :commentable for the comment" }
   c.title               { Factory.next(:title) }

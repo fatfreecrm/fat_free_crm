@@ -20,4 +20,11 @@ class Comment < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
   validates_presence_of :user_id, :commentable_id, :commentable_type, :comment
+
+  # Activity observer expects model to respond to :name or :full_name.
+  #----------------------------------------------------------------------------
+  def name
+    comment.shorten(80)
+  end
+
 end

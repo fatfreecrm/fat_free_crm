@@ -22,7 +22,7 @@ class ActivityObserver < ActiveRecord::Observer
       :user    => model.user,
       :subject => model,
       :action  => action.to_s,
-      :info    => model.respond_to?(:full_name) ? model.full_name : (model.respond_to?(:name) ? model.name : nil)
+      :info    => model.respond_to?(:full_name) ? model.full_name : model.name
     )
   end
 end
