@@ -97,10 +97,12 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.update_attributes(params[:task])
         @task.bucket = @task.computed_bucket
-        if Task.bucket_empty?(@task_before_update.bucket, @current_user, @view)
-          @empty_bucket = @task_before_update.bucket
+        if called_from_index_page?
+          if Task.bucket_empty?(@task_before_update.bucket, @current_user, @view)
+            @empty_bucket = @task_before_update.bucket
+          end
+          update_sidebar
         end
-        update_sidebar if called_from_index_page?
         format.js   # update.js.rjs
         format.xml  { head :ok }
       else

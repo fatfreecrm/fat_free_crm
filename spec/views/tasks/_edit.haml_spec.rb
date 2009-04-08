@@ -19,6 +19,14 @@ describe "/tasks/edit.html.erb" do
     response.should have_tag("form[class=edit_task]")
   end
 
+  [ "ASAP", "Today", "Tomorrow", "This week", "Next week", "Later" ].each do |day|
+    it "should render move to [#{day}] link" do
+      render "/tasks/_edit.html.haml"
+
+      response.should have_tag("a[onclick^=crm.reschedule]", :text => day)
+    end
+  end
+
 end
 
 

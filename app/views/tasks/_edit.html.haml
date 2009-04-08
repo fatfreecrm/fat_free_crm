@@ -10,3 +10,7 @@
       = f.submit "Save Task"
       or
       = link_to_cancel edit_task_path(@task)
+      or move to
+      - [ "ASAP", "Today", "Tomorrow", "This week", "Next week", "Later" ].each do |day|
+        = link_to(day, "#", :onclick => %Q/crm.reschedule_task(#{@task.id}, "due_#{day.downcase.sub(" ", "_")}")/)
+        = " | " if day != "Later"

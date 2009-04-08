@@ -178,6 +178,12 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  reschedule_task: function(id, bucket) {
+    $("task_bucket").value = bucket;
+    $("edit_task_" + id).onsubmit();
+  },
+
+  //----------------------------------------------------------------------------
   toggle_open_id_login: function(first_field) {
     if (arguments.length == 0) {
       first_field = "authentication_openid_identifier";
