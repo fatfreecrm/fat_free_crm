@@ -1,7 +1,7 @@
 %li[activity]
   %div
     .tools
-      %small= activity.created_at.to_date.to_s(:mmddhhss).capitalize
+      %small= activity.created_at.to_s(:mmddhhss).capitalize
     %tt
       = activity.user.full_name + " " + activity.action + " " + activity.subject_type.downcase
       - if activity.subject
