@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     @hello = "Hello world" # The hook below can access controller's instance variables.
     hook(:home_controller, self, :params => "it works!")
 
-    @activities = Activity.latest
+    @activities = Activity.latest.except(:viewed)
   end
   
   # Save expand/collapse state in the session.                             AJAX

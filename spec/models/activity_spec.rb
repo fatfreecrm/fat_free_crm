@@ -19,12 +19,49 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Activity do
   
   before(:each) do
-    Authentication.stub!(:find).and_return(@authentication)
-    @authentication.stub!(:record).and_return(Factory(:user))
+    login
   end
 
   it "should create a new instance given valid attributes" do
     Activity.create!(:user => Factory(:user), :subject => Factory(:lead))
+  end
+
+  describe "with multiple activity records" do
+
+    before(:each) do
+      @user = Factory(:user)
+      @actions = %w(created deleted updated viewed).freeze
+      @actions.each_with_index do |action, index|
+        Factory(:activity, :id => index + 1, :action => action, :user => @user, :subject => Factory(:lead))
+        Factory(:activity, :action => action, :subject => Factory(:lead)) # different user
+      end
+    end
+
+    it "should select all activities except one" do
+      @activities = Activity.for(@user).except(:viewed)
+      @activities.map(&:action).sort.should == %w(created deleted updated)
+    end
+
+    it "should select all activities except many" do
+      @activities = Activity.for(@user).except(:created, :updated, :deleted)
+      @activities.map(&:action).should == %w(viewed)
+    end
+
+    it "should select one requested activity" do
+      @activities = Activity.for(@user).only(:deleted)
+      @activities.map(&:action).should == %w(deleted)
+    end
+
+    it "should select many requested activities" do
+      @activities = Activity.for(@user).only(:created, :updated)
+      @activities.map(&:action).sort.should == %w(created updated)
+    end
+
+    it "should select activities for given user" do
+      @activities = Activity.for(@user)
+      @activities.map(&:action).sort.should == @actions
+    end
+
   end
 
   %w(account campaign comment contact lead opportunity task).each do |subject|

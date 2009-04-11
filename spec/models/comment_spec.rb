@@ -19,8 +19,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Comment do
 
   before(:each) do
-    Authentication.stub!(:find).and_return(@authentication)
-    @authentication.stub!(:record).and_return(Factory(:user))
+    login
   end
 
   it "should create a new instance given valid attributes" do

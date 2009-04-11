@@ -19,6 +19,9 @@ class Activity < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :subject, :polymorphic => true
   named_scope :latest, lambda { { :conditions => [ "activities.created_at >= ?", Date.today - 1.week ], :include => :user, :order => "activities.created_at DESC" } }
+  named_scope :for,    lambda { |user| { :conditions => [ "user_id =?", user.id] } }
+  named_scope :only,   lambda { |*actions| { :conditions => "action     IN (#{actions.join("','").wrap("'")})" } }
+  named_scope :except, lambda { |*actions| { :conditions => "action NOT IN (#{actions.join("','").wrap("'")})" } }
 
   validates_presence_of :user, :subject
 

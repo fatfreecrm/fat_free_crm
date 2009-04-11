@@ -13,12 +13,17 @@ class String
 
 
   def n2br
-    self.strip.gsub("\n", "<br />")
+    strip.gsub("\n", "<br />")
+  end
+
+
+  def wrap(prefix, suffix = prefix)
+    prefix + self + suffix
   end
 
 
   def digitize
-    gsub /[^\d]/, ""  # "$100,000".digitize # => 100000
+    gsub(/[^\d]/, "")  # "$100,000".digitize # => 100000
   end
 
 end
