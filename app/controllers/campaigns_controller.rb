@@ -1,7 +1,8 @@
 class CampaignsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:campaigns)", :only => [ :index, :show ]
+  before_filter :set_current_tab, :only => [ :index, :show ]
+  after_filter  :update_recently_viewed, :only => :show
 
   # GET /campaigns
   # GET /campaigns.xml

@@ -35,14 +35,14 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Contact do
+
   before(:each) do
-    @valid_attributes = {
-      :first_name => "Joe",
-      :last_name => "Spec"
-    }
+    Authentication.stub!(:find).and_return(@authentication)
+    @authentication.stub!(:record).and_return(Factory(:user))
   end
 
   it "should create a new instance given valid attributes" do
-    Contact.create!(@valid_attributes)
+    Contact.create!(:first_name => "Billy", :last_name => "Bones")
   end
+
 end

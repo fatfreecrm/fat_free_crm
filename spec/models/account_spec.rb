@@ -23,14 +23,14 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Account do
+
   before(:each) do
-    @valid_attributes = {
-      :name => "Test Account",
-      :user => mock_model(User)
-    }
+    Authentication.stub!(:find).and_return(@authentication)
+    @authentication.stub!(:record).and_return(Factory(:user))
   end
 
   it "should create a new instance given valid attributes" do
-    Account.create!(@valid_attributes)
+    Account.create!(:name => "Test Account", :user => Factory(:user))
   end
+
 end

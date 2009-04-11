@@ -1,6 +1,7 @@
 class AccountsController < ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab(:accounts)", :only => [ :index, :show ]
+  before_filter :set_current_tab, :only => [ :index, :show ]
+  after_filter  :update_recently_viewed, :only => :show
 
   # GET /accounts
   # GET /accounts.xml

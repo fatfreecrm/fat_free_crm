@@ -51,7 +51,7 @@ describe CampaignsController do
       assigns[:campaigns].map(&:status).should == %w(planned started)
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
       it "should render all campaigns as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -70,21 +70,45 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
-    it "should expose the requested campaign as @campaign and render [show] template" do
-      @campaign = Factory(:campaign, :id => 42, :user => @current_user)
-      @stage = Setting.as_hash(:opportunity_stage)
-      @comment = Comment.new
+    describe "with mime type of HTML" do
 
-      get :show, :id => 42
-      assigns[:campaign].should == @campaign
-      assigns[:stage].should == @stage
-      assigns[:comment].attributes.should == @comment.attributes
-      response.should render_template("campaigns/show")
+      before(:each) do
+        @campaign = Factory(:campaign, :id => 42, :user => @current_user)
+        @stage = Setting.as_hash(:opportunity_stage)
+        @comment = Comment.new
+      end
+
+      it "should expose the requested campaign as @campaign and render [show] template" do
+        get :show, :id => 42
+        assigns[:campaign].should == @campaign
+        assigns[:stage].should == @stage
+        assigns[:comment].attributes.should == @comment.attributes
+        response.should render_template("campaigns/show")
+      end
+
+      it "should create a new activity when viewing the campaign" do
+        get :show, :id => @campaign.id
+        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @campaign.id, "Campaign" ])
+        @activity.should_not == nil
+        @activity.info.should == @campaign.name
+      end
+
+      it "should update existing activity when viewing the campaign" do
+        @viewed = Factory(:activity, :subject => @campaign, :action => "viewed", :user => @current_user)
+
+        get :show, :id => @campaign.id
+        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @campaign.id, "Campaign" ])
+  
+        @activity.should_not == nil
+        @activity.size.should == 1
+        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
+      end
+
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
-      it "should render the requested campaign as xml" do
+      it "should render the requested campaign as XML" do
         request.env["HTTP_ACCEPT"] = "application/xml"
         @campaign = Factory(:campaign, :id => 42, :user => @current_user)
 

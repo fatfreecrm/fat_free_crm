@@ -17,6 +17,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Activity do
+  
+  before(:each) do
+    Authentication.stub!(:find).and_return(@authentication)
+    @authentication.stub!(:record).and_return(Factory(:user))
+  end
 
   it "should create a new instance given valid attributes" do
     Activity.create!(:user => Factory(:user), :subject => Factory(:lead))
@@ -30,11 +35,11 @@ describe Activity do
         @subject = Factory(subject.to_sym)
       end
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='created'", @subject.id, subject.capitalize ])
-
+  
       @activity.should_not == nil
       @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
     end
-
+  
     it "should add an activity when updating existing #{subject}" do
       if subject == "comment"
         @subject = Factory(:comment, :commentable => Factory(:account))
@@ -48,11 +53,11 @@ describe Activity do
         end
       end
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='updated'", @subject.id, subject.capitalize ])
-
+  
       @activity.should_not == nil
       @activity.info.should == "Billy Bones"
     end
-
+  
     it "should add an activity when deleting #{subject}" do
       if subject == "comment"
         @subject = Factory(:comment, :commentable => Factory(:account))
@@ -61,11 +66,10 @@ describe Activity do
       end
       @subject.destroy
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='deleted'", @subject.id, subject.capitalize ])
-
+  
       @activity.should_not == nil
       @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
     end
-
   end
 
 end

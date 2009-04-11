@@ -20,7 +20,7 @@ describe ContactsController do
       response.should render_template("contacts/index")
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
       it "should render all contacts as xml" do
         @contacts = [ Factory(:contact, :user => @current_user) ]
@@ -39,19 +39,43 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
-    it "should expose the requested contact as @contact" do
-      @contact = Factory(:contact, :id => 42)
-      @stage = Setting.as_hash(:opportunity_stage)
-      @comment = Comment.new
+    describe "with mime type of HTML" do
 
-      get :show, :id => 42
-      assigns[:contact].should == @contact
-      assigns[:stage].should == @stage
-      assigns[:comment].attributes.should == @comment.attributes
-      response.should render_template("contacts/show")
+      before(:each) do
+        @contact = Factory(:contact, :id => 42)
+        @stage = Setting.as_hash(:opportunity_stage)
+        @comment = Comment.new
+      end
+
+      it "should expose the requested contact as @contact" do
+        get :show, :id => 42
+        assigns[:contact].should == @contact
+        assigns[:stage].should == @stage
+        assigns[:comment].attributes.should == @comment.attributes
+        response.should render_template("contacts/show")
+      end
+
+      it "should create a new activity when viewing the contact" do
+        get :show, :id => @contact.id
+        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @contact.id, "Contact" ])
+        @activity.should_not == nil
+        @activity.info.should == @contact.name
+      end
+
+      it "should update existing activity when viewing the contact" do
+        @viewed = Factory(:activity, :subject => @contact, :action => "viewed", :user => @current_user)
+
+        get :show, :id => @contact.id
+        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @contact.id, "Contact" ])
+
+        @activity.should_not == nil
+        @activity.size.should == 1
+        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
+      end
+
     end
-
-    describe "with mime type of xml" do
+  
+    describe "with mime type of XML" do
 
       it "should render the requested contact as xml" do
         @contact = Factory(:contact, :id => 42)

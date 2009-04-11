@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   private
   #----------------------------------------------------------------------------
-  def set_current_tab(tab = :none)
+  def set_current_tab(tab = controller_name.to_sym)
     @current_tab = tab
   end
   
@@ -70,6 +70,14 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def called_from_landing_page?(controller = controller_name)
     request.referer =~ %r(/#{controller}/\w+)
+  end
+
+  #----------------------------------------------------------------------------
+  def update_recently_viewed
+    subject = instance_variable_get("@#{controller_name.singularize}")
+    if subject
+      Activity.stamp(@current_user, subject, :viewed)
+    end
   end
 
 end

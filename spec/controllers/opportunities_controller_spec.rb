@@ -49,7 +49,7 @@ describe OpportunitiesController do
       assigns[:opportunities].map(&:stage).should == %w(prospecting qualification)
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
       it "should render all opportunities as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -68,19 +68,43 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
-    it "should expose the requested opportunity as @opportunity and render [show] template" do
-      @opportunity = Factory(:opportunity, :id => 42)
-      @stage = Setting.as_hash(:opportunity_stage)
-      @comment = Comment.new
+    describe "with mime type of HTML" do
 
-      get :show, :id => 42
-      assigns[:opportunity].should == @opportunity
-      assigns[:stage].should == @stage
-      assigns[:comment].attributes.should == @comment.attributes
-      response.should render_template("opportunities/show")
+      before(:each) do
+        @opportunity = Factory(:opportunity, :id => 42)
+        @stage = Setting.as_hash(:opportunity_stage)
+        @comment = Comment.new
+      end
+
+      it "should expose the requested opportunity as @opportunity and render [show] template" do
+        get :show, :id => 42
+        assigns[:opportunity].should == @opportunity
+        assigns[:stage].should == @stage
+        assigns[:comment].attributes.should == @comment.attributes
+        response.should render_template("opportunities/show")
+      end
+
+      it "should create a new activity when viewing the opportunity" do
+        get :show, :id => @opportunity.id
+        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @opportunity.id, "Opportunity" ])
+        @activity.should_not == nil
+        @activity.info.should == @opportunity.name
+      end
+
+      it "should update existing activity when viewing the opportunity" do
+        @viewed = Factory(:activity, :subject => @opportunity, :action => "viewed", :user => @current_user)
+
+        get :show, :id => @opportunity.id
+        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @opportunity.id, "Opportunity" ])
+
+        @activity.should_not == nil
+        @activity.size.should == 1
+        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
+      end
+
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
       it "should render the requested opportunity as xml" do
         @opportunity = Factory(:opportunity, :id => 42)

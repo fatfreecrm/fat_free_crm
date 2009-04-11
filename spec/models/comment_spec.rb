@@ -17,15 +17,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Comment do
+
   before(:each) do
-    @valid_attributes = {
-      :user => mock_model(User),
-      :commentable => mock_model(Campaign),
-      :comment => "Blah"
-    }
+    Authentication.stub!(:find).and_return(@authentication)
+    @authentication.stub!(:record).and_return(Factory(:user))
   end
 
   it "should create a new instance given valid attributes" do
-    Comment.create!(@valid_attributes)
+    Comment.create!(:comment => "Hello", :user => Factory(:user), :commentable => Factory(:lead))
   end
 end

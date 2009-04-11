@@ -18,7 +18,7 @@ describe AccountsController do
       response.should render_template("accounts/index")
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
       it "should render all accounts as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -36,26 +36,50 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
-    it "should expose the requested account as @account and render [show] template" do
-      @account = Factory(:account, :id => 42)
-      @stage = Setting.as_hash(:opportunity_stage)
-      @comment = Comment.new
+    describe "with mime type of HTML" do
 
-      get :show, :id => 42
-      assigns[:account].should == @account
-      assigns[:stage].should == @stage
-      assigns[:comment].attributes.should == @comment.attributes
-      response.should render_template("accounts/show")
+      before(:each) do
+        @account = Factory(:account, :user => @current_user)
+        @stage = Setting.as_hash(:opportunity_stage)
+        @comment = Comment.new
+      end
+
+      it "should expose the requested account as @account and render [show] template" do
+        get :show, :id => @account.id
+        assigns[:account].should == @account
+        assigns[:stage].should == @stage
+        assigns[:comment].attributes.should == @comment.attributes
+        response.should render_template("accounts/show")
+      end
+
+      it "should create a new activity when viewing the account" do
+        get :show, :id => @account.id
+        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @account.id, "Account" ])
+        @activity.should_not == nil
+        @activity.info.should == @account.name
+      end
+
+      it "should update existing activity when viewing the account" do
+        @viewed = Factory(:activity, :subject => @account, :action => "viewed", :user => @current_user)
+
+        get :show, :id => @account.id
+        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @account.id, "Account" ])
+  
+        @activity.should_not == nil
+        @activity.size.should == 1
+        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
+      end
+
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
       it "should render the requested account as xml" do
-        @account = Factory(:account, :id => 42)
+        @account = Factory(:account, :user => @current_user)
         @stage = Setting.as_hash(:opportunity_stage)
-
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :show, :id => 42
+
+        get :show, :id => @account.id
         response.body.should == @account.to_xml
       end
 

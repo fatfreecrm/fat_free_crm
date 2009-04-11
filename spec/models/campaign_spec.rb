@@ -28,13 +28,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Campaign do
+
   before(:each) do
-    @valid_attributes = {
-      :name => "RSpec campaign"
-    }
+    Authentication.stub!(:find).and_return(@authentication)
+    @authentication.stub!(:record).and_return(Factory(:user))
   end
 
   it "should create a new instance given valid attributes" do
-    Campaign.create!(@valid_attributes)
+    Campaign.create!(:name => "Campaign", :user => Factory(:user))
   end
 end

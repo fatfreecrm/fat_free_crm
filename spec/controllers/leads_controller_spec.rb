@@ -52,7 +52,7 @@ describe LeadsController do
       assigns[:leads].map(&:status).should == %w(contacted new)
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
       it "should render all leads as xml" do
         @leads = [ Factory(:lead, :user => @current_user) ]
@@ -71,17 +71,41 @@ describe LeadsController do
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
-    it "should expose the requested lead as @lead and render [show] template" do
-      @lead = Factory(:lead, :id => 42, :user => @current_user)
-      @comment = Comment.new
+    describe "with mime type of HTML" do
 
-      get :show, :id => 42
-      assigns[:lead].should == @lead
-      assigns[:comment].attributes.should == @comment.attributes
-      response.should render_template("leads/show")
+      before(:each) do
+        @lead = Factory(:lead, :id => 42, :user => @current_user)
+        @comment = Comment.new
+      end
+
+      it "should expose the requested lead as @lead and render [show] template" do
+        get :show, :id => 42
+        assigns[:lead].should == @lead
+        assigns[:comment].attributes.should == @comment.attributes
+        response.should render_template("leads/show")
+      end
+
+      it "should create a new activity when viewing the lead" do
+        get :show, :id => @lead.id
+        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @lead.id, "Lead" ])
+        @activity.should_not == nil
+        @activity.info.should == @lead.name
+      end
+
+      it "should update existing activity when viewing the lead" do
+        @viewed = Factory(:activity, :subject => @lead, :action => "viewed", :user => @current_user)
+
+        get :show, :id => @lead.id
+        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @lead.id, "Lead" ])
+
+        @activity.should_not == nil
+        @activity.size.should == 1
+        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
+      end
+
     end
 
-    describe "with mime type of xml" do
+    describe "with mime type of XML" do
 
       it "should render the requested lead as xml" do
         @lead = Factory(:lead, :id => 42, :user => @current_user)

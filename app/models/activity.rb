@@ -21,4 +21,19 @@ class Activity < ActiveRecord::Base
   named_scope :latest, lambda { { :conditions => [ "activities.created_at >= ?", Date.today - 1.week ], :include => :user, :order => "activities.created_at DESC" } }
 
   validates_presence_of :user, :subject
+
+  #----------------------------------------------------------------------------
+  def self.stamp(user, subject, action)
+    if action == :viewed
+      viewed = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
+      return viewed.update_attributes(:updated_at => Time.now) if viewed
+    end
+    create(
+      :user    => user,
+      :subject => subject,
+      :action  => action.to_s,
+      :info    => subject.respond_to?(:full_name) ? subject.full_name : subject.name
+    )
+  end
+
 end

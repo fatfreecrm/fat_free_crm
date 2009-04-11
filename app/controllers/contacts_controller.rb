@@ -1,6 +1,7 @@
 class ContactsController < ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab(:contacts)", :only => [ :index, :show ]
+  before_filter :set_current_tab, :only => [ :index, :show ]
+  after_filter  :update_recently_viewed, :only => :show
 
   # GET /contacts
   # GET /contacts.xml

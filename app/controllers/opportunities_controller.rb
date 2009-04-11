@@ -1,8 +1,9 @@
 class OpportunitiesController < ApplicationController
   before_filter :require_user
+  before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :load_settings, :only => [ :show,  :edit, :create, :update, :filter ]
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter "set_current_tab(:opportunities)", :only => [ :index, :show ]
-  before_filter "load_settings", :only => [ :show,  :edit, :create, :update, :filter ]
+  after_filter  :update_recently_viewed, :only => :show
 
   # GET /opportunities
   # GET /opportunities.xml
