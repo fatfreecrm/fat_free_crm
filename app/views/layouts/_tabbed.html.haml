@@ -7,6 +7,6 @@
 %table{ :width => "100%", :height => "100%", :cellpadding => 0, :cellspacing => 0, :class => :tabbed }
   %tr
     %td{ :class => :sidebar, :id => :sidebar, :valign => :top }
-      = yield(:sidebar) || render(:partial => "sidebar_" << controller.action_name) rescue nil
+      = render :partial => "layouts/sidebar"
     %td{ :class => :main, :id => :main, :valign => :top }
       = yield

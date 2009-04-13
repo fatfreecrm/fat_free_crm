@@ -1,0 +1,8 @@
+- @recent = Activity.for(@current_user).recent
+- logger.p @recent.inspect
+.panel#recently
+  .caption Recent Items
+  - unless @recent.empty?
+    = render :partial => "common/recent", :collection => @recent
+  - else
+    %div Help text (TBD).
