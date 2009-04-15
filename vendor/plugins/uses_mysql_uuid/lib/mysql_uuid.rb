@@ -8,10 +8,8 @@ module ActiveRecord
           puts "** UUID support is only available for MySQL v5 or later" if ActiveRecord::Base.connected? and !base.mysql5_or_later?
         end
 
-        #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         module ClassMethods
 
-          #--------------------------------------------------------------------------
           def uses_mysql_uuid
             if mysql5_or_later? && !already_uses_mysql_uuid?
               include ActiveRecord::Uses::MySQL::UUID::InstanceMethods
@@ -24,7 +22,11 @@ module ActiveRecord
           #--------------------------------------------------------------------------
           def mysql5_or_later?
             # First check whether the connection exists. This lets [rake db:create] run without complains.
-            return false unless ActiveRecord::Base.connected?
+            #
+            # NOTE: return false unless ActiveRecord::Base.connected? doesn't appear to work with observed
+            # models in Rails 2.2, so instead of checking connected? we test the connection itself.
+            #
+            return false unless ActiveRecord::Base.connection
 
             if ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
               if ActiveRecord::Base.connection.select_value("SELECT VERSION()").to_i >= 5
@@ -34,14 +36,12 @@ module ActiveRecord
             false
           end
 
-          #--------------------------------------------------------------------------
           def already_uses_mysql_uuid?
             self.included_modules.include?(InstanceMethods)
           end
 
         end
 
-        #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         module InstanceMethods
 
           # Override default :id with :uuid for the model so it shows up in URLs.
@@ -57,9 +57,9 @@ module ActiveRecord
             self.uuid = self.class.find(self.id, :select => :uuid).uuid if self.id && !self.uuid?
             success
           end
+
         end
 
-        #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         module SingletonMethods
 
           # Determine whether to call regular find() or find_by_uuid().
@@ -70,6 +70,7 @@ module ActiveRecord
             else
               super(*args)
             end
+
           end
         end
 

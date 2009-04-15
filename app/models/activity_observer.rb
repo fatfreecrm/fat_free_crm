@@ -6,7 +6,6 @@ class ActivityObserver < ActiveRecord::Observer
   end
 
   def after_update(subject)
-    subject.logger.p "self: " + self.methods.sort.inspect
     stamp(subject, :updated)
   end
 
@@ -16,7 +15,10 @@ class ActivityObserver < ActiveRecord::Observer
 
   private
   def stamp(subject, action)
-    current_user = Authentication.find.record
-    Activity.stamp(current_user, subject, action) if current_user
+    authentication = Authentication.find
+    if authentication
+      current_user = authentication.record
+      Activity.stamp(current_user, subject, action) if current_user
+    end
   end
 end

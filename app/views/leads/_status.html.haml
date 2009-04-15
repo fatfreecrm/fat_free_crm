@@ -1,7 +1,7 @@
 - edit ||= false
 - collapsed = session[:lead_status].nil? # && @lead.errors.empty?
 = subtitle :lead_status, collapsed
-- logger.p @lead.inspect
+
 .section
   %small#lead_status_intro{ hidden_if(!collapsed) }
     = "You can add lead status information later." unless edit
