@@ -17,7 +17,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Activity do
-  
+
   before(:each) do
     login
   end
@@ -72,11 +72,11 @@ describe Activity do
         @subject = Factory(subject.to_sym)
       end
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='created'", @subject.id, subject.capitalize ])
-  
+
       @activity.should_not == nil
       @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
     end
-  
+
     it "should add an activity when updating existing #{subject}" do
       if subject == "comment"
         @subject = Factory(:comment, :commentable => Factory(:account))
@@ -90,11 +90,11 @@ describe Activity do
         end
       end
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='updated'", @subject.id, subject.capitalize ])
-  
+
       @activity.should_not == nil
       @activity.info.should == "Billy Bones"
     end
-  
+
     it "should add an activity when deleting #{subject}" do
       if subject == "comment"
         @subject = Factory(:comment, :commentable => Factory(:account))
@@ -103,9 +103,44 @@ describe Activity do
       end
       @subject.destroy
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='deleted'", @subject.id, subject.capitalize ])
-  
+
       @activity.should_not == nil
       @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
+    end
+  end
+
+  %w(account campaign contact lead opportunity).each do |subject|
+  # %w(account campaign).each do |subject|
+    before(:each) do
+      @subject = Factory(subject.to_sym)
+      @conditions = [ "subject_id=? AND subject_type=? AND action='viewed'", @subject.id, subject.capitalize ]
+    end
+
+    it "creating a new #{subject} should also make it a recently viewed item" do
+      @activity = Activity.first(:conditions => @conditions)
+
+      @activity.should_not == nil
+    end
+
+    it "updating #{subject} should also mark it as recently viewed" do
+      @before = Activity.first(:conditions => @conditions)
+      if @subject.respond_to?(:full_name)
+        @subject.update_attributes(:first_name => "Billy", :last_name => "Bones")
+      else
+        @subject.update_attributes(:name => "Billy Bones")
+      end
+      @after = Activity.first(:conditions => @conditions)
+
+      @before.should_not == nil
+      @after.should_not == nil
+      @after.updated_at.should >= @before.updated_at
+    end
+
+    it "deleting #{subject} should remove it from recently viewed items" do
+      @subject.destroy
+      @activity = Activity.first(:conditions => @conditions)
+
+      @activity.should be_nil
     end
   end
 

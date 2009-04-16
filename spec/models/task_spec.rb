@@ -24,6 +24,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Task do
 
+  before(:each) do
+    login
+  end
+
   describe "Task/Create" do
     it "should create a new task instance given valid attributes" do
       task = Factory(:task)

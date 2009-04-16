@@ -28,16 +28,39 @@ class Activity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def self.stamp(user, subject, action)
-    if action == :viewed
-      viewed = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
-      return viewed.update_attributes(:updated_at => Time.now) if viewed
+    if action != :viewed
+      create_activity(user, subject, action)
+      if action == :created
+        create_activity(user, subject, :viewed)
+      elsif action == :deleted
+        delete_activity(user, subject, :viewed)
+      end
     end
+    if action == :viewed || action == :updated
+      update_activity(user, subject, :viewed)
+    end
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def self.create_activity(user, subject, action)
     create(
       :user    => user,
       :subject => subject,
       :action  => action.to_s,
       :info    => subject.respond_to?(:full_name) ? subject.full_name : subject.name
     )
+  end
+
+  #----------------------------------------------------------------------------
+  def self.update_activity(user, subject, action)
+    activity = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
+    activity.update_attribute(:updated_at, Time.now) if activity
+  end
+
+  #----------------------------------------------------------------------------
+  def self.delete_activity(user, subject, action)
+    delete_all([ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
   end
 
 end

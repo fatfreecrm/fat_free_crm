@@ -85,22 +85,9 @@ describe LeadsController do
         response.should render_template("leads/show")
       end
 
-      it "should create a new activity when viewing the lead" do
+      it "should update an activity when viewing the lead" do
+        Activity.should_receive(:stamp).with(@current_user, @lead, :viewed).once
         get :show, :id => @lead.id
-        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @lead.id, "Lead" ])
-        @activity.should_not == nil
-        @activity.info.should == @lead.name
-      end
-
-      it "should update existing activity when viewing the lead" do
-        @viewed = Factory(:activity, :subject => @lead, :action => "viewed", :user => @current_user)
-
-        get :show, :id => @lead.id
-        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @lead.id, "Lead" ])
-
-        @activity.should_not == nil
-        @activity.size.should == 1
-        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
       end
 
     end

@@ -55,22 +55,9 @@ describe ContactsController do
         response.should render_template("contacts/show")
       end
 
-      it "should create a new activity when viewing the contact" do
+      it "should update an activity when viewing the contact" do
+        Activity.should_receive(:stamp).with(@current_user, @contact, :viewed).once
         get :show, :id => @contact.id
-        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @contact.id, "Contact" ])
-        @activity.should_not == nil
-        @activity.info.should == @contact.name
-      end
-
-      it "should update existing activity when viewing the contact" do
-        @viewed = Factory(:activity, :subject => @contact, :action => "viewed", :user => @current_user)
-
-        get :show, :id => @contact.id
-        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @contact.id, "Contact" ])
-
-        @activity.should_not == nil
-        @activity.size.should == 1
-        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
       end
 
     end

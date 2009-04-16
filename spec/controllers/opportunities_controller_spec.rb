@@ -84,22 +84,9 @@ describe OpportunitiesController do
         response.should render_template("opportunities/show")
       end
 
-      it "should create a new activity when viewing the opportunity" do
+      it "should update an activity when viewing the opportunity" do
+        Activity.should_receive(:stamp).with(@current_user, @opportunity, :viewed).once
         get :show, :id => @opportunity.id
-        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @opportunity.id, "Opportunity" ])
-        @activity.should_not == nil
-        @activity.info.should == @opportunity.name
-      end
-
-      it "should update existing activity when viewing the opportunity" do
-        @viewed = Factory(:activity, :subject => @opportunity, :action => "viewed", :user => @current_user)
-
-        get :show, :id => @opportunity.id
-        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @opportunity.id, "Opportunity" ])
-
-        @activity.should_not == nil
-        @activity.size.should == 1
-        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
       end
 
     end

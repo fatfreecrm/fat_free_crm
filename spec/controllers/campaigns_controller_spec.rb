@@ -86,22 +86,9 @@ describe CampaignsController do
         response.should render_template("campaigns/show")
       end
 
-      it "should create a new activity when viewing the campaign" do
+      it "should update an activity when viewing the campaign" do
+        Activity.should_receive(:stamp).with(@current_user, @campaign, :viewed).once
         get :show, :id => @campaign.id
-        @activity = Activity.find(:first, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @campaign.id, "Campaign" ])
-        @activity.should_not == nil
-        @activity.info.should == @campaign.name
-      end
-
-      it "should update existing activity when viewing the campaign" do
-        @viewed = Factory(:activity, :subject => @campaign, :action => "viewed", :user => @current_user)
-
-        get :show, :id => @campaign.id
-        @activity = Activity.find(:all, :conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @campaign.id, "Campaign" ])
-  
-        @activity.should_not == nil
-        @activity.size.should == 1
-        @activity[0].updated_at.to_s(:db).should == Time.now.to_s(:db)
       end
 
     end
