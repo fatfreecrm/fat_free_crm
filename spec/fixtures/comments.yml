@@ -22,13 +22,11 @@
   time = Time.now - (rand(30) + 30).minutes
 
   for i in (1 .. rand(200) + 200) do
-    time -= i.minutes
 %>
 comment_<%= i %>:
-  id                : <%= i %>
-  user_id           : <%= rand(8) + 1 %>
-  commentable_id    : <%= rand(30) + 1 %>
-  commentable_type  : <%= commentable[rand(commentable.size)] %>
-  comment           : <%= Faker::Lorem::paragraph(rand(3) + 1) %>
-  created_at        : <%= time.to_s(:db) %>
+  id               : <%= i %>
+  user_id          : <%= rand(8) + 1 %>
+  commentable_id   : <%= rand(15) + 1 %>
+  commentable_type : <%= commentable[rand(commentable.size)] %>
+  comment          : <%= Faker::Lorem::paragraph(rand(3) + 1) %>
 <% end %>

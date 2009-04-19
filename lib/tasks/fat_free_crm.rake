@@ -39,6 +39,15 @@ namespace :crm do
           Activity.create(:action => "updated", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
           if model != "Task"
             Activity.create(:action => "viewed", :created_at => subject.updated_at + rand(12 * 60).minutes, :user => subject.user, :subject => subject, :info => info)
+            comments = Comment.find(:all, :conditions => [ "commentable_id=? AND commentable_type=?", subject.id, model ])
+            comments.each_with_index do |comment, i|
+              time = subject.created_at + rand(12 * 60 * i).minutes
+              if time > Time.now
+                time = subject.created_at + rand(600).minutes
+              end
+              comment.update_attribute(:created_at, time)
+              Activity.create(:action => "commented", :created_at => time, :user => comment.user, :subject => subject, :info => info)
+            end
           end
         end
       end
