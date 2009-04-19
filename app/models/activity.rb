@@ -55,7 +55,11 @@ class Activity < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.update_activity(user, subject, action)
     activity = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
-    activity.update_attribute(:updated_at, Time.now) if activity
+    if activity
+      activity.update_attribute(:updated_at, Time.now)
+    else
+      create_activity(user, subject, action)
+    end
   end
 
   #----------------------------------------------------------------------------

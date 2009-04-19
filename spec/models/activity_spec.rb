@@ -110,7 +110,6 @@ describe Activity do
   end
 
   %w(account campaign contact lead opportunity).each do |subject|
-  # %w(account campaign).each do |subject|
     before(:each) do
       @subject = Factory(subject.to_sym)
       @conditions = [ "subject_id=? AND subject_type=? AND action='viewed'", @subject.id, subject.capitalize ]
