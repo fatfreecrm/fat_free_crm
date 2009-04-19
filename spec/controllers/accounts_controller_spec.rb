@@ -53,7 +53,7 @@ describe AccountsController do
       end
 
       it "should update an activity when viewing the account" do
-        Activity.should_receive(:stamp).with(@current_user, @account, :viewed).once
+        Activity.should_receive(:log).with(@current_user, @account, :viewed).once
         get :show, :id => @account.id
       end
 

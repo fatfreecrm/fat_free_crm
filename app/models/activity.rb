@@ -27,16 +27,16 @@ class Activity < ActiveRecord::Base
   validates_presence_of :user, :subject
 
   #----------------------------------------------------------------------------
-  def self.stamp(user, subject, action)
+  def self.log(user, subject, action)
     if action != :viewed
       create_activity(user, subject, action)
       if action == :created
         create_activity(user, subject, :viewed)
       elsif action == :deleted
-        delete_activity(user, subject, :viewed)
+        delete_activity(user, subject, :viewed) # Remove from recently viewed list.
       end
     end
-    if action == :viewed || action == :updated
+    if [:viewed, :updated, :commented].include?(action)
       update_activity(user, subject, :viewed)
     end
   end

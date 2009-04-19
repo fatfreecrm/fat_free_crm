@@ -86,7 +86,7 @@ describe LeadsController do
       end
 
       it "should update an activity when viewing the lead" do
-        Activity.should_receive(:stamp).with(@current_user, @lead, :viewed).once
+        Activity.should_receive(:log).with(@current_user, @lead, :viewed).once
         get :show, :id => @lead.id
       end
 

@@ -64,13 +64,9 @@ describe Activity do
 
   end
 
-  %w(account campaign comment contact lead opportunity task).each do |subject|
+  %w(account campaign contact lead opportunity task).each do |subject|
     it "should add an activity when creating new #{subject}" do
-      if subject == "comment"
-        @subject = Factory(:comment, :commentable => Factory(:account))
-      else
-        @subject = Factory(subject.to_sym)
-      end
+      @subject = Factory(subject.to_sym)
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='created'", @subject.id, subject.capitalize ])
 
       @activity.should_not == nil
@@ -78,16 +74,11 @@ describe Activity do
     end
 
     it "should add an activity when updating existing #{subject}" do
-      if subject == "comment"
-        @subject = Factory(:comment, :commentable => Factory(:account))
-        @subject.update_attributes(:comment => "Billy Bones")
+      @subject = Factory(subject.to_sym)
+      if @subject.respond_to?(:full_name)
+        @subject.update_attributes(:first_name => "Billy", :last_name => "Bones")
       else
-        @subject = Factory(subject.to_sym)
-        if @subject.respond_to?(:full_name)
-          @subject.update_attributes(:first_name => "Billy", :last_name => "Bones")
-        else
-          @subject.update_attributes(:name => "Billy Bones")
-        end
+        @subject.update_attributes(:name => "Billy Bones")
       end
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='updated'", @subject.id, subject.capitalize ])
 
@@ -96,17 +87,23 @@ describe Activity do
     end
 
     it "should add an activity when deleting #{subject}" do
-      if subject == "comment"
-        @subject = Factory(:comment, :commentable => Factory(:account))
-      else
-        @subject = Factory(subject.to_sym)
-      end
+      @subject = Factory(subject.to_sym)
       @subject.destroy
       @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='deleted'", @subject.id, subject.capitalize ])
 
       @activity.should_not == nil
       @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
     end
+    
+    it "should add an activity when commenting on a #{subject}" do
+      @subject = Factory(subject.to_sym)
+      @comment = Factory(:comment, :commentable => @subject)
+
+      @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='commented'", @subject.id, subject.capitalize ])
+      @activity.should_not == nil
+      @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
+    end
+  
   end
 
   %w(account campaign contact lead opportunity).each do |subject|

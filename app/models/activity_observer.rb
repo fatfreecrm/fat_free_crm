@@ -1,24 +1,24 @@
 class ActivityObserver < ActiveRecord::Observer
-  observe Account, Campaign, Comment, Contact, Lead, Opportunity, Task
+  observe Account, Campaign, Contact, Lead, Opportunity, Task
 
   def after_create(subject)
-    stamp(subject, :created)
+    log_activity(subject, :created)
   end
 
   def after_update(subject)
-    stamp(subject, :updated)
+    log_activity(subject, :updated)
   end
 
   def after_destroy(subject)
-    stamp(subject, :deleted)
+    log_activity(subject, :deleted)
   end
 
   private
-  def stamp(subject, action)
+  def log_activity(subject, action)
     authentication = Authentication.find
     if authentication
       current_user = authentication.record
-      Activity.stamp(current_user, subject, action) if current_user
+      Activity.log(current_user, subject, action) if current_user
     end
   end
 end

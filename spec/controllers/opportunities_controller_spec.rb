@@ -85,7 +85,7 @@ describe OpportunitiesController do
       end
 
       it "should update an activity when viewing the opportunity" do
-        Activity.should_receive(:stamp).with(@current_user, @opportunity, :viewed).once
+        Activity.should_receive(:log).with(@current_user, @opportunity, :viewed).once
         get :show, :id => @opportunity.id
       end
 

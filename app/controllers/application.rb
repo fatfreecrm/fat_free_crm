@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
   def update_recently_viewed
     subject = instance_variable_get("@#{controller_name.singularize}")
     if subject
-      Activity.stamp(@current_user, subject, :viewed)
+      Activity.log(@current_user, subject, :viewed)
     end
   end
 

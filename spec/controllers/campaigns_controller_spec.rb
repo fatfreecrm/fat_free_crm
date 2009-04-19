@@ -87,7 +87,7 @@ describe CampaignsController do
       end
 
       it "should update an activity when viewing the campaign" do
-        Activity.should_receive(:stamp).with(@current_user, @campaign, :viewed).once
+        Activity.should_receive(:log).with(@current_user, @campaign, :viewed).once
         get :show, :id => @campaign.id
       end
 

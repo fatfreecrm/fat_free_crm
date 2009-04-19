@@ -8,6 +8,7 @@ Sat, Apr 18, 2009
 ---------------------------------------------------------------------
 - Scraped the idea of demo factories -- fixtures are easier to use and maintain.
 - Updated demo fixtures and crm:demo:load task to simulate user activities and recently viewed items.
+- Implemented "commented on" user activity type.
 
 Fri, Apr 17, 2009
 ---------------------------------------------------------------------

@@ -20,11 +20,15 @@ class Comment < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
   validates_presence_of :user_id, :commentable_id, :commentable_type, :comment
+  after_create :log_activity
 
-  # Activity observer expects model to respond to :name or :full_name.
-  #----------------------------------------------------------------------------
-  def name
-    comment.shorten(80)
+  private
+  def log_activity
+    authentication = Authentication.find
+    if authentication
+      current_user = authentication.record
+      Activity.log(current_user, commentable, :commented) if current_user
+    end
   end
 
 end

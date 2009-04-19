@@ -56,7 +56,7 @@ describe ContactsController do
       end
 
       it "should update an activity when viewing the contact" do
-        Activity.should_receive(:stamp).with(@current_user, @contact, :viewed).once
+        Activity.should_receive(:log).with(@current_user, @contact, :viewed).once
         get :show, :id => @contact.id
       end
 
