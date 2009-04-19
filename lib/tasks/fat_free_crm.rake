@@ -28,6 +28,20 @@ namespace :crm do
     task :load => :environment do
       Rake::Task["spec:db:fixtures:load"].invoke      # loading fixtures truncates settings!
       Rake::Task["crm:settings:load"].invoke
+
+      # Simulate random user activities.
+      %w(Account Campaign Contact Lead Opportunity Task).each do |model|
+        puts "Loading user activities for #{model.downcase.pluralize}..."
+        assets = model.constantize.send(:find, :all)
+        assets.each do |subject|
+          info = subject.respond_to?(:full_name) ? subject.full_name : subject.name
+          Activity.create(:action => "created", :created_at => subject.created_at, :user => subject.user, :subject => subject, :info => info)
+          Activity.create(:action => "updated", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
+          if model != "Task"
+            Activity.create(:action => "viewed", :created_at => subject.updated_at + rand(12 * 60).minutes, :user => subject.user, :subject => subject, :info => info)
+          end
+        end
+      end
     end
 
     desc "Reset the database and reload demo data along with default application settings"

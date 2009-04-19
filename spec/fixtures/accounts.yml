@@ -23,26 +23,26 @@
 <%
   require "faker"
   Faker::PhoneNumber::Formats = ["(###)###-####"]
+  puts "Loading accounts..."
 
-  for i in (1 .. rand(10) + 20) do 
+  for i in (1 .. rand(20) + 10) do
 %>
 account<%= i %>:
-  id: <%= i %>
-  user_id: 1
-  assigned_to : <%= rand(5) + 1 %>
-  name: <%= company = Faker::Company.name %>
-  access: Public
-  website: http://www.<%= company.downcase.gsub(/\W/, "") %>.com
-  tall_free_phone: 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
-  phone: <%= Faker::PhoneNumber.phone_number %>
-  fax: <%= Faker::PhoneNumber.phone_number %>
-  billing_address: |
-    <%= addr1 = Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-    <%= addr2 = Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
-  shipping_address: |
-    <%= addr1 %>
-    <%= addr2 %>
-  deleted_at:
-  created_at: <%= starts = Date.today - rand(15).days %>
-  updated_at: <%= starts + rand(5).days %>
+  id               : <%= i %>
+  user_id          : <%= rand(8) + 1 %>
+  assigned_to      : <%= rand(8) + 1 %>
+  name             : <%= company = Faker::Company.name %>
+  access           : Public
+  website          : http://www.<%= company.downcase.gsub(/\W/, "") %>.com
+  tall_free_phone  : 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
+  phone            : <%= Faker::PhoneNumber.phone_number %>
+  fax              : <%= Faker::PhoneNumber.phone_number %>
+  billing_address  : |
+                     <%= addr1 = Faker::Address.street_address + " " + Faker::Address.secondary_address %>
+                     <%= addr2 = Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
+  shipping_address : |
+                     <%= addr1 %>
+                     <%= addr2 %>
+  created_at       : <%= created_at = (rand(60) + 1).days.ago + rand(600).minutes; created_at.to_s(:db) %>
+  updated_at       : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>

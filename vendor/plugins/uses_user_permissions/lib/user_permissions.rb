@@ -12,7 +12,7 @@ module ActiveRecord
           def uses_user_permissions
             unless included_modules.include?(InstanceMethods)
               has_many :permissions, :as => :asset, :include => :user
-              named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["#{self.table_name}.user_id=? OR #{self.table_name}.assigned_to=? OR permissions.user_id=?", user, user, user], :order => "#{self.table_name}.id DESC" } }
+              named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["#{self.table_name}.user_id=? OR #{self.table_name}.assigned_to=? OR permissions.user_id=? OR access='Public'", user, user, user], :order => "#{self.table_name}.id DESC" } }
               include ActiveRecord::Uses::User::Permissions::InstanceMethods
               extend  ActiveRecord::Uses::User::Permissions::SingletonMethods
             end

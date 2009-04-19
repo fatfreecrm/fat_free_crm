@@ -34,8 +34,9 @@
 #  updated_at        :datetime
 #
 
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
+<%
+  puts "Loading users..."
+%>
 aaron:
   id: 1
   username: aaron

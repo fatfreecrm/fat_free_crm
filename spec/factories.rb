@@ -1,4 +1,5 @@
 require "faker"
+Faker::PhoneNumber::Formats = ["(###)###-####"]
 
 Factory.sequence :uuid do |x|
   "%08x-%04x-%04x-%04x-%012x" % [ rand(12345678), rand(1234), rand(1234), rand(1234), rand(123456789012) ]
@@ -235,7 +236,7 @@ Factory.define :task do |t|
   t.name                { Faker::Lorem.sentence[0..63] }
   t.priority            nil
   t.category            { %w(call email folowup lunch meeting money presentation trip).rand }
-  t.bucket         "due_asap"
+  t.bucket              "due_asap"
   t.due_at              { Factory.next(:time) }
   t.completed_at        nil
   t.deleted_at          nil
@@ -269,12 +270,12 @@ Factory.define :user do |u|
   u.last_login_at       { Factory.next(:time) }
   u.last_login_ip       "127.0.0.1"
   u.current_login_ip    "127.0.0.1"
-  u.login_count         { rand(100) }
+  u.login_count         { rand(100) + 1 }
   u.deleted_at          nil
   u.updated_at          { Factory.next(:time) }
   u.created_at          { Factory.next(:time) }
-  u.password              "aaron"
-  u.password_confirmation "aaron"
+  u.password              "password"
+  u.password_confirmation "password"
 end
 
 # Load default settings from config/settings.yml file.

@@ -34,6 +34,7 @@
 
 <% 
   require "faker"
+  puts "Loading contacts..."
 
   title = [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ]
   source = %w(campaign cold_call conference online referral self web word_of_mouth other) << ""
@@ -65,7 +66,6 @@ contact_<%= i %>:
                 <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
   born_on     : <%= Date.today - (rand(20) + 20).years - rand(200).days %>
   do_not_call : false
-  deleted_at  :
-  created_at  : <%= starts = Date.today - rand(15).days %>
-  updated_at  : <%= starts + rand(5).days %>
+  created_at  : <%= created_at = (rand(60) + 1).days.ago + rand(600).minutes; created_at.to_s(:db) %>
+  updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>

@@ -22,6 +22,8 @@
 
 <%
   require "faker"
+  puts "Loading tasks..."
+
   category = %w(call email folowup lunch meeting money presentation trip) << ""
 
   for i in (1 .. 250) do
@@ -39,20 +41,19 @@
         due_at = nil
         bucket = "due_later"
       end
+    asset = (i % 5 == 0 ? rand(10) + 1 : nil)
 %>
 task<%= i %>:
   id           : <%= i %>
-  user_id      : <%= rand(7) + 1 %>
+  user_id      : <%= rand(8) + 1 %>
   assigned_to  : <%= rand(4) == 0 ? rand(5) + 1 : "" %>
   name         : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "") %>
-  asset_id     : <%=  %>
-  asset_type   : <%=  %>
-  priority     :
+  asset_id     : <%= asset %>
+  asset_type   : <%= %w(Account Campaign Contact Lead Opportunity).rand if asset %>
   category     : <%= category[rand(category.size)] %>
-  bucket  : <%= bucket %>
+  bucket       : <%= bucket %>
   due_at       : <%= due_at %>
   completed_at : <%= rand(4) == 0 ? Date.today - rand(5).days : "" %>
-  deleted_at   :
-  created_at   : <%= starts = Date.today - rand(15).days %>
-  updated_at   : <%= starts + rand(5).days %>
+  created_at   : <%= created_at = (rand(60) + 1).days.ago + rand(600).minutes; created_at.to_s(:db) %>
+  updated_at   : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>
