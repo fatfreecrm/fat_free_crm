@@ -1,5 +1,4 @@
 require "faker"
-Faker::PhoneNumber::Formats = ["(###)###-####"]
 
 Factory.sequence :uuid do |x|
   "%08x-%04x-%04x-%04x-%012x" % [ rand(12345678), rand(1234), rand(1234), rand(1234), rand(123456789012) ]
