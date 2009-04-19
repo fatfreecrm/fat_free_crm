@@ -27,9 +27,9 @@ describe "/contacts/update.js.rjs" do
     render "contacts/update.js.rjs"
     response.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=summary]")
+      with_tag("div[id=recently]")
     end
     response.should include_text('$("summary").visualEffect("shake"')
-    response.should include_text("Recent Items")
   end
  
   it "no errors: should replace [Edit Contact] with contact partial and highligh it when called outside contact landing page" do

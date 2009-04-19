@@ -4,10 +4,9 @@ describe "/accounts/_edit.html.haml" do
   include AccountsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     assigns[:account] = Factory(:account)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
   end
 
   it "should render [edit account] form" do

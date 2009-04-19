@@ -1,1 +1,2 @@
 page[dom_id(@account)].visual_effect "BlindUp", :duration => 0.25
+page << refresh_sidebar

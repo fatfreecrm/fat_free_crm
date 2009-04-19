@@ -4,10 +4,9 @@ describe "/accounts/new.js.rjs" do
   include AccountsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     assigns[:account] = Account.new(:user => @current_user)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
   end
  
   it "create: should render [new.html.haml] template into :create_account div" do

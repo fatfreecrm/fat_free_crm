@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/contacts/create.js.rjs" do
   include ContactsHelper
+
   before(:each) do
     login_and_assign
   end
@@ -20,7 +21,9 @@ describe "/contacts/create.js.rjs" do
     assigns[:contact] = Factory(:contact, :id => 42)
     render "contacts/create.js.rjs"
 
-    response.should include_text("Recent Items")
+    response.should have_rjs("sidebar") do |rjs|
+      with_tag("div[id=recently]")
+    end
   end
  
   it "create (failure): should re-render [create.html.haml] template in :create_contact div" do

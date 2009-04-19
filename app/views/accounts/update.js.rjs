@@ -6,6 +6,7 @@ if @account.errors.empty?
     page[id].replace :partial => "account", :collection => [ @account ]
     page[id].visual_effect :highlight, :duration => 1.0
   end
+  page << refresh_sidebar(:index)
 else  
   page[id].replace_html :partial => "edit"
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6

@@ -4,10 +4,9 @@ describe "/accounts/show.html.haml" do
   include AccountsHelper
 
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     assigns[:account] = Factory(:account, :id => 42)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
     assigns[:comment] = Comment.new
   end
 

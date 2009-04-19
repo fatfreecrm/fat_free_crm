@@ -4,11 +4,10 @@ describe "/accounts/edit.js.rjs" do
   include AccountsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     @account = Factory(:account, :id => 42, :user => @current_user)
     assigns[:account] = @account
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
   end
 
   it "edit: should hide previously open [edit account] for and replace it with account partial" do
