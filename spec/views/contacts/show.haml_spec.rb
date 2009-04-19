@@ -4,10 +4,9 @@ describe "/contacts/show.html.haml" do
   include ContactsHelper
 
   before(:each) do
-    @current_user = Factory(:user)
+    login
     assigns[:contact] = Factory(:contact, :id => 42)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
     assigns[:comment] = Comment.new
   end
 

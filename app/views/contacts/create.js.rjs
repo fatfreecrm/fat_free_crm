@@ -5,6 +5,7 @@ if @contact.valid?
   page[:create_contact].update ""
   page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
   page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
+  page << refresh_sidebar
 else
   page[:create_contact].replace_html :partial => "create"
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?

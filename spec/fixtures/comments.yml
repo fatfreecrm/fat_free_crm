@@ -19,8 +19,6 @@
   puts "Loading comments..."
 
   commentable = %w(Account Campaign Contact Lead Opportunity) # Task
-  time = Time.now - (rand(30) + 30).minutes
-
   for i in (1 .. rand(200) + 200) do
 %>
 comment_<%= i %>:

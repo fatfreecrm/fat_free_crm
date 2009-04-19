@@ -6,12 +6,12 @@ end
 
 if @contact.errors.empty?
   if id == :edit_contact
-    page[:sidebar].replace_html :partial => "sidebar_show"
-    page[:summary].visual_effect :shake, :duration => 0.4, :distance => 3
     page.call "crm.flip_form", id, @contact.full_name
+    page << refresh_sidebar(:show, :summary)
   else
     page[id].replace :partial => "contact", :collection => [ @contact ]
     page[id].visual_effect :highlight, :duration => 1.0
+    page << refresh_sidebar(:index)
   end
 else  
   page[id].replace_html :partial => "edit"

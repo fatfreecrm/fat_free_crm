@@ -1,3 +1,4 @@
+- action ||= controller.action_name
 = yield(:sidebar)
-= render(:partial => "sidebar_" << controller.action_name) rescue nil
+= render(:partial => "sidebar_" << action.to_s) rescue nil
 = render :partial => "common/recently"

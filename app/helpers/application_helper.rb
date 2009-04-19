@@ -152,4 +152,14 @@ module ApplicationHelper
     end
   end
 
+  #----------------------------------------------------------------------------
+  def refresh_sidebar(action = nil, shake = nil)
+    update_page do |page|
+      page[:sidebar].replace_html :partial => "layouts/sidebar", :locals => { :action => action }
+      if shake
+        page[shake].visual_effect :shake, :duration => 0.4, :distance => 3
+      end
+    end
+  end
+
 end

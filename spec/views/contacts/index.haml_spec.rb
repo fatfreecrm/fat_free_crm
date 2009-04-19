@@ -4,6 +4,7 @@ describe "/contacts/index.html.erb" do
   include ContactsHelper
   
   before(:each) do
+    login
   end
 
   it "should render list of accounts if list of contacts is not empty" do

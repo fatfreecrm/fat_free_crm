@@ -4,11 +4,10 @@ describe "/contacts/new.js.rjs" do
   include ContactsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login
     @account = Factory(:account)
     assigns[:contact] = Contact.new(:user => @current_user)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]
   end
