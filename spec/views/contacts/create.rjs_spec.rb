@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/contacts/create.js.rjs" do
   include ContactsHelper
   before(:each) do
-    login
+    login_and_assign
   end
 
   it "create (success): should hide [Create Contact] form and insert contact partial" do

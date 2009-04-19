@@ -4,7 +4,7 @@ describe "/contacts/edit.js.rjs" do
   include ContactsHelper
   
   before(:each) do
-    login
+    login_and_assign
     @account = Factory(:account)
     assigns[:contact] = Factory(:contact, :id => 42, :user => @current_user)
     assigns[:users] = [ @current_user ]

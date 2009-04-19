@@ -4,7 +4,7 @@ describe "/contacts/edit.html.erb" do
   include ContactsHelper
   
   before(:each) do
-    login
+    login_and_assign
     @account = Factory(:account)
     assigns[:contact] = Factory(:contact)
     assigns[:users] = [ @current_user ]

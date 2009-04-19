@@ -60,6 +60,11 @@ def login(session_stubs = {}, user_stubs = {})
   @current_user = Factory(:user, user_stubs)
   @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
+end
+
+#----------------------------------------------------------------------------
+def login_and_assign
+  login
   assigns[:current_user] = @current_user
 end
  

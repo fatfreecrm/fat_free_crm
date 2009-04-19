@@ -4,7 +4,7 @@ describe "/contacts/_create.html.haml" do
   include ContactsHelper
   
   before(:each) do
-    login
+    login_and_assign
     @account = Factory(:account)
     assigns[:contact] = Contact.new
     assigns[:users] = [ @current_user ]
