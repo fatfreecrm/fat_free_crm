@@ -4,6 +4,7 @@ describe "/campaigns/index.html.haml" do
   include CampaignsHelper
   
   before(:each) do
+    login_and_assign
   end
 
   it "should render list of accounts if list of campaigns is not empty" do

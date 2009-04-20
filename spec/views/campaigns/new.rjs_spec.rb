@@ -4,10 +4,9 @@ describe "/campaigns/new.html.erb" do
   include CampaignsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     assigns[:campaign] = Campaign.new(:user => @current_user)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
   end
  
   it "create: should render [new.html.haml] template into :create_campaign div" do

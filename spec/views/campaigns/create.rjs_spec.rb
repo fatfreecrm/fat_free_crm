@@ -4,7 +4,7 @@ describe "/campaigns/create.js.rjs" do
   include CampaignsHelper
 
   before(:each) do
-    assigns[:current_user] = Factory(:user)
+    login_and_assign
   end
 
   it "create (success): should hide [Create Campaign] form and insert campaign partial" do
@@ -14,7 +14,7 @@ describe "/campaigns/create.js.rjs" do
     response.should have_rjs(:insert, :top) do |rjs|
       with_tag("li[id=campaign_42]")
     end
-    response.should include_text('visualEffect("highlight"')
+    response.should include_text('$("campaign_42").visualEffect("highlight"')
   end
 
   it "create (success): should update sidebar filters when called from campaigns page" do
@@ -25,6 +25,7 @@ describe "/campaigns/create.js.rjs" do
 
     response.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=filters]")
+      with_tag("div[id=recently]")
     end
   end
 
@@ -37,7 +38,7 @@ describe "/campaigns/create.js.rjs" do
     response.should have_rjs("create_campaign") do |rjs|
       with_tag("form[class=new_campaign]")
     end
-    response.should include_text('visualEffect("shake"')
+    response.should include_text('$("create_campaign").visualEffect("shake"')
     response.should include_text('crm.date_select_popup("campaign_starts_on")')
     response.should include_text('crm.date_select_popup("campaign_ends_on")')
 

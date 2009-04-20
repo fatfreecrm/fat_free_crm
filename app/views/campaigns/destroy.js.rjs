@@ -1,2 +1,2 @@
 page[dom_id(@campaign)].visual_effect "BlindUp", :duration => 0.25
-page << update_sidebar if called_from_index_page?
+page << refresh_sidebar(:index, :filters)

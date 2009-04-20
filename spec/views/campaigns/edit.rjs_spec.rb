@@ -4,10 +4,9 @@ describe "/campaigns/edit.js.rjs" do
   include CampaignsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     assigns[:campaign] = Factory(:campaign, :id => 42, :user => @current_user)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
   end
 
   it "cancel from campaign index page: should replace [Edit Campaign] form with campaign partial" do

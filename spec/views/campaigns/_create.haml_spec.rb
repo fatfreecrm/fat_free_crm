@@ -4,10 +4,9 @@ describe "/campaigns/_create.html.haml" do
   include CampaignsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     assigns[:campaign] = Campaign.new
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
   end
 
   it "should render [create campaign] form" do
