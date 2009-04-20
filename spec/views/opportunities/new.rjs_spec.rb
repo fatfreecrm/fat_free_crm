@@ -4,11 +4,10 @@ describe "/opportunities/new.html.erb" do
   include OpportunitiesHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     @account = Factory(:account)
     assigns[:opportunity] = Opportunity.new(:user => @current_user)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]
   end

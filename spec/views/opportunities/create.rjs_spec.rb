@@ -4,7 +4,7 @@ describe "/opportunities/create.js.rjs" do
   include OpportunitiesHelper
 
   before(:each) do
-    assigns[:current_user] = Factory(:user)
+    login_and_assign
     assigns[:stage] = {}
   end
 
@@ -15,7 +15,7 @@ describe "/opportunities/create.js.rjs" do
     response.should have_rjs(:insert, :top) do |rjs|
       with_tag("li[id=opportunity_42]")
     end
-    response.should include_text('visualEffect("highlight"')
+    response.should include_text('$("opportunity_42").visualEffect("highlight"')
   end
 
   it "create (success): should update sidebar filters when called from opportunities page" do
@@ -26,6 +26,7 @@ describe "/opportunities/create.js.rjs" do
 
     response.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=filters]")
+      with_tag("div[id=recently]")
     end
   end
 
@@ -41,7 +42,7 @@ describe "/opportunities/create.js.rjs" do
     response.should have_rjs("create_opportunity") do |rjs|
       with_tag("form[class=new_opportunity]")
     end
-    response.should include_text('visualEffect("shake"')
+    response.should include_text('$("create_opportunity").visualEffect("shake"')
     response.should include_text("crm.create_or_select_account")
     response.should include_text("crm.date_select_popup")
   end

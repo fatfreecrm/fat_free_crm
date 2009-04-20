@@ -4,6 +4,7 @@ describe "/opportunities/index.html.erb" do
   include OpportunitiesHelper
   
   before(:each) do
+    login_and_assign
   end
 
   it "should render list of accounts if list of opportunities is not empty" do

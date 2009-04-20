@@ -6,13 +6,13 @@ end
 
 if @opportunity.errors.empty?
   if id == :edit_opportunity # Opportunity landing page.
-    page[:sidebar].replace_html :partial => "sidebar_show"
-    page[:summary].visual_effect :shake, :duration => 0.4, :distance => 3
     page.call "crm.flip_form", :edit_opportunity, @opportunity.name
+    page << refresh_sidebar(:show, :summary)
   else
     page[id].replace :partial => "opportunity", :collection => [ @opportunity ]
     page[id].visual_effect :highlight, :duration => 1.0
-    page << update_sidebar if called_from_index_page?
+    # page << update_sidebar if called_from_index_page?
+    page << refresh_sidebar(:index, :filters)
   end
 else  
   page[id].replace_html :partial => "edit"

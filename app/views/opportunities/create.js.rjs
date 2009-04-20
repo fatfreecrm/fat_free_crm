@@ -5,7 +5,8 @@ if @opportunity.valid?
   page[:create_opportunity].update ""
   page.insert_html :top, :opportunities, :partial => "opportunity", :collection => [ @opportunity ]
   page[dom_id(@opportunity)].visual_effect :highlight, :duration => 1.5
-  page << update_sidebar if called_from_index_page?
+  # page << update_sidebar if called_from_index_page?
+  page << refresh_sidebar(:index, :filters)
 else
   page[:create_opportunity].replace_html :partial => "create"
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
