@@ -82,9 +82,9 @@ describe "/leads/promote.js.rjs" do
     assigns[:lead] = Factory(:lead, :id => 42, :status => "new", :user => @current_user, :assignee => @current_user)
   
     render "leads/promote.js.rjs"
-    response.body.should include_text("crm.create_or_select_account")
-    response.body.should include_text('crm.date_select_popup("opportunity_closes_on")')
-    response.body.should include_text('$("account_name").focus()')
+    response.should include_text("crm.create_or_select_account")
+    response.should include_text('crm.date_select_popup("opportunity_closes_on")')
+    response.should include_text('$("account_name").focus()')
   end
 
 end

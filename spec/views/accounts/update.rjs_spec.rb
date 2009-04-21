@@ -15,7 +15,7 @@ describe "/accounts/update.js.rjs" do
     render "accounts/update.js.rjs"
  
     response.should_not have_rjs("account_42")
-    response.body.should include_text('crm.flip_form("edit_account"')
+    response.should include_text('crm.flip_form("edit_account"')
   end
  
   it "no errors: should replace [edit_account] form with account partial and highligh it when called from account index" do

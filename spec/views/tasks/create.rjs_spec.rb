@@ -29,11 +29,11 @@ describe "/tasks/create.js.rjs" do
       end
 
       it "should update tasks sidebar" do
-        response.body.should have_rjs("sidebar") do |rjs|
+        response.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        response.body.should include_text(%Q/$("filters").visualEffect("shake"/)
+        response.should include_text(%Q/$("filters").visualEffect("shake"/)
       end
     end
   end

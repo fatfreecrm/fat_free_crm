@@ -26,7 +26,7 @@ describe "/contacts/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "contacts/edit.js.rjs"
-    response.body.should include_text('crm.flip_form("edit_contact"')
+    response.should include_text('crm.flip_form("edit_contact"')
   end
 
   it "edit: should hide previously open [Edit Contact] for and replace it with contact partial" do
@@ -43,7 +43,7 @@ describe "/contacts/edit.js.rjs" do
     params[:cancel] = nil
     
     render "contacts/edit.js.rjs"
-    response.body.should include_text('crm.highlight_off("contact_42");')
+    response.should include_text('crm.highlight_off("contact_42");')
     response.should have_rjs("contact_42") do |rjs|
       with_tag("form[class=edit_contact]")
     end
@@ -56,13 +56,13 @@ describe "/contacts/edit.js.rjs" do
     response.should have_rjs("edit_contact") do |rjs|
       with_tag("form[class=edit_contact]")
     end
-    response.body.should include_text('crm.flip_form("edit_contact"')
+    response.should include_text('crm.flip_form("edit_contact"')
   end
   
   it "should show handle new or existing account for the contact" do
 
     render "contacts/edit.js.rjs"
-    response.body.should include_text("crm.create_or_select_account")
+    response.should include_text("crm.create_or_select_account")
   end
 
 end

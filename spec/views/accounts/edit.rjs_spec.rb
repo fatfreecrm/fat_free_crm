@@ -24,7 +24,7 @@ describe "/accounts/edit.js.rjs" do
     params[:cancel] = nil
     
     render "accounts/edit.js.rjs"
-    response.body.should include_text('crm.highlight_off("account_42");')
+    response.should include_text('crm.highlight_off("account_42");')
     response.should have_rjs("account_42") do |rjs|
       with_tag("form[class=edit_account]")
     end
@@ -37,7 +37,7 @@ describe "/accounts/edit.js.rjs" do
     response.should have_rjs("edit_account") do |rjs|
       with_tag("form[class=edit_account]")
     end
-    response.body.should include_text('crm.flip_form("edit_account"')
+    response.should include_text('crm.flip_form("edit_account"')
   end
 
   it "cancel from account landing page: should hide [edit account] form" do
@@ -45,7 +45,7 @@ describe "/accounts/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "accounts/edit.js.rjs"
-    response.body.should include_text('crm.flip_form("edit_account"')
+    response.should include_text('crm.flip_form("edit_account"')
   end
 
   it "cancel from account index page: should replace [edit account] form with account partial" do

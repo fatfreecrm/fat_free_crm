@@ -27,7 +27,7 @@ describe "/leads/convert.js.rjs" do
     params[:cancel] = "true"
     
     render "leads/convert.js.rjs"
-    response.body.should include_text('crm.flip_form("convert_lead"')
+    response.should include_text('crm.flip_form("convert_lead"')
   end
   
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
@@ -44,7 +44,7 @@ describe "/leads/convert.js.rjs" do
     params[:cancel] = nil
     
     render "leads/convert.js.rjs"
-    response.body.should include_text('crm.highlight_off("lead_42");')
+    response.should include_text('crm.highlight_off("lead_42");')
     response.should have_rjs("lead_42") do |rjs|
       with_tag("form[class=edit_lead]")
     end
@@ -57,17 +57,17 @@ describe "/leads/convert.js.rjs" do
     response.should have_rjs("convert_lead") do |rjs|
       with_tag("form[class=edit_lead]")
     end
-    response.body.should include_text('crm.hide_form("edit_lead"')
-    response.body.should include_text('crm.flip_form("convert_lead"')
+    response.should include_text('crm.hide_form("edit_lead"')
+    response.should include_text('crm.flip_form("convert_lead"')
   end
 
   it "convert: should handle new or existing account and set up calendar field" do
     params[:cancel] = "false"
 
     render "leads/convert.js.rjs"
-    response.body.should include_text("crm.create_or_select_account")
-    response.body.should include_text('crm.date_select_popup("opportunity_closes_on")')
-    response.body.should include_text('$("account_name").focus()')
+    response.should include_text("crm.create_or_select_account")
+    response.should include_text('crm.date_select_popup("opportunity_closes_on")')
+    response.should include_text('$("account_name").focus()')
   end
 
 end

@@ -23,7 +23,7 @@ describe "/campaigns/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "campaigns/edit.js.rjs"
-    response.body.should include_text('crm.flip_form("edit_campaign"')
+    response.should include_text('crm.flip_form("edit_campaign"')
   end
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
@@ -40,7 +40,7 @@ describe "/campaigns/edit.js.rjs" do
     params[:cancel] = nil
     
     render "campaigns/edit.js.rjs"
-    response.body.should include_text('crm.highlight_off("campaign_42");')
+    response.should include_text('crm.highlight_off("campaign_42");')
     response.should have_rjs("campaign_42") do |rjs|
       with_tag("form[class=edit_campaign]")
     end
@@ -53,16 +53,16 @@ describe "/campaigns/edit.js.rjs" do
     response.should have_rjs("edit_campaign") do |rjs|
       with_tag("form[class=edit_campaign]")
     end
-    response.body.should include_text('crm.flip_form("edit_campaign"')
+    response.should include_text('crm.flip_form("edit_campaign"')
   end
   
   it "should call JavaScript to set up popup Calendar" do
     params[:cancel] = nil
 
     render "campaigns/edit.js.rjs"
-    response.body.should include_text('crm.date_select_popup("campaign_starts_on")')
-    response.body.should include_text('crm.date_select_popup("campaign_ends_on")')
-    response.body.should include_text('$("campaign_name").focus()')
+    response.should include_text('crm.date_select_popup("campaign_starts_on")')
+    response.should include_text('crm.date_select_popup("campaign_ends_on")')
+    response.should include_text('$("campaign_name").focus()')
   end
 
 end

@@ -27,7 +27,7 @@ describe "/opportunities/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "opportunities/edit.js.rjs"
-    response.body.should include_text('crm.flip_form("edit_opportunity"')
+    response.should include_text('crm.flip_form("edit_opportunity"')
   end
 
   it "edit: should hide previously open [Edit Opportunity] for and replace it with opportunity partial" do
@@ -44,7 +44,7 @@ describe "/opportunities/edit.js.rjs" do
     params[:cancel] = nil
     
     render "opportunities/edit.js.rjs"
-    response.body.should include_text('crm.highlight_off("opportunity_42");')
+    response.should include_text('crm.highlight_off("opportunity_42");')
     response.should have_rjs("opportunity_42") do |rjs|
       with_tag("form[class=edit_opportunity]")
     end
@@ -57,13 +57,13 @@ describe "/opportunities/edit.js.rjs" do
     response.should have_rjs("edit_opportunity") do |rjs|
       with_tag("form[class=edit_opportunity]")
     end
-    response.body.should include_text('crm.flip_form("edit_opportunity"')
+    response.should include_text('crm.flip_form("edit_opportunity"')
   end
   
   it "edit: should handle new or existing account for the opportunity" do
 
     render "opportunities/edit.js.rjs"
-    response.body.should include_text("crm.create_or_select_account")
+    response.should include_text("crm.create_or_select_account")
   end
 
 end
