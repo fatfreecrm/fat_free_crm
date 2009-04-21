@@ -4,6 +4,7 @@ describe "/tasks/index.html.haml" do
   include TasksHelper
   
   before(:each) do
+    login_and_assign
     @asap  = Factory(:task, :asset => Factory(:account), :bucket => "due_asap")
     @today = Factory(:task, :asset => Factory(:account), :bucket => "due_today")
   end

@@ -4,10 +4,9 @@ describe "/tasks/edit.html.erb" do
   include TasksHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     assigns[:task] = Factory(:task, :asset => Factory(:account), :bucket => "due_asap")
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
     assigns[:bucket] = %w(due_asap due_today)
     assigns[:category] = %w(meeting money)
   end

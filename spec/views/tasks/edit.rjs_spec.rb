@@ -4,8 +4,7 @@ describe "/tasks/edit.js.rjs" do
   include TasksHelper
 
   before(:each) do
-    @current_user = Factory(:user)
-    assigns[:current_user] = @current_user
+    login_and_assign
     assigns[:users] = [ @current_user ]
     assigns[:bucket] = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
     assigns[:category] = Setting.invert(:task_category)
@@ -24,9 +23,9 @@ describe "/tasks/edit.js.rjs" do
         with_tag("li[id=task_#{@task.id}]")
       end
       if view == "pending"
-        response.body.should include_text('type=\\"checkbox\\"')
+        response.should include_text('type=\\"checkbox\\"')
       else
-        response.body.should_not include_text('type=\\"checkbox\\"')
+        response.should_not include_text('type=\\"checkbox\\"')
       end
     end
 
@@ -35,7 +34,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:task] = stub_task(view)
 
       render "tasks/edit.js.rjs"
-      response.body.should include_text('crm.hide_form("create_task"')
+      response.should include_text('crm.hide_form("create_task"')
     end
 
     it "edit: should hide previously open [Edit Task] form" do
@@ -56,11 +55,11 @@ describe "/tasks/edit.js.rjs" do
       assigns[:task] = @task
 
       render "tasks/edit.js.rjs"
-      response.body.should include_text(%Q/crm.highlight_off("task_#{@task.id}");/)
+      response.should include_text(%Q/crm.highlight_off("task_#{@task.id}");/)
       response.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("form[class=edit_task]")
       end
-      response.body.should include_text('$("task_name").focus()')
+      response.should include_text('$("task_name").focus()')
     end
 
   end

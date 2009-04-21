@@ -94,7 +94,7 @@ module TasksHelper
       else
         page << replace_content(@task, @task.bucket)
       end
-      page << update_sidebar
+      page << refresh_sidebar(:index, :filters)
     end
   end
 
@@ -103,7 +103,7 @@ module TasksHelper
     update_page do |page|
       page << hide_task_and_possibly_bucket(id, @task_before_update.bucket)
       page << insert_content(@task, @task.bucket, @view)
-      page << update_sidebar
+      page << refresh_sidebar(:index, :filters)
     end
   end
 

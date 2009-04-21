@@ -3,6 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/edit.js.rjs" do
   include TasksHelper
 
+  before(:each) do
+    login_and_assign
+  end
+
   describe "complete from Tasks tab (pending view)" do
     before(:each) do
       @task = Factory(:task)
@@ -16,8 +20,8 @@ describe "/tasks/edit.js.rjs" do
       request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render "tasks/complete.js.rjs"
-      response.body.should include_text(%Q/$("task_#{@task.id}").visualEffect("fade"/)
-      response.body.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
+      response.should include_text(%Q/$("task_#{@task.id}").visualEffect("fade"/)
+      response.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
     end
 
     it "should update tasks sidebar" do
@@ -29,8 +33,9 @@ describe "/tasks/edit.js.rjs" do
       render "tasks/complete.js.rjs"
       response.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
+        with_tag("div[id=recently]")
       end
-      response.body.should include_text(%Q/$("filters").visualEffect("shake"/)
+      response.should include_text(%Q/$("filters").visualEffect("shake"/)
     end
   end
   
@@ -38,13 +43,23 @@ describe "/tasks/edit.js.rjs" do
     it "should replace pending partial with the completed one" do
       @task = Factory(:task, :completed_at => Time.now)
       assigns[:task] = @task
-      assigns[:current_user] = Factory(:user)
 
       render "tasks/complete.js.rjs"
       response.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
-      response.body.should include_text('<strike>')
+      response.should include_text('<strike>')
+    end
+
+    it "should update recently viewed items" do
+      @task = Factory(:task, :completed_at => Time.now)
+      assigns[:task] = @task
+      request.env["HTTP_REFERER"] = "http://localhost/leads/123"
+  
+      render "tasks/complete.js.rjs"
+      response.should have_rjs("recently") do |rjs|
+        with_tag("div[class=caption]")
+      end
     end
   end
 
