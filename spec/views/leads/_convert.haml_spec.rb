@@ -4,11 +4,10 @@ describe "/leads/convert.html.erb" do
   include LeadsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     @account = Factory(:account)
     assigns[:lead] = Factory(:lead)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]
     assigns[:opportunity] = Factory(:opportunity)

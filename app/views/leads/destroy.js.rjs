@@ -1,2 +1,6 @@
 page[dom_id(@lead)].visual_effect :blind_up, :duration => 0.25
-page << update_sidebar if called_from_index_page?
+if called_from_index_page?
+  page << refresh_sidebar(:index, :filters)
+else
+  page[:recently].replace :partial => "common/recently"
+end

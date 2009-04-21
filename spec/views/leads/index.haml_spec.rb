@@ -4,6 +4,7 @@ describe "/leads/index.html.haml" do
   include LeadsHelper
   
   before(:each) do
+    login_and_assign
   end
 
   it "should render list of accounts if list of leads is not empty" do

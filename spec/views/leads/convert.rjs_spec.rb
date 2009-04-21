@@ -4,10 +4,9 @@ describe "/leads/convert.js.rjs" do
   include LeadsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     @account = Factory(:account)
     assigns[:lead] = Factory(:lead, :id => 42, :user => @current_user)
-    assigns[:current_user] = @current_user
     assigns[:users] = [ @current_user ]
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]

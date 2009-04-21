@@ -4,9 +4,8 @@ describe "/leads/edit.js.rjs" do
   include LeadsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     assigns[:lead] = Factory(:lead, :id => 42, :status => "new", :user => @current_user)
-    assigns[:current_user] = @current_user
     assigns[:users] = [ @current_user ]
     assigns[:campaigns] = [ Factory(:campaign) ]
   end

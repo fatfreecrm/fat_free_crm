@@ -4,11 +4,10 @@ describe "/leads/edit.html.erb" do
   include LeadsHelper
   
   before(:each) do
-    @current_user = Factory(:user)
+    login_and_assign
     @campaign = Factory(:campaign)
     assigns[:lead] = Factory(:lead)
     assigns[:users] = [ @current_user ]
-    assigns[:current_user] = @current_user
     assigns[:campaign] = @campaign
     assigns[:campaigns] = [ @campaign ]
   end

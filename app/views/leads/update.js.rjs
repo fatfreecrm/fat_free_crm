@@ -6,13 +6,16 @@ end
 
 if @lead.errors.empty?
   if id == :edit_lead # Lead landing page.
-    page[:sidebar].replace_html :partial => "sidebar_show"
-    page[:summary].visual_effect :shake, :duration => 0.4, :distance => 3
+    page << refresh_sidebar(:show, :summary)
     page.call "crm.flip_form", :edit_lead, @lead.full_name
   else
     page[id].replace :partial => "lead", :collection => [ @lead ]
     page[id].visual_effect :highlight, :duration => 1.0
-    page << update_sidebar if called_from_index_page?
+    if called_from_index_page?
+      page << refresh_sidebar(:index, :filters)
+    else
+      page[:recently].replace :partial => "common/recently"
+    end
   end
 else  
   page[id].replace_html :partial => "edit"
