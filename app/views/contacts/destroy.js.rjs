@@ -1,2 +1,6 @@
 page[dom_id(@contact)].visual_effect "BlindUp", :duration => 0.25
-page << refresh_sidebar(:index)
+if called_from_index_page?
+  page << refresh_sidebar(:index)
+else
+  page[:recently].replace :partial => "common/recently"
+end

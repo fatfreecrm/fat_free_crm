@@ -18,7 +18,7 @@ describe "/opportunities/create.js.rjs" do
     response.should include_text('$("opportunity_42").visualEffect("highlight"')
   end
 
-  it "create (success): should update sidebar filters when called from opportunities page" do
+  it "create (success): should update sidebar filters and recently viewed items when called from opportunities page" do
     assigns[:opportunity] = Factory(:opportunity, :id => 42)
     assigns[:opportunity_stage_total] = {:prospecting=>10, :final_review=>1, :qualification=>1, :won=>2, :all=>20, :analysis=>1, :lost=>0, :presentation=>2, :other=>0, :proposal=>1, :negotiation=>2}
     request.env["HTTP_REFERER"] = "http://localhost/opportunities"
@@ -27,6 +27,17 @@ describe "/opportunities/create.js.rjs" do
     response.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=filters]")
       with_tag("div[id=recently]")
+    end
+  end
+
+  it "create (success): should update recently viewed items when called outside the opportunities (i.e. embedded)" do
+    assigns[:opportunity] = Factory(:opportunity, :id => 42)
+    assigns[:opportunity_stage_total] = {:prospecting=>10, :final_review=>1, :qualification=>1, :won=>2, :all=>20, :analysis=>1, :lost=>0, :presentation=>2, :other=>0, :proposal=>1, :negotiation=>2}
+    request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+    render "opportunities/create.js.rjs"
+
+    response.should have_rjs("recently") do |rjs|
+      with_tag("div[class=caption]")
     end
   end
 

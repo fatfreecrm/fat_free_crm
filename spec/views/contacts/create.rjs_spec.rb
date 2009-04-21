@@ -17,12 +17,22 @@ describe "/contacts/create.js.rjs" do
     response.should include_text('$("contact_42").visualEffect("highlight"')
   end
 
-  it "create (success): should refresh sidebar" do
+  it "create (success): should refresh sidebar when called from contacts page" do
     assigns[:contact] = Factory(:contact, :id => 42)
+    request.env["HTTP_REFERER"] = "http://localhost/contacts"
     render "contacts/create.js.rjs"
 
     response.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
+    end
+  end
+
+  it "create (success): should update recently viewed items when called outside the contacts (i.e. embedded)" do
+    assigns[:contact] = Factory(:contact, :id => 42)
+    render "contacts/create.js.rjs"
+
+    response.should have_rjs("recently") do |rjs|
+      with_tag("div[class=caption]")
     end
   end
  

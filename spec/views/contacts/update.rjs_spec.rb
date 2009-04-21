@@ -31,6 +31,24 @@ describe "/contacts/update.js.rjs" do
     end
     response.should include_text('$("summary").visualEffect("shake"')
   end
+
+  it "no errors: should update sidebar when called from contacts index page" do
+    request.env["HTTP_REFERER"] = "http://localhost/contacts"
+
+    render "contacts/update.js.rjs"
+    response.should have_rjs("sidebar") do |rjs|
+      with_tag("div[id=recently]")
+    end
+  end
+
+  it "no errors: should update recently viewed items when called outside the contacts (i.e. embedded)" do
+    request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+
+    render "contacts/update.js.rjs"
+    response.should have_rjs("recently") do |rjs|
+      with_tag("div[class=caption]")
+    end
+  end
  
   it "no errors: should replace [Edit Contact] with contact partial and highligh it when called outside contact landing page" do
     request.env["HTTP_REFERER"] = "http://localhost/contacts"

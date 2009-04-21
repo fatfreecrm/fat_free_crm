@@ -33,6 +33,26 @@ describe "/opportunities/update.js.rjs" do
     end
     response.should include_text('$("summary").visualEffect("shake"')
   end
+
+  it "no errors: should update sidebar when called from opportunities index page" do
+    request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+
+    render "opportunities/update.js.rjs"
+    response.should have_rjs("sidebar") do |rjs|
+      with_tag("div[id=filters]")
+      with_tag("div[id=recently]")
+    end
+    response.should include_text('$("filters").visualEffect("shake"')
+  end
+
+  it "no errors: should update recently viewed items when called outside the opportunities (i.e. embedded)" do
+    request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+
+    render "opportunities/update.js.rjs"
+    response.should have_rjs("recently") do |rjs|
+      with_tag("div[class=caption]")
+    end
+  end
  
   it "no errors: should replace [Edit Opportunity] with opportunity partial and highligh it when called outside opportunity landing page" do
     request.env["HTTP_REFERER"] = "http://localhost/opportunities"

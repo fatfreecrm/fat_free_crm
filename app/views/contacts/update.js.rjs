@@ -11,7 +11,11 @@ if @contact.errors.empty?
   else
     page[id].replace :partial => "contact", :collection => [ @contact ]
     page[id].visual_effect :highlight, :duration => 1.0
-    page << refresh_sidebar(:index)
+    if called_from_index_page?
+      page << refresh_sidebar(:index)
+    else
+      page[:recently].replace :partial => "common/recently"
+    end
   end
 else  
   page[id].replace_html :partial => "edit"
