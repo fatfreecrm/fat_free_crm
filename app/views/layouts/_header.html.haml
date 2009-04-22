@@ -2,7 +2,7 @@
   %div
     - if current_user
       Welcome,
-      = current_user.first_name << "! "
+      = current_user.username << "! "
       = link_to("Preferences", url_for(:controller => "preferences")) << " | "
       = link_to("Profile", profile_path) << " | "
       = link_to("Logout", logout_path, :method => :delete)

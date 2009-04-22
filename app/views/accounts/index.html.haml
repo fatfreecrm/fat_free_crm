@@ -8,4 +8,4 @@
   - unless @accounts.empty?
     = render :partial => "account", :collection => @accounts
   - else
-    %div== You don't have any accounts set up yet. Feel free to #{link_to("create new account", new_account_path)} now.
+    %div== You don't have any accounts set up yet. Feel free to #{link_to_remote("create new account", :url => new_account_path)} now.

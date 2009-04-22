@@ -6,6 +6,6 @@
   - unless @contacts.empty?
     = render :partial => "contact", :collection => @contacts
   - else
-    %div== You don't have any contacts yet. Feel free to #{link_to("create new contact", new_contact_path)}.
+    %div== You don't have any contacts yet. Feel free to #{link_to_remote("create new contact", :url => new_contact_path)}.
 
 

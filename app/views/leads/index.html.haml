@@ -8,4 +8,4 @@
   - unless @leads.empty?
     = render :partial => "lead", :collection => @leads
   - else
-    %div== You don't have any leads yet. Feel free to #{link_to("create new lead", new_lead_path)}.
+    %div== You don't have any leads yet. Feel free to #{link_to_remote("create new lead", :url => new_lead_path)}.

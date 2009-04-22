@@ -8,4 +8,4 @@
   - unless @opportunities.empty?
     = render :partial => "opportunity", :collection => @opportunities
   - else
-    %div== You don't have any opportunities yet. Feel free to #{link_to("create new opportunity", new_opportunity_path)}.
+    %div== You don't have any opportunities yet. Feel free to #{link_to_remote("create new opportunity", :url => new_opportunity_path)}.
