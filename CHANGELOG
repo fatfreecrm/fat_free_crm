@@ -4,9 +4,17 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Apr 22, 2009
+---------------------------------------------------------------------
+- Filter activities based on asset's permissions (existing assets only so far).
+
+Tue, Apr 21, 2009
+---------------------------------------------------------------------
+- Honor object permissions when displaying activity log (LH #17).
+
 Mon, Apr 20, 2009
 ---------------------------------------------------------------------
-- Finished with recently viewed items sidebar panel.
+- Finished with recently viewed items sidebar panel (LH #28).
 
 Sun, Apr 19, 2009
 ---------------------------------------------------------------------
