@@ -11,6 +11,12 @@ module ActiveRecord
 
           def uses_user_permissions
             unless included_modules.include?(InstanceMethods)
+              #
+              # NOTE: we're deliberately omitting :dependent => :destroy to preserve
+              # permissions of deleted objects. This serves two purposes: 1) to be able
+              # to implement Recycly Bin/Restore and 2) to honor permissions when
+              # displaying "object deleted..." in the activity log.
+              #
               has_many :permissions, :as => :asset, :include => :user
               named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["#{self.table_name}.user_id=? OR #{self.table_name}.assigned_to=? OR permissions.user_id=? OR access='Public'", user, user, user], :order => "#{self.table_name}.id DESC" } }
               include ActiveRecord::Uses::User::Permissions::InstanceMethods

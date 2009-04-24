@@ -143,20 +143,27 @@ describe Activity do
   end
 
   describe "Permissions" do
-    # Somebody created private asset -- its activities shouldn't be visible to current user.
-    it "should not show the activity if the related asset is private" do
+    it "should not show the created/updated activities if the subject is private" do
       @subject = Factory(:account, :user => Factory(:user), :access => "Private")
       @subject.update_attribute(:updated_at, Time.now)
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
-
       @activities = Activity.latest.visible_to(@current_user)
       @activities.should == []
     end
 
-    # Somebody created an asset and shared it with other users -- its activitie shouldn't be visible to current user.
-    it "should not show the activity if the related asset was not shared with the user" do
+    it "should not show the deleted activity if the subject is private" do
+      @subject = Factory(:account, :user => Factory(:user), :access => "Private")
+      @subject.destroy
+
+      @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities.map(&:action).sort.should == %w(created deleted)
+      @activities = Activity.latest.visible_to(@current_user)
+      @activities.should == []
+    end
+
+    it "should not show created/updated activities if the subject was not shared with the user" do
       @user = Factory(:user)
       @subject = Factory(:account,
         :user => @user,
@@ -167,13 +174,26 @@ describe Activity do
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
-
       @activities = Activity.latest.visible_to(@current_user)
       @activities.should == []
     end
 
-    # Somebody created an asset and shared it with the current user -- its activitie shouldn be visible to current user.
-    it "should show the activity if the related asset was shared with the user" do
+    it "should not show the deleted activity if the subject was not shared with the user" do
+      @user = Factory(:user)
+      @subject = Factory(:account,
+        :user => @user,
+        :access => "Shared",
+        :permissions => [ Factory.build(:permission, :user => @user, :asset => @subject) ]
+      )
+      @subject.destroy
+
+      @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities.map(&:action).sort.should == %w(created deleted)
+      @activities = Activity.latest.visible_to(@current_user)
+      @activities.should == []
+    end
+
+    it "should show created/updated activities if the subject was shared with the user" do
       @subject = Factory(:account,
         :user => Factory(:user),
         :access => "Shared",
@@ -186,6 +206,18 @@ describe Activity do
 
       @activities = Activity.latest.visible_to(@current_user)
       @activities.map(&:action).sort.should == %w(created updated viewed)
+    end
+
+    it "should show deleted activity if the subject was shared with the user" do
+      @subject = Factory(:account,
+        :user => Factory(:user),
+        :access => "Shared",
+        :permissions => [ Factory.build(:permission, :user => @current_user, :asset => @subject) ]
+      )
+      @subject.destroy
+
+      @activities = Activity.latest.visible_to(@current_user)
+      @activities.map(&:action).sort.should == %w(created deleted)
     end
   end
 end
