@@ -8,4 +8,4 @@
   - unless @campaigns.empty?
     = render :partial => "campaign", :collection => @campaigns
   - else
-    %div== You don't have any campaigns set up. Please #{link_to("create new campaign", new_campaign_path)} first.
+    %div== You don't have any campaigns set up. Please #{link_to_remote("create new campaign", :url => new_campaign_path)} first.
