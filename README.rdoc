@@ -10,20 +10,16 @@ Here are the steps to get Fat Free CRM up and running on your system.
 === System Requirements
 
 * Ruby v1.8.6 or later
-* Ruby on Rails v2.2 or later
+* Ruby on Rails v2.2 (hasn't been ported to Rails 2.3 yet)
 * MySQL v4.1.1 or later (v5+ is recommended) or SQLite v3.4 or later
+* Browsers: FireFox and Safari (IE is not supported yet)
 
+=== Resources
 
-=== Getting The Source Code
-
-The source code of Fat Free CRM is maintained using Git version control
-system. To clone the source from the official repository use the following
-command:
-
-   $ git clone git://github.com/michaeldv/fat_free_crm.git
-
-This will download the latest code snapshot and unpack it on your local machine.
-
+* Project page: http://github.com/michaeldv/fat_free_crm/tree/master
+* Git repository: git://github.com/michaeldv/fat_free_crm.git
+* Lighthouse: http://fatfreecrm.lighthouseapp.com
+* Twitter: http://twitter.com/fatfreecrm
 
 === Setting Up The Database
 
