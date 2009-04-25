@@ -4,6 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Fri, Apr 24, 2009
+---------------------------------------------------------------------
+- Make sure tasks don't get onto recently viewed items list.
+- Added "completed", "reassigned", and "rescheduled" activity logs for tasks (closes LH #17).
+ 
 Thu, Apr 23, 2009
 ---------------------------------------------------------------------
 - Filter activities based on asset permissions, even for deleted assets.

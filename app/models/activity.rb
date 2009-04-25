@@ -44,12 +44,14 @@ class Activity < ActiveRecord::Base
   private
   #----------------------------------------------------------------------------
   def self.create_activity(user, subject, action)
-    create(
-      :user    => user,
-      :subject => subject,
-      :action  => action.to_s,
-      :info    => subject.respond_to?(:full_name) ? subject.full_name : subject.name
-    )
+    unless subject.is_a?(Task) && action == :viewed # Tasks don't have landing pages, so technically they can't be "viewed".
+      create(
+        :user    => user,
+        :subject => subject,
+        :action  => action.to_s,
+        :info    => subject.respond_to?(:full_name) ? subject.full_name : subject.name
+      )
+    end
   end
 
   #----------------------------------------------------------------------------

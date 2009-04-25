@@ -142,6 +142,54 @@ describe Activity do
     end
   end
 
+  describe "Recently viewed items (task)" do
+    before(:each) do
+      @task = Factory(:task)
+      @conditions = [ "subject_id=? AND subject_type='Task'", @task.id ]
+    end
+
+    it "creating a new task should not add it to recently viewed items list" do
+      @activities = Activity.all(:conditions => @conditions)
+
+      @activities.map(&:action).should == %w(created) # but not viewed
+    end
+
+    it "updating a new task should not add it to recently viewed items list" do
+      @task.update_attribute(:updated_at, Time.now)
+      @activities = Activity.all(:conditions => @conditions)
+
+      @activities.map(&:action).sort.should == %w(created updated) # but not viewed
+    end
+  end
+
+  describe "Action refinements for task updates" do
+    before(:each) do
+      @task = Factory(:task, :user => @current_user)
+      @conditions = [ "subject_id=? AND subject_type='Task' AND user_id=?", @task.id, @current_user ]
+    end
+
+    it "should create 'completed' task action" do
+      @task.update_attribute(:completed_at, Time.now)
+      @activities = Activity.all(:conditions => @conditions)
+
+      @activities.map(&:action).sort.should == %w(completed created)
+    end
+
+    it "should create 'reassigned' task action" do
+      @task.update_attribute(:assigned_to, @current_user.id + 1)
+      @activities = Activity.all(:conditions => @conditions)
+
+      @activities.map(&:action).sort.should == %w(created reassigned)
+    end
+
+    it "should create 'rescheduled' task action" do
+      @task.update_attribute(:bucket, "due_tomorrow") # Factory creates :due_asap task
+      @activities = Activity.all(:conditions => @conditions)
+
+      @activities.map(&:action).sort.should == %w(created rescheduled)
+    end
+  end
+
   describe "Permissions" do
     it "should not show the created/updated activities if the subject is private" do
       @subject = Factory(:account, :user => Factory(:user), :access => "Private")
