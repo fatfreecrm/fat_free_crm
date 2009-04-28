@@ -25,7 +25,7 @@ class Account < ActiveRecord::Base
   has_many    :account_contacts, :dependent => :destroy
   has_many    :contacts, :through => :account_contacts, :uniq => true
   has_many    :account_opportunities, :dependent => :destroy
-  has_many    :opportunities, :through => :account_opportunities, :uniq => true, :order => "id DESC"
+  has_many    :opportunities, :through => :account_opportunities, :uniq => true, :order => "opportunities.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 

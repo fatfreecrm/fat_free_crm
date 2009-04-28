@@ -1,7 +1,7 @@
 config/database.yml
 coverage/*
 db/schema.rb
-db/*.sql
+db/*.sql*
 log/*.log
 tmp/**/*
 .DS_Store

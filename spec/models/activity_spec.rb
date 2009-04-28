@@ -32,7 +32,7 @@ describe Activity do
       @user = Factory(:user)
       @actions = %w(created deleted updated viewed).freeze
       @actions.each_with_index do |action, index|
-        Factory(:activity, :id => index + 1, :action => action, :user => @user, :subject => Factory(:lead))
+        Factory(:activity, :action => action, :user => @user, :subject => Factory(:lead))
         Factory(:activity, :action => action, :subject => Factory(:lead)) # different user
       end
     end
@@ -155,7 +155,7 @@ describe Activity do
     end
 
     it "updating a new task should not add it to recently viewed items list" do
-      @task.update_attribute(:updated_at, Time.now)
+      @task.update_attribute(:updated_at, 1.second.ago)
       @activities = Activity.all(:conditions => @conditions)
 
       @activities.map(&:action).sort.should == %w(created updated) # but not viewed
@@ -169,7 +169,7 @@ describe Activity do
     end
 
     it "should create 'completed' task action" do
-      @task.update_attribute(:completed_at, Time.now)
+      @task.update_attribute(:completed_at, 1.second.ago)
       @activities = Activity.all(:conditions => @conditions)
 
       @activities.map(&:action).sort.should == %w(completed created)
@@ -193,7 +193,7 @@ describe Activity do
   describe "Permissions" do
     it "should not show the created/updated activities if the subject is private" do
       @subject = Factory(:account, :user => Factory(:user), :access => "Private")
-      @subject.update_attribute(:updated_at, Time.now)
+      @subject.update_attribute(:updated_at,  1.second.ago)
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
@@ -218,7 +218,7 @@ describe Activity do
         :access => "Shared",
         :permissions => [ Factory.build(:permission, :user => @user, :asset => @subject) ]
       )
-      @subject.update_attribute(:updated_at, Time.now)
+      @subject.update_attribute(:updated_at, 1.second.ago)
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
@@ -247,7 +247,7 @@ describe Activity do
         :access => "Shared",
         :permissions => [ Factory.build(:permission, :user => @current_user, :asset => @subject) ]
       )
-      @subject.update_attribute(:updated_at, Time.now)
+      @subject.update_attribute(:updated_at, 1.second.ago)
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
