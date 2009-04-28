@@ -8,7 +8,8 @@ describe "/accounts/index.html.haml" do
   end
 
   it "should render list of accounts if list of accounts is not empty" do
-    assigns[:accounts] = [ Factory(:account) ]
+    assigns[:accounts] = [ Factory(:account), Factory(:account) ]
+    assigns[:accounts_total] = 2
     template.should_receive(:render).with(hash_including(:partial => "account"))
     render "/accounts/index.html.haml"
   end

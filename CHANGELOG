@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Apr 27, 2009
+---------------------------------------------------------------------
+- Initial implementation of on demand paging (Accounts only so far).
+
+Sun, Apr 26, 2009
+---------------------------------------------------------------------
+- Researched on demand paginations, and [will_paginate].
+
 Sat, Apr 25, 2009
 ---------------------------------------------------------------------
 - Installed [will_paginate] plugin.

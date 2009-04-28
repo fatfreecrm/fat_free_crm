@@ -7,5 +7,6 @@
 .list#accounts
   - unless @accounts.empty?
     = render :partial => "account", :collection => @accounts
+    = render :partial => "common/paginate"
   - else
     %div== You don't have any accounts set up yet. Feel free to #{link_to_remote("create new account", :url => new_account_path)} now.

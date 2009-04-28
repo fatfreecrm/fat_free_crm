@@ -4,14 +4,23 @@ class AccountsController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /accounts
-  # GET /accounts.xml
+  # GET /accounts.xml                                             HTML and AJAX
   #----------------------------------------------------------------------------
   def index
-    @accounts = Account.my(@current_user)
+    @page = (params[:page].to_i || 0) + 1
+    @accounts = Account.my(@current_user).paginate(:page => @page, :per_page => 10)
+    @accounts_total = Account.my(@current_user).count
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @accounts }
+      format.js {
+        unless @accounts.blank?
+          render :partial => "account", :collection => @accounts
+        else
+          render :partial => "common/total"
+        end
+      }
+      format.xml { render :xml => @accounts }
     end
   end
 
