@@ -4,6 +4,7 @@ if @account.valid?
   page << "Effect.toggle('create_account', 'blind', { duration: 0.1 });"
   page.insert_html :top, :accounts, :partial => "account", :collection => [ @account ]
   page[dom_id(@account)].visual_effect :highlight, :duration => 1.5
+  page.call "crm.update_total", 1
   page << refresh_sidebar
 else
   page[:create_account].replace_html :partial => "create"

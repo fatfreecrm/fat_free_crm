@@ -13,14 +13,8 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.js {
-        unless @accounts.blank?
-          render :partial => "account", :collection => @accounts
-        else
-          render :partial => "common/total"
-        end
-      }
-      format.xml { render :xml => @accounts }
+      format.js   { render :template => "accounts/index.js.haml" }
+      format.xml  { render :xml => @accounts }
     end
   end
 

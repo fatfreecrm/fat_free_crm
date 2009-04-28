@@ -19,14 +19,13 @@ describe AccountsController do
       response.should render_template("accounts/index")
     end
 
-    # it "should expose all accounts as @accounts and render [account] partial" do
-    #   @accounts = [ Factory(:account, :user => @current_user), Factory(:account, :user => @current_user) ]
-    #   xhr :get, :index
-    #   assigns[:accounts].should == @accounts
-    #   assigns[:accounts_total].should == @accounts.size
-    #   response.should render_template("accounts/account")
-    #   # response.expects_render(:partial => "account", :collection => @accounts)
-    # end
+    it "should respond to [Load more] request and render [index.js.haml] template" do
+      @accounts = [ Factory(:account, :user => @current_user) ]
+      xhr :get, :index
+      assigns[:accounts].should == @accounts
+      assigns[:accounts_total].should == @accounts.size
+      response.should render_template("accounts/index.js.haml")
+    end
 
     describe "with mime type of XML" do
 

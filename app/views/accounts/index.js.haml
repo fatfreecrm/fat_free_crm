@@ -1,0 +1,4 @@
+- unless @accounts.blank? # This is not exactly right...
+  = render :partial => "account", :collection => @accounts
+- else
+  = render :partial => "common/total"

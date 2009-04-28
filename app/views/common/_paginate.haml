@@ -4,7 +4,7 @@
 #loading{ hidden }= image_tag("loading.gif", :size => "16x16")
 #paginate
   - if collection.size < total
-    = link_to_function("Load more...", "crm.paginate('#{items}')")
+    = link_to_function("Show more #{items}...", "crm.paginate('#{items}')")
   - else
     = render :partial => "common/total"
 #page{ hidden }= @page

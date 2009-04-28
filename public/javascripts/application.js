@@ -211,6 +211,14 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  update_total: function(delta) {
+    var total = $("total");
+    if (total) {
+      total.update(parseInt(total.innerHTML) + delta);
+    }
+  },
+
+  //----------------------------------------------------------------------------
   toggle_open_id_login: function(first_field) {
     if (arguments.length == 0) {
       first_field = "authentication_openid_identifier";

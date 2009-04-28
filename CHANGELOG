@@ -7,6 +7,8 @@ then you win. –- Mahatma Gandhi
 Mon, Apr 27, 2009
 ---------------------------------------------------------------------
 - Initial implementation of on demand paging (Accounts only so far).
+- Fixed SQLite incompatibilities (thanks, James!)
+- Restructured pagination templates and added specs.
 
 Sun, Apr 26, 2009
 ---------------------------------------------------------------------

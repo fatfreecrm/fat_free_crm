@@ -17,6 +17,13 @@ describe "/accounts/create.js.rjs" do
     response.should include_text('$("account_42").visualEffect("highlight"')
   end
 
+  it "create (success): should increment total number of accounts" do
+    assigns[:account] = Factory(:account, :id => 42)
+    render "accounts/create.js.rjs"
+
+    response.should include_text('crm.update_total(1);')
+  end
+
   it "create (success): should refresh sidebar" do
     assigns[:account] = Factory(:account, :id => 42)
     render "accounts/create.js.rjs"
