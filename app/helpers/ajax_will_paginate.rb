@@ -12,7 +12,7 @@ class AjaxWillPaginate < WillPaginate::LinkRenderer
   #----------------------------------------------------------------------------
   def page_link(page, text, attributes = {})
     @template.link_to_remote(text, { 
-      :url     => url_for(page).sub(/(\w+)\/\w+\?/, "\\1?"),
+      :url     => url_for(page).sub(/(\w+)\/[^\?]+\?/, "\\1?"),
       :method  => :get,
       :loading => "$('loading').show()",
       :success => "$('loading').hide()"

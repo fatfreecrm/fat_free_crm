@@ -69,7 +69,10 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save_with_permissions(params)
-        get_data_for_sidebar if called_from_index_page?
+        if called_from_index_page?
+          @leads = get_leads
+          get_data_for_sidebar
+        end
         format.js   # create.js.rjs
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
       else
@@ -106,11 +109,9 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
     @lead.destroy
 
-    get_data_for_sidebar if called_from_index_page?
-
     respond_to do |format|
-      format.html { flash[:notice] = "#{@lead.full_name} has beed deleted."; redirect_to(leads_path) }
-      format.js   # destroy.js.rjs
+      format.html { respond_to_destroy(:html) }
+      format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
     end
   end
@@ -171,7 +172,31 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def get_current_page
     page = params[:page] || session[:leads_current_page] || 1
-    session[:leads_current_page] = page
+    session[:leads_current_page] = page.to_i
+  end
+
+  #----------------------------------------------------------------------------
+  def respond_to_destroy(method)
+    if method == :ajax
+      if called_from_index_page?                  # Called from Leads index.
+        @leads = get_leads                        # Get leads for current page.
+        if @leads.blank?                          # Any leads on this page?
+          if session[:leads_current_page] > 1     # No.
+            session[:leads_current_page] -= 1     #   Is there a previous page?
+            @leads = get_leads                    #   Yes.
+          end                                     #   Get leads for previous page
+          render :action => :index                #   And reload the whole list.
+        else                                      # Yes.
+          get_data_for_sidebar                    #   Update sidebar.
+        end
+      else                                        # Called from related asset.
+        session[:leads_current_page] = 1          # Reset current page to 1 to make sure it stays valid.
+      end                                         # Render destroy.js.rjs
+    else # :html destroy
+      session[:leads_current_page] = 1
+      flash[:notice] = "#{@lead.full_name} has beed deleted."
+      redirect_to(leads_path)
+    end
   end
 
   #----------------------------------------------------------------------------

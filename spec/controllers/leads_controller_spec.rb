@@ -239,6 +239,15 @@ describe LeadsController do
         assigns[:lead_status_total].should be_an_instance_of(Hash)
       end
 
+      it "should reload leads to update pagination if called from leads index" do
+        @lead = Factory.build(:lead, :user => @current_user, :campaign => nil)
+        Lead.stub!(:new).and_return(@lead)
+
+        request.env["HTTP_REFERER"] = "http://localhost/leads"
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
+        assigns[:leads].should == [ @lead ]
+      end
+
     end
 
     describe "with invalid params" do
@@ -344,33 +353,68 @@ describe LeadsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
 
-    it "should destroy the requested lead and render [destroy] template" do
-      @lead = Factory(:lead, :id => 42, :user => @current_user)
-
-      xhr :delete, :destroy, :id => 42
-      assigns[:lead_status_total].should be_nil
+    before(:each) do
+      @lead = Factory(:lead, :user => @current_user)
     end
 
-    it "should get the data for leads sidebar if called from leads index" do
-      @lead = Factory(:lead, :id => 42, :user => @current_user)
-      request.env["HTTP_REFERER"] = "http://localhost/leads"
+    describe "AJAX request" do
+      it "should destroy the requested lead and render [destroy] template" do
+        xhr :delete, :destroy, :id => @lead.id
+        assigns[:lead_status_total].should be_nil
+        response.should render_template("leads/destroy")
+      end
 
-      xhr :delete, :destroy, :id => 42
-      assigns[:lead].should == @lead
-      assigns[:lead_status_total].should_not be_nil
-      assigns[:lead_status_total].should be_an_instance_of(Hash)
-      response.should render_template("leads/destroy")
+      describe "when called from Leads index page" do
+        before(:each) do
+          request.env["HTTP_REFERER"] = "http://localhost/leads"
+        end
+
+        it "should update sidebar if current page has leads" do
+          @another_lead = Factory(:lead, :user => @current_user)
+
+          xhr :delete, :destroy, :id => @lead.id
+          assigns[:leads].should == [ @another_lead ] # @lead got deleted
+          assigns[:lead_status_total].should_not be_nil
+          assigns[:lead_status_total].should be_an_instance_of(Hash)
+          response.should render_template("leads/destroy")
+        end
+
+        it "should try previous page and render index action if current page has no leads" do
+          session[:leads_current_page] = 42
+
+          xhr :delete, :destroy, :id => @lead.id
+          session[:leads_current_page].should == 41
+          response.should render_template("leads/index")
+        end
+
+        it "should render index action when deleting last lead" do
+          session[:leads_current_page] = 1
+
+          xhr :delete, :destroy, :id => @lead.id
+          session[:leads_current_page].should == 1
+          response.should render_template("leads/index")
+        end
+      end
+
+      describe "when called from related asset page page" do
+        it "should reset current page to 1" do
+          request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+
+          xhr :delete, :destroy, :id => @lead.id
+          session[:leads_current_page].should == 1
+          response.should render_template("leads/destroy")
+        end
+      end
     end
 
-    it "should redirect to Leads index when a lead gets deleted from its landing page" do
-      @lead = Factory(:lead)
-
-      delete :destroy, :id => @lead.id
-
-      flash[:notice].should_not == nil
-      response.should redirect_to(leads_path)
+    describe "HTML request" do
+      it "should redirect to Leads index when a lead gets deleted from its landing page" do
+        delete :destroy, :id => @lead.id
+        flash[:notice].should_not == nil
+        session[:leads_current_page].should == 1
+        response.should redirect_to(leads_path)
+      end
     end
-
   end
 
   # GET /leads/1/convert

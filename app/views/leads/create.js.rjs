@@ -6,6 +6,7 @@ if @lead.valid?
   page[dom_id(@lead)].visual_effect :highlight, :duration => 1.5
   if called_from_index_page?
     page << refresh_sidebar(:index, :filters)
+    page[:paginate].replace_html render(:partial => "common/ajax_paginate")
   else
     page[:recently].replace :partial => "common/recently"
   end

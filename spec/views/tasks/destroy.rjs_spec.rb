@@ -48,17 +48,6 @@ describe "/tasks/destroy.js.rjs" do
       response.should include_text(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
       response.should_not include_text(%Q/$("list_due_asap").visualEffect("fade"/) # bucket is not empty
     end
-
-    it "should update recently viewed items" do
-      @task = Factory(:task)
-      assigns[:task] = @task
-      request.env["HTTP_REFERER"] = "http://localhost/leads/123"
-  
-      render "tasks/destroy.js.rjs"
-      response.should have_rjs("recently") do |rjs|
-        with_tag("div[class=caption]")
-      end
-    end
   end
 
 end

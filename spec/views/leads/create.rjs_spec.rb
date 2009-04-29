@@ -5,22 +5,22 @@ describe "/leads/create.js.rjs" do
 
   before(:each) do
     login_and_assign
+    assigns[:lead] = @lead = Factory(:lead)
     assigns[:campaigns] = [ Factory(:campaign) ]
+    assigns[:lead_status_total] = { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 }
   end
 
   it "create (success): should hide [Create Lead] form and insert lead partial" do
-    assigns[:lead] = Factory(:lead, :id => 42)
     render "leads/create.js.rjs"
 
     response.should have_rjs(:insert, :top) do |rjs|
-      with_tag("li[id=lead_42]")
+      with_tag("li[id=lead_#{@lead.id}]")
     end
-    response.should include_text('$("lead_42").visualEffect("highlight"')
+    response.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
   end
 
   it "create (success): should update sidebar when called from leads page" do
-    assigns[:lead] = Factory(:lead, :id => 42)
-    assigns[:lead_status_total] = { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 }
+    assigns[:leads] = [ @lead ].paginate
     request.env["HTTP_REFERER"] = "http://localhost/leads"
     render "leads/create.js.rjs"
 
@@ -31,9 +31,15 @@ describe "/leads/create.js.rjs" do
     response.should include_text('$("filters").visualEffect("shake"')
   end
 
-  it "create (success): should update recently viewed items when called outside the leads (i.e. embedded)" do
-    assigns[:lead] = Factory(:lead, :id => 42)
-    assigns[:lead_status_total] = { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 }
+  it "create (success): should update pagination when called related asset" do
+    assigns[:leads] = [ @lead ].paginate
+    request.env["HTTP_REFERER"] = "http://localhost/leads"
+    render "leads/create.js.rjs"
+
+    response.should have_rjs("paginate")
+  end
+
+  it "create (success): should update recently viewed items when called from related asset" do
     request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
     render "leads/create.js.rjs"
 
