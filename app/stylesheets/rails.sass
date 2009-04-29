@@ -63,3 +63,32 @@ div
         :padding 2px
         &.selected
           :background-color #ffb
+
+// Pagination.
+//------------------------------------------------------------------------------
+.pagination
+  :background white
+  :float right
+  :font-size 11px
+  :margin 6px 0px 0px 0px
+  a, span
+    :padding .2em .5em
+    :display block
+    :float left
+    :margin 0px 2px 0px 0px
+  span.disabled
+    :color #999
+    :border 1px solid #DDD
+  span.current
+    :font-weight bold
+    :background #2E6AB1
+    :color white
+    :border 1px solid #2E6AB1
+  a
+    :text-decoration none
+    :color #105CB6
+    :border 1px solid #9AAFE5
+    &:hover, &:focus
+      :color navy
+      :background lightyellow
+      :border-color navy

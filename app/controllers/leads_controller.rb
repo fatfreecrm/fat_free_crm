@@ -8,11 +8,12 @@ class LeadsController < ApplicationController
   # GET /leads.xml
   #----------------------------------------------------------------------------
   def index
-    unless session[:filter_by_lead_status]
-      @leads = Lead.my(@current_user)
+    @page = params[:page] || 1
+    @leads = unless session[:filter_by_lead_status]
+      Lead.my(@current_user)
     else
-      @leads = Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
-    end
+      Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
+    end.paginate(:page => @page)
 
     respond_to do |format|
       format.html # index.html.erb

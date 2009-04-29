@@ -52,3 +52,30 @@ div.autocomplete {
       padding: 2px; }
       div.autocomplete ul li.selected {
         background-color: #ffb; }
+
+.pagination {
+  background: white;
+  float: right;
+  font-size: 11px;
+  margin: 6px 0px 0px 0px; }
+  .pagination a, .pagination span {
+    padding: .2em .5em;
+    display: block;
+    float: left;
+    margin: 0px 2px 0px 0px; }
+  .pagination span.disabled {
+    color: #999;
+    border: 1px solid #DDD; }
+  .pagination span.current {
+    font-weight: bold;
+    background: #2E6AB1;
+    color: white;
+    border: 1px solid #2E6AB1; }
+  .pagination a {
+    text-decoration: none;
+    color: #105CB6;
+    border: 1px solid #9AAFE5; }
+    .pagination a:hover, .pagination a:focus {
+      color: navy;
+      background: lightyellow;
+      border-color: navy; }

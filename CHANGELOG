@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Apr 27, 2009
+---------------------------------------------------------------------
+- Started to explore alternative approach to pagination (see Leads).
+
 Mon, Apr 27, 2009
 ---------------------------------------------------------------------
 - Initial implementation of on demand paging (Accounts only so far).

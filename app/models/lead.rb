@@ -79,8 +79,10 @@ class Lead < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def convert
-    update_attributes(:status => "converted")
+    update_attribute(:status, "converted")
   end
+
+  def self.per_page; 20; end
 
   #----------------------------------------------------------------------------
   def full_name

@@ -15,3 +15,6 @@ Sass::Plugin.options[:css_location] = File.join(RAILS_ROOT, "public/stylesheets"
 Date::DATE_FORMATS[:mmddyyyy] = "%m/%d/%Y"
 Date::DATE_FORMATS[:mmdd] = "%b %e"
 Time::DATE_FORMATS[:mmddhhss] = "%b %e at %l:%M%p"
+
+#---------------------------------------------------------------------
+WillPaginate::ViewHelpers.pagination_options[:renderer] = "AjaxWillPaginate"

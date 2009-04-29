@@ -8,7 +8,7 @@ describe "/leads/index.html.haml" do
   end
 
   it "should render list of accounts if list of leads is not empty" do
-    assigns[:leads] = [ Factory(:lead) ]
+    assigns[:leads] = [ Factory(:lead) ].paginate(:page => 1, :per_page => 20)
     template.should_receive(:render).with(hash_including(:partial => "lead"))
     render "/leads/index.html.haml"
   end
