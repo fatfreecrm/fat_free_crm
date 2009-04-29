@@ -12,7 +12,7 @@ describe LeadsController do
   end
 
   # GET /leads
-  # GET /leads.xml
+  # GET /leads.xml                                                AJAX and HTML
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
 
@@ -50,6 +50,38 @@ describe LeadsController do
       # Note: can't compare campaigns directly because of BigDecimals.
       assigns[:leads].size.should == 2
       assigns[:leads].map(&:status).should == %w(contacted new)
+    end
+
+    describe "AJAX pagination" do
+      it "should use default page number of 1" do
+        @leads = [ Factory(:lead, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:page].should == 1
+        assigns[:leads].should == @leads
+        session[:leads_current_page].should == 1
+        response.should render_template("leads/index")
+      end
+
+      it "should pick up page number from params" do
+        @leads = [ Factory(:lead, :user => @current_user) ]
+        xhr :get, :index, :page => 42
+
+        assigns[:page].to_i.should == 42
+        assigns[:leads].should == [] # page #42 should be empty if there's only one lead ;-)
+        session[:leads_current_page].to_i.should == 42
+        response.should render_template("leads/index")
+      end
+
+      it "should pick up saved page number from session" do
+        session[:leads_current_page] = 42
+        @leads = [ Factory(:lead, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:page].should == 42
+        assigns[:leads].should == []
+        response.should render_template("leads/index")
+      end
     end
 
     describe "with mime type of XML" do
@@ -308,7 +340,7 @@ describe LeadsController do
   end
 
   # DELETE /leads/1
-  # DELETE /leads/1.xml                                                    AJAX
+  # DELETE /leads/1.xml                                           AJAX and HTML
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
 
@@ -328,6 +360,15 @@ describe LeadsController do
       assigns[:lead_status_total].should_not be_nil
       assigns[:lead_status_total].should be_an_instance_of(Hash)
       response.should render_template("leads/destroy")
+    end
+
+    it "should redirect to Leads index when a lead gets deleted from its landing page" do
+      @lead = Factory(:lead)
+
+      delete :destroy, :id => @lead.id
+
+      flash[:notice].should_not == nil
+      response.should redirect_to(leads_path)
     end
 
   end
@@ -425,22 +466,21 @@ describe LeadsController do
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do
 
-    it "should filter out leads as @leads and render [filter] template" do
+    it "should filter out leads as @leads and render :index action" do
       session[:filter_by_lead_status] = "contacted,rejected"
 
       @leads = [ Factory(:lead, :user => @current_user, :status => "new") ]
       xhr :get, :filter, :status => "new"
       assigns[:leads].should == @leads
-      response.should render_template("leads/filter")
+      response.should be_a_success
+      response.should render_template("leads/index")
     end
 
-    it "should redirect to Leads index when a lead gets deleted from its landing page" do
-      @lead = Factory(:lead)
+    it "should reset current page to 1" do
+      @leads = []
+      xhr :get, :filter, :status => "new"
 
-      delete :destroy, :id => @lead.id
-
-      flash[:notice].should_not == nil
-      response.should redirect_to(leads_path)
+      session[:leads_current_page].should == 1
     end
 
   end

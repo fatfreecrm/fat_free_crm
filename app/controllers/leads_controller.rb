@@ -5,18 +5,14 @@ class LeadsController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /leads
-  # GET /leads.xml
+  # GET /leads.xml                                                AJAX and HTML
   #----------------------------------------------------------------------------
   def index
-    @page = params[:page] || 1
-    @leads = unless session[:filter_by_lead_status]
-      Lead.my(@current_user)
-    else
-      Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
-    end.paginate(:page => @page)
+    @leads = get_leads
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js   # index.js.rjs
       format.xml  { render :xml => @leads }
     end
   end
@@ -156,10 +152,28 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_lead_status] = params[:status]
-    @leads = Lead.my(@current_user).only(params[:status].split(","))
+    session[:leads_current_page] = 1
+    @leads = get_leads
+    render :action => :index
   end
 
   private
+  #----------------------------------------------------------------------------
+  def get_leads
+    @page = get_current_page
+    unless session[:filter_by_lead_status]
+      Lead.my(@current_user)
+    else
+      Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
+    end.paginate(:page => @page)
+  end
+
+  #----------------------------------------------------------------------------
+  def get_current_page
+    page = params[:page] || session[:leads_current_page] || 1
+    session[:leads_current_page] = page
+  end
+
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }

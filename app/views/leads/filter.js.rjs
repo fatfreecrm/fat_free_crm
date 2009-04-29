@@ -1,1 +1,0 @@
-page[:leads].replace_html render(:partial => "lead", :collection => @leads)
