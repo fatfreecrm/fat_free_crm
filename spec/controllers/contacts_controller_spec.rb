@@ -20,6 +20,38 @@ describe ContactsController do
       response.should render_template("contacts/index")
     end
 
+    describe "AJAX pagination" do
+      it "should use default page number of 1" do
+        @contacts = [ Factory(:contact, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:page].should == 1
+        assigns[:contacts].should == @contacts
+        session[:contacts_current_page].should == 1
+        response.should render_template("contacts/index")
+      end
+
+      it "should pick up page number from params" do
+        @contacts = [ Factory(:contact, :user => @current_user) ]
+        xhr :get, :index, :page => 42
+
+        assigns[:page].to_i.should == 42
+        assigns[:contacts].should == [] # page #42 should be empty if there's only one contact ;-)
+        session[:contacts_current_page].to_i.should == 42
+        response.should render_template("contacts/index")
+      end
+
+      it "should pick up saved page number from session" do
+        session[:contacts_current_page] = 42
+        @contacts = [ Factory(:contact, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:page].should == 42
+        assigns[:contacts].should == []
+        response.should render_template("contacts/index")
+      end
+    end
+
     describe "with mime type of XML" do
 
       it "should render all contacts as xml" do
@@ -169,6 +201,15 @@ describe ContactsController do
         response.should render_template("contacts/create")
       end
 
+      it "should reload contacts to update pagination if called from contacts index" do
+        @contact = Factory.build(:contact, :user => @current_user)
+        Contact.stub!(:new).and_return(@contact)
+
+        request.env["HTTP_REFERER"] = "http://localhost/contacts"
+        xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}, :users => %w(1 2 3)
+        assigns[:contacts].should == [ @contact ]
+      end
+
     end
 
     describe "with invalid params" do
@@ -306,24 +347,59 @@ describe ContactsController do
   # DELETE /contacts/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-
-    it "should destroy the requested contact and render [destroy] template" do
-      @contact = Factory(:contact, :id => 42)
-
-      xhr :delete, :destroy, :id => 42
-      lambda { @contact.reload }.should raise_error(ActiveRecord::RecordNotFound)
-      response.should render_template("contacts/destroy")
+    before(:each) do
+      @contact = Factory(:contact, :user => @current_user)
     end
 
-    it "should redirect to Contacts index when a contact gets deleted from its landing page" do
-      @contact = Factory(:contact)
+    describe "AJAX request" do
+      it "should destroy the requested contact and render [destroy] template" do
+        xhr :delete, :destroy, :id => @contact.id
 
-      delete :destroy, :id => @contact.id
+        lambda { @contact.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        response.should render_template("contacts/destroy")
+      end
 
-      flash[:notice].should_not == nil
-      response.should redirect_to(contacts_path)
+      describe "when called from Contacts index page" do
+        before(:each) do
+          request.env["HTTP_REFERER"] = "http://localhost/contacts"
+        end
+
+        it "should try previous page and render index action if current page has no contacts" do
+          session[:contacts_current_page] = 42
+          xhr :delete, :destroy, :id => @contact.id
+
+          session[:contacts_current_page].should == 41
+          response.should render_template("contacts/index")
+        end
+
+        it "should render index action when deleting last contact" do
+          session[:contacts_current_page] = 1
+          xhr :delete, :destroy, :id => @contact.id
+
+          session[:contacts_current_page].should == 1
+          response.should render_template("contacts/index")
+        end
+      end
+
+      describe "when called from related asset page page" do
+        it "should reset current page to 1" do
+          request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+          xhr :delete, :destroy, :id => @contact.id
+
+          session[:contacts_current_page].should == 1
+          response.should render_template("contacts/destroy")
+        end
+      end
     end
 
+    describe "HTML request" do
+      it "should redirect to Contacts index when a contact gets deleted from its landing page" do
+        delete :destroy, :id => @contact.id
+
+        flash[:notice].should_not == nil
+        response.should redirect_to(contacts_path)
+      end
+    end
   end
 
 end

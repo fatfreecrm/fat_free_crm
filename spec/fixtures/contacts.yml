@@ -39,7 +39,7 @@
   title = [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ]
   source = %w(campaign cold_call conference online referral self web word_of_mouth other) << ""
 
-  for i in (1 .. rand(10) + 20) do
+  for i in (1 .. rand(20) + 100) do
 %>
 contact_<%= i %>:
   id          : <%= i %>

@@ -4,13 +4,14 @@ class ContactsController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /contacts
-  # GET /contacts.xml
+  # GET /contacts.xml                                             AJAX and HTML
   #----------------------------------------------------------------------------
   def index
-    @contacts = Contact.my(@current_user)
+    @contacts = get_contacts
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
+      format.js   # index.js.rjs
       format.xml  { render :xml => @contacts }
     end
   end
@@ -68,6 +69,7 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
+        @contacts = get_contacts if called_from_index_page?
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
@@ -121,9 +123,45 @@ class ContactsController < ApplicationController
     @contact.destroy
 
     respond_to do |format|
-      format.html { flash[:notice] = "#{@contact.full_name} has beed deleted."; redirect_to(contacts_path) }
-      format.js   # destroy.js.rjs
+      format.html { respond_to_destroy(:html) }
+      format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
+    end
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def get_contacts
+    @page = get_current_page
+    @contacts = Contact.my(@current_user).paginate(:page => @page)
+  end
+
+  #----------------------------------------------------------------------------
+  def get_current_page
+    page = params[:page] || session[:contacts_current_page] || 1
+    session[:contacts_current_page] = page.to_i
+  end
+
+  #----------------------------------------------------------------------------
+  def respond_to_destroy(method)
+    if method == :ajax
+      if called_from_index_page?
+        @contacts = get_contacts
+        if @contacts.blank?
+          if session[:contacts_current_page] > 1
+            session[:contacts_current_page] -= 1
+            @contacts = get_contacts
+          end
+          render :action => :index and return
+        end
+      else
+        session[:contacts_current_page] = 1
+      end
+      # At this point render destroy.js.rjs
+    else
+      session[:contacts_current_page] = 1
+      flash[:notice] = "#{@contact.full_name} has beed deleted."
+      redirect_to(contacts_path)
     end
   end
 

@@ -52,6 +52,8 @@ class Contact < ActiveRecord::Base
   validates_presence_of :last_name, :message => "^Please specify last name."
   validate :users_for_shared_access
 
+  def self.per_page; 30; end
+
   #----------------------------------------------------------------------------
   def full_name
     self.first_name + " " + self.last_name
