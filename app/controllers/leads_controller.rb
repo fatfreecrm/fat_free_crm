@@ -179,15 +179,14 @@ class LeadsController < ApplicationController
   def respond_to_destroy(method)
     if method == :ajax
       if called_from_index_page?                  # Called from Leads index.
+        get_data_for_sidebar                      # Get data for the sidebar.
         @leads = get_leads                        # Get leads for current page.
         if @leads.blank?                          # Any leads on this page?
           if session[:leads_current_page] > 1     # No.
             session[:leads_current_page] -= 1     #   Is there a previous page?
             @leads = get_leads                    #   Yes.
           end                                     #   Get leads for previous page
-          render :action => :index                #   And reload the whole list.
-        else                                      # Yes.
-          get_data_for_sidebar                    #   Update sidebar.
+          render :action => :index and return     #   And reload the whole list.
         end
       else                                        # Called from related asset.
         session[:leads_current_page] = 1          # Reset current page to 1 to make sure it stays valid.

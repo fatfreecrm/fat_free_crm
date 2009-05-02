@@ -7,41 +7,47 @@ describe "/campaigns/create.js.rjs" do
     login_and_assign
   end
 
-  it "create (success): should hide [Create Campaign] form and insert campaign partial" do
-    assigns[:campaign] = Factory(:campaign, :id => 42)
-    render "campaigns/create.js.rjs"
-
-    response.should have_rjs(:insert, :top) do |rjs|
-      with_tag("li[id=campaign_42]")
+  describe "create success" do
+    before(:each) do
+      assigns[:campaign] = @campaign = Factory(:campaign)
+      assigns[:campaigns] = [ @campaign ].paginate
+      assigns[:campaign_status_total] = { :called_off => 1, :completed => 1, :on_hold => 1, :planned => 1, :started => 1, :other => 1, :all => 6 }
+      render "campaigns/create.js.rjs"
     end
-    response.should include_text('$("campaign_42").visualEffect("highlight"')
+
+    it "should hide [Create Campaign] form and insert campaign partial" do
+      response.should have_rjs(:insert, :top) do |rjs|
+        with_tag("li[id=campaign_#{@campaign.id}]")
+      end
+      response.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
+    end
+
+    it "should update pagination" do
+      response.should have_rjs("paginate")
+    end
+
+    it "should update Campaigns sidebar filters" do
+      response.should have_rjs("sidebar") do |rjs|
+        with_tag("div[id=filters]")
+        with_tag("div[id=recently]")
+      end
+    end
   end
 
-  it "create (success): should update sidebar filters when called from campaigns page" do
-    assigns[:campaign] = Factory(:campaign, :id => 42)
-    assigns[:campaign_status_total] = { :called_off => 1, :completed => 1, :on_hold => 1, :planned => 1, :started => 1, :other => 1, :all => 6 }
-    request.env["HTTP_REFERER"] = "http://localhost/campaigns"
-    render "campaigns/create.js.rjs"
-
-    response.should have_rjs("sidebar") do |rjs|
-      with_tag("div[id=filters]")
-      with_tag("div[id=recently]")
-    end
-  end
-
-  it "create (failure): should re-render [create.html.haml] template in :create_campaign div" do
-    assigns[:campaign] = Factory.build(:campaign, :name => nil) # make it invalid
-    assigns[:users] = [ Factory(:user) ]
+  describe "create failure" do
+    it "should re-render [create.html.haml] template in :create_campaign div" do
+      assigns[:campaign] = Factory.build(:campaign, :name => nil) # make it invalid
+      assigns[:users] = [ Factory(:user) ]
   
-    render "campaigns/create.js.rjs"
+      render "campaigns/create.js.rjs"
   
-    response.should have_rjs("create_campaign") do |rjs|
-      with_tag("form[class=new_campaign]")
+      response.should have_rjs("create_campaign") do |rjs|
+        with_tag("form[class=new_campaign]")
+      end
+      response.should include_text('$("create_campaign").visualEffect("shake"')
+      response.should include_text('crm.date_select_popup("campaign_starts_on")')
+      response.should include_text('crm.date_select_popup("campaign_ends_on")')
     end
-    response.should include_text('$("create_campaign").visualEffect("shake"')
-    response.should include_text('crm.date_select_popup("campaign_starts_on")')
-    response.should include_text('crm.date_select_popup("campaign_ends_on")')
-
   end
 
 end

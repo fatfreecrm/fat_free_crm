@@ -5,17 +5,14 @@ class CampaignsController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /campaigns
-  # GET /campaigns.xml
+  # GET /campaigns.xml                                            AJAX and HTML
   #----------------------------------------------------------------------------
   def index
-    unless session[:filter_by_campaign_status]
-      @campaigns = Campaign.my(@current_user)
-    else
-      @campaigns = Campaign.my(@current_user).only(session[:filter_by_campaign_status].split(","))
-    end
+    @campaigns = get_campaigns
 
     respond_to do |format|
       format.html # index.html.haml
+      format.js   # index.js.rjs
       format.xml  { render :xml => @campaigns }
     end
   end
@@ -70,7 +67,8 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
-        get_data_for_sidebar if called_from_index_page?
+        @campaigns = get_campaigns
+        get_data_for_sidebar
         format.js   # create.js.rjs
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
       else
@@ -107,9 +105,8 @@ class CampaignsController < ApplicationController
     @campaign.destroy
 
     respond_to do |format|
-      get_data_for_sidebar if called_from_index_page?
-      format.html { flash[:notice] = "#{@campaign.name} has beed deleted."; redirect_to(campaigns_path) }
-      format.js   # destroy.js.rjs
+      format.html { respond_to_destroy(:html) }
+      format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
     end
   end
@@ -118,10 +115,47 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_campaign_status] = params[:status]
-    @campaigns = Campaign.my(@current_user).only(params[:status].split(","))
+    session[:campaigns_current_page] = 1
+    @campaigns = get_campaigns
+    render :action => :index
   end
 
   private
+  #----------------------------------------------------------------------------
+  def get_campaigns
+    @page = get_current_page
+    unless session[:filter_by_campaign_status]
+      @campaigns = Campaign.my(@current_user)
+    else
+      @campaigns = Campaign.my(@current_user).only(session[:filter_by_campaign_status].split(","))
+    end.paginate(:page => @page)
+  end
+
+  #----------------------------------------------------------------------------
+  def get_current_page
+    page = params[:page] || session[:campaigns_current_page] || 1
+    session[:campaigns_current_page] = page.to_i
+  end
+
+  #----------------------------------------------------------------------------
+  def respond_to_destroy(method)
+    if method == :ajax
+      get_data_for_sidebar
+      @campaigns = get_campaigns
+      if @campaigns.blank?
+        if session[:campaigns_current_page] > 1
+          session[:campaigns_current_page] -= 1
+          @campaigns = get_campaigns
+        end
+        render :action => :index and return
+      end
+    else # :html request
+      session[:campaigns_current_page] = 1
+      flash[:notice] = "#{@campaign.name} has beed deleted."
+      redirect_to(campaigns_path)
+    end
+  end
+
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @campaign_status_total = { :all => Campaign.my(@current_user).count, :other => 0 }

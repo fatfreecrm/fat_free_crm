@@ -21,6 +21,7 @@ describe "/leads/destroy.js.rjs" do
     response.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
     end
+    response.should include_text('$("filters").visualEffect("shake"')
   end
 
   it "should update pagination when called from leads index" do

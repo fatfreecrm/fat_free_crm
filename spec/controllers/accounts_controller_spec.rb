@@ -15,16 +15,39 @@ describe AccountsController do
       @accounts = [ Factory(:account, :user => @current_user) ]
       get :index
       assigns[:accounts].should == @accounts
-      assigns[:accounts_total].should == @accounts.size
       response.should render_template("accounts/index")
     end
 
-    it "should respond to [Load more] request and render [index.js.haml] template" do
-      @accounts = [ Factory(:account, :user => @current_user) ]
-      xhr :get, :index
-      assigns[:accounts].should == @accounts
-      assigns[:accounts_total].should == @accounts.size
-      response.should render_template("accounts/index.js.haml")
+    describe "AJAX pagination" do
+      it "should use default page number of 1" do
+        @accounts = [ Factory(:account, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:page].should == 1
+        assigns[:accounts].should == @accounts
+        session[:accounts_current_page].should == 1
+        response.should render_template("accounts/index")
+      end
+
+      it "should pick up page number from params" do
+        @accounts = [ Factory(:account, :user => @current_user) ]
+        xhr :get, :index, :page => 42
+
+        assigns[:page].to_i.should == 42
+        assigns[:accounts].should == [] # page #42 should be empty if there's only one account ;-)
+        session[:accounts_current_page].to_i.should == 42
+        response.should render_template("accounts/index")
+      end
+
+      it "should pick up saved page number from session" do
+        session[:accounts_current_page] = 42
+        @accounts = [ Factory(:account, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:page].should == 42
+        assigns[:accounts].should == []
+        response.should render_template("accounts/index")
+      end
     end
 
     describe "with mime type of XML" do
@@ -151,6 +174,15 @@ describe AccountsController do
         response.should render_template("accounts/create")
       end
 
+      # Note: [Create Account] is shown only on Accounts index page.
+      it "should reload accounts to update pagination" do
+        @account = Factory.build(:account, :user => @current_user)
+        Account.stub!(:new).and_return(@account)
+
+        xhr :post, :create, :account => { :name => "Hello" }, :users => %w(1 2 3)
+        assigns[:accounts].should == [ @account ]
+      end
+
     end
 
     describe "with invalid params" do
@@ -218,22 +250,44 @@ describe AccountsController do
   # DELETE /accounts/1.xml
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-  
-    it "should destroy the requested account and render [destroy] template" do
-      @account = Factory(:account, :id => 42)
-
-      xhr :delete, :destroy, :id => 42
-      lambda { @account.reload }.should raise_error(ActiveRecord::RecordNotFound)
-      response.should render_template("accounts/destroy")
+    before(:each) do
+      @account = Factory(:account, :user => @current_user)
     end
 
-    it "should redirect to Accounts index when an account gets deleted from its landing page" do
-      @account = Factory(:account)
+    describe "AJAX request" do
+      it "should destroy the requested account and render [destroy] template" do
+        @another_account = Factory(:account, :user => @current_user)
+        xhr :delete, :destroy, :id => @account.id
 
-      delete :destroy, :id => @account.id
+        lambda { @account.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        assigns[:accounts].should == [ @another_account ] # @account got deleted
+        response.should render_template("accounts/destroy")
+      end
 
-      flash[:notice].should_not == nil
-      response.should redirect_to(accounts_path)
+      it "should try previous page and render index action if current page has no accounts" do
+        session[:accounts_current_page] = 42
+
+        xhr :delete, :destroy, :id => @account.id
+        session[:accounts_current_page].should == 41
+        response.should render_template("accounts/index")
+      end
+
+      it "should render index action when deleting last account" do
+        session[:accounts_current_page] = 1
+
+        xhr :delete, :destroy, :id => @account.id
+        session[:accounts_current_page].should == 1
+        response.should render_template("accounts/index")
+      end
+    end
+
+    describe "HTML request" do
+      it "should redirect to Accounts index when an account gets deleted from its landing page" do
+        delete :destroy, :id => @account.id
+
+        flash[:notice].should_not == nil
+        response.should redirect_to(accounts_path)
+      end
     end
 
   end

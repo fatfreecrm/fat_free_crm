@@ -38,6 +38,8 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name
   validate :users_for_shared_access
 
+  def self.per_page; 30; end
+
   # Extract last line of billing address and get rid of numeric zipcode.
   #----------------------------------------------------------------------------
   def location

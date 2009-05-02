@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Fri, May 1, 2009
+---------------------------------------------------------------------
+- Implemented Ajax pagination for Campaigns.
+
+Thu, Apr 30, 2009
+---------------------------------------------------------------------
+- Implemented Ajax pagination for Accounts.
+
 Wed, Apr 29, 2009
 ---------------------------------------------------------------------
 - Implemented Ajax pagination for Leads.

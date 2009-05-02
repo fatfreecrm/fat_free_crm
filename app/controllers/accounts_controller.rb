@@ -7,13 +7,11 @@ class AccountsController < ApplicationController
   # GET /accounts.xml                                             HTML and AJAX
   #----------------------------------------------------------------------------
   def index
-    @page = (params[:page].to_i || 0) + 1
-    @accounts = Account.my(@current_user).paginate(:page => @page, :per_page => 10)
-    @accounts_total = Account.my(@current_user).count
+    @accounts = get_accounts
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.js   { render :template => "accounts/index.js.haml" }
+      format.html # index.html.haml
+      format.js   # index.js.rjs
       format.xml  { render :xml => @accounts }
     end
   end
@@ -68,6 +66,9 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
+        # None: account can only be created from the Accounts index page, so we 
+        # don't have to check whether we're on the index page.
+        @accounts = get_accounts
         format.js   # create.js.rjs
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
@@ -103,9 +104,41 @@ class AccountsController < ApplicationController
     @account.destroy
 
     respond_to do |format|
-      format.html { flash[:notice] = "#{@account.name} has beed deleted."; redirect_to(accounts_path) }
-      format.js   # destroy.js.rjs
+      format.html { respond_to_destroy(:html) }
+      format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
+    end
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def get_accounts
+    @page = get_current_page
+    Account.my(@current_user).paginate(:page => @page)
+  end
+
+  #----------------------------------------------------------------------------
+  def get_current_page
+    page = params[:page] || session[:accounts_current_page] || 1
+    session[:accounts_current_page] = page.to_i
+  end
+
+  #----------------------------------------------------------------------------
+  def respond_to_destroy(method)
+    if method == :ajax
+      @accounts = get_accounts
+      if @accounts.blank?
+        if session[:accounts_current_page] > 1
+          session[:accounts_current_page] -= 1
+          @accounts = get_accounts
+        end
+        render :action => :index and return
+      end
+      # At this point we render default destroy.js.rjs template.
+    else # :html request
+      session[:accounts_current_page] = 1 # Reset current page to 1 to make sure it stays valid.
+      flash[:notice] = "#{@account.name} has beed deleted."
+      redirect_to(accounts_path)
     end
   end
 

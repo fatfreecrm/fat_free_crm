@@ -55,6 +55,8 @@ class Lead < ActiveRecord::Base
   after_create  :increment_leads_count
   after_destroy :decrement_leads_count
 
+  def self.per_page; 30; end
+
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
   def save_with_permissions(params)
@@ -81,8 +83,6 @@ class Lead < ActiveRecord::Base
   def convert
     update_attribute(:status, "converted")
   end
-
-  def self.per_page; 20; end
 
   #----------------------------------------------------------------------------
   def full_name

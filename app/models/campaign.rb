@@ -43,6 +43,8 @@ class Campaign < ActiveRecord::Base
   validate :start_and_end_dates
   validate :users_for_shared_access
 
+  def self.per_page; 30; end
+
   private
   # Make sure end date > start date.
   #----------------------------------------------------------------------------

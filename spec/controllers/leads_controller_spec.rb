@@ -360,7 +360,9 @@ describe LeadsController do
     describe "AJAX request" do
       it "should destroy the requested lead and render [destroy] template" do
         xhr :delete, :destroy, :id => @lead.id
-        assigns[:lead_status_total].should be_nil
+
+        assigns[:leads].should == nil # @lead got deleted
+        lambda { @lead.reload }.should raise_error(ActiveRecord::RecordNotFound)
         response.should render_template("leads/destroy")
       end
 
@@ -369,7 +371,7 @@ describe LeadsController do
           request.env["HTTP_REFERER"] = "http://localhost/leads"
         end
 
-        it "should update sidebar if current page has leads" do
+        it "should get data for the sidebar" do
           @another_lead = Factory(:lead, :user => @current_user)
 
           xhr :delete, :destroy, :id => @lead.id

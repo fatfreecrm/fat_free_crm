@@ -6,19 +6,19 @@ describe "/accounts/destroy.js.rjs" do
   before(:each) do
     login_and_assign
     assigns[:account] = @account = Factory(:account)
-    request.env["HTTP_REFERER"] = "http://localhost/accounts"
+    assigns[:accounts] = [ @account ].paginate
     render "accounts/destroy.js.rjs"
   end
 
-  it "should blind up out destroyed account partial" do
+  it "should blind up destroyed account partial" do
     response.should include_text(%Q/$("account_#{@account.id}").visualEffect("blind_up"/)
   end
 
-  it "should decrement total number of accounts" do
-    response.should include_text('crm.update_total(-1);')
+  it "should update accounts pagination" do
+    response.should have_rjs("paginate")
   end
 
-  it "should update accounts sidebar" do
+  it "should update recently viewed items in accounts sidebar" do
     response.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
     end

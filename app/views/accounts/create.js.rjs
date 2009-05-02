@@ -6,6 +6,7 @@ if @account.valid?
   page[dom_id(@account)].visual_effect :highlight, :duration => 1.5
   page.call "crm.update_total", 1
   page << refresh_sidebar
+  page[:paginate].replace_html render(:partial => "common/ajax_paginate")
 else
   page[:create_account].replace_html :partial => "create"
   page[:create_account].visual_effect :shake, :duration => 0.25, :distance => 6

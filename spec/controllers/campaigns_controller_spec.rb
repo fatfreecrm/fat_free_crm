@@ -51,8 +51,39 @@ describe CampaignsController do
       assigns[:campaigns].map(&:status).should == %w(planned started)
     end
 
-    describe "with mime type of XML" do
+    describe "AJAX pagination" do
+      it "should use default page number of 1" do
+        @campaigns = [ Factory(:campaign, :user => @current_user) ]
+        xhr :get, :index
 
+        assigns[:page].should == 1
+        assigns[:campaigns].should == @campaigns
+        session[:campaigns_current_page].should == 1
+        response.should render_template("campaigns/index")
+      end
+
+      it "should pick up page number from params" do
+        @campaigns = [ Factory(:campaign, :user => @current_user) ]
+        xhr :get, :index, :page => 42
+
+        assigns[:page].to_i.should == 42
+        assigns[:campaigns].should == [] # page #42 should be empty if there's only one campaign ;-)
+        session[:campaigns_current_page].to_i.should == 42
+        response.should render_template("campaigns/index")
+      end
+
+      it "should pick up saved page number from session" do
+        session[:campaigns_current_page] = 42
+        @campaigns = [ Factory(:campaign, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:page].should == 42
+        assigns[:campaigns].should == []
+        response.should render_template("campaigns/index")
+      end
+    end
+
+    describe "with mime type of XML" do
       it "should render all campaigns as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
         @campaigns = [ Factory(:campaign, :user => @current_user) ]
@@ -60,7 +91,6 @@ describe CampaignsController do
         get :index
         response.body.should == @campaigns.to_xml
       end
-
     end
 
   end
@@ -171,18 +201,24 @@ describe CampaignsController do
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns(:campaign).should == @campaign
         assigns(:users).should == @users
-        assigns[:campaign_status_total].should == nil
         response.should render_template("campaigns/create")
       end
 
-      it "should get data to update campaign sidebar if called from campaigns index page" do
+      it "should get data to update campaign sidebar" do
         @campaign = Factory.build(:campaign, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
         @users = [ Factory(:user) ]
 
-        request.env["HTTP_REFERER"] = "http://localhost/campaigns"
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:campaign_status_total].should be_instance_of(Hash)
+      end
+
+      it "should reload campaigns to update pagination" do
+        @campaign = Factory.build(:campaign, :user => @current_user)
+        Campaign.stub!(:new).and_return(@campaign)
+
+        xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
+        assigns[:campaigns].should == [ @campaign ]
       end
 
     end
@@ -217,14 +253,13 @@ describe CampaignsController do
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
         @campaign.reload.name.should == "Hello"
         assigns(:campaign).should == @campaign
-        assigns[:campaign_status_total].should be_nil
         response.should render_template("campaigns/update")
       end
 
-      it "should get data for campaigns sidebar if called from campaigns index page" do
+      it "should get data for campaigns sidebar when called from Campaigns index" do
         @campaign = Factory(:campaign, :id => 42)
-
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
+
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
         assigns(:campaign).should == @campaign
         assigns[:campaign_status_total].should be_instance_of(Hash)
@@ -264,22 +299,50 @@ describe CampaignsController do
   # DELETE /campaigns/1.xml                                                AJAX
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-
-    it "should destroy the requested campaign and render [destroy] template" do
-      @campaign = Factory(:campaign, :id => 42)
-
-      xhr :delete, :destroy, :id => 42
-      lambda { @campaign.reload }.should raise_error(ActiveRecord::RecordNotFound)
-      assigns[:campaign_status_total].should be_nil
-      response.should render_template("campaigns/destroy")
+    before(:each) do
+      @campaign = Factory(:campaign, :user => @current_user)
     end
 
-    it "should get data for campaigns sidebar if called from campaigns index page" do
-      @campaign = Factory(:campaign, :id => 42)
+    describe "AJAX request" do
+      it "should destroy the requested campaign and render [destroy] template" do
+        @another_campaign = Factory(:campaign, :user => @current_user)
+        xhr :delete, :destroy, :id => @campaign.id
 
-      request.env["HTTP_REFERER"] = "http://localhost/campaigns"
-      xhr :delete, :destroy, :id => 42
-      assigns[:campaign_status_total].should be_instance_of(Hash)
+        assigns[:campaigns].should == [ @another_campaign ]
+        lambda { @campaign.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        response.should render_template("campaigns/destroy")
+      end
+
+      it "should get data for campaigns sidebar" do
+        xhr :delete, :destroy, :id => @campaign.id
+
+        assigns[:campaign_status_total].should be_instance_of(Hash)
+      end
+
+      it "should try previous page and render index action if current page has no campaigns" do
+        session[:campaigns_current_page] = 42
+
+        xhr :delete, :destroy, :id => @campaign.id
+        session[:campaigns_current_page].should == 41
+        response.should render_template("campaigns/index")
+      end
+
+      it "should render index action when deleting last campaign" do
+        session[:campaigns_current_page] = 1
+
+        xhr :delete, :destroy, :id => @campaign.id
+        session[:campaigns_current_page].should == 1
+        response.should render_template("campaigns/index")
+      end
+    end
+
+    describe "HTML request" do
+      it "should redirect to Campaigns index when a campaign gets deleted from its landing page" do
+        delete :destroy, :id => @campaign.id
+
+        flash[:notice].should_not == nil
+        response.should redirect_to(campaigns_path)
+      end
     end
 
   end
@@ -294,16 +357,14 @@ describe CampaignsController do
 
       xhr :get, :filter, :status => "completed"
       assigns(:campaigns).should == @campaigns
-      response.should render_template("campaigns/filter")
+      response.should render_template("campaigns/index")
     end
 
-    it "should redirect to Campaigns index when a campaign gets deleted from its landing page" do
-      @campaign = Factory(:campaign)
+    it "should reset current page to 1" do
+      @campaigns = []
+      xhr :get, :filter, :status => "completed"
 
-      delete :destroy, :id => @campaign.id
-
-      flash[:notice].should_not == nil
-      response.should redirect_to(campaigns_path)
+      session[:campaigns_current_page].should == 1
     end
 
   end

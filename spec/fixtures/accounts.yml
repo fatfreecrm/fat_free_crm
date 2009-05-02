@@ -25,7 +25,7 @@
   Faker::PhoneNumber::Formats = ["(###)###-####"]
   puts "Loading accounts..."
 
-  for i in (1 .. rand(20) + 10) do
+  for i in (1 .. rand(20) + 100) do
 %>
 account<%= i %>:
   id               : <%= i %>
