@@ -47,6 +47,8 @@ class Opportunity < ActiveRecord::Base
   after_create  :increment_opportunities_count
   after_destroy :decrement_opportunities_count
 
+  def self.per_page; 30; end
+
   #----------------------------------------------------------------------------
   def weighted_amount
     ((amount || 0) - (discount || 0)) * (probability || 0) / 100.0

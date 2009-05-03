@@ -1,7 +1,7 @@
 class OpportunitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :load_settings, :only => [ :show,  :edit, :create, :update, :filter ]
+  before_filter :load_settings, :only => [ :index, :show,  :edit, :create, :update, :filter ]
   before_filter :get_data_for_sidebar, :only => :index
   after_filter  :update_recently_viewed, :only => :show
 
@@ -9,14 +9,11 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities.xml
   #----------------------------------------------------------------------------
   def index
-    unless session[:filter_by_opportunity_stage]
-      @opportunities = Opportunity.my(@current_user)
-    else
-      @opportunities = Opportunity.my(@current_user).only(session[:filter_by_opportunity_stage].split(","))
-    end
+    @opportunities = get_opportunities
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
+      format.js   # index.js.rjs
       format.xml  { render :xml => @opportunities }
     end
   end
@@ -73,7 +70,10 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
-        get_data_for_sidebar if called_from_index_page?
+        if called_from_index_page?
+          @opportunities = get_opportunities
+          get_data_for_sidebar
+        end
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
@@ -128,11 +128,9 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.find(params[:id])
     @opportunity.destroy
 
-    get_data_for_sidebar if called_from_index_page?
-
     respond_to do |format|
-      format.html { flash[:notice] = "#{@opportunity.name} has beed deleted."; redirect_to(opportunities_path) }
-      format.js   # destroy.js.rjs
+      format.html { respond_to_destroy(:html) }
+      format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
     end
   end
@@ -141,10 +139,52 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_opportunity_stage] = params[:stage]
-    @opportunities = Opportunity.my(@current_user).only(params[:stage].split(","))
+    session[:opportunities_current_page] = 1
+    @opportunities = get_opportunities
+    render :action => :index
   end
 
   private
+  #----------------------------------------------------------------------------
+  def get_opportunities
+    @page = get_current_page
+    unless session[:filter_by_opportunity_stage]
+      @opportunities = Opportunity.my(@current_user)
+    else
+      @opportunities = Opportunity.my(@current_user).only(session[:filter_by_opportunity_stage].split(","))
+    end.paginate(:page => @page)
+  end
+
+  #----------------------------------------------------------------------------
+  def get_current_page
+    page = params[:page] || session[:opportunities_current_page] || 1
+    session[:opportunities_current_page] = page.to_i
+  end
+
+  #----------------------------------------------------------------------------
+  def respond_to_destroy(method)
+    if method == :ajax
+      if called_from_index_page?
+        get_data_for_sidebar
+        @opportunities = get_opportunities
+        if @opportunities.blank?
+          if session[:opportunities_current_page] > 1
+            session[:opportunities_current_page] -= 1
+            @opportunities = get_opportunities
+          end
+          render :action => :index and return
+        end
+      else # Called from related asset.
+        session[:opportunities_current_page] = 1
+      end
+      # At this point render destroy.js.rjs
+    else
+      session[:opportunities_current_page] = 1
+      flash[:notice] = "#{@opportunity.name} has beed deleted."
+      redirect_to(opportunities_path)
+    end
+  end
+
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     load_settings

@@ -45,12 +45,43 @@ describe OpportunitiesController do
 
       get :index
       # Note: can't compare opportunities directly because of BigDecimal objects.
-      assigns[:opportunities].count.should == 2
+      assigns[:opportunities].size.should == 2
       assigns[:opportunities].map(&:stage).should == %w(prospecting qualification)
     end
 
-    describe "with mime type of XML" do
+    describe "AJAX pagination" do
+      it "should use default page number of 1" do
+        @opportunities = [ Factory(:opportunity, :user => @current_user) ]
+        xhr :get, :index
 
+        assigns[:page].should == 1
+        assigns[:opportunities].should == @opportunities
+        session[:opportunities_current_page].should == 1
+        response.should render_template("opportunities/index")
+      end
+
+      it "should pick up page number from params" do
+        @opportunities = [ Factory(:opportunity, :user => @current_user) ]
+        xhr :get, :index, :page => 42
+
+        assigns[:page].to_i.should == 42
+        assigns[:opportunities].should == [] # page #42 should be empty if there's only one opportunity ;-)
+        session[:opportunities_current_page].to_i.should == 42
+        response.should render_template("opportunities/index")
+      end
+
+      it "should pick up saved page number from session" do
+        session[:opportunities_current_page] = 42
+        @opportunities = [ Factory(:opportunity, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:page].should == 42
+        assigns[:opportunities].should == []
+        response.should render_template("opportunities/index")
+      end
+    end
+
+    describe "with mime type of XML" do
       it "should render all opportunities as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
         @opportunities = [ Factory(:opportunity, :user => @current_user) ]
@@ -58,7 +89,6 @@ describe OpportunitiesController do
         get :index
         response.body.should == @opportunities.to_xml
       end
-
     end
 
   end
@@ -192,6 +222,13 @@ describe OpportunitiesController do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
         assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
+      end
+
+      it "should reload opportunities to update pagination if called from opportunities index" do
+        request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        assigns[:opportunities].should == [ @opportunity ]
       end
 
       it "should associate opportunity with the campaign when called from campaign landing page" do
@@ -376,22 +413,63 @@ describe OpportunitiesController do
   # DELETE /opportunities/1.xml                                            AJAX
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-
-    it "should destroy the requested opportunity and render [destroy] template" do
-      @opportunity = Factory(:opportunity, :id => 42)
-
-      xhr :delete, :destroy, :id => 42
-      lambda { @opportunity.reload }.should raise_error(ActiveRecord::RecordNotFound)
-      assigns(:opportunity_stage_total).should == nil
-      response.should render_template("opportunities/destroy")
+    before(:each) do
+      @opportunity = Factory(:opportunity, :user => @current_user)
     end
 
-    it "should get sidebar data if called from opportunities index" do
-      @oppportunity = Factory(:opportunity, :id => 42)
+    describe "AJAX request" do
+      it "should destroy the requested opportunity and render [destroy] template" do
+        xhr :delete, :destroy, :id => @opportunity.id
 
-      request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-      xhr :delete, :destroy, :id => 42
-      assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
+        lambda { @opportunity.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        assigns(:opportunity_stage_total).should == nil
+        response.should render_template("opportunities/destroy")
+      end
+
+      describe "when called from Opportunities index page" do
+        before(:each) do
+          request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+        end
+
+        it "should get sidebar data if called from opportunities index" do
+          xhr :delete, :destroy, :id => @opportunity.id
+          assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
+        end
+
+        it "should try previous page and render index action if current page has no opportunities" do
+          session[:opportunities_current_page] = 42
+
+          xhr :delete, :destroy, :id => @opportunity.id
+          session[:opportunities_current_page].should == 41
+          response.should render_template("opportunities/index")
+        end
+
+        it "should render index action when deleting last opportunity" do
+          session[:opportunities_current_page] = 1
+
+          xhr :delete, :destroy, :id => @opportunity.id
+          session[:opportunities_current_page].should == 1
+          response.should render_template("opportunities/index")
+        end
+      end
+
+      describe "when called from related asset page" do
+        it "should reset current page to 1" do
+          request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+
+          xhr :delete, :destroy, :id => @opportunity.id
+          session[:opportunities_current_page].should == 1
+          response.should render_template("opportunities/destroy")
+        end
+      end
+    end
+
+    describe "HTML request" do
+      it "should redirect to Opportunities index when an opportunity gets deleted from its landing page" do
+        delete :destroy, :id => @opportunity.id
+        flash[:notice].should_not == nil
+        response.should redirect_to(opportunities_path)
+      end
     end
 
   end
@@ -408,16 +486,15 @@ describe OpportunitiesController do
       xhr :get, :filter, :stage => "prospecting"
       assigns(:opportunities).should == @opportunities
       assigns[:stage].should == @stage
-      response.should render_template("opportunities/filter")
+      response.should be_a_success
+      response.should render_template("opportunities/index")
     end
 
-    it "should redirect to Opportunities index when an opportunity gets deleted from its landing page" do
-      @opportunity = Factory(:opportunity)
+    it "should reset current page to 1" do
+      @opportunities = []
+      xhr :get, :filter, :status => "new"
 
-      delete :destroy, :id => @opportunity.id
-
-      flash[:notice].should_not == nil
-      response.should redirect_to(opportunities_path)
+      session[:opportunities_current_page].should == 1
     end
 
   end

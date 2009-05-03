@@ -28,7 +28,7 @@
   source = %w(campaign cold_call conference online referral self web word_of_mouth other) << ""
   stage = %w(prospecting qualification analysis presentation proposal negotiation final_review won lost) << ""
 
-  for i in (1 .. rand(10) + 20) do
+  for i in (1 .. rand(20) + 100) do
 %>
 opportunity_<%= i %>:
   id          : <%= i %>
