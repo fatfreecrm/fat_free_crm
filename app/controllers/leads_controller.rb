@@ -160,19 +160,13 @@ class LeadsController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_leads
-    @page = get_current_page
+  def get_leads(page = current_page)
+    self.current_page = page
     unless session[:filter_by_lead_status]
       Lead.my(@current_user)
     else
       Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
-    end.paginate(:page => @page)
-  end
-
-  #----------------------------------------------------------------------------
-  def get_current_page
-    page = params[:page] || session[:leads_current_page] || 1
-    session[:leads_current_page] = page.to_i
+    end.paginate(:page => page)
   end
 
   #----------------------------------------------------------------------------
@@ -181,18 +175,15 @@ class LeadsController < ApplicationController
       if called_from_index_page?                  # Called from Leads index.
         get_data_for_sidebar                      # Get data for the sidebar.
         @leads = get_leads                        # Get leads for current page.
-        if @leads.blank?                          # Any leads on this page?
-          if session[:leads_current_page] > 1     # No.
-            session[:leads_current_page] -= 1     #   Is there a previous page?
-            @leads = get_leads                    #   Yes.
-          end                                     #   Get leads for previous page
-          render :action => :index and return     #   And reload the whole list.
+        if @leads.blank?                          # If no lead on this page then try the previous one.
+          @leads = get_leads(current_page - 1) if current_page > 1
+          render :action => :index and return     # And reload the whole list even if it's empty.
         end
       else                                        # Called from related asset.
-        session[:leads_current_page] = 1          # Reset current page to 1 to make sure it stays valid.
+        self.current_page = 1                     # Reset current page to 1 to make sure it stays valid.
       end                                         # Render destroy.js.rjs
     else # :html destroy
-      session[:leads_current_page] = 1
+      self.current_page = 1
       flash[:notice] = "#{@lead.full_name} has beed deleted."
       redirect_to(leads_path)
     end

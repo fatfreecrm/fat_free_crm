@@ -56,7 +56,7 @@ describe CampaignsController do
         @campaigns = [ Factory(:campaign, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 1
+        assigns[:current_page].should == 1
         assigns[:campaigns].should == @campaigns
         session[:campaigns_current_page].should == 1
         response.should render_template("campaigns/index")
@@ -66,7 +66,7 @@ describe CampaignsController do
         @campaigns = [ Factory(:campaign, :user => @current_user) ]
         xhr :get, :index, :page => 42
 
-        assigns[:page].to_i.should == 42
+        assigns[:current_page].to_i.should == 42
         assigns[:campaigns].should == [] # page #42 should be empty if there's only one campaign ;-)
         session[:campaigns_current_page].to_i.should == 42
         response.should render_template("campaigns/index")
@@ -77,7 +77,7 @@ describe CampaignsController do
         @campaigns = [ Factory(:campaign, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 42
+        assigns[:current_page].should == 42
         assigns[:campaigns].should == []
         response.should render_template("campaigns/index")
       end

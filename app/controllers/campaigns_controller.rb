@@ -122,19 +122,13 @@ class CampaignsController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_campaigns
-    @page = get_current_page
+  def get_campaigns(page = current_page)
+    self.current_page = page
     unless session[:filter_by_campaign_status]
       @campaigns = Campaign.my(@current_user)
     else
       @campaigns = Campaign.my(@current_user).only(session[:filter_by_campaign_status].split(","))
-    end.paginate(:page => @page)
-  end
-
-  #----------------------------------------------------------------------------
-  def get_current_page
-    page = params[:page] || session[:campaigns_current_page] || 1
-    session[:campaigns_current_page] = page.to_i
+    end.paginate(:page => page)
   end
 
   #----------------------------------------------------------------------------
@@ -143,14 +137,12 @@ class CampaignsController < ApplicationController
       get_data_for_sidebar
       @campaigns = get_campaigns
       if @campaigns.blank?
-        if session[:campaigns_current_page] > 1
-          session[:campaigns_current_page] -= 1
-          @campaigns = get_campaigns
-        end
+        @campaigns = get_campaigns(current_page - 1) if current_page > 1
         render :action => :index and return
       end
+      # At this point render destroy.js.rjs
     else # :html request
-      session[:campaigns_current_page] = 1
+      self.current_page = 1
       flash[:notice] = "#{@campaign.name} has beed deleted."
       redirect_to(campaigns_path)
     end

@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Sun, May 3, 2009
 ---------------------------------------------------------------------
 - Implemented Ajax pagination for Opportunities.
+- Simplified paging by using single proxy to store and retrieve current page.
 
 Sat, May 2, 2009
 ---------------------------------------------------------------------

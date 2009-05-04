@@ -146,19 +146,13 @@ class OpportunitiesController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_opportunities
-    @page = get_current_page
+  def get_opportunities(page = current_page)
+    self.current_page = page
     unless session[:filter_by_opportunity_stage]
       @opportunities = Opportunity.my(@current_user)
     else
       @opportunities = Opportunity.my(@current_user).only(session[:filter_by_opportunity_stage].split(","))
-    end.paginate(:page => @page)
-  end
-
-  #----------------------------------------------------------------------------
-  def get_current_page
-    page = params[:page] || session[:opportunities_current_page] || 1
-    session[:opportunities_current_page] = page.to_i
+    end.paginate(:page => page)
   end
 
   #----------------------------------------------------------------------------
@@ -168,18 +162,15 @@ class OpportunitiesController < ApplicationController
         get_data_for_sidebar
         @opportunities = get_opportunities
         if @opportunities.blank?
-          if session[:opportunities_current_page] > 1
-            session[:opportunities_current_page] -= 1
-            @opportunities = get_opportunities
-          end
+          @opportunities = get_opportunities(current_page - 1) if current_page > 1
           render :action => :index and return
         end
       else # Called from related asset.
-        session[:opportunities_current_page] = 1
+        self.current_page = 1
       end
       # At this point render destroy.js.rjs
     else
-      session[:opportunities_current_page] = 1
+      self.current_page = 1
       flash[:notice] = "#{@opportunity.name} has beed deleted."
       redirect_to(opportunities_path)
     end

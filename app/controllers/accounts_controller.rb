@@ -112,15 +112,9 @@ class AccountsController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_accounts
-    @page = get_current_page
-    Account.my(@current_user).paginate(:page => @page)
-  end
-
-  #----------------------------------------------------------------------------
-  def get_current_page
-    page = params[:page] || session[:accounts_current_page] || 1
-    session[:accounts_current_page] = page.to_i
+  def get_accounts(page = current_page)
+    self.current_page = page
+    Account.my(@current_user).paginate(:page => page)
   end
 
   #----------------------------------------------------------------------------
@@ -128,15 +122,12 @@ class AccountsController < ApplicationController
     if method == :ajax
       @accounts = get_accounts
       if @accounts.blank?
-        if session[:accounts_current_page] > 1
-          session[:accounts_current_page] -= 1
-          @accounts = get_accounts
-        end
+        @accounts = get_accounts(current_page - 1) if current_page > 1
         render :action => :index and return
       end
-      # At this point we render default destroy.js.rjs template.
+      # At this point render default destroy.js.rjs template.
     else # :html request
-      session[:accounts_current_page] = 1 # Reset current page to 1 to make sure it stays valid.
+      self.current_page = 1 # Reset current page to 1 to make sure it stays valid.
       flash[:notice] = "#{@account.name} has beed deleted."
       redirect_to(accounts_path)
     end

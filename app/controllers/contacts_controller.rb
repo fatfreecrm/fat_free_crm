@@ -131,15 +131,9 @@ class ContactsController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_contacts
-    @page = get_current_page
-    @contacts = Contact.my(@current_user).paginate(:page => @page)
-  end
-
-  #----------------------------------------------------------------------------
-  def get_current_page
-    page = params[:page] || session[:contacts_current_page] || 1
-    session[:contacts_current_page] = page.to_i
+  def get_contacts(page = current_page)
+    self.current_page = page
+    @contacts = Contact.my(@current_user).paginate(:page => page)
   end
 
   #----------------------------------------------------------------------------
@@ -148,18 +142,15 @@ class ContactsController < ApplicationController
       if called_from_index_page?
         @contacts = get_contacts
         if @contacts.blank?
-          if session[:contacts_current_page] > 1
-            session[:contacts_current_page] -= 1
-            @contacts = get_contacts
-          end
+          @contacts = get_contacts(current_page - 1) if current_page > 1
           render :action => :index and return
         end
       else
-        session[:contacts_current_page] = 1
+        self.current_page = 1
       end
       # At this point render destroy.js.rjs
     else
-      session[:contacts_current_page] = 1
+      self.current_page = 1
       flash[:notice] = "#{@contact.full_name} has beed deleted."
       redirect_to(contacts_path)
     end

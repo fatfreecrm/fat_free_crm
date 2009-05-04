@@ -57,7 +57,7 @@ describe LeadsController do
         @leads = [ Factory(:lead, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 1
+        assigns[:current_page].should == 1
         assigns[:leads].should == @leads
         session[:leads_current_page].should == 1
         response.should render_template("leads/index")
@@ -67,7 +67,7 @@ describe LeadsController do
         @leads = [ Factory(:lead, :user => @current_user) ]
         xhr :get, :index, :page => 42
 
-        assigns[:page].to_i.should == 42
+        assigns[:current_page].to_i.should == 42
         assigns[:leads].should == [] # page #42 should be empty if there's only one lead ;-)
         session[:leads_current_page].to_i.should == 42
         response.should render_template("leads/index")
@@ -78,7 +78,7 @@ describe LeadsController do
         @leads = [ Factory(:lead, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 42
+        assigns[:current_page].should == 42
         assigns[:leads].should == []
         response.should render_template("leads/index")
       end

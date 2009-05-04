@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"
 
+  attr_accessor :current_page   # See current_page() and current_page=() down below.
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   # protect_from_forgery # :secret => '165eb65bfdacf95923dad9aea10cc64a'
@@ -78,6 +80,18 @@ class ApplicationController < ActionController::Base
     if subject
       Activity.log(@current_user, subject, :viewed)
     end
+  end
+
+  # Proxy current page for any of the controllers by storing it in a session.
+  #----------------------------------------------------------------------------
+  def current_page=(page)
+    @current_page = session["#{controller_name}_current_page".to_sym] = page.to_i
+  end
+
+  #----------------------------------------------------------------------------
+  def current_page
+    page = params[:page] || session["#{controller_name}_current_page".to_sym] || 1
+    @current_page = page.to_i
   end
 
 end

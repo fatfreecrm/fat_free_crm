@@ -23,7 +23,7 @@ describe AccountsController do
         @accounts = [ Factory(:account, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 1
+        assigns[:current_page].should == 1
         assigns[:accounts].should == @accounts
         session[:accounts_current_page].should == 1
         response.should render_template("accounts/index")
@@ -33,7 +33,7 @@ describe AccountsController do
         @accounts = [ Factory(:account, :user => @current_user) ]
         xhr :get, :index, :page => 42
 
-        assigns[:page].to_i.should == 42
+        assigns[:current_page].to_i.should == 42
         assigns[:accounts].should == [] # page #42 should be empty if there's only one account ;-)
         session[:accounts_current_page].to_i.should == 42
         response.should render_template("accounts/index")
@@ -44,7 +44,7 @@ describe AccountsController do
         @accounts = [ Factory(:account, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 42
+        assigns[:current_page].should == 42
         assigns[:accounts].should == []
         response.should render_template("accounts/index")
       end

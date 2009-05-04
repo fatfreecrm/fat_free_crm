@@ -54,7 +54,7 @@ describe OpportunitiesController do
         @opportunities = [ Factory(:opportunity, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 1
+        assigns[:current_page].should == 1
         assigns[:opportunities].should == @opportunities
         session[:opportunities_current_page].should == 1
         response.should render_template("opportunities/index")
@@ -64,7 +64,7 @@ describe OpportunitiesController do
         @opportunities = [ Factory(:opportunity, :user => @current_user) ]
         xhr :get, :index, :page => 42
 
-        assigns[:page].to_i.should == 42
+        assigns[:current_page].to_i.should == 42
         assigns[:opportunities].should == [] # page #42 should be empty if there's only one opportunity ;-)
         session[:opportunities_current_page].to_i.should == 42
         response.should render_template("opportunities/index")
@@ -75,7 +75,7 @@ describe OpportunitiesController do
         @opportunities = [ Factory(:opportunity, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 42
+        assigns[:current_page].should == 42
         assigns[:opportunities].should == []
         response.should render_template("opportunities/index")
       end

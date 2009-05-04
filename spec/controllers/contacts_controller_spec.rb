@@ -25,7 +25,7 @@ describe ContactsController do
         @contacts = [ Factory(:contact, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 1
+        assigns[:current_page].should == 1
         assigns[:contacts].should == @contacts
         session[:contacts_current_page].should == 1
         response.should render_template("contacts/index")
@@ -35,7 +35,7 @@ describe ContactsController do
         @contacts = [ Factory(:contact, :user => @current_user) ]
         xhr :get, :index, :page => 42
 
-        assigns[:page].to_i.should == 42
+        assigns[:current_page].to_i.should == 42
         assigns[:contacts].should == [] # page #42 should be empty if there's only one contact ;-)
         session[:contacts_current_page].to_i.should == 42
         response.should render_template("contacts/index")
@@ -46,7 +46,7 @@ describe ContactsController do
         @contacts = [ Factory(:contact, :user => @current_user) ]
         xhr :get, :index
 
-        assigns[:page].should == 42
+        assigns[:current_page].should == 42
         assigns[:contacts].should == []
         response.should render_template("contacts/index")
       end
