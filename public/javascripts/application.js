@@ -184,41 +184,6 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  paginate: function(controller) {
-    var page = $("page").innerHTML;
-    if (Ajax.activeRequestCount == 0) {
-      new Ajax.Request("/" + controller, {
-        method     : "get",
-        parameters : "page=" + page,
-        onLoading  : function() {
-          $("paginate").hide();
-          $("loading").show();
-        },
-        onSuccess: function(xhr) {
-          $("loading").hide();
-          console.log(xhr.responseText);
-          var re = RegExp(controller + "\\s+total\\.$", "m");
-          if (re.test(xhr.responseText)) {
-            $("paginate").update(xhr.responseText);
-          } else {
-            $("page").update(parseInt(page) + 1);
-            $("loading").insert({ before: xhr.responseText });
-          }
-          $("paginate").show();
-        }
-      });
-    }
-  },
-
-  //----------------------------------------------------------------------------
-  update_total: function(delta) {
-    var total = $("total");
-    if (total) {
-      total.update(parseInt(total.innerHTML) + delta);
-    }
-  },
-
-  //----------------------------------------------------------------------------
   toggle_open_id_login: function(first_field) {
     if (arguments.length == 0) {
       first_field = "authentication_openid_identifier";

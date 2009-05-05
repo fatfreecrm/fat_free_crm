@@ -1,0 +1,3 @@
+- assets = controller.controller_name
+- asset = assets.singularize
+#empty== You don't have any #{assets} yet. Feel free to #{link_to_remote("create a new " << asset, :url => send("new_" << asset << "_path"), :loading => "$('empty').hide()")}.

@@ -6,7 +6,7 @@ if @campaign.valid?
   page.insert_html :top, :campaigns, :partial => "campaign", :collection => [ @campaign ]
   page[dom_id(@campaign)].visual_effect :highlight, :duration => 1.5
   page << refresh_sidebar(:index, :filters)
-  page[:paginate].replace_html render(:partial => "common/ajax_paginate")
+  page[:paginate].replace_html render(:partial => "common/paginate")
 else
   page[:create_campaign].replace_html :partial => "create"
   page.call "crm.date_select_popup", :campaign_starts_on

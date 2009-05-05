@@ -1,9 +1,2 @@
-- items      ||= controller.controller_name
-- collection ||= instance_variable_get("@#{items}")
-- total      ||= instance_variable_get("@#{items}_total")
+= will_paginate
 #loading{ hidden }= image_tag("loading.gif", :size => "16x16")
-#paginate
-  - if collection.size < total
-    = link_to_function("Show more #{items}...", "crm.paginate('#{items}')")
-  - else
-    = render :partial => "common/total"

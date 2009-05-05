@@ -10,15 +10,15 @@ describe "/accounts/index.html.haml" do
   it "should render list of accounts if list of accounts is not empty" do
     assigns[:accounts] = [ Factory(:account), Factory(:account) ].paginate
     template.should_receive(:render).with(hash_including(:partial => "account"))
-    template.should_receive(:render).with(:partial => "common/ajax_paginate")
+    template.should_receive(:render).with(:partial => "common/paginate")
     render "/accounts/index.html.haml"
   end
 
   it "should render a message if there're no accounts" do
     assigns[:accounts] = [].paginate
     template.should_not_receive(:render).with(hash_including(:partial => "account"))
-    template.should_receive(:render).with(:partial => "empty")
-    template.should_receive(:render).with(:partial => "common/ajax_paginate")
+    template.should_receive(:render).with(:partial => "common/empty")
+    template.should_receive(:render).with(:partial => "common/paginate")
     render "/accounts/index.html.haml"
   end
 end
