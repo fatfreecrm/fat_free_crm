@@ -202,6 +202,20 @@ var crm = {
     $("login_link").toggle();
     $("openid_link").toggle();
     $('user_email').focus();
+  },
+
+  //----------------------------------------------------------------------------
+  search: function(query, controller) {
+    $("loading").show();
+    $(controller).setStyle({ opacity: 0.4 });
+    new Ajax.Request("/" + controller + "/search", {
+      method     : "get",
+      parameters : { query : query },
+      onSuccess  : function() {
+        $("loading").hide();
+        $(controller).setStyle({ opacity: 1 });
+      }
+    });
   }
 }
 

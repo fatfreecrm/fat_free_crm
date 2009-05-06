@@ -14,8 +14,8 @@ class AjaxWillPaginate < WillPaginate::LinkRenderer
     @template.link_to_remote(text, { 
       :url     => url_for(page).sub(/(\w+)\/[^\?]+\?/, "\\1?"),
       :method  => :get,
-      :loading => "$('loading').show()",
-      :success => "$('loading').hide()"
+      :loading => "$('paging').show()",
+      :success => "$('paging').hide()"
     }.merge(@remote))
   end
 

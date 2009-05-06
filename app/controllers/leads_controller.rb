@@ -149,6 +149,19 @@ class LeadsController < ApplicationController
     end
   end
 
+  # GET /leads/search/query                                                AJAX
+  #----------------------------------------------------------------------------
+  def search
+    @query = params[:query]
+    @leads = get_leads # STUB.
+
+    respond_to do |format|
+      format.js   # search.js.rjs
+      format.xml  { render :xml => @leads }
+    end
+  end
+
+
   # Ajax request to filter out list of leads.
   #----------------------------------------------------------------------------
   def filter

@@ -1,7 +1,9 @@
 = styles_for :lead
 
 = inline :create_lead, new_lead_path
-.title#create_lead_title Leads
+.title#create_lead_title
+  Leads
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#create_lead{ hidden }
 
 .list#leads

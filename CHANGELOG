@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, May 6, 2009
+---------------------------------------------------------------------
+- Implemented prototype search box for Leads with stubbed controller.
+
+Tue, May 5, 2009
+---------------------------------------------------------------------
+- Started with live search (LH #22).
+
 Mon, May 4, 2009
 ---------------------------------------------------------------------
 - Last bit of paging refactoring before closing LH #18.

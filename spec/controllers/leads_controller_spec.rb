@@ -85,7 +85,6 @@ describe LeadsController do
     end
 
     describe "with mime type of XML" do
-
       it "should render all leads as xml" do
         @leads = [ Factory(:lead, :user => @current_user) ]
 
@@ -93,7 +92,6 @@ describe LeadsController do
         get :index
         response.body.should == @leads.to_xml
       end
-
     end
 
   end
@@ -506,6 +504,33 @@ describe LeadsController do
       response.should render_template("leads/promote")
     end
 
+  end
+
+  # GET /leads/search/query                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to GET search" do
+    before(:each) do
+      @billy_bones   = Factory(:lead, :user => @current_user, :first_name => "Billy",   :last_name => "Bones");
+      @captain_flint = Factory(:lead, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
+      @leads = [ @billy_bones, @captain_flint ]
+    end
+
+    it "should look up the leads using query string" do
+      xhr :get, :search, :query => "bill"
+
+      assigns[:leads].should == [ @captain_flint, @billy_bones ] # STUB.
+      assigns[:query].should == "bill"
+      response.should render_template("leads/search")
+    end
+
+    describe "with mime type of XML" do
+      it "should render all found leads as xml" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :search, :query => "bill"
+
+        response.body.should == [ @captain_flint, @billy_bones ].to_xml # STUB.
+      end
+    end
   end
 
   # Ajax request to filter out list of leads.

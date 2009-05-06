@@ -106,9 +106,12 @@ tt {
 .title {
   border-bottom: 1px gray solid;
   color: #342d7e;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: bold;
-  padding-bottom: 3px; }
+  padding-bottom: 2px; }
+  .title img {
+    position: relative;
+    top: 2px; }
 
 .title_tools {
   font-size: 12px;
@@ -305,7 +308,7 @@ tt {
   font-size: 10px;
   margin: 4px 0px 0px 0px; }
 
-#loading {
+#paging {
   float: right;
   margin: 7px 5px 0px 0px; }
 
@@ -394,6 +397,12 @@ tt {
   font-weight: bold;
   margin: 4px 0px 2px 0px;
   padding: 2px 0px 2px 0px; }
+.panel .field {
+  color: navy;
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+  height: 16px; }
 
 .selector {
   color: black;
