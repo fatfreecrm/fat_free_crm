@@ -1,7 +1,3 @@
-= inline :create_task, url_for(:action => :new, :view => @view), (@view == "assigned" ? "Assign Task" : "Create Task")
-- unless @task
-  .title#create_task_title= (@view == "assigned" ? "Assigned Tasks" : "Tasks")
-  .remote#create_task{ hidden }
-- else
-  .title#create_task_title= (@view == "assigned" ? "Assign Task" : "Create Task")
-  .remote#create_task= render :partial => "create"
+= inline :create_task, url_for(:action => :new, :view => @view)
+.title#create_task_title= (@view == "assigned" ? "Assigned Tasks" : "Tasks")
+.remote#create_task{ hidden }

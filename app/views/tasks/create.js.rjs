@@ -25,6 +25,7 @@ if @task.valid?
       page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
       page << refresh_sidebar(:index, :filters)
     end
+    page.call "crm.flick", :empty, :remove
 
   else # Inline [Create Task] form reqested from any of the core asset landing pages.
 

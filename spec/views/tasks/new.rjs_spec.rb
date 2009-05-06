@@ -11,30 +11,45 @@ describe "/tasks/new.html.haml" do
     assigns[:category] = Setting.invert(:task_category)
   end
 
-  it "create: should hide :tasks_flash div if it exists" do
+  it "should hide tasks_flash div if it exists" do
     render "tasks/new.js.rjs"
 
-    response.should include_text('$("tasks_flash").hide();')
+    response.should include_text('crm.flick("tasks_flash", "hide")')
   end
 
-  it "create: should render [new.html.haml] template into :create_task div" do
-    params[:cancel] = nil
+  it "should toggle empty message div if it exists" do
     render "tasks/new.js.rjs"
+
+    response.should include_text('crm.flick("empty", "toggle")')
+  end
+
+  describe "new task" do
+    it "create: should render [new.html.haml] template into :create_task div" do
+      params[:cancel] = nil
+      render "tasks/new.js.rjs"
     
-    response.should have_rjs("create_task") do |rjs|
-      with_tag("form[class=new_task]")
+      response.should have_rjs("create_task") do |rjs|
+        with_tag("form[class=new_task]")
+      end
+      response.should include_text('crm.flip_form("create_task");')
     end
-    response.should include_text('crm.flip_form("create_task");')
+
+    it "should call JavaScript functions to load Calendar popup" do
+      params[:cancel] = nil
+      render "tasks/new.js.rjs"
+
+      response.should include_text('crm.date_select_popup("task_calendar", "task_bucket")')
+    end
   end
 
-  it "cancel: should render [new.html.haml] template into :create_task div" do
-    params[:cancel] = "true"
-    render "tasks/new.js.rjs"
+  describe "cancel new task" do
+    it "should hide [create task] form" do
+      params[:cancel] = "true"
+      render "tasks/new.js.rjs"
 
-    response.should_not have_rjs("create_task")
-    response.should include_text('crm.flip_form("create_task");')
+      response.should_not have_rjs("create_task")
+      response.should include_text('crm.flip_form("create_task");')
+    end
   end
 
 end
-
-
