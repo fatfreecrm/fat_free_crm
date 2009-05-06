@@ -33,7 +33,9 @@ class Activity < ActiveRecord::Base
       if action == :created
         create_activity(user, subject, :viewed)
       elsif action == :deleted
-        delete_activity(user, subject, :viewed) # Remove from recently viewed list.
+         # Remove the subject from recently viewed list. Note that we don't
+         # specify an user since we want to delete :viewed activity for all users.
+        delete_activity(nil, subject, :viewed)
       end
     end
     if [:viewed, :updated, :commented].include?(action)
@@ -66,7 +68,11 @@ class Activity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def self.delete_activity(user, subject, action)
-    delete_all([ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
+    unless user
+      delete_all([ "subject_id=? AND subject_type=? AND action=?", subject.id, subject.class.name, action.to_s ])
+    else
+      delete_all([ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
+    end
   end
 
 end

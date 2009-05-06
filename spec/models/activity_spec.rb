@@ -67,11 +67,12 @@ describe Activity do
   %w(account campaign contact lead opportunity task).each do |subject|
     describe "Create, update, and delete (#{subject})" do
       before(:each) do
-        @subject = Factory(subject.to_sym)
+        @subject = Factory(subject.to_sym, :user => @current_user)
+        @conditions = [ "user_id=? AND subject_id=? AND subject_type=? AND action=?", @current_user.id, @subject.id, subject.capitalize ]
       end
 
       it "should add an activity when creating new #{subject}" do
-        @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='created'", @subject.id, subject.capitalize ])
+        @activity = Activity.find(:first, :conditions => (@conditions << "created"))
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
@@ -82,7 +83,7 @@ describe Activity do
         else
           @subject.update_attributes(:name => "Billy Bones")
         end
-        @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='updated'", @subject.id, subject.capitalize ])
+        @activity = Activity.find(:first, :conditions => (@conditions << "updated"))
 
         @activity.should_not == nil
         @activity.info.should == "Billy Bones"
@@ -90,7 +91,7 @@ describe Activity do
 
       it "should add an activity when deleting #{subject}" do
         @subject.destroy
-        @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='deleted'", @subject.id, subject.capitalize ])
+        @activity = Activity.find(:first, :conditions => (@conditions << "deleted"))
 
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
@@ -99,7 +100,7 @@ describe Activity do
       it "should add an activity when commenting on a #{subject}" do
         @comment = Factory(:comment, :commentable => @subject)
 
-        @activity = Activity.find(:first, :conditions => [ "subject_id=? AND subject_type=? AND action='commented'", @subject.id, subject.capitalize ])
+        @activity = Activity.find(:first, :conditions => (@conditions << "commented"))
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
@@ -109,8 +110,8 @@ describe Activity do
   %w(account campaign contact lead opportunity).each do |subject|
     describe "Recently viewed items (#{subject})" do
       before(:each) do
-        @subject = Factory(subject.to_sym)
-        @conditions = [ "subject_id=? AND subject_type=? AND action='viewed'", @subject.id, subject.capitalize ]
+        @subject = Factory(subject.to_sym, :user => @current_user)
+        @conditions = [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @subject.id, subject.capitalize ]
       end
 
       it "creating a new #{subject} should also make it a recently viewed item" do
@@ -137,6 +138,20 @@ describe Activity do
         @subject.destroy
         @activity = Activity.first(:conditions => @conditions)
 
+        @activity.should be_nil
+      end
+
+      it "deleting #{subject} should remove it from recently viewed items for all other users" do
+        @somebody = Factory(:user)
+        @subject = Factory(subject.to_sym, :user => @somebody,  :access => "Public")
+        Factory(:activity, :user => @somebody, :subject => @subject, :action => "viewed")
+
+        @activity = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @somebody.id, @subject.id, subject.capitalize ])
+        @activity.should_not == nil
+
+        # Now @current_user destroys somebody's object: somebody should no longer have it :viewed.
+        @subject.destroy
+        @activity = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @somebody.id, @subject.id, subject.capitalize ])
         @activity.should be_nil
       end
     end
