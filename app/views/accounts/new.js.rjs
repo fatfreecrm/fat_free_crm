@@ -1,3 +1,4 @@
+page.call "crm.flick", :empty, :toggle
 if params[:cancel] != "true"
   page[:create_account].replace_html :partial => "create"
 end

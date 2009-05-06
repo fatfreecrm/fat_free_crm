@@ -10,6 +10,23 @@ describe "/accounts/edit.js.rjs" do
     assigns[:users] = [ @current_user ]
   end
 
+  it "cancel from accounts index page: should replace [Edit Account] form with account partial" do
+    params[:cancel] = "true"
+    
+    render "accounts/edit.js.rjs"
+    response.should have_rjs("account_42") do |rjs|
+      with_tag("li[id=account_42]")
+    end
+  end
+
+  it "cancel from account landing page: should hide [Edit Account] form" do
+    request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+    params[:cancel] = "true"
+    
+    render "accounts/edit.js.rjs"
+    response.should include_text('crm.flip_form("edit_account"')
+  end
+
   it "edit: should hide previously open [edit account] for and replace it with account partial" do
     params[:cancel] = nil
     assigns[:previous] = Factory(:account, :id => 41, :user => @current_user)
@@ -38,23 +55,6 @@ describe "/accounts/edit.js.rjs" do
       with_tag("form[class=edit_account]")
     end
     response.should include_text('crm.flip_form("edit_account"')
-  end
-
-  it "cancel from account landing page: should hide [edit account] form" do
-    request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
-    params[:cancel] = "true"
-    
-    render "accounts/edit.js.rjs"
-    response.should include_text('crm.flip_form("edit_account"')
-  end
-
-  it "cancel from account index page: should replace [edit account] form with account partial" do
-    params[:cancel] = "true"
-    
-    render "accounts/edit.js.rjs"
-    response.should have_rjs("account_42") do |rjs|
-      with_tag("li[id=account_42]")
-    end
   end
 
 end

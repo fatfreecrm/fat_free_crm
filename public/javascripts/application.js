@@ -205,6 +205,19 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  flick: function(element, action) {
+    if ($(element)) {
+      switch(action) {
+        case "show":   $(element).show();     break;
+        case "hide":   $(element).hide();     break;
+        case "clear":  $(element).update(""); break;
+        case "remove": $(element).remove();   break;
+        case "toggle": $(element).toggle();   break;
+      }
+    }
+  },
+
+  //----------------------------------------------------------------------------
   search: function(query, controller) {
     $("loading").show();
     $(controller).setStyle({ opacity: 0.4 });

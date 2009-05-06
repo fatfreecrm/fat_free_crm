@@ -1,8 +1,7 @@
 if @contact.valid?
   page[:create_contact_arrow].replace_html "&#9658;"
   page[:create_contact_title].replace_html "Contacts"
-  page << "Effect.toggle('create_contact', 'blind', { duration: 0.1 });"
-  page[:create_contact].update ""
+  page.visual_effect :toggle_blind, :create_contact, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
   page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
   page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
   if called_from_index_page?
@@ -11,6 +10,7 @@ if @contact.valid?
   else
     page[:recently].replace :partial => "common/recently"
   end
+  page.call "crm.flick", :empty, :remove
 else
   page[:create_contact].replace_html :partial => "create"
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?

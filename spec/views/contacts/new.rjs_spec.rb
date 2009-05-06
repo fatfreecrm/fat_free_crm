@@ -11,13 +11,31 @@ describe "/contacts/new.js.rjs" do
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]
   end
- 
-  it "create: should render [new.html.haml] template into :create_contact div" do
-    params[:cancel] = nil
+
+  it "should toggle empty message div if it exists" do
     render "contacts/new.js.rjs"
+
+    response.should include_text('crm.flick("empty", "toggle")')
+  end
+
+  describe "new contact" do
+    it "should render [new.html.haml] template into :create_contact div" do
+      params[:cancel] = nil
+      render "contacts/new.js.rjs"
     
-    response.should have_rjs("create_contact") do |rjs|
-      with_tag("form[class=new_contact]")
+      response.should have_rjs("create_contact") do |rjs|
+        with_tag("form[class=new_contact]")
+      end
+    end
+  end
+
+  describe "cancel new contact" do
+    it "should hide [create contact] form" do
+      params[:cancel] = "true"
+      render "contacts/new.js.rjs"
+    
+      response.should_not have_rjs("create_contact")
+      response.should include_text('crm.flip_form("create_contact");')
     end
   end
 

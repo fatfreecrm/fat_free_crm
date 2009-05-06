@@ -9,22 +9,32 @@ describe "/accounts/new.js.rjs" do
     assigns[:users] = [ @current_user ]
   end
  
-  it "create: should render [new.html.haml] template into :create_account div" do
-    params[:cancel] = nil
+  it "should toggle empty message div if it exists" do
     render "accounts/new.js.rjs"
+
+    response.should include_text('crm.flick("empty", "toggle")')
+  end
+
+  describe "new account" do
+    it "should render [new.html.haml] template into :create_account div" do
+      params[:cancel] = nil
+      render "accounts/new.js.rjs"
     
-    response.should have_rjs("create_account") do |rjs|
-      with_tag("form[class=new_account]")
+      response.should have_rjs("create_account") do |rjs|
+        with_tag("form[class=new_account]")
+      end
+      response.should include_text('crm.flip_form("create_account");')
     end
-    response.should include_text('crm.flip_form("create_account");')
   end
- 
-  it "cancel: should call crm.flip_form()" do
-    params[:cancel] = "true"
-    render "accounts/new.js.rjs"
+  
+  describe "cancel new account" do
+    it "should hide [create account] form()" do
+      params[:cancel] = "true"
+      render "accounts/new.js.rjs"
     
-    response.should_not have_rjs("create_account")
-    response.should have_text('crm.flip_form("create_account");')
+      response.should_not have_rjs("create_account")
+      response.should include_text('crm.flip_form("create_account");')
+    end
   end
- 
+
 end

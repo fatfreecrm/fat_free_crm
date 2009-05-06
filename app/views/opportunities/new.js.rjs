@@ -1,6 +1,9 @@
+page.call "crm.flick", :empty, :toggle
 if params[:cancel] != "true"
   page[:create_opportunity].replace_html :partial => "create"
+  page.call "crm.flip_form", :create_opportunity
+  page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
+  page.call "crm.date_select_popup", "opportunity_closes_on"
+else
+  page.call "crm.flip_form", :create_opportunity
 end
-page.call "crm.flip_form", :create_opportunity
-page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
-page.call "crm.date_select_popup", "opportunity_closes_on"
