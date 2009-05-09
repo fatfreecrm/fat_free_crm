@@ -1,0 +1,40 @@
+= Simple Column Search
+
+Quick and dirty multi column LIKE searches. Great for prototyping auto-completers as it handles partial matches and adding search terms refines the results.
+
+Running lots of queries or have a large data set? You should probably upgrade to a real search back-end already!
+
+== Examples
+
+Add a search method to your model by calling simple_column_search with the fields you want to search.
+
+  class User
+    simple_column_search :first_name, :last_name
+  end
+ 
+Search for a single value across all searched columns.
+
+  User.search('eli')             # => anyone with first or last name starting with eli
+  User.search('miller')          # => anyone with first or last name starting with miller
+  
+Refine the search by adding another search term.
+
+  User.search('eli miller')
+    # => anyone with first or last name starting with eli AND
+    #    anyone with first or last name starting with miller
+
+== Install
+
+As a Rails plugin.
+
+  ./script/plugin install git://github.com/jqr/simple_column_search.git
+
+Prefer gems? Add this to your environment.rb and run the following command.
+
+  config.gem 'jqr-simple_column_search', :lib => 'simple_column_search', :source => 'http://gems.github.com'
+
+  $ rake gems:install
+
+
+Homepage:: http://github.com/jqr/simple_column_search/tree/master  
+License:: Copyright (c) 2008 Elijah Miller <mailto:elijah.miller@gmail.com>, released under the MIT license.

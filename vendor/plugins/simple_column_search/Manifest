@@ -1,0 +1,8 @@
+CHANGELOG
+init.rb
+lib/simple_column_search.rb
+Manifest
+Rakefile
+README.rdoc
+spec/models.rb
+spec/spec_helper.rb
