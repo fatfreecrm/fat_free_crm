@@ -515,10 +515,17 @@ describe LeadsController do
       @leads = [ @billy_bones, @captain_flint ]
     end
 
+    it "should redirecto to index if the search string contains garbage or is empty" do
+      xhr :get, :search, :query => "%*&'[]"
+
+      assigns[:query].should == ""
+      response.body.should == %Q(window.location.href = "/leads";) # Ajax redirect
+    end
+
     it "should look up the leads using query string" do
       xhr :get, :search, :query => "bill"
 
-      assigns[:leads].should == [ @captain_flint, @billy_bones ] # STUB.
+      assigns[:leads].should == [ @billy_bones ]
       assigns[:query].should == "bill"
       response.should render_template("leads/search")
     end
@@ -528,7 +535,7 @@ describe LeadsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "bill"
 
-        response.body.should == [ @captain_flint, @billy_bones ].to_xml # STUB.
+        response.body.should == [ @billy_bones ].to_xml
       end
     end
   end

@@ -152,12 +152,16 @@ class LeadsController < ApplicationController
   # GET /leads/search/query                                                AJAX
   #----------------------------------------------------------------------------
   def search
-    @query = params[:query]
-    @leads = get_leads # STUB.
+    @query = params[:query].gsub(/[^\w\s]/, "").strip
+    if @query.blank?
+      render(:update) { |page| page.redirect_to(:action => :index) }
+    else
+      @leads = Lead.my(@current_user).search(@query)
 
-    respond_to do |format|
-      format.js   # search.js.rjs
-      format.xml  { render :xml => @leads }
+      respond_to do |format|
+        format.js   # search.js.rjs
+        format.xml  { render :xml => @leads }
+      end
     end
   end
 

@@ -89,6 +89,8 @@ var crm = {
         first_element.focus();
         first_element.value = first_element.value;
       }
+    } else if ($("query")) {
+      $("query").focus();
     }
   },
 
@@ -219,16 +221,19 @@ var crm = {
 
   //----------------------------------------------------------------------------
   search: function(query, controller) {
-    $("loading").show();
-    $(controller).setStyle({ opacity: 0.4 });
-    new Ajax.Request("/" + controller + "/search", {
-      method     : "get",
-      parameters : { query : query },
-      onSuccess  : function() {
-        $("loading").hide();
-        $(controller).setStyle({ opacity: 1 });
-      }
-    });
+    if (!this.request) {
+      $("loading").show();
+      $(controller).setStyle({ opacity: 0.4 });
+      new Ajax.Request("/" + controller + "/search", {
+        method     : "get",
+        parameters : { query : query },
+        onSuccess  : function() {
+          $("loading").hide();
+          $(controller).setStyle({ opacity: 1 });
+        },
+        onComplete : (function() { this.request = null; }).bind(this)
+      });
+    }
   }
 }
 
