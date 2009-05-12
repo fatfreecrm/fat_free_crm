@@ -30,27 +30,30 @@ namespace :crm do
       Rake::Task["crm:settings:load"].invoke
 
       # Simulate random user activities.
-      %w(Account Campaign Contact Lead Opportunity Task).each do |model|
-        puts "Loading user activities for #{model.downcase.pluralize}..."
-        assets = model.constantize.send(:find, :all)
-        assets.each do |subject|
-          info = subject.respond_to?(:full_name) ? subject.full_name : subject.name
-          Activity.create(:action => "created", :created_at => subject.created_at, :user => subject.user, :subject => subject, :info => info)
-          Activity.create(:action => "updated", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
-          if model != "Task"
-            Activity.create(:action => "viewed", :created_at => subject.updated_at + rand(12 * 60).minutes, :user => subject.user, :subject => subject, :info => info)
-            comments = Comment.find(:all, :conditions => [ "commentable_id=? AND commentable_type=?", subject.id, model ])
-            comments.each_with_index do |comment, i|
-              time = subject.created_at + rand(12 * 60 * i).minutes
-              if time > Time.now
-                time = subject.created_at + rand(600).minutes
-              end
-              comment.update_attribute(:created_at, time)
-              Activity.create(:action => "commented", :created_at => time, :user => comment.user, :subject => subject, :info => info)
+      $stdout.sync = true
+      puts "Generating user activities..."
+      %w(Account Campaign Contact Lead Opportunity Task).inject([]) do |assets, model|
+        assets << model.constantize.send(:find, :all)
+      end.flatten.shuffle.each do |subject|
+        info = subject.respond_to?(:full_name) ? subject.full_name : subject.name
+        Activity.create(:action => "created", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
+        Activity.create(:action => "updated", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
+        unless subject.is_a?(Task)
+          time = subject.updated_at + rand(12 * 60).minutes
+          Activity.create(:action => "viewed", :created_at => time, :user => subject.user, :subject => subject, :info => info)
+          comments = Comment.find(:all, :conditions => [ "commentable_id=? AND commentable_type=?", subject.id, subject.class.name ])
+          comments.each_with_index do |comment, i|
+            time = subject.created_at + rand(12 * 60 * i).minutes
+            if time > Time.now
+              time = subject.created_at + rand(600).minutes
             end
+            comment.update_attribute(:created_at, time)
+            Activity.create(:action => "commented", :created_at => time, :user => comment.user, :subject => subject, :info => info)
           end
         end
+        print "." if subject.id % 10 == 0
       end
+      puts
     end
 
     desc "Reset the database and reload demo data along with default application settings"

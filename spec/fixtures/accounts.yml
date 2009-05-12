@@ -43,6 +43,6 @@ account<%= i %>:
   shipping_address : |
                      <%= addr1 %>
                      <%= addr2 %>
-  created_at       : <%= created_at = (rand(60) + 1).days.ago + rand(600).minutes; created_at.to_s(:db) %>
+  created_at       : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at       : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>
