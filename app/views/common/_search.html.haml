@@ -1,6 +1,5 @@
 - assets = controller.controller_name
-.panel#search
-  %span.field== Search #{assets}
-  %div{ :style => "margin: 0px 0px 6px 0px" }
-    = text_field_tag("query", nil, :size => 23)
-    = observe_field("query", :frequency => 0.75, :function => "crm.search(value, '#{assets}')")
+%h4== Search #{assets}
+%div{ :style => "margin: 0px 0px 6px 0px" }
+  = text_field_tag("query", @current_query, :size => 23)
+  = observe_field("query", :frequency => 0.75, :function => "crm.search(value, '#{assets}')")

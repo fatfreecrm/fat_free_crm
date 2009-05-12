@@ -1,3 +1,7 @@
 - assets = controller.controller_name
 - asset = assets.singularize
-#empty== You don't have any #{assets} yet. Feel free to #{link_to_remote("create a new " << asset, :url => send("new_" << asset << "_path"))}.
+#empty
+  - if @current_query.blank?
+    == You don't have any #{assets} yet. Feel free to #{link_to_remote("create a new " << asset, :url => send("new_" << asset << "_path"))}.
+  - else
+    == Coundn't find #{assets} matching <span class="cool"><b>#{h @current_query}</b></span>; please try another query.

@@ -267,6 +267,13 @@
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px; }
 
+.filters h4 {
+  color: navy;
+  font-size: 12px;
+  font-weight: bold; }
+.filters input[type=text] {
+  margin-bottom: 4px; }
+
 .panel div {
   margin: 0px 0px 10px 0px; }
 .panel h4 {
@@ -292,12 +299,6 @@
   font-weight: bold;
   margin: 4px 0px 2px 0px;
   padding: 2px 0px 2px 0px; }
-.panel .field {
-  color: navy;
-  float: left;
-  font-size: 12px;
-  font-weight: bold;
-  height: 16px; }
 
 .selector {
   color: black;

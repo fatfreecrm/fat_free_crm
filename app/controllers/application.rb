@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"
 
-  attr_accessor :current_page   # See current_page() and current_page=() down below.
+  attr_accessor :current_page   # See current_page() and current_page=() mathods down below.
+  attr_accessor :current_query  # See current_query() and current_query=() mathods down below.
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -92,6 +93,17 @@ class ApplicationController < ActionController::Base
   def current_page
     page = params[:page] || session["#{controller_name}_current_page".to_sym] || 1
     @current_page = page.to_i
+  end
+
+  # Proxy current search query for any of the controllers by storing it in a session.
+  #----------------------------------------------------------------------------
+  def current_query=(query)
+    @current_query = session["#{controller_name}_current_query".to_sym] = query
+  end
+
+  #----------------------------------------------------------------------------
+  def current_query
+    @current_query = params[:query] || session["#{controller_name}_current_query".to_sym] || ""
   end
 
 end

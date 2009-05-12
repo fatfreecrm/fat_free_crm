@@ -8,7 +8,7 @@ class LeadsController < ApplicationController
   # GET /leads.xml                                                AJAX and HTML
   #----------------------------------------------------------------------------
   def index
-    @leads = get_leads
+    @leads = get_leads(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -152,38 +152,34 @@ class LeadsController < ApplicationController
   # GET /leads/search/query                                                AJAX
   #----------------------------------------------------------------------------
   def search
-    @query = params[:query].gsub(/[^\w\s]/, "").strip
-    if @query.blank?
-      render(:update) { |page| page.redirect_to(:action => :index) }
-    else
-      @leads = Lead.my(@current_user).search(@query)
+    @leads = get_leads(:query => params[:query], :page => 1)
 
-      respond_to do |format|
-        format.js   # search.js.rjs
-        format.xml  { render :xml => @leads }
-      end
+    respond_to do |format|
+      format.js   { render :action => :index }
+      format.xml  { render :xml => @leads.to_xml }
     end
   end
 
-
-  # Ajax request to filter out list of leads.
+  # Ajax request to filter out list of leads.                              AJAX
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_lead_status] = params[:status]
-    session[:leads_current_page] = 1
-    @leads = get_leads
+    @leads = get_leads(:page => 1) # Start one the first page.
     render :action => :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_leads(page = current_page)
-    self.current_page = page
-    unless session[:filter_by_lead_status]
-      Lead.my(@current_user)
+  def get_leads(options = { :page => nil, :query => nil })
+    self.current_page = options[:page] if options[:page]
+    self.current_query = options[:query] if options[:query]
+
+    if session[:filter_by_lead_status]
+      filters = session[:filter_by_lead_status].split(",")
+      current_query.blank? ? Lead.my(@current_user).only(filters) : Lead.my(@current_user).only(filters).search(current_query)
     else
-      Lead.my(@current_user).only(session[:filter_by_lead_status].split(","))
-    end.paginate(:page => page)
+      current_query.blank? ? Lead.my(@current_user) : Lead.my(@current_user).search(current_query)
+    end.paginate(:page => current_page)
   end
 
   #----------------------------------------------------------------------------
@@ -193,7 +189,7 @@ class LeadsController < ApplicationController
         get_data_for_sidebar                      # Get data for the sidebar.
         @leads = get_leads                        # Get leads for current page.
         if @leads.blank?                          # If no lead on this page then try the previous one.
-          @leads = get_leads(current_page - 1) if current_page > 1
+          @leads = get_leads(:page => current_page - 1) if current_page > 1
           render :action => :index and return     # And reload the whole list even if it's empty.
         end
       else                                        # Called from related asset.

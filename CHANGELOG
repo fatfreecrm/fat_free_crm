@@ -4,6 +4,18 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, May 11, 2009
+---------------------------------------------------------------------
+- Implemented live search for leads that can be reused in other controllers.
+
+Sun, May 10, 2009
+---------------------------------------------------------------------
+- More work on simplifying search.
+
+Fri, May 8, 2009
+---------------------------------------------------------------------
+- Created initial implementation of live search (Leads only so far).
+
 Thu, May 7, 2009
 ---------------------------------------------------------------------
 - Installed [simple_column_search] plugin.

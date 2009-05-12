@@ -1,6 +1,0 @@
-unless @leads.blank?
-  page[:leads].replace_html render(:partial => "lead", :collection => @leads)
-else
-  page[:leads].replace_html "Cound't find leads matching <b>#{h params[:query]}</b>"
-end
-page[:paginate].update ""

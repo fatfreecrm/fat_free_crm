@@ -22,6 +22,7 @@ module SimpleColumnSearch
     options[:name] ||= 'search'
     
     named_scope options[:name], lambda { |terms|
+      terms = options[:escape].call(terms) if options[:escape]
       conditions = terms.split.inject(nil) do |acc, term|
         pattern = 
           case(options[:match])
