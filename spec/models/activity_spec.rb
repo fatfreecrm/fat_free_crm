@@ -205,6 +205,29 @@ describe Activity do
     end
   end
 
+  describe "Rejecting a lead" do
+    before(:each) do
+      @lead = Factory(:lead, :user => @current_user, :status => "new")
+      @conditions = [ "subject_id=? AND subject_type='Lead' AND user_id=?", @lead.id, @current_user ]
+    end
+
+    it "should create 'rejected' lead action" do
+      @lead.update_attribute(:status, "rejected")
+      @activities = Activity.all(:conditions => @conditions)
+
+      @activities.map(&:action).sort.should == %w(created rejected viewed)
+    end
+
+    it "should not mark it as recently viewed" do
+      Activity.delete_all                                   # delete :created and :viewed
+      @lead.update_attribute(:status, "rejected")
+      @activities = Activity.all(:conditions => @conditions)
+
+      @activities.map(&:action).sort.should == %w(rejected) # no :viewed, only :rejected
+    end
+
+  end
+
   describe "Permissions" do
     it "should not show the created/updated activities if the subject is private" do
       @subject = Factory(:account, :user => Factory(:user), :access => "Private")
