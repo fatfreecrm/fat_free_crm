@@ -2,9 +2,11 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  - if @lead.status != "converted"
+  - unless %w(converted rejected).include?(@lead.status)
     = link_to_inline(:convert_lead, convert_lead_path(@lead), :text => "Convert") + " | "
   = link_to_inline(:edit_lead, edit_lead_path(@lead), :text => "Edit") + " | "
+  - if @lead.status != "rejected"
+    = link_to_function("Reject?", confirm_reject(@lead)) + " | "
   = link_to_function("Delete?", confirm_delete(@lead))
 .title#title= @lead.full_name
 

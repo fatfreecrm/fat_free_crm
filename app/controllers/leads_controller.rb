@@ -149,6 +149,21 @@ class LeadsController < ApplicationController
     end
   end
 
+  # PUT /leads/1/reject
+  # PUT /leads/1/reject.xml                                       AJAX and HTML
+  #----------------------------------------------------------------------------
+  def reject
+    @lead = Lead.find(params[:id])
+    @lead.reject
+    get_data_for_sidebar if called_from_index_page?
+
+    respond_to do |format|
+      format.html { flash[:notice] = "#{@lead.full_name} has beed rejected."; redirect_to(leads_path) }
+      format.js   # reject.js.rjs
+      format.xml  { head :ok }
+    end
+  end
+
   # GET /leads/search/query                                                AJAX
   #----------------------------------------------------------------------------
   def search

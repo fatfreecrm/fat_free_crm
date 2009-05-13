@@ -6,9 +6,15 @@
   %div
     .tools{ invisible, :id => dom_id(lead, :tools) }
       %small
-        - if lead.status != "converted"
-          = link_to_convert(lead) + " | "
         = link_to_edit(lead) + " | "
+        - unless %w(converted rejected).include?(lead.status)
+          = link_to_convert(lead) + " | "
+        - else
+          = "<font color='silver'>Convert</font> | "
+        - if lead.status != "rejected"
+          = link_to_reject(lead) + " | "
+        - else
+          = "<font color='silver'>Reject</font> | "
         = link_to_delete(lead) + "&nbsp;"
     = link_to(lead.full_name, lead)
     %tt

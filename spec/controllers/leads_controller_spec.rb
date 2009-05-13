@@ -524,6 +524,38 @@ describe LeadsController do
     end
   end
 
+  # PUT /leads/1/reject
+  # PUT /leads/1/reject.xml                                       AJAX and HTML
+  #----------------------------------------------------------------------------
+  describe "responding to PUT reject" do
+
+    before(:each) do
+      @lead = Factory(:lead, :user => @current_user, :status => "new")
+    end
+
+    describe "AJAX request" do
+      it "should reject the requested lead and render [reject] template" do
+        xhr :put, :reject, :id => @lead.id
+
+        assigns[:lead].should == @lead.reload
+        @lead.status.should == "rejected"
+        response.should render_template("leads/reject")
+      end
+    end
+
+    describe "HTML request" do
+      it "should redirect to Leads index when a lead gets rejected from its landing page" do
+        put :reject, :id => @lead.id
+
+        assigns[:lead].should == @lead.reload
+        @lead.status.should == "rejected"
+        flash[:notice].should_not == nil
+        response.should redirect_to(leads_path)
+      end
+    end
+
+  end
+
   # Ajax request to filter out list of leads.
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do

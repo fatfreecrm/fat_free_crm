@@ -21,6 +21,22 @@ module LeadsHelper
     )
   end
 
+  #----------------------------------------------------------------------------
+  def link_to_reject(lead)
+    link_to_remote("Reject!", :method => :put, :url => reject_lead_path(lead))
+  end
+
+  #----------------------------------------------------------------------------
+  def confirm_reject(lead)
+    question = %(<span class="warn">Are you sure you want to reject this lead?</span>)
+    yes = link_to("Yes", reject_lead_path(lead), :method => :put)
+    no = link_to_function("No", "$('menu').update($('confirm').innerHTML)")
+    update_page do |page|
+      page << "$('confirm').update($('menu').innerHTML)"
+      page[:menu].replace_html "#{question} #{yes} : #{no}"
+    end
+  end
+
   # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
   #----------------------------------------------------------------------------
   def rating_select(name, options = {})
