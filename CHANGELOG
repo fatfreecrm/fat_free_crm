@@ -8,6 +8,8 @@ Wed, May 13, 2009
 ---------------------------------------------------------------------
 - Implemented search for campaigns, opportunities, accounts, and contacts.
 - Made it easier to reject leads (LH #35).
+- Added sidebar summary for accounts.
+- Added web presence links for leads and contacts.
 
 Tue, May 12, 2009
 ---------------------------------------------------------------------

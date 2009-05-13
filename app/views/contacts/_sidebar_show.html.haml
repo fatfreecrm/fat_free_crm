@@ -1,25 +1,29 @@
 .panel#summary
   %span{:style => "float:right"}= gravatar_for(@contact, :size => "50x50", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
   %h4= @contact.full_name
-  - if @contact.title && @contact.account
+  - if !@contact.title.blank? && @contact.account
     %div== #{@contact.title} at #{link_to(@contact.account.name, account_path(@contact.account))}
-  - elsif @contact.title || @contact.account.name
-    %div= @contact.title || @contact.account.name
-  - if @contact.department
+  - elsif !@contact.title.blank?
+    %div= @contact.title
+  - elsif @contact.account
+    %div= link_to(@contact.account.name, account_path(@contact.account))
+  - unless @contact.department.blank?
     = @contact.department + " department"
 
-  - if @contact.address
+  - unless @contact.address.blank?
     %div= @contact.address.n2br
 
   %div
-    - if @contact.phone
+    - unless @contact.phone.blank?
       == Phone: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.phone) : @contact.phone}</b><br />
-    - if @contact.mobile
+    - unless @contact.mobile.blank?
       == Mobile: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.mobile) : @contact.mobile}</b><br />
-    - if @contact.fax
+    - unless @contact.fax.blank?
       == Fax: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.fax) : @contact.fax}</b><br />
   %div
-    - if @contact.email
+    - unless @contact.email.blank?
       == Email: <b>#{link_to(@contact.email, "mailto:" + @contact.email)}</b><br />
-    - if @contact.alt_email
-      == Alt: <b>#{link_to(@contact.alt_email, "mailto:" + @contact.alt_email)}</b><br />
+    - unless @contact.alt_email.blank?
+      == Other: <b>#{link_to(@contact.alt_email, "mailto:" + @contact.alt_email)}</b><br />
+
+  = web_presence_icons(@contact)

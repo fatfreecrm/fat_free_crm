@@ -18,6 +18,7 @@
       == Email: <b>#{link_to(@lead.email, "mailto:" + @lead.email)}</b><br />
     - if @lead.alt_email
       == Alt: <b>#{link_to(@lead.alt_email, "mailto:" + @lead.alt_email)}</b><br />
+  = web_presence_icons(@lead)
 
   .caption Lead Summary
   %li

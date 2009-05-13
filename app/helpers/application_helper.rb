@@ -154,4 +154,15 @@ module ApplicationHelper
     end
   end
 
+  # Display web presence mini-icons for Contact or Lead.
+  #----------------------------------------------------------------------------
+  def web_presence_icons(person)
+    [ :blog, :linkedin, :facebook, :twitter ].inject([]) do |links, site|
+      url = person.send(site)
+      unless url.blank?
+        links << link_to(image_tag("#{site}.gif", :size => "15x15"), url, :popup => true, :title => "Open #{url} in a new window")
+      end
+      links
+    end.join("\n")
+  end
 end
