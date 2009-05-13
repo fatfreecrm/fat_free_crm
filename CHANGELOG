@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, May 13, 2009
+---------------------------------------------------------------------
+- Implemented search for campaigns.
+
+Tue, May 12, 2009
+---------------------------------------------------------------------
+- Added company field to leads search.
+
 Mon, May 11, 2009
 ---------------------------------------------------------------------
 - Implemented live search for leads that can be reused in other controllers.

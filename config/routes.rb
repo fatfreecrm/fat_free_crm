@@ -8,11 +8,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :passwords
   map.resources :comments
   map.resources :tasks,         :has_many => :comments, :member => { :complete => :put }
-  map.resources :accounts,      :has_many => :comments
-  map.resources :campaigns,     :has_many => :comments
+  map.resources :accounts,      :has_many => :comments, :collection => { :search => :get }
+  map.resources :campaigns,     :has_many => :comments, :collection => { :search => :get }
   map.resources :leads,         :has_many => :comments, :collection => { :search => :get }, :member => { :convert => :get, :promote => :put }
-  map.resources :contacts,      :has_many => :comments
-  map.resources :opportunities, :has_many => :comments
+  map.resources :contacts,      :has_many => :comments, :collection => { :search => :get }
+  map.resources :opportunities, :has_many => :comments, :collection => { :search => :get }
 
   map.signup "signup", :controller => "users",           :action => "new"
   map.login  "login",  :controller => "authentications", :action => "new"

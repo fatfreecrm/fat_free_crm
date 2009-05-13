@@ -8,7 +8,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns.xml                                            AJAX and HTML
   #----------------------------------------------------------------------------
   def index
-    @campaigns = get_campaigns
+    @campaigns = get_campaigns(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.haml
@@ -111,24 +111,38 @@ class CampaignsController < ApplicationController
     end
   end
 
+  # GET /campaigns/search/query                                           AJAX
+  #----------------------------------------------------------------------------
+  def search
+    @campaigns = get_campaigns(:query => params[:query], :page => 1)
+
+    respond_to do |format|
+      format.js   { render :action => :index }
+      format.xml  { render :xml => @campaigns.to_xml }
+    end
+  end
+
+
   # Ajax request to filter out list of campaigns.                          AJAX
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_campaign_status] = params[:status]
-    session[:campaigns_current_page] = 1
-    @campaigns = get_campaigns
+    @campaigns = get_campaigns(:page => 1)
     render :action => :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_campaigns(page = current_page)
-    self.current_page = page
-    unless session[:filter_by_campaign_status]
-      @campaigns = Campaign.my(@current_user)
+  def get_campaigns(options = { :page => nil, :query => nil })
+    self.current_page = options[:page] if options[:page]
+    self.current_query = options[:query] if options[:query]
+
+    if session[:filter_by_campaign_status]
+      filters = session[:filter_by_campaign_status].split(",")
+      current_query.blank? ? Campaign.my(@current_user).only(filters) : Campaign.my(@current_user).only(filters).search(current_query)
     else
-      @campaigns = Campaign.my(@current_user).only(session[:filter_by_campaign_status].split(","))
-    end.paginate(:page => page)
+      current_query.blank? ? Campaign.my(@current_user) : Campaign.my(@current_user).search(current_query)
+    end.paginate(:page => current_page)
   end
 
   #----------------------------------------------------------------------------
@@ -137,7 +151,7 @@ class CampaignsController < ApplicationController
       get_data_for_sidebar
       @campaigns = get_campaigns
       if @campaigns.blank?
-        @campaigns = get_campaigns(current_page - 1) if current_page > 1
+        @campaigns = get_campaigns(:page => current_page - 1) if current_page > 1
         render :action => :index and return
       end
       # At this point render destroy.js.rjs

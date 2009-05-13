@@ -500,7 +500,7 @@ describe LeadsController do
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
     before(:each) do
-      @billy_bones   = Factory(:lead, :user => @current_user, :first_name => "Billy",   :last_name => "Bones");
+      @billy_bones   = Factory(:lead, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
       @captain_flint = Factory(:lead, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
       @leads = [ @billy_bones, @captain_flint ]
     end

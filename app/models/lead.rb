@@ -43,7 +43,7 @@ class Lead < ActiveRecord::Base
   named_scope :converted, :conditions => "status='converted'"
   named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }
 
-  simple_column_search :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
+  simple_column_search :first_name, :last_name, :company, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
   uses_mysql_uuid
   uses_user_permissions
   acts_as_commentable

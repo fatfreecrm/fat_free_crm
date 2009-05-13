@@ -7,9 +7,6 @@ class ApplicationController < ActionController::Base
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"
 
-  attr_accessor :current_page   # See current_page() and current_page=() mathods down below.
-  attr_accessor :current_query  # See current_query() and current_query=() mathods down below.
-
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   # protect_from_forgery # :secret => '165eb65bfdacf95923dad9aea10cc64a'

@@ -52,16 +52,6 @@ describe CampaignsController do
     end
 
     describe "AJAX pagination" do
-      it "should use default page number of 1" do
-        @campaigns = [ Factory(:campaign, :user => @current_user) ]
-        xhr :get, :index
-
-        assigns[:current_page].should == 1
-        assigns[:campaigns].should == @campaigns
-        session[:campaigns_current_page].should == 1
-        response.should render_template("campaigns/index")
-      end
-
       it "should pick up page number from params" do
         @campaigns = [ Factory(:campaign, :user => @current_user) ]
         xhr :get, :index, :page => 42
@@ -345,6 +335,34 @@ describe CampaignsController do
       end
     end
 
+  end
+
+  # GET /campaigns/search/query                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to GET search" do
+    before(:each) do
+      @first  = Factory(:campaign, :user => @current_user, :name => "Hello, world!")
+      @second = Factory(:campaign, :user => @current_user, :name => "Hello again")
+      @campaigns = [ @first, @second ]
+    end
+
+    it "should perform lookup using query string and redirect to index" do
+      xhr :get, :search, :query => "again"
+
+      assigns[:campaigns].should == [ @second ]
+      assigns[:current_query].should == "again"
+      session[:campaigns_current_query].should == "again"
+      response.should render_template("index")
+    end
+
+    describe "with mime type of XML" do
+      it "should perform lookup using query string and render XML" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :search, :query => "again?!"
+
+        response.body.should == [ @second ].to_xml
+      end
+    end
   end
 
   # Ajax request to filter out list of campaigns.                          AJAX
