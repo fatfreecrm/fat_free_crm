@@ -34,6 +34,8 @@ class Opportunity < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
 
+  simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
+
   uses_mysql_uuid
   uses_user_permissions
   acts_as_commentable

@@ -1,7 +1,7 @@
 class OpportunitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :load_settings, :only => [ :index, :show,  :edit, :create, :update, :filter ]
+  before_filter :load_settings, :except => [ :new, :destroy ]
   before_filter :get_data_for_sidebar, :only => :index
   after_filter  :update_recently_viewed, :only => :show
 
@@ -9,7 +9,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities.xml
   #----------------------------------------------------------------------------
   def index
-    @opportunities = get_opportunities
+    @opportunities = get_opportunities(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.haml
@@ -135,24 +135,37 @@ class OpportunitiesController < ApplicationController
     end
   end
 
+  # GET /campaigns/search/query                                           AJAX
+  #----------------------------------------------------------------------------
+  def search
+    @opportunities = get_opportunities(:query => params[:query], :page => 1)
+
+    respond_to do |format|
+      format.js   { render :action => :index }
+      format.xml  { render :xml => @opportunities.to_xml }
+    end
+  end
+
   # Ajax request to filter out list of opportunities.                      AJAX
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_opportunity_stage] = params[:stage]
-    session[:opportunities_current_page] = 1
-    @opportunities = get_opportunities
+    @opportunities = get_opportunities(:page => 1)
     render :action => :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_opportunities(page = current_page)
-    self.current_page = page
-    unless session[:filter_by_opportunity_stage]
-      @opportunities = Opportunity.my(@current_user)
+  def get_opportunities(options = { :page => nil, :query => nil })
+    self.current_page = options[:page] if options[:page]
+    self.current_query = options[:query] if options[:query]
+
+    if session[:filter_by_opportunity_stage]
+      filters = session[:filter_by_opportunity_stage].split(",")
+      current_query.blank? ? Opportunity.my(@current_user).only(filters) : Opportunity.my(@current_user).only(filters).search(current_query)
     else
-      @opportunities = Opportunity.my(@current_user).only(session[:filter_by_opportunity_stage].split(","))
-    end.paginate(:page => page)
+      current_query.blank? ? Opportunity.my(@current_user) : Opportunity.my(@current_user).search(current_query)
+    end.paginate(:page => current_page)
   end
 
   #----------------------------------------------------------------------------
@@ -162,7 +175,7 @@ class OpportunitiesController < ApplicationController
         get_data_for_sidebar
         @opportunities = get_opportunities
         if @opportunities.blank?
-          @opportunities = get_opportunities(current_page - 1) if current_page > 1
+          @opportunities = get_opportunities(:page => current_page - 1) if current_page > 1
           render :action => :index and return
         end
       else # Called from related asset.

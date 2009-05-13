@@ -50,16 +50,6 @@ describe OpportunitiesController do
     end
 
     describe "AJAX pagination" do
-      it "should use default page number of 1" do
-        @opportunities = [ Factory(:opportunity, :user => @current_user) ]
-        xhr :get, :index
-
-        assigns[:current_page].should == 1
-        assigns[:opportunities].should == @opportunities
-        session[:opportunities_current_page].should == 1
-        response.should render_template("opportunities/index")
-      end
-
       it "should pick up page number from params" do
         @opportunities = [ Factory(:opportunity, :user => @current_user) ]
         xhr :get, :index, :page => 42
@@ -472,6 +462,34 @@ describe OpportunitiesController do
       end
     end
 
+  end
+
+  # GET /opportunities/search/query                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to GET search" do
+    before(:each) do
+      @first  = Factory(:opportunity, :user => @current_user, :name => "The first one")
+      @second = Factory(:opportunity, :user => @current_user, :name => "The second one")
+      @opportunities = [ @first, @second ]
+    end
+
+    it "should perform lookup using query string and redirect to index" do
+      xhr :get, :search, :query => "second"
+
+      assigns[:opportunities].should == [ @second ]
+      assigns[:current_query].should == "second"
+      session[:opportunities_current_query].should == "second"
+      response.should render_template("index")
+    end
+
+    describe "with mime type of XML" do
+      it "should perform lookup using query string and render XML" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :search, :query => "second?!"
+
+        response.body.should == [ @second ].to_xml
+      end
+    end
   end
 
   # Ajax request to filter out list of opportunities.                      AJAX

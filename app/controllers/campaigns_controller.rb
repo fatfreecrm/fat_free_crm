@@ -122,7 +122,6 @@ class CampaignsController < ApplicationController
     end
   end
 
-
   # Ajax request to filter out list of campaigns.                          AJAX
   #----------------------------------------------------------------------------
   def filter
