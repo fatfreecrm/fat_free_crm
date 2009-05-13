@@ -7,7 +7,7 @@ class ContactsController < ApplicationController
   # GET /contacts.xml                                             AJAX and HTML
   #----------------------------------------------------------------------------
   def index
-    @contacts = get_contacts
+    @contacts = get_contacts(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.haml
@@ -129,11 +129,28 @@ class ContactsController < ApplicationController
     end
   end
 
+  # GET /contacts/search/query                                             AJAX
+  #----------------------------------------------------------------------------
+  def search
+    @contacts = get_contacts(:query => params[:query], :page => 1)
+
+    respond_to do |format|
+      format.js   { render :action => :index }
+      format.xml  { render :xml => @contacts.to_xml }
+    end
+  end
+
   private
   #----------------------------------------------------------------------------
-  def get_contacts(page = current_page)
-    self.current_page = page
-    @contacts = Contact.my(@current_user).paginate(:page => page)
+  def get_contacts(options = { :page => nil, :query => nil })
+    self.current_page = options[:page] if options[:page]
+    self.current_query = options[:query] if options[:query]
+
+    if current_query.blank?
+      Contact.my(@current_user)
+    else
+      Contact.my(@current_user).search(current_query)
+    end.paginate(:page => current_page)
   end
 
   #----------------------------------------------------------------------------
@@ -142,7 +159,7 @@ class ContactsController < ApplicationController
       if called_from_index_page?
         @contacts = get_contacts
         if @contacts.blank?
-          @contacts = get_contacts(current_page - 1) if current_page > 1
+          @contacts = get_contacts(:page => current_page - 1) if current_page > 1
           render :action => :index and return
         end
       else

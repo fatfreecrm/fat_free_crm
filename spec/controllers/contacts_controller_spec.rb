@@ -21,16 +21,6 @@ describe ContactsController do
     end
 
     describe "AJAX pagination" do
-      it "should use default page number of 1" do
-        @contacts = [ Factory(:contact, :user => @current_user) ]
-        xhr :get, :index
-
-        assigns[:current_page].should == 1
-        assigns[:contacts].should == @contacts
-        session[:contacts_current_page].should == 1
-        response.should render_template("contacts/index")
-      end
-
       it "should pick up page number from params" do
         @contacts = [ Factory(:contact, :user => @current_user) ]
         xhr :get, :index, :page => 42
@@ -398,6 +388,34 @@ describe ContactsController do
 
         flash[:notice].should_not == nil
         response.should redirect_to(contacts_path)
+      end
+    end
+  end
+
+  # GET /contacts/search/query                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to GET search" do
+    before(:each) do
+      @billy_bones   = Factory(:contact, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
+      @captain_flint = Factory(:contact, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
+      @contacts = [ @billy_bones, @captain_flint ]
+    end
+
+    it "should perform lookup using query string and redirect to index" do
+      xhr :get, :search, :query => "bill"
+
+      assigns[:contacts].should == [ @billy_bones ]
+      assigns[:current_query].should == "bill"
+      session[:contacts_current_query].should == "bill"
+      response.should render_template("index")
+    end
+
+    describe "with mime type of XML" do
+      it "should perform lookup using query string and render XML" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :search, :query => "bill?!"
+
+        response.body.should == [ @billy_bones ].to_xml
       end
     end
   end

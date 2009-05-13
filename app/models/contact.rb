@@ -43,6 +43,8 @@ class Contact < ActiveRecord::Base
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
+  simple_column_search :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
+
   uses_mysql_uuid
   uses_user_permissions
   acts_as_commentable
