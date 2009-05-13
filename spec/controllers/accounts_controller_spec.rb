@@ -19,16 +19,6 @@ describe AccountsController do
     end
 
     describe "AJAX pagination" do
-      it "should use default page number of 1" do
-        @accounts = [ Factory(:account, :user => @current_user) ]
-        xhr :get, :index
-
-        assigns[:current_page].should == 1
-        assigns[:accounts].should == @accounts
-        session[:accounts_current_page].should == 1
-        response.should render_template("accounts/index")
-      end
-
       it "should pick up page number from params" do
         @accounts = [ Factory(:account, :user => @current_user) ]
         xhr :get, :index, :page => 42
@@ -290,6 +280,34 @@ describe AccountsController do
       end
     end
 
+  end
+
+  # GET /accounts/search/query                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to GET search" do
+    before(:each) do
+      @first  = Factory(:account, :user => @current_user, :name => "The first one")
+      @second = Factory(:account, :user => @current_user, :name => "The second one")
+      @accounts = [ @first, @second ]
+    end
+
+    it "should perform lookup using query string and redirect to index" do
+      xhr :get, :search, :query => "second"
+
+      assigns[:accounts].should == [ @second ]
+      assigns[:current_query].should == "second"
+      session[:accounts_current_query].should == "second"
+      response.should render_template("index")
+    end
+
+    describe "with mime type of XML" do
+      it "should perform lookup using query string and render XML" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :search, :query => "second?!"
+
+        response.body.should == [ @second ].to_xml
+      end
+    end
   end
 
 end

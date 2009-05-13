@@ -7,7 +7,7 @@ class AccountsController < ApplicationController
   # GET /accounts.xml                                             HTML and AJAX
   #----------------------------------------------------------------------------
   def index
-    @accounts = get_accounts
+    @accounts = get_accounts(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.haml
@@ -110,11 +110,28 @@ class AccountsController < ApplicationController
     end
   end
 
+  # GET /accounts/search/query                                             AJAX
+  #----------------------------------------------------------------------------
+  def search
+    @accounts = get_accounts(:query => params[:query], :page => 1)
+
+    respond_to do |format|
+      format.js   { render :action => :index }
+      format.xml  { render :xml => @accounts.to_xml }
+    end
+  end
+
   private
   #----------------------------------------------------------------------------
-  def get_accounts(page = current_page)
-    self.current_page = page
-    Account.my(@current_user).paginate(:page => page)
+  def get_accounts(options = { :page => nil, :query => nil })
+    self.current_page = options[:page] if options[:page]
+    self.current_query = options[:query] if options[:query]
+
+    if current_query.blank?
+      Account.my(@current_user)
+    else
+      Account.my(@current_user).search(current_query)
+    end.paginate(:page => current_page)
   end
 
   #----------------------------------------------------------------------------
@@ -122,7 +139,7 @@ class AccountsController < ApplicationController
     if method == :ajax
       @accounts = get_accounts
       if @accounts.blank?
-        @accounts = get_accounts(current_page - 1) if current_page > 1
+        @accounts = get_accounts(:page => current_page - 1) if current_page > 1
         render :action => :index and return
       end
       # At this point render default destroy.js.rjs template.

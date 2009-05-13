@@ -29,6 +29,8 @@ class Account < ActiveRecord::Base
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
+  simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
+
   uses_mysql_uuid
   uses_user_permissions
   acts_as_commentable
