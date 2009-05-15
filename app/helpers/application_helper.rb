@@ -14,9 +14,13 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def show_flash_if_any
-    %w(error warning message notice).each do |type|
-      return content_tag("p", h(flash[type.to_sym]), :id => "flash_#{type}", :class => "flash_#{type}") if flash[type.to_sym]
+  def show_flash(options = { :container => nil, :sticky => false })
+    [:error, :warning, :info, :notice].each do |type|
+      if flash[type]
+        id = "flash_#{type}"
+        html = content_tag(:p, h(flash[type]), :class => "flash_#{type}", :id => (options[:container] ? nil : id))
+        return html << content_tag(:script, "crm.flash('#{options[:container] || id}', #{options[:sticky]})", :type => "text/javascript")
+      end
     end
     nil
   end

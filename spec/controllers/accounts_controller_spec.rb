@@ -59,7 +59,6 @@ describe AccountsController do
   describe "responding to GET show" do
 
     describe "with mime type of HTML" do
-
       before(:each) do
         @account = Factory(:account, :user => @current_user)
         @stage = Setting.as_hash(:opportunity_stage)
@@ -78,11 +77,9 @@ describe AccountsController do
         Activity.should_receive(:log).with(@current_user, @account, :viewed).once
         get :show, :id => @account.id
       end
-
     end
 
     describe "with mime type of XML" do
-
       it "should render the requested account as xml" do
         @account = Factory(:account, :user => @current_user)
         @stage = Setting.as_hash(:opportunity_stage)
@@ -91,9 +88,27 @@ describe AccountsController do
         get :show, :id => @account.id
         response.body.should == @account.to_xml
       end
-
     end
 
+    describe "account got deleted or otherwise unavailable" do
+      before(:each) do
+        @account = Factory(:account, :user => @current_user)
+        @account.destroy # say, somebody else deletes the account...
+      end
+
+      it "should redirect to account index if account is not available" do
+        get :show, :id => @account.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(accounts_path)
+      end
+
+      it "should return 404 (Not Found) XML error" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+
+        get :show, :id => @account.id
+        response.code.should == "404" # :not_found
+      end
+    end
   end
 
   # GET /accounts/new

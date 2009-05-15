@@ -20,13 +20,20 @@ class AccountsController < ApplicationController
   # GET /accounts/1.xml
   #----------------------------------------------------------------------------
   def show
-    @account = Account.find(params[:id])
+    @account = Account.find_by_id(params[:id])
     @stage = Setting.as_hash(:opportunity_stage)
     @comment = Comment.new
 
-    respond_to do |format|
-      format.html # show.html.haml
-      format.xml  { render :xml => @account }
+    if @account
+      respond_to do |format|
+        format.html # show.html.haml
+        format.xml  { render :xml => @account }
+      end
+    else
+      respond_to do |format|
+        format.html { flash[:warning] = "The account is no longer available."; redirect_to(:action => :index) }
+        format.xml  { render :status => :not_found }
+      end
     end
   end
 

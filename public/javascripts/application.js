@@ -220,6 +220,15 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  flash: function(id, sticky) {
+    $(id).hide();
+    Effect.Appear(id, { duration: 0.5 });
+    if (!sticky) {
+      setTimeout("Effect.Fade('" + id + "')", 3000);
+    }
+  },
+
+  //----------------------------------------------------------------------------
   search: function(query, controller) {
     if (!this.request) {
       $("loading").show();
