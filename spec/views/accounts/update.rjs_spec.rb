@@ -17,6 +17,27 @@ describe "/accounts/update.js.rjs" do
     response.should_not have_rjs("account_42")
     response.should include_text('crm.flip_form("edit_account"')
   end
+
+  it "no errors: should update sidebar when called from account landing page" do
+    request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+
+    render "accounts/update.js.rjs"
+    response.should have_rjs("sidebar") do |rjs|
+      with_tag("div[id=summary]")
+      with_tag("div[id=recently]")
+    end
+    response.should include_text('$("summary").visualEffect("shake"')
+  end
+
+  it "no errors: should update sidebar when called from opportunities index page" do
+    request.env["HTTP_REFERER"] = "http://localhost/accounts"
+
+    render "accounts/update.js.rjs"
+    response.should have_rjs("sidebar") do |rjs|
+      with_tag("div[id=filters]")
+      with_tag("div[id=recently]")
+    end
+  end
  
   it "no errors: should replace [edit_account] form with account partial and highligh it when called from account index" do
     request.env["HTTP_REFERER"] = "http://localhost/accounts"

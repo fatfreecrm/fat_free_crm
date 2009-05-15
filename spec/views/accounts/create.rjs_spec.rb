@@ -27,8 +27,9 @@ describe "/accounts/create.js.rjs" do
       response.should have_rjs("paginate")
     end
 
-    it "should refresh recently viewed items in the sidebar" do
+    it "should refresh accounts sidebar" do
       response.should have_rjs("sidebar") do |rjs|
+        with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
     end

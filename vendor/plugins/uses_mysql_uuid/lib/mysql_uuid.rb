@@ -66,11 +66,10 @@ module ActiveRecord
           #--------------------------------------------------------------------------
           def find(*args)
             if args.first =~ /\A[a-f\d\-]{36}\Z/
-              send(:find_by_uuid, *args)
+              send(:find_by_uuid, *args) || raise(RecordNotFound, "Couldn't find #{self.name} with ID=#{args.first}")
             else
               super(*args)
             end
-
           end
         end
 

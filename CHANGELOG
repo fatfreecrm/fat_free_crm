@@ -8,6 +8,7 @@ Thu, May 14, 2009
 ---------------------------------------------------------------------
 - Started with LH #34 (Gracefully handle missing objects).
 - Replaced regular flash messages with non-sticky ones.
+- Make sure search box gets shown after creating, updating, or deleting an account.
 
 Wed, May 13, 2009
 ---------------------------------------------------------------------

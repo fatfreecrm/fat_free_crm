@@ -18,8 +18,9 @@ describe "/accounts/destroy.js.rjs" do
     response.should have_rjs("paginate")
   end
 
-  it "should update recently viewed items in accounts sidebar" do
+  it "should update accounts sidebar" do
     response.should have_rjs("sidebar") do |rjs|
+      with_tag("div[id=filters]")
       with_tag("div[id=recently]")
     end
   end
