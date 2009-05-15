@@ -1,8 +1,8 @@
 = styles_for :campaign
 
 = inline :create_campaign, new_campaign_path
-.title#create_campaign_title
-  Campaigns
+.title
+  %span#create_campaign_title Campaigns
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#create_campaign{ hidden }
 

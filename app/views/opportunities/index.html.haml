@@ -1,8 +1,8 @@
 = styles_for :opportunity
 
 = inline :create_opportunity, new_opportunity_path
-.title#create_opportunity_title
-  Opportunities
+.title
+  %span#create_opportunity_title Opportunities
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#create_opportunity{ hidden }
 

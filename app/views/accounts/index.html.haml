@@ -1,8 +1,8 @@
 = styles_for :account
 
 = inline :create_account, new_account_path
-.title#create_account_title
-  Accounts
+.title
+  %span#create_account_title Accounts
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#create_account{ hidden }
 
