@@ -18,13 +18,7 @@ class CreateAccounts < ActiveRecord::Migration
 
     add_index :accounts, [ :user_id, :name, :deleted_at ], :unique => true
     add_index :accounts, :assigned_to
-
-    if adapter_name.downcase == "mysql"
-      if select_value("SELECT VERSION()").to_i >= 5
-        add_index :accounts, :uuid
-        execute("CREATE TRIGGER accounts_uuid BEFORE INSERT ON accounts FOR EACH ROW SET NEW.uuid = UUID()")
-      end
-    end
+    add_uuid_trigger :accounts
   end
 
   def self.down

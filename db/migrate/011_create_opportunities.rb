@@ -19,13 +19,7 @@ class CreateOpportunities < ActiveRecord::Migration
 
     add_index :opportunities, [ :user_id, :deleted_at ], :unique => true
     add_index :opportunities, :assigned_to
-
-    if adapter_name.downcase == "mysql"
-      if select_value("SELECT VERSION()").to_i >= 5
-        add_index :opportunities, :uuid
-        execute("CREATE TRIGGER opportunities_uuid BEFORE INSERT ON opportunities FOR EACH ROW SET NEW.uuid = UUID()")
-      end
-    end
+    add_uuid_trigger :opportunities
   end
 
   def self.down

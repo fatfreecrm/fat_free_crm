@@ -26,13 +26,7 @@ class CreateCampaigns < ActiveRecord::Migration
 
     add_index :campaigns, [ :user_id, :name, :deleted_at ], :unique => true
     add_index :campaigns, :assigned_to
-    add_index :campaigns, :uuid
-
-    if adapter_name.downcase == "mysql"
-      if select_value("select version()").to_i >= 5
-        execute("CREATE TRIGGER campaigns_uuid BEFORE INSERT ON campaigns FOR EACH ROW SET NEW.uuid = UUID()")
-      end
-    end
+    add_uuid_trigger :campaigns
   end
 
   def self.down

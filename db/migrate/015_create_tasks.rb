@@ -17,13 +17,7 @@ class CreateTasks < ActiveRecord::Migration
 
     add_index :tasks, [ :user_id, :name, :deleted_at ], :unique => true
     add_index :tasks, :assigned_to
-
-    if adapter_name.downcase == "mysql"
-      if select_value("SELECT VERSION()").to_i >= 5
-        add_index :tasks, :uuid
-        execute("CREATE TRIGGER tasks_uuid BEFORE INSERT ON tasks FOR EACH ROW SET NEW.uuid = UUID()")
-      end
-    end
+    add_uuid_trigger :tasks
   end
 
   def self.down

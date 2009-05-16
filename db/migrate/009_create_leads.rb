@@ -30,13 +30,7 @@ class CreateLeads < ActiveRecord::Migration
 
     add_index :leads, [ :user_id, :last_name, :deleted_at ], :unique => true
     add_index :leads, :assigned_to
-
-    if adapter_name.downcase == "mysql"
-      if select_value("SELECT VERSION()").to_i >= 5
-        add_index :leads, :uuid
-        execute("CREATE TRIGGER leads_uuid BEFORE INSERT ON leads FOR EACH ROW SET NEW.uuid = UUID()")
-      end
-    end
+    add_uuid_trigger :leads
   end
 
   def self.down
