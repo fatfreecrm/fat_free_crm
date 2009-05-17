@@ -42,7 +42,7 @@ class ContactsController < ApplicationController
   def new
     @contact  = Contact.new(:user => @current_user)
     @account  = Account.new(:user => @current_user)
-    @users    = User.all_except(@current_user)
+    @users    = User.except(@current_user).all
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:related]
       model, id = params[:related].split("_")
@@ -59,7 +59,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @contact  = Contact.my(@current_user).find(params[:id])
-    @users    = User.all_except(@current_user)
+    @users    = User.except(@current_user).all
     @account  = @contact.account || Account.new(:user => @current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
@@ -83,7 +83,7 @@ class ContactsController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
-        @users = User.all_except(@current_user)
+        @users = User.except(@current_user).all
         @accounts = Account.my(@current_user).all(:order => "name")
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
@@ -112,7 +112,7 @@ class ContactsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.all_except(@current_user)
+        @users = User.except(@current_user).all
         @accounts = Account.my(@current_user).all(:order => "name")
         if @contact.account
           @account = Account.find(@contact.account.id)

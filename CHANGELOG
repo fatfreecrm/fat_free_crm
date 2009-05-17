@@ -8,6 +8,7 @@ Sun, May 17, 2009
 ---------------------------------------------------------------------
 - Added missing object handling for #edit action (all core objects except tasks).
 - If object permissions prevent access, treat the object as missing.
+- Refacoring: use more idiomatic Rails named scope (User#except).
 
 Sat, May 16, 2009
 ---------------------------------------------------------------------

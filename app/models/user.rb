@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :preferences
   has_many :shared_accounts, :through => :permissions, :source => :asset, :source_type => "Account", :class_name => "Account"
-  named_scope :all_except, lambda { | user | { :conditions => "id != #{user.id}" } }
+  named_scope :except, lambda { | user | { :conditions => "id != #{user.id}" } }
   uses_mysql_uuid
   acts_as_paranoid
 
