@@ -25,6 +25,10 @@ describe OpportunitiesController do
     it "should map #destroy" do
       route_for(:controller => "opportunities", :action => "destroy", :id => 1).should == "/opportunities/1"
     end
+
+    it "should map #search" do
+      route_for(:controller => "opportunities", :action => "search", :id => 1).should == "/opportunities/search/1"
+    end
   end
 
   describe "route recognition" do
@@ -54,6 +58,10 @@ describe OpportunitiesController do
   
     it "should generate params for #destroy" do
       params_from(:delete, "/opportunities/1").should == {:controller => "opportunities", :action => "destroy", :id => "1"}
+    end
+
+    it "should generate params for #search" do
+      params_from(:get, "/opportunities/search/1").should == {:controller => "opportunities", :action => "search", :id => "1"}
     end
   end
 end

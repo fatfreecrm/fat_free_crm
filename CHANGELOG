@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Sat, May 16, 2009
 ---------------------------------------------------------------------
 - Added missing object handling for #show action (all core objects).
+- Added controller routing specs for new routes.
 
 Fri, May 15, 2009
 ---------------------------------------------------------------------

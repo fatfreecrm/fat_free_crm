@@ -25,6 +25,10 @@ describe TasksController do
     it "should map #destroy" do
       route_for(:controller => "tasks", :action => "destroy", :id => 1).should == "/tasks/1"
     end
+
+    it "should map #complete" do
+      route_for(:controller => "tasks", :action => "complete", :id => 1).should == "/tasks/1/complete"
+    end
   end
 
   describe "route recognition" do
@@ -54,6 +58,10 @@ describe TasksController do
   
     it "should generate params for #destroy" do
       params_from(:delete, "/tasks/1").should == {:controller => "tasks", :action => "destroy", :id => "1"}
+    end
+
+    it "should generate params for #complete" do
+      params_from(:put, "/tasks/1/complete").should == {:controller => "tasks", :action => "complete", :id => "1"}
     end
   end
 end

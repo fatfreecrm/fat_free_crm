@@ -25,6 +25,22 @@ describe LeadsController do
     it "should map #destroy" do
       route_for(:controller => "leads", :action => "destroy", :id => 1).should == "/leads/1"
     end
+
+    it "should map #search" do
+      route_for(:controller => "leads", :action => "search", :id => 1).should == "/leads/search/1"
+    end
+
+    it "should map #convert" do
+      route_for(:controller => "leads", :action => "convert", :id => 1).should == "/leads/1/convert"
+    end
+
+    it "should map #promote" do
+      route_for(:controller => "leads", :action => "promote", :id => 1).should == "/leads/1/promote"
+    end
+
+    it "should map #reject" do
+      route_for(:controller => "leads", :action => "reject", :id => 1).should == "/leads/1/reject"
+    end
   end
 
   describe "route recognition" do
@@ -54,6 +70,22 @@ describe LeadsController do
   
     it "should generate params for #destroy" do
       params_from(:delete, "/leads/1").should == {:controller => "leads", :action => "destroy", :id => "1"}
+    end
+
+    it "should generate params for #search" do
+      params_from(:get, "/leads/search/1").should == {:controller => "leads", :action => "search", :id => "1"}
+    end
+
+    it "should generate params for #convert" do
+      params_from(:get, "/leads/1/convert").should == {:controller => "leads", :action => "convert", :id => "1"}
+    end
+
+    it "should generate params for #promote" do
+      params_from(:put, "/leads/1/promote").should == {:controller => "leads", :action => "promote", :id => "1"}
+    end
+
+    it "should generate params for #reject" do
+      params_from(:put, "/leads/1/reject").should == {:controller => "leads", :action => "reject", :id => "1"}
     end
   end
 end
