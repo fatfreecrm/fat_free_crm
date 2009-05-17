@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
-    @account = Account.find(params[:id])
+    @account = Account.my(@current_user).find(params[:id])
     @stage = Setting.as_hash(:opportunity_stage)
     @comment = Comment.new
 
@@ -56,11 +56,15 @@ class AccountsController < ApplicationController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @account = Account.find(params[:id])
+    @account = Account.my(@current_user).find(params[:id])
     @users = User.all_except(@current_user)
     if params[:previous] =~ /(\d+)\z/
       @previous = Account.find($1)
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "This account is no longer available."
+    render(:update) { |page| page.reload }
   end
 
   # POST /accounts

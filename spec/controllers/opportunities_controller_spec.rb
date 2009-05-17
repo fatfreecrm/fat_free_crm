@@ -121,18 +121,24 @@ describe OpportunitiesController do
     end
 
     describe "opportunity got deleted or otherwise unavailable" do
-      before(:each) do
-        @opportunity = Factory(:opportunity, :user => @current_user)
-        @opportunity.destroy # somebody deletes the opportunity...
-      end
+      it "should redirect to opportunity index if the opportunity got deleted" do
+        @opportunity = Factory(:opportunity, :user => @current_user).destroy
 
-      it "should redirect to opportunity index if opportunity is not available" do
         get :show, :id => @opportunity.id
         flash[:warning].should_not == nil
         response.should redirect_to(opportunities_path)
       end
 
+      it "should redirect to opportunity index if the opportunity is protected" do
+        @private = Factory(:opportunity, :user => Factory(:user), :access => "Private")
+
+        get :show, :id => @private.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(opportunities_path)
+      end
+
       it "should return 404 (Not Found) XML error" do
+        @opportunity = Factory(:opportunity, :user => @current_user).destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @opportunity.id
@@ -199,6 +205,22 @@ describe OpportunitiesController do
 
       xhr :get, :edit, :id => 42, :previous => 41
       assigns[:previous].should == @previous
+    end
+
+    it "should reload current page with the flash message if the opportunity got deleted" do
+      @opportunity = Factory(:opportunity, :user => @current_user).destroy
+
+      xhr :get, :edit, :id => @opportunity.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+
+    it "should reload current page with the flash message if the opportunity is protected" do
+      @private = Factory(:opportunity, :user => Factory(:user), :access => "Private")
+
+      xhr :get, :edit, :id => @private.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
     end
 
   end

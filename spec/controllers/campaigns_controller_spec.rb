@@ -122,18 +122,24 @@ describe CampaignsController do
     end
 
     describe "campaign got deleted or otherwise unavailable" do
-      before(:each) do
-        @campaign = Factory(:campaign, :user => @current_user)
-        @campaign.destroy # somebody deletes the campaign...
+      it "should redirect to campaign index if the campaign got deleted" do
+        @campaign = Factory(:campaign, :user => @current_user).destroy
+
+        get :show, :id => @campaign.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(campaigns_path)
       end
 
-      it "should redirect to campaign index if campaign is not available" do
+      it "should redirect to campaign index if the campaign is protected" do
+        @campaign = Factory(:campaign, :user => Factory(:user), :access => "Private")
+
         get :show, :id => @campaign.id
         flash[:warning].should_not == nil
         response.should redirect_to(campaigns_path)
       end
 
       it "should return 404 (Not Found) XML error" do
+        @campaign = Factory(:campaign, :user => @current_user).destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @campaign.id
@@ -188,6 +194,22 @@ describe CampaignsController do
       xhr :get, :edit, :id => 42, :previous => 99
       assigns[:campaign].should == @campaign
       assigns[:previous].should == @previous
+    end
+
+    it "should reload current page with the flash message if the campaign got deleted" do
+      @campaign = Factory(:campaign, :user => @current_user).destroy
+
+      xhr :get, :edit, :id => @campaign.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+
+    it "should reload current page with the flash message if the campaign is protected" do
+      @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+
+      xhr :get, :edit, :id => @private.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
     end
 
   end

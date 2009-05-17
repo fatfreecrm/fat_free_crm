@@ -21,7 +21,7 @@ class LeadsController < ApplicationController
   # GET /leads/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
-    @lead = Lead.find(params[:id])
+    @lead = Lead.my(@current_user).find(params[:id])
     @comment = Comment.new
 
     respond_to do |format|
@@ -57,12 +57,16 @@ class LeadsController < ApplicationController
   # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @lead = Lead.find(params[:id])
+    @lead = Lead.my(@current_user).find(params[:id])
     @users = User.all_except(@current_user)
     @campaigns = Campaign.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
       @previous = Lead.find($1)
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "This lead is no longer available."
+    render(:update) { |page| page.reload }
   end
 
   # POST /leads

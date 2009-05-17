@@ -22,7 +22,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1.xml                                               HTML
   #----------------------------------------------------------------------------
   def show
-    @opportunity = Opportunity.find(params[:id])
+    @opportunity = Opportunity.my(@current_user).find(params[:id])
     @comment = Comment.new
 
     respond_to do |format|
@@ -59,13 +59,17 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
-    @opportunity = Opportunity.find(params[:id])
+    @opportunity = Opportunity.my(@current_user).find(params[:id])
     @users = User.all_except(@current_user)
     @account  = @opportunity.account || Account.new(:user => @current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
       @previous = Opportunity.find($1)
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "This opportunity is no longer available."
+    render(:update) { |page| page.reload }
   end
 
   # POST /opportunities

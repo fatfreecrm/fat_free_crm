@@ -121,18 +121,24 @@ describe LeadsController do
     end
 
     describe "lead got deleted or otherwise unavailable" do
-      before(:each) do
-        @lead = Factory(:lead, :user => @current_user)
-        @lead.destroy # somebody deletes the lead...
-      end
+      it "should redirect to lead index if the lead got deleted" do
+        @lead = Factory(:lead, :user => @current_user).destroy
 
-      it "should redirect to lead index if lead is not available" do
         get :show, :id => @lead.id
         flash[:warning].should_not == nil
         response.should redirect_to(leads_path)
       end
 
+      it "should redirect to lead index if the lead is protected" do
+        @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+        get :show, :id => @private.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(leads_path)
+      end
+
       it "should return 404 (Not Found) XML error" do
+        @lead = Factory(:lead, :user => @current_user).destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @lead.id
@@ -191,6 +197,22 @@ describe LeadsController do
 
       xhr :get, :edit, :id => 42, :previous => 321
       assigns[:previous].should == @previous
+    end
+
+    it "should reload current page with the flash message if the lead got deleted" do
+      @lead = Factory(:lead, :user => @current_user).destroy
+
+      xhr :get, :edit, :id => @lead.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+
+    it "should reload current page with the flash message if the lead is protected" do
+      @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+      xhr :get, :edit, :id => @private.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
     end
 
   end

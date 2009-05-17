@@ -91,18 +91,24 @@ describe AccountsController do
     end
 
     describe "account got deleted or otherwise unavailable" do
-      before(:each) do
-        @account = Factory(:account, :user => @current_user)
-        @account.destroy # say, somebody else deletes the account...
-      end
+      it "should redirect to account index if the account got deleted" do
+        @account = Factory(:account, :user => @current_user).destroy
 
-      it "should redirect to account index if account is not available" do
         get :show, :id => @account.id
         flash[:warning].should_not == nil
         response.should redirect_to(accounts_path)
       end
 
+      it "should redirect to account index if the account is protected" do
+        @private = Factory(:account, :user => Factory(:user), :access => "Private")
+
+        get :show, :id => @private.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(accounts_path)
+      end
+
       it "should return 404 (Not Found) XML error" do
+        @account = Factory(:account, :user => @current_user).destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @account.id
@@ -157,6 +163,22 @@ describe AccountsController do
 
       xhr :get, :edit, :id => 42, :previous => 41
       assigns[:previous].should == @previous
+    end
+
+    it "should reload current page with the flash message if the account got deleted" do
+      @account = Factory(:account, :user => @current_user).destroy
+
+      xhr :get, :edit, :id => @account.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+
+    it "should reload current page with the flash message if the account is protected" do
+      @private = Factory(:account, :user => Factory(:user), :access => "Private")
+
+      xhr :get, :edit, :id => @private.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
     end
 
   end

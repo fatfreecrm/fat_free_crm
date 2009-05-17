@@ -4,9 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, May 17, 2009
+---------------------------------------------------------------------
+- Added missing object handling for #edit action (all core objects except tasks).
+- If object permissions prevent access, treat the object as missing.
+
 Sat, May 16, 2009
 ---------------------------------------------------------------------
-- Added missing object handling for #show action (all core objects).
+- Added missing object handling for #show action (all core objects except tasks).
 - Added controller routing specs for new routes.
 
 Fri, May 15, 2009

@@ -93,18 +93,24 @@ describe ContactsController do
     end
 
     describe "contact got deleted or otherwise unavailable" do
-      before(:each) do
-        @contact = Factory(:contact, :user => @current_user)
-        @contact.destroy # somebody deletes the contact...
-      end
+      it "should redirect to contact index if the contact got deleted" do
+        @contact = Factory(:contact, :user => @current_user).destroy
 
-      it "should redirect to contact index if contact is not available" do
         get :show, :id => @contact.id
         flash[:warning].should_not == nil
         response.should redirect_to(contacts_path)
       end
 
+      it "should redirect to contact index if the contact is protected" do
+        @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+
+        get :show, :id => @private.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(contacts_path)
+      end
+
       it "should return 404 (Not Found) XML error" do
+        @contact = Factory(:contact, :user => @current_user).destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @contact.id
@@ -176,6 +182,22 @@ describe ContactsController do
 
       xhr :get, :edit, :id => 42, :previous => 1992
       assigns[:previous].should == @previous
+    end
+
+    it "should reload current page with the flash message if the contact got deleted" do
+      @contact = Factory(:contact, :user => @current_user).destroy
+
+      xhr :get, :edit, :id => @contact.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+
+    it "should reload current page with the flash message if the contact is protected" do
+      @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+
+      xhr :get, :edit, :id => @private.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
     end
 
   end

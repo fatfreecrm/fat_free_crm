@@ -20,7 +20,7 @@ class ContactsController < ApplicationController
   # GET /contacts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
-    @contact = Contact.find(params[:id])
+    @contact = Contact.my(@current_user).find(params[:id])
     @stage = Setting.as_hash(:opportunity_stage)
     @comment = Comment.new
 
@@ -58,13 +58,17 @@ class ContactsController < ApplicationController
   # GET /contacts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @contact  = Contact.find(params[:id])
+    @contact  = Contact.my(@current_user).find(params[:id])
     @users    = User.all_except(@current_user)
     @account  = @contact.account || Account.new(:user => @current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
       @previous = Contact.find($1)
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "This contact is no longer available."
+    render(:update) { |page| page.reload }
   end
 
   # POST /contacts
