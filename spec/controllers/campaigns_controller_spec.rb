@@ -86,12 +86,11 @@ describe CampaignsController do
   end
 
   # GET /campaigns/1
-  # GET /campaigns/1.xml
+  # GET /campaigns/1.xml                                                   HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
     describe "with mime type of HTML" do
-
       before(:each) do
         @campaign = Factory(:campaign, :id => 42, :user => @current_user)
         @stage = Setting.as_hash(:opportunity_stage)
@@ -110,11 +109,9 @@ describe CampaignsController do
         Activity.should_receive(:log).with(@current_user, @campaign, :viewed).once
         get :show, :id => @campaign.id
       end
-
     end
 
     describe "with mime type of XML" do
-
       it "should render the requested campaign as XML" do
         request.env["HTTP_ACCEPT"] = "application/xml"
         @campaign = Factory(:campaign, :id => 42, :user => @current_user)
@@ -122,7 +119,26 @@ describe CampaignsController do
         get :show, :id => 42
         response.body.should == @campaign.to_xml
       end
+    end
 
+    describe "campaign got deleted or otherwise unavailable" do
+      before(:each) do
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy # somebody deletes the campaign...
+      end
+
+      it "should redirect to campaign index if campaign is not available" do
+        get :show, :id => @campaign.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(campaigns_path)
+      end
+
+      it "should return 404 (Not Found) XML error" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+
+        get :show, :id => @campaign.id
+        response.code.should == "404" # :not_found
+      end
     end
 
   end

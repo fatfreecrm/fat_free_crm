@@ -18,7 +18,7 @@ class CampaignsController < ApplicationController
   end
 
   # GET /campaigns/1
-  # GET /campaigns/1.xml
+  # GET /campaigns/1.xml                                                   HTML
   #----------------------------------------------------------------------------
   def show
     @campaign = Campaign.find(params[:id])
@@ -28,6 +28,12 @@ class CampaignsController < ApplicationController
     respond_to do |format|
       format.html # show.html.haml
       format.xml  { render :xml => @campaign }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { flash[:warning] = "This campaign is no longer available."; redirect_to(:action => :index) }
+      format.xml  { render :status => :not_found }
     end
   end
 

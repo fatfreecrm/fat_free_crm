@@ -19,7 +19,7 @@ class OpportunitiesController < ApplicationController
   end
 
   # GET /opportunities/1
-  # GET /opportunities/1.xml
+  # GET /opportunities/1.xml                                               HTML
   #----------------------------------------------------------------------------
   def show
     @opportunity = Opportunity.find(params[:id])
@@ -28,6 +28,12 @@ class OpportunitiesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @opportunity }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { flash[:warning] = "This opportunity is no longer available."; redirect_to(:action => :index) }
+      format.xml  { render :status => :not_found }
     end
   end
 

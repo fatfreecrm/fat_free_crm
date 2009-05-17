@@ -54,7 +54,7 @@ describe AccountsController do
   end
 
   # GET /accounts/1
-  # GET /accounts/1.xml
+  # GET /accounts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 

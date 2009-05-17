@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, May 16, 2009
+---------------------------------------------------------------------
+- Added missing object handling for #show action (all core objects).
+
+Fri, May 15, 2009
+---------------------------------------------------------------------
+- Replaced explicit MySQL trigger creation with [add_uuid_trigger].
+
 Thu, May 14, 2009
 ---------------------------------------------------------------------
 - Started with LH #34 (Gracefully handle missing objects).

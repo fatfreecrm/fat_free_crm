@@ -17,7 +17,7 @@ class ContactsController < ApplicationController
   end
 
   # GET /contacts/1
-  # GET /contacts/1.xml
+  # GET /contacts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
     @contact = Contact.find(params[:id])
@@ -27,6 +27,12 @@ class ContactsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @contact }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { flash[:warning] = "This contact is no longer available."; redirect_to(:action => :index) }
+      format.xml  { render :status => :not_found }
     end
   end
 

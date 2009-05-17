@@ -84,12 +84,11 @@ describe OpportunitiesController do
   end
 
   # GET /opportunities/1
-  # GET /opportunities/1.xml
+  # GET /opportunities/1.xml                                               HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
     describe "with mime type of HTML" do
-
       before(:each) do
         @opportunity = Factory(:opportunity, :id => 42)
         @stage = Setting.as_hash(:opportunity_stage)
@@ -108,11 +107,9 @@ describe OpportunitiesController do
         Activity.should_receive(:log).with(@current_user, @opportunity, :viewed).once
         get :show, :id => @opportunity.id
       end
-
     end
 
     describe "with mime type of XML" do
-
       it "should render the requested opportunity as xml" do
         @opportunity = Factory(:opportunity, :id => 42)
         @stage = Setting.as_hash(:opportunity_stage)
@@ -121,7 +118,26 @@ describe OpportunitiesController do
         get :show, :id => 42
         response.body.should == @opportunity.to_xml
       end
+    end
 
+    describe "opportunity got deleted or otherwise unavailable" do
+      before(:each) do
+        @opportunity = Factory(:opportunity, :user => @current_user)
+        @opportunity.destroy # somebody deletes the opportunity...
+      end
+
+      it "should redirect to opportunity index if opportunity is not available" do
+        get :show, :id => @opportunity.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(opportunities_path)
+      end
+
+      it "should return 404 (Not Found) XML error" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+
+        get :show, :id => @opportunity.id
+        response.code.should == "404" # :not_found
+      end
     end
 
   end

@@ -57,12 +57,11 @@ describe ContactsController do
   end
 
   # GET /contacts/1
-  # GET /contacts/1.xml
+  # GET /contacts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
     describe "with mime type of HTML" do
-
       before(:each) do
         @contact = Factory(:contact, :id => 42)
         @stage = Setting.as_hash(:opportunity_stage)
@@ -81,11 +80,9 @@ describe ContactsController do
         Activity.should_receive(:log).with(@current_user, @contact, :viewed).once
         get :show, :id => @contact.id
       end
-
     end
   
     describe "with mime type of XML" do
-
       it "should render the requested contact as xml" do
         @contact = Factory(:contact, :id => 42)
 
@@ -93,7 +90,26 @@ describe ContactsController do
         get :show, :id => 42
         response.body.should == @contact.to_xml
       end
+    end
 
+    describe "contact got deleted or otherwise unavailable" do
+      before(:each) do
+        @contact = Factory(:contact, :user => @current_user)
+        @contact.destroy # somebody deletes the contact...
+      end
+
+      it "should redirect to contact index if contact is not available" do
+        get :show, :id => @contact.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(contacts_path)
+      end
+
+      it "should return 404 (Not Found) XML error" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+
+        get :show, :id => @contact.id
+        response.code.should == "404" # :not_found
+      end
     end
 
   end

@@ -18,7 +18,7 @@ class LeadsController < ApplicationController
   end
 
   # GET /leads/1
-  # GET /leads/1.xml
+  # GET /leads/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
     @lead = Lead.find(params[:id])
@@ -27,6 +27,12 @@ class LeadsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @lead }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { flash[:warning] = "This lead is no longer available."; redirect_to(:action => :index) }
+      format.xml  { render :status => :not_found }
     end
   end
 

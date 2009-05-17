@@ -87,12 +87,11 @@ describe LeadsController do
   end
 
   # GET /leads/1
-  # GET /leads/1.xml
+  # GET /leads/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
     describe "with mime type of HTML" do
-
       before(:each) do
         @lead = Factory(:lead, :id => 42, :user => @current_user)
         @comment = Comment.new
@@ -109,11 +108,9 @@ describe LeadsController do
         Activity.should_receive(:log).with(@current_user, @lead, :viewed).once
         get :show, :id => @lead.id
       end
-
     end
 
     describe "with mime type of XML" do
-
       it "should render the requested lead as xml" do
         @lead = Factory(:lead, :id => 42, :user => @current_user)
 
@@ -121,7 +118,26 @@ describe LeadsController do
         get :show, :id => 42
         response.body.should == @lead.to_xml
       end
+    end
 
+    describe "lead got deleted or otherwise unavailable" do
+      before(:each) do
+        @lead = Factory(:lead, :user => @current_user)
+        @lead.destroy # somebody deletes the lead...
+      end
+
+      it "should redirect to lead index if lead is not available" do
+        get :show, :id => @lead.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(leads_path)
+      end
+
+      it "should return 404 (Not Found) XML error" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+
+        get :show, :id => @lead.id
+        response.code.should == "404" # :not_found
+      end
     end
 
   end

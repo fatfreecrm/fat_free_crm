@@ -17,7 +17,7 @@ class AccountsController < ApplicationController
   end
 
   # GET /accounts/1
-  # GET /accounts/1.xml
+  # GET /accounts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
     @account = Account.find(params[:id])
