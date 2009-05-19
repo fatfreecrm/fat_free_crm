@@ -41,7 +41,7 @@ module GravatarHelper
     # the given user object will respond_to "email", and return the user's
     # email address.
     def gravatar_for(user, options={})
-      gravatar(user.email, options)
+      gravatar(user.email || "", options) # Make it work even if user.email == nil
     end
 
     # Return the HTML img tag for the given email address's gravatar.

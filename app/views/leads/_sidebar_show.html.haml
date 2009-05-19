@@ -1,13 +1,13 @@
 .panel#summary
   %span{:style => "float:right"}= gravatar_for(@lead, :size => "50x50", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
   %h4= @lead.full_name
-  - if @lead.title && @lead.company
+  - if !@lead.title.blank? && !@lead.company.blank?
     %div== #{@lead.title} at #{@lead.company}
-  - elsif @lead.title || @lead.company
-    %div= @lead.title || @lead.company
+  - else
+    %div= @lead.title unless @lead.title.blank?
+    %div= @lead.company unless @lead.company.blank?
 
-  - if @lead.address
-    %div= @lead.address.n2br
+  %div= @lead.address.n2br if @lead.address
 
   %div
     - if @lead.phone
