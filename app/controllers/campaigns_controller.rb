@@ -64,7 +64,7 @@ class CampaignsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "This campaign is no longer available."
+    flash[:warning] = "Can't edit the campaign since it's no longer available."
     render(:update) { |page| page.reload }
   end
 
@@ -92,7 +92,7 @@ class CampaignsController < ApplicationController
   # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def update
-    @campaign = Campaign.find(params[:id])
+    @campaign = Campaign.my(@current_user).find(params[:id])
 
     respond_to do |format|
       if @campaign.update_with_permissions(params[:campaign], params[:users])
@@ -105,19 +105,34 @@ class CampaignsController < ApplicationController
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't save the campaign since it's no longer available."
+    respond_to do |format|
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
+    end
   end
 
   # DELETE /campaigns/1
   # DELETE /campaigns/1.xml                                       HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @campaign = Campaign.find(params[:id])
-    @campaign.destroy
+    @campaign = Campaign.my(@current_user).find(params[:id])
+    @campaign.destroy if @campaign
 
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't delete the campaign since it's no longer available."
+    respond_to do |format|
+      format.html { redirect_to(:action => :index) }
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
     end
   end
 

@@ -207,22 +207,23 @@ describe OpportunitiesController do
       assigns[:previous].should == @previous
     end
 
-    it "should reload current page with the flash message if the opportunity got deleted" do
-      @opportunity = Factory(:opportunity, :user => @current_user).destroy
+    describe "opportunity got deleted or otherwise unavailable" do
+      it "should reload current page with the flash message if the opportunity got deleted" do
+        @opportunity = Factory(:opportunity, :user => @current_user).destroy
 
-      xhr :get, :edit, :id => @opportunity.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+        xhr :get, :edit, :id => @opportunity.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+      it "should reload current page with the flash message if the opportunity is protected" do
+        @private = Factory(:opportunity, :user => Factory(:user), :access => "Private")
+
+        xhr :get, :edit, :id => @private.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
-
-    it "should reload current page with the flash message if the opportunity is protected" do
-      @private = Factory(:opportunity, :user => Factory(:user), :access => "Private")
-
-      xhr :get, :edit, :id => @private.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
-    end
-
   end
 
   # POST /opportunities
@@ -410,6 +411,23 @@ describe OpportunitiesController do
         assigns[:opportunity].should == @opportunity
       end
 
+      describe "opportunity got deleted or otherwise unavailable" do
+        it "should reload current page with the flash message if the opportunity got deleted" do
+          @opportunity = Factory(:opportunity, :user => @current_user).destroy
+
+          xhr :put, :update, :id => @opportunity.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the opportunity is protected" do
+          @private = Factory(:opportunity, :user => Factory(:user), :access => "Private")
+
+          xhr :put, :update, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
 
     describe "with invalid params" do
@@ -490,12 +508,46 @@ describe OpportunitiesController do
           response.should render_template("opportunities/destroy")
         end
       end
+
+      describe "opportunity got deleted or otherwise unavailable" do
+        it "should reload current page is the opportunity got deleted" do
+          @opportunity = Factory(:opportunity, :user => @current_user).destroy
+
+          xhr :delete, :destroy, :id => @opportunity.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the opportunity is protected" do
+          @private = Factory(:opportunity, :user => Factory(:user), :access => "Private")
+
+          xhr :delete, :destroy, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
 
     describe "HTML request" do
       it "should redirect to Opportunities index when an opportunity gets deleted from its landing page" do
         delete :destroy, :id => @opportunity.id
         flash[:notice].should_not == nil
+        response.should redirect_to(opportunities_path)
+      end
+
+      it "should redirect to opportunity index with the flash message is the opportunity got deleted" do
+        @opportunity = Factory(:opportunity, :user => @current_user).destroy
+
+        delete :destroy, :id => @opportunity.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(opportunities_path)
+      end
+
+      it "should redirect to opportunity index with the flash message if the opportunity is protected" do
+        @private = Factory(:opportunity, :user => Factory(:user), :access => "Private")
+
+        delete :destroy, :id => @private.id
+        flash[:warning].should_not == nil
         response.should redirect_to(opportunities_path)
       end
     end

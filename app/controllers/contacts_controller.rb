@@ -67,7 +67,7 @@ class ContactsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "This contact is no longer available."
+    flash[:warning] = "Can't edit the contact since it's no longer available."
     render(:update) { |page| page.reload }
   end
 
@@ -105,7 +105,7 @@ class ContactsController < ApplicationController
   # PUT /contacts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    @contact = Contact.find(params[:id])
+    @contact = Contact.my(@current_user).find(params[:id])
 
     respond_to do |format|
       if @contact.update_with_account_and_permissions(params)
@@ -123,19 +123,34 @@ class ContactsController < ApplicationController
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't save the contact since it's no longer available."
+    respond_to do |format|
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
+    end
   end
 
   # DELETE /contacts/1
   # DELETE /contacts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @contact = Contact.find(params[:id])
-    @contact.destroy
+    @contact = Contact.my(@current_user).find(params[:id])
+    @contact.destroy if @contact
 
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't delete the contact since it's no longer available."
+    respond_to do |format|
+      format.html { redirect_to(:action => :index) }
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
     end
   end
 

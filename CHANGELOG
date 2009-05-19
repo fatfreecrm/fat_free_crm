@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, May 17, 2009
+---------------------------------------------------------------------
+- Added missing and protected object handling for #update and #delete (all except tasks).
+
 Sun, May 17, 2009
 ---------------------------------------------------------------------
 - Added missing object handling for #edit action (all core objects except tasks).

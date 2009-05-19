@@ -115,6 +115,7 @@ describe AccountsController do
         response.code.should == "404" # :not_found
       end
     end
+
   end
 
   # GET /accounts/new
@@ -165,20 +166,22 @@ describe AccountsController do
       assigns[:previous].should == @previous
     end
 
-    it "should reload current page with the flash message if the account got deleted" do
-      @account = Factory(:account, :user => @current_user).destroy
+    describe "account got deleted or otherwise unavailable" do
+      it "should reload current page with the flash message if the account got deleted" do
+        @account = Factory(:account, :user => @current_user).destroy
 
-      xhr :get, :edit, :id => @account.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
-    end
+        xhr :get, :edit, :id => @account.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
 
-    it "should reload current page with the flash message if the account is protected" do
-      @private = Factory(:account, :user => Factory(:user), :access => "Private")
+      it "should reload current page with the flash message if the account is protected" do
+        @private = Factory(:account, :user => Factory(:user), :access => "Private")
 
-      xhr :get, :edit, :id => @private.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+        xhr :get, :edit, :id => @private.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
 
   end
@@ -213,7 +216,6 @@ describe AccountsController do
     end
 
     describe "with invalid params" do
-  
       it "should expose a newly created but unsaved account as @account and still render [create] template" do
         @account = Factory.build(:account, :name => nil, :user => nil)
         Account.stub!(:new).and_return(@account)
@@ -224,7 +226,6 @@ describe AccountsController do
         assigns(:users).should == @users
         response.should render_template("accounts/create")
       end
-    
     end
   
   end
@@ -235,7 +236,6 @@ describe AccountsController do
   describe "responding to PUT udpate" do
   
     describe "with valid params" do
-
       it "should update the requested account, expose the requested account as @account, and render [update] template" do
         @account = Factory(:account, :id => 42, :name => "Hello people")
 
@@ -256,10 +256,26 @@ describe AccountsController do
         assigns[:account].should == @account
       end
 
+      describe "account got deleted or otherwise unavailable" do
+        it "should reload current page is the account got deleted" do
+          @account = Factory(:account, :user => @current_user).destroy
+
+          xhr :put, :update, :id => @account.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the account is protected" do
+          @private = Factory(:account, :user => Factory(:user), :access => "Private")
+
+          xhr :put, :update, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
   
     describe "with invalid params" do
-
       it "should not update the requested account but still expose the requested account as @account, and render [update] template" do
         @account = Factory(:account, :id => 42, :name => "Hello people")
 
@@ -268,7 +284,6 @@ describe AccountsController do
         assigns(:account).should == @account
         response.should render_template("accounts/update")
       end
-
     end
 
   end
@@ -306,6 +321,24 @@ describe AccountsController do
         session[:accounts_current_page].should == 1
         response.should render_template("accounts/index")
       end
+
+      describe "account got deleted or otherwise unavailable" do
+        it "should reload current page is the account got deleted" do
+          @account = Factory(:account, :user => @current_user).destroy
+
+          xhr :delete, :destroy, :id => @account.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the account is protected" do
+          @private = Factory(:account, :user => Factory(:user), :access => "Private")
+
+          xhr :delete, :destroy, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
 
     describe "HTML request" do
@@ -313,6 +346,22 @@ describe AccountsController do
         delete :destroy, :id => @account.id
 
         flash[:notice].should_not == nil
+        response.should redirect_to(accounts_path)
+      end
+
+      it "should redirect to account index with the flash message is the account got deleted" do
+        @account = Factory(:account, :user => @current_user).destroy
+
+        delete :destroy, :id => @account.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(accounts_path)
+      end
+
+      it "should redirect to account index with the flash message if the account is protected" do
+        @private = Factory(:account, :user => Factory(:user), :access => "Private")
+
+        delete :destroy, :id => @private.id
+        flash[:warning].should_not == nil
         response.should redirect_to(accounts_path)
       end
     end

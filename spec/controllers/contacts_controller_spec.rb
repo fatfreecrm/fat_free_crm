@@ -184,20 +184,22 @@ describe ContactsController do
       assigns[:previous].should == @previous
     end
 
-    it "should reload current page with the flash message if the contact got deleted" do
-      @contact = Factory(:contact, :user => @current_user).destroy
+    describe "contact got deleted or otherwise unavailable" do
+      it "should reload current page with the flash message if the contact got deleted" do
+        @contact = Factory(:contact, :user => @current_user).destroy
 
-      xhr :get, :edit, :id => @contact.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
-    end
+        xhr :get, :edit, :id => @contact.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
 
-    it "should reload current page with the flash message if the contact is protected" do
-      @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+      it "should reload current page with the flash message if the contact is protected" do
+        @private = Factory(:contact, :user => Factory(:user), :access => "Private")
 
-      xhr :get, :edit, :id => @private.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+        xhr :get, :edit, :id => @private.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
 
   end
@@ -237,7 +239,6 @@ describe ContactsController do
         xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}, :users => %w(1 2 3)
         assigns[:contacts].should == [ @contact ]
       end
-
     end
 
     describe "with invalid params" do
@@ -342,6 +343,24 @@ describe ContactsController do
         assigns[:contact].should == @contact
       end
 
+      describe "contact got deleted or otherwise unavailable" do
+        it "should reload current page is the contact got deleted" do
+          @contact = Factory(:contact, :user => @current_user).destroy
+
+          xhr :put, :update, :id => @contact.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the contact is protected" do
+          @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+
+          xhr :put, :update, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
+
     end
 
     describe "with invalid params" do
@@ -418,6 +437,24 @@ describe ContactsController do
           response.should render_template("contacts/destroy")
         end
       end
+
+      describe "contact got deleted or otherwise unavailable" do
+        it "should reload current page is the contact got deleted" do
+          @contact = Factory(:contact, :user => @current_user).destroy
+
+          xhr :delete, :destroy, :id => @contact.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the contact is protected" do
+          @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+
+          xhr :delete, :destroy, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
 
     describe "HTML request" do
@@ -425,6 +462,22 @@ describe ContactsController do
         delete :destroy, :id => @contact.id
 
         flash[:notice].should_not == nil
+        response.should redirect_to(contacts_path)
+      end
+
+      it "should redirect to contact index with the flash message is the contact got deleted" do
+        @contact = Factory(:contact, :user => @current_user).destroy
+
+        delete :destroy, :id => @contact.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(contacts_path)
+      end
+
+      it "should redirect to contact index with the flash message if the contact is protected" do
+        @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+
+        delete :destroy, :id => @private.id
+        flash[:warning].should_not == nil
         response.should redirect_to(contacts_path)
       end
     end

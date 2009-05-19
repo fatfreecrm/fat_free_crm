@@ -65,7 +65,7 @@ class LeadsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "This lead is no longer available."
+    flash[:warning] = "Can't edit the lead since it's no longer available."
     render(:update) { |page| page.reload }
   end
 
@@ -96,7 +96,7 @@ class LeadsController < ApplicationController
   # PUT /leads/1.xml
   #----------------------------------------------------------------------------
   def update
-    @lead = Lead.find(params[:id])
+    @lead = Lead.my(@current_user).find(params[:id])
 
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
@@ -110,19 +110,34 @@ class LeadsController < ApplicationController
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't save the lead since it's no longer available."
+    respond_to do |format|
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
+    end
   end
 
   # DELETE /leads/1
   # DELETE /leads/1.xml                                           HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @lead = Lead.find(params[:id])
-    @lead.destroy
+    @lead = Lead.my(@current_user).find(params[:id])
+    @lead.destroy if @lead
 
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't delete the lead since it's no longer available."
+    respond_to do |format|
+      format.html { redirect_to(:action => :index) }
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
     end
   end
 

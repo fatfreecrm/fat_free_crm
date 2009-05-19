@@ -196,20 +196,22 @@ describe CampaignsController do
       assigns[:previous].should == @previous
     end
 
-    it "should reload current page with the flash message if the campaign got deleted" do
-      @campaign = Factory(:campaign, :user => @current_user).destroy
+    describe "campaign got deleted or otherwise unavailable" do
+      it "should reload current page with the flash message if the campaign got deleted" do
+        @campaign = Factory(:campaign, :user => @current_user).destroy
 
-      xhr :get, :edit, :id => @campaign.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
-    end
+        xhr :get, :edit, :id => @campaign.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
 
-    it "should reload current page with the flash message if the campaign is protected" do
-      @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+      it "should reload current page with the flash message if the campaign is protected" do
+        @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
 
-      xhr :get, :edit, :id => @private.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+        xhr :get, :edit, :id => @private.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
 
   end
@@ -304,6 +306,24 @@ describe CampaignsController do
         assigns[:campaign].should == @campaign
       end
 
+      describe "campaign got deleted or otherwise unavailable" do
+        it "should reload current page with the flash message if the campaign got deleted" do
+          @campaign = Factory(:campaign, :user => @current_user).destroy
+
+          xhr :put, :update, :id => @campaign.id, :users => []
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the campaign is protected" do
+          @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+
+          xhr :put, :update, :id => @private.id, :users => []
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
+
     end
 
     describe "with invalid params" do
@@ -362,6 +382,24 @@ describe CampaignsController do
         session[:campaigns_current_page].should == 1
         response.should render_template("campaigns/index")
       end
+
+      describe "campaign got deleted or otherwise unavailable" do
+        it "should reload current page with the flash message if the campaign got deleted" do
+          @campaign = Factory(:campaign, :user => @current_user).destroy
+
+          xhr :delete, :destroy, :id => @campaign.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the campaign is protected" do
+          @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+
+          xhr :delete, :destroy, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
 
     describe "HTML request" do
@@ -369,6 +407,22 @@ describe CampaignsController do
         delete :destroy, :id => @campaign.id
 
         flash[:notice].should_not == nil
+        response.should redirect_to(campaigns_path)
+      end
+
+      it "should redirect to campaign index with the flash message is the campaign got deleted" do
+        @campaign = Factory(:campaign, :user => @current_user).destroy
+
+        delete :destroy, :id => @campaign.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(campaigns_path)
+      end
+
+      it "should redirect to campaign index with the flash message if the campaign is protected" do
+        @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+
+        delete :destroy, :id => @private.id
+        flash[:warning].should_not == nil
         response.should redirect_to(campaigns_path)
       end
     end

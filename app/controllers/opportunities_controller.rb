@@ -68,7 +68,7 @@ class OpportunitiesController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "This opportunity is no longer available."
+    flash[:warning] = "Can't edit the opportunity since it's no longer available."
     render(:update) { |page| page.reload }
   end
 
@@ -110,7 +110,7 @@ class OpportunitiesController < ApplicationController
   # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
   def update
-    @opportunity = Opportunity.find(params[:id])
+    @opportunity = Opportunity.my(@current_user).find(params[:id])
 
     respond_to do |format|
       if @opportunity.update_with_account_and_permissions(params)
@@ -129,19 +129,34 @@ class OpportunitiesController < ApplicationController
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't save the opportunity since it's no longer available."
+    respond_to do |format|
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
+    end
   end
 
   # DELETE /opportunities/1
   # DELETE /opportunities/1.xml                                   HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @opportunity = Opportunity.find(params[:id])
-    @opportunity.destroy
+    @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity.destroy if @opportunity
 
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't delete the opportunity since it's no longer available."
+    respond_to do |format|
+      format.html { redirect_to(:action => :index) }
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
     end
   end
 

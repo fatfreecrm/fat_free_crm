@@ -199,22 +199,23 @@ describe LeadsController do
       assigns[:previous].should == @previous
     end
 
-    it "should reload current page with the flash message if the lead got deleted" do
-      @lead = Factory(:lead, :user => @current_user).destroy
+    describe "lead got deleted or otherwise unavailable" do
+      it "should reload current page with the flash message if the lead got deleted" do
+        @lead = Factory(:lead, :user => @current_user).destroy
 
-      xhr :get, :edit, :id => @lead.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+        xhr :get, :edit, :id => @lead.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+      it "should reload current page with the flash message if the lead is protected" do
+        @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+        xhr :get, :edit, :id => @private.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
-
-    it "should reload current page with the flash message if the lead is protected" do
-      @private = Factory(:lead, :user => Factory(:user), :access => "Private")
-
-      xhr :get, :edit, :id => @private.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
-    end
-
   end
 
   # POST /leads
@@ -354,6 +355,23 @@ describe LeadsController do
         assigns[:lead_status_total].should be_an_instance_of(Hash)
       end
 
+      describe "lead got deleted or otherwise unavailable" do
+        it "should reload current page with the flash message if the lead got deleted" do
+          @lead = Factory(:lead, :user => @current_user).destroy
+
+          xhr :put, :update, :id => @lead.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the lead is protected" do
+          @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+          xhr :put, :update, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
 
     describe "with invalid params" do
@@ -433,6 +451,24 @@ describe LeadsController do
           response.should render_template("leads/destroy")
         end
       end
+
+      describe "lead got deleted or otherwise unavailable" do
+        it "should reload current page with the flash message if the lead got deleted" do
+          @lead = Factory(:lead, :user => @current_user).destroy
+
+          xhr :delete, :destroy, :id => @lead.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the lead is protected" do
+          @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+          xhr :delete, :destroy, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
 
     describe "HTML request" do
@@ -440,6 +476,22 @@ describe LeadsController do
         delete :destroy, :id => @lead.id
         flash[:notice].should_not == nil
         session[:leads_current_page].should == 1
+        response.should redirect_to(leads_path)
+      end
+
+      it "should redirect to lead index with the flash message is the lead got deleted" do
+        @lead = Factory(:lead, :user => @current_user).destroy
+
+        delete :destroy, :id => @lead.id
+        flash[:warning].should_not == nil
+        response.should redirect_to(leads_path)
+      end
+
+      it "should redirect to lead index with the flash message if the lead is protected" do
+        @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+        delete :destroy, :id => @private.id
+        flash[:warning].should_not == nil
         response.should redirect_to(leads_path)
       end
     end

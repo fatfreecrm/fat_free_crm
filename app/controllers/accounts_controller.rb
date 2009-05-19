@@ -63,7 +63,7 @@ class AccountsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "This account is no longer available."
+    flash[:warning] = "Can't edit the account since it's no longer available."
     render(:update) { |page| page.reload }
   end
 
@@ -92,7 +92,7 @@ class AccountsController < ApplicationController
   # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    @account = Account.find(params[:id])
+    @account = Account.my(@current_user).find(params[:id])
 
     respond_to do |format|
       if @account.update_with_permissions(params[:account], params[:users])
@@ -104,19 +104,34 @@ class AccountsController < ApplicationController
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't save the account since it's no longer available."
+    respond_to do |format|
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
+    end
   end
 
   # DELETE /accounts/1
   # DELETE /accounts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @account = Account.find(params[:id])
-    @account.destroy
+    @account = Account.my(@current_user).find(params[:id])
+    @account.destroy if @account
 
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
       format.xml  { head :ok }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:warning] = "Couldn't delete the account since it's no longer available."
+    respond_to do |format|
+      format.html { redirect_to(:action => :index) }
+      format.js   { render(:update) { |page| page.reload } }
+      format.xml  { render :status => :not_found }
     end
   end
 
