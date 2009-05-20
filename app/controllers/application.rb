@@ -80,6 +80,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #----------------------------------------------------------------------------
+  def respond_to_not_found(*types)
+    asset = self.controller_name.singularize
+    flick = case self.action_name
+      when "destroy": "delete"
+      when "promote": "convert"
+      else self.action_name
+    end
+    if self.action_name == "show"
+      flash[:warning] = "This #{asset} is no longer available."
+    else
+      flash[:warning] = "Can't #{flick} the #{asset} since it's no longer available."
+    end
+    respond_to do |format|
+      format.html { redirect_to(:action => :index) }         if types.include?(:html)
+      format.js   { render(:update) { |page| page.reload } } if types.include?(:js)
+      format.xml  { render :status => :not_found }           if types.include?(:xml)
+    end
+  end
+
   # Proxy current page for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_page=(page)

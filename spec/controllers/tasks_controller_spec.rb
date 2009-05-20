@@ -88,16 +88,16 @@ describe TasksController do
   describe "responding to GET show" do
 
     VIEWS.each do |view|
-      it "should render tasks index for #{view}  view (since a task doesn't have landing page)" do
+      it "should render tasks index for #{view} view (since a task doesn't have landing page)" do
         get :show, :id => 42, :view => view
         response.should render_template("tasks/index")
       end
 
       it "should render the requested task as xml for #{view} view" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        @task = Factory(:task, :id => 42)
+        @task = Factory(:task, :user => @current_user)
 
-        get :show, :id => 42, :view => "pending"
+        get :show, :id => @task.id, :view => "pending"
         response.body.should == @task.to_xml
       end
     end
@@ -141,12 +141,12 @@ describe TasksController do
 
     it "should expose the requested task as @task and render [edit] template" do
       @asset = Factory(:account, :user => @current_user)
-      @task = Factory(:task, :id => 42, :user => @current_user, :asset => @asset)
+      @task = Factory(:task, :user => @current_user, :asset => @asset)
       @users = [ Factory(:user) ]
       @bucket = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.invert(:task_category)
 
-      xhr :get, :edit, :id => 42
+      xhr :get, :edit, :id => @task.id
       assigns[:task].should == @task
       assigns[:users].should == @users
       assigns[:bucket].should == @bucket
@@ -156,13 +156,31 @@ describe TasksController do
     end
 
     it "should find previously open task when necessary" do
-      @task = Factory(:task, :id => 42, :user => @current_user)
+      @task = Factory(:task, :user => @current_user)
       @previous = Factory(:task, :id => 999, :user => @current_user)
 
-      xhr :get, :edit, :id => 42, :previous => 999
+      xhr :get, :edit, :id => @task.id, :previous => 999
       assigns[:task].should == @task
       assigns[:previous].should == @previous
       response.should render_template("tasks/edit")
+    end
+
+    describe "task got deleted or reassigned" do
+      it "should reload current page with the flash message if the task got deleted" do
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+
+        xhr :get, :edit, :id => @task.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+      it "should reload current page with the flash message if the task got reassigned" do
+        @task = Factory(:task, :user => Factory(:user), :assignee => Factory(:user))
+
+        xhr :get, :edit, :id => @task.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
 
   end
@@ -218,14 +236,13 @@ describe TasksController do
   # PUT /tasks/1
   # PUT /tasks/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
-
       it "should update the requested task, expose it as @task, and render [update] template" do
-        @task = Factory(:task, :id => 42, :name => "Hi", :user => @current_user)
+        @task = Factory(:task, :name => "Hi", :user => @current_user)
 
-        xhr :put, :update, :id => 42, :task => { :name => "Hello" }
+        xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
         @task.reload.name.should == "Hello"
         assigns(:task).should == @task
         assigns(:view).should == "pending"
@@ -235,29 +252,44 @@ describe TasksController do
 
       [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
         it "should update tasks sidebar when [update] is being called from [/tasks#{view}] page" do
-          @task = Factory(:task, :id => 42, :name => "Hi", :user => @current_user)
+          @task = Factory(:task, :name => "Hi", :user => @current_user)
 
           request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
-          xhr :put, :update, :id => 42, :task => { :name => "Hello" }
+          xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
           assigns[:task_total].should be_an_instance_of(Hash)
         end
       end
-
     end
 
     describe "with invalid params" do
-
       it "should not update the task, but still expose it as @task and render [update] template" do
-        @task = Factory(:task, :id => 42, :name => "Hi", :user => @current_user)
+        @task = Factory(:task, :name => "Hi", :user => @current_user)
 
-        xhr :put, :update, :id => 42, :task => { :name => nil }
+        xhr :put, :update, :id => @task.id, :task => { :name => nil }
         @task.reload.name.should == "Hi"
         assigns(:task).should == @task
         assigns(:view).should == "pending"
         assigns[:task_total].should == nil
         response.should render_template("tasks/update")
       end
+    end
 
+    describe "task got deleted or reassigned" do
+      it "should reload current page with the flash message if the task got deleted" do
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+
+        xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+      it "should reload current page with the flash message if the task got reassigned" do
+        @task = Factory(:task, :user => Factory(:user), :assignee => Factory(:user))
+
+        xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
 
   end
@@ -268,9 +300,9 @@ describe TasksController do
   describe "responding to DELETE destroy" do
 
     it "should destroy the requested task and render [destroy] template" do
-      @task = Factory(:task, :id => 42, :user => @current_user)
+      @task = Factory(:task, :user => @current_user)
 
-      xhr :delete, :destroy, :id => 42, :bucket => "due_asap"
+      xhr :delete, :destroy, :id => @task.id, :bucket => "due_asap"
       assigns(:task).should == @task
       assigns(:view).should == "pending"
       assigns[:task_total].should == nil
@@ -279,19 +311,37 @@ describe TasksController do
 
     [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
       it "should update sidebar when [destroy] is being called from [/tasks#{view}]" do
-        @task = Factory(:task, :id => 42, :user => @current_user)
+        @task = Factory(:task, :user => @current_user)
 
         request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
-        xhr :delete, :destroy, :id => 42, :bucket => "due_asap"
+        xhr :delete, :destroy, :id => @task.id, :bucket => "due_asap"
         assigns[:task_total].should be_an_instance_of(Hash)
       end
     end
 
     it "should not update sidebar when [destroy] is being called from asset page" do
-      @task = Factory(:task, :id => 42, :user => @current_user)
+      @task = Factory(:task, :user => @current_user)
 
-      xhr :delete, :destroy, :id => 42
+      xhr :delete, :destroy, :id => @task.id
       assigns[:task_total].should == nil
+    end
+
+    describe "task got deleted or reassigned" do
+      it "should reload current page with the flash message if the task got deleted" do
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+
+        xhr :delete, :destroy, :id => @task.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+      it "should reload current page with the flash message if the task got reassigned" do
+        @task = Factory(:task, :user => Factory(:user), :assignee => Factory(:user))
+
+        xhr :delete, :destroy, :id => @task.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
 
   end
@@ -302,9 +352,9 @@ describe TasksController do
   describe "responding to PUT complete" do
 
     it "should change task status, expose task as @task, and render [complete] template" do
-      @task = Factory(:task, :completed_at => nil, :id => 42, :user => @current_user)
+      @task = Factory(:task, :completed_at => nil, :user => @current_user)
 
-      xhr :put, :complete, :id => 42
+      xhr :put, :complete, :id => @task.id
       @task.reload.completed_at.should_not == nil
       assigns[:task].should == @task
       assigns[:task_total].should == nil
@@ -312,10 +362,28 @@ describe TasksController do
     end
 
     it "should change update tasks sidebar if bucket is not empty" do
-      @task = Factory(:task, :completed_at => nil, :id => 42, :user => @current_user)
+      @task = Factory(:task, :completed_at => nil, :user => @current_user)
 
-      xhr :put, :complete, :id => 42, :bucket => "due_asap"
+      xhr :put, :complete, :id => @task.id, :bucket => "due_asap"
       assigns[:task_total].should be_an_instance_of(Hash)
+    end
+
+    describe "task got deleted or reassigned" do
+      it "should reload current page with the flash message if the task got deleted" do
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+
+        xhr :put, :complete, :id => @task.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+      it "should reload current page with the flash message if the task got reassigned" do
+        @task = Factory(:task, :user => Factory(:user), :assignee => Factory(:user))
+
+        xhr :put, :complete, :id => @task.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
     end
 
   end

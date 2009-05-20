@@ -30,10 +30,7 @@ class LeadsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to do |format|
-      format.html { flash[:warning] = "This lead is no longer available."; redirect_to(:action => :index) }
-      format.xml  { render :status => :not_found }
-    end
+    respond_to_not_found(:html, :xml)
   end
 
   # GET /leads/new
@@ -65,8 +62,7 @@ class LeadsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "Can't edit the lead since it's no longer available."
-    render(:update) { |page| page.reload }
+    respond_to_not_found(:js)
   end
 
   # POST /leads
@@ -112,11 +108,7 @@ class LeadsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "Couldn't save the lead since it's no longer available."
-    respond_to do |format|
-      format.js   { render(:update) { |page| page.reload } }
-      format.xml  { render :status => :not_found }
-    end
+    respond_to_not_found(:js, :xml)
   end
 
   # DELETE /leads/1
@@ -133,30 +125,28 @@ class LeadsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "Couldn't delete the lead since it's no longer available."
-    respond_to do |format|
-      format.html { redirect_to(:action => :index) }
-      format.js   { render(:update) { |page| page.reload } }
-      format.xml  { render :status => :not_found }
-    end
+    respond_to_not_found(:html, :js, :xml)
   end
 
   # GET /leads/1/convert
   # GET /leads/1/convert.xml                                               AJAX
   #----------------------------------------------------------------------------
   def convert
-    @lead = Lead.find(params[:id])
+    @lead = Lead.my(@current_user).find(params[:id])
     @users = User.except(@current_user).all
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my(@current_user).all(:order => "name")
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
   # PUT /leads/1/promote
   # PUT /leads/1/promote.xml                                               AJAX
   #----------------------------------------------------------------------------
   def promote
-    @lead = Lead.find(params[:id])
+    @lead = Lead.my(@current_user).find(params[:id])
     @users = User.except(@current_user).all
     @account, @opportunity, @contact = @lead.promote(params)
     @accounts = Account.my(@current_user).all(:order => "name")
@@ -172,14 +162,17 @@ class LeadsController < ApplicationController
         format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
       end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
   # PUT /leads/1/reject
   # PUT /leads/1/reject.xml                                       AJAX and HTML
   #----------------------------------------------------------------------------
   def reject
-    @lead = Lead.find(params[:id])
-    @lead.reject
+    @lead = Lead.my(@current_user).find(params[:id])
+    @lead.reject if @lead
     get_data_for_sidebar if called_from_index_page?
 
     respond_to do |format|
@@ -187,6 +180,9 @@ class LeadsController < ApplicationController
       format.js   # reject.js.rjs
       format.xml  { head :ok }
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
   end
 
   # GET /leads/search/query                                                AJAX

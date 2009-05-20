@@ -23,7 +23,7 @@ class TasksController < ApplicationController
   def show
     respond_to do |format|
       format.html { render :action => :index }
-      format.xml  { @task = Task.find(params[:id]);  render :xml => @task }
+      format.xml  { @task = Task.tracked_by(@current_user).find(params[:id]);  render :xml => @task }
     end
   end
 
@@ -50,8 +50,8 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @task = Task.find(params[:id])
     @view = params[:view] || "pending"
+    @task = Task.tracked_by(@current_user).find(params[:id])
     @users = User.except(@current_user).all
     @bucket = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
     @category = Setting.invert(:task_category)
@@ -59,6 +59,9 @@ class TasksController < ApplicationController
     if params[:previous] =~ /(\d+)\z/
       @previous = Task.find($1)
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js)
   end
 
   # POST /tasks
@@ -85,7 +88,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @view = params[:view] || "pending"
-    @task = Task.find(params[:id])
+    @task = Task.tracked_by(@current_user).find(params[:id])
     @task_before_update = @task.clone
 
     if @task.due_at && (@task.due_at < Date.today.to_time)
@@ -110,6 +113,9 @@ class TasksController < ApplicationController
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
   # DELETE /tasks/1
@@ -117,8 +123,8 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @view = params[:view] || "pending"
-    @task = Task.find(params[:id])
-    @task.destroy
+    @task = Task.tracked_by(@current_user).find(params[:id])
+    @task.destroy if @task
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
     if Task.bucket_empty?(params[:bucket], @current_user, @view)
@@ -127,17 +133,20 @@ class TasksController < ApplicationController
 
     update_sidebar if called_from_index_page?
     respond_to do |format|
-      format.js
+      format.js   # destroy.js.rjs
       format.xml  { head :ok }
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
   # PUT /tasks/1/complete
   # PUT /leads/1/complete.xml                                              AJAX
   #----------------------------------------------------------------------------
   def complete
-    @task = Task.find(params[:id])
-    @task.update_attributes(:completed_at => Time.now)
+    @task = Task.tracked_by(@current_user).find(params[:id])
+    @task.update_attributes(:completed_at => Time.now) if @task
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
     if Task.bucket_empty?(params[:bucket], @current_user)
@@ -149,6 +158,9 @@ class TasksController < ApplicationController
       format.js   # complete.js.rjs
       format.xml  { head :ok }
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
   # Ajax request to filter out a list of tasks.                            AJAX

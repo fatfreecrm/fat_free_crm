@@ -31,10 +31,7 @@ class OpportunitiesController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to do |format|
-      format.html { flash[:warning] = "This opportunity is no longer available."; redirect_to(:action => :index) }
-      format.xml  { render :status => :not_found }
-    end
+    respond_to_not_found(:html, :xml)
   end
 
   # GET /opportunities/new
@@ -68,8 +65,7 @@ class OpportunitiesController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "Can't edit the opportunity since it's no longer available."
-    render(:update) { |page| page.reload }
+    respond_to_not_found(:js)
   end
 
   # POST /opportunities
@@ -131,11 +127,7 @@ class OpportunitiesController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "Couldn't save the opportunity since it's no longer available."
-    respond_to do |format|
-      format.js   { render(:update) { |page| page.reload } }
-      format.xml  { render :status => :not_found }
-    end
+    respond_to_not_found(:js, :xml)
   end
 
   # DELETE /opportunities/1
@@ -152,12 +144,7 @@ class OpportunitiesController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:warning] = "Couldn't delete the opportunity since it's no longer available."
-    respond_to do |format|
-      format.html { redirect_to(:action => :index) }
-      format.js   { render(:update) { |page| page.reload } }
-      format.xml  { render :status => :not_found }
-    end
+    respond_to_not_found(:html, :js, :xml)
   end
 
   # GET /campaigns/search/query                                           AJAX

@@ -4,19 +4,26 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Mon, May 17, 2009
+Tue, May 19, 2009
 ---------------------------------------------------------------------
-- Added missing and protected object handling for #update and #delete (all except tasks).
+- Added missing and protected object handling for #convert, #promote, #reject (Leads).
+- Added new [tracked_by] named scope for Tasks.
+- Added missing and protected object handling for Tasks.
+- Refactored rescue clause to use respond_to_not_found().
+
+Mon, May 18, 2009
+---------------------------------------------------------------------
+- Added missing and protected object handling for #update and #delete (all except Tasks).
 
 Sun, May 17, 2009
 ---------------------------------------------------------------------
-- Added missing object handling for #edit action (all core objects except tasks).
+- Added missing object handling for #edit action (all core objects except Tasks).
 - If object permissions prevent access, treat the object as missing.
 - Refacoring: use more idiomatic Rails named scope (User#except).
 
 Sat, May 16, 2009
 ---------------------------------------------------------------------
-- Added missing object handling for #show action (all core objects except tasks).
+- Added missing object handling for #show action (all core objects except Tasks).
 - Added controller routing specs for new routes.
 
 Fri, May 15, 2009

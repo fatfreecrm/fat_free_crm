@@ -503,13 +503,13 @@ describe LeadsController do
   describe "responding to GET convert" do
 
     it "should should collect necessary data and render [convert] template" do
-      @lead = Factory(:lead, :id => 42, :user => @current_user, :campaign => nil)
+      @lead = Factory(:lead, :user => @current_user, :campaign => nil)
       @users = [ Factory(:user) ]
       @accounts = [ Factory(:account, :user => @current_user) ]
       @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
       @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
 
-      xhr :get, :convert, :id => 42
+      xhr :get, :convert, :id => @lead.id
       assigns[:lead].should == @lead
       assigns[:users].should == @users
       assigns[:accounts].should == @accounts
@@ -518,6 +518,23 @@ describe LeadsController do
       response.should render_template("leads/convert")
     end
 
+    describe "lead got deleted or otherwise unavailable" do
+      it "should reload current page with the flash message if the lead got deleted" do
+        @lead = Factory(:lead, :user => @current_user).destroy
+
+        xhr :get, :convert, :id => @lead.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+      it "should reload current page with the flash message if the lead is protected" do
+        @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+        xhr :get, :convert, :id => @private.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+    end
   end
 
   # PUT /leads/1/promote
@@ -584,6 +601,24 @@ describe LeadsController do
       response.should render_template("leads/promote")
     end
 
+    describe "lead got deleted or otherwise unavailable" do
+      it "should reload current page with the flash message if the lead got deleted" do
+        @lead = Factory(:lead, :user => @current_user).destroy
+
+        xhr :put, :promote, :id => @lead.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+      it "should reload current page with the flash message if the lead is protected" do
+        @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+        xhr :put, :promote, :id => @private.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+    end
+
   end
 
   # GET /leads/search/query                                                AJAX
@@ -631,6 +666,24 @@ describe LeadsController do
         @lead.status.should == "rejected"
         response.should render_template("leads/reject")
       end
+
+      describe "lead got deleted or otherwise unavailable" do
+        it "should reload current page with the flash message if the lead got deleted" do
+          @lead = Factory(:lead, :user => @current_user).destroy
+
+          xhr :put, :reject, :id => @lead.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+
+        it "should reload current page with the flash message if the lead is protected" do
+          @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+          xhr :put, :reject, :id => @private.id
+          flash[:warning].should_not == nil
+          response.body.should == "window.location.reload();"
+        end
+      end
     end
 
     describe "HTML request" do
@@ -641,6 +694,24 @@ describe LeadsController do
         @lead.status.should == "rejected"
         flash[:notice].should_not == nil
         response.should redirect_to(leads_path)
+      end
+
+      describe "lead got deleted or otherwise unavailable" do
+        it "should redirect to lead index if the lead got deleted" do
+          @lead = Factory(:lead, :user => @current_user).destroy
+
+          put :reject, :id => @lead.id
+          flash[:warning].should_not == nil
+          response.should redirect_to(leads_path)
+        end
+
+        it "should redirect to lead index if the lead is protected" do
+          @private = Factory(:lead, :user => Factory(:user), :access => "Private")
+
+          put :reject, :id => @private.id
+          flash[:warning].should_not == nil
+          response.should redirect_to(leads_path)
+        end
       end
     end
 
