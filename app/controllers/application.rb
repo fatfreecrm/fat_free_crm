@@ -103,6 +103,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def respond_to_related_not_found(related, *types)
     asset = self.controller_name.singularize
+    asset = "note" if asset == "comment"
     flash[:warning] = "Can't create the #{asset} since the #{related} is no longer available."
     url = send("#{related.pluralize}_path")
     respond_to do |format|
