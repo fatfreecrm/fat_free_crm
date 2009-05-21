@@ -12,7 +12,11 @@ else # <----------------------------------------- Show [Edit Contact] form.
 
   if params[:cancel].blank?                       # Called from contacts list item...
     if @previous                                  # Hide open [Edit Contact] form if any.
-      page[dom_id(@previous)].replace :partial => "contact", :collection => [ @previous ]
+      if @previous.is_a?(Contact)
+        page[dom_id(@previous)].replace :partial => "contact", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "contact_#{@previous}", :remove
+      end
     end
     page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
     page[id].replace_html :partial => "edit"      # Show [Edit Contact] form.

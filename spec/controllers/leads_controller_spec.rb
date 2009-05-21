@@ -199,7 +199,7 @@ describe LeadsController do
       assigns[:previous].should == @previous
     end
 
-    describe "lead got deleted or otherwise unavailable" do
+    describe "lead got deleted or is otherwise unavailable" do
       it "should reload current page with the flash message if the lead got deleted" do
         @lead = Factory(:lead, :user => @current_user).destroy
 
@@ -216,6 +216,32 @@ describe LeadsController do
         response.body.should == "window.location.reload();"
       end
     end
+
+    describe "(previous lead got deleted or is otherwise unavailable)" do
+      before(:each) do
+        @lead = Factory(:lead, :user => @current_user)
+        @previous = Factory(:lead, :user => Factory(:user))
+      end
+
+      it "should notify the view if previous lead got deleted" do
+        @previous.destroy
+
+        xhr :get, :edit, :id => @lead.id, :previous => @previous.id
+        flash[:warning].should == nil # no warning, just silently remove the div
+        assigns[:previous].should == @previous.id
+        response.should render_template("leads/edit")
+      end
+
+      it "should notify the view if previous lead got protected" do
+        @previous.update_attribute(:access, "Private")
+
+        xhr :get, :edit, :id => @lead.id, :previous => @previous.id
+        flash[:warning].should == nil
+        assigns[:previous].should == @previous.id
+        response.should render_template("leads/edit")
+      end
+    end
+
   end
 
   # POST /leads
@@ -518,7 +544,7 @@ describe LeadsController do
       response.should render_template("leads/convert")
     end
 
-    describe "lead got deleted or otherwise unavailable" do
+    describe "(lead got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the lead got deleted" do
         @lead = Factory(:lead, :user => @current_user).destroy
 
@@ -533,6 +559,31 @@ describe LeadsController do
         xhr :get, :convert, :id => @private.id
         flash[:warning].should_not == nil
         response.body.should == "window.location.reload();"
+      end
+    end
+
+    describe "(previous lead got deleted or is otherwise unavailable)" do
+      before(:each) do
+        @lead = Factory(:lead, :user => @current_user)
+        @previous = Factory(:lead, :user => Factory(:user))
+      end
+
+      it "should notify the view if previous lead got deleted" do
+        @previous.destroy
+
+        xhr :get, :convert, :id => @lead.id, :previous => @previous.id
+        flash[:warning].should == nil # no warning, just silently remove the div
+        assigns[:previous].should == @previous.id
+        response.should render_template("leads/convert")
+      end
+
+      it "should notify the view if previous lead got protected" do
+        @previous.update_attribute(:access, "Private")
+
+        xhr :get, :convert, :id => @lead.id, :previous => @previous.id
+        flash[:warning].should == nil
+        assigns[:previous].should == @previous.id
+        response.should render_template("leads/convert")
       end
     end
   end

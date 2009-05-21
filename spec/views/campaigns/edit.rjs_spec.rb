@@ -35,6 +35,14 @@ describe "/campaigns/edit.js.rjs" do
       with_tag("li[id=campaign_41]")
     end
   end
+
+  it "edit: should remove previously open [Edit Campaign] if it's no longer available" do
+    params[:cancel] = nil
+    assigns[:previous] = 41
+
+    render "campaigns/edit.js.rjs"
+    response.should include_text(%Q/crm.flick("campaign_41", "remove");/)
+  end
   
   it "edit from campaigns index page: should turn off highlight and replace current campaign with [Edit Campaign] form" do
     params[:cancel] = nil

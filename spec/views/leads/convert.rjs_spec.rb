@@ -25,7 +25,7 @@ describe "/leads/convert.js.rjs" do
   it "cancel from lead landing page: should hide [Convert Lead] form" do
     request.env["HTTP_REFERER"] = "http://localhost/leads/123"
     params[:cancel] = "true"
-    
+
     render "leads/convert.js.rjs"
     response.should include_text('crm.flip_form("convert_lead"')
   end
@@ -33,11 +33,19 @@ describe "/leads/convert.js.rjs" do
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
     params[:cancel] = nil
     assigns[:previous] = Factory(:lead, :id => 41, :user => @current_user)
-    
+
     render "leads/convert.js.rjs"
     response.should have_rjs("lead_41") do |rjs|
       with_tag("li[id=lead_41]")
     end
+  end
+
+  it "convert: should remove previously open [Convert Lead] if it's no longer available" do
+    params[:cancel] = nil
+    assigns[:previous] = 41
+
+    render "leads/convert.js.rjs"
+    response.should include_text(%Q/crm.flick("lead_41", "remove");/)
   end
   
   it "convert from leads index page: should turn off highlight and replace current lead with [Convert Lead] form" do

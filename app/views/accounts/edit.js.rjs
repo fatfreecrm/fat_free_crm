@@ -12,7 +12,11 @@ else # <----------------------------------------  Show [Edit Account] form.
 
   if params[:cancel].blank?                       # Called from accounts list item...
     if @previous                                    # Hide open [Edit Account] form if any.
-      page[dom_id(@previous)].replace :partial => "account", :collection => [ @previous ]
+      if @previous.is_a?(Account)
+        page[dom_id(@previous)].replace :partial => "account", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "account_#{@previous}", :remove
+      end
     end
     page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
     page[id].replace_html :partial => "edit"        # Show [Edit Account] form.

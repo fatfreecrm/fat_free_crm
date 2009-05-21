@@ -184,7 +184,7 @@ describe ContactsController do
       assigns[:previous].should == @previous
     end
 
-    describe "contact got deleted or otherwise unavailable" do
+    describe "(contact got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the contact got deleted" do
         @contact = Factory(:contact, :user => @current_user).destroy
 
@@ -199,6 +199,31 @@ describe ContactsController do
         xhr :get, :edit, :id => @private.id
         flash[:warning].should_not == nil
         response.body.should == "window.location.reload();"
+      end
+    end
+
+    describe "(previous contact got deleted or is otherwise unavailable)" do
+      before(:each) do
+        @contact = Factory(:contact, :user => @current_user)
+        @previous = Factory(:contact, :user => Factory(:user))
+      end
+
+      it "should notify the view if previous contact got deleted" do
+        @previous.destroy
+
+        xhr :get, :edit, :id => @contact.id, :previous => @previous.id
+        flash[:warning].should == nil
+        assigns[:previous].should == @previous.id
+        response.should render_template("contacts/edit")
+      end
+
+      it "should notify the view if previous contact got protected" do
+        @previous.update_attribute(:access, "Private")
+
+        xhr :get, :edit, :id => @contact.id, :previous => @previous.id
+        flash[:warning].should == nil
+        assigns[:previous].should == @previous.id
+        response.should render_template("contacts/edit")
       end
     end
 

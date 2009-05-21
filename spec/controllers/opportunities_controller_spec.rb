@@ -207,7 +207,7 @@ describe OpportunitiesController do
       assigns[:previous].should == @previous
     end
 
-    describe "opportunity got deleted or otherwise unavailable" do
+    describe "opportunity got deleted or is otherwise unavailable" do
       it "should reload current page with the flash message if the opportunity got deleted" do
         @opportunity = Factory(:opportunity, :user => @current_user).destroy
 
@@ -222,6 +222,31 @@ describe OpportunitiesController do
         xhr :get, :edit, :id => @private.id
         flash[:warning].should_not == nil
         response.body.should == "window.location.reload();"
+      end
+    end
+
+    describe "(previous opportunity got deleted or is otherwise unavailable)" do
+      before(:each) do
+        @opportunity = Factory(:opportunity, :user => @current_user)
+        @previous = Factory(:opportunity, :user => Factory(:user))
+      end
+
+      it "should notify the view if previous opportunity got deleted" do
+        @previous.destroy
+
+        xhr :get, :edit, :id => @opportunity.id, :previous => @previous.id
+        flash[:warning].should == nil # no warning, just silently remove the div
+        assigns[:previous].should == @previous.id
+        response.should render_template("opportunities/edit")
+      end
+
+      it "should notify the view if previous opportunity got protected" do
+        @previous.update_attribute(:access, "Private")
+
+        xhr :get, :edit, :id => @opportunity.id, :previous => @previous.id
+        flash[:warning].should == nil
+        assigns[:previous].should == @previous.id
+        response.should render_template("opportunities/edit")
       end
     end
   end

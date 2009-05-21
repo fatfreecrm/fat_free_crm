@@ -56,11 +56,12 @@ class AccountsController < ApplicationController
     @account = Account.my(@current_user).find(params[:id])
     @users = User.except(@current_user).all
     if params[:previous] =~ /(\d+)\z/
-      @previous = Account.find($1)
+      @previous = Account.my(@current_user).find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js)
+    @previous ||= $1.to_i
+    respond_to_not_found(:js) unless @account
   end
 
   # POST /accounts

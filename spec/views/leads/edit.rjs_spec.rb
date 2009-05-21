@@ -30,11 +30,19 @@ describe "/leads/edit.js.rjs" do
   it "edit: should hide previously open [Edit Lead] and replace it with lead partial" do
     params[:cancel] = nil
     assigns[:previous] = Factory(:lead, :id => 41, :user => @current_user)
-    
+
     render "leads/edit.js.rjs"
     response.should have_rjs("lead_41") do |rjs|
       with_tag("li[id=lead_41]")
     end
+  end
+
+  it "edit: should remove previously open [Edit Lead] if it's no longer available" do
+    params[:cancel] = nil
+    assigns[:previous] = 41
+
+    render "leads/edit.js.rjs"
+    response.should include_text(%Q/crm.flick("lead_41", "remove");/)
   end
   
   it "edit from leads index page: should turn off highlight and replace current lead with [Edit Lead] form" do

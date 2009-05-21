@@ -58,11 +58,12 @@ class LeadsController < ApplicationController
     @users = User.except(@current_user).all
     @campaigns = Campaign.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
-      @previous = Lead.find($1)
+      @previous = Lead.my(@current_user).find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js)
+    @previous ||= $1.to_i
+    respond_to_not_found(:js) unless @lead
   end
 
   # POST /leads
@@ -137,9 +138,13 @@ class LeadsController < ApplicationController
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my(@current_user).all(:order => "name")
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
+    if params[:previous] =~ /(\d+)\z/
+      @previous = Lead.my(@current_user).find($1)
+    end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    @previous ||= $1.to_i
+    respond_to_not_found(:js, :xml) unless @lead
   end
 
   # PUT /leads/1/promote

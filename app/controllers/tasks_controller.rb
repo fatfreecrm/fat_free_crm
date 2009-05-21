@@ -57,11 +57,12 @@ class TasksController < ApplicationController
     @category = Setting.invert(:task_category)
     @asset = @task.asset if @task.asset_id?
     if params[:previous] =~ /(\d+)\z/
-      @previous = Task.find($1)
+      @previous = Task.tracked_by(@current_user).find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js)
+    @previous ||= $1.to_i
+    respond_to_not_found(:js) unless @task
   end
 
   # POST /tasks

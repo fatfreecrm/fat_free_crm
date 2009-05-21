@@ -165,7 +165,7 @@ describe TasksController do
       response.should render_template("tasks/edit")
     end
 
-    describe "task got deleted or reassigned" do
+    describe "(task got deleted or reassigned)" do
       it "should reload current page with the flash message if the task got deleted" do
         @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
 
@@ -180,6 +180,31 @@ describe TasksController do
         xhr :get, :edit, :id => @task.id
         flash[:warning].should_not == nil
         response.body.should == "window.location.reload();"
+      end
+    end
+
+    describe "(previous task got deleted or reassigned)" do
+      before(:each) do
+        @task = Factory(:task, :user => @current_user)
+        @previous = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+      end
+
+      it "should notify the view if previous task got deleted" do
+        @previous.destroy
+
+        xhr :get, :edit, :id => @task.id, :previous => @previous.id
+        flash[:warning].should == nil # no warning, just silently remove the div
+        assigns[:previous].should == @previous.id
+        response.should render_template("tasks/edit")
+      end
+
+      it "should notify the view if previous task got reassigned" do
+        @previous.update_attribute(:assignee, Factory(:user))
+
+        xhr :get, :edit, :id => @task.id, :previous => @previous.id
+        flash[:warning].should == nil
+        assigns[:previous].should == @previous.id
+        response.should render_template("tasks/edit")
       end
     end
 

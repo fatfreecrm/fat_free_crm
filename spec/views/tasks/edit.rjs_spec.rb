@@ -42,11 +42,21 @@ describe "/tasks/edit.js.rjs" do
       assigns[:previous] = @previous
       assigns[:view] = view
       assigns[:task] = stub_task(view)
-      
+
       render "tasks/edit.js.rjs"
       response.should have_rjs("task_#{@previous.id}") do |rjs|
         with_tag("li[id=task_#{@previous.id}]")
       end
+    end
+
+    it "edit: should remove previous [Edit Task] form if previous task is not available" do
+      @previous = stub_task(view)
+      assigns[:previous] = 41
+      assigns[:view] = view
+      assigns[:task] = stub_task(view)
+
+      render "tasks/edit.js.rjs"
+      response.should include_text(%Q/crm.flick("task_41", "remove");/)
     end
 
     it "edit: should turn off highlight and replace current task with [Edit Task] form" do

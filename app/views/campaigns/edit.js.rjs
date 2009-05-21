@@ -12,7 +12,11 @@ else # <----------------------------------------  Show [Edit Campaign] form.
 
   if params[:cancel].blank?                       # Called from campaigns list item...
     if @previous                                  # Hide open [Edit Campaign] form if any.
-      page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
+      if @previous.is_a?(Campaign)
+        page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "campaign_#{@previous}", :remove
+      end
     end
     page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
     page[id].replace_html :partial => "edit"      # Show [Edit Campaign] form.

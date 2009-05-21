@@ -27,7 +27,7 @@ describe "/accounts/edit.js.rjs" do
     response.should include_text('crm.flip_form("edit_account"')
   end
 
-  it "edit: should hide previously open [edit account] for and replace it with account partial" do
+  it "edit: should hide previously open [Edit Account] for and replace it with account partial" do
     params[:cancel] = nil
     assigns[:previous] = Factory(:account, :id => 41, :user => @current_user)
     
@@ -35,6 +35,14 @@ describe "/accounts/edit.js.rjs" do
     response.should have_rjs("account_41") do |rjs|
       with_tag("li[id=account_41]")
     end
+  end
+
+  it "edit: should remove previously open [Edit Account] if it's no longer available" do
+    params[:cancel] = nil
+    assigns[:previous] = 41
+
+    render "accounts/edit.js.rjs"
+    response.should include_text(%Q/crm.flick("account_41", "remove");/)
   end
 
   it "edit from accounts index page: should turn off highlight and replace current account with [edit account] form" do

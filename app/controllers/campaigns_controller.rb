@@ -57,11 +57,12 @@ class CampaignsController < ApplicationController
     @campaign = Campaign.my(@current_user).find(params[:id])
     @users = User.except(@current_user).all
     if params[:previous] =~ /(\d+)\z/
-      @previous = Campaign.find($1)
+      @previous = Campaign.my(@current_user).find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js)
+    @previous ||= $1.to_i
+    respond_to_not_found(:js) unless @campaign
   end
 
   # POST /campaigns

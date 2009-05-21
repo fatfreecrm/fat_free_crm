@@ -38,6 +38,14 @@ describe "/contacts/edit.js.rjs" do
       with_tag("li[id=contact_41]")
     end
   end
+
+  it "edit: should hide and remove previously open [Edit Contact] if it's no longer available" do
+    params[:cancel] = nil
+    assigns[:previous] = 41
+
+    render "contacts/edit.js.rjs"
+    response.should include_text(%Q/crm.flick("contact_41", "remove");/)
+  end
   
   it "edit from contacts index page: should turn off highlight and replace current contact with [Edit Contact] form" do
     params[:cancel] = nil
