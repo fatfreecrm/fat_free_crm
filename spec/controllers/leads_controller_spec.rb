@@ -173,6 +173,24 @@ describe LeadsController do
       assigns[:campaign].should == @campaign
     end
 
+    describe "(when creating related lead)" do
+      it "should redirect to parent asset's index page with the message if parent asset got deleted" do
+        @campaign = Factory(:campaign).destroy
+
+        xhr :get, :new, :related => "campaign_#{@campaign.id}"
+        flash[:warning].should_not == nil
+        response.body.should == 'window.location.href = "/campaigns";'
+      end
+
+      it "should redirect to parent asset's index page with the message if parent asset got protected" do
+        @campaign = Factory(:campaign, :access => "Private")
+        
+        xhr :get, :new, :related => "campaign_#{@campaign.id}"
+        flash[:warning].should_not == nil
+        response.body.should == 'window.location.href = "/campaigns";'
+      end
+    end
+
   end
 
   # GET /leads/1/edit                                                      AJAX

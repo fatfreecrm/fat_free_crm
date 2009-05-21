@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   end
 
   # GET /tasks/1
-  # GET /tasks/1.xml
+  # GET /tasks/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
     respond_to do |format|
@@ -38,13 +38,16 @@ class TasksController < ApplicationController
     @category = Setting.invert(:task_category)
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@asset", model.classify.constantize.find(id))
+      instance_variable_set("@asset", model.classify.constantize.my(@current_user).find(id))
     end
 
     respond_to do |format|
       format.js   # new.js.rjs
       format.xml  { render :xml => @task }
     end
+
+  rescue ActiveRecord::RecordNotFound # Kicks in if related asset was not found.
+    respond_to_related_not_found(model, :js) if model
   end
 
   # GET /tasks/1/edit                                                      AJAX

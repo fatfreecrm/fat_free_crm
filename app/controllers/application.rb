@@ -100,6 +100,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #----------------------------------------------------------------------------
+  def respond_to_related_not_found(related, *types)
+    asset = self.controller_name.singularize
+    flash[:warning] = "Can't create the #{asset} since the #{related} is no longer available."
+    url = send("#{related.pluralize}_path")
+    respond_to do |format|
+      format.html { redirect_to(url) }                                 if types.include?(:html)
+      format.js   { render(:update) { |page| page.redirect_to(url) } } if types.include?(:js)
+      format.xml  { render :status => :not_found }                     if types.include?(:xml)
+    end
+  end
+
   # Proxy current page for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_page=(page)

@@ -4,6 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, May 20, 2009
+---------------------------------------------------------------------
+- Make sure we handle the case when previous asset is deleted or no longer available.
+- Make sure we handle the case when related asset is deleted or no longer available.
+
 Tue, May 19, 2009
 ---------------------------------------------------------------------
 - Added missing and protected object handling for #convert, #promote, #reject (Leads).

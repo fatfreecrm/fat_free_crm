@@ -133,6 +133,24 @@ describe TasksController do
       response.should render_template("tasks/new")
     end
 
+    describe "(when creating related task)" do
+      it "should redirect to parent asset's index page with the message if parent asset got deleted" do
+        @account = Factory(:account).destroy
+
+        xhr :get, :new, :related => "account_#{@account.id}"
+        flash[:warning].should_not == nil
+        response.body.should == 'window.location.href = "/accounts";'
+      end
+
+      it "should redirect to parent asset's index page with the message if parent asset got protected" do
+        @account = Factory(:account, :access => "Private")
+        
+        xhr :get, :new, :related => "account_#{@account.id}"
+        flash[:warning].should_not == nil
+        response.body.should == 'window.location.href = "/accounts";'
+      end
+    end
+
   end
 
   # GET /tasks/1/edit                                                      AJAX

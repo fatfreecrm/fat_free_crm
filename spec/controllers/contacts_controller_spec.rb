@@ -141,12 +141,29 @@ describe ContactsController do
     end
 
     it "should created an instance of related object when necessary" do
-      @opportunity = Factory(:opportunity, :id => 42)
+      @opportunity = Factory(:opportunity)
 
-      xhr :get, :new, :related => "opportunity_42"
+      xhr :get, :new, :related => "opportunity_#{@opportunity.id}"
       assigns[:opportunity].should == @opportunity
     end
 
+    describe "(when creating related contact)" do
+      it "should redirect to parent asset's index page with the message if parent asset got deleted" do
+        @account = Factory(:account).destroy
+
+        xhr :get, :new, :related => "account_#{@account.id}"
+        flash[:warning].should_not == nil
+        response.body.should == 'window.location.href = "/accounts";'
+      end
+
+      it "should redirect to parent asset's index page with the message if parent asset got protected" do
+        @account = Factory(:account, :access => "Private")
+        
+        xhr :get, :new, :related => "account_#{@account.id}"
+        flash[:warning].should_not == nil
+        response.body.should == 'window.location.href = "/accounts";'
+      end
+    end
   end
 
   # GET /contacts/1/edit                                                   AJAX
@@ -508,7 +525,7 @@ describe ContactsController do
     end
   end
 
-  # GET /contacts/search/query                                                AJAX
+  # GET /contacts/search/query                                             AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
     before(:each) do

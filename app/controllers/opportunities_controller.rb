@@ -44,13 +44,16 @@ class OpportunitiesController < ApplicationController
     @accounts    = Account.my(@current_user).all(:order => "name")
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+      instance_variable_set("@#{model}", model.classify.constantize.my(@current_user).find(id))
     end
 
     respond_to do |format|
       format.js   # new.js.rjs
       format.xml  { render :xml => @opportunity }
     end
+
+  rescue ActiveRecord::RecordNotFound # Kicks in if related asset was not found.
+    respond_to_related_not_found(model, :js) if model
   end
 
   # GET /opportunities/1/edit                                              AJAX

@@ -174,6 +174,24 @@ describe OpportunitiesController do
       assigns[:contact].should == @contact
     end
 
+    describe "(when creating related opportunity)" do
+      it "should redirect to parent asset's index page with the message if parent asset got deleted" do
+        @account = Factory(:account).destroy
+
+        xhr :get, :new, :related => "account_#{@account.id}"
+        flash[:warning].should_not == nil
+        response.body.should == 'window.location.href = "/accounts";'
+      end
+
+      it "should redirect to parent asset's index page with the message if parent asset got protected" do
+        @account = Factory(:account, :access => "Private")
+        
+        xhr :get, :new, :related => "account_#{@account.id}"
+        flash[:warning].should_not == nil
+        response.body.should == 'window.location.href = "/accounts";'
+      end
+    end
+
   end
 
   # GET /opportunities/1/edit                                              AJAX
