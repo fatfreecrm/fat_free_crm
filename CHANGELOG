@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Thu, May 21, 2009
+---------------------------------------------------------------------
+Fixed JavaScript and CSS caching issues in production environment.
+
 Wed, May 20, 2009
 ---------------------------------------------------------------------
 - Gracefully handle use cases when previous or related asset is deleted or protected.

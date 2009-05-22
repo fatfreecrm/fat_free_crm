@@ -4,5 +4,7 @@ db/schema.rb
 db/*.sql*
 log/*.log
 tmp/**/*
+public/javascripts/cache/*.js
+public/stylesheets/cache/*.css
 .DS_Store
 *~
