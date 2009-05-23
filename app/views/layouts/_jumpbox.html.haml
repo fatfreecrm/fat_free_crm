@@ -1,0 +1,9 @@
+%br
+#jumpbox{ hidden }
+  = link_to("Campaigns", "#") << " |"
+  = link_to("Accounts", "#") << " |"
+  = link_to("Leads", "#") << " |"
+  = link_to("Contacts", "#") << " |"
+  = link_to("Opportunities", "#")
+  %br
+    = text_field_tag "jump_query", nil, :style => "width: 310px"

@@ -186,27 +186,6 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  toggle_open_id_login: function(first_field) {
-    if (arguments.length == 0) {
-      first_field = "authentication_openid_identifier";
-    }
-    $("login").toggle();
-    $("openid").toggle();
-    $("login_link").toggle();
-    $("openid_link").toggle();
-    $(first_field).focus();
-  },
-
-  //----------------------------------------------------------------------------
-  toggle_open_id_signup: function() {
-    $("login").toggle();
-    $("openid").toggle();
-    $("login_link").toggle();
-    $("openid_link").toggle();
-    $('user_email').focus();
-  },
-
-  //----------------------------------------------------------------------------
   flick: function(element, action) {
     if ($(element)) {
       switch(action) {
@@ -246,4 +225,9 @@ var crm = {
   }
 }
 
-Event.observe(window, "load", function() { crm.focus_on_first_field() })
+// Note: observing "dom:loaded" is supposedly faster that "window.onload" since
+// it will fire immediately after the HTML document is fully loaded, but before
+// images on the page are fully loaded.
+
+// Event.observe(window, "load", function() { crm.focus_on_first_field() })
+document.observe("dom:loaded", function() { crm.focus_on_first_field() });

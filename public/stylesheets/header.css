@@ -7,15 +7,40 @@
     color: greenyellow;
     font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
-  #header div {
+  #header #welcome {
     float: right;
     font-size: 11px; }
-    #header div a {
+    #header #welcome a {
       color: lightyellow;
-      padding: 1px 4px 1px 4px;
+      padding: 1px 4px 2px 4px;
       text-decoration: none; }
-      #header div a:hover {
-        background: steelblue; }
+      #header #welcome a:hover {
+        background: #1e4262;
+        color: yellow; }
+    #header #welcome a.selected {
+      background: steelblue;
+      color: lightyellow;
+      -moz-border-radius-topleft: 2px;
+      -moz-border-radius-topright: 2px;
+      -webkit-border-top-left-radius: 2px;
+      -webkit-border-top-right-radius: 2px; }
+  #header #jumpbox {
+    background: steelblue;
+    margin: 2px 0px 0px 0px;
+    padding: 12px;
+    position: absolute;
+    -moz-border-radius-bottomleft: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px; }
+    #header #jumpbox a {
+      color: white;
+      padding: 0px 0px 4px 0px; }
+      #header #jumpbox a:hover {
+        background: steelblue;
+        color: navy; }
+    #header #jumpbox input {
+      margin: 2px 0px 0px 0px; }
 
 #tabs {
   background: #1e4262;

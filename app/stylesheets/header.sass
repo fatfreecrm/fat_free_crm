@@ -28,17 +28,45 @@
     :font normal 15px "Lucida Grande", Arial, Helvetica, sans-serif
     :text-decoration none
 
-  div
+  #welcome
     :float right
     :font-size 11px
-
     a
       :color lightyellow
-      :padding 1px 4px 1px 4px
+      :padding 1px 4px 2px 4px
       :text-decoration none
       &:hover
-        :background steelblue
+        :background = !color_header_background
+        :color yellow
+    a.selected
+      :background steelblue
+      :color lightyellow
+      :-moz-border-radius
+        :topleft 2px
+        :topright 2px
+      :-webkit-border
+        :top-left-radius 2px
+        :top-right-radius 2px
 
+  #jumpbox
+    :background steelblue
+    :margin 2px 0px 0px 0px
+    :padding 12px
+    :position absolute
+    :-moz-border-radius
+      :bottomleft 6px
+      :bottomright 6px
+    :-webkit-border
+      :bottom-left-radius 6px
+      :bottom-right-radius 6px
+    a
+      :color white
+      :padding 0px 0px 4px 0px
+      &:hover
+        :background steelblue
+        :color navy
+    input
+      :margin 2px 0px 0px 0px
 #tabs
   :background = !color_header_background
   :height = !size_tab_height

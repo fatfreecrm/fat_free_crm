@@ -4,9 +4,18 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, May 23, 2009
+---------------------------------------------------------------------
+- Restructured application's JavaScript and added crm.Popup class.
+- Added "Jump to..." link that shows the jumpbox (see LH #45).
+
+Fri, May 22, 2009
+---------------------------------------------------------------------
+- Happy birthday, Dad!
+
 Thu, May 21, 2009
 ---------------------------------------------------------------------
-Fixed JavaScript and CSS caching issues in production environment.
+- Fixed JavaScript and CSS caching issues in production environment.
 
 Wed, May 20, 2009
 ---------------------------------------------------------------------

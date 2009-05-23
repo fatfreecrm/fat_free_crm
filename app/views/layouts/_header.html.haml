@@ -1,11 +1,13 @@
 #header
-  %div
+  #welcome
     - if current_user
       Welcome,
       = current_user.username << "! "
+      = link_to("Jump to...", "#", :id => "jumper") << " | "
       = link_to("Preferences", url_for(:controller => "preferences")) << " | "
       = link_to("Profile", profile_path) << " | "
       = link_to("Logout", logout_path, :method => :delete)
+      = render :partial => "/layouts/jumpbox"
     - else
       = link_to("Login", login_path) << " | "
       = link_to("Sign Up", signup_path)
