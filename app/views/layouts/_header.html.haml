@@ -2,8 +2,8 @@
   #welcome
     - if current_user
       Welcome,
-      = current_user.username << "! "
-      = link_to("Jump to...", "#", :id => "jumper") << " | "
+      = (current_user.first_name.blank? ? current_user.username : current_user.first_name.capitalize) << "! "
+      = link_to("Quick Find", "#", :id => "jumper") << " | "
       = link_to("Preferences", url_for(:controller => "preferences")) << " | "
       = link_to("Profile", profile_path) << " | "
       = link_to("Logout", logout_path, :method => :delete)

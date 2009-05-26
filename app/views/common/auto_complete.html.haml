@@ -1,0 +1,5 @@
+- unless @auto_complete.blank?
+  %ul
+    - @auto_complete.each do |item|
+      - name = item.name << (item.is_a?(Lead) ? " (#{item.company})" : "")
+      %li{ :id => item.to_param }= highlight name.shorten(45), params[:auto_complete_query]

@@ -1,9 +1,21 @@
-%br
+- current_auto_complete = session[:auto_complete] || :leads
+= content_for(:javascript_epilogue) do
+  :plain
+    document.observe("dom:loaded", function() {
+      new crm.Popup({
+        trigger     : "jumper",
+        target      : "jumpbox",
+        appear      : 0.3,
+        fade        : 0.3,
+        before_show : function() { $("jumper").className = "selected"; },
+        after_show  : function() { $("auto_complete_query").focus(); },
+        after_hide  : function() { $("jumper").className = ""; }
+      });
+      crm.auto_complete("#{current_auto_complete}");
+    });
+
 #jumpbox{ hidden }
-  = link_to("Campaigns", "#") << " |"
-  = link_to("Accounts", "#") << " |"
-  = link_to("Leads", "#") << " |"
-  = link_to("Contacts", "#") << " |"
-  = link_to("Opportunities", "#")
+  = jumpbox(current_auto_complete)
   %br
-    = text_field_tag "jump_query", nil, :style => "width: 310px"
+    = text_field_tag "auto_complete_query", nil, :style => "width: 310px", :autocomplete => :off
+    .auto_complete#auto_complete_dropdown

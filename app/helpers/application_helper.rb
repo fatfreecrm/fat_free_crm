@@ -92,6 +92,13 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
+  def jumpbox(current)
+    [ :campaigns, :accounts, :leads, :contacts, :opportunities ].inject([]) do |html, controller|
+      html << link_to_function(controller.to_s.capitalize, "crm.jumper('#{controller}')", :class => (controller == current ? "selected" : ""))
+    end.join(" | ")
+  end
+
+  #----------------------------------------------------------------------------
   def styles_for(*models)
     render :partial => "common/inline_styles", :locals => { :models => models }
   end

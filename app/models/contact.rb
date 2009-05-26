@@ -42,6 +42,7 @@ class Contact < ActiveRecord::Base
   has_many    :opportunities, :through => :contact_opportunities, :uniq => true, :order => "opportunities.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
+  named_scope :limit, lambda { |n| { :limit => n } }
 
   simple_column_search :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
 

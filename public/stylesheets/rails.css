@@ -33,25 +33,33 @@ p.flash_notice, p.flash_message {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 
-div.autocomplete {
-  background: #fff;
-  border: 1px solid #888;
+div.auto_complete {
+  background: white;
+  border-left: 1px solid silver;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
   margin: 0px;
   padding: 0px;
   position: absolute;
-  width: 250px; }
-  div.autocomplete ul {
+  width: 310px; }
+  div.auto_complete ul {
     list-style-type: none;
     margin: 0px;
     padding: 0px; }
-    div.autocomplete ul li {
+    div.auto_complete ul li {
+      color: #3f3f3f;
       cursor: pointer;
       display: block;
       list-style-type: none;
       margin: 0px;
       padding: 2px; }
-      div.autocomplete ul li.selected {
-        background-color: #ffb; }
+      div.auto_complete ul li .highlight {
+        background: lightyellow; }
+      div.auto_complete ul li.selected {
+        background: royalblue;
+        color: white; }
+        div.auto_complete ul li.selected .highlight {
+          background: royalblue; }
 
 .pagination {
   background: white;

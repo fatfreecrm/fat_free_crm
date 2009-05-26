@@ -135,6 +135,15 @@ class CampaignsController < ApplicationController
     end
   end
 
+  # POST /leads/auto_complete/query                                        AJAX
+  #----------------------------------------------------------------------------
+  def auto_complete
+    @query = params[:auto_complete_query]
+    @auto_complete = Campaign.my(@current_user).search(@query).limit(10)
+    session[:auto_complete] = :campaigns
+    render :template => "common/auto_complete", :layout => nil
+  end
+
   # Ajax request to filter out list of campaigns.                          AJAX
   #----------------------------------------------------------------------------
   def filter

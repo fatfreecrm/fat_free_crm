@@ -2,6 +2,8 @@ var crm = {
 
   EXPANDED:  "&#9660;",
   COLLAPSED: "&#9658;",
+  request: null,
+  autocompleter: null,
 
   //----------------------------------------------------------------------------
   date_select_popup: function(id, dropdown_id) {
@@ -221,6 +223,38 @@ var crm = {
         },
         onComplete : (function() { this.request = null; }).bind(this)
       });
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  jumper: function(controller) {
+    var name = controller.capitalize();
+    $$("#jumpbox a").each(function(link) {
+      if (link.innerHTML == name) {
+        link.addClassName("selected");
+      } else {
+        link.removeClassName("selected");
+      }
+    });
+    this.auto_complete(controller, true);
+  },
+
+  //----------------------------------------------------------------------------
+  auto_complete: function(controller, focus) {
+    if (this.autocompleter) {
+      Event.stopObserving(this.autocompleter.element);
+      delete this.autocompleter;
+    }
+    this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", "/" + controller + "/auto_complete", { 
+      frequency: 0.4,
+      afterUpdateElement: function(text, el) {
+        window.location.href = "/" + controller + "/" + escape(el.id);
+      }
+    });
+    $("auto_complete_dropdown").update("");
+    $("auto_complete_query").value = "";
+    if (focus) {
+      $("auto_complete_query").focus();
     }
   }
 }

@@ -204,6 +204,15 @@ class LeadsController < ApplicationController
     end
   end
 
+  # POST /leads/auto_complete/query                                        AJAX
+  #----------------------------------------------------------------------------
+  def auto_complete
+    @query = params[:auto_complete_query]
+    @auto_complete = Lead.my(@current_user).search(@query).limit(10)
+    session[:auto_complete] = :leads
+    render :template => "common/auto_complete", :layout => nil
+  end
+
   # Ajax request to filter out list of leads.                              AJAX
   #----------------------------------------------------------------------------
   def filter

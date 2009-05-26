@@ -36,9 +36,10 @@
     #header #jumpbox a {
       color: white;
       padding: 0px 0px 4px 0px; }
-      #header #jumpbox a:hover {
-        background: steelblue;
+      #header #jumpbox a.selected {
         color: navy; }
+      #header #jumpbox a:hover {
+        background: steelblue; }
     #header #jumpbox input {
       margin: 2px 0px 0px 0px; }
 

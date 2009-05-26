@@ -94,15 +94,3 @@ crm.Popup = Class.create({
 		}
 	}
 });
-
-document.observe("dom:loaded", function() {
-  new crm.Popup({
-    trigger     : "jumper",
-    target      : "jumpbox",
-    appear      : 0.3,
-    fade        : 0.3,
-    before_show : function() { $("jumper").className = "selected"; },
-    after_show  : function() { $("jump_query").focus(); },
-    after_hide  : function() { $("jumper").className = ""; }
-  });
-});

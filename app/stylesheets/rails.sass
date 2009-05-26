@@ -43,26 +43,34 @@ p
 // Autocomplete.
 //------------------------------------------------------------------------------
 div
-  &.autocomplete
-    :background #fff
-    :border 1px solid #888
+  &.auto_complete
+    :background white
+    :border
+      :left 1px solid silver
+      :right 1px solid silver
+      :bottom 1px solid silver
     :margin 0px
     :padding 0px
     :position absolute
-    :width 250px
+    :width 310px
     ul
       :list-style-type none
       :margin 0px
       :padding 0px
       li
+        :color #3f3f3f
         :cursor pointer
         :display block
-        /:height 32px
         :list-style-type none
         :margin 0px
         :padding 2px
+        .highlight
+          :background lightyellow
         &.selected
-          :background-color #ffb
+          :background royalblue
+          :color white
+          .highlight
+            :background royalblue
 
 // Pagination.
 //------------------------------------------------------------------------------

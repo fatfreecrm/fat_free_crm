@@ -156,6 +156,15 @@ class ContactsController < ApplicationController
     end
   end
 
+  # POST /leads/auto_complete/query                                        AJAX
+  #----------------------------------------------------------------------------
+  def auto_complete
+    @query = params[:auto_complete_query]
+    @auto_complete = Contact.my(@current_user).search(@query).limit(10)
+    session[:auto_complete] = :contacts
+    render :template => "common/auto_complete", :layout => nil
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_contacts(options = { :page => nil, :query => nil })
