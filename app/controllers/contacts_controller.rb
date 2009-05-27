@@ -1,6 +1,7 @@
 class ContactsController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /contacts
@@ -156,14 +157,9 @@ class ContactsController < ApplicationController
     end
   end
 
-  # POST /leads/auto_complete/query                                        AJAX
+  # POST /contacts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
-  def auto_complete
-    @query = params[:auto_complete_query]
-    @auto_complete = Contact.my(@current_user).search(@query).limit(10)
-    session[:auto_complete] = :contacts
-    render :template => "common/auto_complete", :layout => nil
-  end
+  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   private
   #----------------------------------------------------------------------------

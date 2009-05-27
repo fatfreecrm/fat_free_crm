@@ -29,6 +29,10 @@ describe CampaignsController do
     it "should map #search" do
       route_for(:controller => "campaigns", :action => "search", :id => 1).should == "/campaigns/search/1"
     end
+
+    it "should map #auto_complete" do
+      route_for(:controller => "campaigns", :action => "auto_complete", :id => 1).should == "/campaigns/auto_complete/1"
+    end
   end
 
   describe "route recognition" do
@@ -62,6 +66,10 @@ describe CampaignsController do
 
     it "should generate params for #search" do
       params_from(:get, "/campaigns/search/1").should == {:controller => "campaigns", :action => "search", :id => "1"}
+    end
+
+    it "should generate params for #auto_complete" do
+      params_from(:post, "/campaigns/auto_complete/1").should == {:controller => "campaigns", :action => "auto_complete", :id => "1"}
     end
   end
 end

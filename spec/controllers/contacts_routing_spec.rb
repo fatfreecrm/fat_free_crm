@@ -29,6 +29,10 @@ describe ContactsController do
     it "should map #search" do
       route_for(:controller => "contacts", :action => "search", :id => 1).should == "/contacts/search/1"
     end
+
+    it "should map #auto_complete" do
+      route_for(:controller => "contacts", :action => "auto_complete", :id => 1).should == "/contacts/auto_complete/1"
+    end
   end
 
   describe "route recognition" do
@@ -62,6 +66,10 @@ describe ContactsController do
 
     it "should generate params for #search" do
       params_from(:get, "/contacts/search/1").should == {:controller => "contacts", :action => "search", :id => "1"}
+    end
+
+    it "should generate params for #auto_complete" do
+      params_from(:post, "/contacts/auto_complete/1").should == {:controller => "contacts", :action => "auto_complete", :id => "1"}
     end
   end
 end

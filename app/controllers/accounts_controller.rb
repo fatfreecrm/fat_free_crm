@@ -1,6 +1,7 @@
 class AccountsController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /accounts
@@ -134,14 +135,9 @@ class AccountsController < ApplicationController
     end
   end
 
-  # POST /leads/auto_complete/query                                        AJAX
+  # POST /accounts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
-  def auto_complete
-    @query = params[:auto_complete_query]
-    @auto_complete = Account.my(@current_user).search(@query).limit(10)
-    session[:auto_complete] = :accounts
-    render :template => "common/auto_complete", :layout => nil
-  end
+  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   private
   #----------------------------------------------------------------------------

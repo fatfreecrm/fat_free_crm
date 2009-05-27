@@ -482,6 +482,16 @@ describe CampaignsController do
     end
   end
 
+  # POST /campaigns/auto_complete/query                                    AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST auto_complete" do
+    before(:each) do
+      @auto_complete_matches = [ Factory(:campaign, :name => "Hello World", :user => @current_user) ]
+    end
+
+    it_should_behave_like("auto complete")
+  end
+
   # Ajax request to filter out list of campaigns.                          AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do

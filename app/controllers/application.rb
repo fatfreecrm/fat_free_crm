@@ -113,6 +113,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Autocomplete handler for all core controllers.
+  #----------------------------------------------------------------------------
+  def auto_complete
+    @query = params[:auto_complete_query]
+    @auto_complete = self.controller_name.classify.constantize.my(@current_user).search(@query).limit(10)
+    session[:auto_complete] = self.controller_name.to_sym
+    render :template => "common/auto_complete", :layout => nil
+  end
+
   # Proxy current page for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_page=(page)

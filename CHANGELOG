@@ -4,6 +4,16 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, May 27, 2009
+---------------------------------------------------------------------
+- Refactored auto_complete to use before_filter.
+- Created shared behavior specs to test auto_complete.
+- Display a message when no quick find matches were found.
+
+Tue, May 26, 2009
+---------------------------------------------------------------------
+- Happy birthday, Laura!
+
 Mon, May 25, 2009
 ---------------------------------------------------------------------
 - Implemented jumpbox (called "Quick Find").

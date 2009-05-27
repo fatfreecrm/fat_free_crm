@@ -625,6 +625,16 @@ describe OpportunitiesController do
     end
   end
 
+  # POST /opportunities/auto_complete/query                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST auto_complete" do
+    before(:each) do
+      @auto_complete_matches = [ Factory(:opportunity, :name => "Hello World", :user => @current_user) ]
+    end
+
+    it_should_behave_like("auto complete")
+  end
+
   # Ajax request to filter out list of opportunities.                      AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do

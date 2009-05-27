@@ -786,6 +786,16 @@ describe LeadsController do
 
   end
 
+  # POST /leads/auto_complete/query                                        AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST auto_complete" do
+    before(:each) do
+      @auto_complete_matches = [ Factory(:lead, :first_name => "Hello", :last_name => "World", :user => @current_user) ]
+    end
+
+    it_should_behave_like("auto complete")
+  end
+
   # Ajax request to filter out list of leads.
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do

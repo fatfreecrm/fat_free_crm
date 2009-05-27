@@ -421,4 +421,14 @@ describe AccountsController do
     end
   end
 
+  # POST /accounts/auto_complete/query                                     AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST auto_complete" do
+    before(:each) do
+      @auto_complete_matches = [ Factory(:account, :name => "Hello World", :user => @current_user) ]
+    end
+
+    it_should_behave_like("auto complete")
+  end
+
 end

@@ -553,4 +553,14 @@ describe ContactsController do
     end
   end
 
+  # POST /contacts/auto_complete/query                                     AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST auto_complete" do
+    before(:each) do
+      @auto_complete_matches = [ Factory(:contact, :first_name => "Hello", :last_name => "World", :user => @current_user) ]
+    end
+
+    it_should_behave_like("auto complete")
+  end
+
 end

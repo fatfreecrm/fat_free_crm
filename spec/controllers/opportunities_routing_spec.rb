@@ -29,6 +29,10 @@ describe OpportunitiesController do
     it "should map #search" do
       route_for(:controller => "opportunities", :action => "search", :id => 1).should == "/opportunities/search/1"
     end
+
+    it "should map #auto_complete" do
+      route_for(:controller => "opportunities", :action => "auto_complete", :id => 1).should == "/opportunities/auto_complete/1"
+    end
   end
 
   describe "route recognition" do
@@ -62,6 +66,10 @@ describe OpportunitiesController do
 
     it "should generate params for #search" do
       params_from(:get, "/opportunities/search/1").should == {:controller => "opportunities", :action => "search", :id => "1"}
+    end
+
+    it "should generate params for #auto_complete" do
+      params_from(:post, "/opportunities/auto_complete/1").should == {:controller => "opportunities", :action => "auto_complete", :id => "1"}
     end
   end
 end

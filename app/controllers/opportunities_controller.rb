@@ -3,6 +3,7 @@ class OpportunitiesController < ApplicationController
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :load_settings, :except => [ :new, :destroy ]
   before_filter :get_data_for_sidebar, :only => :index
+  before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /opportunities
@@ -162,14 +163,9 @@ class OpportunitiesController < ApplicationController
     end
   end
 
-  # POST /leads/auto_complete/query                                        AJAX
+  # POST /opportunities/auto_complete/query                                AJAX
   #----------------------------------------------------------------------------
-  def auto_complete
-    @query = params[:auto_complete_query]
-    @auto_complete = Opportunity.my(@current_user).search(@query).limit(10)
-    session[:auto_complete] = :opportunities
-    render :template => "common/auto_complete", :layout => nil
-  end
+  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   # Ajax request to filter out list of opportunities.                      AJAX
   #----------------------------------------------------------------------------

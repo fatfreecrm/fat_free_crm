@@ -246,9 +246,14 @@ var crm = {
       delete this.autocompleter;
     }
     this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", "/" + controller + "/auto_complete", { 
-      frequency: 0.4,
+      frequency: 0.25,
       afterUpdateElement: function(text, el) {
-        window.location.href = "/" + controller + "/" + escape(el.id);
+        if (el.id) {  // found: redirect to #show
+          window.location.href = "/" + controller + "/" + escape(el.id);
+        } else {      // not found: refresh current page
+          $("auto_complete_query").value = "";
+          window.location.href = window.location.href;
+        }
       }
     });
     $("auto_complete_dropdown").update("");
