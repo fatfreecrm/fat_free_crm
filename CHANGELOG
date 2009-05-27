@@ -9,6 +9,7 @@ Wed, May 27, 2009
 - Refactored auto_complete to use before_filter.
 - Created shared behavior specs to test auto_complete.
 - Display a message when no quick find matches were found.
+- Uninstalled [auto_complete] plugin since we're not using it.
 
 Tue, May 26, 2009
 ---------------------------------------------------------------------
