@@ -30,6 +30,7 @@
   - fields_for(@account) do |a|
     = a.hidden_field :user_id
     = a.hidden_field :access
+    = a.hidden_field :assigned_to
     %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
@@ -41,5 +42,5 @@
         %td= spacer
         %td{ :valign => :top }
           .label.req Assigned to:
-          = collection_select :account, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+          = collection_select :opportunity, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
 

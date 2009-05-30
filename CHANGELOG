@@ -4,12 +4,21 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Fri, May 29, 2009
+---------------------------------------------------------------------
+- Fixed opportunity assignment issue reported by Deepu (LH #49).
+
+Thu, May 28, 2009
+---------------------------------------------------------------------
+- Server installation and configuration at Linode.
+
 Wed, May 27, 2009
 ---------------------------------------------------------------------
 - Refactored auto_complete to use before_filter.
 - Created shared behavior specs to test auto_complete.
 - Display a message when no quick find matches were found.
 - Uninstalled [auto_complete] plugin since we're not using it.
+- Signed up for Linode.com
 
 Tue, May 26, 2009
 ---------------------------------------------------------------------
