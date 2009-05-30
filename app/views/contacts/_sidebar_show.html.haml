@@ -10,8 +10,7 @@
   - unless @contact.department.blank?
     = @contact.department + " department"
 
-  - unless @contact.address.blank?
-    %div= @contact.address.n2br
+  %div= @contact.address.n2br if @contact.address
 
   %div
     - unless @contact.phone.blank?

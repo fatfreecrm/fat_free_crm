@@ -9,7 +9,7 @@ describe "/contacts/_create.html.haml" do
     assigns[:contact] = Contact.new
     assigns[:users] = [ @current_user ]
     assigns[:account] = @account
-    assigns[:contacts] = [ @account ]
+    assigns[:accounts] = [ @account ]
   end
 
   it "should render [create contact] form" do
@@ -20,6 +20,13 @@ describe "/contacts/_create.html.haml" do
 
     render "/contacts/_create.html.haml"
     response.should have_tag("form[class=new_contact]")
+  end
+
+  it "should pick default assignee (Myself)" do
+    render "/contacts/_create.html.haml"
+    response.should have_tag("select[id=contact_assigned_to]") do |options|
+      options.to_s.should_not include_text(%Q/selected="selected"/)
+    end
   end
 end
 

@@ -7,6 +7,8 @@ then you win. –- Mahatma Gandhi
 Fri, May 29, 2009
 ---------------------------------------------------------------------
 - Fixed opportunity assignment issue reported by Deepu (LH #49).
+- Fixed similar issue with the contact assignments.
+- Fixed account sidebar issue when shipping/billing addresses are missing.
 
 Thu, May 28, 2009
 ---------------------------------------------------------------------
