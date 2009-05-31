@@ -457,6 +457,36 @@ tt {
   -webkit-border-bottom-right-radius: 9px;
   -webkit-border-top-right-radius: 9px; }
 
+.menu {
+  background: #f4f5eb;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #666;
+  border-bottom: 1px solid #666;
+  left: 0px;
+  padding: 2px 0px;
+  position: absolute;
+  top: 0px;
+  width: 12em;
+  -webkit-box-shadow: 10px 10px 15px gainsboro; }
+  .menu ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px; }
+  .menu li {
+    list-style-position: outside; }
+  .menu a {
+    color: #555;
+    cursor: default;
+    display: block;
+    margin: 0px 2px;
+    outline: none;
+    padding: 4px 15px;
+    text-decoration: none; }
+  .menu a:hover {
+    background: mediumblue //#006;
+    color: #fff; }
+
 .errorExplanation {
   background-color: seashell;
   border: 2px solid salmon;

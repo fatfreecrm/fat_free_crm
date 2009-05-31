@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, May 30, 2009
+---------------------------------------------------------------------
+- Implemented crm.Menu class and added menu related CSS styles.
+
 Fri, May 29, 2009
 ---------------------------------------------------------------------
 - Fixed opportunity assignment issue reported by Deepu (LH #49).
