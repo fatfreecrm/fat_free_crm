@@ -1,0 +1,10 @@
+- sortby_menu_items = ["Name", "Date Created", "Date Updated"].inject([]) do | items, sortby|
+  - items << %Q[{ name: "#{sortby}", on_select: function() { #{redraw(:sortby, sortby)} } }]
+
+:plain
+  new crm.Menu({
+    trigger   : "sortby",
+    fade      : 0.5,
+    appear    : 0.5,
+    menu_items: [ #{sortby_menu_items.join(",")} ]
+  });

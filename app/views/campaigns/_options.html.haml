@@ -1,6 +1,12 @@
 %p
   = link_to_close options_campaigns_path
   = hidden_field_tag "campaign[user_id]", @current_user.id
-  Sort campaigns by <a href=#>date created</a>.
-  Show <a href=#>30</a> campaign records per page using <a href=#>long</a> format.
+  == Sort campaigns by #{link_to("date created", "#", :id => :sortby)}.
+  == Show #{link_to("30", "#", :id => :perpage)} campaign records per page
+  == using #{link_to("long", "#", :id => :format)} format.
 %p
+
+%script
+  = render :partial => "sortby"
+  = render :partial => "common/perpage"
+  = render :partial => "common/format"

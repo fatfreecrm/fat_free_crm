@@ -150,6 +150,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     logger.p "POST /campaigns/redraw..."
+    render :nothing => true # stub
   end
 
   # Ajax request to filter out list of campaigns.                          AJAX

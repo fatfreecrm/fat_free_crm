@@ -30,12 +30,14 @@ describe "/campaigns/options.rjs" do
       response.should include_text('crm.flip_form("options", "Options")')
     end
 
-    # it "should call JavaScript functions to load preferences menus" do
-    #   params[:cancel] = nil
-    #   render "campaigns/options.rjs.rjs"
-    # 
-    #   response.should include_text()
-    # end
+    it "should call JavaScript functions to load preferences menus" do
+      params[:cancel] = nil
+      template.should_receive(:render).with(:partial => "sortby")
+      template.should_receive(:render).with(:partial => "common/perpage")
+      template.should_receive(:render).with(:partial => "common/format")
+
+      render "campaigns/options.rjs.rjs"
+    end
   end
   
   describe "cancel campaign options" do
