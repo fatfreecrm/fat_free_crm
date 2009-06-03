@@ -6,5 +6,5 @@ if params[:cancel] != "true"
   page.call "crm.date_select_popup", :task_calendar, :task_bucket
 else
   page.call "crm.flip_form", :create_task
-  page[:create_task_title].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
+  page[:title].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
 end

@@ -140,6 +140,18 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
 
+  # GET /campaigns/options                                                 AJAX
+  #----------------------------------------------------------------------------
+  def options
+    logger.p "GET /campaigns/options..."
+  end
+
+  # POST /campaigns/redraw                                                 AJAX
+  #----------------------------------------------------------------------------
+  def redraw
+    logger.p "POST /campaigns/redraw..."
+  end
+
   # Ajax request to filter out list of campaigns.                          AJAX
   #----------------------------------------------------------------------------
   def filter

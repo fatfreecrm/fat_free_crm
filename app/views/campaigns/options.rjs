@@ -1,0 +1,6 @@
+page.call "crm.flick", :empty, :toggle
+page.call "crm.hide_form", :create_campaign
+if params[:cancel] != "true"
+  page[:options].replace_html :partial => "options"
+end
+page.call "crm.flip_form", :options, "Options"

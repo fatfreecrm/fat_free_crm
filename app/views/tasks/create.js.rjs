@@ -1,6 +1,6 @@
 if @task.valid?
   page[:create_task_arrow].replace_html "&#9658;"
-  page[:create_task_title].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
+  page[:title].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
   page.visual_effect :toggle_blind, :create_task, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
 
   if called_from_index_page?  # "Classic" [Create Task] form requested from the Tasks page.

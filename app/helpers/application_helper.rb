@@ -41,10 +41,11 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_inline(id, url, options = {})
-    text    = options[:text] || id.to_s.titleize
+    text = options[:text] || id.to_s.titleize
+    text = (arrow_for(id) << "&nbsp;" << text) unless options[:plain]
     related = (options[:related] ? ", related: '#{options[:related]}'" : "")
 
-    link_to_remote(arrow_for(id) << "&nbsp;" << text,
+    link_to_remote(text,
       :url    => url,
       :method => :get,
       :with   => "{ cancel: Element.visible('#{id}')#{related} }"

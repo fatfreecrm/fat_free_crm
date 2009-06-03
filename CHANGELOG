@@ -4,6 +4,18 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue
+---------------------------------------------------------------------
+- Added [Options] form for Campaigns with all preferences stubbed.
+
+Mon, Jun 1, 2009
+---------------------------------------------------------------------
+- Happy birthday, Sophie!
+
+Sun, May 31, 2009
+---------------------------------------------------------------------
+- Work on adding [Options] inline form and related controller actions.
+
 Sat, May 30, 2009
 ---------------------------------------------------------------------
 - Implemented crm.Menu class and added menu related CSS styles.

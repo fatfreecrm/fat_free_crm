@@ -1,7 +1,8 @@
 = inline :create_contact, new_contact_path
 .title
-  %span#create_contact_title Contacts
+  %span#title Contacts
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#options{ hidden }
 .remote#create_contact{ hidden }
 
 .list#contacts

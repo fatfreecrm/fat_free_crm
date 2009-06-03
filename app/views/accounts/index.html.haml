@@ -2,8 +2,9 @@
 
 = inline :create_account, new_account_path
 .title
-  %span#create_account_title Accounts
+  %span#title Accounts
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#options{ hidden }
 .remote#create_account{ hidden }
 
 .list#accounts

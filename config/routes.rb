@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :comments
   map.resources :tasks,         :has_many => :comments, :member => { :complete => :put }
   map.resources :accounts,      :has_many => :comments, :collection => { :search => :get, :auto_complete => :post }
-  map.resources :campaigns,     :has_many => :comments, :collection => { :search => :get, :auto_complete => :post }
+  map.resources :campaigns,     :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }
   map.resources :leads,         :has_many => :comments, :collection => { :search => :get, :auto_complete => :post }, :member => { :convert => :get, :promote => :put, :reject => :put }
   map.resources :contacts,      :has_many => :comments, :collection => { :search => :get, :auto_complete => :post }
   map.resources :opportunities, :has_many => :comments, :collection => { :search => :get, :auto_complete => :post }

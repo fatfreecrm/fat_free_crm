@@ -55,7 +55,7 @@ var crm = {
 
   //----------------------------------------------------------------------------
   show_form: function(id, caption) {
-    var title = $(id + "_title") || $("title");
+    var title = $("title");
     var arrow = $(id + "_arrow") || $("arrow");
     if (typeof(caption) == "undefined") {
       var words = id.split("_");
@@ -63,7 +63,11 @@ var crm = {
     }
     title.update(caption);
     arrow.update(this.EXPANDED);
-    Effect.BlindDown(id, { duration: 0.25, afterFinish: function() { $(id).down("input[type=text]").focus() } });
+    Effect.BlindDown(id, { duration: 0.25, afterFinish: function() {
+        var input = $(id).down("input[type=text]");
+        if (input) input.focus();
+      }
+    });
   },
 
   //----------------------------------------------------------------------------

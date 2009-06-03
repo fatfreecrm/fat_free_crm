@@ -1,0 +1,53 @@
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+
+describe "/campaigns/options.rjs" do
+  include CampaignsHelper
+  
+  before(:each) do
+    login_and_assign
+  end
+
+  it "should toggle empty message div if it exists" do
+    render "campaigns/options.rjs.rjs"
+
+    response.should include_text('crm.flick("empty", "toggle")')
+  end
+
+  it "should hide [Create Campaign] form if it's visible" do
+    render "campaigns/options.rjs.rjs"
+
+    response.should include_text('crm.hide_form("create_campaign")')
+  end
+
+  describe "campaign options" do
+    it "should render [options.html.haml] template into :options div and show it" do
+      params[:cancel] = nil
+      render "campaigns/options.rjs.rjs"
+    
+      response.should have_rjs("options") do |rjs|
+        with_tag("input[type=hidden]") # @current_user
+      end
+      response.should include_text('crm.flip_form("options", "Options")')
+    end
+
+    # it "should call JavaScript functions to load preferences menus" do
+    #   params[:cancel] = nil
+    #   render "campaigns/options.rjs.rjs"
+    # 
+    #   response.should include_text()
+    # end
+  end
+  
+  describe "cancel campaign options" do
+    it "should hide campaign options form" do
+      params[:cancel] = "true"
+      render "campaigns/options.rjs.rjs"
+
+      response.should_not have_rjs("options")
+      response.should include_text('crm.flip_form("options", "Options")')
+    end
+  end
+
+end
+
+

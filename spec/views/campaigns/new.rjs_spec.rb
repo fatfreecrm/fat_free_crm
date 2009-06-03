@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/new.html.erb" do
+describe "/campaigns/new.js.rjs" do
   include CampaignsHelper
   
   before(:each) do
@@ -13,6 +13,12 @@ describe "/campaigns/new.html.erb" do
     render "campaigns/new.js.rjs"
 
     response.should include_text('crm.flick("empty", "toggle")')
+  end
+
+  it "should hide options form if it's visible" do
+    render "campaigns/new.js.rjs"
+
+    response.should include_text('crm.hide_form("options", "Campaigns")')
   end
 
   describe "new campaign" do

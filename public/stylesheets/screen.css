@@ -245,15 +245,19 @@ tt {
   position: relative; }
   .remote .close {
     background: lightblue;
+    border-top: 1px gainsboro solid;
+    border-left: 1px gainsboro solid;
+    border-bottom: 1px grey solid;
+    border-right: 1px grey solid;
     color: navy;
     cursor: pointer;
-    height: 18px;
-    margin: 2px;
+    height: 16px;
+    margin: 3px;
     position: absolute;
     right: 0px;
     text-align: center;
     top: 0px;
-    width: 18px; }
+    width: 17px; }
 
 .buttonbar {
   border-top: 1px gray solid;
