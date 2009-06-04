@@ -1,1 +1,0 @@
-page[:campaigns].replace_html render(:partial => "campaign", :collection => @campaigns)

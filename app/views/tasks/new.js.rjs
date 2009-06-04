@@ -1,10 +1,11 @@
 page.call "crm.flick", :empty, :toggle
 page.call "crm.flick", :tasks_flash, :hide
+page.call "crm.flip_form", :create_task
+
 if params[:cancel] != "true"
   page[:create_task].replace_html :partial => "create"
-  page.call "crm.flip_form", :create_task
+  page.call "crm.set_title", :create_task
   page.call "crm.date_select_popup", :task_calendar, :task_bucket
 else
-  page.call "crm.flip_form", :create_task
-  page[:title].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
+  page.call "crm.set_title", :create_task, (@view == "assigned" ? "Assigned Tasks" : "Tasks")
 end

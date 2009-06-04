@@ -1,12 +1,9 @@
-if called_from_landing_page?
-  id = :edit_contact
-else
-  id = dom_id(@contact)
-end
+id = dom_id(@contact)
 
 if @contact.errors.empty?
-  if id == :edit_contact
-    page.call "crm.flip_form", id, @contact.full_name
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_contact
+    page.call "crm.set_title", :edit_contact, @contact.full_name
     page << refresh_sidebar(:show, :summary)
   else
     page[id].replace :partial => "contact", :collection => [ @contact ]

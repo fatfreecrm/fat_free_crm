@@ -1,21 +1,20 @@
 %li[contact]{ highlightable(dom_id(contact, :tools)) }
   = gravatar_for(contact, :size => "30x30", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
-  %div
-    .tools{ invisible, :id => dom_id(contact, :tools) }
-      %small
-        = link_to_edit(contact) + " | "
-        = link_to_delete(contact) + "&nbsp;"
-    = link_to(contact.full_name, contact)
-    %tt
-      - if contact.title? && contact.department?
-        = contact.title << ", " << contact.department
-      - else
-        = contact.title if contact.title?
-      - if contact.account && contact.account.name?
-        == at #{link_to contact.account.name, account_path(contact.account)}
-      = "&ndash; referred by #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
-    %dt
-      = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
-      = "phone: <b>" + contact.phone << "</b> | " if contact.phone?
-      = "mobile: <b>" + contact.mobile << "</b> | " if contact.mobile?
-      == added #{time_ago_in_words(contact.created_at)} ago
+  .tools{ invisible, :id => dom_id(contact, :tools) }
+    %small
+      = link_to_edit(contact) + " | "
+      = link_to_delete(contact) + "&nbsp;"
+  = link_to(contact.full_name, contact)
+  %tt
+    - if contact.title? && contact.department?
+      = contact.title << ", " << contact.department
+    - else
+      = contact.title if contact.title?
+    - if contact.account && contact.account.name?
+      == at #{link_to contact.account.name, account_path(contact.account)}
+    = "&ndash; referred by #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
+  %dt{ :style => "padding: 2px 0px 0px 0px" }
+    = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
+    = "phone: <b>" + contact.phone << "</b> | " if contact.phone?
+    = "mobile: <b>" + contact.mobile << "</b> | " if contact.mobile?
+    == added #{time_ago_in_words(contact.created_at)} ago

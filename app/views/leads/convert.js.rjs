@@ -3,7 +3,8 @@ id = dom_id(@lead)
 if params[:cancel] == "true" # <----------------- Hide [Convert Lead]
 
   if called_from_landing_page?
-    page.call "crm.flip_form", :convert_lead, "#{@lead.full_name}"
+    page.call "crm.flip_form", :convert_lead
+    page.call "crm.set_title", :convert_lead, @lead.full_name
   else                                            # Called from leads list item...
     page[id].replace :partial => "lead", :collection => [ @lead ]
   end
@@ -23,8 +24,9 @@ else # <----------------------------------------  Show [Convert Lead] form.
 
   elsif params[:cancel] == "false"                # Called from title of the lead landing page...
     page[:convert_lead].replace_html :partial => "convert"
-    page.call "crm.hide_form", :edit_lead,    "Edit #{@lead.full_name}"
-    page.call "crm.flip_form", :convert_lead, "Convert #{@lead.full_name}"
+    page.call "crm.hide_form", :edit_lead
+    page.call "crm.flip_form", :convert_lead
+    page.call "crm.set_title", :convert_lead, "Convert #{@lead.full_name}"
   end
 
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?

@@ -18,7 +18,7 @@ describe "/campaigns/new.js.rjs" do
   it "should hide options form if it's visible" do
     render "campaigns/new.js.rjs"
 
-    response.should include_text('crm.hide_form("options", "Campaigns")')
+    response.should include_text('crm.hide_form("options")')
   end
 
   describe "new campaign" do

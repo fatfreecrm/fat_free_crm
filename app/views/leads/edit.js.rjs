@@ -3,7 +3,8 @@ id = dom_id(@lead)
 if params[:cancel] == "true" # <----------------- Hide [Edit Campaign]
 
   if called_from_landing_page?
-    page.call "crm.flip_form", :edit_lead, "#{@lead.full_name}"
+    page.call "crm.flip_form", :edit_lead
+    page.call "crm.set_title", :edit_lead, @lead.full_name
   else                                            # Called from leads list item...
     page[id].replace :partial => "lead", :collection => [ @lead ]
   end
@@ -24,9 +25,10 @@ else # <----------------------------------------  Show [Edit Campaign] form.
   elsif params[:cancel] == "false"                # Called from title of the lead landing page...
     page[:edit_lead].replace_html :partial => "edit"
     unless @lead.status == "converted"
-      page.call "crm.hide_form", :convert_lead, "Convert #{@lead.full_name}"
+      page.call "crm.hide_form", :convert_lead
     end
-    page.call "crm.flip_form", :edit_lead, "Edit #{@lead.full_name}"
+    page.call "crm.flip_form", :edit_lead
+    page.call "crm.set_title", :edit_lead, "Edit #{@lead.full_name}"
   end
   page[:lead_first_name].focus
 

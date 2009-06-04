@@ -281,6 +281,7 @@ tt {
   color: black;
   float: left;
   font-size: 11px;
+  margin: 0px 6px 0px 0px;
   padding: 1px 4px 1px 3px;
   text-align: right;
   width: 75px;
@@ -288,15 +289,6 @@ tt {
   -moz-border-radius-bottomleft: 7px;
   -webkit-border-top-left-radius: 7px;
   -webkit-border-bottom-left-radius: 7px; }
-
-.longstrip {
-  color: black;
-  float: left;
-  font-size: 11px;
-  margin: 0px 5px 5px 0px;
-  padding: 1px 3px 1px 3px;
-  text-align: right;
-  width: 120px; }
 
 .bucket {
   margin: 0px 0px 10px 0px; }
@@ -361,8 +353,6 @@ tt {
   .log input[type=checkbox] {
     float: left;
     margin: 0px 4px 0px 0px; }
-  .log .strip {
-    margin: 0px 5px 0px 0px; }
 
 .list {
   padding: 8px 0px 0px 0px; }
@@ -382,7 +372,7 @@ tt {
     .list li dt {
       color: #3f3f3f;
       font-size: 11px;
-      padding: 2px 0px 0px 0px; }
+      padding: 2px 0px 0px 88px; }
     .list li dt a:link, .list li dt a:visited {
       color: #3f3f3f;
       font-weight: bold;
@@ -392,8 +382,6 @@ tt {
       color: white;
       font-weight: bold;
       text-decoration: none; }
-  .list .strip {
-    margin: 2px 6px 20px 0px; }
 
 .filters, .panel {
   background: snow;

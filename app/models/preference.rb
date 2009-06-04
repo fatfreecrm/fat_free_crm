@@ -16,25 +16,22 @@ class Preference < ActiveRecord::Base
 
   #-------------------------------------------------------------------
   def [] (name)
-    if new_record? && name.to_s != "user_id"
-      preference = Preference.find_by_name_and_user_id(name.to_s, self.user.id)
-      preference ? Marshal.load(Base64.decode64(preference.value)) : nil
-    else
-      value = super(name)
-      name.to_s == "value" ? Marshal.load(Base64.decode64(value)) : value
-    end
+    return super(name) if name.to_s == "user_id" # get the value of belongs_to
+
+    preference = Preference.find_by_name_and_user_id(name.to_s, self.user.id)
+    preference ? Marshal.load(Base64.decode64(preference.value)) : nil
   end
 
   #-------------------------------------------------------------------
   def []= (name, value)
-    return super(name, value) if name.to_s == "user_id"
-    if new_record?
-      preference = Preference.find_by_name_and_user_id(name.to_s, self.user.id)
-      preference.value = Base64.encode64(Marshal.dump(value))
-      preference.save
+    return super(name, value) if name.to_s == "user_id" # set the value of belongs_to
+
+    encoded = Base64.encode64(Marshal.dump(value))
+    preference = Preference.find_by_name_and_user_id(name.to_s, self.user.id)
+    if preference
+      preference.update_attribute(:value, encoded)
     else
-      super(name, Base64.encode64(Marshal.dump(value)))
-      self.save
+      Preference.create(:user => self.user, :name => name.to_s, :value => encoded)
     end
     value
   end

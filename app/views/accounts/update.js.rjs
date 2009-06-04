@@ -1,7 +1,9 @@
 id = dom_id(@account)
+
 if @account.errors.empty?
   if called_from_landing_page?
-    page.call "crm.flip_form", :edit_account, @account.name
+    page.call "crm.flip_form", :edit_account
+    page.call "crm.set_title", :edit_account, @account.name
     page << refresh_sidebar(:show, :summary)
   else
     page[id].replace :partial => "account", :collection => [ @account ]

@@ -38,30 +38,15 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  hide_form: function(id, caption) {
-    var title = $(id + "_title") || $("title");
+  hide_form: function(id) {
     var arrow = $(id + "_arrow") || $("arrow");
-    if (typeof(caption) == "undefined") {
-      caption = id.split("_")[1];
-      caption = caption.capitalize() + "s";
-      if (caption.endsWith("ys")) {
-        caption = caption.sub(/ys$/, "ies");
-      }
-    }
-    title.update(caption);
     arrow.update(this.COLLAPSED);
     Effect.BlindUp(id, { duration: 0.25, afterFinish: function() { $(id).update("") } });
   },
 
   //----------------------------------------------------------------------------
-  show_form: function(id, caption) {
-    var title = $("title");
+  show_form: function(id) {
     var arrow = $(id + "_arrow") || $("arrow");
-    if (typeof(caption) == "undefined") {
-      var words = id.split("_");
-      caption = words[0].capitalize() + " " + words[1].capitalize();
-    }
-    title.update(caption);
     arrow.update(this.EXPANDED);
     Effect.BlindDown(id, { duration: 0.25, afterFinish: function() {
         var input = $(id).down("input[type=text]");
@@ -71,14 +56,28 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  flip_form: function(id, caption) {
+  flip_form: function(id) {
     if ($(id)) {
       if (Element.visible(id)) {
-        this.hide_form(id, caption);
+        this.hide_form(id);
       } else {
-        this.show_form(id, caption);
+        this.show_form(id);
       }
     }
+  },
+
+  //----------------------------------------------------------------------------
+  set_title: function(id, caption) {
+    var title = $(id + "_title") || $("title");
+    if (typeof(caption) == "undefined") {
+      var words = id.split("_");
+      if (words.length == 1) {
+        caption = id.capitalize();
+      } else {
+        caption = words[0].capitalize() + " " + words[1].capitalize();
+      }
+    }
+    title.update(caption);
   },
 
   //----------------------------------------------------------------------------

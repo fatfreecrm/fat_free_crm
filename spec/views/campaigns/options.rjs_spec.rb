@@ -27,14 +27,15 @@ describe "/campaigns/options.rjs" do
       response.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
       end
-      response.should include_text('crm.flip_form("options", "Options")')
+      response.should include_text('crm.flip_form("options")')
+      response.should include_text('crm.set_title("create_campaign", "Options")')
     end
 
     it "should call JavaScript functions to load preferences menus" do
       params[:cancel] = nil
-      template.should_receive(:render).with(:partial => "sortby")
-      template.should_receive(:render).with(:partial => "common/perpage")
-      template.should_receive(:render).with(:partial => "common/format")
+      template.should_receive(:render).with(:partial => "sort_by")
+      template.should_receive(:render).with(:partial => "common/per_page")
+      template.should_receive(:render).with(:partial => "common/outline")
 
       render "campaigns/options.rjs.rjs"
     end
@@ -46,7 +47,8 @@ describe "/campaigns/options.rjs" do
       render "campaigns/options.rjs.rjs"
 
       response.should_not have_rjs("options")
-      response.should include_text('crm.flip_form("options", "Options")')
+      response.should include_text('crm.flip_form("options")')
+      response.should include_text('crm.set_title("create_campaign", "Campaigns")')
     end
   end
 

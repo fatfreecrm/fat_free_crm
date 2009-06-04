@@ -1,12 +1,9 @@
-if called_from_landing_page?
-  id = :edit_campaign
-else
-  id = dom_id(@campaign)
-end
+id = dom_id(@campaign)
 
 if @campaign.errors.empty?
-  if id == :edit_campaign # Campaign landing page.
-    page.call "crm.flip_form", id, @campaign.name
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_campaign
+    page.call "crm.set_title", :edit_campaign, @campaign.name
     page << refresh_sidebar(:show, :summary)
   else
     page[id].replace :partial => "campaign", :collection => [ @campaign ]

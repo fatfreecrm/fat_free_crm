@@ -149,11 +149,17 @@ class CampaignsController < ApplicationController
   # POST /campaigns/redraw                                                 AJAX
   #----------------------------------------------------------------------------
   def redraw
-    logger.p "POST /campaigns/redraw..."
-    render :nothing => true # stub
+    [ :sort_by, :per_page, :outline ].each do |option|
+      if params[option]
+        @current_user.preference["campaigns_#{option}"] = params[option]
+        break
+      end
+    end
+    @campaigns = get_campaigns(:page => 1)
+    render :action => :index
   end
 
-  # Ajax request to filter out list of campaigns.                          AJAX
+  # POST /campaigns/filter                                                 AJAX
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_campaign_status] = params[:status]
@@ -172,7 +178,7 @@ class CampaignsController < ApplicationController
       current_query.blank? ? Campaign.my(@current_user).only(filters) : Campaign.my(@current_user).only(filters).search(current_query)
     else
       current_query.blank? ? Campaign.my(@current_user) : Campaign.my(@current_user).search(current_query)
-    end.paginate(:page => current_page)
+    end.paginate(:page => current_page, :per_page => @current_user.preference[:campaigns_per_page])
   end
 
   #----------------------------------------------------------------------------
