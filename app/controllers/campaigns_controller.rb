@@ -143,7 +143,9 @@ class CampaignsController < ApplicationController
   # GET /campaigns/options                                                 AJAX
   #----------------------------------------------------------------------------
   def options
-    logger.p "GET /campaigns/options..."
+    @sort_by  = @current_user.preference[:campaigns_sort_by]  || "date created"
+    @per_page = @current_user.preference[:campaigns_per_page] || Campaign.per_page
+    @outline  = @current_user.preference[:campaigns_outline]  || Campaign.outline
   end
 
   # POST /campaigns/redraw                                                 AJAX

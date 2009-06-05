@@ -18,7 +18,19 @@ module ActiveRecord
               # displaying "object deleted..." in the activity log.
               #
               has_many :permissions, :as => :asset, :include => :user
-              named_scope :my, lambda { |user| { :include => :permissions, :conditions => ["#{self.table_name}.user_id=? OR #{self.table_name}.assigned_to=? OR permissions.user_id=? OR access='Public'", user, user, user], :order => "#{self.table_name}.id DESC" } }
+              #
+              # The :my named scope accepts either single User parameter, or a Hash. For example:
+              #
+              #  - Account.my(@current_user)
+              #  - Account.my(:user => @current_user, :order => "updated_at DESC", :limit => 20)
+              #
+              named_scope :my, lambda { |options| {
+                :include => :permissions,
+                :conditions => ["#{self.table_name}.user_id=? OR #{self.table_name}.assigned_to=? OR permissions.user_id=? OR access='Public'", 
+                  options[:user] || options, options[:user] || options, options[:user] || options[:user] ], # to support Model.my(@current_user) syntax
+                :order => options[:order] || "#{self.table_name}.id DESC",
+                :limit => options[:limit] # nil selects all records
+              } }
               include ActiveRecord::Uses::User::Permissions::InstanceMethods
               extend  ActiveRecord::Uses::User::Permissions::SingletonMethods
             end

@@ -32,7 +32,6 @@ class Campaign < ActiveRecord::Base
   has_many    :opportunities, :dependent => :destroy, :order => "id DESC"
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
-  named_scope :limit, lambda { |n| { :limit => n } }
 
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
 
@@ -46,7 +45,11 @@ class Campaign < ActiveRecord::Base
   validate :start_and_end_dates
   validate :users_for_shared_access
 
-  def self.per_page; 30; end
+  # Default values provided through class methods.
+  #----------------------------------------------------------------------------
+  def self.per_page ;  30                  ; end
+  def self.outline  ;  "long"              ; end
+  def self.sort_by  ;  "campaigns.id DESC" ; end
 
   private
   # Make sure end date > start date.

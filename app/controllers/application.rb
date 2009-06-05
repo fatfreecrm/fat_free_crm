@@ -117,7 +117,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
-    @auto_complete = self.controller_name.classify.constantize.my(@current_user).search(@query).limit(10)
+    @auto_complete = self.controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
     session[:auto_complete] = self.controller_name.to_sym
     render :template => "common/auto_complete", :layout => nil
   end
