@@ -143,20 +143,20 @@ class CampaignsController < ApplicationController
   # GET /campaigns/options                                                 AJAX
   #----------------------------------------------------------------------------
   def options
-    @sort_by  = @current_user.preference[:campaigns_sort_by]  || "date created"
-    @per_page = @current_user.preference[:campaigns_per_page] || Campaign.per_page
-    @outline  = @current_user.preference[:campaigns_outline]  || Campaign.outline
+    unless params[:cancel] == "true"
+      @per_page = @current_user.preference[:campaigns_per_page] || Campaign.per_page
+      @outline  = @current_user.preference[:campaigns_outline]  || Campaign.outline
+      @sort_by  = @current_user.preference[:campaigns_sort_by]  || Campaign.sort_by
+      @sort_by  = Campaign::SORT_BY.invert[@sort_by]
+    end
   end
 
   # POST /campaigns/redraw                                                 AJAX
   #----------------------------------------------------------------------------
   def redraw
-    [ :sort_by, :per_page, :outline ].each do |option|
-      if params[option]
-        @current_user.preference["campaigns_#{option}"] = params[option]
-        break
-      end
-    end
+    @current_user.preference["campaigns_per_page"] = params[:per_page] if params[:per_page]
+    @current_user.preference["campaigns_outline"]  = params[:outline]  if params[:outline]
+    @current_user.preference["campaigns_sort_by"]  = Campaign::SORT_BY[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(:page => 1)
     render :action => :index
   end
@@ -175,12 +175,21 @@ class CampaignsController < ApplicationController
     self.current_page = options[:page] if options[:page]
     self.current_query = options[:query] if options[:query]
 
+    records = {
+      :user => @current_user,
+      :order => @current_user.preference[:campaigns_sort_by] || Campaign.sort_by
+    }
+    pages = {
+      :page => current_page,
+      :per_page => @current_user.preference[:campaigns_per_page]
+    }
+
     if session[:filter_by_campaign_status]
       filters = session[:filter_by_campaign_status].split(",")
-      current_query.blank? ? Campaign.my(@current_user).only(filters) : Campaign.my(@current_user).only(filters).search(current_query)
+      current_query.blank? ? Campaign.my(records).only(filters) : Campaign.my(records).only(filters).search(current_query)
     else
-      current_query.blank? ? Campaign.my(@current_user) : Campaign.my(@current_user).search(current_query)
-    end.paginate(:page => current_page, :per_page => @current_user.preference[:campaigns_per_page])
+      current_query.blank? ? Campaign.my(records) : Campaign.my(records).search(current_query)
+    end.paginate(pages)
   end
 
   #----------------------------------------------------------------------------

@@ -48,7 +48,7 @@ describe CampaignsController do
       get :index
       # Note: can't compare campaigns directly because of BigDecimal objects.
       assigns[:campaigns].size.should == 2
-      assigns[:campaigns].map(&:status).should == %w(planned started)
+      assigns[:campaigns].map(&:status).sort.should == %w(planned started)
     end
 
     describe "AJAX pagination" do
@@ -492,22 +492,71 @@ describe CampaignsController do
     it_should_behave_like("auto complete")
   end
 
-  # Ajax request to filter out list of campaigns.                          AJAX
+  # GET /campaigns/options                                                 AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST options" do
+    it "should set current user preferences when showing options" do
+      @per_page = Factory(:preference, :user => @current_user, :name => "campaigns_per_page", :value => Base64.encode64(Marshal.dump(42)))
+      @outline  = Factory(:preference, :user => @current_user, :name => "campaigns_outline",  :value => Base64.encode64(Marshal.dump("long")))
+      @sort_by  = Factory(:preference, :user => @current_user, :name => "campaigns_sort_by",  :value => Base64.encode64(Marshal.dump("campaigns.name ASC")))
+
+      xhr :get, :options
+      assigns[:per_page].should == 42
+      assigns[:outline].should  == "long"
+      assigns[:sort_by].should  == "name"
+    end
+
+    it "should not assign instance variables when hiding options" do
+      xhr :get, :options, :cancel => "true"
+      assigns[:per_page].should == nil
+      assigns[:outline].should  == nil
+      assigns[:sort_by].should  == nil
+    end
+  end
+
+  # POST /campaigns/redraw                                                 AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST redraw" do
+    it "should save user selected campaign preference" do
+      xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
+      @current_user.preference[:campaigns_per_page].should == "42"
+      @current_user.preference[:campaigns_outline].should  == "brief"
+      @current_user.preference[:campaigns_sort_by].should  == "campaigns.name ASC"
+    end
+
+    it "should reset current page to 1" do
+      xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
+      session[:campaigns_current_page].should == 1
+    end
+
+    it "should select @campaigns and render [index] template" do
+      @campaigns = [
+        Factory(:campaign, :name => "A", :user => @current_user),
+        Factory(:campaign, :name => "B", :user => @current_user)
+      ]
+
+      xhr :post, :redraw, :per_page => 1, :sort_by => "name"
+      assigns(:campaigns).should == [ @campaigns.first ]
+      response.should render_template("campaigns/index")
+    end
+  end
+
+  # POST /campaigns/filter                                                 AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do
 
-    it "should expose filtered campaigns as @campaigns and render [filter] template" do
+    it "should expose filtered campaigns as @campaigns and render [index] template" do
       session[:filter_by_campaign_status] = "planned,started"
       @campaigns = [ Factory(:campaign, :status => "completed", :user => @current_user) ]
 
-      xhr :get, :filter, :status => "completed"
+      xhr :post, :filter, :status => "completed"
       assigns(:campaigns).should == @campaigns
       response.should render_template("campaigns/index")
     end
 
     it "should reset current page to 1" do
       @campaigns = []
-      xhr :get, :filter, :status => "completed"
+      xhr :post, :filter, :status => "completed"
 
       session[:campaigns_current_page].should == 1
     end

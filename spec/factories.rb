@@ -202,8 +202,8 @@ end
 #----------------------------------------------------------------------------
 Factory.define :preference do |p|
   p.user                { |a| a.association(:user) }
-  p.name                "foo"
-  p.value               "foo"
+  p.name                { raise "Please specify :name for the preference" }
+  p.value               { raise "Please specify :value for the preference" }
   p.updated_at          { Factory.next(:time) }
   p.created_at          { Factory.next(:time) }
 end

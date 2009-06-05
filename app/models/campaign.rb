@@ -45,11 +45,17 @@ class Campaign < ActiveRecord::Base
   validate :start_and_end_dates
   validate :users_for_shared_access
 
+  SORT_BY = {
+    "name"         => "campaigns.name ASC",
+    "date created" => "campaigns.created_at DESC",
+    "date updated" => "campaigns.updated_at DESC"
+  }
+
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ;  30                  ; end
-  def self.outline  ;  "long"              ; end
-  def self.sort_by  ;  "campaigns.id DESC" ; end
+  def self.per_page ;  30                          ; end
+  def self.outline  ;  "long"                      ; end
+  def self.sort_by  ;  "campaigns.created_at DESC" ; end
 
   private
   # Make sure end date > start date.

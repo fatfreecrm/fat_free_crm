@@ -4,7 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Wed, Jun 2, 2009
+Thu, Jun 4, 2009
+---------------------------------------------------------------------
+- Implemented :sort_by option for Campaigns.
+- Wrote specs and finished [Options] for Campaigns.
+
+Wed, Jun 3, 2009
 ---------------------------------------------------------------------
 - Implemented :per_page, and :format user preferences for Campaigns.
 - Revisited user Preference model and wrote full spec coverage.
