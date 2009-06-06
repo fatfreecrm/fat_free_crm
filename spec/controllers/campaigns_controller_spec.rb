@@ -494,7 +494,7 @@ describe CampaignsController do
 
   # GET /campaigns/options                                                 AJAX
   #----------------------------------------------------------------------------
-  describe "responding to POST options" do
+  describe "responding to GET options" do
     it "should set current user preferences when showing options" do
       @per_page = Factory(:preference, :user => @current_user, :name => "campaigns_per_page", :value => Base64.encode64(Marshal.dump(42)))
       @outline  = Factory(:preference, :user => @current_user, :name => "campaigns_outline",  :value => Base64.encode64(Marshal.dump("long")))
@@ -543,7 +543,7 @@ describe CampaignsController do
 
   # POST /campaigns/filter                                                 AJAX
   #----------------------------------------------------------------------------
-  describe "responding to GET filter" do
+  describe "responding to POST filter" do
 
     it "should expose filtered campaigns as @campaigns and render [index] template" do
       session[:filter_by_campaign_status] = "planned,started"

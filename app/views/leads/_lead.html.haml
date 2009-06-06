@@ -3,27 +3,27 @@
     .strip{:class => lead.status}= Setting.lead_status[lead.status.intern]
   - else
     .strip{:style => "color:white;"} Other
-  %div
-    .tools{ invisible, :id => dom_id(lead, :tools) }
-      %small
-        = link_to_edit(lead) + " | "
-        - unless %w(converted rejected).include?(lead.status)
-          = link_to_convert(lead) + " | "
-        - else
-          = "<font color='silver'>Convert</font> | "
-        - if lead.status != "rejected"
-          = link_to_reject(lead) + " | "
-        - else
-          = "<font color='silver'>Reject</font> | "
-        = link_to_delete(lead) + "&nbsp;"
-    = link_to(lead.full_name, lead)
-    %tt
-      - if lead.company? && lead.title?
-        = lead.title << " at " << lead.company
+  .tools{ invisible, :id => dom_id(lead, :tools) }
+    %small
+      = link_to_edit(lead) + " | "
+      - unless %w(converted rejected).include?(lead.status)
+        = link_to_convert(lead) + " | "
       - else
-        = lead.company if lead.company?
-      /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
-      = "&ndash; referred by #{lead.referred_by}" if lead.referred_by?
+        = "<font color='silver'>Convert</font> | "
+      - if lead.status != "rejected"
+        = link_to_reject(lead) + " | "
+      - else
+        = "<font color='silver'>Reject</font> | "
+      = link_to_delete(lead) + "&nbsp;"
+  = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)
+  %tt
+    - if lead.company? && lead.title?
+      = lead.title << " at " << lead.company
+    - else
+      = lead.company if lead.company?
+    /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
+    = "&ndash; referred by #{lead.referred_by}" if lead.referred_by?
+  - unless @current_user.preference[:leads_outline] == "brief"
     %dt
       = stars_for(lead) + " | "
       = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?

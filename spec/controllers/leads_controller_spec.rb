@@ -49,7 +49,7 @@ describe LeadsController do
       get :index
       # Note: can't compare campaigns directly because of BigDecimals.
       assigns[:leads].size.should == 2
-      assigns[:leads].map(&:status).should == %w(contacted new)
+      assigns[:leads].map(&:status).sort.should == %w(contacted new)
     end
 
     describe "AJAX pagination" do
@@ -796,15 +796,68 @@ describe LeadsController do
     it_should_behave_like("auto complete")
   end
 
-  # Ajax request to filter out list of leads.
+  # GET /leads/options                                                     AJAX
   #----------------------------------------------------------------------------
-  describe "responding to GET filter" do
+  describe "responding to GET options" do
+    it "should set current user preferences when showing options" do
+      @per_page = Factory(:preference, :user => @current_user, :name => "leads_per_page", :value => Base64.encode64(Marshal.dump(42)))
+      @outline  = Factory(:preference, :user => @current_user, :name => "leads_outline",  :value => Base64.encode64(Marshal.dump("long")))
+      @sort_by  = Factory(:preference, :user => @current_user, :name => "leads_sort_by",  :value => Base64.encode64(Marshal.dump("leads.first_name ASC")))
+      @naming   = Factory(:preference, :user => @current_user, :name => "leads_naming",   :value => Base64.encode64(Marshal.dump("after")))
+
+      xhr :get, :options
+      assigns[:per_page].should == 42
+      assigns[:outline].should  == "long"
+      assigns[:sort_by].should  == "first name"
+      assigns[:naming].should   == "after"
+    end
+
+    it "should not assign instance variables when hiding options" do
+      xhr :get, :options, :cancel => "true"
+      assigns[:per_page].should == nil
+      assigns[:outline].should  == nil
+      assigns[:sort_by].should  == nil
+      assigns[:naming].should   == nil
+    end
+  end
+
+  # POST /leads/redraw                                                     AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST redraw" do
+    it "should save user selected lead preference" do
+      xhr :post, :redraw, :per_page => 42, :outline => "long", :sort_by => "first name", :naming => "after"
+      @current_user.preference[:leads_per_page].should == "42"
+      @current_user.preference[:leads_outline].should  == "long"
+      @current_user.preference[:leads_sort_by].should  == "leads.first_name ASC"
+      @current_user.preference[:leads_naming].should   == "after"
+    end
+
+    it "should reset current page to 1" do
+      xhr :post, :redraw, :per_page => 42, :outline => "long", :sort_by => "first name", :naming => "after"
+      session[:leads_current_page].should == 1
+    end
+
+    it "should select @leads and render [index] template" do
+      @leads = [
+        Factory(:lead, :first_name => "Alice", :user => @current_user),
+        Factory(:lead, :first_name => "Bobby", :user => @current_user)
+      ]
+
+      xhr :post, :redraw, :per_page => 1, :sort_by => "first name"
+      assigns(:leads).should == [ @leads.first ]
+      response.should render_template("leads/index")
+    end
+  end
+
+  # POST /leads/filter                                                     AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST filter" do
 
     it "should filter out leads as @leads and render :index action" do
       session[:filter_by_lead_status] = "contacted,rejected"
 
       @leads = [ Factory(:lead, :user => @current_user, :status => "new") ]
-      xhr :get, :filter, :status => "new"
+      xhr :post, :filter, :status => "new"
       assigns[:leads].should == @leads
       response.should be_a_success
       response.should render_template("leads/index")
@@ -812,7 +865,7 @@ describe LeadsController do
 
     it "should reset current page to 1" do
       @leads = []
-      xhr :get, :filter, :status => "new"
+      xhr :post, :filter, :status => "new"
 
       session[:leads_current_page].should == 1
     end

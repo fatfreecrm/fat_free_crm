@@ -209,7 +209,30 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
 
-  # Ajax request to filter out list of leads.                              AJAX
+  # GET /leads/options                                                     AJAX
+  #----------------------------------------------------------------------------
+  def options
+    unless params[:cancel] == "true"
+      @per_page = @current_user.preference[:leads_per_page] || Lead.per_page
+      @outline  = @current_user.preference[:leads_outline]  || Lead.outline
+      @sort_by  = @current_user.preference[:leads_sort_by]  || Lead.sort_by
+      @sort_by  = Lead::SORT_BY.invert[@sort_by]
+      @naming   = @current_user.preference[:leads_naming]   || Lead.first_name_position
+    end
+  end
+
+  # POST /leads/redraw                                                     AJAX
+  #----------------------------------------------------------------------------
+  def redraw
+    @current_user.preference[:leads_per_page] = params[:per_page] if params[:per_page]
+    @current_user.preference[:leads_outline]  = params[:outline]  if params[:outline]
+    @current_user.preference[:leads_sort_by]  = Lead::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @current_user.preference[:leads_naming]   = params[:naming] if params[:naming]
+    @leads = get_leads(:page => 1) # Start one the first page.
+    render :action => :index
+  end
+
+  # POST /leads/filter                                                     AJAX
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_lead_status] = params[:status]
@@ -223,12 +246,21 @@ class LeadsController < ApplicationController
     self.current_page = options[:page] if options[:page]
     self.current_query = options[:query] if options[:query]
 
+    records = {
+      :user => @current_user,
+      :order => @current_user.preference[:leads_sort_by] || Lead.sort_by
+    }
+    pages = {
+      :page => current_page,
+      :per_page => @current_user.preference[:leads_per_page]
+    }
+
     if session[:filter_by_lead_status]
-      filters = session[:filter_by_lead_status].split(",")
-      current_query.blank? ? Lead.my(@current_user).only(filters) : Lead.my(@current_user).only(filters).search(current_query)
+      filtered = session[:filter_by_lead_status].split(",")
+      current_query.blank? ? Lead.my(records).only(filtered) : Lead.my(records).only(filtered).search(current_query)
     else
-      current_query.blank? ? Lead.my(@current_user) : Lead.my(@current_user).search(current_query)
-    end.paginate(:page => current_page)
+      current_query.blank? ? Lead.my(records) : Lead.my(records).search(current_query)
+    end.paginate(pages)
   end
 
   #----------------------------------------------------------------------------

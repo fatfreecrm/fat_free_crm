@@ -1,6 +1,9 @@
 = styles_for :lead
 
-= inline :create_lead, new_lead_path
+.title_tools
+  = link_to_inline(:create_lead, new_lead_path) << " | "
+  = link_to_inline(:options, options_leads_path)
+
 .title
   %span#create_lead_title Leads
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")

@@ -154,9 +154,9 @@ class CampaignsController < ApplicationController
   # POST /campaigns/redraw                                                 AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.preference["campaigns_per_page"] = params[:per_page] if params[:per_page]
-    @current_user.preference["campaigns_outline"]  = params[:outline]  if params[:outline]
-    @current_user.preference["campaigns_sort_by"]  = Campaign::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @current_user.preference[:campaigns_per_page] = params[:per_page] if params[:per_page]
+    @current_user.preference[:campaigns_outline]  = params[:outline]  if params[:outline]
+    @current_user.preference[:campaigns_sort_by]  = Campaign::SORT_BY[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(:page => 1)
     render :action => :index
   end
@@ -185,8 +185,8 @@ class CampaignsController < ApplicationController
     }
 
     if session[:filter_by_campaign_status]
-      filters = session[:filter_by_campaign_status].split(",")
-      current_query.blank? ? Campaign.my(records).only(filters) : Campaign.my(records).only(filters).search(current_query)
+      filtered = session[:filter_by_campaign_status].split(",")
+      current_query.blank? ? Campaign.my(records).only(filtered) : Campaign.my(records).only(filtered).search(current_query)
     else
       current_query.blank? ? Campaign.my(records) : Campaign.my(records).search(current_query)
     end.paginate(pages)
