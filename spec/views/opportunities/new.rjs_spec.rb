@@ -18,6 +18,13 @@ describe "/opportunities/new.html.erb" do
     response.should include_text('crm.flick("empty", "toggle")')
   end
 
+  it "should hide options form when called from Opportunities index" do
+    request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+    render "opportunities/new.js.rjs"
+
+    response.should include_text('crm.hide_form("options")')
+  end
+
   describe "new opportunity" do
     it "should render [new.html.haml] template into :create_opportunity div" do
       params[:cancel] = nil

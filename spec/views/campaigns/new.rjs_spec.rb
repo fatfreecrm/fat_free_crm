@@ -15,7 +15,8 @@ describe "/campaigns/new.js.rjs" do
     response.should include_text('crm.flick("empty", "toggle")')
   end
 
-  it "should hide options form if it's visible" do
+  it "should hide options form when called from Campaigns index" do
+    request.env["HTTP_REFERER"] = "http://localhost/campaigns"
     render "campaigns/new.js.rjs"
 
     response.should include_text('crm.hide_form("options")')

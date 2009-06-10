@@ -15,6 +15,13 @@ describe "/accounts/new.js.rjs" do
     response.should include_text('crm.flick("empty", "toggle")')
   end
 
+  it "should hide options form when called from Accounts index" do
+    request.env["HTTP_REFERER"] = "http://localhost/accounts"
+    render "accounts/new.js.rjs"
+
+    response.should include_text('crm.hide_form("options")')
+  end
+
   describe "new account" do
     it "should render [new.html.haml] template into :create_account div" do
       params[:cancel] = nil

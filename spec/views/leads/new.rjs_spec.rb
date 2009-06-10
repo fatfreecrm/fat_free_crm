@@ -18,6 +18,13 @@ describe "/leads/new.js.rjs" do
     response.should include_text('crm.flick("empty", "toggle")')
   end
 
+  it "should hide options form when called from Leads index" do
+    request.env["HTTP_REFERER"] = "http://localhost/leads"
+    render "leads/new.js.rjs"
+
+    response.should include_text('crm.hide_form("options")')
+  end
+
   describe "new lead" do
     it "should render [new.html.haml] template into :create_lead div" do
       params[:cancel] = nil
