@@ -40,7 +40,17 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name
   validate :users_for_shared_access
 
-  def self.per_page; 30; end
+  SORT_BY = {
+    "name"         => "accounts.name ASC",
+    "date created" => "accounts.created_at DESC",
+    "date updated" => "accounts.updated_at DESC"
+  }
+
+  # Default values provided through class methods.
+  #----------------------------------------------------------------------------
+  def self.per_page ;  30                         ; end
+  def self.outline  ;  "long"                     ; end
+  def self.sort_by  ;  "accounts.created_at DESC" ; end
 
   # Extract last line of billing address and get rid of numeric zipcode.
   #----------------------------------------------------------------------------

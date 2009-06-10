@@ -431,4 +431,53 @@ describe AccountsController do
     it_should_behave_like("auto complete")
   end
 
+  # GET /accounts/options                                                 AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to GET options" do
+    it "should set current user preferences when showing options" do
+      @per_page = Factory(:preference, :user => @current_user, :name => "accounts_per_page", :value => Base64.encode64(Marshal.dump(42)))
+      @outline  = Factory(:preference, :user => @current_user, :name => "accounts_outline",  :value => Base64.encode64(Marshal.dump("long")))
+      @sort_by  = Factory(:preference, :user => @current_user, :name => "accounts_sort_by",  :value => Base64.encode64(Marshal.dump("accounts.name ASC")))
+
+      xhr :get, :options
+      assigns[:per_page].should == 42
+      assigns[:outline].should  == "long"
+      assigns[:sort_by].should  == "name"
+    end
+
+    it "should not assign instance variables when hiding options" do
+      xhr :get, :options, :cancel => "true"
+      assigns[:per_page].should == nil
+      assigns[:outline].should  == nil
+      assigns[:sort_by].should  == nil
+    end
+  end
+
+  # POST /accounts/redraw                                                 AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST redraw" do
+    it "should save user selected account preference" do
+      xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
+      @current_user.preference[:accounts_per_page].should == "42"
+      @current_user.preference[:accounts_outline].should  == "brief"
+      @current_user.preference[:accounts_sort_by].should  == "accounts.name ASC"
+    end
+
+    it "should reset current page to 1" do
+      xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
+      session[:accounts_current_page].should == 1
+    end
+
+    it "should select @accounts and render [index] template" do
+      @accounts = [
+        Factory(:account, :name => "A", :user => @current_user),
+        Factory(:account, :name => "B", :user => @current_user)
+      ]
+
+      xhr :post, :redraw, :per_page => 1, :sort_by => "name"
+      assigns(:accounts).should == [ @accounts.first ]
+      response.should render_template("accounts/index")
+    end
+  end
+
 end

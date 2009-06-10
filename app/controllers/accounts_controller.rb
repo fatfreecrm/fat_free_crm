@@ -139,17 +139,47 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
 
+  # GET /accounts/options                                                 AJAX
+  #----------------------------------------------------------------------------
+  def options
+    unless params[:cancel] == "true"
+      @per_page = @current_user.preference[:accounts_per_page] || Account.per_page
+      @outline  = @current_user.preference[:accounts_outline]  || Account.outline
+      @sort_by  = @current_user.preference[:accounts_sort_by]  || Account.sort_by
+      @sort_by  = Account::SORT_BY.invert[@sort_by]
+    end
+  end
+
+  # POST /accounts/redraw                                                 AJAX
+  #----------------------------------------------------------------------------
+  def redraw
+    @current_user.preference[:accounts_per_page] = params[:per_page] if params[:per_page]
+    @current_user.preference[:accounts_outline]  = params[:outline]  if params[:outline]
+    @current_user.preference[:accounts_sort_by]  = Account::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @accounts = get_accounts(:page => 1)
+    render :action => :index
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_accounts(options = { :page => nil, :query => nil })
     self.current_page = options[:page] if options[:page]
     self.current_query = options[:query] if options[:query]
 
+    records = {
+      :user => @current_user,
+      :order => @current_user.preference[:accounts_sort_by] || Account.sort_by
+    }
+    pages = {
+      :page => current_page,
+      :per_page => @current_user.preference[:accounts_per_page]
+    }
+
     if current_query.blank?
-      Account.my(@current_user)
+      Account.my(records)
     else
-      Account.my(@current_user).search(current_query)
-    end.paginate(:page => current_page)
+      Account.my(records).search(current_query)
+    end.paginate(pages)
   end
 
   #----------------------------------------------------------------------------

@@ -14,8 +14,9 @@
       = account.location << ", " unless account.location.blank?
       == added #{time_ago_in_words(account.created_at)} ago by 
       == #{account.user.id == @current_user.id ? "me" : account.user.full_name}
-    %dt
-      = link_to(account.website, account.website) << " | " if account.website?
-      = "phone: " << (account.tall_free_phone || account.phone) << " | " if account.tall_free_phone? || account.phone?
-      = pluralize(account.contacts.count, "contact") << " | "
-      = pluralize(account.opportunities.count, "opportunity")
+    - unless @current_user.preference[:accounts_outline] == "brief"
+      %dt
+        = link_to(account.website, account.website) << " | " if account.website?
+        = "phone: " << (account.tall_free_phone || account.phone) << " | " if account.tall_free_phone? || account.phone?
+        = pluralize(account.contacts.count, "contact") << " | "
+        = pluralize(account.opportunities.count, "opportunity")
