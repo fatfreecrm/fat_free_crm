@@ -46,9 +46,15 @@ class Campaign < ActiveRecord::Base
   validate :users_for_shared_access
 
   SORT_BY = {
-    "name"         => "campaigns.name ASC",
-    "date created" => "campaigns.created_at DESC",
-    "date updated" => "campaigns.updated_at DESC"
+    "name"           => "campaigns.name ASC",
+    "target leads"   => "campaigns.target_leads DESC",
+    "target revenue" => "campaigns.target_revenue DESC",
+    "actual leads"   => "campaigns.leads_count DESC",
+    "actual revenue" => "campaigns.revenue DESC",
+    "start date"     => "campaigns.starts_on DESC",
+    "end date"       => "campaigns.ends_on DESC",
+    "date created"   => "campaigns.created_at DESC",
+    "date updated"   => "campaigns.updated_at DESC"
   }
 
   # Default values provided through class methods.

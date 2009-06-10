@@ -59,6 +59,8 @@ class Lead < ActiveRecord::Base
   SORT_BY = {
     "first name"   => "leads.first_name ASC",
     "last name"    => "leads.last_name ASC",
+    "company"      => "leads.company ASC",
+    "rating"       => "leads.rating DESC",
     "date created" => "leads.created_at DESC",
     "date updated" => "leads.updated_at DESC"
   }

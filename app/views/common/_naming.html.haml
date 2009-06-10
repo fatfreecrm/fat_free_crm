@@ -1,4 +1,4 @@
-- naming_menu_items = [ :before, :after ].inject([]) do | items, naming|
+- naming_menu_items = ["Before", "After"].inject([]) do | items, naming|
   - items << %Q[{ name: "#{naming}", on_select: function() { #{redraw(:naming, naming)} } }]
 
 :plain

@@ -50,9 +50,13 @@ class Opportunity < ActiveRecord::Base
   after_destroy :decrement_opportunities_count
 
   SORT_BY = {
-    "name"         => "opportunities.name ASC",
-    "date created" => "opportunities.created_at DESC",
-    "date updated" => "opportunities.updated_at DESC"
+    "name"            => "opportunities.name ASC",
+    "amount"          => "opportunities.amount DESC",
+    "weighted amount" => "opportunities.amount * opportunities.probability DESC",
+    "probability"     => "opportunities.probability DESC",
+    "closing date"    => "opportunities.closes_on ASC",
+    "date created"    => "opportunities.created_at DESC",
+    "date updated"    => "opportunities.updated_at DESC"
   }
 
   # Default values provided through class methods.
