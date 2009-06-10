@@ -57,11 +57,13 @@ class User < ActiveRecord::Base
   def full_name
     self.first_name && self.last_name ? "#{self.first_name} #{self.last_name}" : self.email
   end
+  alias :name :full_name
 
   #----------------------------------------------------------------------------
   def preference
     Preference.new(:user => self)
   end
+  alias :pref :preference
 
   # All of the following code is for OpenID integration.
   #----------------------------------------------------------------------------

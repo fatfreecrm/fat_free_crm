@@ -143,9 +143,9 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel] == "true"
-      @per_page = @current_user.preference[:accounts_per_page] || Account.per_page
-      @outline  = @current_user.preference[:accounts_outline]  || Account.outline
-      @sort_by  = @current_user.preference[:accounts_sort_by]  || Account.sort_by
+      @per_page = @current_user.pref[:accounts_per_page] || Account.per_page
+      @outline  = @current_user.pref[:accounts_outline]  || Account.outline
+      @sort_by  = @current_user.pref[:accounts_sort_by]  || Account.sort_by
       @sort_by  = Account::SORT_BY.invert[@sort_by]
     end
   end
@@ -153,9 +153,9 @@ class AccountsController < ApplicationController
   # POST /accounts/redraw                                                 AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.preference[:accounts_per_page] = params[:per_page] if params[:per_page]
-    @current_user.preference[:accounts_outline]  = params[:outline]  if params[:outline]
-    @current_user.preference[:accounts_sort_by]  = Account::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
+    @current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
+    @current_user.pref[:accounts_sort_by]  = Account::SORT_BY[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(:page => 1)
     render :action => :index
   end
@@ -168,11 +168,11 @@ class AccountsController < ApplicationController
 
     records = {
       :user => @current_user,
-      :order => @current_user.preference[:accounts_sort_by] || Account.sort_by
+      :order => @current_user.pref[:accounts_sort_by] || Account.sort_by
     }
     pages = {
       :page => current_page,
-      :per_page => @current_user.preference[:accounts_per_page]
+      :per_page => @current_user.pref[:accounts_per_page]
     }
 
     if current_query.blank?

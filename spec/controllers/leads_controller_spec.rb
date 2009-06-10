@@ -832,6 +832,12 @@ describe LeadsController do
       @current_user.preference[:leads_naming].should   == "after"
     end
 
+    it "should set similar options for Contacts" do
+      xhr :post, :redraw, :sort_by => "first name", :naming => "after"
+      @current_user.pref[:contacts_sort_by].should == "contacts.first_name ASC"
+      @current_user.pref[:contacts_naming].should == "after"
+    end
+
     it "should reset current page to 1" do
       xhr :post, :redraw, :per_page => 42, :outline => "long", :sort_by => "first name", :naming => "after"
       session[:leads_current_page].should == 1

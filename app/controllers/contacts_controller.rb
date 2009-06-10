@@ -165,21 +165,32 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel] == "true"
-      @per_page = @current_user.preference[:contacts_per_page] || Contact.per_page
-      @outline  = @current_user.preference[:contacts_outline]  || Contact.outline
-      @sort_by  = @current_user.preference[:contacts_sort_by]  || Contact.sort_by
+      @per_page = @current_user.pref[:contacts_per_page] || Contact.per_page
+      @outline  = @current_user.pref[:contacts_outline]  || Contact.outline
+      @sort_by  = @current_user.pref[:contacts_sort_by]  || Contact.sort_by
       @sort_by  = Contact::SORT_BY.invert[@sort_by]
-      @naming   = @current_user.preference[:contacts_naming]   || Contact.first_name_position
+      @naming   = @current_user.pref[:contacts_naming]   || Contact.first_name_position
     end
   end
 
   # POST /contacts/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.preference[:contacts_per_page] = params[:per_page] if params[:per_page]
-    @current_user.preference[:contacts_outline]  = params[:outline]  if params[:outline]
-    @current_user.preference[:contacts_sort_by]  = Contact::SORT_BY[params[:sort_by]] if params[:sort_by]
-    @current_user.preference[:contacts_naming]   = params[:naming] if params[:naming]
+    @current_user.pref[:contacts_per_page] = params[:per_page] if params[:per_page]
+    @current_user.pref[:contacts_outline]  = params[:outline]  if params[:outline]
+
+    # Sorting and naming only: set the same option for Leads if the hasn't been set yet.
+    if params[:sort_by]
+      @current_user.pref[:contacts_sort_by] = Contact::SORT_BY[params[:sort_by]]
+      if Lead::SORT_BY.keys.include?(params[:sort_by])
+        @current_user.pref[:leads_sort_by] ||= Lead::SORT_BY[params[:sort_by]]
+      end
+    end
+    if params[:naming]
+      @current_user.pref[:contacts_naming] = params[:naming]
+      @current_user.pref[:leads_naming] ||= params[:naming]
+    end
+
     @contacts = get_contacts(:page => 1) # Start one the first page.
     render :action => :index
   end
@@ -192,11 +203,11 @@ class ContactsController < ApplicationController
 
     records = {
       :user => @current_user,
-      :order => @current_user.preference[:contacts_sort_by] || Contact.sort_by
+      :order => @current_user.pref[:contacts_sort_by] || Contact.sort_by
     }
     pages = {
       :page => current_page,
-      :per_page => @current_user.preference[:contacts_per_page]
+      :per_page => @current_user.pref[:contacts_per_page]
     }
 
     if current_query.blank?

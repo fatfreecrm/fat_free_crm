@@ -213,21 +213,32 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel] == "true"
-      @per_page = @current_user.preference[:leads_per_page] || Lead.per_page
-      @outline  = @current_user.preference[:leads_outline]  || Lead.outline
-      @sort_by  = @current_user.preference[:leads_sort_by]  || Lead.sort_by
+      @per_page = @current_user.pref[:leads_per_page] || Lead.per_page
+      @outline  = @current_user.pref[:leads_outline]  || Lead.outline
+      @sort_by  = @current_user.pref[:leads_sort_by]  || Lead.sort_by
       @sort_by  = Lead::SORT_BY.invert[@sort_by]
-      @naming   = @current_user.preference[:leads_naming]   || Lead.first_name_position
+      @naming   = @current_user.pref[:leads_naming]   || Lead.first_name_position
     end
   end
 
   # POST /leads/redraw                                                     AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.preference[:leads_per_page] = params[:per_page] if params[:per_page]
-    @current_user.preference[:leads_outline]  = params[:outline]  if params[:outline]
-    @current_user.preference[:leads_sort_by]  = Lead::SORT_BY[params[:sort_by]] if params[:sort_by]
-    @current_user.preference[:leads_naming]   = params[:naming] if params[:naming]
+    @current_user.pref[:leads_per_page] = params[:per_page] if params[:per_page]
+    @current_user.pref[:leads_outline]  = params[:outline]  if params[:outline]
+
+    # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
+    if params[:sort_by]
+      @current_user.pref[:leads_sort_by] = Lead::SORT_BY[params[:sort_by]]
+      if Contact::SORT_BY.keys.include?(params[:sort_by])
+        @current_user.pref[:contacts_sort_by] ||= Contact::SORT_BY[params[:sort_by]]
+      end
+    end
+    if params[:naming]
+      @current_user.pref[:leads_naming] = params[:naming]
+      @current_user.pref[:contacts_naming] ||= params[:naming]
+    end
+
     @leads = get_leads(:page => 1) # Start one the first page.
     render :action => :index
   end
