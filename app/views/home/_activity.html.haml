@@ -3,6 +3,7 @@
     .tools
       %small= activity.created_at.to_s(:mmddhhss).capitalize
     %tt
+      = gravatar_for(activity.user, :size => "16x16", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
       = activity.user.full_name
       = activity.action + (activity.action != "commented" ? " " : " on ")
       = activity.subject_type.downcase

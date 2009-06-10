@@ -28,7 +28,7 @@ describe "/contacts/options.rjs" do
         with_tag("input[type=hidden]") # @current_user
       end
       response.should include_text('crm.flip_form("options")')
-      response.should include_text('crm.set_title("create_contact", "Options")')
+      response.should include_text('crm.set_title("create_contact", "Contacts Options")')
     end
 
     it "should call JavaScript functions to load preferences menus" do

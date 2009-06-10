@@ -62,7 +62,7 @@ crm.Popup = Class.create({
       var coordinates = Event.element(e).viewportOffset();
       var x = coordinates[0] + "px";
       var y = coordinates[1] + dimensions.height + "px";
-      this.popup.setStyle({ left: x, top: y});
+      this.popup.setStyle({ left: x, top: y });
     }
     this.popup.setStyle({ zIndex: this.options.zindex });
 
@@ -104,6 +104,7 @@ crm.Menu = Class.create({
       trigger     : "menu",                   // #id of the element clicking on which triggers dropdown menu.
       appear      : 0,                        // duration of EffectAppear or 0 for show().
       fade        : 0,                        // duration of EffectFade or 0 for hide().
+      width       : 0,                        // explicit menu width if set to non-zero
       zindex      : 100,                      // zIndex value for the popup.
       before_show : Prototype.emptyFunction,  // before show callback.
       before_hide : Prototype.emptyFunction,  // before hide callback.
@@ -129,6 +130,9 @@ crm.Menu = Class.create({
     }.bind(this));
 
     this.menu = new Element("div", { className: "menu",  style: "display:none" });
+    if (this.options.width) {
+      this.menu.setStyle({ width: this.options.width + "px" })
+    }
     $(document.body).insert(this.menu.insert(ul).observe("click", Event.stop));
   },
 
@@ -169,7 +173,7 @@ crm.Menu = Class.create({
     var coordinates = Event.element(e).viewportOffset();
     var x = coordinates[0] + "px";
     var y = coordinates[1] + dimensions.height + "px";
-    this.menu.setStyle({ left: x, top: y}).setStyle({zIndex: this.options.zindex});
+    this.menu.setStyle({ left: x, top: y }).setStyle({ zIndex: this.options.zindex });
 
     this.options.before_show(e);
     if (!this.options.appear) {
