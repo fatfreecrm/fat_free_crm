@@ -161,17 +161,49 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
 
+  # GET /contacts/options                                                  AJAX
+  #----------------------------------------------------------------------------
+  def options
+    unless params[:cancel] == "true"
+      @per_page = @current_user.preference[:contacts_per_page] || Contact.per_page
+      @outline  = @current_user.preference[:contacts_outline]  || Contact.outline
+      @sort_by  = @current_user.preference[:contacts_sort_by]  || Contact.sort_by
+      @sort_by  = Contact::SORT_BY.invert[@sort_by]
+      @naming   = @current_user.preference[:contacts_naming]   || Contact.first_name_position
+    end
+  end
+
+  # POST /contacts/redraw                                                  AJAX
+  #----------------------------------------------------------------------------
+  def redraw
+    @current_user.preference[:contacts_per_page] = params[:per_page] if params[:per_page]
+    @current_user.preference[:contacts_outline]  = params[:outline]  if params[:outline]
+    @current_user.preference[:contacts_sort_by]  = Contact::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @current_user.preference[:contacts_naming]   = params[:naming] if params[:naming]
+    @contacts = get_contacts(:page => 1) # Start one the first page.
+    render :action => :index
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_contacts(options = { :page => nil, :query => nil })
     self.current_page = options[:page] if options[:page]
     self.current_query = options[:query] if options[:query]
 
+    records = {
+      :user => @current_user,
+      :order => @current_user.preference[:contacts_sort_by] || Contact.sort_by
+    }
+    pages = {
+      :page => current_page,
+      :per_page => @current_user.preference[:contacts_per_page]
+    }
+
     if current_query.blank?
-      Contact.my(@current_user)
+      Contact.my(records)
     else
-      Contact.my(@current_user).search(current_query)
-    end.paginate(:page => current_page)
+      Contact.my(records).search(current_query)
+    end.paginate(pages)
   end
 
   #----------------------------------------------------------------------------

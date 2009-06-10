@@ -54,11 +54,27 @@ class Contact < ActiveRecord::Base
   validates_presence_of :last_name, :message => "^Please specify last name."
   validate :users_for_shared_access
 
-  def self.per_page; 30; end
+  SORT_BY = {
+    "first name"   => "contacts.first_name ASC",
+    "last name"    => "contacts.last_name ASC",
+    "date created" => "contacts.created_at DESC",
+    "date updated" => "contacts.updated_at DESC"
+  }
+
+  # Default values provided through class methods.
+  #----------------------------------------------------------------------------
+  def self.per_page ;  30                         ; end
+  def self.outline  ;  "long"                     ; end
+  def self.sort_by  ;  "contacts.created_at DESC" ; end
+  def self.first_name_position ;  "before"        ; end
 
   #----------------------------------------------------------------------------
-  def full_name
-    self.first_name + " " + self.last_name
+  def full_name(format = nil)
+    if format.nil? || format == "before"
+      "#{self.first_name} #{self.last_name}"
+    else
+      "#{self.last_name}, #{self.first_name}"
+    end
   end
   alias :name :full_name
 

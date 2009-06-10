@@ -1,4 +1,5 @@
 page.call "crm.flick", :empty, :toggle
+page.call "crm.hide_form", :options
 page.call "crm.flip_form", :create_contact
 
 if params[:cancel] != "true"

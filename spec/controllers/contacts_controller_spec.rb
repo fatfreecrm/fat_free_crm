@@ -563,4 +563,57 @@ describe ContactsController do
     it_should_behave_like("auto complete")
   end
 
+  # GET /contacts/options                                                  AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to GET options" do
+    it "should set current user preferences when showing options" do
+      @per_page = Factory(:preference, :user => @current_user, :name => "contacts_per_page", :value => Base64.encode64(Marshal.dump(42)))
+      @outline  = Factory(:preference, :user => @current_user, :name => "contacts_outline",  :value => Base64.encode64(Marshal.dump("long")))
+      @sort_by  = Factory(:preference, :user => @current_user, :name => "contacts_sort_by",  :value => Base64.encode64(Marshal.dump("contacts.first_name ASC")))
+      @naming   = Factory(:preference, :user => @current_user, :name => "contacts_naming",   :value => Base64.encode64(Marshal.dump("after")))
+
+      xhr :get, :options
+      assigns[:per_page].should == 42
+      assigns[:outline].should  == "long"
+      assigns[:sort_by].should  == "first name"
+      assigns[:naming].should   == "after"
+    end
+
+    it "should not assign instance variables when hiding options" do
+      xhr :get, :options, :cancel => "true"
+      assigns[:per_page].should == nil
+      assigns[:outline].should  == nil
+      assigns[:sort_by].should  == nil
+      assigns[:naming].should   == nil
+    end
+  end
+
+  # POST /contacts/redraw                                                  AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST redraw" do
+    it "should save user selected contact preference" do
+      xhr :post, :redraw, :per_page => 42, :outline => "long", :sort_by => "first name", :naming => "after"
+      @current_user.preference[:contacts_per_page].should == "42"
+      @current_user.preference[:contacts_outline].should  == "long"
+      @current_user.preference[:contacts_sort_by].should  == "contacts.first_name ASC"
+      @current_user.preference[:contacts_naming].should   == "after"
+    end
+
+    it "should reset current page to 1" do
+      xhr :post, :redraw, :per_page => 42, :outline => "long", :sort_by => "first name", :naming => "after"
+      session[:contacts_current_page].should == 1
+    end
+
+    it "should select @contacts and render [index] template" do
+      @contacts = [
+        Factory(:contact, :first_name => "Alice", :user => @current_user),
+        Factory(:contact, :first_name => "Bobby", :user => @current_user)
+      ]
+
+      xhr :post, :redraw, :per_page => 1, :sort_by => "first name"
+      assigns(:contacts).should == [ @contacts.first ]
+      response.should render_template("contacts/index")
+    end
+  end
+
 end

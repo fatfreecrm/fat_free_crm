@@ -1,4 +1,7 @@
-= inline :create_contact, new_contact_path
+.title_tools
+  = link_to_inline(:create_contact, new_contact_path) << " | "
+  = link_to_inline(:options, options_contacts_path)
+
 .title
   %span#create_contact_title Contacts
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
