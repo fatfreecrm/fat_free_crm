@@ -1,6 +1,9 @@
 = styles_for :opportunity
 
-= inline :create_opportunity, new_opportunity_path
+.title_tools
+  = link_to_inline(:create_opportunity, new_opportunity_path) << " | "
+  = link_to_inline(:options, options_opportunities_path)
+
 .title
   %span#create_opportunity_title Opportunities
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")

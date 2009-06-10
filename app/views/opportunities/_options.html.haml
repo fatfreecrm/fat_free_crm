@@ -1,0 +1,12 @@
+%p
+  = link_to_close options_opportunities_path
+  = hidden_field_tag "opportunity[user_id]", @current_user.id
+  == Sort opportunities by #{link_to(@sort_by, "#", :id => :sort_by)}.
+  == Show #{link_to(@per_page, "#", :id => :per_page)} opportunity records per page
+  == using #{link_to(@outline, "#", :id => :outline)} format.
+%p
+
+%script
+  = render :partial => "sort_by"
+  = render :partial => "common/per_page"
+  = render :partial => "common/outline"

@@ -167,7 +167,28 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
 
-  # Ajax request to filter out list of opportunities.                      AJAX
+  # GET /opportunities/options                                             AJAX
+  #----------------------------------------------------------------------------
+  def options
+    unless params[:cancel] == "true"
+      @per_page = @current_user.preference[:opportunities_per_page] || Opportunity.per_page
+      @outline  = @current_user.preference[:opportunities_outline]  || Opportunity.outline
+      @sort_by  = @current_user.preference[:opportunities_sort_by]  || Opportunity.sort_by
+      @sort_by  = Opportunity::SORT_BY.invert[@sort_by]
+    end
+  end
+
+  # POST /opportunities/redraw                                             AJAX
+  #----------------------------------------------------------------------------
+  def redraw
+    @current_user.preference[:opportunities_per_page] = params[:per_page] if params[:per_page]
+    @current_user.preference[:opportunities_outline]  = params[:outline]  if params[:outline]
+    @current_user.preference[:opportunities_sort_by]  = Opportunity::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @opportunities = get_opportunities(:page => 1)
+    render :action => :index
+  end
+
+  # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_opportunity_stage] = params[:stage]
@@ -181,12 +202,21 @@ class OpportunitiesController < ApplicationController
     self.current_page = options[:page] if options[:page]
     self.current_query = options[:query] if options[:query]
 
+    records = {
+      :user => @current_user,
+      :order => @current_user.preference[:opportunities_sort_by] || Opportunity.sort_by
+    }
+    pages = {
+      :page => current_page,
+      :per_page => @current_user.preference[:opportunities_per_page]
+    }
+
     if session[:filter_by_opportunity_stage]
-      filters = session[:filter_by_opportunity_stage].split(",")
-      current_query.blank? ? Opportunity.my(@current_user).only(filters) : Opportunity.my(@current_user).only(filters).search(current_query)
+      filtered = session[:filter_by_opportunity_stage].split(",")
+      current_query.blank? ? Opportunity.my(records).only(filtered) : Opportunity.my(records).only(filtered).search(current_query)
     else
-      current_query.blank? ? Opportunity.my(@current_user) : Opportunity.my(@current_user).search(current_query)
-    end.paginate(:page => current_page)
+      current_query.blank? ? Opportunity.my(records) : Opportunity.my(records).search(current_query)
+    end.paginate(pages)
   end
 
   #----------------------------------------------------------------------------

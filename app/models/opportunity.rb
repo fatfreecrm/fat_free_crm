@@ -49,7 +49,17 @@ class Opportunity < ActiveRecord::Base
   after_create  :increment_opportunities_count
   after_destroy :decrement_opportunities_count
 
-  def self.per_page; 30; end
+  SORT_BY = {
+    "name"         => "opportunities.name ASC",
+    "date created" => "opportunities.created_at DESC",
+    "date updated" => "opportunities.updated_at DESC"
+  }
+
+  # Default values provided through class methods.
+  #----------------------------------------------------------------------------
+  def self.per_page ;  30                              ; end
+  def self.outline  ;  "long"                          ; end
+  def self.sort_by  ;  "opportunities.created_at DESC" ; end
 
   #----------------------------------------------------------------------------
   def weighted_amount
