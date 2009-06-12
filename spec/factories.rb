@@ -33,7 +33,7 @@ end
 Factory.define :account do |a|
   a.uuid                { Factory.next(:uuid) }
   a.user                { |a| a.association(:user) } 
-  a.assigned_to         { rand(5) + 1 }
+  a.assigned_to         nil
   a.name                { Faker::Company.name }
   a.access              "Public"
   a.website             { Factory.next(:website) }
@@ -81,7 +81,7 @@ Factory.define :campaign do |c|
   c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
   c.name                { Faker::Lorem.sentence[0..63] }
-  c.assigned_to         1
+  c.assigned_to         nil
   c.access              "Public"
   c.status              { %w(planned started completed planned started completed on_hold called_off).rand }
   c.budget              { rand(500) }
@@ -115,8 +115,8 @@ Factory.define :contact do |c|
   c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
   c.lead                { |a| a.association(:lead) }
-  c.assigned_to         1
-  c.reports_to          1
+  c.assigned_to         nil
+  c.reports_to          nil
   c.first_name          { Faker::Name.first_name }
   c.last_name           { Faker::Name.last_name }
   c.access              "Public"
@@ -155,7 +155,7 @@ Factory.define :lead do |l|
   l.uuid                { Factory.next(:uuid) }
   l.user                { |a| a.association(:user) }
   l.campaign            { |a| a.association(:campaign) }
-  l.assigned_to         1
+  l.assigned_to         nil
   l.first_name          { Faker::Name.first_name }
   l.last_name           { Faker::Name.last_name }
   l.access              "Public"
@@ -185,7 +185,7 @@ Factory.define :opportunity do |o|
   o.uuid                { Factory.next(:uuid) }
   o.user                { |a| a.association(:user) }
   o.campaign            { |a| a.association(:campaign) }
-  o.assigned_to         1
+  o.assigned_to         nil
   o.name                { Faker::Lorem.sentence[0..63] }
   o.access              "Public"
   o.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).rand }
