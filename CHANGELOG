@@ -4,9 +4,15 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Jun 11, 2009
+---------------------------------------------------------------------
+- Finished user options for the Recent Activity (LH #46).
+- Fixed sporadic spec failures when running with SQLite.
+
 Tue, Jun 10, 2009
 ---------------------------------------------------------------------
 - Implemented options for Opportunities and Contacts.
+- Started with the options for the Recent Activity.
 
 Tue, Jun 9, 2009
 ---------------------------------------------------------------------

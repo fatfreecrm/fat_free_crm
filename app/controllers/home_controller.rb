@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   before_filter :require_user, :except => [ :toggle ]
-  before_filter "set_current_tab(:dashboard)", :except => [ :toggle ]
+  before_filter "set_current_tab(:dashboard)", :only => :index
   before_filter "hook(:home_before_filter, self, :amazing => true)"
 
   #----------------------------------------------------------------------------
@@ -14,9 +14,11 @@ class HomeController < ApplicationController
   # GET /home/options                                                      AJAX
   #----------------------------------------------------------------------------
   def options
-    @asset = @current_user.pref[:activity_asset] || "all"
-    @user = @current_user.pref[:activity_user] || "all users"
-    @duration = @current_user.pref[:activity_duration] || "two weeks"
+    unless params[:cancel] == "true"
+      @asset = @current_user.pref[:activity_asset] || "all"
+      @user = @current_user.pref[:activity_user] || "all users"
+      @duration = @current_user.pref[:activity_duration] || "one week"
+    end
   end
 
   # POST /home/redraw                                                      AJAX
@@ -30,7 +32,7 @@ class HomeController < ApplicationController
     render :action => "index"
   end
   
-  # Save expand/collapse state in the session.                             AJAX
+  # GET /home/toggle                                                       AJAX
   #----------------------------------------------------------------------------
   def toggle
     if session[params[:id].to_sym]

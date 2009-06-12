@@ -1,4 +1,3 @@
-page.call "crm.flick", :empty, :toggle
 page.call "crm.flip_form", :options
 
 if params[:cancel] != "true"
