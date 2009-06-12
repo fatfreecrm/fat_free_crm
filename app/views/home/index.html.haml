@@ -1,10 +1,16 @@
-.title Recent Activity
+.title_tools
+  = link_to_inline(:options, url_for(:action => :options))
+
+.title
+  %span#title Recent Activity
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#options{ hidden }
+
 .list#activities
   - unless @activities.empty?
     = render :partial => "activity", :collection => @activities
   - else
-    %div There are no recorded activities yet.
-
+    No activity records found.
 
 /
   Check out HTML source to view the output of the hook if you have sample plugin installed

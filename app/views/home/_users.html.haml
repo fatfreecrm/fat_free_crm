@@ -1,0 +1,12 @@
+- users = [ "All Users" ] + User.all(:order => "first_name, last_name").map(&:name)
+- sort_by_menu_items = users.inject([]) do | items, user|
+  - items << %Q[{ name: "#{user}", on_select: function() { #{redraw(:user, user == users.first ? user.downcase! : user, url_for(:action => :redraw))} } }]
+
+:plain
+  new crm.Menu({
+    trigger   : "user",
+    fade      : 0.5,
+    appear    : 0.5,
+    width     : 180,
+    menu_items: [ #{sort_by_menu_items.join(",")} ]
+  });

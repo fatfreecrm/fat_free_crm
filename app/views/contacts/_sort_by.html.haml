@@ -1,5 +1,5 @@
 - sort_by_menu_items = ["First Name", "Last Name", "Date Created", "Date Updated"].inject([]) do | items, sort_by|
-  - items << %Q[{ name: "#{sort_by}", on_select: function() { #{redraw(:sort_by, sort_by)} } }]
+  - items << %Q[{ name: "#{sort_by}", on_select: function() { #{redraw(:sort_by, sort_by.downcase!)} } }]
 
 :plain
   new crm.Menu({

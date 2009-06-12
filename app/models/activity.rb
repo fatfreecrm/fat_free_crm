@@ -19,10 +19,15 @@ class Activity < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :subject, :polymorphic => true
   named_scope :recent, { :conditions => "action='viewed'", :order => "updated_at DESC", :limit => 10 }
-  named_scope :latest, lambda { { :conditions => [ "activities.created_at >= ?", Date.today - 1.week ], :include => :user, :order => "activities.created_at DESC" } }
-  named_scope :for,    lambda { |user| { :conditions => [ "user_id =?", user.id] } }
+  named_scope :for,    lambda { |user|     { :conditions => [ "user_id =?", user.id] } }
   named_scope :only,   lambda { |*actions| { :conditions => "action     IN (#{actions.join("','").wrap("'")})" } }
   named_scope :except, lambda { |*actions| { :conditions => "action NOT IN (#{actions.join("','").wrap("'")})" } }
+  named_scope :latest, lambda { |options|  {
+    :conditions => [ "#{options[:asset] ? "subject_type = ?" : "0=?"} AND #{options[:user] ? "user_id = ?" : "0=?"} AND activities.created_at >= ?",
+      options[:asset] || 0, options[:user] || 0, Time.now - (options[:duration] || 2.weeks) ],
+    :include => :user,
+    :order => "activities.created_at DESC"
+  } }
 
   validates_presence_of :user, :subject
 

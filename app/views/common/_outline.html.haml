@@ -1,5 +1,5 @@
 - outline_menu_items = ["Brief", "Long"].inject([]) do | items, outline|
-  - items << %Q[{ name: "#{outline}", on_select: function() { #{redraw(:outline, outline)} } }]
+  - items << %Q[{ name: "#{outline}", on_select: function() { #{redraw(:outline, outline.downcase!)} } }]
 
 :plain
   new crm.Menu({

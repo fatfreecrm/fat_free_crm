@@ -1,0 +1,12 @@
+%p
+  = link_to_close url_for(:action => "options")
+  = hidden_field_tag "account[user_id]", @current_user.id
+  == Show #{link_to(@asset, "#", :id => :asset)} activities
+  == performed by #{link_to(@user, "#", :id => :user)}
+  == in the past #{link_to(@duration, "#", :id => :duration)}.
+%p
+
+%script
+  = render :partial => "assets"
+  = render :partial => "users"
+  = render :partial => "duration"

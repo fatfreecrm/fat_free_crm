@@ -235,7 +235,7 @@ describe Activity do
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
-      @activities = Activity.latest.visible_to(@current_user)
+      @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
     end
 
@@ -245,7 +245,7 @@ describe Activity do
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created deleted)
-      @activities = Activity.latest.visible_to(@current_user)
+      @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
     end
 
@@ -260,7 +260,7 @@ describe Activity do
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
-      @activities = Activity.latest.visible_to(@current_user)
+      @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
     end
 
@@ -275,7 +275,7 @@ describe Activity do
 
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created deleted)
-      @activities = Activity.latest.visible_to(@current_user)
+      @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
     end
 
@@ -290,7 +290,7 @@ describe Activity do
       @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
 
-      @activities = Activity.latest.visible_to(@current_user)
+      @activities = Activity.latest({}).visible_to(@current_user)
       @activities.map(&:action).sort.should == %w(created updated viewed)
     end
 
@@ -302,7 +302,7 @@ describe Activity do
       )
       @subject.destroy
 
-      @activities = Activity.latest.visible_to(@current_user)
+      @activities = Activity.latest({}).visible_to(@current_user)
       @activities.map(&:action).sort.should == %w(created deleted)
     end
   end

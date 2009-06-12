@@ -1,0 +1,10 @@
+- sort_by_menu_items = %w(All Tasks Campaigns Leads Accounts Contacts Opportunities).inject([]) do | items, asset|
+  - items << %Q[{ name: "#{asset}", on_select: function() { #{redraw(:asset, asset.downcase!, url_for(:action => :redraw))} } }]
+
+:plain
+  new crm.Menu({
+    trigger   : "asset",
+    fade      : 0.5,
+    appear    : 0.5,
+    menu_items: [ #{sort_by_menu_items.join(",")} ]
+  });
