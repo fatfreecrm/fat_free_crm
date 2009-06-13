@@ -15,7 +15,7 @@
     &ndash;
     %tt
       - if assigned.bucket == "due_asap"
-        due now.
+        %span.urgent due now.
       - elsif assigned.bucket == "due_later"
         due sometime soon.
       - elsif assigned.due_at < Date.today
@@ -23,5 +23,5 @@
       - elsif assigned.due_at > Date.today
         = "due in " << distance_of_time_in_words(Time.now, assigned.due_at.end_of_day)
       - else
-        %span.cool due today!
+        %span.cool due today.
       

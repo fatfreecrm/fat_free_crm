@@ -274,7 +274,10 @@ tt {
   color: darkgreen; }
 
 .warn {
-  color: maroon; }
+  color: crimson; }
+
+.urgent {
+  color: darkred; }
 
 .strip {
   background: gainsboro;
@@ -337,11 +340,19 @@ tt {
 .log {
   padding: 8px 0px 0px 0px; }
   .log h3 {
-    background: whitesmoke;
-    border-bottom: 1px silver dotted;
+    border-bottom: 1px #2f2f2f dotted;
     color: #2f2f2f;
     margin: 0px 0px 4px 0px;
     padding: 2px 0px 2px 86px; }
+    .log h3.overdue {
+      color: crimson;
+      border-bottom: 1px crimson dotted; }
+    .log h3.due_asap {
+      color: darkred;
+      border-bottom: 1px darkred dotted; }
+    .log h3.due_today {
+      color: darkgreen;
+      border-bottom: 1px darkgreen dotted; }
   .log li {
     color: #3f3f3f;
     font-size: 12px;
@@ -422,6 +433,10 @@ tt {
   font-weight: bold;
   margin: 4px 0px 2px 0px;
   padding: 2px 0px 2px 0px; }
+.panel#recently {
+  background: floralwhite; }
+.panel#summary {
+  background: oldlace; }
 
 .selector {
   color: black;
