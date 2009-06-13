@@ -1,6 +1,29 @@
 module Spec
   module Rails
     module Example
+      class ViewExampleGroupController < ApplicationController #:nodoc:
+        include Spec::Rails::Example::RenderObserver
+        attr_reader :template
+
+        def add_helper_for(template_path)
+          add_helper(template_path.split('/')[0])
+        end
+
+        def add_helper(name)
+          begin
+            helper_module = "#{name}_helper".camelize.constantize
+          rescue
+            return
+          end
+          (class << template; self; end).class_eval do
+            include helper_module
+          end
+        end
+        
+        def forget_variables_added_to_assigns
+        end
+      end
+
       # View Examples live in $RAILS_ROOT/spec/views/.
       #
       # View Specs use Spec::Rails::Example::ViewExampleGroup,
@@ -24,24 +47,36 @@ module Spec
       #     end
       #   end
       class ViewExampleGroup < FunctionalExampleGroup
-        before(:each) do
-          ensure_that_flash_and_session_work_properly
+        if ActionView::Base.respond_to?(:load_helpers) # Rails 2.0.x
+          ActionView::Helpers.constants.each do |name|
+            const = ActionView::Helpers.const_get(name)
+            include const if name.include?("Helper") && Module === const
+          end
+        elsif ActionView::Base.respond_to?(:helper_modules) # Rails 2.1.x
+          ActionView::Base.helper_modules.each do |helper_module|
+            include helper_module
+          end
+        else # Rails 2.2.x
+          include ActionView::Helpers
         end
 
-        after(:each) do
-          ensure_that_base_view_path_is_not_set_across_example_groups
+        tests ViewExampleGroupController
+        class << self
+          def inherited(klass) # :nodoc:
+            klass.subject { template }
+            super
+          end
         end
 
-        def initialize(defined_description, options={}, &implementation) #:nodoc:
-          super
-          @controller_class_name = "Spec::Rails::Example::ViewExampleGroupController"
-        end
+        before {ensure_that_flash_and_session_work_properly}
+        after  {ensure_that_base_view_path_is_not_set_across_example_groups}
 
         def ensure_that_flash_and_session_work_properly #:nodoc:
-          @controller.send :initialize_template_class, @response
-          @controller.send :assign_shortcuts, @request, @response
+          @controller.class.__send__ :public, :flash
+          @controller.__send__ :initialize_template_class, @response
+          @controller.__send__ :assign_shortcuts, @request, @response
+          @controller.__send__ :initialize_current_url
           @session = @controller.session
-          @controller.class.send :public, :flash
         end
 
         def ensure_that_base_view_path_is_not_set_across_example_groups #:nodoc:
@@ -97,8 +132,15 @@ module Spec
         # See Spec::Rails::Example::ViewExampleGroup for more information.
         def render(*args)
           options = Hash === args.last ? args.pop : {}
-          options[:template] = args.first.to_s unless args.empty?
-
+          
+          if args.empty? 
+            unless [:partial, :inline, :file, :template, :xml, :json, :update].any? {|k| options.has_key? k} 
+              args << self.class.description_parts.first
+            end
+          end
+          
+          options[:template] = args.first.to_s.sub(/^\//,'') unless args.empty?
+          
           set_base_view_path(options)
           add_helpers(options)
 
@@ -112,9 +154,7 @@ module Spec
           defaults = { :layout => false }
           options = defaults.merge options
 
-          @controller.send(:params).reverse_merge! @request.parameters
-
-          @controller.send :initialize_current_url
+          @controller.__send__(:params).reverse_merge! @request.parameters
 
           @controller.class.instance_eval %{
             def controller_path
@@ -126,9 +166,9 @@ module Spec
             end
           }
 
-          @controller.send :forget_variables_added_to_assigns
-          @controller.send :render, options
-          @controller.send :process_cleanup
+          @controller.__send__ :forget_variables_added_to_assigns
+          @controller.__send__ :render, options
+          @controller.__send__ :process_cleanup
         end
 
         # This provides the template. Use this to set mock
@@ -148,36 +188,12 @@ module Spec
 
         Spec::Example::ExampleGroupFactory.register(:view, self)
 
-        protected
+      protected
         def _assigns_hash_proxy
-          @_assigns_hash_proxy ||= AssignsHashProxy.new self do
-            @response.template
-          end
+          @_assigns_hash_proxy ||= AssignsHashProxy.new(self) {@response.template}
         end
       end
 
-      class ViewExampleGroupController < ApplicationController #:nodoc:
-        include Spec::Rails::Example::RenderObserver
-        attr_reader :template
-
-        def add_helper_for(template_path)
-          add_helper(template_path.split('/')[0])
-        end
-
-        def add_helper(name)
-          begin
-            helper_module = "#{name}_helper".camelize.constantize
-          rescue
-            return
-          end
-          (class << template; self; end).class_eval do
-            include helper_module
-          end
-        end
-        
-        def forget_variables_added_to_assigns
-        end
-      end
     end
   end
 end

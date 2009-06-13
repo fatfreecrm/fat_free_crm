@@ -42,9 +42,10 @@ module Spec
         __raise "#{intro} yielded |#{arg_list(*args_to_yield)}| to block with arity of #{arity}"
       end
       
-      private
+    private
+
       def intro
-        @name ? "Mock '#{@name}'" : @target.class == Class ? "<#{@target.inspect} (class)>" : (@target.nil? ? "nil" : @target.to_s)
+        @name ? "Mock '#{@name}'" : @target.class == Class ? "<#{@target.inspect} (class)>" : (@target.nil? ? "nil" : @target)
       end
       
       def __raise(message)
@@ -57,15 +58,11 @@ module Spec
       end
       
       def format_args(*args)
-        return "(no args)" if args.empty? || args == [:no_args]
-        return "(any args)" if args == [:any_args]
-        "(" + arg_list(*args) + ")"
+        args.empty? ? "(no args)" : "(" + arg_list(*args) + ")"
       end
 
       def arg_list(*args)
-        args.collect do |arg|
-          arg.respond_to?(:description) ? arg.description : arg.inspect
-        end.join(", ")
+        args.collect {|arg| arg.respond_to?(:description) ? arg.description : arg.inspect}.join(", ")
       end
       
       def count_message(count)

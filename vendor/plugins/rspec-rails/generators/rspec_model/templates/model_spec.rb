@@ -3,9 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '<%= '/..' * class_nesting_dep
 describe <%= class_name %> do
   before(:each) do
     @valid_attributes = {
-<% attributes.each_with_index do |attribute, attribute_index| -%>
-      :<%= attribute.name %> => <%= attribute.default_value %><%= attribute_index == attributes.length - 1 ? '' : ','%>
-<% end -%>
+      <%= attributes.map{|a| ":#{a.name_or_reference} => #{a.default_value}" }.join(",\n      ") %>
     }
   end
 

@@ -8,7 +8,7 @@ module Spec
       attr_accessor :error_generator
       protected :error_generator, :error_generator=
       
-      def initialize(error_generator, expectation_ordering, expected_from, sym, method_block, expected_received_count=1, opts={})
+      def initialize(error_generator, expectation_ordering, expected_from, sym, method_block, expected_received_count=1, opts={}, &implementation)
         @error_generator = error_generator
         @error_generator.opts = opts
         @expected_from = expected_from
@@ -17,7 +17,7 @@ module Spec
         @return_block = nil
         @actual_received_count = 0
         @expected_received_count = expected_received_count
-        @args_expectation = ArgumentExpectation.new([ArgumentConstraints::AnyArgsConstraint.new])
+        @args_expectation = ArgumentExpectation.new([ArgumentMatchers::AnyArgsMatcher.new])
         @consecutive = false
         @exception_to_raise = nil
         @symbol_to_throw = nil
@@ -25,6 +25,9 @@ module Spec
         @at_least = nil
         @at_most = nil
         @args_to_yield = []
+        @failed_fast = nil
+        @args_to_yield_were_cloned = false
+        @return_block = implementation
       end
       
       def build_child(expected_from, method_block, expected_received_count, opts={})
@@ -32,6 +35,7 @@ module Spec
         child.expected_from = expected_from
         child.method_block = method_block
         child.expected_received_count = expected_received_count
+        child.clear_actual_received_count!
         new_gen = error_generator.clone
         new_gen.opts = opts
         child.error_generator = new_gen
@@ -55,8 +59,6 @@ module Spec
                                                     @expected_received_count < values.size
         end
         @return_block = block_given? ? return_block : lambda { value }
-        # Ruby 1.9 - see where this is used below
-        @ignore_args = !block_given?
       end
       
       # :call-seq:
@@ -87,7 +89,7 @@ module Spec
         @args_to_yield << args
         self
       end
-  
+      
       def matches(sym, args)
         @sym == sym and @args_expectation.args_match?(args)
       end
@@ -156,9 +158,7 @@ module Spec
       end
       
       def invoke_consecutive_return_block(args, block)
-        args << block unless block.nil?
-        value = @return_block.call(*args)
-        
+        value = invoke_return_block(args, block)
         index = [@actual_received_count, value.size-1].min
         value[index]
       end
@@ -168,13 +168,9 @@ module Spec
         # Ruby 1.9 - when we set @return_block to return values
         # regardless of arguments, any arguments will result in
         # a "wrong number of arguments" error
-        if @ignore_args
-          @return_block.call()
-        else
-          @return_block.call(*args)
-        end
+        @return_block.arity == 0 ? @return_block.call : @return_block.call(*args)
       end
-
+      
       def clone_args_to_yield(args)
         @args_to_yield = args.clone
         @args_to_yield_were_cloned = true
@@ -191,7 +187,7 @@ module Spec
         @sym == sym and not @args_expectation.args_match?(args)
       end
        
-      def verify_messages_received   
+      def verify_messages_received
         return if expected_messages_received? || failed_fast?
     
         generate_error
@@ -233,7 +229,7 @@ module Spec
         if similar_messages.empty?
           @error_generator.raise_expectation_error(@sym, @expected_received_count, @actual_received_count, *@args_expectation.args)
         else
-          @error_generator.raise_unexpected_message_args_error(self, *@similar_messages.first)
+          @error_generator.raise_unexpected_message_args_error(self, *@similar_messages)
         end
       end
 
@@ -308,6 +304,10 @@ module Spec
             when :twice
               2
           end
+        end
+        
+        def clear_actual_received_count!
+          @actual_received_count = 0
         end
       
     end

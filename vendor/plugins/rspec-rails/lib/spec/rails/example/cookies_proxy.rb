@@ -9,7 +9,11 @@ module Spec
         end
       
         def[]=(name, value)
-          @example.request.cookies[name.to_s] = CGI::Cookie.new(name.to_s, value)
+          if ::Rails::VERSION::STRING >= '2.3'
+            @example.request.cookies[name.to_s] = value
+          else
+            @example.request.cookies[name.to_s] = CGI::Cookie.new(name.to_s, value)
+          end
         end
         
         def [](name)

@@ -1,4 +1,5 @@
-require File.dirname(__FILE__) + '/../../spec_helper.rb'
+require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/resources/custom_example_group_runner'
 
 module Spec
   module Runner
@@ -7,10 +8,23 @@ module Spec
         @err = StringIO.new('')
         @out = StringIO.new('')
         @options = Options.new(@err, @out)
+
+        before_suite_parts = []
+        after_suite_parts = []
+        @options.stub!(:before_suite_parts).and_return(before_suite_parts)
+        @options.stub!(:after_suite_parts).and_return(after_suite_parts)
       end
 
       after(:each) do
         Spec::Expectations.differ = nil
+      end
+      
+      describe "#require_ruby_debug" do
+        it "should require ruby-debug" do
+          @options.stub!(:require)
+          @options.should_receive(:require).with("ruby-debug")
+          @options.require_ruby_debug
+        end
       end
 
       describe "#examples" do
@@ -18,21 +32,21 @@ module Spec
           @options.examples.should == []
         end
       end
-      
+
       describe "#include_pattern" do
         it "should default to '**/*_spec.rb'" do
           @options.filename_pattern.should == "**/*_spec.rb"
         end
       end
-      
+
       describe "#files_to_load" do
-        
+
         it "should load files not following pattern if named explicitly" do
           file = File.expand_path(File.dirname(__FILE__) + "/resources/a_bar.rb")
           @options.files << file
           @options.files_to_load.should include(file)
         end
-        
+
         describe "with default --pattern" do
           it "should load files named _spec.rb" do
             dir = File.expand_path(File.dirname(__FILE__) + "/resources/")
@@ -40,33 +54,33 @@ module Spec
             @options.files_to_load.should == ["#{dir}/a_spec.rb"]
           end
         end
-        
+
         describe "with explicit pattern (single)" do
           before(:each) do
             @options.filename_pattern = "**/*_foo.rb"
           end
-        
+
           it "should load files following pattern" do
             file = File.expand_path(File.dirname(__FILE__) + "/resources/a_foo.rb")
             @options.files << file
             @options.files_to_load.should include(file)
           end
-        
+
           it "should load files in directories following pattern" do
             dir = File.expand_path(File.dirname(__FILE__) + "/resources")
             @options.files << dir
             @options.files_to_load.should include("#{dir}/a_foo.rb")
           end
-        
+
           it "should not load files in directories not following pattern" do
             dir = File.expand_path(File.dirname(__FILE__) + "/resources")
             @options.files << dir
             @options.files_to_load.should_not include("#{dir}/a_bar.rb")
           end
         end
-        
+
         describe "with explicit pattern (comma,separated,values)" do
-          
+
           before(:each) do
             @options.filename_pattern = "**/*_foo.rb,**/*_bar.rb"
           end
@@ -77,16 +91,16 @@ module Spec
             @options.files_to_load.should include("#{dir}/a_foo.rb")
             @options.files_to_load.should include("#{dir}/a_bar.rb")
           end
-        
+
           it "should support comma separated values with spaces" do
             dir = File.expand_path(File.dirname(__FILE__) + "/resources")
             @options.files << dir
             @options.files_to_load.should include("#{dir}/a_foo.rb")
             @options.files_to_load.should include("#{dir}/a_bar.rb")
           end
-        
+
         end
-      
+
       end
 
       describe "#backtrace_tweaker" do
@@ -98,6 +112,12 @@ module Spec
       describe "#dry_run" do
         it "should default to false" do
           @options.dry_run.should == false
+        end
+      end
+
+      describe "#debug" do
+        it "should default to false" do
+          @options.debug.should == false
         end
       end
 
@@ -209,6 +229,22 @@ module Spec
         end
       end
 
+      describe "debug option specified" do
+        it "should cause ruby_debug to be required and do nothing" do
+          @options.debug = true
+          @options.should_receive(:require_ruby_debug)
+          @options.run_examples.should be_true
+        end
+      end
+
+      describe "debug option not specified" do
+        it "should not cause ruby_debug to be required" do
+          @options.debug = false
+          @options.should_not_receive(:require_ruby_debug)
+          @options.run_examples.should be_true
+        end
+      end
+
       describe "#load_class" do
         it "should raise error when not class name" do
           lambda do
@@ -224,8 +260,23 @@ module Spec
         end
       end
 
+      describe "#number_of_examples" do
+        context "when --example is parsed" do
+          it "provides the number of examples parsed instead of the total number of examples collected" do
+            @example_group = Class.new(::Spec::Example::ExampleGroup).describe("Some Examples") do
+              it "uses this example_group 1" do; end
+              it "uses this example_group 2" do; end
+              it "uses this example_group 3" do; end
+            end
+            @options.add_example_group @example_group
+            @options.parse_example("an example")
+            @options.number_of_examples.should == 1
+          end
+        end
+      end
+
       describe "#add_example_group affecting passed in example_group" do
-        it "runs all examples when options.examples is nil" do
+        it "runs all examples when options.examples is empty" do
           example_1_has_run = false
           example_2_has_run = false
           @example_group = Class.new(::Spec::Example::ExampleGroup).describe("Some Examples") do
@@ -237,7 +288,7 @@ module Spec
             end
           end
 
-          @options.examples = nil
+          @options.examples.clear
 
           @options.add_example_group @example_group
           @options.run_examples
@@ -256,8 +307,6 @@ module Spec
               example_2_has_run = true
             end
           end
-
-          @options.examples = []
 
           @options.add_example_group @example_group
           @options.run_examples
@@ -293,6 +342,40 @@ module Spec
       end
 
       describe "#run_examples" do
+        describe "with global predicate matchers" do
+          it "defines global predicate matcher methods on ExampleMethods" do
+            Spec::Runner.configuration.stub!(:predicate_matchers).and_return({:this => :that?})
+            group = Class.new(::Spec::Example::ExampleGroupDouble).describe("Some Examples")
+            example = group.new(::Spec::Example::ExampleProxy.new)
+
+            @options.run_examples
+            example.this
+          end
+
+          after(:each) do
+            Spec::Example::ExampleMethods.class_eval "undef :this"
+          end
+        end
+
+        describe "with a mock framework defined as a Symbol" do
+          it "includes Spec::Adapters::MockFramework" do
+            Spec::Runner.configuration.stub!(:mock_framework).and_return('spec/adapters/mock_frameworks/rspec')
+
+            Spec::Example::ExampleMethods.should_receive(:include).with(Spec::Adapters::MockFramework)
+
+            @options.run_examples
+          end
+        end
+
+        describe "with a mock framework defined as a Module" do
+          it "includes the module in ExampleMethods" do
+            mod = Module.new
+            Spec::Runner.configuration.stub!(:mock_framework).and_return(mod)
+            Spec::Example::ExampleMethods.should_receive(:include).with(mod)
+            @options.run_examples
+          end
+        end
+
         describe "when not given a custom runner" do
           it "should use the standard" do
             runner = ::Spec::Runner::ExampleGroupRunner.new(@options)
@@ -355,14 +438,14 @@ module Spec
               @options.after_suite_parts << lambda do |success|
                 success_result = success
               end
-              
+
               @options.run_examples
               success_result.should be_true
             end
           end
 
           describe "and the suite fails" do
-            before do
+            before(:each) do
               @example_group.should_receive(:run).and_return(false)
             end
 
@@ -382,12 +465,12 @@ module Spec
               @heckle_runner_mock = mock("HeckleRunner")
               @options.heckle_runner = @heckle_runner_mock
             end
-            
+
             it "should heckle" do
               @heckle_runner_mock.should_receive(:heckle_with)
               @options.run_examples
             end
-            
+
             it "shouldn't heckle recursively" do
               heckled = false
               @heckle_runner_mock.should_receive(:heckle_with) {

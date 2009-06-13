@@ -41,10 +41,6 @@ module Spec
           end
           @output.flush
         end
-        
-        def method_missing(sym, *args)
-          # ignore
-        end
       end
     end
   end

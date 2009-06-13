@@ -25,6 +25,7 @@ module Spec
         @stubs = []
         @proxied_methods = []
         @options = options ? DEFAULT_OPTIONS.dup.merge(options) : DEFAULT_OPTIONS
+        @already_proxied_respond_to = false
       end
 
       def null_object?
@@ -55,12 +56,12 @@ module Spec
         @expectations.last
       end
 
-      def add_stub(expected_from, sym, opts={})
+      def add_stub(expected_from, sym, opts={}, &implementation)
         __add sym
-        @stubs.unshift MessageExpectation.new(@error_generator, @expectation_ordering, expected_from, sym, nil, :any, opts)
+        @stubs.unshift MessageExpectation.new(@error_generator, @expectation_ordering, expected_from, sym, nil, :any, opts, &implementation)
         @stubs.first
       end
-
+      
       def verify #:nodoc:
         verify_expectations
       ensure
@@ -82,6 +83,10 @@ module Spec
       def has_negative_expectation?(sym)
         @expectations.detect {|expectation| expectation.negative_expectation_for?(sym)}
       end
+      
+      def record_message_received(sym, args, block)
+        @messages_received << [sym, args, block]
+      end
 
       def message_received(sym, *args, &block)
         expectation = find_matching_expectation(sym, *args)
@@ -91,7 +96,7 @@ module Spec
           if expectation = find_almost_matching_expectation(sym, *args)
             expectation.advise(args, block) unless expectation.expected_messages_received?
           end
-          stub.invoke([], block)
+          stub.invoke(args, block)
         elsif expectation
           expectation.invoke(args, block)
         elsif expectation = find_almost_matching_expectation(sym, *args)
@@ -118,29 +123,28 @@ module Spec
       end
       
       def warn_if_nil_class(sym)
-        if proxy_for_nil_class? && @@warn_about_expectations_on_nil          
+        if proxy_for_nil_class? & @@warn_about_expectations_on_nil          
           Kernel.warn("An expectation of :#{sym} was set on nil. Called from #{caller[2]}. Use allow_message_expectations_on_nil to disable warnings.")
         end
       end
       
       def define_expected_method(sym)
-        visibility_string = "#{visibility(sym)} :#{sym}"
         unless @proxied_methods.include?(sym)
+          visibility_string = "#{visibility(sym)} :#{sym}"
           if target_responds_to?(sym)
             munged_sym = munge(sym)
             target_metaclass.instance_eval do
-              alias_method munged_sym, sym if method_defined?(sym.to_s)
+              alias_method munged_sym, sym if method_defined?(sym)
             end
             @proxied_methods << sym
           end
+          target_metaclass.class_eval(<<-EOF, __FILE__, __LINE__)
+            def #{sym}(*args, &block)
+              __mock_proxy.message_received :#{sym}, *args, &block
+            end
+            #{visibility_string}
+          EOF
         end
-
-        target_metaclass.class_eval(<<-EOF, __FILE__, __LINE__)
-          def #{sym}(*args, &block)
-            __mock_proxy.message_received :#{sym}, *args, &block
-          end
-          #{visibility_string}
-        EOF
       end
 
       def target_responds_to?(sym)
@@ -162,7 +166,7 @@ module Spec
       end
 
       def munge(sym)
-        "proxied_by_rspec__#{sym.to_s}".to_sym
+        "proxied_by_rspec__#{sym}"
       end
 
       def clear_expectations
@@ -191,11 +195,10 @@ module Spec
         @proxied_methods.each do |sym|
           munged_sym = munge(sym)
           target_metaclass.instance_eval do
-            if method_defined?(munged_sym.to_s)
+            remove_method sym
+            if method_defined?(munged_sym)
               alias_method sym, munged_sym
-              undef_method munged_sym
-            else
-              remove_method sym
+              remove_method munged_sym
             end
           end
         end
@@ -210,6 +213,7 @@ module Spec
       end
 
       def find_matching_expectation(sym, *args)
+        @expectations.find {|expectation| expectation.matches(sym, args) && !expectation.called_max_times?} || 
         @expectations.find {|expectation| expectation.matches(sym, args)}
       end
 

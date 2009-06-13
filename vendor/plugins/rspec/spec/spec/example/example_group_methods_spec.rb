@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+  require File.dirname(__FILE__) + '/../../spec_helper'
 
 module Spec
   module Example
@@ -12,21 +12,21 @@ module Spec
           options.backtrace_tweaker = mock("backtrace_tweaker", :null_object => true)
           @reporter = FakeReporter.new(@options)
           options.reporter = reporter
-          @example_group = Class.new(ExampleGroup) do
+          @example_group = Class.new(ExampleGroupDouble) do
             describe("ExampleGroup")
             it "does nothing"
           end
         end
         
         after(:each) do
-          ExampleGroup.reset
+          ExampleGroupDouble.reset
         end
 
         ["describe","context"].each do |method|
           describe "##{method}" do
             describe "when creating an ExampleGroup" do
               before(:each) do
-                @parent_example_group = Class.new(ExampleGroup) do
+                @parent_example_group = Class.new(ExampleGroupDouble) do
                   example "first example" do; end
                 end
                 @child_example_group = @parent_example_group.__send__ method, "Child" do
@@ -41,6 +41,18 @@ module Spec
 
               it "should not inherit examples" do
                 @child_example_group.should have(1).examples
+              end
+              
+              it "records the spec path" do
+                @child_example_group.location.should =~ /#{__FILE__}:#{__LINE__ - 15}/
+              end
+            end
+            
+            describe "when creating an example group with no description" do
+              it "raises an ArgumentError" do
+                lambda do
+                  Class.new(ExampleGroupDouble).describe
+                end.should raise_error(Spec::Example::NoDescriptionError, /No description supplied for example group declared on #{__FILE__}:#{__LINE__ - 1}/)
               end
             end
 
@@ -62,17 +74,64 @@ module Spec
           end
         end
         
-        [:specify, :it].each do |method|
+        [:example, :specify, :it].each do |method|
           describe "##{method.to_s}" do
-            it "should should create an example" do
+            it "should add an example" do
               lambda {
                 @example_group.__send__(method, "")
               }.should change { @example_group.examples.length }.by(1)
             end
+            
+            describe "with no location supplied" do
+              describe "creates an ExampleProxy" do
+                before(:all) do
+                  @example_group = Class.new(ExampleGroupDouble).describe("bar")
+                  @example_proxy = @example_group.__send__(method, "foo", {:this => :that}) {}
+                  @location = "#{__FILE__}:#{__LINE__ - 1}"
+                end
+
+                specify "with a description" do
+                  @example_proxy.description.should == "foo"
+                end
+
+                specify "with options" do
+                  @example_proxy.options.should == {:this => :that}
+                end
+
+                specify "with a default backtrace (DEPRECATED)" do
+                  Spec.stub!(:deprecate)
+                  @example_proxy.backtrace.should =~ /#{@location}/
+                end
+
+                specify "with a default location" do
+                  @example_proxy.location.should =~ /#{@location}/
+                end
+              end
+            end
+            
+            describe "with a location supplied" do
+              describe "creates an ExampleProxy" do
+                before(:all) do
+                  @example_group = Class.new(ExampleGroupDouble).describe("bar")
+                  @example_proxy = @example_group.__send__(method, "foo", {:this => :that}, "the location") {}
+                end
+
+                specify "with the supplied location as #backtrace (DEPRECATED)" do
+                  Spec.stub!(:deprecate)
+                  @example_proxy.backtrace.should == "the location"
+                end
+
+                specify "with the supplied location as #location" do
+                  @example_proxy.location.should == "the location"
+                end
+              end
+            end
+          
+            
           end
         end
         
-        [:xit, :xspecify].each do |method|
+        [:xexample, :xit, :xspecify].each do |method|
           describe "##{method.to_s}" do
             before(:each) do
               Kernel.stub!(:warn)
@@ -91,10 +150,9 @@ module Spec
           end
         end
         
-
         describe "#examples" do
           it "should have Examples" do
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               it "should exist" do; end
             end
             example_group.examples.length.should == 1
@@ -102,7 +160,7 @@ module Spec
           end
 
           it "should not include methods that begin with test (only when TU interop is loaded)" do
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               def test_any_args(*args)
                 true.should be_true
               end
@@ -119,12 +177,13 @@ module Spec
                 # forces the run
               end
             end
+            
             example_group.examples.length.should == 1
-            example_group.run.should be_true
+            example_group.run(options).should be_true
           end
 
           it "should include methods that begin with should and has an arity of 0 in suite" do
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               def shouldCamelCase
                 true.should be_true
               end
@@ -145,7 +204,7 @@ module Spec
               end
             end
             example_group.should have(4).examples
-            descriptions = example_group.examples.collect {|example| example.description}
+            descriptions = example_group.examples.collect {|e| e.description}
             descriptions.should include(
               "shouldCamelCase",
               "should_any_args",
@@ -158,7 +217,7 @@ module Spec
           end
 
           it "should not include methods that begin with test_ and has an arity > 0 in suite" do
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               def test_invalid(foo)
                 1.should == 1
               end
@@ -170,7 +229,7 @@ module Spec
           end
 
           it "should not include methods that begin with should_ and has an arity > 0 in suite" do
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               def should_invalid(foo)
                 1.should == 2
               end
@@ -185,17 +244,17 @@ module Spec
               end
             end
             example_group.should have(1).examples
-            example_group.run.should be_true
+            example_group.run(options).should be_true
           end
 
           it "should run should_methods" do
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               def should_valid
                 1.should == 2
               end
             end
             example_group.should have(1).examples
-            example_group.run.should be_false
+            example_group.run(options).should be_false
           end
         end
 
@@ -269,7 +328,17 @@ module Spec
             end
           end
 
-          describe "#set_description(Type, String containing .)" do
+          describe "#set_description(Class, String starting with #)" do
+            before(:each) do
+              example_group.set_description(ExampleGroup, "#behaving")
+            end
+
+            specify "should return the Class then String" do
+              example_group.description.should == "Spec::Example::ExampleGroup#behaving"
+            end
+          end
+
+          describe "#set_description(Class, String containing .)" do
             before(:each) do
               example_group.set_description(ExampleGroup, "calling a.b")
             end
@@ -279,17 +348,7 @@ module Spec
             end
           end
 
-          describe "#set_description(Type, String starting with .)" do
-            before(:each) do
-              example_group.set_description(ExampleGroup, ".behaving")
-            end
-
-            specify "should return the Type then String" do
-              example_group.description.should == "Spec::Example::ExampleGroup.behaving"
-            end
-          end
-
-          describe "#set_description(Type, String containing .)" do
+          describe "#set_description(Class, String containing #)" do
             before(:each) do
               example_group.set_description(ExampleGroup, "is #1")
             end
@@ -311,15 +370,15 @@ module Spec
 
           describe "#set_description(Hash representing options)" do
             before(:each) do
-              example_group.set_description(:a => "b", :spec_path => "blah")
+              example_group.set_description(:a => "b", :location => "blah")
             end
 
-            it ".spec_path should expand the passed in :spec_path option passed into the constructor" do
-              example_group.spec_path.should == File.expand_path("blah")
+            it ".location should expand the passed in :location option passed into the constructor" do
+              example_group.location.should == File.expand_path("blah")
             end
 
-            it ".description_options should return all the options passed in" do
-              example_group.description_options.should == {:a => "b", :spec_path => "blah"}
+            it ".options should return all the options passed in" do
+              example_group.options.should == {:a => "b", :location => "blah"}
             end
 
           end
@@ -330,14 +389,14 @@ module Spec
             example_group.description.should eql(example_group.description)
           end
 
-          it "should not add a space when description_text begins with #" do
+          it "should not add a space when description begins with #" do
             child_example_group = Class.new(example_group) do
               describe("#foobar", "Does something")
             end
             child_example_group.description.should == "ExampleGroup#foobar Does something"
           end
 
-          it "should not add a space when description_text begins with ." do
+          it "should not add a space when description begins with ." do
             child_example_group = Class.new(example_group) do
               describe(".foobar", "Does something")
             end
@@ -353,6 +412,11 @@ module Spec
             example_group.set_description("")
             example_group.description.should =~ /Class:/
           end
+          
+          it "is cached" do
+            example_group.set_description("describe me")
+            example_group.description.should be(example_group.description)
+          end
         end
 
         describe "#description_parts" do
@@ -361,7 +425,7 @@ module Spec
           end
 
           it "should return an Array of the description args from each class in the hierarchy" do
-            parent_example_group = Class.new(ExampleGroup) do
+            parent_example_group = Class.new(ExampleGroupDouble) do
               describe("Parent")
             end
             
@@ -381,6 +445,10 @@ module Spec
               Spec::Example::ExampleGroup
             ]
           end
+          
+          it "caches the description parts" do
+            example_group.description_parts.should equal(example_group.description_parts)
+          end
         end
 
         describe "#described_type" do
@@ -392,7 +460,7 @@ module Spec
           end
 
           it "should return #described_type of superclass when no passed in type" do
-            parent_example_group = Class.new(ExampleGroup) do
+            parent_example_group = Class.new(ExampleGroupDouble) do
               describe Object, "#foobar"
             end
             child_example_group = Class.new(parent_example_group) do
@@ -400,25 +468,15 @@ module Spec
             end
             child_example_group.described_type.should == Object
           end
-        end
-
-        describe "#remove_after" do
-          it "should unregister a given after(:each) block" do
-            after_all_ran = false
-            proc = Proc.new { after_all_ran = true }
-
-            example_group = Class.new(ExampleGroup) do
-              specify("example") {}
-              after(:each, &proc)
+          
+          it "is cached per example group" do
+            klass = Class.new
+            group = Class.new(ExampleGroupDouble) do
+              describe(klass)
             end
-
-            example_group.run
-            after_all_ran.should be_true
-
-            after_all_ran = false
-            example_group.remove_after(:each, &proc)
-            example_group.run
-            after_all_ran.should be_false
+            group.should_receive(:description_parts).once.and_return([klass])
+            group.described_type
+            group.described_type
           end
         end
 
@@ -426,14 +484,13 @@ module Spec
           it "should have accessible class methods from included module" do
             mod_method_called = false
             mod = Module.new do
-              extend Spec::MetaClass
               class_methods = Module.new do
                 define_method :mod_method do
                   mod_method_called = true
                 end
               end
 
-              metaclass.class_eval do
+              self.class.class_eval do
                 define_method(:included) do |receiver|
                   receiver.extend class_methods
                 end
@@ -460,13 +517,13 @@ module Spec
 
         describe "#class_eval" do
           it "should allow constants to be defined" do
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               FOO = 1
               it "should reference FOO" do
                 FOO.should == 1
               end
             end
-            success = example_group.run
+            success = example_group.run(options)
             success.should be_true
             Object.const_defined?(:FOO).should == false
           end
@@ -474,20 +531,20 @@ module Spec
 
         describe '#register' do
           after(:each) do
-            example_group.unregister
+            Spec::Runner.options.remove_example_group example_group
           end
           it "should add ExampleGroup to set of ExampleGroups to be run" do
-            example_group.register
+            Spec::Runner.options.add_example_group example_group
             options.example_groups.should include(example_group)
           end
         end
 
-        describe '#unregister' do
+        describe '#remove_example_group' do
           before(:each) do
-            example_group.register
+            Spec::Runner.options.add_example_group example_group
           end
           it "should remove ExampleGroup from set of ExampleGroups to be run" do
-            example_group.unregister
+            Spec::Runner.options.remove_example_group example_group
             options.example_groups.should_not include(example_group)
           end
         end
@@ -495,34 +552,32 @@ module Spec
         describe "#run" do
           describe "given an example group with at least one example" do
             it "should call add_example_group" do
-              example_group = Class.new(ExampleGroup) do
+              example_group = Class.new(ExampleGroupDouble) do
                 example("anything") {}
               end
               reporter.should_receive(:add_example_group)
-              example_group.run
+              example_group.run(options)
             end
           end
 
           describe "given an example group with no examples" do
             it "should NOT call add_example_group" do
-              example_group = Class.new(ExampleGroup) do end
+              example_group = Class.new(ExampleGroupDouble) do end
               reporter.should_not_receive(:add_example_group)
-              example_group.run
+              example_group.run(options)
             end
           end
         end
 
         describe "#matcher_class=" do 
           it "should call new and matches? on the class used for matching examples" do 
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               it "should do something" do end
-              class << self
-                def specified_examples
-                  ["something"]
-                end
-                def to_s
-                  "TestMatcher"
-                end
+              def self.specified_examples
+                ["something"]
+              end
+              def self.to_s
+                "TestMatcher"
               end
             end
 
@@ -530,12 +585,12 @@ module Spec
             matcher.should_receive(:matches?).with(["something"]).any_number_of_times
           
             matcher_class = Class.new
-            matcher_class.should_receive(:new).with("TestMatcher", "should do something").twice.and_return(matcher)
+            matcher_class.should_receive(:new).with("TestMatcher", "should do something").and_return(matcher)
 
             begin 
               ExampleGroupMethods.matcher_class = matcher_class
 
-              example_group.run
+              example_group.run(options)
             ensure 
               ExampleGroupMethods.matcher_class = ExampleMatcher
             end
@@ -549,30 +604,70 @@ module Spec
           end
         end
 
-        describe "#backtrace" do        
-          it "returns the backtrace from where the example group was defined" do
-            example_group = Class.new(ExampleGroup).describe("foo") do
-              example "bar" do; end
-            end
-            example_group.backtrace.join("\n").should include("#{__FILE__}:#{__LINE__-3}")
+        describe "#before" do
+          it "stores before(:each) blocks" do
+            example_group = Class.new(ExampleGroupDouble) {}
+            block = lambda {}
+            example_group.before(:each, &block)
+            example_group.before_each_parts.should include(block)
+          end
+
+          it "stores before(:all) blocks" do
+            example_group = Class.new(ExampleGroupDouble) {}
+            block = lambda {}
+            example_group.before(:all, &block)
+            example_group.before_all_parts.should include(block)
+          end
+
+          it "stores before(:suite) blocks" do
+            example_group = Class.new(ExampleGroupDouble) {}
+            parts = []
+            ExampleGroupMethods.stub!(:before_suite_parts).and_return(parts)
+            block = lambda {}
+            example_group.before(:suite, &block)
+            example_group.before_suite_parts.should include(block)
           end
         end
 
-        describe "#example_group_backtrace (deprecated)" do        
-          before(:each) do
-            Kernel.stub!(:warn)
-          end
-          it "sends a deprecation warning" do
-            example_group = Class.new(ExampleGroup) {}
-            Kernel.should_receive(:warn).with(/#example_group_backtrace.*deprecated.*#backtrace instead/m)
-            example_group.example_group_backtrace
+        
+        describe "#after" do
+          it "stores after(:each) blocks" do
+            example_group = Class.new(ExampleGroupDouble) {}
+            block = lambda {}
+            example_group.after(:each, &block)
+            example_group.after_each_parts.should include(block)
           end
 
-          it "returns the backtrace from where the example group was defined" do
-            example_group = Class.new(ExampleGroup).describe("foo") do
-              example "bar" do; end
-            end
-            example_group.example_group_backtrace.join("\n").should include("#{__FILE__}:#{__LINE__-3}")
+          it "stores after(:all) blocks" do
+            example_group = Class.new(ExampleGroupDouble) {}
+            block = lambda {}
+            example_group.after(:all, &block)
+            example_group.after_all_parts.should include(block)
+          end
+
+          it "stores after(:suite) blocks" do
+            example_group = Class.new(ExampleGroupDouble) {}
+            parts = []
+            ExampleGroupMethods.stub!(:after_suite_parts).and_return(parts)
+            block = lambda {}
+            example_group.after(:suite, &block)
+            example_group.after_suite_parts.should include(block)
+          end
+        end
+
+        describe "#run_before_all" do
+          it "does not create an instance if before_all_parts are empty" do
+            example_group = Class.new(ExampleGroupDouble) { example("one example") {} }
+            example_group.should_not_receive(:new)
+            example_group.__send__ :run_before_all, nil
+          end
+        end
+        
+        describe "#run_after_all" do
+          it "does not create an instance if after_all_parts are empty" do
+            example_group = Class.new(ExampleGroupDouble) { example("one example") {} }
+            example_group.should_not_receive(:new)
+            example_group.__send__ :run_after_all, true, {}, nil
           end
         end
 

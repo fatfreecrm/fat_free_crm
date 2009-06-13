@@ -6,7 +6,7 @@ module Spec
     describe "an expectation set on nil" do
       
       it "should issue a warning with file and line number information" do
-        expected_warning = "An expectation of :foo was set on nil. Called from #{__FILE__}:#{__LINE__+3}. Use allow_message_expectations_on_nil to disable warnings."
+        expected_warning = %r%An expectation of :foo was set on nil. Called from #{__FILE__}:#{__LINE__+3}(:in `block \(2 levels\) in <module:Mocks>')?. Use allow_message_expectations_on_nil to disable warnings.%
         Kernel.should_receive(:warn).with(expected_warning)
 
         nil.should_receive(:foo)
@@ -33,7 +33,7 @@ module Spec
     describe "#allow_message_expectations_on_nil" do
       
       it "should not effect subsequent examples" do
-        example_group = Class.new(ExampleGroup)
+        example_group = Class.new(::Spec::Example::ExampleGroupDouble)
         example_group.it("when called in one example that doesn't end up setting an expectation on nil") do
                         allow_message_expectations_on_nil
                       end
@@ -43,7 +43,7 @@ module Spec
                         nil.foo
                       end
                               
-        example_group.run.should be_true
+        example_group.run(Spec::Runner.options).should be_true
                   
       end
 

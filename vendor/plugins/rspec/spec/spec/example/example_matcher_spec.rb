@@ -3,52 +3,52 @@ require File.dirname(__FILE__) + '/../../spec_helper.rb'
 module Spec
   module Example
     describe ExampleMatcher, "#matches?" do
-      def match_description(description)
+      def match_examples(examples)
         simple_matcher do |actual, matcher|
           matcher.failure_message = "expected matcher.matches?(#{description.inspect}) to return true, got false"
           matcher.negative_failure_message = "expected matcher.matches?(#{description.inspect}) to return false, got true"
-          actual.matches?(description)
+          actual.matches?(examples)
         end
       end
       
       it "should match correct example_group and example" do
         matcher = ExampleMatcher.new("example_group", "example")
-        matcher.should match_description("example_group example")
+        matcher.should match_examples(["example_group example"])
       end
       
       it "should not match wrong example" do
         matcher = ExampleMatcher.new("example_group", "other example")
-        matcher.should_not match_description("example_group example")
+        matcher.should_not match_examples(["example_group example"])
       end
       
       it "should not match wrong example_group" do
         matcher = ExampleMatcher.new("other example_group", "example")
-        matcher.should_not match_description("example_group example")
+        matcher.should_not match_examples(["example_group example"])
       end
       
       it "should match example only" do
         matcher = ExampleMatcher.new("example_group", "example")
-        matcher.should match_description("example")
+        matcher.should match_examples(["example"])
       end
 
       it "should match example_group only" do
         matcher = ExampleMatcher.new("example_group", "example")
-        matcher.should match_description("example_group")
+        matcher.should match_examples(["example_group"])
       end
 
       it "should match example_group ending with before(:all)" do
         matcher = ExampleMatcher.new("example_group", "example")
-        matcher.should match_description("example_group before(:all)")
+        matcher.should match_examples(["example_group before(:all)"])
       end
       
       it "should escape regexp chars" do
         matcher = ExampleMatcher.new("(con|text)", "[example]")
-        matcher.should_not match_description("con p")
+        matcher.should_not match_examples(["con p"])
       end
       
       it "should match when example_group is modularized" do
         matcher = ExampleMatcher.new("MyModule::MyClass", "example")
-        matcher.should match_description("MyClass example")
+        matcher.should match_examples(["MyClass example"])
       end      
     end
 

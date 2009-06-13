@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper.rb'
 
 class LiarLiarPantsOnFire
-  include Spec::MetaClass
-  extend Spec::MetaClass
   def respond_to?(sym, incl_private=false)
     true
   end
@@ -28,7 +26,7 @@ describe 'should_receive' do
   end
   
   it 'should cleanup after itself' do
-    LiarLiarPantsOnFire.metaclass.instance_methods.should_not include("something")
+    (class << LiarLiarPantsOnFire; self; end).instance_methods.should_not include("something")
   end
 end
 

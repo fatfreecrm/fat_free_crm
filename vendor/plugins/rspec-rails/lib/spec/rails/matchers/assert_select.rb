@@ -5,53 +5,81 @@ module Spec # :nodoc:
     module Matchers
 
       class AssertSelect #:nodoc:
+        attr_reader :options
 
-        def initialize(assertion, spec_scope, *args, &block)
-          @assertion = assertion
+        def initialize(selector_assertion, spec_scope, *args, &block)
+          @args, @options = args_and_options(args)
           @spec_scope = spec_scope
-          @args = args
+          @selector_assertion = selector_assertion
           @block = block
         end
         
         def matches?(response_or_text, &block)
-          if ActionController::TestResponse === response_or_text and
-                   response_or_text.headers.key?('Content-Type') and
-                   !response_or_text.headers['Content-Type'].blank? and
-                   response_or_text.headers['Content-Type'].to_sym == :xml
-            @args.unshift(HTML::Document.new(response_or_text.body, false, true).root)           
-          elsif String === response_or_text
-            @args.unshift(HTML::Document.new(response_or_text).root)
-          end
           @block = block if block
-          begin
-            @spec_scope.send(@assertion, *@args, &@block)
-          rescue ::Test::Unit::AssertionFailedError => @error
-          end
-          
-          @error.nil?
-        end
 
-        def failure_message; @error.message; end
-        def negative_failure_message; "should not #{description}, but did"; end
+          if doc = doc_from(response_or_text)
+            @args.unshift(doc)
+          end
+
+          begin
+            @spec_scope.__send__(@selector_assertion, *@args, &@block)
+            true
+          rescue ::Test::Unit::AssertionFailedError => @error
+            false
+          end
+        end
+        
+        def failure_message_for_should; @error.message; end
+        def failure_message_for_should_not; "should not #{description}, but did"; end
 
         def description
           {
             :assert_select => "have tag#{format_args(*@args)}",
             :assert_select_email => "send email#{format_args(*@args)}",
-          }[@assertion]
+          }[@selector_assertion]
         end
 
       private
 
+        module TestResponseOrString
+          def test_response?
+            ActionController::TestResponse === self and
+                                               !self.headers['Content-Type'].blank? and
+                                               self.headers['Content-Type'].to_sym == :xml
+          end
+        
+          def string?
+            String === self
+          end
+        end
+
+        def doc_from(response_or_text)
+          response_or_text.extend TestResponseOrString
+          if response_or_text.test_response?
+            HTML::Document.new(response_or_text.body, @options[:strict], @options[:xml]).root
+          elsif response_or_text.string?
+            HTML::Document.new(response_or_text, @options[:strict], @options[:xml]).root
+           end
+        end
+
         def format_args(*args)
-          return "" if args.empty?
-          return "(#{arg_list(*args)})"
+          args.empty? ? "" : "(#{arg_list(*args)})"
         end
 
         def arg_list(*args)
-          args.collect do |arg|
+          args.map do |arg|
             arg.respond_to?(:description) ? arg.description : arg.inspect
           end.join(", ")
+        end
+        
+        def args_and_options(args)
+          opts = {:xml => false, :strict => false}
+          if args.last.is_a?(::Hash)
+            opts[:strict] = args.last.delete(:strict) unless args.last[:strict].nil?
+            opts[:xml]    = args.last.delete(:xml)    unless args.last[:xml].nil?
+            args.pop if args.last.empty?
+          end
+          return [args, opts]
         end
         
       end
@@ -63,19 +91,26 @@ module Spec # :nodoc:
       # wrapper for assert_select with additional support for using
       # css selectors to set expectation on Strings. Use this in
       # helper specs, for example, to set expectations on the results
-      # of helper methods.
+      # of helper methods. Also allow specification of how the 
+      # response is parsed using the options :xml and :strict options.
+      # By default, these options are set to false.
       #
       # == Examples
       #
       #   # in a controller spec
       #   response.should have_tag("div", "some text")
       #
+      #   # to force xml and/or strict parsing of the response
+      #   response.should have_tag("div", "some text", :xml => true)
+      #   response.should have_tag("div", "some text", :strict => true)
+      #   response.should have_tag("div", "some text", :xml => true, :strict => false)
+      #
       #   # in a helper spec (person_address_tag is a method in the helper)
       #   person_address_tag.should have_tag("input#person_address")
       #
       # see documentation for assert_select at http://api.rubyonrails.org/
       def have_tag(*args, &block)
-        AssertSelect.new(:assert_select, self, *args, &block)
+        @__current_scope_for_assert_select = AssertSelect.new(:assert_select, self, *args, &block)
       end
     
       # wrapper for a nested assert_select
@@ -86,7 +121,8 @@ module Spec # :nodoc:
       #
       # see documentation for assert_select at http://api.rubyonrails.org/
       def with_tag(*args, &block)
-        should have_tag(*args, &block)
+        args = prepare_args(args, @__current_scope_for_assert_select)
+        @__current_scope_for_assert_select.should have_tag(*args, &block)
       end
     
       # wrapper for a nested assert_select with false
@@ -97,7 +133,8 @@ module Spec # :nodoc:
       #
       # see documentation for assert_select at http://api.rubyonrails.org/
       def without_tag(*args, &block)
-        should_not have_tag(*args, &block)
+        args = prepare_args(args, @__current_scope_for_assert_select)
+        @__current_scope_for_assert_select.should_not have_tag(*args, &block)
       end
     
       # :call-seq:
@@ -126,6 +163,18 @@ module Spec # :nodoc:
       def with_encoded(*args, &block)
         should AssertSelect.new(:assert_select_encoded, self, *args, &block)
       end
+
+    private
+    
+      def prepare_args(args, current_scope = nil)
+        return args if current_scope.nil?
+        defaults = current_scope.options || {:strict => false, :xml => false}
+        args << {} unless args.last.is_a?(::Hash)
+        args.last[:strict] = defaults[:strict] if args.last[:strict].nil?
+        args.last[:xml] = defaults[:xml] if args.last[:xml].nil?
+        args
+      end
+
     end
   end
 end

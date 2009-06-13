@@ -7,9 +7,7 @@ module Spec
 
       module Foo
         module Bar
-          def self.loaded?
-            true
-          end
+          def self.loaded?; true; end
         end
       end
       include Foo
@@ -18,11 +16,23 @@ module Spec
         Bar.should be_loaded
       end
 
-      @@foo = 1
+      @@class_variable = "a class variable"
 
-      it "should allow class variables to be defined" do
-        @@foo.should == 1
+      it "can access class variables in examples in Ruby 1.8" do
+        with_ruby 1.8 do
+          @@class_variable.should == "a class variable"
+        end
       end
+      
+      it "can NOT access class variables in examples in Ruby 1.9" do
+        with_ruby 1.9 do
+          lambda do
+            @@class_variable.should == "a class variable"
+          end.should raise_error(NameError)
+        end
+      end
+      
+      
     end
 
     class ExampleClassVariablePollutionSpec < ExampleGroup
@@ -30,7 +40,7 @@ module Spec
 
       it "should not retain class variables from other Example classes" do
         proc do
-          @@foo
+          @@class_variable
         end.should raise_error
       end
     end
@@ -60,7 +70,7 @@ module Spec
 
     describe ExampleGroup, "#run with failure in example", :shared => true do
       it "should add an example failure to the TestResult" do
-        example_group.run.should be_false
+        example_group.run(options).should be_false
       end
     end
 
@@ -74,7 +84,7 @@ module Spec
           options.backtrace_tweaker = mock("backtrace_tweaker", :null_object => true)
           @reporter = FakeReporter.new(options)
           options.reporter = reporter
-          @example_group = Class.new(ExampleGroup) do
+          @example_group = Class.new(ExampleGroupDouble) do
             describe("example")
             it "does nothing" do
             end
@@ -89,14 +99,29 @@ module Spec
         end
 
         it "should not run when there are no examples" do
-          example_group = Class.new(ExampleGroup) do
+          example_group = Class.new(ExampleGroupDouble) do
             describe("Foobar")
           end
           example_group.examples.should be_empty
 
           reporter = mock("Reporter")
           reporter.should_not_receive(:add_example_group)
-          example_group.run
+          example_group.run(options)
+        end
+
+        it "should report the start of an example run" do
+          reporter.should_receive(:example_started) do |example|
+            example.should equal(example_group.examples[0])
+          end
+          example_group.run(options)
+        end
+
+        it "should report the end of an example run" do
+          reporter.should_receive(:example_finished) do |example, execution_error|
+            example.should equal(example_group.examples[0])
+            execution_error.should be_nil
+          end
+          example_group.run(options)
         end
       
         describe "when before_each fails" do
@@ -114,12 +139,12 @@ module Spec
           end
 
           it "should not run example block" do
-            example_group.run
+            example_group.run(options)
             $example_ran.should be_false
           end
         
           it "should run after_each" do
-            example_group.run
+            example_group.run(options)
             $after_each_ran.should be_true
           end
 
@@ -127,7 +152,7 @@ module Spec
             reporter.should_receive(:example_finished) do |example_group, error|
               error.message.should eql("in before_each")
             end
-            example_group.run
+            example_group.run(options)
           end
         end
 
@@ -142,7 +167,7 @@ module Spec
             ExampleGroup.before(:all) { before_all_ran = true }
             ExampleGroup.after(:all) { after_all_ran = true }
             example_group.it("should") {}
-            example_group.run
+            example_group.run(options)
             before_all_ran.should be_false
             after_all_ran.should be_false
           end
@@ -150,7 +175,7 @@ module Spec
           it "should not run example" do
             example_ran = false
             example_group.it("should") {example_ran = true}
-            example_group.run
+            example_group.run(options)
             example_ran.should be_false
           end
         end
@@ -164,7 +189,7 @@ module Spec
           describe "when specified_examples matches entire ExampleGroup" do
             before do
               examples_that_were_run = @examples_that_were_run
-              @example_group = Class.new(ExampleGroup) do
+              @example_group = Class.new(ExampleGroupDouble) do
                 describe("the ExampleGroup")
                 it("should be run") do
                   examples_that_were_run << 'should be run'
@@ -174,11 +199,11 @@ module Spec
                   examples_that_were_run << 'should also be run'
                 end
               end
-              options.examples = ["the ExampleGroup"]
+              options.parse_example "the ExampleGroup"
             end
 
             it "should not run the Examples in the ExampleGroup" do
-              example_group.run
+              example_group.run(options)
               examples_that_were_run.should == ['should be run', 'should also be run']
             end
           end
@@ -186,17 +211,17 @@ module Spec
           describe ExampleGroup, "#run when specified_examples matches only Example description" do
             before do
               examples_that_were_run = @examples_that_were_run
-              @example_group = Class.new(ExampleGroup) do
+              @example_group = Class.new(ExampleGroupDouble) do
                 describe("example")
                 it("should be run") do
                   examples_that_were_run << 'should be run'
                 end
               end
-              options.examples = ["should be run"]
+              options.parse_example "should be run"
             end
 
             it "should not run the example" do
-              example_group.run
+              example_group.run(options)
               examples_that_were_run.should == ['should be run']
             end
           end
@@ -204,17 +229,17 @@ module Spec
           describe ExampleGroup, "#run when specified_examples does not match an Example description" do
             before do
               examples_that_were_run = @examples_that_were_run
-              @example_group = Class.new(ExampleGroup) do
+              @example_group = Class.new(ExampleGroupDouble) do
                 describe("example")
                 it("should be something else") do
                   examples_that_were_run << 'should be something else'
                 end
               end
-              options.examples = ["does not match anything"]
+              options.parse_example "does not match anything"
             end
 
             it "should not run the example" do
-              example_group.run
+              example_group.run(options)
               examples_that_were_run.should == []
             end
           end
@@ -222,7 +247,7 @@ module Spec
           describe ExampleGroup, "#run when specified_examples matches an Example description" do
             before do
               examples_that_were_run = @examples_that_were_run
-              @example_group = Class.new(ExampleGroup) do
+              @example_group = Class.new(ExampleGroupDouble) do
                 describe("example")
                 it("should be run") do
                   examples_that_were_run << 'should be run'
@@ -231,25 +256,21 @@ module Spec
                   examples_that_were_run << 'should not be run'
                 end
               end
-              options.examples = ["should be run"]
+              options.parse_example "should be run"
             end
 
-            it "should run only the example, when there is only one" do
-              example_group.run
+            it "should run only the example" do
+              example_group.run(options)
               examples_that_were_run.should == ["should be run"]
             end
-
-            it "should run only the one example" do
-              example_group.run
-              examples_that_were_run.should == ["should be run"]          end
           end
         end
 
         describe ExampleGroup, "#run with success" do
           before do
-            @special_example_group = Class.new(ExampleGroup)
+            @special_example_group = Class.new(ExampleGroupDouble)
             ExampleGroupFactory.register(:special, @special_example_group)
-            @not_special_example_group = Class.new(ExampleGroup)
+            @not_special_example_group = Class.new(ExampleGroupDouble)
             ExampleGroupFactory.register(:not_special, @not_special_example_group)
           end
 
@@ -257,15 +278,15 @@ module Spec
             ExampleGroupFactory.reset
           end
 
-          it "should send reporter add_example_group" do
-            example_group.run
-            reporter.example_groups.should == [example_group]
+          it "should send reporter example_group_started" do
+            reporter.should_receive(:example_group_started)
+            example_group.run(options)
           end
 
           it "should run example on run" do
             example_ran = false
             example_group.it("should") {example_ran = true}
-            example_group.run
+            example_group.run(options)
             example_ran.should be_true
           end
 
@@ -274,7 +295,7 @@ module Spec
             example_group.before(:all) {before_all_run_count_run_count += 1}
             example_group.it("test") {true}
             example_group.it("test2") {true}
-            example_group.run
+            example_group.run(options)
             before_all_run_count_run_count.should == 1
           end
 
@@ -283,7 +304,7 @@ module Spec
             example_group.after(:all) {after_all_run_count += 1}
             example_group.it("test") {true}
             example_group.it("test2") {true}
-            example_group.run
+            example_group.run(options)
             after_all_run_count.should == 1
             @reporter.rspec_verify
           end
@@ -294,7 +315,7 @@ module Spec
             example_group.before(:all) { @instance_var = context_instance_value_in }
             example_group.after(:all) { context_instance_value_out = @instance_var }
             example_group.it("test") {true}
-            example_group.run
+            example_group.run(options)
             context_instance_value_in.should == context_instance_value_out
           end
 
@@ -303,7 +324,7 @@ module Spec
             context_instance_value_out = ""
             example_group.before(:all) { @instance_var = context_instance_value_in }
             example_group.it("test") {context_instance_value_out = @instance_var}
-            example_group.run
+            example_group.run(options)
             context_instance_value_in.should == context_instance_value_out
           end
 
@@ -317,11 +338,11 @@ module Spec
             @special_example_group.before(:all) { fiddle << "Example.before(:all, :type => :special)" }
             @special_example_group.prepend_before(:all) { fiddle << "Example.prepend_before(:all, :type => :special)" }
 
-            example_group = Class.new(ExampleGroup) do
+            example_group = Class.new(ExampleGroupDouble) do
               describe("I'm not special", :type => :not_special)
               it "does nothing"
             end
-            example_group.run
+            example_group.run(options)
             fiddle.should == [
               'Example.prepend_before(:all)',
               'Example.before(:all)',
@@ -341,7 +362,7 @@ module Spec
 
             example_group = Class.new(@special_example_group).describe("I'm a special example_group") {}
             example_group.it("test") {true}
-            example_group.run
+            example_group.run(options)
             fiddle.should == [
               'Example.prepend_before(:all)',
               'Example.before(:all)',
@@ -361,7 +382,7 @@ module Spec
             example_group.before(:all) { fiddle << "before(:all)" }
             example_group.prepend_before(:each) { fiddle << "prepend_before(:each)" }
             example_group.before(:each) { fiddle << "before(:each)" }
-            example_group.run
+            example_group.run(options)
             fiddle.should == [
               'Example.prepend_before(:all)',
               'Example.before(:all)',
@@ -380,7 +401,7 @@ module Spec
             example_group.append_after(:all) { fiddle << "append_after(:all)" }
             ExampleGroup.after(:all) { fiddle << "Example.after(:all)" }
             ExampleGroup.append_after(:all) { fiddle << "Example.append_after(:all)" }
-            example_group.run
+            example_group.run(options)
             fiddle.should == [
               'after(:each)',
               'append_after(:each)',
@@ -412,7 +433,7 @@ module Spec
               mod1_method
               mod2_method
             end
-            example_group.run
+            example_group.run(options)
             mod1_method_called.should be_true
             mod2_method_called.should be_true
           end
@@ -427,56 +448,13 @@ module Spec
             example_group = Class.new(@special_example_group).describe("I'm special", :type => :special) do
               it "does nothing"
             end
-            example_group.run
+            example_group.run(options)
 
             example_group.included_modules.should include(mod1)
             example_group.included_modules.should include(mod2)
             example_group.included_modules.should_not include(mod3)
           end
 
-          it "should include any predicate_matchers included using configuration" do
-            $included_predicate_matcher_found = false
-            Spec::Runner.configuration.predicate_matchers[:do_something] = :does_something?
-            example_group = Class.new(ExampleGroup) do
-              describe('example')
-              it "should respond to do_something" do
-                $included_predicate_matcher_found = respond_to?(:do_something)
-              end
-            end
-            example_group.run
-            $included_predicate_matcher_found.should be(true)
-          end
-
-          it "should use a mock framework set up in config" do
-            mod = Module.new do
-              class << self
-                def included(mod)
-                  $included_module = mod
-                end
-              end
-
-              def teardown_mocks_for_rspec
-                $torn_down = true
-              end
-            end
-
-            begin
-              $included_module = nil
-              $torn_down = true
-              Spec::Runner.configuration.mock_with mod
-
-              example_group = Class.new(ExampleGroup) do
-                describe('example')
-                it "does nothing"
-              end
-              example_group.run
-
-              $included_module.should_not be_nil
-              $torn_down.should == true
-            ensure
-              Spec::Runner.configuration.mock_with :rspec
-            end
-          end
         end
 
         describe ExampleGroup, "#run with pending example that has a failing assertion" do
@@ -488,7 +466,7 @@ module Spec
 
           it "should send example_pending to formatter" do
             @formatter.should_receive(:example_pending).with("example", "should be pending", "Example fails")
-            example_group.run
+            example_group.run(options)
           end
         end
 
@@ -503,7 +481,7 @@ module Spec
 
           it "should send example_pending to formatter" do
             @formatter.should_receive(:example_pending).with("example", "should be pending", "Example passes")
-            example_group.run
+            example_group.run(options)
           end
         end
 
@@ -517,32 +495,32 @@ module Spec
           it "should not run any example" do
             spec_ran = false
             example_group.it("test") {spec_ran = true}
-            example_group.run
+            example_group.run(options)
             spec_ran.should be_false
           end
 
           it "should run ExampleGroup after(:all)" do
             after_all_ran = false
             ExampleGroup.after(:all) { after_all_ran = true }
-            example_group.run
+            example_group.run(options)
             after_all_ran.should be_true
           end
 
           it "should run example_group after(:all)" do
             after_all_ran = false
             example_group.after(:all) { after_all_ran = true }
-            example_group.run
+            example_group.run(options)
             after_all_ran.should be_true
           end
 
           it "should supply before(:all) as description" do
-            @reporter.should_receive(:failure) do |example, error|
+            @reporter.should_receive(:example_failed) do |example, error|
               example.description.should eql("before(:all)")
               error.message.should eql("before(:all) failure")
             end
 
             example_group.it("test") {true}
-            example_group.run
+            example_group.run(options)
           end
         end
 
@@ -556,7 +534,7 @@ module Spec
           it "should run after(:all)" do
             after_all_ran = false
             ExampleGroup.after(:all) { after_all_ran = true }
-            example_group.run
+            example_group.run(options)
             after_all_ran.should be_true
           end
         end
@@ -571,7 +549,7 @@ module Spec
           it "should run after(:all)" do
             after_all_ran = false
             ExampleGroup.after(:all) { after_all_ran = true }
-            example_group.run
+            example_group.run(options)
             after_all_ran.should be_true
           end
         end
@@ -600,7 +578,7 @@ module Spec
               example.should equal(example)
               error.message.should eql("first")
             end
-            example_group.run
+            example_group.run(options)
             example_group.first_after_ran.should be_true
             example_group.second_after_ran.should be_true
           end
@@ -629,7 +607,7 @@ module Spec
             reporter.should_receive(:example_finished) do |name, error|
               error.message.should eql("first")
             end
-            example_group.run
+            example_group.run(options)
             example_group.first_before_ran.should be_true
             example_group.second_before_ran.should be_false
           end
@@ -643,34 +621,22 @@ module Spec
           end
 
           it "should return false" do
-            example_group.run.should be_false
+            example_group.run(options).should be_false
           end
         end
       end
     end
 
-    class ExampleSubclass < ExampleGroup
-    end
-
     describe ExampleGroup, "subclasses" do
-      after do
-        ExampleGroupFactory.reset
-      end
-
       it "should have access to the described_type" do
-        example_group = Class.new(ExampleSubclass) do
-          describe(Array)
-        end
+        example_group = Class.new(ExampleGroupDouble).describe(Array)
         example_group.__send__(:described_type).should == Array
       end
 
       it "should concat descriptions when nested" do
-        example_group = Class.new(ExampleSubclass) do
-          describe(Array)
-          $nested_group = describe("when empty") do
-          end
-        end
-        $nested_group.description.to_s.should == "Array when empty"
+        example_group = Class.new(ExampleGroupDouble).describe(Array)
+        nested_group = example_group.describe("when empty") do; end
+        nested_group.description.to_s.should == "Array when empty"
       end
     end
   end

@@ -12,14 +12,21 @@ describe Spec::Expectations, "#fail_with with no diff" do
     }.should fail_with("the message")
   end
   
-  it "should handle an Array" do
-    lambda {
-      Spec::Expectations.fail_with ["the message","expected","actual"]
-    }.should fail_with("the message")
-  end
-
   after(:each) do
     Spec::Expectations.differ = @old_differ
+  end
+end
+
+describe Spec::Expectations, "#fail_with with Array" do
+  before(:each) do
+    Spec.stub!(:warn)
+  end
+  
+  it "is deprecated" do
+    Spec.should_receive(:warn)
+    lambda {
+      Spec::Expectations.fail_with ["message", "expected", "actual"]
+    }.should raise_error
   end
 end
 
@@ -57,14 +64,24 @@ describe Spec::Expectations, "#fail_with with diff" do
       Spec::Expectations.fail_with "the message", lambda {}, lambda {}
     }.should fail_with("the message")
   end
-  
-  it "should call differ if expected/actual are presented in an Array with message" do
-    @differ.should_receive(:diff_as_string).with("actual","expected").and_return("diff")
-    lambda {
-      Spec::Expectations.fail_with(["the message", "expected", "actual"])
-    }.should fail_with(/the message\nDiff:diff/)
+
+  after(:each) do
+    Spec::Expectations.differ = @old_differ
   end
-  
+end
+
+describe Spec::Expectations, "#fail_with with a nil message" do
+  before(:each) do
+    @old_differ = Spec::Expectations.differ
+    Spec::Expectations.differ = nil
+  end
+
+  it "should handle just a message" do
+    lambda {
+      Spec::Expectations.fail_with nil
+    }.should raise_error(ArgumentError, /Failure message is nil\. Does your matcher define the appropriate failure_message_for_\* method to return a string\?/)
+  end
+
   after(:each) do
     Spec::Expectations.differ = @old_differ
   end

@@ -1,9 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '<%= '/..' * class_nesting_depth %>/../../spec_helper')
 
-<% output_attributes = attributes.reject{|attribute| attribute.name =~ /_id/ || [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
+<% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
 describe "/<%= table_name %>/new.<%= default_file_extension %>" do
   include <%= controller_class_name %>Helper
-  
+
   before(:each) do
     assigns[:<%= file_name %>] = stub_model(<%= class_name %>,
       :new_record? => true<%= output_attributes.empty? ? '' : ',' %>
@@ -13,9 +13,9 @@ describe "/<%= table_name %>/new.<%= default_file_extension %>" do
     )
   end
 
-  it "should render new form" do
-    render "/<%= table_name %>/new.<%= default_file_extension %>"
-    
+  it "renders new <%= file_name %> form" do
+    render
+
     response.should have_tag("form[action=?][method=post]", <%= table_name %>_path) do
 <% for attribute in output_attributes -%>
       with_tag("<%= attribute.input_type -%>#<%= file_name %>_<%= attribute.name %>[name=?]", "<%= file_name %>[<%= attribute.name %>]")
@@ -23,5 +23,3 @@ describe "/<%= table_name %>/new.<%= default_file_extension %>" do
     end
   end
 end
-
-

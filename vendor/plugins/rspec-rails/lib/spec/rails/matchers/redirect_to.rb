@@ -4,21 +4,35 @@ module Spec
 
       class RedirectTo  #:nodoc:
 
+        include ActionController::StatusCodes
+
         def initialize(request, expected)
           @expected = expected
           @request = request
         end
 
-        def matches?(response)
+        def matches?(response_or_controller)
+          response  = response_or_controller.respond_to?(:response) ?
+                      response_or_controller.response :
+                      response_or_controller
+
           @redirected = response.redirect?
           @actual = response.redirect_url
           return false unless @redirected
+
+          if @expected_status
+            @actual_status = interpret_status(response.code.to_i)
+            @status_matched = @expected_status == @actual_status
+          else
+            @status_matched = true
+          end
+
           if @expected.instance_of? Hash
             return false unless @actual =~ %r{^\w+://#{@request.host}}
             return false unless actual_redirect_to_valid_route
-            return actual_hash == expected_hash
+            return actual_hash == expected_hash && @status_matched
           else
-            return @actual == expected_url
+            return @actual == expected_url && @status_matched
           end
         end
 
@@ -40,14 +54,19 @@ module Spec
 
         def path_hash(url)
           path = url.sub(%r{^\w+://#{@request.host}(?::\d+)?}, "").split("?", 2)[0]
-          ActionController::Routing::Routes.recognize_path path
+          ActionController::Routing::Routes.recognize_path path, { :method => :get }
         end
 
         def query_hash(url)
           query = url.split("?", 2)[1] || ""
-          QueryParameterParser.parse_query_parameters(query, @request)
+          Rack::Utils.parse_query(query)
         end
 
+        def with(options)
+          @expected_status = interpret_status(options[:status])
+          self
+        end
+        
        def expected_url
           case @expected
             when Hash
@@ -61,30 +80,24 @@ module Spec
           end
         end
 
-        def failure_message
+        def failure_message_for_should
           if @redirected
-            return %Q{expected redirect to #{@expected.inspect}, got redirect to #{@actual.inspect}}
+            if @status_matched
+              return %Q{expected redirect to #{@expected.inspect}, got redirect to #{@actual.inspect}}
+            else
+              return %Q{expected redirect to #{@expected.inspect} with status #{@expected_status}, got #{@actual_status}}
+            end
           else
             return %Q{expected redirect to #{@expected.inspect}, got no redirect}
           end
         end
 
-        def negative_failure_message
+        def failure_message_for_should_not
             return %Q{expected not to be redirected to #{@expected.inspect}, but was} if @redirected
         end
 
         def description
-          "redirect to #{@actual.inspect}"
-        end
-
-        class QueryParameterParser
-          def self.parse_query_parameters(query, request)
-            if defined?(CGIMethods)
-              CGIMethods.parse_query_parameters(query)
-            else
-              request.class.parse_query_parameters(query)
-            end
-          end
+          "redirect to #{@expected.inspect}"
         end
       end
 

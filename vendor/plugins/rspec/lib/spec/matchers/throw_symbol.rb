@@ -5,7 +5,7 @@ module Spec
       def initialize(expected_symbol = nil, expected_arg=nil)
         @expected_symbol = expected_symbol
         @expected_arg = expected_arg
-        @caught_symbol = nil
+        @caught_symbol = @caught_arg = nil
       end
       
       def matches?(given_proc)
@@ -35,15 +35,13 @@ module Spec
             if @expected_arg.nil?
               return @caught_symbol == @expected_symbol
             else
-              # puts [@caught_symbol, @expected_symbol].inspect
-              # puts [@caught_arg, @expected_arg].inspect
-              return @caught_symbol == @expected_symbol && @caught_arg == @expected_arg
+              return (@caught_symbol == @expected_symbol) & (@caught_arg == @expected_arg)
             end
           end
         end
       end
 
-      def failure_message
+      def failure_message_for_should
         if @caught_symbol
           "expected #{expected}, got #{@caught_symbol.inspect}"
         else
@@ -51,7 +49,7 @@ module Spec
         end
       end
       
-      def negative_failure_message
+      def failure_message_for_should_not
         if @expected_symbol
           "expected #{expected} not to be thrown"
         else

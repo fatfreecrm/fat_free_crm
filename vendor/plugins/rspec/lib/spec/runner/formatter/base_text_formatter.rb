@@ -1,4 +1,5 @@
 require 'spec/runner/formatter/base_formatter'
+require 'fileutils'
 
 module Spec
   module Runner
@@ -7,42 +8,47 @@ module Spec
       # non-text based ones too - just ignore the +output+ constructor
       # argument.
       class BaseTextFormatter < BaseFormatter
-        attr_reader :output, :pending_examples
-        # Creates a new instance that will write to +where+. If +where+ is a
+        attr_reader :output, :example_group
+        # Creates a new instance that will write to +output+. If +output+ is a
         # String, output will be written to the File with that name, otherwise
-        # +where+ is exected to be an IO (or an object that responds to #puts and #write).
-        def initialize(options, where)
-          super
-          if where.is_a?(String)
-            @output = File.open(where, 'w')
+        # +output+ is exected to be an IO (or an object that responds to #puts
+        # and #write).
+        def initialize(options, output)
+          @options = options
+          if String === output
+            FileUtils.mkdir_p(File.dirname(output))
+            @output = File.open(output, 'w')
           else
-            @output = where
+            @output = output
           end
           @pending_examples = []
         end
+
+        def example_group_started(example_group_proxy)
+          @example_group = example_group_proxy
+        end
         
-        def example_pending(example, message, pending_caller)
-          @pending_examples << [example.full_description, message, pending_caller]
+        def example_pending(example, message, deprecated_pending_location=nil)
+          @pending_examples << ["#{@example_group.description} #{example.description}", message, example.location]
         end
         
         def dump_failure(counter, failure)
           @output.puts
           @output.puts "#{counter.to_s})"
-          @output.puts colourise("#{failure.header}\n#{failure.exception.message}", failure)
+          @output.puts colorize_failure("#{failure.header}\n#{failure.exception.message}", failure)
           @output.puts format_backtrace(failure.exception.backtrace)
           @output.flush
         end
         
-        def colourise(s, failure)
-          if(failure.expectation_not_met?)
-            red(s)
-          elsif(failure.pending_fixed?)
-            blue(s)
-          else
-            magenta(s)
-          end
+        def colorize_failure(message, failure)
+          failure.pending_fixed? ? blue(message) : red(message)
         end
-      
+        
+        def colourise(message, failure)
+          Spec::deprecate("BaseTextFormatter#colourise", "colorize_failure")
+          colorize_failure(message, failure)
+        end
+        
         def dump_summary(duration, example_count, failure_count, pending_count)
           return if dry_run?
           @output.puts
@@ -77,9 +83,7 @@ module Spec
         end
         
         def close
-          if IO === @output && @output != $stdout
-            @output.close 
-          end
+          @output.close  if (IO === @output) & (@output != $stdout)
         end
         
         def format_backtrace(backtrace)
@@ -90,11 +94,15 @@ module Spec
       protected
 
         def colour?
-          @options.colour ? true : false
+          !!@options.colour
         end
 
         def dry_run?
-          @options.dry_run ? true : false
+          !!@options.dry_run
+        end
+        
+        def autospec?
+          !!@options.autospec
         end
         
         def backtrace_line(line)
@@ -102,7 +110,7 @@ module Spec
         end
 
         def colour(text, colour_code)
-          return text unless colour? && output_to_tty?
+          return text unless ENV['RSPEC_COLOR'] || (colour? & (autospec? || output_to_tty?))
           "#{colour_code}#{text}\e[0m"
         end
 
@@ -116,10 +124,13 @@ module Spec
         
         def green(text); colour(text, "\e[32m"); end
         def red(text); colour(text, "\e[31m"); end
-        def magenta(text); colour(text, "\e[35m"); end
         def yellow(text); colour(text, "\e[33m"); end
         def blue(text); colour(text, "\e[34m"); end
         
+        def magenta(text)
+          Spec::deprecate("BaseTextFormatter#magenta")
+          red(text)
+        end
       end
     end
   end

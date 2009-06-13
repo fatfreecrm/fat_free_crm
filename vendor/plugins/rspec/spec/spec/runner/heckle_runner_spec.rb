@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper.rb'
-unless [/mswin/, /java/].detect{|p| p =~ RUBY_PLATFORM}
+unless [/mswin/, /java/].detect{|p| p =~ RUBY_PLATFORM} || Spec::Ruby.version.to_f == 1.9
   require 'spec/runner/heckle_runner'
 
   module Foo

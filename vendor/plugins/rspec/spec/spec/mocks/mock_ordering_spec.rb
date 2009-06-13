@@ -78,6 +78,16 @@ module Spec
         @mock.ignored_1
         @mock.rspec_verify
       end
+      
+      it "should pass when duplicates exist" do
+        @mock.should_receive(:a).ordered
+        @mock.should_receive(:b).ordered
+        @mock.should_receive(:a).ordered
+        
+        @mock.a
+        @mock.b
+        @mock.a
+      end
             
     end
   end

@@ -1,5 +1,5 @@
 class RenderSpecController < ApplicationController
-  set_view_path File.join(File.dirname(__FILE__), "..", "views")
+  prepend_view_path File.join(File.dirname(__FILE__), "..", "views")
   
   def some_action
     respond_to do |format|

@@ -1,22 +1,21 @@
 require 'erb'
 require 'spec/runner/formatter/base_text_formatter'
+require 'spec/runner/formatter/no_op_method_missing'
 
 module Spec
   module Runner
     module Formatter
       class HtmlFormatter < BaseTextFormatter
         include ERB::Util # for the #h method
+        include NOOPMethodMissing
         
         def initialize(options, output)
           super
           @example_group_number = 0
           @example_number = 0
+          @header_red = nil
         end
         
-        def method_missing(sym, *args)
-          # no-op
-        end
-
         # The number of the currently running example_group
         def example_group_number
           @example_group_number
@@ -35,9 +34,8 @@ module Spec
           @output.flush
         end
 
-        def add_example_group(example_group)
+        def example_group_started(example_group)
           super
-          @example_group_red = false
           @example_group_red = false
           @example_group_number += 1
           unless example_group_number == 1
@@ -85,7 +83,7 @@ module Spec
           @output.flush
         end
 
-        def example_pending(example, message, pending_caller)
+        def example_pending(example, message, deprecated_pending_location=nil)
           @output.puts "    <script type=\"text/javascript\">makeYellow('rspec-header');</script>" unless @header_red
           @output.puts "    <script type=\"text/javascript\">makeYellow('example_group_#{example_group_number}');</script>" unless @example_group_red
           move_progress
@@ -154,14 +152,6 @@ module Spec
     font-size: 80%;
   }
   </style>
-</head>
-<body>
-EOF
-        end
-
-        def report_header
-          <<-EOF
-<div class="rspec-report">
   <script type="text/javascript">
     // <![CDATA[
 #{global_scripts}
@@ -170,9 +160,19 @@ EOF
   <style type="text/css">
 #{global_styles}
   </style>
+</head>
+<body>
+EOF
+        end
+
+        def report_header
+          <<-EOF
+<div class="rspec-report">
 
 <div id="rspec-header">
-  <h1>RSpec Results</h1>
+  <div id="label">
+    <h1>RSpec Code Examples</h1>
+  </div>
 
   <div id="summary">
     <p id="totals">&nbsp;</p>
@@ -212,7 +212,7 @@ EOF
         def global_styles
           <<-EOF
 #rspec-header {
-  background: #65C400; color: #fff;
+  background: #65C400; color: #fff; height: 4em;
 }
 
 .rspec-report h1 {
@@ -220,15 +220,16 @@ EOF
   padding: 10px;
   font-family: "Lucida Grande", Helvetica, sans-serif;
   font-size: 1.8em;
+  position: absolute;
 }
 
 #summary {
   margin: 0; padding: 5px 10px;
   font-family: "Lucida Grande", Helvetica, sans-serif;
   text-align: right;
-  position: absolute;
   top: 0px;
   right: 0px;
+  float:right;
 }
 
 #summary p {

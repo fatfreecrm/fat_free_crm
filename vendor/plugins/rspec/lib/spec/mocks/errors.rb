@@ -1,6 +1,6 @@
 module Spec
   module Mocks
-    class MockExpectationError < StandardError
+    class MockExpectationError < Exception
     end
     
     class AmbiguousReturnError < StandardError

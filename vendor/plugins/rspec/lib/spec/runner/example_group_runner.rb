@@ -6,6 +6,7 @@ module Spec
       end
 
       def load_files(files)
+        $KCODE = 'u' if RUBY_VERSION.to_f < 1.9
         # It's important that loading files (or choosing not to) stays the
         # responsibility of the ExampleGroupRunner. Some implementations (like)
         # the one using DRb may choose *not* to load files, but instead tell
@@ -19,14 +20,15 @@ module Spec
         prepare
         success = true
         example_groups.each do |example_group|
-          success = success & example_group.run
+          success = success & example_group.run(@options)
         end
         return success
       ensure
         finish
       end
 
-      protected
+    protected
+
       def prepare
         reporter.start(number_of_examples)
         example_groups.reverse! if reverse
@@ -53,7 +55,5 @@ module Spec
         @options.number_of_examples
       end
     end
-    # TODO: BT - Deprecate BehaviourRunner?
-    BehaviourRunner = ExampleGroupRunner
   end
 end

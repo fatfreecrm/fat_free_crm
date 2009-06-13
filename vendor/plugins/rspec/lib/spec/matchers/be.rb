@@ -2,9 +2,12 @@ module Spec
   module Matchers
     
     class Be #:nodoc:
+      include Spec::Matchers::Pretty
+      
       def initialize(*args)
         @expected = args.empty? ? true : set_expected(args.shift)
         @args = args
+        @comparison_method = nil
       end
       
       def matches?(actual)
@@ -26,24 +29,24 @@ module Spec
         end
       end
       
-      def failure_message
+      def failure_message_for_should
         handling_predicate? ?
           "expected #{predicate}#{args_to_s} to return true, got #{@result.inspect}" :
           "expected #{@comparison_method} #{expected}, got #{@actual.inspect}".gsub('  ',' ')
       end
       
-      def negative_failure_message
+      def failure_message_for_should_not
         if handling_predicate?
           "expected #{predicate}#{args_to_s} to return false, got #{@result.inspect}"
         else
           message = <<-MESSAGE
 'should_not be #{@comparison_method} #{expected}' not only FAILED,
-it reads really poorly.
+it is a bit confusing.
           MESSAGE
           
           raise message << ([:===,:==].include?(@comparison_method) ?
-            "Why don't you try expressing it without the \"be\"?" :
-            "Why don't you try expressing it in the positive?")
+            "It might be more clearly expressed without the \"be\"?" :
+            "It might be more clearly expressed in the positive?")
         end
       end
       
@@ -60,12 +63,7 @@ it reads really poorly.
 
       private
         def match_or_compare(actual)
-          case @expected
-          when TrueClass
-            @actual
-          else
-            @actual.__send__(comparison_method, @expected)
-          end
+          TrueClass === @expected ? @actual : @actual.__send__(comparison_method, @expected)
         end
       
         def comparison_method
@@ -87,7 +85,7 @@ it reads really poorly.
         def parse_expected(expected)
           ["be_an_","be_a_","be_"].each do |prefix|
             handling_predicate!
-            if expected.starts_with?(prefix)
+            if expected.to_s =~ /^#{prefix}/
               set_prefix(prefix)
               expected = expected.to_s.sub(prefix,"")
               [true, false, nil].each do |val|
@@ -103,6 +101,9 @@ it reads really poorly.
         end
         
         def prefix
+          # FIXME - this is a bit goofy - but we get failures
+          # if just defining @prefix = nil in initialize
+          @prefix = nil unless defined?(@prefix)
           @prefix
         end
 
@@ -112,7 +113,9 @@ it reads really poorly.
         
         def handling_predicate?
           return false if [true, false, nil].include?(expected)
-          return @handling_predicate
+          # FIXME - this is a bit goofy - but we get failures
+          # if just defining @handling_predicate = nil or false in initialize
+          return defined?(@handling_predicate) ? @handling_predicate : nil
         end
 
         def predicate
@@ -147,19 +150,8 @@ it reads really poorly.
           split_words(prefix)
         end
 
-        def split_words(sym)
-          sym.to_s.gsub(/_/,' ')
-        end
-
         def args_to_sentence
-          case @args.length
-            when 0
-              ""
-            when 1
-              " #{@args[0]}"
-            else
-              " #{@args[0...-1].join(', ')} and #{@args[-1]}"
-          end
+          to_sentence(@args)
         end
         
     end
@@ -168,9 +160,9 @@ it reads really poorly.
     #   should be_true
     #   should be_false
     #   should be_nil
-    #   should be_arbitrary_predicate(*args)
+    #   should be_[arbitrary_predicate](*args)
     #   should_not be_nil
-    #   should_not be_arbitrary_predicate(*args)
+    #   should_not be_[arbitrary_predicate](*args)
     #
     # Given true, false, or nil, will pass if actual value is
     # true, false or nil (respectively). Given no args means
@@ -192,12 +184,17 @@ it reads really poorly.
     #   target.should_not be_nil
     #
     #   collection.should be_empty #passes if target.empty?
-    #   "this string".should be_an_intance_of(String)
-    #
     #   target.should_not be_empty #passes unless target.empty?
     #   target.should_not be_old_enough(16) #passes unless target.old_enough?(16)
     def be(*args)
       Matchers::Be.new(*args)
     end
+
+    # passes if target.kind_of?(klass)
+    def be_a(klass)
+      be_a_kind_of(klass)
+    end
+    
+    alias_method :be_an, :be_a
   end
 end

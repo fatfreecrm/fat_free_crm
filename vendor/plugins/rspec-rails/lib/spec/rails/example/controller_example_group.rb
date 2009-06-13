@@ -3,21 +3,22 @@ module Spec
     module Example
       # Controller Examples live in $RAILS_ROOT/spec/controllers/.
       #
-      # Controller Examples use Spec::Rails::Example::ControllerExampleGroup, which supports running specs for
-      # Controllers in two modes, which represent the tension between the more granular
-      # testing common in TDD and the more high level testing built into
-      # rails. BDD sits somewhere in between: we want to a balance between
-      # specs that are close enough to the code to enable quick fault
-      # isolation and far enough away from the code to enable refactoring
-      # with minimal changes to the existing specs.
+      # Controller Examples use Spec::Rails::Example::ControllerExampleGroup,
+      # which supports running specs for Controllers in two modes, which
+      # represent the tension between the more granular testing common in TDD
+      # and the more high level testing built into rails. BDD sits somewhere
+      # in between: we want to a balance between specs that are close enough
+      # to the code to enable quick fault isolation and far enough away from
+      # the code to enable refactoring with minimal changes to the existing
+      # specs.
       #
       # == Isolation mode (default)
       #
-      # No dependencies on views because none are ever rendered. The
-      # benefit of this mode is that can spec the controller completely
-      # independent of the view, allowing that responsibility to be
-      # handled later, or by somebody else. Combined w/ separate view
-      # specs, this also provides better fault isolation.
+      # No dependencies on views because none are ever rendered. The benefit
+      # of this mode is that can spec the controller completely independent of
+      # the view, allowing that responsibility to be handled later, or by
+      # somebody else. Combined w/ separate view specs, this also provides
+      # better fault isolation.
       #
       # == Integration mode
       #
@@ -28,50 +29,30 @@ module Spec
       #     integrate_views
       #     ...
       #
-      # In this mode, controller specs are run in the same way that
-      # rails functional tests run - one set of tests for both the
-      # controllers and the views. The benefit of this approach is that
-      # you get wider coverage from each spec. Experienced rails
-      # developers may find this an easier approach to begin with, however
-      # we encourage you to explore using the isolation mode and revel
-      # in its benefits.
+      # In this mode, controller specs are run in the same way that rails
+      # functional tests run - one set of tests for both the controllers and
+      # the views. The benefit of this approach is that you get wider coverage
+      # from each spec. Experienced rails developers may find this an easier
+      # approach to begin with, however we encourage you to explore using the
+      # isolation mode and revel in its benefits.
       #
       # == Expecting Errors
       #
-      # Rspec on Rails will raise errors that occur in controller actions.
-      # In contrast, Rails will swallow errors that are raised in controller
-      # actions and return an error code in the header. If you wish to override
-      # Rspec and have Rail's default behaviour,tell the controller to use
-      # rails error handling ...
+      # Rspec on Rails will raise errors that occur in controller actions and
+      # are not rescued or handeled with rescue_from.
       #
-      #   before(:each) do
-      #     controller.use_rails_error_handling!
-      #   end
-      #
-      # When using Rail's error handling, you can expect error codes in headers ...
-      #
-      #   it "should return an error in the header" do
-      #     response.should be_error
-      #   end
-      #
-      #   it "should return a 501" do
-      #     response.response_code.should == 501
-      #   end
-      #
-      #   it "should return a 501" do
-      #     response.code.should == "501"
-      #   end
       class ControllerExampleGroup < FunctionalExampleGroup
         class << self
                     
-          # Use this to instruct RSpec to render views in your controller examples (Integration Mode).
+          # Use integrate_views to instruct RSpec to render views in
+          # your controller examples in Integration mode.
           #
           #   describe ThingController do
           #     integrate_views
           #     ...
           #
-          # See Spec::Rails::Example::ControllerExampleGroup for more information about
-          # Integration and Isolation modes.
+          # See Spec::Rails::Example::ControllerExampleGroup for more
+          # information about Integration and Isolation modes.
           def integrate_views(integrate_views = true)
             @integrate_views = integrate_views
           end
@@ -81,23 +62,38 @@ module Spec
           end
           
           def inherited(klass) # :nodoc:
-            klass.controller_class_name = controller_class_name
             klass.integrate_views(integrate_views?)
+            klass.subject { controller }
             super
           end
 
-          # You MUST provide a controller_name within the context of
+          def set_description(*args) # :nodoc:
+            super
+            if described_class && described_class.ancestors.include?(ActionController::Base)
+              controller_klass = if superclass.controller_class.ancestors.include?(ActionController::Base)
+                superclass.controller_class
+              else
+                described_class
+              end
+              tests controller_klass
+            end
+          end
+
+          # When you don't pass a controller to describe, like this:
+          #
+          #   describe ThingsController do
+          #
+          # ... then you must provide a controller_name within the context of
           # your controller specs:
           #
           #   describe "ThingController" do
           #     controller_name :thing
           #     ...
           def controller_name(name)
-            @controller_class_name = "#{name}_controller".camelize
+            tests "#{name}_controller".camelize.constantize
           end
-          attr_accessor :controller_class_name # :nodoc:
         end
-
+        
         before(:each) do
           # Some Rails apps explicitly disable ActionMailer in environment.rb
           if defined?(ActionMailer)
@@ -106,103 +102,102 @@ module Spec
           end
 
           unless @controller.class.ancestors.include?(ActionController::Base)
-            Spec::Expectations.fail_with <<-EOE
-            You have to declare the controller name in controller specs. For example:
-            describe "The ExampleController" do
-            controller_name "example" #invokes the ExampleController
-            end
-            EOE
+            Spec::Expectations.fail_with <<-MESSAGE
+Controller specs need to know what controller is being specified. You can
+indicate this by passing the controller to describe():
+
+  describe MyController do
+    
+or by declaring the controller's name
+
+  describe "a MyController" do
+    controller_name :my #invokes the MyController
+end
+MESSAGE
           end
-          (class << @controller; self; end).class_eval do
-            def controller_path #:nodoc:
-              self.class.name.underscore.gsub('_controller', '')
-            end
-            include ControllerInstanceMethods
-          end
-          @controller.integrate_views! if @integrate_views
+          @controller.extend ControllerInstanceMethods
+          @controller.integrate_views! if integrate_views?
           @controller.session = session
         end
 
         attr_reader :response, :request, :controller
+        
+        def integrate_views?
+          @integrate_views || self.class.integrate_views?
+        end
 
-        def initialize(defined_description, options={}, &implementation) #:nodoc:
-          super
-          controller_class_name = self.class.controller_class_name
-          if controller_class_name
-            @controller_class_name = controller_class_name.to_s
+        # Bypasses any error rescues defined with rescue_from. Useful
+        # in cases in which you want to specify errors coming out of
+        # actions that might be caught by a rescue_from clause that is
+        # specified separately.
+        #
+        # Note that this will override the effect of rescue_action_in_public
+        def bypass_rescue
+          if ::Rails::VERSION::STRING >= '2.2'
+            def controller.rescue_action(exception)
+              raise exception
+            end
           else
-            @controller_class_name = self.class.described_type.to_s
+            def controller.rescue_action_with_handler(exception)
+              raise exception
+            end
           end
-          @integrate_views = self.class.integrate_views?
         end
+        
+      protected
 
-        # Uses ActionController::Routing::Routes to generate
-        # the correct route for a given set of options.
-        # == Example
-        #   route_for(:controller => 'registrations', :action => 'edit', :id => 1)
-        #     => '/registrations/1;edit'
-        def route_for(options)
-          ensure_that_routes_are_loaded
-          ActionController::Routing::Routes.generate(options)
-        end
-
-        # Uses ActionController::Routing::Routes to parse
-        # an incoming path so the parameters it generates can be checked
-        # == Example
-        #   params_from(:get, '/registrations/1;edit')
-        #     => :controller => 'registrations', :action => 'edit', :id => 1
-        def params_from(method, path)
-          ensure_that_routes_are_loaded
-          ActionController::Routing::Routes.recognize_path(path, :method => method)
-        end
-
-        protected
         def _assigns_hash_proxy
-          @_assigns_hash_proxy ||= AssignsHashProxy.new self do
-            @response.template
+          @_assigns_hash_proxy ||= AssignsHashProxy.new(self) {@response.template}
+        end
+
+      private
+        
+        module TemplateIsolationExtensions
+          def file_exists?(ignore); true; end
+          
+          def render_file(*args)
+            @first_render ||= args[0] unless args[0] =~ /^layouts/
+          end
+          
+          # Rails 2.2
+          def _pick_template(*args)
+            @_first_render ||= args[0] unless args[0] =~ /^layouts/
+            PickedTemplate.new
+          end
+          
+          def render(*args)
+            return super if Hash === args.last && args.last[:inline]
+            @_rendered ? record_render(args[0]) : super
+          end
+        
+        private
+        
+          def record_render(opts)
+            (@_rendered[:template] ||= opts[:file]) if opts[:file]
+            (@_rendered[:partials][opts[:partial]] += 1) if opts[:partial]
+          end
+          
+          # Returned by _pick_template when running controller examples in isolation mode.
+          class PickedTemplate 
+            # Do nothing when running controller examples in isolation mode.
+            def render_template(*ignore_args); end
+            # Do nothing when running controller examples in isolation mode.
+            def render_partial(*ignore_args);  end
           end
         end
-
-        private
-        def ensure_that_routes_are_loaded
-          ActionController::Routing::Routes.reload if ActionController::Routing::Routes.empty?
-        end
-
-        module ControllerInstanceMethods #:nodoc:
+        
+        module ControllerInstanceMethods # :nodoc:
           include Spec::Rails::Example::RenderObserver
 
-          # === render(options = nil, deprecated_status_or_extra_options = nil, &block)
+          # === render(options = nil, extra_options={}, &block)
           #
           # This gets added to the controller's singleton meta class,
           # allowing Controller Examples to run in two modes, freely switching
-          # from context to context.
-          def render(options=nil, deprecated_status_or_extra_options=nil, &block)
-            if ::Rails::VERSION::STRING >= '2.0.0' && deprecated_status_or_extra_options.nil?
-              deprecated_status_or_extra_options = {}
-            end
-              
+          # from example group to example group.
+          def render(options=nil, extra_options={}, &block)
             unless block_given?
               unless integrate_views?
-                if @template.respond_to?(:finder)
-                  (class << @template.finder; self; end).class_eval do
-                    define_method :file_exists? do; true; end
-                  end
-                else
-                  (class << @template; self; end).class_eval do
-                    define_method :file_exists? do; true; end
-                  end
-                end
-                (class << @template; self; end).class_eval do
-                  define_method :render_file do |*args|
-                    @first_render ||= args[0] unless args[0] =~ /^layouts/
-                    @_first_render ||= args[0] unless args[0] =~ /^layouts/
-                  end
-                  
-                  define_method :_pick_template do |*args|
-                    @_first_render ||= args[0] unless args[0] =~ /^layouts/
-                    PickedTemplate.new
-                  end
-                end
+                @template.extend TemplateIsolationExtensions
               end
             end
 
@@ -213,7 +208,7 @@ module Spec
               if matching_stub_exists(options)
                 @performed_render = true
               else
-                super(options, deprecated_status_or_extra_options, &block)
+                super
               end
             end
           end
@@ -221,38 +216,31 @@ module Spec
           def response(&block)
             # NOTE - we're setting @update for the assert_select_spec - kinda weird, huh?
             @update = block
-            @_response || @response
+            super
           end
 
           def integrate_views!
             @integrate_views = true
           end
 
-          private
-
+        private
+        
           def integrate_views?
             @integrate_views
           end
 
           def matching_message_expectation_exists(options)
-            render_proxy.send(:__mock_proxy).send(:find_matching_expectation, :render, options)
+            render_proxy.__send__(:__mock_proxy).__send__(:find_matching_expectation, :render, options)
           end
         
           def matching_stub_exists(options)
-            render_proxy.send(:__mock_proxy).send(:find_matching_method_stub, :render, options)
+            render_proxy.__send__(:__mock_proxy).__send__(:find_matching_method_stub, :render, options)
           end
         
         end
 
         Spec::Example::ExampleGroupFactory.register(:controller, self)
-      end
-      
-      # Returned by _pick_template when running controller examples in isolation mode.
-      class PickedTemplate 
-        # Do nothing when running controller examples in isolation mode.
-        def render_template(*ignore_args); end
-        # Do nothing when running controller examples in isolation mode.
-        def render_partial(*ignore_args);  end
+        
       end
     end
   end

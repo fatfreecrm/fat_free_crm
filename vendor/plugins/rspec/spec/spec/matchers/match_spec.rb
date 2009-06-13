@@ -14,7 +14,7 @@ describe "should match(expected)" do
   it "should provide message, expected and actual on failure" do
     matcher = match(/rings/)
     matcher.matches?("string")
-    matcher.failure_message.should == ["expected \"string\" to match /rings/", /rings/, "string"]
+    matcher.failure_message_for_should.should == "expected \"string\" to match /rings/"
   end
 end
 
@@ -32,6 +32,6 @@ describe "should_not match(expected)" do
   it "should provide message, expected and actual on failure" do
     matcher = match(/tri/)
     matcher.matches?("string")
-    matcher.negative_failure_message.should == ["expected \"string\" not to match /tri/", /tri/, "string"]
+    matcher.failure_message_for_should_not.should == "expected \"string\" not to match /tri/"
   end
 end

@@ -12,6 +12,24 @@ describe "should raise_error" do
   end
 end
 
+describe "should raise_error {|err| ... }" do
+  it "passes if there is an error" do
+    ran = false
+    lambda { non_existent_method }.should raise_error {|e|
+      ran = true
+    }
+    ran.should be_true
+  end
+
+  it "passes the error to the block" do
+    error = nil
+    lambda { non_existent_method }.should raise_error {|e|
+      error = e
+    }
+    error.should be_kind_of(NameError)
+  end
+end
+
 describe "should_not raise_error" do
   it "should pass if nothing is raised" do
     lambda {}.should_not raise_error
@@ -100,8 +118,8 @@ describe "should_not raise_error(NamedError)" do
   
   it "should fail if named error is raised" do
     lambda {
-      lambda { non_existent_method }.should_not raise_error(NameError)
-    }.should fail_with(/expected no NameError, got #<NameError: undefined/)
+      lambda { 1 + 'b' }.should_not raise_error(TypeError)
+    }.should fail_with(/expected no TypeError, got #<TypeError: String can't be/)
   end  
 end
 

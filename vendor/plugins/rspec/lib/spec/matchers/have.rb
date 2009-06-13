@@ -4,6 +4,7 @@ module Spec
       def initialize(expected, relativity=:exactly)
         @expected = (expected == :no ? 0 : expected)
         @relativity = relativity
+        @actual = nil
       end
     
       def relativities
@@ -24,25 +25,25 @@ module Spec
         else
           collection_owner.__send__(@collection_name, *@args, &@block)
         end
-        @given = collection.size if collection.respond_to?(:size)
-        @given = collection.length if collection.respond_to?(:length)
-        raise not_a_collection if @given.nil?
-        return @given >= @expected if @relativity == :at_least
-        return @given <= @expected if @relativity == :at_most
-        return @given == @expected
+        @actual = collection.size if collection.respond_to?(:size)
+        @actual = collection.length if collection.respond_to?(:length)
+        raise not_a_collection if @actual.nil?
+        return @actual >= @expected if @relativity == :at_least
+        return @actual <= @expected if @relativity == :at_most
+        return @actual == @expected
       end
       
       def not_a_collection
         "expected #{@collection_name} to be a collection but it does not respond to #length or #size"
       end
     
-      def failure_message
-        "expected #{relative_expectation} #{@collection_name}, got #{@given}"
+      def failure_message_for_should
+        "expected #{relative_expectation} #{@collection_name}, got #{@actual}"
       end
 
-      def negative_failure_message
+      def failure_message_for_should_not
         if @relativity == :exactly
-          return "expected target not to have #{@expected} #{@collection_name}, got #{@given}"
+          return "expected target not to have #{@expected} #{@collection_name}, got #{@actual}"
         elsif @relativity == :at_most
           return <<-EOF
 Isn't life confusing enough?

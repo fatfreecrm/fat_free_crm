@@ -3,7 +3,7 @@
 # object in the system.
 
 require 'spec/mocks/methods'
-require 'spec/mocks/argument_constraints'
+require 'spec/mocks/argument_matchers'
 require 'spec/mocks/spec_methods'
 require 'spec/mocks/proxy'
 require 'spec/mocks/mock'

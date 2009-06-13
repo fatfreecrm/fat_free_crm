@@ -17,7 +17,7 @@ module Spec
           :errors => stub("errors", :count => 0)
         })
         m = mock("#{model_class.name}_#{id}", options_and_stubs)
-        m.send(:__mock_proxy).instance_eval <<-CODE
+        m.__send__(:__mock_proxy).instance_eval <<-CODE
           def @target.as_new_record
             self.stub!(:id).and_return nil
             self.stub!(:to_param).and_return nil
@@ -104,21 +104,24 @@ module Spec
               model[k] = stubs.delete(k)
             end
           end
-          add_stubs(model, stubs)
+          model.stub!(stubs)
           yield model if block_given?
         end
       end
       
-      #--
-      # TODO - Shouldn't this just be an extension of stub! ??
-      # - object.stub!(:method => return_value, :method2 => return_value2, :etc => etc)
-      #++
+      # DEPRECATED - use object.stub!(:method => value, :method2 => value)
+      #
       # Stubs methods on +object+ (if +object+ is a symbol or string a new mock
       # with that name will be created). +stubs+ is a Hash of +method=>value+
       def add_stubs(object, stubs = {}) #:nodoc:
-        m = [String, Symbol].index(object.class) ? mock(object.to_s) : object
-        stubs.each {|k,v| m.stub!(k).and_return(v)}
-        m
+        Kernel.warn <<-WARNING
+DEPRECATION NOTICE: add_stubs is deprecated and will be removed
+from a future version of rspec-rails. Use this instead:
+  
+  object.stub!(:method => value, :method2 => value)
+  
+WARNING
+        object.stub!(stubs)
       end
 
       private

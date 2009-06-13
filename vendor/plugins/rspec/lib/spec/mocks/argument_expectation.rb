@@ -6,37 +6,39 @@ module Spec
       
       def initialize(args, &block)
         @args = args
-        @constraints_block = block
+        @matchers_block = block
+        @match_any_args = false
+        @matchers = nil
         
-        if ArgumentConstraints::AnyArgsConstraint === args.first
+        if ArgumentMatchers::AnyArgsMatcher === args.first
           @match_any_args = true
-        elsif ArgumentConstraints::NoArgsConstraint === args.first
-          @constraints = []
+        elsif ArgumentMatchers::NoArgsMatcher === args.first
+          @matchers = []
         else
-          @constraints = args.collect {|arg| constraint_for(arg)}
+          @matchers = args.collect {|arg| matcher_for(arg)}
         end
       end
       
-      def constraint_for(arg)
-        return ArgumentConstraints::MatcherConstraint.new(arg)   if is_matcher?(arg)
-        return ArgumentConstraints::RegexpConstraint.new(arg) if arg.is_a?(Regexp)
-        return ArgumentConstraints::EqualityProxy.new(arg)
+      def matcher_for(arg)
+        return ArgumentMatchers::MatcherMatcher.new(arg)   if is_matcher?(arg)
+        return ArgumentMatchers::RegexpMatcher.new(arg) if arg.is_a?(Regexp)
+        return ArgumentMatchers::EqualityProxy.new(arg)
       end
       
       def is_matcher?(obj)
-        return obj.respond_to?(:matches?) && obj.respond_to?(:description)
+        return obj.respond_to?(:matches?) & obj.respond_to?(:description)
       end
       
       def args_match?(given_args)
-        match_any_args? || constraints_block_matches?(given_args) || constraints_match?(given_args)
+        match_any_args? || matchers_block_matches?(given_args) || matchers_match?(given_args)
       end
       
-      def constraints_block_matches?(given_args)
-        @constraints_block ? @constraints_block.call(*given_args) : nil
+      def matchers_block_matches?(given_args)
+        @matchers_block ? @matchers_block.call(*given_args) : nil
       end
       
-      def constraints_match?(given_args)
-        @constraints == given_args
+      def matchers_match?(given_args)
+        @matchers == given_args
       end
       
       def match_any_args?

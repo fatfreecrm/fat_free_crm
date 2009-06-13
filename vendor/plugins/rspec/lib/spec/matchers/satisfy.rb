@@ -6,18 +6,18 @@ module Spec
         @block = block
       end
       
-      def matches?(given, &block)
+      def matches?(actual, &block)
         @block = block if block
-        @given = given
-        @block.call(given)
+        @actual = actual
+        @block.call(actual)
       end
       
-      def failure_message
-        "expected #{@given} to satisfy block"
+      def failure_message_for_should
+        "expected #{@actual} to satisfy block"
       end
 
-      def negative_failure_message
-        "expected #{@given} not to satisfy block"
+      def failure_message_for_should_not
+        "expected #{@actual} not to satisfy block"
       end
     end
     

@@ -219,7 +219,7 @@ describe "should_not with operators" do
   it "should coach user to stop using operators with should_not" do
     lambda {
       5.should_not be < 6
-    }.should raise_error(/not only FAILED,\nit reads really poorly./m)
+    }.should raise_error(/not only FAILED,\nit is a bit confusing./m)
   end
 end
 
@@ -259,10 +259,6 @@ end
 
 describe "arbitrary predicate with DelegateClass" do
   it "should access methods defined in the delegating class (LH[#48])" do
-    pending(%{
-      Looks like DelegateClass is delegating #should to the
-      delegate. Not sure how to fix this one. Or if we even should."
-    })
     require 'delegate'
     class ArrayDelegate < DelegateClass(Array)
       def initialize(array)
@@ -277,5 +273,27 @@ describe "arbitrary predicate with DelegateClass" do
 
     delegate = ArrayDelegate.new([1,2,3,4,5,6])
     delegate.should be_large
+  end
+end
+
+describe "be_a, be_an" do
+  it "should pass when class matches" do
+    "foobar".should be_a(String)
+    [1,2,3].should be_an(Array)
+  end
+
+  it "should fail when class does not match" do
+    "foobar".should_not be_a(Hash)
+    [1,2,3].should_not be_an(Integer)
+  end
+end
+
+describe "be_an_instance_of" do
+  it "passes when direct class matches" do
+    5.should be_an_instance_of(Fixnum)
+  end
+  
+  it "fails when class is higher up hierarchy" do
+    5.should_not be_an_instance_of(Numeric)
   end
 end

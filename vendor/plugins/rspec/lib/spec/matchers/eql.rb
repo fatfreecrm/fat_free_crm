@@ -1,6 +1,5 @@
 module Spec
   module Matchers
-  
     # :call-seq:
     #   should eql(expected)
     #   should_not eql(expected)
@@ -14,11 +13,29 @@ module Spec
     #   5.should eql(5)
     #   5.should_not eql(3)
     def eql(expected)
-      simple_matcher do |actual, matcher|
-        matcher.failure_message          = "expected #{expected.inspect}, got #{actual.inspect} (using .eql?)", expected, actual
-        matcher.negative_failure_message = "expected #{actual.inspect} not to equal #{expected.inspect} (using .eql?)", expected, actual
-        matcher.description              = "eql #{expected.inspect}"
-        actual.eql?(expected)
+      Matcher.new :eql, expected do |_expected_|
+        match do |actual|
+          actual.eql?(_expected_)
+        end
+
+        failure_message_for_should do |actual|
+          <<-MESSAGE
+
+expected #{_expected_.inspect}
+     got #{actual.inspect}
+
+(compared using eql?)
+MESSAGE
+        end
+
+        failure_message_for_should_not do |actual|
+          <<-MESSAGE
+
+expected #{actual.inspect} not to equal #{_expected_.inspect}
+
+(compared using eql?)
+MESSAGE
+        end
       end
     end
   end

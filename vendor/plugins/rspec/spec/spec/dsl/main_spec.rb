@@ -4,17 +4,24 @@ module Spec
   module DSL
     describe Main do
       before(:each) do
-        @main = Class.new do; include Main; end
+        @main = Class.new do; include Spec::DSL::Main; end
       end
 
       [:describe, :context].each do |method|
         describe "##{method}" do
           it "should delegate to Spec::Example::ExampleGroupFactory.create_example_group" do
-            block = lambda {}
+            block = lambda {|a,b|}
             Spec::Example::ExampleGroupFactory.should_receive(:create_example_group).with(
-              "The ExampleGroup", &block
+              "The ExampleGroup", hash_including(:location), &block
             )
             @main.__send__ method, "The ExampleGroup", &block
+          end
+          
+          it "raises with no description" do
+            block = lambda {|a,b|}
+            lambda do
+              @main.__send__ method, &block
+            end.should raise_error(ArgumentError, /No description supplied for example group declared on #{__FILE__}:#{__LINE__ - 1}/)
           end
         end
       end
@@ -22,22 +29,40 @@ module Spec
       [:share_examples_for, :shared_examples_for].each do |method|
         describe "##{method}" do
           it "should create a shared ExampleGroup" do
-            block = lambda {}
-            Spec::Example::SharedExampleGroup.should_receive(:register).with(
-              "shared group", &block
+            block = lambda {|a,b|}
+            Spec::Example::ExampleGroupFactory.should_receive(:create_shared_example_group).with(
+              "shared group", hash_including(:location), &block
             )
             @main.__send__ method, "shared group", &block
           end
         end
       end
+
+      describe "#describe; with RUBY_VERSION = 1.9" do
+        it "includes an enclosing module into the block's scope" do
+          Spec::Ruby.stub!(:version).and_return("1.9")
+
+          module Foo; module Bar; end; end
+          
+          Foo::Bar.should_receive(:included).with do |*args|
+            included_by = args.last
+            included_by.description.should == "this example group"
+          end
+          
+          module Foo
+            module Bar
+              describe("this example group") do; end
+            end
+          end
+        end
+      end
+
     
       describe "#share_as" do
-        class << self
-          def next_group_name
-            @group_number ||= 0
-            @group_number += 1
-            "Group#{@group_number}"
-          end
+        def self.next_group_name
+          @group_number ||= 0
+          @group_number += 1
+          "Group#{@group_number}"
         end
         
         def group_name
@@ -45,8 +70,11 @@ module Spec
         end
         
         it "registers a shared ExampleGroup" do
-          Spec::Example::SharedExampleGroup.should_receive(:register)
-          group = @main.share_as group_name do end
+          block = lambda {|a,b|}
+          Spec::Example::ExampleGroupFactory.should_receive(:create_shared_example_group).with(
+            group_name, hash_including(:location), &block
+          )
+          @main.share_as group_name, &block
         end
       
         it "creates a constant that points to a Module" do

@@ -1,6 +1,10 @@
 module Spec
   module Rails
     module Example
+      class HelperExampleGroupController < ApplicationController #:nodoc:
+        attr_accessor :request, :url
+      end
+
       # Helper Specs live in $RAILS_ROOT/spec/helpers/.
       #
       # Helper Specs use Spec::Rails::Example::HelperExampleGroup, which allows you to
@@ -12,7 +16,7 @@ module Spec
       #
       # == Example
       #
-      #   class ThingHelper
+      #   module ThingHelper
       #     def number_of_things
       #       Thing.count
       #     end
@@ -26,30 +30,19 @@ module Spec
       #     end
       #   end
       class HelperExampleGroup < FunctionalExampleGroup
+        tests HelperExampleGroupController
+        attr_accessor :output_buffer
+        
         class HelperObject < ActionView::Base
+          def initialize(*args)
+            @template = self
+            super
+          end
           def protect_against_forgery?
             false
           end
           
-          def session=(session)
-            @session = session
-          end
-          
-          def request=(request)
-            @request = request
-          end
-          
-          def flash=(flash)
-            @flash = flash
-          end
-          
-          def params=(params)
-            @params = params
-          end
-          
-          def controller=(controller)
-            @controller = controller
-          end
+          attr_writer :session, :request, :flash, :params, :controller
           
           private
             attr_reader :session, :request, :flash, :params, :controller
@@ -106,18 +99,16 @@ module Spec
         ActionView::Base.included_modules.reverse.each do |mod|
           include mod if mod.parents.include?(ActionView::Helpers)
         end
-
-        before(:all) do
-          @controller_class_name = 'Spec::Rails::Example::HelperExampleGroupController'
-        end
-
+        
         before(:each) do
           @controller.request = @request
           @controller.url = ActionController::UrlRewriter.new @request, {} # url_for
 
           @flash = ActionController::Flash::FlashHash.new
           session['flash'] = @flash
-
+          
+          @output_buffer = ""
+          @template = helper
           ActionView::Helpers::AssetTagHelper::reset_javascript_include_default
           
           helper.session = session
@@ -150,20 +141,12 @@ module Spec
 
         Spec::Example::ExampleGroupFactory.register(:helper, self)
 
-        protected
+      protected
+
         def _assigns_hash_proxy
-          @_assigns_hash_proxy ||= AssignsHashProxy.new self do
-            helper
-          end
+          @_assigns_hash_proxy ||= AssignsHashProxy.new(self) {helper}
         end
 
-      end
-
-      class HelperExampleGroupController < ApplicationController #:nodoc:
-        attr_accessor :request, :url
-
-        # Re-raise errors
-        def rescue_action(e); raise e; end
       end
     end
   end

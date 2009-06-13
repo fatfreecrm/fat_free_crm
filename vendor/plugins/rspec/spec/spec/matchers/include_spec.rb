@@ -35,7 +35,7 @@ describe "should include(with, multiple, args)" do
   it "should fail if target does not include any one of the items" do
     lambda {
       [1,2,3].should include(1,2,4)
-    }.should fail_with("expected [1, 2, 3] to include 1, 2 and 4")
+    }.should fail_with("expected [1, 2, 3] to include 1, 2, and 4")
   end
   
   it 'should pass if target is a Hash missing any item as a key' do

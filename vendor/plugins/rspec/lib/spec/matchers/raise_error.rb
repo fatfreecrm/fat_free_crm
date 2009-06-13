@@ -3,6 +3,7 @@ module Spec
     class RaiseError #:nodoc:
       def initialize(expected_error_or_message=Exception, expected_message=nil, &block)
         @block = block
+        @actual_error = nil
         case expected_error_or_message
         when String, Regexp
           @expected_error, @expected_message = Exception, expected_error_or_message
@@ -18,10 +19,10 @@ module Spec
         @eval_block_passed = false
         begin
           given_proc.call
-        rescue @expected_error => @given_error
+        rescue @expected_error => @actual_error
           @raised_expected_error = true
           @with_expected_message = verify_message
-        rescue Exception => @given_error
+        rescue Exception => @actual_error
           # This clause should be empty, but rcov will not report it as covered
           # unless something (anything) is executed within the clause
           rcov_error_report = "http://eigenclass.org/hiki.rb?rcov-0.8.0"
@@ -31,16 +32,16 @@ module Spec
           eval_block if @raised_expected_error && @with_expected_message && @block
         end
       ensure
-        return (@raised_expected_error && @with_expected_message) ? (@eval_block ? @eval_block_passed : true) : false
+        return (@raised_expected_error & @with_expected_message) ? (@eval_block ? @eval_block_passed : true) : false
       end
       
       def eval_block
         @eval_block = true
         begin
-          @block[@given_error]
+          @block[@actual_error]
           @eval_block_passed = true
         rescue Exception => err
-          @given_error = err
+          @actual_error = err
         end
       end
 
@@ -49,17 +50,17 @@ module Spec
         when nil
           true
         when Regexp
-          @expected_message =~ @given_error.message
+          @expected_message =~ @actual_error.message
         else
-          @expected_message == @given_error.message
+          @expected_message == @actual_error.message
         end
       end
       
-      def failure_message
-        @eval_block ? @given_error.message : "expected #{expected_error}#{given_error}"
+      def failure_message_for_should
+        @eval_block ? @actual_error.message : "expected #{expected_error}#{given_error}"
       end
 
-      def negative_failure_message
+      def failure_message_for_should_not
         "expected no #{expected_error}#{given_error}"
       end
       
@@ -80,7 +81,7 @@ module Spec
         end
 
         def given_error
-          @given_error.nil? ? " but nothing was raised" : ", got #{@given_error.inspect}"
+          @actual_error.nil? ? " but nothing was raised" : ", got #{@actual_error.inspect}"
         end
         
         def negative_expectation?

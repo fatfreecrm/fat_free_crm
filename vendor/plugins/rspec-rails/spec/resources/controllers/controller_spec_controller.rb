@@ -6,12 +6,8 @@ class ControllerSpecController < ActionController::Base
   end
   
   skip_before_filter :raise_error
-  
-  if ['edge','2.0.0'].include?(ENV['RSPEC_RAILS_VERSION'])
-    set_view_path [File.join(File.dirname(__FILE__), "..", "views")]
-  else
-    set_view_path File.join(File.dirname(__FILE__), "..", "views")
-  end
+
+  prepend_view_path File.join(File.dirname(__FILE__), "..", "views")
   
   def some_action
     render :template => "template/that/does/not/actually/exist"
@@ -86,9 +82,34 @@ class ControllerSpecController < ActionController::Base
     render :text => ""
   end
   
+  def action_that_renders_inline
+    render :inline => "<%= 'inline code' %>"
+  end
+  
   def action_that_assigns_false_to_a_variable
     @a_variable = false
     render :text => ""
+  end
+  
+  def action_with_two_arg_render
+    render :update, :status => 404 do |page|
+      page.visual_effect :highlight, 'user_list'
+    end
+  end
+  
+  class RescuedError < Exception; end
+  class UnRescuedError < Exception; end
+  
+  rescue_from RescuedError do |e|
+    render :text => 'Rescued!'
+  end
+
+  def rescued_error_action
+    raise RescuedError
+  end
+
+  def un_rescued_error_action
+    raise UnRescuedError
   end
 end
 

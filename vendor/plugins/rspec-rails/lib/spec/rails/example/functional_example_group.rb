@@ -1,31 +1,47 @@
+require 'action_controller/test_case'
+
 module Spec
   module Rails
     module Example
-      class FunctionalExampleGroup < RailsExampleGroup
-        include ActionController::TestProcess
-        include ActionController::Assertions
-
-        attr_reader :request, :response
-        before(:each) do
-          @controller_class = Object.path2class @controller_class_name
-          raise "Can't determine controller class for #{@controller_class_name}" if @controller_class.nil?
-
-          @controller = @controller_class.new
-          @request = ActionController::TestRequest.new
-          @response = ActionController::TestResponse.new
-          @response.session = @request.session
+      class FunctionalExampleGroup < ActionController::TestCase
+        def setup
+          # no-op to override AC::TC's setup w/ conflicts with the before(:each) below
         end
 
+        attr_reader :request, :response
+
+        # The params hash accessed within a view or helper. Use this before
+        # rendering a view or calling a helper to provide data used by the
+        # view or helper.
+        #
+        # == Examples
+        #   # in a view spec
+        #   params[:name] = "David"
+        #   render
+        #   response.should have_tag("div.name","David")
+        #    
+        #   # in a helper spec
+        #   params[:first_name] = "David"
+        #   params[:last_name] = "Chelimsky"
+        #   helper.full_name.should == "David Chelimsky"
         def params
           request.parameters
         end
 
+        # Provides access to the flash hash. Use this after rendering a
+        # view, calling a helper or calling a controller action.
+        #
+        # == Examples
+        #   post :create
+        #   flash[:notice].should == "Success!"
         def flash
-          response.flash
+          @controller.__send__ :flash
         end
 
+        # Provides acces to the session hash. Use this before or after
+        # rendering a view, calling a helper or calling a controller action.
         def session
-          response.session
+          request.session
         end
         
         # Overrides the <tt>cookies()</tt> method in
@@ -35,20 +51,23 @@ module Spec
         # cookies in examples using the same API with which you set and read
         # them in controllers.
         #
-        # == Examples (Rails >= 1.2.6)
-        #
-        #   cookies[:user_id] = '1234'
-        #   get :index
-        #   assigns[:user].id.should == '1234'
-        #
-        #   post :login
-        #   cookies[:login].expires.should == 1.week.from_now
-        #
-        # == Examples (Rails >= 2.0.0 only)
+        # == Examples (Rails 2.0 > 2.2)
         #
         #   cookies[:user_id] = {:value => '1234', :expires => 1.minute.ago}
         #   get :index
         #   response.should be_redirect
+        #
+        # == Examples (Rails 2.3)
+        #
+        # Rails 2.3 changes the way cookies are made available to functional
+        # tests (and therefore rspec controller specs), only making single
+        # values available with no access to other aspects of the cookie. This
+        # is backwards-incompatible, so you have to change your examples to
+        # look like this:
+        #
+        #   cookies[:foo] = 'bar'
+        #   get :index
+        #   cookies[:foo].should == 'bar'
         def cookies
           @cookies ||= Spec::Rails::Example::CookiesProxy.new(self)
         end
@@ -71,7 +90,7 @@ module Spec
         #   assigns[:registration].should == Thing.new
         #--
         # NOTE - Even though docs only use assigns[:key] format, this supports
-        # assigns(:key) in order to avoid breaking old specs.
+        # assigns(:key) for backwards compatibility.
         #++
         def assigns(key = nil)
           if key.nil?

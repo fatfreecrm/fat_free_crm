@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '<%= '/..' * class_nesting_depth %>/../../spec_helper')
 
-<% output_attributes = attributes.reject{|attribute| attribute.name =~ /_id/ || [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
+<% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
 describe "/<%= table_name %>/show.<%= default_file_extension %>" do
   include <%= controller_class_name %>Helper
   before(:each) do
@@ -13,11 +13,10 @@ describe "/<%= table_name %>/show.<%= default_file_extension %>" do
 <% end -%>
   end
 
-  it "should render attributes in <p>" do
-    render "/<%= table_name %>/show.<%= default_file_extension %>"
+  it "renders attributes in <p>" do
+    render
 <% for attribute in output_attributes -%>
-    response.should have_text(/<%= Regexp.escape(attribute.default_value)[1..-2]%>/)
+    response.should have_text(/<%= Regexp.escape(attribute.default_value).gsub(/^"|"$/, '')%>/)
 <% end -%>
   end
 end
-

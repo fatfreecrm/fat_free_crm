@@ -20,11 +20,11 @@ module Spec
 
           describe "where ExampleGroup has no superclasss with a description" do
             before do
-              add_example_group
+              example_group_started
             end
 
-            def add_example_group
-              formatter.add_example_group(example_group)
+            def example_group_started
+              formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
             end
 
             describe "#dump_summary" do
@@ -39,7 +39,7 @@ module Spec
               end
             end
 
-            describe "#add_example_group" do
+            describe "#example_group_started" do
               it "should push ExampleGroup name" do
                 io.string.should eql("\nExampleGroup\n")
               end
@@ -52,9 +52,9 @@ module Spec
                     formatter.example_failed(
                       example_group.it("spec"),
                       98,
-                      Reporter::Failure.new("c s", RuntimeError.new)
+                      Spec::Runner::Reporter::Failure.new("g", "c s", RuntimeError.new)
                     )
-                    io.string.should have_example_group_output("- spec (ERROR - 98)\n")
+                    io.string.should have_example_group_output("- spec (FAILED - 98)\n")
                   end
                 end
 
@@ -63,7 +63,7 @@ module Spec
                     formatter.example_failed(
                       example_group.it("spec"),
                       98,
-                      Reporter::Failure.new("c s", Spec::Expectations::ExpectationNotMetError.new)
+                      Spec::Runner::Reporter::Failure.new("g", "c s", Spec::Expectations::ExpectationNotMetError.new)
                     )
                     io.string.should have_example_group_output("- spec (FAILED - 98)\n")
                   end
@@ -73,10 +73,10 @@ module Spec
               describe "where ExampleGroup has two superclasses with a description" do
                 attr_reader :child_example_group, :grand_child_example_group
               
-                def add_example_group
+                def example_group_started
                   @child_example_group = Class.new(example_group).describe("Child ExampleGroup")
                   @grand_child_example_group = Class.new(child_example_group).describe("GrandChild ExampleGroup")
-                  formatter.add_example_group(grand_child_example_group)
+                  formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(grand_child_example_group))
                 end
 
                 describe "when having an error" do
@@ -84,9 +84,9 @@ module Spec
                     formatter.example_failed(
                     example_group.it("spec"),
                     98,
-                    Reporter::Failure.new("c s", RuntimeError.new)
+                    Spec::Runner::Reporter::Failure.new("g", "c s", RuntimeError.new)
                     )
-                    io.string.should have_nested_example_group_output("- spec (ERROR - 98)\n")
+                    io.string.should have_nested_example_group_output("- spec (FAILED - 98)\n")
                   end
                 end
 
@@ -95,7 +95,7 @@ module Spec
                     formatter.example_failed(
                       example_group.it("spec"),
                       98,
-                      Reporter::Failure.new("c s", Spec::Expectations::ExpectationNotMetError.new)
+                      Spec::Runner::Reporter::Failure.new("g", "c s", Spec::Expectations::ExpectationNotMetError.new)
                     )
                     io.string.should have_nested_example_group_output("- spec (FAILED - 98)\n")
                   end

@@ -8,8 +8,7 @@ module Spec
         end
 
         def [](key)
-          return false if assigns[key] == false
-          return false if assigns[key.to_s] == false
+          return false if false == assigns[key] || false == assigns[key.to_s]
           assigns[key] || assigns[key.to_s] || @target.instance_variable_get("@#{key}")
         end
 

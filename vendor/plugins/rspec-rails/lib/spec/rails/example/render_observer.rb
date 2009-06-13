@@ -8,32 +8,6 @@ module Spec
       # and template and view examples
       module RenderObserver
 
-        # DEPRECATED
-        #
-        # Use should_receive(:render).with(opts) instead
-        def expect_render(opts={})
-          warn_deprecation("expect_render", "should_receive")
-          register_verify_after_each
-          render_proxy.should_receive(:render, :expected_from => caller(1)[0]).with(opts)
-        end
-
-        # DEPRECATED
-        #
-        # Use stub!(:render).with(opts) instead
-        def stub_render(opts={})
-          warn_deprecation("stub_render", "stub!")
-          register_verify_after_each
-          render_proxy.stub!(:render, :expected_from => caller(1)[0]).with(opts)
-        end
-        
-        def warn_deprecation(deprecated_method, new_method)
-          Kernel.warn <<-WARNING
-#{deprecated_method} is deprecated and will be removed from a future version of rspec-rails.
-
-Please just use object.#{new_method} instead.
-WARNING
-        end
-  
         def verify_rendered # :nodoc:
           render_proxy.rspec_verify
         end
@@ -61,15 +35,28 @@ WARNING
           end
         end
         
-        def stub!(*args)
+        def stub(*args)
           if args[0] == :render
             register_verify_after_each
-            render_proxy.stub!(:render, :expected_from => caller(1)[0])
+            render_proxy.stub(args.first, :expected_from => caller(1)[0])
           else
             super
           end
         end
-
+        
+        # FIXME - for some reason, neither alias nor alias_method are working
+        # as expected in the else branch, so this is a duplicate of stub()
+        # above. Could delegate, but then we'd run into craziness handling
+        # :expected_from. This will have to do for the moment.
+        def stub!(*args)
+          if args[0] == :render
+            register_verify_after_each
+            render_proxy.stub!(args.first, :expected_from => caller(1)[0])
+          else
+            super
+          end
+        end
+        
         def verify_rendered_proc #:nodoc:
           template = self
           @verify_rendered_proc ||= Proc.new do

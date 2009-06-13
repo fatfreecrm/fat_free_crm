@@ -128,19 +128,34 @@ module Spec
 
       it 'should keep public methods public' do
         @object.should_receive(:public_method)
-        @object.public_methods.should include('public_method')
+        with_ruby('1.9') do
+          @object.public_methods.should include(:public_method)
+        end
+        with_ruby('1.8') do
+          @object.public_methods.should include('public_method')
+        end
         @object.public_method
       end
 
       it 'should keep private methods private' do
         @object.should_receive(:private_method)
-        @object.private_methods.should include('private_method')
+        with_ruby('1.9') do
+          @object.private_methods.should include(:private_method)
+        end
+        with_ruby('1.8') do
+          @object.private_methods.should include('private_method')
+        end
         @object.public_method
       end
 
       it 'should keep protected methods protected' do
         @object.should_receive(:protected_method)
-        @object.protected_methods.should include('protected_method')
+        with_ruby('1.9') do
+          @object.protected_methods.should include(:protected_method)
+        end
+        with_ruby('1.8') do
+          @object.protected_methods.should include('protected_method')
+        end
         @object.public_method
       end
 

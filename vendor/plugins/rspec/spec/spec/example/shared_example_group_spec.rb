@@ -8,7 +8,7 @@ module Spec
         before(:each) do
           @formatter = Spec::Mocks::Mock.new("formatter", :null_object => true)
           options.formatters << formatter
-          @example_group = Class.new(ExampleGroup).describe("example_group")
+          @example_group = Class.new(ExampleGroupDouble).describe("example_group")
           class << example_group
             public :include
           end
@@ -22,7 +22,7 @@ module Spec
         
         describe "#register" do
           it "creates a new shared example group with the submitted args" do
-            block = lambda {}
+            block = lambda {|a|}
             group = SharedExampleGroup.new("shared group") do end
             Spec::Example::SharedExampleGroup.should_receive(:new).with("share me", &block).and_return(group)
             Spec::Example::SharedExampleGroup.register("share me", &block)
@@ -66,12 +66,12 @@ module Spec
           SharedExampleGroup.register(
             "shared example_group",
             :shared => true,
-            :spec_path => "/my/spec/a/../shared.rb"
+            :location => "/my/spec/a/../shared.rb"
           )
           SharedExampleGroup.register(
             "shared example_group",
             :shared => true,
-            :spec_path => "/my/spec/b/../shared.rb"
+            :location => "/my/spec/b/../shared.rb"
           )
         end
 
@@ -79,13 +79,13 @@ module Spec
           SharedExampleGroup.register(
             "shared example_group",
             :shared => true,
-            :spec_path => "/my/spec/a/shared.rb"
+            :location => "/my/spec/a/shared.rb"
           )
           lambda do
             SharedExampleGroup.register(
               "shared example_group",
               :shared => true,
-              :spec_path => "/my/spec/b/shared.rb"
+              :location => "/my/spec/b/shared.rb"
             )
           end.should raise_error(ArgumentError, /already exists/)
         end
@@ -130,12 +130,12 @@ module Spec
         end
 
         it "adds examples to current example_group using it_should_behave_like with a module" do
-          AllThings = describe "all things", :shared => true do
+          ::AllThings = describe "all things", :shared => true do
             it "should do stuff" do end
           end
         
           example_group = describe "one thing" do
-            it_should_behave_like AllThings
+            it_should_behave_like ::AllThings
           end
         
           example_group.number_of_examples.should == 1
@@ -151,7 +151,7 @@ module Spec
 
           example_group.it_should_behave_like("shared example_group")
           example_group.it("example") {example_ran = true}
-          example_group.run
+          example_group.run(options)
           example_ran.should be_true
           shared_example_ran.should be_true
         end
@@ -169,7 +169,7 @@ module Spec
 
           example_group.it_should_behave_like("shared example_group")
           example_group.it("example") {example_ran = true}
-          example_group.run
+          example_group.run(options)
           example_ran.should be_true
           shared_setup_ran.should be_true
           shared_teardown_ran.should be_true
@@ -188,7 +188,7 @@ module Spec
 
           example_group.it_should_behave_like("shared example_group")
           example_group.it("example") {example_ran = true}
-          example_group.run
+          example_group.run(options)
           example_ran.should be_true
           shared_before_all_run_count.should == 1
           shared_after_all_run_count.should == 1
@@ -224,7 +224,7 @@ module Spec
             mod1_method
             mod2_method
           end
-          example_group.run
+          example_group.run(options)
           mod1_method_called.should be_true
           mod2_method_called.should be_true
         end
@@ -241,7 +241,7 @@ module Spec
             a_shared_helper_method
             success = true
           end
-          example_group.run
+          example_group.run(options)
           success.should be_true
         end
 

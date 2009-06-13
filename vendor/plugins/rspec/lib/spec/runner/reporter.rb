@@ -1,19 +1,23 @@
 module Spec
   module Runner
     class Reporter
-      attr_reader :options, :example_groups
+      attr_reader :options
       
       def initialize(options)
         @options = options
         @options.reporter = self
-        clear
+        @failures = []
+        @pending_count = 0
+        @example_count = 0
+        @start_time = nil
+        @end_time = nil
       end
       
-      def add_example_group(example_group)
+      def example_group_started(example_group)
+        @example_group = example_group
         formatters.each do |f|
-          f.add_example_group(example_group)
+          f.example_group_started(example_group)
         end
-        example_groups << example_group
       end
       
       def example_started(example)
@@ -21,29 +25,27 @@ module Spec
       end
       
       def example_finished(example, error=nil)
-        @examples << example
+        @example_count += 1
         
         if error.nil?
           example_passed(example)
         elsif Spec::Example::ExamplePendingError === error
-          example_pending(example, error.pending_caller, error.message)
+          example_pending(example, example.location, error.message)
         else
           example_failed(example, error)
         end
       end
 
-      def failure(example, error)
+      def example_failed(example, error)
         backtrace_tweaker.tweak_backtrace(error)
-        failure = Failure.new(example, error)
+        failure = Failure.new(@example_group.description, example.description, error)
         @failures << failure
         formatters.each do |f|
           f.example_failed(example, @failures.length, failure)
         end
       end
-      alias_method :example_failed, :failure
 
       def start(number_of_examples)
-        clear
         @start_time = Time.new
         formatters.each{|f| f.start(number_of_examples)}
       end
@@ -58,10 +60,49 @@ module Spec
         dump_pending
         dump_failures
         formatters.each do |f|
-          f.dump_summary(duration, @examples.length, @failures.length, @pending_count)
+          f.dump_summary(duration, @example_count, @failures.length, @pending_count)
           f.close
         end
         @failures.length
+      end
+
+      class Failure
+        def initialize(group_description, example_description, exception)  # :nodoc:
+          @example_name = "#{group_description} #{example_description}"
+          @exception = exception
+        end
+        
+        # The Exception object raised
+        attr_reader :exception
+        
+        # Header messsage for reporting this failure, including the name of the
+        # example and an indicator of the type of failure. FAILED indicates a
+        # failed expectation. FIXED indicates a pending example that passes, and
+        # no longer needs to be pending. RuntimeError indicates that a
+        # RuntimeError occured.
+        # 
+        # == Examples
+        #
+        #   'A new account should have a zero balance' FAILED
+        #   'A new account should have a zero balance' FIXED
+        #   RuntimeError in 'A new account should have a zero balance'
+        def header
+          if expectation_not_met?
+            "'#{@example_name}' FAILED"
+          elsif pending_fixed?
+            "'#{@example_name}' FIXED"
+          else
+            "#{@exception.class.name} in '#{@example_name}'"
+          end
+        end
+        
+        def pending_fixed? # :nodoc:
+          @exception.is_a?(Spec::Example::PendingExampleFixedError)
+        end
+
+        def expectation_not_met?  # :nodoc:
+          @exception.is_a?(Spec::Expectations::ExpectationNotMetError)
+        end
       end
 
     private
@@ -72,15 +113,6 @@ module Spec
 
       def backtrace_tweaker
         @options.backtrace_tweaker
-      end
-  
-      def clear
-        @example_groups = []
-        @failures = []
-        @pending_count = 0
-        @examples = []
-        @start_time = nil
-        @end_time = nil
       end
   
       def dump_failures
@@ -105,63 +137,35 @@ module Spec
       end
 
       EXAMPLE_PENDING_DEPRECATION_WARNING = <<-WARNING
-        DEPRECATION NOTICE: RSpec's formatters have changed example_pending
-        to accept three arguments instead of just two. Please see the rdoc
-        for Spec::Runner::Formatter::BaseFormatter#example_pending
-        for more information.
-          
-        Please update any custom formatters to accept the third argument
-        to example_pending. Support for example_pending with two arguments
-        and this warning message will be removed after the RSpec 1.1.5 release.
-      WARNING
+
+*********************************************************************
+DEPRECATION WARNING: RSpec's formatters have changed example_pending
+to accept two arguments instead of three. Please see the rdoc
+for Spec::Runner::Formatter::BaseFormatter#example_pending
+for more information.
+  
+Please update any custom formatters to accept only two arguments
+to example_pending. Support for example_pending with two arguments
+and this warning message will be removed after the RSpec 2.0 release.
+*********************************************************************      
+WARNING
       
-      def example_pending(example, pending_caller, message="Not Yet Implemented")
+      def example_pending(example, ignore, message="Not Yet Implemented")
         @pending_count += 1
         formatters.each do |formatter|
           if formatter_uses_deprecated_example_pending_method?(formatter)
-            Kernel.warn EXAMPLE_PENDING_DEPRECATION_WARNING
-            formatter.example_pending(example, message)
+            Spec.warn EXAMPLE_PENDING_DEPRECATION_WARNING
+            formatter.example_pending(example, message, example.location)
           else
-            formatter.example_pending(example, message, pending_caller)
+            formatter.example_pending(example, message)
           end
         end
       end
       
       def formatter_uses_deprecated_example_pending_method?(formatter)
-        formatter.method(:example_pending).arity == 2
+        formatter.method(:example_pending).arity == 3
       end
       
-      class Failure
-        attr_reader :example, :exception
-        
-        def initialize(example, exception)
-          @example = example
-          @exception = exception
-        end
-
-        def header
-          if expectation_not_met?
-            "'#{example_name}' FAILED"
-          elsif pending_fixed?
-            "'#{example_name}' FIXED"
-          else
-            "#{@exception.class.name} in '#{example_name}'"
-          end
-        end
-        
-        def pending_fixed?
-          @exception.is_a?(Spec::Example::PendingExampleFixedError)
-        end
-
-        def expectation_not_met?
-          @exception.is_a?(Spec::Expectations::ExpectationNotMetError)
-        end
-
-        protected
-        def example_name
-          @example.full_description
-        end
-      end
     end
   end
 end

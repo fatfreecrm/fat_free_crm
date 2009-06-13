@@ -5,11 +5,15 @@ module Spec
   module Runner
     module Formatter
       describe ProgressBarFormatter do
+        
+        treats_method_missing_as_private
+
         before(:each) do
           @io = StringIO.new
           @options = mock('options')
           @options.stub!(:dry_run).and_return(false)
           @options.stub!(:colour).and_return(false)
+          @options.stub!(:autospec).and_return(false)
           @formatter = ProgressBarFormatter.new(@options, @io)
         end
 
@@ -29,6 +33,7 @@ module Spec
             end
           end
           example = example_group.examples.first
+          @formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
           @formatter.example_pending(example, "message", "#{__FILE__}:#{__LINE__}")
           @io.rewind
           @formatter.dump_summary(3, 2, 1, 1)
@@ -49,21 +54,21 @@ Finished in 3 seconds
         it "should push red F for failure spec" do
           @io.should_receive(:tty?).and_return(true)
           @options.should_receive(:colour).and_return(true)
-          @formatter.example_failed("spec", 98, Reporter::Failure.new("c s", Spec::Expectations::ExpectationNotMetError.new))
+          @formatter.example_failed("spec", 98, Spec::Runner::Reporter::Failure.new("g", "c s", Spec::Expectations::ExpectationNotMetError.new))
           @io.string.should eql("\e[31mF\e[0m")
         end
 
-        it "should push magenta F for error spec" do
+        it "should push red F for error spec" do
           @io.should_receive(:tty?).and_return(true)
           @options.should_receive(:colour).and_return(true)
-          @formatter.example_failed("spec", 98, Reporter::Failure.new("c s", RuntimeError.new))
-          @io.string.should eql("\e[35mF\e[0m")
+          @formatter.example_failed("spec", 98, Spec::Runner::Reporter::Failure.new("g", "c s", RuntimeError.new))
+          @io.string.should eql("\e[31mF\e[0m")
         end
 
         it "should push blue F for fixed pending spec" do
           @io.should_receive(:tty?).and_return(true)
           @options.should_receive(:colour).and_return(true)
-          @formatter.example_failed("spec", 98, Reporter::Failure.new("c s", Spec::Example::PendingExampleFixedError.new))
+          @formatter.example_failed("spec", 98, Spec::Runner::Reporter::Failure.new("g", "c s", Spec::Example::PendingExampleFixedError.new))
           @io.string.should eql("\e[34mF\e[0m")
         end
 
@@ -95,16 +100,11 @@ EOE
           end
           example = example_group.examples.first
           file = __FILE__
-          line = __LINE__ + 1
+          line = __LINE__ - 5
+          @formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
           @formatter.example_pending(example, "message", "#{__FILE__}:#{__LINE__}")
           @formatter.dump_pending
-          @io.string.should ==(<<-HERE)
-*
-Pending:
-
-example_group example (message)
-#{file}:#{line}
-HERE
+          @io.string.should =~ /Pending:\n\nexample_group example \(message\)\n#{file}:#{line}/m
         end
       end
       

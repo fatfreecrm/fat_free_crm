@@ -4,7 +4,7 @@ module Spec
       # This class extracts code snippets by looking at the backtrace of the passed error
       class SnippetExtractor #:nodoc:
         class NullConverter; def convert(code, pre); code; end; end #:nodoc:
-        begin; require 'rubygems'; require 'syntax/convertors/html'; @@converter = Syntax::Convertors::HTML.for_syntax "ruby"; rescue LoadError => e; @@converter = NullConverter.new; end
+        begin; require 'syntax/convertors/html'; @@converter = Syntax::Convertors::HTML.for_syntax "ruby"; rescue LoadError => e; @@converter = NullConverter.new; end
         
         def snippet(error)
           raw_code, line = snippet_for(error.backtrace[0])

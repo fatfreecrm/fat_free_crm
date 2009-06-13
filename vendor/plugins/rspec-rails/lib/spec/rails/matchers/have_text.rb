@@ -14,15 +14,15 @@ module Spec
           return actual == expected unless Regexp === expected
         end
       
-        def failure_message
+        def failure_message_for_should
           "expected #{expected.inspect}, got #{actual.inspect}"
         end
         
-        def negative_failure_message
+        def failure_message_for_should_not
           "expected not to have text #{expected.inspect}"
         end
         
-        def to_s
+        def description
           "have text #{expected.inspect}"
         end
       

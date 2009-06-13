@@ -8,7 +8,7 @@ module Spec
           mock = Spec::Mocks::Mock.new("a mock")
           mock.should_receive(:message, :expected_from => "/path/to/blah.ext:37")
           mock.rspec_verify
-        rescue => e
+        rescue Exception => e
         ensure
           e.backtrace.to_s.should =~ /\/path\/to\/blah.ext:37/m
         end

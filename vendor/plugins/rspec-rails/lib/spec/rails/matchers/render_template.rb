@@ -9,10 +9,24 @@ module Spec
           @expected = expected
         end
       
-        def matches?(response)
-          
+        def matches?(response_or_controller)
+          response  = response_or_controller.respond_to?(:response) ?
+                      response_or_controller.response :
+                      response_or_controller
+
           if response.respond_to?(:rendered_file)
             @actual = response.rendered_file
+          elsif response.respond_to?(:rendered)
+            case template = response.rendered[:template]
+            when nil
+              unless response.rendered[:partials].empty?
+                @actual = path_and_file(response.rendered[:partials].keys.first).join("/_")
+              end
+            when ActionView::Template
+              @actual = template.path
+            when String
+              @actual = template
+            end
           else
             @actual = response.rendered_template.to_s
           end
@@ -22,11 +36,11 @@ module Spec
           given_controller_path == expected_controller_path && given_file.match(expected_file)
         end
         
-        def failure_message
+        def failure_message_for_should
           "expected #{@expected.inspect}, got #{@actual.inspect}"
         end
         
-        def negative_failure_message
+        def failure_message_for_should_not
           "expected not to render #{@expected.inspect}, but did"
         end
         

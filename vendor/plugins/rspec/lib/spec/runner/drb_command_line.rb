@@ -8,11 +8,14 @@ module Spec
       # CommandLine - making it possible for clients to use both interchangeably.
       def self.run(options)
         begin
-          DRb.start_service
+          # See http://redmine.ruby-lang.org/issues/show/496 as to why we specify localhost:0
+          DRb.start_service("druby://localhost:0")
           spec_server = DRbObject.new_with_uri("druby://127.0.0.1:8989")
           spec_server.run(options.argv, options.error_stream, options.output_stream)
-        rescue DRb::DRbConnError => e
+          true
+        rescue DRb::DRbConnError
           options.error_stream.puts "No server is running"
+          false
         end
       end
     end
