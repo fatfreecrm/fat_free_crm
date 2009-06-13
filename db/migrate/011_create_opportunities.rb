@@ -17,7 +17,7 @@ class CreateOpportunities < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :opportunities, [ :user_id, :deleted_at ], :unique => true
+    add_index :opportunities, [ :user_id, :name, :deleted_at ], :unique => true
     add_index :opportunities, :assigned_to
     add_uuid_trigger :opportunities
   end
