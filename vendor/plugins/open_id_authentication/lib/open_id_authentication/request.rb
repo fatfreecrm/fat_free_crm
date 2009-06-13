@@ -14,4 +14,10 @@ module OpenIdAuthentication
   end
 end
 
-ActionController::AbstractRequest.send :include, OpenIdAuthentication::Request
+# In Rails 2.3, the request object has been renamed
+# from AbstractRequest to Request
+if defined? ActionController::Request
+  ActionController::Request.send :include, OpenIdAuthentication::Request
+else
+  ActionController::AbstractRequest.send :include, OpenIdAuthentication::Request
+end
