@@ -120,11 +120,19 @@ module Caboose #:nodoc:
           end
 
           def count(*args)
-            with_deleted_scope { count_with_deleted(*args) }
+            with, only = extract_deleted_options(args.last) if args.last.is_a?(Hash)
+            
+            with ? count_with_deleted(*args) :
+              only ? count_only_deleted(*args) :
+                with_deleted_scope { count_with_deleted(*args) }
           end
 
           def calculate(*args)
-            with_deleted_scope { calculate_with_deleted(*args) }
+            with, only = extract_deleted_options(args.last) if args.last.is_a?(Hash)
+            
+            with ? calculate_with_deleted(*args) :
+              only ? calculate_only_deleted(*args) :
+                with_deleted_scope { calculate_with_deleted(*args) }
           end
 
           def delete_all(conditions = nil)
@@ -147,11 +155,15 @@ module Caboose #:nodoc:
           private
             # all find calls lead here
             def find_every(options)
-              options.delete(:with_deleted) ? 
-                find_every_with_deleted(options) :
-                options.delete(:only_deleted) ? 
-                  with_only_deleted_scope { find_every_with_deleted(options) } :
+              with, only = extract_deleted_options(options)
+
+              with ? find_every_with_deleted(options) :
+                only ? with_only_deleted_scope { find_every_with_deleted(options) } :
                   with_deleted_scope { find_every_with_deleted(options) }
+            end
+
+            def extract_deleted_options(options)
+              return options.delete(:with_deleted), options.delete(:only_deleted)
             end
         end
 
@@ -180,6 +192,15 @@ module Caboose #:nodoc:
         def recover!
           self.deleted_at = nil
           save!
+        end
+        
+        def recover_with_associations!(*associations)
+          self.recover!
+          associations.to_a.each do |assoc|
+            self.send(assoc).find_with_deleted(:all).each do |a|
+              a.recover! if a.class.paranoid?
+            end
+          end
         end
       end
     end

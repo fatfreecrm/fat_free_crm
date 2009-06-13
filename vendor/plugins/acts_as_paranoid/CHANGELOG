@@ -1,3 +1,8 @@
+* (16 Apr 2009)
+
+Allow :with_deleted and :only_deleted options to work with count and calculate.
+Fixes compatibility with will_paginate. [James Le Cuirot]
+
 * (4 Oct 2007)
 
 Update for Edge rails: remove support for legacy #count args 

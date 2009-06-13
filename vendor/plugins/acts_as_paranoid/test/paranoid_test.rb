@@ -260,6 +260,24 @@ class ParanoidTest < Test::Unit::TestCase
     assert_equal [],        w[2].categories.search('c').ids
     assert_equal [3,4],     w[2].categories.search_with_deleted('c').ids
   end
+  
+  def test_should_recover_record
+    Widget.find(1).destroy
+    assert_equal true, Widget.find_with_deleted(1).deleted? 
+    
+    Widget.find_with_deleted(1).recover!
+    assert_equal false, Widget.find(1).deleted?
+  end
+  
+  def test_should_recover_record_and_has_many_associations
+    Widget.find(1).destroy
+    assert_equal true, Widget.find_with_deleted(1).deleted?
+    assert_equal true, Category.find_with_deleted(1).deleted?
+    
+    Widget.find_with_deleted(1).recover_with_associations!(:categories)
+    assert_equal false, Widget.find(1).deleted?
+    assert_equal false, Category.find(1).deleted?
+  end
 end
 
 class Array
