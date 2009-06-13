@@ -2,36 +2,40 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe AccountsController do
   describe "route generation" do
-    it "should map #index" do
+    it "maps #index" do
       route_for(:controller => "accounts", :action => "index").should == "/accounts"
     end
   
-    it "should map #new" do
+    it "maps #new" do
       route_for(:controller => "accounts", :action => "new").should == "/accounts/new"
     end
   
-    it "should map #show" do
-      route_for(:controller => "accounts", :action => "show", :id => 1).should == "/accounts/1"
-    end
-  
-    it "should map #edit" do
-      route_for(:controller => "accounts", :action => "edit", :id => 1).should == "/accounts/1/edit"
-    end
-  
-    it "should map #update" do
-      route_for(:controller => "accounts", :action => "update", :id => 1).should == "/accounts/1"
-    end
-  
-    it "should map #destroy" do
-      route_for(:controller => "accounts", :action => "destroy", :id => 1).should == "/accounts/1"
+    it "maps #show" do
+      route_for(:controller => "accounts", :action => "show", :id => "1").should == "/accounts/1"
     end
 
-    it "should map #search" do
-      route_for(:controller => "accounts", :action => "search", :id => 1).should == "/accounts/search/1"
+    it "maps #create" do
+      route_for(:controller => "accounts", :action => "create").should == { :path => "/accounts", :method => :post }
+    end 
+  
+    it "maps #edit" do
+      route_for(:controller => "accounts", :action => "edit", :id => "1").should == "/accounts/1/edit"
+    end
+  
+    it "maps #update" do
+      route_for(:controller => "accounts", :action => "update", :id => "1").should == { :path => "/accounts/1", :method => :put }
+    end
+  
+    it "maps #destroy" do
+      route_for(:controller => "accounts", :action => "destroy", :id => "1").should == { :path => "/accounts/1", :method => :delete }
     end
 
-    it "should map #auto_complete" do
-      route_for(:controller => "accounts", :action => "auto_complete", :id => 1).should == "/accounts/auto_complete/1"
+    it "maps #search" do
+      route_for(:controller => "accounts", :action => "search", :id => "1").should == "/accounts/search/1"
+    end
+
+    it "maps #auto_complete" do
+      route_for(:controller => "accounts", :action => "auto_complete", :id => "1").should == "/accounts/auto_complete/1"
     end
   end
 

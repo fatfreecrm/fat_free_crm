@@ -2,36 +2,40 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ContactsController do
   describe "route generation" do
-    it "should map #index" do
+    it "maps #index" do
       route_for(:controller => "contacts", :action => "index").should == "/contacts"
     end
   
-    it "should map #new" do
+    it "maps #new" do
       route_for(:controller => "contacts", :action => "new").should == "/contacts/new"
     end
   
-    it "should map #show" do
-      route_for(:controller => "contacts", :action => "show", :id => 1).should == "/contacts/1"
+    it "maps #show" do
+      route_for(:controller => "contacts", :action => "show", :id => "1").should == "/contacts/1"
     end
   
-    it "should map #edit" do
-      route_for(:controller => "contacts", :action => "edit", :id => 1).should == "/contacts/1/edit"
+    it "maps #edit" do
+      route_for(:controller => "contacts", :action => "edit", :id => "1").should == "/contacts/1/edit"
     end
   
-    it "should map #update" do
-      route_for(:controller => "contacts", :action => "update", :id => 1).should == "/contacts/1"
+    it "maps #create" do
+      route_for(:controller => "contacts", :action => "create").should == { :path => "/contacts", :method => :post }
+    end 
+
+    it "maps #update" do
+      route_for(:controller => "contacts", :action => "update", :id => "1").should == { :path => "/contacts/1", :method => :put }
     end
   
-    it "should map #destroy" do
-      route_for(:controller => "contacts", :action => "destroy", :id => 1).should == "/contacts/1"
+    it "maps #destroy" do
+      route_for(:controller => "contacts", :action => "destroy", :id => "1").should == { :path => "/contacts/1", :method => :delete }
     end
 
-    it "should map #search" do
-      route_for(:controller => "contacts", :action => "search", :id => 1).should == "/contacts/search/1"
+    it "maps #search" do
+      route_for(:controller => "contacts", :action => "search", :id => "1").should == "/contacts/search/1"
     end
 
-    it "should map #auto_complete" do
-      route_for(:controller => "contacts", :action => "auto_complete", :id => 1).should == "/contacts/auto_complete/1"
+    it "maps #auto_complete" do
+      route_for(:controller => "contacts", :action => "auto_complete", :id => "1").should == "/contacts/auto_complete/1"
     end
   end
 

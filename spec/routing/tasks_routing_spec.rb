@@ -2,32 +2,36 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TasksController do
   describe "route generation" do
-    it "should map #index" do
+    it "maps #index" do
       route_for(:controller => "tasks", :action => "index").should == "/tasks"
     end
   
-    it "should map #new" do
+    it "maps #new" do
       route_for(:controller => "tasks", :action => "new").should == "/tasks/new"
     end
   
-    it "should map #show" do
-      route_for(:controller => "tasks", :action => "show", :id => 1).should == "/tasks/1"
+    it "maps #show" do
+      route_for(:controller => "tasks", :action => "show", :id => "1").should == "/tasks/1"
     end
   
-    it "should map #edit" do
-      route_for(:controller => "tasks", :action => "edit", :id => 1).should == "/tasks/1/edit"
+    it "maps #edit" do
+      route_for(:controller => "tasks", :action => "edit", :id => "1").should == "/tasks/1/edit"
     end
   
-    it "should map #update" do
-      route_for(:controller => "tasks", :action => "update", :id => 1).should == "/tasks/1"
+    it "maps #create" do
+      route_for(:controller => "tasks", :action => "create").should == { :path => "/tasks", :method => :post }
+    end 
+
+    it "maps #update" do
+      route_for(:controller => "tasks", :action => "update", :id => "1").should == { :path => "/tasks/1", :method => :put }
     end
   
-    it "should map #destroy" do
-      route_for(:controller => "tasks", :action => "destroy", :id => 1).should == "/tasks/1"
+    it "maps #destroy" do
+      route_for(:controller => "tasks", :action => "destroy", :id => "1").should == { :path => "/tasks/1", :method => :delete }
     end
 
-    it "should map #complete" do
-      route_for(:controller => "tasks", :action => "complete", :id => 1).should == "/tasks/1/complete"
+    it "maps #complete" do
+      route_for(:controller => "tasks", :action => "complete", :id => "1").should == { :path => "/tasks/1/complete", :method => :put }
     end
   end
 

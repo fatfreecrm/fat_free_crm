@@ -2,28 +2,32 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe CommentsController do
   describe "route generation" do
-    it "should map #index" do
+    it "maps #index" do
       route_for(:controller => "comments", :action => "index").should == "/comments"
     end
   
-    it "should map #new" do
+    it "maps #new" do
       route_for(:controller => "comments", :action => "new").should == "/comments/new"
     end
   
-    it "should map #show" do
-      route_for(:controller => "comments", :action => "show", :id => 1).should == "/comments/1"
+    it "maps #show" do
+      route_for(:controller => "comments", :action => "show", :id => "1").should == "/comments/1"
     end
   
-    it "should map #edit" do
-      route_for(:controller => "comments", :action => "edit", :id => 1).should == "/comments/1/edit"
+    it "maps #edit" do
+      route_for(:controller => "comments", :action => "edit", :id => "1").should == "/comments/1/edit"
     end
   
-    it "should map #update" do
-      route_for(:controller => "comments", :action => "update", :id => 1).should == "/comments/1"
+    it "maps #create" do
+      route_for(:controller => "comments", :action => "create").should == { :path => "/comments", :method => :post }
+    end 
+
+    it "maps #update" do
+      route_for(:controller => "comments", :action => "update", :id => "1").should == { :path => "/comments/1", :method => :put }
     end
   
-    it "should map #destroy" do
-      route_for(:controller => "comments", :action => "destroy", :id => 1).should == "/comments/1"
+    it "maps #destroy" do
+      route_for(:controller => "comments", :action => "destroy", :id => "1").should == { :path => "/comments/1", :method => :delete }
     end
   end
 

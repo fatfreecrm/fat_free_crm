@@ -2,48 +2,52 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe LeadsController do
   describe "route generation" do
-    it "should map #index" do
+    it "maps #index" do
       route_for(:controller => "leads", :action => "index").should == "/leads"
     end
   
-    it "should map #new" do
+    it "maps #new" do
       route_for(:controller => "leads", :action => "new").should == "/leads/new"
     end
   
-    it "should map #show" do
-      route_for(:controller => "leads", :action => "show", :id => 1).should == "/leads/1"
+    it "maps #show" do
+      route_for(:controller => "leads", :action => "show", :id => "1").should == "/leads/1"
     end
   
-    it "should map #edit" do
-      route_for(:controller => "leads", :action => "edit", :id => 1).should == "/leads/1/edit"
+    it "maps #edit" do
+      route_for(:controller => "leads", :action => "edit", :id => "1").should == "/leads/1/edit"
     end
   
-    it "should map #update" do
-      route_for(:controller => "leads", :action => "update", :id => 1).should == "/leads/1"
+    it "maps #create" do
+      route_for(:controller => "leads", :action => "create").should == { :path => "/leads", :method => :post }
+    end 
+
+    it "maps #update" do
+      route_for(:controller => "leads", :action => "update", :id => "1").should == { :path => "/leads/1", :method => :put }
     end
   
-    it "should map #destroy" do
-      route_for(:controller => "leads", :action => "destroy", :id => 1).should == "/leads/1"
+    it "maps #destroy" do
+      route_for(:controller => "leads", :action => "destroy", :id => "1").should == { :path => "/leads/1", :method => :delete }
     end
 
-    it "should map #search" do
-      route_for(:controller => "leads", :action => "search", :id => 1).should == "/leads/search/1"
+    it "maps #search" do
+      route_for(:controller => "leads", :action => "search", :id => "1").should == "/leads/search/1"
     end
 
-    it "should map #convert" do
-      route_for(:controller => "leads", :action => "convert", :id => 1).should == "/leads/1/convert"
+    it "maps #convert" do
+      route_for(:controller => "leads", :action => "convert", :id => "1").should == "/leads/1/convert"
     end
 
-    it "should map #promote" do
-      route_for(:controller => "leads", :action => "promote", :id => 1).should == "/leads/1/promote"
+    it "maps #promote" do
+      route_for(:controller => "leads", :action => "promote", :id => "1").should == { :path => "/leads/1/promote", :method => :put }
     end
 
-    it "should map #reject" do
-      route_for(:controller => "leads", :action => "reject", :id => 1).should == "/leads/1/reject"
+    it "maps #reject" do
+      route_for(:controller => "leads", :action => "reject", :id => "1").should == { :path => "/leads/1/reject", :method => :put }
     end
 
-    it "should map #auto_complete" do
-      route_for(:controller => "leads", :action => "auto_complete", :id => 1).should == "/leads/auto_complete/1"
+    it "maps #auto_complete" do
+      route_for(:controller => "leads", :action => "auto_complete", :id => "1").should == "/leads/auto_complete/1"
     end
   end
 
