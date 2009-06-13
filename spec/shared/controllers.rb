@@ -18,7 +18,7 @@ module SharedControllerSpecs
 
     it "should render common/auto_complete template" do
       post :auto_complete, :auto_complete_query => @query
-      response.should render_template("auto_complete")
+      response.should render_template("common/auto_complete")
     end
   end
 

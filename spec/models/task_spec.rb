@@ -69,14 +69,14 @@ describe Task do
       task = Factory(:task, :due_at => Date.tomorrow, :bucket => "due_tomorrow")
       task.update_attributes( { :bucket => "due_this_week" } )
       task.bucket.should == "due_this_week"
-      task.due_at.should == Date.today.end_of_week
+      task.due_at.should == Date.today.end_of_week.to_time
     end
 
     it "should update due date if specific calendar date selected" do
       task = Factory(:task, :due_at => Date.tomorrow, :bucket => "due_tomorrow")
       task.update_attributes( { :bucket => "specific_time", :calendar => "01/31/2020" } )
       task.bucket.should == "specific_time"
-      task.due_at.should == Time.parse("01/31/2020")
+      task.due_at.should == Time.zone.parse("01/31/2020")
     end
 
   end

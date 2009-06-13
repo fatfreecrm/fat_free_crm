@@ -10,7 +10,7 @@ Here are the steps to get Fat Free CRM up and running on your system.
 === System Requirements
 
 * Ruby v1.8.6 or later
-* Ruby on Rails v2.2 (hasn't been ported to Rails 2.3 yet)
+* Ruby on Rails v2.3.2
 * MySQL v4.1.1 or later (v5+ is recommended) or SQLite v3.4 or later
 * Browsers: FireFox and Safari (IE is not supported yet)
 

@@ -94,9 +94,9 @@ class ApplicationController < ActionController::Base
       flash[:warning] = "Can't #{flick} the #{asset} since it's no longer available."
     end
     respond_to do |format|
-      format.html { redirect_to(:action => :index) }         if types.include?(:html)
-      format.js   { render(:update) { |page| page.reload } } if types.include?(:js)
-      format.xml  { render :status => :not_found }           if types.include?(:xml)
+      format.html { redirect_to(:action => :index) }                         if types.include?(:html)
+      format.js   { render(:update) { |page| page.reload } }                 if types.include?(:js)
+      format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
   end
 
@@ -107,9 +107,9 @@ class ApplicationController < ActionController::Base
     flash[:warning] = "Can't create the #{asset} since the #{related} is no longer available."
     url = send("#{related.pluralize}_path")
     respond_to do |format|
-      format.html { redirect_to(url) }                                 if types.include?(:html)
-      format.js   { render(:update) { |page| page.redirect_to(url) } } if types.include?(:js)
-      format.xml  { render :status => :not_found }                     if types.include?(:xml)
+      format.html { redirect_to(url) }                                       if types.include?(:html)
+      format.js   { render(:update) { |page| page.redirect_to(url) } }       if types.include?(:js)
+      format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
   end
 
