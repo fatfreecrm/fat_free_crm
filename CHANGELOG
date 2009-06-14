@@ -11,7 +11,7 @@ Sat, Jun 13, 2009
 - Upgraded [acts-as-paranoid] plugin.
 - Fixed task title naming issue.
 - Fixed opportunity unique index issue (SQLite).
-- Tagged 0.9.0.
+- Tagged 0.9.0 to build downloadable distributions on Github.
 
 Thu, Jun 11, 2009
 ---------------------------------------------------------------------
