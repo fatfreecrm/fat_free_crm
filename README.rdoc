@@ -14,12 +14,19 @@ Here are the steps to get Fat Free CRM up and running on your system.
 * MySQL v4.1.1 or later (v5+ is recommended) or SQLite v3.4 or later
 * Browsers: FireFox and Safari (IE is not supported yet)
 
+=== Downloads
+
+* Git source code repository: git://github.com/michaeldv/fat_free_crm.git
+* .tgz archive: http://github.com/michaeldv/fat_free_crm/tarball/0.9.0
+* .zip archive: http://github.com/michaeldv/fat_free_crm/zipball/0.9.0
+
 === Resources
 
 * Project page: http://github.com/michaeldv/fat_free_crm/tree/master
-* Git repository: git://github.com/michaeldv/fat_free_crm.git
-* Lighthouse: http://fatfreecrm.lighthouseapp.com
-* Twitter: http://twitter.com/fatfreecrm
+* Features and bugs: http://fatfreecrm.lighthouseapp.com
+* Twitter commit updates: http://twitter.com/fatfreecrm
+* Discussion group for users: http://groups.google.com/group/fat-free-crm-users
+* Discussion group for developers: http://groups.google.com/group/fat-free-crm-dev
 
 === Setting Up The Database
 
