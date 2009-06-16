@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Jun 15, 2009
+---------------------------------------------------------------------
+- Updated Readme file (added links to direct downloads and Google Groups).
+- Installed [facebox-for-prototype] JavaScript library.
+- Implemented About box showing version number and helpful links (rerun rake crm:setup!)
+
 Sat, Jun 13, 2009
 ---------------------------------------------------------------------
 - Upgraded to work with Rails 2.3.2

@@ -1,3 +1,24 @@
 #footer
-  == Powered by #{link_to "Fat Free CRM", "http://www.fatfreecrm.com"} &copy; 2008-#{Date.today.year} by Michael Dvorkin
+  == Powered by #{link_to "Fat Free CRM", "http://www.fatfreecrm.com", :popup => true }
+  == &copy; 2008-#{Date.today.year} by Michael Dvorkin
+  == | #{link_to  "About", "#about", :rel => "facebox" }
 %br
+#about{ hidden }
+  %h3
+    Fat Free CRM version
+    - if Setting.version
+      %span.cool== v#{Setting.version[:major]}.#{Setting.version[:minor]}.#{Setting.version[:patch]}
+    - else
+      %span.warn unknown.
+  %p
+    Thank you for using Fat Free CRM! We appreciate your business and hope
+    you enjoy using the software.
+    %p
+      Few resources that you might find helpful (links open in a new window):
+      %ul{:style => "margin: 0px 0px 0px 15px"}
+        %li== &raquo; #{link_to "Home page", "http://www.fatfreecrm.com", :popup => true}
+        %li== &raquo; #{link_to "Project page", "http://github.com/michaeldv/fat_free_crm/tree/master", :popup => true}
+        %li== &raquo; #{link_to "Features and bugs", "http://fatfreecrm.lighthouseapp.com", :popup => true}
+        %li== &raquo; #{link_to "Twitter commit updates", "http://twitter.com/fatfreecrm", :popup => true}
+        %li== &raquo; #{link_to "Discussion group for users", "http://groups.google.com/group/fat-free-crm-users", :popup => true}
+        %li== &raquo; #{link_to "Discussion group for developers", "http://groups.google.com/group/fat-free-crm-dev", :popup => true}

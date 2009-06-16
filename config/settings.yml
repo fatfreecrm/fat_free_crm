@@ -2,28 +2,33 @@
 #
 #   rake db:settings:load
 #
+version:
+  :major  : 0
+  :minor  : 9
+  :patch  : 0
+
 :tabs:
-  - :active: true
-    :text: Dashboard
-    :url: /
-  - :active: false
-    :text: Tasks
-    :url: /tasks
-  - :active: false
-    :text: Campaigns
-    :url: /campaigns
-  - :active: false
-    :text: Leads
-    :url: /leads
-  - :active: false
-    :text: Accounts
-    :url: /accounts
-  - :active: false
-    :text: Contacts
-    :url: /contacts
-  - :active: false
-    :text: Opportunities
-    :url: /opportunities
+  - :active   : true
+    :text     : Dashboard
+    :url      : /
+  - :active   : false
+    :text     : Tasks
+    :url      : /tasks
+  - :active   : false
+    :text     : Campaigns
+    :url      : /campaigns
+  - :active   : false
+    :text     : Leads
+    :url      : /leads
+  - :active   : false
+    :text     : Accounts
+    :url      : /accounts
+  - :active   : false
+    :text     : Contacts
+    :url      : /contacts
+  - :active   : false
+    :text     : Opportunities
+    :url      : /opportunities
 
 campaign_status:
   :planned       : Planned
