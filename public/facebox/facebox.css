@@ -93,3 +93,7 @@
   position: absolute;
   height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
 }
+
+a.close:hover {
+  background: white;
+}

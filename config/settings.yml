@@ -2,11 +2,6 @@
 #
 #   rake db:settings:load
 #
-version:
-  :major  : 0
-  :minor  : 9
-  :patch  : 1
-
 :tabs:
   - :active   : true
     :text     : Dashboard

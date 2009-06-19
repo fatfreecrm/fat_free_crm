@@ -6,10 +6,8 @@
 #about{ hidden }
   %h3
     Fat Free CRM version
-    - if Setting.version
-      %span.cool== v#{Setting.version[:major]}.#{Setting.version[:minor]}.#{Setting.version[:patch]}
-    - else
-      %span.warn unknown.
+    %span.cool== v#{FatFreeCRM::Version}
+    == (#{ActiveRecord::Base.connection.adapter_name.downcase})
   %p
     Thank you for using Fat Free CRM! We appreciate your business and hope
     you enjoy using the software.
