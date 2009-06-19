@@ -71,6 +71,24 @@ class Task < ActiveRecord::Base
   before_create :set_due_date, :notify_assignee
   before_update :set_due_date, :notify_assignee
 
+  # Matcher for the :my named scope.
+  #----------------------------------------------------------------------------
+  def my?(user)
+    (self.user == user && assignee.nil?) || assignee == user
+  end
+
+  # Matcher for the :assigned_by named scope.
+  #----------------------------------------------------------------------------
+  def assigned_by?(user)
+    self.user == user && assignee && assignee != user
+  end
+
+  # Matcher for the :tracked_by? named scope.
+  #----------------------------------------------------------------------------
+  def tracked_by?(user)
+    self.user == user || self.assignee == user
+  end
+
   # Convert specific due_date to "due_today", "due_tomorrow", etc. bucket name.
   #----------------------------------------------------------------------------
   def computed_bucket

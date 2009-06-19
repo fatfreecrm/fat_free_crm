@@ -81,4 +81,68 @@ describe Task do
 
   end
 
+  # named_scope :my, lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
+  describe "task.my?" do
+    it "should match a task created by the user" do
+      task = Factory(:task, :user => @current_user, :assignee => nil)
+      task.my?(@current_user).should == true
+    end
+
+    it "should match a task assigned to the user" do
+      task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+      task.my?(@current_user).should == true
+    end
+
+    it "should Not match a task not created by the user" do
+      task = Factory(:task, :user => Factory(:user))
+      task.my?(@current_user).should == false
+    end
+
+    it "should Not match a task created by the user but assigned to somebody else" do
+      task = Factory(:task, :user => @current_user, :assignee => Factory(:user))
+      task.my?(@current_user).should == false
+    end
+  end
+
+  # named_scope :assigned_by, lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?", user.id, user.id ], :include => :assignee } }
+  describe "task.assigned_by?" do
+    it "should match a task assigned by the user to somebody else" do
+      task = Factory(:task, :user => @current_user, :assignee => Factory(:user))
+      task.assigned_by?(@current_user).should == true
+    end
+
+    it "should Not match a task not created by the user" do
+      task = Factory(:task, :user => Factory(:user))
+      task.assigned_by?(@current_user).should == false
+    end
+
+    it "should Not match a task not assigned to anybody" do
+      task = Factory(:task, :assignee => nil)
+      task.assigned_by?(@current_user).should == false
+    end
+
+    it "should Not match a task assigned to the user" do
+      task = Factory(:task, :assignee => @current_user)
+      task.assigned_by?(@current_user).should == false
+    end
+  end
+
+  # named_scope :tracked_by, lambda { |user| { :conditions => [ "user_id = ? OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
+  describe "task.tracked_by?" do
+    it "should match a task created by the user" do
+      task = Factory(:task, :user => @current_user)
+      task.tracked_by?(@current_user).should == true
+    end
+
+    it "should match a task assigned to the user" do
+      task = Factory(:task, :assignee => @current_user)
+      task.tracked_by?(@current_user).should == true
+    end
+
+    it "should Not match a task that is neither created nor assigned to the user" do
+      task = Factory(:task, :user => Factory(:user), :assignee => Factory(:user))
+      task.tracked_by?(@current_user).should == false
+    end
+  end
+
 end
