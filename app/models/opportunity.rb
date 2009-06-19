@@ -61,7 +61,7 @@ class Opportunity < ActiveRecord::Base
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ;  30                              ; end
+  def self.per_page ;  20                              ; end
   def self.outline  ;  "long"                          ; end
   def self.sort_by  ;  "opportunities.created_at DESC" ; end
 

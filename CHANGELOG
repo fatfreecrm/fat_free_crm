@@ -9,6 +9,7 @@ Thu, Jun 18, 2009
 - Fixed task creation issue on landing pages; added missing task stylesheets.
 - Simplified version handling to avoid unnecessary database queries.
 - Fixed Rails 2.3 incompatibility (expand/collapse in forms and [Cancel] for notes).
+- Changed defaults to more reasonable values (thanks, Lana!).
 
 Mon, Jun 15, 2009
 ---------------------------------------------------------------------

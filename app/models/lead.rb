@@ -67,7 +67,7 @@ class Lead < ActiveRecord::Base
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ;  30                      ; end
+  def self.per_page ;  20                      ; end
   def self.outline  ;  "long"                  ; end
   def self.sort_by  ;  "leads.created_at DESC" ; end
   def self.first_name_position ;  "before"     ; end

@@ -17,7 +17,7 @@ class HomeController < ApplicationController
     unless params[:cancel] == "true"
       @asset = @current_user.pref[:activity_asset] || "all"
       @user = @current_user.pref[:activity_user] || "all users"
-      @duration = @current_user.pref[:activity_duration] || "one week"
+      @duration = @current_user.pref[:activity_duration] || "two days"
     end
   end
 
