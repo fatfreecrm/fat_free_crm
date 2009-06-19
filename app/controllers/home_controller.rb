@@ -36,7 +36,7 @@ class HomeController < ApplicationController
   #----------------------------------------------------------------------------
   def toggle
     if session[params[:id].to_sym]
-      session.data.delete(params[:id].to_sym)
+      session.delete(params[:id].to_sym)
     else
       session[params[:id].to_sym] = true
     end

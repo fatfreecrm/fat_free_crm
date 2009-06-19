@@ -120,7 +120,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def update_commentable_session
     if params[:cancel] == "true"
-      session.data.delete("#{@commentable}_new_comment")
+      session.delete("#{@commentable}_new_comment")
     else
       session["#{@commentable}_new_comment"] = true
     end

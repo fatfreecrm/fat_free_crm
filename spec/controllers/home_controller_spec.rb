@@ -86,7 +86,7 @@ describe HomeController do
     end
 
     it "should toggle expand/collapse state of form section in the session (save new session key)" do
-      session.data.delete(:hello)
+      session.delete(:hello)
 
       xhr :get, :toggle, :id => "hello"
       session[:hello].should == true
