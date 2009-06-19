@@ -7,16 +7,12 @@ describe "/tasks/create.js.rjs" do
     login_and_assign
   end
 
-  VIEWS.each do |view|
-    before(:each) do
-      @task = stub_task(view)
-      assigns[:view] = view
-      assigns[:task] = @task
-      assigns[:task_total] = stub_task_total(view)
-    end
-
+  (VIEWS - %w(completed)).each do |view|
     describe "create from #{view} tasks page" do
       before(:each) do
+        assigns[:view] = view
+        assigns[:task] = @task = stub_task(view)
+        assigns[:task_total] = stub_task_total(view)
         request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{view}"
         render "tasks/create.js.rjs"
       end
@@ -26,6 +22,14 @@ describe "/tasks/create.js.rjs" do
           with_tag("li[id=task_#{@task.id}]")
         end
         response.should include_text(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+      end
+
+      it "should update tasks title" do
+        if view == "assigned"
+          response.should include_text('$("title").update("Assigned Tasks")')
+        else
+          response.should include_text('$("title").update("Tasks")')
+        end
       end
 
       it "should update tasks sidebar" do
@@ -87,6 +91,10 @@ describe "/tasks/create.js.rjs" do
         assigns[:view] = view
         assigns[:task] = @task
         render "tasks/create.js.rjs"
+      end
+
+      it "should update tasks title" do
+        response.should include_text('$("create_task_title").update("Tasks")')
       end
 
       it "should insert #{view} partial and highlight it" do

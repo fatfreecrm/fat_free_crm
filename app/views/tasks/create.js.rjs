@@ -1,9 +1,9 @@
 if @task.valid?
   page[:create_task_arrow].replace_html "&#9658;"
-  page[:title].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
   page.visual_effect :toggle_blind, :create_task, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
 
   if called_from_index_page?  # "Classic" [Create Task] form requested from the Tasks page.
+    page[:title].replace_html(@view == "assigned" ? "Assigned Tasks" : "Tasks")
 
     # Show flash if assigned to somebody else from the [Pending Tasks] page.
     if @view == "pending" && @task.assigned_to && @task.assigned_to != @current_user.id
@@ -28,6 +28,7 @@ if @task.valid?
     page.call "crm.flick", :empty, :remove
 
   else # Inline [Create Task] form reqested from any of the core asset landing pages.
+    page[:create_task_title].replace_html("Tasks")
 
     partial = (@task.assigned_to && @task.assigned_to != @current_user.id) ? "assigned" : "pending"
     page.insert_html :top, :tasks, :partial => "tasks/#{partial}", :collection => [@task], :locals => { :bucket => nil }
