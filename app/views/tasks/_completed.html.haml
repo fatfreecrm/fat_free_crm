@@ -1,17 +1,18 @@
 %li[completed]{ highlightable(dom_id(completed, :tools)) }
   - unless completed.category.blank?
-    .strip{:class => completed.category}= Setting.task_category[completed.category.intern]
+    .strip{:class => completed.category}= Setting.task_category[completed.category.to_sym]
   - else
     .strip{:style => "color:white"} Other
   %div
     .tools{ invisible, :id => dom_id(completed, :tools) }
-      %small= link_to_task_delete(completed, bucket)
-    - if completed.user.id != @current_user.id
-      == From #{link_to(completed.user.full_name, "mailto:" + completed.user.email)}:
+      %small=  link_to_task_delete(completed, bucket) if @current_user == completed.user
     %strike= completed.name
     - if completed.asset_id?
       == (re: #{link_to(completed.asset.name, polymorphic_url(completed.asset))})
     &ndash;
     %tt
-      %span.cool= "completed " << distance_of_time_in_words(completed.completed_at, Time.now) << " ago"
+      %span.cool
+        = "completed " << distance_of_time_in_words(completed.completed_at, Time.now) << " ago"
+        - if completed.completor.id != @current_user.id
+          = "by " << link_to(completed.completor.name, "mailto:" + completed.completor.email)
       

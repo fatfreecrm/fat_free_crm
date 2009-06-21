@@ -232,6 +232,7 @@ Factory.define :task do |t|
   t.asset_id            nil
   t.asset_type          nil
   t.assigned_to         nil
+  t.completed_by        nil
   t.name                { Faker::Lorem.sentence[0..63] }
   t.priority            nil
   t.category            { %w(call email folowup lunch meeting money presentation trip).rand }

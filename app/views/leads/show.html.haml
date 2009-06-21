@@ -22,9 +22,14 @@
 .subtitle#create_task_title Tasks
 .remote#create_task{ hidden }
 .log#tasks
-  - if @lead.tasks.my(@current_user).pending.any?
-    = render :partial => "tasks/pending", :collection => @lead.tasks.my(@current_user).pending, :locals => { :bucket => nil }
-  - if @lead.tasks.assigned.any?
-    = render :partial => "tasks/assigned", :collection => @lead.tasks.assigned, :locals => { :bucket => nil }
-  - if @lead.tasks.completed.any?
-    = render :partial => "tasks/completed", :collection => @lead.tasks.completed, :locals => { :bucket => nil }
+  - @lead.tasks.each do |task|
+    - if task.completed_at?
+      = render :partial => "tasks/completed", :locals => { :completed => task, :bucket => nil }
+    - elsif task.my?(@current_user)
+      = render :partial => "tasks/pending", :locals => { :pending => task, :bucket => nil }
+    - elsif task.assigned_by?(@current_user)
+      = render :partial => "tasks/assigned", :locals => { :assigned => task, :bucket => nil }
+    - else
+      = render :partial => "tasks/related", :locals => { :related => task, :bucket => nil }
+      / == #{task.id}: created by #{task.user.name}, assigned to #{task.assignee ? task.assignee.name : "none"}
+

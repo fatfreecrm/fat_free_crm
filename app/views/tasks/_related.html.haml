@@ -1,0 +1,29 @@
+%li[related]{ highlightable(dom_id(related, :tools)) }
+  - unless related.category.blank?
+    .strip{:class => related.category}= Setting.task_category[related.category.to_sym]
+  - else
+    .strip{:style => "color:white"} Other
+  %div
+    .tools{ invisible, :id => dom_id(related, :tools) }
+    - if related.assigned_to
+      = link_to(related.assignee.name, "mailto:" + related.assignee.email)
+    - else
+      = link_to(related.user.name, "mailto:" + related.user.email)
+    = ": " + related.name
+    - if related.asset_id?
+      == (re: #{link_to(related.asset.name, polymorphic_url(related.asset))})
+    &ndash;
+    %tt
+      - if related.completed_at
+        %span.cool= "completed " << distance_of_time_in_words(related.completed_at, Time.now) << " ago"
+      - elsif related.bucket == "due_asap"
+        %span.urgent due now.
+      - elsif related.bucket == "due_later"
+        due sometime soon.
+      - elsif related.due_at < Date.today
+        %span.warn= distance_of_time_in_words(related.due_at, Date.today) << " late, was due on #{related.due_at.strftime('%b %e')}"
+      - elsif related.due_at > Date.today
+        = "due in " << distance_of_time_in_words(Time.now, related.due_at.end_of_day)
+      - else
+        %span.cool due today.
+      

@@ -41,19 +41,22 @@
         due_at = nil
         bucket = "due_later"
       end
+    user = rand(8) + 1
     asset = (i % 5 == 0 ? rand(10) + 1 : nil)
+    completed_by = rand(4) == 0 ? user : nil
 %>
 task<%= i %>:
   id           : <%= i %>
-  user_id      : <%= rand(8) + 1 %>
+  user_id      : <%= user %>
   assigned_to  : <%= rand(4) == 0 ? rand(5) + 1 : "" %>
+  completed_by : <%= completed_by %>
   name         : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "") %>
   asset_id     : <%= asset %>
   asset_type   : <%= %w(Account Campaign Contact Lead Opportunity).rand if asset %>
   category     : <%= category[rand(category.size)] %>
   bucket       : <%= bucket %>
   due_at       : <%= due_at %>
-  completed_at : <%= rand(4) == 0 ? Date.today - rand(5).days : "" %>
+  completed_at : <%= completed_by ? Date.today - rand(5).days : "" %>
   created_at   : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at   : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>

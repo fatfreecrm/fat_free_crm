@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   def set_current_tab(tab = controller_name.to_sym)
     @current_tab = tab
   end
-  
+
   #----------------------------------------------------------------------------
   def current_user_session
     @current_user_session ||= Authentication.find
@@ -29,7 +29,10 @@ class ApplicationController < ActionController::Base
   
   #----------------------------------------------------------------------------
   def require_user
-    unless current_user
+    if current_user
+      # TODO: add timezone to user profile (f.time_zone_select :time_zone, TimeZone.us_zones)
+      # Time.zone = @current_user.time_zone
+    else
       store_location
       flash[:notice] = "You must be logged in to access this page." if request.request_uri != "/"
       redirect_to login_url

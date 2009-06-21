@@ -4,6 +4,7 @@ class CreateTasks < ActiveRecord::Migration
       t.string      :uuid, :limit => 36
       t.references  :user
       t.integer     :assigned_to
+      t.integer     :completed_by
       t.string      :name, :null => false, :default => ""
       t.references  :asset, :polymorphic => true
       t.string      :priority, :limit => 32

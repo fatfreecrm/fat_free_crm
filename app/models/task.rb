@@ -25,6 +25,7 @@ class Task < ActiveRecord::Base
 
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
+  belongs_to  :completor, :class_name => "User", :foreign_key => :completed_by
   belongs_to  :asset, :polymorphic => true
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 

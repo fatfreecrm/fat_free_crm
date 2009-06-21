@@ -41,7 +41,7 @@ describe "/tasks/edit.js.rjs" do
   
   describe "complete from related asset" do
     it "should replace pending partial with the completed one" do
-      @task = Factory(:task, :completed_at => Time.now)
+      @task = Factory(:task, :completed_at => Time.now, :completor => @current_user)
       assigns[:task] = @task
 
       render "tasks/complete.js.rjs"
@@ -52,7 +52,7 @@ describe "/tasks/edit.js.rjs" do
     end
 
     it "should update recently viewed items" do
-      @task = Factory(:task, :completed_at => Time.now)
+      @task = Factory(:task, :completed_at => Time.now, :completor => @current_user)
       assigns[:task] = @task
       request.env["HTTP_REFERER"] = "http://localhost/leads/123"
   
