@@ -1,0 +1,10 @@
+- asset ||= instance_variable_get("@" << controller.controller_name.singularize)
+- asset.tasks.each do |task|
+  - if task.completed_at?
+    = render :partial => "tasks/completed", :locals => { :completed => task, :bucket => nil }
+  - elsif task.my?(@current_user)
+    = render :partial => "tasks/pending",   :locals => { :pending => task,   :bucket => nil }
+  - elsif task.assigned_by?(@current_user)
+    = render :partial => "tasks/assigned",  :locals => { :assigned => task,  :bucket => nil }
+  - else
+    = render :partial => "tasks/related",   :locals => { :related => task,   :bucket => nil }

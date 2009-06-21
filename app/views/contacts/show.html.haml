@@ -17,12 +17,7 @@
 .subtitle#create_task_title Tasks
 .remote#create_task{ hidden }
 .log#tasks
-  - if @contact.tasks.my(@current_user).pending.any?
-    = render :partial => "tasks/pending", :collection => @contact.tasks.my(@current_user).pending, :locals => { :bucket => nil }
-  - if @contact.tasks.assigned.any?
-    = render :partial => "tasks/assigned", :collection => @contact.tasks.assigned, :locals => { :bucket => nil }
-  - if @contact.tasks.completed.any?
-    = render :partial => "tasks/completed", :collection => @contact.tasks.completed, :locals => { :bucket => nil }
+  = render :partial => "common/tasks"
 
 -#-----------------------------------------------------------------------------
 %br
