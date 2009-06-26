@@ -17,11 +17,11 @@ Here are the steps to get Fat Free CRM up and running on your system.
 === Downloads
 
 * Git source code repository: git://github.com/michaeldv/fat_free_crm.git
-* .tgz archive: http://github.com/michaeldv/fat_free_crm/tarball/0.9.0
-* .zip archive: http://github.com/michaeldv/fat_free_crm/zipball/0.9.0
+* .zip or .tgz archives: http://github.com/michaeldv/fat_free_crm/downloads
 
 === Resources
 
+* Home page: http://www.fatfreecrm.com
 * Project page: http://github.com/michaeldv/fat_free_crm/tree/master
 * Features and bugs: http://fatfreecrm.lighthouseapp.com
 * Twitter commit updates: http://twitter.com/fatfreecrm
@@ -43,6 +43,9 @@ the database:
 
    $ rake db:create
 
+NOTE: if you are running MySQL v5+ please make sure that:
+  * prior to MySQL v5.1.6: database user must have SUPER privilege;
+  * MySQL v5.1.6 or later: database user must have SUPER or TRIGGER privilege.
 
 === Setting Up The Application
 
