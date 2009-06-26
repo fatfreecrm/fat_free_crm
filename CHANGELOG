@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Thu, Jun 25, 2008
+---------------------------------------------------------------------
+- Rewrote config/settings.yml to use more familiar Ruby-like syntax.
+
+Mon, Jun 22, 2009
+---------------------------------------------------------------------
+- Fat Free CRM website is up at http://www.fatfreecrm.com
+
 Sat, Jun 20, 2009
 ---------------------------------------------------------------------
 - Assets now show all related tasks, even if they were not created or assigned by current user.

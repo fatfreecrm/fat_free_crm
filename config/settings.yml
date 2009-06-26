@@ -2,28 +2,15 @@
 #
 #   rake db:settings:load
 #
-:tabs:
-  - :active   : true
-    :text     : Dashboard
-    :url      : /
-  - :active   : false
-    :text     : Tasks
-    :url      : /tasks
-  - :active   : false
-    :text     : Campaigns
-    :url      : /campaigns
-  - :active   : false
-    :text     : Leads
-    :url      : /leads
-  - :active   : false
-    :text     : Accounts
-    :url      : /accounts
-  - :active   : false
-    :text     : Contacts
-    :url      : /contacts
-  - :active   : false
-    :text     : Opportunities
-    :url      : /opportunities
+:tabs: [
+  { :active : true,  :text : "Dashboard",     :url : "/"              },
+  { :active : false, :text : "Tasks",         :url : "/tasks"         },
+  { :active : false, :text : "Campaigns",     :url : "/campaigns"     },
+  { :active : false, :text : "Leads",         :url : "/leads"         },
+  { :active : false, :text : "Accounts",      :url : "/accounts"      },
+  { :active : false, :text : "Contacts",      :url : "/contacts"      },
+  { :active : false, :text : "Opportunities", :url : "/opportunities" }
+]
 
 campaign_status:
   :planned       : Planned
@@ -64,25 +51,16 @@ lead_source:
 
 # Use array of hashes for now to preserve sort order. For Ruby 1.9 or later
 # we can use regular hash since its insertion order will be preserved.
-opportunity_stage:
-  - - Prospecting
-    - :prospecting
-  - - Qualification
-    - :qualification
-  - - Analysis
-    - :analysis
-  - - Presentation
-    - :presentation
-  - - Proposal
-    - :proposal
-  - - Negotiation
-    - :negotiation
-  - - Final Review
-    - :final_review
-  - - Closed/Won
-    - :won
-  - - Closed/Lost
-    - :lost
+opportunity_stage: [
+  [ "Prospecting",  :prospecting  ],
+  [ "Analysis",     :analysis     ],
+  [ "Presentation", :presentation ],
+  [ "Proposal",     :proposal     ],
+  [ "Negotiation",  :negotiation  ],
+  [ "Final Review", :final_review ],
+  [ "Closed/Won",   :won          ],
+  [ "Closed/Lost",  :lost         ]
+]
 
 opportunity_stage_color:
   :prospecting   : lavender
@@ -115,30 +93,20 @@ task_category_color:
   :presentation  : aquamarine
   :trip          : skyblue
 
-task_bucket:
-  - - Overdue
-    - :overdue
-  - - As Soon As Possible
-    - :due_asap
-  - - Today
-    - :due_today
-  - - Tomorrow
-    - :due_tomorrow
-  - - This Week
-    - :due_this_week
-  - - Next Week
-    - :due_next_week
-  - - Sometime Later
-    - :due_later
+task_bucket: [
+  [ "Overdue" ,            :overdue       ],
+  [ "As Soon As Possible", :due_asap      ],
+  [ "Today",               :due_today     ],
+  [ "Tomorrow",            :due_tomorrow  ],
+  [ "This Week",           :due_this_week ],
+  [ "Next Week",           :due_next_week ],
+  [ "Sometime Later",      :due_later     ]
+]
 
-task_completed:
-  - - Today
-    - :completed_today
-  - - Yesterday
-    - :completed_yesterday
-  - - Last week
-    - :completed_last_week
-  - - This month
-    - :completed_this_month
-  - - Last month
-    - :completed_last_month
+task_completed: [
+  [ "Today",      :completed_today      ],
+  [ "Yesterday",  :completed_yesterday  ],
+  [ "Last week",  :completed_last_week  ],
+  [ "This month", :completed_this_month ],
+  [ "Last month", :completed_last_month ]
+]
