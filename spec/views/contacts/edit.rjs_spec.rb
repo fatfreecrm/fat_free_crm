@@ -5,10 +5,9 @@ describe "/contacts/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    @account = Factory(:account)
-    assigns[:contact] = Factory(:contact, :id => 42, :user => @current_user)
+    assigns[:contact] = @contact = Factory(:contact, :user => @current_user)
     assigns[:users] = [ @current_user ]
-    assigns[:account] = @account
+    assigns[:account] = @account = Factory(:account)
     assigns[:accounts] = [ @account ]
   end
 
@@ -16,8 +15,8 @@ describe "/contacts/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "contacts/edit.js.rjs"
-    response.should have_rjs("contact_42") do |rjs|
-      with_tag("li[id=contact_42]")
+    response.should have_rjs("contact_#{@contact.id}") do |rjs|
+      with_tag("li[id=contact_#{@contact.id}]")
     end
   end
 
@@ -31,28 +30,29 @@ describe "/contacts/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Contact] for and replace it with contact partial" do
     params[:cancel] = nil
-    assigns[:previous] = Factory(:contact, :id => 41, :user => @current_user)
+    assigns[:previous] = previous = Factory(:contact, :user => @current_user)
     
     render "contacts/edit.js.rjs"
-    response.should have_rjs("contact_41") do |rjs|
-      with_tag("li[id=contact_41]")
+    response.should have_rjs("contact_#{previous.id}") do |rjs|
+      with_tag("li[id=contact_#{previous.id}]")
     end
   end
 
   it "edit: should hide and remove previously open [Edit Contact] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = 41
+    assigns[:previous] = previous = 41
 
     render "contacts/edit.js.rjs"
-    response.should include_text(%Q/crm.flick("contact_41", "remove");/)
+    response.should include_text(%Q/crm.flick("contact_#{previous}", "remove");/)
   end
   
-  it "edit from contacts index page: should turn off highlight and replace current contact with [Edit Contact] form" do
+  it "edit from contacts index page: should turn off highlight, hide [Create Contact] form, and replace current contact with [Edit Contact] form" do
     params[:cancel] = nil
     
     render "contacts/edit.js.rjs"
-    response.should include_text('crm.highlight_off("contact_42");')
-    response.should have_rjs("contact_42") do |rjs|
+    response.should include_text(%Q/crm.highlight_off("contact_#{@contact.id}");/)
+    response.should include_text('crm.hide_form("create_contact")')
+    response.should have_rjs("contact_#{@contact.id}") do |rjs|
       with_tag("form[class=edit_contact]")
     end
   end

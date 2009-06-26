@@ -20,6 +20,7 @@ else # <----------------------------------------  Show [Edit Campaign] form.
       end
     end
     page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_lead       # Hide [Create Lead] form if any.
     page[id].replace_html :partial => "edit"      # Show [Edit Lead] form.
 
   elsif params[:cancel] == "false"                # Called from title of the lead landing page...

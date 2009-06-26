@@ -5,10 +5,10 @@ describe "/opportunities/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    @account = Factory(:account)
-    assigns[:opportunity] = Factory(:opportunity, :id => 42, :user => @current_user)
+    
+    assigns[:opportunity] = @opportunity = Factory(:opportunity, :user => @current_user)
     assigns[:users] = [ @current_user ]
-    assigns[:account] = @account
+    assigns[:account] = @account = Factory(:account)
     assigns[:accounts] = [ @account ]
     assigns[:stage] = {}
   end
@@ -17,8 +17,8 @@ describe "/opportunities/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "opportunities/edit.js.rjs"
-    response.should have_rjs("opportunity_42") do |rjs|
-      with_tag("li[id=opportunity_42]")
+    response.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
+      with_tag("li[id=opportunity_#{@opportunity.id}]")
     end
   end
 
@@ -32,28 +32,29 @@ describe "/opportunities/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Opportunity] for and replace it with opportunity partial" do
     params[:cancel] = nil
-    assigns[:previous] = Factory(:opportunity, :id => 41, :user => @current_user)
+    assigns[:previous] = previous = Factory(:opportunity, :user => @current_user)
 
     render "opportunities/edit.js.rjs"
-    response.should have_rjs("opportunity_41") do |rjs|
-      with_tag("li[id=opportunity_41]")
+    response.should have_rjs("opportunity_#{previous.id}") do |rjs|
+      with_tag("li[id=opportunity_#{previous.id}]")
     end
   end
 
   it "edit: remove previously open [Edit Opportunity] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = 41
+    assigns[:previous] = previous = 41
 
     render "opportunities/edit.js.rjs"
-    response.should include_text(%Q/crm.flick("opportunity_41", "remove");/)
+    response.should include_text(%Q/crm.flick("opportunity_#{previous}", "remove");/)
   end
   
-  it "edit from opportunities index page: should turn off highlight and replace current opportunity with [Edit Opportunity] form" do
+  it "edit from opportunities index page: should turn off highlight, hide [Create Opportunity] form, and replace current opportunity with [Edit Opportunity] form" do
     params[:cancel] = nil
     
     render "opportunities/edit.js.rjs"
-    response.should include_text('crm.highlight_off("opportunity_42");')
-    response.should have_rjs("opportunity_42") do |rjs|
+    response.should include_text(%Q/crm.highlight_off("opportunity_#{@opportunity.id}");/)
+    response.should include_text('crm.hide_form("create_opportunity")')
+    response.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
       with_tag("form[class=edit_opportunity]")
     end
   end

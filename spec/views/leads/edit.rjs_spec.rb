@@ -5,7 +5,7 @@ describe "/leads/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:lead] = Factory(:lead, :id => 42, :status => "new", :user => @current_user)
+    assigns[:lead] = @lead = Factory(:lead, :status => "new", :user => @current_user)
     assigns[:users] = [ @current_user ]
     assigns[:campaigns] = [ Factory(:campaign) ]
   end
@@ -14,8 +14,8 @@ describe "/leads/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "leads/edit.js.rjs"
-    response.should have_rjs("lead_42") do |rjs|
-      with_tag("li[id=lead_42]")
+    response.should have_rjs("lead_#{@lead.id}") do |rjs|
+      with_tag("li[id=lead_#{@lead.id}]")
     end
   end
 
@@ -29,28 +29,29 @@ describe "/leads/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assigns[:previous] = Factory(:lead, :id => 41, :user => @current_user)
+    assigns[:previous] = previous = Factory(:lead, :user => @current_user)
 
     render "leads/edit.js.rjs"
-    response.should have_rjs("lead_41") do |rjs|
-      with_tag("li[id=lead_41]")
+    response.should have_rjs("lead_#{previous.id}") do |rjs|
+      with_tag("li[id=lead_#{previous.id}]")
     end
   end
 
   it "edit: should remove previously open [Edit Lead] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = 41
+    assigns[:previous] = previous = 41
 
     render "leads/edit.js.rjs"
-    response.should include_text(%Q/crm.flick("lead_41", "remove");/)
+    response.should include_text(%Q/crm.flick("lead_#{previous}", "remove");/)
   end
   
-  it "edit from leads index page: should turn off highlight and replace current lead with [Edit Lead] form" do
+  it "edit from leads index page: should turn off highlight, hide [Create Lead] form, and replace current lead with [Edit Lead] form" do
     params[:cancel] = nil
     
     render "leads/edit.js.rjs"
-    response.should include_text('crm.highlight_off("lead_42");')
-    response.should have_rjs("lead_42") do |rjs|
+    response.should include_text(%Q/crm.highlight_off("lead_#{@lead.id}");/)
+    response.should include_text('crm.hide_form("create_lead")')
+    response.should have_rjs("lead_#{@lead.id}") do |rjs|
       with_tag("form[class=edit_lead]")
     end
   end

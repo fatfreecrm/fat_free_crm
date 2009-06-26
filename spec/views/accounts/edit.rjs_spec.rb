@@ -5,8 +5,7 @@ describe "/accounts/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    @account = Factory(:account, :id => 42, :user => @current_user)
-    assigns[:account] = @account
+    assigns[:account] = @account = Factory(:account, :user => @current_user)
     assigns[:users] = [ @current_user ]
   end
 
@@ -14,8 +13,8 @@ describe "/accounts/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "accounts/edit.js.rjs"
-    response.should have_rjs("account_42") do |rjs|
-      with_tag("li[id=account_42]")
+    response.should have_rjs("account_#{@account.id}") do |rjs|
+      with_tag("li[id=account_#{@account.id}]")
     end
   end
 
@@ -29,28 +28,29 @@ describe "/accounts/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Account] for and replace it with account partial" do
     params[:cancel] = nil
-    assigns[:previous] = Factory(:account, :id => 41, :user => @current_user)
+    assigns[:previous] = previous = Factory(:account, :user => @current_user)
     
     render "accounts/edit.js.rjs"
-    response.should have_rjs("account_41") do |rjs|
-      with_tag("li[id=account_41]")
+    response.should have_rjs("account_#{previous.id}") do |rjs|
+      with_tag("li[id=account_#{previous.id}]")
     end
   end
 
   it "edit: should remove previously open [Edit Account] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = 41
+    assigns[:previous] = previous = 41
 
     render "accounts/edit.js.rjs"
-    response.should include_text(%Q/crm.flick("account_41", "remove");/)
+    response.should include_text(%Q/crm.flick("account_#{previous}", "remove");/)
   end
 
-  it "edit from accounts index page: should turn off highlight and replace current account with [edit account] form" do
+  it "edit from accounts index page: should turn off highlight, hide [Create Account] form, and replace current account with [edit account] form" do
     params[:cancel] = nil
     
     render "accounts/edit.js.rjs"
-    response.should include_text('crm.highlight_off("account_42");')
-    response.should have_rjs("account_42") do |rjs|
+    response.should include_text(%Q/crm.highlight_off("account_#{@account.id}");/)
+    response.should include_text('crm.hide_form("create_account")')
+    response.should have_rjs("account_#{@account.id}") do |rjs|
       with_tag("form[class=edit_account]")
     end
   end

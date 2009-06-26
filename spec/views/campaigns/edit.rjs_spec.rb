@@ -5,7 +5,7 @@ describe "/campaigns/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:campaign] = Factory(:campaign, :id => 42, :user => @current_user)
+    assigns[:campaign] = @campaign = Factory(:campaign, :user => @current_user)
     assigns[:users] = [ @current_user ]
   end
 
@@ -13,8 +13,8 @@ describe "/campaigns/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "campaigns/edit.js.rjs"
-    response.should have_rjs("campaign_42") do |rjs|
-      with_tag("li[id=campaign_42]")
+    response.should have_rjs("campaign_#{@campaign.id}") do |rjs|
+      with_tag("li[id=campaign_#{@campaign.id}]")
     end
   end
 
@@ -28,28 +28,29 @@ describe "/campaigns/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
     params[:cancel] = nil
-    assigns[:previous] = Factory(:campaign, :id => 41, :user => @current_user)
+    assigns[:previous] = previous = Factory(:campaign, :user => @current_user)
     
     render "campaigns/edit.js.rjs"
-    response.should have_rjs("campaign_41") do |rjs|
-      with_tag("li[id=campaign_41]")
+    response.should have_rjs("campaign_#{previous.id}") do |rjs|
+      with_tag("li[id=campaign_#{previous.id}]")
     end
   end
 
   it "edit: should remove previously open [Edit Campaign] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = 41
+    assigns[:previous] = previous = 41
 
     render "campaigns/edit.js.rjs"
-    response.should include_text(%Q/crm.flick("campaign_41", "remove");/)
+    response.should include_text(%Q/crm.flick("campaign_#{previous}", "remove");/)
   end
   
-  it "edit from campaigns index page: should turn off highlight and replace current campaign with [Edit Campaign] form" do
+  it "edit from campaigns index page: should turn off highlight, hide [Create Campaign], and replace current campaign with [Edit Campaign] form" do
     params[:cancel] = nil
     
     render "campaigns/edit.js.rjs"
-    response.should include_text('crm.highlight_off("campaign_42");')
-    response.should have_rjs("campaign_42") do |rjs|
+    response.should include_text(%Q/crm.highlight_off("campaign_#{@campaign.id}");/)
+    response.should include_text('crm.hide_form("create_campaign")')
+    response.should have_rjs("campaign_#{@campaign.id}") do |rjs|
       with_tag("form[class=edit_campaign]")
     end
   end

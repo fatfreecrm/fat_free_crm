@@ -6,6 +6,7 @@ then you win. –- Mahatma Gandhi
 
 Thu, Jun 25, 2008
 ---------------------------------------------------------------------
+- Hide [Create...] form before showing [Edit...] to make sure initial focus gets set properly.
 - Rewrote config/settings.yml to use more familiar Ruby-like syntax.
 
 Mon, Jun 22, 2009
