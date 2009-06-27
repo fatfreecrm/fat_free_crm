@@ -58,10 +58,11 @@ crm.Popup = Class.create({
   show_popup: function(e) {
     e.stop();
     if (this.options.under) {
-      var dimensions = Event.element(e).getDimensions();
-      var coordinates = Event.element(e).viewportOffset();
-      var x = coordinates[0] + "px";
-      var y = coordinates[1] + dimensions.height + "px";
+      var coordinates = $(this.options.under).viewportOffset();
+      var under = $(this.options.under).getDimensions();
+      var popup = $(this.popup).getDimensions();
+      var x = (coordinates[0] + under.width - popup.width) + "px";
+      var y = (coordinates[1] + under.height) + "px";
       this.popup.setStyle({ left: x, top: y });
     }
     this.popup.setStyle({ zIndex: this.options.zindex });

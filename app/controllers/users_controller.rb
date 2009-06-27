@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [ :new, :create ]
-  before_filter :require_user, :only => [ :show, :edit, :update ]
-  before_filter :set_current_tab
+  before_filter :require_user, :except => [ :new, :create ]
+
+  #----------------------------------------------------------------------------
+  def index
+  end
 
   #----------------------------------------------------------------------------
   def new
@@ -14,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       flash[:notice] = "Successfull signup, welcome to Fat Free CRM!"
-      redirect_back_or_default profile_url
+      redirect_back_or_default preferences_url
     else
       render :action => :new
     end
@@ -35,7 +38,7 @@ class UsersController < ApplicationController
     @user = @current_user
     if @user.update_attributes(params[:user])
       flash[:notice] = "Your user profile has been updated."
-      redirect_to profile_url
+      redirect_to preferences_url
     else
       render :action => :edit
     end

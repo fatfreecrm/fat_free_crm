@@ -1,5 +1,5 @@
 .standalone
-  - form_for @user, :url => profile_path do |f|
+  - form_for @user, :url => preferences_path do |f|
     .title_tools== Already signed up? #{link_to "Login Now!", login_path}
     .title Sign Up
     = f.error_messages
