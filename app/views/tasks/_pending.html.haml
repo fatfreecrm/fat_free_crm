@@ -11,7 +11,7 @@
     = check_box_tag dom_id(pending, :complete), 1, false, :onclick => link_to_task_complete(pending, bucket)
     %label{ :id => dom_id(pending, :name) }
       - if pending.user.id != @current_user.id
-        == From #{link_to(pending.user.full_name, "mailto:" + pending.user.email)}:
+        == From #{link_to(pending.user.full_name, user_path(pending.user))}:
       = pending.name
       - if pending.asset_id?
         == (re: #{link_to(pending.asset.name, polymorphic_url(pending.asset))})

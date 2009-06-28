@@ -32,7 +32,7 @@ class PasswordsController < ApplicationController
     @user.password_confirmation = params[:user][:password_confirmation]
     if @user.save
       flash[:notice] = "Password was successfully updated."
-      redirect_to preferences_url
+      redirect_to profile_url
     else
       render :action => :edit
     end

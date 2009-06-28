@@ -6,9 +6,9 @@
   %div
     .tools{ invisible, :id => dom_id(related, :tools) }
     - if related.assigned_to
-      = link_to(related.assignee.name, "mailto:" + related.assignee.email)
+      = link_to(related.assignee.full_name, user_path(related.assignee))
     - else
-      = link_to(related.user.name, "mailto:" + related.user.email)
+      = link_to(related.user.full_name, user_path(related.user))
     = ": " + related.name
     - if related.asset_id?
       == (re: #{link_to(related.asset.name, polymorphic_url(related.asset))})

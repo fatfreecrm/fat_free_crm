@@ -2,8 +2,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # The priority is based upon order of creation: first created -> highest priority.
   map.home "",  :controller => "home", :action => "index"
-  map.resource  :user
   map.resource  :authentication
+  map.resources :users
   map.resources :passwords
   map.resources :comments
   map.resources :tasks,         :has_many => :comments, :member => { :complete => :put }
@@ -12,11 +12,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :leads,         :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }, :member => { :convert => :get, :promote => :put, :reject => :put }
   map.resources :contacts,      :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }
   map.resources :opportunities, :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }
-  map.resources :preferences, :controller => "users"
 
-  map.signup "signup", :controller => "users",           :action => "new"
-  map.login  "login",  :controller => "authentications", :action => "new"
-  map.logout "logout", :controller => "authentications", :action => "destroy"
+  map.signup  "signup",  :controller => "users",           :action => "new"
+  map.profile "profile", :controller => "users",           :action => "show"
+  map.login   "login",   :controller => "authentications", :action => "new"
+  map.logout  "logout",  :controller => "authentications", :action => "destroy"
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

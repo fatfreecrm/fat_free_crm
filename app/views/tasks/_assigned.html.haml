@@ -8,7 +8,7 @@
       %small
         = link_to_task_edit(assigned, bucket) + " | "
         = link_to_task_delete(assigned, bucket) + "&nbsp;"
-    = link_to(assigned.assignee.full_name, "mailto:" + assigned.assignee.email) + ": "
+    = link_to(assigned.assignee.full_name, user_path(assigned.assignee)) + ": "
     = assigned.name
     - if assigned.asset_id?
       == (re: #{link_to(assigned.asset.name, polymorphic_url(assigned.asset))})

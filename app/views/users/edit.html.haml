@@ -1,8 +1,7 @@
 .form
   - form_for @user do |f|
     .title_tools
-      = "Edit Profile | "
-      = link_to_function("Update notifications", %/alert("Not implemeneted yet.")/) + " | "
+      = "Edit profile | "
       = link_to_function("Change password", %/alert("Not implemeneted yet.")/)
     .title Edit Profile
     = f.error_messages
@@ -62,4 +61,4 @@
     .buttonbar
       = f.submit "Save"
       or
-      = link_to "Cancel", preferences_url
+      = link_to "Cancel", profile_url

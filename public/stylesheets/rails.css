@@ -19,8 +19,8 @@
       list-style-type: disc;
       padding: 0px; }
 
-.fieldWithErrors {
-  border-bottom: 2px salmon solid; }
+.fieldWithErrors input {
+  background: pink; }
 
 p.flash_warning, p.flash_error {
   background: lightpink;

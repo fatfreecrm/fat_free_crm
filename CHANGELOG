@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, Jun 28, 2009
+---------------------------------------------------------------------
+- Another iteration on User Profiles; all users now have personal profile page.
+
+Sat, Jun 27, 2009
+---------------------------------------------------------------------
+Combined [Preferences] and [Profile] into single [Preferences] menu item.
+
 Thu, Jun 25, 2008
 ---------------------------------------------------------------------
 - Hide [Create...] form before showing [Edit...] to make sure initial focus gets set properly.

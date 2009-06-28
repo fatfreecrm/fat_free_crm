@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       flash[:notice] = "Successfull signup, welcome to Fat Free CRM!"
-      redirect_back_or_default preferences_url
+      redirect_back_or_default profile_url
     else
       render :action => :new
     end
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   
   #----------------------------------------------------------------------------
   def show
-    @user = @current_user
+    @user = params[:id] ? User.find(params[:id]) : @current_user
   end
 
   #----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     @user = @current_user
     if @user.update_attributes(params[:user])
       flash[:notice] = "Your user profile has been updated."
-      redirect_to preferences_url
+      redirect_to profile_url
     else
       render :action => :edit
     end

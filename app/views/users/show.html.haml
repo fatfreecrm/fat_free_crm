@@ -1,9 +1,9 @@
 .title_tools
-  = link_to("Edit profile", edit_preference_path(@user)) + " | "
-  = link_to_function("Update notifications", %/alert("Not implemeneted yet.")/) + " | "
-  = link_to_function("Change password", %/alert("Not implemeneted yet.")/)
-.title= @current_user.full_name
-%p Not implemented yet.
+  - if @user == @current_user
+    = link_to("Edit profile", edit_user_path(@user)) + " | "
+    = link_to_function("Change password", %/alert("Not implemeneted yet.")/)
+.title Profile
+%p== Not implemented yet (#{@user.username} - #{@user.email})
 / :erb
 /     / The following is for OpenID, if you are not using OpenID in your app remove
 /     / the OpenID if statement and field below.
