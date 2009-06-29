@@ -35,9 +35,9 @@ describe OpportunitiesController do
     end
 
     it "should filter out opportunities by stage" do
-      controller.session[:filter_by_opportunity_stage] = "prospecting,qualification"
+      controller.session[:filter_by_opportunity_stage] = "prospecting,negotiation"
       @opportunities = [
-        Factory(:opportunity, :user => @current_user, :stage => "qualification"),
+        Factory(:opportunity, :user => @current_user, :stage => "negotiation"),
         Factory(:opportunity, :user => @current_user, :stage => "prospecting")
       ]
       # This one should be filtered out.
@@ -46,7 +46,7 @@ describe OpportunitiesController do
       get :index
       # Note: can't compare opportunities directly because of BigDecimal objects.
       assigns[:opportunities].size.should == 2
-      assigns[:opportunities].map(&:stage).sort.should == %w(prospecting qualification)
+      assigns[:opportunities].map(&:stage).sort.should == %w(negotiation prospecting)
     end
 
     describe "AJAX pagination" do
@@ -689,7 +689,7 @@ describe OpportunitiesController do
   describe "responding to GET filter" do
 
     it "should expose filtered opportunities as @opportunity and render [filter] template" do
-      session[:filter_by_opportunity_stage] = "qualification,analysis"
+      session[:filter_by_opportunity_stage] = "negotiation,analysis"
       @opportunities = [ Factory(:opportunity, :stage => "prospecting", :user => @current_user) ]
       @stage = Setting.as_hash(:opportunity_stage)
 

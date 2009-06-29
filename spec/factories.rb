@@ -189,7 +189,7 @@ Factory.define :opportunity do |o|
   o.name                { Faker::Lorem.sentence[0..63] }
   o.access              "Public"
   o.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).rand }
-  o.stage               { %w(prospecting qualification analysis presentation proposal negotiation final_review won lost).rand }
+  o.stage               { %w(prospecting analysis presentation proposal negotiation final_review won lost).rand }
   o.probability         { rand(50) }
   o.amount              { rand(1000) }
   o.discount            { rand(100) }

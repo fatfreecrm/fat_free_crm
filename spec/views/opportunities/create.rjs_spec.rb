@@ -12,7 +12,7 @@ describe "/opportunities/create.js.rjs" do
     before(:each) do
       assigns[:opportunity] = @opportunity = Factory(:opportunity)
       assigns[:opportunities] = [ @opportunities ].paginate
-      assigns[:opportunity_stage_total] = {:prospecting=>10, :final_review=>1, :qualification=>1, :won=>2, :all=>20, :analysis=>1, :lost=>0, :presentation=>2, :other=>0, :proposal=>1, :negotiation=>2}
+      assigns[:opportunity_stage_total] = { :prospecting => 10, :final_review => 1, :won => 2, :all => 20, :analysis => 1, :lost => 0, :presentation => 2, :other => 0, :proposal => 1, :negotiation => 2 }
     end
 
     it "should hide [Create Opportunity] form and insert opportunity partial" do
