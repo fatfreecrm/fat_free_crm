@@ -20,6 +20,8 @@
       padding: 0px; }
 
 .fieldWithErrors input {
+  border-bottom: 1px solid lightpink;
+  border-right: 1px solid lightpink;
   background: pink; }
 
 p.flash_warning, p.flash_error {

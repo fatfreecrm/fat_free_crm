@@ -1,4 +1,4 @@
-id = dom_id(@lead)
+id = called_from_landing_page? ? "edit_lead" : dom_id(@lead)
 
 if @lead.errors.empty?
   if called_from_landing_page?

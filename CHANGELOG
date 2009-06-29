@@ -7,6 +7,8 @@ then you win. –- Mahatma Gandhi
 Sun, Jun 28, 2009
 ---------------------------------------------------------------------
 - Another iteration on User Profiles; all users now have personal profile page.
+- Fixed form validation issue on asset landing pages.
+- Refactored form validation specs.
 
 Sat, Jun 27, 2009
 ---------------------------------------------------------------------

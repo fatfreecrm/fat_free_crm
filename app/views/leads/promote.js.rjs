@@ -1,4 +1,4 @@
-id = dom_id(@lead)
+id = called_from_landing_page? ? "convert_lead" : dom_id(@lead)
 
 if @lead.status == "converted"
   if called_from_landing_page?

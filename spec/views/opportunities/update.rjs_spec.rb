@@ -5,83 +5,137 @@ describe "/opportunities/update.js.rjs" do
   
   before(:each) do
     login_and_assign
-    @account = Factory(:account, :id => 987654)
-    @opportunity = Factory(:opportunity, :id => 42, :user => @current_user, :assignee => Factory(:user))
-    assigns[:opportunity] = @opportunity
+
+    assigns[:opportunity] = @opportunity = Factory(:opportunity, :user => @current_user, :assignee => Factory(:user))
     assigns[:users] = [ @current_user ]
-    assigns[:account] = @account
+    assigns[:account] = @account = Factory(:account)
     assigns[:accounts] = [ @account ]
     assigns[:stage] = Setting.as_hash(:opportunity_stage)
-    assigns[:opportunity_stage_total] = {:prospecting=>10, :final_review=>1, :qualification=>1, :won=>2, :all=>20, :analysis=>1, :lost=>0, :presentation=>2, :other=>0, :proposal=>1, :negotiation=>2}
+    assigns[:opportunity_stage_total] = { :prospecting => 10, :final_review => 1, :won => 2, :all => 20, :analysis => 1, :lost => 0, :presentation => 2, :other => 0, :proposal => 1, :negotiation => 2 }
   end
+
+  describe "no errors:" do
+    describe "on opportunity landing page -" do
+      before(:each) do
+        request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
+      end
+
+      it "should flip [edit_opportunity] form" do
+        render "opportunities/update.js.rjs"
+        response.should_not have_rjs("opportunity_#{@opportunity.id}")
+        response.should include_text('crm.flip_form("edit_opportunity"')
+      end
+
+      it "should update sidebar" do
+        render "opportunities/update.js.rjs"
+        response.should have_rjs("sidebar") do |rjs|
+          with_tag("div[id=summary]")
+          with_tag("div[id=recently]")
+        end
+        response.should include_text('$("summary").visualEffect("shake"')
+      end
+    end
+
+    describe "on opportunities index page -" do
+      before(:each) do
+        request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+      end
+
+      it "should replace [Edit Opportunity] with opportunity partial and highligh it" do
+        render "opportunities/update.js.rjs"
+        response.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
+          with_tag("li[id=opportunity_#{@opportunity.id}]")
+        end
+        response.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
+      end
+
+      it "should update sidebar" do
+        render "opportunities/update.js.rjs"
+        response.should have_rjs("sidebar") do |rjs|
+          with_tag("div[id=filters]")
+          with_tag("div[id=recently]")
+        end
+        response.should include_text('$("filters").visualEffect("shake"')
+      end
+    end
+
+    describe "on related asset page -" do
+      before(:each) do
+        request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+      end
+
+      it "should update recently viewed items" do
+        render "opportunities/update.js.rjs"
+        response.should have_rjs("recently") do |rjs|
+          with_tag("div[class=caption]")
+        end
+      end
  
-  it "no errors: should flip [edit_opportunity] form when called from opportunity landing page" do
-    request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
-
-    render "opportunities/update.js.rjs"
-    response.should_not have_rjs("opportunity_42")
-    response.should include_text('crm.flip_form("edit_opportunity"')
-  end
-
-  it "no errors: should update sidebar when called from opportunity landing page" do
-    request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
-
-    render "opportunities/update.js.rjs"
-    response.should have_rjs("sidebar") do |rjs|
-      with_tag("div[id=summary]")
-      with_tag("div[id=recently]")
-    end
-    response.should include_text('$("summary").visualEffect("shake"')
-  end
-
-  it "no errors: should update sidebar when called from opportunities index page" do
-    request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-
-    render "opportunities/update.js.rjs"
-    response.should have_rjs("sidebar") do |rjs|
-      with_tag("div[id=filters]")
-      with_tag("div[id=recently]")
-    end
-    response.should include_text('$("filters").visualEffect("shake"')
-  end
-
-  it "no errors: should update recently viewed items when called outside the opportunities (i.e. embedded)" do
-    request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
-
-    render "opportunities/update.js.rjs"
-    response.should have_rjs("recently") do |rjs|
-      with_tag("div[class=caption]")
+      it "should replace [Edit Opportunity] with opportunity partial and highligh it" do
+        render "opportunities/update.js.rjs"
+        response.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
+          with_tag("li[id=opportunity_#{@opportunity.id}]")
+        end
+        response.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
+      end
     end
   end
- 
-  it "no errors: should replace [Edit Opportunity] with opportunity partial and highligh it when called outside opportunity landing page" do
-    request.env["HTTP_REFERER"] = "http://localhost/opportunities"
 
-    render "opportunities/update.js.rjs"
-    response.should have_rjs("opportunity_42") do |rjs|
-      with_tag("li[id=opportunity_42]")
+  describe "validation errors:" do
+    before(:each) do
+      @opportunity.errors.add(:error)
     end
-    response.should include_text('$("opportunity_42").visualEffect("highlight"')
-  end
- 
-  it "errors: should redraw the [edit_opportunity] form and shake it" do
-    @opportunity.errors.add(:error)
 
-    render "opportunities/update.js.rjs"
-    response.should have_rjs("opportunity_42") do |rjs|
-      with_tag("form[class=edit_opportunity]")
+    describe "on opportunity landing page -" do
+      before(:each) do
+        request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
+      end
+
+      it "should redraw the [edit_opportunity] form and shake it" do
+        render "opportunities/update.js.rjs"
+        response.should have_rjs("edit_opportunity") do |rjs|
+          with_tag("form[class=edit_opportunity]")
+        end
+        response.should include_text('crm.create_or_select_account(false)')
+        response.should include_text('$("edit_opportunity").visualEffect("shake"')
+        response.should include_text('focus()')
+      end
     end
-    response.should include_text('crm.create_or_select_account(false)')
-    response.should include_text('$("opportunity_42").visualEffect("shake"')
-    response.should include_text('focus()')
-  end
 
-  it "errors: should show disabled accounts dropdown when called from accounts landing page" do
-    @opportunity.errors.add(:error)
-    request.env["HTTP_REFERER"] = ref = "http://localhost/accounts/123"
+    describe "on opportunities index page -" do
+      before(:each) do
+        request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+      end
 
-    render "opportunities/update.js.rjs"
-    response.should include_text("crm.create_or_select_account(#{ref =~ /\/accounts\//})")
-  end
+      it "should redraw the [edit_opportunity] form and shake it" do
+        render "opportunities/update.js.rjs"
+        response.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
+          with_tag("form[class=edit_opportunity]")
+        end
+        response.should include_text('crm.create_or_select_account(false)')
+        response.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("shake"/)
+        response.should include_text('focus()')
+      end
+    end
 
+    describe "on related asset page -" do
+      before(:each) do
+        request.env["HTTP_REFERER"] = @referer = "http://localhost/accounts/123"
+      end
+
+      it "should show disabled accounts dropdown when called from accounts landing page" do
+        render "opportunities/update.js.rjs"
+        response.should include_text("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
+      end
+
+      it "should redraw the [edit_opportunity] form and shake it" do
+        render "opportunities/update.js.rjs"
+        response.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
+          with_tag("form[class=edit_opportunity]")
+        end
+        response.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("shake"/)
+        response.should include_text('focus()')
+      end
+    end
+  end # errors
 end

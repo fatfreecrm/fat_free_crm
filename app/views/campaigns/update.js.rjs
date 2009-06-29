@@ -1,4 +1,4 @@
-id = dom_id(@campaign)
+id = called_from_landing_page? ? "edit_campaign" : dom_id(@campaign)
 
 if @campaign.errors.empty?
   if called_from_landing_page?
@@ -10,7 +10,7 @@ if @campaign.errors.empty?
     page[id].visual_effect :highlight, :duration => 1.0
     page << refresh_sidebar(:index, :filters)
   end
-else  
+else
   page[id].replace_html :partial => "edit"
   page.call "crm.date_select_popup", :campaign_starts_on
   page.call "crm.date_select_popup", :campaign_ends_on

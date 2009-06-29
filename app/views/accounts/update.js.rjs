@@ -1,4 +1,4 @@
-id = dom_id(@account)
+id = called_from_landing_page? ? "edit_account" : dom_id(@account)
 
 if @account.errors.empty?
   if called_from_landing_page?

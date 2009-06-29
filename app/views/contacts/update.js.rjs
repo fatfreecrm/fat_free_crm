@@ -1,4 +1,4 @@
-id = dom_id(@contact)
+id = called_from_landing_page? ? "edit_contact" : dom_id(@contact)
 
 if @contact.errors.empty?
   if called_from_landing_page?
