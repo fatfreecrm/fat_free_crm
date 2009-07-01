@@ -4,7 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Mon, Jul 1, 2009
+Wed, Jul 1, 2009
+---------------------------------------------------------------------
+- Added copyright notices (thanks, Michael!).
+
+Tue, Jun 30, 2009
 ---------------------------------------------------------------------
 - More work on user profile.
 - Applied patches to fix an issue with comments and their formatting (thanks, Eric!).
