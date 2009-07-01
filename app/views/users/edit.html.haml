@@ -2,6 +2,7 @@
   - form_for @user do |f|
     .title_tools
       = "Edit profile | "
+      = link_to_function("Upload avatar", %/alert("Not implemeneted yet.")/) + " | "
       = link_to_function("Change password", %/alert("Not implemeneted yet.")/)
     .title Edit Profile
     = f.error_messages
