@@ -1,0 +1,10 @@
+.remote
+  - remote_form_for(@user, :url => upload_avatar_user_path(@user)) do |f|
+    = link_to_close avatar_user_path(@user)
+    %p Not implemented yet.
+    
+    .buttonbar
+      = f.submit "Upload Avatar"
+      or
+      = link_to_cancel avatar_user_path(@user)
+%br

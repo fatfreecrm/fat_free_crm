@@ -20,15 +20,28 @@ class UsersController < ApplicationController
   before_filter :require_no_user, :only => [ :new, :create ]
   before_filter :require_user, :except => [ :new, :create ]
 
+  # GET /users
+  # GET /userss.xml                             HTML (not directly exposed yet)
   #----------------------------------------------------------------------------
   def index
   end
 
+  # GET /users/1
+  # GET /users/1.xml                                                       HTML
+  #----------------------------------------------------------------------------
+  def show
+    @user = params[:id] ? User.find(params[:id]) : @current_user
+  end
+
+  # GET /users/new
+  # GET /users/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
     @user = User.new
   end
   
+  # POST /users
+  # POST /users.xml                                                        AJAX
   #----------------------------------------------------------------------------
   def create
     @user = User.new(params[:user])
@@ -40,16 +53,14 @@ class UsersController < ApplicationController
     end
   end
   
-  #----------------------------------------------------------------------------
-  def show
-    @user = params[:id] ? User.find(params[:id]) : @current_user
-  end
-
+  # GET /users/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
     @user = @current_user
   end
   
+  # PUT /users/1
+  # PUT /users/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   def update
     @user = @current_user
@@ -59,6 +70,44 @@ class UsersController < ApplicationController
     else
       render :action => :edit
     end
+  end
+
+  # DELETE /users/1
+  # DELETE /users/1.xml                HTML and AJAX (not directly exposed yet)
+  #----------------------------------------------------------------------------
+  def destroy
+  end
+
+  # GET /users/1/avatar
+  # GET /users/1/avatar.xml                                                AJAX
+  #----------------------------------------------------------------------------
+  def avatar
+    logger.p "User#avatar"
+    @user = @current_user
+  end
+
+  # PUT /users/1/upload_avatar
+  # PUT /users/1/upload_avatar.xml                                         AJAX
+  #----------------------------------------------------------------------------
+  def upload_avatar
+    logger.p "User#upload_avatar"
+    @user = @current_user
+  end
+
+  # GET /users/1/password
+  # GET /users/1/password.xml                                              AJAX
+  #----------------------------------------------------------------------------
+  def password
+    logger.p "User#password"
+    @user = @current_user
+  end
+
+  # PUT /users/1/change_password
+  # PUT /users/1/change_password.xml                                       AJAX
+  #----------------------------------------------------------------------------
+  def change_password
+    logger.p "User#change_password"
+    @user = @current_user
   end
 
 end

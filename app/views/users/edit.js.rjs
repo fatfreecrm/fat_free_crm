@@ -1,0 +1,13 @@
+logger.p "edit.js.rjs"
+# page.call "console.log", "edit.js.rjs"
+
+if params[:cancel] == "true"
+  page.call "crm.flip_form", :edit_profile
+  page.call "crm.set_title", :edit_profile, "My Profile"
+else
+  page[:edit_profile].replace_html :partial => "profile"
+  page.call "crm.hide_form", :upload_avatar
+  page.call "crm.hide_form", :change_password
+  page.call "crm.flip_form", :edit_profile
+  page.call "crm.set_title", :edit_profile
+end

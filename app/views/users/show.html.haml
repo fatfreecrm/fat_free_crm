@@ -1,9 +1,12 @@
 .title_tools
   - if @user == @current_user
-    = link_to("Edit profile", edit_user_path(@user)) + " | "
-    = link_to_function("Upload avatar", %/alert("Not implemeneted yet.")/) + " | "
-    = link_to_function("Change password", %/alert("Not implemeneted yet.")/)
-.title= (@user == @current_user ? "My " : "") << "Profile"
+    = link_to_inline(:edit_profile, edit_user_path(@user), :text => "Edit profile") + " | "
+    = link_to_inline(:upload_avatar, avatar_user_path(@user), :text => "Upload avatar") + " | "
+    = link_to_inline(:change_password, password_user_path(@user), :text => "Change password")
+.title#title= (@user == @current_user ? "My " : "") << "Profile"
+%div#edit_profile{ hidden }
+%div#upload_avatar{ hidden }
+%div#change_password{ hidden }
 
 .list
   %table{ :cellspacing => 0, :cellpadding => 0 }
@@ -20,7 +23,7 @@
         %br
         %div= "Email: " + auto_link(@user.email) + (@user.alt_email.blank? ? "" : " or " + auto_link(@user.alt_email))
         - if !@user.phone.blank? && !@user.mobile.blank?
-          %div== Phone: #{@user.phone}, Mobile: #{@user.mobile}
+          %div== Phone: <b>#{@user.phone}</b>, Mobile: <b>#{@user.mobile}</b>
         - else
-          = "Phone: #{@user.phone}" unless @user.phone.blank?
-          = "Mobile: #{@user.mobile}" unless @user.mobile.blank?
+          = "Phone: <b>#{@user.phone}</b>" unless @user.phone.blank?
+          = "Mobile: <b>#{@user.mobile}</b>" unless @user.mobile.blank?
