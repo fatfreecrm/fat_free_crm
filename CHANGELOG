@@ -4,6 +4,15 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, Jul 4, 2009
+---------------------------------------------------------------------
+- Finished [Edit Profile] form which now updates all other page elements.
+
+Fri, Jul 3, 2009
+---------------------------------------------------------------------
+- Added user controller and view specs.
+- Converted [Edit Profile] form to Ajax, implemented update.
+
 Wed, Jul 1, 2009
 ---------------------------------------------------------------------
 - Added copyright notices (thanks, Michael!).

@@ -70,10 +70,14 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email,    :message => "^There is another user with the same email."
 
   #----------------------------------------------------------------------------
-  def full_name
-    self.first_name && self.last_name ? "#{self.first_name} #{self.last_name}" : self.email
+  def name
+    self.first_name.blank? ? self.username : self.first_name
   end
-  alias :name :full_name
+
+  #----------------------------------------------------------------------------
+  def full_name
+    self.first_name.blank? || self.last_name.blank? ? self.email : "#{self.first_name} #{self.last_name}"
+  end
 
   #----------------------------------------------------------------------------
   def preference

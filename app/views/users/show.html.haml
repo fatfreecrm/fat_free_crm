@@ -8,22 +8,4 @@
 %div#upload_avatar{ hidden }
 %div#change_password{ hidden }
 
-.list
-  %table{ :cellspacing => 0, :cellpadding => 0 }
-    %tr
-      %td{ :valign => :top }
-        = image_tag("/images/avatar.jpg", :size => "75x75", :style => "margin: 0px 10px 0px 0px")
-      %td{ :valign => :top }
-        %h3= @user.full_name + " (#{@user.username})"
-        - if !@user.title.blank? && !@user.company.blank?
-          %div== #{@user.title} at #{@user.company}
-        - else
-          = @user.title unless @user.title.blank?
-          = @user.company unless @user.company.blank?
-        %br
-        %div= "Email: " + auto_link(@user.email) + (@user.alt_email.blank? ? "" : " or " + auto_link(@user.alt_email))
-        - if !@user.phone.blank? && !@user.mobile.blank?
-          %div== Phone: <b>#{@user.phone}</b>, Mobile: <b>#{@user.mobile}</b>
-        - else
-          = "Phone: <b>#{@user.phone}</b>" unless @user.phone.blank?
-          = "Mobile: <b>#{@user.mobile}</b>" unless @user.mobile.blank?
+.list#profile= render :partial => "user"

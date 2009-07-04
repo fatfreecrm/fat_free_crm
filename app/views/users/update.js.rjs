@@ -4,8 +4,9 @@ if @user.errors.empty?
   #
   # TODO:
   # - update actual user profile
-  # - update Welcome, Firstname! in the header
   #
+  page[:welcome_username].replace_html @user.name
+  page[:profile].replace_html :partial => "user"
 else  
   page[:edit_profile].replace_html :partial => "profile"
   page[:edit_profile].visual_effect :shake, :duration => 0.25, :distance => 6

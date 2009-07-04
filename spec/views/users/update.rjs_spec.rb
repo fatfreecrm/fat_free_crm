@@ -11,8 +11,17 @@ describe "/users/update.js.rjs" do
   describe "no errors:" do
     it "should flip [Edit Profile] form" do
       render "users/update.js.rjs"
-      response.should_not have_rjs("user_#{@user.id}")
       response.should include_text('crm.flip_form("edit_profile")')
+    end
+
+    it "should update Welcome, user!" do
+      render "users/update.js.rjs"
+      response.should have_rjs("welcome_username")
+    end
+
+    it "should update actual user profile information" do
+      render "users/update.js.rjs"
+      response.should have_rjs("profile")
     end
   end # no errors
 
@@ -29,5 +38,12 @@ describe "/users/update.js.rjs" do
       response.should include_text('$("edit_profile").visualEffect("shake"')
       response.should include_text('$("user_email").focus()')
     end
+    
+    it "should keep welcome or profile information intact" do
+      render "users/update.js.rjs"
+      response.should_not have_rjs("welcome_username")
+      response.should_not have_rjs("profile")
+    end
+
   end # errors
 end
