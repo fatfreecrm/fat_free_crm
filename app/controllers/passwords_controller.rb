@@ -31,7 +31,7 @@ class PasswordsController < ApplicationController
     if @user
       @user.deliver_password_reset_instructions!
       flash[:notice] = "Instructions to reset your password have been emailed to you. Please check your email."
-      redirect_to home_url
+      redirect_to root_url
     else
       flash[:notice] = "No user was found with that email address."
       render :action => :new
@@ -65,7 +65,7 @@ class PasswordsController < ApplicationController
         issues try copying and pasting the URL from your email into your browser
         or restarting the reset password process.
       EOS
-      redirect_to home_url
+      redirect_to root_url
     end
   end
 

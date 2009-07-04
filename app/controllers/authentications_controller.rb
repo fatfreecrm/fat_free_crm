@@ -42,7 +42,7 @@ class AuthenticationsController < ApplicationController
         if @authentication.record.login_count > 1 && @authentication.record.last_login_at?
           flash[:notice] << " Your last login was on " << @authentication.record.last_login_at.strftime("%A, %B %e at %I:%M %p.")
         end
-        redirect_back_or_default home_url
+        redirect_back_or_default root_url
       else
         render :action => :new
       end

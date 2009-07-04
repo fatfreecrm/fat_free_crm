@@ -67,7 +67,7 @@ describe UsersController do
   end
 
   # GET /users/new
-  # GET /users/new.xml                                                     AJAX
+  # GET /users/new.xml                                                     HTML
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
   

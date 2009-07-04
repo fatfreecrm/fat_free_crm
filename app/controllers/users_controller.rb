@@ -39,13 +39,13 @@ class UsersController < ApplicationController
   end
 
   # GET /users/new
-  # GET /users/new.xml                                                     AJAX
+  # GET /users/new.xml                                                     HTML
   #----------------------------------------------------------------------------
   def new
     @user = User.new
 
     respond_to do |format|
-      format.js   # new.js.rjs
+      format.html # new.html.haml <-- signup form
       format.xml  { render :xml => @user }
     end
   end
