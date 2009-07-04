@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   before_filter :require_user, :except => [ :new, :create ]
 
   # GET /users
-  # GET /userss.xml                             HTML (not directly exposed yet)
+  # GET /users.xml                              HTML (not directly exposed yet)
   #----------------------------------------------------------------------------
   def index
   end
@@ -31,6 +31,11 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @user = params[:id] ? User.find(params[:id]) : @current_user
+
+    respond_to do |format|
+      format.html # show.html.haml
+      format.xml  { render :xml => @user }
+    end
   end
 
   # GET /users/new
@@ -38,6 +43,17 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @user = User.new
+
+    respond_to do |format|
+      format.js   # new.js.rjs
+      format.xml  { render :xml => @user }
+    end
+  end
+  
+  # GET /users/1/edit                                                      AJAX
+  #----------------------------------------------------------------------------
+  def edit
+    @user = @current_user
   end
   
   # POST /users
@@ -51,12 +67,6 @@ class UsersController < ApplicationController
     else
       render :action => :new
     end
-  end
-  
-  # GET /users/1/edit                                                      AJAX
-  #----------------------------------------------------------------------------
-  def edit
-    @user = @current_user
   end
   
   # PUT /users/1
