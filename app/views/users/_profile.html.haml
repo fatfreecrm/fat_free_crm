@@ -1,8 +1,61 @@
 .remote
   - remote_form_for(@user) do |f|
     = link_to_close edit_user_path(@user)
-    %p Not implemented yet.
-    
+    = f.error_messages
+    .section
+      %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+        %tr
+          %td{ :valign => :top }
+            .label.top First name:
+            = f.text_field :first_name, :style => "width:240px"
+          %td= spacer
+          %td{ :valign => :top }
+            .label.top Last name:
+            = f.text_field :last_name, :style => "width:240px"
+        %tr
+          %td{ :valign => :top }
+            .label Title:
+            = f.text_field :title, :style => "width:240px"
+          %td= spacer
+          %td{ :valign => :top }
+            .label Company:
+            = f.text_field :company, :style => "width:240px"
+    .subtitle Contact Information
+    .section
+      %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+        %tr
+          %td{ :valign => :top, :colspan => 3 }
+            .label.top.req Email:
+            = f.text_field :email, :style => "width:240px"
+          %td= spacer
+          %td{ :valign => :top, :colspan => 3 }
+            .label.top Alternative email:
+            = f.text_field :alt_email, :style => "width:240px"
+        %tr
+          %td{ :valign => :top, :colspan => 3 }
+            .label Phone:
+            = f.text_field :phone, :style => "width:240px"
+          %td= spacer
+          %td{ :valign => :top, :colspan => 3 }
+            .label Mobile:
+            = f.text_field :mobile, :style => "width:240px"
+        %tr
+          %td{ :valign => :top }
+            .label AOL IM:
+            = f.text_field :aim, :style => "width:112px"
+          %td= spacer
+          %td{ :valign => :top }
+            .label Yahoo IM:
+            = f.text_field :yahoo, :style => "width:112px"
+          %td= spacer
+          %td{ :valign => :top }
+            .label Google IM:
+            = f.text_field :google, :style => "width:112px"
+          %td= spacer
+          %td{ :valign => :top }
+            .label Skype:
+            = f.text_field :skype, :style => "width:112px"
+
     .buttonbar
       = f.submit "Save Profile"
       or

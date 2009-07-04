@@ -31,7 +31,7 @@ describe UsersController do
       require_user
     end
 
-    it "should expose the requested user as @user" do
+    it "should expose the requested user as @user and render [show] template" do
       @user = Factory(:user)
 
       get :show, :id => @user.id
@@ -71,7 +71,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
   
-    it "should expose a new user as @user" do
+    it "should expose a new user as @user and render [new] template" do
       @user = Factory.build(:user)
       User.stub!(:new).and_return(@user)
 
@@ -89,7 +89,7 @@ describe UsersController do
       require_user
     end
   
-    it "should expose current user as @user" do
+    it "should expose current user as @user and render [edit] template" do
       @user = @current_user
 
       xhr :get, :edit, :id => @user.id
