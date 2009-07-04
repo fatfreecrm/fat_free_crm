@@ -74,11 +74,15 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @user = @current_user
-    if @user.update_attributes(params[:user])
-      flash[:notice] = "Your user profile has been updated."
-      redirect_to profile_url
-    else
-      render :action => :edit
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        format.js
+        format.xml { head :ok }
+      else
+        format.js
+        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

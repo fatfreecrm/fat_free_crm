@@ -27,7 +27,7 @@ describe "/users/update.js.rjs" do
         with_tag("form[class=edit_user]")
       end
       response.should include_text('$("edit_profile").visualEffect("shake"')
-      # response.should include_text('focus()')
+      response.should include_text('$("user_email").focus()')
     end
   end # errors
 end

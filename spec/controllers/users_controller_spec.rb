@@ -132,30 +132,28 @@ describe UsersController do
   describe "responding to PUT udpate" do
     before(:each) do
       require_user
+      @user = @current_user
     end
 
     describe "with valid params" do
 
-      it "should update the requested user" do
-      end
-
-      it "should expose the requested user as @user" do
-      end
-
-      it "should redirect to the user" do
+      it "should update user information and render [update] template" do
+        xhr :put, :update, :id => @user.id, :user => { :first_name => "Billy", :last_name => "Bones" }
+        @user.reload.first_name.should == "Billy"
+        @user.last_name.should == "Bones"
+        assigns[:user].should == @user
+        response.should render_template("users/update")
       end
 
     end
     
     describe "with invalid params" do
 
-      it "should update the requested user" do
-      end
-
-      it "should expose the user as @user" do
-      end
-
-      it "should re-render the 'edit' template" do
+      it "should not update the user information and redraw [update] template" do
+        xhr :put, :update, :id => @user.id, :user => { :first_name => nil }
+        @user.reload.first_name.should == @current_user.first_name
+        assigns[:user].should == @user
+        response.should render_template("users/update")
       end
 
     end

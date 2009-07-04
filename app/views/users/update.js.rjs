@@ -1,15 +1,13 @@
-logger.p "update.js.rjs"
-
 if @user.errors.empty?
   page.call "crm.flip_form", :edit_profile
   page.call "crm.set_title", :edit_profile, "My Profile"
+  #
+  # TODO:
+  # - update actual user profile
+  # - update Welcome, Firstname! in the header
+  #
 else  
   page[:edit_profile].replace_html :partial => "profile"
   page[:edit_profile].visual_effect :shake, :duration => 0.25, :distance => 6
-  
-  # if error_message_on(@user, :first_name).blank? and !error_message_on(@user, :last_name).blank?
-  #   page[:user_last_name].focus
-  # else
-  #   page[:user_first_name].focus
-  # end
+  page[:user_email].focus
 end
