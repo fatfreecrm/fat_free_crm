@@ -1,0 +1,193 @@
+h1. "HasImage":http://github.com/norman/has_image
+
+Image attachment gem/plugin for Ruby on Rails
+
+HasImage allows Ruby on Rails applications to have attached images. It is very
+small and lightweight: it only requires one column in your model to store the
+uploaded image's file name.
+
+HasImage was created as a smaller, simpler, lighter alternative to
+"attachment_fu":http://github.com/technoweenie/attachment_fu for applications
+that need to handle uploaded images.
+
+It is, by design, very simplistic: It only supports using a filesystem for
+storage, and only supports
+"MiniMagick":http://github.com/probablycorey/mini_magick as an image
+processor. However, its code is very small, clean and hackable, so adding
+support for other backends or processors should be fairly easy.
+
+Some typical use cases are: websites that want to create photo galleries with
+fixed-dimension thumbnails, or that want to store user profile pictures
+without creating a separate model for the images.
+
+It creates only one database record per image, and uses ImageMagick's
+"crop":http://www.imagemagick.org/script/command-line-options.php#crop and
+"center gravity":http://www.imagemagick.org/script/command-line-options.php#gravity
+functions to produce thumbnails that generally look acceptable, unless the
+image is a panorama, or the subject matter is close to one of the margins,
+etc. For most sites where people upload pictures of themselves the generated
+thumbnails will look good almost all the time.
+
+h2. Another image attachment library? Why?
+
+<blockquote>
+  The three chief virtues of a programmer are: Laziness, Impatience and Hubris. - "Larry Wall":http://en.wikipedia.org/wiki/Larry_Wall
+</blockquote>
+
+Attachment_fu is too large and general for some of the places I want to use
+images. I sometimes found myself writing more code to hack attachment_fu than
+it took to create this gem. In fact, most of the code here has been plucked
+from my various projects that use attachment_fu.
+
+The other image attachment libraries I found fell short of my needs for
+various other reasons, so I decided to roll my own.
+
+h2. HasImage vs. attachment_fu
+
+h3. Advantages
+
+  * Simpler, smaller, more easily hackable codebase - and specialized for
+    images only.
+  * Installable via Ruby Gems. This makes version dependencies easy when using
+    Rails 2.1.
+  * Creates only one database record per image.
+  * Has built-in facilities for making distortion-free, fixed-size thumbnails.
+  * Doesn't regenerate the thumbnails every time you save your model. This means
+    you can easily use it, for example, inside a Member model to store member
+    avatars.
+
+h3. Disadvantages
+
+  * Doesn't save image dimensions in the database. However, if you're using
+    fixed-sized images, you can read the size from MyModel.thumbnails[:my_size].
+  * No support for AWS or DBFile storage, only filesystem.
+  * Only supports "MiniMagick":http://github.com/probablycorey/mini_magick/tree as an image processor, no RMagick, GD, CoreImage, etc.
+  * No support for anything other than image attachments.
+  * Not as popular as attachment_fu, but then again if you use it you'll be cooler (until HasImage becomes popular).
+
+h2. Examples
+
+Point-and-drool use case. It's probably not what you want, but it may be
+useful for bootstrapping.
+
+  class Member < ActiveRecord::Base
+    has_image
+  end
+
+Single image, no thumbnails, with some size limits:
+
+  class Picture < ActiveRecord::Base
+    has_image :resize_to => "200x200",
+      :max_size => 3.megabytes,
+      :min_size => 4.kilobytes
+  end
+
+Image with some thumbnails:
+
+  class Photo < ActiveRecord::Base
+    has_image :resize_to => "640x480",
+      :thumbnails => {
+        :square => "200x200",
+        :medium => "320x240"
+      },
+      :max_size => 3.megabytes,
+      :min_size => 4.kilobytes
+  end
+  
+It also provides a view helper to make displaying the images extremely simple:
+
+  <%= image_tag_for(@photo) # show the full-sized image %>
+  <%= image_tag_for(@photo, :thumb => :square) # show the square thumbnail %>
+
+The image_tag_for helper calls Rails' image_tag, so you can pass in all the 
+regular options to set the alt property, CSS class, etc:
+  
+  <%= image_tag_for(@photo, :alt => "my cool picture", :class => "photo") %>
+
+Setting up forms for HasImage is simple, too:
+
+<pre>
+  <% form_for(@photo, :html => {:multipart => true}) do |f| %>
+    <p>
+      <%= f.label :image_data %>
+      <%= f.file_field :image_data %>
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
+  <% end %>
+</pre>
+
+h2. Getting it
+
+Has image can be installed as a gem, or as a Rails plugin. Gem installation
+is easiest, and recommended:
+
+  gem install has_image
+
+and add 
+
+  require 'has_image'
+
+to your environment.rb file.
+
+Alternatively, you can install it as a Rails plugin:
+
+  ./script plugin install git://github.com/norman/has_image.git
+  
+Rails versions before 2.1 do not support plugin installation using Git, so if
+you're on 2.0 (or earlier), then please install the gem rather than the
+plugin.
+  
+Then, make sure the model has a column named "has_image_file."
+
+"Git repository":http://github.com/norman/has_image: git://github.com/norman/has_image.git
+
+h2. Hacking it
+
+Don't like the way it makes images? Want to pipe the images through some
+"crazy fast seam carving library written in OCaml":http://eigenclass.org/hiki/seam-carving-in-ocaml, or watermark them
+with your corporate logo? Happiness is just a "monkey-patch":http://en.wikipedia.org/wiki/Monkey_patch away:
+
+  module HasImage
+    class Processor
+      def resize_image(size)
+        # your new-and-improved thumbnailer code goes here.
+      end
+    end
+  end
+
+HasImage follows a philosophy of ""skinny model, fat plugin":http://weblog.jamisbuck.org/2006/10/18/skinny-controller-fat-model."
+This means that it tries to pollute your ActiveRecord model with as little
+functionality as possible, so that in a sense, the model is acts like a
+"controller" and the plugin like a "model" as regards the image handling
+functionality. This makes it easier to test, hack, and reuse, because the
+storage and processing functionality is largely independent of your model, and
+of Rails.
+
+My goal for HasImage is to keep it very small. If you need *a lot* of
+functionality that's not here, instead of patching this code, you will likely
+be better off using attachment_fu, which is more powerful, but also more
+complex.
+
+h2. Bugs
+
+Please report them on "Lighthouse":http://randomba.lighthouseapp.com/projects/14674-has_image.
+
+Copyright (c) 2008 "Norman Clarke":mailto:norman@randomba.org, released under
+the MIT license
+
+h2. Is anyone using this thing?
+
+HasImage powers "FotoBlog":http://fotoblog.ciudad.com.ar, one of the largest
+Rails sites in Argentina. If you're using it in your project let me know and
+I'll add your link here.
+
+h2. Acknowledgements
+
+I'd like to thank the following contributors:
+
+* "Adrian Mugnolo":http://github.com/xymbol
+* "Gerrit Keiser":http://github.com/gerrit
+* the folks from "Tricycle Developments":http://github.com/tricycle
+* "Dima Sabanin":http://github.com/railsmonk

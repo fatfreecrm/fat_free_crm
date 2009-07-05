@@ -1,0 +1,25 @@
+= Frequently Asked Questions
+
+HasImage is too new to have many FAQ items yet. {Ask
+me}[mailto:norman@randomba.org] and they will be included; this is a work in
+progress.
+
+= How do I validate the mime type of my uploaded images?
+
+You don't. Rather than examine the mime type, HasImage runs the "identify"
+command on the file to determine if it is processable by ImageMagick, and if
+it is, converts it to the format you specify, which defaults to JPEG.
+
+This is better than checking for mime types, because your users may upload
+exotic image types that you didn't even realize would work, such as Truevision
+Targa images, or Seattle Film Works files.
+
+If you wish to give users a list of file types they can upload, a good start
+would be jpeg, png, bmp, and maybe gif and ttf if your installation of
+ImageMagick understands them. You can find out what image types your
+ImageMagick understands by running:
+
+identify -list format
+
+Ideally, if your users just upload files that "look like" images on their
+computers, it HasImage should "just work."
