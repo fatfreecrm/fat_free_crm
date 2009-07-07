@@ -94,6 +94,17 @@ Factory.define :activity do |a|
 end
 
 #----------------------------------------------------------------------------
+Factory.define :avatar do |a|
+  a.user                { |a| a.association(:user) }
+  a.entity              { raise "Please specify :entity for the avatar" }
+  a.image_file_size     nil
+  a.image_file_name     nil
+  a.image_content_type  nil
+  a.updated_at          { Factory.next(:time) }
+  a.created_at          { Factory.next(:time) }
+end
+
+#----------------------------------------------------------------------------
 Factory.define :campaign do |c|
   c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }

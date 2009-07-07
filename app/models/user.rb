@@ -52,6 +52,8 @@
 
 class User < ActiveRecord::Base
   
+  has_one  :avatar, :as => :entity, :dependent => :destroy
+  has_many :avatars # as owner who uploaded it, ex. Contact avatar
   has_many :accounts
   has_many :campaigns
   has_many :leads
