@@ -1,1 +1,8 @@
-logger.p "upload_avatar.js.rjs"
+if @user.errors.empty?
+  page.call "crm.flip_form", :upload_avatar
+  page.call "crm.set_title", :upload_avatar, "My Profile"
+  page[:profile].replace_html :partial => "user"
+else
+  page[:upload_avatar].replace_html :partial => "avatar"
+  page[:upload_avatar].visual_effect :shake, :duration => 0.25, :distance => 6
+end

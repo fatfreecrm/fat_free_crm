@@ -4,6 +4,17 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Jul 7, 2009
+---------------------------------------------------------------------
+- More tweaks for Profile > Upload Avatar form.
+
+Mon, Jul 6, 2009
+---------------------------------------------------------------------
+- Replaced [mini_magick/has_image] combo with [paperclip] plugin.
+- Installed [responds-to-parent-plugin].
+- Added [Avatar] model.
+- Implemented Ajax avatar uploads through hidden frame.
+
 Sun, Jul 5, 2009
 ---------------------------------------------------------------------
 - Installed [mini_magick] gem and [has_image] plugin.

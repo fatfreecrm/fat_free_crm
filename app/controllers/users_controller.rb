@@ -105,7 +105,19 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def upload_avatar
     logger.p "User#upload_avatar"
+
     @user = @current_user
+    @user.avatar = Avatar.new(params[:avatar])
+
+    respond_to do |format|
+      if @user.save
+        format.js  { responds_to_parent { render } }
+        format.xml { head :ok }
+      else
+        format.js  { responds_to_parent { render } }
+        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
   # GET /users/1/password
