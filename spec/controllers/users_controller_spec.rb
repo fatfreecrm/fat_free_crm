@@ -87,11 +87,10 @@ describe UsersController do
   describe "responding to GET edit" do
     before(:each) do
       require_user
+      @user = @current_user
     end
   
     it "should expose current user as @user and render [edit] template" do
-      @user = @current_user
-
       xhr :get, :edit, :id => @user.id
       assigns[:user].should == @current_user
       response.should render_template("users/edit")
@@ -194,9 +193,44 @@ describe UsersController do
   describe "responding to PUT update_avatar" do
     before(:each) do
       require_user
+      @user = @current_user
     end
 
-    it "should" do
+    it "should delete avatar if user chooses to use Gravatar" do
+      @avatar = Factory(:avatar, :user => @user, :entity => @user)
+
+      xhr :put, :upload_avatar, :id => @user.id, :gravatar => 1
+      @user.avatar.should == nil
+      response.should render_template("users/upload_avatar")
+    end
+
+    it "should do nothing if user hasn't specified the avatar file to upload" do
+      @avatar = Factory(:avatar, :user => @user, :entity => @user)
+
+      xhr :put, :upload_avatar, :id => @user.id, :avatar => nil
+      @user.avatar.should == @avatar
+      response.should render_template("users/upload_avatar")
+    end
+
+    it "should save the user avatar if it was successfully uploaded and resized" do
+      @image = fixture_file_upload("rails.png", "image/png")
+
+      xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
+      @user.avatar.should_not == nil
+      @user.avatar.image_file_size.should == @image.size
+      @user.avatar.image_file_name.should == @image.original_filename
+      @user.avatar.image_content_type.should == @image.content_type
+      response.should render_template("users/upload_avatar")
+    end
+
+    it "should return errors if the avatar failed to get uploaded and resized" do
+      @image = fixture_file_upload("rails.png", "image/png")
+      @user.stub!(:save).and_return(false) # make it fail
+    
+      xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
+      @user.avatar.errors.should_not be_empty
+      @user.avatar.should have(1).error_on(:image)
+      response.should render_template("users/upload_avatar")
     end
   end
 

@@ -1,6 +1,7 @@
 .remote
   - form_for(@user, :url => upload_avatar_user_path(@user, :format => "js"), :html => { :multipart => true, :target => "uploading" }) do |f|
     = link_to_close avatar_user_path(@user)
+    = error_messages_for :avatar, :object => @user.avatar
 
     %p
       %small The image file you upload will be automatically resized to 75 x 75 pixels.
@@ -14,7 +15,7 @@
       or
       = link_to_cancel avatar_user_path(@user)
       or use
-      = link_to("Gravatar", "#")
+      = link_to_remote("Gravatar", :url => upload_avatar_user_path(@user), :method => :put, :with => "'gravatar=1'")
       %small.cool== (learn what is #{link_to("Gravatar", "http://en.gravatar.com", :popup => true)})
 
 %br

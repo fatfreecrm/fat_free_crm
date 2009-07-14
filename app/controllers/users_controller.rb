@@ -104,19 +104,20 @@ class UsersController < ApplicationController
   # PUT /users/1/upload_avatar.xml                                         AJAX
   #----------------------------------------------------------------------------
   def upload_avatar
-    logger.p "User#upload_avatar"
-
     @user = @current_user
-    @user.avatar = Avatar.new(params[:avatar])
-
-    respond_to do |format|
-      if @user.save
-        format.js  { responds_to_parent { render } }
-        format.xml { head :ok }
-      else
-        format.js  { responds_to_parent { render } }
-        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+    if params[:gravatar]
+      @user.avatar = nil
+      @user.save
+      render
+    else
+      if params[:avatar]
+        @user.avatar = Avatar.new(params[:avatar])
+        unless @user.save && @user.avatar.errors.blank?
+          @user.avatar.errors.clear
+          @user.avatar.errors.add(:image, "file: could't upload or resize the avatar.")
+        end
       end
+      responds_to_parent { render }
     end
   end
 
