@@ -42,7 +42,8 @@ module Paperclip
     # contains ":url" to prevent infinite recursion. This interpolation
     # is used in the default :path to ease default specifications.
     def url attachment, style
-      raise InfiniteInterpolationError if attachment.options[:url].include?(":url")
+      # 07/15/2009 MiD - check whether :url option is a string. It can also be lambda that doesn't respond to include?
+      raise InfiniteInterpolationError if attachment.options[:url].is_a?(String) && attachment.options[:url].include?(":url")
       attachment.url(style, false)
     end
 

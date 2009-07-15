@@ -7,7 +7,7 @@
       %small The image file you upload will be automatically resized to 75 x 75 pixels.
 
     %div Image file:
-    - fields_for(@user.avatar) do |a|
+    - fields_for(Avatar) do |a|
       %div= a.file_field :image
 
     .buttonbar

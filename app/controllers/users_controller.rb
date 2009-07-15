@@ -111,7 +111,7 @@ class UsersController < ApplicationController
       render
     else
       if params[:avatar]
-        @user.avatar = Avatar.new(params[:avatar])
+        @user.avatar = Avatar.new(params[:avatar].merge(:entity => @user))
         unless @user.save && @user.avatar.errors.blank?
           @user.avatar.errors.clear
           @user.avatar.errors.add(:image, "file: could't upload or resize the avatar.")
