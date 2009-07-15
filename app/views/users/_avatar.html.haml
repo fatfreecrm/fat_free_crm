@@ -4,18 +4,17 @@
     = error_messages_for :avatar, :object => @user.avatar
 
     %p
-      %small The image file you upload will be automatically resized to 75 x 75 pixels.
+      %small The image file you upload will be automatically resized to 75 x 75 pixels. Supported formats are GIF, JPG, and PNG.
 
     %div Image file:
     - fields_for(Avatar) do |a|
       %div= a.file_field :image
 
     .buttonbar
-      = f.submit "Upload Avatar"
+      %small.cool{:style => "float:right"}== Not familiar with Gravatars? Learn about Gravatars #{link_to("here", "http://en.gravatar.com", :popup => true)}.
+      = f.submit "Upload Picture"
+      or
+      = link_to_remote("Use Gravatar", :url => upload_avatar_user_path(@user), :method => :put, :with => "'gravatar=1'")
       or
       = link_to_cancel avatar_user_path(@user)
-      or use
-      = link_to_remote("Gravatar", :url => upload_avatar_user_path(@user), :method => :put, :with => "'gravatar=1'")
-      %small.cool== (learn what is #{link_to("Gravatar", "http://en.gravatar.com", :popup => true)})
-
 %br

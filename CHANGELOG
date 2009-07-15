@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Jul 15, 2009
+---------------------------------------------------------------------
+- Moved avatars in separate directories based on who the avatar belongs to.
+- Implemented avatar_for() to encapsulate uploaded image, gravatar, and default icon.
+- Fixed Paperclip bug when :url option is a lambda and not a string.
+
 Mon, Jul 13, 2009
 ---------------------------------------------------------------------
 - Finished with user avatar upload, including controller and view specs.

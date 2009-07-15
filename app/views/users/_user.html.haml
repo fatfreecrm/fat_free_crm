@@ -1,7 +1,7 @@
 %table{ :cellspacing => 0, :cellpadding => 0 }
   %tr
     %td{ :valign => :top }
-      = image_tag("/images/avatar.jpg", :size => "75x75", :style => "margin: 0px 10px 0px 0px")
+      = avatar_for(@user, :style => "margin: 0px 10px 0px 0px")
     %td{ :valign => :top }
       %h3= @user.full_name + " (#{@user.username})"
       - if !@user.title.blank? && !@user.company.blank?

@@ -205,4 +205,16 @@ module ApplicationHelper
     )
   end
 
+  #----------------------------------------------------------------------------
+  def avatar_for(model, args = {})
+    args[:size]  ||= "75x75"
+    args[:class] ||= "gravatar"
+    if model.avatar
+      image_tag(model.avatar.image.url(Avatar.styles[args[:size]]), args)
+    elsif model.email
+      gravatar(model.email, { :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg" }.merge(args))
+    else
+      image_tag("/images/avatar.jpg", args)
+    end
+  end
 end

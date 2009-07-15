@@ -229,7 +229,7 @@ describe UsersController do
     
       xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
       @user.avatar.errors.should_not be_empty
-      @user.avatar.should have(1).error_on(:image)
+      @user.avatar.should have(1).error # .error_on(:image)
       response.should render_template("users/upload_avatar")
     end
   end

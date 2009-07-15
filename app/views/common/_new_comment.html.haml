@@ -1,6 +1,6 @@
 - class_name = commentable.class.name.downcase
 .comment#comment_new{:style => "margin: 5px 0px 0px 0px"}
-  = gravatar_for(@current_user, :size => "25x25", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
+  = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
   #post{ hidden_if(session["#{class_name}_new_comment"].nil?) }
     - remote_form_for(@comment) do |f|
       = hidden_field_tag "comment[user_id]", @current_user.id
