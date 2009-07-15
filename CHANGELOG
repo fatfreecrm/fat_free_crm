@@ -9,6 +9,7 @@ Wed, Jul 15, 2009
 - Moved avatars in separate directories based on who the avatar belongs to.
 - Implemented avatar_for() to encapsulate uploaded image, gravatar, and default icon.
 - Fixed Paperclip bug when :url option is a lambda and not a string.
+- Release 0.9.4.
 
 Mon, Jul 13, 2009
 ---------------------------------------------------------------------
