@@ -1,28 +1,15 @@
-es:
- 
+es-MX:
   number:
-    percentage:
-      format:
-        delimiter: ""
-    currency:
-      format: "%u%n"
-      delimiter: ","
-      unit: "$"
-      precision: 2
-      separator: "."
     format:
       delimiter: ","
-      precision: 3
+      precision_int: 3
       separator: "."
-    human:
-      format:
-        delimiter: ""
-        precision: 1
-      storage_units: [Bytes, KB, MB, GB, TB]
-    precision:
-      format:
-        delimiter: ""
- 
+    currency:
+      format: " %n " 
+      precision_int: 2
+      delimiter: ","
+      separator: "."
+      unit: "$"
   date:
     order: [:day, :month, :year]
     abbr_day_names: [Dom, Lun, Mar, Mie, Jue, Vie, Sab]
