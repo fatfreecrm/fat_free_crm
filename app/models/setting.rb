@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 19
+#
+# Table name: settings
+#
+#  id            :integer(4)      not null, primary key
+#  name          :string(32)      default(""), not null
+#  value         :text
+#  default_value :text
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
 # Fat Free CRM
 # Copyright (C) 2008-2009 by Michael Dvorkin
 # 
@@ -14,19 +27,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-# == Schema Information
-# Schema version: 17
-#
-# Table name: settings
-#
-#  id            :integer(4)      not null, primary key
-#  name          :string(32)      default(""), not null
-#  value         :text
-#  default_value :text
-#  created_at    :datetime
-#  updated_at    :datetime
-#
-
 class Setting < ActiveRecord::Base
   
   #-------------------------------------------------------------------

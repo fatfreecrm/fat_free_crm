@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 17
+# Schema version: 19
 #
 # Table name: users
 #
@@ -20,9 +20,8 @@
 #  skype             :string(32)
 #  password_hash     :string(255)     default(""), not null
 #  password_salt     :string(255)     default(""), not null
-#  remember_token    :string(255)     default(""), not null
+#  persistence_token :string(255)     default(""), not null
 #  perishable_token  :string(255)     default(""), not null
-#  openid_identifier :string(255)
 #  last_request_at   :datetime
 #  last_login_at     :datetime
 #  current_login_at  :datetime

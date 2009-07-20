@@ -1,3 +1,19 @@
+# == Schema Information
+# Schema version: 19
+#
+# Table name: comments
+#
+#  id               :integer(4)      not null, primary key
+#  user_id          :integer(4)
+#  commentable_id   :integer(4)
+#  commentable_type :string(255)
+#  private          :boolean(1)
+#  title            :string(255)     default("")
+#  comment          :text
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 # Fat Free CRM
 # Copyright (C) 2008-2009 by Michael Dvorkin
 # 
@@ -14,22 +30,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-# == Schema Information
-# Schema version: 17
-#
-# Table name: comments
-#
-#  id               :integer(4)      not null, primary key
-#  user_id          :integer(4)
-#  commentable_id   :integer(4)
-#  commentable_type :string(255)
-#  private          :boolean(1)
-#  title            :string(255)     default("")
-#  comment          :text
-#  created_at       :datetime
-#  updated_at       :datetime
-#
-
 class Comment < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :commentable, :polymorphic => true

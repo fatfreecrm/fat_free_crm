@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 17
+# Schema version: 19
 #
 # Table name: tasks
 #
@@ -7,6 +7,7 @@
 #  uuid         :string(36)
 #  user_id      :integer(4)
 #  assigned_to  :integer(4)
+#  completed_by :integer(4)
 #  name         :string(255)     default(""), not null
 #  asset_id     :integer(4)
 #  asset_type   :string(255)
