@@ -1,16 +1,14 @@
 require "digest/sha2"
 
 module Authlogic
-  # = Crypto Providers
-  #
-  # The acts_as_authentic method allows you to pass a :crypto_provider option. This allows you to use any type of encryption you like.
+  # The acts_as_authentic method has a crypto_provider option. This allows you to use any type of encryption you like.
   # Just create a class with a class level encrypt and matches? method. See example below.
   #
   # === Example
   #
   #   class MyAwesomeEncryptionMethod
   #     def self.encrypt(*tokens)
-  #       # the tokens passed wil be an array of objects, what type of object is irrelevant
+  #       # the tokens passed will be an array of objects, what type of object is irrelevant,
   #       # just do what you need to do with them and return a single encrypted string.
   #       # for example, you will most likely join all of the objects into a single string and then encrypt that string
   #     end

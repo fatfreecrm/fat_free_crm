@@ -65,11 +65,15 @@ class User < ActiveRecord::Base
   named_scope :except, lambda { | user | { :conditions => "id != #{user.id}" } }
   uses_mysql_uuid
   acts_as_paranoid
+  acts_as_authentic do |c|
+    c.session_class = Authentication
+    c.validates_uniqueness_of_login_field_options = { :message => "^This username has been already taken." }
+    c.validates_uniqueness_of_email_field_options = { :message => "^There is another user with the same email." }
+    c.validates_length_of_password_field_options  = { :minimum => 3 }
+  end
 
-  validates_presence_of   :username, :message => "^Please specify the username."
-  validates_presence_of   :email,    :message => "^Please specify your email address."
-  validates_uniqueness_of :username, :message => "^This username has been already taken."
-  validates_uniqueness_of :email,    :message => "^There is another user with the same email."
+  # validates_presence_of :username, :message => "^Please specify the username."
+  # validates_presence_of :email,    :message => "^Please specify your email address."
 
   #----------------------------------------------------------------------------
   def name
@@ -87,38 +91,10 @@ class User < ActiveRecord::Base
   end
   alias :pref :preference
 
-  # All of the following code is for OpenID integration.
-  #----------------------------------------------------------------------------
-  acts_as_authentic(
-    :login_field => :username,
-    :session_class => Authentication,
-    :login_field_validation_options => { :if => :openid_identifier_blank? }, 
-    :password_field_validation_options => { :if => :openid_identifier_blank? }
-  )
-  
-  validate :normalize_openid_identifier
-  validates_uniqueness_of :openid_identifier, :allow_blank => true
-  
-  # For acts_as_authentic configuration
-  #----------------------------------------------------------------------------
-  def openid_identifier_blank?
-    openid_identifier.blank?
-  end
-  
   #----------------------------------------------------------------------------
   def deliver_password_reset_instructions!
     reset_perishable_token!
     Notifier.deliver_password_reset_instructions(self)
-  end
-  
-  #----------------------------------------------------------------------------
-  private
-  def normalize_openid_identifier
-    begin
-      self.openid_identifier = OpenIdAuthentication.normalize_url(openid_identifier) if !openid_identifier.blank?
-    rescue OpenIdAuthentication::InvalidOpenId => e
-      errors.add(:openid_identifier, e.message)
-    end
   end
 
 end

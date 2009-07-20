@@ -4,24 +4,15 @@
     .title Login
     = "Invalid username or password" unless f.error_messages.blank?
     .section
-      #login{ hidden_if(!@authentication.openid_identifier.blank?) }
-        .label Username:
-        = f.text_field :username
-        .label Password:
-        = f.password_field :password
-      #openid{ hidden_if(@authentication.openid_identifier.blank?) }
-        .label OpenID: 
-        = f.text_field :openid_identifier
-      .label
-        .check_box
-          = f.check_box(:remember_me) << " Remember me"
+      .label Username:
+      = f.text_field :username
+      .label Password:
+      = f.password_field :password
+    .label
+      .check_box
+        = f.check_box(:remember_me) << " Remember me"
+
     .buttonbar
       = f.submit "Login"
       or 
       = link_to "Forgot password?", new_password_path
-
-%small#login_link
-  = link_to_function "Login using OpenID", "crm.toggle_open_id_login()"
-
-%small#openid_link{ hidden }
-  = link_to_function "Login using username and password", "crm.toggle_open_id_login('authentication_username')"
