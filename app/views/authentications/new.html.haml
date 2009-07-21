@@ -2,7 +2,7 @@
   - form_for @authentication, :url => authentication_path do |f|
     .title_tools== Don't have an account? #{link_to 'Sign Up Now!', signup_path}
     .title Login
-    = "Invalid username or password" unless f.error_messages.blank?
+    .warn= "Invalid username or password" unless f.error_messages.blank?
     .section
       .label Username:
       = f.text_field :username

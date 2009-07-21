@@ -8,6 +8,9 @@ Mon, Jul 20, 2009
 ---------------------------------------------------------------------
 - Happy birthday, Lana!
 - Annotated models for schema version #19.
+- Implemented Profile > Change Password.
+- Added ability to show flash notices from RJS templates.
+- First gathering at #fatfreecrm channel on irc.freenode.net (thanks, Eric!)
 
 Sun, Jul 19, 2009
 ---------------------------------------------------------------------

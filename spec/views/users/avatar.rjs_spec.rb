@@ -19,9 +19,9 @@ describe "/users/avatar.js.rjs" do
   it "edit profile: should hide [Edit Profile] and [Change Password] forms and show [Upload Avatar]" do
     render "users/avatar.js.rjs"
 
-    # response.should have_rjs("upload_avatar") do |rjs|
-    #   with_tag("form[class=upload_avatar]")
-    # end
+    response.should have_rjs("upload_avatar") do |rjs|
+      with_tag("form[class=edit_user]")
+    end
     response.should include_text('crm.hide_form("edit_profile")')
     response.should include_text('crm.hide_form("change_password")')
     response.should include_text('crm.flip_form("upload_avatar")')

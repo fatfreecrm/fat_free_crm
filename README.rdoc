@@ -28,6 +28,7 @@ Here are the steps to get Fat Free CRM up and running on your system.
 * Twitter commit updates: http://twitter.com/fatfreecrm
 * Discussion group for users: http://groups.google.com/group/fat-free-crm-users
 * Discussion group for developers: http://groups.google.com/group/fat-free-crm-dev
+* IRC channel: #fatfreecrm on irc.freenode.net
 
 === Setting Up The Database
 

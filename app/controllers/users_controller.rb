@@ -18,12 +18,14 @@
 class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [ :new, :create ]
-  before_filter :require_user, :except => [ :new, :create ]
+  before_filter :require_user, :only => [ :show ]
+  before_filter :require_and_assign_user, :except => [ :new, :create, :show ]
 
   # GET /users
   # GET /users.xml                              HTML (not directly exposed yet)
   #----------------------------------------------------------------------------
   def index
+    # not exposed
   end
 
   # GET /users/1
@@ -53,7 +55,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @user = @current_user
+    # <-- render edit.js.rjs
   end
   
   # POST /users
@@ -73,8 +75,6 @@ class UsersController < ApplicationController
   # PUT /users/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   def update
-    @user = @current_user
-
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.js
@@ -90,21 +90,20 @@ class UsersController < ApplicationController
   # DELETE /users/1.xml                HTML and AJAX (not directly exposed yet)
   #----------------------------------------------------------------------------
   def destroy
+    # not exposed
   end
 
   # GET /users/1/avatar
   # GET /users/1/avatar.xml                                                AJAX
   #----------------------------------------------------------------------------
   def avatar
-    logger.p "User#avatar"
-    @user = @current_user
+    # <-- render avatar.js.rjs
   end
 
   # PUT /users/1/upload_avatar
   # PUT /users/1/upload_avatar.xml                                         AJAX
   #----------------------------------------------------------------------------
   def upload_avatar
-    @user = @current_user
     if params[:gravatar]
       @user.avatar = nil
       @user.save
@@ -114,7 +113,7 @@ class UsersController < ApplicationController
         @user.avatar = Avatar.new(params[:avatar].merge(:entity => @user))
         unless @user.save && @user.avatar.errors.blank?
           @user.avatar.errors.clear
-          @user.avatar.errors.add(:image, "file: could't upload or resize the avatar.")
+          @user.avatar.errors.add(:image, "^Could't upload or resize the image file you specified.")
         end
       end
       responds_to_parent { render }
@@ -125,15 +124,25 @@ class UsersController < ApplicationController
   # GET /users/1/password.xml                                              AJAX
   #----------------------------------------------------------------------------
   def password
-    logger.p "User#password"
-    @user = @current_user
+    # <-- render password.js.rjs
   end
 
   # PUT /users/1/change_password
   # PUT /users/1/change_password.xml                                       AJAX
   #----------------------------------------------------------------------------
   def change_password
-    logger.p "User#change_password"
+    if @user.valid_password?(params[:current_password], true)
+      @user.update_attributes(params[:user])
+    else
+      @user.errors.add(:current_password, "^Please specify valid current password")
+    end
+    # <-- render change_password.js.rjs
+  end
+
+  private
+  #----------------------------------------------------------------------------
+  def require_and_assign_user
+    require_user
     @user = @current_user
   end
 

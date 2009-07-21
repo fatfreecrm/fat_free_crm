@@ -181,9 +181,13 @@ describe UsersController do
   describe "responding to GET avatar" do
     before(:each) do
       require_user
+      @user = @current_user
     end
 
-    it "should" do
+    it "should expose current user as @user and render [avatar] template" do
+      xhr :get, :avatar, :id => @user.id
+      assigns[:user].should == @current_user
+      response.should render_template("users/avatar")
     end
   end
 
@@ -240,9 +244,13 @@ describe UsersController do
   describe "responding to GET avatar" do
     before(:each) do
       require_user
+      @user = @current_user
     end
 
-    it "should" do
+    it "should expose current user as @user and render [pssword] template" do
+      xhr :get, :password, :id => @user.id
+      assigns[:user].should == @current_user
+      response.should render_template("users/password")
     end
   end
 
@@ -252,9 +260,32 @@ describe UsersController do
   describe "responding to PUT change_password" do
     before(:each) do
       require_user
+      @current_user_session.stub!(:unauthorized_record=).and_return(@current_user)
+      @current_user_session.stub!(:save).and_return(@current_user)
+      @user = @current_user
+      @new_password = "secret?!"
     end
 
-    it "should" do
+    it "should set new user password" do
+      xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => @new_password }
+      assigns[:user].should == @current_user
+      @current_user.password.should == @new_password
+      @current_user.errors.should be_empty
+      response.should render_template("users/change_password")
+    end
+
+    it "should require valid current password" do
+      xhr :put, :change_password, :id => @user.id, :current_password => "what?!", :user => { :password => @new_password, :password_confirmation => @new_password }
+      @current_user.password.should == @user.password # password stays the same
+      @current_user.should have(1).error # .error_on(:current_password)
+      response.should render_template("users/change_password")
+    end
+
+    it "should require new password and password confirmation to match" do
+      xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => "none" }
+      @current_user.password.should == @user.password # password stays the same
+      @current_user.should have(1).error # .error_on(:current_password)
+      response.should render_template("users/change_password")
     end
   end
 
