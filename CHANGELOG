@@ -10,6 +10,7 @@ Mon, Jul 20, 2009
 - Annotated models for schema version #19.
 - Implemented Profile > Change Password.
 - Added ability to show flash notices from RJS templates.
+- Removed [open_id_authentication] plugin since it's no longer needed.
 - First gathering at #fatfreecrm channel on irc.freenode.net (thanks, Eric!)
 
 Sun, Jul 19, 2009
