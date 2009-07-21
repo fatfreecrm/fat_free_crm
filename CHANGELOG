@@ -4,6 +4,42 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Jul 20, 2009
+---------------------------------------------------------------------
+- Happy birthday, Lana!
+- Annotated models for schema version #19.
+- Implemented Profile > Change Password.
+- Added ability to show flash notices from RJS templates.
+- First gathering at #fatfreecrm channel on irc.freenode.net (thanks, Eric!)
+
+Sun, Jul 19, 2009
+---------------------------------------------------------------------
+- Completed upgrade to Authlogic 2.1.2
+- Removed support for OpenID authentication
+
+Sat, Jul 18, 2009
+---------------------------------------------------------------------
+- Upgrading to Authlogic 2.1.2
+
+Wed, Jul 15, 2009
+---------------------------------------------------------------------
+- Moved avatars in separate directories based on who the avatar belongs to.
+- Implemented avatar_for() to encapsulate uploaded image, gravatar, and default icon.
+- Fixed Paperclip bug when :url option is a lambda and not a string.
+- Release 0.9.4.
+
+Mon, Jul 13, 2009
+---------------------------------------------------------------------
+- Finished with user avatar upload, including controller and view specs.
+
+Sun, Jul 12, 2009
+---------------------------------------------------------------------
+- Back home from Pismo Beach.
+
+Thu, Jul 9, 2009
+---------------------------------------------------------------------
+- On my way to Pismo Beach, CA.
+
 Tue, Jul 7, 2009
 ---------------------------------------------------------------------
 - More tweaks for Profile > Upload Avatar form.

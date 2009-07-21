@@ -1,7 +1,7 @@
 .title_tools
   - if @user == @current_user
     = link_to_inline(:edit_profile, edit_user_path(@user), :text => "Edit profile") + " | "
-    = link_to_inline(:upload_avatar, avatar_user_path(@user), :text => "Upload avatar") + " | "
+    = link_to_inline(:upload_avatar, avatar_user_path(@user), :text => "Upload picture") + " | "
     = link_to_inline(:change_password, password_user_path(@user), :text => "Change password")
 .title#title= (@user == @current_user ? "My " : "") << "Profile"
 %div#edit_profile{ hidden }

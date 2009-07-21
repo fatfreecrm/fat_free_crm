@@ -173,7 +173,7 @@ module Paperclip
     #   This field is interpolated just as the url is. The default value is 
     #   "/:attachment/:style/missing.png"
     #     has_attached_file :avatar, :default_url => "/images/default_:style_avatar.png"
-    #     User.new.avatar_url(:small) # => "/images/default_small_avatar.png"
+    #     User.new.avatar.url(:small) # => "/images/default_small_avatar.png"
     # * +styles+: A hash of thumbnail styles and their geometries. You can find more about 
     #   geometry strings at the ImageMagick website 
     #   (http://www.imagemagick.org/script/command-line-options.php#resize). Paperclip

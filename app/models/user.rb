@@ -1,21 +1,5 @@
-# Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-# 
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#------------------------------------------------------------------------------
 # == Schema Information
-# Schema version: 17
+# Schema version: 19
 #
 # Table name: users
 #
@@ -36,9 +20,8 @@
 #  skype             :string(32)
 #  password_hash     :string(255)     default(""), not null
 #  password_salt     :string(255)     default(""), not null
-#  remember_token    :string(255)     default(""), not null
+#  persistence_token :string(255)     default(""), not null
 #  perishable_token  :string(255)     default(""), not null
-#  openid_identifier :string(255)
 #  last_request_at   :datetime
 #  last_login_at     :datetime
 #  current_login_at  :datetime
@@ -50,6 +33,22 @@
 #  updated_at        :datetime
 #
 
+# Fat Free CRM
+# Copyright (C) 2008-2009 by Michael Dvorkin
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+# 
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#------------------------------------------------------------------------------
 class User < ActiveRecord::Base
   
   has_one  :avatar, :as => :entity, :dependent => :destroy
@@ -65,11 +64,15 @@ class User < ActiveRecord::Base
   named_scope :except, lambda { | user | { :conditions => "id != #{user.id}" } }
   uses_mysql_uuid
   acts_as_paranoid
+  acts_as_authentic do |c|
+    c.session_class = Authentication
+    c.validates_uniqueness_of_login_field_options = { :message => "^This username has been already taken." }
+    c.validates_uniqueness_of_email_field_options = { :message => "^There is another user with the same email." }
+    c.validates_length_of_password_field_options  = { :minimum => 3 }
+  end
 
-  validates_presence_of   :username, :message => "^Please specify the username."
-  validates_presence_of   :email,    :message => "^Please specify your email address."
-  validates_uniqueness_of :username, :message => "^This username has been already taken."
-  validates_uniqueness_of :email,    :message => "^There is another user with the same email."
+  # validates_presence_of :username, :message => "^Please specify the username."
+  # validates_presence_of :email,    :message => "^Please specify your email address."
 
   #----------------------------------------------------------------------------
   def name
@@ -87,38 +90,10 @@ class User < ActiveRecord::Base
   end
   alias :pref :preference
 
-  # All of the following code is for OpenID integration.
-  #----------------------------------------------------------------------------
-  acts_as_authentic(
-    :login_field => :username,
-    :session_class => Authentication,
-    :login_field_validation_options => { :if => :openid_identifier_blank? }, 
-    :password_field_validation_options => { :if => :openid_identifier_blank? }
-  )
-  
-  validate :normalize_openid_identifier
-  validates_uniqueness_of :openid_identifier, :allow_blank => true
-  
-  # For acts_as_authentic configuration
-  #----------------------------------------------------------------------------
-  def openid_identifier_blank?
-    openid_identifier.blank?
-  end
-  
   #----------------------------------------------------------------------------
   def deliver_password_reset_instructions!
     reset_perishable_token!
     Notifier.deliver_password_reset_instructions(self)
-  end
-  
-  #----------------------------------------------------------------------------
-  private
-  def normalize_openid_identifier
-    begin
-      self.openid_identifier = OpenIdAuthentication.normalize_url(openid_identifier) if !openid_identifier.blank?
-    rescue OpenIdAuthentication::InvalidOpenId => e
-      errors.add(:openid_identifier, e.message)
-    end
   end
 
 end

@@ -87,11 +87,10 @@ describe UsersController do
   describe "responding to GET edit" do
     before(:each) do
       require_user
+      @user = @current_user
     end
   
     it "should expose current user as @user and render [edit] template" do
-      @user = @current_user
-
       xhr :get, :edit, :id => @user.id
       assigns[:user].should == @current_user
       response.should render_template("users/edit")
@@ -182,9 +181,13 @@ describe UsersController do
   describe "responding to GET avatar" do
     before(:each) do
       require_user
+      @user = @current_user
     end
 
-    it "should" do
+    it "should expose current user as @user and render [avatar] template" do
+      xhr :get, :avatar, :id => @user.id
+      assigns[:user].should == @current_user
+      response.should render_template("users/avatar")
     end
   end
 
@@ -194,9 +197,44 @@ describe UsersController do
   describe "responding to PUT update_avatar" do
     before(:each) do
       require_user
+      @user = @current_user
     end
 
-    it "should" do
+    it "should delete avatar if user chooses to use Gravatar" do
+      @avatar = Factory(:avatar, :user => @user, :entity => @user)
+
+      xhr :put, :upload_avatar, :id => @user.id, :gravatar => 1
+      @user.avatar.should == nil
+      response.should render_template("users/upload_avatar")
+    end
+
+    it "should do nothing if user hasn't specified the avatar file to upload" do
+      @avatar = Factory(:avatar, :user => @user, :entity => @user)
+
+      xhr :put, :upload_avatar, :id => @user.id, :avatar => nil
+      @user.avatar.should == @avatar
+      response.should render_template("users/upload_avatar")
+    end
+
+    it "should save the user avatar if it was successfully uploaded and resized" do
+      @image = fixture_file_upload("rails.png", "image/png")
+
+      xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
+      @user.avatar.should_not == nil
+      @user.avatar.image_file_size.should == @image.size
+      @user.avatar.image_file_name.should == @image.original_filename
+      @user.avatar.image_content_type.should == @image.content_type
+      response.should render_template("users/upload_avatar")
+    end
+
+    it "should return errors if the avatar failed to get uploaded and resized" do
+      @image = fixture_file_upload("rails.png", "image/png")
+      @user.stub!(:save).and_return(false) # make it fail
+    
+      xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
+      @user.avatar.errors.should_not be_empty
+      @user.avatar.should have(1).error # .error_on(:image)
+      response.should render_template("users/upload_avatar")
     end
   end
 
@@ -206,9 +244,13 @@ describe UsersController do
   describe "responding to GET avatar" do
     before(:each) do
       require_user
+      @user = @current_user
     end
 
-    it "should" do
+    it "should expose current user as @user and render [pssword] template" do
+      xhr :get, :password, :id => @user.id
+      assigns[:user].should == @current_user
+      response.should render_template("users/password")
     end
   end
 
@@ -218,9 +260,32 @@ describe UsersController do
   describe "responding to PUT change_password" do
     before(:each) do
       require_user
+      @current_user_session.stub!(:unauthorized_record=).and_return(@current_user)
+      @current_user_session.stub!(:save).and_return(@current_user)
+      @user = @current_user
+      @new_password = "secret?!"
     end
 
-    it "should" do
+    it "should set new user password" do
+      xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => @new_password }
+      assigns[:user].should == @current_user
+      @current_user.password.should == @new_password
+      @current_user.errors.should be_empty
+      response.should render_template("users/change_password")
+    end
+
+    it "should require valid current password" do
+      xhr :put, :change_password, :id => @user.id, :current_password => "what?!", :user => { :password => @new_password, :password_confirmation => @new_password }
+      @current_user.password.should == @user.password # password stays the same
+      @current_user.should have(1).error # .error_on(:current_password)
+      response.should render_template("users/change_password")
+    end
+
+    it "should require new password and password confirmation to match" do
+      xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => "none" }
+      @current_user.password.should == @user.password # password stays the same
+      @current_user.should have(1).error # .error_on(:current_password)
+      response.should render_template("users/change_password")
     end
   end
 

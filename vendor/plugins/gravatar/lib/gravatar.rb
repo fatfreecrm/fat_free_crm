@@ -32,6 +32,9 @@ module GravatarHelper
     
     # Whether or not to display the gravatars using HTTPS instead of HTTP
     :ssl => false,
+
+    # Default style for the image tag
+    :style => ''
   }
   
   # The methods that will be made available to your views.
@@ -48,8 +51,8 @@ module GravatarHelper
     def gravatar(email, options={})
       src = h(gravatar_url(email, options))
       options = DEFAULT_OPTIONS.merge(options)
-      [:class, :alt, :size].each { |opt| options[opt] = h(options[opt]) }
-      "<img class=\"#{options[:class]}\" alt=\"#{options[:alt]}\" width=\"#{options[:size]}\" height=\"#{options[:size]}\" src=\"#{src}\" />"      
+      [:class, :alt, :size, :style].each { |opt| options[opt] = h(options[opt]) }
+      "<img class=\"#{options[:class]}\" alt=\"#{options[:alt]}\" width=\"#{options[:size]}\" height=\"#{options[:size]}\" style=\"#{options[:style]}\" src=\"#{src}\" />"
     end
     
     # Returns the base Gravatar URL for the given email hash. If ssl evaluates to true,
