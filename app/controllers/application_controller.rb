@@ -104,8 +104,8 @@ class ApplicationController < ActionController::Base
   def respond_to_not_found(*types)
     asset = self.controller_name.singularize
     flick = case self.action_name
-      when "destroy": "delete"
-      when "promote": "convert"
+      when "destroy" then "delete"
+      when "promote" then "convert"
       else self.action_name
     end
     if self.action_name == "show"
