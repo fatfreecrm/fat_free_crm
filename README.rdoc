@@ -45,10 +45,6 @@ the database:
 
    $ rake db:create
 
-NOTE: if you are running MySQL v5+ please make sure that:
-  * prior to MySQL v5.1.6: database user must have SUPER privilege;
-  * MySQL v5.1.6 or later: database user must have SUPER or TRIGGER privilege.
-
 === Setting Up The Application
 
 The next step is to load default Fat Free CRM settings, such as menu structure,

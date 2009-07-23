@@ -22,16 +22,27 @@ module ActiveRecord
 
         def self.included(base)
           base.extend(ClassMethods)
-          puts "** UUID support is only available for MySQL v5 or later" if ActiveRecord::Base.connected? and !base.mysql5_or_later?
+          if base.uuid_configured? && base.mysql5_or_later?
+            puts "=> Enabling MySQL v5 UUID support"
+          end
         end
 
         module ClassMethods
 
           def uses_mysql_uuid
-            if mysql5_or_later? && !already_uses_mysql_uuid?
+            if uuid_configured? && mysql5_or_later? && !already_uses_mysql_uuid?
               include ActiveRecord::Uses::MySQL::UUID::InstanceMethods
-              extend ActiveRecord::Uses::MySQL::UUID::SingletonMethods
+              extend  ActiveRecord::Uses::MySQL::UUID::SingletonMethods
             end
+          end
+
+          # To enable the use of MySQL v5 UUID triggers config/database.yml should
+          # have explicit "uuid: true" set.
+          #--------------------------------------------------------------------------
+          def uuid_configured?
+            return false unless ActiveRecord::Base.connection
+            config = ActiveRecord::Base.connection.instance_variable_get("@config")
+            config[:uuid]
           end
 
           # CREATE TRIGGER ... BEFORE INSERT ... is only supported in MySQL 5+,

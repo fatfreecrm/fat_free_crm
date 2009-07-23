@@ -14,6 +14,12 @@
 #
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+#
+# NOTE #1: to enable UUIDs set the uuid option to true (uuid: true).
+# NOTE #2: UUIDs are only supported for MySQL v5+. Please make sure:
+#  - MySQL v5.0 -- v5.1.6: database user must have SUPER privilege;
+#  - MySQL v5.1.6 or later: database user must have SUPER or TRIGGER privilege.
+#------------------------------------------------------------------------------
 development:
   adapter: mysql
   encoding: utf8
@@ -22,6 +28,7 @@ development:
   username: root
   password:
   socket: /tmp/mysql.sock
+  uuid:
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -34,6 +41,7 @@ test:
   username: root
   password:
   socket: /tmp/mysql.sock
+  uuid:
 
 production:
   adapter: mysql
@@ -43,3 +51,4 @@ production:
   username: root
   password: 
   socket: /tmp/mysql.sock
+  uuid:
