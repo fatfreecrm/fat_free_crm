@@ -7,14 +7,12 @@ if @task.valid?
 
     # Show flash if assigned to somebody else from the [Pending Tasks] page.
     if @view == "pending" && @task.assigned_to && @task.assigned_to != @current_user.id
-      page[:tasks_flash].update "The task has been created and assigned to #{@task.assignee.full_name} (" << link_to("view assigned tasks", url_for(:view => "assigned")) << ")."
-      page[:tasks_flash].show
+      page << tasks_flash("The task has been created and assigned to #{@task.assignee.full_name} (" << link_to("view assigned tasks", url_for(:view => "assigned")) << ").")
       page[:recently].replace :partial => "common/recently"
 
     # Show flash if assigned to current user from the [Assigned Tasks] page.
     elsif @view == "assigned" && @task.assigned_to.blank?
-      page[:tasks_flash].update "The task has been created (" << link_to("view pending tasks", tasks_url) << ")."
-      page[:tasks_flash].show
+      page << tasks_flash("The task has been created (" << link_to("view pending tasks", tasks_url) << ").")
       page[:recently].replace :partial => "common/recently"
 
     # Show newly created task by inserting its div into appropriate bucket; then update tasks sidebar.

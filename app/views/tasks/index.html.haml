@@ -7,8 +7,6 @@
   - buckets = Setting.task_bucket
   = render :partial => "title"
 
-%p.flash_message#tasks_flash{ hidden }
-
 .log#tasks
   - buckets.each do |value, key|
     %div{ hidden_if(filtered_out?(@view, key)), :id => "list_#{key}" }

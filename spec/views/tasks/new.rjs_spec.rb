@@ -11,12 +11,6 @@ describe "/tasks/new.html.haml" do
     assigns[:category] = Setting.invert(:task_category)
   end
 
-  it "should hide tasks_flash div if it exists" do
-    render "tasks/new.js.rjs"
-
-    response.should include_text('crm.flick("tasks_flash", "hide")')
-  end
-
   it "should toggle empty message div if it exists" do
     render "tasks/new.js.rjs"
 

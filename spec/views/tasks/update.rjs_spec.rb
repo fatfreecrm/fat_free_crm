@@ -73,8 +73,8 @@ describe "/tasks/update.js.rjs" do
 
       render "tasks/update.js.rjs"
       response.should include_text(%Q/$("task_#{@task.id}").replace("")/)
-      response.should include_text(%Q/$("tasks_flash").update("The task has been assigned to #{assignee.full_name}/)
-      response.should include_text('$("tasks_flash").show()')
+      response.should include_text('("flash_notice").update(')
+      response.should include_text('crm.flash("flash_notice", true)')
     end
 
     it "assigned tasks to me from Tasks tab: should remove the task and show flash message (pending)" do
@@ -86,8 +86,8 @@ describe "/tasks/update.js.rjs" do
 
       render "tasks/update.js.rjs"
       response.should include_text(%Q/$("task_#{@task.id}").replace("")/)
-      response.should include_text('$("tasks_flash").update("The task has been moved to pending tasks')
-      response.should include_text('$("tasks_flash").show()')
+      response.should include_text('("flash_notice").update(')
+      response.should include_text('crm.flash("flash_notice", true)')
     end
 
     it "assigned tasks to somebody else from Tasks tab: should re-render task partial" do

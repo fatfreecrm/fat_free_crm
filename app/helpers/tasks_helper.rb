@@ -94,8 +94,8 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def tasks_flash(message)
     update_page do |page|
-      page[:tasks_flash].update message
-      page[:tasks_flash].show
+      page[:flash_notice].replace_html message
+      page.call "crm.flash", :flash_notice, true
     end
   end
 

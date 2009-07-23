@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Thu, Jul 23, 2009
 ---------------------------------------------------------------------
 - Made UUID support optional (affects MySQL v5+ users only).
+- Removed task-specific flash area; changed to use generic flash messages instead.
 
 Tue, Jul 21, 2009
 ---------------------------------------------------------------------

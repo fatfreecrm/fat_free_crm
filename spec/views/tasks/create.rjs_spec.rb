@@ -48,8 +48,8 @@ describe "/tasks/create.js.rjs" do
     request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render "tasks/create.js.rjs"
     
-    response.should include_text('$("tasks_flash").update("The task has been created and assigned to')
-    response.should include_text('$("tasks_flash").show()')
+    response.should include_text('$("flash_notice").update(')
+    response.should include_text('crm.flash("flash_notice", true)')
   end
 
   it "should update recent items when assigning a task from pending tasks view" do
@@ -69,8 +69,8 @@ describe "/tasks/create.js.rjs" do
     request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render "tasks/create.js.rjs"
     
-    response.should include_text('$("tasks_flash").update("The task has been created (')
-    response.should include_text('$("tasks_flash").show()')
+    response.should include_text('$("flash_notice").update(')
+    response.should include_text('crm.flash("flash_notice", true)')
   end
 
   it "should update recent items when creating a pending task from assigned tasks view" do
