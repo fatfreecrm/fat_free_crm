@@ -71,6 +71,10 @@ class User < ActiveRecord::Base
     c.validates_length_of_password_field_options  = { :minimum => 3 }
   end
 
+  # Store current user in the class so we could access it from the activity
+  # observer without extra authentication query.
+  cattr_accessor :current_user
+
   # validates_presence_of :username, :message => "^Please specify the username."
   # validates_presence_of :email,    :message => "^Please specify your email address."
 

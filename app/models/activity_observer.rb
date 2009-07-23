@@ -55,10 +55,7 @@ class ActivityObserver < ActiveRecord::Observer
 
   private
   def log_activity(subject, action)
-    authentication = Authentication.find
-    if authentication
-      current_user = authentication.record
-      Activity.log(current_user, subject, action) if current_user
-    end
+    current_user = User.current_user
+    Activity.log(current_user, subject, action) if current_user
   end
 end
