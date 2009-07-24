@@ -1,0 +1,12 @@
+.standalone
+  - form_for @user, :url => password_path, :method => :put do |f|
+    .title Reset Password
+    = f.error_messages
+    .intro Please type your new password and then confirm it.
+    .section
+      .label Password:
+      = f.password_field :password
+      .label Password confirmation:
+      = f.password_field :password_confirmation
+    .buttonbar
+      = f.submit "Update Password and Login"

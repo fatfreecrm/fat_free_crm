@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Fri, Jul 24, 2009
 ---------------------------------------------------------------------
 - Fixed a typo that affected individual permissions (thanks, Guillermo!)
+- Refactored password reset controller and related views.
 
 Thu, Jul 23, 2009
 ---------------------------------------------------------------------

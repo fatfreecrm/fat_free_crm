@@ -17,8 +17,6 @@
 
 class Notifier < ActionMailer::Base
   
-  default_url_options[:host] = "localhost:3000"
-  
   #----------------------------------------------------------------------------
   def password_reset_instructions(user)
     subject       "Fat Free CRM: password reset instructions"

@@ -22,7 +22,7 @@ class PasswordsController < ApplicationController
   
   #----------------------------------------------------------------------------
   def new
-    render
+    # <-- render new.html.haml
   end
   
   #----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ class PasswordsController < ApplicationController
     @user = User.find_by_email(params[:email])
     if @user
       @user.deliver_password_reset_instructions!
-      flash[:notice] = "Instructions to reset your password have been emailed to you. Please check your email."
+      flash[:notice] = "Instructions to reset your password have been sent to you. Please check your email."
       redirect_to root_url
     else
       flash[:notice] = "No user was found with that email address."
@@ -40,14 +40,15 @@ class PasswordsController < ApplicationController
   
   #----------------------------------------------------------------------------
   def edit
-    render
+    # <-- render edit.html.haml
   end
 
   #----------------------------------------------------------------------------
   def update
-    @user.password = params[:user][:password]
-    @user.password_confirmation = params[:user][:password_confirmation]
-    if @user.save
+    if empty_password?
+      flash[:notice] = "Please enter your new password."
+      render :action => :edit
+    elsif @user.update_attributes(params[:user])
       flash[:notice] = "Password was successfully updated."
       redirect_to profile_url
     else
@@ -61,12 +62,16 @@ class PasswordsController < ApplicationController
     @user = User.find_using_perishable_token(params[:id])
     unless @user
       flash[:notice] = <<-EOS
-        We are sorry, but we could not locate your user profile. If you are having 
-        issues try copying and pasting the URL from your email into your browser
-        or restarting the reset password process.
+        Sorry, we could not locate your user profile. Try to copy and paste the URL
+        from your email into your browser or restart the reset password process.
       EOS
       redirect_to root_url
     end
   end
 
+  #----------------------------------------------------------------------------
+  def empty_password?
+    (params[:user][:password] == params[:user][:password_confirmation]) &&
+    (params[:user][:password] =~ /^\s*$/)
+  end
 end
