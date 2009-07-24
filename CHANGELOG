@@ -9,6 +9,7 @@ Thu, Jul 23, 2009
 - Made UUID support optional (affects MySQL v5+ users only).
 - Removed task-specific flash area; changed to use generic flash messages instead.
 - Store current user in the class to make it easier to access it from observers.
+- Removed password length restriction to allow blank passwords.
 
 Tue, Jul 21, 2009
 ---------------------------------------------------------------------

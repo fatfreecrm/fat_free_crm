@@ -132,7 +132,12 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def change_password
     if @user.valid_password?(params[:current_password], true)
-      @user.update_attributes(params[:user])
+      unless params[:user][:password].blank?
+        @user.update_attributes(params[:user])
+        flash[:notice] = "Your password has been changed."
+      else
+        flash[:notice] = "Your password hasn't been changed."
+      end
     else
       @user.errors.add(:current_password, "^Please specify valid current password")
     end
