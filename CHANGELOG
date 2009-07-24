@@ -9,6 +9,7 @@ Fri, Jul 24, 2009
 - Fixed a typo that affected individual permissions (thanks, Guillermo!)
 - Refactored password reset controller and related views.
 - Merged in Spanish translation from chillicoder/master (thanks, Martin!).
+- Release 0.9.5.
 
 Thu, Jul 23, 2009
 ---------------------------------------------------------------------
