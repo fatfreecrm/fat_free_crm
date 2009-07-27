@@ -22,4 +22,6 @@
     - else
       = render :partial => "layouts/tabbed"
       = render :partial => "layouts/footer"
-    %script{:type => "text/javascript"}= yield :javascript_epilogue
+    %script{:type => "text/javascript"}
+      = get_browser_timezone_offset
+      = yield :javascript_epilogue

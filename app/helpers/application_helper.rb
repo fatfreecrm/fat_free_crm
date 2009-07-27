@@ -206,6 +206,17 @@ module ApplicationHelper
     )
   end
 
+  # Ajax helper to pass browser timezone offset to the server.
+  #----------------------------------------------------------------------------
+  def get_browser_timezone_offset
+    unless session[:timezone_offset]
+      remote_function(
+        :url  => url_for(:controller => :home, :action => :timezone),
+        :with => "{ offset: (new Date()).getTimezoneOffset() }"
+      )
+    end
+  end
+
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args[:size]  ||= "75x75"

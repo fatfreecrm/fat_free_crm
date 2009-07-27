@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   helper_method :called_from_index_page?, :called_from_landing_page?
 
   filter_parameter_logging :password, :password_confirmation
+  before_filter :set_timezone
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"
 
@@ -29,6 +30,11 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery # :secret => '165eb65bfdacf95923dad9aea10cc64a'
 
   private
+  #----------------------------------------------------------------------------
+  def set_timezone
+    ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
+  end
+
   #----------------------------------------------------------------------------
   def set_current_tab(tab = controller_name.to_sym)
     @current_tab = tab

@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 class HomeController < ApplicationController
-  before_filter :require_user, :except => [ :toggle ]
+  before_filter :require_user, :except => [ :toggle, :timezone ]
   before_filter "set_current_tab(:dashboard)", :only => :index
   before_filter "hook(:home_before_filter, self, :amazing => true)"
 
@@ -56,6 +56,20 @@ class HomeController < ApplicationController
       session.delete(params[:id].to_sym)
     else
       session[params[:id].to_sym] = true
+    end
+    render :nothing => true
+  end
+
+  # GET /home/timezone                                                     AJAX
+  #----------------------------------------------------------------------------
+  def timezone
+    #
+    # (new Date()).getTimezoneOffset() in JavaScript returns (UTC - localtime) in
+    # minutes, while ActiveSupport::TimeZone expects (localtime - UTC) in seconds.
+    #
+    if params[:offset]
+      session[:timezone_offset] = params[:offset].to_i * -60
+      ActiveSupport::TimeZone[session[:timezone_offset]]
     end
     render :nothing => true
   end

@@ -55,7 +55,9 @@ def login(session_stubs = {}, user_stubs = {})
   User.current_user = @current_user = Factory(:user, user_stubs)
   @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
+  set_timezone
 end
+alias :require_user :login
 
 #----------------------------------------------------------------------------
 def login_and_assign
@@ -69,6 +71,7 @@ def logout
   @current_user_session = nil
   Authentication.stub!(:find).and_return(nil)
 end
+alias :require_no_user :logout
   
 #----------------------------------------------------------------------------
 def current_user
@@ -78,16 +81,6 @@ end
 #----------------------------------------------------------------------------
 def current_user_session
   @current_user_session
-end
-
-#----------------------------------------------------------------------------
-def require_user
-  login
-end
-
-#----------------------------------------------------------------------------
-def require_no_user
-  logout
 end
 
 #----------------------------------------------------------------------------
@@ -110,4 +103,12 @@ end
 def stub_task_total(view = "pending")
   settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
   settings.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
+end
+
+# Get current server timezone and set it (see rake time:zones:local for details).
+#----------------------------------------------------------------------------
+def set_timezone
+  offset = [ Time.now.beginning_of_year.utc_offset, Time.now.beginning_of_year.change(:month => 7).utc_offset ].min
+  offset *= 3600 if offset.abs < 13
+  Time.zone = ActiveSupport::TimeZone.all.select { |zone| zone.utc_offset == offset }.first
 end
