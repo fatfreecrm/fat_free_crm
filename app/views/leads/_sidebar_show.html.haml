@@ -31,15 +31,15 @@
     %span{:style => "float:right;"}= stars_for(@lead)
     %tt Rating:
   %li
-    %dt= @lead.referred_by ? @lead.referred_by.shorten : "N/A"
+    %dt= @lead.referred_by ? truncate(@lead.referred_by, :length => 16) : "N/A"
     %tt Referred by:
   %li
-    %dt= (@lead.assigned_to ? @lead.assignee.full_name : @lead.user.full_name).shorten
+    %dt= truncate((@lead.assigned_to ? @lead.assignee.full_name : @lead.user.full_name), :length => 16)
     %tt Assigned to:
   %li.last
     %dt
       - if @lead.campaign
-        = link_to(@lead.campaign.name.shorten, @lead.campaign, :title => @lead.campaign.name)
+        = link_to(truncate(@lead.campaign.name, :length => 16), @lead.campaign, :title => @lead.campaign.name)
       - else
         N/A
     %tt Campaign:
