@@ -1,17 +1,3 @@
-# == Schema Information
-# Schema version: 19
-#
-# Table name: contact_opportunities
-#
-#  id             :integer(4)      not null, primary key
-#  contact_id     :integer(4)
-#  opportunity_id :integer(4)
-#  role           :string(32)
-#  deleted_at     :datetime
-#  created_at     :datetime
-#  updated_at     :datetime
-#
-
 # Fat Free CRM
 # Copyright (C) 2008-2009 by Michael Dvorkin
 # 
@@ -28,6 +14,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
+
+# == Schema Information
+# Schema version: 21
+#
+# Table name: contact_opportunities
+#
+#  id             :integer(4)      not null, primary key
+#  contact_id     :integer(4)
+#  opportunity_id :integer(4)
+#  role           :string(32)
+#  deleted_at     :datetime
+#  created_at     :datetime
+#  updated_at     :datetime
+#
 class ContactOpportunity < ActiveRecord::Base
   belongs_to :contact
   belongs_to :opportunity

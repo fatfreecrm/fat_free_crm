@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 21
 #
 # Table name: users
 #
@@ -31,6 +31,7 @@
 #  deleted_at        :datetime
 #  created_at        :datetime
 #  updated_at        :datetime
+#  admin             :boolean(1)      not null
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
