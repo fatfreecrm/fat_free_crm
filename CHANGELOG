@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Jul 28, 2009
+---------------------------------------------------------------------
+- More work on building the Admin infrastructure.
+
+Tue, Jul 28, 2009
+---------------------------------------------------------------------
+- Building Admin infrastructure.
+
 Mon, Jul 27, 2009
 ---------------------------------------------------------------------
 - Dropped open_id related tables, added [admin] flag to [users] table.

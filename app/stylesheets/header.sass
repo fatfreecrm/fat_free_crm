@@ -34,7 +34,6 @@
 // Header, tabs, and footer.
 //------------------------------------------------------------------------------
 #header
-  // :background #153358;
   :background = !color_header_background
   :color = !color_header
   :padding 8px 16px 8px 16px
@@ -118,7 +117,6 @@
       :right-radius 3px
 
   a:hover
-    // :background #ffdb97
     :background = !color_hover_tab_background
     :color = !color_hover_tab
 
@@ -131,3 +129,15 @@
   :color = !color_footer
   :font-size 10px
   :padding 0px 0px 0px 16px
+
+.admin
+  #header
+    :background #385261
+    h3 a
+      :background #385261
+    #welcome
+      a
+        &:hover
+          :background #385261
+  #tabs
+    :background #385261

@@ -51,7 +51,7 @@ Factory(:default_settings)
 
 # Note: Authentication is NOT ActiveRecord model, so we mock and stub it using RSpec.
 #----------------------------------------------------------------------------
-def login(session_stubs = {}, user_stubs = {})
+def login(user_stubs = {}, session_stubs = {})
   User.current_user = @current_user = Factory(:user, user_stubs)
   @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
@@ -60,8 +60,8 @@ end
 alias :require_user :login
 
 #----------------------------------------------------------------------------
-def login_and_assign
-  login
+def login_and_assign(user_stubs = {}, session_stubs = {})
+  login(user_stubs, session_stubs)
   assigns[:current_user] = @current_user
 end
  

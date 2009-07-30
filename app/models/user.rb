@@ -77,8 +77,8 @@ class User < ActiveRecord::Base
   # observer without extra authentication query.
   cattr_accessor :current_user
 
-  # validates_presence_of :username, :message => "^Please specify the username."
-  # validates_presence_of :email,    :message => "^Please specify your email address."
+  validates_presence_of :username, :message => "^Please specify the username."
+  validates_presence_of :email,    :message => "^Please specify your email address."
 
   #----------------------------------------------------------------------------
   def name

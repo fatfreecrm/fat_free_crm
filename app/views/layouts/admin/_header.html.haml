@@ -1,0 +1,12 @@
+#header
+  #welcome
+    %span Welcome, #{@current_user.name}
+    %span> !&nbsp;&nbsp;
+
+    = link_to("Quick find", "#", :id => "jumper") << " |"
+    = link_to("Profile", profile_path) << " |"
+    = link_to("Back to Fat Free CRM", root_path) << " |"
+    = link_to("Logout", logout_path, :method => :delete)
+    = render :partial => "/layouts/jumpbox"
+  %h3
+    = link_to("Fat Free CRM Administration", admin_path)
