@@ -4,7 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Wed, Jul 28, 2009
+Thu, Jul 30, 2009
+---------------------------------------------------------------------
+- Fixed ActionMailer password reset issue (thanks, James!).
+
+Wed, Jul 29, 2009
 ---------------------------------------------------------------------
 - More work on building the Admin infrastructure.
 

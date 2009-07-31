@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   helper_method :called_from_index_page?, :called_from_landing_page?
 
   filter_parameter_logging :password, :password_confirmation
-  before_filter :set_timezone
+  before_filter :set_context
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"
 
@@ -30,8 +30,9 @@ class ApplicationController < ActionController::Base
 
   private
   #----------------------------------------------------------------------------
-  def set_timezone
+  def set_context
     ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
 
   #----------------------------------------------------------------------------
