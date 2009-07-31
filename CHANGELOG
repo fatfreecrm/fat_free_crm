@@ -7,6 +7,8 @@ then you win. –- Mahatma Gandhi
 Thu, Jul 30, 2009
 ---------------------------------------------------------------------
 - Fixed ActionMailer password reset issue (thanks, James!).
+- Use truncate() instead of shorten() for multibyte chars (thanks, Dima!).
+- Increased the size of the textarea when adding notes (LH #80).
 
 Wed, Jul 29, 2009
 ---------------------------------------------------------------------

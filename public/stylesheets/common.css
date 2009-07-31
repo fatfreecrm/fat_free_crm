@@ -182,7 +182,7 @@
     width: 500px; }
   .comment textarea {
     font-size: 11px;
-    height: 30px;
+    height: 110px;
     padding: 3px;
     width: 500px; }
   .comment .gravatar {
@@ -197,7 +197,7 @@
     color: #666666; }
   .comment dt {
     padding: 0px;
-    margin: 0px 0px 0px 36px; }
+    margin: -10px 0px 0px 36px; }
 
 #paginate {
   float: right;
