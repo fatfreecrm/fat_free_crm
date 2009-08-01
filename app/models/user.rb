@@ -91,6 +91,11 @@ class User < ActiveRecord::Base
   end
 
   #----------------------------------------------------------------------------
+  def suspended?
+    self.suspended_at
+  end
+
+  #----------------------------------------------------------------------------
   def preference
     Preference.new(:user => self)
   end

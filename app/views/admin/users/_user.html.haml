@@ -1,0 +1,37 @@
+%li[user]{ highlightable(dom_id(user, :tools)) }
+
+  - if user.admin?
+    .strip{:class => "admin"} Admin
+  - elsif user.suspended?
+    .strip{:class => "suspended"} Suspended
+  - else
+    .strip{:class => "active"} Active
+
+  = gravatar_for(user, :size => "30x30", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
+  .tools{ invisible, :id => dom_id(user, :tools) }
+    %small
+      = link_to("Edit", "#")    << " | "
+      = link_to("Suspend", "#") << " | "
+      = link_to("Delete", "#")  << "&nbsp;"
+  = link_to(user.full_name, user)
+  %tt
+    = user.title unless user.title.blank?
+    = " at " + user.company unless user.company.blank?
+
+    %span.black= "|"
+    - if user.last_request_at && user.login_count > 0
+      = pluralize(user.login_count, "login")
+      %span.black= "|"
+
+    - if user.last_request_at
+      %span.cool last seen #{time_ago_in_words(user.last_request_at)} ago
+    - else
+      %span.warn hasn't yet logged in
+  %dt{ :style => "padding: 2px 0px 0px 0px" }
+    = link_to(user.email, "mailto:" << user.email.to_s) << " | "
+    = "phone: <b>" + user.phone << "</b> | " if user.phone?
+    = "mobile: <b>" + user.mobile << "</b> | " if user.mobile?
+    - unless user.suspended?
+      user since #{user.created_at.to_date.to_s(:mmddyy)}
+    - else
+      %span.warn suspended on #{user.suspended_at.to_date.to_s(:mmddyy)}

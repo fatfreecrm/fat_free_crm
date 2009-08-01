@@ -4,13 +4,13 @@ describe "/admin/users/index.html.haml" do
   include Admin::UsersHelper
 
   before(:each) do
-    assigns[:users] = [
-      stub_model(User),
-      stub_model(User)
-    ]
+    login_and_assign(:admin => true)
   end
 
   it "renders a list of users" do
-    render
+    assigns[:users] = [ Factory(:user) ].paginate
+    template.should_receive(:render).with(hash_including(:partial => "user"))
+    template.should_receive(:render).with(:partial => "common/paginate")
+    render "/admin/users/index.html.haml"
   end
 end
