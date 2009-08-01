@@ -10,7 +10,7 @@
 #  name             :string(64)      default(""), not null
 #  access           :string(8)       default("Private")
 #  website          :string(64)
-#  tall_free_phone  :string(32)
+#  toll_free_phone  :string(32)
 #  phone            :string(32)
 #  fax              :string(32)
 #  billing_address  :string(255)
@@ -34,7 +34,7 @@ account<%= i %>:
   name             : <%= company = Faker::Company.name %>
   access           : Public
   website          : http://www.<%= company.downcase.gsub(/\W/, "") %>.com
-  tall_free_phone  : 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
+  toll_free_phone  : 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
   phone            : <%= Faker::PhoneNumber.phone_number %>
   fax              : <%= Faker::PhoneNumber.phone_number %>
   billing_address  : |
