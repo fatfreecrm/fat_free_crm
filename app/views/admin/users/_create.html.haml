@@ -1,0 +1,8 @@
+- remote_form_for(@user) do |f|
+  = link_to_close new_admin_user_path
+  = f.error_messages
+  = render :partial => "admin/users/profile", :locals => { :f => f }
+  .buttonbar
+    = f.submit "Create User"
+    or
+    = link_to_cancel new_admin_user_path

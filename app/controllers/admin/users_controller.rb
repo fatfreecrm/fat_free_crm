@@ -19,7 +19,7 @@ class Admin::UsersController < Admin::ApplicationController
   before_filter :set_current_tab, :only => [ :index, :show ]
 
   # GET /admin/users
-  # GET /admin/users.xml
+  # GET /admin/users.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
     @users = User.all.paginate
@@ -43,13 +43,13 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   # GET /admin/users/new
-  # GET /admin/users/new.xml
+  # GET /admin/users/new.xml                                               AJAX
   #----------------------------------------------------------------------------
   def new
     @user = User.new
 
     respond_to do |format|
-      format.html # new.html.haml
+      format.js   # new.js.rjs
       format.xml  { render :xml => @user }
     end
   end
