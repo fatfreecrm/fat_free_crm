@@ -18,13 +18,23 @@ describe "/leads/reject.js.rjs" do
     response.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
   end
 
-  it "should update sidebar" do
+  it "should update sidebar filters when called from index page" do
+    request.env["HTTP_REFERER"] = "http://localhost/leads"
     render "leads/reject.js.rjs"
 
     response.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=filters]")
     end
     response.should include_text('$("filters").visualEffect("shake"')
+  end
+
+  it "should update sidebar summary when called from landing page" do
+    render "leads/reject.js.rjs"
+
+    response.should have_rjs("sidebar") do |rjs|
+      with_tag("div[id=summary]")
+    end
+    response.should include_text('$("summary").visualEffect("shake"')
   end
 
 end

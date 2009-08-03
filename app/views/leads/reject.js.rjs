@@ -1,4 +1,8 @@
 id = dom_id(@lead)
 page[id].replace :partial => "lead", :collection => [ @lead ]
 page[id].visual_effect :highlight, :duration => 1.0
-page << refresh_sidebar(:index, :filters)
+if called_from_index_page?
+  page << refresh_sidebar(:index, :filters)
+else
+  page << refresh_sidebar(:show, :summary)
+end
