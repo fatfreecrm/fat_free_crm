@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Aug 3, 2009
+---------------------------------------------------------------------
+- Implemented Admin > [Create User] form.
+
+Sun, Aug 2, 2009
+---------------------------------------------------------------------
+- Updated authentication to allow creating users with blank passwords.
+
 Sat, Aug 1, 2009
 ---------------------------------------------------------------------
 - More work on Admin/Users: added list of users and [Create User] form.

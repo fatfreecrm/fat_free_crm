@@ -22,7 +22,7 @@ class Admin::UsersController < Admin::ApplicationController
   # GET /admin/users.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
-    @users = User.all.paginate
+    @users = get_users
 
     respond_to do |format|
       format.html # index.html.haml
@@ -61,18 +61,19 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   # POST /admin/users
-  # POST /admin/users.xml
+  # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
+    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.new(params[:user])
 
     respond_to do |format|
-      if @user.save
-        flash[:notice] = 'User was successfully created.'
-        format.html { redirect_to(admin_users_url) }
+      if @user.save_without_session_maintenance
+        @users = get_users
+        format.js   # create.js.rjs
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
-        format.html { render :action => "new" }
+        format.js   # create.js.rjs
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
@@ -109,4 +110,11 @@ class Admin::UsersController < Admin::ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+  #----------------------------------------------------------------------------
+  def get_users
+    User.all(:order => "id DESC").paginate
+  end
+
 end

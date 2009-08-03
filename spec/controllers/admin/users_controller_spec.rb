@@ -15,7 +15,8 @@ describe Admin::UsersController do
       @users = [ @current_user, Factory(:user) ]
 
       get :index
-      assigns[:users].should == @users
+      assigns[:users].first.should == @users.last # get_users() sorts by id DESC
+      assigns[:users].last.should == @users.first
       response.should render_template("admin/users/index")
     end
   end
@@ -59,30 +60,32 @@ describe Admin::UsersController do
   end
 
   # POST /admin/users
-  # POST /admin/users.xml
+  # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   describe "POST create" do
   
     describe "with valid params" do
-      it "assigns a newly created user as @user and redirect to the Admin/Users" do
-        username = "none";  email = username + "@example.com"
+      it "assigns a newly created user as @user and renders [create] template" do
+        username = "none"
+        email = username + "@example.com"
+        password = confirmation = "secret"
         @user = Factory.build(:user, :username => username, :email => email)
         User.stub!(:new).and_return(@user)
 
-        post :create, :user => { :username => username, :email => email }
+        post :create, :user => { :username => username, :email => email, :password => password, :password_confirmation => confirmation }
         assigns[:user].should == @user
-        response.should redirect_to(admin_users_url)
+        response.should render_template("admin/users/create")
       end
     end
   
     describe "with invalid params" do
-      it "assigns a newly created but unsaved user as @user and re-render [new] template" do
+      it "assigns a newly created but unsaved user as @user and re-renders [create] template" do
         @user = Factory.build(:user, :username => "", :email => "")
         User.stub!(:new).and_return(@user)
 
-        # post :create, :user => {}
-        # assigns[:user].should == @user
-        # response.should render_template("admin/users/new")
+        post :create, :user => {}
+        assigns[:user].should == @user
+        response.should render_template("admin/users/create")
       end
     end
   

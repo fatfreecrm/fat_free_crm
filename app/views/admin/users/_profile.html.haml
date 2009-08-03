@@ -1,37 +1,41 @@
 .section
-  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+  %table(width=500 cellpadding=0 cellspacing=0)
     %tr
-      %td{ :valign => :top }
-        .label.top First name:
+      %td(valign="top")
+        .label.top.req Username:
+        = f.text_field :username, :style => "width:240px"
+      %td= spacer
+      %td(valign="top")
+        .label.top.req Email:
+        = f.text_field :email, :style => "width:240px"
+    %tr
+      %td(valign="top")
+        .label Password:
+        = f.password_field :password, :style => "width:240px"
+      %td= spacer
+      %td(valign="top")
+        .label Password confirmation:
+        = f.password_field :password_confirmation, :style => "width:240px"
+    %tr
+      %td(valign="top" colspan=3)
+        .check_box(style="margin-top:6px")
+          = f.check_box(:admin, {}) << " The user is Administrator"
+.subtitle Personal Information
+.section
+  %table(width=500 cellpadding=0 cellspacing=0)
+    %tr
+      %td(valign="top")
+        .label First name:
         = f.text_field :first_name, :style => "width:240px"
       %td= spacer
-      %td{ :valign => :top }
-        .label.top Last name:
+      %td(valign="top")
+        .label Last name:
         = f.text_field :last_name, :style => "width:240px"
     %tr
-      %td{ :valign => :top }
+      %td(valign="top")
         .label Title:
         = f.text_field :title, :style => "width:240px"
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label Company:
         = f.text_field :company, :style => "width:240px"
-.subtitle Access Information
-.section
-  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
-    %tr
-      %td{ :valign => :top }
-        .label.req Username:
-        = f.text_field :username, :style => "width:240px"
-      %td= spacer
-      %td{ :valign => :top }
-        .label.req Email:
-        = f.text_field :email, :style => "width:240px"
-    %tr
-      %td{ :valign => :top }
-        .label.req Password:
-        = f.password_field :password, :style => "width:240px"
-      %td= spacer
-      %td{ :valign => :top }
-        .label.req Password conformation:
-        = f.password_field :password_confirmation, :style => "width:240px"

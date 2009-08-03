@@ -17,4 +17,18 @@
 
 class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord model.
   authenticate_with User
+
+  private
+
+  # Override Authlogic's validate_by_password() to allow blank passwords. See
+  # authlogic/session/pasword.rb for details.
+  #----------------------------------------------------------------------------
+  def validate_by_password
+    if send("protected_#{password_field}").blank?
+      self.invalid_password = false
+      self.attempted_record = search_for_record(find_by_login_method, send(login_field))
+    else
+      super # Password is not blank, authenticate as usual.
+    end
+  end
 end
