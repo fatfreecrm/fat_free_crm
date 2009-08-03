@@ -5,16 +5,18 @@ describe "/opportunities/edit.html.erb" do
   
   before(:each) do
     login_and_assign
-    @account = Factory(:account)
-    assigns[:account] = @account
+    assigns[:account] = @account = Factory(:account)
     assigns[:accounts] = [ @account ]
   end
 
   it "should render [edit opportunity] form" do
     assigns[:users] = [ @current_user ]
-    assigns[:opportunity] = Factory(:opportunity)
+    assigns[:opportunity] = @opportunity = Factory(:opportunity, :campaign => @campaign = Factory(:campaign))
     render "/opportunities/_edit.html.haml"
-    response.should have_tag("form[class=edit_opportunity]")
+    response.should have_tag("form[class=edit_opportunity]") do
+      with_tag "input[type=hidden][id=opportunity_user_id][value=#{@opportunity.user_id}]"
+      with_tag "input[type=hidden][id=opportunity_campaign_id][value=#{@opportunity.campaign_id}]"
+    end
   end
 
   it "should pick default assignee (Myself)" do

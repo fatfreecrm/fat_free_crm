@@ -5,7 +5,7 @@ describe "/campaigns/_edit.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:campaign] = Factory(:campaign)
+    assigns[:campaign] = @campaign = Factory(:campaign)
     assigns[:users] = [ @current_user ]
   end
 
@@ -15,7 +15,9 @@ describe "/campaigns/_edit.html.haml" do
     template.should_receive(:render).with(hash_including(:partial => "campaigns/permissions"))
     render "/campaigns/_edit.html.haml"
 
-    response.should have_tag("form[class=edit_campaign]")
+    response.should have_tag("form[class=edit_campaign]") do
+      with_tag "input[type=hidden][id=campaign_user_id][value=#{@campaign.user_id}]"
+    end
   end
 
 end

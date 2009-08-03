@@ -5,10 +5,9 @@ describe "/leads/edit.html.erb" do
   
   before(:each) do
     login_and_assign
-    @campaign = Factory(:campaign)
-    assigns[:lead] = Factory(:lead)
+    assigns[:lead] = @lead = Factory(:lead)
     assigns[:users] = [ @current_user ]
-    assigns[:campaign] = @campaign
+    assigns[:campaign] = @campaign = Factory(:campaign)
     assigns[:campaigns] = [ @campaign ]
   end
 
@@ -20,7 +19,9 @@ describe "/leads/edit.html.erb" do
     template.should_receive(:render).with(hash_including(:partial => "leads/permissions"))
 
     render "/leads/_edit.html.haml"
-    response.should have_tag("form[class=edit_lead]")
+    response.should have_tag("form[class=edit_lead]") do
+      with_tag "input[type=hidden][id=lead_user_id][value=#{@lead.user_id}]"
+    end
   end
 
 end

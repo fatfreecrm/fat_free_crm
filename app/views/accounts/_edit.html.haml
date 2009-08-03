@@ -1,7 +1,7 @@
 .remote
   - remote_form_for(@account) do |f|
     = link_to_close edit_account_path(@account)
-    = hidden_field_tag "account[user_id]", @current_user.id
+    = f.hidden_field :user_id
     = f.error_messages
     = render :partial => "accounts/top_section",  :locals => { :f => f, :edit => true }
     = render :partial => "accounts/contact_info", :locals => { :f => f, :edit => true }

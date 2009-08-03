@@ -1,7 +1,7 @@
 .remote
   - remote_form_for(@campaign) do |f|
     = link_to_close edit_campaign_path(@campaign)
-    = hidden_field_tag "campaign[user_id]", @current_user.id
+    = f.hidden_field :user_id
     = f.error_messages
     = render :partial => "campaigns/top_section", :locals => { :f => f, :edit => true }
     = render :partial => "campaigns/objectives",  :locals => { :f => f, :edit => true }

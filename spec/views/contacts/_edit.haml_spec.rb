@@ -5,13 +5,12 @@ describe "/contacts/edit.html.erb" do
   
   before(:each) do
     login_and_assign
-    @account = Factory(:account)
-    assigns[:account] = @account
+    assigns[:account] = @account = Factory(:account)
     assigns[:accounts] = [ @account ]
   end
 
   it "should render [edit contact] form" do
-    assigns[:contact] = Factory(:contact)
+    assigns[:contact] = @contact = Factory(:contact)
     assigns[:users] = [ @current_user ]
     template.should_receive(:render).with(hash_including(:partial => "contacts/top_section"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/extra"))
@@ -19,7 +18,9 @@ describe "/contacts/edit.html.erb" do
     template.should_receive(:render).with(hash_including(:partial => "contacts/permissions"))
 
     render "/contacts/_edit.html.haml"
-    response.should have_tag("form[class=edit_contact]")
+    response.should have_tag("form[class=edit_contact]") do
+      with_tag "input[type=hidden][id=contact_user_id][value=#{@contact.user_id}]"
+    end
   end
 
   it "should pick default assignee (Myself)" do

@@ -8,6 +8,7 @@ Mon, Aug 3, 2009
 ---------------------------------------------------------------------
 - Implemented Admin > [Create User] form.
 - Include all application helpers except the ones in /admin/helpers subdirectory (GH #5).
+- Make sure editing assets doesn't change asset owner (LH #79).
 
 Sun, Aug 2, 2009
 ---------------------------------------------------------------------

@@ -1,7 +1,7 @@
 .remote
   - remote_form_for(@lead) do |f|
     = link_to_close edit_lead_path(@lead)
-    = hidden_field_tag "lead[user_id]", @current_user.id
+    = f.hidden_field :user_id
     = f.error_messages
     = render :partial => "leads/top_section", :locals => { :f => f, :edit => true }
     = render :partial => "leads/status",      :locals => { :f => f, :edit => true }
