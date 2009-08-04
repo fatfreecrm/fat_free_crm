@@ -8,6 +8,7 @@ Tue, Aug 4, 2009
 ---------------------------------------------------------------------
 - Upgraded [acts_as_commentable] plugin for Ruby 1.9 compatibility.
 - Updated tab settings to allow Fat Free CRM to run from a subdirectory (thanks, okyada!).
+- Updated [rake crm:settings:load] task to ensure Rails 2.3.3 compatibility.
 
 Mon, Aug 3, 2009
 ---------------------------------------------------------------------

@@ -29,7 +29,12 @@ namespace :crm do
       settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
       settings.keys.each do |key|
         sql = [ "INSERT INTO settings (name, default_value) VALUES(?, ?)", key.to_s, Base64.encode64(Marshal.dump(settings[key])) ]
-        ActiveRecord::Base.connection.execute(ActiveRecord::Base.send(:sanitize_sql, sql))
+        sql = if Rails::VERSION::STRING < "2.3.3"
+          ActiveRecord::Base.send(:sanitize_sql, sql)
+        else
+          ActiveRecord::Base.send(:sanitize_sql, sql, nil) # Rails 2.3.3 introduces extra "table_name" parameter.
+        end
+        ActiveRecord::Base.connection.execute(sql)
       end
     end
   end
