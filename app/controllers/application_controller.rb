@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def current_user_session
     @current_user_session ||= Authentication.find
+    if @current_user_session && @current_user_session.record.suspended?
+      @current_user_session = nil
+    end
+    @current_user_session
   end
   
   #----------------------------------------------------------------------------
