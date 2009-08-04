@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Aug 4, 2009
+---------------------------------------------------------------------
+- Upgraded [acts_as_commentable] plugin for Ruby 1.9 compatibility.
+
 Mon, Aug 3, 2009
 ---------------------------------------------------------------------
 - Implemented Admin > [Create User] form.

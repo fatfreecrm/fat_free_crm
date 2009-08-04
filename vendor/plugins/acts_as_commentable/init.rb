@@ -1,3 +1,1 @@
-# Include hook code here
-require 'acts_as_commentable'
-
+require File.join(File.dirname(__FILE__), 'rails', 'init')

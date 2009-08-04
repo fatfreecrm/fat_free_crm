@@ -1,0 +1,65 @@
+Acts As Commentable
+=================
+
+Allows for comments to be added to multiple and different models.
+
+== Resources
+
+Install
+
+ * To install as a plugin:
+ 
+  script/plugin install http://juixe.com/svn/acts_as_commentable
+ 
+ * To install as a gem:
+ 
+ rake install
+ 
+ * Create a new rails migration and add the following self.up and self.down methods
+ 
+  def self.up
+    create_table "comments", :force => true do |t|
+      t.column "title", :string, :limit => 50, :default => ""
+      t.column "comment", :text, :default => ""
+      t.column "created_at", :datetime, :null => false
+      t.column "commentable_id", :integer, :default => 0, :null => false
+      t.column "commentable_type", :string, :limit => 15, :default => "", :null => false
+      t.column "user_id", :integer, :default => 0, :null => false
+    end
+  
+    add_index "comments", ["user_id"], :name => "fk_comments_user"
+  end
+
+  def self.down
+    drop_table :comments
+  end
+
+== Usage
+ 
+ * Make your ActiveRecord model act as commentable.
+ 
+ class Model < ActiveRecord::Base
+ 	acts_as_commentable
+ end
+ 
+ * Add a comment to a model instance
+ 
+ model = Model.new
+ comment = Comment.new
+ comment.comment = 'Some comment'
+ model.comments << comment
+
+ # Following doesn't work/make sense to me. Leaving for historical sake -- Jack
+ # * Each comment reference commentable object
+ #
+ # model = Model.find(1)
+ # model.comments.get(0).commentable == model
+
+== Credits
+
+Xelipe - This plugin is heavily influenced by Acts As Taggable.
+
+== More
+
+http://www.juixe.com/techknow/index.php/2006/06/18/acts-as-commentable-plugin/
+http://www.juixe.com/projects/acts_as_commentable

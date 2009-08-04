@@ -13,31 +13,29 @@ Install
  
     script/plugin install http://github.com/jackdempsey/acts_as_commentable.git
 
+   * To install as a gem
+   sudo gem install 
+
   Merb/Rails
   
    * To install as a gem:
- 
-   rake install
- 
- * Create a new rails migration and add the following self.up and self.down methods
- 
-  def self.up
-    create_table :comments do |t|
-      t.string :title, :limit => 50, :default => "" 
-      t.text :comment, :default => "" 
-      t.references :commentable, :polymorphic => true
-      t.references :user
-      t.timestamps
-    end
+    Run the following if you haven't already:
+    gem sources -a http://gems.github.com
 
-    add_index :comments, :commentable_type
-    add_index :comments, :commentable_id
-    add_index :comments, :user_id
-  end
+    Install the gem(s):
+    sudo gem install jackdempsey-acts_as_commentable
 
-  def self.down
-    drop_table :comments
-  end
+    add the folloowing line to your environment.rb
+    config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
+   
+ 
+ Generate your comment model:
+ 
+ script/generate comment
+ 
+ Then migrate your database:
+ 
+ rake db:migrate
 
 == Usage
  Merb Users:
@@ -51,10 +49,13 @@ Install
  
  * Add a comment to a model instance
  
- model = Model.new
- comment = Comment.new
- comment.comment = 'Some comment'
- model.comments << comment
+ commentable = Model.create
+ commentable.comments.create(:title => "First comment.", :comment => "This is the first comment.")
+
+ * Fetch comments for a commentable model:
+ 
+ commentable = Model.find(1)
+ comments = commentable.comments.recent.limit(10).all
 
  # Following doesn't work/make sense to me. Leaving for historical sake -- Jack
  # * Each comment reference commentable object
