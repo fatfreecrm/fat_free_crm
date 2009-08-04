@@ -111,6 +111,33 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
+  # PUT /admin/users/1/suspend
+  # PUT /admin/users/1/suspend.xml                                         AJAX
+  #----------------------------------------------------------------------------
+  def suspend
+    @user = User.find(params[:id])
+    @user.update_attribute(:suspended_at, Time.now) if @user != @current_user
+
+    respond_to do |format|
+      format.js   # suspend.js.rjs
+      format.xml  { render :xml => @user }
+    end
+  end
+
+  # PUT /admin/users/1/reactivate
+  # PUT /admin/users/1/reactivate.xml                                      AJAX
+  #----------------------------------------------------------------------------
+  def reactivate
+    @user = User.find(params[:id])
+    @user.update_attribute(:suspended_at, nil)
+
+    respond_to do |format|
+      format.js   # reactivate.js.rjs
+      format.xml  { render :xml => @user }
+    end
+  end
+
+
   private
   #----------------------------------------------------------------------------
   def get_users

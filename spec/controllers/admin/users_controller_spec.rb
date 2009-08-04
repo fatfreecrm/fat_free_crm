@@ -91,9 +91,9 @@ describe Admin::UsersController do
   
   end
   
-  # # PUT /admin/users/1
-  # # PUT /admin/users/1.xml
-  # #----------------------------------------------------------------------------
+  # PUT /admin/users/1
+  # PUT /admin/users/1.xml
+  #----------------------------------------------------------------------------
   describe "PUT update" do
   
     describe "with valid params" do
@@ -136,6 +136,40 @@ describe Admin::UsersController do
 
       delete :destroy, :id => @user.id
       response.should redirect_to(admin_users_url)
+    end
+  end
+
+  # PUT /admin/users/1/suspend
+  # PUT /admin/users/1/suspend.xml                                         AJAX
+  #----------------------------------------------------------------------------
+  describe "PUT suspend" do
+    it "suspends the requested user" do
+      @user = Factory(:user)
+
+      xhr :put, :suspend, :id => @user.id
+      assigns[:user].suspended?.should == true
+      response.should render_template("admin/users/suspend")
+    end
+
+    it "doesn't suspend current user" do
+      @user = @current_user
+
+      xhr :put, :suspend, :id => @user.id
+      assigns[:user].suspended?.should == false
+      response.should render_template("admin/users/suspend")
+    end
+  end
+
+  # PUT /admin/users/1/reactivate
+  # PUT /admin/users/1/reactivate.xml                                      AJAX
+  #----------------------------------------------------------------------------
+  describe "PUT reactivate" do
+    it "re-activates the requested user" do
+      @user = Factory(:user, :suspended_at => Time.now.yesterday)
+
+      xhr :put, :reactivate, :id => @user.id
+      assigns[:user].suspended?.should == false
+      response.should render_template("admin/users/reactivate")
     end
   end
 

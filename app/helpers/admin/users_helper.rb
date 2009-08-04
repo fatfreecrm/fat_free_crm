@@ -16,4 +16,13 @@
 #------------------------------------------------------------------------------
 
 module Admin::UsersHelper
+
+  def link_to_suspend(user)
+    link_to_remote("Suspend!", :method => :put, :url => suspend_admin_user_path(user))
+  end
+
+  def link_to_reactivate(user)
+    link_to_remote("Reactivate!", :method => :put, :url => reactivate_admin_user_path(user))
+  end
+
 end
