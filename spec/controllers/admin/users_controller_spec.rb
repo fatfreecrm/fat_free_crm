@@ -119,27 +119,37 @@ describe Admin::UsersController do
   end
   
   # PUT /admin/users/1
-  # PUT /admin/users/1.xml
+  # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   describe "PUT update" do
   
     describe "with valid params" do
-      it "updates the requested user, assigns it to @user, and redirects to Admin/Users" do
+      it "updates the requested user, assigns it to @user, and renders [update] template" do
         @user = Factory(:user, :username => "flip", :email => "flip@example.com")
 
         put :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
-        assigns[:user].should == @user
-        response.should redirect_to(admin_users_url)
+        assigns[:user].should == @user.reload
+        assigns[:user].username.should == "flop"
+        response.should render_template("admin/users/update")
+      end
+
+      it "reloads current page is the user got deleted" do
+        @user = Factory(:user).destroy
+
+        xhr :put, :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
       end
     end
   
     describe "with invalid params" do
-      it "doesn't update the requested users, but assigns it to @user and redirects to Admin/Users" do
+      it "doesn't update the requested user, but assigns it to @user and renders [update] template" do
         @user = Factory(:user, :username => "flip", :email => "flip@example.com")
 
         put :update, :id => @user.id, :user => {}
-        assigns[:user].should == @user
-        response.should redirect_to(admin_users_url)
+        assigns[:user].should == @user.reload
+        assigns[:user].username.should == "flip"
+        response.should render_template("admin/users/update")
       end
     end
   

@@ -88,21 +88,24 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   # PUT /admin/users/1
-  # PUT /admin/users/1.xml
+  # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
+    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.find(params[:id])
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        flash[:notice] = 'User was successfully updated.'
-        format.html { redirect_to(admin_users_url) }
+        format.js   # update.js.rjs
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.js   # update.js.rjs
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
   # DELETE /admin/users/1

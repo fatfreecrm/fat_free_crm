@@ -275,6 +275,15 @@ describe UsersController do
       response.should render_template("users/change_password")
     end
 
+    it "should allow to change password if current password is blank" do
+      @user.password_hash = nil
+      xhr :put, :change_password, :id => @user.id, :current_password => "", :user => { :password => @new_password, :password_confirmation => @new_password }
+      @current_user.password.should == @new_password
+      @current_user.errors.should be_empty
+      flash[:notice].should_not == nil
+      response.should render_template("users/change_password")
+    end
+
     it "should not change user password if password field is blank" do
       xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => "", :password_confirmation => "" }
       assigns[:user].should == @current_user
@@ -297,6 +306,7 @@ describe UsersController do
       @current_user.should have(1).error # .error_on(:current_password)
       response.should render_template("users/change_password")
     end
+
   end
 
 end

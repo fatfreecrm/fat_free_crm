@@ -131,7 +131,7 @@ class UsersController < ApplicationController
   # PUT /users/1/change_password.xml                                       AJAX
   #----------------------------------------------------------------------------
   def change_password
-    if @user.valid_password?(params[:current_password], true)
+    if @user.valid_password?(params[:current_password], true) || @user.password_hash.blank?
       unless params[:user][:password].blank?
         @user.update_attributes(params[:user])
         flash[:notice] = "Your password has been changed."
