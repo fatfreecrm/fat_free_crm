@@ -20,19 +20,19 @@
 #   rake crm:settings:load
 #
 :tabs: [
-  { :active : true,  :text : "Dashboard",     :url : "/"               },
-  { :active : false, :text : "Tasks",         :url : "/tasks"          },
-  { :active : false, :text : "Campaigns",     :url : "/campaigns"      },
-  { :active : false, :text : "Leads",         :url : "/leads"          },
-  { :active : false, :text : "Accounts",      :url : "/accounts"       },
-  { :active : false, :text : "Contacts",      :url : "/contacts"       },
-  { :active : false, :text : "Opportunities", :url : "/opportunities"  }
+  { :active : true,  :text : "Dashboard",     :url : { :controller : "/"              } },
+  { :active : false, :text : "Tasks",         :url : { :controller : "tasks"          } },
+  { :active : false, :text : "Campaigns",     :url : { :controller : "campaigns"      } },
+  { :active : false, :text : "Leads",         :url : { :controller : "leads"          } },
+  { :active : false, :text : "Accounts",      :url : { :controller : "accounts"       } },
+  { :active : false, :text : "Contacts",      :url : { :controller : "contacts"       } },
+  { :active : false, :text : "Opportunities", :url : { :controller : "opportunities"  } }
 ]
 
 :admin_tabs: [
-  { :active : true,  :text : "Users",         :url : "/admin/users"    },
-  { :active : true,  :text : "Settings",      :url : "/admin/settings" },
-  { :active : true,  :text : "Plugins",       :url : "/admin/plugins"  }
+  { :active : true,  :text : "Users",         :url : { :controller : "admin/users"    } },
+  { :active : true,  :text : "Settings",      :url : { :controller : "admin/settings" } },
+  { :active : true,  :text : "Plugins",       :url : { :controller : "admin/plugins"  } }
 ]
 
 campaign_status:
