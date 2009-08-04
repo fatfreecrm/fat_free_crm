@@ -1,3 +1,4 @@
+- edit ||= false
 .section
   %table(width=500 cellpadding=0 cellspacing=0)
     %tr
@@ -19,7 +20,8 @@
     %tr
       %td(valign="top" colspan=3)
         .check_box(style="margin-top:6px")
-          = f.check_box(:admin, {}) << " The user is Administrator"
+          -# Sorry, you can't revoke Admin rights from yourself.
+          = f.check_box(:admin, { :disabled => edit && @user == @current_user }) << " The user is Administrator"
 .subtitle Personal Information
 .section
   %table(width=500 cellpadding=0 cellspacing=0)

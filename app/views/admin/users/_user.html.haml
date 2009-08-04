@@ -10,7 +10,7 @@
   = gravatar_for(user, :size => "30x30", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
   .tools{ invisible, :id => dom_id(user, :tools) }
     %small
-      = link_to("Edit", "#") << " | "
+      = link_to_edit(user) << " | "
 
       - if user.suspended?
         = link_to_reactivate(user) << " | "

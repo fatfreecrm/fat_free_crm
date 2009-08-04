@@ -4,13 +4,12 @@ describe "/admin/users/edit.html.haml" do
   include Admin::UsersHelper
 
   before(:each) do
-    assigns[:user] = @user = stub_model(User, :new_record? => false)
+    login_and_assign(:admin => true)
+    assigns[:user] = @user = Factory(:user)
   end
 
-  it "renders the edit users form" do
+  it "renders the edit user form" do
     render
-
-    response.should have_tag("form[action=#{admin_user_path(@user)}][class=edit_user]") do
-    end
+    response.should have_tag("form[action=#{admin_user_path(@user)}][class=edit_user]")
   end
 end

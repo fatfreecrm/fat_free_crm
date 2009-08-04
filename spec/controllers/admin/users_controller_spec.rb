@@ -47,14 +47,41 @@ describe Admin::UsersController do
     end
   end
 
-  # GET /admin/users/1/edit
+  # GET /admin/users/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   describe "GET edit" do
-    it "assigns the requested users as @user and renders [edit] template" do
+    it "assigns the requested user as @user and renders [edit] template" do
       @user = Factory(:user)
 
-      get :edit, :id => @user.id
+      xhr :get, :edit, :id => @user.id
       assigns[:user].should == @user
+      assigns[:previous].should == nil
+      response.should render_template("admin/users/edit")
+    end
+
+    it "assigns the previous user as @previous when necessary" do
+      @user = Factory(:user)
+      @previous = Factory(:user)
+
+      xhr :get, :edit, :id => @user.id, :previous => @previous.id
+      assigns[:previous].should == @previous
+    end
+
+    it "reloads current page with the flash message if user got deleted" do
+      @user = Factory(:user).destroy
+
+      xhr :get, :edit, :id => @user.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+
+    it "notifies the view if previous user got deleted" do
+      @user = Factory(:user)
+      @previous = Factory(:user).destroy
+
+      xhr :get, :edit, :id => @user.id, :previous => @previous.id
+      flash[:warning].should == nil # no warning, just silently remove the div
+      assigns[:previous].should == @previous.id
       response.should render_template("admin/users/edit")
     end
   end

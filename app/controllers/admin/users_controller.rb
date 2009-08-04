@@ -54,10 +54,18 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
-  # GET /admin/users/1/edit
+  # GET /admin/users/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   def edit
     @user = User.find(params[:id])
+
+    if params[:previous] =~ /(\d+)\z/
+      @previous = User.find($1)
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    @previous ||= $1.to_i
+    respond_to_not_found(:js) unless @user
   end
 
   # POST /admin/users
