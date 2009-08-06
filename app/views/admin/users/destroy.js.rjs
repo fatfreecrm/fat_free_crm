@@ -1,0 +1,5 @@
+id = dom_id(@user, :confirm)
+page.call "crm.flick", id, :remove
+
+page[:flash_notice].replace_html "Delete user: not implemented yet."
+page.call "crm.flash", :flash_notice

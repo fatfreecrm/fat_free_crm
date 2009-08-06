@@ -20,9 +20,9 @@
         = "<font color='silver'>Suspend!</font> | "
 
       - if user != @current_user
-        = link_to("Delete!", "#") << "&nbsp;"
+        = link_to_confirm(user) << "&nbsp;"
       - else
-        <font color='silver'>Delete!</font>&nbsp;
+        <font color='silver'>Delete?</font>&nbsp;
 
   = link_to(user.full_name, user)
   %tt

@@ -17,12 +17,28 @@
 
 module Admin::UsersHelper
 
+  #----------------------------------------------------------------------------
   def link_to_suspend(user)
     link_to_remote("Suspend!", :method => :put, :url => suspend_admin_user_path(user))
   end
 
+  #----------------------------------------------------------------------------
   def link_to_reactivate(user)
     link_to_remote("Reactivate!", :method => :put, :url => reactivate_admin_user_path(user))
+  end
+
+  #----------------------------------------------------------------------------
+  def link_to_confirm(user)
+    link_to_remote("Delete?", :method => :get, :url => confirm_admin_user_path(user))
+  end
+
+  #----------------------------------------------------------------------------
+  def link_to_delete(user)
+    link_to_remote("Yes", 
+      :method => :delete,
+      :url => admin_user_path(user),
+      :before => visual_effect(:highlight, dom_id(user), :startcolor => "#ffe4e1")
+    )
   end
 
 end

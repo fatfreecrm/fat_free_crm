@@ -20,7 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin   "admin",   :controller => "admin/users",     :action => "index"
 
   map.namespace :admin do |admin|
-    admin.resources :users, :member => { :suspend => :put, :reactivate => :put }
+    admin.resources :users, :member => { :suspend => :put, :reactivate => :put, :confirm => :get }
     admin.resources :settings
     admin.resources :plugins
   end

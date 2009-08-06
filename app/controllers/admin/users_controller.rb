@@ -108,16 +108,24 @@ class Admin::UsersController < Admin::ApplicationController
     respond_to_not_found(:js, :xml)
   end
 
+  # GET /admin/users/1/confirm                                             AJAX
+  #----------------------------------------------------------------------------
+  def confirm
+    @user = User.find(params[:id])
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
+  end
+
   # DELETE /admin/users/1
-  # DELETE /admin/users/1.xml
+  # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
     @user = User.find(params[:id])
-    flash[:notice] = 'Deleting users is not implemented yet.'
     # @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to(admin_users_url) }
+      format.js   # destroy.js.rjs
       format.xml  { head :ok }
     end
   end
@@ -133,6 +141,9 @@ class Admin::UsersController < Admin::ApplicationController
       format.js   # suspend.js.rjs
       format.xml  { render :xml => @user }
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
   # PUT /admin/users/1/reactivate
@@ -146,6 +157,9 @@ class Admin::UsersController < Admin::ApplicationController
       format.js   # reactivate.js.rjs
       format.xml  { render :xml => @user }
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
 

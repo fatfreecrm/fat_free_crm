@@ -25,7 +25,7 @@ describe Admin::UsersController do
   # GET /admin/users/1.xml
   #----------------------------------------------------------------------------
   describe "GET show" do
-    it "assigns the requested users as @user and renders [show] template" do
+    it "assigns the requested user as @user and renders [show] template" do
       @user = Factory(:user)
 
       get :show, :id => @user.id
@@ -38,7 +38,7 @@ describe Admin::UsersController do
   # GET /admin/users/new.xml                                               AJAX
   #----------------------------------------------------------------------------
   describe "GET new" do
-    it "assigns a new users as @user and renders [new] template" do
+    it "assigns a new user as @user and renders [new] template" do
       @user = User.new
 
       xhr :get, :new
@@ -155,24 +155,37 @@ describe Admin::UsersController do
   
   end
 
+  # GET /admin/users/1/confirm                                             AJAX
+  #----------------------------------------------------------------------------
+  describe "GET confirm" do
+    it "assigns the requested user as @user and renders [confirm] template" do
+      @user = Factory(:user)
+
+      xhr :get, :confirm, :id => @user.id
+      assigns[:user].should == @user
+      response.should render_template("admin/users/confirm")
+    end
+
+    it "reloads current page is the user got deleted" do
+      @user = Factory(:user).destroy
+
+      xhr :get, :confirm, :id => @user.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+  end
+
   # DELETE /admin/users/1
-  # DELETE /admin/users/1.xml
+  # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   describe "DELETE destroy" do
-    it "destroys the requested user" do
+    it "destroys the requested user and renders [destroy] template" do
       @him = Factory(:user)
       @her = Factory(:user)
 
-      delete :destroy, :id => @him.id
+      xhr :delete, :destroy, :id => @him.id
       # lambda { @him.reload }.should raise_error(ActiveRecord::RecordNotFound)
-      flash[:notice].should_not == nil
-    end
-
-    it "redirects back to the Admin/Users" do
-      @user = Factory(:user)
-
-      delete :destroy, :id => @user.id
-      response.should redirect_to(admin_users_url)
+      response.should render_template("admin/users/destroy")
     end
   end
 
@@ -195,6 +208,14 @@ describe Admin::UsersController do
       assigns[:user].suspended?.should == false
       response.should render_template("admin/users/suspend")
     end
+
+    it "reloads current page is the user got deleted" do
+      @user = Factory(:user).destroy
+
+      xhr :put, :suspend, :id => @user.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
   end
 
   # PUT /admin/users/1/reactivate
@@ -207,6 +228,14 @@ describe Admin::UsersController do
       xhr :put, :reactivate, :id => @user.id
       assigns[:user].suspended?.should == false
       response.should render_template("admin/users/reactivate")
+    end
+
+    it "reloads current page is the user got deleted" do
+      @user = Factory(:user).destroy
+
+      xhr :put, :reactivate, :id => @user.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
     end
   end
 

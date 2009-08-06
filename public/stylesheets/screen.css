@@ -351,6 +351,13 @@ tt {
   float: right;
   margin: 7px 5px 0px 0px; }
 
+.confirm {
+  background: #cdfecd;
+  border-left: 10px palegreen solid;
+  font-size: 11px;
+  margin: 0px 0px 6px 0px;
+  padding: 6px; }
+
 .log {
   padding: 8px 0px 0px 0px; }
   .log h3 {

@@ -1,0 +1,5 @@
+.confirm[@user, :confirm]
+  A user can only be deleted if no related assets are left behind.
+  Delete <b>#{@user.full_name}</b>?&nbsp;
+  = link_to_delete(@user) << " : "
+  = link_to_function("No", "crm.flick('#{dom_id(@user, :confirm)}', 'remove')")
