@@ -192,6 +192,7 @@ describe Admin::UsersController do
       @account = Factory(:account, :user => @user) # Plant artifact to prevent the user from being deleted.
 
       xhr :delete, :destroy, :id => @user.id
+      flash[:warning].should_not == nil
       lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
       response.should render_template("admin/users/destroy")
     end

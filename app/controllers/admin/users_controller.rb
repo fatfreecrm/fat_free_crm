@@ -128,6 +128,7 @@ class Admin::UsersController < Admin::ApplicationController
         format.js   # destroy.js.rjs
         format.xml  { head :ok }
       else
+        flash[:warning] = "Couldn't delete the user since #{@user.full_name} has related assets present."
         format.js   # destroy.js.rjs
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end

@@ -8,6 +8,7 @@ Sat, Aug 8, 2009
 ---------------------------------------------------------------------
 - Added :before_destroy filters for User model.
 - Implemented deleting users in Admin interface.
+- Refactored flash messages to set notice/warning class on the fly.
 
 Wed, Aug 5, 2009
 ---------------------------------------------------------------------

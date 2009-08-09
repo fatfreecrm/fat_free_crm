@@ -30,15 +30,14 @@ module ApplicationHelper
 
   # Show existing flash or embed hidden paragraph ready for flash[:notice]
   #----------------------------------------------------------------------------
-  def show_flash(options = { :container => nil, :sticky => false })
+  def show_flash(options = { :sticky => false })
     [:error, :warning, :info, :notice].each do |type|
       if flash[type]
-        id = "flash_#{type}"
-        html = content_tag(:p, h(flash[type]), :class => "flash_#{type}", :id => (options[:container] ? nil : id))
-        return html << content_tag(:script, "crm.flash('#{options[:container] || id}', #{options[:sticky]})", :type => "text/javascript")
+        html = content_tag(:p, h(flash[type]), :id => "flash")
+        return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})", :type => "text/javascript")
       end
     end
-    content_tag(:p, h(flash[:notice]), :class => "flash_notice", :id => "flash_notice", :style => "display:none;")
+    content_tag(:p, nil, :id => "flash", :style => "display:none;")
   end
 
   #----------------------------------------------------------------------------

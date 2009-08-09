@@ -5,6 +5,7 @@ if @user.deleted?
 else
   page.call "crm.flick", dom_id(@user, :confirm), :remove
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
-  page[:flash_notice].replace_html "Couldn't delete the user since #{@user.full_name} has related assets present."
-  page.call "crm.flash", :flash_notice
+  page[:flash].replace_html flash[:warning]
+  page.call "crm.flash", :warning
+  flash[:warning] = nil
 end

@@ -39,8 +39,8 @@ describe "admin/users/destroy.js.rjs" do
     it "should show flash message" do
       render
 
-      response.should have_rjs("flash_notice")
-      response.should include_text('crm.flash("flash_notice")')
+      response.should have_rjs("flash")
+      response.should include_text('crm.flash("warning")')
     end
   end
 end
