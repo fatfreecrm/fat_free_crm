@@ -49,4 +49,49 @@ describe User do
   it "should create a new instance given valid attributes" do
     User.create!(@valid_attributes)
   end
+
+  describe "should destroy the users unless she has no related assets" do
+    before(:each) do
+      @user = Factory(:user)
+    end
+
+    %w(account campaign lead contact opportunity).each do |asset|
+      it "should not destroy the user if she owns #{asset}" do
+        Factory(asset, :user => @user)
+        @user.destroy
+        lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+        @user.deleted?.should == false
+      end
+
+      it "should not destroy the user if she has #{asset} assigned" do
+        Factory(asset, :assignee => @user)
+        @user.destroy
+        lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+        @user.deleted?.should == false
+      end
+    end
+
+    it "should not destroy the user if she owns a comment" do
+      login
+      account = Factory(:account, :user => @current_user)
+      Factory(:comment, :user => @user, :commentable => account)
+      @user.destroy
+      lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+      @user.deleted?.should == false
+    end
+
+    it "should not destroy the current user" do
+      login
+      @current_user.destroy
+      lambda { @current_user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+      @current_user.deleted?.should == false
+    end
+
+    it "should destroy the user" do
+      @user.destroy
+      lambda { @user.reload }.should raise_error(ActiveRecord::RecordNotFound)
+      @user.deleted?.should == true
+    end
+  end
+
 end

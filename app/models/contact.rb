@@ -59,6 +59,9 @@ class Contact < ActiveRecord::Base
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
+  named_scope :created_by, lambda { |user| { :conditions => "user_id = #{user.id}" } }
+  named_scope :assigned_to, lambda { |user| { :conditions => "assigned_to = #{user.id}" } }
+
   simple_column_search :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
 
   uses_mysql_uuid
