@@ -92,6 +92,32 @@ describe User do
       lambda { @user.reload }.should raise_error(ActiveRecord::RecordNotFound)
       @user.deleted?.should == true
     end
+
+    it "once the user gets deleted all her activity records must be deleted too" do
+      login
+      Factory(:activity, :user => @user, :subject => Factory(:account))
+      Factory(:activity, :user => @user, :subject => Factory(:contact))
+      @user.activities.count.should == 2
+      @user.destroy
+      @user.activities.count.should == 0
+    end
+
+    it "once the user gets deleted all her permissions must be deleted too" do
+      Factory(:permission, :user => @user, :asset => Factory(:account))
+      Factory(:permission, :user => @user, :asset => Factory(:contact))
+      @user.permissions.count.should == 2
+      @user.destroy
+      @user.permissions.count.should == 0
+    end
+
+    it "once the user gets deleted all her preferences must be deleted too" do
+      Factory(:preference, :user => @user, :name => "Hello", :value => "World")
+      Factory(:preference, :user => @user, :name => "World", :value => "Hello")
+      @user.preferences.count.should == 2
+      @user.destroy
+      @user.preferences.count.should == 0
+    end
+
   end
 
 end
