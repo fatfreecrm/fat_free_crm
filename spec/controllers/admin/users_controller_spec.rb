@@ -180,11 +180,19 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "DELETE destroy" do
     it "destroys the requested user and renders [destroy] template" do
-      @him = Factory(:user)
-      @her = Factory(:user)
+      @user = Factory(:user)
 
-      xhr :delete, :destroy, :id => @him.id
-      # lambda { @him.reload }.should raise_error(ActiveRecord::RecordNotFound)
+      xhr :delete, :destroy, :id => @user.id
+      lambda { @user.reload }.should raise_error(ActiveRecord::RecordNotFound)
+      response.should render_template("admin/users/destroy")
+    end
+
+    it "handles the case when the requested user can't be deleted" do
+      @user = Factory(:user)
+      @account = Factory(:account, :user => @user) # Plant artifact to prevent the user from being deleted.
+
+      xhr :delete, :destroy, :id => @user.id
+      lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
       response.should render_template("admin/users/destroy")
     end
   end

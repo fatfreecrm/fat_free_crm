@@ -1,5 +1,10 @@
-id = dom_id(@user, :confirm)
-page.call "crm.flick", id, :remove
+id = dom_id(@user)
 
-page[:flash_notice].replace_html "Delete user: not implemented yet."
-page.call "crm.flash", :flash_notice
+if @user.deleted?
+  page[id].visual_effect :blind_up, :duration => 0.25
+else
+  page.call "crm.flick", dom_id(@user, :confirm), :remove
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:flash_notice].replace_html "Couldn't delete the user since #{@user.full_name} has related assets present."
+  page.call "crm.flash", :flash_notice
+end

@@ -122,11 +122,15 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @user = User.find(params[:id])
-    # @user.destroy
 
     respond_to do |format|
-      format.js   # destroy.js.rjs
-      format.xml  { head :ok }
+      if @user.destroy
+        format.js   # destroy.js.rjs
+        format.xml  { head :ok }
+      else
+        format.js   # destroy.js.rjs
+        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
