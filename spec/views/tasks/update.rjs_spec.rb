@@ -17,7 +17,7 @@ describe "/tasks/update.js.rjs" do
 
     it "from Tasks tab: should remove task from current bucket and hide empty bucket" do
       request.env["HTTP_REFERER"] = "http://localhost/tasks"
-      render "tasks/update.js.rjs"
+      render
 
       response.should include_text(%Q/$("task_#{@task.id}").replace("")/)
       response.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
@@ -25,7 +25,7 @@ describe "/tasks/update.js.rjs" do
 
     it "from Tasks tab: should show updated task in a new bucket" do
       request.env["HTTP_REFERER"] = "http://localhost/tasks"
-      render "tasks/update.js.rjs"
+      render
       response.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
@@ -34,7 +34,7 @@ describe "/tasks/update.js.rjs" do
 
     it "from Tasks tab: should update tasks sidebar" do
       request.env["HTTP_REFERER"] = "http://localhost/tasks"
-      render "tasks/update.js.rjs"
+      render
 
       response.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
@@ -44,14 +44,14 @@ describe "/tasks/update.js.rjs" do
     end
 
     it "from asset page: should update task partial in place" do
-      render "tasks/update.js.rjs"
+      render
       response.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
     end
 
     it "from asset page: should update recently viewed items" do
-      render "tasks/update.js.rjs"
+      render
       response.should have_rjs("recently") do |rjs|
         with_tag("div[class=caption]")
       end
@@ -71,10 +71,10 @@ describe "/tasks/update.js.rjs" do
       assigns[:view] = "pending"
       request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
-      render "tasks/update.js.rjs"
+      render
       response.should include_text(%Q/$("task_#{@task.id}").replace("")/)
-      response.should include_text('("flash_notice").update(')
-      response.should include_text('crm.flash("flash_notice", true)')
+      response.should include_text('("flash").update(')
+      response.should include_text('crm.flash("notice", true)')
     end
 
     it "assigned tasks to me from Tasks tab: should remove the task and show flash message (pending)" do
@@ -84,10 +84,10 @@ describe "/tasks/update.js.rjs" do
       assigns[:view] = "assigned"
       request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
-      render "tasks/update.js.rjs"
+      render
       response.should include_text(%Q/$("task_#{@task.id}").replace("")/)
-      response.should include_text('("flash_notice").update(')
-      response.should include_text('crm.flash("flash_notice", true)')
+      response.should include_text('("flash").update(')
+      response.should include_text('crm.flash("notice", true)')
     end
 
     it "assigned tasks to somebody else from Tasks tab: should re-render task partial" do
@@ -96,7 +96,7 @@ describe "/tasks/update.js.rjs" do
       assigns[:view] = "assigned"
       request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
-      render "tasks/update.js.rjs"
+      render
       response.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
@@ -107,7 +107,7 @@ describe "/tasks/update.js.rjs" do
       assigns[:task] = @task       = Factory(:task, :assignee => Factory(:user))
       assigns[:view] = "assigned"
       request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
-      render "tasks/update.js.rjs"
+      render
 
       response.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
@@ -119,7 +119,7 @@ describe "/tasks/update.js.rjs" do
     it "from asset page: should should re-render task partial" do
       assigns[:task_before_update] = Factory(:task, :assignee => nil)
       assigns[:task] = @task       = Factory(:task, :assignee => Factory(:user))
-      render "tasks/update.js.rjs"
+      render
 
       response.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
@@ -129,7 +129,7 @@ describe "/tasks/update.js.rjs" do
     it "from asset page: should update recently viewed items" do
       assigns[:task_before_update] = Factory(:task, :assignee => nil)
       assigns[:task] = @task       = Factory(:task, :assignee => Factory(:user))
-      render "tasks/update.js.rjs"
+      render
 
       response.should have_rjs("recently") do |rjs|
         with_tag("div[class=caption]")
@@ -143,7 +143,7 @@ describe "/tasks/update.js.rjs" do
     assigns[:task] = @task = Factory(:task)
     @task.errors.add(:error)
 
-    render "tasks/update.js.rjs"
+    render
     response.should include_text(%Q/$("task_#{@task.id}").visualEffect("shake"/)
   end
 

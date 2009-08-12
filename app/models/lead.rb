@@ -55,9 +55,12 @@ class Lead < ActiveRecord::Base
   has_one     :contact
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
+
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
   named_scope :converted, :conditions => "status='converted'"
   named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }
+  named_scope :created_by, lambda { |user| { :conditions => "user_id = #{user.id}" } }
+  named_scope :assigned_to, lambda { |user| { :conditions => "assigned_to = #{user.id}" } }
 
   simple_column_search :first_name, :last_name, :company, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
   uses_mysql_uuid

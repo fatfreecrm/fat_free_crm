@@ -9,14 +9,6 @@ describe "admin/users/update.js.rjs" do
   end
 
   describe "no errors:" do
-    it "updates sidebar" do
-      render
-
-      response.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=recently]")
-      end
-    end
- 
     it "replaces [Edit User] form with user partial and highlights it" do
       render
 

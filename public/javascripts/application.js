@@ -221,11 +221,16 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  flash: function(id, sticky) {
-    $(id).hide();
-    Effect.Appear(id, { duration: 0.5 });
+  flash: function(type, sticky) {
+    $("flash").hide();
+    if (type == "warning" || type == "error") {
+      $("flash").className = "flash_warning";
+    } else {
+      $("flash").className = "flash_notice";
+    }
+    Effect.Appear("flash", { duration: 0.5 });
     if (!sticky) {
-      setTimeout("Effect.Fade('" + id + "')", 3000);
+      setTimeout("Effect.Fade('flash')", 3000);
     }
   },
 

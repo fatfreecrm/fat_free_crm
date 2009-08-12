@@ -10,7 +10,7 @@ describe "/users/change_password.js.rjs" do
 
   describe "no errors:" do
     it "should flip [Change Password] form" do
-      render "users/change_password.js.rjs"
+      render
 
       response.should_not have_rjs("user_#{@user.id}")
       response.should include_text('crm.flip_form("change_password"')
@@ -18,17 +18,17 @@ describe "/users/change_password.js.rjs" do
     end
 
     it "should show flash message" do
-      render "users/change_password.js.rjs"
+      render
 
-      response.should have_rjs("flash_notice")
-      response.should include_text('crm.flash("flash_notice")')
+      response.should have_rjs("flash")
+      response.should include_text('crm.flash("notice")')
     end
   end # no errors
 
   describe "validation errors:" do
     it "should redraw the [Change Password] form and shake it" do
       @user.errors.add(:current_password, "error")
-      render "users/change_password.js.rjs"
+      render
 
       response.should have_rjs("change_password") do |rjs|
         with_tag("form[class=edit_user]")
@@ -39,7 +39,7 @@ describe "/users/change_password.js.rjs" do
 
     it "should redraw the [Change Password] form and correctly set focus" do
       @user.errors.add(:user_password, "error")
-      render "users/change_password.js.rjs"
+      render
 
       response.should include_text('$("user_password").focus()')
     end

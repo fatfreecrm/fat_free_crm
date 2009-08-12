@@ -10,25 +10,3 @@
 
 .list#users= render :partial => "user", :collection => @users
 #paginate= render :partial => "common/paginate"
-
-:erb
-  <!--
-  <table>
-  <% @users.each do |user| %>
-    <tr>
-      <td>
-        <%= user.full_name %>
-      </td>
-      <td width="200" align="right">
-        <small>
-          <%= link_to 'Show', admin_user_path(user) %> |
-          <%= link_to 'Edit', edit_admin_user_path(user) %> | 
-          <%= link_to 'Delete', admin_user_path(user), :method => :delete %>
-        </small>
-      </td>
-    </tr>
-  <% end %>
-  </table>
-  <br />
-  <%= link_to 'New user', new_admin_user_path %>
-  -->
