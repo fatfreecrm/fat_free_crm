@@ -6,7 +6,8 @@ then you win. –- Mahatma Gandhi
 
 Tue, Aug 8, 2009
 ---------------------------------------------------------------------
-- Installed [Highline] gem in vendor/gems.
+- Installed [Highline] gem in vendor/gems for [rake crm:setup:admin] task.
+- Implemented [rake crm:setup:admin] task to create admin user.
 
 Sat, Aug 8, 2009
 ---------------------------------------------------------------------
