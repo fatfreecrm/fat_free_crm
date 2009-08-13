@@ -51,18 +51,19 @@
 #  admin             :boolean(1)      not null
 #
 class User < ActiveRecord::Base
-  
-  has_one  :avatar, :as => :entity, :dependent => :destroy
-  has_many :avatars # as owner who uploaded it, ex. Contact avatar
-  has_many :accounts
-  has_many :campaigns
-  has_many :leads
-  has_many :contacts
-  has_many :opportunities
-  has_many :permissions
-  has_many :preferences
-  has_many :shared_accounts, :through => :permissions, :source => :asset, :source_type => "Account", :class_name => "Account"
-  named_scope :except, lambda { | user | { :conditions => "id != #{user.id}" } }
+  has_one     :avatar, :as => :entity, :dependent => :destroy  # Personal avatar.
+  has_many    :avatars                                         # As owner who uploaded it, ex. Contact avatar.
+  has_many    :comments, :as => :commentable                   # As owner who crated a comment.
+  has_many    :accounts
+  has_many    :campaigns
+  has_many    :leads
+  has_many    :contacts
+  has_many    :opportunities
+  has_many    :activities,  :dependent => :destroy
+  has_many    :permissions, :dependent => :destroy
+  has_many    :preferences, :dependent => :destroy
+  named_scope :except, lambda { |user| { :conditions => "id != #{user.id}" } }
+
   uses_mysql_uuid
   acts_as_paranoid
   acts_as_authentic do |c|
@@ -79,6 +80,8 @@ class User < ActiveRecord::Base
 
   validates_presence_of :username, :message => "^Please specify the username."
   validates_presence_of :email,    :message => "^Please specify your email address."
+
+  before_destroy :check_if_current_user, :check_if_has_related_assets
 
   #----------------------------------------------------------------------------
   def name
@@ -105,6 +108,26 @@ class User < ActiveRecord::Base
   def deliver_password_reset_instructions!
     reset_perishable_token!
     Notifier.deliver_password_reset_instructions(self)
+  end
+
+
+  private
+
+  # Prevent current user from deleting herself.
+  #----------------------------------------------------------------------------
+  def check_if_current_user
+    User.current_user && User.current_user != self
+  end
+
+  # Prevent deleting a user unless she has no artifacts left.
+  #----------------------------------------------------------------------------
+  def check_if_has_related_assets
+    artifacts = %w(Account Campaign Lead Contact Opportunity Comment).inject(0) do |sum, asset|
+      klass = asset.constantize
+      sum += klass.assigned_to(self).count if asset != "Comment"
+      sum += klass.created_by(self).count
+    end
+    artifacts == 0
   end
 
 end

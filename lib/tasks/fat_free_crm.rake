@@ -43,6 +43,48 @@ namespace :crm do
   task :setup => :environment do
     Rake::Task["db:migrate:reset"].invoke
     Rake::Task["crm:settings:load"].invoke
+    Rake::Task["crm:setup:admin"].invoke
+  end
+
+  namespace :setup do
+    desc "Create admin user"
+    task :admin => :environment do
+      require "highline/import"
+
+      puts "\nTo create the admin user you will be prompted to enter username, password,"
+      puts "and email address. You might also specify the username of existing user.\n"
+
+      username = password = email = nil
+      loop do
+        username = ask("\nUsername [system]: ", String) do |s|
+          s.validate = /^\S{0,32}$/
+          s.whitespace = :strip
+        end
+        username = "system" if username.blank?
+
+        password = ask("Password [manager]: ", String) do |s|
+          s.echo = false unless defined?(::JRuby)
+          s.validate = /^\S{0,64}$/
+        end
+        password = "manager" if password.blank?
+
+        email = ask("Email: ", String) do |s|
+          s.validate = /^\S{0,64}$/
+        end
+        puts "\nThe admin user will be created with the following credentials:\n\n"
+        puts "  Username: #{username}"
+        puts "  Password: #{'*' * password.length}"
+        puts "     Email: #{email}\n"
+        continue = ask("\nContinue [yes/no/exit]: ")
+        break if continue =~ /y(?:es)*/i
+        retry if continue =~ /no*/i
+        puts "No admin user was created."
+        exit
+      end
+      user = User.find_by_username(username) || User.new
+      user.update_attributes(:username => username, :password => password, :email => email, :admin => true)
+      puts "Admin user has been created."
+    end
   end
 
   namespace :demo do
