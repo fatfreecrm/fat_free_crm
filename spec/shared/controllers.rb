@@ -13,7 +13,12 @@ module SharedControllerSpecs
     
     it "should save current autocomplete controller in a session" do
       post :auto_complete, :auto_complete_query => @query
-      session[:auto_complete].should == @controller.controller_name.to_sym
+
+      # We don't save Admin/Users autocomplete controller in a session since Users are not
+      # exposed through the Jumpbox.
+      unless controller.class.to_s.starts_with?("Admin::")
+        session[:auto_complete].should == @controller.controller_name.to_sym
+      end
     end
 
     it "should render common/auto_complete template" do

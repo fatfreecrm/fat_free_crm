@@ -30,4 +30,12 @@ class Admin::ApplicationController < ApplicationController
     end
   end
 
+  # Autocomplete handler for all admin controllers.
+  #----------------------------------------------------------------------------
+  def auto_complete
+    @query = params[:auto_complete_query]
+    @auto_complete = self.controller_name.classify.constantize.scoped(:limit => 10).search(@query)
+    render :template => "common/auto_complete", :layout => nil
+  end
+
 end

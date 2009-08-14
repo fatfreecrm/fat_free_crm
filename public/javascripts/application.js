@@ -237,14 +237,18 @@ var crm = {
   //----------------------------------------------------------------------------
   search: function(query, controller) {
     if (!this.request) {
+      var list = controller;          // ex. "users"
+      if (list.indexOf("/") >= 0) {   // ex. "admin/users"
+        list = list.split("/")[1];
+      }
       $("loading").show();
-      $(controller).setStyle({ opacity: 0.4 });
+      $(list).setStyle({ opacity: 0.4 });
       new Ajax.Request("/" + controller + "/search", {
         method     : "get",
         parameters : { query : query },
         onSuccess  : function() {
           $("loading").hide();
-          $(controller).setStyle({ opacity: 1 });
+          $(list).setStyle({ opacity: 1 });
         },
         onComplete : (function() { this.request = null; }).bind(this)
       });

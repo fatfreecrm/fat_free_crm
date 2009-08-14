@@ -63,6 +63,9 @@ class User < ActiveRecord::Base
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
   named_scope :except, lambda { |user| { :conditions => "id != #{user.id}" } }
+  default_scope :order => "id DESC" # Show newest users first.
+
+  simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
 
   uses_mysql_uuid
   acts_as_paranoid

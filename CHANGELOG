@@ -4,7 +4,15 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Tue, Aug 8, 2009
+Thu, Aug 13, 2009
+---------------------------------------------------------------------
+- Added user search and pagination to Admin/Users.
+
+Wed, Aug 12, 2009
+---------------------------------------------------------------------
+- Adding search and pagination to Admin/Users.
+
+Tue, Aug 11, 2009
 ---------------------------------------------------------------------
 - Installed [Highline] gem in vendor/gems for [rake crm:setup:admin] task.
 - Implemented [rake crm:setup:admin] task to create admin user.
