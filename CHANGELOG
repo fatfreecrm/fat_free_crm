@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Sat, Aug 15, 2009
 ---------------------------------------------------------------------
 - Implemented plugin dependencies to be able to change plugin loading order.
+- Pass on [lead.id] when converting it into a contact (LH #86).
 
 Fri, Aug 14, 2009
 ---------------------------------------------------------------------
