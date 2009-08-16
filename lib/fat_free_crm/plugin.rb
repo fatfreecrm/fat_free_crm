@@ -19,6 +19,11 @@ module FatFreeCRM
   class Plugin
     @@list = {} # List of added plugins.
 
+    #--------------------------------------------------------------------------
+    def initialize(id, initializer)
+      @id, @initializer = id, initializer
+    end
+
     # Create getters and setters for plugin properties.
     #--------------------------------------------------------------------------
     %w(name description author version).each do |name|
@@ -27,18 +32,23 @@ module FatFreeCRM
       end
     end
     
+    # Preload other plugins that are required by the plugin being loaded.
     #--------------------------------------------------------------------------
-    def initialize(id)
-      @id = id
+    def dependencies(*plugins)
+      plugin_path = @initializer.configuration.plugin_paths.first
+      plugins.each do |name|
+        plugin = Rails::Plugin.new("#{plugin_path}/#{name}")
+        plugin.load(@initializer)
+      end
     end
 
     # Class methods.
     #--------------------------------------------------------------------------
     class << self
-      private :new  # For the outside world new plugins can only be created through self.add.
+      private :new  # For the outside world new plugins can only be created through self.register.
 
-      def register(id, &block)
-        plugin = new(id)
+      def register(id, initializer = nil, &block)
+        plugin = new(id, initializer)
         plugin.instance_eval(&block)            # Grab plugin properties.
         plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
         @@list[id] = plugin

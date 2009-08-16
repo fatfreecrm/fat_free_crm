@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, Aug 15, 2009
+---------------------------------------------------------------------
+- Implemented plugin dependencies to be able to change plugin loading order.
+
+Fri, Aug 14, 2009
+---------------------------------------------------------------------
+- Reviewed pccl fork and [fat_free_issues] plugin.
+
 Thu, Aug 13, 2009
 ---------------------------------------------------------------------
 - Added user search and pagination to Admin/Users.
