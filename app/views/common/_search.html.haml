@@ -1,5 +1,8 @@
 - assets = controller.controller_name
+- klass = controller.class.to_s
+- path = klass.include?("::") ? "#{klass.split('::').first.downcase}/#{assets}" : assets
+
 %h4== Search #{assets}
 %div{ :style => "margin: 0px 0px 6px 0px" }
   = text_field_tag("query", @current_query, :size => 23)
-  = observe_field("query", :frequency => 0.75, :function => "crm.search(value, '#{assets}')")
+  = observe_field("query", :frequency => 0.75, :function => "crm.search(value, '#{path}')")

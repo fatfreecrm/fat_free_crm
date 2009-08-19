@@ -24,9 +24,9 @@
       - else
         <font color='silver'>Delete?</font>&nbsp;
 
-  = link_to(user.full_name, user)
+  %span.black #{link_to(user.full_name, user)} (#{user.username})
   %tt
-    = user.title unless user.title.blank?
+    = "- #{user.title}" unless user.title.blank?
     = " at " + user.company unless user.company.blank?
 
     %span.black= "|"

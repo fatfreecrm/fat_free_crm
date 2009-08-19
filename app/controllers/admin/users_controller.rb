@@ -17,15 +17,17 @@
 
 class Admin::UsersController < Admin::ApplicationController
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :auto_complete, :only => :auto_complete
 
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
-    @users = get_users
+    @users = get_users(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.haml
+      format.js   # index.js.rjs
       format.xml  { render :xml => @users }
     end
   end
@@ -135,6 +137,21 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
+  # GET /users/search/query                                                AJAX
+  #----------------------------------------------------------------------------
+  def search
+    @users = get_users(:query => params[:query], :page => 1)
+
+    respond_to do |format|
+      format.js   { render :action => :index }
+      format.xml  { render :xml => @users.to_xml }
+    end
+  end
+
+  # POST /users/auto_complete/query                                        AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :auto_complete, :only => :auto_complete
+
   # PUT /admin/users/1/suspend
   # PUT /admin/users/1/suspend.xml                                         AJAX
   #----------------------------------------------------------------------------
@@ -170,8 +187,15 @@ class Admin::UsersController < Admin::ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_users
-    User.all(:order => "id DESC").paginate
+  def get_users(options = { :page => nil, :query => nil })
+    self.current_page = options[:page] if options[:page]
+    self.current_query = options[:query] if options[:query]
+
+    if current_query.blank?
+      User.paginate(:page => current_page)
+    else
+      User.search(current_query).paginate(:page => current_page)
+    end
   end
 
 end

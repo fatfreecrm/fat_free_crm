@@ -4,7 +4,25 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Tue, Aug 8, 2009
+Sat, Aug 15, 2009
+---------------------------------------------------------------------
+- Implemented plugin dependencies to be able to change plugin loading order.
+- Pass on [lead.id] when converting it into a contact (LH #86).
+- Corrected format of opportunity closing date (GH #7).
+
+Fri, Aug 14, 2009
+---------------------------------------------------------------------
+- Reviewed pccl fork and [fat_free_issues] plugin.
+
+Thu, Aug 13, 2009
+---------------------------------------------------------------------
+- Added user search and pagination to Admin/Users.
+
+Wed, Aug 12, 2009
+---------------------------------------------------------------------
+- Adding search and pagination to Admin/Users.
+
+Tue, Aug 11, 2009
 ---------------------------------------------------------------------
 - Installed [Highline] gem in vendor/gems for [rake crm:setup:admin] task.
 - Implemented [rake crm:setup:admin] task to create admin user.

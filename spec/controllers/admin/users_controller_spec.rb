@@ -198,6 +198,44 @@ describe Admin::UsersController do
     end
   end
 
+  # GET /users/search/query                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "GET search" do
+    before(:each) do
+      @amy = Factory(:user, :username => "amy")
+      @bob = Factory(:user, :username => "bob")
+      @accounts = [ @amy, @bob, @current_user ]
+    end
+
+    it "performs lookup using query string and redirect to index" do
+      xhr :get, :search, :query => "amy"
+
+      assigns[:users].should == [ @amy ]
+      assigns[:current_query].should == "amy"
+      session[:users_current_query].should == "amy"
+      response.should render_template("admin/users/index")
+    end
+
+    describe "with mime type of XML" do
+      it "performs lookup using query string and render XML" do
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :search, :query => "amy?!"
+
+        response.body.should == [ @amy ].to_xml
+      end
+    end
+  end
+
+  # POST /users/auto_complete/query                                        AJAX
+  #----------------------------------------------------------------------------
+  describe "POST auto_complete" do
+    before(:each) do
+      @auto_complete_matches = [ Factory(:user, :first_name => "Hello") ]
+    end
+
+    it_should_behave_like("auto complete")
+  end
+
   # PUT /admin/users/1/suspend
   # PUT /admin/users/1/suspend.xml                                         AJAX
   #----------------------------------------------------------------------------
