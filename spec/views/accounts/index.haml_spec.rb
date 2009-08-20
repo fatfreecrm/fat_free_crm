@@ -7,6 +7,12 @@ describe "/accounts/index.html.haml" do
     login_and_assign
   end
 
+  it "should render a proper account website link if an account is provided" do
+    assigns[:accounts] = [ Factory(:account, :website => 'www.fatfreecrm.com'), Factory(:account) ].paginate
+    render "/accounts/index.html.haml"
+    response.should have_tag("a[href=http://www.fatfreecrm.com]")
+  end
+
   it "should render list of accounts if list of accounts is not empty" do
     assigns[:accounts] = [ Factory(:account), Factory(:account) ].paginate
     template.should_receive(:render).with(hash_including(:partial => "account"))
