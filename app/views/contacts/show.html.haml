@@ -26,3 +26,5 @@
 .remote#create_opportunity{ hidden }
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @contact.opportunities
+
+= hook(:show_contact_bottom, self)
