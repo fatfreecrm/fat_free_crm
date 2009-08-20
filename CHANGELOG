@@ -4,6 +4,18 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Aug 19, 2009
+---------------------------------------------------------------------
+- Added view hooks on landing pages of all major models.
+
+Tue, Aug 18, 2009
+---------------------------------------------------------------------
+- More work on [crm_issues] plugin.
+
+Mon, Aug 17, 2009
+---------------------------------------------------------------------
+- Work on [crm_issues] plugin.
+
 Sat, Aug 15, 2009
 ---------------------------------------------------------------------
 - Implemented plugin dependencies to be able to change plugin loading order.
