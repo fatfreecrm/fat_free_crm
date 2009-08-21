@@ -41,9 +41,21 @@ namespace :crm do
 
   desc "Prepare the database and load default application settings"
   task :setup => :environment do
-    Rake::Task["db:migrate:reset"].invoke
-    Rake::Task["crm:settings:load"].invoke
-    Rake::Task["crm:setup:admin"].invoke
+    proceed = true
+    if ActiveRecord::Migrator.current_version > 0
+      puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
+      loop do
+        print "Continue [yes/no]: "
+        proceed = STDIN.gets.strip
+        break unless proceed.blank?
+      end
+      proceed = (proceed =~ /y(?:es)*/i)
+    end
+    if proceed
+      Rake::Task["db:migrate:reset"].invoke
+      Rake::Task["crm:settings:load"].invoke
+      Rake::Task["crm:setup:admin"].invoke
+    end
   end
 
   namespace :setup do

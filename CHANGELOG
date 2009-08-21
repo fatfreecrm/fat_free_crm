@@ -6,7 +6,8 @@ then you win. –- Mahatma Gandhi
 
 Thu, Aug 20, 2009
 ---------------------------------------------------------------------
-- Added support for unattended rake crm:setup and rake crm:setup:admin tasks.
+- Added support for unattended [rake crm:setup] and [rake crm:setup:admin] tasks.
+- Warn about database reset in [rake crm:setup] task.
 - Removed dependency on Highline gem and removed it from vendors/gems.
 
 Wed, Aug 19, 2009
