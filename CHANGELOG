@@ -4,6 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Thu, Aug 20, 2009
+---------------------------------------------------------------------
+- Added support for unattended rake crm:setup and rake crm:setup:admin tasks.
+- Removed dependency on Highline gem and removed it from vendors/gems.
+
 Wed, Aug 19, 2009
 ---------------------------------------------------------------------
 - Added view hooks on landing pages of all major models.
