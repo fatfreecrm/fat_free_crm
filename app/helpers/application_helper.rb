@@ -187,6 +187,7 @@ module ApplicationHelper
     [ :blog, :linkedin, :facebook, :twitter ].inject([]) do |links, site|
       url = person.send(site)
       unless url.blank?
+        url = "http://" << url unless url.match(/^https?:\/\//)
         links << link_to(image_tag("#{site}.gif", :size => "15x15"), url, :popup => true, :title => "Open #{url} in a new window")
       end
       links

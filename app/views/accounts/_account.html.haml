@@ -16,7 +16,7 @@
       == #{account.user.id == @current_user.id ? "me" : account.user.full_name}
     - unless @current_user.preference[:accounts_outline] == "brief"
       %dt
-        = link_to(account.website, account.website) << " | " if account.website?
+        = link_to(account.website, account.website.match(/^https?:\/\//) ? account.website : 'http://' << account.website) << " | " if account.website?
         = "phone: " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
         = pluralize(account.contacts.count, "contact") << " | "
         = pluralize(account.opportunities.count, "opportunity")
