@@ -49,6 +49,12 @@ end
 # Load default settings from config/settings.yml
 Factory(:default_settings)
 
+# See vendor/plugins/authlogic/lib/authlogic/test_case.rb
+#----------------------------------------------------------------------------
+def activate_authlogic
+  Authlogic::Session::Base.controller = (@request && Authlogic::TestCase::RailsRequestAdapter.new(@request)) || controller
+end
+
 # Note: Authentication is NOT ActiveRecord model, so we mock and stub it using RSpec.
 #----------------------------------------------------------------------------
 def login(user_stubs = {}, session_stubs = {})

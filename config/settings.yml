@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-# Defaul applications settings to be loaded during installation:
+# Default application settings to be loaded during installation:
 #
 #   rake crm:settings:load
 #
@@ -34,6 +34,13 @@
   { :active : true,  :text : "Settings",      :url : { :controller : "admin/settings" } },
   { :active : true,  :text : "Plugins",       :url : { :controller : "admin/plugins"  } }
 ]
+
+# The following setting controls user signup. Possible values are:
+#   :allowed        -- users can sign up and use the system once they have registered.
+#   :needs_approval -- users can sign up but must be approved before they can use the system.
+#   :not_allowed    -- users can only be added by system administrator. This is the default.
+
+:user_signup: :not_allowed
 
 campaign_status:
   :planned       : Planned

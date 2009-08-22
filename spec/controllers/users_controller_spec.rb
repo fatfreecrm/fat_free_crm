@@ -71,13 +71,25 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
   
-    it "should expose a new user as @user and render [new] template" do
-      @user = Factory.build(:user)
-      User.stub!(:new).and_return(@user)
+    describe "if user is allowed to sign up" do
+      it "should expose a new user as @user and render [new] template" do
+        controller.should_receive(:can_signup?).and_return(true)
+        @user = Factory.build(:user)
+        User.stub!(:new).and_return(@user)
 
-      get :new
-      assigns[:user].should == @user
-      response.should render_template("users/new")
+        get :new
+        assigns[:user].should == @user
+        response.should render_template("users/new")
+      end
+    end
+
+    describe "if user is not allowed to sign up" do
+      it "should redirect to login_path" do
+        controller.should_receive(:can_signup?).and_return(false)
+
+        get :new
+        response.should redirect_to(login_path)
+      end
     end
 
   end

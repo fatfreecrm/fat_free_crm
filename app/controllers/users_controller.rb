@@ -44,11 +44,15 @@ class UsersController < ApplicationController
   # GET /users/new.xml                                                     HTML
   #----------------------------------------------------------------------------
   def new
-    @user = User.new
+    if can_signup?
+      @user = User.new
 
-    respond_to do |format|
-      format.html # new.html.haml <-- signup form
-      format.xml  { render :xml => @user }
+      respond_to do |format|
+        format.html # new.html.haml <-- signup form
+        format.xml  { render :xml => @user }
+      end
+    else
+      redirect_to login_path
     end
   end
   
