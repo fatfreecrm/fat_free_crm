@@ -31,20 +31,22 @@ class AuthenticationsController < ApplicationController
 
     if @authentication.save && !@authentication.user.suspended?
       flash[:notice] = "Welcome to Fat Free CRM!"
-      if @authentication.record.login_count > 1 && @authentication.record.last_login_at?
-        flash[:notice] << " Your last login was on " << @authentication.record.last_login_at.strftime("%A, %B %e at %I:%M %p.")
+      if @authentication.user.login_count > 1 && @authentication.user.last_login_at?
+        flash[:notice] << " Your last login was on " << @authentication.user.last_login_at.strftime("%A, %B %e at %I:%M %p.")
       end
       redirect_back_or_default root_url
     else
-      render :action => :new
+      if @authentication.user.awaits_approval?
+        flash[:notice] = "Your account has not been approved yet."
+      else
+        flash[:warning] = "Invalid username or password."
+      end
+      redirect_to :action => :new
     end
   end
 
   # The login form gets submitted to :update action when @authentication is
   # saved (@authentication != nil) but the user is suspended.
-  #
-  # Note that user is always shown "Invalid username or password" message,
-  # even if her account is suspended.
   #----------------------------------------------------------------------------
   alias :update :create
 

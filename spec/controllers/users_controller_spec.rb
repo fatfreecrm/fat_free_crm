@@ -111,28 +111,46 @@ describe UsersController do
   end
 
   # POST /users
-  # POST /users.xml                                                        AJAX
+  # POST /users.xml                                                        HTML
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
 
     describe "with valid params" do
-      
-      it "should expose a newly created user as @user" do
+      before(:each) do
+        @username = "none"
+        @email = @username + "@example.com"
+        @password = "secret"
+        @user = Factory.build(:user, :username => @username, :email => @email)
+        User.stub!(:new).and_return(@user)
       end
 
-      it "should redirect to the created user" do
+      it "exposes a newly created user as @user and redirect to profile page" do
+        post :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
+        assigns[:user].should == @user
+        flash[:notice].should =~ /welcome/
+        response.should redirect_to(profile_url)
+      end
+
+      it "should redirect to login page if user signup needs approval" do
+        Setting.stub!(:user_signup).and_return(:needs_approval)
+
+        post :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
+        assigns[:user].should == @user
+        flash[:notice].should =~ /approval/
+        response.should redirect_to(login_url)
       end
       
     end
     
     describe "with invalid params" do
+      it "assigns a newly created but unsaved user as @user and renders [new] template" do
+        @user = Factory.build(:user, :username => "", :email => "")
+        User.stub!(:new).and_return(@user)
 
-      it "should expose a newly created but unsaved user as @user" do
+        post :create, :user => {}
+        assigns[:user].should == @user
+        response.should render_template("users/new")
       end
-
-      it "should re-render the 'new' template" do
-      end
-      
     end
     
   end

@@ -14,7 +14,7 @@
       = render :partial => "/layouts/jumpbox"
     - else
       = link_to("Login", login_path) << " |"
-      = link_to("Sign Up", signup_path) if can_signup?
+      = link_to("Sign Up", signup_path) << " |" if can_signup?
       = link_to("About", "#about", :rel => "facebox")
   %h3
     = link_to("Fat Free CRM", root_path)

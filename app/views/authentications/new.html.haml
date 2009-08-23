@@ -5,7 +5,6 @@
     - if can_signup?
       .title_tools== Don't have an account? #{link_to 'Sign Up Now!', signup_path}
     .title Login
-    .warn= "Invalid username or password" unless f.error_messages.blank?
     .section
       .label Username:
       = f.text_field :username

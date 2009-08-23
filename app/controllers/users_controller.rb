@@ -63,13 +63,18 @@ class UsersController < ApplicationController
   end
   
   # POST /users
-  # POST /users.xml                                                        AJAX
+  # POST /users.xml                                                        HTML
   #----------------------------------------------------------------------------
   def create
     @user = User.new(params[:user])
     if @user.save
-      flash[:notice] = "Successfull signup, welcome to Fat Free CRM!"
-      redirect_back_or_default profile_url
+      if Setting.user_signup == :needs_approval
+        flash[:notice] = "Your account has been created and is awating approval by the system administrator."
+        redirect_to login_url
+      else
+        flash[:notice] = "Successfull signup, welcome to Fat Free CRM!"
+        redirect_back_or_default profile_url
+      end
     else
       render :action => :new
     end

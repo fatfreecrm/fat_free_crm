@@ -95,11 +95,11 @@ describe Admin::UsersController do
       it "assigns a newly created user as @user and renders [create] template" do
         username = "none"
         email = username + "@example.com"
-        password = confirmation = "secret"
+        password = "secret"
         @user = Factory.build(:user, :username => username, :email => email)
         User.stub!(:new).and_return(@user)
 
-        post :create, :user => { :username => username, :email => email, :password => password, :password_confirmation => confirmation }
+        xhr :post, :create, :user => { :username => username, :email => email, :password => password, :password_confirmation => password }
         assigns[:user].should == @user
         response.should render_template("admin/users/create")
       end
@@ -110,7 +110,7 @@ describe Admin::UsersController do
         @user = Factory.build(:user, :username => "", :email => "")
         User.stub!(:new).and_return(@user)
 
-        post :create, :user => {}
+        xhr :post, :create, :user => {}
         assigns[:user].should == @user
         response.should render_template("admin/users/create")
       end
