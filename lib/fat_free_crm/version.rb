@@ -19,7 +19,7 @@ module FatFreeCRM
   class Version
     MAJOR = 0
     MINOR = 9
-    TINY  = 5
+    TINY  = 6
 
     def self.to_a
       [ MAJOR, MINOR, TINY ]
