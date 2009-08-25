@@ -34,7 +34,7 @@ class PasswordsController < ApplicationController
       redirect_to root_url
     else
       flash[:notice] = "No user was found with that email address."
-      render :action => :new
+      redirect_to :action => :new
     end
   end
   

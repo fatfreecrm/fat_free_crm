@@ -4,6 +4,27 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Aug 24, 2009
+---------------------------------------------------------------------
+- Implemented user approvals in Admin/Users and closed LH #29.
+- Release 0.9.6.
+
+Sat, Aug 22, 2009
+---------------------------------------------------------------------
+- Implemented :needs_approval setting for user signups.
+
+Fri, Aug 21, 2009
+---------------------------------------------------------------------
+- Added new :user_signup setting (see config/settings.yml).
+- User signups are only allowed if :user_signup is set to :allowed or :needs_approval.
+
+Thu, Aug 20, 2009
+---------------------------------------------------------------------
+- Added support for unattended [rake crm:setup] and [rake crm:setup:admin] tasks.
+- Warn about database reset in [rake crm:setup] task.
+- Removed dependency on Highline gem and removed it from vendors/gems.
+- Added [:user_signup] setting and started with the signup permissions.
+
 Wed, Aug 19, 2009
 ---------------------------------------------------------------------
 - Added view hooks on landing pages of all major models.

@@ -41,45 +41,61 @@ namespace :crm do
 
   desc "Prepare the database and load default application settings"
   task :setup => :environment do
-    Rake::Task["db:migrate:reset"].invoke
-    Rake::Task["crm:settings:load"].invoke
-    Rake::Task["crm:setup:admin"].invoke
+    proceed = true
+    if ActiveRecord::Migrator.current_version > 0
+      puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
+      loop do
+        print "Continue [yes/no]: "
+        proceed = STDIN.gets.strip
+        break unless proceed.blank?
+      end
+      proceed = (proceed =~ /y(?:es)*/i)
+    end
+    if proceed
+      Rake::Task["db:migrate:reset"].invoke
+      Rake::Task["crm:settings:load"].invoke
+      Rake::Task["crm:setup:admin"].invoke
+    end
   end
 
   namespace :setup do
     desc "Create admin user"
     task :admin => :environment do
-      require "highline/import"
+      username, password, email = ENV["USERNAME"], ENV["PASSWORD"], ENV["EMAIL"]
+      unless username && password && email
+        puts "\nTo create the admin user you will be prompted to enter username, password,"
+        puts "and email address. You might also specify the username of existing user.\n"
+        loop do
+          username ||= "system"
+          print "\nUsername [#{username}]: "
+          reply = STDIN.gets.strip
+          username = reply unless reply.blank?
 
-      puts "\nTo create the admin user you will be prompted to enter username, password,"
-      puts "and email address. You might also specify the username of existing user.\n"
+          password ||= "manager"
+          print "Pasword [#{password}]: "
+          reply = STDIN.gets.strip
+          password = reply unless reply.blank?
 
-      username = password = email = nil
-      loop do
-        username = ask("\nUsername [system]: ", String) do |s|
-          s.validate = /^\S{0,32}$/
-          s.whitespace = :strip
+          loop do
+            print "Email: "
+            email = STDIN.gets.strip
+            break unless email.blank?
+          end
+
+          puts "\nThe admin user will be created with the following credentials:\n\n"
+          puts "  Username: #{username}"
+          puts "  Password: #{'*' * password.length}"
+          puts "     Email: #{email}\n\n"
+          loop do
+            print "Continue [yes/no/exit]: "
+            reply = STDIN.gets.strip
+            break unless reply.blank?
+          end
+          break if reply =~ /y(?:es)*/i
+          retry if reply =~ /no*/i
+          puts "No admin user was created."
+          exit
         end
-        username = "system" if username.blank?
-
-        password = ask("Password [manager]: ", String) do |s|
-          s.echo = false unless defined?(::JRuby)
-          s.validate = /^\S{0,64}$/
-        end
-        password = "manager" if password.blank?
-
-        email = ask("Email: ", String) do |s|
-          s.validate = /^\S{0,64}$/
-        end
-        puts "\nThe admin user will be created with the following credentials:\n\n"
-        puts "  Username: #{username}"
-        puts "  Password: #{'*' * password.length}"
-        puts "     Email: #{email}\n"
-        continue = ask("\nContinue [yes/no/exit]: ")
-        break if continue =~ /y(?:es)*/i
-        retry if continue =~ /no*/i
-        puts "No admin user was created."
-        exit
       end
       user = User.find_by_username(username) || User.new
       user.update_attributes(:username => username, :password => password, :email => email, :admin => true)

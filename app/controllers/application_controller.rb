@@ -17,7 +17,7 @@
 
 class ApplicationController < ActionController::Base
   helper(application_helpers)
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
 
   filter_parameter_logging :password, :password_confirmation
@@ -85,6 +85,11 @@ class ApplicationController < ActionController::Base
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
+  end
+
+  #----------------------------------------------------------------------------
+  def can_signup?
+    [ :allowed, :needs_approval ].include? Setting.user_signup
   end
 
   #----------------------------------------------------------------------------
