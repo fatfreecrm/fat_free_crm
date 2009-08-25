@@ -32,7 +32,7 @@ class AuthenticationsController < ApplicationController
     if @authentication.save && !@authentication.user.suspended?
       flash[:notice] = "Welcome to Fat Free CRM!"
       if @authentication.user.login_count > 1 && @authentication.user.last_login_at?
-        flash[:notice] << " Your last login was on " << @authentication.user.last_login_at.strftime("%A, %B %e at %I:%M %p.")
+        flash[:notice] << " Your last login was on " << @authentication.user.last_login_at.to_s(:mmddhhss)
       end
       redirect_back_or_default root_url
     else

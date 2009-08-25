@@ -24,7 +24,8 @@ module Admin::UsersHelper
 
   #----------------------------------------------------------------------------
   def link_to_reactivate(user)
-    link_to_remote("Reactivate!", :method => :put, :url => reactivate_admin_user_path(user))
+    name = user.awaits_approval? ? "Approve!" : "Reactivate!"
+    link_to_remote(name, :method => :put, :url => reactivate_admin_user_path(user))
   end
 
   #----------------------------------------------------------------------------

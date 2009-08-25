@@ -43,7 +43,7 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
     end
   end
 
-  # Override Authologic instance method in order to keep :login_counter,
+  # Override Authologic instance method in order to keep :login_count,
   # :last_login_at, and :last_login_ip intact if the user is suspended.
   # See vendor/plugin/authlogin/lib/authlogic/session/magic_columns.rb.
   #----------------------------------------------------------------------------

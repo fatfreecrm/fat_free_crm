@@ -1,6 +1,8 @@
 %li[user]{ highlightable(dom_id(user, :tools)) }
 
-  - if user.suspended?
+  - if user.awaits_approval?
+    .strip{:class => "signed_up"} Signed Up
+  - elsif user.suspended?
     .strip{:class => "suspended"} Suspended
   - elsif user.admin?
     .strip{:class => "admin"} Admin
@@ -34,7 +36,9 @@
       = pluralize(user.login_count, "login")
       %span.black= "|"
 
-    - if user.last_request_at
+    - if user.awaits_approval?
+      %b.cool awaits your approval
+    - elsif user.last_request_at
       %span.cool last seen #{time_ago_in_words(user.last_request_at)} ago
     - else
       %span.warn hasn't yet logged in
@@ -42,7 +46,10 @@
     = link_to(user.email, "mailto:" << user.email.to_s) << " | "
     = "phone: <b>" + user.phone << "</b> | " if user.phone?
     = "mobile: <b>" + user.mobile << "</b> | " if user.mobile?
-    - unless user.suspended?
-      user since #{user.created_at.to_date.to_s(:mmddyy)}
+
+    - if !user.suspended?
+      %span user since #{user.created_at.to_date.to_s(:mmddyy)}
+    - elsif user.awaits_approval?
+      %b.cool signed up on #{user.created_at.to_s(:mmddhhss)}
     - else
-      %span.warn suspended on #{user.suspended_at.to_date.to_s(:mmddyy)}
+      %span.warn suspended on #{user.created_at.to_date.to_s(:mmddyy)}
