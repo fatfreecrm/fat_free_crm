@@ -42,6 +42,16 @@ module FatFreeCRM
       end
     end
 
+    #--------------------------------------------------------------------------
+    def tab(area, options = nil)
+      tabs = []
+      if block_given?
+        yield tabs
+      else
+        # not implemented yet
+      end
+    end
+
     # Class methods.
     #--------------------------------------------------------------------------
     class << self
