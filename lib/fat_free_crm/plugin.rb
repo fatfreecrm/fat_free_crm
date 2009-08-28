@@ -44,11 +44,11 @@ module FatFreeCRM
 
     #--------------------------------------------------------------------------
     def tab(area, options = nil)
-      tabs = []
+      tabs = FatFreeCRM::Tabs.list(area)
       if block_given?
         yield tabs
       else
-        # not implemented yet
+        tabs << options
       end
     end
 

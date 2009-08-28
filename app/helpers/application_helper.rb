@@ -19,7 +19,7 @@ module ApplicationHelper
 
   def tabs
     @current_tab ||= :home
-    Setting[:tabs].each { |tab| tab[:active] = (tab[:text].downcase.to_sym == @current_tab || tab[:url][:controller].to_sym == @current_tab) }
+    FatFreeCRM::Tabs.main.each { |tab| tab[:active] = (tab[:text].downcase.to_sym == @current_tab || tab[:url][:controller].to_sym == @current_tab) }
   end
   
   #----------------------------------------------------------------------------
