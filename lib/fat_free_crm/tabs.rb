@@ -15,8 +15,22 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require "fat_free_crm/version"
-require "fat_free_crm/core_ext"
-require "fat_free_crm/tabs"
-require "fat_free_crm/callback"
-require "fat_free_crm/plugin"
+module FatFreeCRM
+  class Tabs
+    cattr_accessor :main
+    cattr_accessor :admin
+    
+    @@main  = Setting[:tabs]
+    @@admin = Setting[:admin_tabs]
+
+    #----------------------------------------------------------------------------
+    def self.list(which_ones = :main)
+      case which_ones
+        when :main  then @@main
+        when :admin then @@admin
+        else raise raise ArgumentError.new("invalid argument, use :tabs or :admin")
+      end
+    end
+
+  end
+end
