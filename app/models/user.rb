@@ -125,7 +125,7 @@ class User < ActiveRecord::Base
   # Suspend newly created user if signup requires an approval.
   #----------------------------------------------------------------------------
   def check_if_needs_approval
-    self.suspended_at = Time.now if Setting.user_signup == :needs_approval
+    self.suspended_at = Time.now if Setting.user_signup == :needs_approval && !self.admin
   end
 
   # Prevent current user from deleting herself.
