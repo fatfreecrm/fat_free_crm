@@ -97,6 +97,7 @@ namespace :crm do
           exit
         end
       end
+      User.reset_column_information # Reload the class since we've added new fields in migrations.
       user = User.find_by_username(username) || User.new
       user.update_attributes(:username => username, :password => password, :email => email, :admin => true)
       puts "Admin user has been created."
