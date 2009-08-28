@@ -36,7 +36,7 @@ class AuthenticationsController < ApplicationController
       end
       redirect_back_or_default root_url
     else
-      if @authentication.user.awaits_approval?
+      if @authentication.user && @authentication.user.awaits_approval?
         flash[:notice] = "Your account has not been approved yet."
       else
         flash[:warning] = "Invalid username or password."
