@@ -42,13 +42,20 @@ module FatFreeCRM
       end
     end
 
+    # Define custom tab -- see usage example in [crm_sample_tabs] plugin.
     #--------------------------------------------------------------------------
-    def tab(area, options = nil)
-      tabs = FatFreeCRM::Tabs.list(area) || []
-      if block_given?
-        yield tabs
-      else
-        tabs << options
+    def tab(section, options = nil)
+      if section.is_a?(Hash)    # Make it possible to omit first parameter...
+        options = section.dup   # ...and use :main as default.
+        section = :main
+      end
+      tabs = FatFreeCRM::Tabs.send(section)
+      if tabs # Might be nil when running rake task.
+        if block_given?
+          yield tabs
+        else
+          tabs << options if options
+        end
       end
     end
 

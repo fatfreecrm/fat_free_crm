@@ -20,17 +20,21 @@ module FatFreeCRM
     cattr_accessor :main
     cattr_accessor :admin
 
-    if ENV['RAILS_ENV'] && ActiveRecord::Base.connection.tables.include?("settings")
-      @@main  = Setting[:tabs]
-      @@admin = Setting[:admin_tabs]
+    # Class methods.
+    #----------------------------------------------------------------------------
+    def self.main
+      @@main || reload!(:main)
     end
 
-    #----------------------------------------------------------------------------
-    def self.list(which_ones = :main)
-      case which_ones
-        when :main  then @@main
-        when :admin then @@admin
-        else raise ArgumentError.new("#{which_one} is invalid tab argument, use :main or :admin")
+    def self.admin
+      @@admin || reload!(:admin)
+    end
+
+    def self.reload!(section = :main)
+      return if ENV['RAILS_ENV'].nil? || !ActiveRecord::Base.connection.tables.include?("settings")
+      case section
+        when :main  then @@main  = Setting[:tabs]
+        when :admin then @@admin = Setting[:admin_tabs]
       end
     end
 
