@@ -188,9 +188,9 @@ var crm = {
 
   //----------------------------------------------------------------------------
   flip_subtitle: function(el) {
-    var arrow = el.down("small");
-    var intro = el.up().next().down("small");
-    var section = el.up().next().down("div");
+    var arrow = Element.down(el, "small");
+    var intro = Element.down(Element.next(Element.up(el)), "small");
+    var section = Element.down(Element.next(Element.up(el)), "div");
 
     if (Element.visible(section)) {
       arrow.update(this.COLLAPSED);
