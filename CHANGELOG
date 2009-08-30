@@ -4,6 +4,32 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, Aug 30, 2009
+---------------------------------------------------------------------
+- Get flip_subtitle working in IE8 (thanks, Hamish!)
+- Make sure simple_column_search does not escape period and single quote (thanks, Rit!)
+- Don't suspend Admin users (thanks, Rit!)
+- Moved [crm_sample_tabs] plugin into separate repository.
+- Merged plugin tab support into the master branch.
+
+Sat, Aug 29, 2009
+---------------------------------------------------------------------
+- Some refactoring and more comments explaining the examples in [crm_sample_plugin].
+
+Thu, Aug 27, 2009
+---------------------------------------------------------------------
+- Make sure we can run Rake tasks when Settings are missing.
+- Reload User class in [rake crm:setup] task to make sure migration attributes are set.
+- Make sure the user has been authenticated before checking whether she is awaiting approval.
+
+Wed, Aug 26, 2009
+---------------------------------------------------------------------
+- Implemented #tab method for plugin registration.
+
+Tue, Aug 25, 2009
+---------------------------------------------------------------------
+- Added [crm_sample_tabs] plugin with the tab registration prototype.
+
 Mon, Aug 24, 2009
 ---------------------------------------------------------------------
 - Implemented user approvals in Admin/Users and closed LH #29.
