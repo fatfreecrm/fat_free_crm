@@ -51,6 +51,8 @@
 #  admin             :boolean(1)      not null
 #
 class User < ActiveRecord::Base
+  attr_protected :admin, :suspended_at
+
   before_create  :check_if_needs_approval
   before_destroy :check_if_current_user, :check_if_has_related_assets
 
