@@ -73,8 +73,14 @@ namespace :crm do
 
           password ||= "manager"
           print "Pasword [#{password}]: "
-          reply = STDIN.gets.strip
-          password = reply unless reply.blank?
+          echo = lambda { |toggle| return if RUBY_PLATFORM =~ /mswin/; system(toggle ? "stty echo && echo" : "stty -echo") }
+          begin
+            echo.call(false)
+            reply = STDIN.gets.strip
+            password = reply unless reply.blank?
+          ensure
+            echo.call(true)
+          end
 
           loop do
             print "Email: "

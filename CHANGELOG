@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Tue, Sep 1, 2009
 ---------------------------------------------------------------------
 - Fixed user signup vulnerability (thanks, Rit!)
+- Suppress terminal echo when asking for admin password in [rake crm:setup:admin] task.
 
 Sun, Aug 30, 2009
 ---------------------------------------------------------------------
