@@ -18,13 +18,7 @@
 module Admin::ApplicationHelper
 
   def tabs
-    @current_tab ||= :users
-    tabs = FatFreeCRM::Tabs.admin
-    if tabs
-      tabs.each { |tab| tab[:active] = (tab[:text].downcase.to_sym == @current_tab) }
-    else
-      raise RuntimeError.new("Admin Tab settings are missing, please run 'rake crm:setup'")
-    end
+    super(FatFreeCRM::Tabs.admin)
   end
 
   #----------------------------------------------------------------------------

@@ -8,6 +8,7 @@ Thu, Sep 3, 2009
 ---------------------------------------------------------------------
 - Make sure [rake crm:setup:admin] can actually assign admin attribute (thanks Rit!)
 - Correctly assign and revoke admin rights in Admin/Users (thanks Rit!)
+- Refactored Tabs code to avoid duplication.
 
 Tue, Sep 1, 2009
 ---------------------------------------------------------------------
