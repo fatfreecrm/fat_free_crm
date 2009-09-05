@@ -7,6 +7,8 @@ then you win. –- Mahatma Gandhi
 Sat, Sep 5, 2009
 ---------------------------------------------------------------------
 - Added overlay to the facebox library.
+- Upgraded Rails Engines plugin (edge 2009-06-16).
+- Boot Rails Engines right after Rails boots itself up.
 
 Thu, Sep 3, 2009
 ---------------------------------------------------------------------

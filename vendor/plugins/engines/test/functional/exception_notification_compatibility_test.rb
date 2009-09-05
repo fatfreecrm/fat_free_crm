@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class ExceptionNotificationCompatibilityTest < Test::Unit::TestCase
+class ExceptionNotificationCompatibilityTest < ActionController::TestCase
   ExceptionNotifier.exception_recipients = %w(joe@schmoe.com bill@schmoe.com)
   class SimpleController < ApplicationController
     include ExceptionNotifiable
