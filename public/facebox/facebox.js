@@ -106,7 +106,7 @@ var Facebox = Class.create({
 		
 		var pageScroll = document.viewport.getScrollOffsets();
 		this.facebox.setStyle({
-			'top': pageScroll.top + (document.viewport.getHeight() / 10) + 'px',
+			'top': pageScroll.top + (document.viewport.getHeight() / 5) + 'px',
 			'left': document.viewport.getWidth() / 2 - (this.facebox.getWidth() / 2) + 'px'
 		});
 		
@@ -118,6 +118,8 @@ var Facebox = Class.create({
 		this.loading();
 		load = $$('#facebox .loading').first();
 		if(load) load.remove();
+
+    this.show_overlay();
 		
 		contentWrapper = $$('#facebox .content').first();
 		if (klass) contentWrapper.addClassName(klass);
@@ -137,7 +139,8 @@ var Facebox = Class.create({
 	},
 	
 	close		: function(){
-		 new Effect.Fade('facebox', {duration: .3});
+    this.hide_overlay();
+    new Effect.Fade('facebox', {duration: 0.25});
 	},
 	
 	click_handler	: function(elem, e){
@@ -180,7 +183,46 @@ var Facebox = Class.create({
 			});
 			
 		}
-	}
+	},
+
+  show_overlay: function() {
+    if (!$("facebox_overlay")) {
+      new Insertion.Top(document.body, '<div id="facebox_overlay" style="display:none;"></div>');
+    }
+    this.set_overlay_size();
+    // this.hide_selects();
+    new Effect.Appear("facebox_overlay", { duration: 0.3 });
+  },
+
+  hide_overlay: function() {
+    // this.show_selects();
+    new Effect.Fade("facebox_overlay", { duration: 0.3 });
+  },
+
+  set_overlay_size: function() {
+    if (window.innerHeight && window.scrollMaxY) {
+      yScroll = window.innerHeight + window.scrollMaxY;
+    } else if (document.body.scrollHeight > document.body.offsetHeight) {
+      yScroll = document.body.scrollHeight;
+    } else {
+      yScroll = document.body.offsetHeight;
+    }
+    $("facebox_overlay").style['height'] = yScroll + "px";
+  },
+
+  hide_selects: function() {
+    selects = document.getElementsByTagName("select");
+    for (i = 0;  i < selects.length;  i++) {
+      selects[i].style.visibility = "hidden";
+    }
+  },
+
+  show_selects: function() {
+    selects = document.getElementsByTagName("select");
+    for (i = 0;  i < selects.length;  i++) {
+      selects[i].style.visibility = "visible";
+    }
+  }
 });
 
 var facebox;

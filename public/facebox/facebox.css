@@ -73,11 +73,18 @@
 }
 
 #facebox_overlay {
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  filter: alpha(opacity=50);
+  height: 100%;
+  min-height:100%;
+  opacity: 0.5;
   position: fixed;
-  top: 0px;
-  left: 0px;
-  height:100%;
-  width:100%;
+  width: 100%;
+  z-index: 100;
 }
 
 .facebox_hide {
