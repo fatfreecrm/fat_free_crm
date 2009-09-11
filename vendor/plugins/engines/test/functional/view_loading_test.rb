@@ -7,7 +7,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class ViewLoadingTest < Test::Unit::TestCase
+class ViewLoadingTest < ActionController::TestCase
   def setup
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new

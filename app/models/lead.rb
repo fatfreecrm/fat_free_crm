@@ -62,7 +62,7 @@ class Lead < ActiveRecord::Base
   named_scope :created_by, lambda { |user| { :conditions => "user_id = #{user.id}" } }
   named_scope :assigned_to, lambda { |user| { :conditions => "assigned_to = #{user.id}" } }
 
-  simple_column_search :first_name, :last_name, :company, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
+  simple_column_search :first_name, :last_name, :company, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   uses_mysql_uuid
   uses_user_permissions
   acts_as_commentable

@@ -51,6 +51,8 @@
 #  admin             :boolean(1)      not null
 #
 class User < ActiveRecord::Base
+  attr_protected :admin, :suspended_at
+
   before_create  :check_if_needs_approval
   before_destroy :check_if_current_user, :check_if_has_related_assets
 
@@ -68,7 +70,7 @@ class User < ActiveRecord::Base
   named_scope :except, lambda { |user| { :conditions => "id != #{user.id}" } }
   default_scope :order => "id DESC" # Show newest users first.
 
-  simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-]/, "").strip }
+  simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
 
   uses_mysql_uuid
   acts_as_paranoid
@@ -125,7 +127,7 @@ class User < ActiveRecord::Base
   # Suspend newly created user if signup requires an approval.
   #----------------------------------------------------------------------------
   def check_if_needs_approval
-    self.suspended_at = Time.now if Setting.user_signup == :needs_approval
+    self.suspended_at = Time.now if Setting.user_signup == :needs_approval && !self.admin
   end
 
   # Prevent current user from deleting herself.

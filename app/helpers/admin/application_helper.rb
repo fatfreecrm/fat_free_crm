@@ -18,8 +18,7 @@
 module Admin::ApplicationHelper
 
   def tabs
-    @current_tab ||= :users
-    Setting[:admin_tabs].each { |tab| tab[:active] = (tab[:text].downcase.to_sym == @current_tab) }
+    super(FatFreeCRM::Tabs.admin)
   end
 
   #----------------------------------------------------------------------------

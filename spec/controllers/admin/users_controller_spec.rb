@@ -92,15 +92,30 @@ describe Admin::UsersController do
   describe "POST create" do
   
     describe "with valid params" do
+      before(:each) do
+        @username = "none"
+        @email = @username + "@example.com"
+        @password = "secret"
+      end
+
       it "assigns a newly created user as @user and renders [create] template" do
-        username = "none"
-        email = username + "@example.com"
-        password = "secret"
-        @user = Factory.build(:user, :username => username, :email => email)
+        @user = Factory.build(:user, :username => @username, :email => @email)
         User.stub!(:new).and_return(@user)
 
-        xhr :post, :create, :user => { :username => username, :email => email, :password => password, :password_confirmation => password }
+        xhr :post, :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
         assigns[:user].should == @user
+        response.should render_template("admin/users/create")
+      end
+
+      it "creates admin user when requested so" do
+        xhr :post, :create, :user => { :username => @username, :email => @email, :admin => "1", :password => @password, :password_confirmation => @password }
+        assigns[:user].admin.should == true
+        response.should render_template("admin/users/create")
+      end
+
+      it "doesn't create admin user unless requested so" do
+        xhr :post, :create, :user => { :username => @username, :email => @email, :admin => "0", :password => @password, :password_confirmation => @password }
+        assigns[:user].admin.should == false
         response.should render_template("admin/users/create")
       end
     end
@@ -139,6 +154,22 @@ describe Admin::UsersController do
         xhr :put, :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
         flash[:warning].should_not == nil
         response.body.should == "window.location.reload();"
+      end
+
+      it "assigns admin rights when requested so" do
+        @user = Factory(:user, :admin => false)
+        xhr :put, :update, :id => @user.id, :user => { :admin => "1", :username => @user.username, :email => @user.email }
+        assigns[:user].should == @user.reload
+        assigns[:user].admin.should == true
+        response.should render_template("admin/users/update")
+      end
+
+      it "revokes admin rights when requested so" do
+        @user = Factory(:user, :admin => true)
+        xhr :put, :update, :id => @user.id, :user => { :admin => "0", :username => @user.username, :email => @user.email }
+        assigns[:user].should == @user.reload
+        assigns[:user].admin.should == false
+        response.should render_template("admin/users/update")
       end
     end
   

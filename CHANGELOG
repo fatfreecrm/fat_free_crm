@@ -4,6 +4,56 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, Sep 6, 2009
+---------------------------------------------------------------------
+- Release 0.9.7.
+- Open up [Quick find] on click rather than on mouseover.
+- Added bounce effect to the login screen (fun!).
+- Added CONTRIBUTORS file.
+
+Sat, Sep 5, 2009
+---------------------------------------------------------------------
+- Added overlay to the facebox library.
+- Upgraded Rails Engines plugin (edge 2009-06-16).
+- Boot Rails Engines right after Rails boots itself up.
+
+Thu, Sep 3, 2009
+---------------------------------------------------------------------
+- Make sure [rake crm:setup:admin] can actually assign admin attribute (thanks Rit!)
+- Correctly assign and revoke admin rights in Admin/Users (thanks Rit!)
+- Refactored Tabs code to avoid duplication.
+
+Tue, Sep 1, 2009
+---------------------------------------------------------------------
+- Fixed user signup vulnerability (thanks, Rit!)
+- Suppress terminal echo when asking for admin password in [rake crm:setup:admin] task.
+
+Sun, Aug 30, 2009
+---------------------------------------------------------------------
+- Get flip_subtitle working in IE8 (thanks, Hamish!)
+- Make sure simple_column_search does not escape period and single quote (thanks, Rit!)
+- Don't suspend Admin users (thanks, Rit!)
+- Moved [crm_sample_tabs] plugin into separate repository.
+- Merged plugin tab support into the master branch.
+
+Sat, Aug 29, 2009
+---------------------------------------------------------------------
+- Some refactoring and more comments explaining the examples in [crm_sample_plugin].
+
+Thu, Aug 27, 2009
+---------------------------------------------------------------------
+- Make sure we can run Rake tasks when Settings are missing.
+- Reload User class in [rake crm:setup] task to make sure migration attributes are set.
+- Make sure the user has been authenticated before checking whether she is awaiting approval.
+
+Wed, Aug 26, 2009
+---------------------------------------------------------------------
+- Implemented #tab method for plugin registration.
+
+Tue, Aug 25, 2009
+---------------------------------------------------------------------
+- Added [crm_sample_tabs] plugin with the tab registration prototype.
+
 Mon, Aug 24, 2009
 ---------------------------------------------------------------------
 - Implemented user approvals in Admin/Users and closed LH #29.

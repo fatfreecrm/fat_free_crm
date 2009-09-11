@@ -47,8 +47,9 @@ the database:
 
 === Setting Up The Application
 
-The next step is to load default Fat Free CRM settings, such as menu structure,
-default colors, etc. This is done by running the following rake task:
+The next step is to load default Fat Free CRM settings, such as menu structures,
+default colors, etc. and create the Admin user. This is done by running the
+following rake task:
 
    $ rake crm:setup
 
@@ -56,7 +57,8 @@ default colors, etc. This is done by running the following rake task:
 === Loading Demo Data
 
 You can test drive Fat Free CRM by loading sample records that are generated
-on the fly mimic the actual use:
+on the fly mimic the actual use. IMPORTANT: loading demo will delete all the
+existing data.
 
    $ rake crm:demo:load
 
@@ -79,10 +81,13 @@ to http://localhost:3000
 
 === For Developers
 
-Fat Free CRM can be customized by trapping callback hooks and extended by adding
-plugins. Please see http://github.com/michaeldv/crm_sample_plugin/tree/master and
-http://github.com/michaeldv/crm_web_to_lead/tree/master for sample source code
-demonstrating the concepts.
+Fat Free CRM can be customized by implementing callback hooks and extended by
+creating Rails Engines plugins. Check out these sample repositories demonstrating
+the concepts:
+
+   http://github.com/michaeldv/crm_sample_plugin/tree/master
+   http://github.com/michaeldv/crm_sample_tabs/tree/master
+   http://github.com/michaeldv/crm_web_to_lead/tree/master
 
 
 === License

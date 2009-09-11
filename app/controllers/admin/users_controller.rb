@@ -76,6 +76,7 @@ class Admin::UsersController < Admin::ApplicationController
   def create
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.new(params[:user])
+    @user.admin = (params[:user][:admin] == "1")
 
     respond_to do |format|
       if @user.save_without_session_maintenance
@@ -95,6 +96,7 @@ class Admin::UsersController < Admin::ApplicationController
   def update
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.find(params[:id])
+    @user.admin = (params[:user][:admin] == "1")
 
     respond_to do |format|
       if @user.update_attributes(params[:user])

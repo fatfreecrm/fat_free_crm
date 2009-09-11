@@ -129,15 +129,6 @@ tt {
   font-size: 10px;
   padding: 0px 0px 0px 16px; }
 
-.admin #header {
-  background: #385261; }
-  .admin #header h3 a {
-    background: #385261; }
-  .admin #header #welcome a:hover {
-    background: #385261; }
-.admin #tabs {
-  background: #385261; }
-
 .title {
   border-bottom: 1px gray solid;
   color: #342d7e;

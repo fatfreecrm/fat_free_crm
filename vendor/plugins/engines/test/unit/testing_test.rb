@@ -4,9 +4,10 @@ class TestingTest < Test::Unit::TestCase
   def setup
     Engines::Testing.set_fixture_path
     @filename = File.join(Engines::Testing.temporary_fixtures_directory, 'testing_fixtures.yml')
+    File.delete(@filename) if File.exists?(@filename)
   end
   
-  def teardown    
+  def teardown
     File.delete(@filename) if File.exists?(@filename)
   end
 

@@ -42,6 +42,26 @@ module FatFreeCRM
       end
     end
 
+    # Define custom tab. See [crm_sample_tabs] plugin for usage examples.
+    #   tab(:main | :admin, { :text => ..., :url => ... })
+    # or
+    #   tab(:main | :admin) { |tabs| ... }
+    #--------------------------------------------------------------------------
+    def tab(main_or_admin, options = nil)
+      if main_or_admin.is_a?(Hash)    # Make it possible to omit first parameter...
+        options = main_or_admin.dup   # ...and use :main as default.
+        main_or_admin = :main
+      end
+      tabs = FatFreeCRM::Tabs.send(main_or_admin)
+      if tabs                         # Might be nil when running rake task (ex: rake crm:setup).
+        if block_given?
+          yield tabs
+        else
+          tabs << options if options
+        end
+      end
+    end
+
     # Class methods.
     #--------------------------------------------------------------------------
     class << self

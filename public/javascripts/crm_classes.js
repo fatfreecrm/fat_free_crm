@@ -45,7 +45,7 @@ crm.Popup = Class.create({
 
   //----------------------------------------------------------------------------
   setup_show_observer: function() {
-    $(this.options.trigger).observe("mouseover", function(e) {
+    $(this.options.trigger).observe("click", function(e) {
       if (this.popup && !this.popup.visible()) {
         this.show_popup(e);
       }

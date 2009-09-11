@@ -73,8 +73,14 @@ namespace :crm do
 
           password ||= "manager"
           print "Pasword [#{password}]: "
-          reply = STDIN.gets.strip
-          password = reply unless reply.blank?
+          echo = lambda { |toggle| return if RUBY_PLATFORM =~ /mswin/; system(toggle ? "stty echo && echo" : "stty -echo") }
+          begin
+            echo.call(false)
+            reply = STDIN.gets.strip
+            password = reply unless reply.blank?
+          ensure
+            echo.call(true)
+          end
 
           loop do
             print "Email: "
@@ -97,8 +103,10 @@ namespace :crm do
           exit
         end
       end
+      User.reset_column_information # Reload the class since we've added new fields in migrations.
       user = User.find_by_username(username) || User.new
-      user.update_attributes(:username => username, :password => password, :email => email, :admin => true)
+      user.update_attributes(:username => username, :password => password, :email => email)
+      user.update_attribute(:admin, true) # Mass assignments don't work for :admin because of the attr_protected
       puts "Admin user has been created."
     end
   end
