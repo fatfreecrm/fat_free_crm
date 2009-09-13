@@ -4,9 +4,28 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, Sep 13, 2009
+---------------------------------------------------------------------
+- Added [get_*] controller hooks.
+- Refactored FatFreeCRM::Callback.hook to simplify and support hook chains.
+- Implemented controller hooks in [crm_tags] plugin.
+
 Sat, Sep 12, 2009
 ---------------------------------------------------------------------
-- Added view hooks to support [crm_tags] plugin.
+- Added [*_top_section_bottom] view hooks.
+- Make Rails not to reload core classes when developing a plugin.
+
+Thu, Sep 10, 2009
+---------------------------------------------------------------------
+- More work on [crm_tags] plugin and its view hooks.
+
+Wed, Sep 9, 2009
+---------------------------------------------------------------------
+- Injecting [acts_as_taggable_on] to existing models.
+
+Mon, Sep 7, 2009
+---------------------------------------------------------------------
+- Started with [crm_tags] plugin.
 
 Sun, Sep 6, 2009
 ---------------------------------------------------------------------

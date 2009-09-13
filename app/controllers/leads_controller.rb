@@ -283,6 +283,11 @@ class LeadsController < ApplicationController
       :per_page => @current_user.preference[:leads_per_page]
     }
 
+    # Call :get_leads hook and return its output if any.
+    leads = hook(:get_leads, self, :records => records, :pages => pages)
+    return leads.last unless leads.empty?
+
+    # Default processing if no :get_leads hooks are present.
     if session[:filter_by_lead_status]
       filtered = session[:filter_by_lead_status].split(",")
       current_query.blank? ? Lead.my(records).only(filtered) : Lead.my(records).only(filtered).search(current_query)
