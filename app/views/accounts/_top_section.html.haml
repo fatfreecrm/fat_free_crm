@@ -8,3 +8,4 @@
       %td{ :valign => :top }
         .label.top.req Assigned to:
         = collection_select :account, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+    = hook(:account_top_section_bottom, self, :f => f)

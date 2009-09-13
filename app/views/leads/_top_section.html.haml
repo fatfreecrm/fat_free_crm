@@ -16,3 +16,4 @@
       %td{ :valign => :top }
         .label Phone:
         = f.text_field :phone, :style => "width:240px"
+    = hook(:lead_top_section_bottom, self, :f => f)

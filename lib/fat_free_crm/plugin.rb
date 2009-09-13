@@ -31,7 +31,8 @@ module FatFreeCRM
         args.empty? ? instance_variable_get("@#{name}") : instance_variable_set("@#{name}", args.first)
       end
     end
-    
+    alias :authors :author
+
     # Preload other plugins that are required by the plugin being loaded.
     #--------------------------------------------------------------------------
     def dependencies(*plugins)

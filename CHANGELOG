@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, Sep 12, 2009
+---------------------------------------------------------------------
+- Added view hooks to support [crm_tags] plugin.
+
 Sun, Sep 6, 2009
 ---------------------------------------------------------------------
 - Release 0.9.7.
