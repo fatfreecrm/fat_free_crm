@@ -69,6 +69,9 @@ module FatFreeCRM
       private :new  # For the outside world new plugins can only be created through self.register.
 
       def register(id, initializer = nil, &block)
+        if initializer && ENV['RAILS_ENV'] == "development"
+          initializer.configuration.cache_classes = true # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
+        end
         plugin = new(id, initializer)
         plugin.instance_eval(&block)            # Grab plugin properties.
         plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
