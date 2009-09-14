@@ -62,20 +62,20 @@ class Task < ActiveRecord::Base
 
   # Due date scopes.
   named_scope :due_asap,      :conditions => "due_at IS NULL AND bucket = 'due_asap'", :order => "id DESC"
-  named_scope :overdue,       lambda { { :conditions => [ "due_at IS NOT NULL AND due_at < ?", Time.now.midnight.utc ], :order => "id DESC" } }
-  named_scope :due_today,     lambda { { :conditions => [ "due_at = ?", Time.now.midnight.utc ], :order => "id DESC" } }
-  named_scope :due_tomorrow,  lambda { { :conditions => [ "due_at = ?", Time.now.midnight.tomorrow.utc ], :order => "id DESC" } }
-  named_scope :due_this_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Time.now.midnight.tomorrow.utc + 1.day, Time.now.next_week.utc ], :order => "id DESC" } }
-  named_scope :due_next_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Time.now.next_week.utc, Time.now.next_week.end_of_week.utc + 1.day ], :order => "id DESC" } }
-  named_scope :due_later,     lambda { { :conditions => [ "(due_at IS NULL AND bucket = 'due_later') OR due_at >= ?", Time.now.next_week.end_of_week.utc + 1.day ], :order => "id DESC" } }
+  named_scope :overdue,       lambda { { :conditions => [ "due_at IS NOT NULL AND due_at < ?", Time.zone.now.midnight.utc ], :order => "id DESC" } }
+  named_scope :due_today,     lambda { { :conditions => [ "due_at = ?", Time.zone.now.midnight.utc ], :order => "id DESC" } }
+  named_scope :due_tomorrow,  lambda { { :conditions => [ "due_at = ?", Time.zone.now.midnight.tomorrow.utc ], :order => "id DESC" } }
+  named_scope :due_this_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Time.zone.now.midnight.tomorrow.utc + 1.day, Time.zone.now.next_week.utc ], :order => "id DESC" } }
+  named_scope :due_next_week, lambda { { :conditions => [ "due_at >= ? AND due_at < ?", Time.zone.now.next_week.utc, Time.zone.now.next_week.end_of_week.utc + 1.day ], :order => "id DESC" } }
+  named_scope :due_later,     lambda { { :conditions => [ "(due_at IS NULL AND bucket = 'due_later') OR due_at >= ?", Time.zone.now.next_week.end_of_week.utc + 1.day ], :order => "id DESC" } }
 
   # Completion time scopes.
-  named_scope :completed_today,      lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.now.midnight.utc, Time.now.midnight.tomorrow.utc ] } }
-  named_scope :completed_yesterday,  lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.now.midnight.yesterday.utc, Time.now.midnight.utc ] } }
-  named_scope :completed_this_week,  lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.now.beginning_of_week.utc , Time.now.midnight.yesterday.utc ] } }
-  named_scope :completed_last_week,  lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.now.beginning_of_week.utc - 7.days, Time.now.beginning_of_week.utc ] } }
-  named_scope :completed_this_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.now.beginning_of_month.utc, Time.now.beginning_of_week.utc - 7.days ] } }
-  named_scope :completed_last_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", (Time.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.now.beginning_of_month.utc ] } }
+  named_scope :completed_today,      lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc ] } }
+  named_scope :completed_yesterday,  lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.zone.now.midnight.yesterday.utc, Time.zone.now.midnight.utc ] } }
+  named_scope :completed_this_week,  lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.zone.now.beginning_of_week.utc , Time.zone.now.midnight.yesterday.utc ] } }
+  named_scope :completed_last_week,  lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.zone.now.beginning_of_week.utc - 7.days, Time.zone.now.beginning_of_week.utc ] } }
+  named_scope :completed_this_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days ] } }
+  named_scope :completed_last_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc ] } }
 
   uses_mysql_uuid
   acts_as_commentable
@@ -112,15 +112,15 @@ class Task < ActiveRecord::Base
   def computed_bucket
     return self.bucket if self.bucket != "specific_time"
     case
-    when self.due_at < Time.now.midnight
+    when self.due_at < Time.zone.now.midnight
       "overdue"
-    when self.due_at == Time.now.midnight
+    when self.due_at == Time.zone.now.midnight
       "due_today"
-    when self.due_at == Time.now.midnight.tomorrow
+    when self.due_at == Time.zone.now.midnight.tomorrow
       "due_tomorrow"
-    when self.due_at >= (Time.now.midnight.tomorrow + 1.day) && self.due_at < Time.now.next_week
+    when self.due_at >= (Time.zone.now.midnight.tomorrow + 1.day) && self.due_at < Time.zone.now.next_week
       "due_this_week"
-    when self.due_at >= Time.now.next_week && self.due_at < (Time.now.next_week.end_of_week + 1.day)
+    when self.due_at >= Time.zone.now.next_week && self.due_at < (Time.zone.now.next_week.end_of_week + 1.day)
       "due_next_week"
     else
       "due_later"
@@ -164,17 +164,17 @@ class Task < ActiveRecord::Base
   def set_due_date
     self.due_at = case self.bucket
     when "overdue"
-      self.due_at || Time.now.midnight.yesterday
+      self.due_at || Time.zone.now.midnight.yesterday
     when "due_today"
-      Time.now.midnight
+      Time.zone.now.midnight
     when "due_tomorrow"
-      Time.now.midnight.tomorrow
+      Time.zone.now.midnight.tomorrow
     when "due_this_week"
-      Time.now.end_of_week
+      Time.zone.now.end_of_week
     when "due_next_week"
-      Time.now.next_week.end_of_week
+      Time.zone.now.next_week.end_of_week
     when "due_later"
-      Time.now.midnight + 100.years
+      Time.zone.now.midnight + 100.years
     when "specific_time"
       self.calendar
     else # due_later or due_asap
