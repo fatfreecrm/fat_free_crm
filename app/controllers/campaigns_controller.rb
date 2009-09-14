@@ -201,6 +201,11 @@ class CampaignsController < ApplicationController
       :per_page => @current_user.pref[:campaigns_per_page]
     }
 
+    # Call :get_campaigns hook and return its output if any.
+    campaigns = hook(:get_campaigns, self, :records => records, :pages => pages)
+    return campaigns.last unless campaigns.empty?
+
+    # Default processing if no :get_campaigns hooks are present.
     if session[:filter_by_campaign_status]
       filtered = session[:filter_by_campaign_status].split(",")
       current_query.blank? ? Campaign.my(records).only(filtered) : Campaign.my(records).only(filtered).search(current_query)

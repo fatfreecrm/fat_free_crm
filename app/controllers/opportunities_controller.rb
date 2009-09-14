@@ -228,6 +228,11 @@ class OpportunitiesController < ApplicationController
       :per_page => @current_user.pref[:opportunities_per_page]
     }
 
+    # Call :get_opportunities hook and return its output if any.
+    opportunities = hook(:get_opportunities, self, :records => records, :pages => pages)
+    return opportunities.last unless opportunities.empty?
+
+    # Default processing if no :get_opportunities hooks are present.
     if session[:filter_by_opportunity_stage]
       filtered = session[:filter_by_opportunity_stage].split(",")
       current_query.blank? ? Opportunity.my(records).only(filtered) : Opportunity.my(records).only(filtered).search(current_query)

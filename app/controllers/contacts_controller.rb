@@ -227,6 +227,11 @@ class ContactsController < ApplicationController
       :per_page => @current_user.pref[:contacts_per_page]
     }
 
+    # Call :get_contacts hook and return its output if any.
+    contacts = hook(:get_contacts, self, :records => records, :pages => pages)
+    return contacts.last unless contacts.empty?
+
+    # Default processing if no :get_contacts hooks are present.
     if current_query.blank?
       Contact.my(records)
     else

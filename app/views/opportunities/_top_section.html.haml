@@ -43,4 +43,5 @@
         %td{ :valign => :top }
           .label.req Assigned to:
           = collection_select :opportunity, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+      = hook(:opportunity_top_section_bottom, self, :f => f)
 

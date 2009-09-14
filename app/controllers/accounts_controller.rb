@@ -192,6 +192,11 @@ class AccountsController < ApplicationController
       :per_page => @current_user.pref[:accounts_per_page]
     }
 
+    # Call :get_accounts hook and return its output if any.
+    accounts = hook(:get_accounts, self, :records => records, :pages => pages)
+    return accounts.last unless accounts.empty?
+
+    # Default processing if no :get_accounts hooks are present.
     if current_query.blank?
       Account.my(records)
     else
