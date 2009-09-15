@@ -118,3 +118,13 @@ def set_timezone
   offset *= 3600 if offset.abs < 13
   Time.zone = ActiveSupport::TimeZone.all.select { |zone| zone.utc_offset == offset }.first
 end
+
+# Adjusts current timezone by given offset (in seconds).
+#----------------------------------------------------------------------------
+def adjust_timezone(offset)
+  if offset
+    ActiveSupport::TimeZone[offset]
+    adjusted_time = Time.now + offset.seconds
+    Time.stub(:now).and_return(adjusted_time)
+  end
+end
