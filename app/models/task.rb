@@ -83,8 +83,8 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :user_id
   validates_presence_of :name, :message => "^Please specify task name."
-  validates_presence_of :calendar, :if => "self.bucket == 'specific_time'"
-  validate              :specific_time
+  validates_presence_of :calendar, :if => "self.bucket == 'specific_time' && !self.completed_at"
+  validate              :specific_time, :unless => "self.completed_at"
 
   before_create :set_due_date, :notify_assignee
   before_update :set_due_date, :notify_assignee

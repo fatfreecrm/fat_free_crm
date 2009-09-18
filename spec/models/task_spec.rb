@@ -33,6 +33,7 @@ describe Task do
     it "should create a new task instance given valid attributes" do
       task = Factory(:task)
       task.should be_valid
+      task.errors.should be_empty
     end
 
     [ nil, Time.now.utc_offset + 3600 ].each do |offset|
@@ -42,12 +43,14 @@ describe Task do
 
       it "should create a task with due date selected from dropdown within #{offset ? 'different' : 'current'} timezone" do
         task = Factory(:task, :due_at => Time.now.end_of_week, :bucket => "due_this_week")
+        task.errors.should be_empty
         task.bucket.should == "due_this_week"
         task.due_at.should == Time.zone.now.end_of_week
       end
 
       it "should create a task with due date selected from the calendar within #{offset ? 'different' : 'current'} timezone" do
         task = Factory(:task, :bucket => "specific_time", :calendar => "01/31/2020")
+        task.errors.should be_empty
         task.bucket.should == "specific_time"
         task.due_at.should == Time.zone.parse("01/31/2020")
       end
@@ -58,12 +61,14 @@ describe Task do
     it "should update task name" do
       task = Factory(:task, :name => "Hello")
       task.update_attributes({ :name => "World"})
+      task.errors.should be_empty
       task.name.should == "World"
     end
 
     it "should update task category" do
       task = Factory(:task, :category => "call")
       task.update_attributes({ :category => "email" })
+      task.errors.should be_empty
       task.category.should == "email"
     end
 
@@ -72,6 +77,7 @@ describe Task do
       her = Factory(:user)
       task = Factory(:task, :assigned_to => him.id)
       task.update_attributes( { :assigned_to => her.id } )
+      task.errors.should be_empty
       task.assigned_to.should == her.id
       task.assignee.should == her
     end
@@ -80,6 +86,7 @@ describe Task do
       him = Factory(:user)
       task = Factory(:task, :assigned_to => him.id)
       task.update_attributes( { :assigned_to => "" } )
+      task.errors.should be_empty
       task.assigned_to.should == nil
       task.assignee.should == nil
     end
@@ -92,6 +99,7 @@ describe Task do
       it "should update due date based on selected bucket within #{offset ? 'different' : 'current'} timezone" do
         task = Factory(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
         task.update_attributes( { :bucket => "due_this_week" } )
+        task.errors.should be_empty
         task.bucket.should == "due_this_week"
         task.due_at.should == Time.zone.now.end_of_week
       end
@@ -99,11 +107,48 @@ describe Task do
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
         task = Factory(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
         task.update_attributes( { :bucket => "specific_time", :calendar => "01/31/2020" } )
+        task.errors.should be_empty
         task.bucket.should == "specific_time"
         task.due_at.should == Time.zone.parse("01/31/2020")
       end
     end
 
+  end
+
+  describe "Task/Complete" do
+    it "should comlete a task that is overdue" do
+      task = Factory(:task, :due_at => 2.days.ago, :bucket => "overdue")
+      task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id)
+      task.errors.should be_empty
+      task.completed_at.should_not == nil
+      task.completor.should == @current_user
+    end
+
+    it "should complete a task due sometime in the future" do
+      task = Factory(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
+      task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id)
+      task.errors.should be_empty
+      task.completed_at.should_not == nil
+      task.completor.should == @current_user
+    end
+
+    it "should complete a task that is due on specific date in the future" do
+      task = Factory(:task, :calendar => "10/10/2022", :bucket => "specific_time")
+      task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
+      task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id)
+      task.errors.should be_empty
+      task.completed_at.should_not == nil
+      task.completor.should == @current_user
+    end
+
+    it "should complete a task that is due on specific date in the past" do
+      task = Factory(:task, :calendar => "10/10/1992", :bucket => "specific_time")
+      task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
+      task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id)
+      task.errors.should be_empty
+      task.completed_at.should_not == nil
+      task.completor.should == @current_user
+    end
   end
 
   # named_scope :my, lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
