@@ -4,6 +4,15 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Fri, Sep 18, 2009
+---------------------------------------------------------------------
+- Merged String#to_url (thanks, Rit!)
+
+Thu, Sep 17, 2009
+---------------------------------------------------------------------
+- Fixed task completion bug for tasks with specific due date (thanks, Andrew!)
+- Added more task model specs.
+
 Mon, Sep 14, 2009
 ---------------------------------------------------------------------
 - Merged in Andrew's patch that solves disappearing tasks puzzle (thanks, Andrew!)
