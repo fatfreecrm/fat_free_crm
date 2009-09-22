@@ -30,3 +30,4 @@
       = "phone: " + lead.phone  << " | " if lead.phone?
       = "mobile: " + lead.mobile << " | " if lead.mobile?
       == added #{time_ago_in_words(lead.created_at)} ago
+    = hook(:lead_bottom, self, :lead => lead)

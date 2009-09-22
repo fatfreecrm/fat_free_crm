@@ -20,3 +20,4 @@
         = "phone: " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
         = pluralize(account.contacts.count, "contact") << " | "
         = pluralize(account.opportunities.count, "opportunity")
+      = hook(:account_bottom, self, :account => account)

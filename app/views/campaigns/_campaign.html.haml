@@ -8,3 +8,4 @@
   = render :partial => "campaigns/status", :locals => { :campaign => campaign }
   - unless @current_user.preference[:campaigns_outline] == "brief"
     = render :partial => "campaigns/metrics", :locals => { :campaign => campaign }
+    = hook(:campaign_bottom, self, :campaign => campaign)

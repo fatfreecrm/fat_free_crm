@@ -21,3 +21,4 @@
       = "phone: <b>" + contact.phone << "</b> | " if contact.phone?
       = "mobile: <b>" + contact.mobile << "</b> | " if contact.mobile?
       == added #{time_ago_in_words(contact.created_at)} ago
+    = hook(:contact_bottom, self, :contact => contact)
