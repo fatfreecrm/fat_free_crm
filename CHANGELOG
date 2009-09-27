@@ -4,6 +4,24 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, Sep 26, 2009
+---------------------------------------------------------------------
+- Added hooks for inline CSS styles and JavaScript epilogue.
+- crm_tags: added JavaScript and CSS stylesheets for tags.
+- crm_tags: make sure tags stay unique when searching.
+
+Thu, Sep 24, 2009
+---------------------------------------------------------------------
+- crm_tags: Made controller methods work with query string that contains tags.
+
+Tue, Sep 22, 2009
+---------------------------------------------------------------------
+- crm_tags: Proof of concept of combining query string with hash-prefixed tags.
+
+Mon, Sep 21, 2009
+---------------------------------------------------------------------
+- Added hooks to model view partials.
+
 Mon, Sep 21, 2009
 ---------------------------------------------------------------------
 - Added hooks to model view partials.

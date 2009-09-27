@@ -24,3 +24,4 @@
     %script{:type => "text/javascript"}
       = get_browser_timezone_offset
       = yield :javascript_epilogue
+      = hook(:javascript_epilogue, self)
