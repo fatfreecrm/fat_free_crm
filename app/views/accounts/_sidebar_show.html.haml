@@ -20,3 +20,5 @@
   - if @account.shipping_address && (@account.shipping_address != @account.billing_address)
     %b Shipping Address
     %div= @account.shipping_address.n2br if @account.shipping_address
+
+  = hook(:show_account_sidebar_bottom, self, :account => @account)

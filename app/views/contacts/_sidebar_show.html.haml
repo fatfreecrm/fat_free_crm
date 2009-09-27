@@ -26,3 +26,5 @@
       == Other: <b>#{link_to(@contact.alt_email, "mailto:" + @contact.alt_email)}</b><br />
 
   = web_presence_icons(@contact)
+
+  = hook(:show_contact_sidebar_bottom, self, :contact => @contact)

@@ -77,3 +77,5 @@
   %li.last
     %dt= number_to_currency(@campaign.revenue, :precision => 0) || "N/A"
     %tt== Revenue: #{performance(@campaign.revenue, @campaign.target_revenue)}
+
+  = hook(:show_campaign_sidebar_bottom, self, :campaign => @campaign)
