@@ -61,7 +61,6 @@ class Opportunity < ActiveRecord::Base
   acts_as_paranoid
 
   validates_presence_of :name, :message => "^Please specify the opportunity name."
-  validates_uniqueness_of :name, :scope => :user_id
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
 

@@ -4,7 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Sum, Sep 27, 2009
+Tue, Sep 29, 2009
+---------------------------------------------------------------------
+- Adjusted activity timestamp to reflect UTC offset (thanks, Andrew!)
+- Allow creating opportunities with non-unique name.
+
+Sun, Sep 27, 2009
 ---------------------------------------------------------------------
 - Added sidebar hooks on asset landing pages.
 - crm_tags: added support for showing tags on asset landing pages.

@@ -33,4 +33,9 @@ describe Opportunity do
     Opportunity.create!(:name => "Opportunity")
   end
 
+  it "should be possible to create opportunity with the same name" do
+    first  = Factory(:opportunity, :name => "Hello", :user => @current_user)
+    lambda { Factory(:opportunity, :name => "Hello", :user => @current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
+  end
+
 end
