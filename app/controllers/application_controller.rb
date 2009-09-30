@@ -151,7 +151,12 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
-    @auto_complete = self.controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
+    @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
+    if @auto_complete.empty?
+      @auto_complete = self.controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
+    else
+      @auto_complete = @auto_complete.last
+    end
     session[:auto_complete] = self.controller_name.to_sym
     render :template => "common/auto_complete", :layout => nil
   end

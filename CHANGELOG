@@ -8,6 +8,7 @@ Tue, Sep 29, 2009
 ---------------------------------------------------------------------
 - Adjusted activity timestamp to reflect UTC offset (thanks, Andrew!)
 - Allow creating opportunities with non-unique name.
+- Added :auto_complete controller hook.
 
 Sun, Sep 27, 2009
 ---------------------------------------------------------------------
