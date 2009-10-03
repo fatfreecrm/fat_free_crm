@@ -19,7 +19,6 @@ class CreateOpportunities < ActiveRecord::Migration
 
     add_index :opportunities, [ :user_id, :name, :deleted_at ], :unique => true
     add_index :opportunities, :assigned_to
-    add_uuid_trigger :opportunities
   end
 
   def self.down

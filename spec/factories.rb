@@ -17,10 +17,6 @@
 
 require "faker"
 
-Factory.sequence :uuid do |x|
-  "%08x-%04x-%04x-%04x-%012x" % [ rand(12345678), rand(1234), rand(1234), rand(1234), rand(123456789012) ]
-end
-
 Factory.sequence :address do |x|
   Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
   Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code
@@ -48,7 +44,6 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :account do |a|
-  a.uuid                { Factory.next(:uuid) }
   a.user                { |a| a.association(:user) } 
   a.assigned_to         nil
   a.name                { Faker::Company.name }
@@ -106,7 +101,6 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :campaign do |c|
-  c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
   c.name                { Faker::Lorem.sentence[0..63] }
   c.assigned_to         nil
@@ -140,7 +134,6 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :contact do |c|
-  c.uuid                { Factory.next(:uuid) }
   c.user                { |a| a.association(:user) }
   c.lead                { |a| a.association(:lead) }
   c.assigned_to         nil
@@ -180,7 +173,6 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :lead do |l|
-  l.uuid                { Factory.next(:uuid) }
   l.user                { |a| a.association(:user) }
   l.campaign            { |a| a.association(:campaign) }
   l.assigned_to         nil
@@ -210,7 +202,6 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :opportunity do |o|
-  o.uuid                { Factory.next(:uuid) }
   o.user                { |a| a.association(:user) }
   o.campaign            { |a| a.association(:campaign) }
   o.assigned_to         nil
@@ -255,7 +246,6 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :task do |t|
-  t.uuid                { Factory.next(:uuid) }
   t.user                { |a| a.association(:user) }
   t.asset_id            nil
   t.asset_type          nil
@@ -274,7 +264,6 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :user do |u|
-  u.uuid                { Factory.next(:uuid) }
   u.username            { Factory.next(:username) }
   u.email               { Faker::Internet.email }
   u.first_name          { Faker::Name.first_name }

@@ -21,7 +21,6 @@
 # Table name: users
 #
 #  id                :integer(4)      not null, primary key
-#  uuid              :string(36)
 #  username          :string(32)      default(""), not null
 #  email             :string(64)      default(""), not null
 #  first_name        :string(32)
@@ -72,7 +71,6 @@ class User < ActiveRecord::Base
 
   simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
 
-  uses_mysql_uuid
   acts_as_paranoid
   acts_as_authentic do |c|
     c.session_class = Authentication

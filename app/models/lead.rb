@@ -21,7 +21,6 @@
 # Table name: leads
 #
 #  id          :integer(4)      not null, primary key
-#  uuid        :string(36)
 #  user_id     :integer(4)
 #  campaign_id :integer(4)
 #  assigned_to :integer(4)
@@ -63,7 +62,6 @@ class Lead < ActiveRecord::Base
   named_scope :assigned_to, lambda { |user| { :conditions => "assigned_to = #{user.id}" } }
 
   simple_column_search :first_name, :last_name, :company, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
-  uses_mysql_uuid
   uses_user_permissions
   acts_as_commentable
   acts_as_paranoid

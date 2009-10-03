@@ -57,8 +57,6 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
   
-  map.connect ":controller/:action/:uuid", :uuid => /[a-f\d\-]{36}/
-  map.connect ":controller/:action/:uuid.:format", :uuid => /[a-f\d\-]{36}/
   map.connect ":controller/:action/:id"
   map.connect ":controller/:action/:id.:format"
 end

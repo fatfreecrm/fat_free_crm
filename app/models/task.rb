@@ -21,7 +21,6 @@
 # Table name: tasks
 #
 #  id           :integer(4)      not null, primary key
-#  uuid         :string(36)
 #  user_id      :integer(4)
 #  assigned_to  :integer(4)
 #  completed_by :integer(4)
@@ -77,7 +76,6 @@ class Task < ActiveRecord::Base
   named_scope :completed_this_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days ] } }
   named_scope :completed_last_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc ] } }
 
-  uses_mysql_uuid
   acts_as_commentable
   acts_as_paranoid
 

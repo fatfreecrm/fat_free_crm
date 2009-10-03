@@ -18,7 +18,6 @@ class CreateAccounts < ActiveRecord::Migration
 
     add_index :accounts, [ :user_id, :name, :deleted_at ], :unique => true
     add_index :accounts, :assigned_to
-    add_uuid_trigger :accounts
   end
 
   def self.down

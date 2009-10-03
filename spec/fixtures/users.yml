@@ -4,7 +4,6 @@
 # Table name: users
 #
 #  id                :integer(4)      not null, primary key
-#  uuid              :string(36)
 #  username          :string(32)      default(""), not null
 #  email             :string(64)      default(""), not null
 #  first_name        :string(32)

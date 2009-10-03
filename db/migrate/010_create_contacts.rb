@@ -30,7 +30,6 @@ class CreateContacts < ActiveRecord::Migration
 
     add_index :contacts, [ :user_id, :last_name, :deleted_at ], :unique => true
     add_index :contacts, :assigned_to
-    add_uuid_trigger :contacts
   end
 
   def self.down

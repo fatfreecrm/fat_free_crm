@@ -21,7 +21,6 @@
 # Table name: contacts
 #
 #  id          :integer(4)      not null, primary key
-#  uuid        :string(36)
 #  user_id     :integer(4)
 #  lead_id     :integer(4)
 #  assigned_to :integer(4)
@@ -64,7 +63,6 @@ class Contact < ActiveRecord::Base
 
   simple_column_search :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
 
-  uses_mysql_uuid
   uses_user_permissions
   acts_as_commentable
   acts_as_paranoid

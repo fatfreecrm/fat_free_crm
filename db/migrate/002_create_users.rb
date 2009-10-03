@@ -37,7 +37,6 @@ class CreateUsers < ActiveRecord::Migration
     add_index :users, :last_request_at
     add_index :users, :remember_token
     add_index :users, :perishable_token
-    add_uuid_trigger :users
   end
 
   def self.down

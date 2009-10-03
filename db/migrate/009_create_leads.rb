@@ -30,7 +30,6 @@ class CreateLeads < ActiveRecord::Migration
 
     add_index :leads, [ :user_id, :last_name, :deleted_at ], :unique => true
     add_index :leads, :assigned_to
-    add_uuid_trigger :leads
   end
 
   def self.down

@@ -18,7 +18,6 @@ class CreateTasks < ActiveRecord::Migration
 
     add_index :tasks, [ :user_id, :name, :deleted_at ], :unique => true
     add_index :tasks, :assigned_to
-    add_uuid_trigger :tasks
   end
 
   def self.down
