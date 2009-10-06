@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Oct 5, 2009
+---------------------------------------------------------------------
+- Added [rake crm:hooks] task that enumerates the hooks (thanks, Eric!)
+
 Sat, Oct 3, 2009
 ---------------------------------------------------------------------
 - Removed [uses_mysql_uuid] plugin and deprecated support for UUIDs.
