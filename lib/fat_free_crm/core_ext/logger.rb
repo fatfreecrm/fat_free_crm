@@ -15,6 +15,17 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require "permission"
-require "user_permissions"
-ActiveRecord::Base.send(:include, ActiveRecord::Uses::User::Permissions)
+class ActiveSupport::BufferedLogger
+
+  BRIGHT = "\033[1;37;40m"
+  NORMAL = "\033[0m"
+
+  def p(*args)
+    info "#{BRIGHT}\n\n" << args.join(" ") << "#{NORMAL}\n\n\n"
+  end
+
+  def i(*args)
+    info "#{BRIGHT}\n\n" << args.map(&:inspect).join(" ") << "#{NORMAL}\n\n\n"
+  end
+
+end

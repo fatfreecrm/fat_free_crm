@@ -4,6 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Oct 7, 2009
+---------------------------------------------------------------------
+- Moved [uses_user_permission] code from plugin to core library.
+- Added inspector logging.
+
 Mon, Oct 5, 2009
 ---------------------------------------------------------------------
 - Added [rake crm:hooks] task that enumerates the hooks (thanks, Eric!)

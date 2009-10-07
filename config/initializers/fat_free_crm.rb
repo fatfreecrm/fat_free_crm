@@ -1,10 +1,8 @@
 require "fat_free_crm"
 
 #---------------------------------------------------------------------
-class ActiveSupport::BufferedLogger
-  def p(*args)
-    info "\033[1;37;40m\n\n" << args.join(" ") << "\033[0m\n\n\n"
-  end
+ActiveRecord::Base.class_eval do
+  include FatFreeCRM::Permissions
 end
 
 #---------------------------------------------------------------------
