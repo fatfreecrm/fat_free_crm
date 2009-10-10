@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Fri, Oct 9, 2009
 ---------------------------------------------------------------------
 - Prevent multiple form submissions by pressing [Submit] button twice.
+- Fixed apparent MySQL migration error on Windows/XP.
 
 Wed, Oct 7, 2009
 ---------------------------------------------------------------------

@@ -5,7 +5,7 @@ class CreateComments < ActiveRecord::Migration
       t.references  :commentable, :polymorphic => true
       t.boolean     :private  # TODO: add support for private comments.
       t.string      :title,   :default => "" 
-      t.text        :comment, :default => "" 
+      t.text        :comment
       t.timestamps
     end
   end
