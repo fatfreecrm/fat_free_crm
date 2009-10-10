@@ -1,5 +1,5 @@
 .standalone
-  - form_tag passwords_path do
+  - form_tag(passwords_path, one_submit_only(:passwords)) do
     .title Forgot Password
     .intro Please specify your email address and the instructions to reset your password will be sent to you.
     .section
@@ -7,4 +7,4 @@
       = text_field_tag :email
     %br
     .buttonbar
-      = submit_tag "Reset Password"
+      = submit_tag "Reset Password", :id => "passwords_submit"

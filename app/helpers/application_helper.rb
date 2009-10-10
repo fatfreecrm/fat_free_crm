@@ -130,6 +130,11 @@ module ApplicationHelper
   def visible;   { :style => "visibility:visible;" }; end
 
   #----------------------------------------------------------------------------
+  def one_submit_only(form)
+    { :onsubmit => "$('#{form}_submit').disabled = true" }
+  end
+
+  #----------------------------------------------------------------------------
   def hidden_if(you_ask)
     you_ask ? hidden : exposed
   end

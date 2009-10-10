@@ -1,4 +1,4 @@
-- remote_form_for(@campaign) do |f|
+- remote_form_for(@campaign, :html => one_submit_only(:campaign)) do |f|
   = link_to_close new_campaign_path
   = hidden_field_tag "campaign[user_id]", @current_user.id
   = f.error_messages

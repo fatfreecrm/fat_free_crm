@@ -1,5 +1,5 @@
 .standalone
-  - form_for @user, :url => password_path, :method => :put do |f|
+  - form_for(@user, :url => passwords_path, :html => one_submit_only(:user), :method => :put) do |f|
     .title Reset Password
     = f.error_messages
     .intro Please type your new password and then confirm it.

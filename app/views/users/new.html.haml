@@ -1,5 +1,5 @@
 .standalone
-  - form_for @user do |f|
+  - form_for(@user, :html => one_submit_only(:user)) do |f|
     .title_tools== Already signed up? #{link_to "Login Now!", login_path}
     .title Sign Up
     = f.error_messages

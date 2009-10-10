@@ -1,5 +1,5 @@
 .remote
-  - remote_form_for(@user) do |f|
+  - remote_form_for(@user, :html => one_submit_only(:user)) do |f|
     = link_to_close edit_user_path(@user)
     = f.error_messages
     .section
