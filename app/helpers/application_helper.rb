@@ -233,9 +233,9 @@ module ApplicationHelper
     if model.avatar
       image_tag(model.avatar.image.url(Avatar.styles[args[:size]]), args)
     elsif model.email
-      gravatar(model.email, { :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg" }.merge(args))
+      gravatar(model.email, { :default => "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/images/avatar.jpg" }.merge(args))
     else
-      image_tag("/images/avatar.jpg", args)
+      image_tag("avatar.jpg", args)
     end
   end
 end

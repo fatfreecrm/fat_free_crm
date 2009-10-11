@@ -19,6 +19,18 @@
 #
 #   rake crm:settings:load
 #
+#------------------------------------------------------------------------------
+#
+# Leave base_url blank if Fat Free CRM has been deployed in root URL, otherwise
+# specify subdirectory. For example, when deployed to:
+#
+# http://www.domain.com       => :base_url: ""       # (leave blank)
+# http://crm.domain.com       => :base_url: ""       # (leave blank)
+# http://www.domain.com/crm   => :base_url: "/crm"   # (without trailing slash)
+# http://www.domain.com/a/crm => :base_url: "/a/crm" # (without trailing slash)
+
+:base_url: ""
+
 :tabs: [
   { :active : true,  :text : "Dashboard",     :url : { :controller : "/"              } },
   { :active : false, :text : "Tasks",         :url : { :controller : "tasks"          } },
@@ -37,8 +49,8 @@
 
 # The following setting controls user signup. Possible values are:
 #   :allowed        -- users can sign up and use the system once they have registered.
-#   :needs_approval -- users can sign up but must be approved before they can use the system.
 #   :not_allowed    -- users can only be added by system administrator. This is the default.
+#   :needs_approval -- users can sign up but must be approved before they can use the system.
 
 :user_signup: :not_allowed
 

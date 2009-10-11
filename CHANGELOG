@@ -6,6 +6,7 @@ then you win. –- Mahatma Gandhi
 
 Sun, Oct 11, 2009
 ---------------------------------------------------------------------
+- Added full support for deploying Fat Free CRM in subdirectory (see config/settings.yml).
 - Made Facebox library work with the project is deployed in subdirectory.
 
 Sat, Oct 10, 2009

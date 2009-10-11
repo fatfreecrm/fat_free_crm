@@ -17,10 +17,11 @@
 
 var crm = {
 
-  EXPANDED:  "&#9660;",
-  COLLAPSED: "&#9658;",
-  request: null,
-  autocompleter: null,
+  EXPANDED      :  "&#9660;",
+  COLLAPSED     : "&#9658;",
+  request       : null,
+  autocompleter : null,
+  base_url      : "",
 
   //----------------------------------------------------------------------------
   date_select_popup: function(id, dropdown_id) {
@@ -243,7 +244,7 @@ var crm = {
       }
       $("loading").show();
       $(list).setStyle({ opacity: 0.4 });
-      new Ajax.Request("/" + controller + "/search", {
+      new Ajax.Request(this.base_url + "/" + controller + "/search", {
         method     : "get",
         parameters : { query : query },
         onSuccess  : function() {
@@ -274,16 +275,16 @@ var crm = {
       Event.stopObserving(this.autocompleter.element);
       delete this.autocompleter;
     }
-    this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", "/" + controller + "/auto_complete", { 
+    this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", { 
       frequency: 0.25,
       afterUpdateElement: function(text, el) {
         if (el.id) {  // found: redirect to #show
-          window.location.href = "/" + controller + "/" + escape(el.id);
+          window.location.href = this.base_url + "/" + controller + "/" + escape(el.id);
         } else {      // not found: refresh current page
           $("auto_complete_query").value = "";
           window.location.href = window.location.href;
         }
-      }
+      }.bind(this)    // binding for this.base_url
     });
     $("auto_complete_dropdown").update("");
     $("auto_complete_query").value = "";
