@@ -34,7 +34,7 @@ opportunity_<%= i %>:
   user_id     : <%= rand(8) + 1 %>
   campaign_id : <%= (rand(5) + 1) if i > 10 %>
   assigned_to : <%= rand(8) + 1 %>
-  name        : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "") %>
+  name        : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "")[0, 64] %> # name has a limit of 64 characters.
   access      : Public
   source      : <%= source[rand(source.size)] %>
   stage       : <%= the_stage = stage[rand(stage.size)] %>
