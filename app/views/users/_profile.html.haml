@@ -6,58 +6,58 @@
       %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
         %tr
           %td{ :valign => :top }
-            .label.top First name:
+            .label.top #{t:first_name}:
             = f.text_field :first_name, :style => "width:240px"
           %td= spacer
           %td{ :valign => :top }
-            .label.top Last name:
+            .label.top #{t:last_name}:
             = f.text_field :last_name, :style => "width:240px"
         %tr
           %td{ :valign => :top }
-            .label Title:
+            .label.top #{t:job_title}:
             = f.text_field :title, :style => "width:240px"
           %td= spacer
           %td{ :valign => :top }
-            .label Company:
+            .label.top #{t:company}:
             = f.text_field :company, :style => "width:240px"
-    .subtitle Contact Information
+    .subtitle #{t:contact_info_title}
     .section
       %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
         %tr
           %td{ :valign => :top, :colspan => 3 }
-            .label.top.req Email:
+            .label.top.req #{t:email}:
             = f.text_field :email, :style => "width:240px"
           %td= spacer
           %td{ :valign => :top, :colspan => 3 }
-            .label.top Alternative email:
+            .label.top #{t:alt_email}:
             = f.text_field :alt_email, :style => "width:240px"
         %tr
           %td{ :valign => :top, :colspan => 3 }
-            .label Phone:
+            .label #{t:phone}:
             = f.text_field :phone, :style => "width:240px"
           %td= spacer
           %td{ :valign => :top, :colspan => 3 }
-            .label Mobile:
+            .label #{t:mobile}:
             = f.text_field :mobile, :style => "width:240px"
         %tr
           %td{ :valign => :top }
-            .label AOL IM:
+            .label #{t:aim}:
             = f.text_field :aim, :style => "width:112px"
           %td= spacer
           %td{ :valign => :top }
-            .label Yahoo IM:
+            .label #{t:yahoo}:
             = f.text_field :yahoo, :style => "width:112px"
           %td= spacer
           %td{ :valign => :top }
-            .label Google IM:
+            .label #{t:google}:
             = f.text_field :google, :style => "width:112px"
           %td= spacer
           %td{ :valign => :top }
-            .label Skype:
+            .label #{t:skype}:
             = f.text_field :skype, :style => "width:112px"
 
     .buttonbar
-      = f.submit "Save Profile"
+      = f.submit t:save_profile_button
       or
       = link_to_cancel edit_user_path(@user)
 %br

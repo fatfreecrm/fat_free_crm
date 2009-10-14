@@ -47,12 +47,15 @@
   { :active : true,  :text : "Plugins",       :url : { :controller : "admin/plugins"  } }
 ]
 
+# Default locale is American English.
+:locale: "en-US"
+
 # The following setting controls user signup. Possible values are:
 #   :allowed        -- users can sign up and use the system once they have registered.
 #   :not_allowed    -- users can only be added by system administrator. This is the default.
 #   :needs_approval -- users can sign up but must be approved before they can use the system.
 
-:user_signup: :not_allowed
+:user_signup: :allowed
 
 campaign_status:
   :planned       : Planned
