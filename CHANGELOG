@@ -8,6 +8,7 @@ Wed, Oct 14, 2009
 ---------------------------------------------------------------------
 - Make sure opportunity name does not exceed 64 characters (thanks, Rit!)
 - Changed required Rails version to v2.3.4
+- Updated model annotations for schema version #023.
 
 Sun, Oct 11, 2009
 ---------------------------------------------------------------------

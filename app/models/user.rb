@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 21
+# Schema version: 23
 #
 # Table name: users
 #
@@ -48,6 +48,7 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  admin             :boolean(1)      not null
+#  suspended_at      :datetime
 #
 class User < ActiveRecord::Base
   attr_protected :admin, :suspended_at

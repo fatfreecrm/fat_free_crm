@@ -291,6 +291,7 @@ Factory.define :user do |u|
   u.deleted_at          nil
   u.updated_at          { Factory.next(:time) }
   u.created_at          { Factory.next(:time) }
+  u.suspended_at        nil
   u.password              "password"
   u.password_confirmation "password"
 end

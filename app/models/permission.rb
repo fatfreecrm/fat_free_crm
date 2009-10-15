@@ -15,6 +15,9 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
+# == Schema Information
+# Schema version: 23
+#
 # Table name: permissions
 #
 #  id         :integer(4)      not null, primary key
@@ -24,7 +27,6 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-
 class Permission < ActiveRecord::Base
   belongs_to :user
   belongs_to :asset, :polymorphic => true
