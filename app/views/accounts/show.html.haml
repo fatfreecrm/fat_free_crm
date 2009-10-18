@@ -2,7 +2,7 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to_inline(:edit_account, edit_account_path(@account), :text => "Edit") + " | "
+  = link_to_inline(:edit_account, edit_account_path(@account), :text => t(:edit)) + " | "
   = link_to_function("Delete?", confirm_delete(@account))
 .title#edit_account_title= @account.name
 
