@@ -10,9 +10,9 @@
         = @user.title unless @user.title.blank?
         = @user.company unless @user.company.blank?
       %br
-      %div= "Email: " + auto_link(@user.email) + (@user.alt_email.blank? ? "" : " or " + auto_link(@user.alt_email))
+      %div= t(:email) + ':' + auto_link(@user.email) + (@user.alt_email.blank? ? "" : " or " + auto_link(@user.alt_email))
       - if !@user.phone.blank? && !@user.mobile.blank?
-        %div== Phone: <b>#{@user.phone}</b>, Mobile: <b>#{@user.mobile}</b>
+        %div== #{t:phone}: <b>#{@user.phone}</b>, #{t:mobile}: <b>#{@user.mobile}</b>
       - else
-        = "Phone: <b>#{@user.phone}</b>" unless @user.phone.blank?
-        = "Mobile: <b>#{@user.mobile}</b>" unless @user.mobile.blank?
+        = "#{t:phone}: <b>#{@user.phone}</b>" unless @user.phone.blank?
+        = "#{t:mobile}: <b>#{@user.mobile}</b>" unless @user.mobile.blank?

@@ -4,11 +4,16 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, Oct 18, 2009
+---------------------------------------------------------------------
+- Merged localization commits onto i18n branch (thanks, Lana!)
+
 Wed, Oct 14, 2009
 ---------------------------------------------------------------------
 - Make sure opportunity name does not exceed 64 characters (thanks, Rit!)
 - Changed required Rails version to v2.3.4
 - Updated model annotations for schema version #023.
+- Release 0.9.8.
 
 Sun, Oct 11, 2009
 ---------------------------------------------------------------------
