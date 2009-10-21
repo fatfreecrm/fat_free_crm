@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [ :new, :create ]
   before_filter :require_user, :only => [ :show ]
+  before_filter :set_current_tab, :only => [ :show ] # Don't hightlight any tabs.
   before_filter :require_and_assign_user, :except => [ :new, :create, :show ]
 
   # GET /users
