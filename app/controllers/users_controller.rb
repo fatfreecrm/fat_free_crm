@@ -154,6 +154,13 @@ class UsersController < ApplicationController
     # <-- render change_password.js.rjs
   end
 
+  # POST /users/1/redraw                                                   AJAX
+  #----------------------------------------------------------------------------
+  def redraw
+    logger.p "Users/Redraw"
+    render :action => :index
+  end
+
   private
   #----------------------------------------------------------------------------
   def require_and_assign_user
