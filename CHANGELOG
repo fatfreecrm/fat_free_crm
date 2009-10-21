@@ -8,6 +8,8 @@ Tue, Oct 20, 2009
 ---------------------------------------------------------------------
 - Added Language option stubs to user's profile.
 - Disabled tab highlighting when showing user's profile.
+- Include all Fat Free CRM modules from Rails initializer.
+- Added FatFreeCRM::I18n module.
 
 Sun, Oct 18, 2009
 ---------------------------------------------------------------------
