@@ -120,6 +120,7 @@ crm.Menu = Class.create({
   initialize: function() {
     this.options = Object.extend({
       trigger     : "menu",                   // #id of the element clicking on which triggers dropdown menu.
+      align       : "left",                   // align the menu left or right
       appear      : 0,                        // duration of EffectAppear or 0 for show().
       fade        : 0,                        // duration of EffectFade or 0 for hide().
       width       : 0,                        // explicit menu width if set to non-zero
@@ -187,10 +188,18 @@ crm.Menu = Class.create({
   show_menu: function(e) {
     e.stop();
 
+console.log("align: " + this.options.align);
     var dimensions = Event.element(e).getDimensions();
     var coordinates = Event.element(e).viewportOffset();
     var x = coordinates[0] + "px";
     var y = coordinates[1] + dimensions.height + "px";
+    console.log("x: " + x);
+    if (this.options.align == "right") {
+      x = (coordinates[0] - (this.options.width - dimensions.width + 1)) + "px";
+      console.log("x align: " + x);
+      console.log("width: " + dimensions.width);
+    }
+
     this.menu.setStyle({ left: x, top: y }).setStyle({ zIndex: this.options.zindex });
 
     this.options.before_show(e);
