@@ -12,22 +12,18 @@ module FatFreeCRM
       end
     end
 
-    # Scans config/locales directory for Fat Free CRM localization files
-    # (i.e. *_fat_free_crm.yml) and returns locale part of the file name.
+    # Scan config/locales directory for Fat Free CRM localization files
+    # (i.e. *_fat_free_crm.yml) and return locale part of the file name.
     #----------------------------------------------------------------------------
     def locales
-      @@locales ||= Dir.glob(File.join(RAILS_ROOT, "config", "locales", "*.yml")).map do |f|
-        File.basename(f).split('.').first =~ /(.+?)_fat_free_crm$/ ? $1 : nil
-      end.compact
+      @@locales ||= Dir.entries(RAILS_ROOT + "/config/locales").grep(/_fat_free_crm\.yml/) { |f| f.sub("_fat_free_crm.yml", "") }
     end
 
-    # Returns a hash where the key is locale name, and the value is language name
+    # Return a hash where the key is locale name, and the value is language name
     # as defined in the locale_fat_free_crm.yml file.
     #----------------------------------------------------------------------------
     def languages
       @@languages ||= locales.inject({}) do |hash, locale|
-        $stderr.puts "#{locale}.fat_free_crm"
-        puts "#{locale}.fat_free_crm"
         hash[locale] = t(:language, :locale => locale)
         hash
       end

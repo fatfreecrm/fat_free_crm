@@ -1,5 +1,6 @@
-%div(style="float:right")
-  Language: #{link_to("English", "#", :id => :language)}
+- if @user == @current_user
+  %div(style="float:right")
+    Language: #{link_to(language_for(@current_user), "#", :id => :locale)}
 
 %table(cellspacing="0" cellpadding="0")
   %tr

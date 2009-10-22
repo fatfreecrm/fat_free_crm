@@ -16,4 +16,12 @@
 #------------------------------------------------------------------------------
 
 module UsersHelper
+  
+  def language_for(user)
+    if user.preference[:locale]
+      locale, language = languages.detect{ |locale, language| locale == user.preference[:locale] }
+    end
+    language || "English"
+  end
+
 end

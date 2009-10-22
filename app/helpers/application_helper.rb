@@ -206,9 +206,12 @@ module ApplicationHelper
   # Ajax helper to refresh current index page once the user selects an option.
   #----------------------------------------------------------------------------
   def redraw(option, value, url = nil)
+    if value.is_a?(Array)
+      param, value = value.first, value.last
+    end
     remote_function(
       :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "{ #{option}: '#{value}' }",
+      :with      => "{ #{option}: '#{param || value}' }",
       :condition => "$('#{option}').innerHTML != '#{value}'",
       :loading   => "$('#{option}').update('#{value}'); $('loading').show()",
       :complete  => "$('loading').hide()"
