@@ -1,11 +1,11 @@
 = styles_for :contact
 
 .title_tools
-  = link_to_inline(:create_contact, new_contact_path) << " | "
-  = link_to_inline(:options, options_contacts_path)
+  = link_to_inline(:create_contact, new_contact_path, :text=> t(:create_contact_link)) << " | "
+  = link_to_inline(:options, options_contacts_path, :text=> t(:options))
 
 .title
-  %span#create_contact_title Contacts
+  %span#create_contact_title #{t:contacts_title}
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#options{ hidden }
 .remote#create_contact{ hidden }

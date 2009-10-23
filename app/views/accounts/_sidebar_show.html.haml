@@ -2,23 +2,23 @@
   %h4= @account.name
   - if @account.website
     %div
-      %b= link_to(truncate(@account.website, :length => 30), @account.website.to_url, :popup => true, :title => "Open #{@account.website} in a new window")
+      %b= link_to(truncate(@account.website, :length => 30), @account.website.to_url, :popup => true, :title => t(:open_in_window, @account.website))
   %div
     - if @account.toll_free_phone
-      == Toll free: <b>#{@account.toll_free_phone}</b><br />
+      == #{t:phone_toll_free}: <b>#{@account.toll_free_phone}</b><br />
 
     - if @account.phone
-      == Phone: <b>#{@account.phone}</b><br />
+      == #{t:phone}: <b>#{@account.phone}</b><br />
 
     - if @account.fax
-      == Fax: <b>#{@account.fax}</b><br />
+      == #{t:fax}: <b>#{@account.fax}</b><br />
 
   - if @account.billing_address
-    %b Billing Address
+    %b #{t:billing_address}
     %div= @account.billing_address.n2br if @account.billing_address
 
   - if @account.shipping_address && (@account.shipping_address != @account.billing_address)
-    %b Shipping Address
+    %b #{t:shipping_address}
     %div= @account.shipping_address.n2br if @account.shipping_address
 
   = hook(:show_account_sidebar_bottom, self, :account => @account)

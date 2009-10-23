@@ -50,22 +50,27 @@ en-US:
 
   # accounts:
   accounts: Accounts
+  account: Account
   added: added
   ago: ago
   by: by
   me: me
   phone_small: phone
+  mobile_small: mobile
   edit: Edit
   delete: Delete
-  create_task_title: Tasks
-  create_contact_title: Contacts
-  create_opportunity_title: Opportunities
+  options: Options
+  delete_link: Delete?
+  tasks_title: Tasks
+  contacts_title: Contacts
+  opportunities_title: Opportunities
   create_account_button: Create Account
+  create_account_link: Create account
   save_account_button: Save Account
   account_name: Account name
   assigned_to: Assigned to
   website: Website
-  phone_toll_free: Phone (toll-free)
+  phone_toll_free: Toll-free phone 
   fax: Fax
   billing_address: Billing address
   shipping_address: Shipping address
@@ -75,7 +80,34 @@ en-US:
   private_txt: Keep it private, do not share with others
   public_txt: Share it with everyone
   shared_txt: Share it with the following people
+  sort_accounts_by: Sort accounts by
+  show: Show
+  account_records_per_page: account records per page
+  using: using
+  format: format
+  can_add_contact_later: You can add lead contact information later.
+  open_in_window: Open in a new window
     
+  # contacts
+  create_contact_link: Create contact
+  create_contact_button: Create Contact
+  save_contact_button: Save Contact
+  referred_by: referred by
+  at: at
+  department: Department
+  department_small: department
+  other: Other
+  extra_info: Extra Information
+  extra_info_text: You can add extra contact information later.
+  address: Address
+  do_not_call: Do not call
+  web_presence: Web Presence
+  web_presence_text: You can add web presence information later.
+  blog: Website/Blog
+  twitter: Twitter
+  linked_in: LinkedIn
+  facebook: Facebook
+
   inline:
     contact: 
       one: '1 contact'

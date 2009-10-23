@@ -13,12 +13,12 @@
     - else
       = contact.title if contact.title?
     - if contact.account && contact.account.name?
-      == at #{link_to contact.account.name, account_path(contact.account)}
-    = "&ndash; referred by #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
+      == #{t:at} #{link_to contact.account.name, account_path(contact.account)}
+    = "&ndash; #{t:referred_by} #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
   - unless @current_user.preference[:contacts_outline] == "brief"
     %dt{ :style => "padding: 2px 0px 0px 0px" }
       = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
-      = "phone: <b>" + contact.phone << "</b> | " if contact.phone?
-      = "mobile: <b>" + contact.mobile << "</b> | " if contact.mobile?
-      == added #{time_ago_in_words(contact.created_at)} ago
+      = "#{t:phone_small}: <b>" + contact.phone << "</b> | " if contact.phone?
+      = "#{t:mobile_small}: <b>" + contact.mobile << "</b> | " if contact.mobile?
+      == added #{time_ago_in_words(contact.created_at)} #{t:ago}
     = hook(:contact_bottom, self, :contact => contact)

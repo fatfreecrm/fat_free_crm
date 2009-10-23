@@ -2,28 +2,28 @@
   %span{:style => "float:right"}= gravatar_for(@contact, :size => "50x50", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
   %h4= @contact.full_name
   - if !@contact.title.blank? && @contact.account
-    %div== #{@contact.title} at #{link_to(@contact.account.name, account_path(@contact.account))}
+    %div== #{@contact.title} #{t:at} #{link_to(@contact.account.name, account_path(@contact.account))}
   - elsif !@contact.title.blank?
     %div= @contact.title
   - elsif @contact.account
     %div= link_to(@contact.account.name, account_path(@contact.account))
   - unless @contact.department.blank?
-    = @contact.department + " department"
+    == #{@contact.department} #{t:department}
 
   %div= @contact.address.n2br if @contact.address
 
   %div
     - unless @contact.phone.blank?
-      == Phone: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.phone) : @contact.phone}</b><br />
+      == #{t:phone}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.phone) : @contact.phone}</b><br />
     - unless @contact.mobile.blank?
-      == Mobile: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.mobile) : @contact.mobile}</b><br />
+      == #{t:mobile}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.mobile) : @contact.mobile}</b><br />
     - unless @contact.fax.blank?
-      == Fax: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.fax) : @contact.fax}</b><br />
+      == #{t:fax}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.fax) : @contact.fax}</b><br />
   %div
     - unless @contact.email.blank?
-      == Email: <b>#{link_to(@contact.email, "mailto:" + @contact.email)}</b><br />
+      == #{t:email}: <b>#{link_to(@contact.email, "mailto:" + @contact.email)}</b><br />
     - unless @contact.alt_email.blank?
-      == Other: <b>#{link_to(@contact.alt_email, "mailto:" + @contact.alt_email)}</b><br />
+      == #{t:other}: <b>#{link_to(@contact.alt_email, "mailto:" + @contact.alt_email)}</b><br />
 
   = web_presence_icons(@contact)
 

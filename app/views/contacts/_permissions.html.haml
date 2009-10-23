@@ -1,6 +1,6 @@
 - edit ||= false
 - collapsed = session[:contact_permissions].nil? # && @contact.errors.empty?
-= subtitle :contact_permissions, collapsed
+= subtitle :contact_permissions, collapsed, t(:permissions_title)
 .section
   %small#contact_permissions_intro{ hidden_if(!collapsed) }
     = "By default only you will have access to the contact. You can change contact permissions later." unless edit
