@@ -17,10 +17,11 @@
 
 
 var Facebox = Class.create({
-	initialize	: function(extra_set){
+	initialize	: function(){
+    var base_url = (arguments.length == 1 ? arguments[0] + "/" : "/");
 		this.settings = {
-			loading_image : './facebox/loading.gif',
-			close_image   : './facebox/closelabel.gif',
+      loading_image : base_url + 'images/facebox/loading.gif',
+      close_image   : base_url + 'images/facebox/closelabel.gif',
 			image_types   : new RegExp('\.' + ['png', 'jpg', 'jpeg', 'gif'].join('|') + '$', 'i'),
 			inited        : true,
 			facebox_html  : '\
@@ -38,7 +39,7 @@ var Facebox = Class.create({
 	              </div> \
 	              <div class="footer"> \
 	                <a href="#" class="close"> \
-	                  <img src="./facebox/closelabel.gif" title="close" class="close_image" /> \
+	                  <img src="' + base_url + 'images/facebox/closelabel.gif" title="close" class="close_image" /> \
 	                </a> \
 	              </div> \
 	            </td> \
@@ -52,7 +53,6 @@ var Facebox = Class.create({
 	    </div> \
 	  </div>'
 		};
-		if (extra_set) Object.extend(this.settings, extra_set);
 		$(document.body).insert({bottom: this.settings.facebox_html});
 		
 		this.preload = [ new Image(), new Image() ];
@@ -223,9 +223,4 @@ var Facebox = Class.create({
       selects[i].style.visibility = "visible";
     }
   }
-});
-
-var facebox;
-document.observe('dom:loaded', function(){
-	facebox = new Facebox();
 });

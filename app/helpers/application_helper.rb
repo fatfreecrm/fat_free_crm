@@ -227,6 +227,11 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
+  def activate_facebox
+    %Q/document.observe("dom:loaded", function() { new Facebox('#{Setting.base_url}'); });/
+  end
+
+  #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args[:size]  ||= "75x75"
     args[:class] ||= "gravatar"
