@@ -1,24 +1,24 @@
 - edit ||= false
 - collapsed = session[:contact_presence].nil? # && @contact.errors.empty?
-= subtitle :contact_presence, collapsed, "Web Presence"
+= subtitle :contact_presence, collapsed, t(:web_presence)
 .section
   %small#contact_presence_intro{ hidden_if(!collapsed) }
-    = "You can add web presence information later." unless edit
+    = t(:web_presence_text) unless edit
   #contact_presence{ hidden_if(collapsed) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label.top Website/Blog:
+          .label.top #{t:blog}:
           = f.text_field :blog, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label.top Twitter:
+          .label.top #{t:twitter}:
           = f.text_field :twitter, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label LinkedIn:
+          .label #{t:linked_in}:
           = f.text_field :linkedin, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label Facebook:
+          .label #{t:facebook}:
           = f.text_field :facebook, :style => "width:240px"

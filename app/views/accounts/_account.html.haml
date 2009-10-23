@@ -18,6 +18,6 @@
       %dt
         = link_to(account.website, account.website.to_url) << " | " if account.website?
         = t(:phone_small) << ": " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
-        = t('inline.contact', :count => account.contacts.count) << " | "
-        = t('inline.opportunity', :count => account.opportunities.count) << " | "
+        = t('inline.contact', account.contacts.count) << " | "
+        = t('inline.opportunity', account.opportunities.count) << " | "
       = hook(:account_bottom, self, :account => account)

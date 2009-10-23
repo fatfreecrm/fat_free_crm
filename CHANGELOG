@@ -4,11 +4,32 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Thu, Oct 21, 2009
+---------------------------------------------------------------------
+- Fixed SASS deprecation warnings making it compatible with Heroku again (thanks, Jim!).
+- Refactored Facebox library (again!) to take into account [base_url] setting.
+
+Wed, Oct 21, 2009
+---------------------------------------------------------------------
+- Include modules from "lib/fat_free_crm.rb" so that they're loaded when running rake.
+
+Tue, Oct 20, 2009
+---------------------------------------------------------------------
+- Added Language option stubs to user's profile.
+- Disabled tab highlighting when showing user's profile.
+- Include all Fat Free CRM modules from Rails initializer.
+- Added FatFreeCRM::I18n module.
+
+Sun, Oct 18, 2009
+---------------------------------------------------------------------
+- Merged localization commits onto i18n branch (thanks, Lana!)
+
 Wed, Oct 14, 2009
 ---------------------------------------------------------------------
 - Make sure opportunity name does not exceed 64 characters (thanks, Rit!)
 - Changed required Rails version to v2.3.4
 - Updated model annotations for schema version #023.
+- Release 0.9.8.
 
 Sun, Oct 11, 2009
 ---------------------------------------------------------------------

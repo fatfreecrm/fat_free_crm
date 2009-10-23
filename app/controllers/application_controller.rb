@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
     I18n.locale = Setting.locale if Setting.locale
 
     # HACK: this is a temporary hack until we add :locale attribute to User model.
-    session[:locale] = params[:lang] unless params[:lang].blank?
-    I18n.locale = session[:locale]
+    # session[:locale] = params[:lang] unless params[:lang].blank?
+    # I18n.locale = session[:locale]
   end
 
   #----------------------------------------------------------------------------
@@ -58,6 +58,9 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def current_user
     @current_user ||= (current_user_session && current_user_session.record)
+    if @current_user && @current_user.preference[:locale]
+      I18n.locale = @current_user.preference[:locale]
+    end
     User.current_user = @current_user
   end
   

@@ -4,12 +4,12 @@
     %meta{ "http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
     %title Fat Free CRM
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
-    = stylesheet_link_tag "screen", "/facebox/facebox.css", :cache => "cache/all"
+    = stylesheet_link_tag "screen", "facebox.css", :cache => "cache/all"
     - unless tabless_layout?
       = stylesheet_link_tag "calendar_date_select/default.css"
     %style= yield :styles
 
-    = javascript_include_tag :defaults, "/facebox/facebox.js", :cache => "cache/all"
+    = javascript_include_tag :defaults, "facebox.js", :cache => "cache/all"
     - unless tabless_layout?
       = javascript_include_tag "crm_classes.js", "calendar_date_select/calendar_date_select.js", "calendar_date_select/format_american.js", :cache => "cache/classes"
     %script{:type => "text/javascript"}= yield :javascript
@@ -24,5 +24,6 @@
     %script{:type => "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
+      = activate_facebox
       = yield :javascript_epilogue
       = hook(:javascript_epilogue, self)

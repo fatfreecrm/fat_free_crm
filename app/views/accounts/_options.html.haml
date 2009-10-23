@@ -1,9 +1,9 @@
 %p
   = link_to_close options_accounts_path
   = hidden_field_tag "account[user_id]", @current_user.id
-  == Sort accounts by #{link_to(@sort_by, "#", :id => :sort_by)}.
-  == Show #{link_to(@per_page, "#", :id => :per_page)} account records per page
-  == using #{link_to(@outline, "#", :id => :outline)} format.
+  == #{t:sort_accounts_by} #{link_to(@sort_by, "#", :id => :sort_by)}.
+  == #{t:show} #{link_to(@per_page, "#", :id => :per_page)} #{t:account_records_per_page}
+  == #{t:using} #{link_to(@outline, "#", :id => :outline)} #{t:format}.
 %p
 
 %script

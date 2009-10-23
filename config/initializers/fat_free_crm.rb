@@ -1,11 +1,6 @@
 require "fat_free_crm"
 
 #---------------------------------------------------------------------
-ActiveRecord::Base.class_eval do
-  include FatFreeCRM::Permissions
-end
-
-#---------------------------------------------------------------------
 Sass::Plugin.options[:template_location] = File.join(RAILS_ROOT, "app/stylesheets")
 Sass::Plugin.options[:css_location] = File.join(RAILS_ROOT, "public/stylesheets")
 

@@ -1,0 +1,126 @@
+ru:
+
+  language: Russian (Русский)
+
+  # Views - hierarchy follows project view structure
+  # users:
+  user: Пользователь
+  email: E-mail
+  phone: Телефон
+  mobile: Мобильный
+  profile: Профиль
+  my: Мой
+  edit_profile_link: Изменить профиль
+  upload_picture_link: Загрузить фото
+  change_password_link: Изменить пароль
+  change_password_button: Изменить Пароль
+  current_password: Текущий пароль
+  new_password: Новый пароль
+  password_confirmation: Повторить пароль
+  first_name: Имя
+  last_name: Фамилия
+  job_title: Должность
+  company: Организация
+  contact_info_title: Контактная Информация
+  alt_email: Альтернативный E-mail
+  aim: AOL IM
+  yahoo: Yahoo IM
+  google: Google IM
+  skype: Skype
+  save_profile_button: Сохранить Профиль
+  image_help: 'Размер изображения будет автоматически изменен на 75 x 75 пикселей. Поддерживаются форматы: GIF, JPG и PNG.'
+  image_file: Файл с Изображением
+  use_gravatar_link: Использовать Gravatar
+  gravatar_help: Не знаете что такое Gravatar? Почитать про Gravatar
+  here: здесь
+  upload_picture_button: Загрузить Изображение
+  login_now_link: Войти!
+  username: Логин
+  password: Пароль
+  sign_up_button: Зарегистрироваться
+  sign_up_title: Регистрация
+  already_signed_up: Уже регистрировались?
+
+  # auth:
+  login: Вход
+  no_account: Не зарегистрированы?
+  sign_up_now: Зарегистрироваться!
+  forgot_password: Забыли пароль?
+  remember_me: Запомнить
+
+  # accounts:
+  accounts: @ru@Accounts
+  account: Аккаунт
+  added: добавлен
+  ago: назад
+  by: ' '
+  me: мной
+  phone_small: @ru@phone
+  mobile_small: @ru@mobile
+  edit: Изменить
+  delete: Удалить
+  options: @ru@Options
+  delete_link: Удалить?
+  tasks_title: @ru@Tasks
+  contacts_title: @ru@Contacts
+  opportunities_title: @ru@Opportunities
+  create_account_button: @ru@Create Account
+  create_account_link: @ru@Create account
+  save_account_button: @ru@Save Account
+  account_name: @ru@Account name
+  assigned_to: @ru@Assigned to
+  website: @ru@Website 
+  phone_toll_free: @ru@Phone (toll-free)
+  fax: Факс
+  billing_address: @ru@Billing address
+  shipping_address: @ru@Shipping address
+  same_as_billing_link: @ru@same as billing
+  permissions_title: Приватность
+  account_permissions_intro: @ru@By default only you will have access to the account. You can change account permissions later.
+  private_txt: @ru@Keep it private, do not share with others
+  public_txt: @ru@Share it with everyone
+  shared_txt: @ru@Share it with the following people
+  sort_accounts_by: Сортировать аккаунты по
+  show: Показать
+  account_records_per_page: аккаунтов на странице
+  using: в
+  format: формате
+  can_add_contact_later: @ru@You can add lead contact information later.
+  open_in_window: @ru@Open {{value}} in a new window
+
+  # contacts
+  create_contact_link: Создать контакт
+  create_contact_button: Создать Контакт
+  save_contact_button: Сохранить Контакт
+  referred_by: @ru@referred by
+  at: в
+  department: Отдел
+  department_small: отдел
+  other: @ru@Other
+  extra_info: Дополнительные данные
+  extra_info_text: @ru@You can add extra contact information later.
+  address: Адрес
+  do_not_call: Не звонить
+  web_presence: @ru@Web Presence
+  web_presence_text: @ru@You can add web presence information later.
+  blog: @ru@Website/Blog
+  twitter: Twitter
+  linked_in: LinkedIn
+  facebook: Facebook
+
+  inline:
+    contact:
+      zero: '0 контактов'
+      one: '1 контакт'
+      many: '{{count}} контактов'
+      other: '{{count}} контакта'
+    opportunity:
+      zero: '0 возможностей'
+      one: '1 возможность'
+      few: '{{count}} возможности'
+      many: '{{count}} возможностей'
+      other: '{{count}} возможностей'
+
+  # generic:
+  not_implemented: @@@Not implemented yet.
+
