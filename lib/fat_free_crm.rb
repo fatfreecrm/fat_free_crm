@@ -23,6 +23,7 @@ require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/plugin"
 
+ActionView::Base.send(:include, FatFreeCRM::I18n)
 ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
 ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
 ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
