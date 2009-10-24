@@ -2,7 +2,7 @@
   - unless related.category.blank?
     .strip{:class => related.category}= Setting.task_category[related.category.to_sym]
   - else
-    .strip{:style => "color:white"} Other
+    .strip{:style => "color:white"} #{t:category_other}
   %div
     .tools{ invisible, :id => dom_id(related, :tools) }
     - if related.assigned_to
@@ -11,19 +11,23 @@
       = link_to(related.user.full_name, user_path(related.user))
     = ": " + related.name
     - if related.asset_id?
-      == (re: #{link_to(related.asset.name, polymorphic_url(related.asset))})
+      == (#{t:related} #{link_to(related.asset.name, polymorphic_url(related.asset))})
     &ndash;
     %tt
       - if related.completed_at
-        %span.cool= "completed " << distance_of_time_in_words(related.completed_at, Time.now) << " ago"
+        %span.cool
+          == #{t:completed_small} #{distance_of_time_in_words(related.completed_at, Time.now} #{t:ago}
       - elsif related.bucket == "due_asap"
-        %span.urgent due now.
+        %span.urgent 
+        == #{t:due_now}.
       - elsif related.bucket == "due_later"
-        due sometime soon.
+        == #{t:due_later}.
       - elsif related.due_at < Date.today
-        %span.warn= distance_of_time_in_words(related.due_at, Date.today) << " late, was due on #{related.due_at.strftime('%b %e')}"
+        %span.warn= distance_of_time_in_words(related.due_at, Date.today) 
+        == #{t:overdue} #{related.due_at.strftime('%b %e')}
       - elsif related.due_at > Date.today
-        = "due in " << distance_of_time_in_words(Time.now, related.due_at.end_of_day)
+        == #{t:due_in} #{distance_of_time_in_words(Time.now, related.due_at.end_of_day)}
       - else
-        %span.cool due today.
+        %span.cool
+        == #{t:due_today}.
       

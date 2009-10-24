@@ -61,9 +61,6 @@ en-US:
   delete: Delete
   options: Options
   delete_link: Delete?
-  tasks_title: Tasks
-  contacts_title: Contacts
-  opportunities_title: Opportunities
   create_account_button: Create Account
   create_account_link: Create account
   save_account_button: Save Account
@@ -76,37 +73,87 @@ en-US:
   shipping_address: Shipping address
   same_as_billing_link: same as billing
   permissions_title: Permissions
+  account_small: account
   account_permissions_intro: "By default only you will have access to the account. You can change account permissions later."
   private_txt: Keep it private, do not share with others
   public_txt: Share it with everyone
   shared_txt: Share it with the following people
   sort_accounts_by: Sort accounts by
+  date_created: Date Created
+  date_updated: Date Updated
   show: Show
-  account_records_per_page: account records per page
+  before: before
+  after: after
+  account_records: account records
+  per_page: per page
   using: using
   format: format
-  can_add_contact_later: You can add lead contact information later.
-  open_in_window: Open in a new window
+  brief: brief
+  long: long
+  contact_info_intro: You can add lead contact information later.
+  open_in_window: Open {{value}} in a new window
     
   # contacts
+  contacts_title: Contacts
   create_contact_link: Create contact
   create_contact_button: Create Contact
   save_contact_button: Save Contact
+  contact_small: contact
   referred_by: referred by
   at: at
   department: Department
-  department_small: department
+  department_small: '{{value}} department'
   other: Other
+  myself: Myself
+  permissions_intro: By default only you will have access to the {{value}}. You can change {{value}} permissions later.
   extra_info: Extra Information
-  extra_info_text: You can add extra contact information later.
+  extra_info_intro: You can add extra contact information later.
   address: Address
   do_not_call: Do not call
   web_presence: Web Presence
-  web_presence_text: You can add web presence information later.
+  web_presence_intro: You can add web presence information later.
   blog: Website/Blog
   twitter: Twitter
   linked_in: LinkedIn
   facebook: Facebook
+  sort_contacts_by: Sort contacts by
+  displaying: displaying
+  first_name_small: first name
+  last_name_small: last name
+  contact_records: contact records
+
+  # tasks
+  tasks_title: Tasks
+  pending: Pending
+  assigned: Assigned
+  completed: Completed
+  completed_tasks_title: Completed Tasks
+  assigned_tasks_title: Assigned Tasks
+  create_task_link: Create task
+  create_task_button: Create Task
+  create_task_small: create a new task
+  save_task_button: Save Task
+  task_name: Task name
+  task_small: task
+  completed_small: completed
+  due: Due
+  due_now: due now
+  due_later: due sometime soon
+  overdue:  'late, was due on'
+  due_in: due in
+  due_today: due today
+  assign_to: Assign to
+  category: Category
+  select_blank: '-- Select --'
+  or: or
+  move_to: move to
+  no_tasks: "You don't have any {{value}} tasks"
+  feel_free: Feel free to
+  category_other: Other
+ 
+  # opportunities
+  opportunities_title: Opportunities
+  create_opportunity_link: Create opportunity
 
   inline:
     contact: 

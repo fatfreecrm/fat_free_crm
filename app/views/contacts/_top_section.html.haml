@@ -29,6 +29,6 @@
           = a.text_field :name, :style => "width:324px; display:none;"
         %td= spacer
         %td{ :valign => :top }
-          .label #{t:assigned_to}
-          = collection_select :contact, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+          .label #{t:assigned_to}:
+          = collection_select :contact, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
       = hook(:contact_top_section_bottom, self, :f => f)

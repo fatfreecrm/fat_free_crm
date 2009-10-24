@@ -1,4 +1,4 @@
 #empty
-  == You don't have any #{@view} tasks.
+  == #{t(:no_tasks, @view)}.
   - if @view != "completed"
-    == Feel free to #{link_to_remote("create a new task", :url => new_task_path + "?view=#{@view}")}.
+    == #{t:feel_free} #{link_to_remote(t(:create_task_small), :url => new_task_path + "?view=#{@view}")}.

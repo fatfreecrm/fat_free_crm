@@ -2,11 +2,11 @@
   %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
     %tr
       %td{ :valign => :top, :colspan => 5 }
-        .label.top.req Task name:
+        .label.top.req #{t:task_name}:
         = f.text_field :name, :style => "width:500px"
     %tr
       %td{ :valign => :top }
-        .label.req Due:
+        .label.req #{t:due}:
         - bucket = (params[:bucket].blank? ? @task.bucket : params[:bucket]) || "due_asap"
         - if @task.bucket != "specific_time"
           = f.select :bucket, @bucket, { :selected => bucket.to_sym }, { :style => "width:160px;", :onchange => "crm.flip_calendar(this.value)" }
@@ -16,9 +16,9 @@
           = f.text_field :calendar, :value => f.object.due_at.to_date.to_s(:mmddyyyy), :style => "width:160px;", :autocomplete => :off
       %td= spacer
       %td{ :valign => :top }
-        .label.req Assign to:
-        = collection_select :task, :assigned_to, @users, :id, :full_name, { :include_blank => "Me" }, { :style => "width:160px", :disabled => @task.assigned_to == @current_user.id }
+        .label.req #{t:assign_to}:
+        = collection_select :task, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px", :disabled => @task.assigned_to == @current_user.id }
       %td= spacer
       %td{ :valign => :top }
-        .label.req Category:
-        = f.select :category, @category, { :selected => @task.category.blank? ? nil : @task.category.to_sym, :include_blank => "-- Select --" }, { :style => "width:160px" }
+        .label.req #{t:category}:
+        = f.select :category, @category, { :selected => @task.category.blank? ? nil : @task.category.to_sym, :include_blank => t(:select_blank) }, { :style => "width:160px" }
