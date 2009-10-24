@@ -20,7 +20,7 @@ module ApplicationHelper
   def tabs(tabs = FatFreeCRM::Tabs.main)
     if tabs
       @current_tab ||= tabs.first[:text].downcase.to_sym # Select first tab by default.
-      tabs.each { |tab| tab[:active] = (tab[:text].downcase.to_sym == @current_tab || tab[:url][:controller].to_sym == @current_tab) }
+      tabs.each { |tab| tab[:active] = (@current_tab == tab[:text].downcase || @current_tab == tab[:url][:controller]) }
     else
       raise RuntimeError.new("Tab settings are missing, please run 'rake crm:setup'")
     end

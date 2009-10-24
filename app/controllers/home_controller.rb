@@ -17,7 +17,7 @@
 
 class HomeController < ApplicationController
   before_filter :require_user, :except => [ :toggle, :timezone ]
-  before_filter "set_current_tab(:dashboard)", :only => :index
+  before_filter "set_current_tab('/')", :only => :index
   before_filter "hook(:home_before_filter, self, :amazing => true)"
 
   #----------------------------------------------------------------------------

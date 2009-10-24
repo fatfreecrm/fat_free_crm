@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 class Admin::UsersController < Admin::ApplicationController
-  before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter "set_current_tab('admin/users')", :only => [ :index, :show ]
   before_filter :auto_complete, :only => :auto_complete
 
   # GET /admin/users
