@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   #----------------------------------------------------------------------------
-  def set_current_tab(tab = controller_name.to_sym)
+  def set_current_tab(tab = controller_name)
     @current_tab = tab
   end
 

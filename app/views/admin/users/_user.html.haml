@@ -9,7 +9,7 @@
   - else
     .strip{:class => "active"} Active
 
-  = gravatar_for(user, :size => "30x30", :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
+  = gravatar_for(user, :size => "30x30")
   .tools{ invisible, :id => dom_id(user, :tools) }
     %small
       = link_to_edit(user) << " | "
