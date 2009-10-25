@@ -49,69 +49,117 @@ ru:
   remember_me: Запомнить
 
   # accounts:
-  accounts: @ru@Accounts
-  account: Аккаунт
+  accounts: Счета
+  account: Счет
   added: добавлен
   ago: назад
   by: ' '
   me: мной
-  phone_small: @ru@phone
-  mobile_small: @ru@mobile
+  phone_small: телефон
+  mobile_small: мобильный
   edit: Изменить
   delete: Удалить
-  options: @ru@Options
+  options: Опции
   delete_link: Удалить?
-  tasks_title: @ru@Tasks
-  contacts_title: @ru@Contacts
-  opportunities_title: @ru@Opportunities
-  create_account_button: @ru@Create Account
-  create_account_link: @ru@Create account
-  save_account_button: @ru@Save Account
-  account_name: @ru@Account name
-  assigned_to: @ru@Assigned to
-  website: @ru@Website 
-  phone_toll_free: @ru@Phone (toll-free)
+  create_account_button: Создать Счет
+  create_account_link: Создать счет
+  save_account_button: Сохранить Счет
+  account_name: Название счета
+  assigned_to: Поручен
+  website: Интернет-страница
+  phone_toll_free: Бесплатный телефон
   fax: Факс
-  billing_address: @ru@Billing address
-  shipping_address: @ru@Shipping address
-  same_as_billing_link: @ru@same as billing
-  permissions_title: Приватность
-  account_permissions_intro: @ru@By default only you will have access to the account. You can change account permissions later.
+  billing_address: Адрес
+  shipping_address: Адрес доставки
+  same_as_billing_link: тот же
+  permissions_title: Права Доступа
+  account_small: счет
   private_txt: @ru@Keep it private, do not share with others
   public_txt: @ru@Share it with everyone
   shared_txt: @ru@Share it with the following people
-  sort_accounts_by: Сортировать аккаунты по
+  sort_accounts_by: Сортировать счета по
+  date_created: Дате создания
+  date_updated: Дате обновления
   show: Показать
-  account_records_per_page: аккаунтов на странице
+  before: до
+  after: после
+  account_records: счетов
+  per_page: на странице
   using: в
   format: формате
-  can_add_contact_later: @ru@You can add lead contact information later.
-  open_in_window: @ru@Open {{value}} in a new window
+  brief: Кратком
+  long: Полном
+  contact_info_intro: @ru@You can add lead contact information later.
+  open_in_window: Открыть {{value}} в новом окне
 
   # contacts
+  contacts_title: @ru@Contacts
   create_contact_link: Создать контакт
   create_contact_button: Создать Контакт
   save_contact_button: Сохранить Контакт
+  contact_small: контакт
   referred_by: @ru@referred by
   at: в
   department: Отдел
-  department_small: отдел
+  department_small: Отдел {{value}} 
   other: @ru@Other
+  myself: Мне
+  permissions_intro: При создании только Вы получаете доступ к {{value}}у. Права доступа можно изменить в любое время.
   extra_info: Дополнительные данные
-  extra_info_text: @ru@You can add extra contact information later.
+  extra_info_intro: @ru@You can add extra contact information later.
   address: Адрес
   do_not_call: Не звонить
   web_presence: @ru@Web Presence
-  web_presence_text: @ru@You can add web presence information later.
+  web_presence_intro: @ru@You can add web presence information later.
   blog: @ru@Website/Blog
   twitter: Twitter
   linked_in: LinkedIn
   facebook: Facebook
+  sort_contacts_by: Сортировать контакты по
+  displaying: показывая
+  first_name_small: имя
+  last_name_small: фамилии
+  contact_records: контактов
+
+  # tasks
+  tasks_title: @ru@Tasks
+  pending: @ru@Pending
+  assigned: @ru@Assigned
+  completed: @ru@Completed
+  completed_tasks_title: @ru@Completed Tasks
+  assigned_tasks_title: @ru@Assigned Tasks
+  create_task_link: @ru@Create task
+  create_task_button: Создать Task
+  create_task_small: @ru@create a new task
+  save_task_button: Сохранить Task
+  task_name: @ru@Task name
+  task_small: @ru@task
+  completed_small: завершено
+  due: Срок выполнения
+  due_now: @ru@due now
+  due_later: @ru@due sometime soon
+  overdue:  '@ru@late, was due on'
+  due_in: @ru@due in
+  due_today: @ru@due today
+  assign_to: Поручить
+  category: Категория
+  select_blank: '-- Выберите --'
+  or: или
+  move_to: перенести на
+  no_tasks: "You don't have any {{value}} tasks"
+  feel_free: @ru@Feel free to
+  related: 're:'
+ 
+  # opportunities
+  opportunities_title: @ru@Opportunities
+  create_opportunity_link: @ru@Create opportunity
+  category_other: @ru@Other
 
   inline:
     contact:
       zero: '0 контактов'
       one: '1 контакт'
+      few: '{{count}} контакта'
       many: '{{count}} контактов'
       other: '{{count}} контакта'
     opportunity:

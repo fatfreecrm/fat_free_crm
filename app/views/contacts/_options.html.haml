@@ -1,10 +1,10 @@
 %p
   = link_to_close options_contacts_path
   = hidden_field_tag "contact[user_id]", @current_user.id
-  == Sort contacts by #{link_to(@sort_by, "#", :id => :sort_by)}
-  == displaying first name #{link_to(@naming, "#", :id => :naming)} the last name.
-  == Show #{link_to(@per_page, "#", :id => :per_page)} contact records per page
-  == using #{link_to(@outline, "#", :id => :outline)} format.
+  == #{t:sort_contacts_by} #{link_to(@sort_by, "#", :id => :sort_by)},
+  == #{t:displaying} #{t:first_name_small} #{link_to(@naming, "#", :id => :naming)} #{t:last_name_small}.
+  == #{t:show} #{link_to(@per_page, "#", :id => :per_page)} #{t:contact_records} #{t:per_page}
+  == #{t:using} #{link_to(@outline, "#", :id => :outline)} #{t:format}.
 %p
 
 %script

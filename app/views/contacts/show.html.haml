@@ -13,7 +13,7 @@
 
 -#-----------------------------------------------------------------------------
 %br
-= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@contact) }
+= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@contact), :text=> t(:create_task_link) }
 .subtitle#create_task_title #{t:tasks_title}
 .remote#create_task{ hidden }
 .log#tasks
@@ -21,7 +21,7 @@
 
 -#-----------------------------------------------------------------------------
 %br
-= inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@contact) }
+= inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@contact), :text=> t(:create_opportunity_link) }
 .subtitle#create_opportunity_title #{t:opportunities_title}
 .remote#create_opportunity{ hidden }
 .list#opportunities
