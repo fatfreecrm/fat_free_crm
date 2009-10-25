@@ -20,5 +20,5 @@
       = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
       = "#{t:phone_small}: <b>" + contact.phone << "</b> | " if contact.phone?
       = "#{t:mobile_small}: <b>" + contact.mobile << "</b> | " if contact.mobile?
-      == added #{time_ago_in_words(contact.created_at)} #{t:ago}
+      == #{t:added} #{time_ago_in_words(contact.created_at)} #{t:ago}
     = hook(:contact_bottom, self, :contact => contact)

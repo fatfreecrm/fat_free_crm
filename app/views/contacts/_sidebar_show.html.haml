@@ -8,7 +8,7 @@
   - elsif @contact.account
     %div= link_to(@contact.account.name, account_path(@contact.account))
   - unless @contact.department.blank?
-    == #{@contact.department} #{t:department}
+    = t(:department_small, @contact.department)
 
   %div= @contact.address.n2br if @contact.address
 
