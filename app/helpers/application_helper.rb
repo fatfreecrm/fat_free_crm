@@ -231,6 +231,8 @@ module ApplicationHelper
     %Q/document.observe("dom:loaded", function() { new Facebox('#{Setting.base_url}'); });/
   end
 
+  # Users can upload their avatar, and if it's missing we're going to use
+  # gravatar. For leads and contacts we always use gravatars.
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args[:size]  ||= "75x75"
@@ -238,9 +240,22 @@ module ApplicationHelper
     if model.avatar
       image_tag(model.avatar.image.url(Avatar.styles[args[:size]]), args)
     elsif model.email
-      gravatar(model.email, { :default => "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/images/avatar.jpg" }.merge(args))
+      gravatar(model.email, { :default => default_avatar_url }.merge(args))
     else
       image_tag("avatar.jpg", args)
     end
   end
+
+  # Add default avatar image and invoke original :gravatar_for defined by the
+  # gravatar plugin (see vendor/plugins/gravatar/lib/gravatar.rb)
+  #----------------------------------------------------------------------------
+  def gravatar_for(model, args = {})
+    super(model, { :default => default_avatar_url }.merge(args))
+  end
+
+  #----------------------------------------------------------------------------
+  def default_avatar_url
+    "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/images/avatar.jpg"
+  end
+
 end

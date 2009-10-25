@@ -1,7 +1,7 @@
 - gravatar_size = @current_user.preference[:contacts_outline] == "brief" ? "16x16" : "30x30"
 
 %li[contact]{ highlightable(dom_id(contact, :tools)) }
-  = gravatar_for(contact, :size => gravatar_size, :default => "#{request.protocol + request.host_with_port}/images/avatar.jpg")
+  = gravatar_for(contact, :size => gravatar_size)
   .tools{ invisible, :id => dom_id(contact, :tools) }
     %small
       = link_to_edit(contact) + " | "
