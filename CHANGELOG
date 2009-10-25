@@ -8,6 +8,7 @@ Sat, Oct 24, 2009
 ---------------------------------------------------------------------
 - Allow renaming both main and admin tabs (see config/settings.yml).
 - Refactored gravatars to always show default image if gravatar is missing.
+- Fixed Facebox usage within Admin area.
 
 Thu, Oct 22, 2009
 ---------------------------------------------------------------------
