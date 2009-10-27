@@ -1,21 +1,21 @@
 - collapsed = session[:lead_convert_permissions].nil? # && @lead.errors.empty?
-= subtitle :lead_convert_permissions, collapsed
+= subtitle :lead_convert_permissions, collapsed, t(:permissions)
 .section
   %small#lead_convert_permissions_intro{ hidden_if(!collapsed) }
-    Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+    #{t:convert_lead_permissions_intro}
   #lead_convert_permissions{ hidden_if(collapsed) }
     .radio_box
       = radio_button_tag "access", "Lead",    true,  :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Lead'"
-      Copy lead permissions
+      #{t(:copy_permissions, t(:lead_small))}
     .radio_box
       = radio_button_tag "access", "Private", false, :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Private'"
-      Keep it private, do not share with others
+      #{t:private_txt}
     .radio_box
       = radio_button_tag "access", "Public",  false, :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Public'"
-      Share it with everyone
+      #{t:public_txt}
     .radio_box
       = radio_button_tag "access", "Shared",  false, :onclick => "$('people').show(); $('account_access').value = $('opportunity_access').value = 'Shared'"
-      Share it with the following people
+      #{t:shared_txt}
     #people{ hidden }
       %div{ :style => "padding: 6px 0px 0px 20px" }
         - for user in @users

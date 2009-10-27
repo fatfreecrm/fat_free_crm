@@ -50,11 +50,9 @@ ru:
 
   # accounts:
   accounts: Счета
+  accounts_small: счета
   account: Счет
-  added: добавлен
-  ago: назад
-  by: ' '
-  me: мной
+  account_small: счет
   phone_small: телефон
   mobile_small: мобильный
   edit: Изменить
@@ -73,31 +71,23 @@ ru:
   shipping_address: Адрес доставки
   same_as_billing_link: тот же
   permissions_title: Права Доступа
-  account_small: счет
   private_txt: @ru@Keep it private, do not share with others
   public_txt: @ru@Share it with everyone
   shared_txt: @ru@Share it with the following people
-  sort_accounts_by: Сортировать счета по
   date_created: Дате создания
   date_updated: Дате обновления
-  show: Показать
-  before: до
-  after: после
   account_records: счетов
-  per_page: на странице
-  using: в
-  format: формате
-  brief: Кратком
-  long: Полном
-  contact_info_intro: @ru@You can add lead contact information later.
+  intro: @ru@You can add {{value}} information later.
   open_in_window: Открыть {{value}} в новом окне
 
   # contacts
-  contacts_title: @ru@Contacts
+  contacts: Контакты
+  contacts_small: контакты
+  contact_small: контакт
+  contact_records: контактов
   create_contact_link: Создать контакт
   create_contact_button: Создать Контакт
   save_contact_button: Сохранить Контакт
-  contact_small: контакт
   referred_by: @ru@referred by
   at: в
   department: Отдел
@@ -106,20 +96,15 @@ ru:
   myself: Мне
   permissions_intro: При создании только Вы получаете доступ к {{value}}у. Права доступа можно изменить в любое время.
   extra_info: Дополнительные данные
-  extra_info_intro: @ru@You can add extra contact information later.
+  extra_info_small: @ru@extra contact
   address: Адрес
   do_not_call: Не звонить
   web_presence: @ru@Web Presence
-  web_presence_intro: @ru@You can add web presence information later.
+  web_presence_small: @ru@web presence
   blog: @ru@Website/Blog
   twitter: Twitter
   linked_in: LinkedIn
   facebook: Facebook
-  sort_contacts_by: Сортировать контакты по
-  displaying: показывая
-  first_name_small: имя
-  last_name_small: фамилии
-  contact_records: контактов
 
   # tasks
   tasks_title: @ru@Tasks
@@ -144,16 +129,68 @@ ru:
   assign_to: Поручить
   category: Категория
   select_blank: '-- Выберите --'
-  or: или
   move_to: перенести на
   no_tasks: "You don't have any {{value}} tasks"
   feel_free: @ru@Feel free to
   related: 're:'
  
+  # leads
+  leads_title: @ru@Leads
+  lead: @ru@Lead
+  lead_small: @ru@lead
+  leads_small: @ru@leads
+  create_lead_link: @ru@Создать lead
+  create_lead_button: @ru@Создать Lead
+  save_lead_button: @ru@Сохранить Lead
+  convert: @ru@Convert
+  delete: @ru@Delete
+  reject: @ru@Reject
+  status: @ru@Status
+  source: Источник
+  rating: @ru@Rating
+  campaign: @ru@Campaign
+  campaign_small: @ru@campaign
+  lead_info_small: @ru@lead contact
+  lead_status_small: @ru@lead status
+  lead_permissions_intro: @ru@By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  create_opp_for_contact: @ru@You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+  convert_lead_button: @ru@Convert Lead
+  convert_lead_text: @ru@By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  convert_lead_permissions_intro: @ru@Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+  lead_records: @ru@lead records
+
+  # common
+  name: Название
+  added: добавлен
+  ago: назад
+  by: ' '
+  me: мной
+  permissions: Права Доступа
+  copy_permissions: @ru@Copy {{value}} permissions
+  sort_by: Сортировать {{value}} по
+  displaying: показывая
+  first_name_small: имя
+  last_name_small: фамилии
+  show: Показать
+  before: до
+  after: после
+  per_page: на странице
+  using: в
+  format: формате
+  brief: Кратком
+  long: Полном
+  or: или
+
   # opportunities
   opportunities_title: @ru@Opportunities
+  opportunity: @ru@Opportunity
   create_opportunity_link: @ru@Create opportunity
   category_other: @ru@Other
+  stage: Стадия
+  close_date: @ru@Close date
+  probability: Вероятность (%)
+  amount: Сумма (руб.)
+  discount: Скидка (руб.)
 
   inline:
     contact:

@@ -1,4 +1,4 @@
 = inline :create_task, url_for(:action => :new, :view => @view, :text => t(:create_task_link))
-.title#title= (@view == "assigned" ? t(:assigned_tasks_title) : t(:tasks_title))
+.title#title= (@view == "assigned" ? t(:assigned_tasks) : t(:tasks))
 .remote#options{ hidden }
 .remote#create_task{ hidden }

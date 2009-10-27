@@ -3,11 +3,11 @@
 #confirm{ hidden }
 .title_tools#menu
   - unless %w(converted rejected).include?(@lead.status)
-    = link_to_inline(:convert_lead, convert_lead_path(@lead), :text => "Convert") + " | "
-  = link_to_inline(:edit_lead, edit_lead_path(@lead), :text => "Edit") + " | "
+    = link_to_inline(:convert_lead, convert_lead_path(@lead), :text => t(:convert)) + " | "
+  = link_to_inline(:edit_lead, edit_lead_path(@lead), :text => t(:edit)) + " | "
   - if @lead.status != "rejected"
-    = link_to_function("Reject?", confirm_reject(@lead)) + " | "
-  = link_to_function("Delete?", confirm_delete(@lead))
+    = link_to_function(t(:reject) + '?', confirm_reject(@lead)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@lead))
 .title#title= @lead.full_name
 
 %div#convert_lead{ hidden }
@@ -18,8 +18,8 @@
 
 -#-----------------------------------------------------------------------------
 %br
-= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@lead) }
-.subtitle#create_task_title Tasks
+= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@lead), :text => t(:create_task_link) }
+.subtitle#create_task_title #{t:tasks}
 .remote#create_task{ hidden }
 .log#tasks
   = render :partial => "common/tasks"

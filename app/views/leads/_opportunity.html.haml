@@ -2,35 +2,34 @@
   = o.hidden_field :user_id
   = o.hidden_field :access
   = o.hidden_field :assigned_to
-  .subtitle Opportunity
+  .subtitle #{t:opportunity}
   .section
     %small
-      == You can optionally create an opportunity for the #{@lead.full_name} contact by specifying the name, 
-      current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+      #{t(:create_opp_for_contact, @lead.full_name)}
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label Name:
+          .label #{t:name}:
           = o.text_field :name, :style => "width:325px"
         %td= spacer
         %td{ :valign => :top }
-          .label Stage:
+          .label #{t:stage}:
           = o.select :stage, Setting.opportunity_stage, { :selected => @opportunity.stage.to_sym }, { :style => "width:160px" }
 
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label Close date:
+          .label #{t:close_date}:
           = o.text_field :closes_on, :style => "width:110px;", :autocomplete => :off
         %td= spacer
         %td{ :valign => :top }
-          .label Probability (%):
+          .label #{t:probability}:
           = o.text_field :probability, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label Amount ($):
+          .label #{t:amount}:
           = o.text_field :amount, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label Discount ($):
+          .label #{t:discount}:
           = o.text_field :discount, :style => "width:110px; text-align:right;"
