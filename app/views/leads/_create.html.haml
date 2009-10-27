@@ -9,6 +9,6 @@
   = render :partial => "leads/web",         :locals => { :f => f }
   = render :partial => "leads/permissions", :locals => { :f => f }
   .buttonbar
-    = f.submit "Create Lead"
+    = f.submit t:create_lead_button
     or
     = link_to_cancel new_lead_path

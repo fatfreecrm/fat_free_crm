@@ -1,39 +1,39 @@
 - edit ||= false
 - collapsed = session[:lead_contact].nil? # && @lead.errors.empty?
-= subtitle :lead_contact, collapsed, "Contact Information"
+= subtitle :lead_contact, collapsed, t(:contact_info)
 .section
   %small#lead_contact_intro{ hidden_if(!collapsed) }
-    = "You can add lead contact information later." unless edit
+    = t(:intro, t(:lead_info_small)) unless edit
   #lead_contact{ hidden_if(collapsed) }
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label.top Title:
+          .label.top #{t:job_title}:
           = f.text_field :title, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label.top Company:
+          .label.top #{t:company}:
           = f.text_field :company, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label Alternative Email:
+          .label #{t:alt_email}:
           = f.text_field :alt_email, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label Mobile:
+          .label #{t:mobile}:
           = f.text_field :mobile, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label Address:
+          .label #{t:address}:
           = f.text_area :address, :style =>"width:240px", :rows => 4
         %td= spacer
         %td{ :valign => :top }
-          .label Referred by:
+          .label #{t:referred_by}:
           = f.text_field :referred_by, :style => "width:240px"
           %div{:style => "margin-top:6px"}
             .check_box
               = f.check_box :do_not_call, {}, true
-              Do not call
+              #{t:do_not_call}
 
 
 
