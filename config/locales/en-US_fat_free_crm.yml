@@ -1,9 +1,13 @@
 en-US:
 
+  # generic terms
+  #----------------------------------------------------------------------------
+  all: All
   language: English
+  not_implemented: Not implemented yet.
 
-  # Views - hierarchy follows project view structure
-  # users:
+  # views/users:
+  #----------------------------------------------------------------------------
   user: User
   email: Email
   phone: Phone
@@ -41,14 +45,16 @@ en-US:
   sign_up: Sign Up
   already_signed_up: Already signed up?
 
-  # auth:
+  # views/auth:
+  #----------------------------------------------------------------------------
   login: Login
   no_account: Do not have an account?
   sign_up_now: Sign Up Now!
   forgot_password: Forgot Password?
   remember_me: Remember Me
 
-  # accounts:
+  # views/accounts:
+  #----------------------------------------------------------------------------
   accounts: Accounts
   accounts_small: account
   account: Account
@@ -79,8 +85,13 @@ en-US:
   account_records: account records
   intro: You can add {{value}} information later.
   open_in_window: Open {{value}} in a new window
+
+  # views/campaigns
+  #----------------------------------------------------------------------------
+  campaigns: Campaigns
     
-  # contacts
+  # views/contacts
+  #----------------------------------------------------------------------------
   contacts: Contacts
   contacts_small: contacts
   contact_small: contact
@@ -106,7 +117,8 @@ en-US:
   facebook: Facebook
   contact_records: contact records
 
-  # tasks
+  # views/tasks
+  #----------------------------------------------------------------------------
   tasks: Tasks
   pending: Pending
   assigned: Assigned
@@ -134,7 +146,8 @@ en-US:
   feel_free: Feel free to
   category_other: Other
  
-  # leads
+  # views/leads
+  #----------------------------------------------------------------------------
   leads: Leads
   lead: Lead
   lead_small: lead
@@ -159,7 +172,8 @@ en-US:
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
   lead_records: lead records
 
-  # common
+  # views/common
+  #----------------------------------------------------------------------------
   name: Name
   added: added
   ago: ago
@@ -181,7 +195,8 @@ en-US:
   long: long
   or: or
 
-  # opportunities
+  # views/opportunities
+  #----------------------------------------------------------------------------
   opportunities: Opportunities
   opportunity: Opportunity
   create_opportunity_link: Create opportunity
@@ -199,10 +214,18 @@ en-US:
       one: '1 opportunity'
       other: '{{count}} opportunities'
   
-  # home:
-     
-  # generic:
-    not_implemented: Not implemented yet.
-    
+  # views/home:
+  #----------------------------------------------------------------------------
 
-  
+  # models/activity
+  #----------------------------------------------------------------------------
+  one_hour: One Hour
+  one_day: One Day
+  two_days: Two Days
+  one_week: One Week
+  two_weeks: Two Weeks
+  one_month: One Month
+
+  # models/account
+  #----------------------------------------------------------------------------
+  missing_account_name: "^Please specify account name."

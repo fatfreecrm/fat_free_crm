@@ -46,6 +46,9 @@ class Activity < ActiveRecord::Base
 
   validates_presence_of :user, :subject
 
+  ASSETS = %w(all tasks campaigns leads accounts contacts opportunities).inject([]) { |arr, asset| arr << [ asset, I18n.t(asset) ] }
+  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month).inject([]) { |arr, duration| arr << [ duration, I18n.t(duration) ] }
+
   #----------------------------------------------------------------------------
   def self.log(user, subject, action)
     if action != :viewed

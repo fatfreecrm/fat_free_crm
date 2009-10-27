@@ -1,5 +1,5 @@
-- sort_by_menu_items = %w(All Tasks Campaigns Leads Accounts Contacts Opportunities).inject([]) do | items, asset|
-  - items << %Q[{ name: "#{asset}", on_select: function() { #{redraw(:asset, asset.downcase!, url_for(:action => :redraw))} } }]
+- sort_by_menu_items = Activity::ASSETS.inject([]) do |items, (key, value)|
+  - items << %Q[{ name: "#{value}", on_select: function() { #{redraw(:asset, [ key, value.downcase! ], url_for(:action => :redraw))} } }]
 
 :plain
   new crm.Menu({

@@ -1,5 +1,5 @@
-- sort_by_menu_items = ["One Hour", "One Day", "Two Days", "One Week", "Two Weeks", "One Month"].inject([]) do | items, duration|
-  - items << %Q[{ name: "#{duration}", on_select: function() { #{redraw(:duration, duration.downcase!, url_for(:action => :redraw))} } }]
+- sort_by_menu_items = Activity::DURATION.inject([]) do |items, (key, value)|
+  - items << %Q[{ name: "#{value}", on_select: function() { #{redraw(:duration, [ key, value.downcase! ], url_for(:action => :redraw))} } }]
 
 :plain
   new crm.Menu({

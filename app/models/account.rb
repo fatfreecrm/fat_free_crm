@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
   acts_as_commentable
   acts_as_paranoid
 
-  validates_presence_of :name, :message => "^Please specify account name."
+  validates_presence_of :name, :message => I18n.t(:missing_account_name) # "^Please specify account name."
   validates_uniqueness_of :name
   validate :users_for_shared_access
 

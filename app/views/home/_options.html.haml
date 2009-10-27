@@ -1,9 +1,9 @@
 %p
   = link_to_close url_for(:action => "options")
   = hidden_field_tag "account[user_id]", @current_user.id
-  == Show #{link_to(@asset, "#", :id => :asset)} activities
+  == Show #{link_to(t(@asset).downcase, "#", :id => :asset)} activities
   == performed by #{link_to(@user, "#", :id => :user)}
-  == in the past #{link_to(@duration, "#", :id => :duration)}.
+  == in the past #{link_to(t(@duration).downcase, "#", :id => :duration)}.
 %p
 
 %script
