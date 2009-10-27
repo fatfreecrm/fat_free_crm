@@ -21,7 +21,7 @@ en-US:
   last_name: Last name
   job_title: Title
   company: Company
-  contact_info_title: Contact Information
+  contact_info: Contact Information
   alt_email: Alternative email
   aim: AOL IM
   yahoo: Yahoo IM
@@ -38,7 +38,7 @@ en-US:
   username: Username
   password: Password
   sign_up_button: Sign Up
-  sign_up_title: Sign Up
+  sign_up: Sign Up
   already_signed_up: Already signed up?
 
   # auth:
@@ -50,11 +50,9 @@ en-US:
 
   # accounts:
   accounts: Accounts
+  accounts_small: account
   account: Account
-  added: added
-  ago: ago
-  by: by
-  me: me
+  account_small: account
   phone_small: phone
   mobile_small: mobile
   edit: Edit
@@ -72,33 +70,23 @@ en-US:
   billing_address: Billing address
   shipping_address: Shipping address
   same_as_billing_link: same as billing
-  permissions_title: Permissions
-  account_small: account
   account_permissions_intro: "By default only you will have access to the account. You can change account permissions later."
   private_txt: Keep it private, do not share with others
   public_txt: Share it with everyone
   shared_txt: Share it with the following people
-  sort_accounts_by: Sort accounts by
   date_created: Date Created
   date_updated: Date Updated
-  show: Show
-  before: before
-  after: after
   account_records: account records
-  per_page: per page
-  using: using
-  format: format
-  brief: brief
-  long: long
-  contact_info_intro: You can add lead contact information later.
+  intro: You can add {{value}} information later.
   open_in_window: Open {{value}} in a new window
     
   # contacts
-  contacts_title: Contacts
+  contacts: Contacts
+  contacts_small: contacts
+  contact_small: contact
   create_contact_link: Create contact
   create_contact_button: Create Contact
   save_contact_button: Save Contact
-  contact_small: contact
   referred_by: referred by
   at: at
   department: Department
@@ -107,28 +95,24 @@ en-US:
   myself: Myself
   permissions_intro: By default only you will have access to the {{value}}. You can change {{value}} permissions later.
   extra_info: Extra Information
-  extra_info_intro: You can add extra contact information later.
+  extra_info_small: extra contact
   address: Address
   do_not_call: Do not call
   web_presence: Web Presence
-  web_presence_intro: You can add web presence information later.
+  web_presence_small: web presence
   blog: Website/Blog
   twitter: Twitter
   linked_in: LinkedIn
   facebook: Facebook
-  sort_contacts_by: Sort contacts by
-  displaying: displaying
-  first_name_small: first name
-  last_name_small: last name
   contact_records: contact records
 
   # tasks
-  tasks_title: Tasks
+  tasks: Tasks
   pending: Pending
   assigned: Assigned
   completed: Completed
-  completed_tasks_title: Completed Tasks
-  assigned_tasks_title: Assigned Tasks
+  completed_tasks: Completed Tasks
+  assigned_tasks: Assigned Tasks
   create_task_link: Create task
   create_task_button: Create Task
   create_task_small: create a new task
@@ -145,15 +129,67 @@ en-US:
   assign_to: Assign to
   category: Category
   select_blank: '-- Select --'
-  or: or
   move_to: move to
   no_tasks: "You don't have any {{value}} tasks"
   feel_free: Feel free to
   category_other: Other
  
+  # leads
+  leads: Leads
+  lead: Lead
+  lead_small: lead
+  leads_small: leads
+  create_lead_link: Create lead
+  create_lead_button: Create Lead
+  save_lead_button: Save Lead
+  convert: Convert
+  delete: Delete
+  reject: Reject
+  status: Status
+  source: Source
+  rating: Rating
+  campaign: Campaign
+  campaign_small: campaign
+  lead_info_small: lead contact
+  lead_status_small: lead status
+  lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+  convert_lead_button: Convert Lead
+  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+  lead_records: lead records
+
+  # common
+  name: Name
+  added: added
+  ago: ago
+  by: by
+  me: me
+  permissions: Permissions
+  copy_permissions: Copy {{value}} permissions
+  sort_by: Sort {{value}} by
+  displaying: displaying
+  first_name_small: first name
+  last_name_small: last name
+  show: Show
+  before: before
+  after: after
+  per_page: per page
+  using: using
+  format: format
+  brief: brief
+  long: long
+  or: or
+
   # opportunities
-  opportunities_title: Opportunities
+  opportunities: Opportunities
+  opportunity: Opportunity
   create_opportunity_link: Create opportunity
+  stage: Stage
+  close_date: Close date
+  probability: Probability (%)
+  amount: Amount ($)
+  discount: Discount ($)
 
   inline:
     contact: 

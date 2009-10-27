@@ -1,11 +1,11 @@
 = styles_for :lead
 
 .title_tools
-  = link_to_inline(:create_lead, new_lead_path) << " | "
-  = link_to_inline(:options, options_leads_path)
+  = link_to_inline(:create_lead, new_lead_path, :text => t(:create_lead_link)) << " | "
+  = link_to_inline(:options, options_leads_path, :text => t(:options))
 
 .title
-  %span#create_lead_title Leads
+  %span#create_lead_title #{t:leads}
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#options{ hidden }
 .remote#create_lead{ hidden }

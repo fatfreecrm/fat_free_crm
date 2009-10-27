@@ -2,7 +2,7 @@
 
 - if @view == "completed"
   - buckets = Setting.task_completed
-  .title #{t:completed_tasks_title}
+  .title #{t:completed_tasks}
 - else
   - buckets = Setting.task_bucket
   = render :partial => "title"

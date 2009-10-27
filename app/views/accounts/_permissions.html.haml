@@ -1,6 +1,6 @@
 - edit ||= false
 - collapsed = session[:account_permissions].nil? # && @account.errors.empty?
-= subtitle :account_permissions, collapsed, t(:permissions_title)
+= subtitle :account_permissions, collapsed, t(:permissions)
 .section
   %small#account_permissions_intro{ hidden_if(!collapsed) }
     = t(:permissions_intro, t(:account_small)) unless edit

@@ -2,18 +2,18 @@
   %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
     %tr
       %td{ :valign => :top }
-        .label.top.req First name:
+        .label.top.req #{t:first_name}:
         = f.text_field :first_name, :style => "width:240px"
       %td= spacer
       %td{ :valign => :top }
-        .label.top.req Last name:
+        .label.top.req #{t:last_name}:
         = f.text_field :last_name, :style => "width:240px"
     %tr
       %td{ :valign => :top }
-        .label Email:
+        .label #{t:email}:
         = f.text_field :email, :style => "width:240px"
       %td= spacer
       %td{ :valign => :top }
-        .label Phone:
+        .label #{t:phone}:
         = f.text_field :phone, :style => "width:240px"
     = hook(:lead_top_section_bottom, self, :f => f)
