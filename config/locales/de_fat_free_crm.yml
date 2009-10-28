@@ -1,3 +1,231 @@
 de:
 
+  # generic terms
+  #----------------------------------------------------------------------------
+  all: Alles
   language: Deutsch
+  not_implemented: Noch nicht implementiert.
+
+  # views/users:
+  #----------------------------------------------------------------------------
+  user: Benutzer
+  email: Email
+  phone: Telefon
+  mobile: Mobiltelefon
+  profile: Profil
+  my: Mein
+  edit_profile_link: Profil bearbeiten
+  upload_picture_link: Bild hochladen
+  change_password_link: Passwort ändern
+  change_password_button: Ändere das Passwort
+  current_password: Aktuelles Passwort
+  new_password: Neues Passwort
+  password_confirmation: Bestätige das Password
+  first_name: Vorname
+  last_name: Nachname
+  job_title: Titel
+  company: Firma
+  contact_info: Kontaktinformation
+  alt_email: Alternative Email
+  aim: AOL IM
+  yahoo: Yahoo IM
+  google: Google IM
+  skype: Skype
+  save_profile_button: Speicher das Profil
+  image_help: Das hochgeladene Bild wird automatisch auf eine Größe von 75 x 75 Pixels berechnet. Unterstützte Formate sind GIF, JPG, und PNG.
+  image_file: Bilddatei
+  use_gravatar_link: Verwende Gravatar
+  gravatar_help: Gravatars ist nicht bekannt? Lern mehr über Gravatars
+  here: hier
+  upload_picture_button: Lade Bild hoch
+  login_now_link: Login!
+  username: Benutzername
+  password: Passwort
+  sign_up_button: Registrieren
+  sign_up: Registrieren
+  already_signed_up: Schon registriert?
+
+  # views/auth:
+  #----------------------------------------------------------------------------
+  login: Login
+  no_account: Du hast noch kein Konto?
+  sign_up_now: Registrier dich jetzt!
+  forgot_password: Passwort vergessen?
+  remember_me: Erinnere mich
+
+  # views/accounts:
+  #----------------------------------------------------------------------------
+  accounts: Firmen
+  accounts_small: Firmen
+  account: Firma
+  account_small: Firma
+  phone_small: Telefon
+  mobile_small: Mobiltelefon
+  edit: Bearbeiten
+  delete: Löschen
+  options: Optionen
+  delete_link: Löschen?
+  create_account_button: Erstelle Firma
+  create_account_link: Erstelle Firma
+  save_account_button: Speicher Firma
+  account_name: Firmenname
+  assigned_to: Zugeordnet zu
+  website: Website
+  phone_toll_free: kostenloses Telefon 
+  fax: Fax
+  billing_address: Rechnungsadresse
+  shipping_address: Lieferadresse
+  same_as_billing_link: gleiche wie Rechnungsadresse
+  account_permissions_intro: "Standardmäßig hast nr du Zgrff auf die Firma. Du kannst den Zugriff später ändern."
+  private_txt: Halte es privat, zeige es keinem Anderen
+  public_txt: Zeige es allen
+  shared_txt: Zeige es folgenden Leuten
+  date_created: Erstellungsdatum
+  date_updated: Änderungsdatum
+  account_records: Firmensätze
+  intro: Du kannst die Informationen für {{value}} später ändern.
+  open_in_window: Öffne {{value}} in einem neuen Fenster
+
+  # views/campaigns
+  #----------------------------------------------------------------------------
+  campaigns: Kampagnen
+    
+  # views/contacts
+  #----------------------------------------------------------------------------
+  contacts: Kontakte
+  contacts_small: Kontakte
+  contact_small: Kontakt
+  create_contact_link: Erstelle Kontakt
+  create_contact_button: Erstelle Kontakt
+  save_contact_button: Speichere Kontakt
+  referred_by: erwähnt von
+  at: an
+  department: Abteilung
+  department_small: '{{value}} Abteilung'
+  other: Andere
+  myself: mir
+  permissions_intro: By default only you will have access to the {{value}}. You can change {{value}} permissions later.
+  extra_info: Zusatzinformation
+  extra_info_small: zusätzliche Kontaktdaten
+  address: Adresse
+  do_not_call: Nicht anrufen
+  web_presence: Web Präsenz
+  web_presence_small: Web Präsenz
+  blog: Website/Blog
+  twitter: Twitter
+  linked_in: LinkedIn
+  facebook: Facebook
+  contact_records: Kontaktsätze
+
+  # views/tasks
+  #----------------------------------------------------------------------------
+  tasks: Aufgabe
+  pending: Wartend
+  assigned: Zugeordnet
+  completed: Abgeschlossen
+  completed_tasks: Abgeschlossene Aufgaben
+  assigned_tasks: Zugeordnete Aufgaben
+  create_task_link: erstelle eine neue Aufgabe
+  create_task_button: Erstelle Aufgabe
+  create_task_small: erstelle eine neue Aufgabe
+  save_task_button: Speichere Aufgabe
+  task_name: Aufgabenbezeichnung
+  task_small: Aufgabe
+  completed_small: Abgeschlossen
+  due: Fällig
+  due_now: Jetzt fällig
+  due_later: Bald fällig
+  overdue:  'verspätet, war fällig am'
+  due_in: fällig in
+  due_today: heute fällig
+  assign_to: Ordne zu
+  category: Kategorie
+  select_blank: '-- Auswahl --'
+  move_to: verschiebe auf
+  no_tasks: "Du hast keine {{value}} Aufgaben"
+  feel_free: Sei so frei und
+  category_other: Sonstige
+ 
+  # views/leads
+  #----------------------------------------------------------------------------
+  leads: Leads
+  lead: Lead
+  lead_small: lead
+  leads_small: leads
+  create_lead_link: Create lead
+  create_lead_button: Create Lead
+  save_lead_button: Save Lead
+  convert: Convert
+  delete: Delete
+  reject: Reject
+  status: Status
+  source: Source
+  rating: Rating
+  campaign: Campaign
+  campaign_small: campaign
+  lead_info_small: lead contact
+  lead_status_small: lead status
+  lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+  convert_lead_button: Convert Lead
+  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+  lead_records: lead records
+
+  # views/common
+  #----------------------------------------------------------------------------
+  name: Name
+  added: added
+  ago: ago
+  by: by
+  me: me
+  permissions: Permissions
+  copy_permissions: Copy {{value}} permissions
+  sort_by: Sort {{value}} by
+  displaying: displaying
+  first_name_small: first name
+  last_name_small: last name
+  show: Show
+  before: before
+  after: after
+  per_page: per page
+  using: using
+  format: format
+  brief: brief
+  long: long
+  or: or
+
+  # views/opportunities
+  #----------------------------------------------------------------------------
+  opportunities: Opportunities
+  opportunity: Opportunity
+  create_opportunity_link: Create opportunity
+  stage: Stage
+  close_date: Close date
+  probability: Probability (%)
+  amount: Amount ($)
+  discount: Discount ($)
+
+  inline:
+    contact: 
+      one: '1 contact'
+      other: '{{count}} contacts'
+    opportunity:
+      one: '1 opportunity'
+      other: '{{count}} opportunities'
+  
+  # views/home:
+  #----------------------------------------------------------------------------
+
+  # models/activity
+  #----------------------------------------------------------------------------
+  one_hour: One Hour
+  one_day: One Day
+  two_days: Two Days
+  one_week: One Week
+  two_weeks: Two Weeks
+  one_month: One Month
+
+  # models/account
+  #----------------------------------------------------------------------------
+  missing_account_name: "^Please specify account name."
