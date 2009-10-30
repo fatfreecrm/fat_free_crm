@@ -35,7 +35,7 @@ de:
   image_help: Das hochgeladene Bild wird automatisch auf eine Größe von 75 x 75 Pixels berechnet. Unterstützte Formate sind GIF, JPG, und PNG.
   image_file: Bilddatei
   use_gravatar_link: Verwende Gravatar
-  gravatar_help: Gravatars ist nicht bekannt? Lern mehr über Gravatars
+  gravatar_help: Gravatar ist nicht bekannt? Lern mehr über Gravatar
   here: hier
   upload_picture_button: Lade Bild hoch
   login_now_link: Login!
@@ -76,7 +76,7 @@ de:
   billing_address: Rechnungsadresse
   shipping_address: Lieferadresse
   same_as_billing_link: gleiche wie Rechnungsadresse
-  account_permissions_intro: "Standardmäßig hast nr du Zgrff auf die Firma. Du kannst den Zugriff später ändern."
+  account_permissions_intro: "Standardmäßig hast nur du Zgrff auf die Firma. Du kannst den Zugriff später ändern."
   private_txt: Halte es privat, zeige es keinem Anderen
   public_txt: Zeige es allen
   shared_txt: Zeige es folgenden Leuten
@@ -104,7 +104,7 @@ de:
   department_small: '{{value}} Abteilung'
   other: Andere
   myself: mir
-  permissions_intro: By default only you will have access to the {{value}}. You can change {{value}} permissions later.
+  permissions_intro: Standardmäßig hast nur du Zgriff auf den {{value}}. Du kannst die Zugriffsregeln für den {{value}} auch später ändern.
   extra_info: Zusatzinformation
   extra_info_small: zusätzliche Kontaktdaten
   address: Adresse
@@ -125,7 +125,7 @@ de:
   completed: Abgeschlossen
   completed_tasks: Abgeschlossene Aufgaben
   assigned_tasks: Zugeordnete Aufgaben
-  create_task_link: erstelle eine neue Aufgabe
+  create_task_link: Erstelle eine neue Aufgabe
   create_task_button: Erstelle Aufgabe
   create_task_small: erstelle eine neue Aufgabe
   save_task_button: Speichere Aufgabe
@@ -166,10 +166,10 @@ de:
   lead_info_small: Interessentenkontakt
   lead_status_small: Interessentenstatus
   lead_permissions_intro: Standardmäßig werden die Zugriffsregeln aus der Kampagne kopiert oder auf privat gsetzt. Dies kann auch später durchgeführt werden.
-  create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+  create_opp_for_contact: Optional kannst du eine Opportunität erstellen für {{value}} unter Angabe des Namen, aktueller Stand, geschätztes Abschlußdatum, Erfolgswahrscheinlichkeit, Auftragswert und dem angebotenen Rabatt.
   convert_lead_button: Interessent umwandeln
-  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+  convert_lead_text: Mit der Umwandlung wird {{value}} zu einem Kontakt, der einer existierenden oder neu zu erstellenden Firma verbunden wird. Der Interessenten Status wird automatisch auf umgewandelt geändert.
+  convert_lead_permissions_intro: Die Zugriffsregeln des Kontakts werden vom Interessenten übernommen. Du kannst die Zugriffsregeln auch später ändern.
   lead_records: Interessentensätze
 
   # views/common
@@ -182,14 +182,14 @@ de:
   permissions: Zugriffsregeln
   copy_permissions: Kopiere {{value}} Zugriffsregeln
   sort_by: Sortiere {{value}} nach
-  displaying: anzeigen
+  displaying: Zeige
   first_name_small: Vorname
   last_name_small: Nachname
   show: Zeige
   before: vor
   after: nach
   per_page: pro Seite
-  using: verwende
+  using: Verwende
   format: Format
   brief: kurz
   long: lang
@@ -197,9 +197,9 @@ de:
 
   # views/opportunities
   #----------------------------------------------------------------------------
-  opportunities: Opportunities
-  opportunity: Opportunity
-  create_opportunity_link: Create opportunity
+  opportunities: Opportunitäten
+  opportunity: Opportunität
+  create_opportunity_link: Erstelle Opportunität
   stage: Ebene
   close_date: Abschlussdatum
   probability: Wahrscheinlichkeit (%)
@@ -211,8 +211,8 @@ de:
       one: '1 Kontakt'
       other: '{{count}} Kontakte'
     opportunity:
-      one: '1 opportunity'
-      other: '{{count}} opportunities'
+      one: '1 Opportunität'
+      other: '{{count}} Opportunitäten'
   
   # views/home:
   #----------------------------------------------------------------------------
@@ -228,4 +228,4 @@ de:
 
   # models/account
   #----------------------------------------------------------------------------
-  missing_account_name: "^Please specify account name."
+  missing_account_name: "^Bitte Namen der Firma angeben."
