@@ -148,68 +148,68 @@ de:
  
   # views/leads
   #----------------------------------------------------------------------------
-  leads: Leads
-  lead: Lead
-  lead_small: lead
-  leads_small: leads
-  create_lead_link: Create lead
-  create_lead_button: Create Lead
-  save_lead_button: Save Lead
-  convert: Convert
-  delete: Delete
-  reject: Reject
+  leads: Interessenten
+  lead: Interessent
+  lead_small: Interessent
+  leads_small: Interessenten
+  create_lead_link: Erfasse Interessent
+  create_lead_button: Erfasse Interessent
+  save_lead_button: Speicher Interessent
+  convert: Umwandeln
+  delete: Löschen
+  reject: Ablehnen
   status: Status
-  source: Source
+  source: Quelle
   rating: Rating
-  campaign: Campaign
-  campaign_small: campaign
-  lead_info_small: lead contact
-  lead_status_small: lead status
-  lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  campaign: Kampagne
+  campaign_small: Kampagne
+  lead_info_small: Interessentenkontakt
+  lead_status_small: Interessentenstatus
+  lead_permissions_intro: Standardmäßig werden die Zugriffsregeln aus der Kampagne kopiert oder auf privat gsetzt. Dies kann auch später durchgeführt werden.
   create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  convert_lead_button: Convert Lead
+  convert_lead_button: Interessent umwandeln
   convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  lead_records: lead records
+  lead_records: Interessentensätze
 
   # views/common
   #----------------------------------------------------------------------------
   name: Name
-  added: added
-  ago: ago
-  by: by
-  me: me
-  permissions: Permissions
-  copy_permissions: Copy {{value}} permissions
-  sort_by: Sort {{value}} by
-  displaying: displaying
-  first_name_small: first name
-  last_name_small: last name
-  show: Show
-  before: before
-  after: after
-  per_page: per page
-  using: using
-  format: format
-  brief: brief
-  long: long
-  or: or
+  added: hinzugefügt
+  ago: vor
+  by: von
+  me: mir
+  permissions: Zugriffsregeln
+  copy_permissions: Kopiere {{value}} Zugriffsregeln
+  sort_by: Sortiere {{value}} nach
+  displaying: anzeigen
+  first_name_small: Vorname
+  last_name_small: Nachname
+  show: Zeige
+  before: vor
+  after: nach
+  per_page: pro Seite
+  using: verwende
+  format: Format
+  brief: kurz
+  long: lang
+  or: oder
 
   # views/opportunities
   #----------------------------------------------------------------------------
   opportunities: Opportunities
   opportunity: Opportunity
   create_opportunity_link: Create opportunity
-  stage: Stage
-  close_date: Close date
-  probability: Probability (%)
-  amount: Amount ($)
-  discount: Discount ($)
+  stage: Ebene
+  close_date: Abschlussdatum
+  probability: Wahrscheinlichkeit (%)
+  amount: Betrag (€)
+  discount: Rabatt (€)
 
   inline:
     contact: 
-      one: '1 contact'
-      other: '{{count}} contacts'
+      one: '1 Kontakt'
+      other: '{{count}} Kontakte'
     opportunity:
       one: '1 opportunity'
       other: '{{count}} opportunities'
@@ -219,12 +219,12 @@ de:
 
   # models/activity
   #----------------------------------------------------------------------------
-  one_hour: One Hour
-  one_day: One Day
-  two_days: Two Days
-  one_week: One Week
-  two_weeks: Two Weeks
-  one_month: One Month
+  one_hour: Eine Stunde
+  one_day: Ein Tag
+  two_days: Zwei Tage
+  one_week: Eine Woche
+  two_weeks: Zwei Wochen
+  one_month: Ein Monat
 
   # models/account
   #----------------------------------------------------------------------------
