@@ -4,14 +4,14 @@
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @lead_status_total[value]
-      = lead_status_checbox(value, @lead_status_total[value]) << " " << key
+      = lead_status_checbox(value, @lead_status_total[value]) << " " << t(key.downcase)
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}
       = @lead_status_total[:other]
-    = lead_status_checbox("other", @lead_status_total[:other]) << " Other"
+    = lead_status_checbox("other", @lead_status_total[:other]) << " " << t(:category_other)
 
   .check_box
     %div{:style => "float:right;"}
       %b= @lead_status_total[:all]
-    %b Total Leads
+    %b #{t:total_leads}

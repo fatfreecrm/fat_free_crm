@@ -3,7 +3,7 @@
 #confirm{ hidden }
 .title_tools#menu
   = link_to_inline(:edit_contact, edit_contact_path(@contact), :text => t(:edit)) + " | "
-  = link_to_function(t(:delete_link), confirm_delete(@contact))
+  = link_to_function(t(:delete) + '?', confirm_delete(@contact))
 .title#edit_contact_title= @contact.full_name
 
 %div#edit_contact{ hidden }

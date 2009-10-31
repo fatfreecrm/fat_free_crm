@@ -233,7 +233,7 @@ class LeadsController < ApplicationController
       @per_page = @current_user.pref[:leads_per_page] || Lead.per_page
       @outline  = @current_user.pref[:leads_outline]  || Lead.outline
       @sort_by  = @current_user.pref[:leads_sort_by]  || Lead.sort_by
-      @sort_by  = Lead::SORT_BY.invert[@sort_by]
+      @sort_by  = t(Lead::SORT_BY.invert[@sort_by])
       @naming   = @current_user.pref[:leads_naming]   || Lead.first_name_position
     end
   end

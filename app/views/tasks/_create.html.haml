@@ -7,5 +7,5 @@
   = render :partial => "tasks/top_section", :locals => { :f => f }
   .buttonbar
     = f.submit t:create_task_button
-    or
+    #{t:or}
     = link_to_cancel new_task_path + "?view=#{@view}"

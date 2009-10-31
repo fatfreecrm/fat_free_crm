@@ -1,4 +1,4 @@
 - title = (recent.subject.respond_to?(:full_name) ? recent.subject.full_name : recent.subject.name)
 %li{ :class => recent != @recent.last ? "" : "last" }
   %dt= link_to(truncate(title, :length => 19), polymorphic_url(recent.subject), :title => title)
-  %tt= recent.subject_type + ":"
+  %tt= t(recent.subject_type.downcase) + ":"

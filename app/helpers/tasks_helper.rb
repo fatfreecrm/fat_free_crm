@@ -39,7 +39,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_edit(task, bucket)
-    link_to_remote("Edit",
+    link_to_remote(t(:edit),
       :url    => edit_task_path(task),
       :method => :get,
       :with   => "{ bucket: '#{bucket}', view: '#{@view}', previous: crm.find_form('edit_task') }"
@@ -48,7 +48,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_delete(task, bucket)
-    link_to_remote("Delete!",
+    link_to_remote(t(:delete) + "!",
       :url    => task_path(task),
       :method => :delete,
       :with   => "{ bucket: '#{bucket}', view: '#{@view}' }",
@@ -104,10 +104,10 @@ module TasksHelper
     update_page do |page|
       if @view == "pending" && @task.assigned_to != @current_user.id
         page << hide_task_and_possibly_bucket(id, @task_before_update.bucket)
-        page << tasks_flash("The task has been assigned to #{@task.assignee.full_name} (" << link_to("view assigned tasks", url_for(:controller => :tasks, :view => :assigned)) << ").")
+        page << tasks_flash("#{t(:task_assigned, @task.assignee.full_name)} (" << link_to(t(:view_assigned_tasks), url_for(:controller => :tasks, :view => :assigned)) << ").")
       elsif @view == "assigned" && @task.assigned_to.blank?
         page << hide_task_and_possibly_bucket(id, @task_before_update.bucket)
-        page << tasks_flash("The task has been moved to pending tasks (" << link_to("view pending tasks", tasks_url) << ").")
+        page << tasks_flash("#{t(:task_pending)} (" << link_to(t(:view_pending_tasks), tasks_url) << ").")
       else
         page << replace_content(@task, @task.bucket)
       end

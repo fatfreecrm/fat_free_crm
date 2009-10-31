@@ -2,8 +2,8 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), :text => "Edit") + " | "
-  = link_to_function("Delete?", confirm_delete(@campaign))
+  = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), :text => t(:edit)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@campaign))
 .title#edit_campaign_title= @campaign.name
 
 %div#edit_campaign{ hidden }
@@ -13,24 +13,24 @@
 
 -#-----------------------------------------------------------------------------
 %br
-= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@campaign) }
-.subtitle#create_task_title Tasks
+= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@campaign), :text => t(:create_task_link) }
+.subtitle#create_task_title #{t:tasks}
 .remote#create_task{ hidden }
 .log#tasks
   = render :partial => "common/tasks"
 
 -#-----------------------------------------------------------------------------
 %br
-= inline :create_lead, new_lead_path, { :class => "subtitle_tools", :related => dom_id(@campaign) }
-.subtitle#create_lead_title Leads
+= inline :create_lead, new_lead_path, { :class => "subtitle_tools", :related => dom_id(@campaign), :text => t(:create_lead_link) }
+.subtitle#create_lead_title #{t:leads}
 .remote#create_lead{ hidden }
 .list#leads
   = render :partial => "leads/lead", :collection => @campaign.leads
 
 -#-----------------------------------------------------------------------------
 %br
-= inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@campaign) }
-.subtitle#create_opportunity_title Opportunities
+= inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@campaign), :text => t(:create_opportunity_link) }
+.subtitle#create_opportunity_title #{t:opportunities}
 .remote#create_opportunity{ hidden }
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @campaign.opportunities

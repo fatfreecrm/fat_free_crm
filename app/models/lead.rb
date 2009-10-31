@@ -73,13 +73,14 @@ class Lead < ActiveRecord::Base
   after_create  :increment_leads_count
   after_destroy :decrement_leads_count
 
+  SORT_BY_OPTIONS = %w(first_name_sort last_name_sort company_sort rating_sort created_at_sort updated_at_sort)
   SORT_BY = {
-    "first name"   => "leads.first_name ASC",
-    "last name"    => "leads.last_name ASC",
-    "company"      => "leads.company ASC",
-    "rating"       => "leads.rating DESC",
-    "date created" => "leads.created_at DESC",
-    "date updated" => "leads.updated_at DESC"
+    "first_name_sort" => "leads.first_name ASC",
+    "last_name_sort"  => "leads.last_name ASC",
+    "company_sort"    => "leads.company ASC",
+    "rating_sort"     => "leads.rating DESC",
+    "created_at_sort" => "leads.created_at DESC",
+    "updated_at_sort" => "leads.updated_at DESC"
   }
 
   # Default values provided through class methods.

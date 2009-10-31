@@ -56,7 +56,7 @@ en-US:
   # views/accounts:
   #----------------------------------------------------------------------------
   accounts: Accounts
-  accounts_small: account
+  accounts_small: accounts
   account: Account
   account_small: account
   phone_small: phone
@@ -64,7 +64,6 @@ en-US:
   edit: Edit
   delete: Delete
   options: Options
-  delete_link: Delete?
   create_account_button: Create Account
   create_account_link: Create account
   save_account_button: Save Account
@@ -89,16 +88,23 @@ en-US:
   # views/campaigns
   #----------------------------------------------------------------------------
   campaigns: Campaigns
+  campaigns_small: campaigns
+  campaign: Campaign
+  campaign_small: campaign
+  create_campaign_link: Create campaign
     
   # views/contacts
   #----------------------------------------------------------------------------
   contacts: Contacts
   contacts_small: contacts
+  contact: Contact
   contact_small: contact
+  contact_records: contact records
   create_contact_link: Create contact
   create_contact_button: Create Contact
   save_contact_button: Save Contact
-  referred_by: referred by
+  referred_by: Referred by
+  referred_by_small: referred by
   at: at
   department: Department
   department_small: '{{value}} department'
@@ -115,7 +121,6 @@ en-US:
   twitter: Twitter
   linked_in: LinkedIn
   facebook: Facebook
-  contact_records: contact records
 
   # views/tasks
   #----------------------------------------------------------------------------
@@ -145,6 +150,10 @@ en-US:
   no_tasks: "You don't have any {{value}} tasks"
   feel_free: Feel free to
   category_other: Other
+  task_assigned: The task has been assigned to {{value}}
+  task_pending: The task has been moved to pending tasks
+  view_assigned_tasks: view assigned tasks
+  view_pending_tasks: view pending tasks
  
   # views/leads
   #----------------------------------------------------------------------------
@@ -156,13 +165,14 @@ en-US:
   create_lead_button: Create Lead
   save_lead_button: Save Lead
   convert: Convert
-  delete: Delete
   reject: Reject
   status: Status
   source: Source
   rating: Rating
-  campaign: Campaign
-  campaign_small: campaign
+  contacted: Contacted
+  converted: Converted
+  rejected: Rejected
+  new: New
   lead_info_small: lead contact
   lead_status_small: lead status
   lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
@@ -171,6 +181,11 @@ en-US:
   convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
   lead_records: lead records
+  total_leads: Total Leads
+  lead_summary: Lead Summary
+  reject_lead_confirm: Are you sure you want to reject this lead?
+  select_none: '-- None --'
+  none: None
 
   # views/common
   #----------------------------------------------------------------------------
@@ -181,10 +196,35 @@ en-US:
   me: me
   permissions: Permissions
   copy_permissions: Copy {{value}} permissions
+  or: or
+  n_a: N/A
+  cancel: Cancel
+  close_form: Close form
+  yes_button: Yes
+  no_button: No
+  confirm_delete: Are you sure you want to delete this {{value}}?
+  no_match: 'No {{value}} match'
+  search_assets: Search {{value}}
+  recent_items: Recent Items
+  no_recent_items_txt: There are no recent items to display yet.
+  items_total: '{{count}} total.'
+  add_note_button: Add Note
+  add_note_txt: Add a new note...
+  could_not_find: "Couldn't find {{value}}. Feel free to"
+  could_not_find_matching: "Couldn't find {{value}} matching"
+  please_retry: please try another query.
+  create_new: create a new
+  #---- options ------
   sort_by: Sort {{value}} by
+  first_name_sort: first name
+  last_name_sort: last name
+  created_at_sort: date created
+  updated_at_sort: date updated
+  company_sort: company
+  rating_sort: rating
   displaying: displaying
-  first_name_small: first name
-  last_name_small: last name
+  first_name_show: first name
+  last_name_show: last name
   show: Show
   before: before
   after: after
@@ -193,7 +233,6 @@ en-US:
   format: format
   brief: brief
   long: long
-  or: or
 
   # views/opportunities
   #----------------------------------------------------------------------------
@@ -206,7 +245,7 @@ en-US:
   amount: Amount ($)
   discount: Discount ($)
 
-  inline:
+  pluralize:
     contact: 
       one: '1 contact'
       other: '{{count}} contacts'

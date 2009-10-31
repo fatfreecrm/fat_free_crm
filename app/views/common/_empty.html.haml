@@ -2,6 +2,6 @@
 - asset = assets.singularize
 #empty
   - if @current_query.blank?
-    == Couldn't find #{assets}. Feel free to #{link_to_remote("create a new " << asset, :url => send("new_" << asset << "_path"))}.
+    == #{t(:could_not_find, assets)} #{link_to_remote(t(:create_new) << ' ' << t(asset + '_small'), :url => send("new_" << asset << "_path"))}.
   - else
-    == Couldn't find #{assets} matching <span class="cool"><b>#{h @current_query}</b></span>; please try another query.
+    == #{t(:could_not_find_matching, t(assets.downcase + '_small'))} <span class="cool"><b>#{h @current_query}</b></span>; #{t:please_retry}

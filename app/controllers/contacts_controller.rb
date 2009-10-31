@@ -183,10 +183,10 @@ class ContactsController < ApplicationController
   def options
     unless params[:cancel] == "true"
       @per_page = @current_user.pref[:contacts_per_page] || Contact.per_page
-      @outline  = @current_user.pref[:contacts_outline]  || Contact.outline
+      @outline  = t(@current_user.pref[:contacts_outline])  || Contact.outline
       @sort_by  = @current_user.pref[:contacts_sort_by]  || Contact.sort_by
       @sort_by  = Contact::SORT_BY.invert[@sort_by]
-      @naming   = @current_user.pref[:contacts_naming]   || Contact.first_name_position
+      @naming   = t(@current_user.pref[:contacts_naming])   || Contact.first_name_position
     end
   end
 

@@ -72,10 +72,10 @@ class Contact < ActiveRecord::Base
   validate :users_for_shared_access
 
   SORT_BY = {
-    "first name"   => "contacts.first_name ASC",
-    "last name"    => "contacts.last_name ASC",
-    "date created" => "contacts.created_at DESC",
-    "date updated" => "contacts.updated_at DESC"
+    "first_name"   => "contacts.first_name ASC",
+    "last_name"    => "contacts.last_name ASC",
+    "date_created" => "contacts.created_at DESC",
+    "date_updated" => "contacts.updated_at DESC"
   }
 
   # Default values provided through class methods.

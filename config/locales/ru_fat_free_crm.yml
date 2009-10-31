@@ -1,9 +1,14 @@
 ru:
 
+  # generic terms
+  #----------------------------------------------------------------------------
+  all: All
   language: Russian (Русский)
+  not_implemented: Еще не поддержано.
 
-  # Views - hierarchy follows project view structure
-  # users:
+
+  # views/users:
+  #----------------------------------------------------------------------------
   user: Пользователь
   email: E-mail
   phone: Телефон
@@ -21,7 +26,7 @@ ru:
   last_name: Фамилия
   job_title: Должность
   company: Организация
-  contact_info_title: Контактная Информация
+  contact_info: Контактная Информация
   alt_email: Альтернативный E-mail
   aim: AOL IM
   yahoo: Yahoo IM
@@ -38,118 +43,141 @@ ru:
   username: Логин
   password: Пароль
   sign_up_button: Зарегистрироваться
-  sign_up_title: Регистрация
+  sign_up: Регистрация
   already_signed_up: Уже регистрировались?
 
-  # auth:
+  # views/auth:
+  #----------------------------------------------------------------------------
   login: Вход
   no_account: Не зарегистрированы?
   sign_up_now: Зарегистрироваться!
   forgot_password: Забыли пароль?
   remember_me: Запомнить
 
-  # accounts:
-  accounts: Счета
-  accounts_small: счета
-  account: Счет
-  account_small: счет
+  # views/accounts:
+  #----------------------------------------------------------------------------
+  accounts: Контрагенты
+  accounts_small: контрагенты
+  account: Контрагент
+  account_small: контрагент
   phone_small: телефон
   mobile_small: мобильный
   edit: Изменить
   delete: Удалить
   options: Опции
-  delete_link: Удалить?
-  create_account_button: Создать Счет
-  create_account_link: Создать счет
-  save_account_button: Сохранить Счет
-  account_name: Название счета
+  create_account_button: Создать Контрагента
+  create_account_link: Создать контрагента
+  save_account_button: Сохранить Контрагента
+  account_name: Название Контрагента
   assigned_to: Поручен
   website: Интернет-страница
-  phone_toll_free: Бесплатный телефон
+  phone_toll_free: 'Номер 8-800'
   fax: Факс
   billing_address: Адрес
-  shipping_address: Адрес доставки
+  shipping_address: Адрес получателя
   same_as_billing_link: тот же
-  permissions_title: Права Доступа
-  private_txt: @ru@Keep it private, do not share with others
-  public_txt: @ru@Share it with everyone
-  shared_txt: @ru@Share it with the following people
+  permissions: Права Доступа
+  private_txt: Никому не показывать
+  public_txt: Показывать всем
+  shared_txt: Показывать перечисленным людям
   date_created: Дате создания
   date_updated: Дате обновления
-  account_records: счетов
-  intro: @ru@You can add {{value}} information later.
+  account_records: контрагентов
+  intro: Информацию о {{value}} можно добавить позже.
   open_in_window: Открыть {{value}} в новом окне
 
-  # contacts
+  # views/campaigns
+  #----------------------------------------------------------------------------
+  campaigns: Кампании
+  campaigns_small: кампании
+  campaign: Кампания
+  campaign_small: кампании
+  create_campaign_link: @ru@Create campaign
+  create_campaign_button: @ru@Create Campaign
+  campaign_name: Название кампании
+  start_date: Дата начала
+  end_date: Дата окончания
+    
+  # views/contacts
+  #----------------------------------------------------------------------------
   contacts: Контакты
   contacts_small: контакты
+  contact: Контакт
   contact_small: контакт
   contact_records: контактов
   create_contact_link: Создать контакт
   create_contact_button: Создать Контакт
   save_contact_button: Сохранить Контакт
-  referred_by: @ru@referred by
+  referred_by: По рекомендации
+  referred_by_small: по рекомендации
   at: в
   department: Отдел
   department_small: Отдел {{value}} 
-  other: @ru@Other
+  other: Доп. e-mail
   myself: Мне
   permissions_intro: При создании только Вы получаете доступ к {{value}}у. Права доступа можно изменить в любое время.
   extra_info: Дополнительные данные
   extra_info_small: @ru@extra contact
   address: Адрес
   do_not_call: Не звонить
-  web_presence: @ru@Web Presence
-  web_presence_small: @ru@web presence
-  blog: @ru@Website/Blog
+  web_presence: Профили в Сети
+  web_presence_small: профили
+  blog: Блог/Интернет-страница
   twitter: Twitter
   linked_in: LinkedIn
   facebook: Facebook
 
-  # tasks
-  tasks_title: @ru@Tasks
-  pending: @ru@Pending
-  assigned: @ru@Assigned
-  completed: @ru@Completed
-  completed_tasks_title: @ru@Completed Tasks
-  assigned_tasks_title: @ru@Assigned Tasks
-  create_task_link: @ru@Create task
-  create_task_button: Создать Task
-  create_task_small: @ru@create a new task
-  save_task_button: Сохранить Task
-  task_name: @ru@Task name
-  task_small: @ru@task
+  # views/tasks
+  #----------------------------------------------------------------------------
+  tasks: Задания
+  pending: На&nbsp;очереди
+  assigned: Порученные
+  completed: Выполненные
+  completed_tasks: @ru@Completed Tasks
+  assigned_tasks: @ru@Assigned Tasks
+  create_task_link: Добавить задание
+  create_task_button: Создать Задание
+  create_task_small: добавить новое задание
+  save_task_button: Сохранить Задание
+  task_name: Название задания
+  task_small: задание
   completed_small: завершено
   due: Срок выполнения
-  due_now: @ru@due now
-  due_later: @ru@due sometime soon
-  overdue:  '@ru@late, was due on'
-  due_in: @ru@due in
-  due_today: @ru@due today
+  due_now: 'срок: сейчас'
+  due_later: 'срок: скоро'
+  overdue: 'задержка, срок: '
+  due_in: 'срок: через'
+  due_today: 'срок: сегодня'
   assign_to: Поручить
   category: Категория
   select_blank: '-- Выберите --'
   move_to: перенести на
   no_tasks: "You don't have any {{value}} tasks"
-  feel_free: @ru@Feel free to
+  feel_free: Можете
   related: 're:'
+  task_assigned: Это задание поручено {{value}}
+  task_pending: Это задание поставлено в очередь на выполнение
+  view_assigned_tasks: показать порученные задания
+  view_pending_tasks: показать задания на очереди
  
-  # leads
-  leads_title: @ru@Leads
-  lead: @ru@Lead
-  lead_small: @ru@lead
-  leads_small: @ru@leads
-  create_lead_link: @ru@Создать lead
-  create_lead_button: @ru@Создать Lead
-  save_lead_button: @ru@Сохранить Lead
+  # views/leads
+  #----------------------------------------------------------------------------
+  leads: Наводки
+  lead: Наводка
+  lead_small: наводка
+  leads_small: наводки
+  create_lead_link: Создать наводку
+  create_lead_button: Создать Наводку
+  save_lead_button: Сохранить Наводку
   convert: @ru@Convert
-  delete: @ru@Delete
   reject: @ru@Reject
-  status: @ru@Status
+  status: Статус
   source: Источник
-  rating: @ru@Rating
-  campaign: @ru@Campaign
-  campaign_small: @ru@campaign
+  rating: Оценка
+  contacted: В работе
+  converted: @ru@Converted
+  rejected: Закрыт
+  new: Новый
   lead_info_small: @ru@lead contact
   lead_status_small: @ru@lead status
   lead_permissions_intro: @ru@By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
@@ -157,9 +185,14 @@ ru:
   convert_lead_button: @ru@Convert Lead
   convert_lead_text: @ru@By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   convert_lead_permissions_intro: @ru@Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  lead_records: @ru@lead records
+  lead_records: записей
+  total_leads: Всего наводок
+  lead_summary: @ru@Lead Summary
+  reject_lead_confirm: Вы действительно хотите закрыть эту наводку?
+  select_none: '-- Нет --'
 
-  # common
+  # views/common
+  #----------------------------------------------------------------------------
   name: Название
   added: добавлен
   ago: назад
@@ -167,32 +200,59 @@ ru:
   me: мной
   permissions: Права Доступа
   copy_permissions: @ru@Copy {{value}} permissions
+  or: или
+  n_a: '-'
+  cancel: Отменить
+  close_form: Закрыть
+  yes_button: Да
+  no_button: Нет
+  none: Нет
+  confirm_delete: Вы действительно xотите удалить этот {{value}}?
+  no_match: '{{value}} не найдены'
+  search_assets: Поиск - {{value}}
+  recent_items: Недавние Объекты
+  no_recent_items_txt: Недавно просмотренных объектов не найдено.
+  items_total: 'Всего {{count}}.'
+  add_note_button: Добавить Комментарий
+  add_note_txt: Добавить комментарий...
+  could_not_find: Ничего не найдено. Можете 
+  could_not_find_matching: "Не найдены {{value}}, в которыx встречается"
+  please_retry: попробуйте поискать что-нибудь другое.
+  create_new: добавить новый
+  #---- options ------
   sort_by: Сортировать {{value}} по
+  first_name_sort: имени
+  last_name_sort: фамилии
+  created_at_sort: дате создания
+  updated_at_sort: дате обновления
+  company_sort: организации
+  rating_sort: оценке
   displaying: показывая
-  first_name_small: имя
-  last_name_small: фамилии
+  first_name_show: имя
+  last_name_show: фамилии
   show: Показать
   before: до
   after: после
   per_page: на странице
   using: в
   format: формате
-  brief: Кратком
-  long: Полном
-  or: или
+  brief: кратком
+  long: полном
 
-  # opportunities
-  opportunities_title: @ru@Opportunities
-  opportunity: @ru@Opportunity
-  create_opportunity_link: @ru@Create opportunity
+  # views/opportunities
+  #----------------------------------------------------------------------------
+  opportunities: Пeрспективы
+  opportunities_small: пeрспективы
+  opportunity: Пeрспектива
+  create_opportunity_link: Создать пeрспективу
   category_other: @ru@Other
   stage: Стадия
-  close_date: @ru@Close date
+  close_date: Дата завершения
   probability: Вероятность (%)
   amount: Сумма (руб.)
   discount: Скидка (руб.)
 
-  inline:
+  pluralize:
     contact:
       zero: '0 контактов'
       one: '1 контакт'
@@ -206,6 +266,18 @@ ru:
       many: '{{count}} возможностей'
       other: '{{count}} возможностей'
 
-  # generic:
-  not_implemented: @@@Not implemented yet.
+  # views/home:
+  #----------------------------------------------------------------------------
 
+  # models/activity
+  #----------------------------------------------------------------------------
+  one_hour: Один Час
+  one_day: Один День
+  two_days: Два Дня
+  one_week: Одна Неделя
+  two_weeks: Две Недели
+  one_month: Один Месяц
+
+  # models/account
+  #----------------------------------------------------------------------------
+  missing_account_name: "^Пожалуйста укажите имя аккаунта."

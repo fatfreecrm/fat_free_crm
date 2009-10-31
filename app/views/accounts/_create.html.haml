@@ -7,6 +7,6 @@
   = render :partial => "accounts/permissions",  :locals => { :f => f }
   .buttonbar
     = f.submit t:create_account_button
-    or 
+    #{t:or} 
     = link_to_cancel new_account_path
     

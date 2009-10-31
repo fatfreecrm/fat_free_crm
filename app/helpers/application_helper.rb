@@ -79,7 +79,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_edit(model)
     name = model.class.name.downcase
-    link_to_remote("Edit",
+    link_to_remote(t(:edit),
       :method => :get,
       :url    => send("edit_#{name}_path", model),
       :with   => "{ previous: crm.find_form('edit_#{name}') }"
@@ -89,7 +89,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_delete(model)
     name = model.class.name.downcase
-    link_to_remote("Delete!",
+    link_to_remote(t(:delete) + "!",
       :method => :delete,
       :url    => send("#{name}_path", model),
       :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
@@ -98,13 +98,13 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_cancel(url)
-    link_to_remote("Cancel", :url => url, :method => :get, :with => "{ cancel: true }")
+    link_to_remote(t(:cancel), :url => url, :method => :get, :with => "{ cancel: true }")
   end
 
   #----------------------------------------------------------------------------
   def link_to_close(url)
     content_tag("div", "x",
-      :class => "close", :title => "Close form",
+      :class => "close", :title => t(:close_form),
       :onmouseover => "this.style.background='lightsalmon'",
       :onmouseout => "this.style.background='lightblue'",
       :onclick => remote_function(:url => url, :method => :get, :with => "{ cancel: true }")
@@ -161,9 +161,9 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def confirm_delete(model)
-    question = %(<span class="warn">Are you sure you want to delete this #{model.class.to_s.downcase}?</span>)
-    yes = link_to("Yes", model, :method => :delete)
-    no = link_to_function("No", "$('menu').update($('confirm').innerHTML)")
+    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>)
+    yes = link_to(t(:yes_button), model, :method => :delete)
+    no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
     update_page do |page|
       page << "$('confirm').update($('menu').innerHTML)"
       page[:menu].replace_html "#{question} #{yes} : #{no}"
@@ -177,7 +177,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def time_ago(whenever)
-    distance_of_time_in_words(Time.now, whenever) << " ago"
+    distance_of_time_in_words(Time.now, whenever) << " " << t(:ago)
   end
 
   #----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ module ApplicationHelper
       url = person.send(site)
       unless url.blank?
         url = "http://" << url unless url.match(/^https?:\/\//)
-        links << link_to(image_tag("#{site}.gif", :size => "15x15"), url, :popup => true, :title => "Open #{url} in a new window")
+        links << link_to(image_tag("#{site}.gif", :size => "15x15"), url, :popup => true, :title => t(:open_in_window, url))
       end
       links
     end.join("\n")
@@ -214,6 +214,17 @@ module ApplicationHelper
       :with      => "{ #{option}: '#{param || value}' }",
       :condition => "$('#{option}').innerHTML != '#{value}'",
       :loading   => "$('#{option}').update('#{value}'); $('loading').show()",
+      :complete  => "$('loading').hide()"
+    )
+  end
+
+  #----------------------------------------------------------------------------
+  def xredraw(option, key, url = nil)
+    remote_function(
+      :url       => url || send("redraw_#{controller.controller_name}_path"),
+      :with      => "{ #{option}: '#{key}' }",
+      :condition => "$('#{option}').innerHTML != '#{t(key)}'",
+      :loading   => "$('#{option}').update('#{t(key)}'); $('loading').show()",
       :complete  => "$('loading').hide()"
     )
   end

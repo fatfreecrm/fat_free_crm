@@ -3,7 +3,7 @@
   - if amount != 0.0
     .strip.some= number_to_currency(amount, :precision => 0)
   - else
-    .strip.none None
+    .strip.none #{t:none}
   %div
     .tools{ invisible, :id => dom_id(account, :tools) }
       %small

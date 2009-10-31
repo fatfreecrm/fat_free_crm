@@ -2,7 +2,7 @@
   %span{:style => "float:right"}= gravatar_for(@lead, :size => "50x50")
   %h4= @lead.full_name
   - if !@lead.title.blank? && !@lead.company.blank?
-    %div== #{@lead.title} at #{@lead.company}
+    %div== #{@lead.title} #{t:at} #{@lead.company}
   - else
     %div= @lead.title unless @lead.title.blank?
     %div= @lead.company unless @lead.company.blank?
@@ -11,38 +11,38 @@
 
   %div
     - if @lead.phone
-      == Phone: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : @lead.phone}</b><br />
+      == #{t:phone}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : @lead.phone}</b><br />
     - if @lead.mobile
-      == Mobile: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : @lead.mobile}</b><br />
+      == #{t:mobile}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : @lead.mobile}</b><br />
     - if @lead.email
-      == Email: <b>#{link_to(@lead.email, "mailto:" + @lead.email)}</b><br />
+      == #{t:email}: <b>#{link_to(@lead.email, "mailto:" + @lead.email)}</b><br />
     - if @lead.alt_email
-      == Alt: <b>#{link_to(@lead.alt_email, "mailto:" + @lead.alt_email)}</b><br />
+      == #{t:other}: <b>#{link_to(@lead.alt_email, "mailto:" + @lead.alt_email)}</b><br />
   = web_presence_icons(@lead)
 
-  .caption Lead Summary
+  .caption #{t:lead_summary}
   %li
     %dt#lead_status= @lead.status.blank? ? "N/A" : Setting.lead_status[@lead.status.to_sym]
-    %tt Status:
+    %tt #{t:status}:
   %li
     %dt= @lead.source.blank? ? "N/A" : Setting.lead_source[@lead.source.to_sym]
-    %tt Source:
+    %tt #{t:source}:
   %li
     %span{:style => "float:right;"}= stars_for(@lead)
-    %tt Rating:
+    %tt #{t:rating}:
   %li
-    %dt= @lead.referred_by ? truncate(@lead.referred_by, :length => 16) : "N/A"
-    %tt Referred by:
+    %dt= @lead.referred_by ? truncate(@lead.referred_by, :length => 16) : t(:n_a)
+    %tt #{t:referred_by}:
   %li
     %dt= truncate((@lead.assigned_to ? @lead.assignee.full_name : @lead.user.full_name), :length => 16)
-    %tt Assigned to:
+    %tt #{t:assigned_to}:
   %li.last
     %dt
       - if @lead.campaign
         = link_to(truncate(@lead.campaign.name, :length => 16), @lead.campaign, :title => @lead.campaign.name)
       - else
-        N/A
-    %tt Campaign:
+        #{t:n_a}
+    %tt #{t:campaign}:
 
   = hook(:show_lead_sidebar_bottom, self, :lead => @lead)
 

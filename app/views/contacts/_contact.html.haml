@@ -14,7 +14,7 @@
       = contact.title if contact.title?
     - if contact.account && contact.account.name?
       == #{t:at} #{link_to contact.account.name, account_path(contact.account)}
-    = "&ndash; #{t:referred_by} #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
+    = "&ndash; #{t:referred_by_small} #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
   - unless @current_user.preference[:contacts_outline] == "brief"
     %dt{ :style => "padding: 2px 0px 0px 0px" }
       = link_to(contact.email, "mailto:" << contact.email.to_s) << " | " if contact.email?
