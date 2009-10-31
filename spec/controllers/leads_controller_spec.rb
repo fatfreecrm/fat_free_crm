@@ -275,12 +275,11 @@ describe LeadsController do
         @users = [ Factory(:user) ]
         @campaigns = [ Factory(:campaign, :user => @current_user) ]
 
-        request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
         assigns(:lead).should == @lead
         assigns(:users).should == @users
         assigns(:campaigns).should == @campaigns
-        assigns[:lead_status_total].should_not == nil
+        assigns[:lead_status_total].should be_nil
         response.should render_template("leads/create")
       end
 
@@ -295,7 +294,6 @@ describe LeadsController do
         @lead = Factory.build(:lead, :campaign => @campaign, :user => @current_user, :access => "Shared")
         Lead.stub!(:new).and_return(@lead)
 
-        request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :access => "Campaign" }, :campaign => @campaign.id, :users => %w(7 8)
         @lead.reload.access.should == "Shared"
         @lead.permissions.map(&:user_id).sort.should == [ 7, 8 ]

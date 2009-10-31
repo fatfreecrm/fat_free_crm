@@ -7,7 +7,7 @@ then you win. –- Mahatma Gandhi
 Sat, Oct 31, 2009
 ---------------------------------------------------------------------
 - Correctly show opportunity summary when opportunity stage hasn't been specified.
-- Update Campaign summary information when creating or deleting related lead.
+- Update Campaign summary when creating or deleting related lead or opportunity.
 
 Fri, Oct 30, 2009
 ---------------------------------------------------------------------

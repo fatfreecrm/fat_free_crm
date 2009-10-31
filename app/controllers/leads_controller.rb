@@ -100,8 +100,8 @@ class LeadsController < ApplicationController
         if called_from_index_page?
           @leads = get_leads
           get_data_for_sidebar
-        else # Reload the campaign to refresh its summary.
-          @campaign = @lead.campaign ? @lead.campaign.reload : nil
+        elsif @lead.campaign # Reload the campaign to refresh its summary.
+          @campaign = @lead.campaign.reload
         end
         format.js   # create.js.rjs
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }

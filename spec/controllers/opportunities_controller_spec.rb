@@ -286,7 +286,7 @@ describe OpportunitiesController do
         xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
         assigns(:opportunity).should == @opportunity
         assigns(:stage).should == @stage
-        assigns(:opportunity_stage_total).should == nil # No sidebar data unless called from /opportunies page.
+        assigns(:opportunity_stage_total).should be_nil
         response.should render_template("opportunities/create")
       end
 
@@ -298,7 +298,6 @@ describe OpportunitiesController do
 
       it "should reload opportunities to update pagination if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-
         xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
         assigns[:opportunities].should == [ @opportunity ]
       end
@@ -306,9 +305,10 @@ describe OpportunitiesController do
       it "should associate opportunity with the campaign when called from campaign landing page" do
         @campaign = Factory(:campaign, :id => 42)
 
-        request.env["HTTP_REFERER"] = "http://localhost/campaign/42"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => 42, :account => {}, :users => []
+        request.env["HTTP_REFERER"] = "http://localhost/campaign/#{@campaign.id}"
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => {}, :users => []
         assigns(:opportunity).should == @opportunity
+        assigns(:campaign).should == @campaign
         @opportunity.campaign.should == @campaign
       end
 
@@ -548,6 +548,16 @@ describe OpportunitiesController do
 
           xhr :delete, :destroy, :id => @opportunity.id
           session[:opportunities_current_page].should == 1
+          response.should render_template("opportunities/destroy")
+        end
+
+        it "should reload campaiign to be able to refresh its summary" do
+          @campaign = Factory(:campaign)
+          @opportunity = Factory(:opportunity, :user => @current_user, :campaign => @campaign)
+          request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+
+          xhr :delete, :destroy, :id => @opportunity.id
+          assigns[:campaign].should == @campaign
           response.should render_template("opportunities/destroy")
         end
       end
