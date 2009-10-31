@@ -30,17 +30,13 @@ module FatFreeCRM
       #   sortable :by => [ "first_name ASC", "last_name ASC" ], :default => "last_name ASC"
       #--------------------------------------------------------------------------
       def sortable(options = {})
-        cattr_accessor :sort_by, :sort_by_fields, :sort_by_orders
-        self.sort_by_fields, self.sort_by_orders = [], []
+        cattr_accessor :sort_by,            # Default sort order with prepended table name.
+                       :sort_by_fields,     # Array of fields to sort by without ASC/DESC.
+                       :sort_by_clauses     # A copy of sortable :by => ... stored as array.
 
-        if options[:by].is_a?(Array)
-          options[:by].each_with_index { |name, i| self.sort_by_fields[i], self.sort_by_orders[i] = name.split }
-          self.sort_by = options[:default] || options[:by].first
-        else
-          self.sort_by_fields[0], self.sort_by_orders[0] = options[:by].split
-          self.sort_by = options[:default] || options[:by]
-        end
-        self.sort_by = "#{self.name.tableize}.#{self.sort_by}" # "last_name ASC" => "leads.last_name ASC"
+        self.sort_by_clauses = [options[:by]].flatten
+        self.sort_by_fields = self.sort_by_clauses.map(&:split).map(&:first)
+        self.sort_by = self.name.tableize + "." + (options[:default] || options[:by].first)
       end
 
       # Return hash that maps sort options to the actual :order strings, for example:
@@ -48,8 +44,8 @@ module FatFreeCRM
       #   "last_name"  => "leads.last_name ASC"
       #--------------------------------------------------------------------------
       def sort_by_map
-        self.sort_by_fields.zip(self.sort_by_orders).inject({}) do |hash, (field, order)|
-          hash[field] = "#{self.name.tableize}.#{field} #{order}"
+        self.sort_by_fields.zip(self.sort_by_clauses).inject({}) do |hash, (field, clause)|
+          hash[field] = self.name.tableize + "." + clause
           hash
         end
       end
