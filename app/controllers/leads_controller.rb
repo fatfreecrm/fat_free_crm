@@ -100,6 +100,8 @@ class LeadsController < ApplicationController
         if called_from_index_page?
           @leads = get_leads
           get_data_for_sidebar
+        else # Reload the campaign to refresh its summary.
+          @campaign = @lead.campaign ? @lead.campaign.reload : nil
         end
         format.js   # create.js.rjs
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
@@ -308,6 +310,7 @@ class LeadsController < ApplicationController
         end
       else                                        # Called from related asset.
         self.current_page = 1                     # Reset current page to 1 to make sure it stays valid.
+        @campaign = @lead.campaign                # Reload lead's campaign if any.
       end                                         # Render destroy.js.rjs
     else # :html destroy
       self.current_page = 1

@@ -42,12 +42,14 @@ describe "/leads/create.js.rjs" do
       response.should have_rjs("paginate")
     end
 
-    it "should update recently viewed items when called from related asset" do
-      request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+    it "should update related asset sidebar from related asset" do
+      assigns[:campaign] = campaign = Factory(:campaign)
+      request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
       render "leads/create.js.rjs"
 
-      response.should have_rjs("recently") do |rjs|
-        with_tag("div[class=caption]")
+      response.should have_rjs("sidebar") do |rjs|
+        with_tag("div[class=panel][id=summary]")
+        with_tag("div[class=panel][id=recently]")
       end
     end
   end

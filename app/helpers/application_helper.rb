@@ -180,13 +180,18 @@ module ApplicationHelper
     distance_of_time_in_words(Time.now, whenever) << " ago"
   end
 
+  # Reresh sidebar using the action view within the current controller.
   #----------------------------------------------------------------------------
   def refresh_sidebar(action = nil, shake = nil)
+    refresh_sidebar_for(controller.controller_name, action, shake)
+  end
+
+  # Refresh sidebar using the action view within an arbitrary controller.
+  #----------------------------------------------------------------------------
+  def refresh_sidebar_for(view, action = nil, shake = nil)
     update_page do |page|
-      page[:sidebar].replace_html :partial => "layouts/sidebar", :locals => { :action => action }
-      if shake
-        page[shake].visual_effect :shake, :duration => 0.4, :distance => 3
-      end
+      page[:sidebar].replace_html :partial => "layouts/sidebar", :locals => { :view => view, :action => action }
+      page[shake].visual_effect(:shake, :duration => 0.4, :distance => 3) if shake
     end
   end
 

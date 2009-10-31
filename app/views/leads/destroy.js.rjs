@@ -2,6 +2,6 @@ page[dom_id(@lead)].visual_effect :blind_up, :duration => 0.25
 if called_from_index_page?
   page << refresh_sidebar(:index, :filters)
   page[:paginate].replace_html render(:partial => "common/paginate")
-else
-  page[:recently].replace :partial => "common/recently"
+else # Lead deleted on Campaign landing page: refresh Campaign summary.
+  page << refresh_sidebar_for(:campaigns, :show, :summary) if @campaign 
 end
