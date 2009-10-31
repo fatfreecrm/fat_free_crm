@@ -221,12 +221,12 @@ ru:
   create_new: добавить новый
   #---- options ------
   sort_by: Сортировать {{value}} по
-  first_name_sort: имени
-  last_name_sort: фамилии
-  created_at_sort: дате создания
-  updated_at_sort: дате обновления
-  company_sort: организации
-  rating_sort: оценке
+  option_first_name: имени
+  option_last_name: фамилии
+  option_created_at: дате создания
+  option_updated_at: дате обновления
+  option_company: организации
+  option_rating: оценке
   displaying: показывая
   first_name_show: имя
   last_name_show: фамилии
@@ -236,8 +236,8 @@ ru:
   per_page: на странице
   using: в
   format: формате
-  brief: кратком
-  long: полном
+  option_brief: кратком
+  option_long: полном
 
   # views/opportunities
   #----------------------------------------------------------------------------

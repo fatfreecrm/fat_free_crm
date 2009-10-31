@@ -233,7 +233,6 @@ class LeadsController < ApplicationController
       @per_page = @current_user.pref[:leads_per_page] || Lead.per_page
       @outline  = @current_user.pref[:leads_outline]  || Lead.outline
       @sort_by  = @current_user.pref[:leads_sort_by]  || Lead.sort_by
-      @sort_by  = t(Lead::SORT_BY.invert[@sort_by])
       @naming   = @current_user.pref[:leads_naming]   || Lead.first_name_position
     end
   end
@@ -246,7 +245,7 @@ class LeadsController < ApplicationController
 
     # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
     if params[:sort_by]
-      @current_user.pref[:leads_sort_by] = Lead::SORT_BY[params[:sort_by]]
+      @current_user.pref[:leads_sort_by] = Lead::sort_by_map[params[:sort_by]]
       if Contact::SORT_BY.keys.include?(params[:sort_by])
         @current_user.pref[:contacts_sort_by] ||= Contact::SORT_BY[params[:sort_by]]
       end

@@ -1,5 +1,5 @@
-- sort_by_menu_items = Lead::SORT_BY_OPTIONS.inject([]) do |items, key|
-  - items << %Q[{ name: "#{t(key).titleize}", on_select: function() { #{xredraw(:sort_by, key)} }}]
+- sort_by_menu_items = Lead.sort_by_fields.inject([]) do |items, field|
+  - items << options_menu_item(:sort_by, field)
 
 :plain
   new crm.Menu({

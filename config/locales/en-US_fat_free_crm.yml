@@ -216,12 +216,12 @@ en-US:
   create_new: create a new
   #---- options ------
   sort_by: Sort {{value}} by
-  first_name_sort: first name
-  last_name_sort: last name
-  created_at_sort: date created
-  updated_at_sort: date updated
-  company_sort: company
-  rating_sort: rating
+  option_first_name: first name
+  option_last_name: last name
+  option_created_at: date created
+  option_updated_at: date updated
+  option_company: company
+  option_rating: rating
   displaying: displaying
   first_name_show: first name
   last_name_show: last name
@@ -231,8 +231,8 @@ en-US:
   per_page: per page
   using: using
   format: format
-  brief: brief
-  long: long
+  option_brief: brief
+  option_long: long
 
   # views/opportunities
   #----------------------------------------------------------------------------

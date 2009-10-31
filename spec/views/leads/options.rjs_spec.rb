@@ -5,6 +5,8 @@ describe "/leads/options.rjs" do
   
   before(:each) do
     login_and_assign
+    assigns[:sort_by] = "leads.first_name ASC"
+    assigns[:outline] = "long"
   end
 
   it "should toggle empty message div if it exists" do

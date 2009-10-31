@@ -219,14 +219,16 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def xredraw(option, key, url = nil)
+  def options_menu_item(option, key, url = nil)
+    name = t("option_#{key}")
+    "{ name: \"#{name.titleize}\", on_select: function() {" +
     remote_function(
       :url       => url || send("redraw_#{controller.controller_name}_path"),
       :with      => "{ #{option}: '#{key}' }",
-      :condition => "$('#{option}').innerHTML != '#{t(key)}'",
-      :loading   => "$('#{option}').update('#{t(key)}'); $('loading').show()",
+      :condition => "$('#{option}').innerHTML != '#{name}'",
+      :loading   => "$('#{option}').update('#{name}'); $('loading').show()",
       :complete  => "$('loading').hide()"
-    )
+    ) + "}}"
   end
 
   # Ajax helper to pass browser timezone offset to the server.
