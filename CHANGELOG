@@ -8,6 +8,7 @@ Sat, Oct 31, 2009
 ---------------------------------------------------------------------
 - Correctly show opportunity summary when opportunity stage hasn't been specified.
 - Update Campaign summary when creating or deleting related lead or opportunity.
+- Fixed "rake crm:setup" task to be compatible with ruby 1.9.
 
 Fri, Oct 30, 2009
 ---------------------------------------------------------------------

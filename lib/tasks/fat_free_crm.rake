@@ -98,7 +98,7 @@ namespace :crm do
             break unless reply.blank?
           end
           break if reply =~ /y(?:es)*/i
-          retry if reply =~ /no*/i
+          redo if reply =~ /no*/i
           puts "No admin user was created."
           exit
         end
