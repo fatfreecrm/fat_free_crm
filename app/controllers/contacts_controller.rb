@@ -182,11 +182,10 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel] == "true"
-      @per_page = @current_user.pref[:contacts_per_page] || Contact.per_page
-      @outline  = t(@current_user.pref[:contacts_outline])  || Contact.outline
-      @sort_by  = @current_user.pref[:contacts_sort_by]  || Contact.sort_by
-      @sort_by  = Contact::SORT_BY.invert[@sort_by]
-      @naming   = t(@current_user.pref[:contacts_naming])   || Contact.first_name_position
+      @per_page = @current_user.pref[:contacts_per_page]   || Contact.per_page
+      @outline  = t(@current_user.pref[:contacts_outline]) || Contact.outline
+      @sort_by  = @current_user.pref[:contacts_sort_by]    || Contact.sort_by
+      @naming   = t(@current_user.pref[:contacts_naming])  || Contact.first_name_position
     end
   end
 
@@ -198,9 +197,9 @@ class ContactsController < ApplicationController
 
     # Sorting and naming only: set the same option for Leads if the hasn't been set yet.
     if params[:sort_by]
-      @current_user.pref[:contacts_sort_by] = Contact::SORT_BY[params[:sort_by]]
-      if Lead::SORT_BY.keys.include?(params[:sort_by])
-        @current_user.pref[:leads_sort_by] ||= Lead::SORT_BY[params[:sort_by]]
+      @current_user.pref[:contacts_sort_by] = Contact::sort_by_map[params[:sort_by]]
+      if Lead::sort_by_fields.include?(params[:sort_by])
+        @current_user.pref[:leads_sort_by] ||= Lead::sort_by_map[params[:sort_by]]
       end
     end
     if params[:naming]

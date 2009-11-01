@@ -248,8 +248,8 @@ class LeadsController < ApplicationController
     # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
     if params[:sort_by]
       @current_user.pref[:leads_sort_by] = Lead::sort_by_map[params[:sort_by]]
-      if Contact::SORT_BY.keys.include?(params[:sort_by])
-        @current_user.pref[:contacts_sort_by] ||= Contact::SORT_BY[params[:sort_by]]
+      if Contact::sort_by_fields.include?(params[:sort_by])
+        @current_user.pref[:contacts_sort_by] ||= Contact::sort_by_map[params[:sort_by]]
       end
     end
     if params[:naming]

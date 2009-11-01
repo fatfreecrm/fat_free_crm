@@ -74,20 +74,11 @@ class Lead < ActiveRecord::Base
   after_create  :increment_leads_count
   after_destroy :decrement_leads_count
 
-  SORT_BY = {
-    "first_name" => "leads.first_name ASC",
-    "last_name"  => "leads.last_name ASC",
-    "company"    => "leads.company ASC",
-    "rating"     => "leads.rating DESC",
-    "created_at" => "leads.created_at DESC",
-    "updated_at" => "leads.updated_at DESC"
-  }
-
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ;  20                  ; end
-  def self.outline  ;  "long"              ; end
-  def self.first_name_position ;  "before" ; end
+  def self.per_page ;  20                 ; end
+  def self.outline  ;  "long"             ; end
+  def self.first_name_position ; "before" ; end
 
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
-- sort_by_menu_items = [t(:first_name), t(:last_name), t(:date_created), t(:date_updated)].inject([]) do | items, sort_by|
-  - items << %Q[{ name: "#{sort_by}", on_select: function() { #{redraw(:sort_by, sort_by.downcase!)} } }]
+- sort_by_menu_items = Contact.sort_by_fields.inject([]) do |items, field|
+  - items << options_menu_item(:sort_by, field)
 
 :plain
   new crm.Menu({

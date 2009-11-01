@@ -575,7 +575,7 @@ describe ContactsController do
       xhr :get, :options
       assigns[:per_page].should == 42
       assigns[:outline].should  == "long"
-      assigns[:sort_by].should  == "first_name"
+      assigns[:sort_by].should  == "contacts.first_name ASC"
       assigns[:naming].should   == "after"
     end
 

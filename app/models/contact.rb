@@ -62,28 +62,20 @@ class Contact < ActiveRecord::Base
   named_scope :assigned_to, lambda { |user| { :conditions => "assigned_to = #{user.id}" } }
 
   simple_column_search :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
-
   uses_user_permissions
   acts_as_commentable
   acts_as_paranoid
+  sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :first_name, :message => "^Please specify first name."
   validates_presence_of :last_name, :message => "^Please specify last name."
   validate :users_for_shared_access
 
-  SORT_BY = {
-    "first_name"   => "contacts.first_name ASC",
-    "last_name"    => "contacts.last_name ASC",
-    "date_created" => "contacts.created_at DESC",
-    "date_updated" => "contacts.updated_at DESC"
-  }
-
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ;  20                         ; end
-  def self.outline  ;  "long"                     ; end
-  def self.sort_by  ;  "contacts.created_at DESC" ; end
-  def self.first_name_position ;  "before"        ; end
+  def self.per_page ;  20                 ; end
+  def self.outline  ;  "long"             ; end
+  def self.first_name_position ; "before" ; end
 
   #----------------------------------------------------------------------------
   def full_name(format = nil)

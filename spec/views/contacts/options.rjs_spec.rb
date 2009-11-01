@@ -5,6 +5,8 @@ describe "/contacts/options.rjs" do
   
   before(:each) do
     login_and_assign
+    assigns[:sort_by] = "contacts.first_name ASC"
+    assigns[:outline] = "long"
   end
 
   it "should toggle empty message div if it exists" do
