@@ -101,6 +101,8 @@ class OpportunitiesController < ApplicationController
         if called_from_index_page?
           @opportunities = get_opportunities
           get_data_for_sidebar
+        elsif @opportunity.campaign
+          @campaign = @opportunity.campaign.reload # Reload the campaign to refresh its summary.
         end
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
@@ -253,6 +255,7 @@ class OpportunitiesController < ApplicationController
         end
       else # Called from related asset.
         self.current_page = 1
+        @campaign = @opportunity.campaign # Reload related campaign if any.
       end
       # At this point render destroy.js.rjs
     else

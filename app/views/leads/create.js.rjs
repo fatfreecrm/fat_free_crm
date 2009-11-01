@@ -7,8 +7,8 @@ if @lead.valid?
   if called_from_index_page?
     page << refresh_sidebar(:index, :filters)
     page[:paginate].replace_html render(:partial => "common/paginate")
-  else
-    page[:recently].replace :partial => "common/recently"
+  elsif @campaign # Lead created on Campaign landing page: refresh Campaign summary.
+    page << refresh_sidebar_for(:campaigns, :show, :summary)
   end
   page.call "crm.flick", :empty, :remove
 else

@@ -1,7 +1,8 @@
+- logger.i @opportunity
 .panel#summary
   .caption Opportunity Summary
   %li
-    %dt= @stage[@opportunity.stage.intern] || "N/A"
+    %dt= @opportunity.stage ? (@stage[@opportunity.stage.to_sym] || "N/A") : "Other"
     %tt Stage:
   %li
     %dt= @opportunity.closes_on ? @opportunity.closes_on.strftime("%b %e") : "N/A"

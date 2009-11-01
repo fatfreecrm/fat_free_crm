@@ -41,6 +41,17 @@ describe "/opportunities/create.js.rjs" do
       response.should have_rjs("paginate")
     end
 
+    it "should update related campaign sidebar when called from related campaign" do
+      assigns[:campaign] = campaign = Factory(:campaign)
+      request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+      render "opportunities/create.js.rjs"
+
+      response.should have_rjs("sidebar") do |rjs|
+        with_tag("div[class=panel][id=summary]")
+        with_tag("div[class=panel][id=recently]")
+      end
+    end
+
     it "should update recently viewed items when called from related asset" do
       request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       render "opportunities/create.js.rjs"

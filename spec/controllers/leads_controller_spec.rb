@@ -279,7 +279,7 @@ describe LeadsController do
         assigns(:lead).should == @lead
         assigns(:users).should == @users
         assigns(:campaigns).should == @campaigns
-        assigns[:lead_status_total].should == nil
+        assigns[:lead_status_total].should be_nil
         response.should render_template("leads/create")
       end
 
@@ -294,7 +294,7 @@ describe LeadsController do
         @lead = Factory.build(:lead, :campaign => @campaign, :user => @current_user, :access => "Shared")
         Lead.stub!(:new).and_return(@lead)
 
-        xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :campaign_id => @campaign.id, :access => "Campaign" }, :users => %w(7 8)
+        xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :access => "Campaign" }, :campaign => @campaign.id, :users => %w(7 8)
         @lead.reload.access.should == "Shared"
         @lead.permissions.map(&:user_id).sort.should == [ 7, 8 ]
         @lead.permissions.map(&:asset_id).should == [ @lead.id, @lead.id ]
@@ -317,6 +317,15 @@ describe LeadsController do
         request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
         assigns[:leads].should == [ @lead ]
+      end
+
+      it "should reload lead campaign if called from campaign landing page" do
+        @campaign = Factory(:campaign)
+        @lead = Factory.build(:lead, :user => @current_user, :campaign => @campaign)
+      
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+        xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
+        assigns[:campaign].should == @campaign
       end
 
     end
@@ -486,12 +495,22 @@ describe LeadsController do
         end
       end
 
-      describe "when called from related asset page page" do
-        it "should reset current page to 1" do
-          request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+      describe "when called from campaign landing page" do
+        before(:each) do
+          @campaign = Factory(:campaign)
+          @lead = Factory(:lead, :user => @current_user, :campaign => @campaign)
+          request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+        end
 
+        it "should reset current page to 1" do
           xhr :delete, :destroy, :id => @lead.id
           session[:leads_current_page].should == 1
+          response.should render_template("leads/destroy")
+        end
+
+        it "should reload campaiign to be able to refresh its summary" do
+          xhr :delete, :destroy, :id => @lead.id
+          assigns[:campaign].should == @campaign
           response.should render_template("leads/destroy")
         end
       end

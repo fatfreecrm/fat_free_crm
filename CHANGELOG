@@ -4,6 +4,16 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, Oct 31, 2009
+---------------------------------------------------------------------
+- Correctly show opportunity summary when opportunity stage hasn't been specified.
+- Update Campaign summary when creating or deleting related lead or opportunity.
+- Fixed "rake crm:setup" task to be compatible with ruby 1.9.
+
+Fri, Oct 30, 2009
+---------------------------------------------------------------------
+- Introduced Sortable module, more work on I18n.
+
 Sat, Oct 24, 2009
 ---------------------------------------------------------------------
 - Allow renaming both main and admin tabs (see config/settings.yml).
