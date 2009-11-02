@@ -164,7 +164,6 @@ class CampaignsController < ApplicationController
       @per_page = @current_user.pref[:campaigns_per_page] || Campaign.per_page
       @outline  = @current_user.pref[:campaigns_outline]  || Campaign.outline
       @sort_by  = @current_user.pref[:campaigns_sort_by]  || Campaign.sort_by
-      @sort_by  = Campaign::SORT_BY.invert[@sort_by]
     end
   end
 
@@ -173,7 +172,7 @@ class CampaignsController < ApplicationController
   def redraw
     @current_user.pref[:campaigns_per_page] = params[:per_page] if params[:per_page]
     @current_user.pref[:campaigns_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:campaigns_sort_by]  = Campaign::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(:page => 1)
     render :action => :index
   end

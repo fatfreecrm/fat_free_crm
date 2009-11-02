@@ -5,6 +5,9 @@ describe "/campaigns/options.rjs" do
   
   before(:each) do
     login_and_assign
+    assigns[:sort_by]  = "campaigns.name ASC"
+    assigns[:outline]  = "option_long"
+    assigns[:per_page] = 20
   end
 
   it "should toggle empty message div if it exists" do
@@ -33,7 +36,7 @@ describe "/campaigns/options.rjs" do
 
     it "should call JavaScript functions to load preferences menus" do
       params[:cancel] = nil
-      template.should_receive(:render).with(:partial => "sort_by")
+      template.should_receive(:render).with(:partial => "common/sort_by")
       template.should_receive(:render).with(:partial => "common/per_page")
       template.should_receive(:render).with(:partial => "common/outline")
 

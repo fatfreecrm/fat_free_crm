@@ -163,7 +163,6 @@ class AccountsController < ApplicationController
       @per_page = @current_user.pref[:accounts_per_page] || Account.per_page
       @outline  = @current_user.pref[:accounts_outline]  || Account.outline
       @sort_by  = @current_user.pref[:accounts_sort_by]  || Account.sort_by
-      @sort_by  = Account::SORT_BY.invert[@sort_by]
     end
   end
 
@@ -172,7 +171,7 @@ class AccountsController < ApplicationController
   def redraw
     @current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
     @current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:accounts_sort_by]  = Account::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(:page => 1)
     render :action => :index
   end

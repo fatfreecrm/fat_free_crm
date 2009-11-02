@@ -53,33 +53,20 @@ class Campaign < ActiveRecord::Base
   named_scope :assigned_to, lambda { |user| { :conditions => "assigned_to = #{user.id}" } }
 
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
-
   uses_user_permissions
   acts_as_commentable
   acts_as_paranoid
+  sortable :by => [ "name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => "^Please specify campaign name."
   validates_uniqueness_of :name, :scope => :user_id
   validate :start_and_end_dates
   validate :users_for_shared_access
 
-  SORT_BY = {
-    "name"           => "campaigns.name ASC",
-    "target leads"   => "campaigns.target_leads DESC",
-    "target revenue" => "campaigns.target_revenue DESC",
-    "actual leads"   => "campaigns.leads_count DESC",
-    "actual revenue" => "campaigns.revenue DESC",
-    "start date"     => "campaigns.starts_on DESC",
-    "end date"       => "campaigns.ends_on DESC",
-    "date created"   => "campaigns.created_at DESC",
-    "date updated"   => "campaigns.updated_at DESC"
-  }
-
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ;  20                          ; end
-  def self.outline  ;  "long"                      ; end
-  def self.sort_by  ;  "campaigns.created_at DESC" ; end
+  def self.per_page ; 20     ; end
+  def self.outline  ; "long" ; end
 
   private
   # Make sure end date > start date.

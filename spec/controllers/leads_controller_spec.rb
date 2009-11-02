@@ -820,15 +820,15 @@ describe LeadsController do
   describe "responding to GET options" do
     it "should set current user preferences when showing options" do
       @per_page = Factory(:preference, :user => @current_user, :name => "leads_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = Factory(:preference, :user => @current_user, :name => "leads_outline",  :value => Base64.encode64(Marshal.dump("long")))
+      @outline  = Factory(:preference, :user => @current_user, :name => "leads_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
       @sort_by  = Factory(:preference, :user => @current_user, :name => "leads_sort_by",  :value => Base64.encode64(Marshal.dump("leads.first_name ASC")))
-      @naming   = Factory(:preference, :user => @current_user, :name => "leads_naming",   :value => Base64.encode64(Marshal.dump("after")))
+      @naming   = Factory(:preference, :user => @current_user, :name => "leads_naming",   :value => Base64.encode64(Marshal.dump("option_after")))
 
       xhr :get, :options
       assigns[:per_page].should == 42
-      assigns[:outline].should  == "long"
+      assigns[:outline].should  == "option_long"
       assigns[:sort_by].should  == "leads.first_name ASC"
-      assigns[:naming].should   == "after"
+      assigns[:naming].should   == "option_after"
     end
 
     it "should not assign instance variables when hiding options" do

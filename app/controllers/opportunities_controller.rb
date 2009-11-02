@@ -193,7 +193,6 @@ class OpportunitiesController < ApplicationController
       @per_page = @current_user.pref[:opportunities_per_page] || Opportunity.per_page
       @outline  = @current_user.pref[:opportunities_outline]  || Opportunity.outline
       @sort_by  = @current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by
-      @sort_by  = Opportunity::SORT_BY.invert[@sort_by]
     end
   end
 
@@ -202,7 +201,7 @@ class OpportunitiesController < ApplicationController
   def redraw
     @current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
     @current_user.pref[:opportunities_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:opportunities_sort_by]  = Opportunity::SORT_BY[params[:sort_by]] if params[:sort_by]
+    @current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
     @opportunities = get_opportunities(:page => 1)
     render :action => :index
   end

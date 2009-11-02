@@ -4,15 +4,18 @@
 
   - current_sort_by = t("option_" + Contact.sort_by_map.invert[@sort_by])
   - current_outline = t("option_#{@outline}")
+  - current_naming  = t("option_#{@naming}")
 
-  #{t(:sort_by, t(:contacts_small))} #{link_to(current_sort_by, "#", :id => :sort_by)},
-  #{t:displaying} #{t:first_name_show} #{link_to(@naming, "#", :id => :naming)} #{t:last_name_show}.
-  #{t:show} #{link_to(@per_page, "#", :id => :per_page)} #{t:contact_records} #{t:per_page}
-  #{t:using} #{link_to(current_outline, "#", :id => :outline)} #{t:format}.
+  -# sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name. 
+  = t(:sort_by_displaying, :models => t(:contacts_small), :field => link_to(current_sort_by, "#", :id => :sort_by), :position => link_to(current_naming, "#", :id => :naming))
+
+  -# show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
+  = t(:show_per_page, :number => link_to(@per_page, "#", :id => :per_page), :models => t(:contacts_small), :format => link_to(current_outline, "#", :id => :outline))
+
 %p
 
 %script
   = render :partial => "common/naming"
-  = render :partial => "sort_by"
+  = render :partial => "common/sort_by"
   = render :partial => "common/per_page"
   = render :partial => "common/outline"

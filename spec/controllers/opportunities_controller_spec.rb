@@ -650,13 +650,13 @@ describe OpportunitiesController do
   describe "responding to GET options" do
     it "should set current user preferences when showing options" do
       @per_page = Factory(:preference, :user => @current_user, :name => "opportunities_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = Factory(:preference, :user => @current_user, :name => "opportunities_outline",  :value => Base64.encode64(Marshal.dump("long")))
+      @outline  = Factory(:preference, :user => @current_user, :name => "opportunities_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
       @sort_by  = Factory(:preference, :user => @current_user, :name => "opportunities_sort_by",  :value => Base64.encode64(Marshal.dump("opportunities.name ASC")))
 
       xhr :get, :options
       assigns[:per_page].should == 42
-      assigns[:outline].should  == "long"
-      assigns[:sort_by].should  == "name"
+      assigns[:outline].should  == "option_long"
+      assigns[:sort_by].should  == "opportunities.name ASC"
     end
 
     it "should not assign instance variables when hiding options" do

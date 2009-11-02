@@ -1,5 +1,5 @@
-- naming_menu_items = ["before", "after"].inject([]) do | items, naming|
-  - items << %Q[{ name: "#{t(naming).titleize}", on_select: function() { #{redraw(:naming, t(naming.downcase))} } }]
+- naming_menu_items = %w(before after).inject([]) do |items, naming|
+  - items << options_menu_item(:naming, naming)
 
 :plain
   new crm.Menu({

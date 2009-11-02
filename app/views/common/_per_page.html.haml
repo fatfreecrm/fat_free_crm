@@ -1,4 +1,4 @@
-- per_page_menu_items = [ 10, 20, 30, 50 ].inject([]) do | items, per_page|
+- per_page_menu_items = [ 10, 20, 30, 50 ].inject([]) do |items, per_page|
   - items << %Q[{ name: "#{per_page}", on_select: function() { #{redraw(:per_page, per_page)} } }]
 
 :plain

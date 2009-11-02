@@ -570,13 +570,13 @@ describe ContactsController do
       @per_page = Factory(:preference, :user => @current_user, :name => "contacts_per_page", :value => Base64.encode64(Marshal.dump(42)))
       @outline  = Factory(:preference, :user => @current_user, :name => "contacts_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
       @sort_by  = Factory(:preference, :user => @current_user, :name => "contacts_sort_by",  :value => Base64.encode64(Marshal.dump("contacts.first_name ASC")))
-      @naming   = Factory(:preference, :user => @current_user, :name => "contacts_naming",   :value => Base64.encode64(Marshal.dump("after")))
+      @naming   = Factory(:preference, :user => @current_user, :name => "contacts_naming",   :value => Base64.encode64(Marshal.dump("option_after")))
 
       xhr :get, :options
       assigns[:per_page].should == 42
-      assigns[:outline].should  == "long"
+      assigns[:outline].should  == "option_long"
       assigns[:sort_by].should  == "contacts.first_name ASC"
-      assigns[:naming].should   == "after"
+      assigns[:naming].should   == "option_after"
     end
 
     it "should not assign instance variables when hiding options" do

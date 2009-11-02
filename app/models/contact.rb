@@ -73,8 +73,8 @@ class Contact < ActiveRecord::Base
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ;  20                 ; end
-  def self.outline  ;  "long"             ; end
+  def self.per_page ; 20                  ; end
+  def self.outline  ; "long"              ; end
   def self.first_name_position ; "before" ; end
 
   #----------------------------------------------------------------------------

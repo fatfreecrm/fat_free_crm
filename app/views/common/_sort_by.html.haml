@@ -1,4 +1,5 @@
-- sort_by_menu_items = Contact.sort_by_fields.inject([]) do |items, field|
+- model = controller.controller_name.classify.constantize
+- sort_by_menu_items = model.sort_by_fields.inject([]) do |items, field|
   - items << options_menu_item(:sort_by, field)
 
 :plain

@@ -81,7 +81,6 @@ en-US:
   shared_txt: Share it with the following people
   date_created: Date Created
   date_updated: Date Updated
-  account_records: account records
   intro: You can add {{value}} information later.
   open_in_window: Open {{value}} in a new window
 
@@ -99,7 +98,6 @@ en-US:
   contacts_small: contacts
   contact: Contact
   contact_small: contact
-  contact_records: contact records
   create_contact_link: Create contact
   create_contact_button: Create Contact
   save_contact_button: Save Contact
@@ -180,7 +178,6 @@ en-US:
   convert_lead_button: Convert Lead
   convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  lead_records: lead records
   total_leads: Total Leads
   lead_summary: Lead Summary
   reject_lead_confirm: Are you sure you want to reject this lead?
@@ -216,29 +213,42 @@ en-US:
   create_new: create a new
 
   #---- options ------
-  sort_by: Sort {{value}} by
+  sort_by: Sort {{models}} by {{field}}.
+  sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name. 
+  show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
+
   option_first_name: first name
   option_last_name: last name
   option_created_at: date created
   option_updated_at: date updated
   option_company: company
   option_rating: rating
-  displaying: displaying
-  first_name_show: first name
-  last_name_show: last name
-  show: Show
-  before: before
-  after: after
-  per_page: per page
-  using: using
-  format: format
+
+  option_name: name
+  option_target_leads: target leads
+  option_target_revenue: target revenue
+  option_leads_count: actual leads
+  option_revenue: actual revenue
+  option_starts_on: start date
+  option_ends_on: end date
+
+  option_amount: amount
+  "option_amount*probability": weighted amount
+  option_probability: probability
+  option_closes_on: close date
+
+  option_before: before
+  option_after: after
+
   option_brief: brief
   option_long: long
 
   # views/opportunities
   #----------------------------------------------------------------------------
   opportunities: Opportunities
+  opportunities_small: opportunities
   opportunity: Opportunity
+  opportunity_small: opportunity
   create_opportunity_link: Create opportunity
   stage: Stage
   close_date: Close date

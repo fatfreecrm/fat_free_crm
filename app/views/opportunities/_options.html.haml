@@ -1,12 +1,19 @@
 %p
   = link_to_close options_opportunities_path
   = hidden_field_tag "opportunity[user_id]", @current_user.id
-  == Sort opportunities by #{link_to(@sort_by, "#", :id => :sort_by)}.
-  == Show #{link_to(@per_page, "#", :id => :per_page)} opportunity records per page
-  == using #{link_to(@outline, "#", :id => :outline)} format.
+
+  - current_sort_by = t("option_" + Opportunity.sort_by_map.invert[@sort_by])
+  - current_outline = t("option_#{@outline}")
+  - current_naming  = t("option_#{@naming}")
+
+  -# sort_by: Sort {{models}} by {{field}}.
+  = t(:sort_by, :models => t(:opportunities_small), :field => link_to(current_sort_by, "#", :id => :sort_by))
+
+  -# show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
+  = t(:show_per_page, :number => link_to(@per_page, "#", :id => :per_page), :models => t(:opportunities_small), :format => link_to(current_outline, "#", :id => :outline))
 %p
 
 %script
-  = render :partial => "sort_by"
+  = render :partial => "common/sort_by"
   = render :partial => "common/per_page"
   = render :partial => "common/outline"
