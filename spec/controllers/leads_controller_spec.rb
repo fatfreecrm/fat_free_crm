@@ -567,11 +567,11 @@ describe LeadsController do
 
     it "should should collect necessary data and render [convert] template" do
       @campaign = Factory(:campaign, :user => @current_user)
-      @lead = Factory(:lead, :user => @current_user, :campaign => @campaign)
+      @lead = Factory(:lead, :user => @current_user, :campaign => @campaign, :source => "cold_call")
       @users = [ Factory(:user) ]
       @accounts = [ Factory(:account, :user => @current_user) ]
       @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
-      @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign)
+      @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
 
       xhr :get, :convert, :id => @lead.id
       assigns[:lead].should == @lead
@@ -685,6 +685,13 @@ describe LeadsController do
 
       xhr :put, :promote, :id => @lead.id, :account => { :name => "Hello" }, :opportunity => { :name => "Hello", :campaign_id => @campaign.id }
       assigns[:opportunity].campaign.should == @campaign
+    end
+
+    it "should assign lead's source to the newly created opportunity" do
+      @lead = Factory(:lead, :user => @current_user, :source => "cold_call")
+
+      xhr :put, :promote, :id => @lead.id, :account => { :name => "Hello" }, :opportunity => { :name => "Hello", :source => @lead.source }
+      assigns[:opportunity].source.should == @lead.source
     end
 
     it "on failure: should not change lead's status and still render [promote] template" do

@@ -160,7 +160,7 @@ class LeadsController < ApplicationController
     @users = User.except(@current_user).all
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my(@current_user).all(:order => "name")
-    @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign)
+    @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
     if params[:previous] =~ /(\d+)\z/
       @previous = Lead.my(@current_user).find($1)
     end
