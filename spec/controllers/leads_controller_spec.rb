@@ -566,11 +566,12 @@ describe LeadsController do
   describe "responding to GET convert" do
 
     it "should should collect necessary data and render [convert] template" do
-      @lead = Factory(:lead, :user => @current_user, :campaign => nil)
+      @campaign = Factory(:campaign, :user => @current_user)
+      @lead = Factory(:lead, :user => @current_user, :campaign => @campaign)
       @users = [ Factory(:user) ]
       @accounts = [ Factory(:account, :user => @current_user) ]
       @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
-      @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting")
+      @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign)
 
       xhr :get, :convert, :id => @lead.id
       assigns[:lead].should == @lead
@@ -578,6 +579,7 @@ describe LeadsController do
       assigns[:accounts].should == @accounts
       assigns[:account].attributes.should == @account.attributes
       assigns[:opportunity].attributes.should == @opportunity.attributes
+      assigns[:opportunity].campaign.should == @opportunity.campaign
       response.should render_template("leads/convert")
     end
 
@@ -675,6 +677,14 @@ describe LeadsController do
       @opportunity.permissions.map(&:user_id).sort.should == [ 7, 8 ]
       @opportunity.permissions.map(&:asset_id).should == [ @opportunity.id, @opportunity.id ]
       @opportunity.permissions.map(&:asset_type).should == %w(Opportunity Opportunity)
+    end
+
+    it "should assign lead's campaign to the newly created opportunity" do
+      @campaign = Factory(:campaign)
+      @lead = Factory(:lead, :user => @current_user, :campaign => @campaign)
+
+      xhr :put, :promote, :id => @lead.id, :account => { :name => "Hello" }, :opportunity => { :name => "Hello", :campaign_id => @campaign.id }
+      assigns[:opportunity].campaign.should == @campaign
     end
 
     it "on failure: should not change lead's status and still render [promote] template" do
