@@ -358,9 +358,9 @@ describe LeadsController do
     describe "with valid params" do
 
       it "should update the requested lead, expose it as @lead, and render [update] template" do
-        @lead = Factory(:lead, :id => 42, :first_name => "Billy", :user => @current_user)
+        @lead = Factory(:lead, :first_name => "Billy", :user => @current_user)
 
-        xhr :put, :update, :id => 42, :lead => { :first_name => "Bones" }
+        xhr :put, :update, :id => @lead.id, :lead => { :first_name => "Bones" }
         @lead.reload.first_name.should == "Bones"
         assigns[:lead].should == @lead
         assigns[:lead_status_total].should == nil
@@ -368,26 +368,56 @@ describe LeadsController do
       end
 
       it "should update lead status" do
-        @lead = Factory(:lead, :id => 42, :status => "new", :user => @current_user)
+        @lead = Factory(:lead, :status => "new", :user => @current_user)
 
-        xhr :put, :update, :id => 42, :lead => { :status => "rejected" }
+        xhr :put, :update, :id => @lead.id, :lead => { :status => "rejected" }
         @lead.reload.status.should == "rejected"
       end
 
       it "should update lead source" do
-        @lead = Factory(:lead, :id => 42, :source => "campaign", :user => @current_user)
+        @lead = Factory(:lead, :source => "campaign", :user => @current_user)
 
-        xhr :put, :update, :id => 42, :lead => { :source => "cald_call" }
+        xhr :put, :update, :id => @lead.id, :lead => { :source => "cald_call" }
         @lead.reload.source.should == "cald_call"
       end
 
       it "should update lead campaign" do
-        old_campaign = Factory(:campaign)
-        new_campaign = Factory(:campaign)
-        @lead = Factory(:lead, :id => 42, :campaign => old_campaign, :user => @current_user)
+        @campaigns = { :old => Factory(:campaign), :new => Factory(:campaign) }
+        @lead = Factory(:lead, :campaign => @campaigns[:old])
 
-        xhr :put, :update, :id => 42, :lead => { :campaign_id => new_campaign.id }
-        @lead.reload.campaign.should == new_campaign
+        xhr :put, :update, :id => @lead.id, :lead => { :campaign_id => @campaigns[:new].id }
+        @lead.reload.campaign.should == @campaigns[:new]
+      end
+
+      it "should decrement campaign leads count if campaign has been removed" do
+        @campaign = Factory(:campaign)
+        @lead = Factory(:lead, :campaign => @campaign)
+        @count = @campaign.reload.leads_count
+
+        xhr :put, :update, :id => @lead, :lead => { :campaign_id => nil }
+        @lead.reload.campaign.should == nil
+        @campaign.reload.leads_count.should == @count - 1
+      end
+
+      it "should increment campaign leads count if campaign has been assigned" do
+        @campaign = Factory(:campaign)
+        @lead = Factory(:lead, :campaign => nil)
+        @count = @campaign.leads_count
+
+        xhr :put, :update, :id => @lead, :lead => { :campaign_id => @campaign.id }
+        @lead.reload.campaign.should == @campaign
+        @campaign.reload.leads_count.should == @count + 1
+      end
+
+      it "should update both campaign leads counts if reassigned to a new campaign" do
+        @campaigns = { :old => Factory(:campaign), :new => Factory(:campaign) }
+        @lead = Factory(:lead, :campaign => @campaigns[:old])
+        @counts = { :old => @campaigns[:old].reload.leads_count, :new => @campaigns[:new].leads_count }
+
+        xhr :put, :update, :id => @lead, :lead => { :campaign_id => @campaigns[:new].id }
+        @lead.reload.campaign.should == @campaigns[:new]
+        @campaigns[:old].reload.leads_count.should == @counts[:old] - 1
+        @campaigns[:new].reload.leads_count.should == @counts[:new] + 1
       end
 
       it "should update shared permissions for the campaign" do
@@ -400,12 +430,21 @@ describe LeadsController do
       end
 
       it "should get the data for leads sidebar when called from leads index" do
-        @lead = Factory(:lead, :id => 42, :user => @current_user)
+        @lead = Factory(:lead)
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
-        xhr :put, :update, :id => 42, :lead => { :first_name => "Billy" }
+        xhr :put, :update, :id => @lead.id, :lead => { :first_name => "Billy" }
         assigns[:lead_status_total].should_not be_nil
         assigns[:lead_status_total].should be_an_instance_of(Hash)
+      end
+
+      it "should reload lead campaign if called from campaign landing page" do
+        @campaign = Factory(:campaign)
+        @lead = Factory(:lead, :campaign => @campaign)
+      
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+        xhr :put, :update, :id => @lead, :lead => { :first_name => "Hello" }
+        assigns[:campaign].should == @campaign
       end
 
       describe "lead got deleted or otherwise unavailable" do

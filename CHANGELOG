@@ -8,6 +8,7 @@ Wed, Nov 4, 2009
 ---------------------------------------------------------------------
 - Correctly set opportunity campaign and source when converting a lead (LH #119).
 - Show correct campaign name and source when adding a lead from campaign landing page.
+- Update lead counters when reassigning leads between campaigns (LH #117).
 
 Sat, Oct 31, 2009
 ---------------------------------------------------------------------

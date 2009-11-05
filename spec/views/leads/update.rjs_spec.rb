@@ -68,6 +68,17 @@ describe "/leads/update.js.rjs" do
         response.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
+      it "should update related asset sidebar from related asset" do
+        assigns[:campaign] = campaign = Factory(:campaign)
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+        render "leads/create.js.rjs"
+
+        response.should have_rjs("sidebar") do |rjs|
+          with_tag("div[class=panel][id=summary]")
+          with_tag("div[class=panel][id=recently]")
+        end
+      end
+
       it "should update recently viewed items" do
         render "leads/update.js.rjs"
         response.should have_rjs("recently") do |rjs|

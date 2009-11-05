@@ -100,6 +100,19 @@ class Lead < ActiveRecord::Base
     end
   end
 
+  # Update lead attributes taking care of campaign lead counters when necessary.
+  #----------------------------------------------------------------------------
+  def update_with_permissions(attributes, users)
+    if self.campaign_id == attributes[:campaign_id] # Same campaign (if any).
+      super(attributes, users)                      # See lib/fat_free_crm/permissions.rb
+    else                                            # Campaign has been changed -- update lead counters...
+      decrement_leads_count                         # ..for the old campaign...
+      lead = super(attributes, users)               # Assign new campaign.
+      increment_leads_count                         # ...and now for the new campaign.
+      lead
+    end
+  end
+
   # Promote the lead by creating contact and optional opportunity. Upon
   # successful promotion Lead status gets set to :converted.
   #----------------------------------------------------------------------------

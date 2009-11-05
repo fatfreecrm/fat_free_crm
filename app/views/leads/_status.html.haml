@@ -2,11 +2,6 @@
 - collapsed = session[:lead_status].nil? # && @lead.errors.empty?
 = subtitle :lead_status, collapsed
 
-- logger.i @lead.campaign
-- logger.i @lead.source
-- logger.i @campaign
-- logger.i called_from_landing_page?("campaigns")
-
 .section
   %small#lead_status_intro{ hidden_if(!collapsed) }
     = "You can add lead status information later." unless edit
