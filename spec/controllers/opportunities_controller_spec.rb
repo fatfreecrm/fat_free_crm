@@ -337,6 +337,16 @@ describe OpportunitiesController do
         @account.opportunities.should include(@opportunity)
       end
 
+      it "should update related campaign revenue if won" do
+        @campaign = Factory(:campaign, :revenue => 0)
+        @opportunity = Factory.build(:opportunity, :user => @current_user, :stage => "won", :amount => 1100, :discount => 100)
+        Opportunity.stub!(:new).and_return(@opportunity)
+
+        xhr :post, :create, :opportunity => { :name => "Hello world" }, :campaign => @campaign.id, :account => {}
+        assigns(:opportunity).should == @opportunity
+        @opportunity.campaign.should == @campaign.reload
+        @campaign.revenue.to_i.should == 1000 # 1000 - 100 discount.
+      end
     end
 
     describe "with invalid params" do
@@ -452,6 +462,63 @@ describe OpportunitiesController do
         @opportunity.reload.access.should == "Shared"
         @opportunity.permissions.map(&:user_id).sort.should == [ 7, 8 ]
         assigns[:opportunity].should == @opportunity
+      end
+
+      describe "updating campaign revenue (same campaign)" do
+        it "should add to actual revenue when opportunity is closed/won" do
+          @campaign = Factory(:campaign, :revenue => 1000)
+          @opportunity = Factory(:opportunity, :campaign => @campaign, :stage => nil, :amount => 1100, :discount => 100)
+      
+          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "won" }, :account => {}
+          @campaign.reload.revenue.to_i.should == 2000 # 1000 -> 2000
+        end
+      
+        it "should substract from actual revenue when opportunity is no longer closed/won" do
+          @campaign = Factory(:campaign, :revenue => 1000)
+          @opportunity = Factory(:opportunity, :campaign => @campaign, :stage => "won", :amount => 1100, :discount => 100)
+          # @campaign.revenue is now $2000 since we created winning opportunity.
+
+          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => nil }, :account => {}
+          @campaign.reload.revenue.to_i.should == 1000 # Should be adjusted back to $1000.
+        end
+      
+        it "should not update actual revenue when opportunity is not closed/won" do
+          @campaign = Factory(:campaign, :revenue => 1000)
+          @opportunity = Factory(:opportunity, :campaign => @campaign, :stage => nil, :amount => 1100, :discount => 100)
+      
+          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "lost" }, :account => {}
+          @campaign.reload.revenue.to_i.should == 1000 # Stays the same.
+        end
+      end
+
+      describe "updating campaign revenue (diferent campaigns)" do
+        it "should update newly assigned campaign when opportunity is closed/won" do
+          @campaigns = { :old => Factory(:campaign, :revenue => 1000), :new => Factory(:campaign, :revenue => 1000) }
+          @opportunity = Factory(:opportunity, :campaign => @campaigns[:old], :stage => nil, :amount => 1100, :discount => 100)
+              
+          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "won", :campaign_id => @campaigns[:new].id }, :account => {}
+          @campaigns[:old].reload.revenue.to_i.should == 1000 # Stays the same.
+          @campaigns[:new].reload.revenue.to_i.should == 2000 # 1000 -> 2000
+        end
+      
+        it "should update old campaign when opportunity is no longer closed/won" do
+          @campaigns = { :old => Factory(:campaign, :revenue => 1000), :new => Factory(:campaign, :revenue => 1000) }
+          @opportunity = Factory(:opportunity, :campaign => @campaigns[:old], :stage => "won", :amount => 1100, :discount => 100)
+          # @campaign.revenue is now $2000 since we created winning opportunity.
+              
+          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => nil, :campaign_id => @campaigns[:new].id }, :account => {}
+          @campaigns[:old].reload.revenue.to_i.should == 1000 # Should be adjusted back to $1000.
+          @campaigns[:new].reload.revenue.to_i.should == 1000 # Stays the same.
+        end
+              
+        it "should not update campaigns when opportunity is not closed/won" do
+          @campaigns = { :old => Factory(:campaign, :revenue => 1000), :new => Factory(:campaign, :revenue => 1000) }
+          @opportunity = Factory(:opportunity, :campaign => @campaigns[:old], :stage => nil, :amount => 1100, :discount => 100)
+              
+          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "lost", :campaign_id => @campaigns[:new].id }, :account => {}
+          @campaigns[:old].reload.revenue.to_i.should == 1000 # Stays the same.
+          @campaigns[:new].reload.revenue.to_i.should == 1000 # Stays the same.
+        end
       end
 
       describe "opportunity got deleted or otherwise unavailable" do
