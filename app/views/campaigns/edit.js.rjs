@@ -26,7 +26,7 @@ else # <----------------------------------------  Show [Edit Campaign] form.
   elsif params[:cancel] == "false"                # Called from title of the campaign landing page...
     page[:edit_campaign].replace_html :partial => "edit"
     page.call "crm.flip_form", :edit_campaign
-    page.call "crm.set_title", :edit_campaign, "Edit #{@campaign.name}"
+    page.call "crm.set_title", :edit_campaign, "#{t:edit} #{@campaign.name}"
   end
 
   page.call "crm.date_select_popup", :campaign_starts_on

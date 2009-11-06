@@ -1,16 +1,16 @@
 - objectives = []
-- objectives << (number_to_currency(campaign.target_revenue, :precision => 0) << " in revenue") if campaign.target_revenue
-- objectives << pluralize(campaign.target_leads, "lead") if campaign.target_leads
-- objectives << (number_to_percentage(campaign.target_conversion, :precision => 1) << " conversion") if campaign.target_conversion
+- objectives << t(:campaign_revenue_small, number_to_currency(campaign.target_revenue, :precision => 0)) if campaign.target_revenue
+- objectives << t('pluralize.lead', :count => campaign.target_leads) if campaign.target_leads
+- objectives << t(:campaign_conversion_small, number_to_percentage(campaign.target_conversion, :precision => 1)) if campaign.target_conversion
 - unless objectives.empty?
   %dt
-    %b Target:
+    %b #{t:campaign_target}:
     = objectives.join(" | ")
 %dt
   - unless objectives.empty?
-    %b Actual:
-  = number_to_currency(campaign.revenue || 0, :precision => 0) << " in revenue | "
-  = pluralize(campaign.leads_count || 0, "lead") << " | "
-  = pluralize(campaign.opportunities_count || 0, "opportunity")
+    %b #{t:campaign_actual}:
+  = t(:campaign_revenue_small, number_to_currency(campaign.revenue || 0, :precision => 0)) + " | "
+  = t('pluralize.lead', campaign.leads_count || 0) + " | "
+  = t('pluralize.opportunity', campaign.opportunities_count || 0)
   - if campaign.opportunities_count? && campaign.leads_count? && campaign.leads_count != 0
-    = " | " << number_to_percentage(campaign.opportunities_count * 100 / campaign.leads_count, :precision => 1) << " conversion"
+    = " | " << t(:campaign_conversion_small, number_to_percentage(campaign.opportunities_count * 100 / campaign.leads_count, :precision => 1))

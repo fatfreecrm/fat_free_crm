@@ -2,23 +2,23 @@
   - case campaign.status.intern
     - when :started
       - if campaign.starts_on
-        == started #{time_ago_in_words(campaign.starts_on)} ago
+        == #{t:campaign_started_ago, time_ago_in_words(campaign.starts_on)}
         - if campaign.ends_on
           - if campaign.ends_on > Date.today
-            %span>= ", finishes in " << distance_of_time_in_words(Date.today, campaign.ends_on)
+            %span>= ", " + t(:campaign_finishes_in, distance_of_time_in_words(Date.today, campaign.ends_on))
           - else
-            %span.warn= "(was supposed to end on #{campaign.starts_on.strftime('%b %e, %Y')})"
+            %span.warn= "(" + t(:campaign_was_supposed_to_finish, campaign.starts_on.strftime('%b %e, %Y')) + ")"
       - else
-        %span.warn> no start date specified
+        %span.warn> #{t:campaign_no_start_date}
     - when :planned
       - if campaign.starts_on
         - if campaign.starts_on > Date.today
-          = "starts in " << distance_of_time_in_words(Date.today, campaign.starts_on)
+          = t(:campaign_starts_in, distance_of_time_in_words(Date.today, campaign.starts_on))
         - elsif campaign.starts_on < Date.today
-          %span.warn= "(was supposed to start " << distance_of_time_in_words(campaign.starts_on, Date.today) << " ago on #{campaign.starts_on.strftime('%b %e, %Y')})"
+          %span.warn= t(:campaign_was_supposed_to_start, :time_ago => distance_of_time_in_words(campaign.starts_on, Date.today), :start_date => campaign.starts_on.strftime('%b %e, %Y'))
         - else
-          %span.cool starts today!
+          %span.cool #{t:campaign_starts_today}
       - else
-        %span.warn no start date specified
+        %span.warn> #{t:campaign_no_start_date}
     - when :completed
-      = "completed on #{campaign.ends_on.strftime('%b %e, %Y')}" if campaign.ends_on
+      = t(:campaign_finished_on, campaign.ends_on.strftime('%b %e, %Y')) if campaign.ends_on

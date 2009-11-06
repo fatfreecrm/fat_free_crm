@@ -91,6 +91,50 @@ en-US:
   campaign: Campaign
   campaign_small: campaign
   create_campaign_link: Create campaign
+  create_campaign_button: Create Campaign
+  save_campaign_button: Save Campaign
+  campaign_name: Name
+  start_date: Start date
+  end_date: End date
+  objectives: Objectives
+  campaign_objectives_small: campaign objectives
+  campaign_objectives_txt: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
+  campaign_leads_label: Number of leads
+  campaign_conversion_label: Conversion (%)
+  campaign_revenue_label: Revenue ($)
+  campaign_budget_label: Budget ($)
+  campaign_permissions_small: campaign and its leads
+  campaign_started_ago: started {{value}} ago
+  campaign_finishes_in: finishes in {{value}}
+  campaign_finished_on: completed on {{value}}
+  campaign_was_supposed_to_finish: was supposed to finish on {{value}}
+  campaign_no_start_date: no start date specified
+  campaign_starts_in: starts in {{value}}
+  campaign_starts_today: starts today!
+  campaign_was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
+  campaign_target: Target
+  campaign_actual: Actual
+  campaign_revenue_small: "{{value}} in revenue"
+  campaign_conversion_small: "{{value}} conversion" 
+  campaign_status_called_off: Called Off
+  campaign_status_completed: Completed
+  campaign_status_on_hold: On Hold
+  campaign_status_planned: Planned
+  campaign_status_started: Started
+  campaign_checkbox_called_off: Called Off
+  campaign_checkbox_completed: Completed
+  campaign_checkbox_on_hold: On Hold
+  campaign_checkbox_planned: Planned
+  campaign_checkbox_started: Started
+  campaigns_total: Total Campaigns
+  campaign_summary: Campaign Summary
+  campaign_targets: Campaign Targets
+  campaign_performance: Actual Performance
+  campaign_leads: Leads
+  campaign_conversion: Conversion
+  campaign_revenue: Revenue
+  campaign_budget: Budget
+  campaigns_options: Campaigns Options
     
   # views/contacts
   #----------------------------------------------------------------------------
@@ -108,7 +152,7 @@ en-US:
   department_small: '{{value}} department'
   other: Other
   myself: Myself
-  permissions_intro: By default only you will have access to the {{value}}. You can change {{value}} permissions later.
+  permissions_intro: By default only you will have access to the {{value}}. You can change permissions later.
   extra_info: Extra Information
   extra_info_small: extra contact
   address: Address
@@ -197,8 +241,8 @@ en-US:
   n_a: N/A
   cancel: Cancel
   close_form: Close form
-  yes_button: Yes
-  no_button: No
+  yes_button: 'Yes'
+  no_button: 'No'
   confirm_delete: Are you sure you want to delete this {{value}}?
   no_match: 'No {{value}} match'
   search_assets: Search {{value}}
@@ -263,6 +307,9 @@ en-US:
     opportunity:
       one: '1 opportunity'
       other: '{{count}} opportunities'
+    lead:
+      one: '1 lead'
+      other: '{{count}} leads'
   
   # views/home:
   #----------------------------------------------------------------------------

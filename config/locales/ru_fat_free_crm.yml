@@ -91,11 +91,51 @@ ru:
   campaigns_small: кампании
   campaign: Кампания
   campaign_small: кампании
-  create_campaign_link: @ru@Create campaign
-  create_campaign_button: @ru@Create Campaign
+  create_campaign_link: Добавить кампанию
+  create_campaign_button: Создать Кампанию
+  save_campaign_button: Сохранить Изменения
   campaign_name: Название кампании
   start_date: Дата начала
   end_date: Дата окончания
+  objectives: Цели
+  campaign_objectives_small: целях кампании
+  campaign_objectives_txt: @ru@Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
+  campaign_leads_label: Число наводок
+  campaign_conversion_label: Конверсия (%)
+  campaign_revenue_label: Доход (руб.)
+  campaign_budget_label: Бюджет (руб.)
+  campaign_permissions_small: кампании и ее наводк
+  campaign_started_ago: начата {{value}} назад
+  campaign_finishes_in: заканчивается через {{value}}
+  campaign_finished_on: закончилась {{value}}
+  campaign_was_supposed_to_finish: должна была закончиться {{value}}
+  campaign_no_start_date: дата начала не указана
+  campaign_starts_in: начинается через {{value}}
+  campaign_starts_today: начинается сегодня!
+  campaign_was_supposed_to_start: должна была начаться {{time_ago}} назад {{start_date}}
+  campaign_target: Цель
+  campaign_actual: Фактически
+  campaign_revenue_small: "{{value}} дохода"
+  campaign_conversion_small: конверсия {{value}}
+  campaign_status_called_off: Прекращена
+  campaign_status_completed: Завершена
+  campaign_status_on_hold: Остановлена
+  campaign_status_planned: В плане
+  campaign_status_started: Начата
+  campaign_checkbox_called_off: Прекращены
+  campaign_checkbox_completed: Завершены
+  campaign_checkbox_on_hold: Остановлены
+  campaign_checkbox_planned: Запланированы
+  campaign_checkbox_started: Начаты
+  campaigns_total: Всего кампаний
+  campaign_summary: Итоги по Кампании
+  campaign_targets: Цели Кампании
+  campaign_performance: Фактический Результат
+  campaign_leads: Наводок
+  campaign_conversion: Конверсия
+  campaign_revenue: Доход
+  campaign_budget: Бюджет
+  campaigns_options: @ru@Campaigns Options
     
   # views/contacts
   #----------------------------------------------------------------------------
@@ -113,13 +153,13 @@ ru:
   department_small: Отдел {{value}} 
   other: Доп. e-mail
   myself: Мне
-  permissions_intro: При создании только Вы получаете доступ к {{value}}у. Права доступа можно изменить в любое время.
+  permissions_intro: При создании только Вы получаете доступ к {{value}}ам. Права доступа можно изменить в любое время.
   extra_info: Дополнительные данные
   extra_info_small: @ru@extra contact
   address: Адрес
   do_not_call: Не звонить
   web_presence: Профили в Сети
-  web_presence_small: профили
+  web_presence_small: профилях
   blog: Блог/Интернет-страница
   twitter: Twitter
   linked_in: LinkedIn
@@ -255,7 +295,7 @@ ru:
   opportunity: Пeрспектива
   opportunity_small: пeрспектива
   create_opportunity_link: Создать пeрспективу
-  category_other: @ru@Other
+  category_other: Другие
   stage: Стадия
   close_date: Дата завершения
   probability: Вероятность (%)
@@ -270,11 +310,17 @@ ru:
       many: '{{count}} контактов'
       other: '{{count}} контакта'
     opportunity:
-      zero: '0 возможностей'
-      one: '1 возможность'
-      few: '{{count}} возможности'
-      many: '{{count}} возможностей'
-      other: '{{count}} возможностей'
+      zero: '0 перспектив'
+      one: '1 перспектива'
+      few: '{{count}} перспективы'
+      many: '{{count}} перспектив'
+      other: '{{count}} перспектив'
+    lead:
+      zero: '0 наводок'
+      one: '1 наводка'
+      few: '{{count}} наводки'
+      many: '{{count}} наводок'
+      other: '{{count}} наводок'
 
   # views/home:
   #----------------------------------------------------------------------------
