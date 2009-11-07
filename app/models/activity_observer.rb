@@ -76,7 +76,7 @@ class ActivityObserver < ActiveRecord::Observer
   end
 
   def update_campaign_revenue(campaign, revenue)
-    campaign.update_attribute(:revenue, campaign.revenue + revenue) if campaign
+    campaign.update_attribute(:revenue, (campaign.revenue || 0) + revenue) if campaign
   end
 
 end

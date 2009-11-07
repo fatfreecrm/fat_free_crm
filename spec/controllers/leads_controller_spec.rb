@@ -733,6 +733,24 @@ describe LeadsController do
       assigns[:opportunity].source.should == @lead.source
     end
 
+    it "should get the data for leads sidebar when called from leads index" do
+      @lead = Factory(:lead)
+      request.env["HTTP_REFERER"] = "http://localhost/leads"
+
+      xhr :put, :promote, :id => @lead.id, :account => { :name => "Hello" }, :opportunity => {}
+      assigns[:lead_status_total].should_not be_nil
+      assigns[:lead_status_total].should be_an_instance_of(Hash)
+    end
+
+    it "should reload lead campaign if called from campaign landing page" do
+      @campaign = Factory(:campaign)
+      @lead = Factory(:lead, :campaign => @campaign)
+      request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+
+      xhr :put, :promote, :id => @lead.id, :account => { :name => "Hello" }, :opportunity => {}
+      assigns[:campaign].should == @campaign
+    end
+
     it "on failure: should not change lead's status and still render [promote] template" do
       @lead = Factory(:lead, :id => 42, :user => @current_user, :status => "new")
       @users = [ Factory(:user) ]
@@ -809,6 +827,22 @@ describe LeadsController do
         assigns[:lead].should == @lead.reload
         @lead.status.should == "rejected"
         response.should render_template("leads/reject")
+      end
+
+      it "should get the data for leads sidebar when called from leads index" do
+        request.env["HTTP_REFERER"] = "http://localhost/leads"
+        xhr :put, :reject, :id => @lead.id
+        assigns[:lead_status_total].should_not be_nil
+        assigns[:lead_status_total].should be_an_instance_of(Hash)
+      end
+
+      it "should reload lead campaign if called from campaign landing page" do
+        @campaign = Factory(:campaign)
+        @lead = Factory(:lead, :campaign => @campaign)
+      
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+        xhr :put, :reject, :id => @lead.id
+        assigns[:campaign].should == @campaign
       end
 
       describe "lead got deleted or otherwise unavailable" do

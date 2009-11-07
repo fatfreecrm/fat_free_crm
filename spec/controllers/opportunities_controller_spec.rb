@@ -303,9 +303,9 @@ describe OpportunitiesController do
       end
 
       it "should associate opportunity with the campaign when called from campaign landing page" do
-        @campaign = Factory(:campaign, :id => 42)
+        @campaign = Factory(:campaign)
 
-        request.env["HTTP_REFERER"] = "http://localhost/campaign/#{@campaign.id}"
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => {}, :users => []
         assigns(:opportunity).should == @opportunity
         assigns(:campaign).should == @campaign
@@ -315,7 +315,7 @@ describe OpportunitiesController do
       it "should associate opportunity with the contact when called from contact landing page" do
         @contact = Factory(:contact, :id => 42)
 
-        request.env["HTTP_REFERER"] = "http://localhost/contact/42"
+        request.env["HTTP_REFERER"] = "http://localhost/contacts/42"
         xhr :post, :create, :opportunity => { :name => "Hello" }, :contact => 42, :account => {}, :users => []
         assigns(:opportunity).should == @opportunity
         @opportunity.contacts.should include(@contact)
@@ -387,7 +387,7 @@ describe OpportunitiesController do
       it "should preserve the campaign when called from campaign landing page" do
         @campaign = Factory(:campaign, :id => 42)
 
-        request.env["HTTP_REFERER"] = "http://localhost/campaign/42"
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/42"
         xhr :post, :create, :opportunity => { :name => nil }, :campaign => 42, :account => {}, :users => []
         assigns(:campaign).should == @campaign
         response.should render_template("opportunities/create")
@@ -396,7 +396,7 @@ describe OpportunitiesController do
       it "should preserve the contact when called from contact landing page" do
         @contact = Factory(:contact, :id => 42)
 
-        request.env["HTTP_REFERER"] = "http://localhost/contact/42"
+        request.env["HTTP_REFERER"] = "http://localhost/contacts/42"
         xhr :post, :create, :opportunity => { :name => nil }, :contact => 42, :account => {}, :users => []
         assigns(:contact).should == @contact
         response.should render_template("opportunities/create")

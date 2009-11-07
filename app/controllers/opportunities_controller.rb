@@ -101,8 +101,8 @@ class OpportunitiesController < ApplicationController
         if called_from_index_page?
           @opportunities = get_opportunities
           get_data_for_sidebar
-        elsif @opportunity.campaign
-          @campaign = @opportunity.campaign.reload # Reload the campaign to refresh its summary.
+        else
+          get_data_for_sidebar(:campaign)
         end
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
@@ -137,7 +137,7 @@ class OpportunitiesController < ApplicationController
         if called_from_index_page?
           get_data_for_sidebar
         else
-          @campaign = @opportunity.campaign if called_from_landing_page?("campaigns")
+          get_data_for_sidebar(:campaign)
         end
         format.js
         format.xml  { head :ok }
@@ -270,14 +270,18 @@ class OpportunitiesController < ApplicationController
   end
 
   #----------------------------------------------------------------------------
-  def get_data_for_sidebar
-    load_settings
-    @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
-    @stage.keys.each do |key|
-      @opportunity_stage_total[key] = Opportunity.my(@current_user).count(:conditions => [ "stage=?", key.to_s ])
-      @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
+  def get_data_for_sidebar(related = false)
+    if related
+      instance_variable_set("@#{related}", @opportunity.send(related)) if called_from_landing_page?(related.to_s.pluralize)
+    else
+      load_settings
+      @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
+      @stage.keys.each do |key|
+        @opportunity_stage_total[key] = Opportunity.my(@current_user).count(:conditions => [ "stage=?", key.to_s ])
+        @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
+      end
+      @opportunity_stage_total[:other] += @opportunity_stage_total[:all]
     end
-    @opportunity_stage_total[:other] += @opportunity_stage_total[:all]
   end
 
   #----------------------------------------------------------------------------
