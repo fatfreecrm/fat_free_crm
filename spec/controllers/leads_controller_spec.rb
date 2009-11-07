@@ -688,6 +688,7 @@ describe LeadsController do
       assigns[:accounts].should == [ @account ]
       assigns[:opportunity].should == @opportunity
       assigns[:contact].should == @contact
+      assigns[:stage].should be_instance_of(Hash)
       response.should render_template("leads/promote")
     end
 

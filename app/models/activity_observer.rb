@@ -24,7 +24,7 @@ class ActivityObserver < ActiveRecord::Observer
   def after_create(subject)
     log_activity(subject, :created)
     if subject.is_a?(Opportunity) && subject.campaign && subject.stage == "won"
-      update_campaign_revenue(subject.campaign, subject.amount - subject.discount)
+      update_campaign_revenue(subject.campaign, (subject.amount || 0) - (subject.discount || 0))
     end
   end
 

@@ -8,7 +8,8 @@ Fri, Nov 6, 2009
 ---------------------------------------------------------------------
 - Adjust total campaign revenue when related opportunity is won (LH #121).
 - Refresh campaign sidebar when updating related opportunity (LH #121).
-- Update campaign summary when rejecting or converting related lead (LH #121).
+- Refresh campaign sidebar when rejecting or converting related lead (LH #121).
+- Display newly created opportunity when converting lead from campaign page (LH #121).
 
 Thu, Nov 5, 2009
 ---------------------------------------------------------------------
