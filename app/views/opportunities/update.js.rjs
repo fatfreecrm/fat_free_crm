@@ -10,6 +10,8 @@ if @opportunity.errors.empty?
     page[id].visual_effect :highlight, :duration => 1.0
     if called_from_index_page?
       page << refresh_sidebar(:index, :filters)
+    elsif @campaign # Opportunity updated on Campaign landing page: refresh Campaign summary.
+      page << refresh_sidebar_for(:campaigns, :show, :summary)
     else
       page[:recently].replace :partial => "common/recently"
     end

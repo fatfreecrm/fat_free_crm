@@ -117,11 +117,14 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @lead = Lead.my(@current_user).find(params[:id])
-    @campaign = @lead.campaign.dup if @lead.campaign && !called_from_index_page?
 
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
-        get_data_for_sidebar if called_from_index_page?
+        if called_from_index_page?
+          get_data_for_sidebar 
+        else
+          @campaign = @lead.campaign if called_from_landing_page?("campaigns")
+        end
         format.js
         format.xml  { head :ok }
       else

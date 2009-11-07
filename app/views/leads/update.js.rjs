@@ -11,7 +11,6 @@ if @lead.errors.empty?
     if called_from_index_page?
       page << refresh_sidebar(:index, :filters)
     elsif @campaign # Lead updated on Campaign landing page: refresh Campaign summary.
-      @campaign.reload
       page << refresh_sidebar_for(:campaigns, :show, :summary)
     else
       page[:recently].replace :partial => "common/recently"

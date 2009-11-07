@@ -464,6 +464,15 @@ describe OpportunitiesController do
         assigns[:opportunity].should == @opportunity
       end
 
+      it "should reload opportunity campaign if called from campaign landing page" do
+        @campaign = Factory(:campaign)
+        @opportunity = Factory(:opportunity, :campaign => @campaign)
+      
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+        xhr :put, :update, :id => @opportunity.id, :opportunity => { :name => "Hello" }, :account => {}
+        assigns[:campaign].should == @campaign
+      end
+
       describe "updating campaign revenue (same campaign)" do
         it "should add to actual revenue when opportunity is closed/won" do
           @campaign = Factory(:campaign, :revenue => 1000)

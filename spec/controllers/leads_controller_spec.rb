@@ -443,7 +443,7 @@ describe LeadsController do
         @lead = Factory(:lead, :campaign => @campaign)
       
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
-        xhr :put, :update, :id => @lead, :lead => { :first_name => "Hello" }
+        xhr :put, :update, :id => @lead.id, :lead => { :first_name => "Hello" }
         assigns[:campaign].should == @campaign
       end
 

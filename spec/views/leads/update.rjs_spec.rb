@@ -68,7 +68,7 @@ describe "/leads/update.js.rjs" do
         response.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
-      it "should update related asset sidebar from related asset" do
+      it "should update related campaign sidebar from campaign landing page" do
         assigns[:campaign] = campaign = Factory(:campaign)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
         render "leads/create.js.rjs"

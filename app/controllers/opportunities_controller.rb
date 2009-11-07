@@ -134,7 +134,11 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       if @opportunity.update_with_account_and_permissions(params)
-        get_data_for_sidebar if called_from_index_page?
+        if called_from_index_page?
+          get_data_for_sidebar
+        else
+          @campaign = @opportunity.campaign if called_from_landing_page?("campaigns")
+        end
         format.js
         format.xml  { head :ok }
       else
