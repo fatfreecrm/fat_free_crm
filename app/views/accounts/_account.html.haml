@@ -12,12 +12,11 @@
     = link_to(account.name, account) << " &ndash; "
     %tt
       = account.location << ", " unless account.location.blank?
-      #{t:added} #{time_ago_in_words(account.created_at)} #{t:ago} #{t:by} 
-      == #{account.user.id == @current_user.id ? t(:me) : account.user.full_name}
+      = t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => (account.user.id == @current_user.id ? t(:me) : account.user.full_name))
     - unless @current_user.preference[:accounts_outline] == "brief"
       %dt
         = link_to(account.website, account.website.to_url) << " | " if account.website?
         = t(:phone_small) << ": " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
-        = t('inline.contact', account.contacts.count) << " | "
-        = t('inline.opportunity', account.opportunities.count)
+        = t('pluralize.contact', account.contacts.count) << " | "
+        = t('pluralize.opportunity', account.opportunities.count)
       = hook(:account_bottom, self, :account => account)

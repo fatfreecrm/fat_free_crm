@@ -5,7 +5,7 @@ describe "/opportunities/create.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:stage] = {}
+    assigns[:stage] = Setting.as_hash(:opportunity_stage)
   end
 
   describe "create success" do

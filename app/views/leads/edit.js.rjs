@@ -29,7 +29,7 @@ else # <----------------------------------------  Show [Edit Campaign] form.
       page.call "crm.hide_form", :convert_lead
     end
     page.call "crm.flip_form", :edit_lead
-    page.call "crm.set_title", :edit_lead, "Edit #{@lead.full_name}"
+    page.call "crm.set_title", :edit_lead, "#{t:edit} #{@lead.full_name}"
   end
   page[:lead_first_name].focus
 

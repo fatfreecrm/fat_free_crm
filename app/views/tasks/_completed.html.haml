@@ -8,7 +8,7 @@
       %small=  link_to_task_delete(completed, bucket) if @current_user == completed.user
     %strike= completed.name
     - if completed.asset_id?
-      == (re: #{link_to(completed.asset.name, polymorphic_url(completed.asset))})
+      == #{t:related} #{link_to(completed.asset.name, polymorphic_url(completed.asset))}
     &ndash;
     %tt
       %span.cool

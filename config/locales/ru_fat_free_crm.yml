@@ -68,16 +68,17 @@ ru:
   create_account_button: Создать Контрагента
   create_account_link: Создать контрагента
   save_account_button: Сохранить Контрагента
+  accounts_options: Опции для Контрагентов
   account_name: Название Контрагента
   assigned_to: Поручен
   website: Интернет-страница
   phone_toll_free: 'Номер 8-800'
   fax: Факс
-  billing_address: Адрес
+  billing_address: Адрес плательщика
   shipping_address: Адрес получателя
   same_as_billing_link: тот же
   permissions: Права Доступа
-  private_txt: Никому не показывать
+  private_txt: Не показывать никому
   public_txt: Показывать всем
   shared_txt: Показывать перечисленным людям
   date_created: Дате создания
@@ -135,7 +136,7 @@ ru:
   campaign_conversion: Конверсия
   campaign_revenue: Доход
   campaign_budget: Бюджет
-  campaigns_options: @ru@Campaigns Options
+  campaigns_options: Опции для Кампаний
     
   # views/contacts
   #----------------------------------------------------------------------------
@@ -146,6 +147,7 @@ ru:
   create_contact_link: Создать контакт
   create_contact_button: Создать Контакт
   save_contact_button: Сохранить Контакт
+  contacts_options: Опции для Контактов
   referred_by: По рекомендации
   referred_by_small: по рекомендации
   at: в
@@ -171,8 +173,9 @@ ru:
   pending: На&nbsp;очереди
   assigned: Порученные
   completed: Выполненные
-  completed_tasks: @ru@Completed Tasks
-  assigned_tasks: @ru@Assigned Tasks
+  completed_tasks: Выполненные Задания
+  assigned_tasks: Порученные Задания
+  pending_tasks: Задания На Очереди
   create_task_link: Добавить задание
   create_task_button: Создать Задание
   create_task_small: добавить новое задание
@@ -192,11 +195,25 @@ ru:
   move_to: перенести на
   no_tasks: "You don't have any {{value}} tasks"
   feel_free: Можете
-  related: 're:'
+  related: 'см.'
   task_assigned: Это задание поручено {{value}}
   task_pending: Это задание поставлено в очередь на выполнение
+  task_created: Задание добавлено
+  task_assigned_to: и поручено {{value}}
   view_assigned_tasks: показать порученные задания
   view_pending_tasks: показать задания на очереди
+  total_tasks: "{{value}}, всего:"
+  tasks_due_overdue: Задержка
+  tasks_due_as_soon_as_possible: Как можно скорее
+  tasks_due_today: Сегодня
+  tasks_due_tomorrow: Завтра
+  tasks_due_this_week: На этой неделе
+  tasks_due_next_week: На следующей неделе
+  tasks_due_sometime_later: Позже
+  tasks_due_yesterday: Вчера
+  tasks_due_last_week: На прошлой неделе
+  tasks_due_this_month: В этом месяце
+  tasks_due_last_month: В прошлом месяце
  
   # views/leads
   #----------------------------------------------------------------------------
@@ -207,13 +224,14 @@ ru:
   create_lead_link: Создать наводку
   create_lead_button: Создать Наводку
   save_lead_button: Сохранить Наводку
-  convert: @ru@Convert
-  reject: @ru@Reject
+  leads_options: Опции для Наводок
+  convert: Продвинуть
+  reject: Закрыть
   status: Статус
   source: Источник
   rating: Оценка
   contacted: В работе
-  converted: @ru@Converted
+  converted: Продвинут
   rejected: Закрыт
   new: Новый
   lead_info_small: @ru@lead contact
@@ -234,7 +252,8 @@ ru:
   added: добавлен
   ago: назад
   by: ' '
-  me: мной
+  me: я
+  added_by: "{{user}} добавил(а) {{time_ago}} назад"
   permissions: Права Доступа
   copy_permissions: @ru@Copy {{value}} permissions
   or: или
@@ -295,12 +314,41 @@ ru:
   opportunity: Пeрспектива
   opportunity_small: пeрспектива
   create_opportunity_link: Создать пeрспективу
+  create_opportunity_button: Создать Пeрспективу
+  save_opportunity_button: Сохранить Пeрспективу
   category_other: Другие
   stage: Стадия
   close_date: Дата завершения
-  probability: Вероятность (%)
-  amount: Сумма (руб.)
-  discount: Скидка (руб.)
+  days_left: Осталось дней
+  days_late: "задержка {{value}}"
+  day: день
+  probability: Вероятность
+  amount: Сумма
+  discount: Скидка
+  weighted_amount: Взвешенная сумма
+  currency: (руб.)
+  opportunity_stage_prospecting: Изучение
+  opportunity_stage_analysis: Анализ
+  opportunity_stage_presentation: Презентация
+  opportunity_stage_proposal: Предложение
+  opportunity_stage_negotiation: Переговоры
+  opportunity_stage_final_review: Утверждение
+  opportunity_stage_closed/won: Выиграли
+  opportunity_stage_closed/lost: Проиграли
+  from: из
+  opportunity_summary: Перспектива
+  opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
+  opportunity_discount_text: со скидкой {{value}}
+  opportunity_no_discount_text: без скидки
+  opportunity_probability_text: и вероятностью {{count}}
+  opportunity_closing_date_text: дата завершения {{value}}
+  opportunity_closed_text: завершилось {{time_ago}} назад {{date}}
+  opportunity_expected_to_close_text: завершение ожидается через {{time}} - {{date}}
+  opportunity_close_today_text: завершение ожидается сегодня!
+  opportunity_past_due_text: просрочено, должно было завершено {{value}} назад
+  opportunity_no_closing_date: дата завершения не указана
+  total_opportunities: Всего перспектив
+  opportunities_options: Опции для перспектив
 
   pluralize:
     contact:

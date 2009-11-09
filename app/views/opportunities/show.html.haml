@@ -2,8 +2,8 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to_inline(:edit_opportunity, edit_opportunity_path(@opportunity), :text => "Edit") + " | "
-  = link_to_function("Delete?", confirm_delete(@opportunity))
+  = link_to_inline(:edit_opportunity, edit_opportunity_path(@opportunity), :text => t(:edit)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@opportunity))
 .title#edit_opportunity_title= @opportunity.name
 
 %div#edit_opportunity{ hidden }
@@ -13,16 +13,16 @@
 
 -#-----------------------------------------------------------------------------
 %br
-= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@opportunity) }
-.subtitle#create_task_title Tasks
+= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@opportunity), :text => t(:create_task_link) }
+.subtitle#create_task_title #{t:tasks}
 .remote#create_task{ hidden }
 .log#tasks
   = render :partial => "common/tasks"
 
 -#-----------------------------------------------------------------------------
 %br
-= inline :create_contact, new_contact_path, { :class => "subtitle_tools", :related => dom_id(@opportunity) }
-.subtitle#create_contact_title Contacts
+= inline :create_contact, new_contact_path, { :class => "subtitle_tools", :related => dom_id(@opportunity), :text => t(:create_contact_link) }
+.subtitle#create_contact_title #{t:contacts}
 .remote#create_contact{ hidden }
 .list#contacts
   = render :partial => "contacts/contact", :collection => @opportunity.contacts

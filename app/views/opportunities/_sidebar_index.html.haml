@@ -4,14 +4,14 @@
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @opportunity_stage_total[key]
-      = opportunity_stage_checbox(key, @opportunity_stage_total[key]) << " " << value
+      = opportunity_stage_checbox(key, @opportunity_stage_total[key]) << " " << t('opportunity_stage_' << value.downcase.gsub(" ", "_"))
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}
       = @opportunity_stage_total[:other]
-    = opportunity_stage_checbox("other", @opportunity_stage_total[:other]) << " Other"
+    = opportunity_stage_checbox("other", @opportunity_stage_total[:other]) << " " << t(:category_other)
 
   .check_box
     %div{:style => "float:right;"}
       %b= @opportunity_stage_total[:all]
-    %b Total Opportunities
+    %b #{t:total_opportunities}

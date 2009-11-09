@@ -24,6 +24,6 @@
     = render :partial => "leads/convert_permissions"
     .buttonbar
       = f.submit t(:convert_lead_button)
-      or
+      #{t:or}
       = link_to_cancel convert_lead_path(@lead)
   

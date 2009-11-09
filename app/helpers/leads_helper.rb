@@ -45,7 +45,7 @@ module LeadsHelper
 
   #----------------------------------------------------------------------------
   def confirm_reject(lead)
-    question = %(<span class="warn">#{t:reject_lead_confirm}</span>)
+    question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>)
     yes = link_to(t(:yes_button), reject_lead_path(lead), :method => :put)
     no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
     update_page do |page|

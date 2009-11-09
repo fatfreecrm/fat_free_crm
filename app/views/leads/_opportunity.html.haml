@@ -25,13 +25,13 @@
           = o.text_field :closes_on, :style => "width:110px;", :autocomplete => :off
         %td= spacer
         %td{ :valign => :top }
-          .label #{t:probability}:
+          .label #{t:probability} (%):
           = o.text_field :probability, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label #{t:amount}:
+          .label #{t:amount} #{t:currency}:
           = o.text_field :amount, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label #{t:discount}:
+          .label #{t:discount} #{t:currency}:
           = o.text_field :discount, :style => "width:110px; text-align:right;"

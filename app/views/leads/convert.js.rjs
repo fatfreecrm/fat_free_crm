@@ -27,7 +27,7 @@ else # <----------------------------------------  Show [Convert Lead] form.
     page[:convert_lead].replace_html :partial => "convert"
     page.call "crm.hide_form", :edit_lead
     page.call "crm.flip_form", :convert_lead
-    page.call "crm.set_title", :convert_lead, "Convert #{@lead.full_name}"
+    page.call "crm.set_title", :convert_lead, "#{t:convert} #{@lead.full_name}"
   end
 
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
