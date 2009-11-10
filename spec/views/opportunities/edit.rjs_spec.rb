@@ -10,7 +10,7 @@ describe "/opportunities/edit.js.rjs" do
     assigns[:users] = [ @current_user ]
     assigns[:account] = @account = Factory(:account)
     assigns[:accounts] = [ @account ]
-    assigns[:stage] = {}
+    assigns[:stage] = Setting.as_hash(:opportunity_stage)
   end
 
   it "cancel from opportunity index page: should replace [Edit Opportunity] form with opportunity partial" do

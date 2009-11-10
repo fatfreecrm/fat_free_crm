@@ -1,31 +1,30 @@
 - edit ||= false
 - collapsed = session[:campaign_objectives].nil? # && @campaign.errors.empty?
-= subtitle :campaign_objectives, collapsed
+= subtitle :campaign_objectives, collapsed, t(:objectives)
 .section
   %small#campaign_objectives_intro{ hidden_if(!collapsed) }
-    = "You can add campaign objectives later." unless edit
+    = t(:intro, t(:campaign_objectives_small)) unless edit
   #campaign_objectives{ hidden_if(collapsed) }
     %small
-      Please specify target number of leads, expected leads-to-opportunities conversion ratio, target 
-      revenue, and campaign budget. These numbers will let you track actual campaign performance.
+      #{t:campaign_objectives_txt}
     %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label Number of leads:
+          .label #{t:campaign_leads_label}:
           = f.text_field :target_leads, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label Conversion (%):
+          .label #{t:campaign_conversion_label}:
           = f.text_field :target_conversion, :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label Revenue ($):
+          .label #{t:campaign_revenue_label}:
           = f.text_field :target_revenue, :value => @campaign.target_revenue ? @campaign.target_revenue.to_i : "", :style => "width:110px; text-align:right;"
         %td= spacer
         %td{ :valign => :top }
-          .label Budget ($):
+          .label #{t:campaign_budget_label}:
           = f.text_field :budget, :value => @campaign.budget ? @campaign.budget.to_i : "", :style => "width:110px; text-align:right;"
       %tr
         %td{ :colspan => 7, :valign => :top }
-          .label Objectives:
+          .label #{t:objectives}:
           = f.text_area :objectives, :style => "width:500px", :rows => 2

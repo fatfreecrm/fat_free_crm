@@ -26,7 +26,7 @@ else # <----------------------------------------- Show requested [Edit Opportuni
   elsif params[:cancel] == "false"                # Called from title of the opportunity landing page...
     page[:edit_opportunity].replace_html :partial => "edit"
     page.call "crm.flip_form", :edit_opportunity
-    page.call "crm.set_title", :edit_opportunity, "Edit #{@opportunity.name}"
+    page.call "crm.set_title", :edit_opportunity, "#{t:edit} #{@opportunity.name}"
   end
 
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?

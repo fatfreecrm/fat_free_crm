@@ -67,6 +67,7 @@ en-US:
   create_account_button: Create Account
   create_account_link: Create account
   save_account_button: Save Account
+  accounts_options: Accounts Options
   account_name: Account name
   assigned_to: Assigned to
   website: Website
@@ -91,6 +92,50 @@ en-US:
   campaign: Campaign
   campaign_small: campaign
   create_campaign_link: Create campaign
+  create_campaign_button: Create Campaign
+  save_campaign_button: Save Campaign
+  campaign_name: Name
+  start_date: Start date
+  end_date: End date
+  objectives: Objectives
+  campaign_objectives_small: campaign objectives
+  campaign_objectives_txt: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
+  campaign_leads_label: Number of leads
+  campaign_conversion_label: Conversion (%)
+  campaign_revenue_label: Revenue ($)
+  campaign_budget_label: Budget ($)
+  campaign_permissions_small: campaign and its leads
+  campaign_started_ago: started {{value}} ago
+  campaign_finishes_in: finishes in {{value}}
+  campaign_finished_on: completed on {{value}}
+  campaign_was_supposed_to_finish: was supposed to finish on {{value}}
+  campaign_no_start_date: no start date specified
+  campaign_starts_in: starts in {{value}}
+  campaign_starts_today: starts today!
+  campaign_was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
+  campaign_target: Target
+  campaign_actual: Actual
+  campaign_revenue_small: "{{value}} in revenue"
+  campaign_conversion_small: "{{value}} conversion" 
+  campaign_status_called_off: Called Off
+  campaign_status_completed: Completed
+  campaign_status_on_hold: On Hold
+  campaign_status_planned: Planned
+  campaign_status_started: Started
+  campaign_checkbox_called_off: Called Off
+  campaign_checkbox_completed: Completed
+  campaign_checkbox_on_hold: On Hold
+  campaign_checkbox_planned: Planned
+  campaign_checkbox_started: Started
+  campaigns_total: Total Campaigns
+  campaign_summary: Campaign Summary
+  campaign_targets: Campaign Targets
+  campaign_performance: Actual Performance
+  campaign_leads: Leads
+  campaign_conversion: Conversion
+  campaign_revenue: Revenue
+  campaign_budget: Budget
+  campaigns_options: Campaigns Options
     
   # views/contacts
   #----------------------------------------------------------------------------
@@ -101,6 +146,7 @@ en-US:
   create_contact_link: Create contact
   create_contact_button: Create Contact
   save_contact_button: Save Contact
+  contacts_options: Contacts Options
   referred_by: Referred by
   referred_by_small: referred by
   at: at
@@ -108,7 +154,7 @@ en-US:
   department_small: '{{value}} department'
   other: Other
   myself: Myself
-  permissions_intro: By default only you will have access to the {{value}}. You can change {{value}} permissions later.
+  permissions_intro: By default only you will have access to the {{value}}. You can change permissions later.
   extra_info: Extra Information
   extra_info_small: extra contact
   address: Address
@@ -128,6 +174,7 @@ en-US:
   completed: Completed
   completed_tasks: Completed Tasks
   assigned_tasks: Assigned Tasks
+  pending_tasks: Pending Tasks
   create_task_link: Create task
   create_task_button: Create Task
   create_task_small: create a new task
@@ -147,11 +194,26 @@ en-US:
   move_to: move to
   no_tasks: "You don't have any {{value}} tasks"
   feel_free: Feel free to
+  related: 're:'
   category_other: Other
   task_assigned: The task has been assigned to {{value}}
   task_pending: The task has been moved to pending tasks
+  task_created: The task has been created
+  task_assigned_to: and assigned to {{value}}
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
+  total_tasks: Total {{value}}
+  tasks_due_overdue: Overdue
+  tasks_due_as_soon_as_possible: As Soon As Possible
+  tasks_due_today: Today
+  tasks_due_tomorrow: Tomorrow
+  tasks_due_this_week: This Week
+  tasks_due_next_week: Next Week
+  tasks_due_sometime_later: Sometime Later
+  tasks_due_yesterday: Yesterday
+  tasks_due_last_week: Last Week
+  tasks_due_this_month: This Month
+  tasks_due_last_month: Last Month
  
   # views/leads
   #----------------------------------------------------------------------------
@@ -162,6 +224,7 @@ en-US:
   create_lead_link: Create lead
   create_lead_button: Create Lead
   save_lead_button: Save Lead
+  leads_options: Leads Options
   convert: Convert
   reject: Reject
   status: Status
@@ -191,14 +254,15 @@ en-US:
   ago: ago
   by: by
   me: me
+  added_by: added {{time_ago}} ago by {{user}} 
   permissions: Permissions
   copy_permissions: Copy {{value}} permissions
   or: or
   n_a: N/A
   cancel: Cancel
   close_form: Close form
-  yes_button: Yes
-  no_button: No
+  yes_button: 'Yes'
+  no_button: 'No'
   confirm_delete: Are you sure you want to delete this {{value}}?
   no_match: 'No {{value}} match'
   search_assets: Search {{value}}
@@ -250,11 +314,40 @@ en-US:
   opportunity: Opportunity
   opportunity_small: opportunity
   create_opportunity_link: Create opportunity
+  create_opportunity_button: Create Opportunity
+  save_opportunity_button: Save Opportunity
   stage: Stage
   close_date: Close date
-  probability: Probability (%)
-  amount: Amount ($)
-  discount: Discount ($)
+  days_left: Days left
+  days_late: "{{value}} late"
+  day: день
+  probability: Probability
+  amount: Amount
+  discount: Discount
+  weighted_amount: Weighted amount
+  currency: ($)
+  opportunity_stage_prospecting: Prospecting
+  opportunity_stage_analysis: Analysis
+  opportunity_stage_presentation: Presentation
+  opportunity_stage_proposal: Proposal
+  opportunity_stage_negotiation: Negotiation
+  opportunity_stage_final_review: Final Review
+  opportunity_stage_closed/won: Closed/Won
+  opportunity_stage_closed/lost: Closed/Lost
+  from: from
+  opportunity_summary: Opportunity At a Glance
+  opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
+  opportunity_discount_text: with {{value}} discount
+  opportunity_no_discount_text: with no discount
+  opportunity_probability_text:  and {{count}} probability
+  opportunity_closing_date_text: closing date is {{value}}
+  opportunity_closed_text: closed {{time_ago}} ago on {{date}}
+  opportunity_expected_to_close_text: expected to close in {{time}} on {{date}}
+  opportunity_close_today_text: expected to close today!
+  opportunity_past_due_text: past due, was expected to close {{value}} ago
+  opportunity_no_closing_date: no expected closing date
+  total_opportunities: Total Opportunities
+  opportunities_options: Opportunities Options
 
   pluralize:
     contact: 
@@ -263,6 +356,9 @@ en-US:
     opportunity:
       one: '1 opportunity'
       other: '{{count}} opportunities'
+    lead:
+      one: '1 lead'
+      other: '{{count}} leads'
   
   # views/home:
   #----------------------------------------------------------------------------

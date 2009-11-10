@@ -1,19 +1,19 @@
 - edit ||= false
 - collapsed = session[:opportunity_permissions].nil? # && @opportunity.errors.empty?
-= subtitle :opportunity_permissions, collapsed
+= subtitle :opportunity_permissions, collapsed, t(:permissions)
 .section
   %small#opportunity_permissions_intro{ hidden_if(!collapsed) }
-    = "By default only you will have access to the opportunity. You can change opportunity permissions later." unless edit
+    = t(:permissions_intro, t(:opportunity_small))
   #opportunity_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide(); $('account_access').value = 'Private'"
-      Keep it private, do not share with others
+      #{t:private_txt}
     .radio_box
       = f.radio_button :access, "Public",  :onclick => "$('people').hide(); $('account_access').value = 'Public'"
-      Share it with everyone
+      #{t:public_txt}
     .radio_box
       = f.radio_button :access, "Shared",  :onclick => "$('people').show(); $('account_access').value = 'Shared'"
-      Share it with the following people
+      #{t:shared_txt}
     #people{ hidden_if(@opportunity.access != "Shared") }
       %div{ :style => "padding: 6px 0px 0px 20px" }
         - for user in @users

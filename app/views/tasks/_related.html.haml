@@ -16,7 +16,7 @@
     %tt
       - if related.completed_at
         %span.cool
-          == #{t:completed_small} #{distance_of_time_in_words(related.completed_at, Time.now} #{t:ago}
+          == #{t:completed_small} #{distance_of_time_in_words(related.completed_at, Time.now)} #{t:ago}
       - elsif related.bucket == "due_asap"
         %span.urgent 
         == #{t:due_now}.

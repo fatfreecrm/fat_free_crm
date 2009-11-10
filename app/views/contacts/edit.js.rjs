@@ -26,7 +26,7 @@ else # <----------------------------------------- Show [Edit Contact] form.
   elsif params[:cancel] == "false"                # Called from title of the contact landing page...
     page[:edit_contact].replace_html :partial => "edit"
     page.call "crm.flip_form", :edit_contact
-    page.call "crm.set_title", :edit_contact, "Edit #{@contact.full_name}"
+    page.call "crm.set_title", :edit_contact, "#{t:edit} #{@contact.full_name}"
   end
 
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?

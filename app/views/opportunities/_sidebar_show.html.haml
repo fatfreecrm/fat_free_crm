@@ -1,51 +1,51 @@
 - logger.i @opportunity
 .panel#summary
-  .caption Opportunity Summary
+  .caption #{t:opportunity_summary}
   %li
-    %dt= @opportunity.stage ? (@stage[@opportunity.stage.to_sym] || "N/A") : "Other"
-    %tt Stage:
+    %dt= @opportunity.stage ? (t('opportunity_stage_' << @stage[@opportunity.stage.to_sym].downcase.gsub(" ", "_")) || t(:n_a)) : t(:category_other)
+    %tt #{t:stage}:
   %li
-    %dt= @opportunity.closes_on ? @opportunity.closes_on.strftime("%b %e") : "N/A"
-    %tt Close date:
+    %dt= @opportunity.closes_on ? @opportunity.closes_on.strftime("%b %e") : t(:n_a)
+    %tt #{t:close_date}:
   - if @opportunity.closes_on && @opportunity.stage !~ /lost|won/
     %li
       - days_left = @opportunity.closes_on - Date.today
       - if days_left >= 0
         %dt= days_left
       - else
-        %dt.warn== #{pluralize(days_left * -1, "day")} late
-      %tt Days left:
+        %dt.warn= t(:days_late, pluralize(days_left * -1, t(:day))) 
+      %tt #{t:days_left}:
   %li
-    %dt= @opportunity.probability ? @opportunity.probability.to_s + "%" : "N/A"
-    %tt Probability:
+    %dt= @opportunity.probability ? @opportunity.probability.to_s + "%" : t(:n_a)
+    %tt #{t:probability}:
   %li
-    %dt= @opportunity.amount ? number_to_currency(@opportunity.amount || 0, :precision => 0) : "N/A"
-    %tt Amount:
+    %dt= @opportunity.amount ? number_to_currency(@opportunity.amount || 0, :precision => 0) : t(:n_a)
+    %tt #{t:amount}:
   %li
-    %dt= @opportunity.discount ? number_to_currency(@opportunity.discount || 0, :precision => 0) : "N/A"
+    %dt= @opportunity.discount ? number_to_currency(@opportunity.discount || 0, :precision => 0) : t(:n_a)
     - if @opportunity.amount && @opportunity.discount
       %tt== Discount (#{number_to_percentage(@opportunity.discount / @opportunity.amount * 100, :precision => 1)}):
     - else
-      %tt Discount:
+      %tt #{t:discount}:
   %li
-    %dt= @opportunity.amount ? number_to_currency(@opportunity.weighted_amount || 0, :precision => 0) : "N/A"
-    %tt Weighted amount:
+    %dt= @opportunity.amount ? number_to_currency(@opportunity.weighted_amount || 0, :precision => 0) : t(:n_a)
+    %tt #{t:weighted_amount}:
   %li
     %dt= truncate((@opportunity.assigned_to ? @opportunity.assignee.full_name : @opportunity.user.full_name), :length => 16)
-    %tt Assigned to:
+    %tt #{t:assigned_to}:
   %li
     %dt
       - if @opportunity.account
         = link_to(truncate(@opportunity.account.name, :length => 16), @opportunity.account, :title => @opportunity.account.name)
       - else
-        N/A
-    %tt Account:
+        #{t:n_a}
+    %tt #{t:account}:
   %li.last
     %dt
       - if @opportunity.campaign
         = link_to(truncate(@opportunity.campaign.name, :length => 16), @opportunity.campaign, :title => @opportunity.campaign.name)
       - else
-        N/A
-    %tt Campaign:
+        #{t:n_a}
+    %tt #{t:campaign}:
 
   = hook(:show_opportunity_sidebar_bottom, self, :opportunity => @opportunity)

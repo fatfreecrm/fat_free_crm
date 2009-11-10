@@ -2,29 +2,29 @@
   %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
     %tr
       %td{ :valign => :top }
-        .label.req.top Name:
+        .label.req.top #{t:name}:
         = f.text_field :name, :style => "width:325px"
       %td= spacer
       %td{ :valign => :top }
-        .label.req.top Stage:
+        .label.req.top #{t:stage}:
         = f.select :stage, Setting.opportunity_stage, { :selected => @opportunity.stage ? @opportunity.stage.to_sym : nil }, { :style => "width:160px" }
 
   %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
     %tr
       %td{ :valign => :top }
-        .label Close date:
+        .label #{t:close_date}:
         = f.text_field :closes_on, :value => f.object.closes_on ? f.object.closes_on.to_s(:mmddyyyy) : "", :style => "width:110px;", :autocomplete => :off
       %td= spacer
       %td{ :valign => :top }
-        .label Probability (%):
+        .label #{t:probability} (%):
         = f.text_field :probability, :style => "width:110px; text-align:right;"
       %td= spacer
       %td{ :valign => :top }
-        .label Amount ($):
+        .label #{t:amount} #{t:currency}:
         = f.text_field :amount, :style => "width:110px; text-align:right;"
       %td= spacer
       %td{ :valign => :top }
-        .label Discount ($):
+        .label #{t:discount} #{t:currency}:
         = f.text_field :discount, :style => "width:110px; text-align:right;"
 
   - fields_for(@account) do |a|
@@ -35,13 +35,13 @@
       %tr
         %td{ :valign => :top }
           .label
-            Account
+            #{t:account}
             %span#account_selector
           = collection_select :account, :id, @accounts, :id, :name, { :selected => @account.id || 0 }, { :style => "width:330px; display:none;" }
           = a.text_field :name, :style => "width:324px; display:none;"
         %td= spacer
         %td{ :valign => :top }
-          .label.req Assigned to:
-          = collection_select :opportunity, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+          .label.req #{t:assigned_to}:
+          = collection_select :opportunity, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
       = hook(:opportunity_top_section_bottom, self, :f => f)
 

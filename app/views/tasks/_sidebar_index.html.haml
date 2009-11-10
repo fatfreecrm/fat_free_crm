@@ -5,14 +5,14 @@
       .check_box{:style => "border-bottom: 1px silver dotted;"}
         %div{:style => "float:right;"}
           = @task_total[key]
-        = task_filter_checbox(@view, key, @task_total[key]) << " " << value
+        = task_filter_checbox(@view, key, @task_total[key]) << " " << t('tasks_due_' << value.downcase.gsub(" ", "_"))
   - else # @view == "completed"
     - Setting.task_completed.each do |value, key|
       .check_box{:style => "border-bottom: 1px silver dotted;"}
         %div{:style => "float:right;"}
           = @task_total[key]
-        = task_filter_checbox(@view, key, @task_total[key]) << " " << value
+        = task_filter_checbox(@view, key, @task_total[key]) << " " << t('tasks_due_' << value.downcase.gsub(" ", "_"))
   .check_box
     %div{:style => "float:right;"}
       %b= @task_total[:all]
-    %b== Total #{@view.capitalize} Tasks
+    %b== #{t(:total_tasks, t(@view + '_tasks'))}
