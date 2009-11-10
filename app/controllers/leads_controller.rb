@@ -100,8 +100,8 @@ class LeadsController < ApplicationController
         if called_from_index_page?
           @leads = get_leads
           get_data_for_sidebar
-        elsif @lead.campaign # Reload the campaign to refresh its summary.
-          @campaign = @lead.campaign.reload
+        else
+          get_data_for_sidebar(:campaign)
         end
         format.js   # create.js.rjs
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
@@ -117,11 +117,10 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @lead = Lead.my(@current_user).find(params[:id])
-    @campaign = @lead.campaign.dup if @lead.campaign && !called_from_index_page?
 
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
-        get_data_for_sidebar if called_from_index_page?
+        update_sidebar
         format.js
         format.xml  { head :ok }
       else
@@ -179,11 +178,12 @@ class LeadsController < ApplicationController
     @users = User.except(@current_user).all
     @account, @opportunity, @contact = @lead.promote(params)
     @accounts = Account.my(@current_user).all(:order => "name")
+    @stage = Setting.as_hash(:opportunity_stage)
 
     respond_to do |format|
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
         @lead.convert
-        get_data_for_sidebar if called_from_index_page?
+        update_sidebar
         format.js   # promote.js.rjs
         format.xml  { head :ok }
       else
@@ -202,7 +202,7 @@ class LeadsController < ApplicationController
   def reject
     @lead = Lead.my(@current_user).find(params[:id])
     @lead.reject if @lead
-    get_data_for_sidebar if called_from_index_page?
+    update_sidebar
 
     respond_to do |format|
       format.html { flash[:notice] = "#{@lead.full_name} has beed rejected."; redirect_to(leads_path) }
@@ -320,13 +320,26 @@ class LeadsController < ApplicationController
   end
 
   #----------------------------------------------------------------------------
-  def get_data_for_sidebar
-    @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }
-    Setting.lead_status.keys.each do |key|
-      @lead_status_total[key] = Lead.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
-      @lead_status_total[:other] -= @lead_status_total[key]
+  def get_data_for_sidebar(related = false)
+    if related
+      instance_variable_set("@#{related}", @lead.send(related)) if called_from_landing_page?(related.to_s.pluralize)
+    else
+      @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }
+      Setting.lead_status.keys.each do |key|
+        @lead_status_total[key] = Lead.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
+        @lead_status_total[:other] -= @lead_status_total[key]
+      end
+      @lead_status_total[:other] += @lead_status_total[:all]
     end
-    @lead_status_total[:other] += @lead_status_total[:all]
+  end
+
+  #----------------------------------------------------------------------------
+  def update_sidebar
+    if called_from_index_page?
+      get_data_for_sidebar
+    else
+      get_data_for_sidebar(:campaign)
+    end
   end
 
 end

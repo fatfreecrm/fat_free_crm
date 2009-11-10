@@ -8,7 +8,8 @@ if @opportunity.valid?
     page << refresh_sidebar(:index, :filters)
     page[:paginate].replace_html render(:partial => "common/paginate")
   
-  elsif @campaign # Opportunity created on Campaign landing page: refresh Campaign summary.
+  elsif called_from_landing_page?("campaigns") # Opportunity created on Campaign landing page: refresh Campaign summary.
+    @campaign.reload
     page << refresh_sidebar_for(:campaigns, :show, :summary)
   
   else # Opportunity created on Account or Contact landing page: refresh recent items list.  

@@ -37,4 +37,15 @@ describe "/leads/reject.js.rjs" do
     response.should include_text('$("summary").visualEffect("shake"')
   end
 
+  it "should update campaign sidebar if called from campaign landing page" do
+    assigns[:campaign] = campaign = Factory(:campaign)
+    request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+    render "leads/reject.js.rjs"
+
+    response.should have_rjs("sidebar") do |rjs|
+      with_tag("div[class=panel][id=summary]")
+      with_tag("div[class=panel][id=recently]")
+    end
+  end
+
 end

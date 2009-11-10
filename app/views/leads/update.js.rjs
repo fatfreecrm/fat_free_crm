@@ -10,8 +10,7 @@ if @lead.errors.empty?
     page[id].visual_effect :highlight, :duration => 1.0
     if called_from_index_page?
       page << refresh_sidebar(:index, :filters)
-    elsif @campaign # Lead updated on Campaign landing page: refresh Campaign summary.
-      @campaign.reload
+    elsif called_from_landing_page?("campaigns")
       page << refresh_sidebar_for(:campaigns, :show, :summary)
     else
       page[:recently].replace :partial => "common/recently"

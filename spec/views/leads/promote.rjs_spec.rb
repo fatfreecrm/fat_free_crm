@@ -63,9 +63,12 @@ describe "/leads/promote.js.rjs" do
       end
     end
 
-    describe "from related asset page -" do
+    describe "from related campaign page -" do
       before(:each) do
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+        assigns[:campaign] = Factory(:campaign)
+        assigns[:stage] = {}
+        assigns[:opportunity] = @opportunity = Factory(:opportunity)
       end
 
       it "should replace [Convert Lead] with lead partial and highligh it" do
@@ -76,12 +79,23 @@ describe "/leads/promote.js.rjs" do
         response.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
-      it "should update recently viewed items" do
+      it "should update campaign sidebar" do
         render "leads/promote.js.rjs"
-        response.should have_rjs("recently") do |rjs|
-          with_tag("div[class=caption]")
+
+        response.should have_rjs("sidebar") do |rjs|
+          with_tag("div[class=panel][id=summary]")
+          with_tag("div[class=panel][id=recently]")
         end
       end
+
+      it "should insert new opportunity if any" do
+        render "leads/promote.js.rjs"
+
+        response.should have_rjs(:insert, :top) do |rjs|
+          with_tag("li[id=opportunity_#{@opportunity.id}]")
+        end
+      end
+
     end
   end # no errors
   
