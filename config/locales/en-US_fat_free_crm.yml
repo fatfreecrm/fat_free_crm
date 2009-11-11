@@ -6,6 +6,50 @@ en-US:
   language: English
   not_implemented: Not implemented yet.
 
+  # settings
+  #----------------------------------------------------------------------------
+  tab_dashboard: Dashboard!
+  tab_tasks: Tasks!
+  tab_campaigns: Campaigns!
+  tab_leads: Leads!
+  tab_accounts: Accounts!
+  tab_contacts: Contacts!
+  tab_opportunities: Opportunities!
+
+  admin_tab_users: Users!
+  admin_tab_settings: Settings!
+  admin_tab_plugins: Plugins!
+
+  campaign_status_planned: Planned!
+  campaign_status_started: Started!
+  campaign_status_on_hold: On Hold!
+  campaign_status_completed: Completed!
+  campaign_status_called_off: Called Off!
+
+  lead_status_new: New!
+  lead_status_contacted: Contacted!
+  lead_status_converted: Converted!
+  lead_status_rejected: Rejected!
+
+  lead_source_campaign: Campaign
+  lead_source_cold_call: Cold Call
+  lead_source_conference: Conference
+  lead_source_online_marketing: Online
+  lead_source_referral: Referral
+  lead_source_self_generated: Self
+  lead_source_web_site: Web
+  lead_source_word_of_mouth: Word of Mouth
+  lead_source_other: Other
+
+  task_category_call: Call
+  task_category_email: Email
+  task_category_follow_up: Follow-up
+  task_category_lunch: Lunch
+  task_category_meeting: Meeting
+  task_category_money: Money
+  task_category_presentation: Presentation
+  task_category_trip: Trip
+
   # views/users:
   #----------------------------------------------------------------------------
   user: User
@@ -114,11 +158,6 @@ en-US:
   campaign_actual: Actual
   campaign_revenue_small: "{{value}} in revenue"
   campaign_conversion_small: "{{value}} conversion" 
-  campaign_status_called_off: Called Off
-  campaign_status_completed: Completed
-  campaign_status_on_hold: On Hold
-  campaign_status_planned: Planned
-  campaign_status_started: Started
   campaign_checkbox_called_off: Called Off
   campaign_checkbox_completed: Completed
   campaign_checkbox_on_hold: On Hold

@@ -57,6 +57,7 @@ describe "/leads/update.js.rjs" do
 
     describe "on related asset page -" do
       before(:each) do
+        assigns[:campaign] = Factory(:campaign)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 

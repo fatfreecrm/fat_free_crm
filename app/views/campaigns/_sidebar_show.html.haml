@@ -7,7 +7,7 @@
     %dt= @campaign.ends_on ? @campaign.ends_on.strftime("%b %e") : t(:n_a)
     %tt #{t:end_date}:
   %li
-    %dt= t('campaign_status_' + Setting.campaign_status[@campaign.status.to_sym].snakecase) || t(:n_a)
+    %dt= t(Setting.campaign_status[@campaign.status.to_sym]) || t(:n_a)
     %tt #{t:status}:
   %li.last
     %dt= number_to_currency(@campaign.budget, :precision => 0) || t(:n_a)

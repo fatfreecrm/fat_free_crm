@@ -57,13 +57,13 @@ class Setting < ActiveRecord::Base
   end
 
   #-------------------------------------------------------------------
-  def self.as_hash(setting)
+  def self.to_hash(setting)
     send(setting).inject({}) { |hash, item| hash[item.last] = item.first; hash }
   end
 
   #-------------------------------------------------------------------
   def self.invert(setting)
-    send(setting).invert.sort
+    send(setting).map { |key, value| [ value.is_a?(Symbol) ? I18n.t(value) : value, key ] }.sort
   end
 
 end

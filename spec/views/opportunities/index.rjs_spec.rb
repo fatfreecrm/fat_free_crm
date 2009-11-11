@@ -5,7 +5,7 @@ describe "/opportunities/index.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:stage] = Setting.as_hash(:opportunity_stage)
+    assigns[:stage] = Setting.to_hash(:opportunity_stage)
   end
 
   it "should render [opportunity] template with @opportunities collection if there are opportunities" do

@@ -27,6 +27,12 @@ namespace :crm do
         ActiveRecord::Base.connection.execute("DELETE FROM settings")
       end
       settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
+      # yaml = IO.read("#{RAILS_ROOT}/config/settings.yml")
+      # begin
+      #   settings = YAML::load(ERB.new(yaml).result)
+      # rescue => error
+      #   raise RuntimeError.new("Can't load the settings, check the contents of config/settings.yml file.")
+      # end
       settings.keys.each do |key|
         sql = [ "INSERT INTO settings (name, default_value) VALUES(?, ?)", key.to_s, Base64.encode64(Marshal.dump(settings[key])) ]
         sql = if Rails::VERSION::STRING < "2.3.3"

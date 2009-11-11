@@ -8,7 +8,7 @@ describe TasksController do
   end
 
   def produce_tasks(user, view)
-    settings = (view != "completed" ? Setting.as_hash(:task_bucket) : Setting.as_hash(:task_completed))
+    settings = (view != "completed" ? Setting.to_hash(:task_bucket) : Setting.to_hash(:task_completed))
 
     settings.keys.inject({}) do | hash, due |
       hash[due] ||= []

@@ -93,7 +93,7 @@ describe CampaignsController do
     describe "with mime type of HTML" do
       before(:each) do
         @campaign = Factory(:campaign, :id => 42, :user => @current_user)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.to_hash(:opportunity_stage)
         @comment = Comment.new
       end
 

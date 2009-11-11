@@ -64,7 +64,7 @@ describe ContactsController do
     describe "with mime type of HTML" do
       before(:each) do
         @contact = Factory(:contact, :id => 42)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.to_hash(:opportunity_stage)
         @comment = Comment.new
       end
 

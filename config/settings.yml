@@ -20,7 +20,10 @@
 #   rake crm:settings:load
 #
 #------------------------------------------------------------------------------
-#
+
+# Default locale is American English.
+:locale: "en-US"
+
 # Leave base_url blank if Fat Free CRM has been deployed in root URL, otherwise
 # specify subdirectory. For example, when deployed to:
 #
@@ -28,27 +31,23 @@
 # http://crm.domain.com       => :base_url: ""       # (leave blank)
 # http://www.domain.com/crm   => :base_url: "/crm"   # (without trailing slash)
 # http://www.domain.com/a/crm => :base_url: "/a/crm" # (without trailing slash)
-
 :base_url: ""
 
 :tabs: [
-  { :active : true,  :text : "Dashboard",     :url : { :controller : "/"              } },
-  { :active : false, :text : "Tasks",         :url : { :controller : "tasks"          } },
-  { :active : false, :text : "Campaigns",     :url : { :controller : "campaigns"      } },
-  { :active : false, :text : "Leads",         :url : { :controller : "leads"          } },
-  { :active : false, :text : "Accounts",      :url : { :controller : "accounts"       } },
-  { :active : false, :text : "Contacts",      :url : { :controller : "contacts"       } },
-  { :active : false, :text : "Opportunities", :url : { :controller : "opportunities"  } }
+  { :active : true,  :text : :tab_dashboard,     :url : { :controller : "/"              } },
+  { :active : false, :text : :tab_tasks,         :url : { :controller : "tasks"          } },
+  { :active : false, :text : :tab_campaigns,     :url : { :controller : "campaigns"      } },
+  { :active : false, :text : :tab_leads,         :url : { :controller : "leads"          } },
+  { :active : false, :text : :tab_accounts,      :url : { :controller : "accounts"       } },
+  { :active : false, :text : :tab_contacts,      :url : { :controller : "contacts"       } },
+  { :active : false, :text : :tab_opportunities, :url : { :controller : "opportunities"  } }
 ]
 
 :admin_tabs: [
-  { :active : true,  :text : "Users",         :url : { :controller : "admin/users"    } },
-  { :active : true,  :text : "Settings",      :url : { :controller : "admin/settings" } },
-  { :active : true,  :text : "Plugins",       :url : { :controller : "admin/plugins"  } }
+  { :active : true,  :text : :admin_tab_users,    :url : { :controller : "admin/users"    } },
+  { :active : true,  :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
+  { :active : true,  :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
-
-# Default locale is American English.
-:locale: "en-US"
 
 # The following setting controls user signup. Possible values are:
 #   :allowed        -- users can sign up and use the system once they have registered.
@@ -58,11 +57,11 @@
 :user_signup: :allowed
 
 campaign_status:
-  :planned       : Planned
-  :started       : Started
-  :completed     : Completed
-  :on_hold       : On Hold
-  :called_off    : Called Off
+  :planned       : :campaign_status_planned
+  :started       : :campaign_status_started
+  :completed     : :campaign_status_completed
+  :on_hold       : :campaign_status_on_hold
+  :called_off    : :campaign_status_called_off
 
 campaign_status_color:
   :planned       : palegreen
@@ -72,10 +71,10 @@ campaign_status_color:
   :called_off    : thistle
 
 lead_status:
-  :new           : New
-  :contacted     : Contacted
-  :converted     : Converted
-  :rejected      : Rejected
+  :new           : :lead_status_new
+  :contacted     : :lead_status_contacted
+  :converted     : :lead_status_converted
+  :rejected      : :lead_status_rejected
 
 lead_status_color:
   :new           : palegreen
@@ -84,15 +83,15 @@ lead_status_color:
   :rejected      : thistle
 
 lead_source:
-  :campaign      : Campaign
-  :cold_call     : Cold Call
-  :conference    : Conference
-  :online        : Online Marketing
-  :referral      : Referral
-  :self          : Self Generated
-  :web           : Web Site
-  :word_of_mouth : Word of Mouth
-  :other         : Other
+  :campaign      : :lead_source_campaign
+  :cold_call     : :lead_source_cold_call
+  :conference    : :lead_source_conference
+  :online        : :lead_source_online_marketing
+  :referral      : :lead_source_referral
+  :self          : :lead_source_self_generated
+  :web           : :lead_source_web_site
+  :word_of_mouth : :lead_source_word_of_mouth
+  :other         : :lead_source_other
 
 # Use array of hashes for now to preserve sort order. For Ruby 1.9 or later
 # we can use regular hash since its insertion order will be preserved.
@@ -119,14 +118,14 @@ opportunity_stage_color:
   :lost          : pink
 
 task_category:
-  :call          : Call
-  :email         : Email
-  :folowup       : Follow-up
-  :lunch         : Lunch
-  :meeting       : Meeting
-  :money         : Money
-  :presentation  : Presentation
-  :trip          : Trip
+  :call          : task_category_call
+  :email         : task_category_email
+  :folowup       : task_category_follow_up
+  :lunch         : task_category_lunch
+  :meeting       : task_category_meeting
+  :money         : task_category_money
+  :presentation  : task_category_presentation
+  :trip          : task_category_trip
 
 task_category_color:
   :call          : lavender

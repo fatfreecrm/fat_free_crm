@@ -285,7 +285,7 @@ class OpportunitiesController < ApplicationController
 
   #----------------------------------------------------------------------------
   def load_settings
-    @stage = Setting.as_hash(:opportunity_stage)
+    @stage = Setting.to_hash(:opportunity_stage)
   end
 
 end
