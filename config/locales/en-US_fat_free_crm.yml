@@ -61,9 +61,6 @@ en-US:
   account_small: account
   phone_small: phone
   mobile_small: mobile
-  edit: Edit
-  delete: Delete
-  options: Options
   create_account_button: Create Account
   create_account_link: Create account
   save_account_button: Save Account
@@ -249,6 +246,10 @@ en-US:
 
   # views/common
   #----------------------------------------------------------------------------
+  edit: Edit
+  delete: Delete
+  options: Options
+  back: Back
   name: Name
   added: added
   ago: ago
@@ -319,8 +320,7 @@ en-US:
   stage: Stage
   close_date: Close date
   days_left: Days left
-  days_late: "{{value}} late"
-  day: день
+  days_late: Late by
   probability: Probability
   amount: Amount
   discount: Discount
@@ -332,8 +332,8 @@ en-US:
   opportunity_stage_proposal: Proposal
   opportunity_stage_negotiation: Negotiation
   opportunity_stage_final_review: Final Review
-  opportunity_stage_closed/won: Closed/Won
-  opportunity_stage_closed/lost: Closed/Lost
+  opportunity_stage_closed_won: Closed/Won
+  opportunity_stage_closed_lost: Closed/Lost
   from: from
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
@@ -359,9 +359,38 @@ en-US:
     lead:
       one: '1 lead'
       other: '{{count}} leads'
+    day:
+      one: '1 day'
+      other: '{{count}} days'
+    login:
+      one: '1 login'
+      other: '{{count}} logins'
   
   # views/home:
   #----------------------------------------------------------------------------
+
+  # views/admin:
+  #----------------------------------------------------------------------------
+  users: Users
+  user_confirm_delete_txt: A user can only be deleted if no related assets are left behind.
+  create_user_link: Create user
+  create_user_button: Create User
+  save_user: Save User
+  user_is_admin: The user is Administrator
+  personal_information: Personal Information
+  user_signed_up: Signed Up
+  user_suspended: Suspended
+  user_admin: Admin
+  user_active: Active
+  user_awaits_approval: awaits your approval
+  user_never_logged_in: "hasn't logged in yet"
+  last_seen: last seen {{value}} ago
+  user_since: user since {{value}}
+  user_signed_up_on: signed up on {{value}}
+  user_suspended_on: suspended on {{value}}
+  suspend: Suspend
+  approve: Approve
+  reactivate: Reactivate
 
   # models/activity
   #----------------------------------------------------------------------------

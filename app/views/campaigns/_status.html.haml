@@ -1,5 +1,5 @@
 %tt
-  - case campaign.status.intern
+  - case campaign.status.to_sym
     - when :started
       - if campaign.starts_on
         == #{t:campaign_started_ago, time_ago_in_words(campaign.starts_on)}

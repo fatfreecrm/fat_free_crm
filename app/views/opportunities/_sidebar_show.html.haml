@@ -1,8 +1,7 @@
-- logger.i @opportunity
 .panel#summary
   .caption #{t:opportunity_summary}
   %li
-    %dt= @opportunity.stage ? (t('opportunity_stage_' << @stage[@opportunity.stage.to_sym].downcase.gsub(" ", "_")) || t(:n_a)) : t(:category_other)
+    %dt= @opportunity.stage ? (t('opportunity_stage_' << @stage[@opportunity.stage.to_sym].snakecase) || t(:n_a)) : t(:category_other)
     %tt #{t:stage}:
   %li
     %dt= @opportunity.closes_on ? @opportunity.closes_on.strftime("%b %e") : t(:n_a)
@@ -12,9 +11,10 @@
       - days_left = @opportunity.closes_on - Date.today
       - if days_left >= 0
         %dt= days_left
+        %tt #{t:days_left}:
       - else
-        %dt.warn= t(:days_late, pluralize(days_left * -1, t(:day))) 
-      %tt #{t:days_left}:
+        %dt.warn= t('pluralize.day', :count => (days_left * -1))
+        %tt #{t:days_late}:
   %li
     %dt= @opportunity.probability ? @opportunity.probability.to_s + "%" : t(:n_a)
     %tt #{t:probability}:

@@ -19,23 +19,23 @@ module Admin::UsersHelper
 
   #----------------------------------------------------------------------------
   def link_to_suspend(user)
-    link_to_remote("Suspend!", :method => :put, :url => suspend_admin_user_path(user))
+    link_to_remote(t(:suspend) + "!", :method => :put, :url => suspend_admin_user_path(user))
   end
 
   #----------------------------------------------------------------------------
   def link_to_reactivate(user)
-    name = user.awaits_approval? ? "Approve!" : "Reactivate!"
+    name = user.awaits_approval? ? t(:approve) + "!" : t(:reactivate) + "!"
     link_to_remote(name, :method => :put, :url => reactivate_admin_user_path(user))
   end
 
   #----------------------------------------------------------------------------
   def link_to_confirm(user)
-    link_to_remote("Delete?", :method => :get, :url => confirm_admin_user_path(user))
+    link_to_remote(t(:delete) + "?", :method => :get, :url => confirm_admin_user_path(user))
   end
 
   #----------------------------------------------------------------------------
   def link_to_delete(user)
-    link_to_remote("Yes", 
+    link_to_remote(t(:yes_button), 
       :method => :delete,
       :url => admin_user_path(user),
       :before => visual_effect(:highlight, dom_id(user), :startcolor => "#ffe4e1")

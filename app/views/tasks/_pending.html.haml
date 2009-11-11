@@ -1,6 +1,6 @@
 %li[pending]{ highlightable(dom_id(pending, :tools)) }
   - unless pending.category.blank?
-    .strip{:class => pending.category}= Setting.task_category[pending.category.intern]
+    .strip{:class => pending.category}= Setting.task_category[pending.category.to_sym]
   - else
     .strip{:style => "color:white"} #{t:category_other}
   %div

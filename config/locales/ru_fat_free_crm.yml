@@ -62,9 +62,6 @@ ru:
   account_small: контрагент
   phone_small: телефон
   mobile_small: мобильный
-  edit: Изменить
-  delete: Удалить
-  options: Опции
   create_account_button: Создать Контрагента
   create_account_link: Создать контрагента
   save_account_button: Сохранить Контрагента
@@ -248,6 +245,10 @@ ru:
 
   # views/common
   #----------------------------------------------------------------------------
+  edit: Изменить
+  delete: Удалить
+  options: Опции
+  back: Назад
   name: Название
   added: добавлен
   ago: назад
@@ -320,8 +321,7 @@ ru:
   stage: Стадия
   close_date: Дата завершения
   days_left: Осталось дней
-  days_late: "задержка {{value}}"
-  day: день
+  days_late: Задержка
   probability: Вероятность
   amount: Сумма
   discount: Скидка
@@ -333,8 +333,8 @@ ru:
   opportunity_stage_proposal: Предложение
   opportunity_stage_negotiation: Переговоры
   opportunity_stage_final_review: Утверждение
-  opportunity_stage_closed/won: Выиграли
-  opportunity_stage_closed/lost: Проиграли
+  opportunity_stage_closed_won: Выиграли
+  opportunity_stage_closed_lost: Проиграли
   from: из
   opportunity_summary: Перспектива
   opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
@@ -369,9 +369,43 @@ ru:
       few: '{{count}} наводки'
       many: '{{count}} наводок'
       other: '{{count}} наводок'
+    day:
+      zero: '0 дней'
+      one: '{{count}} день'
+      few: '{{count}} дня'
+      many: '{{count}} дней'
+      other: '{{count}} дней'
+    login:
+      one: 'заходил(а) {{count}} раз'
+      few: 'заходил(а) {{count}} раза'
+      many: 'заходил(а) {{count}} раз'
+      other: 'заходил(а) {{count}} раз'
 
   # views/home:
   #----------------------------------------------------------------------------
+
+  # views/admin:
+  #----------------------------------------------------------------------------
+  users: Пользователи
+  user_confirm_delete_txt: @ru@A user can only be deleted if no related assets are left behind.
+  create_user_link: Добавить пользователя
+  create_user_button: Создать Пользователя
+  save_user: Сохранить Изменения
+  user_is_admin: Дать права Администратора
+  personal_information: @ru@Personal Information
+  user_signed_up: @ru@Signed Up
+  user_suspended: @ru@Suspended
+  user_admin: Админ.
+  user_active: @ru@Active
+  user_awaits_approval: ждет подтверждения
+  user_never_logged_in: еще не заходил(а)
+  last_seen: последний визит {{value}} назад
+  user_since: является пользователем с {{value}}
+  user_signed_up_on: зарегистрирован(а) {{value}}
+  user_suspended_on: @ru@suspended {{value}}
+  suspend: @ru@Suspend
+  approve: @ru@Approve
+  reactivate: @ru@Reactivate
 
   # models/activity
   #----------------------------------------------------------------------------

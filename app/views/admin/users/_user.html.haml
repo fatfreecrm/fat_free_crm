@@ -1,13 +1,13 @@
 %li[user]{ highlightable(dom_id(user, :tools)) }
 
   - if user.awaits_approval?
-    .strip{:class => "signed_up"} Signed Up
+    .strip{:class => "signed_up"} #{t:user_signed_up}
   - elsif user.suspended?
-    .strip{:class => "suspended"} Suspended
+    .strip{:class => "suspended"} #{t:user_suspended}
   - elsif user.admin?
-    .strip{:class => "admin"} Admin
+    .strip{:class => "admin"} #{t:user_admin}
   - else
-    .strip{:class => "active"} Active
+    .strip{:class => "active"} #{t:user_active}
 
   = gravatar_for(user, :size => "30x30")
   .tools{ invisible, :id => dom_id(user, :tools) }
@@ -19,37 +19,37 @@
       - elsif user != @current_user
         = link_to_suspend(user) << " | "
       - else
-        = "<font color='silver'>Suspend!</font> | "
+        = "<font color='silver'>#{t:suspend}!</font> | "
 
       - if user != @current_user
         = link_to_confirm(user) << "&nbsp;"
       - else
-        <font color='silver'>Delete?</font>&nbsp;
+        <font color='silver'>#{t:delete}?</font>&nbsp;
 
   %span.black #{link_to(user.full_name, user)} (#{user.username})
   %tt
     = "- #{user.title}" unless user.title.blank?
-    = " at " + user.company unless user.company.blank?
+    = " " + t(:at) + " " + user.company unless user.company.blank?
 
     %span.black= "|"
     - if user.last_request_at && user.login_count > 0
-      = pluralize(user.login_count, "login")
+      = t('pluralize.login', user.login_count)
       %span.black= "|"
 
     - if user.awaits_approval?
-      %b.cool awaits your approval
+      %b.cool #{t:user_awaits_approval}
     - elsif user.last_request_at
-      %span.cool last seen #{time_ago_in_words(user.last_request_at)} ago
+      %span.cool #{t(:last_seen, time_ago_in_words(user.last_request_at))}
     - else
-      %span.warn hasn't yet logged in
+      %span.warn #{t:user_never_logged_in}
   %dt{ :style => "padding: 2px 0px 0px 0px" }
     = link_to(user.email, "mailto:" << user.email.to_s) << " | "
-    = "phone: <b>" + user.phone << "</b> | " if user.phone?
-    = "mobile: <b>" + user.mobile << "</b> | " if user.mobile?
+    = "#{t:phone_small}: <b>" + user.phone << "</b> | " if user.phone?
+    = "#{t:mobile_small}: <b>" + user.mobile << "</b> | " if user.mobile?
 
     - if !user.suspended?
-      %span user since #{user.created_at.to_date.to_s(:mmddyy)}
+      %span #{t(:user_since, user.created_at.to_date.to_s(:mmddyy))}
     - elsif user.awaits_approval?
-      %b.cool signed up on #{user.created_at.to_s(:mmddhhss)}
+      %b.cool #{t(:user_signed_up_on, user.created_at.to_s(:mmddhhss))}
     - else
-      %span.warn suspended on #{user.created_at.to_date.to_s(:mmddyy)}
+      %span.warn #{t(:user_suspended_on, user.created_at.to_date.to_s(:mmddyy))}

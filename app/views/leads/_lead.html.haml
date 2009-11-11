@@ -1,6 +1,6 @@
 %li[lead]{ highlightable(dom_id(lead, :tools)) }
   - if lead.status
-    .strip{:class => lead.status} #{t(Setting.lead_status[lead.status.intern].downcase)}
+    .strip{:class => lead.status} #{t(Setting.lead_status[lead.status.to_sym].downcase)}
   - else
     .strip{:style => "color:white;"} #{t:category_other}
   .tools{ invisible, :id => dom_id(lead, :tools) }
