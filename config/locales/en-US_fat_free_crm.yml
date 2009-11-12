@@ -1,12 +1,12 @@
 en-US:
 
-  # generic terms
+  # Generic terms
   #----------------------------------------------------------------------------
   all: All
   language: English
   not_implemented: Not implemented yet.
 
-  # settings
+  # Settings
   #----------------------------------------------------------------------------
   tab_dashboard: Dashboard
   tab_tasks: Tasks
@@ -41,6 +41,15 @@ en-US:
   lead_source_word_of_mouth: Word of Mouth
   lead_source_other: Other
 
+  opportunity_stage_prospecting: Prospecting
+  opportunity_stage_analysis: Analysis
+  opportunity_stage_presentation: Presentation
+  opportunity_stage_proposal: Proposal
+  opportunity_stage_negotiation: Negotiation
+  opportunity_stage_final_review: Final Review
+  opportunity_stage_closed_won: Closed/Won
+  opportunity_stage_closed_lost: Closed/Lost
+
   task_category_call: Call
   task_category_email: Email
   task_category_follow_up: Follow-up
@@ -50,14 +59,19 @@ en-US:
   task_category_presentation: Presentation
   task_category_trip: Trip
 
-  opportunity_stage_prospecting: Prospecting
-  opportunity_stage_analysis: Analysis
-  opportunity_stage_presentation: Presentation
-  opportunity_stage_proposal: Proposal
-  opportunity_stage_negotiation: Negotiation
-  opportunity_stage_final_review: Final Review
-  opportunity_stage_closed_won: Closed/Won
-  opportunity_stage_closed_lost: Closed/Lost
+  task_bucket_overdue: "Overdue"
+  task_bucket_asap: "As Soon As Possible"
+  task_bucket_today: "Today"
+  task_bucket_tomorrow: "Tomorrow"
+  task_bucket_this_week: "This Week"
+  task_bucket_next_week: "Next Week"
+  task_bucket_later: "Sometime Later"
+
+  task_completed_today: "Today"
+  task_completed_yesterday: "Yesterday"
+  task_completed_last_week: "Last week"
+  task_completed_this_month: "This month"
+  task_completed_last_month: "Last month"
 
   # views/users:
   #----------------------------------------------------------------------------
@@ -248,17 +262,6 @@ en-US:
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
   total_tasks: Total {{value}}
-  tasks_due_overdue: Overdue
-  tasks_due_as_soon_as_possible: As Soon As Possible
-  tasks_due_today: Today
-  tasks_due_tomorrow: Tomorrow
-  tasks_due_this_week: This Week
-  tasks_due_next_week: Next Week
-  tasks_due_sometime_later: Sometime Later
-  tasks_due_yesterday: Yesterday
-  tasks_due_last_week: Last Week
-  tasks_due_this_month: This Month
-  tasks_due_last_month: Last Month
  
   # views/leads
   #----------------------------------------------------------------------------
@@ -275,10 +278,6 @@ en-US:
   status: Status
   source: Source
   rating: Rating
-  contacted: Contacted
-  converted: Converted
-  rejected: Rejected
-  new: New
   lead_info_small: lead contact
   lead_status_small: lead status
   lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.

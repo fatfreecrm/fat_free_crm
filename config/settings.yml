@@ -118,14 +118,14 @@ opportunity_stage_color:
   :lost          : pink
 
 task_category:
-  :call          : task_category_call
-  :email         : task_category_email
-  :folowup       : task_category_follow_up
-  :lunch         : task_category_lunch
-  :meeting       : task_category_meeting
-  :money         : task_category_money
-  :presentation  : task_category_presentation
-  :trip          : task_category_trip
+  :call          : :task_category_call
+  :email         : :task_category_email
+  :folowup       : :task_category_follow_up
+  :lunch         : :task_category_lunch
+  :meeting       : :task_category_meeting
+  :money         : :task_category_money
+  :presentation  : :task_category_presentation
+  :trip          : :task_category_trip
 
 task_category_color:
   :call          : lavender
@@ -138,19 +138,19 @@ task_category_color:
   :trip          : skyblue
 
 task_bucket: [
-  [ "Overdue" ,            :overdue       ],
-  [ "As Soon As Possible", :due_asap      ],
-  [ "Today",               :due_today     ],
-  [ "Tomorrow",            :due_tomorrow  ],
-  [ "This Week",           :due_this_week ],
-  [ "Next Week",           :due_next_week ],
-  [ "Sometime Later",      :due_later     ]
+  [ :task_bucket_overdue,   :overdue       ],
+  [ :task_bucket_asap,      :due_asap      ],
+  [ :task_bucket_today,     :due_today     ],
+  [ :task_bucket_tomorrow,  :due_tomorrow  ],
+  [ :task_bucket_this_week, :due_this_week ],
+  [ :task_bucket_next_week, :due_next_week ],
+  [ :task_bucket_later,     :due_later     ]
 ]
 
 task_completed: [
-  [ "Today",      :completed_today      ],
-  [ "Yesterday",  :completed_yesterday  ],
-  [ "Last week",  :completed_last_week  ],
-  [ "This month", :completed_this_month ],
-  [ "Last month", :completed_last_month ]
+  [ :task_completed_today,      :completed_today      ],
+  [ :task_completed_yesterday,  :completed_yesterday  ],
+  [ :task_completed_last_week,  :completed_last_week  ],
+  [ :task_completed_this_month, :completed_this_month ],
+  [ :task_completed_last_month, :completed_last_month ]
 ]

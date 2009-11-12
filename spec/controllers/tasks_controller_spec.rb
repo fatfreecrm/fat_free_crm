@@ -114,7 +114,7 @@ describe TasksController do
       @task = Factory.build(:task, :user => @current_user, :asset => account)
       Task.stub!(:new).and_return(@task)
       @users = [ Factory(:user) ]
-      @bucket = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
+      @bucket = Setting.translate(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.invert(:task_category)
 
       xhr :get, :new
@@ -161,7 +161,7 @@ describe TasksController do
       @asset = Factory(:account, :user => @current_user)
       @task = Factory(:task, :user => @current_user, :asset => @asset)
       @users = [ Factory(:user) ]
-      @bucket = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
+      @bucket = Setting.translate(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.invert(:task_category)
 
       xhr :get, :edit, :id => @task.id

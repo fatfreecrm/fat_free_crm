@@ -22,10 +22,10 @@
 
   .caption #{t:lead_summary}
   %li
-    %dt#lead_status= @lead.status.blank? ? "N/A" : Setting.lead_status[@lead.status.to_sym]
+    %dt#lead_status= @lead.status.blank? ? "N/A" : t(Setting.lead_status[@lead.status.to_sym])
     %tt #{t:status}:
   %li
-    %dt= @lead.source.blank? ? "N/A" : Setting.lead_source[@lead.source.to_sym]
+    %dt= @lead.source.blank? ? "N/A" : t(Setting.lead_source[@lead.source.to_sym])
     %tt #{t:source}:
   %li
     %span{:style => "float:right;"}= stars_for(@lead)
