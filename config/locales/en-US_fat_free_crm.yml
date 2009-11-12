@@ -20,11 +20,16 @@ en-US:
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
 
-  campaign_status_planned: Planned
-  campaign_status_started: Started
-  campaign_status_on_hold: On Hold
-  campaign_status_completed: Completed
-  campaign_status_called_off: Called Off
+  planned: Planned
+  started: Started
+  on_hold: On Hold
+  completed: Completed
+  called_off: Called Off
+  # campaign_status_planned: Planned
+  # campaign_status_started: Started
+  # campaign_status_on_hold: On Hold
+  # campaign_status_completed: Completed
+  # campaign_status_called_off: Called Off
 
   lead_status_new: New
   lead_status_contacted: Contacted

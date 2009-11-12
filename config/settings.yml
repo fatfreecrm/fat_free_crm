@@ -57,11 +57,17 @@
 :user_signup: :allowed
 
 campaign_status:
-  :planned       : :campaign_status_planned
-  :started       : :campaign_status_started
-  :completed     : :campaign_status_completed
-  :on_hold       : :campaign_status_on_hold
-  :called_off    : :campaign_status_called_off
+  - :planned
+  - :started
+  - :completed
+  - :on_hold
+  - :called_off
+
+  # :planned       : :campaign_status_planned
+  # :started       : :campaign_status_started
+  # :completed     : :campaign_status_completed
+  # :on_hold       : :campaign_status_on_hold
+  # :called_off    : :campaign_status_called_off
 
 campaign_status_color:
   :planned       : palegreen

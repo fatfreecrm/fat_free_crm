@@ -71,4 +71,9 @@ class Setting < ActiveRecord::Base
     send(setting).map { |key, value| [ value.is_a?(Symbol) ? I18n.t(value) : value, key ] }.sort
   end
 
+  #-------------------------------------------------------------------
+  def self.unroll(setting)
+    send(setting).map { |key| [ key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym ] }
+  end
+
 end

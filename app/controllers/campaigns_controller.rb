@@ -233,7 +233,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @campaign_status_total = { :all => Campaign.my(@current_user).count, :other => 0 }
-    Setting.campaign_status.keys.each do |key|
+    Setting.campaign_status.each do |key|
       @campaign_status_total[key] = Campaign.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
       @campaign_status_total[:other] -= @campaign_status_total[key]
     end
