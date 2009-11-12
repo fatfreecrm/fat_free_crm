@@ -1,20 +1,20 @@
 #header
   #welcome
     - if @current_user
-      Welcome,
+      #{t:welcome},
       -# This span gets updated on the fly if user changes her name.
       %span#welcome_username= @current_user.name
       %span> !&nbsp;&nbsp;
 
-      = link_to("Quick find", "#", :id => "jumper") << " |"
-      = link_to("Profile", profile_path) << " |"
+      = link_to(t(:quick_find), "#", :id => "jumper") << " |"
+      = link_to(t(:profile), profile_path) << " |"
       - if @current_user.admin?
-        = link_to("Admin", admin_path) << " |"
-      = link_to("Logout", logout_path, :method => :delete)
+        = link_to(t(:admin), admin_path) << " |"
+      = link_to(t(:logout), logout_path, :method => :delete)
       = render :partial => "/layouts/jumpbox"
     - else
-      = link_to("Login", login_path) << " |"
-      = link_to("Sign Up", signup_path) << " |" if can_signup?
-      = link_to("About", "#about", :rel => "facebox")
+      = link_to(t(:login), login_path) << " |"
+      = link_to(t(:sign_up), signup_path) << " |" if can_signup?
+      = link_to(t(:about), "#about", :rel => "facebox")
   %h3
     = link_to("Fat Free CRM", root_path)

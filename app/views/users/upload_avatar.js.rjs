@@ -1,6 +1,6 @@
 if @user.avatar.nil? || @user.avatar.errors.empty?
   page.call "crm.flip_form", :upload_avatar
-  page.call "crm.set_title", :upload_avatar, "My Profile"
+  page.call "crm.set_title", :upload_avatar, t(:my_profile)
   page[:profile].replace_html :partial => "user"
 else
   page[:upload_avatar].replace_html :partial => "avatar"

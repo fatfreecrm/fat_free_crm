@@ -25,7 +25,7 @@ describe "/users/password.js.rjs" do
     response.should include_text('crm.hide_form("edit_profile")')
     response.should include_text('crm.hide_form("upload_avatar")')
     response.should include_text('crm.flip_form("change_password")')
-    response.should include_text('crm.set_title("change_password")')
+    response.should include_text('crm.set_title("change_password"')
     response.should include_text('$("current_password").focus()')
   end
 

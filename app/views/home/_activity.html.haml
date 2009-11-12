@@ -4,8 +4,8 @@
   %tt
     = link_to avatar_for(activity.user, :size => "16x16"), user_path(activity.user)
     = link_to(activity.user.full_name, user_path(activity.user))
-    = activity.action + (activity.action != "commented" ? " " : " on ")
-    = activity.subject_type.downcase
+    = t('action_' + activity.action) 
+    = t('subject_' + activity.subject_type.downcase)
     - if activity.subject
       - if activity.subject.respond_to?(:full_name)
         = link_to(activity.subject.full_name, polymorphic_url(activity.subject))

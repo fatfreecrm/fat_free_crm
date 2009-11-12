@@ -21,7 +21,7 @@
         - unless won_or_lost
           == #{number_to_currency(opportunity.amount || 0, :precision => 0)}
           == #{opportunity.discount ? t(:opportunity_discount_text, number_to_currency(opportunity.discount, :precision => 0)) : t(:opportunity_no_discount_text)}
-          = t(:opportunity_probability_text, opportunity.probability || 0) + "% | " 
+          = t(:opportunity_probability_text, (opportunity.probability || 0).to_s + '%') + " | " 
         - if opportunity.closes_on
           - if won_or_lost
             - if opportunity.closes_on >= Date.today

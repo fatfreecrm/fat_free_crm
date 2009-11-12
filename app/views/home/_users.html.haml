@@ -1,4 +1,4 @@
-- users = [ "All Users" ] + User.all(:order => "first_name, last_name").map(&:full_name)
+- users = [ t(:option_all_users) ] + User.all(:order => "first_name, last_name").map(&:full_name)
 - sort_by_menu_items = users.inject([]) do | items, user|
   - items << %Q[{ name: "#{user}", on_select: function() { #{redraw(:user, user == users.first ? user.downcase! : user, url_for(:action => :redraw))} } }]
 
