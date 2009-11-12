@@ -148,20 +148,18 @@ task_category_color:
   :presentation : aquamarine
   :trip         : skyblue
 
-task_bucket: [
-  [ :task_bucket_overdue,   :overdue       ],
-  [ :task_bucket_asap,      :due_asap      ],
-  [ :task_bucket_today,     :due_today     ],
-  [ :task_bucket_tomorrow,  :due_tomorrow  ],
-  [ :task_bucket_this_week, :due_this_week ],
-  [ :task_bucket_next_week, :due_next_week ],
-  [ :task_bucket_later,     :due_later     ]
-]
+task_bucket:
+  - :overdue
+  - :due_asap
+  - :due_today
+  - :due_tomorrow
+  - :due_this_week
+  - :due_next_week
+  - :due_later
 
-task_completed: [
-  [ :task_completed_today,      :completed_today      ],
-  [ :task_completed_yesterday,  :completed_yesterday  ],
-  [ :task_completed_last_week,  :completed_last_week  ],
-  [ :task_completed_this_month, :completed_this_month ],
-  [ :task_completed_last_month, :completed_last_month ]
-]
+task_completed:
+  - :completed_today
+  - :completed_yesterday
+  - :completed_last_week
+  - :completed_this_month
+  - :completed_last_month

@@ -129,7 +129,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject({}) do |hash, (value, key)|
+    settings.inject({}) do |hash, key|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending : my(user).send(key).send(view))
       hash
     end
@@ -150,7 +150,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.totals(user, view = "pending")
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject({ :all => 0 }) do |hash, (value, key)|
+    settings.inject({ :all => 0 }) do |hash, key|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)
       hash[:all] += hash[key]
       hash

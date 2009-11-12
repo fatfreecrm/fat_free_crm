@@ -59,19 +59,19 @@ en-US:
   presentation: Presentation
   trip: Trip
 
-  task_bucket_overdue: "Overdue"
-  task_bucket_asap: "As Soon As Possible"
-  task_bucket_today: "Today"
-  task_bucket_tomorrow: "Tomorrow"
-  task_bucket_this_week: "This Week"
-  task_bucket_next_week: "Next Week"
-  task_bucket_later: "Sometime Later"
+  overdue: "Overdue"
+  due_asap: "As Soon As Possible"
+  due_today: "Today"
+  due_tomorrow: "Tomorrow"
+  due_this_week: "This Week"
+  due_next_week: "Next Week"
+  due_later: "Sometime Later"
 
-  task_completed_today: "Today"
-  task_completed_yesterday: "Yesterday"
-  task_completed_last_week: "Last week"
-  task_completed_this_month: "This month"
-  task_completed_last_month: "Last month"
+  completed_today: "Today"
+  completed_yesterday: "Yesterday"
+  completed_last_week: "Last week"
+  completed_this_month: "This month"
+  completed_last_month: "Last month"
 
   # views/users:
   #----------------------------------------------------------------------------
@@ -240,13 +240,13 @@ en-US:
   save_task_button: Save Task
   task_name: Task name
   task_small: task
-  completed_small: completed
   due: Due
-  due_now: due now
-  due_later: due sometime soon
-  overdue:  'late, was due on'
-  due_in: due in
-  due_today: due today
+  task_completed: completed
+  task_due_now: due now
+  task_due_later: due sometime soon
+  task_overdue: late, was due on
+  task_due_in: due in
+  task_due_today: due today
   assign_to: Assign to
   category: Category
   select_blank: '-- Select --'

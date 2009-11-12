@@ -56,21 +56,9 @@ class Setting < ActiveRecord::Base
     setting.save
   end
 
-  #-------------------------------------------------------------------
-  def self.to_hash(setting)
-    send(setting).inject({}) { |hash, item| hash[item.last] = item.first; hash }
-  end
-
-  #-------------------------------------------------------------------
-  def self.translate(setting)
-    send(setting).map { |key, value| [ key.is_a?(Symbol) ? I18n.t(key) : key, value ] }
-  end
-
-  #-------------------------------------------------------------------
-  def self.invert(setting)
-    send(setting).map { |key, value| [ value.is_a?(Symbol) ? I18n.t(value) : value, key ] }.sort
-  end
-
+  # Unrolls [ :one, :two ] settings array into [[ "One", :one ], [ "Two", :two ]]
+  # picking symbol translations from locale. If setting is not a symbol but
+  # string it gets copied without translation.
   #-------------------------------------------------------------------
   def self.unroll(setting)
     send(setting).map { |key| [ key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym ] }

@@ -1,10 +1,10 @@
 = styles_for :task
 
 - if @view == "completed"
-  - buckets = Setting.task_completed
+  - buckets = Setting.unroll(:task_completed)
   .title #{t:completed_tasks}
 - else
-  - buckets = Setting.task_bucket
+  - buckets = Setting.unroll(:task_bucket)
   = render :partial => "title"
 
 .log#tasks

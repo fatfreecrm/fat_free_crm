@@ -13,7 +13,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:task] = @task
       assigns[:view] = "pending"
       assigns[:empty_bucket] = :due_asap
-      assigns[:task_total] = Setting.task_bucket.inject({ :all => 0 }) { |hash, (value, key)| hash[key] = 1; hash }
+      assigns[:task_total] = stub_task_total("pending")
     end
 
     it "should fade out completed task partial" do

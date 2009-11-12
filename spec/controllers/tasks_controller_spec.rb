@@ -8,9 +8,9 @@ describe TasksController do
   end
 
   def produce_tasks(user, view)
-    settings = (view != "completed" ? Setting.to_hash(:task_bucket) : Setting.to_hash(:task_completed))
+    settings = (view != "completed" ? Setting.task_bucket : Setting.task_completed)
 
-    settings.keys.inject({}) do | hash, due |
+    settings.inject({}) do | hash, due |
       hash[due] ||= []
       if Date.tomorrow == Date.today.end_of_week && due == :due_tomorrow
         due = :due_this_week
@@ -114,7 +114,7 @@ describe TasksController do
       @task = Factory.build(:task, :user => @current_user, :asset => account)
       Task.stub!(:new).and_return(@task)
       @users = [ Factory(:user) ]
-      @bucket = Setting.translate(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
+      @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.unroll(:task_category)
 
       xhr :get, :new
@@ -161,7 +161,7 @@ describe TasksController do
       @asset = Factory(:account, :user => @current_user)
       @task = Factory(:task, :user => @current_user, :asset => @asset)
       @users = [ Factory(:user) ]
-      @bucket = Setting.translate(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
+      @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.unroll(:task_category)
 
       xhr :get, :edit, :id => @task.id
