@@ -63,12 +63,6 @@ campaign_status:
   - :on_hold
   - :called_off
 
-  # :planned       : :campaign_status_planned
-  # :started       : :campaign_status_started
-  # :completed     : :campaign_status_completed
-  # :on_hold       : :campaign_status_on_hold
-  # :called_off    : :campaign_status_called_off
-
 campaign_status_color:
   :planned       : palegreen
   :started       : paleturquoise
@@ -77,10 +71,10 @@ campaign_status_color:
   :called_off    : thistle
 
 lead_status:
-  :new           : :lead_status_new
-  :contacted     : :lead_status_contacted
-  :converted     : :lead_status_converted
-  :rejected      : :lead_status_rejected
+  - :new
+  - :contacted
+  - :converted
+  - :rejected
 
 lead_status_color:
   :new           : palegreen
@@ -89,15 +83,16 @@ lead_status_color:
   :rejected      : thistle
 
 lead_source:
-  :campaign      : :lead_source_campaign
-  :cold_call     : :lead_source_cold_call
-  :conference    : :lead_source_conference
-  :online        : :lead_source_online_marketing
-  :referral      : :lead_source_referral
-  :self          : :lead_source_self_generated
-  :web           : :lead_source_web_site
-  :word_of_mouth : :lead_source_word_of_mouth
-  :other         : :lead_source_other
+  - :campaign
+  - :cold_call
+  - :conference
+  - :online
+  - :referral
+  - :self
+  - :web
+  - :word_of_mouth
+  - :other
+
 
 # Use array of hashes for now to preserve sort order. For Ruby 1.9 or later
 # we can use regular hash since its insertion order will be preserved.

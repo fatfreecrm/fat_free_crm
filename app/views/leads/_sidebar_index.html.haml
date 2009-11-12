@@ -1,10 +1,10 @@
 .filters#filters
   = render :partial => "common/search"
-  - Setting.lead_status.each do |key, value|
+  - Setting.lead_status.each do |key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @lead_status_total[key]
-      = lead_status_checbox(key, @lead_status_total[key]) << " " << t(value)
+      = lead_status_checbox(key, @lead_status_total[key]) << " " << t(key)
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}

@@ -1,6 +1,6 @@
 .filters#filters
   = render :partial => "common/search"
-  - Setting.campaign_status.each do |key, value|
+  - Setting.campaign_status.each do |key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @campaign_status_total[key]

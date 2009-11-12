@@ -33,7 +33,7 @@ describe LeadsController do
       @status = Setting.lead_status
 
       get :index
-      (assigns[:lead_status_total].keys - (@status.keys << :all << :other)).should == []
+      (assigns[:lead_status_total].keys - (@status << :all << :other)).should == []
     end
 
     it "should filter out leads by status" do

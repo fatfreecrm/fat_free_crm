@@ -25,26 +25,21 @@ en-US:
   on_hold: On Hold
   completed: Completed
   called_off: Called Off
-  # campaign_status_planned: Planned
-  # campaign_status_started: Started
-  # campaign_status_on_hold: On Hold
-  # campaign_status_completed: Completed
-  # campaign_status_called_off: Called Off
 
-  lead_status_new: New
-  lead_status_contacted: Contacted
-  lead_status_converted: Converted
-  lead_status_rejected: Rejected
+  new: New
+  contacted: Contacted
+  converted: Converted
+  rejected: Rejected
 
-  lead_source_campaign: Campaign
-  lead_source_cold_call: Cold Call
-  lead_source_conference: Conference
-  lead_source_online_marketing: Online
-  lead_source_referral: Referral
-  lead_source_self_generated: Self
-  lead_source_web_site: Web
-  lead_source_word_of_mouth: Word of Mouth
-  lead_source_other: Other
+  campaign: Campaign
+  cold_call: Cold Call
+  conference: Conference
+  online: Online Marketing
+  referral: Referral
+  self: Self Generated
+  web: Website
+  word_of_mouth: Word of Mouth
+  other: Other
 
   opportunity_stage_prospecting: Prospecting
   opportunity_stage_analysis: Analysis
@@ -134,7 +129,7 @@ en-US:
   phone_small: phone
   mobile_small: mobile
   create_account_button: Create Account
-  create_account_link: Create account
+  create_account_link: Create Account
   save_account_button: Save Account
   accounts_options: Accounts Options
   account_name: Account name
@@ -160,7 +155,7 @@ en-US:
   campaigns_small: campaigns
   campaign: Campaign
   campaign_small: campaign
-  create_campaign_link: Create campaign
+  create_campaign_link: Create Campaign
   create_campaign_button: Create Campaign
   save_campaign_button: Save Campaign
   campaign_name: Name
@@ -207,7 +202,7 @@ en-US:
   contacts_small: contacts
   contact: Contact
   contact_small: contact
-  create_contact_link: Create contact
+  create_contact_link: Create Contact
   create_contact_button: Create Contact
   save_contact_button: Save Contact
   contacts_options: Contacts Options
@@ -239,7 +234,7 @@ en-US:
   completed_tasks: Completed Tasks
   assigned_tasks: Assigned Tasks
   pending_tasks: Pending Tasks
-  create_task_link: Create task
+  create_task_link: Create Task
   create_task_button: Create Task
   create_task_small: create a new task
   save_task_button: Save Task
@@ -274,7 +269,7 @@ en-US:
   lead: Lead
   lead_small: lead
   leads_small: leads
-  create_lead_link: Create lead
+  create_lead_link: Create Lead
   create_lead_button: Create Lead
   save_lead_button: Save Lead
   leads_options: Leads Options
@@ -366,7 +361,7 @@ en-US:
   opportunities_small: opportunities
   opportunity: Opportunity
   opportunity_small: opportunity
-  create_opportunity_link: Create opportunity
+  create_opportunity_link: Create Opportunity
   create_opportunity_button: Create Opportunity
   save_opportunity_button: Save Opportunity
   stage: Stage
@@ -417,7 +412,7 @@ en-US:
   #----------------------------------------------------------------------------
   users: Users
   user_confirm_delete_txt: A user can only be deleted if no related assets are left behind.
-  create_user_link: Create user
+  create_user_link: Create User
   create_user_button: Create User
   save_user: Save User
   user_is_admin: The user is Administrator
