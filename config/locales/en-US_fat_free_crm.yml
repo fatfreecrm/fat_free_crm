@@ -50,14 +50,14 @@ en-US:
   opportunity_stage_closed_won: Closed/Won
   opportunity_stage_closed_lost: Closed/Lost
 
-  task_category_call: Call
-  task_category_email: Email
-  task_category_follow_up: Follow-up
-  task_category_lunch: Lunch
-  task_category_meeting: Meeting
-  task_category_money: Money
-  task_category_presentation: Presentation
-  task_category_trip: Trip
+  call: Call
+  email: Email
+  follow_up: Follow-up
+  lunch: Lunch
+  meeting: Meeting
+  money: Money
+  presentation: Presentation
+  trip: Trip
 
   task_bucket_overdue: "Overdue"
   task_bucket_asap: "As Soon As Possible"

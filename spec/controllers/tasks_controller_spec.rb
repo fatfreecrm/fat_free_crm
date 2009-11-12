@@ -115,7 +115,7 @@ describe TasksController do
       Task.stub!(:new).and_return(@task)
       @users = [ Factory(:user) ]
       @bucket = Setting.translate(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
-      @category = Setting.invert(:task_category)
+      @category = Setting.unroll(:task_category)
 
       xhr :get, :new
       assigns[:task].should == @task
@@ -162,7 +162,7 @@ describe TasksController do
       @task = Factory(:task, :user => @current_user, :asset => @asset)
       @users = [ Factory(:user) ]
       @bucket = Setting.translate(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
-      @category = Setting.invert(:task_category)
+      @category = Setting.unroll(:task_category)
 
       xhr :get, :edit, :id => @task.id
       assigns[:task].should == @task

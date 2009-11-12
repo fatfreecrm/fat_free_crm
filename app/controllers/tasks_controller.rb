@@ -52,7 +52,7 @@ class TasksController < ApplicationController
     @task = Task.new
     @users = User.except(@current_user).all
     @bucket = Setting.translate(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
-    @category = Setting.invert(:task_category)
+    @category = Setting.unroll(:task_category)
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@asset", model.classify.constantize.my(@current_user).find(id))
@@ -74,7 +74,7 @@ class TasksController < ApplicationController
     @task = Task.tracked_by(@current_user).find(params[:id])
     @users = User.except(@current_user).all
     @bucket = Setting.translate(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
-    @category = Setting.invert(:task_category)
+    @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
     if params[:previous] =~ /(\d+)\z/
       @previous = Task.tracked_by(@current_user).find($1)

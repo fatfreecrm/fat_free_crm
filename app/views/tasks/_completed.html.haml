@@ -1,6 +1,6 @@
 %li[completed]{ highlightable(dom_id(completed, :tools)) }
   - unless completed.category.blank?
-    .strip{:class => completed.category}= t(Setting.task_category[completed.category.to_sym])
+    .strip{:class => completed.category}= t(completed.category)
   - else
     .strip{:style => "color:white"} #{t:category_other}
   %div

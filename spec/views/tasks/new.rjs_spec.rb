@@ -8,7 +8,7 @@ describe "/tasks/new.html.haml" do
     assigns[:task] = Factory.build(:task)
     assigns[:users] = [ @current_user ]
     assigns[:bucket] = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
-    assigns[:category] = Setting.invert(:task_category)
+    assigns[:category] = Setting.unroll(:task_category)
   end
 
   it "should toggle empty message div if it exists" do

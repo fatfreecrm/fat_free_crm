@@ -119,14 +119,14 @@ opportunity_stage_color:
   :lost          : pink
 
 task_category:
-  :call          : :task_category_call
-  :email         : :task_category_email
-  :folowup       : :task_category_follow_up
-  :lunch         : :task_category_lunch
-  :meeting       : :task_category_meeting
-  :money         : :task_category_money
-  :presentation  : :task_category_presentation
-  :trip          : :task_category_trip
+  - :call
+  - :email
+  - :follow_up
+  - :lunch
+  - :meeting
+  - :money
+  - :presentation
+  - :trip
 
 task_category_color:
   :call          : lavender
