@@ -1,10 +1,77 @@
 en-US:
 
-  # generic terms
+  # Generic terms
   #----------------------------------------------------------------------------
   all: All
   language: English
   not_implemented: Not implemented yet.
+
+  # Settings
+  #----------------------------------------------------------------------------
+  tab_dashboard: Dashboard
+  tab_tasks: Tasks
+  tab_campaigns: Campaigns
+  tab_leads: Leads
+  tab_accounts: Accounts
+  tab_contacts: Contacts
+  tab_opportunities: Opportunities
+
+  admin_tab_users: Users
+  admin_tab_settings: Settings
+  admin_tab_plugins: Plugins
+
+  planned: Planned
+  started: Started
+  on_hold: On Hold
+  completed: Completed
+  called_off: Called Off
+
+  new: New
+  contacted: Contacted
+  converted: Converted
+  rejected: Rejected
+
+  campaign: Campaign
+  cold_call: Cold Call
+  conference: Conference
+  online: Online Marketing
+  referral: Referral
+  self: Self Generated
+  web: Website
+  word_of_mouth: Word of Mouth
+  other: Other
+
+  prospecting: Prospecting
+  analysis: Analysis
+  presentation: Presentation
+  proposal: Proposal
+  negotiation: Negotiation
+  final_review: Final Review
+  won: Closed/Won
+  lost: Closed/Lost
+
+  call: Call
+  email: Email
+  follow_up: Follow-up
+  lunch: Lunch
+  meeting: Meeting
+  money: Money
+  presentation: Presentation
+  trip: Trip
+
+  overdue: "Overdue"
+  due_asap: "As Soon As Possible"
+  due_today: "Today"
+  due_tomorrow: "Tomorrow"
+  due_this_week: "This Week"
+  due_next_week: "Next Week"
+  due_later: "Sometime Later"
+
+  completed_today: "Today"
+  completed_yesterday: "Yesterday"
+  completed_last_week: "Last week"
+  completed_this_month: "This month"
+  completed_last_month: "Last month"
 
   # views/users:
   #----------------------------------------------------------------------------
@@ -64,7 +131,7 @@ en-US:
   phone_small: phone
   mobile_small: mobile
   create_account_button: Create Account
-  create_account_link: Create account
+  create_account_link: Create Account
   save_account_button: Save Account
   accounts_options: Accounts Options
   account_name: Account name
@@ -90,7 +157,7 @@ en-US:
   campaigns_small: campaigns
   campaign: Campaign
   campaign_small: campaign
-  create_campaign_link: Create campaign
+  create_campaign_link: Create Campaign
   create_campaign_button: Create Campaign
   save_campaign_button: Save Campaign
   campaign_name: Name
@@ -116,11 +183,6 @@ en-US:
   campaign_actual: Actual
   campaign_revenue_small: "{{value}} in revenue"
   campaign_conversion_small: "{{value}} conversion" 
-  campaign_status_called_off: Called Off
-  campaign_status_completed: Completed
-  campaign_status_on_hold: On Hold
-  campaign_status_planned: Planned
-  campaign_status_started: Started
   campaign_checkbox_called_off: Called Off
   campaign_checkbox_completed: Completed
   campaign_checkbox_on_hold: On Hold
@@ -142,7 +204,7 @@ en-US:
   contacts_small: contacts
   contact: Contact
   contact_small: contact
-  create_contact_link: Create contact
+  create_contact_link: Create Contact
   create_contact_button: Create Contact
   save_contact_button: Save Contact
   contacts_options: Contacts Options
@@ -174,19 +236,19 @@ en-US:
   completed_tasks: Completed Tasks
   assigned_tasks: Assigned Tasks
   pending_tasks: Pending Tasks
-  create_task_link: Create task
+  create_task_link: Create Task
   create_task_button: Create Task
   create_task_small: create a new task
   save_task_button: Save Task
   task_name: Task name
   task_small: task
-  completed_small: completed
   due: Due
-  due_now: due now
-  due_later: due sometime soon
-  overdue:  'late, was due on'
-  due_in: due in
-  due_today: due today
+  task_completed: completed
+  task_due_now: due now
+  task_due_later: due sometime soon
+  task_overdue: late, was due on
+  task_due_in: due in
+  task_due_today: due today
   assign_to: Assign to
   category: Category
   select_blank: '-- Select --'
@@ -202,17 +264,6 @@ en-US:
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
   total_tasks: Total {{value}}
-  tasks_due_overdue: Overdue
-  tasks_due_as_soon_as_possible: As Soon As Possible
-  tasks_due_today: Today
-  tasks_due_tomorrow: Tomorrow
-  tasks_due_this_week: This Week
-  tasks_due_next_week: Next Week
-  tasks_due_sometime_later: Sometime Later
-  tasks_due_yesterday: Yesterday
-  tasks_due_last_week: Last Week
-  tasks_due_this_month: This Month
-  tasks_due_last_month: Last Month
  
   # views/leads
   #----------------------------------------------------------------------------
@@ -220,7 +271,7 @@ en-US:
   lead: Lead
   lead_small: lead
   leads_small: leads
-  create_lead_link: Create lead
+  create_lead_link: Create Lead
   create_lead_button: Create Lead
   save_lead_button: Save Lead
   leads_options: Leads Options
@@ -229,10 +280,6 @@ en-US:
   status: Status
   source: Source
   rating: Rating
-  contacted: Contacted
-  converted: Converted
-  rejected: Rejected
-  new: New
   lead_info_small: lead contact
   lead_status_small: lead status
   lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
@@ -320,7 +367,7 @@ en-US:
   opportunities_small: opportunities
   opportunity: Opportunity
   opportunity_small: opportunity
-  create_opportunity_link: Create opportunity
+  create_opportunity_link: Create Opportunity
   create_opportunity_button: Create Opportunity
   save_opportunity_button: Save Opportunity
   stage: Stage
@@ -332,14 +379,6 @@ en-US:
   discount: Discount
   weighted_amount: Weighted amount
   currency: ($)
-  opportunity_stage_prospecting: Prospecting
-  opportunity_stage_analysis: Analysis
-  opportunity_stage_presentation: Presentation
-  opportunity_stage_proposal: Proposal
-  opportunity_stage_negotiation: Negotiation
-  opportunity_stage_final_review: Final Review
-  opportunity_stage_closed_won: Closed/Won
-  opportunity_stage_closed_lost: Closed/Lost
   from: from
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
@@ -414,7 +453,7 @@ en-US:
   #----------------------------------------------------------------------------
   users: Users
   user_confirm_delete_txt: A user can only be deleted if no related assets are left behind.
-  create_user_link: Create user
+  create_user_link: Create User
   create_user_button: Create User
   save_user: Save User
   user_is_admin: The user is Administrator

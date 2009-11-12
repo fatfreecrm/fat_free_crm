@@ -1,6 +1,6 @@
 %li[opportunity]{ highlightable(dom_id(opportunity, :tools)) }
   - if opportunity.stage
-    .strip{:class => opportunity.stage}= t('opportunity_stage_' << @stage[opportunity.stage.to_sym].snakecase)
+    .strip{:class => opportunity.stage}= t(opportunity.stage)
   - else
     .strip{:style => "color:white;"} #{t:category_other}
   %div

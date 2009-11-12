@@ -8,7 +8,7 @@ describe "/opportunities/options.rjs" do
     assigns[:sort_by]  = "opportunities.name ASC"
     assigns[:outline]  = "option_long"
     assigns[:per_page] = 20
-    assigns[:stage]    = Setting.as_hash(:opportunity_stage)
+    assigns[:stage]    = Setting.unroll(:opportunity_stage)
   end
 
   it "should toggle empty message div if it exists" do

@@ -7,8 +7,8 @@ describe "/campaigns/update.js.rjs" do
     login_and_assign
     assigns[:campaign] = @campaign = Factory(:campaign, :user => @current_user)
     assigns[:users] = [ @current_user ]
-    assigns[:status] = Setting.as_hash(:campaign_status)
-    assigns[:campaign_status_total] = { :called_off => 1, :completed => 1, :on_hold => 1, :planned => 1, :started => 1, :other => 1, :all => 6 }
+    assigns[:status] = Setting.campaign_status
+    assigns[:campaign_status_total] = { :called_off => 1, "Explicit" => 1 }
   end
  
   describe "no errors:" do

@@ -39,7 +39,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @contact = Contact.my(@current_user).find(params[:id])
-    @stage = Setting.as_hash(:opportunity_stage)
+    @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
 
     respond_to do |format|

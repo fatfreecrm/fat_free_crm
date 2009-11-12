@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe OpportunitiesController do
 
   def get_data_for_sidebar
-    @stage = Setting.as_hash(:opportunity_stage)
+    @stage = Setting.unroll(:opportunity_stage)
   end
 
   before(:each) do
@@ -31,7 +31,7 @@ describe OpportunitiesController do
     it "should expose the data for the opportunities sidebar" do
       get :index
       assigns[:stage].should == @stage
-      (assigns[:opportunity_stage_total].keys - (@stage.keys << :all << :other)).should == []
+      (assigns[:opportunity_stage_total].keys - (@stage.map(&:last) << :all << :other)).should == []
     end
 
     it "should filter out opportunities by stage" do
@@ -91,7 +91,7 @@ describe OpportunitiesController do
     describe "with mime type of HTML" do
       before(:each) do
         @opportunity = Factory(:opportunity, :id => 42)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
 
@@ -112,7 +112,7 @@ describe OpportunitiesController do
     describe "with mime type of XML" do
       it "should render the requested opportunity as xml" do
         @opportunity = Factory(:opportunity, :id => 42)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
@@ -204,7 +204,7 @@ describe OpportunitiesController do
       @opportunity = Factory(:opportunity, :id => 42, :user => @current_user, :campaign => nil)
       @account  = Account.new(:user => @current_user)
       @users = [ Factory(:user) ]
-      @stage = Setting.as_hash(:opportunity_stage)
+      @stage = Setting.unroll(:opportunity_stage)
       @accounts = [ Factory(:account, :user => @current_user) ]
 
       xhr :get, :edit, :id => 42
@@ -279,7 +279,7 @@ describe OpportunitiesController do
       before(:each) do
         @opportunity = Factory.build(:opportunity, :user => @current_user)
         Opportunity.stub!(:new).and_return(@opportunity)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
       end
 
       it "should expose a newly created opportunity as @opportunity and render [create] template" do
@@ -354,7 +354,7 @@ describe OpportunitiesController do
       it "should expose a newly created but unsaved opportunity as @opportunity with blank @account and render [create] template" do
         @opportunity = Factory.build(:opportunity, :name => nil, :campaign => nil, :user => @current_user)
         Opportunity.stub!(:new).and_return(@opportunity)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
         @users = [ Factory(:user) ]
         @account = Account.new(:user => @current_user)
         @accounts = [ Factory(:account, :user => @current_user) ]
@@ -372,7 +372,7 @@ describe OpportunitiesController do
         @account = Factory(:account, :id => 42, :user => @current_user)
         @opportunity = Factory.build(:opportunity, :name => nil, :campaign => nil, :user => @current_user)
         Opportunity.stub!(:new).and_return(@opportunity)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
         @users = [ Factory(:user) ]
 
         # Expect to redraw [create] form with selected account.
@@ -415,7 +415,7 @@ describe OpportunitiesController do
 
       it "should update the requested opportunity, expose it as @opportunity, and render [update] template" do
         @opportunity = Factory(:opportunity, :id => 42)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
 
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}, :users => %w(1 2 3)
         @opportunity.reload.name.should == "Hello world"
@@ -777,7 +777,7 @@ describe OpportunitiesController do
     it "should expose filtered opportunities as @opportunity and render [filter] template" do
       session[:filter_by_opportunity_stage] = "negotiation,analysis"
       @opportunities = [ Factory(:opportunity, :stage => "prospecting", :user => @current_user) ]
-      @stage = Setting.as_hash(:opportunity_stage)
+      @stage = Setting.unroll(:opportunity_stage)
 
       xhr :get, :filter, :stage => "prospecting"
       assigns(:opportunities).should == @opportunities

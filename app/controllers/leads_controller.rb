@@ -178,7 +178,7 @@ class LeadsController < ApplicationController
     @users = User.except(@current_user).all
     @account, @opportunity, @contact = @lead.promote(params)
     @accounts = Account.my(@current_user).all(:order => "name")
-    @stage = Setting.as_hash(:opportunity_stage)
+    @stage = Setting.unroll(:opportunity_stage)
 
     respond_to do |format|
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?
@@ -325,7 +325,7 @@ class LeadsController < ApplicationController
       instance_variable_set("@#{related}", @lead.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
       @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }
-      Setting.lead_status.keys.each do |key|
+      Setting.lead_status.each do |key|
         @lead_status_total[key] = Lead.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
         @lead_status_total[:other] -= @lead_status_total[key]
       end

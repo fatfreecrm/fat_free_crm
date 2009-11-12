@@ -33,7 +33,7 @@ describe LeadsController do
       @status = Setting.lead_status
 
       get :index
-      (assigns[:lead_status_total].keys - (@status.keys << :all << :other)).should == []
+      (assigns[:lead_status_total].keys - (@status << :all << :other)).should == []
     end
 
     it "should filter out leads by status" do
@@ -688,7 +688,7 @@ describe LeadsController do
       assigns[:accounts].should == [ @account ]
       assigns[:opportunity].should == @opportunity
       assigns[:contact].should == @contact
-      assigns[:stage].should be_instance_of(Hash)
+      assigns[:stage].should be_instance_of(Array)
       response.should render_template("leads/promote")
     end
 

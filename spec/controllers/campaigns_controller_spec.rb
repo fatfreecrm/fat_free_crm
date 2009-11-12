@@ -32,7 +32,7 @@ describe CampaignsController do
       @campaigns = [ Factory(:campaign, :user => @current_user) ]
 
       get :index
-      (assigns[:campaign_status_total].keys - (@status.keys << :all << :other)).should == []
+      (assigns[:campaign_status_total].keys - (@status << :all << :other)).should == []
     end
 
     it "should filter out campaigns by status" do
@@ -93,7 +93,7 @@ describe CampaignsController do
     describe "with mime type of HTML" do
       before(:each) do
         @campaign = Factory(:campaign, :id => 42, :user => @current_user)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
 

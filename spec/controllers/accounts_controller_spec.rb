@@ -61,7 +61,7 @@ describe AccountsController do
     describe "with mime type of HTML" do
       before(:each) do
         @account = Factory(:account, :user => @current_user)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
 
@@ -82,7 +82,7 @@ describe AccountsController do
     describe "with mime type of XML" do
       it "should render the requested account as xml" do
         @account = Factory(:account, :user => @current_user)
-        @stage = Setting.as_hash(:opportunity_stage)
+        @stage = Setting.unroll(:opportunity_stage)
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @account.id

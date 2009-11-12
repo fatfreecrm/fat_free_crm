@@ -11,7 +11,7 @@ describe "/campaigns/create.js.rjs" do
     before(:each) do
       assigns[:campaign] = @campaign = Factory(:campaign)
       assigns[:campaigns] = [ @campaign ].paginate
-      assigns[:campaign_status_total] = { :called_off => 1, :completed => 1, :on_hold => 1, :planned => 1, :started => 1, :other => 1, :all => 6 }
+      assigns[:campaign_status_total] = { :called_off => 1, "Explicit" => 1 }
       render "campaigns/create.js.rjs"
     end
 
@@ -25,7 +25,7 @@ describe "/campaigns/create.js.rjs" do
     it "should update pagination" do
       response.should have_rjs("paginate")
     end
-
+    
     it "should update Campaigns sidebar filters" do
       response.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")

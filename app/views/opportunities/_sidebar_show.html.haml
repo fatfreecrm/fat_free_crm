@@ -1,7 +1,7 @@
 .panel#summary
   .caption #{t:opportunity_summary}
   %li
-    %dt= @opportunity.stage ? (t('opportunity_stage_' << @stage[@opportunity.stage.to_sym].snakecase) || t(:n_a)) : t(:category_other)
+    %dt= @opportunity.stage ? t(@opportunity.stage) : t(:other)
     %tt #{t:stage}:
   %li
     %dt= @opportunity.closes_on ? @opportunity.closes_on.strftime("%b %e") : t(:n_a)

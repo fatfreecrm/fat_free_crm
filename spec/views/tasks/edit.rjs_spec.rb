@@ -7,7 +7,7 @@ describe "/tasks/edit.js.rjs" do
     login_and_assign
     assigns[:users] = [ @current_user ]
     assigns[:bucket] = Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ]
-    assigns[:category] = Setting.invert(:task_category)
+    assigns[:category] = Setting.unroll(:task_category)
   end
 
 

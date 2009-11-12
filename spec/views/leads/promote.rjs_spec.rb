@@ -67,7 +67,7 @@ describe "/leads/promote.js.rjs" do
       before(:each) do
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
         assigns[:campaign] = Factory(:campaign)
-        assigns[:stage] = Setting.as_hash(:opportunity_stage)
+        assigns[:stage] = Setting.unroll(:opportunity_stage)
         assigns[:opportunity] = @opportunity = Factory(:opportunity)
       end
 

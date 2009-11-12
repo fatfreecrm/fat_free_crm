@@ -1,10 +1,10 @@
 .filters#filters
   = render :partial => "common/search"
-  - Setting.invert(:lead_status).each do |key, value|
+  - Setting.lead_status.each do |key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
-        = @lead_status_total[value]
-      = lead_status_checbox(value, @lead_status_total[value]) << " " << t(key.downcase)
+        = @lead_status_total[key]
+      = lead_status_checbox(key, @lead_status_total[key]) << " " << t(key)
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}
