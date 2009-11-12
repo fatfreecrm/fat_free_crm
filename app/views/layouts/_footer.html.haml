@@ -2,6 +2,6 @@
   Powered by #{link_to "Fat Free CRM", "http://www.fatfreecrm.com", :popup => true }
   v#{FatFreeCRM::Version} &copy; 2008-#{Date.today.year} by Michael Dvorkin
   - unless tabless_layout?
-    | #{link_to("About", "#about", :rel => "facebox")}
+    | #{link_to(t(:about), "#about", :rel => "facebox")}
 %br
 = render :partial => "layouts/about"

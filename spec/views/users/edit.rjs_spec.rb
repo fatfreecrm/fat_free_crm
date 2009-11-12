@@ -25,7 +25,7 @@ describe "/users/edit.js.rjs" do
     response.should include_text('crm.hide_form("upload_avatar")')
     response.should include_text('crm.hide_form("change_password")')
     response.should include_text('crm.flip_form("edit_profile")')
-    response.should include_text('crm.set_title("edit_profile")')
+    response.should include_text('crm.set_title("edit_profile"')
   end
 
 end

@@ -1,17 +1,16 @@
 #about{ hidden }
   %h3
-    Fat Free CRM version
+    #{t:about_ff_crm_version}
     %span.cool== v#{FatFreeCRM::Version}
     == (#{ActiveRecord::Base.connection.adapter_name.downcase})
   %p
-    Thank you for using Fat Free CRM! We appreciate your business and hope
-    you enjoy using the software.
+    #{t:about_thank_you_txt}
     %p
-      Fat Free CRM resources (links open a new window):
+      #{t:about_ff_crm_resources}:
       %ul{:style => "margin: 0px 0px 0px 15px"}
-        %li== &raquo; #{link_to "Home page", "http://www.fatfreecrm.com", :popup => true}
-        %li== &raquo; #{link_to "Project page", "http://github.com/michaeldv/fat_free_crm/tree/master", :popup => true}
-        %li== &raquo; #{link_to "Features and bugs", "http://fatfreecrm.lighthouseapp.com", :popup => true}
-        %li== &raquo; #{link_to "Twitter commit updates", "http://twitter.com/fatfreecrm", :popup => true}
-        %li== &raquo; #{link_to "Discussion group for users", "http://groups.google.com/group/fat-free-crm-users", :popup => true}
-        %li== &raquo; #{link_to "Discussion group for developers", "http://groups.google.com/group/fat-free-crm-dev", :popup => true}
+        %li== &raquo; #{link_to t(:about_home_page), "http://www.fatfreecrm.com", :popup => true}
+        %li== &raquo; #{link_to t(:about_project_page), "http://github.com/michaeldv/fat_free_crm/tree/master", :popup => true}
+        %li== &raquo; #{link_to t(:about_features), "http://fatfreecrm.lighthouseapp.com", :popup => true}
+        %li== &raquo; #{link_to t(:about_twitter), "http://twitter.com/fatfreecrm", :popup => true}
+        %li== &raquo; #{link_to t(:about_user_group), "http://groups.google.com/group/fat-free-crm-users", :popup => true}
+        %li== &raquo; #{link_to t(:about_dev_group), "http://groups.google.com/group/fat-free-crm-dev", :popup => true}

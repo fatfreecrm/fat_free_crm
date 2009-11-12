@@ -14,7 +14,8 @@ ru:
   phone: Телефон
   mobile: Мобильный
   profile: Профиль
-  my: Мой
+  my_profile: Мой Профиль
+  edit_profile: Изменить Профиль
   edit_profile_link: Изменить профиль
   upload_picture_link: Загрузить фото
   change_password_link: Изменить пароль
@@ -45,6 +46,7 @@ ru:
   sign_up_button: Зарегистрироваться
   sign_up: Регистрация
   already_signed_up: Уже регистрировались?
+  language: Язык
 
   # views/auth:
   #----------------------------------------------------------------------------
@@ -281,6 +283,7 @@ ru:
   sort_by: Сортировать {{models}} по {{field}}.
   sort_by_displaying: Сортировать {{models}} по {{field}} показывая имя {{position}} фамилии. 
   show_per_page: Показывать {{models}} в {{format}} формате по {{number}} записей на странице. 
+  activity_options: Показывать действия {{models}} произведенные пользователем {{user}} за последние {{period}}
 
   option_first_name: имени
   option_last_name: фамилии
@@ -307,6 +310,9 @@ ru:
 
   option_brief: кратком
   option_long: полном
+
+  option_all_users: всеми
+  option_all: все
 
   # views/opportunities
   #----------------------------------------------------------------------------
@@ -340,7 +346,7 @@ ru:
   opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
   opportunity_discount_text: со скидкой {{value}}
   opportunity_no_discount_text: без скидки
-  opportunity_probability_text: и вероятностью {{count}}
+  opportunity_probability_text: и вероятностью {{value}}
   opportunity_closing_date_text: дата завершения {{value}}
   opportunity_closed_text: завершилось {{time_ago}} назад {{date}}
   opportunity_expected_to_close_text: завершение ожидается через {{time}} - {{date}}
@@ -383,29 +389,70 @@ ru:
 
   # views/home:
   #----------------------------------------------------------------------------
+  action_created: добавил(а)
+  action_updated: изменил(а)
+  action_deleted: удалил(а)
+  action_completed: завершил(а)
+  action_rejected: закрыл(а)
+  action_commented: прокомментировал(а)
+  action_reassigned: перепоручил(а)
+  action_rescheduled: перенес(ла)
+  action_viewed: посмотрел(а)
+  subject_task: задание
+  subject_campaign: кампанию
+  subject_lead: наводку
+  subject_account: контрагента
+  subject_contact: контакт
+  subject_opportunity: перспективу
+  recent_activity: @ru@Recent Activity
+  no_activity_records: @ru@No activity records found.
+  recent_activity_options: @ru@Recent Activity Options
+
+  # views/layout:
+  #----------------------------------------------------------------------------
+  about: О программе
+  welcome: Добро пожаловать
+  quick_find: Быстрый поиск
+  admin: Админ
+  logout: @ru@Logout
+  about_ff_crm_version: Fat Free CRM версия
+  about_thank_you_txt: Спасибо что Вы пользуетесь Fat Free CRM! Мы ценим ваш бизнес и надеемся что Вам нравится наше приложение.
+  about_ff_crm_resources: Полезные ресурсы по Fat Free CRM (ссылки открываются в новом окне)
+  about_home_page: Домашняя страница
+  about_project_page: @ru@Project page
+  about_features: @ru@Features and bugs
+  about_twitter: @ru@Twitter commit updates
+  about_user_group: @ru@Discussion group for users
+  about_dev_group: @ru@Discussion group for developers
 
   # views/admin:
   #----------------------------------------------------------------------------
   users: Пользователи
-  user_confirm_delete_txt: @ru@A user can only be deleted if no related assets are left behind.
+  user_confirm_delete_txt: Пользователя можно удалить только в том случае, если к нему не привязаны никакие объекты.
   create_user_link: Добавить пользователя
   create_user_button: Создать Пользователя
   save_user: Сохранить Изменения
   user_is_admin: Дать права Администратора
-  personal_information: @ru@Personal Information
-  user_signed_up: @ru@Signed Up
-  user_suspended: @ru@Suspended
+  personal_information: Личные Данные
+  user_signed_up: Зарегистрирован
+  user_suspended: Заблокирован
   user_admin: Админ.
-  user_active: @ru@Active
+  user_active: Активен
   user_awaits_approval: ждет подтверждения
   user_never_logged_in: еще не заходил(а)
   last_seen: последний визит {{value}} назад
   user_since: является пользователем с {{value}}
   user_signed_up_on: зарегистрирован(а) {{value}}
-  user_suspended_on: @ru@suspended {{value}}
-  suspend: @ru@Suspend
-  approve: @ru@Approve
-  reactivate: @ru@Reactivate
+  user_suspended_on: заблокирован(а) {{value}}
+  suspend: Заблокировать
+  approve: Подтвердить
+  reactivate: Разблокиривать
+
+  # views/comments:
+  #----------------------------------------------------------------------------
+  edit_comment: Изменить комментарий
+  update: Сохранить
+  show: Показать
 
   # models/activity
   #----------------------------------------------------------------------------

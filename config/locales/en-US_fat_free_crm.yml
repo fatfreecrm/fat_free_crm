@@ -80,7 +80,8 @@ en-US:
   phone: Phone
   mobile: Mobile
   profile: Profile
-  my: My
+  my_profile: My Profile
+  edit_profile: Edit Profile
   edit_profile_link: Edit profile
   upload_picture_link: Upload picture
   change_password_link: Change password
@@ -111,6 +112,7 @@ en-US:
   sign_up_button: Sign Up
   sign_up: Sign Up
   already_signed_up: Already signed up?
+  language: Language
 
   # views/auth:
   #----------------------------------------------------------------------------
@@ -328,6 +330,7 @@ en-US:
   sort_by: Sort {{models}} by {{field}}.
   sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name. 
   show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
+  activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}
 
   option_first_name: first name
   option_last_name: last name
@@ -355,6 +358,9 @@ en-US:
   option_brief: brief
   option_long: long
 
+  option_all_users: all users
+  option_all: all
+
   # views/opportunities
   #----------------------------------------------------------------------------
   opportunities: Opportunities
@@ -378,7 +384,7 @@ en-US:
   opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
   opportunity_discount_text: with {{value}} discount
   opportunity_no_discount_text: with no discount
-  opportunity_probability_text:  and {{count}} probability
+  opportunity_probability_text:  and {{value}} probability
   opportunity_closing_date_text: closing date is {{value}}
   opportunity_closed_text: closed {{time_ago}} ago on {{date}}
   opportunity_expected_to_close_text: expected to close in {{time}} on {{date}}
@@ -407,6 +413,41 @@ en-US:
   
   # views/home:
   #----------------------------------------------------------------------------
+  action_created: created
+  action_updated: updated
+  action_deleted: deleted
+  action_completed: completed
+  action_rejected: rejected
+  action_commented: commented on
+  action_reassigned: reassigned
+  action_rescheduled: rescheduled
+  action_viewed: viewed
+  subject_task: task
+  subject_campaign: campaign
+  subject_lead: lead
+  subject_account: account
+  subject_contact: contact
+  subject_opportunity: opportunity
+  recent_activity: Recent Activity
+  no_activity_records: No activity records found.
+  recent_activity_options: Recent Activity Options
+
+  # views/layout:
+  #----------------------------------------------------------------------------
+  about: About
+  welcome: Welcome
+  quick_find: Quick find
+  admin: Admin
+  logout: Logout
+  about_ff_crm_version: Fat Free CRM version
+  about_thank_you_txt: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
+  about_ff_crm_resources: Fat Free CRM resources (links open a new window)
+  about_home_page: Home page
+  about_project_page: Project page
+  about_features: Features and bugs
+  about_twitter: Twitter commit updates
+  about_user_group: Discussion group for users
+  about_dev_group: Discussion group for developers
 
   # views/admin:
   #----------------------------------------------------------------------------
@@ -430,6 +471,12 @@ en-US:
   suspend: Suspend
   approve: Approve
   reactivate: Reactivate
+
+  # views/comments:
+  #----------------------------------------------------------------------------
+  edit_comment: Editing comment
+  update: Update
+  show: Show
 
   # models/activity
   #----------------------------------------------------------------------------
