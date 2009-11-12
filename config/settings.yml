@@ -96,14 +96,14 @@ lead_source:
 # Use array of hashes for now to preserve sort order. For Ruby 1.9 or later
 # we can use regular hash since its insertion order will be preserved.
 opportunity_stage: [
-  [ "Prospecting",  :prospecting  ],
-  [ "Analysis",     :analysis     ],
-  [ "Presentation", :presentation ],
-  [ "Proposal",     :proposal     ],
-  [ "Negotiation",  :negotiation  ],
-  [ "Final Review", :final_review ],
-  [ "Closed/Won",   :won          ],
-  [ "Closed/Lost",  :lost         ]
+  [ :opportunity_stage_prospecting,  :prospecting  ],
+  [ :opportunity_stage_analysis,     :analysis     ],
+  [ :opportunity_stage_presentation, :presentation ],
+  [ :opportunity_stage_proposal,     :proposal     ],
+  [ :opportunity_stage_negotiation,  :negotiation  ],
+  [ :opportunity_stage_final_review, :final_review ],
+  [ :opportunity_stage_closed_won,   :won          ],
+  [ :opportunity_stage_closed_lost,  :lost         ]
 ]
 
 opportunity_stage_color:

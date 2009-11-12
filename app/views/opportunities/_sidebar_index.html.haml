@@ -4,7 +4,7 @@
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @opportunity_stage_total[key]
-      = opportunity_stage_checbox(key, @opportunity_stage_total[key]) << " " << t('opportunity_stage_' << value.snakecase)
+      = opportunity_stage_checbox(key, @opportunity_stage_total[key]) << " " << t(value)
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}

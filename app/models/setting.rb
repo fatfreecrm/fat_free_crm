@@ -62,6 +62,11 @@ class Setting < ActiveRecord::Base
   end
 
   #-------------------------------------------------------------------
+  def self.translate(setting)
+    send(setting).map { |key, value| [ key.is_a?(Symbol) ? I18n.t(key) : key, value ] }
+  end
+
+  #-------------------------------------------------------------------
   def self.invert(setting)
     send(setting).map { |key, value| [ value.is_a?(Symbol) ? I18n.t(value) : value, key ] }.sort
   end
