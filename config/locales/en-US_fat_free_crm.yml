@@ -8,28 +8,28 @@ en-US:
 
   # settings
   #----------------------------------------------------------------------------
-  tab_dashboard: Dashboard!
-  tab_tasks: Tasks!
-  tab_campaigns: Campaigns!
-  tab_leads: Leads!
-  tab_accounts: Accounts!
-  tab_contacts: Contacts!
-  tab_opportunities: Opportunities!
+  tab_dashboard: Dashboard
+  tab_tasks: Tasks
+  tab_campaigns: Campaigns
+  tab_leads: Leads
+  tab_accounts: Accounts
+  tab_contacts: Contacts
+  tab_opportunities: Opportunities
 
-  admin_tab_users: Users!
-  admin_tab_settings: Settings!
-  admin_tab_plugins: Plugins!
+  admin_tab_users: Users
+  admin_tab_settings: Settings
+  admin_tab_plugins: Plugins
 
-  campaign_status_planned: Planned!
-  campaign_status_started: Started!
-  campaign_status_on_hold: On Hold!
-  campaign_status_completed: Completed!
-  campaign_status_called_off: Called Off!
+  campaign_status_planned: Planned
+  campaign_status_started: Started
+  campaign_status_on_hold: On Hold
+  campaign_status_completed: Completed
+  campaign_status_called_off: Called Off
 
-  lead_status_new: New!
-  lead_status_contacted: Contacted!
-  lead_status_converted: Converted!
-  lead_status_rejected: Rejected!
+  lead_status_new: New
+  lead_status_contacted: Contacted
+  lead_status_converted: Converted
+  lead_status_rejected: Rejected
 
   lead_source_campaign: Campaign
   lead_source_cold_call: Cold Call

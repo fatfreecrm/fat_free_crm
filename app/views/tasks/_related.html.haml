@@ -1,6 +1,6 @@
 %li[related]{ highlightable(dom_id(related, :tools)) }
   - unless related.category.blank?
-    .strip{:class => related.category}= Setting.task_category[related.category.to_sym]
+    .strip{:class => related.category}= t(Setting.task_category[related.category.to_sym])
   - else
     .strip{:style => "color:white"} #{t:category_other}
   %div
