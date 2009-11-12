@@ -18,7 +18,7 @@
 class OpportunitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :load_settings, :except => [ :new, :destroy ]
+  before_filter :load_settings
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
@@ -273,9 +273,8 @@ class OpportunitiesController < ApplicationController
     if related
       instance_variable_set("@#{related}", @opportunity.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      load_settings
       @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
-      @stage.keys.each do |key|
+      @stage.each do |value, key|
         @opportunity_stage_total[key] = Opportunity.my(@current_user).count(:conditions => [ "stage=?", key.to_s ])
         @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
       end
@@ -285,7 +284,7 @@ class OpportunitiesController < ApplicationController
 
   #----------------------------------------------------------------------------
   def load_settings
-    @stage = Setting.to_hash(:opportunity_stage)
+    @stage = Setting.unroll(:opportunity_stage)
   end
 
 end

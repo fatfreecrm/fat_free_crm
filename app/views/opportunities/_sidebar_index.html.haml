@@ -1,10 +1,10 @@
 .filters#filters
   = render :partial => "common/search"
-  - Setting.opportunity_stage.each do |value, key|
+  - @stage.each do |value, key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @opportunity_stage_total[key]
-      = opportunity_stage_checbox(key, @opportunity_stage_total[key]) << " " << t(value)
+      = opportunity_stage_checbox(key, @opportunity_stage_total[key]) << " " << value
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}

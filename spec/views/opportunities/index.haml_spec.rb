@@ -5,7 +5,7 @@ describe "/opportunities/index.html.erb" do
   
   before(:each) do
     login_and_assign
-    assigns[:stage] = Setting.to_hash(:opportunity_stage)
+    assigns[:stage] = Setting.unroll(:opportunity_stage)
   end
 
   it "should render list of accounts if list of opportunities is not empty" do

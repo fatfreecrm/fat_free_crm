@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/new.html.erb" do
+describe "/opportunities/new.js.rjs" do
   include OpportunitiesHelper
   
   before(:each) do
@@ -10,6 +10,7 @@ describe "/opportunities/new.html.erb" do
     assigns[:users] = [ @current_user ]
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]
+    assigns[:stage] = Setting.unroll(:opportunity_stage)
   end
  
   it "should toggle empty message div if it exists" do

@@ -10,6 +10,7 @@ describe "/opportunities/_create.html.haml" do
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]
     assigns[:users] = [ @current_user ]
+    assigns[:stage] = Setting.unroll(:opportunity_stage)
   end
 
   it "should render [create opportunity] form" do

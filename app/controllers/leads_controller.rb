@@ -178,7 +178,7 @@ class LeadsController < ApplicationController
     @users = User.except(@current_user).all
     @account, @opportunity, @contact = @lead.promote(params)
     @accounts = Account.my(@current_user).all(:order => "name")
-    @stage = Setting.to_hash(:opportunity_stage)
+    @stage = Setting.unroll(:opportunity_stage)
 
     respond_to do |format|
       if @account.errors.empty? && @opportunity.errors.empty? && @contact.errors.empty?

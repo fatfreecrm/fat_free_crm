@@ -1,12 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/edit.html.erb" do
+describe "/opportunities/_edit.html.haml" do
   include OpportunitiesHelper
   
   before(:each) do
     login_and_assign
     assigns[:account] = @account = Factory(:account)
     assigns[:accounts] = [ @account ]
+    assigns[:stage] = Setting.unroll(:opportunity_stage)
   end
 
   it "should render [edit opportunity] form" do

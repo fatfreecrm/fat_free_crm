@@ -41,14 +41,14 @@ en-US:
   word_of_mouth: Word of Mouth
   other: Other
 
-  opportunity_stage_prospecting: Prospecting
-  opportunity_stage_analysis: Analysis
-  opportunity_stage_presentation: Presentation
-  opportunity_stage_proposal: Proposal
-  opportunity_stage_negotiation: Negotiation
-  opportunity_stage_final_review: Final Review
-  opportunity_stage_closed_won: Closed/Won
-  opportunity_stage_closed_lost: Closed/Lost
+  prospecting: Prospecting
+  analysis: Analysis
+  presentation: Presentation
+  proposal: Proposal
+  negotiation: Negotiation
+  final_review: Final Review
+  won: Closed/Won
+  lost: Closed/Lost
 
   call: Call
   email: Email
