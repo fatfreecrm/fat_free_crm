@@ -2,7 +2,7 @@
   - if lead.status
     .strip{:class => lead.status} #{t(lead.status)}
   - else
-    .strip{:style => "color:white;"} #{t:category_other}
+    .strip{:style => "color:white;"} #{t:other}
   .tools{ invisible, :id => dom_id(lead, :tools) }
     %small
       = link_to_edit(lead) + " | "
@@ -18,9 +18,11 @@
   = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)
   %tt
     - if lead.company? && lead.title?
-      = lead.title << " #{t:at} " << lead.company
+      -# works_at: "{{job_title}} at {{company}}"
+      = t(:works_at, :job_title => lead.title, :company => lead.company)
     - else
       = lead.company if lead.company?
+      = lead.title if lead.title?
     -#= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
     = "&ndash; #{t:referred_by_small} #{lead.referred_by}" if lead.referred_by?
   - unless @current_user.preference[:leads_outline] == "brief"

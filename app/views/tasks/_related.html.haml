@@ -2,7 +2,7 @@
   - unless related.category.blank?
     .strip{:class => related.category}= t(related.category)
   - else
-    .strip{:style => "color:white"} #{t:category_other}
+    .strip{:style => "color:white"} #{t:other}
   %div
     .tools{ invisible, :id => dom_id(related, :tools) }
     - if related.assigned_to

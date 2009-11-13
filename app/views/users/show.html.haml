@@ -1,8 +1,8 @@
 .title_tools
   - if @user == @current_user
-    = link_to_inline(:edit_profile, edit_user_path(@user), :text => t(:edit_profile_link)) + " | "
-    = link_to_inline(:upload_avatar, avatar_user_path(@user), :text => t(:upload_picture_link)) + " | "
-    = link_to_inline(:change_password, password_user_path(@user), :text => t(:change_password_link))
+    = link_to_inline(:edit_profile, edit_user_path(@user), :text => t(:edit_profile)) + " | "
+    = link_to_inline(:upload_avatar, avatar_user_path(@user), :text => t(:upload_picture)) + " | "
+    = link_to_inline(:change_password, password_user_path(@user), :text => t(:change_password))
 .title#title= (@user == @current_user ? t(:my_profile) : t(:profile))
 %div#edit_profile{ hidden }
 %div#upload_avatar{ hidden }

@@ -1,6 +1,6 @@
 - if @user == @current_user
   %div(style="float:right")
-    #{t:language}: #{link_to(language_for(@current_user), "#", :id => :locale)}
+    #{t:profile_language}: #{link_to(language_for(@current_user), "#", :id => :locale)}
 
 %table(cellspacing="0" cellpadding="0")
   %tr
@@ -9,7 +9,7 @@
     %td(valign="top")
       %h3= @user.full_name + " (#{@user.username})"
       - if !@user.title.blank? && !@user.company.blank?
-        %div== #{@user.title} #{t:at} #{@user.company}
+        %div= t(:works_at, :job_title => @user.title, :company => @user.company)
       - else
         = @user.title unless @user.title.blank?
         = @user.company unless @user.company.blank?

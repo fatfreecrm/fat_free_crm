@@ -82,10 +82,8 @@ en-US:
   profile: Profile
   my_profile: My Profile
   edit_profile: Edit Profile
-  edit_profile_link: Edit profile
-  upload_picture_link: Upload picture
-  change_password_link: Change password
-  change_password_button: Change Password
+  upload_picture: Upload Picture
+  change_password: Change Password
   current_password: Current password
   new_password: New password
   password_confirmation: Confirm new password
@@ -99,20 +97,19 @@ en-US:
   yahoo: Yahoo IM
   google: Google IM
   skype: Skype
-  save_profile_button: Save Profile
+  save_profile: Save Profile
   image_help: The image file you upload will be automatically resized to 75 x 75 pixels. Supported formats are GIF, JPG, and PNG.
   image_file: Image file
-  use_gravatar_link: Use Gravatar
+  use_gravatar: Use Gravatar
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
   here: here
-  upload_picture_button: Upload Picture
   login_now_link: Login Now!
   username: Username
   password: Password
   sign_up_button: Sign Up
   sign_up: Sign Up
   already_signed_up: Already signed up?
-  language: Language
+  profile_language: Language
 
   # views/auth:
   #----------------------------------------------------------------------------
@@ -130,9 +127,8 @@ en-US:
   account_small: account
   phone_small: phone
   mobile_small: mobile
-  create_account_button: Create Account
-  create_account_link: Create Account
-  save_account_button: Save Account
+  create_account: Create Account
+  save_account: Save Account
   accounts_options: Accounts Options
   account_name: Account name
   assigned_to: Assigned to
@@ -141,7 +137,7 @@ en-US:
   fax: Fax
   billing_address: Billing address
   shipping_address: Shipping address
-  same_as_billing_link: same as billing
+  same_as_billing: same as billing
   account_permissions_intro: "By default only you will have access to the account. You can change account permissions later."
   private_txt: Keep it private, do not share with others
   public_txt: Share it with everyone
@@ -157,9 +153,8 @@ en-US:
   campaigns_small: campaigns
   campaign: Campaign
   campaign_small: campaign
-  create_campaign_link: Create Campaign
-  create_campaign_button: Create Campaign
-  save_campaign_button: Save Campaign
+  create_campaign: Create Campaign
+  save_campaign: Save Campaign
   campaign_name: Name
   start_date: Start date
   end_date: End date
@@ -204,16 +199,15 @@ en-US:
   contacts_small: contacts
   contact: Contact
   contact_small: contact
-  create_contact_link: Create Contact
-  create_contact_button: Create Contact
-  save_contact_button: Save Contact
+  create_contact: Create Contact
+  save_contact: Save Contact
   contacts_options: Contacts Options
   referred_by: Referred by
   referred_by_small: referred by
   at: at
   department: Department
   department_small: '{{value}} department'
-  other: Other
+  alt_email_small: Other
   myself: Myself
   permissions_intro: By default only you will have access to the {{value}}. You can change permissions later.
   extra_info: Extra Information
@@ -236,14 +230,14 @@ en-US:
   completed_tasks: Completed Tasks
   assigned_tasks: Assigned Tasks
   pending_tasks: Pending Tasks
-  create_task_link: Create Task
-  create_task_button: Create Task
+  create_task: Create Task
   create_task_small: create a new task
-  save_task_button: Save Task
+  save_task: Save Task
   task_name: Task name
   task_small: task
   due: Due
   task_completed: completed
+  task_completed_by: completed {{time_ago}} ago by {{user}}
   task_due_now: due now
   task_due_later: due sometime soon
   task_overdue: late, was due on
@@ -256,7 +250,6 @@ en-US:
   no_tasks: "You don't have any {{value}} tasks"
   feel_free: Feel free to
   related: 're:'
-  category_other: Other
   task_assigned: The task has been assigned to {{value}}
   task_pending: The task has been moved to pending tasks
   task_created: The task has been created
@@ -271,9 +264,8 @@ en-US:
   lead: Lead
   lead_small: lead
   leads_small: leads
-  create_lead_link: Create Lead
-  create_lead_button: Create Lead
-  save_lead_button: Save Lead
+  create_lead: Create Lead
+  save_lead: Save Lead
   leads_options: Leads Options
   convert: Convert
   reject: Reject
@@ -284,7 +276,7 @@ en-US:
   lead_status_small: lead status
   lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
   create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  convert_lead_button: Convert Lead
+  convert_lead: Convert Lead
   convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
   total_leads: Total Leads
@@ -319,7 +311,7 @@ en-US:
   recent_items: Recent Items
   no_recent_items_txt: There are no recent items to display yet.
   items_total: '{{count}} total.'
-  add_note_button: Add Note
+  add_note: Add Note
   add_note_txt: Add a new note...
   could_not_find: "Couldn't find {{value}}. Feel free to"
   could_not_find_matching: "Couldn't find {{value}} matching"
@@ -367,9 +359,8 @@ en-US:
   opportunities_small: opportunities
   opportunity: Opportunity
   opportunity_small: opportunity
-  create_opportunity_link: Create Opportunity
-  create_opportunity_button: Create Opportunity
-  save_opportunity_button: Save Opportunity
+  create_opportunity: Create Opportunity
+  save_opportunity: Save Opportunity
   stage: Stage
   close_date: Close date
   days_left: Days left
@@ -453,8 +444,7 @@ en-US:
   #----------------------------------------------------------------------------
   users: Users
   user_confirm_delete_txt: A user can only be deleted if no related assets are left behind.
-  create_user_link: Create User
-  create_user_button: Create User
+  create_user: Create User
   save_user: Save User
   user_is_admin: The user is Administrator
   personal_information: Personal Information

@@ -30,7 +30,7 @@
         %td{ :valign => :top }
           .label
             #{t:shipping_address}:
-            = link_to_function t(:same_as_billing_link), %/$("account_shipping_address").value = $("account_billing_address").value/
+            = link_to_function t(:same_as_billing), %/$("account_shipping_address").value = $("account_billing_address").value/
           = f.text_area :shipping_address, :style =>"width:240px", :rows => 4
 
 

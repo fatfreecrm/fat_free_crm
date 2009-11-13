@@ -6,5 +6,5 @@ else
   page.call "crm.hide_form", :edit_profile
   page.call "crm.hide_form", :change_password
   page.call "crm.flip_form", :upload_avatar
-  page.call "crm.set_title", :upload_avatar, t(:upload_picture_button)
+  page.call "crm.set_title", :upload_avatar, t(:upload_picture)
 end

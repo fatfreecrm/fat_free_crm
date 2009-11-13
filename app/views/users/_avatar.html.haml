@@ -12,9 +12,9 @@
 
     .buttonbar
       %small.cool{:style => "float:right"}== #{t:gravatar_help} #{link_to(t(:here), "http://en.gravatar.com", :popup => true)}.
-      = f.submit t(:upload_picture_button), :onclick => "this.disabled = true"
+      = f.submit t(:upload_picture), :onclick => "this.disabled = true"
       #{t:or}
-      = link_to_remote(t(:use_gravatar_link), :url => upload_avatar_user_path(@user), :method => :put, :with => "'gravatar=1'")
+      = link_to_remote(t(:use_gravatar), :url => upload_avatar_user_path(@user), :method => :put, :with => "'gravatar=1'")
       #{t:or}
       = link_to_cancel avatar_user_path(@user)
 %br

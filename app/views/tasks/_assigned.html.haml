@@ -2,7 +2,7 @@
   - unless assigned.category.blank?
     .strip{:class => assigned.category}= t(assigned.category)
   - else
-    .strip{:style => "color:white"} #{t:category_other}
+    .strip{:style => "color:white"} #{t:other}
   %div
     .tools{ invisible, :id => dom_id(assigned, :tools) }
       %small
