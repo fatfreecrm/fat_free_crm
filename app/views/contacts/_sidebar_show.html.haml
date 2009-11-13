@@ -2,7 +2,8 @@
   %span{:style => "float:right"}= gravatar_for(@contact, :size => "50x50")
   %h4= @contact.full_name
   - if !@contact.title.blank? && @contact.account
-    %div== #{@contact.title} #{t:at} #{link_to(@contact.account.name, account_path(@contact.account))}
+    -# works_at: "{{job_title}} at {{company}}"
+    %div= t(:works_at, :job_title => @contact.title, :company => link_to(@contact.account.name, account_path(@contact.account))) 
   - elsif !@contact.title.blank?
     %div= @contact.title
   - elsif @contact.account
@@ -23,7 +24,7 @@
     - unless @contact.email.blank?
       == #{t:email}: <b>#{link_to(@contact.email, "mailto:" + @contact.email)}</b><br />
     - unless @contact.alt_email.blank?
-      == #{t:other}: <b>#{link_to(@contact.alt_email, "mailto:" + @contact.alt_email)}</b><br />
+      == #{t:alt_email_small}: <b>#{link_to(@contact.alt_email, "mailto:" + @contact.alt_email)}</b><br />
 
   = web_presence_icons(@contact)
 

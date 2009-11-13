@@ -6,7 +6,7 @@
     = hidden_field_tag "task[asset_type]", "#{@asset.class if @asset}"
     = render :partial => "tasks/top_section", :locals => { :f => f }
     .buttonbar
-      = f.submit t:save_task_button
+      = f.submit t:save_task
       == #{t:or}
       = link_to_cancel edit_task_path(@task)
       == #{t:or} #{t:move_to}
