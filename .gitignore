@@ -7,6 +7,7 @@ tmp/**/*
 public/avatars/**/*
 public/javascripts/cache/*.js
 public/stylesheets/cache/*.css
+nbproject
 .DS_Store
 *~
 *.swp
