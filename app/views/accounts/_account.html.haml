@@ -4,22 +4,21 @@
     .strip.some= number_to_currency(amount, :precision => 0)
   - else
     .strip.none None
-  %div
-    .tools{ invisible, :id => dom_id(account, :tools) }
-      %small
-        = link_to_edit(account) + " | "
-        = link_to_delete(account) + "&nbsp;"
 
-    .indent
-      = link_to(account.name, account) << " &ndash; "
-      %tt
-        = account.location << ", " unless account.location.blank?
-        == added #{time_ago_in_words(account.created_at)} ago by 
-        == #{account.user.id == @current_user.id ? "me" : account.user.full_name}
-      - unless @current_user.preference[:accounts_outline] == "brief"
-        %dt
-          = link_to(account.website, account.website.to_url) << " | " if account.website?
-          = "phone: " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
-          = pluralize(account.contacts.count, "contact") << " | "
-          = pluralize(account.opportunities.count, "opportunity")
-        = hook(:account_bottom, self, :account => account)
+  .tools{ invisible, :id => dom_id(account, :tools) }
+    = link_to_edit(account) + " | "
+    = link_to_delete(account) + "&nbsp;"
+
+  .indent
+    = link_to(account.name, account) << " &ndash; "
+    %tt
+      = account.location << ", " unless account.location.blank?
+      == added #{time_ago_in_words(account.created_at)} ago by 
+      == #{account.user.id == @current_user.id ? "me" : account.user.full_name}
+    - unless @current_user.preference[:accounts_outline] == "brief"
+      %dt
+        = link_to(account.website, account.website.to_url) << " | " if account.website?
+        = "phone: " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
+        = pluralize(account.contacts.count, "contact") << " | "
+        = pluralize(account.opportunities.count, "opportunity")
+      = hook(:account_bottom, self, :account => account)

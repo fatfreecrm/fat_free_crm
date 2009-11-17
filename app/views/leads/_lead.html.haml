@@ -2,19 +2,19 @@
   - if lead.status
     .strip{:class => lead.status}= Setting.lead_status[lead.status.intern]
   - else
-    .strip{:style => "color:white;"} Other
+    .strip.white Other
+
   .tools{ invisible, :id => dom_id(lead, :tools) }
-    %small
-      = link_to_edit(lead) + " | "
-      - unless %w(converted rejected).include?(lead.status)
-        = link_to_convert(lead) + " | "
-      - else
-        = "<font color='silver'>Convert</font> | "
-      - if lead.status != "rejected"
-        = link_to_reject(lead) + " | "
-      - else
-        = "<font color='silver'>Reject</font> | "
-      = link_to_delete(lead) + "&nbsp;"
+    = link_to_edit(lead) + " | "
+    - unless %w(converted rejected).include?(lead.status)
+      = link_to_convert(lead) + " | "
+    - else
+      = "<font color='silver'>Convert</font> | "
+    - if lead.status != "rejected"
+      = link_to_reject(lead) + " | "
+    - else
+      = "<font color='silver'>Reject</font> | "
+    = link_to_delete(lead) + "&nbsp;"
       
   .indent
     = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)

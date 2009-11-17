@@ -1,32 +1,31 @@
 %li[user]{ highlightable(dom_id(user, :tools)) }
 
   - if user.awaits_approval?
-    .strip{:class => "signed_up"} Signed Up
+    .strip.signed_up Signed Up
   - elsif user.suspended?
-    .strip{:class => "suspended"} Suspended
+    .strip.suspended Suspended
   - elsif user.admin?
-    .strip{:class => "admin"} Admin
+    .strip.admin Admin
   - else
-    .strip{:class => "active"} Active
+    .strip.active Active
 
   = gravatar_for(user, :size => "30x30")
 
   .indentfull
     .tools{ invisible, :id => dom_id(user, :tools) }
-      %small
-        = link_to_edit(user) << " | "
+      = link_to_edit(user) << " | "
 
-        - if user.suspended?
-          = link_to_reactivate(user) << " | "
-        - elsif user != @current_user
-          = link_to_suspend(user) << " | "
-        - else
-          = "<font color='silver'>Suspend!</font> | "
+      - if user.suspended?
+        = link_to_reactivate(user) << " | "
+      - elsif user != @current_user
+        = link_to_suspend(user) << " | "
+      - else
+        = "<font color='silver'>Suspend!</font> | "
 
-        - if user != @current_user
-          = link_to_confirm(user) << "&nbsp;"
-        - else
-          <font color='silver'>Delete?</font>&nbsp;
+      - if user != @current_user
+        = link_to_confirm(user) << "&nbsp;"
+      - else
+        %span.grayed Delete?&nbsp;
 
     %span.black #{link_to(user.full_name, user)} (#{user.username})
     %tt

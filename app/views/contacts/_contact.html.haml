@@ -2,10 +2,10 @@
 
 %li[contact]{ highlightable(dom_id(contact, :tools)) }
   = gravatar_for(contact, :size => gravatar_size)
+
   .tools{ invisible, :id => dom_id(contact, :tools) }
-    %small
-      = link_to_edit(contact) + " | "
-      = link_to_delete(contact) + "&nbsp;"
+    = link_to_edit(contact) + " | "
+    = link_to_delete(contact) + "&nbsp;"
 
   .indentslim
     = link_to(contact.full_name(@current_user.preference[:contacts_naming]), contact)

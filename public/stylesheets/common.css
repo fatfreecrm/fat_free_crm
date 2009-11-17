@@ -81,6 +81,7 @@
     height: 30px; }
 
 .tools {
+  font-size: 10px;
   float: right;
   padding: 0px 0px 0px 4px; }
 
@@ -151,6 +152,12 @@
 .black {
   color: black; }
 
+.white {
+  color: white !important; }
+
+.grayed {
+  color: silver; }
+
 .strip {
   background: gainsboro;
   color: black;
@@ -172,7 +179,7 @@
   margin-left: 38px; }
 
 .indentwide {
-  margin-left: 105px; }
+  margin-left: 106px; }
 
 .indentfull {
   margin-left: 126px; }
