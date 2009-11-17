@@ -3,12 +3,13 @@
   - if amount != 0.0
     .strip.some= number_to_currency(amount, :precision => 0)
   - else
-    .strip.none #{t:none}
-  %div
-    .tools{ invisible, :id => dom_id(account, :tools) }
-      %small
-        = link_to_edit(account) + " | "
-        = link_to_delete(account) + "&nbsp;"
+    .strip.none None
+
+  .tools{ invisible, :id => dom_id(account, :tools) }
+    = link_to_edit(account) + " | "
+    = link_to_delete(account) + "&nbsp;"
+
+  .indent
     = link_to(account.name, account) << " &ndash; "
     %tt
       = account.location << ", " unless account.location.blank?

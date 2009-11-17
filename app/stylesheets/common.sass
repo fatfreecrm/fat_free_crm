@@ -114,6 +114,7 @@
     :height 30px
 
 .tools
+  :font-size 10px
   :float right
   :padding 0px 0px 0px 4px
 
@@ -185,6 +186,12 @@
 .black
   :color black
 
+.white
+  :color white !important
+
+.grayed
+  :color silver !important
+
 .strip
   :background gainsboro
   :color black
@@ -200,6 +207,23 @@
   :-webkit-border
     :top-left-radius 7px
     :bottom-left-radius 7px
+
+// Indentation classes:
+//   - indent: for use with strip (regular indentation).
+//   - indentslim: for use with avatar and no strip (Contacts).
+//   - indentwide: for use with strip + checkbox (Tasks).
+//   - indentfull: for use with strip + avatar (Admin/Users).
+.indent
+  :margin-left 88px
+
+.indentslim
+  :margin-left 38px
+
+.indentwide
+  :margin-left 106px
+
+.indentfull
+  :margin-left 126px
 
 .bucket
   :margin 0px 0px 10px 0px
@@ -321,7 +345,7 @@
     dt
       :color #3f3f3f
       :font-size 11px
-      :padding 2px 0px 0px 88px
+      :padding 2px 0px 0px 0px
 
     dt a:link, dt a:visited
       :color #3f3f3f

@@ -112,6 +112,7 @@ tt {
     text-align: center;
     text-decoration: none;
     width: 80px;
+    height: 15px;
     -moz-border-radius-topleft: 3px;
     -moz-border-radius-topright: 3px;
     -webkit-border-top-left-radius: 3px;
@@ -212,6 +213,7 @@ tt {
     height: 30px; }
 
 .tools {
+  font-size: 10px;
   float: right;
   padding: 0px 0px 0px 4px; }
 
@@ -282,6 +284,12 @@ tt {
 .black {
   color: black; }
 
+.white {
+  color: white !important; }
+
+.grayed {
+  color: silver; }
+
 .strip {
   background: gainsboro;
   color: black;
@@ -295,6 +303,18 @@ tt {
   -moz-border-radius-bottomleft: 7px;
   -webkit-border-top-left-radius: 7px;
   -webkit-border-bottom-left-radius: 7px; }
+
+.indent {
+  margin-left: 88px; }
+
+.indentslim {
+  margin-left: 38px; }
+
+.indentwide {
+  margin-left: 106px; }
+
+.indentfull {
+  margin-left: 126px; }
 
 .bucket {
   margin: 0px 0px 10px 0px; }
@@ -395,7 +415,7 @@ tt {
     .list li dt {
       color: #3f3f3f;
       font-size: 11px;
-      padding: 2px 0px 0px 88px; }
+      padding: 2px 0px 0px 0px; }
     .list li dt a:link, .list li dt a:visited {
       color: #3f3f3f;
       font-weight: bold;

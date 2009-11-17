@@ -2,34 +2,36 @@
   - if lead.status
     .strip{:class => lead.status} #{t(lead.status)}
   - else
-    .strip{:style => "color:white;"} #{t:other}
+    .strip.white #{t:other}
+
   .tools{ invisible, :id => dom_id(lead, :tools) }
-    %small
-      = link_to_edit(lead) + " | "
-      - unless %w(converted rejected).include?(lead.status)
-        = link_to_convert(lead) + " | "
-      - else
-        = "<font color='silver'>#{t:convert}</font> | "
-      - if lead.status != "rejected"
-        = link_to_reject(lead) + " | "
-      - else
-        = "<font color='silver'>#{t:reject}</font> | "
-      = link_to_delete(lead) + "&nbsp;"
-  = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)
-  %tt
-    - if lead.company? && lead.title?
-      -# works_at: "{{job_title}} at {{company}}"
-      = t(:works_at, :job_title => lead.title, :company => lead.company)
+    = link_to_edit(lead) + " | "
+    - unless %w(converted rejected).include?(lead.status)
+      = link_to_convert(lead) + " | "
     - else
-      = lead.company if lead.company?
-      = lead.title if lead.title?
-    -#= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
-    = "&ndash; #{t:referred_by_small} #{lead.referred_by}" if lead.referred_by?
-  - unless @current_user.preference[:leads_outline] == "brief"
-    %dt
-      = stars_for(lead) + " | "
-      = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
-      = "#{t:phone_small}: " + lead.phone  << " | " if lead.phone?
-      = "#{t:mobile_small}: " + lead.mobile << " | " if lead.mobile?
-      == #{t:added} #{time_ago_in_words(lead.created_at)} #{t:ago}
-    = hook(:lead_bottom, self, :lead => lead)
+      = "<font color='silver'>#{t:convert}</font> | "
+    - if lead.status != "rejected"
+      = link_to_reject(lead) + " | "
+    - else
+      = "<font color='silver'>#{t:reject}</font> | "
+    = link_to_delete(lead) + "&nbsp;"
+
+  .indent
+    = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)
+    %tt
+      - if lead.company? && lead.title?
+        -# works_at: "{{job_title}} at {{company}}"
+        = t(:works_at, :job_title => lead.title, :company => lead.company)
+      - else
+        = lead.company if lead.company?
+        = lead.title if lead.title?
+      -#= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
+      = "&ndash; #{t:referred_by_small} #{lead.referred_by}" if lead.referred_by?
+    - unless @current_user.preference[:leads_outline] == "brief"
+      %dt
+        = stars_for(lead) + " | "
+        = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
+        = "#{t:phone_small}: " + lead.phone  << " | " if lead.phone?
+        = "#{t:mobile_small}: " + lead.mobile << " | " if lead.mobile?
+        == #{t:added} #{time_ago_in_words(lead.created_at)} #{t:ago}
+      = hook(:lead_bottom, self, :lead => lead)
