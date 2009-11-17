@@ -6,13 +6,14 @@
   %div
     .tools{ invisible, :id => dom_id(completed, :tools) }
       %small=  link_to_task_delete(completed, bucket) if @current_user == completed.user
-    %strike= completed.name
-    - if completed.asset_id?
-      == (re: #{link_to(completed.asset.name, polymorphic_url(completed.asset))})
-    &ndash;
-    %tt
-      %span.cool
-        = "completed " << distance_of_time_in_words(completed.completed_at, Time.now) << " ago"
-        - if completed.completor.id != @current_user.id
-          = "by " << link_to(completed.completor.full_name, user_path(completed.completor))
+    .indent
+      %strike= completed.name
+      - if completed.asset_id?
+        == (re: #{link_to(completed.asset.name, polymorphic_url(completed.asset))})
+      &ndash;
+      %tt
+        %span.cool
+          = "completed " << distance_of_time_in_words(completed.completed_at, Time.now) << " ago"
+          - if completed.completor.id != @current_user.id
+            = "by " << link_to(completed.completor.full_name, user_path(completed.completor))
       

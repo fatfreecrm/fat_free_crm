@@ -8,33 +8,35 @@
       %small
         = link_to_edit(opportunity) + " | "
         = link_to_delete(opportunity) + "&nbsp;"
-    = link_to(opportunity.name, opportunity)
-    - if opportunity.account
-      == from #{link_to(opportunity.account.name, account_path(opportunity.account))}
-    %tt
-      &ndash;
-      == added #{time_ago_in_words(opportunity.created_at)} ago by
-      == #{opportunity.user.id == @current_user.id ? "me" : opportunity.user.full_name}
-    - unless @current_user.preference[:opportunities_outline] == "brief"
-      %dt
-        %b= number_to_currency(opportunity.weighted_amount, :precision => 0) << " | "
-        - won_or_lost = %w(won lost).include?(opportunity.stage)
-        - unless won_or_lost
-          == #{number_to_currency(opportunity.amount || 0, :precision => 0)} with
-          == #{opportunity.discount ? number_to_currency(opportunity.discount, :precision => 0) : "no"} discount and
-          == #{opportunity.probability || 0}% probability #{"|"}
-        - if opportunity.closes_on
-          - if won_or_lost
-            - if opportunity.closes_on >= Date.today
-              == closing date is #{opportunity.closes_on.to_s(:mmddyy)}
+
+    .indent
+      = link_to(opportunity.name, opportunity)
+      - if opportunity.account
+        == from #{link_to(opportunity.account.name, account_path(opportunity.account))}
+      %tt
+        &ndash;
+        == added #{time_ago_in_words(opportunity.created_at)} ago by
+        == #{opportunity.user.id == @current_user.id ? "me" : opportunity.user.full_name}
+      - unless @current_user.preference[:opportunities_outline] == "brief"
+        %dt
+          %b= number_to_currency(opportunity.weighted_amount, :precision => 0) << " | "
+          - won_or_lost = %w(won lost).include?(opportunity.stage)
+          - unless won_or_lost
+            == #{number_to_currency(opportunity.amount || 0, :precision => 0)} with
+            == #{opportunity.discount ? number_to_currency(opportunity.discount, :precision => 0) : "no"} discount and
+            == #{opportunity.probability || 0}% probability #{"|"}
+          - if opportunity.closes_on
+            - if won_or_lost
+              - if opportunity.closes_on >= Date.today
+                == closing date is #{opportunity.closes_on.to_s(:mmddyy)}
+              - else
+                == closed #{distance_of_time_in_words(opportunity.closes_on, Date.today)} ago on #{opportunity.closes_on.to_s(:mmddyy)}
+            - elsif opportunity.closes_on > Date.today
+              == expected to close in #{distance_of_time_in_words(Date.today, opportunity.closes_on)} on #{opportunity.closes_on.to_s(:mmddyy)}
+            - elsif opportunity.closes_on == Date.today
+              %span.warn== expected to close today!
             - else
-              == closed #{distance_of_time_in_words(opportunity.closes_on, Date.today)} ago on #{opportunity.closes_on.to_s(:mmddyy)}
-          - elsif opportunity.closes_on > Date.today
-            == expected to close in #{distance_of_time_in_words(Date.today, opportunity.closes_on)} on #{opportunity.closes_on.to_s(:mmddyy)}
-          - elsif opportunity.closes_on == Date.today
-            %span.warn== expected to close today!
+              %span.warn== past due, was expected to close #{distance_of_time_in_words(opportunity.closes_on, Date.today)} ago
           - else
-            %span.warn== past due, was expected to close #{distance_of_time_in_words(opportunity.closes_on, Date.today)} ago
-        - else
-          no expected closing date
-      = hook(:opportunity_bottom, self, :opportunity => opportunity)
+            no expected closing date
+        = hook(:opportunity_bottom, self, :opportunity => opportunity)

@@ -15,19 +15,21 @@
       - else
         = "<font color='silver'>Reject</font> | "
       = link_to_delete(lead) + "&nbsp;"
-  = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)
-  %tt
-    - if lead.company? && lead.title?
-      = lead.title << " at " << lead.company
-    - else
-      = lead.company if lead.company?
-    /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
-    = "&ndash; referred by #{lead.referred_by}" if lead.referred_by?
-  - unless @current_user.preference[:leads_outline] == "brief"
-    %dt
-      = stars_for(lead) + " | "
-      = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
-      = "phone: " + lead.phone  << " | " if lead.phone?
-      = "mobile: " + lead.mobile << " | " if lead.mobile?
-      == added #{time_ago_in_words(lead.created_at)} ago
-    = hook(:lead_bottom, self, :lead => lead)
+      
+  .indent
+    = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)
+    %tt
+      - if lead.company? && lead.title?
+        = lead.title << " at " << lead.company
+      - else
+        = lead.company if lead.company?
+      /= link_to(lead.campaign.name, lead.campaign) if lead.campaign_id
+      = "&ndash; referred by #{lead.referred_by}" if lead.referred_by?
+    - unless @current_user.preference[:leads_outline] == "brief"
+      %dt
+        = stars_for(lead) + " | "
+        = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
+        = "phone: " + lead.phone  << " | " if lead.phone?
+        = "mobile: " + lead.mobile << " | " if lead.mobile?
+        == added #{time_ago_in_words(lead.created_at)} ago
+      = hook(:lead_bottom, self, :lead => lead)
