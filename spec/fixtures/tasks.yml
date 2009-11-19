@@ -24,7 +24,7 @@
   require "faker"
   puts "Loading tasks..."
 
-  category = %w(call email folowup lunch meeting money presentation trip) << ""
+  category = %w(call email follow_up lunch meeting money presentation trip) << ""
 
   for i in (1 .. 250) do
     case rand(12)
