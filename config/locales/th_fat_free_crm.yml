@@ -3,7 +3,7 @@ th:
   # Generic terms
   #----------------------------------------------------------------------------
   all: ทั้งหมด
-  language: Thai
+  language: Thai(ไทย)
   not_implemented: อยู่ระหว่างการพัฒนา.
 
   # Settings
@@ -13,7 +13,7 @@ th:
   tab_campaigns: แคมเปญ
   tab_leads: ผู้สนใจ
   tab_accounts: ลูกค้า
-  tab_contacts: รายชื่อที่อยู่ติดต่อ
+  tab_contacts: รายชื่อติดต่อ
   tab_opportunities: โอกาสปิดการขาย
 
   admin_tab_users: รายชื่อผู้ใช้
@@ -166,8 +166,8 @@ th:
   campaign_revenue_label: รายได้ ($)
   campaign_budget_label: งบประมาณ ($)
   campaign_permissions_small: แคมเปณ และผู้สนใจในแคมเปณ
-  campaign_started_ago: เริ่มต้นมา {{value}} แล้ว
-  campaign_finishes_in: เสร็จภายใน {{value}}
+  campaign_started_ago: เริ่มต้นมา {{value}}
+  campaign_finishes_in: เสร็จภายในเวลา {{value}}
   campaign_finished_on: เสร็จสมบูรณ์ {{value}}
   campaign_was_supposed_to_finish: ควรจะเสร็จตั้งแต่ {{value}}
   campaign_no_start_date: ไม่ระบุวันเริ่มต้น
@@ -176,7 +176,7 @@ th:
   campaign_was_supposed_to_start: ควรจะเสร็จตั้งแต่ {{time_ago}} ที่ผ่านมา คือ {{start_date}}
   campaign_target: เป้าหมาย
   campaign_actual: เกิดขึ้นจริง
-  campaign_revenue_small: "รายได้ {{value}} บาท"
+  campaign_revenue_small: "รายได้ {{value}}"
   campaign_conversion_small: "แปลง {{value}} ราย" 
   campaign_checkbox_called_off: เรียกว่าปิด
   campaign_checkbox_completed: เสร็จสมบูรณ์
@@ -225,8 +225,8 @@ th:
   #----------------------------------------------------------------------------
   tasks: ภารกิจ
   pending: งานค้าง
-  assigned: มอบหมายแล้ว
-  completed: เสร็จสมบูรณ์
+  assigned: มอบหมาย
+  completed: เสร็จ
   completed_tasks: ภารกิจเสร็จสมบูรณ์
   assigned_tasks: มอบหมายภารกิจแล้ว
   pending_tasks: งานคงค้าง
@@ -292,7 +292,7 @@ th:
   options: ตัวเลือก
   back: กลับ
   name: ชื่อ
-  added: เพิ่มแล้ว
+  added: เพิ่ม
   ago: แล้ว
   by: โดย
   me: ฉัน
