@@ -33,7 +33,7 @@ pt-BR:
 
   campaign: Campanha
   cold_call: Cold Call
-  conference: Conferêni
+  conference: Conferência
   online: Marketing Online
   referral: Referência
   self: Self Generated
@@ -44,7 +44,7 @@ pt-BR:
   prospecting: Prospecção
   analysis: Análise
   presentation: Apresentação
-  proposal: Porposta
+  proposal: Proposta
   negotiation: Negociação
   final_review: Revisão final
   won: Fechado/Consuistado
@@ -137,7 +137,7 @@ pt-BR:
   fax: Fax
   billing_address: Endereço de cobrança
   shipping_address: Endereço de entrega
-  same_as_billing: mesmo da combraça
+  same_as_billing: mesmo da cobrança
   account_permissions_intro: "Por padrão, somente você terá acesso a conta. Você pode mudar as permissões da conta depois."
   private_txt: manter privado, não compartilhar com os outros
   public_txt: Compartilhar com todos
@@ -274,7 +274,7 @@ pt-BR:
   rating: Rating
   lead_info_small: contato do lead
   lead_status_small: situação do lead
-  lead_permissions_intro: Por padrão, as permissões serão copiadas da campanha ou será privado. Você pode mudar as permissões do lead depois.
+  lead_permissions_intro: Por padrão, as permissões serão copiadas da campanha ou serão privadas. Você pode mudar as permissões do lead depois.
   create_opp_for_contact: Você pode opcionalmente criar uma oportunidade para o contato {{value}}  especificando o nome, fase atual, data estimada de fechamento, probabilidade de venda, valor do acordo, e o desconto oferecido.
   convert_lead: Converter lead
   convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
@@ -391,7 +391,7 @@ pt-BR:
       other: '{{count}} contatos'
     opportunity:
       one: '1 oportunidade'
-      other: '{{count}} opoetunidades'
+      other: '{{count}} oportunidades'
     lead:
       one: '1 lead'
       other: '{{count}} leads'
