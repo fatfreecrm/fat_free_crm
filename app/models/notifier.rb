@@ -19,7 +19,7 @@ class Notifier < ActionMailer::Base
   
   #----------------------------------------------------------------------------
   def password_reset_instructions(user)
-    subject       "Fat Free CRM: password reset instructions"
+    subject       "Fat Free CRM: " + I18n.t(:password_reset_instructions)
     from          "Fat Free CRM <noreply@fatfreecrm.com>"
     recipients    user.email
     sent_on       Time.now

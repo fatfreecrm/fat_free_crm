@@ -13,7 +13,7 @@
   .indentwide
     %label{ :id => dom_id(pending, :name) }
       - if pending.user.id != @current_user.id
-        == From #{link_to(pending.user.full_name, user_path(pending.user))}:
+        = t(:task_from, link_to(pending.user.full_name, user_path(pending.user))) << ':'
       = pending.name
       - if pending.asset_id?
         == #{t:related} #{link_to(pending.asset.name, polymorphic_url(pending.asset))}

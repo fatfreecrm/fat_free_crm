@@ -67,8 +67,8 @@ class Contact < ActiveRecord::Base
   acts_as_paranoid
   sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
-  validates_presence_of :first_name, :message => "^Please specify first name."
-  validates_presence_of :last_name, :message => "^Please specify last name."
+  validates_presence_of :first_name, :message => I18n.t(:msg_missing_first_name)
+  validates_presence_of :last_name, :message => I18n.t(:msg_missing_last_name)
   validate :users_for_shared_access
 
   # Default values provided through class methods.
@@ -136,7 +136,7 @@ class Contact < ActiveRecord::Base
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, "^Please specify users to share the contact with.") if self[:access] == "Shared" && !self.permissions.any?
+    errors.add(:access, I18n.t(:msg_share_contact)) if self[:access] == "Shared" && !self.permissions.any?
   end
 
 end
