@@ -73,6 +73,108 @@ en-US:
   completed_this_month: This month
   completed_last_month: Last month
 
+  # Models/Activity.
+  #----------------------------------------------------------------------------
+  one_hour: One Hour
+  one_day: One Day
+  two_days: Two Days
+  one_week: One Week
+  two_weeks: Two Weeks
+  one_month: One Month
+
+  # Model Validations.
+  #----------------------------------------------------------------------------
+  activerecord:
+    errors:
+      models:
+        authentication:
+          attributes:
+            login_field:
+              is_not_valid: is not valid
+            password_field:
+              is_not_valid: is not valid
+        account:
+          attributes:
+            name:
+              missing_account_name: "^Please specify account name."
+            access:
+              share_account: "^Please specify users to share the account with."
+        campaign:
+          attributes:
+            name:
+              missing_campaign_name: "^Please specify campaign name."
+            ends_on:
+              dates_not_in_sequence: "^Please make sure the campaign end date is after the start date."
+            access:
+              share_campaign: "^Please specify users to share the campaign with."
+        contact:
+          attributes:
+            first_name:
+              missing_first_name: "^Please specify first name."
+            last_name:
+              missing_last_name: "^Please specify last name."
+            access:
+              share_contact: "^Please specify users to share the contact with."
+        lead:
+          attributes:
+            first_name:
+              missing_first_name: "^Please specify first name."
+            last_name:
+              missing_last_name: "^Please specify last name."
+            access:
+              share_lead: "^Please specify users to share the lead with."
+        opportunity:
+          attributes:
+            name:
+              missing_opportunity_name: "^Please specify opportunity name."
+            access:
+              share_opportunity: "^Please specify users to share the opportunity with."
+        task:
+          attributes:
+            name:
+              missing_task_name: "^Please specify task name."
+            calendar:
+              invalid_date: "^Please specify valid date."
+        user:
+          attributes:
+            username:
+              missing_username: "^Please specify username."
+              username_taken: "^This username is already taken."
+            email:
+              missing_email: "^Please specify email address."
+              email_in_use: "^There is another user with the same email."
+
+  msg_account_suspended: User account has been suspended.
+  password_reset_instruction: password reset instructions
+
+  # Controllers.
+  #----------------------------------------------------------------------------
+  msg_asset_deleted: "{{value}} has been deleted."
+  msg_asset_rejected: "{{value}} has been rejected."
+  msg_login_needed: You must be logged in to access this page.
+  msg_logout_needed: You must be logged out to access this page.
+  msg_asset_not_available: This {{value}} is no longer available.
+  msg_cant_do: "Can't {{action}} the {{asset}} since it's no longer available."
+  msg_cant_create_related: "Can't create the {{asset}} since the {{related}} is no longer available."
+  msg_welcome: Welcome to Fat Free CRM!
+  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
+  msg_last_login: Your last login was on {{value}}.
+  msg_account_not_approved: Your account has not been approved yet.
+  msg_successful_signup: Successfull signup, welcome to Fat Free CRM!
+  msg_account_created: Your account has been created and is awating approval by the system administrator.
+  msg_invalig_login: Invalid username or password.
+  msg_invalid_password: "^Please specify valid current password"
+  msg_password_changed: Your password has been changed.
+  msg_password_not_changed: Your password has not been changed.
+  msg_bad_image_file: "^Could't upload or resize the image file you specified."
+  msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
+  msg_email_not_found: No user was found with that email address.
+  msg_enter_new_password: Please enter your new password.
+  msg_password_updated: Password was successfully updated.
+  msg_require_admin: You must be Administrator to access this page.
+  msg_cant_delete_user: "^Couldn't delete the user since {{value}} has related assets present."
+
+
   # views/users:
   #----------------------------------------------------------------------------
   user: User
@@ -477,63 +579,3 @@ en-US:
   confirm_password_intro: Please type your new password and then confirm it.
   update_password_and_login: Update Password and Login
 
-  # models/activity
-  #----------------------------------------------------------------------------
-  one_hour: One Hour
-  one_day: One Day
-  two_days: Two Days
-  one_week: One Week
-  two_weeks: Two Weeks
-  one_month: One Month
-
-  # controllers
-  #----------------------------------------------------------------------------
-  msg_asset_deleted: "{{value}} has been deleted."
-  msg_asset_rejected: "{{value}} has been rejected."
-  msg_login_needed: You must be logged in to access this page.
-  msg_logout_needed: You must be logged out to access this page.
-  msg_asset_not_available: This {{value}} is no longer available.
-  msg_cant_do: "Can't {{action}} the {{asset}} since it's no longer available."
-  msg_cant_create_related: "Can't create the {{asset}} since the {{related}} is no longer available."
-  msg_welcome: Welcome to Fat Free CRM!
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
-  msg_last_login: Your last login was on {{value}}.
-  msg_account_not_approved: Your account has not been approved yet.
-  msg_successful_signup: Successfull signup, welcome to Fat Free CRM!
-  msg_account_created: Your account has been created and is awating approval by the system administrator.
-  msg_invalig_login: Invalid username or password.
-  msg_invalid_password: "^Please specify valid current password"
-  msg_password_changed: Your password has been changed.
-  msg_password_not_changed: Your password has not been changed.
-  msg_bad_image_file: "^Could't upload or resize the image file you specified."
-  msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
-  msg_email_not_found: No user was found with that email address.
-  msg_enter_new_password: Please enter your new password.
-  msg_password_updated: Password was successfully updated.
-  msg_require_admin: You must be Administrator to access this page.
-  msg_cant_delete_user: "^Couldn't delete the user since {{value}} has related assets present."
-
-
-  # errors in models
-  #----------------------------------------------------------------------------
-  msg_missing_account_name: "^Please specify account name."
-  msg_missing_campaign_name: "^Please specify campaign name."
-  msg_missing_opportunity_name: "^Please specify opportunity name."
-  msg_missing_task_name: "^Please specify task name."
-  msg_missing_first_name: "^Please specify first name."
-  msg_missing_last_name: "^Please specify last name."
-  msg_missing_username: "^Please specify username."
-  msg_missing_email: "^Please specify email address."
-  msg_username_taken: "^This username is already taken."
-  msg_email_in_use: "^There is another user with the same email."
-  msg_dates_not_in_sequence: "^Please make sure the campaign end date is after the start date."
-  msg_invalid_date: "^Please specify valid date."
-  msg_share_account: "^Please specify users to share the account with."
-  msg_share_contact: "^Please specify users to share the contact with."
-  msg_share_campaign: "^Please specify users to share the campaign with."
-  msg_share_opportunity: "^Please specify users to share the opportunity with."
-  msg_share_lead: "^Please specify users to share the lead with."
-  msg_field_not_valid: "{{value}} is not valid"
-  msg_is_not_valid: is not valid # until Mike hooks up the one above
-  msg_account_suspended: User account has been suspended.
-  password_reset_instruction: password reset instructions

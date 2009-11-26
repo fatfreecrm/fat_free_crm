@@ -71,6 +71,105 @@ ru:
   completed_this_month: В этом месяце
   completed_last_month: В прошлом месяце
 
+  # Models/Activity.
+  #----------------------------------------------------------------------------
+  one_hour: Один Час
+  one_day: Один День
+  two_days: Два Дня
+  one_week: Одна Неделя
+  two_weeks: Две Недели
+  one_month: Один Месяц
+
+  # Model Validations.
+  #----------------------------------------------------------------------------
+  activerecord:
+    errors:
+      models:
+        authentication:
+          attributes:
+            login_field:
+              is_not_valid: неправильно введен
+            password_field:
+              is_not_valid: неправильно введен
+        account:
+          attributes:
+            name:
+              missing_account_name: "^Пожалуйста введите название контрагента."
+            access:
+              share_account: "^Пожалуйста укажите пользователей которым разрешен доступ к данному контрагенту."
+        campaign:
+          attributes:
+            name:
+              missing_campaign_name: "^Пожалуйста введите название кампании."
+            ends_on:
+              dates_not_in_sequence: "^Пожалуйста укажите дату окончания кампании после ее начала."
+            access:
+              share_campaign: "^Пожалуйста укажите пользователей которым разрешен доступ к данной кампании."
+        contact:
+          attributes:
+            first_name:
+              missing_first_name: "^Пожалуйста введите имя."
+            last_name:
+              missing_last_name: "^Пожалуйста введите фамилию."
+            access:
+              share_contact: "^Пожалуйста укажите пользователей которым разрешен доступ к данному контакту."
+        lead:
+          attributes:
+            first_name:
+              missing_first_name: "^Пожалуйста введите имя."
+            last_name:
+              missing_last_name: "^Пожалуйста введите фамилию."
+            access:
+              share_lead: "^Пожалуйста укажите пользователей которым разрешен доступ к данной наводке."
+        opportunity:
+          attributes:
+            name:
+              missing_opportunity_name: "^Пожалуйста введите название для перспективы."
+            access:
+              share_opportunity: "^Пожалуйста укажите пользователей которым разрешен доступ к данной перспективе."
+        task:
+          attributes:
+            name:
+              missing_task_name: "^Пожалуйста введите название для задания."
+          calendar:
+            invalid_date: "^Пожалуйста укажите правильную дату."
+        user:
+          attributes:
+            username:
+              missing_username: "^Пожалуйста введите имя пользователя."
+              username_taken: "^Данное имя пользователя уже существует."
+            email:
+              msg_missing_email: "^Пожалуйста введите e-mail адрес."
+              email_in_use: "^Пользователь с данным e-mail адресом уже существует."
+
+  msg_account_suspended: Пользователь заблокирован.
+  password_reset_instruction: @ru@password reset instructions # TODO
+
+  # Controllers.
+  #----------------------------------------------------------------------------
+  msg_asset_deleted: @ru@"{{value}} has been deleted." # TODO
+  msg_asset_rejected: @ru@"{{value}} has been rejected." # TODO
+  msg_login_needed: @ru@You must be logged in to access this page. # TODO
+  msg_logout_needed: @ru@You must be logged out to access this page. # TODO
+  msg_asset_not_available: @ru@This {{value}} is no longer available. # TODO
+  msg_cant_do: @ru@"Can't {{action}} the {{asset}} since it's no longer available." # TODO
+  msg_cant_create_related: @ru@"Can't create the {{asset}} since the {{related}} is no longer available." # TODO
+  msg_welcome: @ru@Welcome to Fat Free CRM! # TODO
+  msg_goodbye: @ru@You have been logged out. Thank you for using Fat Free CRM! # TODO
+  msg_last_login: @ru@Your last login was on {{value}}. # TODO
+  msg_account_not_approved: @ru@Your account has not been approved yet. # TODO
+  msg_successful_signup: @ru@Successfull signup, welcome to Fat Free CRM! # TODO
+  msg_account_created: @ru@Your account has been created and is awating approval by the system administrator. # TODO
+  msg_invalig_login: Неправильный логин или пароль.
+  msg_invalid_password: Введите правильный пароль.
+  msg_password_changed: Пароль изменен.
+  msg_password_not_changed: Пароль не был изменен.
+  msg_bad_image_file: @ru@"^Could't upload or resize the image file you specified." # TODO
+  msg_pwd_instructions_sent: Инструкции по перемене пароля Вам высланы. Пожалуйста проверьте свою электронную почту.
+  msg_email_not_found: Пользователя с таким адресом не найдено.
+  msg_enter_new_password: Пожалуйста введите новый пароль.
+  msg_password_updated: Пароль успешно изменен.
+
   # views/users:
   #----------------------------------------------------------------------------
   user: Пользователь
@@ -488,62 +587,3 @@ ru:
   reset_password: Изменить Пароль
   confirm_password_intro: Введите новый пароль, и затем подтвердите его.
   update_password_and_login: Изменить Пароль и Войти
-
-  # models/activity
-  #----------------------------------------------------------------------------
-  one_hour: Один Час
-  one_day: Один День
-  two_days: Два Дня
-  one_week: Одна Неделя
-  two_weeks: Две Недели
-  one_month: Один Месяц
-
-  # controllers
-  #----------------------------------------------------------------------------
-  msg_asset_deleted: @ru@"{{value}} has been deleted." # TODO
-  msg_asset_rejected: @ru@"{{value}} has been rejected." # TODO
-  msg_login_needed: @ru@You must be logged in to access this page. # TODO
-  msg_logout_needed: @ru@You must be logged out to access this page. # TODO
-  msg_asset_not_available: @ru@This {{value}} is no longer available. # TODO
-  msg_cant_do: @ru@"Can't {{action}} the {{asset}} since it's no longer available." # TODO
-  msg_cant_create_related: @ru@"Can't create the {{asset}} since the {{related}} is no longer available." # TODO
-  msg_welcome: @ru@Welcome to Fat Free CRM! # TODO
-  msg_goodbye: @ru@You have been logged out. Thank you for using Fat Free CRM! # TODO
-  msg_last_login: @ru@Your last login was on {{value}}. # TODO
-  msg_account_not_approved: @ru@Your account has not been approved yet. # TODO
-  msg_successful_signup: @ru@Successfull signup, welcome to Fat Free CRM! # TODO
-  msg_account_created: @ru@Your account has been created and is awating approval by the system administrator. # TODO
-  msg_invalig_login: Неправильный логин или пароль.
-  msg_invalid_password: Введите правильный пароль.
-  msg_password_changed: Пароль изменен.
-  msg_password_not_changed: Пароль не был изменен.
-  msg_bad_image_file: @ru@"^Could't upload or resize the image file you specified." # TODO
-  msg_pwd_instructions_sent: Инструкции по перемене пароля Вам высланы. Пожалуйста проверьте свою электронную почту.
-  msg_email_not_found: Пользователя с таким адресом не найдено.
-  msg_enter_new_password: Пожалуйста введите новый пароль.
-  msg_password_updated: Пароль успешно изменен.
-
-  # errors in models
-  #----------------------------------------------------------------------------
-  msg_missing_account_name: "^Пожалуйста введите название контрагента."
-  msg_missing_campaign_name: "^Пожалуйста введите название кампании."
-  msg_missing_opportunity_name: "^Пожалуйста введите название для перспективы."
-  msg_missing_task_name: "^Пожалуйста введите название для задания."
-  msg_missing_first_name: "^Пожалуйста введите имя."
-  msg_missing_last_name: "^Пожалуйста введите фамилию."
-  msg_missing_username: @ru@"^Please specify username." # TODO
-  msg_missing_email: "^Пожалуйста введите e-mail."
-  msg_username_taken: @ru@"^This username is already taken." # TODO
-  msg_email_in_use: @ru@"^There is another user with the same email." # TODO
-  msg_dates_not_in_sequence: @ru@"^Please make sure the campaign end date is after the start date." # TODO
-  msg_invalid_date: @ru@"^Please specify valid date." # TODO
-  msg_share_account: @ru@"^Please specify users to share the account with." # TODO
-  msg_share_contact: @ru@"^Please specify users to share the contact with." # TODO
-  msg_share_campaign: @ru@"^Please specify users to share the campaign with." # TODO
-  msg_share_opportunity: @ru@"^Please specify users to share the opportunity with." # TODO
-  msg_share_lead: @ru@"^Please specify users to share the lead with." # TODO
-  msg_field_not_valid: @ru@"{{value}} is not valid" # TODO
-  msg_is_not_valid: @ru@is not valid # until Mike hooks up the one above # TODO
-  msg_account_suspended: Пользователь заблокирован.
-  password_reset_instruction: @ru@password reset instructions # TODO
-
