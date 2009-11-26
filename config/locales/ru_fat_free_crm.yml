@@ -8,7 +8,7 @@ ru:
 
   # Settings
   #----------------------------------------------------------------------------
-  tab_dashboard: @ru@Dashboard # TODO
+  tab_dashboard: Кабинет
   tab_tasks: Задания
   tab_campaigns: Кампании
   tab_leads: Наводки
@@ -18,7 +18,7 @@ ru:
 
   admin_tab_users: Пользователи
   admin_tab_settings: Установки
-  admin_tab_plugins: @ru@Plugins
+  admin_tab_plugins: Плагины
 
   planned: В плане
   started: Начата
@@ -32,12 +32,12 @@ ru:
   rejected: Закрыт
 
   campaign: Кампания
-  cold_call: @ru@Cold Call
-  conference: @ru@Conference
-  online: @ru@Online Marketing
-  referral: @ru@Referral
+  cold_call: Холодный Звонок
+  conference: Конференция
+  online: Онлайн Маркетинг
+  referral: Рекомендация
   self: @ru@Self Generated
-  web: @ru@Website
+  web: Веб-сайт
   word_of_mouth: @ru@Word of Mouth
   other: Другое
 
@@ -51,7 +51,7 @@ ru:
   lost: Проиграли
 
   call: Звонок
-  follow_up: @ru@Follow-up
+  follow_up: Доработка
   lunch: Обед
   meeting: Встреча
   money: Деньги
@@ -64,11 +64,6 @@ ru:
   due_this_week: На этой неделе
   due_next_week: На следующей неделе
   due_later: Позже
-
-  tasks_due_last_week:
-  tasks_due_this_month:
-  tasks_due_yesterday:
-  tasks_due_last_month:
 
   completed_today: Сегодня
   completed_yesterday: Вчера
@@ -141,7 +136,7 @@ ru:
   billing_address: Адрес плательщика
   shipping_address: Адрес получателя
   same_as_billing: тот же
-  account_permissions_intro: @ru@By default only you will have access to the account. You can change account permissions later.
+  account_permissions_intro: По умолчанию только Вы получаете доступ к контрагенту. Права доступа можно изменить в любое время.
   private_txt: Не показывать никому
   public_txt: Показывать всем
   shared_txt: Показывать перечисленным людям
@@ -228,9 +223,9 @@ ru:
   # views/tasks
   #----------------------------------------------------------------------------
   tasks: Задания
-  pending: На&nbsp;очереди
-  assigned: Порученные
-  completed: Выполненные
+  pending_tab: На&nbsp;очереди
+  assigned_tab: Порученные
+  completed_tab: Выполненные
   completed_tasks: Выполненные Задания
   assigned_tasks: Порученные Задания
   pending_tasks: Задания На Очереди
@@ -247,6 +242,7 @@ ru:
   task_overdue: "задержка, срок:" 
   task_due_in: "срок: через"
   task_due_today: "срок: сегодня"
+  task_from: "{{value}} поручил(a)"
   assign_to: Поручить
   category: Категория
   select_blank: -- Выберите --
@@ -302,7 +298,7 @@ ru:
   me: я
   added_by: "{{user}} добавил(а) {{time_ago}} назад"
   permissions: Права Доступа
-  copy_permissions: @ru@Copy {{value}} permissions
+  copy_permissions: Скопировать права доступа к {{value}}
   or: или
   n_a: -
   cancel: Отменить
@@ -437,9 +433,9 @@ ru:
   subject_account: контрагента
   subject_contact: контакт
   subject_opportunity: перспективу
-  recent_activity: @ru@Recent Activity
-  no_activity_records: @ru@No activity records found.
-  recent_activity_options: @ru@Recent Activity Options
+  recent_activity: Недавние Действия
+  no_activity_records: Недавних действий не найдено.
+  recent_activity_options: Опции для Недавних Действий
 
   # views/layout:
   #----------------------------------------------------------------------------
@@ -447,16 +443,16 @@ ru:
   welcome: Добро пожаловать
   quick_find: Быстрый поиск
   admin: Админ
-  logout: @ru@Logout
+  logout: Выход
   about_ff_crm_version: Fat Free CRM версия
   about_thank_you_txt: Спасибо что Вы пользуетесь Fat Free CRM! Мы ценим ваш бизнес и надеемся что Вам нравится наше приложение.
   about_ff_crm_resources: Полезные ресурсы по Fat Free CRM (ссылки открываются в новом окне)
   about_home_page: Домашняя страница
-  about_project_page: @ru@Project page
+  about_project_page: Страница проекта
   about_features: @ru@Features and bugs
   about_twitter: @ru@Twitter commit updates
-  about_user_group: @ru@Discussion group for users
-  about_dev_group: @ru@Discussion group for developers
+  about_user_group: Форум для пользователей
+  about_dev_group: Форум для разработчиков
 
   # views/admin:
   #----------------------------------------------------------------------------
@@ -486,6 +482,13 @@ ru:
   update: Сохранить
   show: Показать
 
+  # views/passwords:
+  #----------------------------------------------------------------------------
+  password_intro: Введите адрес электронной почты, на который Вам выслать инструкции по перемене пароля.
+  reset_password: Изменить Пароль
+  confirm_password_intro: Введите новый пароль, и затем подтвердите его.
+  update_password_and_login: Изменить Пароль и Войти
+
   # models/activity
   #----------------------------------------------------------------------------
   one_hour: Один Час
@@ -495,7 +498,52 @@ ru:
   two_weeks: Две Недели
   one_month: Один Месяц
 
-  # models/account
+  # controllers
   #----------------------------------------------------------------------------
-  missing_account_name: ^Пожалуйста укажите имя аккаунта.
+  msg_asset_deleted: @ru@"{{value}} has been deleted." # TODO
+  msg_asset_rejected: @ru@"{{value}} has been rejected." # TODO
+  msg_login_needed: @ru@You must be logged in to access this page. # TODO
+  msg_logout_needed: @ru@You must be logged out to access this page. # TODO
+  msg_asset_not_available: @ru@This {{value}} is no longer available. # TODO
+  msg_cant_do: @ru@"Can't {{action}} the {{asset}} since it's no longer available." # TODO
+  msg_cant_create_related: @ru@"Can't create the {{asset}} since the {{related}} is no longer available." # TODO
+  msg_welcome: @ru@Welcome to Fat Free CRM! # TODO
+  msg_goodbye: @ru@You have been logged out. Thank you for using Fat Free CRM! # TODO
+  msg_last_login: @ru@Your last login was on {{value}}. # TODO
+  msg_account_not_approved: @ru@Your account has not been approved yet. # TODO
+  msg_successful_signup: @ru@Successfull signup, welcome to Fat Free CRM! # TODO
+  msg_account_created: @ru@Your account has been created and is awating approval by the system administrator. # TODO
+  msg_invalig_login: Неправильный логин или пароль.
+  msg_invalid_password: Введите правильный пароль.
+  msg_password_changed: Пароль изменен.
+  msg_password_not_changed: Пароль не был изменен.
+  msg_bad_image_file: @ru@"^Could't upload or resize the image file you specified." # TODO
+  msg_pwd_instructions_sent: Инструкции по перемене пароля Вам высланы. Пожалуйста проверьте свою электронную почту.
+  msg_email_not_found: Пользователя с таким адресом не найдено.
+  msg_enter_new_password: Пожалуйста введите новый пароль.
+  msg_password_updated: Пароль успешно изменен.
+
+  # errors in models
+  #----------------------------------------------------------------------------
+  msg_missing_account_name: "^Пожалуйста введите название контрагента."
+  msg_missing_campaign_name: "^Пожалуйста введите название кампании."
+  msg_missing_opportunity_name: "^Пожалуйста введите название для перспективы."
+  msg_missing_task_name: "^Пожалуйста введите название для задания."
+  msg_missing_first_name: "^Пожалуйста введите имя."
+  msg_missing_last_name: "^Пожалуйста введите фамилию."
+  msg_missing_username: @ru@"^Please specify username." # TODO
+  msg_missing_email: "^Пожалуйста введите e-mail."
+  msg_username_taken: @ru@"^This username is already taken." # TODO
+  msg_email_in_use: @ru@"^There is another user with the same email." # TODO
+  msg_dates_not_in_sequence: @ru@"^Please make sure the campaign end date is after the start date." # TODO
+  msg_invalid_date: @ru@"^Please specify valid date." # TODO
+  msg_share_account: @ru@"^Please specify users to share the account with." # TODO
+  msg_share_contact: @ru@"^Please specify users to share the contact with." # TODO
+  msg_share_campaign: @ru@"^Please specify users to share the campaign with." # TODO
+  msg_share_opportunity: @ru@"^Please specify users to share the opportunity with." # TODO
+  msg_share_lead: @ru@"^Please specify users to share the lead with." # TODO
+  msg_field_not_valid: @ru@"{{value}} is not valid" # TODO
+  msg_is_not_valid: @ru@is not valid # until Mike hooks up the one above # TODO
+  msg_account_suspended: Пользователь заблокирован.
+  password_reset_instruction: @ru@password reset instructions # TODO
 

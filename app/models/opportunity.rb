@@ -58,7 +58,7 @@ class Opportunity < ActiveRecord::Base
   acts_as_paranoid
   sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
-  validates_presence_of :name, :message => "^Please specify the opportunity name."
+  validates_presence_of :name, :message => I18n.t(:msg_missing_opportunity_name)
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
 
@@ -116,7 +116,7 @@ class Opportunity < ActiveRecord::Base
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, "^Please specify users to share the opportunity with.") if self[:access] == "Shared" && !self.permissions.any?
+    errors.add(:access, I18n.t(:msg_share_opportunity)) if self[:access] == "Shared" && !self.permissions.any?
   end
 
   #----------------------------------------------------------------------------

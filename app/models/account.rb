@@ -91,7 +91,7 @@ class Account < ActiveRecord::Base
   # Make sure at least one user has been selected if the account is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, "^Please specify users to share the account with.") if self[:access] == "Shared" && !self.permissions.any?
+    errors.add(:access, I18n.t(:access_shared)) if self[:access] == "Shared" && !self.permissions.any?
   end
 
 end

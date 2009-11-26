@@ -80,7 +80,7 @@ class Task < ActiveRecord::Base
   acts_as_paranoid
 
   validates_presence_of :user_id
-  validates_presence_of :name, :message => "^Please specify task name."
+  validates_presence_of :name, :message => I18n.t(:msg_missing_task_name)
   validates_presence_of :calendar, :if => "self.bucket == 'specific_time' && !self.completed_at"
   validate              :specific_time, :unless => "self.completed_at"
 
@@ -191,7 +191,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def specific_time
     if (self.bucket == "specific_time") && (self.calendar !~ %r[\d{2}/\d{2}/\d{4}])
-      errors.add(:calendar, "^Please specify valid date.")
+      errors.add(:calendar, I18n.t(:msg_invalid_date))
     end
   end
 

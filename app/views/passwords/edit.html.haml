@@ -1,13 +1,13 @@
 .standalone
   - form_for(@user, :url => passwords_path, :html => one_submit_only(:user), :method => :put) do |f|
-    .title Reset Password
+    .title #{t:reset_password}
     = f.error_messages
-    .intro Please type your new password and then confirm it.
+    .intro #{t:confirm_password_intro}
     .section
-      .label Password:
+      .label #{t:newpassword}:
       = f.password_field :password
-      .label Password confirmation:
+      .label #{t:password_confirmation}:
       = f.password_field :password_confirmation
     %br
     .buttonbar
-      = f.submit "Update Password and Login"
+      = f.submit t(:update_password_and_login)

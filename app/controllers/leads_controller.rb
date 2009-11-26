@@ -205,7 +205,7 @@ class LeadsController < ApplicationController
     update_sidebar
 
     respond_to do |format|
-      format.html { flash[:notice] = "#{@lead.full_name} has beed rejected."; redirect_to(leads_path) }
+      format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to(leads_path) }
       format.js   # reject.js.rjs
       format.xml  { head :ok }
     end
@@ -314,7 +314,7 @@ class LeadsController < ApplicationController
       end                                         # Render destroy.js.rjs
     else # :html destroy
       self.current_page = 1
-      flash[:notice] = "#{@lead.full_name} has beed deleted."
+      flash[:notice] = t(:msg_asset_deleted, @lead.full_name)
       redirect_to(leads_path)
     end
   end

@@ -225,7 +225,7 @@ class CampaignsController < ApplicationController
       # At this point render destroy.js.rjs
     else # :html request
       self.current_page = 1
-      flash[:notice] = "#{@campaign.name} has beed deleted."
+      flash[:notice] = t(:msg_asset_deleted, @campaign.name)
       redirect_to(campaigns_path)
     end
   end
