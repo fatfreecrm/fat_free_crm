@@ -59,19 +59,121 @@ pt-BR:
   presentation: Apresentação
   trip: Viagem
 
-  overdue: "Overdue"
-  due_asap: "Assim que possível"
-  due_today: "Hoje"
-  due_tomorrow: "Amanhã"
-  due_this_week: "Esta semana"
-  due_next_week: "Próxima semana"
-  due_later: "Depois"
+  overdue: Overdue
+  due_asap: Assim que possível
+  due_today: Hoje
+  due_tomorrow: Amanhã
+  due_this_week: Esta semana
+  due_next_week: Próxima semana
+  due_later: Depois
 
-  completed_today: "Hoje"
-  completed_yesterday: "Ontem"
-  completed_last_week: "Semana passada"
-  completed_this_month: "Este mês"
-  completed_last_month: "Mês passado"
+  completed_today: Hoje
+  completed_yesterday: Ontem
+  completed_last_week: Semana passada
+  completed_this_month: Este mês
+  completed_last_month: Mês passado
+
+  # Models/Activity.
+  #----------------------------------------------------------------------------
+  one_hour: Uma hora
+  one_day: Um dia
+  two_days: Dois dias
+  one_week: Uma semana
+  two_weeks: Duas semanas
+  one_month: Um mês
+
+  # Model Validations
+  #----------------------------------------------------------------------------
+  activerecord:
+    errors:
+      models:
+        authentication:
+          attributes:
+            login_field:
+              is_not_valid: inválido
+            password_field:
+              is_not_valid: inválido
+        account:
+          attributes:
+            name:
+              missing_account_name: "^Por favor, informe um nome para a conta"
+            access:
+              share_account: "^Por favor, informe usuários com quem desejas compartilhar esta conta."
+        campaign:
+          attributes:
+            name:
+              missing_campaign_name: "^Por favor, informe uma node para a campanha."
+            ends_on:
+              dates_not_in_sequence: "^Por favor, certifique-se que a data de término da campanha seja posterior a data de início."
+            access:
+              share_campaign: "^Por favor, informe usuários com quem desejas compartilhar esta campanha."
+        contact:
+          attributes:
+            first_name:
+              missing_first_name: "^Por favor, informe o primeiro nome."
+            last_name:
+              missing_last_name: "^Por favor, informe o último nome."
+            access:
+              share_contact: "^Por favor, informe usuários com quem desejas compartilhar este contato."
+        lead:
+          attributes:
+            first_name:
+              missing_first_name: "^Por favor, informe o primeiro nome."
+            last_name:
+              missing_last_name: "^Por favor, informe o último nome."
+            access:
+              share_lead: "^Por favor, informe usuários com quem desejas compartilhar este lead."
+        opportunity:
+          attributes:
+            name:
+              missing_opportunity_name: "^Por favor, informe um nome para a oportunidade."
+            access:
+              share_opportunity: "^Por favor, informe usuários com quem desejas compartilhar esta oportunidade."
+        task:
+          attributes:
+            name:
+              missing_task_name: "^Por favor, informe um nome para a tarefa."
+            calendar:
+              invalid_date: "^Por favor, informe uma data válida."
+        user:
+          attributes:
+            username:
+              missing_username: "^Por favor, informe o nome do usuário."
+              username_taken: "^Este usuário já está sendo usado."
+            email:
+              missing_email: "^Por favor, informe o e-mail."
+              email_in_use: "^Já existe um usuário com este e-mail."
+
+  msg_account_suspended: A conta do usuário foi suspensa.
+  password_reset_instruction: instruções de redefinição da senha
+
+  # Controllers.
+  #----------------------------------------------------------------------------
+  msg_asset_deleted: "{{value}} foi removido."
+  msg_asset_rejected: "{{value}} foi rejeitado."
+  msg_login_needed: Você precisa entrar no sistema para acessar esta página.
+  msg_logout_needed: Você deve sair do sistema para acessar esta página.
+  msg_asset_not_available: Este(a) {{value}} não está mais disponível.
+  msg_cant_do: "Impossível {{action}} o {{asset}} já que não está mais disponível."
+  msg_cant_create_related: "Impossível criar {{asset}} já que {{related}} não está mais disponível."
+  msg_welcome: Bem vindo(a) ao Fat Free CRM!
+  msg_goodbye: Voi saiu do sistema. Obrigado por usar o Fat Free CRM!
+  msg_last_login: Você entrou no sistema pela última vez em {{value}}.
+  msg_account_not_approved: Sua conta ainda não foi aprovada.
+  msg_successful_signup: Cadastrado com sucesso, bem vindo(a) ao Fat Free CRM!
+  msg_account_created: Sua conta foi criada e está aguardando a aprovação do administrador do sistema.
+  msg_invalig_login: Usuário e senha inválida.
+  msg_invalid_password: "^Por favor informe uma senha válida"
+  msg_password_changed: Sua senha mudou.
+  msg_password_not_changed: Sua senha não mudou.
+  msg_bad_image_file: "^Não foi possível enviar ou redimensionar a imagem que você escolheu."
+  msg_pwd_instructions_sent: instruções para redefinir a sua senha foram enviadas a você. Por favor, verifique seu e-mail.
+  msg_email_not_found: Nenhum usuário encontrado com este e-mail.
+  msg_enter_new_password: Por favor, informe sua nova senha.
+  msg_password_updated: A senha foi atualizada com sucesso.
+  msg_require_admin: É preciso ser um administrador para acessar esta página.
+  msg_cant_delete_user: "^Não foi possível remover o usuário já que {{value}} tem relacionamentos ativos."
+
 
   # views/users:
   #----------------------------------------------------------------------------
@@ -138,7 +240,7 @@ pt-BR:
   billing_address: Endereço de cobrança
   shipping_address: Endereço de entrega
   same_as_billing: mesmo da cobrança
-  account_permissions_intro: "Por padrão, somente você terá acesso a conta. Você pode mudar as permissões da conta depois."
+  account_permissions_intro: Por padrão, somente você terá acesso a conta. Você pode mudar as permissões da conta depois.
   private_txt: manter privado, não compartilhar com os outros
   public_txt: Compartilhar com todos
   shared_txt: Compartilhar somente com algumas pessoas
@@ -205,6 +307,7 @@ pt-BR:
   referred_by: Referred by
   referred_by_small: referred by
   at: at
+  works_at: "{{job_title}} na {{company}}"
   department: Departamento
   department_small: '{{value}} departamento'
   alt_email_small: Outro
@@ -224,9 +327,9 @@ pt-BR:
   # views/tasks
   #----------------------------------------------------------------------------
   tasks: Tarefas
-  pending: Pendente
-  assigned: Atribuída
-  completed: Terminada
+  pending_tab: Pendente
+  assigned_tab: Atribuída
+  completed_tab: Terminada
   completed_tasks: Tarefas terminadas
   assigned_tasks: Tarefas atribuídas
   pending_tasks: Tarefas pendentes
@@ -243,6 +346,7 @@ pt-BR:
   task_overdue: late, was due on
   task_due_in: due in
   task_due_today: due today
+  task_from: de {{value}}
   assign_to: Atribuida para
   category: Categoria
   select_blank: '-- Selecione --'
@@ -443,20 +547,20 @@ pt-BR:
   # views/admin:
   #----------------------------------------------------------------------------
   users: Usuários
-  user_confirm_delete_txt: A user can only be deleted if no related assets are left behind.
-  create_user: Create User
-  save_user: Save User
-  user_is_admin: The user is Administrator
-  personal_information: Personal Information
-  user_signed_up: Signed Up
-  user_suspended: Suspended
+  user_confirm_delete_txt: Um usuário só pode ser removido se não tiver relacionamentos.
+  create_user: Novo usuário
+  save_user: Salvar usuário
+  user_is_admin: Este usuário é administrador
+  personal_information: Informações Pessoais
+  user_signed_up: Cadastrar-se
+  user_suspended: Suspenso
   user_admin: Admin
-  user_active: Active
-  user_awaits_approval: awaits your approval
-  user_never_logged_in: "hasn't logged in yet"
-  last_seen: last seen {{value}} ago
-  user_since: user since {{value}}
-  user_signed_up_on: signed up on {{value}}
+  user_active: Ativo
+  user_awaits_approval: aguarda sua aprovação
+  user_never_logged_in: "ainda não entrou no sistema"
+  last_seen: entrou pela última vez {{value}} atrás
+  user_since: usuário desde {{value}}
+  user_signed_up_on: cadastrou-se em {{value}}
   user_suspended_on: suspended on {{value}}
   suspend: Suspender
   approve: Aprovar
@@ -467,16 +571,10 @@ pt-BR:
   edit_comment: Editando comentário
   update: Atualizar
   show: Exibir
-
-  # models/activity
+  
+  # views/passwords:
   #----------------------------------------------------------------------------
-  one_hour: Uma hora
-  one_day: Um dia
-  two_days: Dois dias
-  one_week: Uma semana
-  two_weeks: Duas semanas
-  one_month: Um mês
-
-  # models/account
-  #----------------------------------------------------------------------------
-  missing_account_name: "^Favor especifique o nome de uma conta."
+  password_intro: Por favor, informe seu e-mail, e as instruções para redefinir a sua senha serão enviadas a você.
+  reset_password: Redefnir senha
+  confirm_password_intro: Por favor, digite sua nova senha e então confirme-a.
+  update_password_and_login: Atualizar senha e entrar.
