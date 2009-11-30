@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Sun, Nov 29, 2009
 ---------------------------------------------------------------------
 - Added optional PLUGIN=plugin parameter to "rake crm:settings:load" task.
+- Sorted locale keys, synced up English, Portuguese, and Russian locale files.
 
 Tue, Nov 24, 2009
 ---------------------------------------------------------------------
