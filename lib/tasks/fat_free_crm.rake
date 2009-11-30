@@ -1,40 +1,61 @@
 # Fat Free CRM
 # Copyright (C) 2008-2009 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
+class Rake::Task
+  def self.sanitize_and_execute(sql)
+    sanitized = if Rails::VERSION::STRING < "2.3.3"
+      ActiveRecord::Base.send(:sanitize_sql, sql)
+    else # Rails 2.3.3 introduced extra "table_name" parameter.
+      ActiveRecord::Base.send(:sanitize_sql, sql, nil)
+    end
+    ActiveRecord::Base.connection.execute(sanitized)
+  end
+end
 
 namespace :crm do
 
   namespace :settings do
     desc "Load default application settings"
     task :load => :environment do
-      ActiveRecord::Base.establish_connection(Rails.env)
-      if ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
-        ActiveRecord::Base.connection.execute("TRUNCATE settings")
-      else
-        ActiveRecord::Base.connection.execute("DELETE FROM settings")
+      plugin = ENV["PLUGIN"]
+      yaml = RAILS_ROOT + (plugin ? "/vendor/plugins/#{plugin}" : "") + "/config/settings.yml"
+      begin
+        settings = YAML.load_file(yaml)
+      rescue
+        puts "Couldn't load #{yaml} configuration file."
+        exit
       end
-      settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
-      settings.keys.each do |key|
-        sql = [ "INSERT INTO settings (name, default_value) VALUES(?, ?)", key.to_s, Base64.encode64(Marshal.dump(settings[key])) ]
-        sql = if Rails::VERSION::STRING < "2.3.3"
-          ActiveRecord::Base.send(:sanitize_sql, sql)
-        else
-          ActiveRecord::Base.send(:sanitize_sql, sql, nil) # Rails 2.3.3 introduces extra "table_name" parameter.
+
+      # Truncate settings table if loading Fat Free CRM settings.
+      ActiveRecord::Base.establish_connection(Rails.env)
+      unless plugin
+        if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
+          ActiveRecord::Base.connection.execute("DELETE FROM settings")
+        else # mysql and postgres
+          ActiveRecord::Base.connection.execute("TRUNCATE settings")
         end
-        ActiveRecord::Base.connection.execute(sql)
+      end
+
+      settings.keys.each do |key|
+        if plugin # Delete existing plugin setting if any (since we haven't truncated the whole table).
+          sql = [ "DELETE FROM settings WHERE name = ?", key.to_s ]
+          Rake::Task.sanitize_and_execute(sql)
+        end
+        sql = [ "INSERT INTO settings (name, default_value, created_at, updated_at) VALUES(?, ?, ?, ?)", key.to_s, Base64.encode64(Marshal.dump(settings[key])), Time.now, Time.now ]
+        Rake::Task.sanitize_and_execute(sql)
       end
     end
   end
@@ -72,7 +93,7 @@ namespace :crm do
           username = reply unless reply.blank?
 
           password ||= "manager"
-          print "Pasword [#{password}]: "
+          print "Password [#{password}]: "
           echo = lambda { |toggle| return if RUBY_PLATFORM =~ /mswin/; system(toggle ? "stty echo && echo" : "stty -echo") }
           begin
             echo.call(false)
