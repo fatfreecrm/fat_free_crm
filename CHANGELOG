@@ -4,9 +4,13 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Wed, Nov 18, 2009
+Sun, Nov 29, 2009
 ---------------------------------------------------------------------
-- Added Thai language translation (thanks, Apirak!)
+- Added optional PLUGIN=plugin parameter to "rake crm:settings:load" task.
+
+Tue, Nov 24, 2009
+---------------------------------------------------------------------
+- Happy birthday, Fat Free CRM is one year old!
 
 Mon, Nov 16, 2009
 ---------------------------------------------------------------------
