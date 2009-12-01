@@ -11,7 +11,7 @@
     %tt #{t:status}:
   %li.last
     %dt= number_to_currency(@campaign.budget, :precision => 0) || t(:n_a)
-    %tt #{t:campaign_budget}:
+    %tt #{t:budget}:
 
   .caption #{t:campaign_targets}
   
@@ -19,13 +19,13 @@
   -#---------------------------------------------------------------------------
   %li
     %dt= @campaign.target_leads || t(:n_a)
-    %tt #{t:campaign_leads}:
+    %tt #{t:leads}:
     
   -# Target Conversion Ratio.
   -#---------------------------------------------------------------------------
   %li
     %dt= number_to_percentage(@campaign.target_conversion, :precision => 1) || t(:n_a)
-    %tt #{t:campaign_conversion}:
+    %tt #{t:conversion}:
     
   -# Target Opportunities: calculated based on target number of leads and
   -# expected conversion ratio.
@@ -42,15 +42,15 @@
   -#---------------------------------------------------------------------------
   %li.last
     %dt= number_to_currency(@campaign.target_revenue, :precision => 0) || t(:n_a)
-    %tt #{t:campaign_revenue}:
+    %tt #{t:revenue}:
 
-  .caption #{t:campaign_performance}
+  .caption #{t:actual_performance}
 
   -# Actual Number of Leads.
   -#---------------------------------------------------------------------------
   %li
     %dt= @campaign.leads_count || t(:n_a)
-    %tt== #{t:campaign_leads}: #{performance(@campaign.leads_count, @campaign.target_leads)}
+    %tt== #{t:leads}: #{performance(@campaign.leads_count, @campaign.target_leads)}
 
   -# Actual Conversion Ratio: calculated based on actual number of leads
   -# and opportunities.
@@ -59,10 +59,10 @@
     - if @campaign.opportunities_count.to_i > 0 && @campaign.leads_count.to_i > 0
       - conversion = @campaign.opportunities_count * 100 / @campaign.leads_count
       %dt= number_to_percentage(conversion, :precision => 1)
-      %tt== #{t:campaign_conversion}: #{performance(conversion, @campaign.target_conversion)}
+      %tt== #{t:conversion}: #{performance(conversion, @campaign.target_conversion)}
     - else
       %dt #{t:n_a}
-      %tt #{t:campaign_conversion}:
+      %tt #{t:conversion}:
 
   -# Actual Opportunities.
   -#---------------------------------------------------------------------------
@@ -76,6 +76,6 @@
   -#---------------------------------------------------------------------------
   %li.last
     %dt= number_to_currency(@campaign.revenue, :precision => 0) || t(:n_a)
-    %tt== #{t:campaign_revenue}: #{performance(@campaign.revenue, @campaign.target_revenue)}
+    %tt== #{t:revenue}: #{performance(@campaign.revenue, @campaign.target_revenue)}
 
   = hook(:show_campaign_sidebar_bottom, self, :campaign => @campaign)

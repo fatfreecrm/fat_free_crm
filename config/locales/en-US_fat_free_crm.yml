@@ -32,7 +32,6 @@ en-US:
   converted: Converted
   rejected: Rejected
 
-  campaign: Campaign
   cold_call: Cold Call
   conference: Conference
   online: Online Marketing
@@ -254,7 +253,6 @@ en-US:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Account
-  account_name: Account name
   account_permissions_intro: By default only you will have access to the account. You can change account permissions later.
   account_small: account
   accounts: Accounts
@@ -281,44 +279,42 @@ en-US:
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
+  actual: Actual
+  actual_performance: Actual Performance
+  budget: Budget
+  budget_label: Budget ($)
   campaign: Campaign
-  campaign_actual: Actual
-  campaign_budget: Budget
-  campaign_budget_label: Budget ($)
-  campaign_conversion: Conversion
-  campaign_conversion_label: Conversion (%)
-  campaign_conversion_small: "{{value}} conversion" 
-  campaign_finished_on: completed on {{value}}
-  campaign_finishes_in: finishes in {{value}}
-  campaign_leads: Leads
-  campaign_leads_label: Number of leads
-  campaign_name: Name
-  campaign_no_start_date: no start date specified
-  campaign_objectives_small: campaign objectives
-  campaign_objectives_txt: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
-  campaign_performance: Actual Performance
-  campaign_permissions_small: campaign and its leads
-  campaign_revenue: Revenue
-  campaign_revenue_label: Revenue ($)
-  campaign_revenue_small: "{{value}} in revenue"
+  campaign_and_leads: campaign and its leads
   campaign_small: campaign
-  campaign_started_ago: started {{value}} ago
-  campaign_starts_in: starts in {{value}}
-  campaign_starts_today: starts today!
   campaign_summary: Campaign Summary
-  campaign_target: Target
   campaign_targets: Campaign Targets
-  campaign_was_supposed_to_finish: was supposed to finish on {{value}}
-  campaign_was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
   campaigns: Campaigns
   campaigns_options: Campaigns Options
   campaigns_small: campaigns
-  campaigns_total: Total Campaigns
+  conversion: Conversion
+  conversion_label: Conversion (%)
+  conversion_number: "{{value}} conversion" 
   create_campaign: Create Campaign
   end_date: End date
+  finished_on: completed on {{value}}
+  finishes_in: finishes in {{value}}
+  no_start_date: no start date specified
+  number_of_leads: Number of leads
   objectives: Objectives
+  objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
+  objectives_small: campaign objectives
+  revenue: Revenue
+  revenue_label: Revenue ($)
+  revenue_number: "{{value}} in revenue"
   save_campaign: Save Campaign
   start_date: Start date
+  started_ago: started {{value}} ago
+  starts_in: starts in {{value}}
+  starts_today: starts today!
+  target: Target
+  total_campaigns: Total Campaigns
+  was_supposed_to_finish: was supposed to finish on {{value}}
+  was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
@@ -453,7 +449,6 @@ en-US:
   task_due_now: due now
   task_due_today: due today
   task_from: From {{value}}
-  task_name: Task name
   task_overdue: late, was due on
   task_pending: The task has been moved to pending tasks
   task_small: task

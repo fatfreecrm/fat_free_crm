@@ -32,7 +32,6 @@ ru:
   converted: Продвинут
   rejected: Закрыт
 
-  campaign: Кампания
   cold_call: Холодный Звонок
   conference: Конференция
   online: Онлайн Маркетинг
@@ -254,7 +253,6 @@ ru:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Контрагент
-  account_name: Название Контрагента
   account_permissions_intro: По умолчанию только Вы получаете доступ к контрагенту. Права доступа можно изменить в любое время.
   account_small: контрагент
   accounts: Контрагенты
@@ -281,44 +279,42 @@ ru:
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
+  actual: Фактически
+  actual_performance: Фактический Результат
+  budget: Бюджет
+  budget_label: Бюджет (руб.)
   campaign: Кампания
-  campaign_actual: Фактически
-  campaign_budget: Бюджет
-  campaign_budget_label: Бюджет (руб.)
-  campaign_conversion: Конверсия
-  campaign_conversion_label: Конверсия (%)
-  campaign_conversion_small: конверсия {{value}}
-  campaign_finished_on: закончилась {{value}}
-  campaign_finishes_in: заканчивается через {{value}}
-  campaign_leads: Наводок
-  campaign_leads_label: Число наводок
-  campaign_name: Название кампании
-  campaign_no_start_date: дата начала не указана
-  campaign_objectives_small: целях кампании
-  campaign_objectives_txt: @ru@Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
-  campaign_performance: Фактический Результат
-  campaign_permissions_small: кампании и ее наводк
-  campaign_revenue: Доход
-  campaign_revenue_label: Доход (руб.)
-  campaign_revenue_small: "{{value}} дохода"
+  campaign_and_leads: кампании и ее наводк
   campaign_small: кампании
-  campaign_started_ago: начата {{value}} назад
-  campaign_starts_in: начинается через {{value}}
-  campaign_starts_today: начинается сегодня!
   campaign_summary: Итоги по Кампании
-  campaign_target: Цель
   campaign_targets: Цели Кампании
-  campaign_was_supposed_to_finish: должна была закончиться {{value}}
-  campaign_was_supposed_to_start: должна была начаться {{time_ago}} назад {{start_date}}
   campaigns: Кампании
   campaigns_options: Опции для Кампаний
   campaigns_small: кампании
-  campaigns_total: Всего кампаний
+  conversion: Конверсия
+  conversion_label: Конверсия (%)
+  conversion_number: конверсия {{value}}
   create_campaign: Создать Кампанию
   end_date: Дата окончания
+  finished_on: закончилась {{value}}
+  finishes_in: заканчивается через {{value}}
+  no_start_date: дата начала не указана
+  number_of_leads: Число наводок
   objectives: Цели
+  objectives_help: @ru@Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
+  objectives_small: целях кампании
+  revenue: Доход
+  revenue_label: Доход (руб.)
+  revenue_number: "{{value}} дохода"
   save_campaign: Сохранить Изменения
   start_date: Дата начала
+  started_ago: начата {{value}} назад
+  starts_in: начинается через {{value}}
+  starts_today: начинается сегодня!
+  target: Цель
+  total_campaigns: Всего кампаний
+  was_supposed_to_finish: должна была закончиться {{value}}
+  was_supposed_to_start: должна была начаться {{time_ago}} назад {{start_date}}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
@@ -467,7 +463,6 @@ ru:
   task_due_now: "срок: сейчас"
   task_due_today: "срок: сегодня"
   task_from: "{{value}} поручил(a)"
-  task_name: Название задания
   task_overdue: "задержка, срок:" 
   task_pending: Это задание поставлено в очередь на выполнение
   task_small: задание
