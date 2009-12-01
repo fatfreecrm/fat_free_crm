@@ -269,11 +269,11 @@ en-US:
   open_in_window: Open {{value}} in a new window
   phone_small: phone
   phone_toll_free: Toll-free phone 
-  private_txt: Keep it private, do not share with others
-  public_txt: Share it with everyone
+  keep_private: Keep it private, do not share with others
+  make_public: Share it with everyone
   same_as_billing: same as billing
   save_account: Save Account
-  shared_txt: Share it with the following people
+  share_with: Share it with the following people
   shipping_address: Shipping address
   website: Website
 
@@ -481,7 +481,7 @@ en-US:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Add Note
-  add_note_txt: Add a new note...
+  add_note_help: Add a new note...
   added: added
   added_by: added {{time_ago}} ago by {{user}} 
   ago: ago
@@ -502,7 +502,7 @@ en-US:
   name: Name
   no_button: 'No'
   no_match: 'No {{value}} match'
-  no_recent_items_txt: There are no recent items to display yet.
+  no_recent_items: There are no recent items to display yet.
   options: Options
   or: or
   permissions: Permissions
@@ -516,11 +516,11 @@ en-US:
   about: About
   about_dev_group: Discussion group for developers
   about_features: Features and bugs
-  about_ff_crm_resources: Fat Free CRM resources (links open a new window)
-  about_ff_crm_version: Fat Free CRM version
+  about_ffc_resources: Fat Free CRM resources (links open a new window)
+  about_ffc_version: Fat Free CRM version
   about_home_page: Home page
   about_project_page: Project page
-  about_thank_you_txt: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
+  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
   about_twitter: Twitter commit updates
   about_user_group: Discussion group for users
   admin: Admin
@@ -553,7 +553,7 @@ en-US:
   user_active: Active
   user_admin: Admin
   user_awaits_approval: awaits your approval
-  user_confirm_delete_txt: A user can only be deleted if no related assets are left behind.
+  user_confirm_delete: A user can only be deleted if no related assets are left behind.
   user_is_admin: The user is Administrator
   user_never_logged_in: "hasn't logged in yet"
   user_signed_up: Signed Up

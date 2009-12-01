@@ -269,11 +269,11 @@ ru:
   open_in_window: Открыть {{value}} в новом окне
   phone_small: телефон
   phone_toll_free: Номер 8-800
-  private_txt: Не показывать никому
-  public_txt: Показывать всем
+  keep_private: Не показывать никому
+  make_public: Показывать всем
   same_as_billing: тот же
   save_account: Сохранить Контрагента
-  shared_txt: Показывать перечисленным людям
+  share_with: Показывать перечисленным людям
   shipping_address: Адрес получателя
   website: Интернет-страница
 
@@ -495,7 +495,7 @@ ru:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Добавить Комментарий
-  add_note_txt: Добавить комментарий...
+  add_note_help: Добавить комментарий...
   added: добавлен
   added_by: "{{user}} добавил(а) {{time_ago}} назад"
   ago: назад
@@ -516,7 +516,7 @@ ru:
   name: Название
   no_button: Нет
   no_match: "{{value}} не найдены"
-  no_recent_items_txt: Недавно просмотренных объектов не найдено.
+  no_recent_items: Недавно просмотренных объектов не найдено.
   options: Опции
   or: или
   permissions: Права Доступа
@@ -530,11 +530,11 @@ ru:
   about: О программе
   about_dev_group: Форум для разработчиков
   about_features: @ru@Features and bugs
-  about_ff_crm_resources: Полезные ресурсы по Fat Free CRM (ссылки открываются в новом окне)
-  about_ff_crm_version: Fat Free CRM версия
+  about_ffc_resources: Полезные ресурсы по Fat Free CRM (ссылки открываются в новом окне)
+  about_ffc_version: Fat Free CRM версия
   about_home_page: Домашняя страница
   about_project_page: Страница проекта
-  about_thank_you_txt: Спасибо что Вы пользуетесь Fat Free CRM! Мы ценим ваш бизнес и надеемся что Вам нравится наше приложение.
+  about_thank_you: Спасибо что Вы пользуетесь Fat Free CRM! Мы ценим ваш бизнес и надеемся что Вам нравится наше приложение.
   about_twitter: @ru@Twitter commit updates
   about_user_group: Форум для пользователей
   admin: Админ
@@ -567,7 +567,7 @@ ru:
   user_active: Активен
   user_admin: Админ.
   user_awaits_approval: ждет подтверждения
-  user_confirm_delete_txt: Пользователя можно удалить только в том случае, если к нему не привязаны никакие объекты.
+  user_confirm_delete: Пользователя можно удалить только в том случае, если к нему не привязаны никакие объекты.
   user_is_admin: Дать права Администратора
   user_never_logged_in: еще не заходил(а)
   user_signed_up: Зарегистрирован

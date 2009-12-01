@@ -7,13 +7,13 @@
   #account_permissions{ hidden_if(collapsed) }
     .radio_box
       = radio_button_tag "account[access]", "Private", @account.access == "Private", :onclick => "$('people').hide()"
-      #{t:private_txt}
+      #{t:keep_private}
     .radio_box
       = radio_button_tag "account[access]", "Public",  @account.access == "Public", :onclick => "$('people').hide()"
-      #{t:public_txt}
+      #{t:make_public}
     .radio_box
       = radio_button_tag "account[access]", "Shared",  @account.access == "Shared", :onclick => "$('people').show()"
-      #{t:shared_txt}
+      #{t:share_with}
     #people{ hidden_if(@account.access != "Shared") }
       %div{ :style => "padding: 6px 0px 0px 20px" }
         - for user in @users

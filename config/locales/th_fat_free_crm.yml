@@ -309,7 +309,7 @@ th:
   no_match: 'ไม่มี{{value}}ที่ตรงกับ'
   search_assets: ค้นหา{{value}}
   recent_items: เอกสารล่าสุด
-  no_recent_items_txt: ไม่มีเอกสารล่าสุดที่จะนำมาแสดง
+  no_recent_items: ไม่มีเอกสารล่าสุดที่จะนำมาแสดง
   items_total: '{{count}} ทั้งหมด'
   add_note: เพิ่มบันทึก
   add_note_txt: เพิ่มบันทึกใหม่ ...
@@ -430,9 +430,9 @@ th:
   quick_find: หาด่วน
   admin: ผู้ดูแลระบบ
   logout: ออกจากระบบ
-  about_ff_crm_version: Fat Free CRM เวอร์ชัน
-  about_thank_you_txt: ขอบคุณที่ใช้งาน Fat Free CRM! เรายินดีเป็นอย่างยิ่งกับธุรกิจของคุณ และหวังว่าคุณจะสนุกกับการใช้โปรแกรม
-  about_ff_crm_resources: Fat Free CRM เพิ่มเติม (กดเพื่อเปิดหน้าใหม่)
+  about_ffc_version: Fat Free CRM เวอร์ชัน
+  about_thank_you: ขอบคุณที่ใช้งาน Fat Free CRM! เรายินดีเป็นอย่างยิ่งกับธุรกิจของคุณ และหวังว่าคุณจะสนุกกับการใช้โปรแกรม
+  about_ffc_resources: Fat Free CRM เพิ่มเติม (กดเพื่อเปิดหน้าใหม่)
   about_home_page: หน้าแรก
   about_project_page: หน้าโครงการ
   about_features: คุณลักษณะ และข้อผิดพลาด
@@ -443,7 +443,7 @@ th:
   # views/admin:
   #----------------------------------------------------------------------------
   users: ผู้ใช้
-  user_confirm_delete_txt: จะลบผู้ใช้ได้ก็ต่อเมื่อไม่มีเอกสารใดเกี่ยวข้องกับผู้ใช้คนนั้นๆ
+  user_confirm_delete: จะลบผู้ใช้ได้ก็ต่อเมื่อไม่มีเอกสารใดเกี่ยวข้องกับผู้ใช้คนนั้นๆ
   create_user: เพิ่มผู้ใช้
   save_user: บันทึกผู้ใช้
   user_is_admin: ผู้ใช้คนนี้เป็นผู้ดูแลระบบ

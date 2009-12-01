@@ -269,11 +269,11 @@ pt-BR:
   open_in_window: Abrir {{value}} em uma nova janela
   phone_small: telefone
   phone_toll_free: Toll-free phone 
-  private_txt: manter privado, não compartilhar com os outros
-  public_txt: Compartilhar com todos
+  keep_private: manter privado, não compartilhar com os outros
+  make_public: Compartilhar com todos
   same_as_billing: mesmo da cobrança
   save_account: Salvar conta
-  shared_txt: Compartilhar somente com algumas pessoas
+  share_with: Compartilhar somente com algumas pessoas
   shipping_address: Endereço de entrega
   website: Website
 
@@ -481,7 +481,7 @@ pt-BR:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Adicionar nota
-  add_note_txt: Adicionar nova nota...
+  add_note_help: Adicionar nova nota...
   added: adicionado
   added_by: adicionado {{time_ago}} atrás por {{user}} 
   ago: atrás
@@ -502,7 +502,7 @@ pt-BR:
   name: Nome
   no_button: 'Não'
   no_match: 'No {{value}} match'
-  no_recent_items_txt: Não existem itens recentes para exibir ainda.
+  no_recent_items: Não existem itens recentes para exibir ainda.
   options: Opções
   or: ou
   permissions: Permissões
@@ -516,11 +516,11 @@ pt-BR:
   about: Sobre
   about_dev_group: Grupo de discussão para desenvolvedores
   about_features: Funcionalidades e bugs
-  about_ff_crm_resources: Recursos do Fat Free CRM (link abre em uma nova janela)
-  about_ff_crm_version: Fat Free CRM versão
+  about_ffc_resources: Recursos do Fat Free CRM (link abre em uma nova janela)
+  about_ffc_version: Fat Free CRM versão
   about_home_page: Home page
   about_project_page: Página do projeto
-  about_thank_you_txt: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
+  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
   about_twitter: Twitter
   about_user_group: Grupo de discussão para usuários
   admin: Admin
@@ -553,7 +553,7 @@ pt-BR:
   user_active: Ativo
   user_admin: Admin
   user_awaits_approval: aguarda sua aprovação
-  user_confirm_delete_txt: Um usuário só pode ser removido se não tiver relacionamentos.
+  user_confirm_delete: Um usuário só pode ser removido se não tiver relacionamentos.
   user_is_admin: Este usuário é administrador
   user_never_logged_in: "ainda não entrou no sistema"
   user_signed_up: Cadastrar-se
