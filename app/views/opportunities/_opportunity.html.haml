@@ -21,20 +21,20 @@
         - won_or_lost = %w(won lost).include?(opportunity.stage)
         - unless won_or_lost
           == #{number_to_currency(opportunity.amount || 0, :precision => 0)}
-          == #{opportunity.discount ? t(:opportunity_discount_text, number_to_currency(opportunity.discount, :precision => 0)) : t(:opportunity_no_discount_text)}
-          = t(:opportunity_probability_text, (opportunity.probability || 0).to_s + '%') + " | " 
+          == #{opportunity.discount ? t(:discount_number, number_to_currency(opportunity.discount, :precision => 0)) : t(:no_discount)}
+          = t(:probability_number, (opportunity.probability || 0).to_s + '%') + " | " 
         - if opportunity.closes_on
           - if won_or_lost
             - if opportunity.closes_on >= Date.today
-              = t(:opportunity_closing_date_text, opportunity.closes_on.to_s(:mmddyy))
+              = t(:closing_date, opportunity.closes_on.to_s(:mmddyy))
             - else
-              = t(:opportunity_closed_text, :time_ago => distance_of_time_in_words(opportunity.closes_on, Date.today), :date => opportunity.closes_on.to_s(:mmddyy))
+              = t(:closed_ago_on, :time_ago => distance_of_time_in_words(opportunity.closes_on, Date.today), :date => opportunity.closes_on.to_s(:mmddyy))
           - elsif opportunity.closes_on > Date.today
-            = t(:opportunity_expected_to_close_text,  :time => distance_of_time_in_words(Date.today, opportunity.closes_on), :date => opportunity.closes_on.to_s(:mmddyy))
+            = t(:expected_to_close,  :time => distance_of_time_in_words(Date.today, opportunity.closes_on), :date => opportunity.closes_on.to_s(:mmddyy))
           - elsif opportunity.closes_on == Date.today
-            %span.warn= t(:opportunity_close_today_text)
+            %span.warn= t(:closes_today)
           - else
-            %span.warn= t(:opportunity_past_due_text, distance_of_time_in_words(opportunity.closes_on, Date.today))
+            %span.warn= t(:past_due, distance_of_time_in_words(opportunity.closes_on, Date.today))
         - else
-          = t(:opportunity_no_closing_date)
+          = t(:no_closing_date)
       = hook(:opportunity_bottom, self, :opportunity => opportunity)

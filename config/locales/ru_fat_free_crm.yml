@@ -375,29 +375,29 @@ ru:
   #----------------------------------------------------------------------------
   amount: Сумма
   close_date: Дата завершения
+  closed_ago_on: завершилось {{time_ago}} назад {{date}}
+  closes_today: завершение ожидается сегодня!
+  closing_date: дата завершения {{value}}
   create_opportunity: Создать Пeрспективу
   currency: (руб.)
   days_late: Задержка
   days_left: Осталось дней
   discount: Скидка
+  discount_number: со скидкой {{value}}
+  expected_to_close: завершение ожидается через {{time}} - {{date}}
   from: из
+  no_closing_date: дата завершения не указана
+  no_discount: без скидки
   opportunities: Пeрспективы
   opportunities_options: Опции для перспектив
   opportunities_small: пeрспективы
   opportunity: Пeрспектива
-  opportunity_close_today_text: завершение ожидается сегодня!
-  opportunity_closed_text: завершилось {{time_ago}} назад {{date}}
-  opportunity_closing_date_text: дата завершения {{value}}
-  opportunity_discount_text: со скидкой {{value}}
-  opportunity_expected_to_close_text: завершение ожидается через {{time}} - {{date}}
-  opportunity_no_closing_date: дата завершения не указана
-  opportunity_no_discount_text: без скидки
-  opportunity_past_due_text: просрочено, должно было завершено {{value}} назад
-  opportunity_probability_text: и вероятностью {{value}}
   opportunity_small: пeрспектива
   opportunity_summary: Перспектива
   opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability"
+  past_due: просрочено, должно было завершено {{value}} назад
   probability: Вероятность
+  probability_number: и вероятностью {{value}}
   save_opportunity: Сохранить Пeрспективу
   stage: Стадия
   total_opportunities: Всего перспектив

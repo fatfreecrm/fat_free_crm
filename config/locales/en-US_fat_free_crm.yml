@@ -375,29 +375,29 @@ en-US:
   #----------------------------------------------------------------------------
   amount: Amount
   close_date: Close date
+  closed_ago_on: closed {{time_ago}} ago on {{date}}
+  closes_today: expected to close today!
+  closing_date: closing date is {{value}}
   create_opportunity: Create Opportunity
   currency: ($)
   days_late: Late by
   days_left: Days left
   discount: Discount
+  discount_number: with {{value}} discount
+  expected_to_close: expected to close in {{time}} on {{date}}
   from: from
+  no_closing_date: no expected closing date
+  no_discount: with no discount
   opportunities: Opportunities
   opportunities_options: Opportunities Options
   opportunities_small: opportunities
   opportunity: Opportunity
-  opportunity_close_today_text: expected to close today!
-  opportunity_closed_text: closed {{time_ago}} ago on {{date}}
-  opportunity_closing_date_text: closing date is {{value}}
-  opportunity_discount_text: with {{value}} discount
-  opportunity_expected_to_close_text: expected to close in {{time}} on {{date}}
-  opportunity_no_closing_date: no expected closing date
-  opportunity_no_discount_text: with no discount
-  opportunity_past_due_text: past due, was expected to close {{value}} ago
-  opportunity_probability_text:  and {{value}} probability
   opportunity_small: opportunity
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
+  past_due: past due, was expected to close {{value}} ago
   probability: Probability
+  probability_number: and {{value}} probability
   save_opportunity: Save Opportunity
   stage: Stage
   total_opportunities: Total Opportunities
