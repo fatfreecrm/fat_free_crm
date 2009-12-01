@@ -285,11 +285,6 @@ pt-BR:
   campaign_actual: Atual
   campaign_budget: Orçamento
   campaign_budget_label: Orçamento ($)
-  campaign_checkbox_called_off: Called Off
-  campaign_checkbox_completed: Terminado
-  campaign_checkbox_on_hold: Em espera
-  campaign_checkbox_planned: Planejado
-  campaign_checkbox_started: Iniciado
   campaign_conversion: Conversão
   campaign_conversion_label: Conversão (%)
   campaign_conversion_small: "{{value}} convertidos" 

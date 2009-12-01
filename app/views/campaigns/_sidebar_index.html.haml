@@ -4,7 +4,7 @@
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @campaign_status_total[key]
-      = campaign_status_checbox(key, @campaign_status_total[key]) << " " << t("campaign_checkbox_#{key}")
+      = campaign_status_checbox(key, @campaign_status_total[key]) << " " << t(key)
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}

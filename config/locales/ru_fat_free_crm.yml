@@ -285,11 +285,6 @@ ru:
   campaign_actual: Фактически
   campaign_budget: Бюджет
   campaign_budget_label: Бюджет (руб.)
-  campaign_checkbox_called_off: Прекращены
-  campaign_checkbox_completed: Завершены
-  campaign_checkbox_on_hold: Остановлены
-  campaign_checkbox_planned: Запланированы
-  campaign_checkbox_started: Начаты
   campaign_conversion: Конверсия
   campaign_conversion_label: Конверсия (%)
   campaign_conversion_small: конверсия {{value}}
