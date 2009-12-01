@@ -7,17 +7,17 @@
   #opportunity_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide(); $('account_access').value = 'Private'"
-      Keep it private, do not share with others
+      = label "opportunity[access]", :private, "Keep it private, do not share with others"
     .radio_box
       = f.radio_button :access, "Public",  :onclick => "$('people').hide(); $('account_access').value = 'Public'"
-      Share it with everyone
+      = label "opportunity[access]", :public, "Share it with everyone"
     .radio_box
       = f.radio_button :access, "Shared",  :onclick => "$('people').show(); $('account_access').value = 'Shared'"
-      Share it with the following people
+      = label "opportunity[access]", :shared, "Share it with the following people"
     #people{ hidden_if(@opportunity.access != "Shared") }
       %div{ :style => "padding: 6px 0px 0px 20px" }
         - for user in @users
           .check_box
             -# Preserve state of the checkboxes if the form gets redrawn on errors.
-            = check_box_tag "users[]", user.id, @opportunity.permissions.map(&:user_id).include?(user.id) || (params[:users] && params[:users].include?(user.id.to_s))
-            = user.full_name
+            = check_box_tag "users[]", user.id, @opportunity.permissions.map(&:user_id).include?(user.id) || (params[:users] && params[:users].include?(user.id.to_s)), :id => "user_#{user.id}"
+            = label_tag "user_#{user.id}", user.full_name

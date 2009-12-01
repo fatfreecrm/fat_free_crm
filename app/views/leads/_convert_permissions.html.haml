@@ -6,20 +6,20 @@
   #lead_convert_permissions{ hidden_if(collapsed) }
     .radio_box
       = radio_button_tag "access", "Lead",    true,  :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Lead'"
-      Copy lead permissions
+      = label :access, :lead, "Copy lead permissions"
     .radio_box
       = radio_button_tag "access", "Private", false, :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Private'"
-      Keep it private, do not share with others
+      = label :access, :private, "Keep it private, do not share with others"
     .radio_box
       = radio_button_tag "access", "Public",  false, :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Public'"
-      Share it with everyone
+      = label :access, :public, "Share it with everyone"
     .radio_box
       = radio_button_tag "access", "Shared",  false, :onclick => "$('people').show(); $('account_access').value = $('opportunity_access').value = 'Shared'"
-      Share it with the following people
+      = label :access, :shared, "Share it with the following people"
     #people{ hidden }
       %div{ :style => "padding: 6px 0px 0px 20px" }
         - for user in @users
           .check_box
             -# Preserve state of the checkboxes if the form gets redrawn on errors.
-            = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s)
-            = user.full_name
+            = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s), :id => "user_#{user.id}", :id => "user_#{user.id}"
+            = label_tag "user_#{user.id}", user.full_name
