@@ -1,12 +1,13 @@
 th:
 
-  # Generic terms
+  # Generic terms.
   #----------------------------------------------------------------------------
   all: ทั้งหมด
   language: Thai(ไทย)
   not_implemented: อยู่ระหว่างการพัฒนา.
+  select_none: '-- ว่าง --'
 
-  # Settings
+  # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: สรุปงาน
   tab_tasks: ภารกิจ
@@ -31,7 +32,6 @@ th:
   converted: แปลงแล้ว
   rejected: ปฏิเสธ
 
-  campaign: แคมเปญ
   cold_call: สุ่มโทร
   conference: สัมนา
   online: การตลาดออนไลท์
@@ -73,402 +73,7 @@ th:
   completed_this_month: "เดือนนี้"
   completed_last_month: "เดือนก่อน"
 
-  # views/users:
-  #----------------------------------------------------------------------------
-  user: ผู้ใช้
-  email: อีเมล์
-  phone: โทรศัพท์
-  mobile: โทรศัพท์มือถือ
-  profile: โพรไฟล์
-  my_profile: โพรไฟล์ของฉัน
-  edit_profile: แก้ไขโพรไฟล์
-  upload_picture: อัปโหลดรูป
-  change_password: เปลี่ยนรหัสผ่าน
-  current_password: รหัสผ่านปัจจุบัน
-  new_password: รัหสผ่านใหม่
-  password_confirmation: ยื่นยันรหัสผ่าน
-  first_name: ชื่อจริง
-  last_name: นามสกุล
-  job_title: ตำแหน่ง
-  company: บริษัท
-  contact_info: ข้อมูลใช้ในการติดต่อ
-  alt_email: อีเมล์ ทางเลือก
-  aim: AOL IM
-  yahoo: Yahoo IM
-  google: Google IM
-  skype: Skype
-  save_profile: บันทึกประวัติ
-  image_help: หลังจากอัปโหลดจะถูกเปลี่ยนขนาดเป็น 75x75 pixels และ รูปภาพที่ใช้จะต้องเป็น GIF, JPG หรือ PNG เท่านั้น
-  image_file: ไฟล์รูปภาพ
-  use_gravatar: ใช้ Gravatar
-  gravatar_help: หากไม่เข้าใจ Gravatars ลองเรียนรูป Gravatars ได้
-  here: ที่นี่
-  login_now_link: เข้าสู่ระบบทันที !
-  username: ชื่อผู้ใช้
-  password: รหัสผ่าน
-  sign_up_button: สมัคร
-  sign_up: สมัครสมาชิก
-  already_signed_up: เป็นสมาชิกอยู่แล้ว
-  profile_language: ภาษา
-
-  # views/auth:
-  #----------------------------------------------------------------------------
-  login: เข้าระบบ
-  no_account: ไม่มีชื่อในรายการสมาชิก
-  sign_up_now: สมัครสามาชิกได้เลย
-  forgot_password: ลืมรหัสผ่าน
-  remember_me: จำฉันไว้
-
-  # views/accounts:
-  #----------------------------------------------------------------------------
-  accounts: รายการลูกค้า
-  accounts_small: รายการลูกค้า
-  account: ลูกค้า
-  account_small: ลูกค้า
-  phone_small: โทรศัพท์
-  mobile_small: โทรศัพท์มือถือ
-  create_account: เพิ่มคู่ค้า
-  save_account: บันทึกลูกค้า
-  accounts_options: ตัวเลือกสำหรับลูกค้า
-  account_name: ชื่อลูกค้า
-  assigned_to: มอบหมายให้
-  website: เว็บไซต์
-  phone_toll_free: เบอร์โทรฟรี
-  fax: แฟกซ์
-  billing_address: ที่อยู่สำหรับวางบิล
-  shipping_address: ที่อยู่สำหรับส่งของ
-  same_as_billing: เหมือนกับที่อยู่วางบิล
-  account_permissions_intro: "ในเบื่องต้น จะมีเฉพาะคุณที่สามารถเข้าถึงรายการได้ แต่คุณสามารถแก้เงื่อนไขได้ในภายหลัง"
-  private_txt: เป็นรายการส่วนตัว ไม่ให้ผู้อื่นเห็น
-  public_txt: สามารถเห็นได้ทุกคน
-  shared_txt: กำหนดผู้ที่เห็นได้ดังต่อไปนี้
-  date_created: วันที่สร้าง
-  date_updated: วันที่แก้ไข
-  intro: คุณส่ามารถเพิ่มข้อมูล {{value}} ในภายหลัง
-  open_in_window: เปิด {{value}} ในหน้าต่างใหม่
-
-  # views/campaigns
-  #----------------------------------------------------------------------------
-  campaigns: รายการแคมเปญ
-  campaigns_small: รายการแคมเปญ
-  campaign: แคมเปญ
-  campaign_small: แคมเปญ
-  create_campaign: เพิ่มแคมเปญ
-  save_campaign: บันทึกแคมเปญ
-  campaign_name: ชื่อแคมเปญ
-  start_date: วันเริ่มต้น
-  end_date: วันสิ้นสุด
-  objectives: เป้าหมาย
-  campaign_objectives_small: เป้าหมายของแคมเปญ
-  campaign_objectives_txt: โปรดระบุจำนวนผู้สนใจ ค่าความคาดหวังที่จะแปลงจากผู้สนใจไปเป็นผู้มีโอกาสปิดการขาย รายได้ที่จะได้รับ และ งบประมาณที่ต้องใช้ ตัวเลขเหล่านี้จะช่วยให้คุณติดตามประสิทธิภาพจริงๆ ของโครงการ
-  campaign_leads_label: จำนวนผู้สนใจ
-  campaign_conversion_label: แปลง (%)
-  campaign_revenue_label: รายได้ ($)
-  campaign_budget_label: งบประมาณ ($)
-  campaign_permissions_small: แคมเปณ และผู้สนใจในแคมเปณ
-  campaign_started_ago: เริ่มต้นมา {{value}}
-  campaign_finishes_in: เสร็จภายในเวลา {{value}}
-  campaign_finished_on: เสร็จสมบูรณ์ {{value}}
-  campaign_was_supposed_to_finish: ควรจะเสร็จตั้งแต่ {{value}}
-  campaign_no_start_date: ไม่ระบุวันเริ่มต้น
-  campaign_starts_in: เริ่มต้นภายใน {{value}}
-  campaign_starts_today: เริ่มต้นวันนี้!
-  campaign_was_supposed_to_start: ควรจะเสร็จตั้งแต่ {{time_ago}} ที่ผ่านมา คือ {{start_date}}
-  campaign_target: เป้าหมาย
-  campaign_actual: เกิดขึ้นจริง
-  campaign_revenue_small: "รายได้ {{value}}"
-  campaign_conversion_small: "แปลง {{value}} ราย" 
-  campaign_checkbox_called_off: เรียกว่าปิด
-  campaign_checkbox_completed: เสร็จสมบูรณ์
-  campaign_checkbox_on_hold: ระงับ
-  campaign_checkbox_planned: วางแผน
-  campaign_checkbox_started: เริ่มต้นแล้ว
-  campaigns_total: จำนวนแคมเปณ
-  campaign_summary: สรุป แคมเปณ
-  campaign_targets: เป้าหมาย แคมเปณ
-  campaign_performance: ประสิทธิที่เกิดขึ้นจริง
-  campaign_leads: ผู้สนใจ
-  campaign_conversion: การแปลง
-  campaign_revenue: รายได้
-  campaign_budget: งบประมาณ
-  campaigns_options: กรองแคมเปณ
-    
-  # views/contacts
-  #----------------------------------------------------------------------------
-  contacts: ที่อยู่ติดต่อ
-  contacts_small: ที่อยู่ติดต่อ
-  contact: ที่อยู่ติดต่อ
-  contact_small: ที่อยู่ติดต่อ
-  create_contact: เพิ่มผู้ติดต่อ
-  save_contact: บันทึกที่อยู่ติดต่อ
-  contacts_options: กรองที่อยู่ติดต่อ
-  referred_by: แนะนำโดย
-  referred_by_small: แนะนำโดย
-  at: ที่
-  department: แผนก
-  department_small: 'แผนก {{value}}'
-  alt_email_small: อื่นๆ
-  myself: ตัวฉัน
-  permissions_intro: เบื้องต้นจะมีเฉพาะคุณเท่านั้นที่เห็น {{value}} แต่สามารถเปลี่ยนได้ในภายหลัง
-  extra_info: ข้อมูลเพิ่มเติม
-  extra_info_small: ที่อยู่ติดต่อเพิ่มเติม
-  address: ที่อยู่
-  do_not_call: ห้ามโทร
-  web_presence: ผ่านเว็บ
-  web_presence_small: ผ่านเว็บ
-  blog: website/blog
-  twitter: Twitter
-  linked_in: LinkedIn
-  facebook: Facebook
-
-  # views/tasks
-  #----------------------------------------------------------------------------
-  tasks: ภารกิจ
-  pending: งานค้าง
-  assigned: มอบหมาย
-  completed: เสร็จ
-  completed_tasks: ภารกิจเสร็จสมบูรณ์
-  assigned_tasks: มอบหมายภารกิจแล้ว
-  pending_tasks: งานคงค้าง
-  create_task: เพิ่มภารกิจ
-  create_task_small: สร้างภารกิจใหม่
-  save_task: บันทึกภารกิจ
-  task_name: ชื่อภารกิจ
-  task_small: ภารกิจ
-  due: ครบกำหนด
-  task_completed: เสร็จสมบูรณ์
-  task_completed_by: เสร็จ {{time_ago}} ที่ผ่านมา โดย {{user}}
-  task_due_now: ครบกำหนดแล้ว
-  task_due_later: ครบกำหนดเร็วๆ นี้
-  task_overdue: ล้าช้ากว่ากำหนด
-  task_due_in: ครบกำหนดภายใน
-  task_due_today: ครบกำหนดวันนี้
-  assign_to: มอบหมายให้
-  category: หมวดหมู่
-  select_blank: '-- เลือก --'
-  move_to: ย้ายไป
-  no_tasks: "You don't have any {{value}} tasks"
-  feel_free: กรอกข้อมูลได้เลย
-  related: 're:'
-  task_assigned: ภารกิจได้ถูกมอบหมายให้ {{value}}
-  task_pending: ภารกิจถูกย้ายเป็นงานคงค้าง
-  task_created: ภารกิจได้ถูกสร้างขึ้นแล้ว
-  task_assigned_to: และได้มอบหมายให้ {{value}}
-  view_assigned_tasks: ดูงานที่มอบหมายแล้ว
-  view_pending_tasks: ดูงานคงค้าง
-  total_tasks: ทั้งหมด {{value}}
- 
-  # views/leads
-  #----------------------------------------------------------------------------
-  leads: รายการผู้สนใจ
-  lead: ผู้สนใจ
-  lead_small: ผู้สนใจ
-  leads_small: ผู้สนใจ
-  create_lead: เพิ่มผู้สนใจ
-  save_lead: บนทึกผู้สนใจ
-  leads_options: กรองผู้สนใจ
-  convert: แปลง
-  reject: ปฏิเสธ
-  status: สถานะ
-  source: แหล่ง
-  rating: โอกาศเป็นคู่ค้า
-  lead_info_small: ที่อยู่ผู้สนใจ
-  lead_status_small: สถานะของผู้สนใจ
-  lead_permissions_intro: ในเบื้องต้นสิทธิ์จะถูกนำไปใช้ในแคมเปณ หรือกำหนดเป็นดูได้คนเดียว แต่สามารถเปลี่ยนได้ในภายหลัง
-  create_opp_for_contact: คุณสามารถสร้าง โอกาศปิดการขาย สำหรับ {{value}} ผู้ติดต่อ โดยกำหนดชื่อ สถานะปัจจุบัน คาดการวันปิด โอกาสปิดการขาย มูลค่า และส่วนลด
-  convert_lead: แปลงผู้สนใจ
-  convert_lead_text: การแปลงผู้สนใจ {{value}} จะกลายที่อยู่ติดต่อใหม่ หรือใช้ที่อยู่ที่มีแล้ว หรือสร้างเพิ่มได้ อย่างไรก็ตามผู้สนใจจะถูกกำหนดสถานะเป็น แปลงแล้ว
-  convert_lead_permissions_intro: สิทธิ์ของที่อยู่ติดต่อจะคัดลอกมาจากผู้สนใจเมื่อมีการแปลงเกิดขึ้น แต่สามารถเปลี่ยนได้ในภายหลัง
-  total_leads: ผู้สนใจทั้งหมด
-  lead_summary: สรุปผู้สนใจ
-  reject_lead_confirm: คุณแน่ใจที่จะยกเลิกผู้สนใจหรือไม่
-  select_none: '-- ไม่เลือก --'
-  none: ไม่เลือก
-
-  # views/common
-  #----------------------------------------------------------------------------
-  edit: แก้ไข
-  delete: ลบ
-  options: ตัวเลือก
-  back: กลับ
-  name: ชื่อ
-  added: เพิ่ม
-  ago: แล้ว
-  by: โดย
-  me: ฉัน
-  added_by: สร้าง {{time_ago}} ที่ผ่านมา โดย {{user}} 
-  permissions: สิทธิ์
-  copy_permissions: คัดลอก{{value}}สิทธิ์
-  or: หรือ
-  n_a: N/A
-  cancel: ยกเลิก
-  close_form: ปิดฟอร์ม
-  yes_button: 'ใช่'
-  no_button: 'ไม่ใช่'
-  confirm_delete: คุณแน่ใจที่จะลบ{{value}}หรือไม่
-  no_match: 'ไม่มี{{value}}ที่ตรงกับ'
-  search_assets: ค้นหา{{value}}
-  recent_items: เอกสารล่าสุด
-  no_recent_items: ไม่มีเอกสารล่าสุดที่จะนำมาแสดง
-  items_total: '{{count}} ทั้งหมด'
-  add_note: เพิ่มบันทึก
-  add_note_txt: เพิ่มบันทึกใหม่ ...
-  could_not_find: "ไม่พบ{{value}} สามารถทดลอง"
-  could_not_find_matching: "ไม่พบ{{value}}ที่ตรงกับคำค้นหา"
-  please_retry: โปรดทดลองคำค้นหาอื่น
-  create_new: สร้าง 
-
-  #---- options ------
-  sort_by: เรียงลำดับ{{models}} โดย {{field}}.
-  sort_by_displaying: เรียงลำดับ{{models}} โดย {{field}} แสดงชื่อจริง {{position}} นามสกุล. 
-  show_per_page: แสดง {{number}} {{models}} ต่อหนึ่งหน้า ในแบบ {{format}} 
-  activity_options: แสดง{{models}}ที่เกิดขึ้น โดย{{user}} ในช่วง{{period}}ที่ผ่านมา
-
-  option_first_name: ชื่อจริง
-  option_last_name: นามสกุล
-  option_created_at: วันที่สร้าง
-  option_updated_at: วันที่แก้ไข
-  option_company: บริษัท
-  option_rating: โอกาศเป็นคู่ค้า
-
-  option_name: ชื่อ
-  option_target_leads: เป้าหมายของจำนวนผู้สนใจ
-  option_target_revenue: เป้าหมายของผลตอนแทน
-  option_leads_count: ผู้สนใจที่เกิดขึ้นจริง
-  option_revenue: ผลตอนแทนที่เกิดขึ้นจริง
-  option_starts_on: วันเริ่ม
-  option_ends_on: วันสิ้นสุด
-
-  option_amount: จำนวน
-  "option_amount*probability": จำนวนถ่วงน้ำหนัก
-  option_probability: ความน่าจะเป็น
-  option_closes_on: วันที่ปิด
-
-  option_before: ก่อน
-  option_after: หลัง
-
-  option_brief: สรุป
-  option_long: ยาว
-
-  option_all_users: ผู้ใช้ทุกคน
-  option_all: ทั้งหมด
-
-  # views/opportunities
-  #----------------------------------------------------------------------------
-  opportunities: รายการโอกาสปิดการขาย
-  opportunities_small: รายการโอกาสปิดการขาย
-  opportunity: โอกาสปิดการขาย
-  opportunity_small: โอกาสปิดการขาย
-  create_opportunity: สร้างโอกาสปิดการขาย
-  save_opportunity: บันทึกโอกาสปิดการขาย
-  stage: ระดับสถานะ
-  close_date: วันที่ปิด
-  days_left: จำนวนวันที่เหลือ
-  days_late: ล่าช้าไป
-  probability: ความน่าจะเป็น
-  amount: รวม
-  discount: ส่วนลด
-  weighted_amount: จำนวนถ่วงน้ำหนัก
-  currency: (฿)
-  from: จาก
-  opportunity_summary: โอกาสที่ได้อย่างรวดเร็ว
-  opportunity_summary_text: "{{amount}} โดยมีส่วนลด {{discount}} และความน่าจะเป็น {{probability}}" 
-  opportunity_discount_text: โดยมีส่วนลด {{value}}
-  opportunity_no_discount_text: โดยไม่มีส่วนลด
-  opportunity_probability_text:  และมีความน่าจะเป็น {{value}}
-  opportunity_closing_date_text: วันที่ปิดคือ {{value}}
-  opportunity_closed_text: ปิด {{time_ago}} ที่ผ่านมา ตั้งแต่ {{date}}
-  opportunity_expected_to_close_text: คาดว่าจะปิดใน {{time}} ในวันที่ {{date}}
-  opportunity_close_today_text: คาดว่าจะปิดในวันนี้!
-  opportunity_past_due_text: เลยกำหนด, คาดว่าจะปิดได้ {{value}} ที่แล้ว
-  opportunity_no_closing_date: ไม่กำหนดวันปิด
-  total_opportunities: โอกาสปิดการขายทั้งหมด
-  opportunities_options: กรองโอกาสปิดการขาย
-
-  pluralize:
-    contact: 
-      one: 'ผู้ติดต่อคนเดียว'
-      other: '{{count}} ผู้ติดต่อ'
-    opportunity:
-      one: 'โอกาศปิดการขายรายการเดียว'
-      other: '{{count}} โอกาศปิดการขาย'
-    lead:
-      one: 'ผู้สนใจคนเดียว'
-      other: '{{count}} ผู้สนใจ'
-    day:
-      one: 'วันเดียว'
-      other: '{{count}} วัน'
-    login:
-      one: 'เข้าสู่ระบบครั้งเดียว'
-      other: 'เข้าสู่ระบบ {{count}} ครั้ง'
-  
-  # views/home:
-  #----------------------------------------------------------------------------
-  action_created: สร้าง
-  action_updated: แก้ไข
-  action_deleted: ลบ
-  action_completed: เสร็จสมบูรณ์
-  action_rejected: ยกเลิกแล้ว
-  action_commented: ใส่คำแนะนำ
-  action_reassigned: มอบหมายให้คนอื่น
-  action_rescheduled: ใส่กำหนดการ
-  action_viewed: แสดง
-  subject_task: ภารกิจ
-  subject_campaign: แคมเปญ
-  subject_lead: ผู้สนใจ
-  subject_account: รายการลูกค้า
-  subject_contact: ที่อยู่ติดต่อ
-  subject_opportunity: โอกาสปิดการขาย
-  recent_activity: กิจกรรมล่าสุด
-  no_activity_records: ไม่พบบันทึกกิจกรรม
-  recent_activity_options: กิจกรรมล่าสุดเพิ่มเติม
-
-  # views/layout:
-  #----------------------------------------------------------------------------
-  about: เกี่ยวกับ
-  welcome: ยินดีต้อนรับ
-  quick_find: หาด่วน
-  admin: ผู้ดูแลระบบ
-  logout: ออกจากระบบ
-  about_ffc_version: Fat Free CRM เวอร์ชัน
-  about_thank_you: ขอบคุณที่ใช้งาน Fat Free CRM! เรายินดีเป็นอย่างยิ่งกับธุรกิจของคุณ และหวังว่าคุณจะสนุกกับการใช้โปรแกรม
-  about_ffc_resources: Fat Free CRM เพิ่มเติม (กดเพื่อเปิดหน้าใหม่)
-  about_home_page: หน้าแรก
-  about_project_page: หน้าโครงการ
-  about_features: คุณลักษณะ และข้อผิดพลาด
-  about_twitter: ติดตามบน Twitter
-  about_user_group: แหล่งสนทนาของผู้ใช้
-  about_dev_group: แหล่งสนทนาของนักพัฒนา
-
-  # views/admin:
-  #----------------------------------------------------------------------------
-  users: ผู้ใช้
-  user_confirm_delete: จะลบผู้ใช้ได้ก็ต่อเมื่อไม่มีเอกสารใดเกี่ยวข้องกับผู้ใช้คนนั้นๆ
-  create_user: เพิ่มผู้ใช้
-  save_user: บันทึกผู้ใช้
-  user_is_admin: ผู้ใช้คนนี้เป็นผู้ดูแลระบบ
-  personal_information: ข้อมูลส่วนตัว
-  user_signed_up: สมัครสมาชิก
-  user_suspended: ระงับผู้ใช้
-  user_admin: ผู้ดูแลระบบ
-  user_active: ทำงาน
-  user_awaits_approval: รอการอนุมัติ
-  user_never_logged_in: "ไม่เคยเข้ามาในระบบ"
-  last_seen: last seen {{value}} ago
-  user_since: user since {{value}}
-  user_signed_up_on: สมัครสมาชิกตั้งแต่ {{value}}
-  user_suspended_on: ระงับตั้งแต่ {{value}}
-  suspend: ระงับ
-  approve: อนุมัติ
-  reactivate: กลับมาทำงานอีกครั้ง
-
-  # views/comments:
-  #----------------------------------------------------------------------------
-  edit_comment: แก้ไขข้อเสนอ
-  update: ปรับปรุง
-  show: แสดง
-
-  # models/activity
+  # Models/Activity.
   #----------------------------------------------------------------------------
   one_hour: หนึ่งชั่วโมง
   one_day: หนึ่งวัน
@@ -477,7 +82,484 @@ th:
   two_weeks: สองสัปดาห์
   one_month: หนึ่งเดือน
 
-  # models/account
+  # Model Validations.
   #----------------------------------------------------------------------------
-  missing_account_name: "^โปรดระบบชื่อให้ชัดเจน."
+  activerecord:
+    errors:
+      models:
+        authentication:
+          attributes:
+            login_field:
+              is_not_valid: ชื่อผู้ใช้ไม่ถูกต้อง
+            password_field:
+              is_not_valid: รหัสผ่านไม่ถูกต้อง
+        account:
+          attributes:
+            name:
+              missing_account_name: "^โปรดระบุบัญชีผู้ใช้."
+            access:
+              share_account: "^โปรดระบุผู้ใช้ที่ต้องการใช้บัญชีร่วมกัน"
+        campaign:
+          attributes:
+            name:
+              missing_campaign_name: "^โปรดระบุชื่อแคมเปญ"
+            ends_on:
+              dates_not_in_sequence: "^โปรดตรวจสอบอีกครั้งว่าวันสิ้นสุดแคมเปญอยู่หลังจากวันเริ่มต้น."
+            access:
+              share_campaign: "^โปรดระบุผู้ใช้ที่ต้องการใช้แคมเปญร่วมกัน"
+        contact:
+          attributes:
+            first_name:
+              missing_first_name: "^โปรดระบุชื่อจริง"
+            last_name:
+              missing_last_name: "^โปรดระบุนามสกุล"
+            access:
+              share_contact: "^โปรดระบุผู้ใช้ที่ต้องการใช้ที่อยู่ติดต่อร่วมกัน"
+        lead:
+          attributes:
+            first_name:
+              missing_first_name: "^โปรดระบุชื่อจริง"
+            last_name:
+              missing_last_name: "^โปรดระบุนามสกุล"
+            access:
+              share_lead: "^โปรดระบุผู้ใช้ที่ต้องการใช้รายการผู้สนใจร่วมกัน"
+        opportunity:
+          attributes:
+            name:
+              missing_opportunity_name: "^โปรดระบุชื่อของโอกาสปิดการขาย"
+            access:
+              share_opportunity: "^โปรดระบุผู้ใช้ที่ต้องการใช้โอกาสปิดการขายร่วมกัน"
+        task:
+          attributes:
+            name:
+              missing_task_name: "^โปรดระบุชื่อภาระกิจ"
+            calendar:
+              invalid_date: "^โปรดระบุวันที่ให้ถูกต้อง"
+        user:
+          attributes:
+            username:
+              missing_username: "^โปรดระบุชื่อผู้ใช้"
+              username_taken: "^ชื่อนี้ได้ถูกใช้แล้ว"
+            email:
+              missing_email: "^โปรดระบุอีเมล์ที่ใช้"
+              email_in_use: "^มีผู้ใช้อื่นที่ใช้อีเมล์นี้แล้ว"
 
+  msg_account_suspended: บัญชีผู้ใช้ถูกระงับแล้ว.
+  password_reset_instruction: ขั้นตอนการตั้งค่ารหัสผ่าน
+
+  # Controllers.
+  #----------------------------------------------------------------------------
+  msg_account_created: Your account has been created and is awating approval by the system administrator.
+  msg_account_created: บัญชีของคุณได้ถูกสร้างแล้ว และรอการอนุมัติโดยผู้ดูแลระบบ
+  msg_account_not_approved: บัญชีของคุณยังไม่ได้รับการอนุมัติ
+  msg_asset_deleted: "{{value}} ได้ถูกลบไปแล้ว"
+  msg_asset_not_available: เอกสาร {{value}} ไม่มีในระบบ
+  msg_asset_rejected: "{{value}} ได้ถูกปฏิเสธแล้ว"
+  msg_bad_image_file: "^ไม่สามารถอัปโหลดหรือเปลี่ยนขนาดของรูปภาพที่คุณระบุได้"
+  msg_cant_create_related: "ไม่สามารถสร้าง{{asset}}ได้ เพราะ{{related}}ไม่มีในระบบ"
+  msg_cant_delete_user: "^ไม่สามารถลบผู้ใช้ตั้งแต่ {{value}} มีเอกสารที่อ้างอิงถึง"
+  msg_cant_do: "ไม่สามารถ{{action}}ของ{{asset}} เพราะไม่มีเอกสารแล้ว"
+  msg_email_not_found: ไม่มีผู้ใช้ที่ใช้อีเมล์นี้
+  msg_enter_new_password: โปรดใส่ระหัสผ่านตัวใหม่
+  msg_goodbye: คุณได้ออกจากระบบแล้ว ขอบคุณที่ใช้งานโปรแกรม Fat Free CRM
+  msg_invalid_password: "^โปรดระบุรหัสผ่านตัวปัจจุบันให้ถูกต้อง"
+  msg_invalig_login: ชื่อผู้ใช้ หรือ รหัสผ่าน ไม่ถูกต้อง
+  msg_last_login: ครั้งสุดท้านที่คุณเข้าสู่ระบบคือ {{value}}.
+  msg_login_needed: คุณต้องเข้าสู่ระบบเพื่อเข้าหน้านี้
+  msg_logout_needed: คุณต้องออกจากระบบเพื่อเข้าหน้านี้
+  msg_password_changed: รหัสผ่านของคุณได้เปลี่ยนไปแล้ว
+  msg_password_not_changed: รหัสผ่านของคุณยังไม่ได้ปรับปรุง
+  msg_password_updated: รหัสผ่านของคุณได้รับการปรับปรุงแล้ว
+  msg_pwd_instructions_sent: ขั้นตอนการตั้งรหัสผ่านใหม่ได้ส่งไปยังคุณแล้ว โปรดตรวจสอบอีเมล์ของคุณ
+  msg_require_admin: คุณต้องเป็นผู้ดูแลระบบเพื่อเข้าหน้านี้
+  msg_successful_signup: สมัครสมาชิกเรียบร้อยแล้ว ยินดีต้อนรับสู่ Fat Free CRM
+  msg_welcome: ยินดีต้อนรับสู่ Fat Free CRM
+
+  # Options.
+  #----------------------------------------------------------------------------
+  "option_amount*probability": จำนวนถ่วงน้ำหนัก
+  activity_options: แสดง{{models}}ที่เกิดขึ้น โดย{{user}} ในช่วง{{period}}ที่ผ่านมา
+  option_after: หลัง
+  option_all: ทั้งหมด
+  option_all_users: ผู้ใช้ทุกคน
+  option_amount: จำนวน
+  option_before: ก่อน
+  option_brief: สรุป
+  option_closes_on: วันที่ปิด
+  option_company: บริษัท
+  option_created_at: วันที่สร้าง
+  option_ends_on: วันสิ้นสุด
+  option_first_name: ชื่อจริง
+  option_last_name: นามสกุล
+  option_leads_count: ผู้สนใจที่เกิดขึ้นจริง
+  option_long: ยาว
+  option_name: ชื่อ
+  option_probability: ความน่าจะเป็น
+  option_rating: โอกาศเป็นคู่ค้า
+  option_revenue: ผลตอนแทนที่เกิดขึ้นจริง
+  option_starts_on: วันเริ่ม
+  option_target_leads: เป้าหมายของจำนวนผู้สนใจ
+  option_target_revenue: เป้าหมายของผลตอนแทน
+  option_updated_at: วันที่แก้ไข
+  show_per_page: แสดง {{number}} {{models}} ต่อหนึ่งหน้า ในแบบ {{format}}
+  sort_by: เรียงลำดับ{{models}} โดย {{field}}.
+  sort_by_displaying: เรียงลำดับ{{models}} โดย {{field}} แสดงชื่อจริง {{position}} นามสกุล.
+
+  # Views -> Profile.
+  #----------------------------------------------------------------------------
+  aim: AOL IM
+  already_signed_up: เป็นสมาชิกอยู่แล้ว
+  alt_email: อีเมล์ ทางเลือก
+  change_password: เปลี่ยนรหัสผ่าน
+  company: บริษัท
+  contact_info: ข้อมูลใช้ในการติดต่อ
+  current_password: รหัสผ่านปัจจุบัน
+  edit_profile: แก้ไขโพรไฟล์
+  email: อีเมล์
+  first_name: ชื่อจริง
+  google: Google IM
+  gravatar_help: หากไม่เข้าใจ Gravatars ลองเรียนรูป Gravatars ได้
+  here: ที่นี่
+  image_file: ไฟล์รูปภาพ
+  image_help: หลังจากอัปโหลดจะถูกเปลี่ยนขนาดเป็น 75x75 pixels และ รูปภาพที่ใช้จะต้องเป็น GIF, JPG หรือ PNG เท่านั้น
+  job_title: ตำแหน่ง
+  last_name: นามสกุล
+  login_now_link: เข้าสู่ระบบทันที !
+  mobile: โทรศัพท์มือถือ
+  my_profile: โพรไฟล์ของฉัน
+  new_password: รัหสผ่านใหม่
+  password: รหัสผ่าน
+  password_confirmation: ยื่นยันรหัสผ่าน
+  phone: โทรศัพท์
+  profile: โพรไฟล์
+  profile_language: ภาษา
+  save_profile: บันทึกประวัติ
+  sign_up: สมัครสมาชิก
+  sign_up_button: สมัคร
+  skype: Skype
+  upload_picture: อัปโหลดรูป
+  use_gravatar: ใช้ Gravatar
+  user: ผู้ใช้
+  username: ชื่อผู้ใช้
+  yahoo: Yahoo IM
+
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
+  forgot_password: ลืมรหัสผ่าน
+  login: เข้าระบบ
+  no_account: ไม่มีชื่อในรายการสมาชิก
+  remember_me: จำฉันไว้
+  sign_up_now: สมัครสามาชิกได้เลย
+
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
+  accounts: รายการลูกค้า
+  account_permissions_intro: "ในเบื่องต้น จะมีเฉพาะคุณที่สามารถเข้าถึงรายการได้ แต่คุณสามารถแก้เงื่อนไขได้ในภายหลัง"
+  accounts_small: รายการลูกค้า
+  account: ลูกค้า
+  accounts_options: ตัวเลือกสำหรับลูกค้า
+  account_small: ลูกค้า
+  assigned_to: มอบหมายให้
+  billing_address: ที่อยู่บนใบเสร็จ
+  create_account: เพิ่มคู่ค้า
+  date_created: วันที่สร้าง
+  date_updated: วันที่แก้ไข
+  fax: แฟกซ์
+  intro: คุณส่ามารถเพิ่มข้อมูล {{value}} ในภายหลัง
+  mobile_small: โทรศัพท์มือถือ
+  open_in_window: เปิด {{value}} ในหน้าต่างใหม่
+  phone_small: โทรศัพท์
+  phone_toll_free: เบอร์โทรฟรี
+  keep_private: เป็นรายการส่วนตัว ไม่ให้ผู้อื่นเห็น
+  make_public: สามารถเห็นได้ทุกคน
+  same_as_billing: เหมือนกับที่อยู่วางบิล
+  save_account: บันทึกลูกค้า
+  share_with: กำหนดผู้ที่เห็นได้ดังต่อไปนี้
+  shipping_address: ที่อยู่สำหรับส่งของ
+  website: เว็บไซต์
+
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
+  actual: เกิดขึ้นจริง
+  actual_performance: ประสิทธิที่เกิดขึ้นจริง
+  budget: งบประมาณ
+  budget_label: งบประมาณ (฿)
+  campaign: แคมเปญ
+  campaign_and_leads: แคมเปณ และผู้สนใจในแคมเปณ
+  campaign_small: แคมเปญ
+  campaign_summary: สรุปแคมเปณ
+  campaign_targets: เป้าหมาย แคมเปณ
+  campaigns: รายการแคมเปญ
+  campaigns_options: กรองแคมเปณ
+  campaigns_small: รายการแคมเปญ
+  conversion: การแปลง
+  conversion_label: แปลง (%)
+  conversion_number: "แปลง {{value}} ราย"
+  create_campaign: เพิ่มแคมเปญ
+  end_date: วันสิ้นสุด
+  finished_on: เสร็จสมบูรณ์ {{value}}
+  finishes_in: เสร็จภายใน {{value}}
+  no_start_date: ไม่ระบุวันเริ่มต้น
+  number_of_leads: จำนวนผู้สนใจ
+  objectives: เป้าหมาย
+  objectives_help: โปรดระบุจำนวนผู้สนใจ ค่าความคาดหวังที่จะแปลงจากผู้สนใจไปเป็นผู้มีโอกาสปิดการขาย รายได้ที่จะได้รับ และ งบประมาณที่ต้องใช้ ตัวเลขเหล่านี้จะช่วยให้คุณติดตามประสิทธิภาพจริงๆ ของโครงการ
+  objectives_small: เป้าหมายของแคมเปญ
+  revenue: รายได้
+  revenue_label: รายได้ (฿)
+  revenue_number: "รายได้ {{value}}"
+  save_campaign: บันทึกแคมเปญ
+  start_date: วันเริ่มต้น
+  started_ago: เริ่มต้น{{value}}ที่ผ่านมา
+  starts_in: เริ่มต้นภายใน {{value}}
+  starts_today: เริ่มต้นวันนี้
+  target: เป้าหมาย
+  total_campaigns: จำนวนแคมเปณ
+  was_supposed_to_finish: ควรจะเสร็จตั้งแต่ {{value}}
+  was_supposed_to_start: ควรจะเสร็จตั้งแต่ {{time_ago}} ที่ผ่านมา คือ {{start_date}}
+    
+  # Views -> Contacts.
+  #----------------------------------------------------------------------------
+  address: ที่อยู่
+  alt_email_small: อื่นๆ
+  at: ที่
+  blog: website/blog
+  contact: ที่อยู่ติดต่อ
+  contact_small: ที่อยู่ติดต่อ
+  contacts: ที่อยู่ติดต่อ
+  contacts_small: ที่อยู่ติดต่อ
+  create_contact: เพิ่มผู้ติดต่อ
+  department: แผนก
+  department_small: 'แผนก {{value}}'
+  do_not_call: ห้ามโทร
+  extra_info: ข้อมูลเพิ่มเติม
+  extra_info_small: ที่อยู่ติดต่อเพิ่มเติม
+  facebook: Facebook
+  linked_in: LinkedIn
+  myself: ตัวฉัน
+  permissions_intro: เบื้องต้นจะมีเฉพาะคุณเท่านั้นที่เห็น {{value}} แต่สามารถเปลี่ยนได้ในภายหลัง
+  referred_by: แนะนำโดย
+  referred_by_small: แนะนำโดย
+  save_contact: บันทึกที่อยู่ติดต่อ
+  twitter: Twitter
+  web_presence: ผ่านเว็บ
+  web_presence_small: ผ่านเว็บ
+  contacts_options: กรองที่อยู่ติดต่อ
+
+  # Views -> Leads.
+  #----------------------------------------------------------------------------
+  convert: แปลง
+  convert_lead: แปลงผู้สนใจ
+  convert_lead_permissions_intro: สิทธิ์ของที่อยู่ติดต่อจะคัดลอกมาจากผู้สนใจเมื่อมีการแปลงเกิดขึ้น แต่สามารถเปลี่ยนได้ในภายหลัง
+  convert_lead_text: การแปลงผู้สนใจ {{value}} จะกลายที่อยู่ติดต่อใหม่ หรือใช้ที่อยู่ที่มีแล้ว หรือสร้างเพิ่มได้ อย่างไรก็ตามผู้สนใจจะถูกกำหนดสถานะเป็น แปลงแล้ว
+  create_lead: เพิ่มผู้สนใจ
+  create_opp_for_contact: คุณสามารถสร้าง โอกาศปิดการขาย สำหรับ {{value}} ผู้ติดต่อ โดยกำหนดชื่อ สถานะปัจจุบัน คาดการวันปิด โอกาสปิดการขาย มูลค่า และส่วนลด
+  lead: ผู้สนใจ
+  lead_info_small: ที่อยู่ผู้สนใจ
+  lead_permissions_intro: ในเบื้องต้นสิทธิ์จะถูกนำไปใช้ในแคมเปณ หรือกำหนดเป็นดูได้คนเดียว แต่สามารถเปลี่ยนได้ในภายหลัง
+  lead_small: ผู้สนใจ
+  lead_status_small: สถานะของผู้สนใจ
+  lead_summary: สรุปผู้สนใจ
+  leads: รายการผู้สนใจ
+  leads_options: กรองผู้สนใจ
+  leads_small: ผู้สนใจ
+  none: ไม่เลือก
+  rating: โอกาศเป็นคู่ค้า
+  reject: ปฏิเสธ
+  reject_lead_confirm: คุณแน่ใจที่จะยกเลิกผู้สนใจหรือไม่
+  save_lead: บนทึกผู้สนใจ
+  source: แหล่ง
+  status: สถานะ
+  total_leads: ผู้สนใจทั้งหมด
+
+  # Views -> Opportunities.
+  #----------------------------------------------------------------------------
+  amount: รวม
+  close_date: วันที่ปิด
+  closed_ago_on: ปิด {{time_ago}} ที่ผ่านมา ตั้งแต่ {{date}}
+  closes_today: คาดว่าจะปิดในวันนี้
+  closing_date: วันที่ปิดคือ {{value}}
+  create_opportunity: สร้างโอกาสปิดการขาย
+  currency: (฿)
+  days_late: ล่าช้าไป
+  days_left: จำนวนวันที่เหลือ
+  discount: ส่วนลด
+  discount_number: โดยมีส่วนลด {{value}}
+  expected_to_close: คาดว่าจะปิดใน {{time}} ในวันที่ {{date}}
+  from: จาก
+  no_closing_date: ไม่กำหนดวันปิด
+  no_discount: โดยไม่มีส่วนลด
+  opportunities: รายการโอกาสปิดการขาย
+  opportunities_options: กรองโอกาสปิดการขาย
+  opportunities_small: รายการโอกาสปิดการขาย
+  opportunity: โอกาสปิดการขาย
+  opportunity_small: โอกาสปิดการขาย
+  opportunity_summary: สรุปโอกาสที่ได้อย่างรวดเร็ว
+  opportunity_summary_text: "{{amount}} โดยมีส่วนลด {{discount}} และความน่าจะเป็น {{probability}}"
+  past_due: เลยกำหนด, คาดว่าจะปิดได้ {{value}} ที่แล้ว
+  probability: ความน่าจะเป็น
+  probability_number: และมีความน่าจะเป็น {{value}}
+  save_opportunity: บันทึกโอกาสปิดการขาย
+  stage: ระดับสถานะ
+  total_opportunities: โอกาสปิดการขายทั้งหมด
+  weighted_amount: จำนวนถ่วงน้ำหนัก
+
+  pluralize:
+    contact:
+      one: 'ผู้ติดต่อหนึ่งคน'
+      other: '{{count}} ผู้ติดต่อ'
+    opportunity:
+      one: 'โอกาศปิดการขายหนึ่งรายการ'
+      other: '{{count}} โอกาศปิดการขาย'
+    lead:
+      one: 'ผู้สนใจหนึ่งคน'
+      other: '{{count}} ผู้สนใจ'
+    day:
+      one: 'หนึ่งวัน'
+      other: '{{count}} วัน'
+    login:
+      one: 'เข้าสู่ระบบหนึ่งครั้ง'
+      other: 'เข้าสู่ระบบ {{count}} ครั้ง'
+  
+  # Views -> Tasks.
+  #----------------------------------------------------------------------------
+  assign_to: มอบหมายให้
+  assigned_tab: มอบหมาย
+  assigned_tasks: มอบหมายภารกิจแล้ว
+  category: หมวดหมู่
+  completed_tab: เสร็จ
+  completed_tasks: ภารกิจเสร็จสมบูรณ์
+  create_task: เพิ่มภารกิจ
+  create_task_small: สร้างภารกิจใหม่
+  due: ครบกำหนด
+  feel_free: กรอกข้อมูลได้เลย
+  move_to: ย้ายไป
+  no_tasks: "คุณไม่มีภารกิจ{{value}}"
+  pending_tab: งานค้าง
+  pending_tasks: งานคงค้าง
+  related: 're:'
+  save_task: บันทึกภารกิจ
+  select_blank: '-- เลือก --'
+  task_assigned: ภารกิจได้ถูกมอบหมายให้ {{value}}
+  task_assigned_to: และได้มอบหมายให้ {{value}}
+  task_completed: เสร็จสมบูรณ์
+  task_completed_by: เสร็จ {{time_ago}} ที่ผ่านมา โดย {{user}}
+  task_created: ภารกิจได้ถูกสร้างขึ้นแล้ว
+  task_due_in: ครบกำหนดภายใน
+  task_due_later: ครบกำหนดเร็วๆ นี้
+  task_due_now: ครบกำหนดแล้ว
+  task_due_today: ครบกำหนดวันนี้
+  task_from: จาก {{value}}
+  task_overdue: ล้าช้ากว่ากำหนด
+  task_pending: ภารกิจถูกย้ายเป็นงานคงค้าง
+  task_small: ภารกิจ
+  tasks: ภารกิจ
+  total_tasks: ทั้งหมด {{value}}
+  view_assigned_tasks: ดูงานที่มอบหมายแล้ว
+  view_pending_tasks: ดูงานคงค้าง
+
+  # Views -> Home.
+  #----------------------------------------------------------------------------
+  action_commented: ใส่คำแนะนำ
+  action_completed: เสร็จสมบูรณ์
+  action_created: สร้าง
+  action_deleted: ลบ
+  action_reassigned: มอบหมายให้คนอื่น
+  action_rejected: ยกเลิกแล้ว
+  action_rescheduled: ใส่กำหนดการ
+  action_updated: แก้ไข
+  action_viewed: แสดง
+  no_activity_records: ไม่พบบันทึกกิจกรรม
+  recent_activity: กิจกรรมล่าสุด
+  recent_activity_options: กิจกรรมล่าสุดเพิ่มเติม
+  subject_account: รายการลูกค้า
+  subject_campaign: แคมเปญ
+  subject_contact: ที่อยู่ติดต่อ
+  subject_lead: ผู้สนใจ
+  subject_opportunity: โอกาสปิดการขาย
+  subject_task: ภารกิจ
+
+  # Views -> Common.
+  #----------------------------------------------------------------------------
+  add_note: เพิ่มบันทึก
+  add_note_txt: เพิ่มบันทึกใหม่ ...
+  added: เพิ่ม
+  added_by: สร้าง {{time_ago}} ที่ผ่านมา โดย {{user}}
+  ago: แล้ว
+  back: กลับ
+  by: โดย
+  cancel: ยกเลิก
+  close_form: ปิดฟอร์ม
+  confirm_delete: คุณแน่ใจที่จะลบ{{value}}หรือไม่
+  copy_permissions: คัดลอก{{value}}สิทธิ์
+  could_not_find: "ไม่พบ{{value}} สามารถทดลอง"
+  could_not_find_matching: "ไม่พบ{{value}}ที่ตรงกับคำค้นหา"
+  create_new: สร้าง
+  delete: ลบ
+  edit: แก้ไข
+  items_total: '{{count}} ทั้งหมด'
+  me: ฉัน
+  n_a: N/A
+  name: ชื่อ
+  no_button: 'ไม่ใช่'
+  no_match: 'ไม่มี{{value}}ที่ตรงกับ'
+  no_recent_items: ไม่มีเอกสารล่าสุดที่จะนำมาแสดง
+  options: ตัวเลือก
+  or: หรือ
+  permissions: สิทธิ์
+  please_retry: โปรดทดลองคำค้นหาอื่น
+  recent_items: เอกสารล่าสุด
+  search_assets: ค้นหา{{value}}
+  yes_button: 'ใช่'
+
+  # Views -> Layout.
+  #----------------------------------------------------------------------------
+  about: เกี่ยวกับ
+  about_dev_group: แหล่งสนทนาของนักพัฒนา
+  about_features: คุณลักษณะ และข้อผิดพลาด
+  about_ffc_resources: Fat Free CRM เพิ่มเติม (กดเพื่อเปิดหน้าใหม่)
+  about_ffc_version: Fat Free CRM เวอร์ชัน
+  about_home_page: หน้าแรก
+  about_project_page: หน้าโครงการ
+  about_thank_you: ขอบคุณที่ใช้งาน Fat Free CRM! เรายินดีเป็นอย่างยิ่งกับธุรกิจของคุณ และหวังว่าคุณจะสนุกกับการใช้โปรแกรม
+  about_twitter: ติดตามบน Twitter
+  about_user_group: แหล่งสนทนาของผู้ใช้
+  admin: ผู้ดูแลระบบ
+  logout: ออกจากระบบ
+  quick_find: หาด่วน
+  welcome: ยินดีต้อนรับ
+
+  # Views -> Comments.
+  #----------------------------------------------------------------------------
+  edit_comment: แก้ไขข้อเสนอ
+  show: แสดง
+  update: ปรับปรุง
+
+  # Views -> Passwords.
+  #----------------------------------------------------------------------------
+  confirm_password_intro: โปรดใส่รหัสผ่านใหม่ และกรอกรหัสอีกครั้งเพื่อความถูกต้อง
+  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
+  password_intro: โปรดระบุอีเมล์ของท่าน จากนั้นขั้นตอนการเปลี่ยนรหัสผ่านจะส่งถึงท่านผ่านทางอีเมล์
+  reset_password: เปลี่ยนรหัสผ่าน
+  update_password_and_login: ปรับปรุงรหัสผ่านและเข้าสู่ระบบ
+
+  # Views -> Admin -> Users.
+  #----------------------------------------------------------------------------
+  approve: อนุมัติ
+  create_user: เพิ่มผู้ใช้
+  last_seen: ดูล่าสุด{{value}}ที่ผ่านมา
+  personal_information: ข้อมูลส่วนตัว
+  reactivate: กลับมาทำงานอีกครั้ง
+  save_user: บันทึกผู้ใช้
+  suspend: ระงับ
+  user_active: ทำงาน
+  user_admin: ผู้ดูแลระบบ
+  user_awaits_approval: รอการอนุมัติ
+  user_confirm_delete: จะลบผู้ใช้ได้ก็ต่อเมื่อไม่มีเอกสารใดเกี่ยวข้องกับผู้ใช้คนนั้นๆ
+  user_is_admin: ผู้ใช้คนนี้เป็นผู้ดูแลระบบ
+  user_never_logged_in: "ไม่เคยเข้ามาในระบบ"
+  user_signed_up: สมัครสมาชิก
+  user_signed_up_on: สมัครสมาชิกตั้งแต่ {{value}}
+  user_since: user since {{value}}
+  user_suspended: ระงับผู้ใช้
+  user_suspended_on: ระงับตั้งแต่ {{value}}
+  users: ผู้ใช้
