@@ -104,7 +104,27 @@ describe Activity do
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
+
+      describe "on a deleted record" do
+          it 'should still be able to update' do
+            @subject.destroy
+            deleted = subject.classify.constantize.find_with_deleted(@subject)
+
+            if deleted.respond_to?(:full_name)
+              deleted.update_attributes(:first_name => "Billy", :last_name => "Bones DELETED")
+            else
+              deleted.update_attributes(:name => "Billy Bones DELETED")
+            end
+
+            @activity = Activity.find(:first, :conditions => (@conditions << "updated"))
+
+            @activity.should_not == nil
+            @activity.info.should == "Billy Bones DELETED"
+          end
+      end
+
     end
+
   end
 
   %w(account campaign contact lead opportunity).each do |subject|
