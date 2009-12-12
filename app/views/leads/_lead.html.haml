@@ -33,5 +33,5 @@
         = link_to(lead.email, "mailto:" << lead.email.to_s) << " | " if lead.email?
         = "#{t:phone_small}: " + lead.phone  << " | " if lead.phone?
         = "#{t:mobile_small}: " + lead.mobile << " | " if lead.mobile?
-        == #{t:added} #{time_ago_in_words(lead.created_at)} #{t:ago}
+        = t(:added_ago, time_ago_in_words(lead.created_at))
       = hook(:lead_bottom, self, :lead => lead)

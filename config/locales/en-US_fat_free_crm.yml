@@ -2,10 +2,17 @@ en-US:
 
   # Generic terms.
   #----------------------------------------------------------------------------
+  ago: ago
   all: All
+  at: at
+  here: here
   language: English
+  no_button: "No"
   not_implemented: Not implemented yet.
+  or: or
   select_none: '-- None --'
+  select_blank: '-- Select --'
+  yes_button: "Yes"
 
   # Settings.
   #----------------------------------------------------------------------------
@@ -176,8 +183,8 @@ en-US:
 
   # Options.
   #----------------------------------------------------------------------------
-  "option_amount*probability": weighted amount
   activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}
+  "option_amount*probability": weighted amount
   option_after: after
   option_all: all
   option_all_users: all users
@@ -218,7 +225,6 @@ en-US:
   first_name: First name
   google: Google IM
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
-  here: here
   image_file: Image file
   image_help: The image file you upload will be automatically resized to 75 x 75 pixels. Supported formats are GIF, JPG, and PNG.
   job_title: Title
@@ -320,7 +326,6 @@ en-US:
   #----------------------------------------------------------------------------
   address: Address
   alt_email_small: Other
-  at: at
   blog: Website/Blog
   contact: Contact
   contact_small: contact
@@ -403,23 +408,6 @@ en-US:
   total_opportunities: Total Opportunities
   weighted_amount: Weighted amount
 
-  pluralize:
-    contact: 
-      one: '1 contact'
-      other: '{{count}} contacts'
-    opportunity:
-      one: '1 opportunity'
-      other: '{{count}} opportunities'
-    lead:
-      one: '1 lead'
-      other: '{{count}} leads'
-    day:
-      one: '1 day'
-      other: '{{count}} days'
-    login:
-      one: '1 login'
-      other: '{{count}} logins'
-  
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   assign_to: Assign to
@@ -438,13 +426,13 @@ en-US:
   pending_tasks: Pending Tasks
   related: 're:'
   save_task: Save Task
-  select_blank: '-- Select --'
   task_assigned: The task has been assigned to {{value}}
   task_assigned_to: and assigned to {{value}}
   task_completed: completed
+  task_completed_ago: completed {{value}} ago
   task_completed_by: completed {{time_ago}} ago by {{user}}
   task_created: The task has been created
-  task_due_in: due in
+  task_due_in: due in {{value}}
   task_due_later: due sometime soon
   task_due_now: due now
   task_due_today: due today
@@ -482,11 +470,9 @@ en-US:
   #----------------------------------------------------------------------------
   add_note: Add Note
   add_note_help: Add a new note...
-  added: added
+  added_ago: added {{value}} ago
   added_by: added {{time_ago}} ago by {{user}} 
-  ago: ago
   back: Back
-  by: by
   cancel: Cancel
   close_form: Close form
   confirm_delete: Are you sure you want to delete this {{value}}?
@@ -500,16 +486,13 @@ en-US:
   me: me
   n_a: N/A
   name: Name
-  no_button: 'No'
-  no_match: 'No {{value}} match'
+  no_match: No {{value}} match
   no_recent_items: There are no recent items to display yet.
   options: Options
-  or: or
   permissions: Permissions
   please_retry: please try another query.
   recent_items: Recent Items
   search_assets: Search {{value}}
-  yes_button: 'Yes'
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -562,3 +545,21 @@ en-US:
   user_suspended: Suspended
   user_suspended_on: suspended on {{value}}
   users: Users
+
+  pluralize:
+    contact: 
+      one: '1 contact'
+      other: '{{count}} contacts'
+    opportunity:
+      one: '1 opportunity'
+      other: '{{count}} opportunities'
+    lead:
+      one: '1 lead'
+      other: '{{count}} leads'
+    day:
+      one: '1 day'
+      other: '{{count}} days'
+    login:
+      one: '1 login'
+      other: '{{count}} logins'
+  

@@ -2,7 +2,7 @@
   - case campaign.status.to_sym
     - when :started
       - if campaign.starts_on
-        == #{t:started_ago, time_ago_in_words(campaign.starts_on)}
+        = t(:started_ago, time_ago_in_words(campaign.starts_on))
         - if campaign.ends_on
           - if campaign.ends_on > Date.today
             %span>= ", " + t(:finishes_in, distance_of_time_in_words(Date.today, campaign.ends_on))

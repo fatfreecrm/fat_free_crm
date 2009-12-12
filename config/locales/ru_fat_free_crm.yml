@@ -2,10 +2,17 @@ ru:
 
   # Generic terms.
   #----------------------------------------------------------------------------
+  ago: назад
   all: Все
+  at: в
+  here: здесь
   language: Russian (Русский)
+  no_button: Нет
   not_implemented: Еще не поддержано.
+  or: или
   select_none: -- Нет --
+  select_blank: -- Выберите --
+  yes_button: Да
 
   # Settings.
   #----------------------------------------------------------------------------
@@ -36,9 +43,9 @@ ru:
   conference: Конференция
   online: Онлайн Маркетинг
   referral: Рекомендация
-  self: @ru@Self Generated
+  self: Сам Пришел
   web: Веб-сайт
-  word_of_mouth: @ru@Word of Mouth
+  word_of_mouth: Понаслышке
   other: Другое
 
   prospecting: Изучение
@@ -145,39 +152,39 @@ ru:
               email_in_use: "^Пользователь с данным e-mail адресом уже существует."
 
   msg_account_suspended: Пользователь заблокирован.
-  password_reset_instruction: @ru@password reset instructions # TODO
+  password_reset_instruction: инструкции по перемене пароля
 
   # Controllers.
   #----------------------------------------------------------------------------
   msg_account_created: @ru@Your account has been created and is awating approval by the system administrator. # TODO
   msg_account_not_approved: @ru@Your account has not been approved yet. # TODO
-  msg_asset_deleted: "@ru@ {{value}} has been deleted." # TODO
+  msg_asset_deleted: Этот {{value}} был удален.
   msg_asset_not_available: @ru@This {{value}} is no longer available. # TODO
   msg_asset_rejected: "@ru@ {{value}} has been rejected." # TODO
-  msg_bad_image_file: @ru@"^Could't upload or resize the image file you specified." # TODO
+  msg_bad_image_file: Ошибка при загрузке или изменении размера указанного изображения.
   msg_cant_create_related: "@ru@ Can't create the {{asset}} since the {{related}} is no longer available." # TODO
   msg_cant_delete_user: "@ru@^Couldn't delete the user since {{value}} has related assets present." # TODO
-  msg_cant_do: "@ru@ Can't {{action}} the {{asset}} since it's no longer available." # TODO
+  msg_cant_do: Нельзя {{action}} {{asset}}, его больше не существует.
   msg_email_not_found: Пользователя с таким адресом не найдено.
   msg_enter_new_password: Пожалуйста введите новый пароль.
   msg_goodbye: @ru@You have been logged out. Thank you for using Fat Free CRM! # TODO
   msg_invalid_password: Введите правильный пароль.
   msg_invalig_login: Неправильный логин или пароль.
-  msg_last_login: @ru@Your last login was on {{value}}. # TODO
+  msg_last_login: Последний раз Вы заходили {{value}}.
   msg_login_needed: @ru@You must be logged in to access this page. # TODO
   msg_logout_needed: @ru@You must be logged out to access this page. # TODO
   msg_password_changed: Пароль изменен.
   msg_password_not_changed: Пароль не был изменен.
   msg_password_updated: Пароль успешно изменен.
   msg_pwd_instructions_sent: Инструкции по перемене пароля Вам высланы. Пожалуйста проверьте свою электронную почту.
-  msg_require_admin: @ru@ You must be Administrator to access this page. # TODO
-  msg_successful_signup: @ru@Successfull signup, welcome to Fat Free CRM! # TODO
-  msg_welcome: @ru@Welcome to Fat Free CRM! # TODO
+  msg_require_admin: Для доступа к этой странице нужны права Администратора
+  msg_successful_signup: Регистрация прошла успешно, добро пожаловать в Fat Free CRM!
+  msg_welcome: Добро пожаловать в Fat Free CRM!
 
   # Options.
   #----------------------------------------------------------------------------
-  "option_amount*probability": взвешенной сумме
   activity_options: Показывать действия {{models}} произведенные пользователем {{user}} за последние {{period}}
+  "option_amount*probability": взвешенной сумме
   option_after: после
   option_all: все
   option_all_users: всеми
@@ -218,7 +225,6 @@ ru:
   first_name: Имя
   google: Google IM
   gravatar_help: Не знаете что такое Gravatar? Почитать про Gravatar
-  here: здесь
   image_file: Файл с Изображением
   image_help: "Размер изображения будет автоматически изменен на 75 x 75 пикселей. Поддерживаются форматы: GIF, JPG и PNG."
   job_title: Должность
@@ -320,7 +326,6 @@ ru:
   #----------------------------------------------------------------------------
   address: Адрес
   alt_email_small: Доп. e-mail
-  at: в
   blog: Блог/Интернет-страница
   contact: Контакт
   contact_small: контакт
@@ -403,37 +408,6 @@ ru:
   total_opportunities: Всего перспектив
   weighted_amount: Взвешенная сумма
 
-  pluralize:
-    contact:
-      zero: '0 контактов'
-      one: '1 контакт'
-      few: '{{count}} контакта'
-      many: '{{count}} контактов'
-      other: '{{count}} контакта'
-    opportunity:
-      zero: '0 перспектив'
-      one: '1 перспектива'
-      few: '{{count}} перспективы'
-      many: '{{count}} перспектив'
-      other: '{{count}} перспектив'
-    lead:
-      zero: '0 наводок'
-      one: '1 наводка'
-      few: '{{count}} наводки'
-      many: '{{count}} наводок'
-      other: '{{count}} наводок'
-    day:
-      zero: '0 дней'
-      one: '{{count}} день'
-      few: '{{count}} дня'
-      many: '{{count}} дней'
-      other: '{{count}} дней'
-    login:
-      one: 'заходил(а) {{count}} раз'
-      few: 'заходил(а) {{count}} раза'
-      many: 'заходил(а) {{count}} раз'
-      other: 'заходил(а) {{count}} раз'
-
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   assign_to: Поручить
@@ -447,18 +421,18 @@ ru:
   due: Срок выполнения
   feel_free: Можете
   move_to: перенести на
-  no_tasks: "You don't have any {{value}} tasks"
+  no_tasks: @ru@"You don't have any {{value}} tasks" # TODO
   pending_tab: На&nbsp;очереди
   pending_tasks: Задания На Очереди
   related: см.
   save_task: Сохранить Задание
-  select_blank: -- Выберите --
   task_assigned: Это задание поручено {{value}}
   task_assigned_to: и поручено {{value}}
   task_completed: завершено
+  task_completed_ago: завершено {{value}} назад
   task_completed_by: завершил(а) {{user}} {{time_ago}} назад
   task_created: Задание добавлено
-  task_due_in: "срок: через"
+  task_due_in: "срок: через {{value}}"
   task_due_later: "срок: скоро"
   task_due_now: "срок: сейчас"
   task_due_today: "срок: сегодня"
@@ -496,11 +470,9 @@ ru:
   #----------------------------------------------------------------------------
   add_note: Добавить Комментарий
   add_note_help: Добавить комментарий...
-  added: добавлен
+  added_ago: добавлен {{value}} назад
   added_by: "{{user}} добавил(а) {{time_ago}} назад"
-  ago: назад
   back: Назад
-  by:  
   cancel: Отменить
   close_form: Закрыть
   confirm_delete: Вы действительно xотите удалить этот {{value}}?
@@ -514,16 +486,13 @@ ru:
   me: я
   n_a: -
   name: Название
-  no_button: Нет
   no_match: "{{value}} не найдены"
   no_recent_items: Недавно просмотренных объектов не найдено.
   options: Опции
-  or: или
   permissions: Права Доступа
   please_retry: попробуйте поискать что-нибудь другое.
   recent_items: Недавние Объекты
   search_assets: Поиск - {{value}}
-  yes_button: Да
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -576,3 +545,34 @@ ru:
   user_suspended: Заблокирован
   user_suspended_on: заблокирован(а) {{value}}
   users: Пользователи
+
+  pluralize:
+    contact:
+      zero: '0 контактов'
+      one: '1 контакт'
+      few: '{{count}} контакта'
+      many: '{{count}} контактов'
+      other: '{{count}} контакта'
+    opportunity:
+      zero: '0 перспектив'
+      one: '1 перспектива'
+      few: '{{count}} перспективы'
+      many: '{{count}} перспектив'
+      other: '{{count}} перспектив'
+    lead:
+      zero: '0 наводок'
+      one: '1 наводка'
+      few: '{{count}} наводки'
+      many: '{{count}} наводок'
+      other: '{{count}} наводок'
+    day:
+      zero: '0 дней'
+      one: '{{count}} день'
+      few: '{{count}} дня'
+      many: '{{count}} дней'
+      other: '{{count}} дней'
+    login:
+      one: 'заходил(а) {{count}} раз'
+      few: 'заходил(а) {{count}} раза'
+      many: 'заходил(а) {{count}} раз'
+      other: 'заходил(а) {{count}} раз'
