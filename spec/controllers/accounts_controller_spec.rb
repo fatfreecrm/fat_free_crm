@@ -393,7 +393,7 @@ describe AccountsController do
 
   end
 
-  # GET /accounts/search/query                                                AJAX
+  # GET /accounts/search/query                                             AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
     before(:each) do

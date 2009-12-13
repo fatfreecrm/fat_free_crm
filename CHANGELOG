@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, Dec 12, 2009
+---------------------------------------------------------------------
+- Upgraded [simple_column_search] plugin that adds search support for Postgres.
+- More I18n tweaks in views.
+- Metallica show at HP Pavilion in San Jose!
+
 Sun, Nov 29, 2009
 ---------------------------------------------------------------------
 - Added optional PLUGIN=plugin parameter to "rake crm:settings:load" task.
