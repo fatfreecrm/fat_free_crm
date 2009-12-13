@@ -1,11 +1,18 @@
 th:
+  language: Thai (ไทย)
 
   # Generic terms.
   #----------------------------------------------------------------------------
+  ago: แล้ว
   all: ทั้งหมด
-  language: Thai(ไทย)
+  at: ที่
+  here: ที่นี่
+  no_button: 'ไม่ใช่'
   not_implemented: อยู่ระหว่างการพัฒนา.
+  or: หรือ
+  select_blank: '-- เลือก --'
   select_none: '-- ว่าง --'
+  yes_button: 'ใช่'
 
   # Settings.
   #----------------------------------------------------------------------------
@@ -149,7 +156,6 @@ th:
 
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: Your account has been created and is awating approval by the system administrator.
   msg_account_created: บัญชีของคุณได้ถูกสร้างแล้ว และรอการอนุมัติโดยผู้ดูแลระบบ
   msg_account_not_approved: บัญชีของคุณยังไม่ได้รับการอนุมัติ
   msg_asset_deleted: "{{value}} ได้ถูกลบไปแล้ว"
@@ -219,7 +225,6 @@ th:
   first_name: ชื่อจริง
   google: Google IM
   gravatar_help: หากไม่เข้าใจ Gravatars ลองเรียนรูป Gravatars ได้
-  here: ที่นี่
   image_file: ไฟล์รูปภาพ
   image_help: หลังจากอัปโหลดจะถูกเปลี่ยนขนาดเป็น 75x75 pixels และ รูปภาพที่ใช้จะต้องเป็น GIF, JPG หรือ PNG เท่านั้น
   job_title: ตำแหน่ง
@@ -321,11 +326,11 @@ th:
   #----------------------------------------------------------------------------
   address: ที่อยู่
   alt_email_small: อื่นๆ
-  at: ที่
   blog: website/blog
   contact: ที่อยู่ติดต่อ
   contact_small: ที่อยู่ติดต่อ
   contacts: ที่อยู่ติดต่อ
+  contacts_options: Contacts Options
   contacts_small: ที่อยู่ติดต่อ
   create_contact: เพิ่มผู้ติดต่อ
   department: แผนก
@@ -403,23 +408,6 @@ th:
   total_opportunities: โอกาสปิดการขายทั้งหมด
   weighted_amount: จำนวนถ่วงน้ำหนัก
 
-  pluralize:
-    contact:
-      one: 'ผู้ติดต่อหนึ่งคน'
-      other: '{{count}} ผู้ติดต่อ'
-    opportunity:
-      one: 'โอกาศปิดการขายหนึ่งรายการ'
-      other: '{{count}} โอกาศปิดการขาย'
-    lead:
-      one: 'ผู้สนใจหนึ่งคน'
-      other: '{{count}} ผู้สนใจ'
-    day:
-      one: 'หนึ่งวัน'
-      other: '{{count}} วัน'
-    login:
-      one: 'เข้าสู่ระบบหนึ่งครั้ง'
-      other: 'เข้าสู่ระบบ {{count}} ครั้ง'
-  
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   assign_to: มอบหมายให้
@@ -438,13 +426,13 @@ th:
   pending_tasks: งานคงค้าง
   related: 're:'
   save_task: บันทึกภารกิจ
-  select_blank: '-- เลือก --'
   task_assigned: ภารกิจได้ถูกมอบหมายให้ {{value}}
   task_assigned_to: และได้มอบหมายให้ {{value}}
   task_completed: เสร็จสมบูรณ์
   task_completed_by: เสร็จ {{time_ago}} ที่ผ่านมา โดย {{user}}
+  task_completed_ago: completed {{value}} ago # TODO
   task_created: ภารกิจได้ถูกสร้างขึ้นแล้ว
-  task_due_in: ครบกำหนดภายใน
+  task_due_in: ครบกำหนดภายใน {{value}}
   task_due_later: ครบกำหนดเร็วๆ นี้
   task_due_now: ครบกำหนดแล้ว
   task_due_today: ครบกำหนดวันนี้
@@ -481,12 +469,10 @@ th:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: เพิ่มบันทึก
-  add_note_txt: เพิ่มบันทึกใหม่ ...
-  added: เพิ่ม
+  add_note_help: Add a new note...
+  added_ago: added {{value}} ago # TODO
   added_by: สร้าง {{time_ago}} ที่ผ่านมา โดย {{user}}
-  ago: แล้ว
   back: กลับ
-  by: โดย
   cancel: ยกเลิก
   close_form: ปิดฟอร์ม
   confirm_delete: คุณแน่ใจที่จะลบ{{value}}หรือไม่
@@ -500,16 +486,13 @@ th:
   me: ฉัน
   n_a: N/A
   name: ชื่อ
-  no_button: 'ไม่ใช่'
-  no_match: 'ไม่มี{{value}}ที่ตรงกับ'
+  no_match: ไม่มี{{value}}ที่ตรงกับ
   no_recent_items: ไม่มีเอกสารล่าสุดที่จะนำมาแสดง
   options: ตัวเลือก
-  or: หรือ
   permissions: สิทธิ์
   please_retry: โปรดทดลองคำค้นหาอื่น
   recent_items: เอกสารล่าสุด
   search_assets: ค้นหา{{value}}
-  yes_button: 'ใช่'
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -537,7 +520,6 @@ th:
   # Views -> Passwords.
   #----------------------------------------------------------------------------
   confirm_password_intro: โปรดใส่รหัสผ่านใหม่ และกรอกรหัสอีกครั้งเพื่อความถูกต้อง
-  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
   password_intro: โปรดระบุอีเมล์ของท่าน จากนั้นขั้นตอนการเปลี่ยนรหัสผ่านจะส่งถึงท่านผ่านทางอีเมล์
   reset_password: เปลี่ยนรหัสผ่าน
   update_password_and_login: ปรับปรุงรหัสผ่านและเข้าสู่ระบบ
@@ -563,3 +545,20 @@ th:
   user_suspended: ระงับผู้ใช้
   user_suspended_on: ระงับตั้งแต่ {{value}}
   users: ผู้ใช้
+
+  pluralize:
+    contact:
+      one: 'ผู้ติดต่อหนึ่งคน'
+      other: '{{count}} ผู้ติดต่อ'
+    opportunity:
+      one: 'โอกาศปิดการขายหนึ่งรายการ'
+      other: '{{count}} โอกาศปิดการขาย'
+    lead:
+      one: 'ผู้สนใจหนึ่งคน'
+      other: '{{count}} ผู้สนใจ'
+    day:
+      one: 'หนึ่งวัน'
+      other: '{{count}} วัน'
+    login:
+      one: 'เข้าสู่ระบบหนึ่งครั้ง'
+      other: 'เข้าสู่ระบบ {{count}} ครั้ง'

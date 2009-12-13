@@ -1,11 +1,18 @@
 pt-BR:
+  language: Português do Brasil
 
   # Generic terms.
   #----------------------------------------------------------------------------
+  ago: atrás
   all: Tudo
-  language: Português do Brasil
+  at: at
+  here: aqui
+  no_button: 'Não'
   not_implemented: Ainda não implementado.
+  or: ou
+  select_blank: '-- Selecione --'
   select_none: '-- Nenhum --'
+  yes_button: 'Sim'
 
   # Settings.
   #----------------------------------------------------------------------------
@@ -218,7 +225,6 @@ pt-BR:
   first_name: Primeiro nome
   google: Google IM
   gravatar_help: Não conhece o Gravatar? Saiba mais sobre
-  here: aqui
   image_file: Arquivo de imagem
   image_help: A imagem que você enviar será automaticamente redimensionada para 75 x 75 pixels. Os formatos suportados são GIF, JPG, and PNG.
   job_title: Título
@@ -320,7 +326,6 @@ pt-BR:
   #----------------------------------------------------------------------------
   address: Endereço
   alt_email_small: Outro
-  at: at
   blog: Website/Blog
   contact: Contato
   contact_small: contato
@@ -403,23 +408,6 @@ pt-BR:
   total_opportunities: Total Opportunities
   weighted_amount: Weighted amount
 
-  pluralize:
-    contact: 
-      one: '1 contato'
-      other: '{{count}} contatos'
-    opportunity:
-      one: '1 oportunidade'
-      other: '{{count}} oportunidades'
-    lead:
-      one: '1 lead'
-      other: '{{count}} leads'
-    day:
-      one: '1 dia'
-      other: '{{count}} dias'
-    login:
-      one: '1 login'
-      other: '{{count}} logins'
-  
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   assign_to: Atribuida para
@@ -438,13 +426,13 @@ pt-BR:
   pending_tasks: Tarefas pendentes
   related: 're:'
   save_task: Salvar atividade
-  select_blank: '-- Selecione --'
   task_assigned: As tarefas foram atribuídas para {{value}}
   task_assigned_to: e artibuída para {{value}}
   task_completed: terminada
+  task_completed_ago: completed {{value}} ago # TODO
   task_completed_by: terminada {{time_ago}} atrás por {{user}}
   task_created: A tarea foi criada
-  task_due_in: due in
+  task_due_in: due in {{value}}
   task_due_later: due sometime soon
   task_due_now: vende
   task_due_today: due today
@@ -482,11 +470,9 @@ pt-BR:
   #----------------------------------------------------------------------------
   add_note: Adicionar nota
   add_note_help: Adicionar nova nota...
-  added: adicionado
+  added_ago: added {{value}} ago # TODO
   added_by: adicionado {{time_ago}} atrás por {{user}} 
-  ago: atrás
   back: Voltar
-  by: por
   cancel: Cancelar
   close_form: Fechar formulário
   confirm_delete: Tem certeza que deseja remover este {{value}}?
@@ -500,16 +486,13 @@ pt-BR:
   me: eu
   n_a: N/A
   name: Nome
-  no_button: 'Não'
   no_match: 'No {{value}} match'
   no_recent_items: Não existem itens recentes para exibir ainda.
   options: Opções
-  or: ou
   permissions: Permissões
   please_retry: favor tente outra consulta.
   recent_items: Itens recentes
   search_assets: Buscar {{value}}
-  yes_button: 'Sim'
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -562,3 +545,20 @@ pt-BR:
   user_suspended: Suspenso
   user_suspended_on: suspended on {{value}}
   users: Usuários
+
+  pluralize:
+    contact: 
+      one: '1 contato'
+      other: '{{count}} contatos'
+    opportunity:
+      one: '1 oportunidade'
+      other: '{{count}} oportunidades'
+    lead:
+      one: '1 lead'
+      other: '{{count}} leads'
+    day:
+      one: '1 dia'
+      other: '{{count}} dias'
+    login:
+      one: '1 login'
+      other: '{{count}} logins'

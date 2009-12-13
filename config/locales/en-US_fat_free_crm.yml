@@ -1,4 +1,5 @@
 en-US:
+  language: English
 
   # Generic terms.
   #----------------------------------------------------------------------------
@@ -6,13 +7,12 @@ en-US:
   all: All
   at: at
   here: here
-  language: English
-  no_button: "No"
+  no_button: 'No'
   not_implemented: Not implemented yet.
   or: or
   select_none: '-- None --'
   select_blank: '-- Select --'
-  yes_button: "Yes"
+  yes_button: 'Yes'
 
   # Settings.
   #----------------------------------------------------------------------------
@@ -183,8 +183,8 @@ en-US:
 
   # Options.
   #----------------------------------------------------------------------------
-  activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}
   "option_amount*probability": weighted amount
+  activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}
   option_after: after
   option_all: all
   option_all_users: all users
@@ -562,4 +562,3 @@ en-US:
     login:
       one: '1 login'
       other: '{{count}} logins'
-  
