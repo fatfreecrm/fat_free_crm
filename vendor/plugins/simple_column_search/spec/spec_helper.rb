@@ -1,9 +1,10 @@
 require 'spec'
 require 'fileutils'
 
-require File.join(File.dirname(__FILE__), '..', 'init')
 
-require File.join(File.dirname(__FILE__), 'models')
+$: << File.join(File.dirname(__FILE__), '..', 'lib')
+
+require File.join(File.dirname(__FILE__), '..', 'init')
 
 TEST_DATABASE_FILE = File.join(File.dirname(__FILE__), 'test.sqlite3')
 
@@ -31,3 +32,5 @@ def create_tables
 end
 
 setup_database
+
+require File.join(File.dirname(__FILE__), 'models')
