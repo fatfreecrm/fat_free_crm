@@ -263,4 +263,12 @@ module ApplicationHelper
     "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/images/avatar.jpg"
   end
 
+  # Returns true if partial template exists. Note that the file name of the
+  # partial starts with underscore.
+  #----------------------------------------------------------------------------
+  def partial_exist?(partial, extension = '.html.haml')
+    filename = partial.sub(%r{/([^/]*)$}, '/_\\1') + extension
+    FileTest.exist?(File.join(RAILS_ROOT, 'app', 'views', filename))
+  end
+
 end
