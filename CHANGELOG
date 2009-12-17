@@ -4,6 +4,15 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Dec 14, 2009
+---------------------------------------------------------------------
+- Make sure no activity records are left behind when model record gets deleted from the database.
+
+Sun, Dec 13, 2009
+---------------------------------------------------------------------
+- Fixed broken sidebar search in Admin/Users.
+- Refactored sidebar rendering to explicitly check if template file exists.
+
 Sat, Dec 12, 2009
 ---------------------------------------------------------------------
 - Upgraded [simple_column_search] plugin that adds search support for Postgres.
