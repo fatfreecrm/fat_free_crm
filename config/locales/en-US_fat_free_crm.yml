@@ -3,7 +3,6 @@ en-US:
 
   # Generic terms.
   #----------------------------------------------------------------------------
-  ago: ago
   all: All
   at: at
   here: here
@@ -493,6 +492,7 @@ en-US:
   please_retry: please try another query.
   recent_items: Recent Items
   search_assets: Search {{value}}
+  time_ago: "{{value}} ago"
 
   # Views -> Layout.
   #----------------------------------------------------------------------------

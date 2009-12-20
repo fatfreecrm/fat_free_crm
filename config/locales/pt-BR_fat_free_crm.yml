@@ -3,7 +3,6 @@ pt-BR:
 
   # Generic terms.
   #----------------------------------------------------------------------------
-  ago: atrás
   all: Tudo
   at: at
   here: aqui
@@ -493,6 +492,7 @@ pt-BR:
   please_retry: favor tente outra consulta.
   recent_items: Itens recentes
   search_assets: Buscar {{value}}
+  time_ago: "{{value}} atrás"
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
