@@ -33,7 +33,6 @@ module FatFreeCRM
     # Make it possible to reload tabs (:main, :admin, or both).
     #----------------------------------------------------------------------------
     def self.reload!(main_or_admin = nil)
-      return if ENV['RAILS_ENV'].nil? || !ActiveRecord::Base.connection.tables.include?("settings")
       case main_or_admin
         when :main  then @@main  = Setting[:tabs]
         when :admin then @@admin = Setting[:admin_tabs]
