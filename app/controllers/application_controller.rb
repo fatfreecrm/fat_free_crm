@@ -34,7 +34,12 @@ class ApplicationController < ActionController::Base
   def set_context
     ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
-    I18n.locale = Setting.locale if Setting.locale
+    if Setting.locale
+      I18n.locale = Setting.locale
+    else
+      # Pre-I18n settings that need to be reloaded. Use English message text since the actual locale is unknown.
+      raise FatFreeCRM::ObsoleteSettings, "It looks like you are upgrading from the older version of Fat Free CRM. Please review config/settings.yml file, and re-run<br><b>rake crm:settings:load</b> command."
+    end
   end
 
   #----------------------------------------------------------------------------

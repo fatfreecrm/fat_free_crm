@@ -15,21 +15,19 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require "fat_free_crm/version"
-require "fat_free_crm/core_ext"
-require "fat_free_crm/exceptions"
-require "fat_free_crm/i18n"
-require "fat_free_crm/permissions"
-require "fat_free_crm/sortable"
-require "fat_free_crm/tabs"
-require "fat_free_crm/callback"
-require "fat_free_crm/plugin"
+module FatFreeCRM
+  class MissingSettings < StandardError; end
+  class ObsoleteSettings < StandardError; end
+end
 
-      ActionView::Base.send(:include, FatFreeCRM::I18n)
-ActionController::Base.send(:include, FatFreeCRM::I18n)
+class ActionController::Base
+  rescue_from FatFreeCRM::MissingSettings,  :with => :render_fat_free_crm_exception
+  rescue_from FatFreeCRM::ObsoleteSettings, :with => :render_fat_free_crm_exception
 
-      ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
-ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
-
-    ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
-    ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
+  private
+  
+  def render_fat_free_crm_exception(exception)
+    log_error(exception)
+    render :layout => false, :template => "/layouts/500.html.haml", :status => 500, :locals => { :exception => exception }
+  end
+end

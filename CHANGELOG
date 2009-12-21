@@ -8,6 +8,8 @@ Sat, Dec 19, 2009
 ---------------------------------------------------------------------
 - Fixed deprecation warning when adding a new comment.
 - Fixed Apache/Passenger issue of not being able to load tab settings.
+- Merged in I18n branch: Fat Free CRM could be easily localized now by dropping in config/locales file.
+- Added exception handling and custom 500 status code template.
 
 Mon, Dec 14, 2009
 ---------------------------------------------------------------------

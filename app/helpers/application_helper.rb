@@ -22,7 +22,7 @@ module ApplicationHelper
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
     else
-      raise RuntimeError.new("Tab settings are missing, please run 'rake crm:setup'")
+      raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake crm:setup</b> command."
     end
   end
   
