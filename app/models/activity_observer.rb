@@ -66,7 +66,11 @@ class ActivityObserver < ActiveRecord::Observer
   end
 
   def after_destroy(subject)
-    log_activity(subject, :deleted)
+    if subject.deleted_at               # If the record is marked as deleted...
+      log_activity(subject, :deleted)   # then log the activity. Otherwise (i.e. the record
+    else                                # is actually deleted) wipe out all related activities.
+      Activity.delete_all([ "subject_id=? AND subject_type=?", subject.id, subject.class.to_s ])
+    end
   end
 
   private

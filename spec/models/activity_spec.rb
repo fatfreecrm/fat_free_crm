@@ -72,7 +72,7 @@ describe Activity do
       end
 
       it "should add an activity when creating new #{subject}" do
-        @activity = Activity.find(:first, :conditions => (@conditions << "created"))
+        @activity = Activity.first(:conditions => (@conditions << "created"))
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
@@ -83,7 +83,7 @@ describe Activity do
         else
           @subject.update_attributes(:name => "Billy Bones")
         end
-        @activity = Activity.find(:first, :conditions => (@conditions << "updated"))
+        @activity = Activity.first(:conditions => (@conditions << "updated"))
 
         @activity.should_not == nil
         @activity.info.should == "Billy Bones"
@@ -91,7 +91,7 @@ describe Activity do
 
       it "should add an activity when deleting #{subject}" do
         @subject.destroy
-        @activity = Activity.find(:first, :conditions => (@conditions << "deleted"))
+        @activity = Activity.first(:conditions => (@conditions << "deleted"))
 
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
@@ -100,29 +100,37 @@ describe Activity do
       it "should add an activity when commenting on a #{subject}" do
         @comment = Factory(:comment, :commentable => @subject)
 
-        @activity = Activity.find(:first, :conditions => (@conditions << "commented"))
+        @activity = Activity.first(:conditions => (@conditions << "commented"))
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
 
-      describe "on a deleted record" do
-          it 'should still be able to update' do
-            @subject.destroy
-            deleted = subject.classify.constantize.find_with_deleted(@subject)
+      describe "on a record marked as deleted" do
+        it "should still be able to update" do
+          @subject.destroy
+          deleted = subject.classify.constantize.find_with_deleted(@subject)
 
-            if deleted.respond_to?(:full_name)
-              deleted.update_attributes(:first_name => "Billy", :last_name => "Bones DELETED")
-            else
-              deleted.update_attributes(:name => "Billy Bones DELETED")
-            end
-
-            @activity = Activity.find(:first, :conditions => (@conditions << "updated"))
-
-            @activity.should_not == nil
-            @activity.info.should == "Billy Bones DELETED"
+          if deleted.respond_to?(:full_name)
+            deleted.update_attributes(:first_name => "Billy", :last_name => "Bones DELETED")
+          else
+            deleted.update_attributes(:name => "Billy Bones DELETED")
           end
+          @activity = Activity.first(:conditions => (@conditions << "updated"))
+
+          @activity.should_not == nil
+          @activity.info.should == "Billy Bones DELETED"
+        end
       end
 
+      describe "on an actually deleted record" do
+        it "should wipe out all associated activity records" do
+          @subject.destroy!
+          @activities = Activity.all(:conditions => [ "user_id=? AND subject_id=? AND subject_type=?", @current_user.id, @subject.id, subject.capitalize ])
+
+          lambda { subject.classify.constantize.find_with_deleted(@subject) }.should raise_error(ActiveRecord::RecordNotFound)
+          @activities.should == []
+        end
+      end
     end
 
   end
@@ -253,7 +261,7 @@ describe Activity do
       @subject = Factory(:account, :user => Factory(:user), :access => "Private")
       @subject.update_attribute(:updated_at,  1.second.ago)
 
-      @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
@@ -263,7 +271,7 @@ describe Activity do
       @subject = Factory(:account, :user => Factory(:user), :access => "Private")
       @subject.destroy
 
-      @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created deleted)
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
@@ -278,7 +286,7 @@ describe Activity do
       )
       @subject.update_attribute(:updated_at, 1.second.ago)
 
-      @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
@@ -293,7 +301,7 @@ describe Activity do
       )
       @subject.destroy
 
-      @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created deleted)
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
@@ -307,7 +315,7 @@ describe Activity do
       )
       @subject.update_attribute(:updated_at, 1.second.ago)
 
-      @activities = Activity.find(:all, :conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
       @activities.map(&:action).sort.should == %w(created updated viewed)
 
       @activities = Activity.latest({}).visible_to(@current_user)
@@ -326,4 +334,5 @@ describe Activity do
       @activities.map(&:action).sort.should == %w(created deleted)
     end
   end
+
 end
