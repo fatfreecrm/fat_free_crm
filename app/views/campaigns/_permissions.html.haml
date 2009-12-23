@@ -3,17 +3,17 @@
 = subtitle :campaign_permissions, collapsed, t(:permissions)
 .section
   %small#campaign_permissions_intro{ hidden_if(!collapsed) }
-    = t(:permissions_intro, t(:campaign_permissions_small)) unless edit
+    = t(:permissions_intro, t(:campaign_and_leads)) unless edit
   #campaign_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide(); $('campaign_access_private').value = 'Private'"
-      #{t:private_txt}
+      #{t:keep_private}
     .radio_box
       = f.radio_button :access, "Public", :onclick => "$('people').hide(); $('campaign_access_public').value = 'Public'"
-      #{t:public_txt}
+      #{t:make_public}
     .radio_box
       = f.radio_button :access, "Shared", :onclick => "$('people').show(); $('campaign_access_shared').value = 'Shared'"
-      #{t:shared_txt}
+      #{t:share_with}
     #people{ hidden_if(@campaign.access != "Shared") }
       %div{ :style => "padding: 6px 0px 0px 20px" }
         - for user in @users

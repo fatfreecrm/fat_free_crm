@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
   acts_as_paranoid
   sortable :by => [ "name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
-  validates_presence_of :name, :message => I18n.t(:missing_account_name) # "^Please specify account name."
+  validates_presence_of :name, :message => :missing_account_name
   validates_uniqueness_of :name
   validate :users_for_shared_access
 
@@ -91,7 +91,7 @@ class Account < ActiveRecord::Base
   # Make sure at least one user has been selected if the account is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, "^Please specify users to share the account with.") if self[:access] == "Shared" && !self.permissions.any?
+    errors.add(:access, :share_account) if self[:access] == "Shared" && !self.permissions.any?
   end
 
 end

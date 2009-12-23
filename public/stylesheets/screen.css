@@ -112,7 +112,6 @@ tt {
     text-align: center;
     text-decoration: none;
     width: 80px;
-    height: 15px;
     -moz-border-radius-topleft: 3px;
     -moz-border-radius-topright: 3px;
     -webkit-border-top-left-radius: 3px;
@@ -288,7 +287,7 @@ tt {
   color: white !important; }
 
 .grayed {
-  color: silver; }
+  color: silver !important; }
 
 .strip {
   background: gainsboro;
@@ -562,6 +561,13 @@ p.flash_notice, p.flash_message {
   color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
+p.flash_exception {
+  background: #df9;
+  border: 5px limegreen solid;
+  font-size: 14px;
+  margin: 50px auto;
+  padding: 50px;
+  width: 450px; }
 
 div.auto_complete {
   background: white;

@@ -4,6 +4,13 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat, Dec 19, 2009
+---------------------------------------------------------------------
+- Fixed deprecation warning when adding a new comment.
+- Fixed Apache/Passenger issue of not being able to load tab settings.
+- Merged in I18n branch: Fat Free CRM could be easily localized now by dropping in config/locales file.
+- Added exception handling and custom 500 status code template.
+
 Mon, Dec 14, 2009
 ---------------------------------------------------------------------
 - Make sure no activity records are left behind when model record gets deleted from the database.
@@ -22,10 +29,15 @@ Sat, Dec 12, 2009
 Sun, Nov 29, 2009
 ---------------------------------------------------------------------
 - Added optional PLUGIN=plugin parameter to "rake crm:settings:load" task.
+- Sorted locale keys, synced up English, Portuguese, and Russian locale files.
 
 Tue, Nov 24, 2009
 ---------------------------------------------------------------------
 - Happy birthday, Fat Free CRM is one year old!
+
+Wed, Nov 18, 2009
+---------------------------------------------------------------------
+- Added Thai language translation (thanks, Apirak!)
 
 Mon, Nov 16, 2009
 ---------------------------------------------------------------------

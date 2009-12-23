@@ -30,16 +30,16 @@ class AuthenticationsController < ApplicationController
     @authentication = Authentication.new(params[:authentication])
 
     if @authentication.save && !@authentication.user.suspended?
-      flash[:notice] = "Welcome to Fat Free CRM!"
+      flash[:notice] = t(:msg_welcome)
       if @authentication.user.login_count > 1 && @authentication.user.last_login_at?
-        flash[:notice] << " Your last login was on " << @authentication.user.last_login_at.to_s(:mmddhhss)
+        flash[:notice] << " " << t(:msg_last_login, @authentication.user.last_login_at.to_s(:mmddhhss))
       end
       redirect_back_or_default root_url
     else
       if @authentication.user && @authentication.user.awaits_approval?
-        flash[:notice] = "Your account has not been approved yet."
+        flash[:notice] = t(:msg_account_not_approved)
       else
-        flash[:warning] = "Invalid username or password."
+        flash[:warning] = t(:msg_invalig_login)
       end
       redirect_to :action => :new
     end
@@ -53,7 +53,7 @@ class AuthenticationsController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     current_user_session.destroy
-    flash[:notice] = "You have been logged out. Thank you for using Fat Free CRM!"
+    flash[:notice] = t(:msg_goodbye)
     redirect_back_or_default login_url
   end
 

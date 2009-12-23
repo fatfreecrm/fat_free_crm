@@ -30,10 +30,10 @@ class PasswordsController < ApplicationController
     @user = User.find_by_email(params[:email])
     if @user
       @user.deliver_password_reset_instructions!
-      flash[:notice] = "Instructions to reset your password have been sent to you. Please check your email."
+      flash[:notice] = t(:msg_pwd_instructions_sent)
       redirect_to root_url
     else
-      flash[:notice] = "No user was found with that email address."
+      flash[:notice] = t(:msg_email_not_found)
       redirect_to :action => :new
     end
   end
@@ -46,10 +46,10 @@ class PasswordsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     if empty_password?
-      flash[:notice] = "Please enter your new password."
+      flash[:notice] = t(:msg_enter_new_password)
       render :action => :edit
     elsif @user.update_attributes(params[:user])
-      flash[:notice] = "Password was successfully updated."
+      flash[:notice] = t(:msg_password_updated)
       redirect_to profile_url
     else
       render :action => :edit

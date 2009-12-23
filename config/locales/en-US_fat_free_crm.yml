@@ -1,12 +1,19 @@
 en-US:
+  language: English
 
-  # Generic terms
+  # Generic terms.
   #----------------------------------------------------------------------------
   all: All
-  language: English
+  at: at
+  here: here
+  no_button: 'No'
   not_implemented: Not implemented yet.
+  or: or
+  select_none: '-- None --'
+  select_blank: '-- Select --'
+  yes_button: 'Yes'
 
-  # Settings
+  # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Dashboard
   tab_tasks: Tasks
@@ -31,7 +38,6 @@ en-US:
   converted: Converted
   rejected: Rejected
 
-  campaign: Campaign
   cold_call: Cold Call
   conference: Conference
   online: Online Marketing
@@ -59,331 +65,486 @@ en-US:
   presentation: Presentation
   trip: Trip
 
-  overdue: "Overdue"
-  due_asap: "As Soon As Possible"
-  due_today: "Today"
-  due_tomorrow: "Tomorrow"
-  due_this_week: "This Week"
-  due_next_week: "Next Week"
-  due_later: "Sometime Later"
+  overdue: Overdue
+  due_asap: As Soon As Possible
+  due_today: Today
+  due_tomorrow: Tomorrow
+  due_this_week: This Week
+  due_next_week: Next Week
+  due_later: Sometime Later
 
-  completed_today: "Today"
-  completed_yesterday: "Yesterday"
-  completed_last_week: "Last week"
-  completed_this_month: "This month"
-  completed_last_month: "Last month"
+  completed_today: Today
+  completed_yesterday: Yesterday
+  completed_last_week: Last week
+  completed_this_month: This month
+  completed_last_month: Last month
 
-  # views/users:
+  # Models/Activity.
   #----------------------------------------------------------------------------
-  user: User
-  email: Email
-  phone: Phone
-  mobile: Mobile
-  profile: Profile
-  my_profile: My Profile
-  edit_profile: Edit Profile
-  upload_picture: Upload Picture
-  change_password: Change Password
-  current_password: Current password
-  new_password: New password
-  password_confirmation: Confirm new password
-  first_name: First name
-  last_name: Last name
-  job_title: Title
-  company: Company
-  contact_info: Contact Information
-  alt_email: Alternative email
-  aim: AOL IM
-  yahoo: Yahoo IM
-  google: Google IM
-  skype: Skype
-  save_profile: Save Profile
-  image_help: The image file you upload will be automatically resized to 75 x 75 pixels. Supported formats are GIF, JPG, and PNG.
-  image_file: Image file
-  use_gravatar: Use Gravatar
-  gravatar_help: Not familiar with Gravatars? Learn about Gravatars
-  here: here
-  login_now_link: Login Now!
-  username: Username
-  password: Password
-  sign_up_button: Sign Up
-  sign_up: Sign Up
-  already_signed_up: Already signed up?
-  profile_language: Language
+  one_hour: One Hour
+  one_day: One Day
+  two_days: Two Days
+  one_week: One Week
+  two_weeks: Two Weeks
+  one_month: One Month
 
-  # views/auth:
+  # Model Validations.
   #----------------------------------------------------------------------------
-  login: Login
-  no_account: Do not have an account?
-  sign_up_now: Sign Up Now!
-  forgot_password: Forgot Password?
-  remember_me: Remember Me
+  activerecord:
+    errors:
+      models:
+        authentication:
+          attributes:
+            login_field:
+              is_not_valid: is not valid
+            password_field:
+              is_not_valid: is not valid
+        account:
+          attributes:
+            name:
+              missing_account_name: "^Please specify account name."
+            access:
+              share_account: "^Please specify users to share the account with."
+        campaign:
+          attributes:
+            name:
+              missing_campaign_name: "^Please specify campaign name."
+            ends_on:
+              dates_not_in_sequence: "^Please make sure the campaign end date is after the start date."
+            access:
+              share_campaign: "^Please specify users to share the campaign with."
+        contact:
+          attributes:
+            first_name:
+              missing_first_name: "^Please specify first name."
+            last_name:
+              missing_last_name: "^Please specify last name."
+            access:
+              share_contact: "^Please specify users to share the contact with."
+        lead:
+          attributes:
+            first_name:
+              missing_first_name: "^Please specify first name."
+            last_name:
+              missing_last_name: "^Please specify last name."
+            access:
+              share_lead: "^Please specify users to share the lead with."
+        opportunity:
+          attributes:
+            name:
+              missing_opportunity_name: "^Please specify opportunity name."
+            access:
+              share_opportunity: "^Please specify users to share the opportunity with."
+        task:
+          attributes:
+            name:
+              missing_task_name: "^Please specify task name."
+            calendar:
+              invalid_date: "^Please specify valid date."
+        user:
+          attributes:
+            username:
+              missing_username: "^Please specify username."
+              username_taken: "^This username is already taken."
+            email:
+              missing_email: "^Please specify email address."
+              email_in_use: "^There is another user with the same email."
 
-  # views/accounts:
-  #----------------------------------------------------------------------------
-  accounts: Accounts
-  accounts_small: accounts
-  account: Account
-  account_small: account
-  phone_small: phone
-  mobile_small: mobile
-  create_account: Create Account
-  save_account: Save Account
-  accounts_options: Accounts Options
-  account_name: Account name
-  assigned_to: Assigned to
-  website: Website
-  phone_toll_free: Toll-free phone 
-  fax: Fax
-  billing_address: Billing address
-  shipping_address: Shipping address
-  same_as_billing: same as billing
-  account_permissions_intro: "By default only you will have access to the account. You can change account permissions later."
-  private_txt: Keep it private, do not share with others
-  public_txt: Share it with everyone
-  shared_txt: Share it with the following people
-  date_created: Date Created
-  date_updated: Date Updated
-  intro: You can add {{value}} information later.
-  open_in_window: Open {{value}} in a new window
+  msg_account_suspended: User account has been suspended.
+  password_reset_instruction: password reset instructions
 
-  # views/campaigns
+  # Controllers.
   #----------------------------------------------------------------------------
-  campaigns: Campaigns
-  campaigns_small: campaigns
-  campaign: Campaign
-  campaign_small: campaign
-  create_campaign: Create Campaign
-  save_campaign: Save Campaign
-  campaign_name: Name
-  start_date: Start date
-  end_date: End date
-  objectives: Objectives
-  campaign_objectives_small: campaign objectives
-  campaign_objectives_txt: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
-  campaign_leads_label: Number of leads
-  campaign_conversion_label: Conversion (%)
-  campaign_revenue_label: Revenue ($)
-  campaign_budget_label: Budget ($)
-  campaign_permissions_small: campaign and its leads
-  campaign_started_ago: started {{value}} ago
-  campaign_finishes_in: finishes in {{value}}
-  campaign_finished_on: completed on {{value}}
-  campaign_was_supposed_to_finish: was supposed to finish on {{value}}
-  campaign_no_start_date: no start date specified
-  campaign_starts_in: starts in {{value}}
-  campaign_starts_today: starts today!
-  campaign_was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
-  campaign_target: Target
-  campaign_actual: Actual
-  campaign_revenue_small: "{{value}} in revenue"
-  campaign_conversion_small: "{{value}} conversion" 
-  campaign_checkbox_called_off: Called Off
-  campaign_checkbox_completed: Completed
-  campaign_checkbox_on_hold: On Hold
-  campaign_checkbox_planned: Planned
-  campaign_checkbox_started: Started
-  campaigns_total: Total Campaigns
-  campaign_summary: Campaign Summary
-  campaign_targets: Campaign Targets
-  campaign_performance: Actual Performance
-  campaign_leads: Leads
-  campaign_conversion: Conversion
-  campaign_revenue: Revenue
-  campaign_budget: Budget
-  campaigns_options: Campaigns Options
-    
-  # views/contacts
-  #----------------------------------------------------------------------------
-  contacts: Contacts
-  contacts_small: contacts
-  contact: Contact
-  contact_small: contact
-  create_contact: Create Contact
-  save_contact: Save Contact
-  contacts_options: Contacts Options
-  referred_by: Referred by
-  referred_by_small: referred by
-  at: at
-  department: Department
-  department_small: '{{value}} department'
-  alt_email_small: Other
-  myself: Myself
-  permissions_intro: By default only you will have access to the {{value}}. You can change permissions later.
-  extra_info: Extra Information
-  extra_info_small: extra contact
-  address: Address
-  do_not_call: Do not call
-  web_presence: Web Presence
-  web_presence_small: web presence
-  blog: Website/Blog
-  twitter: Twitter
-  linked_in: LinkedIn
-  facebook: Facebook
+  msg_account_created: Your account has been created and is awating approval by the system administrator.
+  msg_account_not_approved: Your account has not been approved yet.
+  msg_asset_deleted: "{{value}} has been deleted."
+  msg_asset_not_available: This {{value}} is no longer available.
+  msg_asset_rejected: "{{value}} has been rejected."
+  msg_bad_image_file: "^Could't upload or resize the image file you specified."
+  msg_cant_create_related: "Can't create the {{asset}} since the {{related}} is no longer available."
+  msg_cant_delete_user: "^Couldn't delete the user since {{value}} has related assets present."
+  msg_cant_do: "Can't {{action}} the {{asset}} since it's no longer available."
+  msg_email_not_found: No user was found with that email address.
+  msg_enter_new_password: Please enter your new password.
+  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
+  msg_invalid_password: "^Please specify valid current password"
+  msg_invalig_login: Invalid username or password.
+  msg_last_login: Your last login was on {{value}}.
+  msg_login_needed: You must be logged in to access this page.
+  msg_logout_needed: You must be logged out to access this page.
+  msg_password_changed: Your password has been changed.
+  msg_password_not_changed: Your password has not been changed.
+  msg_password_updated: Password was successfully updated.
+  msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
+  msg_require_admin: You must be Administrator to access this page.
+  msg_successful_signup: Successfull signup, welcome to Fat Free CRM!
+  msg_welcome: Welcome to Fat Free CRM!
 
-  # views/tasks
+  # Options.
   #----------------------------------------------------------------------------
-  tasks: Tasks
-  pending: Pending
-  assigned: Assigned
-  completed: Completed
-  completed_tasks: Completed Tasks
-  assigned_tasks: Assigned Tasks
-  pending_tasks: Pending Tasks
-  create_task: Create Task
-  create_task_small: create a new task
-  save_task: Save Task
-  task_name: Task name
-  task_small: task
-  due: Due
-  task_completed: completed
-  task_completed_by: completed {{time_ago}} ago by {{user}}
-  task_due_now: due now
-  task_due_later: due sometime soon
-  task_overdue: late, was due on
-  task_due_in: due in
-  task_due_today: due today
-  assign_to: Assign to
-  category: Category
-  select_blank: '-- Select --'
-  move_to: move to
-  no_tasks: "You don't have any {{value}} tasks"
-  feel_free: Feel free to
-  related: 're:'
-  task_assigned: The task has been assigned to {{value}}
-  task_pending: The task has been moved to pending tasks
-  task_created: The task has been created
-  task_assigned_to: and assigned to {{value}}
-  view_assigned_tasks: view assigned tasks
-  view_pending_tasks: view pending tasks
-  total_tasks: Total {{value}}
- 
-  # views/leads
-  #----------------------------------------------------------------------------
-  leads: Leads
-  lead: Lead
-  lead_small: lead
-  leads_small: leads
-  create_lead: Create Lead
-  save_lead: Save Lead
-  leads_options: Leads Options
-  convert: Convert
-  reject: Reject
-  status: Status
-  source: Source
-  rating: Rating
-  lead_info_small: lead contact
-  lead_status_small: lead status
-  lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  convert_lead: Convert Lead
-  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  total_leads: Total Leads
-  lead_summary: Lead Summary
-  reject_lead_confirm: Are you sure you want to reject this lead?
-  select_none: '-- None --'
-  none: None
-
-  # views/common
-  #----------------------------------------------------------------------------
-  edit: Edit
-  delete: Delete
-  options: Options
-  back: Back
-  name: Name
-  added: added
-  ago: ago
-  by: by
-  me: me
-  added_by: added {{time_ago}} ago by {{user}} 
-  permissions: Permissions
-  copy_permissions: Copy {{value}} permissions
-  or: or
-  n_a: N/A
-  cancel: Cancel
-  close_form: Close form
-  yes_button: 'Yes'
-  no_button: 'No'
-  confirm_delete: Are you sure you want to delete this {{value}}?
-  no_match: 'No {{value}} match'
-  search_assets: Search {{value}}
-  recent_items: Recent Items
-  no_recent_items_txt: There are no recent items to display yet.
-  items_total: '{{count}} total.'
-  add_note: Add Note
-  add_note_txt: Add a new note...
-  could_not_find: "Couldn't find {{value}}. Feel free to"
-  could_not_find_matching: "Couldn't find {{value}} matching"
-  please_retry: please try another query.
-  create_new: create a new
-
-  #---- options ------
-  sort_by: Sort {{models}} by {{field}}.
-  sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name. 
-  show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
+  "option_amount*probability": weighted amount
   activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}
-
+  option_after: after
+  option_all: all
+  option_all_users: all users
+  option_amount: amount
+  option_before: before
+  option_brief: brief
+  option_closes_on: close date
+  option_company: company
+  option_created_at: date created
+  option_ends_on: end date
   option_first_name: first name
   option_last_name: last name
-  option_created_at: date created
-  option_updated_at: date updated
-  option_company: company
-  option_rating: rating
-
-  option_name: name
-  option_target_leads: target leads
-  option_target_revenue: target revenue
   option_leads_count: actual leads
+  option_long: long
+  option_name: name
+  option_probability: probability
+  option_rating: rating
   option_revenue: actual revenue
   option_starts_on: start date
-  option_ends_on: end date
+  option_target_leads: target leads
+  option_target_revenue: target revenue
+  option_updated_at: date updated
+  show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
+  sort_by: Sort {{models}} by {{field}}.
+  sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name. 
 
-  option_amount: amount
-  "option_amount*probability": weighted amount
-  option_probability: probability
-  option_closes_on: close date
-
-  option_before: before
-  option_after: after
-
-  option_brief: brief
-  option_long: long
-
-  option_all_users: all users
-  option_all: all
-
-  # views/opportunities
+  # Views -> Profile.
   #----------------------------------------------------------------------------
+  aim: AOL IM
+  already_signed_up: Already signed up?
+  alt_email: Alternative email
+  change_password: Change Password
+  company: Company
+  contact_info: Contact Information
+  current_password: Current password
+  edit_profile: Edit Profile
+  email: Email
+  first_name: First name
+  google: Google IM
+  gravatar_help: Not familiar with Gravatars? Learn about Gravatars
+  image_file: Image file
+  image_help: The image file you upload will be automatically resized to 75 x 75 pixels. Supported formats are GIF, JPG, and PNG.
+  job_title: Title
+  last_name: Last name
+  login_now_link: Login Now!
+  mobile: Mobile
+  my_profile: My Profile
+  new_password: New password
+  password: Password
+  password_confirmation: Confirm new password
+  phone: Phone
+  profile: Profile
+  profile_language: Language
+  save_profile: Save Profile
+  sign_up: Sign Up
+  sign_up_button: Sign Up
+  skype: Skype
+  upload_picture: Upload Picture
+  use_gravatar: Use Gravatar
+  user: User
+  username: Username
+  yahoo: Yahoo IM
+
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
+  forgot_password: Forgot Password?
+  login: Login
+  no_account: Do not have an account?
+  remember_me: Remember Me
+  sign_up_now: Sign Up Now!
+
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
+  account: Account
+  account_permissions_intro: By default only you will have access to the account. You can change account permissions later.
+  account_small: account
+  accounts: Accounts
+  accounts_options: Accounts Options
+  accounts_small: accounts
+  assigned_to: Assigned to
+  billing_address: Billing address
+  create_account: Create Account
+  date_created: Date Created
+  date_updated: Date Updated
+  fax: Fax
+  intro: You can add {{value}} information later.
+  mobile_small: mobile
+  open_in_window: Open {{value}} in a new window
+  phone_small: phone
+  phone_toll_free: Toll-free phone 
+  keep_private: Keep it private, do not share with others
+  make_public: Share it with everyone
+  same_as_billing: same as billing
+  save_account: Save Account
+  share_with: Share it with the following people
+  shipping_address: Shipping address
+  website: Website
+
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
+  actual: Actual
+  actual_performance: Actual Performance
+  budget: Budget
+  budget_label: Budget ($)
+  campaign: Campaign
+  campaign_and_leads: campaign and its leads
+  campaign_small: campaign
+  campaign_summary: Campaign Summary
+  campaign_targets: Campaign Targets
+  campaigns: Campaigns
+  campaigns_options: Campaigns Options
+  campaigns_small: campaigns
+  conversion: Conversion
+  conversion_label: Conversion (%)
+  conversion_number: "{{value}} conversion" 
+  create_campaign: Create Campaign
+  end_date: End date
+  finished_on: completed on {{value}}
+  finishes_in: finishes in {{value}}
+  no_start_date: no start date specified
+  number_of_leads: Number of leads
+  objectives: Objectives
+  objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
+  objectives_small: campaign objectives
+  revenue: Revenue
+  revenue_label: Revenue ($)
+  revenue_number: "{{value}} in revenue"
+  save_campaign: Save Campaign
+  start_date: Start date
+  started_ago: started {{value}} ago
+  starts_in: starts in {{value}}
+  starts_today: starts today!
+  target: Target
+  total_campaigns: Total Campaigns
+  was_supposed_to_finish: was supposed to finish on {{value}}
+  was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
+    
+  # Views -> Contacts.
+  #----------------------------------------------------------------------------
+  address: Address
+  alt_email_small: Other
+  blog: Website/Blog
+  contact: Contact
+  contact_small: contact
+  contacts: Contacts
+  contacts_options: Contacts Options
+  contacts_small: contacts
+  create_contact: Create Contact
+  department: Department
+  department_small: '{{value}} department'
+  do_not_call: Do not call
+  extra_info: Extra Information
+  extra_info_small: extra contact
+  facebook: Facebook
+  linked_in: LinkedIn
+  myself: Myself
+  permissions_intro: By default only you will have access to the {{value}}. You can change permissions later.
+  referred_by: Referred by
+  referred_by_small: referred by
+  save_contact: Save Contact
+  twitter: Twitter
+  web_presence: Web Presence
+  web_presence_small: web presence
+  works_at: "{{job_title}} at {{company}}"
+
+  # Views -> Leads.
+  #----------------------------------------------------------------------------
+  convert: Convert
+  convert_lead: Convert Lead
+  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  create_lead: Create Lead
+  create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+  lead: Lead
+  lead_info_small: lead contact
+  lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_small: lead
+  lead_status_small: lead status
+  lead_summary: Lead Summary
+  leads: Leads
+  leads_options: Leads Options
+  leads_small: leads
+  none: None
+  rating: Rating
+  reject: Reject
+  reject_lead_confirm: Are you sure you want to reject this lead?
+  save_lead: Save Lead
+  source: Source
+  status: Status
+  total_leads: Total Leads
+
+  # Views -> Opportunities.
+  #----------------------------------------------------------------------------
+  amount: Amount
+  close_date: Close date
+  closed_ago_on: closed {{time_ago}} ago on {{date}}
+  closes_today: expected to close today!
+  closing_date: closing date is {{value}}
+  create_opportunity: Create Opportunity
+  currency: ($)
+  days_late: Late by
+  days_left: Days left
+  discount: Discount
+  discount_number: with {{value}} discount
+  expected_to_close: expected to close in {{time}} on {{date}}
+  from: from
+  no_closing_date: no expected closing date
+  no_discount: with no discount
   opportunities: Opportunities
+  opportunities_options: Opportunities Options
   opportunities_small: opportunities
   opportunity: Opportunity
   opportunity_small: opportunity
-  create_opportunity: Create Opportunity
-  save_opportunity: Save Opportunity
-  stage: Stage
-  close_date: Close date
-  days_left: Days left
-  days_late: Late by
-  probability: Probability
-  amount: Amount
-  discount: Discount
-  weighted_amount: Weighted amount
-  currency: ($)
-  from: from
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
-  opportunity_discount_text: with {{value}} discount
-  opportunity_no_discount_text: with no discount
-  opportunity_probability_text:  and {{value}} probability
-  opportunity_closing_date_text: closing date is {{value}}
-  opportunity_closed_text: closed {{time_ago}} ago on {{date}}
-  opportunity_expected_to_close_text: expected to close in {{time}} on {{date}}
-  opportunity_close_today_text: expected to close today!
-  opportunity_past_due_text: past due, was expected to close {{value}} ago
-  opportunity_no_closing_date: no expected closing date
+  past_due: past due, was expected to close {{value}} ago
+  probability: Probability
+  probability_number: and {{value}} probability
+  save_opportunity: Save Opportunity
+  stage: Stage
   total_opportunities: Total Opportunities
-  opportunities_options: Opportunities Options
+  weighted_amount: Weighted amount
+
+  # Views -> Tasks.
+  #----------------------------------------------------------------------------
+  assign_to: Assign to
+  assigned_tab: Assigned
+  assigned_tasks: Assigned Tasks
+  category: Category
+  completed_tab: Completed
+  completed_tasks: Completed Tasks
+  create_task: Create Task
+  create_task_small: create a new task
+  due: Due
+  feel_free: Feel free to
+  move_to: move to
+  no_tasks: "You don't have any {{value}} tasks"
+  pending_tab: Pending
+  pending_tasks: Pending Tasks
+  related: 're:'
+  save_task: Save Task
+  task_assigned: The task has been assigned to {{value}}
+  task_assigned_to: and assigned to {{value}}
+  task_completed: completed
+  task_completed_ago: completed {{value}} ago
+  task_completed_by: completed {{time_ago}} ago by {{user}}
+  task_created: The task has been created
+  task_due_in: due in {{value}}
+  task_due_later: due sometime soon
+  task_due_now: due now
+  task_due_today: due today
+  task_from: From {{value}}
+  task_overdue: late, was due on
+  task_pending: The task has been moved to pending tasks
+  task_small: task
+  tasks: Tasks
+  total_tasks: Total {{value}}
+  view_assigned_tasks: view assigned tasks
+  view_pending_tasks: view pending tasks
+
+  # Views -> Home.
+  #----------------------------------------------------------------------------
+  action_commented: commented on
+  action_completed: completed
+  action_created: created
+  action_deleted: deleted
+  action_reassigned: reassigned
+  action_rejected: rejected
+  action_rescheduled: rescheduled
+  action_updated: updated
+  action_viewed: viewed
+  no_activity_records: No activity records found.
+  recent_activity: Recent Activity
+  recent_activity_options: Recent Activity Options
+  subject_account: account
+  subject_campaign: campaign
+  subject_contact: contact
+  subject_lead: lead
+  subject_opportunity: opportunity
+  subject_task: task
+
+  # Views -> Common.
+  #----------------------------------------------------------------------------
+  add_note: Add Note
+  add_note_help: Add a new note...
+  added_ago: added {{value}} ago
+  added_by: added {{time_ago}} ago by {{user}} 
+  back: Back
+  cancel: Cancel
+  close_form: Close form
+  confirm_delete: Are you sure you want to delete this {{value}}?
+  copy_permissions: Copy {{value}} permissions
+  could_not_find: "Couldn't find {{value}}. Feel free to"
+  could_not_find_matching: "Couldn't find {{value}} matching"
+  create_new: create a new
+  delete: Delete
+  edit: Edit
+  items_total: '{{count}} total.'
+  me: me
+  n_a: N/A
+  name: Name
+  no_match: No {{value}} match
+  no_recent_items: There are no recent items to display yet.
+  options: Options
+  permissions: Permissions
+  please_retry: please try another query.
+  recent_items: Recent Items
+  search_assets: Search {{value}}
+  time_ago: "{{value}} ago"
+
+  # Views -> Layout.
+  #----------------------------------------------------------------------------
+  about: About
+  about_dev_group: Discussion group for developers
+  about_features: Features and bugs
+  about_ffc_resources: Fat Free CRM resources (links open a new window)
+  about_ffc_version: Fat Free CRM version
+  about_home_page: Home page
+  about_project_page: Project page
+  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
+  about_twitter: Twitter commit updates
+  about_user_group: Discussion group for users
+  admin: Admin
+  logout: Logout
+  quick_find: Quick find
+  welcome: Welcome
+
+  # Views -> Comments.
+  #----------------------------------------------------------------------------
+  edit_comment: Editing comment
+  show: Show
+  update: Update
+
+  # Views -> Passwords.
+  #----------------------------------------------------------------------------
+  confirm_password_intro: Please type your new password and then confirm it.
+  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
+  reset_password: Reset Password
+  update_password_and_login: Update Password and Login
+
+  # Views -> Admin -> Users.
+  #----------------------------------------------------------------------------
+  approve: Approve
+  create_user: Create User
+  last_seen: last seen {{value}} ago
+  personal_information: Personal Information
+  reactivate: Reactivate
+  save_user: Save User
+  suspend: Suspend
+  user_active: Active
+  user_admin: Admin
+  user_awaits_approval: awaits your approval
+  user_confirm_delete: A user can only be deleted if no related assets are left behind.
+  user_is_admin: The user is Administrator
+  user_never_logged_in: "hasn't logged in yet"
+  user_signed_up: Signed Up
+  user_signed_up_on: signed up on {{value}}
+  user_since: user since {{value}}
+  user_suspended: Suspended
+  user_suspended_on: suspended on {{value}}
+  users: Users
 
   pluralize:
     contact: 
@@ -401,82 +562,3 @@ en-US:
     login:
       one: '1 login'
       other: '{{count}} logins'
-  
-  # views/home:
-  #----------------------------------------------------------------------------
-  action_created: created
-  action_updated: updated
-  action_deleted: deleted
-  action_completed: completed
-  action_rejected: rejected
-  action_commented: commented on
-  action_reassigned: reassigned
-  action_rescheduled: rescheduled
-  action_viewed: viewed
-  subject_task: task
-  subject_campaign: campaign
-  subject_lead: lead
-  subject_account: account
-  subject_contact: contact
-  subject_opportunity: opportunity
-  recent_activity: Recent Activity
-  no_activity_records: No activity records found.
-  recent_activity_options: Recent Activity Options
-
-  # views/layout:
-  #----------------------------------------------------------------------------
-  about: About
-  welcome: Welcome
-  quick_find: Quick find
-  admin: Admin
-  logout: Logout
-  about_ff_crm_version: Fat Free CRM version
-  about_thank_you_txt: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
-  about_ff_crm_resources: Fat Free CRM resources (links open a new window)
-  about_home_page: Home page
-  about_project_page: Project page
-  about_features: Features and bugs
-  about_twitter: Twitter commit updates
-  about_user_group: Discussion group for users
-  about_dev_group: Discussion group for developers
-
-  # views/admin:
-  #----------------------------------------------------------------------------
-  users: Users
-  user_confirm_delete_txt: A user can only be deleted if no related assets are left behind.
-  create_user: Create User
-  save_user: Save User
-  user_is_admin: The user is Administrator
-  personal_information: Personal Information
-  user_signed_up: Signed Up
-  user_suspended: Suspended
-  user_admin: Admin
-  user_active: Active
-  user_awaits_approval: awaits your approval
-  user_never_logged_in: "hasn't logged in yet"
-  last_seen: last seen {{value}} ago
-  user_since: user since {{value}}
-  user_signed_up_on: signed up on {{value}}
-  user_suspended_on: suspended on {{value}}
-  suspend: Suspend
-  approve: Approve
-  reactivate: Reactivate
-
-  # views/comments:
-  #----------------------------------------------------------------------------
-  edit_comment: Editing comment
-  update: Update
-  show: Show
-
-  # models/activity
-  #----------------------------------------------------------------------------
-  one_hour: One Hour
-  one_day: One Day
-  two_days: Two Days
-  one_week: One Week
-  two_weeks: Two Weeks
-  one_month: One Month
-
-  # models/account
-  #----------------------------------------------------------------------------
-  missing_account_name: "^Please specify account name."

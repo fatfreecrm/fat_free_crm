@@ -16,7 +16,7 @@
     %tt
       - if related.completed_at
         %span.cool
-          == #{t:completed_small} #{distance_of_time_in_words(related.completed_at, Time.now)} #{t:ago}
+          = t(:task_completed_ago, distance_of_time_in_words(related.completed_at, Time.now))
       - elsif related.bucket == "due_asap"
         %span.urgent 
         == #{t:due_now}.
@@ -26,7 +26,7 @@
         %span.warn= distance_of_time_in_words(related.due_at, Date.today) 
         == #{t:overdue} #{related.due_at.strftime('%b %e')}
       - elsif related.due_at > Date.today
-        == #{t:due_in} #{distance_of_time_in_words(Time.now, related.due_at.end_of_day)}
+        = t(:task_due_in, distance_of_time_in_words(Time.now, related.due_at.end_of_day))
       - else
         %span.cool
         == #{t:due_today}.

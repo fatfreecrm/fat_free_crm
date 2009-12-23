@@ -6,8 +6,8 @@ describe "/opportunities/destroy.js.rjs" do
   before(:each) do
     login_and_assign
     assigns[:opportunity] = @opportunity = Factory(:opportunity)
-    assigns[:opportunity_stage_total] = { :prospecting => 10, :final_review => 1, :won => 2, :all => 20, :analysis => 1, :lost => 0, :presentation => 2, :other => 0, :proposal => 1, :negotiation => 2 }
-    assigns[:stage] = {}
+    assigns[:stage] = Setting.unroll(:opportunity_stage)
+    assigns[:opportunity_stage_total] = { :prospecting => 1, "Custom" => 1 }
   end
 
   it "should blind up destroyed opportunity partial" do

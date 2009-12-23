@@ -253,7 +253,7 @@ class ContactsController < ApplicationController
       # At this point render destroy.js.rjs
     else
       self.current_page = 1
-      flash[:notice] = "#{@contact.full_name} has beed deleted."
+      flash[:notice] = t(:msg_asset_deleted, @contact.full_name)
       redirect_to(contacts_path)
     end
   end

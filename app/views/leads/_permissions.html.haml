@@ -7,13 +7,13 @@
   #lead_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide(); $('lead_access_private').value = 'Private'"
-      #{t:private_txt}
+      #{t:keep_private}
     .radio_box
       = f.radio_button :access, "Public", :onclick => "$('people').hide(); $('lead_access_public').value = 'Public'"
-      #{t:public_txt}
+      #{t:make_public}
     .radio_box
       = f.radio_button :access, "Shared", :onclick => "$('people').show(); $('lead_access_shared').value = 'Shared'"
-      #{t:shared_txt}
+      #{t:share_with}
     #people{ hidden_if(@lead.access != "Shared") }
       %div{ :style => "padding: 6px 0px 0px 20px" }
         - for user in @users

@@ -263,7 +263,7 @@ class OpportunitiesController < ApplicationController
       # At this point render destroy.js.rjs
     else
       self.current_page = 1
-      flash[:notice] = "#{@opportunity.name} has beed deleted."
+      flash[:notice] = t(:msg_asset_deleted, @opportunity.name)
       redirect_to(opportunities_path)
     end
   end

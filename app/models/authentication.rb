@@ -22,14 +22,14 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
   private
 
   # Override Authlogic's validate_by_password() to allow blank passwords. See
-  # authlogic/lib/authlogic/session/pasword.rb for details.
+  # authlogic/lib/authlogic/session/password.rb for details.
   #----------------------------------------------------------------------------
   def validate_by_password
     self.invalid_password = false
 
     self.attempted_record = search_for_record(find_by_login_method, send(login_field))
     if self.attempted_record.blank?
-      errors.add(login_field, "is not valid")
+      errors.add(login_field, :is_not_valid)
     else
       # Run password verification first, but then adjust the validity if both
       # password hash and password field are blank.
@@ -38,7 +38,7 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
         self.invalid_password = false
       end
       if self.invalid_password?
-        errors.add(password_field, "is not valid")
+        errors.add(password_field, :is_not_valid)
       end
     end
   end
@@ -53,7 +53,7 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
 
   #----------------------------------------------------------------------------
   def check_if_suspended
-    self.errors.add_to_base("User account has been suspended.") if self.user.suspended?
+    self.errors.add_to_base(I18n.t(:msg_account_suspended)) if self.user.suspended?
   end
 
 end

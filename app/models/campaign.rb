@@ -58,7 +58,7 @@ class Campaign < ActiveRecord::Base
   acts_as_paranoid
   sortable :by => [ "name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
-  validates_presence_of :name, :message => "^Please specify campaign name."
+  validates_presence_of :name, :message => :missing_campaign_name
   validates_uniqueness_of :name, :scope => :user_id
   validate :start_and_end_dates
   validate :users_for_shared_access
@@ -73,14 +73,14 @@ class Campaign < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def start_and_end_dates
     if (self.starts_on && self.ends_on) && (self.starts_on > self.ends_on)
-      errors.add(:ends_on, "^Please make sure the campaign end date is after the start date.")
+      errors.add(:ends_on, :dates_not_in_sequence)
     end
   end
 
   # Make sure at least one user has been selected if the campaign is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, "^Please specify users to share the campaign with.") if self[:access] == "Shared" && !self.permissions.any?
+    errors.add(:access, :share_campaign) if self[:access] == "Shared" && !self.permissions.any?
   end
 
 end

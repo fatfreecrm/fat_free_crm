@@ -12,18 +12,22 @@
 # GNU Affero General Public License for more details.
 # 
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class Notifier < ActionMailer::Base
-  
-  #----------------------------------------------------------------------------
-  def password_reset_instructions(user)
-    subject       "Fat Free CRM: " + I18n.t(:password_reset_instructions)
-    from          "Fat Free CRM <noreply@fatfreecrm.com>"
-    recipients    user.email
-    sent_on       Time.now
-    body          :edit_password_url => edit_password_url(user.perishable_token)
-  end
+module FatFreeCRM
+  class MissingSettings < StandardError; end
+  class ObsoleteSettings < StandardError; end
+end
 
+class ActionController::Base
+  rescue_from FatFreeCRM::MissingSettings,  :with => :render_fat_free_crm_exception
+  rescue_from FatFreeCRM::ObsoleteSettings, :with => :render_fat_free_crm_exception
+
+  private
+  
+  def render_fat_free_crm_exception(exception)
+    log_error(exception)
+    render :layout => false, :template => "/layouts/500.html.haml", :status => 500, :locals => { :exception => exception }
+  end
 end
