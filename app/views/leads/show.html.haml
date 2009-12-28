@@ -8,7 +8,7 @@
   - if @lead.status != "rejected"
     = link_to_function(t(:reject) + '?', confirm_reject(@lead)) + " | "
   = link_to_function(t(:delete) + '?', confirm_delete(@lead))
-.title#title= @lead.full_name
+.title#title= h(@lead.full_name)
 
 %div#convert_lead{ hidden }
 %div#edit_lead{ hidden }
