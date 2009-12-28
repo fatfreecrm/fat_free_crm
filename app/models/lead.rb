@@ -58,8 +58,8 @@ class Lead < ActiveRecord::Base
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
   named_scope :converted, :conditions => "status='converted'"
   named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }
-  named_scope :created_by, lambda { |user| { :conditions => "user_id = #{user.id}" } }
-  named_scope :assigned_to, lambda { |user| { :conditions => "assigned_to = #{user.id}" } }
+  named_scope :created_by, lambda { |user| { :conditions => [ "user_id = ?" , user.id ] } }
+  named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ? " , user.id ] } }
 
   simple_column_search :first_name, :last_name, :company, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   uses_user_permissions
