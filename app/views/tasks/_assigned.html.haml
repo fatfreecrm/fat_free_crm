@@ -12,7 +12,7 @@
     = link_to(assigned.assignee.full_name, user_path(assigned.assignee)) + ": "
     = h(assigned.name)
     - if assigned.asset_id?
-      == #{t:related} #{link_to(assigned.asset.name, polymorphic_url(assigned.asset))}
+      == #{t:related} #{link_to(h(assigned.asset.name), polymorphic_url(assigned.asset))}
     &ndash;
     %tt
       - if assigned.bucket == "due_asap"

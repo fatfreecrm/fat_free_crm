@@ -16,7 +16,7 @@
         = t(:task_from, link_to(pending.user.full_name, user_path(pending.user))) << ':'
       = h(pending.name)
       - if pending.asset_id?
-        == #{t:related} #{link_to(pending.asset.name, polymorphic_url(pending.asset))}
+        == #{t:related} #{link_to(h(pending.asset.name), polymorphic_url(pending.asset))}
       &ndash;
     %tt
       - if pending.bucket == "due_asap"

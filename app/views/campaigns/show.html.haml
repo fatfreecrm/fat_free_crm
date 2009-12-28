@@ -4,7 +4,7 @@
 .title_tools#menu
   = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), :text => t(:edit)) + " | "
   = link_to_function(t(:delete) + '?', confirm_delete(@campaign))
-.title#edit_campaign_title= @campaign.name
+.title#edit_campaign_title= h(@campaign.name)
 
 %div#edit_campaign{ hidden }
 

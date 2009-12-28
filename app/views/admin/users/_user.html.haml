@@ -27,10 +27,10 @@
       - else
         %span.grayed #{t:delete}?&nbsp;
 
-    %span.black #{link_to(user.full_name, user)} (#{user.username})
+    %span.black #{link_to(h(user.full_name), user)} (#{user.username})
     %tt
-      = "- #{user.title}" unless user.title.blank?
-      = " " + t(:at) + " " + user.company unless user.company.blank?
+      = "- #{h(user.title)}" unless user.title.blank?
+      = " " + t(:at) + " " + h(user.company) unless user.company.blank?
 
       %span.black= "|"
       - if user.last_request_at && user.login_count > 0

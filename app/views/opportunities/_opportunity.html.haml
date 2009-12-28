@@ -9,7 +9,7 @@
     = link_to_delete(opportunity) + "&nbsp;"
 
   .indent
-    = link_to(opportunity.name, opportunity)
+    = link_to(h(opportunity.name), opportunity)
     - if opportunity.account
       == #{t:from} #{link_to(opportunity.account.name, account_path(opportunity.account))}
     %tt
