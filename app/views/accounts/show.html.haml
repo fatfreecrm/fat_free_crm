@@ -4,7 +4,7 @@
 .title_tools#menu
   = link_to_inline(:edit_account, edit_account_path(@account), :text => t(:edit)) + " | "
   = link_to_function(t:delete, confirm_delete(@account))
-.title#edit_account_title= @account.name
+.title#edit_account_title= h(@account.name)
 
 %div#edit_account{ hidden }
 

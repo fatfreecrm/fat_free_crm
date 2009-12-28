@@ -10,7 +10,7 @@
 
   .indent
     = link_to(assigned.assignee.full_name, user_path(assigned.assignee)) + ": "
-    = assigned.name
+    = h(assigned.name)
     - if assigned.asset_id?
       == #{t:related} #{link_to(assigned.asset.name, polymorphic_url(assigned.asset))}
     &ndash;
