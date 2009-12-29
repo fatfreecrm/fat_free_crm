@@ -8,28 +8,28 @@
     %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label.top #{t:website}:
+          .label.top #{t :website}:
           = f.text_field :website, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label.top #{t:phone_toll_free}:
+          .label.top #{t :phone_toll_free}:
           = f.text_field :toll_free_phone, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label #{t:phone}:
+          .label #{t :phone}:
           = f.text_field :phone, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label #{t:fax}:
+          .label #{t :fax}:
           = f.text_field :fax, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label #{t:billing_address}:
+          .label #{t :billing_address}:
           = f.text_area :billing_address, :style =>"width:240px", :rows => 4
         %td= spacer
         %td{ :valign => :top }
           .label
-            #{t:shipping_address}:
+            #{t :shipping_address}:
             = link_to_function t(:same_as_billing), %/$("account_shipping_address").value = $("account_billing_address").value/
           = f.text_area :shipping_address, :style =>"width:240px", :rows => 4
 

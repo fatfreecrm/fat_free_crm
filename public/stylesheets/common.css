@@ -156,7 +156,7 @@
   color: white !important; }
 
 .grayed {
-  color: silver; }
+  color: silver !important; }
 
 .strip {
   background: gainsboro;

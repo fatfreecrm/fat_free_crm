@@ -12,38 +12,38 @@
 
   %div
     - if @lead.phone
-      == #{t:phone}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : @lead.phone}</b><br />
+      == #{t :phone}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : @lead.phone}</b><br />
     - if @lead.mobile
-      == #{t:mobile}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : @lead.mobile}</b><br />
+      == #{t :mobile}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : @lead.mobile}</b><br />
     - if @lead.email
-      == #{t:email}: <b>#{link_to(h(@lead.email), "mailto:" + @lead.email)}</b><br />
+      == #{t :email}: <b>#{link_to(h(@lead.email), "mailto:" + @lead.email)}</b><br />
     - if @lead.alt_email
-      == #{t:other}: <b>#{link_to(@lead.alt_email, "mailto:" + @lead.alt_email)}</b><br />
+      == #{t :other}: <b>#{link_to(@lead.alt_email, "mailto:" + @lead.alt_email)}</b><br />
   = web_presence_icons(@lead)
 
-  .caption #{t:lead_summary}
+  .caption #{t :lead_summary}
   %li
     %dt#lead_status= t(@lead.status, :default => :n_a)
-    %tt #{t:status}:
+    %tt #{t :status}:
   %li
     %dt= t(@lead.source, :default => :n_a)
-    %tt #{t:source}:
+    %tt #{t :source}:
   %li
     %span{:style => "float:right;"}= stars_for(@lead)
-    %tt #{t:rating}:
+    %tt #{t :rating}:
   %li
     %dt= @lead.referred_by ? truncate(@lead.referred_by, :length => 16) : t(:n_a)
-    %tt #{t:referred_by}:
+    %tt #{t :referred_by}:
   %li
     %dt= truncate((@lead.assigned_to ? @lead.assignee.full_name : @lead.user.full_name), :length => 16)
-    %tt #{t:assigned_to}:
+    %tt #{t :assigned_to}:
   %li.last
     %dt
       - if @lead.campaign
         = link_to(truncate(@lead.campaign.name, :length => 16), @lead.campaign, :title => @lead.campaign.name)
       - else
-        #{t:n_a}
-    %tt #{t:campaign}:
+        #{t :n_a}
+    %tt #{t :campaign}:
 
   = hook(:show_lead_sidebar_bottom, self, :lead => @lead)
 

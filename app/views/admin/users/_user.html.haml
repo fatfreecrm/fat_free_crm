@@ -1,13 +1,13 @@
 %li[user]{ highlightable(dom_id(user, :tools)) }
 
   - if user.awaits_approval?
-    .strip.signed_up #{t:user_signed_up}
+    .strip.signed_up #{t :user_signed_up}
   - elsif user.suspended?
-    .strip.suspended #{t:user_suspended}
+    .strip.suspended #{t :user_suspended}
   - elsif user.admin?
-    .strip.admin #{t:user_admin}
+    .strip.admin #{t :user_admin}
   - else
-    .strip.active #{t:user_active}
+    .strip.active #{t :user_active}
 
   = gravatar_for(user, :size => "30x30")
 
@@ -20,12 +20,12 @@
       - elsif user != @current_user
         = link_to_suspend(user) << " | "
       - else
-        = "<font color='silver'>#{t:suspend}!</font> | "
+        = "<font color='silver'>#{t :suspend}!</font> | "
 
       - if user != @current_user
         = link_to_confirm(user) << "&nbsp;"
       - else
-        %span.grayed #{t:delete}?&nbsp;
+        %span.grayed #{t :delete}?&nbsp;
 
     %span.black #{link_to(h(user.full_name), user)} (#{user.username})
     %tt
@@ -38,15 +38,15 @@
         %span.black= "|"
 
       - if user.awaits_approval?
-        %b.cool #{t:user_awaits_approval}
+        %b.cool #{t :user_awaits_approval}
       - elsif user.last_request_at
         %span.cool #{t(:last_seen, time_ago_in_words(user.last_request_at))}
       - else
-        %span.warn #{t:user_never_logged_in}
+        %span.warn #{t :user_never_logged_in}
     %dt{ :style => "padding: 2px 0px 0px 0px" }
       = link_to(user.email, "mailto:" << user.email.to_s) << " | "
-      = "#{t:phone_small}: <b>" + user.phone << "</b> | " if user.phone?
-      = "#{t:mobile_small}: <b>" + user.mobile << "</b> | " if user.mobile?
+      = "#{t :phone_small}: <b>" + user.phone << "</b> | " if user.phone?
+      = "#{t :mobile_small}: <b>" + user.mobile << "</b> | " if user.mobile?
 
       - if !user.suspended?
         %span #{t(:user_since, user.created_at.to_date.to_s(:mmddyy))}

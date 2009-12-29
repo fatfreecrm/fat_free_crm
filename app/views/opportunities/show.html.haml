@@ -14,7 +14,7 @@
 -#-----------------------------------------------------------------------------
 %br
 = inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@opportunity), :text => t(:create_task) }
-.subtitle#create_task_title #{t:tasks}
+.subtitle#create_task_title #{t :tasks}
 .remote#create_task{ hidden }
 .log#tasks
   = render :partial => "common/tasks"
@@ -22,7 +22,7 @@
 -#-----------------------------------------------------------------------------
 %br
 = inline :create_contact, new_contact_path, { :class => "subtitle_tools", :related => dom_id(@opportunity), :text => t(:create_contact) }
-.subtitle#create_contact_title #{t:contacts}
+.subtitle#create_contact_title #{t :contacts}
 .remote#create_contact{ hidden }
 .list#contacts
   = render :partial => "contacts/contact", :collection => @opportunity.contacts

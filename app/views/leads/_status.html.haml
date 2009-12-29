@@ -9,15 +9,15 @@
     %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label.top #{t:assigned_to}:
+          .label.top #{t :assigned_to}:
           = collection_select :lead, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
-          .label.top #{t:status}:
+          .label.top #{t :status}:
           = f.select :status, Setting.unroll(:lead_status), { :selected => (@lead.status || "new").to_sym }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
-          .label.top #{t:source}:
+          .label.top #{t :source}:
           - if @campaign && !edit # Create a lead from Campaign landing page: select :campaign as a source and disable the dropdown.
             = f.select :source, Setting.unroll(:lead_source), { :selected => :campaign }, { :style => "width:160px;", :disabled => true }
             = hidden_field_tag "lead[source]", "campaign"
@@ -25,11 +25,11 @@
             = f.select :source, Setting.unroll(:lead_source), { :selected => (@lead.source || "other").to_sym }, { :style => "width:160px" }
       %tr
         %td{ :valign => :top }
-          .label #{t:rating}:
+          .label #{t :rating}:
           = rating_select "lead[rating]", { :id => :lead_rating, :selected => @lead.rating, :style => "width:100%" }
         %td= spacer
         %td{ :valign => :top, :colspan => 3 }
-          .label #{t:campaign}:
+          .label #{t :campaign}:
           - if @campaign && !edit # Create a lead from Campaign landing page: select current campaign and disable the dropdown.
             = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :selected => @campaign.id }, { :style => "width:100%", :disabled => true }
           - else

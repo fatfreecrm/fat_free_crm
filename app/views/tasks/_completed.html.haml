@@ -2,7 +2,7 @@
   - unless completed.category.blank?
     .strip{:class => completed.category}= t(completed.category)
   - else
-    .strip.white #{t:other}
+    .strip.white #{t :other}
 
   .tools{ invisible, :id => dom_id(completed, :tools) }
     = link_to_task_delete(completed, bucket) + "&nbsp;" if @current_user == completed.user
@@ -10,7 +10,7 @@
   .indent
     %strike= h(completed.name)
     - if completed.asset_id?
-      == #{t:related} #{link_to(h(completed.asset.name), polymorphic_url(completed.asset))}
+      == #{t :related} #{link_to(h(completed.asset.name), polymorphic_url(completed.asset))}
     &ndash;
     %tt
       %span.cool

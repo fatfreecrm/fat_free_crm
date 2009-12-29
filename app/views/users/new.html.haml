@@ -1,16 +1,16 @@
 .standalone
   - form_for(@user, :html => one_submit_only(:user)) do |f|
-    .title_tools #{t:already_signed_up} #{link_to t(:login_now_link), login_path}
-    .title #{t:sign_up}
+    .title_tools #{t :already_signed_up} #{link_to t(:login_now_link), login_path}
+    .title #{t :sign_up}
     = f.error_messages
     .section
-      .label #{t:email}:
+      .label #{t :email}:
       = f.text_field :email
-      .label #{t:username}:
+      .label #{t :username}:
       = f.text_field :username
-      .label #{t:password}:
+      .label #{t :password}:
       = f.password_field :password
-      .label #{t:password_confirmation}:
+      .label #{t :password_confirmation}:
       = f.password_field :password_confirmation
 
     .buttonbar
