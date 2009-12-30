@@ -8,6 +8,7 @@ Tue, Dec 29, 2009
 ---------------------------------------------------------------------
 - Fixed Ruby 1.9 compatibility issues with I18n.t (thanks, Gavin!)
 - Fixed rendering of callback hooks to be compatible with Ruby 1.9.
+- Fixed password reset submission form (thanks, Roman!)
 
 Mon, Dec 28, 2009
 ---------------------------------------------------------------------
