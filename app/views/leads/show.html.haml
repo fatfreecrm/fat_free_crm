@@ -8,7 +8,7 @@
   - if @lead.status != "rejected"
     = link_to_function(t(:reject) + '?', confirm_reject(@lead)) + " | "
   = link_to_function(t(:delete) + '?', confirm_delete(@lead))
-.title#title= @lead.full_name
+.title#title= h(@lead.full_name)
 
 %div#convert_lead{ hidden }
 %div#edit_lead{ hidden }
@@ -19,9 +19,9 @@
 -#-----------------------------------------------------------------------------
 %br
 = inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@lead), :text => t(:create_task) }
-.subtitle#create_task_title #{t:tasks}
+.subtitle#create_task_title #{t :tasks}
 .remote#create_task{ hidden }
 .log#tasks
   = render :partial => "common/tasks"
 
-= hook(:show_lead_bottom, self)
+= hook(:show_lead_bottom, self).join

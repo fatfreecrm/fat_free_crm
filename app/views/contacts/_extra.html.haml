@@ -8,29 +8,29 @@
     %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
         %td{ :valign => :top }
-          .label #{t:job_title}:
+          .label #{t :job_title}:
           = f.text_field :title, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label #{t:department}:
+          .label #{t :department}:
           = f.text_field :department, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label #{t:alt_email}:
+          .label #{t :alt_email}:
           = f.text_field :alt_email, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
-          .label #{t:mobile}:
+          .label #{t :mobile}:
           = f.text_field :mobile, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label #{t:address}:
+          .label #{t :address}:
           = f.text_area :address, :style =>"width:240px", :rows => 3
         %td= spacer
         %td{ :valign => :top }
-          .label #{t:fax}:
+          .label #{t :fax}:
           = f.text_field :fax, :style => "width:240px"
           %div{:style => "margin-top:6px"}
             .check_box
               = f.check_box :do_not_call, {}, true
-              #{t:do_not_call}
+              #{t :do_not_call}

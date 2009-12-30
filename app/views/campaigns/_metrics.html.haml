@@ -4,11 +4,11 @@
 - objectives << t(:conversion_number, number_to_percentage(campaign.target_conversion, :precision => 1)) if campaign.target_conversion
 - unless objectives.empty?
   %dt
-    %b #{t:target}:
+    %b #{t :target}:
     = objectives.join(" | ")
 %dt
   - unless objectives.empty?
-    %b #{t:actual}:
+    %b #{t :actual}:
   = t(:revenue_number, number_to_currency(campaign.revenue || 0, :precision => 0)) + " | "
   = t('pluralize.lead', campaign.leads_count || 0) + " | "
   = t('pluralize.opportunity', campaign.opportunities_count || 0)

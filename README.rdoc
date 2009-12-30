@@ -13,7 +13,6 @@ Here are the steps to get Fat Free CRM up and running on your system.
 * Ruby on Rails v2.3.4 (works with 2.3.2 and 2.3.3)
 * MySQL v4.1.1 or later (v5+ is recommended) or SQLite v3.4 or later
 * ImageMagick (optional, only if you would like to use avatars)
-* Browsers: FireFox and Safari (IE is not supported yet)
 
 === Downloads
 
@@ -44,6 +43,7 @@ details. Once you have database configuration file ready run rake to create
 the database:
 
    $ rake db:create
+
 
 === Setting Up The Application
 
@@ -76,7 +76,7 @@ You can reset the database and reload demo data at any time by using:
 Now you should be able to launch the Rails server and point your web browser
 to http://localhost:3000
 
-   $ ./script/server
+   $ ruby script/server
 
 
 === For Developers
@@ -88,6 +88,7 @@ the concepts:
    http://github.com/michaeldv/crm_sample_plugin/tree/master
    http://github.com/michaeldv/crm_sample_tabs/tree/master
    http://github.com/michaeldv/crm_web_to_lead/tree/master
+   http://github.com/michaeldv/crm_tags/tree/master
 
 
 === License

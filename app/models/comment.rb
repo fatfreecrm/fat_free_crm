@@ -36,7 +36,7 @@ class Comment < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
   default_scope :order => "created_at DESC"
-  named_scope :created_by, lambda { |user| { :conditions => "user_id = #{user.id}" } }
+  named_scope :created_by, lambda { |user| { :conditions => ["user_id = ? ", user.id ] } }
 
   validates_presence_of :user_id, :commentable_id, :commentable_type, :comment
   after_create :log_activity

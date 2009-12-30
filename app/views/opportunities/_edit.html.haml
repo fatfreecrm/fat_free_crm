@@ -8,5 +8,5 @@
     = render :partial => "opportunities/permissions", :locals => { :f => f, :edit => true }
     .buttonbar
       = f.submit t(:save_opportunity), :onclick => %/$("account_assigned_to").value = $F("opportunity_assigned_to");/
-      #{t:or}
+      #{t :or}
       = link_to_cancel edit_opportunity_path(@opportunity)

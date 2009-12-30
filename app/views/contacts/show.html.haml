@@ -4,7 +4,7 @@
 .title_tools#menu
   = link_to_inline(:edit_contact, edit_contact_path(@contact), :text => t(:edit)) + " | "
   = link_to_function(t(:delete) + '?', confirm_delete(@contact))
-.title#edit_contact_title= @contact.full_name
+.title#edit_contact_title= h(@contact.full_name)
 
 %div#edit_contact{ hidden }
 
@@ -14,7 +14,7 @@
 -#-----------------------------------------------------------------------------
 %br
 = inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@contact), :text=> t(:create_task) }
-.subtitle#create_task_title #{t:tasks}
+.subtitle#create_task_title #{t :tasks}
 .remote#create_task{ hidden }
 .log#tasks
   = render :partial => "common/tasks"
@@ -22,9 +22,9 @@
 -#-----------------------------------------------------------------------------
 %br
 = inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@contact), :text=> t(:create_opportunity) }
-.subtitle#create_opportunity_title #{t:opportunities}
+.subtitle#create_opportunity_title #{t :opportunities}
 .remote#create_opportunity{ hidden }
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @contact.opportunities
 
-= hook(:show_contact_bottom, self)
+= hook(:show_contact_bottom, self).join

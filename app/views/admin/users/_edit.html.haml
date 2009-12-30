@@ -5,5 +5,5 @@
     = render :partial => "admin/users/profile", :locals => { :f => f, :edit => true }
     .buttonbar
       = f.submit t(:save_user)
-      #{t:or}
+      #{t :or}
       = link_to_cancel edit_admin_user_path(@user)

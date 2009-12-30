@@ -8,5 +8,5 @@
     = render :partial => "campaigns/permissions", :locals => { :f => f, :edit => true }
     .buttonbar
       = f.submit t(:save_campaign)
-      #{t:or}
+      #{t :or}
       = link_to_cancel edit_campaign_path(@campaign)

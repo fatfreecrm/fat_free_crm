@@ -26,4 +26,4 @@
       = get_browser_timezone_offset
       = activate_facebox
       = yield :javascript_epilogue
-      = hook(:javascript_epilogue, self)
+      = hook(:javascript_epilogue, self).join
