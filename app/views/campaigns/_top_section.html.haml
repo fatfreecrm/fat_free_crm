@@ -16,4 +16,4 @@
       %td{ :valign => :top }
         .label #{t :status}:
         = f.select :status, Setting.unroll(:campaign_status), { :selected => (@campaign.status || "planned").to_sym }, { :style => "width:250px" }
-    = hook(:campaign_top_section_bottom, self, :f => f)
+    = hook(:campaign_top_section_bottom, self, :f => f).join

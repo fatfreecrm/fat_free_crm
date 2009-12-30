@@ -8,4 +8,4 @@
       %td{ :valign => :top }
         .label.top.req #{t :assigned_to}:
         = collection_select :account, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
-    = hook(:account_top_section_bottom, self, :f => f)
+    = hook(:account_top_section_bottom, self, :f => f).join

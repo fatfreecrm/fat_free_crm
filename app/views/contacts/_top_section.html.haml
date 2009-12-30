@@ -31,4 +31,4 @@
         %td{ :valign => :top }
           .label #{t :assigned_to}:
           = collection_select :contact, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
-      = hook(:contact_top_section_bottom, self, :f => f)
+      = hook(:contact_top_section_bottom, self, :f => f).join

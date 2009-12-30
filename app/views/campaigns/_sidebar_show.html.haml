@@ -78,4 +78,4 @@
     %dt= number_to_currency(@campaign.revenue, :precision => 0) || t(:n_a)
     %tt== #{t :revenue}: #{performance(@campaign.revenue, @campaign.target_revenue)}
 
-  = hook(:show_campaign_sidebar_bottom, self, :campaign => @campaign)
+  = hook(:show_campaign_sidebar_bottom, self, :campaign => @campaign).join
