@@ -174,7 +174,7 @@ class Task < ActiveRecord::Base
     when "due_later"
       Time.zone.now.midnight + 100.years
     when "specific_time"
-      self.calendar
+      self.calendar ? Date.strptime(self.calendar, "%m/%d/%Y") : nil
     else # due_later or due_asap
       nil
     end
