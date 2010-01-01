@@ -43,5 +43,5 @@
         %td{ :valign => :top }
           .label.req #{t :assigned_to}:
           = collection_select :opportunity, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
-      = hook(:opportunity_top_section_bottom, self, :f => f).join
+      = hook(:opportunity_top_section_bottom, self, :f => f)
 
