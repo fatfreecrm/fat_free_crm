@@ -17,12 +17,12 @@
 
 module FatFreeCRM
   class Version
-    MAJOR = 0
-    MINOR = 9
-    TINY  = 9
+    RELEASE = 0
+    MAJOR   = 9
+    MINOR   = "9a"
 
     def self.to_a
-      [ MAJOR, MINOR, TINY ]
+      [ RELEASE, MAJOR, MINOR ]
     end
     
     def self.to_s

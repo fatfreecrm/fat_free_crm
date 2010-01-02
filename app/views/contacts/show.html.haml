@@ -27,4 +27,4 @@
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @contact.opportunities
 
-= hook(:show_contact_bottom, self).join
+= hook(:show_contact_bottom, self)

@@ -21,4 +21,4 @@
     %b #{t :shipping_address}
     %div= @account.shipping_address.n2br if @account.shipping_address
 
-  = hook(:show_account_sidebar_bottom, self, :account => @account).join
+  = hook(:show_account_sidebar_bottom, self, :account => @account)

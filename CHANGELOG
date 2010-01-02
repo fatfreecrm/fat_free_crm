@@ -4,6 +4,16 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Thu, Dec 31, 2009
+---------------------------------------------------------------------
+- Version 0.9.9a -- Happy New Year!
+- Added [rake crm:settings:show] task.
+- Minor fixes.
+
+Wed, Dec 30, 2009
+---------------------------------------------------------------------
+- More Ruby 1.9 compatibility fixes: all specs pass.
+
 Tue, Dec 29, 2009
 ---------------------------------------------------------------------
 - Fixed Ruby 1.9 compatibility issues with I18n.t (thanks, Gavin!)

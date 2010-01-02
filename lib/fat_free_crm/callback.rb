@@ -58,7 +58,7 @@ module FatFreeCRM
     #--------------------------------------------------------------------------
     module Helper
       def hook(method, caller, context = {})
-        FatFreeCRM::Callback.hook(method, caller, context)
+        FatFreeCRM::Callback.hook(method, caller, context).join
       end
     end # module Helper
 

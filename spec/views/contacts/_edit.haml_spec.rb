@@ -40,7 +40,8 @@ describe "/contacts/edit.html.erb" do
 
     render "/contacts/_edit.html.haml"
     response.should have_tag("select[id=contact_assigned_to]") do |options|
-      options.to_s.should include_text(%Q/<option selected="selected" value="#{@user.id}">/)
+      with_tag "option[selected=selected]"
+      with_tag "option[value=#{@user.id}]"
     end
   end
 

@@ -51,7 +51,7 @@ describe Task do
         task = Factory(:task, :bucket => "specific_time", :calendar => "01/31/2020")
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == Time.zone.parse("01/31/2020")
+        task.due_at.should == Time.zone.parse("2020-01-31")
       end
     end
   end
@@ -108,7 +108,7 @@ describe Task do
         task.update_attributes( { :bucket => "specific_time", :calendar => "01/31/2020" } )
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == Time.zone.parse("01/31/2020")
+        task.due_at.should == Time.zone.parse("2020-01-31")
       end
     end
 

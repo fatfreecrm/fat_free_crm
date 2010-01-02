@@ -313,13 +313,13 @@ pt-BR:
   revenue_number: "{{value}} em receita"
   save_campaign: Salvar campanha
   start_date: Data de início
-  started_ago: iniciado a {{value}} atrás
+  started_ago: iniciou há {{value}} atrás
   starts_in: começa em {{value}}
   starts_today: começa hoje!
   target: Alvo
   total_campaigns: Total Campaigns
   was_supposed_to_finish: deveria ter terminado a {{value}}
-  was_supposed_to_start: deveria ter começado a {{time_ago}} atrás em {{start_date}}
+  was_supposed_to_start: deveria ter começado há {{time_ago}} atrás em {{start_date}}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
@@ -379,7 +379,7 @@ pt-BR:
   #----------------------------------------------------------------------------
   amount: Valor
   close_date: Close date
-  closed_ago_on: fechado {{time_ago}} atrás em {{date}}
+  closed_ago_on: fechada há {{time_ago}} atrás em {{date}}
   closes_today: expected to close today!
   closing_date: closing date is {{value}}
   create_opportunity: Cria oportunidade
@@ -429,7 +429,7 @@ pt-BR:
   task_assigned_to: e artibuída para {{value}}
   task_completed: terminada
   task_completed_ago: completed {{value}} ago # TODO
-  task_completed_by: terminada {{time_ago}} atrás por {{user}}
+  task_completed_by: terminada há {{time_ago}} atrás por {{user}}
   task_created: A tarea foi criada
   task_due_in: due in {{value}}
   task_due_later: due sometime soon
@@ -470,7 +470,7 @@ pt-BR:
   add_note: Adicionar nota
   add_note_help: Adicionar nova nota...
   added_ago: added {{value}} ago # TODO
-  added_by: adicionado {{time_ago}} atrás por {{user}} 
+  added_by: adicionado(a) há {{time_ago}} atrás por {{user}} 
   back: Voltar
   cancel: Cancelar
   close_form: Fechar formulário
@@ -482,7 +482,7 @@ pt-BR:
   delete: Remover
   edit: Editar
   items_total: '{{count}} total.'
-  me: eu
+  me: mim
   n_a: N/A
   name: Nome
   no_match: 'No {{value}} match'
@@ -492,7 +492,7 @@ pt-BR:
   please_retry: favor tente outra consulta.
   recent_items: Itens recentes
   search_assets: Buscar {{value}}
-  time_ago: "{{value}} atrás"
+  time_ago: "há {{value}} atrás"
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -528,7 +528,7 @@ pt-BR:
   #----------------------------------------------------------------------------
   approve: Aprovar
   create_user: Novo usuário
-  last_seen: entrou pela última vez {{value}} atrás
+  last_seen: entrou pela última vez há {{value}} atrás
   personal_information: Informações Pessoais
   reactivate: Reativar
   save_user: Salvar usuário

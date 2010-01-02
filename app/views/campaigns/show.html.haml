@@ -35,4 +35,4 @@
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @campaign.opportunities
 
-= hook(:show_campaign_bottom, self).join
+= hook(:show_campaign_bottom, self)

@@ -58,6 +58,15 @@ namespace :crm do
         Rake::Task.sanitize_and_execute(sql)
       end
     end
+
+    desc "Show current application settings"
+    task :show => :environment do
+      ActiveRecord::Base.establish_connection(Rails.env)
+      names = ActiveRecord::Base.connection.select_values("SELECT name FROM settings ORDER BY name")
+      names.each do |name|
+        puts "\n#{name}:\n  #{Setting.send(name).inspect}"
+      end
+    end
   end
 
   desc "Prepare the database and load default application settings"
