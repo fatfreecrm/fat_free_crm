@@ -55,10 +55,13 @@ module FatFreeCRM
     end # class Base
 
     # This makes it possible to call hook() without FatFreeCRM::Callback prefix.
+    # Returns stringified data when called from within templates, and the actual
+    # data otherwise.
     #--------------------------------------------------------------------------
     module Helper
       def hook(method, caller, context = {})
-        FatFreeCRM::Callback.hook(method, caller, context).join
+        data = FatFreeCRM::Callback.hook(method, caller, context)
+        caller.class.to_s.start_with?("ActionView") ? data.join : data
       end
     end # module Helper
 
