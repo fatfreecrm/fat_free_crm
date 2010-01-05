@@ -159,6 +159,7 @@ pt-BR:
   msg_account_not_approved: Sua conta ainda não foi aprovada.
   msg_asset_deleted: "{{value}} foi removido."
   msg_asset_not_available: Este(a) {{value}} não está mais disponível.
+  msg_assets_not_available: The {{value}} are not available. # TODO
   msg_asset_rejected: "{{value}} foi rejeitado."
   msg_bad_image_file: "^Não foi possível enviar ou redimensionar a imagem que você escolheu."
   msg_cant_create_related: "Impossível criar {{asset}} já que {{related}} não está mais disponível."

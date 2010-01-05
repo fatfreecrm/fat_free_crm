@@ -159,6 +159,7 @@ th:
   msg_account_not_approved: บัญชีของคุณยังไม่ได้รับการอนุมัติ
   msg_asset_deleted: "{{value}} ได้ถูกลบไปแล้ว"
   msg_asset_not_available: เอกสาร {{value}} ไม่มีในระบบ
+  msg_assets_not_available: The {{value}} are not available. # TODO
   msg_asset_rejected: "{{value}} ได้ถูกปฏิเสธแล้ว"
   msg_bad_image_file: "^ไม่สามารถอัปโหลดหรือเปลี่ยนขนาดของรูปภาพที่คุณระบุได้"
   msg_cant_create_related: "ไม่สามารถสร้าง{{asset}}ได้ เพราะ{{related}}ไม่มีในระบบ"
