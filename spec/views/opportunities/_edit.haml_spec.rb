@@ -14,6 +14,7 @@ describe "/opportunities/_edit.html.haml" do
     assigns[:users] = [ @current_user ]
     assigns[:opportunity] = @opportunity = Factory(:opportunity, :campaign => @campaign = Factory(:campaign))
     render "/opportunities/_edit.html.haml"
+
     response.should have_tag("form[class=edit_opportunity]") do
       with_tag "input[type=hidden][id=opportunity_user_id][value=#{@opportunity.user_id}]"
       with_tag "input[type=hidden][id=opportunity_campaign_id][value=#{@opportunity.campaign_id}]"
@@ -37,7 +38,8 @@ describe "/opportunities/_edit.html.haml" do
     render "/opportunities/_edit.html.haml"
 
     response.should have_tag("select[id=opportunity_assigned_to]") do |options|
-      options.to_s.should include_text(%Q/<option selected="selected" value="#{@user.id}">/)
+      with_tag "option[selected=selected]"
+      with_tag "option[value=#{@user.id}]"
     end
   end
 
