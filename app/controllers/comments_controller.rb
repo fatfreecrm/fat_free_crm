@@ -20,16 +20,26 @@ class CommentsController < ApplicationController
   COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id).freeze
 
   # GET /comments
-  # GET /comments.xml                                           not implemented
+  # GET /comments.xml
   #----------------------------------------------------------------------------
-  # def index
-  #   @comments = Comment.all
-  # 
-  #   respond_to do |format|
-  #     format.html # index.html.erb
-  #     format.xml  { render :xml => @comments }
-  #   end
-  # end
+  def index
+    @commentable = extract_commentable_name(params)
+    if @commentable
+      @asset = @commentable.classify.constantize.my(@current_user).find(params[:"#{@commentable}_id"])
+      @comments = @asset.comments(:order => "created_at DESC")
+    end
+    respond_to do |format|
+      format.html { redirect_to(@asset) }
+      format.xml  { render :xml => @comments }
+    end
+
+  rescue ActiveRecord::RecordNotFound # Kicks in if @asset was not found.
+    flash[:warning] = t(:msg_assets_not_available, "notes")
+    respond_to do |format|
+      format.html { redirect_to(root_url) }
+      format.xml  { render :text => flash[:warning], :status => :not_found }
+    end
+  end
 
   # GET /comments/1
   # GET /comments/1.xml                                         not implemented
@@ -51,7 +61,7 @@ class CommentsController < ApplicationController
     @commentable = extract_commentable_name(params)
     if @commentable
       update_commentable_session
-      @commentable.classify.constantize.my(@current_user).find(params["#{@commentable}_id".to_sym])
+      @commentable.classify.constantize.my(@current_user).find(params[:"#{@commentable}_id"])
     end
 
     respond_to do |format|

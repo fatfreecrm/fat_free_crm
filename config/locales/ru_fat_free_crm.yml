@@ -159,6 +159,7 @@ ru:
   msg_account_not_approved: @ru@Your account has not been approved yet. # TODO
   msg_asset_deleted: Этот {{value}} был удален.
   msg_asset_not_available: @ru@This {{value}} is no longer available. # TODO
+  msg_assets_not_available: The {{value}} are not available. # TODO
   msg_asset_rejected: "@ru@ {{value}} has been rejected." # TODO
   msg_bad_image_file: Ошибка при загрузке или изменении размера указанного изображения.
   msg_cant_create_related: "@ru@ Can't create the {{asset}} since the {{related}} is no longer available." # TODO
