@@ -151,7 +151,7 @@ pt-BR:
               email_in_use: "^Já existe um usuário com este e-mail."
 
   msg_account_suspended: A conta do usuário foi suspensa.
-  password_reset_instruction: instruções de redefinição da senha
+  password_reset_instruction: Instruções de redefinição da senha
 
   # Controllers.
   #----------------------------------------------------------------------------
@@ -159,7 +159,7 @@ pt-BR:
   msg_account_not_approved: Sua conta ainda não foi aprovada.
   msg_asset_deleted: "{{value}} foi removido."
   msg_asset_not_available: Este(a) {{value}} não está mais disponível.
-  msg_assets_not_available: The {{value}} are not available. # TODO
+  msg_assets_not_available: Estes(as) {{value}} não estão mais disponíveis.
   msg_asset_rejected: "{{value}} foi rejeitado."
   msg_bad_image_file: "^Não foi possível enviar ou redimensionar a imagem que você escolheu."
   msg_cant_create_related: "Impossível criar {{asset}} já que {{related}} não está mais disponível."
@@ -167,7 +167,7 @@ pt-BR:
   msg_cant_do: "Impossível {{action}} o {{asset}} já que não está mais disponível."
   msg_email_not_found: Nenhum usuário encontrado com este e-mail.
   msg_enter_new_password: Por favor, informe sua nova senha.
-  msg_goodbye: Voi saiu do sistema. Obrigado por usar o Fat Free CRM!
+  msg_goodbye: Você saiu do sistema. Obrigado por usar o Fat Free CRM!
   msg_invalid_password: "^Por favor informe uma senha válida"
   msg_invalig_login: Usuário e senha inválida.
   msg_last_login: Você entrou no sistema pela última vez em {{value}}.
@@ -176,7 +176,7 @@ pt-BR:
   msg_password_changed: Sua senha mudou.
   msg_password_not_changed: Sua senha não mudou.
   msg_password_updated: A senha foi atualizada com sucesso.
-  msg_pwd_instructions_sent: instruções para redefinir a sua senha foram enviadas a você. Por favor, verifique seu e-mail.
+  msg_pwd_instructions_sent: Instruções para redefinir a sua senha foram enviadas a você. Por favor, verifique seu e-mail.
   msg_require_admin: É preciso ser um administrador para acessar esta página.
   msg_successful_signup: Cadastrado com sucesso, bem vindo(a) ao Fat Free CRM!
   msg_welcome: Bem vindo(a) ao Fat Free CRM!
@@ -429,7 +429,7 @@ pt-BR:
   task_assigned: As tarefas foram atribuídas para {{value}}
   task_assigned_to: e artibuída para {{value}}
   task_completed: terminada
-  task_completed_ago: completed {{value}} ago # TODO
+  task_completed_ago: terminada há {{value}} atrás
   task_completed_by: terminada há {{time_ago}} atrás por {{user}}
   task_created: A tarea foi criada
   task_due_in: due in {{value}}
@@ -470,7 +470,7 @@ pt-BR:
   #----------------------------------------------------------------------------
   add_note: Adicionar nota
   add_note_help: Adicionar nova nota...
-  added_ago: added {{value}} ago # TODO
+  added_ago: adicionado(a) há {{value}} atrás
   added_by: adicionado(a) há {{time_ago}} atrás por {{user}} 
   back: Voltar
   cancel: Cancelar
@@ -504,7 +504,7 @@ pt-BR:
   about_ffc_version: Fat Free CRM versão
   about_home_page: Home page
   about_project_page: Página do projeto
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
+  about_thank_you: Obrigado(a) por usar o Fat Free CRM! Nós apreciamos o seu negócio e esperamos que você goste de usar nosso software.
   about_twitter: Twitter
   about_user_group: Grupo de discussão para usuários
   admin: Admin
@@ -544,7 +544,7 @@ pt-BR:
   user_signed_up_on: cadastrou-se em {{value}}
   user_since: usuário desde {{value}}
   user_suspended: Suspenso
-  user_suspended_on: suspended on {{value}}
+  user_suspended_on: suspenso em {{value}}
   users: Usuários
 
   pluralize:
