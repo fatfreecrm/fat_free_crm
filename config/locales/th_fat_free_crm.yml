@@ -159,7 +159,7 @@ th:
   msg_account_not_approved: บัญชีของคุณยังไม่ได้รับการอนุมัติ
   msg_asset_deleted: "{{value}} ได้ถูกลบไปแล้ว"
   msg_asset_not_available: เอกสาร {{value}} ไม่มีในระบบ
-  msg_assets_not_available: The {{value}} are not available. # TODO
+  msg_assets_not_available: เอกสาร {{value}} ไม่มีในระบบ.
   msg_asset_rejected: "{{value}} ได้ถูกปฏิเสธแล้ว"
   msg_bad_image_file: "^ไม่สามารถอัปโหลดหรือเปลี่ยนขนาดของรูปภาพที่คุณระบุได้"
   msg_cant_create_related: "ไม่สามารถสร้าง{{asset}}ได้ เพราะ{{related}}ไม่มีในระบบ"
@@ -321,7 +321,7 @@ th:
   total_campaigns: จำนวนแคมเปณ
   was_supposed_to_finish: ควรจะเสร็จตั้งแต่ {{value}}
   was_supposed_to_start: ควรจะเสร็จตั้งแต่ {{time_ago}} ที่ผ่านมา คือ {{start_date}}
-    
+
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   address: ที่อยู่
@@ -330,7 +330,7 @@ th:
   contact: ที่อยู่ติดต่อ
   contact_small: ที่อยู่ติดต่อ
   contacts: ที่อยู่ติดต่อ
-  contacts_options: Contacts Options
+  contacts_options: กรองที่อยู่ติดต่อ
   contacts_small: ที่อยู่ติดต่อ
   create_contact: เพิ่มผู้ติดต่อ
   department: แผนก
@@ -430,7 +430,7 @@ th:
   task_assigned_to: และได้มอบหมายให้ {{value}}
   task_completed: เสร็จสมบูรณ์
   task_completed_by: เสร็จ {{time_ago}} ที่ผ่านมา โดย {{user}}
-  task_completed_ago: completed {{value}} ago # TODO
+  task_completed_ago: เสร็จ {{value}} ที่ผ่านมา
   task_created: ภารกิจได้ถูกสร้างขึ้นแล้ว
   task_due_in: ครบกำหนดภายใน {{value}}
   task_due_later: ครบกำหนดเร็วๆ นี้
@@ -470,7 +470,7 @@ th:
   #----------------------------------------------------------------------------
   add_note: เพิ่มบันทึก
   add_note_help: Add a new note...
-  added_ago: added {{value}} ago # TODO
+  added_ago: สร้าง {{value}} ที่ผ่านมา
   added_by: สร้าง {{time_ago}} ที่ผ่านมา โดย {{user}}
   back: กลับ
   cancel: ยกเลิก
@@ -493,7 +493,7 @@ th:
   please_retry: โปรดทดลองคำค้นหาอื่น
   recent_items: เอกสารล่าสุด
   search_assets: ค้นหา{{value}}
-  ago: "{{value}} แล้ว"
+  ago: "{{value}}ที่ผ่านมา"
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
