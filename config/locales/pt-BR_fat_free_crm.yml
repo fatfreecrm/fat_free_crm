@@ -184,7 +184,7 @@ pt-BR:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: Exibir atividades em {{models}} feitas por {{user}} no(s) último(s) {{period}}
+  activity_options: Exibir atividades em {{models}} feitas por {{user}} no(s) último(s) {{period}}.
   option_after: depois
   option_all: todos
   option_all_users: todos os usuários

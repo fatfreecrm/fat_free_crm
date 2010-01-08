@@ -184,7 +184,7 @@ ru:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": взвешенной сумме
-  activity_options: Показывать действия {{models}} произведенные пользователем {{user}} за последние {{period}}
+  activity_options: Показывать действия {{models}} произведенные пользователем {{user}} за последние {{period}}.
   option_after: после
   option_all: все
   option_all_users: всеми
