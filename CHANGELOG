@@ -4,6 +4,14 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Jan 7, 2010
+---------------------------------------------------------------------
+- Added :per_user_locale setting (default is false).
+
+Wed, Jan 6, 2010
+---------------------------------------------------------------------
+- Updated Thai and Portuguese language translations.
+
 Mon, Jan 4, 2010
 ---------------------------------------------------------------------
 - Implemented REST API for fetching asset notes (thanks, Adrian!)

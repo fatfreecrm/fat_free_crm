@@ -38,7 +38,11 @@ class ApplicationController < ActionController::Base
       I18n.locale = Setting.locale
     else
       # Pre-I18n settings that need to be reloaded. Use English message text since the actual locale is unknown.
-      raise FatFreeCRM::ObsoleteSettings, "It looks like you are upgrading from the older version of Fat Free CRM. Please review config/settings.yml file, and re-run<br><b>rake crm:settings:load</b> command."
+      raise FatFreeCRM::ObsoleteSettings, <<-OBSOLETE
+        It looks like you are upgrading from the older version of Fat Free CRM. Please review
+        <b>config/settings.yml</b> file, and re-run<br><b>rake crm:settings:load</b> command
+        in development and production environments.
+      OBSOLETE
     end
   end
 
