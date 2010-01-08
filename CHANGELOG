@@ -8,6 +8,7 @@ Wed, Jan 7, 2010
 ---------------------------------------------------------------------
 - Added :per_user_locale setting (default is false).
 - Added some CSS eye candy (drop shadows and options links).
+- Version 0.9.9b
 
 Wed, Jan 6, 2010
 ---------------------------------------------------------------------
