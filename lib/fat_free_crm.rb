@@ -25,6 +25,10 @@ require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/plugin"
 
+if RUBY_VERSION  == "1.9.1" && ActiveRecord::Base.configurations[RAILS_ENV]["adapter"] == "mysql"
+  require "fat_free_crm/mysql_utf8.rb"
+end
+
       ActionView::Base.send(:include, FatFreeCRM::I18n)
 ActionController::Base.send(:include, FatFreeCRM::I18n)
 
