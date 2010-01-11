@@ -30,6 +30,8 @@ es-ES:
   admin_tab_settings: Configuración
   admin_tab_plugins: Complementos
 
+  users_small: usuarios
+
   planned: Planificada
   started: Iniciada
   on_hold: Aplazada
@@ -229,7 +231,7 @@ es-ES:
   google: Google IM
   gravatar_help: ¿No sabe qué son Gravatars? Conózcalos
   image_file: Imagen de archivo
-  image_help: Eltamaño de la imagen que cargue se reajustará automáticamenta a 75 x 75 píxeles. Los formatos soportados son GIF, JPG y PNG.
+  image_help: El tamaño de la imagen que cargue se reajustará automáticamente a 75 x 75 píxeles. Los formatos soportados son GIF, JPG y PNG.
   job_title: Profesión
   last_name: Apellidos
   login_now_link: ¡Inicie sesión!
