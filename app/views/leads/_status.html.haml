@@ -10,7 +10,7 @@
       %tr
         %td{ :valign => :top }
           .label.top #{t :assigned_to}:
-          = collection_select :lead, :assigned_to, @users, :id, :full_name, { :include_blank => "Myself" }, { :style => "width:160px" }
+          = collection_select :lead, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
           .label.top #{t :status}:
@@ -33,4 +33,4 @@
           - if @campaign && !edit # Create a lead from Campaign landing page: select current campaign and disable the dropdown.
             = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :selected => @campaign.id }, { :style => "width:100%", :disabled => true }
           - else
-            = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :selected => @lead.campaign_id, :include_blank => "-- None --" }, { :style => "width:100%", :onchange => "crm.flip_campaign_permissions(this.value)" }
+            = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :selected => @lead.campaign_id, :include_blank => t(:none) }, { :style => "width:100%", :onchange => "crm.flip_campaign_permissions(this.value)" }
