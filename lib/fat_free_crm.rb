@@ -15,6 +15,10 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
+if RUBY_VERSION.starts_with? "1.9" && ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
+  require "fat_free_crm/mysql_utf8.rb"
+end
+
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"
 require "fat_free_crm/exceptions"
@@ -24,10 +28,6 @@ require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/plugin"
-
-if RUBY_VERSION  == "1.9.1" && ActiveRecord::Base.configurations[RAILS_ENV]["adapter"] == "mysql"
-  require "fat_free_crm/mysql_utf8.rb"
-end
 
       ActionView::Base.send(:include, FatFreeCRM::I18n)
 ActionController::Base.send(:include, FatFreeCRM::I18n)

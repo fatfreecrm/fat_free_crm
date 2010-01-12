@@ -1,9 +1,6 @@
-# from http://gnuu.org/2009/11/06/ruby19-rails-mysql-utf8/
-# see http://github.com/nex3/haml/commit/76bd406875920079bb26445ddeb0d3842e825f01
-# for a good explanation of why it's needed. Gav
+# Problem: http://github.com/nex3/haml/commit/76bd406875920079bb26445ddeb0d3842e825f01
+# Solution: http://gnuu.org/2009/11/06/ruby19-rails-mysql-utf8/
 
-require 'mysql'
- 
 class Mysql::Result
   def encode(value, encoding = "utf-8")
     String === value ? value.force_encoding(encoding) : value
