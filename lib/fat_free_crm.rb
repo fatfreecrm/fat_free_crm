@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-if RUBY_VERSION.starts_with? "1.9" && ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
+if RUBY_VERSION.start_with?("1.9") && ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
   require "fat_free_crm/mysql_utf8.rb"
 end
 
