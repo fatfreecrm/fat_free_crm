@@ -480,6 +480,7 @@ ru:
   could_not_find: Ничего не найдено. Можете
   could_not_find_matching: Не найдены {{value}}, в которыx встречается
   create_new: добавить новый
+  select_existing: выбрaть существующий
   delete: Удалить
   edit: Изменить
   items_total: Всего {{count}}.

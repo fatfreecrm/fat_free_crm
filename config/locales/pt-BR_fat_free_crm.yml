@@ -480,6 +480,7 @@ pt-BR:
   could_not_find: "{{value}} não encontrado. Sinta-se livre para"
   could_not_find_matching: "Couldn't find {{value}} matching"
   create_new: cria um(a) novo(a)
+  select_existing: selecione existentes
   delete: Remover
   edit: Editar
   items_total: '{{count}} total.'

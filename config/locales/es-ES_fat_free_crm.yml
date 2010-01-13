@@ -485,6 +485,7 @@ es-ES:
   could_not_find: "No se encontraron {{value}}."
   could_not_find_matching: "No se pudo encontrar coincidencia con {{value}}"
   create_new: Crear
+  select_existing: seleccione existentes
   delete: Eliminar
   edit: Editar
   items_total: 'total {{count}}.'

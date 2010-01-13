@@ -4,7 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Wed, Jan 7, 2010
+Tue, Jan 12, 2010
+---------------------------------------------------------------------
+- Pulled remaining English strings out of JavaScript (thanks, Gavin!)
+
+Mon, Jan 11, 2010
 ---------------------------------------------------------------------
 - Added Spanish translation (thanks, Beatriz!)
 - Fixed text encoding issues with Ruby 1.9/MySQL and HAML (thanks, Gavin!)
