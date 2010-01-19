@@ -35,6 +35,15 @@ a {
     color: white;
     text-decoration: none; }
 
+#options a {
+  border-bottom: 1px dotted darkcyan;
+  color: darkcyan;
+  text-decoration: none; }
+  #options a:hover {
+    background: #e5e5e5;
+    border-bottom: 1px dotted darkblue;
+    color: darkblue; }
+
 abbr {
   font-size: 9px; }
 
@@ -182,7 +191,9 @@ tt {
   padding: 20px;
   width: 400px;
   -moz-border-radius: 6px;
-  -webkit-border-radius: 6px; }
+  -moz-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb;
+  -webkit-border-radius: 6px;
+  -webkit-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb; }
   .standalone input[type="text"], .standalone input[type="password"] {
     font-size: 16px;
     padding: 2px;
@@ -197,7 +208,9 @@ tt {
   background: white;
   padding: 8px 15px 15px 15px;
   -moz-border-radius: 4px;
-  -webkit-border-radius: 4px; }
+  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
+  -webkit-border-radius: 4px;
+  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
 
 .sidebar {
   color: #3f3f3f;
@@ -427,10 +440,12 @@ tt {
 
 .filters, .panel {
   background: snow;
-  margin: 0px 0px 10px 0px;
+  margin: 0px 0px 12px 0px;
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
-  -webkit-border-radius: 4px; }
+  -webkit-border-radius: 4px;
+  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
+  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
 
 .filters h4 {
   color: navy;
@@ -567,7 +582,9 @@ p.flash_exception {
   font-size: 14px;
   margin: 50px auto;
   padding: 50px;
-  width: 450px; }
+  width: 450px;
+  -moz-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999;
+  -webkit-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999; }
 
 div.auto_complete {
   background: white;

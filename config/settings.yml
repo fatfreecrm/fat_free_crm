@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -35,6 +35,11 @@
 #------------------------------------------------------------------------------
 # Default locale is American English.
 :locale: "en-US"
+
+# By default individual users can't pick their own locale and are presented
+# with the one set above. To enable language selection in User/Profile set
+# the following option to true.
+:per_user_locale: false
 
 # User Signup.
 #------------------------------------------------------------------------------
