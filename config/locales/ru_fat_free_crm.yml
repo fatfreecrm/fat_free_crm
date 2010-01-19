@@ -7,7 +7,7 @@ ru:
   at: в
   here: здесь
   no_button: 'Нет'
-  not_implemented: Еще не поддержано.
+  not_implemented: Пока не поддерживается.
   or: или
   select_blank: -- Выберите --
   select_none: -- Нет --
@@ -155,23 +155,23 @@ ru:
 
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: @ru@Your account has been created and is awating approval by the system administrator. # TODO
-  msg_account_not_approved: @ru@Your account has not been approved yet. # TODO
+  msg_account_created: Ваш аккаунт создан и ожидает активации системным администратором.
+  msg_account_not_approved: Ваш аккаунт еще не активирован.
   msg_asset_deleted: Этот {{value}} был удален.
-  msg_asset_not_available: @ru@This {{value}} is no longer available. # TODO
-  msg_asset_rejected: "@ru@ {{value}} has been rejected." # TODO
+  msg_asset_not_available: Этот {{value}} более недоступен.
+  msg_asset_rejected: Этот {{value}} отклонен.
   msg_bad_image_file: Ошибка при загрузке или изменении размера указанного изображения.
-  msg_cant_create_related: "@ru@ Can't create the {{asset}} since the {{related}} is no longer available." # TODO
-  msg_cant_delete_user: "@ru@^Couldn't delete the user since {{value}} has related assets present." # TODO
+  msg_cant_create_related: Невозвожно создать {{asset}} так как {{related}} более недоступен.
+  msg_cant_delete_user: "Невозможно удалить пользователя так как к {{value}} привязаны объекты."
   msg_cant_do: Нельзя {{action}} {{asset}}, его больше не существует.
   msg_email_not_found: Пользователя с таким адресом не найдено.
   msg_enter_new_password: Пожалуйста введите новый пароль.
-  msg_goodbye: @ru@You have been logged out. Thank you for using Fat Free CRM! # TODO
+  msg_goodbye: Вы вышли. Спасибо за использование Fat Free CRM!
   msg_invalid_password: Введите правильный пароль.
   msg_invalig_login: Неправильный логин или пароль.
   msg_last_login: Последний раз Вы заходили {{value}}.
-  msg_login_needed: @ru@You must be logged in to access this page. # TODO
-  msg_logout_needed: @ru@You must be logged out to access this page. # TODO
+  msg_login_needed: Для доступа к этой странице нужно войти в систему.
+  msg_logout_needed: Для доступа к этой странице необходимо выйти из системы.
   msg_password_changed: Пароль изменен.
   msg_password_not_changed: Пароль не был изменен.
   msg_password_updated: Пароль успешно изменен.
@@ -289,7 +289,7 @@ ru:
   budget: Бюджет
   budget_label: Бюджет (руб.)
   campaign: Кампания
-  campaign_and_leads: кампании и ее наводк
+  campaign_and_leads: кампании и ее наводки
   campaign_small: кампании
   campaign_summary: Итоги по Кампании
   campaign_targets: Цели Кампании
@@ -304,9 +304,9 @@ ru:
   finished_on: закончилась {{value}}
   finishes_in: заканчивается через {{value}}
   no_start_date: дата начала не указана
-  number_of_leads: Число наводок
+  number_of_leads: Количество наводок
   objectives: Цели
-  objectives_help: @ru@Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
+  objectives_help: Пожалуйста, введите ожидаемое количество наводок, планируемый коэффициент конверсии наводок в перспективы, планируемый доход и бюджет рекламной кампании. Эти цифры позволят отследить фактическую эффективность кампании.
   objectives_small: целях кампании
   revenue: Доход
   revenue_label: Доход (руб.)
@@ -336,9 +336,9 @@ ru:
   department_small: Отдел {{value}}
   do_not_call: Не звонить
   extra_info: Дополнительные данные
-  extra_info_small: @ru@extra contact
-  facebook: Facebook
-  linked_in: LinkedIn
+  extra_info_small: дополнительные данные
+  facebook: Вконтакте
+  linked_in: Одноклассники
   myself: Мне
   permissions_intro: При создании только Вы получаете доступ к {{value}}ам. Права доступа можно изменить в любое время.
   referred_by: По рекомендации
@@ -351,18 +351,18 @@ ru:
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
-  convert: Продвинуть
-  convert_lead: @ru@Convert Lead
-  convert_lead_permissions_intro: @ru@Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  convert_lead_text: @ru@By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  convert: Конверсия
+  convert_lead: Конвертировать наводку
+  convert_lead_permissions_intro: Права доступа к контакту будут скопированы от карточки конвертируемой наводки. Позже вы сможете изменить права доступа.
+  convert_lead_text: "В результате конверсии наводки &laquo;{{value}}&raquo;, будет создан новый контакт, привязанный к существующему или вновь созданному клиенту. Статус наводки автоматически изменится на 'сконвертирована'."
   create_lead: Создать Наводку
-  create_opp_for_contact: @ru@You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+  create_opp_for_contact: Вы можете создать перспективу, привязанную к контакту &laquo;{{value}}&raquo;, введя в следующих полях название, стадию, предполагаемую дату завершения, вероятность продажи, сумму сделки и предлагаемую скидку.
   lead: Наводка
-  lead_info_small: @ru@lead contact
-  lead_permissions_intro: @ru@By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_info_small: информация о наводке
+  lead_permissions_intro: "По умолчанию, права доступа будут скопированы от рекламной кампании или установлено 'Не показывать никому'. Вы сможете изменить права доступа позже."
   lead_small: наводка
-  lead_status_small: @ru@lead status
-  lead_summary: @ru@Lead Summary
+  lead_status_small: Статус наводки
+  lead_summary: Информация о наводке
   leads: Наводки
   leads_options: Опции для Наводок
   leads_small: наводки
@@ -379,7 +379,7 @@ ru:
   #----------------------------------------------------------------------------
   amount: Сумма
   close_date: Дата завершения
-  closed_ago_on: завершилось {{time_ago}} назад {{date}}
+  closed_ago_on: завершена {{time_ago}} назад {{date}}
   closes_today: завершение ожидается сегодня!
   closing_date: дата завершения {{value}}
   create_opportunity: Создать Пeрспективу
@@ -398,7 +398,7 @@ ru:
   opportunity: Пeрспектива
   opportunity_small: пeрспектива
   opportunity_summary: Перспектива
-  opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability"
+  opportunity_summary_text: "{{amount}} со скидкой {{discount}} и вероятностью {{probability}}"
   past_due: просрочено, должно было завершено {{value}} назад
   probability: Вероятность
   probability_number: и вероятностью {{value}}
@@ -420,7 +420,7 @@ ru:
   due: Срок выполнения
   feel_free: Можете
   move_to: перенести на
-  no_tasks: @ru@"You don't have any {{value}} tasks" # TODO
+  no_tasks: У вас нет {{value}} заданий
   pending_tab: На&nbsp;очереди
   pending_tasks: Задания На Очереди
   related: см.
@@ -498,7 +498,7 @@ ru:
   #----------------------------------------------------------------------------
   about: О программе
   about_dev_group: Форум для разработчиков
-  about_features: @ru@Features and bugs
+  about_features: Багтрекер
   about_ffc_resources: Полезные ресурсы по Fat Free CRM (ссылки открываются в новом окне)
   about_ffc_version: Fat Free CRM версия
   about_home_page: Домашняя страница
