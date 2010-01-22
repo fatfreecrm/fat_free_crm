@@ -4,6 +4,25 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Jan 12, 2010
+---------------------------------------------------------------------
+- Pulled remaining English strings out of JavaScript (thanks, Gavin!)
+
+Mon, Jan 11, 2010
+---------------------------------------------------------------------
+- Added Spanish translation (thanks, Beatriz!)
+- Fixed text encoding issues with Ruby 1.9/MySQL and HAML (thanks, Gavin!)
+
+Wed, Jan 7, 2010
+---------------------------------------------------------------------
+- Added :per_user_locale setting (default is false).
+- Added some CSS eye candy (drop shadows and options links).
+- Version 0.9.9b
+
+Wed, Jan 6, 2010
+---------------------------------------------------------------------
+- Updated Thai and Portuguese language translations.
+
 Mon, Jan 4, 2010
 ---------------------------------------------------------------------
 - Implemented REST API for fetching asset notes (thanks, Adrian!)

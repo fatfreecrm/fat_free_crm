@@ -40,7 +40,9 @@ p.flash_exception {
   font-size: 14px;
   margin: 50px auto;
   padding: 50px;
-  width: 450px; }
+  width: 450px;
+  -moz-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999;
+  -webkit-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999; }
 
 div.auto_complete {
   background: white;

@@ -184,7 +184,7 @@ pt-BR:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: Exibir atividades em {{models}} feitas por {{user}} no(s) último(s) {{period}}
+  activity_options: Exibir atividades em {{models}} feitas por {{user}} no(s) último(s) {{period}}.
   option_after: depois
   option_all: todos
   option_all_users: todos os usuários
@@ -480,6 +480,7 @@ pt-BR:
   could_not_find: "{{value}} não encontrado. Sinta-se livre para"
   could_not_find_matching: "Couldn't find {{value}} matching"
   create_new: cria um(a) novo(a)
+  select_existing: selecione existentes
   delete: Remover
   edit: Editar
   items_total: '{{count}} total.'

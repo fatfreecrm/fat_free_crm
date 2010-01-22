@@ -184,7 +184,7 @@ en-US:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}
+  activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}.
   option_after: after
   option_all: all
   option_all_users: all users
@@ -417,7 +417,7 @@ en-US:
   completed_tab: Completed
   completed_tasks: Completed Tasks
   create_task: Create Task
-  create_task_small: create a new task
+  create_task_small: create new task
   due: Due
   feel_free: Feel free to
   move_to: move to
@@ -479,7 +479,8 @@ en-US:
   copy_permissions: Copy {{value}} permissions
   could_not_find: "Couldn't find {{value}}. Feel free to"
   could_not_find_matching: "Couldn't find {{value}} matching"
-  create_new: create a new
+  create_new: create new
+  select_existing: select existing
   delete: Delete
   edit: Edit
   items_total: '{{count}} total.'
