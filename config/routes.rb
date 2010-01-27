@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :member => { :avatar => :get, :upload_avatar => :put, :password => :get, :change_password => :put }
   map.resources :passwords
   map.resources :comments
+  map.resources :emails
   map.resources :tasks,         :has_many => :comments, :member => { :complete => :put }
   map.resources :accounts,      :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }
   map.resources :campaigns,     :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }

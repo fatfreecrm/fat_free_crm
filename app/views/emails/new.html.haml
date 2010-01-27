@@ -1,0 +1,10 @@
+%h1 New email
+
+= error_messages_for :email 
+
+- form_for(@email) do |f| 
+
+  %p
+    = f.submit "Create"
+    
+= link_to 'Back', emails_path 
