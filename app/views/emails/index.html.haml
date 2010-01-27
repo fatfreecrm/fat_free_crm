@@ -1,0 +1,13 @@
+%h1 Listing emails
+
+%table
+  %tr
+
+- for email in @emails
+  %tr
+  
+    %td= link_to 'Show', email_path(email)
+    %td= link_to 'Edit', edit_email_path(email)
+    %td= link_to 'Destroy', email_path(email), :confirm => 'Are you sure?', :method => :delete, :confirm => "Are you sure?", :method => :delete
+    
+= link_to 'New email', new_email_path 
