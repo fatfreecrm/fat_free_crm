@@ -79,6 +79,12 @@ class CommentsController < ApplicationController
   def edit
     @comment = Comment.find(params[:id])
 
+    if @comment.commentable
+      @comment.commentable_type.constantize.my(@current_user).find(@comment.commentable.id)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
+
   rescue ActiveRecord::RecordNotFound # Kicks in if commentable asset was not found.
     respond_to_related_not_found(params[:comment][:commentable_type].downcase, :js, :xml)
   end
@@ -113,20 +119,21 @@ class CommentsController < ApplicationController
   # PUT /comments/1
   # PUT /comments/1.xml                                          not implemened
   #----------------------------------------------------------------------------
-  # def update
-  #   @comment = Comment.find(params[:id])
-  # 
-  #   respond_to do |format|
-  #     if @comment.update_attributes(params[:comment])
-  #       flash[:notice] = 'Comment was successfully updated.'
-  #       format.html { redirect_to(@comment) }
-  #       format.xml  { head :ok }
-  #     else
-  #       format.html { render :action => "edit" }
-  #       format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
-  #     end
-  #   end
-  # end
+  def update
+    @comment = Comment.find(params[:id])
+  
+    respond_to do |format|
+      if @comment.update_attributes(params[:comment])
+        format.js
+        format.xml  { head :ok }
+      else
+        format.js
+        format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
+      end
+    end
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
+  end
 
   # DELETE /comments/1
   # DELETE /comments/1.xml                                      not implemented
