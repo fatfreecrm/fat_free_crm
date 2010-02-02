@@ -59,6 +59,7 @@ class CommentsController < ApplicationController
   def new
     @comment = Comment.new
     @commentable = extract_commentable_name(params)
+
     if @commentable
       update_commentable_session
       @commentable.classify.constantize.my(@current_user).find(params[:"#{@commentable}_id"])
@@ -73,11 +74,14 @@ class CommentsController < ApplicationController
     respond_to_related_not_found(@commentable, :js)
   end
 
-  # GET /comments/1/edit                                        not implemented
+  # GET /comments/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
-  # def edit
-  #   @comment = Comment.find(params[:id])
-  # end
+  def edit
+    @comment = Comment.find(params[:id])
+
+  rescue ActiveRecord::RecordNotFound # Kicks in if commentable asset was not found.
+    respond_to_related_not_found(params[:comment][:commentable_type].downcase, :js, :xml)
+  end
 
   # POST /comments
   # POST /comments.xml                                                     AJAX
@@ -127,15 +131,22 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.xml                                      not implemented
   #----------------------------------------------------------------------------
-  # def destroy
-  #   @comment = Comment.find(params[:id])
-  #   @comment.destroy
-  # 
-  #   respond_to do |format|
-  #     format.html { redirect_to(comments_url) }
-  #     format.xml  { head :ok }
-  #   end
-  # end
+  def destroy
+    @comment = Comment.find(params[:id])
+   
+    respond_to do |format|
+      if @comment.destroy
+        format.js   # destroy.js.rjs
+        format.xml  { render :xml => @comment, :status => :deleted, :location => @comment }
+      else
+        format.js   # destroy.js.rjs
+        format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
+      end
+    end     
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)    
+  end
 
   private
   #----------------------------------------------------------------------------
@@ -152,4 +163,5 @@ class CommentsController < ApplicationController
       session["#{@commentable}_new_comment"] = true
     end
   end
+  
 end
