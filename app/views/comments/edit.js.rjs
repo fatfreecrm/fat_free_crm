@@ -1,0 +1,12 @@
+id = dom_id(@comment)
+
+if params[:cancel] == "true" # <----------------- Hide [Edit Comment]
+
+  page[id].replace :partial => "common/comment", :collection => [ @comment ]
+
+else # <----------------------------------------- Show [Edit Comment] form.
+
+  page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+  page[id].replace_html :partial => "common/edit_comment", :locals => { :commentable => @comment.commentable }
+
+end
