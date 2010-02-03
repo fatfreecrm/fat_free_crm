@@ -39,7 +39,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @account = Account.my(@current_user).find(params[:id])
-    @stage = Setting.unroll(:default_access)
+    @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
 
     respond_to do |format|
