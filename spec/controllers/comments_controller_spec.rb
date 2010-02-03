@@ -113,7 +113,6 @@ describe CommentsController do
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id
         flash[:warning].should_not == nil
-        #response.body.should == %Q(window.location.href = "/#{asset.to_s.pluralize}";)
         response.body.should ==  %Q(try {\nwindow.location.href = \"/#{asset.to_s.pluralize}\";\n} catch (e) { alert('RJS error:\\n\\n' + e.toString()); alert('window.location.href = \\\"/#{asset.to_s.pluralize}\\\";'); throw e })
       end
 
@@ -123,7 +122,6 @@ describe CommentsController do
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id
         flash[:warning].should_not == nil
-        #response.body.should == %Q(window.location.href = "/#{asset.to_s.pluralize}";)
         response.body.should ==  %Q(try {\nwindow.location.href = \"/#{asset.to_s.pluralize}\";\n} catch (e) { alert('RJS error:\\n\\n' + e.toString()); alert('window.location.href = \\\"/#{asset.to_s.pluralize}\\\";'); throw e })
       end
     end
@@ -140,7 +138,6 @@ describe CommentsController do
         Comment.stub!(:new).and_return(@comment)
 
         xhr :get, :edit, :id => 42
-        #assigns[:commentable].should == @asset
         assigns[:comment].should == @comment
         response.should render_template("comments/edit")
       end  
