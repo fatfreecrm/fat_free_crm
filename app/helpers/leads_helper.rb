@@ -70,4 +70,14 @@ module LeadsHelper
     check_box_tag("status[]", status, checked, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
   end
 
+  # Returns default permissions intro for leads.
+  #----------------------------------------------------------------------------
+  def get_lead_default_permissions_intro(access)
+    case access
+      when "Private" then t(:lead_permissions_intro_private, t(:opportunity_small))
+      when "Public"  then t(:lead_permissions_intro_public,  t(:opportunity_small))
+      when "Shared"  then t(:lead_permissions_intro_shared,  t(:opportunity_small))
+    end
+  end
+
 end

@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @account = Account.new(:user => @current_user)
+    @account = Account.new(:user => @current_user, :access => Setting.default_access)
     @users = User.except(@current_user).all
     if params[:related]
       model, id = params[:related].split("_")

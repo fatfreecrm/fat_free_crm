@@ -265,7 +265,6 @@ es-ES:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Cuenta
-  account_permissions_intro: Por defecto sólo usted tendrá acceso a la cuenta. Puede cambiar los permisos más tarde.
   account_small: cuenta
   accounts: Cuentas
   accounts_options: Opciones de Cuenta
@@ -346,8 +345,10 @@ es-ES:
   extra_info_small: éste contacto 
   facebook: Facebook
   linked_in: LinkedIn
-  myself: Mí 
-  permissions_intro: Por defecto sólo usted tendrá acceso a {{value}}. Puede cambiar los permisos más tarde.
+  myself: Mí
+  permissions_intro_private: Por defecto sólo usted tendrá acceso a {{value}}. Puede cambiar los permisos más tarde.  
+  permissions_intro_public: Por defecto todos los usuarios tendrán acceso a {{value}}. Puede cambiar los permisos más tarde.
+  permissions_intro_shared: Por defecto sólo los usuarios seleccionados tendrán acceso a {{value}}. Puede cambiar los permisos más tarde.  
   referred_by: Referencias
   referred_by_small: referencias
   save_contact: Guardar contacto
@@ -366,7 +367,9 @@ es-ES:
   create_opp_for_contact: De forma opcional puede crear una oportunidad para el contacto {{value}} atribuyéndole un nombre, su estado actual, una fecha de cierre estimada, la probabilidad de ventas, valor de la transacción y descuento ofertado.
   lead: Iniciativa
   lead_info_small: contacto de iniciativa
-  lead_permissions_intro: Por defecto los permisos se copiarán de la campaña o estarán configurados de forma privada. Puede cambiar los permisos de la iniciativa más tarde.
+  lead_permissions_intro_private: Por defecto los permisos se copiarán de la campaña o estarán configurados de forma privada. Puede cambiar los permisos de la iniciativa más tarde.
+  lead_permissions_intro_public: Por defecto los permisos se copiarán de la campaña o estarán configurados de forma pública. Puede cambiar los permisos de la iniciativa más tarde.  
+  lead_permissions_intro_shared: Por defecto los permisos se copiarán de la campaña o estarán compartidos con los usuarios seleccionados. Puede cambiar los permisos de la iniciativa más tarde.  
   lead_small: iniciativa
   lead_status_small: estado de la iniciativa
   lead_summary: Resumen de iniciativas
