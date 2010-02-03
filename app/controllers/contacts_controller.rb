@@ -55,7 +55,7 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @contact  = Contact.new(:user => @current_user)
+    @contact  = Contact.new(:user => @current_user, :access => Setting.default_access)
     @account  = Account.new(:user => @current_user)
     @users    = User.except(@current_user).all
     @accounts = Account.my(@current_user).all(:order => "name")

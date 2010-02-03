@@ -281,5 +281,15 @@ module ApplicationHelper
     filename = partial.sub(%r{/([^/]*)$}, '/_\\1') + extension
     FileTest.exist?(File.join(RAILS_ROOT, 'app', 'views', filename))
   end
+  
+  # Returns default permissions intro
+  #----------------------------------------------------------------------------
+  def get_default_permissions_intro(access, text)
+    case access
+      when "Private" then t(:permissions_intro_private, text)
+      when "Public" then t(:permissions_intro_public, text)
+      when "Shared" then t(:permissions_intro_shared, text)
+    end
+  end  
 
 end

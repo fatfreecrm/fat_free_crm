@@ -56,7 +56,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    @campaign = Campaign.new(:user => @current_user)
+    @campaign = Campaign.new(:user => @current_user, :access => Setting.default_access)
     @users = User.except(@current_user).all
     if params[:related]
       model, id = params[:related].split("_")

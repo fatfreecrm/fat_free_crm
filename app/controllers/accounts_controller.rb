@@ -39,7 +39,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @account = Account.my(@current_user).find(params[:id])
-    @stage = Setting.unroll(:opportunity_stage)
+    @stage = Setting.unroll(:default_access)
     @comment = Comment.new
 
     respond_to do |format|
@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @account = Account.new(:user => @current_user)
+    @account = Account.new(:user => @current_user, :access => Setting.default_access)
     @users = User.except(@current_user).all
     if params[:related]
       model, id = params[:related].split("_")

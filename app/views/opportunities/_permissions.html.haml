@@ -3,7 +3,7 @@
 = subtitle :opportunity_permissions, collapsed, t(:permissions)
 .section
   %small#opportunity_permissions_intro{ hidden_if(!collapsed) }
-    = t(:permissions_intro, t(:opportunity_small))
+    = get_default_permissions_intro(@opportunity.access, t(:opportunity_small)) unless edit
   #opportunity_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide();"
