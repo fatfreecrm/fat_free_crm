@@ -273,6 +273,7 @@ en-US:
   intro: You can add {{value}} information later.
   mobile_small: mobile
   open_in_window: Open {{value}} in a new window
+  mail_to: Mail to {{value}}
   phone_small: phone
   phone_toll_free: Toll-free phone 
   keep_private: Keep it private, do not share with others
@@ -470,6 +471,7 @@ en-US:
   #----------------------------------------------------------------------------
   add_note: Add Note
   add_note_help: Add a new note...
+  edit_note: Edit Note
   added_ago: added {{value}} ago
   added_by: added {{time_ago}} ago by {{user}} 
   back: Back

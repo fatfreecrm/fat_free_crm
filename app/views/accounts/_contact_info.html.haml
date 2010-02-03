@@ -12,13 +12,17 @@
           = f.text_field :website, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
+          .label.top Email:
+          = f.text_field :email, :style => "width:240px" 
+      %tr        
+        %td{ :valign => :top }
+          .label #{t :phone}:
+          = f.text_field :phone, :style => "width:240px"        
+        %td= spacer
+        %td{ :valign => :top }
           .label.top #{t :phone_toll_free}:
           = f.text_field :toll_free_phone, :style => "width:240px"
       %tr
-        %td{ :valign => :top }
-          .label #{t :phone}:
-          = f.text_field :phone, :style => "width:240px"
-        %td= spacer
         %td{ :valign => :top }
           .label #{t :fax}:
           = f.text_field :fax, :style => "width:240px"
