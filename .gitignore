@@ -8,6 +8,7 @@ public/avatars/**/*
 public/javascripts/cache/*.js
 public/stylesheets/cache/*.css
 nbproject
+.idea/
 .DS_Store
 *~
 *.swp
