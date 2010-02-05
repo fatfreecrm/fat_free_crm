@@ -250,7 +250,7 @@ ru:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Забыли пароль?
+  forgot_password: Забыли пароль
   login: Вход
   no_account: Не зарегистрированы?
   remember_me: Запомнить
@@ -456,6 +456,7 @@ ru:
   action_rescheduled: перенес(ла)
   action_updated: изменил(а)
   action_viewed: посмотрел(а)
+  action_won: выиграл(а)
   no_activity_records: Недавних действий не найдено.
   recent_activity: Недавние Действия
   recent_activity_options: Опции для Недавних Действий
@@ -547,6 +548,7 @@ ru:
   user_suspended: Заблокирован
   user_suspended_on: заблокирован(а) {{value}}
   users: Пользователи
+  users_small: пользователи
 
   pluralize:
     contact:

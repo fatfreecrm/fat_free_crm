@@ -250,7 +250,7 @@ en-US:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Forgot Password?
+  forgot_password: Forgot Password
   login: Login
   no_account: Do not have an account?
   remember_me: Remember Me
@@ -456,6 +456,7 @@ en-US:
   action_rescheduled: rescheduled
   action_updated: updated
   action_viewed: viewed
+  action_won: won
   no_activity_records: No activity records found.
   recent_activity: Recent Activity
   recent_activity_options: Recent Activity Options
@@ -547,6 +548,7 @@ en-US:
   user_suspended: Suspended
   user_suspended_on: suspended on {{value}}
   users: Users
+  users_small: users
 
   pluralize:
     contact: 

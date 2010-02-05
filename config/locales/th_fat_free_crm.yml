@@ -456,6 +456,7 @@ th:
   action_rescheduled: ใส่กำหนดการ
   action_updated: แก้ไข
   action_viewed: แสดง
+  action_won: won # TODO
   no_activity_records: ไม่พบบันทึกกิจกรรม
   recent_activity: กิจกรรมล่าสุด
   recent_activity_options: กิจกรรมล่าสุดเพิ่มเติม
@@ -547,6 +548,7 @@ th:
   user_suspended: ระงับผู้ใช้
   user_suspended_on: ระงับตั้งแต่ {{value}}
   users: ผู้ใช้
+  users_small: ผู้ใช้ # TODO
 
   pluralize:
     contact:

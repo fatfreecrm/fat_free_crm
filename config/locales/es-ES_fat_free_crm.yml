@@ -255,7 +255,7 @@ es-ES:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: ¿Ha olvidado la contraseña?
+  forgot_password: ¿Ha olvidado la contraseña
   login: Iniciar sesión
   no_account: ¿No tiene una cuenta?
   remember_me: Recordar mis datos
@@ -461,6 +461,7 @@ es-ES:
   action_rescheduled: modificó fecha de finalización de 
   action_updated: actualizó
   action_viewed: vió
+  action_won: conseguida
   no_activity_records: Ningún registro encontrado.
   recent_activity: Actividad reciente
   recent_activity_options: Opciones de actividad reciente
@@ -552,6 +553,7 @@ es-ES:
   user_suspended: Suspendido
   user_suspended_on: suspendido el {{value}}
   users: Usuarios
+  users_small: usuarios
 
   pluralize:
     contact: 
