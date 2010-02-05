@@ -121,7 +121,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @comment = Comment.find(params[:id])
-  
+
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
         format.js
@@ -140,7 +140,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @comment = Comment.find(params[:id])
-   
+
     respond_to do |format|
       if @comment.destroy
         format.js   # destroy.js.rjs
@@ -149,7 +149,7 @@ class CommentsController < ApplicationController
         format.js   # destroy.js.rjs
         format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
       end
-    end     
+    end
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:html, :js, :xml)    

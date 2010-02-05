@@ -470,6 +470,7 @@ pt-BR:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Adicionar nota
+  save_note: Salvar nota
   add_note_help: Adicionar nova nota...
   added_ago: adicionado(a) há {{value}} atrás
   added_by: adicionado(a) há {{time_ago}} atrás por {{user}} 

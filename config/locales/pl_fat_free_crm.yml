@@ -472,6 +472,7 @@ pl:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Dodaj notatkę
+  save_note: Zapisz notatkę
   add_note_help: Dodaj nową notatkę...
   added_ago: dodano {{value}} temu
   added_by: dodano {{time_ago}} temu przez {{user}}

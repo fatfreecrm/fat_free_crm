@@ -8,7 +8,7 @@
       = hidden_field_tag "comment[commentable_type]", class_name.capitalize
       = f.text_area :comment
       %div{:style => "padding:6px 0px 0px 40px;"}
-        = f.submit t :add_note
+        = f.submit t(:add_note)
         #{t :or}
         = link_to_remote(t(:cancel), :url => send("new_#{class_name}_comment_url", commentable), :method => :get, :with => "'cancel=true'")
   #ask{ hidden_if(session["#{class_name}_new_comment"])}

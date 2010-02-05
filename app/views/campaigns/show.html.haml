@@ -8,8 +8,8 @@
 
 %div#edit_campaign{ hidden }
 
-= render :partial => "common/new_comment", :locals => { :commentable => @campaign }
-= render :partial => "common/comment", :collection => @campaign.comments
+= render :partial => "comments/new", :locals => { :commentable => @campaign }
+= render :partial => "comments/comment", :collection => @campaign.comments
 
 -#-----------------------------------------------------------------------------
 %br

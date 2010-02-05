@@ -470,6 +470,7 @@ en-US:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Add Note
+  save_note: Save Note
   add_note_help: Add a new note...
   added_ago: added {{value}} ago
   added_by: added {{time_ago}} ago by {{user}} 

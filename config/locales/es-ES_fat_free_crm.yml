@@ -475,6 +475,7 @@ es-ES:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Añadir Nota
+  save_note: Guardar Nota
   add_note_help: Añadir una nueva nota...
   added_ago: añadida hace {{value}}
   added_by: añadida hace {{time_ago}} por {{user}} 

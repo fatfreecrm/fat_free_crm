@@ -145,17 +145,12 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def highlightable(id = nil, use_hide_and_show = false)
-    if use_hide_and_show
-      show = (id ? "$('#{id}').show()" : "")
-      hide = (id ? "$('#{id}').hide()" : "")
-    else
-      show = (id ? "$('#{id}').style.visibility='visible'" : "")
-      hide = (id ? "$('#{id}').style.visibility='hidden'" : "")
-    end
-    {
-      :onmouseover => "this.style.background='seashell'; #{show}",
-      :onmouseout  => "this.style.background='white'; #{hide}"
+  def highlightable(id = nil, color = {})
+    color = { :on => "seashell", :off => "white" }.merge(color)
+    show = (id ? "$('#{id}').style.visibility='visible'" : "")
+    hide = (id ? "$('#{id}').style.visibility='hidden'" : "")
+    { :onmouseover => "this.style.background='#{color[:on]}'; #{show}",
+      :onmouseout  => "this.style.background='#{color[:off]}'; #{hide}"
     }
   end
 

@@ -470,6 +470,7 @@ th:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: เพิ่มบันทึก
+  save_note: Save Note # TODO
   add_note_help: Add a new note...
   added_ago: สร้าง {{value}} ที่ผ่านมา
   added_by: สร้าง {{time_ago}} ที่ผ่านมา โดย {{user}}

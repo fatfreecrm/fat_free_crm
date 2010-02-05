@@ -113,7 +113,8 @@ describe CommentsController do
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id
         flash[:warning].should_not == nil
-        response.body.should ==  %Q(try {\nwindow.location.href = \"/#{asset.to_s.pluralize}\";\n} catch (e) { alert('RJS error:\\n\\n' + e.toString()); alert('window.location.href = \\\"/#{asset.to_s.pluralize}\\\";'); throw e })
+        response.body.should =~ %r(window.location.href)m
+        response.body.should =~ %r(#{asset.to_s.pluralize})m
       end
 
       it "should redirect to #{asset}'s index page with the message if the #{asset} got protected" do
@@ -122,7 +123,8 @@ describe CommentsController do
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id
         flash[:warning].should_not == nil
-        response.body.should ==  %Q(try {\nwindow.location.href = \"/#{asset.to_s.pluralize}\";\n} catch (e) { alert('RJS error:\\n\\n' + e.toString()); alert('window.location.href = \\\"/#{asset.to_s.pluralize}\\\";'); throw e })
+        response.body.should =~ %r(window.location.href)m
+        response.body.should =~ %r(#{asset.to_s.pluralize})m
       end
     end
   end
@@ -140,7 +142,7 @@ describe CommentsController do
         xhr :get, :edit, :id => 42
         assigns[:comment].should == @comment
         response.should render_template("comments/edit")
-      end  
+      end
     end
 
   end
@@ -231,7 +233,7 @@ describe CommentsController do
   # DELETE /comments/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-    
+
     describe "AJAX request" do
       describe "with valid params" do
         COMMENTABLE.each do |asset|
@@ -239,16 +241,16 @@ describe CommentsController do
             @asset = Factory(asset)
             @comment = Factory.create(:comment, :commentable => @asset, :user => @current_user)
             Comment.stub!(:new).and_return(@comment)
-  
+
             xhr :delete, :destroy, :id => @comment.id
-    
+
             lambda { @comment.reload }.should raise_error(ActiveRecord::RecordNotFound)
             response.should render_template("comments/destroy")
           end
         end
       end
     end
-    
+
   end
 
 end
