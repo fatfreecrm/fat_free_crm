@@ -259,7 +259,6 @@ en-US:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Account
-  account_permissions_intro: By default only you will have access to the account. You can change account permissions later.
   account_small: account
   accounts: Accounts
   accounts_options: Accounts Options
@@ -273,6 +272,7 @@ en-US:
   intro: You can add {{value}} information later.
   mobile_small: mobile
   open_in_window: Open {{value}} in a new window
+  mail_to: Mail to {{value}}
   phone_small: phone
   phone_toll_free: Toll-free phone 
   keep_private: Keep it private, do not share with others
@@ -341,7 +341,9 @@ en-US:
   facebook: Facebook
   linked_in: LinkedIn
   myself: Myself
-  permissions_intro: By default only you will have access to the {{value}}. You can change permissions later.
+  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.  
+  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
   referred_by: Referred by
   referred_by_small: referred by
   save_contact: Save Contact
@@ -360,7 +362,9 @@ en-US:
   create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
   lead: Lead
   lead_info_small: lead contact
-  lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
   lead_small: lead
   lead_status_small: lead status
   lead_summary: Lead Summary
@@ -470,6 +474,7 @@ en-US:
   #----------------------------------------------------------------------------
   add_note: Add Note
   add_note_help: Add a new note...
+  edit_note: Edit Note
   added_ago: added {{value}} ago
   added_by: added {{time_ago}} ago by {{user}} 
   back: Back

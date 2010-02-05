@@ -57,6 +57,7 @@ Factory.define :account do |a|
   a.deleted_at          nil
   a.updated_at          { Factory.next(:time) }
   a.created_at          { Factory.next(:time) }
+  a.email               { Faker::Internet.email }  
 end
 
 #----------------------------------------------------------------------------

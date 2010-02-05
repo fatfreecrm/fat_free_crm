@@ -55,7 +55,7 @@ class LeadsController < ApplicationController
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
-    @lead = Lead.new
+    @lead = Lead.new(:access => Setting.default_access)
     @users = User.except(@current_user).all
     @campaigns = Campaign.my(@current_user).all(:order => "name")
     if params[:related]
