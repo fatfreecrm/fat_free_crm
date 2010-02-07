@@ -11,5 +11,6 @@
       = link_to_cancel edit_task_path(@task)
       == #{t :or} #{t :move_to}
       - [ "ASAP", "Today", "Tomorrow", "This week", "Next week", "Later" ].each do |day|
-        = link_to(day, "#", :onclick => %Q/crm.reschedule_task(#{@task.id}, "due_#{day.downcase.sub(" ", "_")}")/)
+        - due_day = "due_#{day.snakecase}"
+        = link_to(t(due_day.to_sym), "#", :onclick => %Q/crm.reschedule_task(#{@task.id}, "#{due_day}")/)
         = " | " if day != "Later"
