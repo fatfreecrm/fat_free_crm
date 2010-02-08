@@ -4,9 +4,38 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sun, Feb 7, 2010
+---------------------------------------------------------------------
+- Updated Russian locale files (thanks, Roman!)
+- Updated task editing to support localization (thanks, Yura!)
+- Added email attribute to Accounts -- run rake db:migrate (thanks, Jose Luis!)
+- Updated README to mention http://demo.fatfreecrm.com
+
+Thu, Feb 4, 2010
+---------------------------------------------------------------------
+- Fixed few i18n omissions in locale files.
+- Added support for editing and deleting notes (thanks, Jose Luis!)
+
+Tue, Feb 2, 2010
+---------------------------------------------------------------------
+- Added Polish translation (thanks, Kamil!)
+
+Wed, Jan 27, 2010
+---------------------------------------------------------------------
+- Fixed task time zone specs (thanks, Tom!)
+
+Mon, Jan 25, 2010
+---------------------------------------------------------------------
+- Small tweak to better support Heroku deployments (thanks, Ryan!)
+
+Tue, Jan 19, 2010
+---------------------------------------------------------------------
+- Updated Russian translation (thanks, Roman!)
+
 Tue, Jan 12, 2010
 ---------------------------------------------------------------------
 - Pulled remaining English strings out of JavaScript (thanks, Gavin!)
+- Added missing message to locale files.
 
 Mon, Jan 11, 2010
 ---------------------------------------------------------------------

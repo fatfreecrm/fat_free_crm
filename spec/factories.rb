@@ -49,6 +49,7 @@ Factory.define :account do |a|
   a.name                { Faker::Company.name }
   a.access              "Public"
   a.website             { Factory.next(:website) }
+  a.email               { Faker::Internet.email }
   a.toll_free_phone     { Faker::PhoneNumber.phone_number }
   a.phone               { Faker::PhoneNumber.phone_number }
   a.fax                 { Faker::PhoneNumber.phone_number }

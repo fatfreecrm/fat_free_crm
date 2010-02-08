@@ -22,6 +22,7 @@ Here are the steps to get Fat Free CRM up and running on your system.
 === Resources
 
 * Home page: http://www.fatfreecrm.com
+* Online demo: http://demo.fatfreecrm.com
 * Project page: http://github.com/michaeldv/fat_free_crm/tree/master
 * Features and bugs: http://fatfreecrm.lighthouseapp.com
 * Twitter commit updates: http://twitter.com/fatfreecrm
@@ -63,8 +64,9 @@ existing data.
    $ rake crm:demo:load
 
 Among other things the demo generator creates 8 sample user records with the
-following usernames: +aaron+, +ben+, +cindy+, +dan+, +emily+, +frank+, +george+,
-and +heather+. You can login with any of these names using the name as password.
+following usernames: +aaron+, +ben+, +cindy+, +dan+, +elizabeth+, +frank+, +george+,
+and +heather+. You can log in with any of these names using the name as password.
+The demo site at http://demo.fatfreecrm.com provides access as a sample user as well.
 
 You can reset the database and reload demo data at any time by using:
 
