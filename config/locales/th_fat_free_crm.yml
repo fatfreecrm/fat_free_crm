@@ -551,6 +551,8 @@ th:
   users: ผู้ใช้
   users_small: ผู้ใช้ # TODO
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact:
       one: 'ผู้ติดต่อหนึ่งคน'
@@ -567,3 +569,16 @@ th:
     login:
       one: 'เข้าสู่ระบบหนึ่งครั้ง'
       other: 'เข้าสู่ระบบ {{count}} ครั้ง'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"
+      

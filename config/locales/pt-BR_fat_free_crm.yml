@@ -551,6 +551,8 @@ pt-BR:
   users: Usuários
   users_small: usuários
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact: 
       one: '1 contato'
@@ -567,3 +569,15 @@ pt-BR:
     login:
       one: '1 login'
       other: '{{count}} logins'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"

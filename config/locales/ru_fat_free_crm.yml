@@ -551,6 +551,8 @@ ru:
   users: Пользователи
   users_small: пользователи
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact:
       zero: '0 контактов'
@@ -581,3 +583,15 @@ ru:
       few: 'заходил(а) {{count}} раза'
       many: 'заходил(а) {{count}} раз'
       other: 'заходил(а) {{count}} раз'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"

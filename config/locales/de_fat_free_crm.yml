@@ -229,3 +229,20 @@ de:
   # models/account
   #----------------------------------------------------------------------------
   missing_account_name: "^Bitte Namen der Firma angeben."
+
+  # Pluralizations.
+  #----------------------------------------------------------------------------
+  pluralize:
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"
+  

@@ -172,7 +172,7 @@ pl:
   msg_goodbye: Zostałeś wylogowany. Dziękujemy za używanie Fat Free CRM!
   msg_invalid_password: "^Proszę prawidłowo podać aktualne hasło"
   msg_invalig_login: Nieprawidłowy użytkownik lub hasło.
-  msg_last_login: "Ostatnio zalogowany: {{value}}."
+  msg_last_login: "Ostatnio zalogowany {{value}}."
   msg_login_needed: Musisz być zalogowany, by mieć dostęp do tej strony.
   msg_logout_needed: Musisz być wylogowany, by mieć dostęp do tej strony.
   msg_password_changed: Twoje hasło zostało zmienione.
@@ -553,6 +553,8 @@ pl:
   users: Użytkownicy
   users_small: użytkowników
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact: 
       one: '1 kontakt'
@@ -573,3 +575,16 @@ pl:
       one: '1 logowanie'
       few: '{{count}} logowania'
       other: '{{count}} logowań'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%d.%m.%Y"
+      mmdd: "%e %b"
+      mmddyy: "%e %b %Y"
+
+  time:
+    formats:
+      mmddhhss: "%e %b o %H:%M"
+      
