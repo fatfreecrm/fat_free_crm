@@ -252,7 +252,7 @@ pl:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Zapomniałeś hasło
+  forgot_password: Zapomniałem hasła
   login: Zaloguj
   no_account: Czy posiadasz konto?
   remember_me: Pamiętaj mnie na tym komputerze
@@ -458,7 +458,7 @@ pl:
   action_rescheduled: zmienił/a termin
   action_updated: zmienił/a
   action_viewed: oglądał/a
-  action_won: wygral/a
+  action_won: wygrał/a
   no_activity_records: Brak czynności dla tych ustawień.
   recent_activity: Ostatnie czynności
   recent_activity_options: Opcje ostatnich czynności
