@@ -34,6 +34,7 @@
 #  deleted_at       :datetime
 #  created_at       :datetime
 #  updated_at       :datetime
+#  email            :string(64)
 #
 class Account < ActiveRecord::Base
   belongs_to  :user
