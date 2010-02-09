@@ -188,6 +188,7 @@ pl:
   #----------------------------------------------------------------------------
   "option_amount*probability": kwoty ważonej
   activity_options: Pokaż {{models}} zmieniane przez {{user}} przez ostatnie {{period}}.
+  all_users: wszystkich
   option_after: po nazwisku
   option_all: wszystko
   option_all_users: wszystkich
@@ -596,4 +597,3 @@ pl:
   time:
     formats:
       mmddhhss: "%e %b o %H:%M"
-      
