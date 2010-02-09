@@ -72,6 +72,7 @@ en-US:
   due_this_week: This Week
   due_next_week: Next Week
   due_later: Sometime Later
+  due_specific_date: On Specific Date...
 
   completed_today: Today
   completed_yesterday: Yesterday
