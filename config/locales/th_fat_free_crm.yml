@@ -72,6 +72,7 @@ th:
   due_this_week: "อาทิตย์นี้"
   due_next_week: "อาทิตย์หน้า"
   due_later: "วันหลัง"
+  due_specific_date: On Specific Date... # TODO
 
   completed_today: "วันนี้"
   completed_yesterday: "เมื่อวานนี้"

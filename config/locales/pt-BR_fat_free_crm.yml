@@ -72,6 +72,7 @@ pt-BR:
   due_this_week: Esta semana
   due_next_week: Próxima semana
   due_later: Depois
+  due_specific_date: Em Data Específica... # ?!
 
   completed_today: Hoje
   completed_yesterday: Ontem

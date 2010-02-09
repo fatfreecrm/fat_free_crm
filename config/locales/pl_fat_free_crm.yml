@@ -74,6 +74,7 @@ pl:
   due_this_week: W tym tygodniu
   due_next_week: w nast. tygodniu
   due_later: Później
+  due_specific_date: Na Konkretnej Daty... # ?!
 
   completed_today: Dziś
   completed_yesterday: Wczoraj
