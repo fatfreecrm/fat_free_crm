@@ -17,6 +17,7 @@
 #  deleted_at       :datetime
 #  created_at       :datetime
 #  updated_at       :datetime
+#  email            :string(64)
 #
 
 <%
@@ -44,4 +45,5 @@ account<%= i %>:
                      <%= addr2 %>
   created_at       : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at       : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
+  email            : info@<%= company.downcase.gsub(/\W/, "") %>.com
 <% end %>

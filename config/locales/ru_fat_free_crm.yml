@@ -72,6 +72,7 @@ ru:
   due_this_week: На этой неделе
   due_next_week: На следующей неделе
   due_later: Позже
+  due_specific_date: Конкретная дата 
 
   completed_today: Сегодня
   completed_yesterday: Вчера

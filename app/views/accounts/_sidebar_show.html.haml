@@ -3,15 +3,19 @@
   - if @account.website
     %div
       %b= link_to(truncate(@account.website, :length => 30), @account.website.to_url, :popup => true, :title => t(:open_in_window, @account.website))
+  - if @account.email
+    %div
+      %b= link_to(truncate(@account.email, :length => 30), "mailto:" << @account.email.to_s, :title => @account.email)
+
   %div
     - if @account.toll_free_phone
-      == #{t :phone_toll_free}: <b>#{@account.toll_free_phone}</b><br />
+      #{t :phone_toll_free}: <b>#{@account.toll_free_phone}</b><br />
 
     - if @account.phone
-      == #{t :phone}: <b>#{@account.phone}</b><br />
+      #{t :phone}: <b>#{@account.phone}</b><br />
 
     - if @account.fax
-      == #{t :fax}: <b>#{@account.fax}</b><br />
+      #{t :fax}: <b>#{@account.fax}</b><br />
 
   - if @account.billing_address
     %b #{t :billing_address}
