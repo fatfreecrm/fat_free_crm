@@ -84,12 +84,12 @@ pl:
 
   # Models/Activity.
   #----------------------------------------------------------------------------
-  one_hour: godzinę
-  one_day: dzień
-  two_days: dwa dni
-  one_week: tydzień
-  two_weeks: dwa tygodnie
-  one_month: miesiąc
+  one_hour: ostatnią godzinę
+  one_day: ostatni dzień
+  two_days: ostatnie dwa dni
+  one_week: ostatni tydzień
+  two_weeks: ostatnie dwa tygodnie
+  one_month: ostatni miesiąc
 
   # Model Validations.
   #----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ pl:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": kwoty ważonej
-  activity_options: Pokaż {{models}} zmieniane przez {{user}} przez ostatnie {{period}}.
+  activity_options: Pokaż {{models}} zmieniane przez {{user}} przez {{period}}.
   all_users: wszystkich
   option_after: po nazwisku
   option_all: wszystko
