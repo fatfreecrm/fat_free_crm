@@ -232,7 +232,7 @@ class LeadsController < ApplicationController
   # GET /leads/options                                                     AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @per_page = @current_user.pref[:leads_per_page] || Lead.per_page
       @outline  = @current_user.pref[:leads_outline]  || Lead.outline
       @sort_by  = @current_user.pref[:leads_sort_by]  || Lead.sort_by

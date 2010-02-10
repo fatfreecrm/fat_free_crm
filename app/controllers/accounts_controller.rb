@@ -159,7 +159,7 @@ class AccountsController < ApplicationController
   # GET /accounts/options                                                 AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @per_page = @current_user.pref[:accounts_per_page] || Account.per_page
       @outline  = @current_user.pref[:accounts_outline]  || Account.outline
       @sort_by  = @current_user.pref[:accounts_sort_by]  || Account.sort_by

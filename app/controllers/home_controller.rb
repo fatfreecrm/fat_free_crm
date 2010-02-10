@@ -31,7 +31,7 @@ class HomeController < ApplicationController
   # GET /home/options                                                      AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @asset = @current_user.pref[:activity_asset] || "all"
       @user = @current_user.pref[:activity_user] || "all users"
       @duration = @current_user.pref[:activity_duration] || "two_days"

@@ -160,7 +160,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns/options                                                 AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @per_page = @current_user.pref[:campaigns_per_page] || Campaign.per_page
       @outline  = @current_user.pref[:campaigns_outline]  || Campaign.outline
       @sort_by  = @current_user.pref[:campaigns_sort_by]  || Campaign.sort_by

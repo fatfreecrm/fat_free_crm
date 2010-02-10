@@ -1,6 +1,6 @@
 id = dom_id(@contact)
 
-if params[:cancel] == "true" # <----------------- Hide [Edit Contact]
+if params[:cancel].true?     # <----------------- Hide [Edit Contact]
 
   if called_from_landing_page?
     page.call "crm.flip_form", :edit_contact
@@ -23,7 +23,7 @@ else # <----------------------------------------- Show [Edit Contact] form.
     page.call "crm.hide_form", :create_contact    # Hide [Create Contact] form if any.
     page[id].replace_html :partial => "edit"      # Show [Edit Contact] form.
 
-  elsif params[:cancel] == "false"                # Called from title of the contact landing page...
+  elsif params[:cancel].false?                    # Called from title of the contact landing page...
     page[:edit_contact].replace_html :partial => "edit"
     page.call "crm.flip_form", :edit_contact
     page.call "crm.set_title", :edit_contact, "#{t :edit} #{h(@contact.full_name)}"

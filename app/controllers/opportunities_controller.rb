@@ -193,7 +193,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/options                                             AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @per_page = @current_user.pref[:opportunities_per_page] || Opportunity.per_page
       @outline  = @current_user.pref[:opportunities_outline]  || Opportunity.outline
       @sort_by  = @current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by

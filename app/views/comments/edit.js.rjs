@@ -1,6 +1,6 @@
 id = dom_id(@comment)
 
-if params[:cancel] == "true" # <----------------- Hide [Edit Comment]
+if params[:cancel].true?     # <----------------- Hide [Edit Comment]
 
   page[id].replace :partial => "comment", :collection => [ @comment ]
 

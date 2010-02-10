@@ -1,6 +1,6 @@
 id = dom_id(@user)
 
-if params[:cancel] == "true" # <----------------- Hide [Edit User]
+if params[:cancel].true?     # <----------------- Hide [Edit User]
   page[id].replace :partial => "user", :collection => [ @user ]
 
 else # <----------------------------------------  Show [Edit User] form.
