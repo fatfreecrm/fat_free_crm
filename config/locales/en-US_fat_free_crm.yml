@@ -427,6 +427,9 @@ en-US:
   feel_free: Feel free to
   move_to: move to
   no_tasks: "You don't have any {{value}} tasks"
+  no_tasks_pending: pending
+  no_tasks_assigned: assigned
+  no_tasks_completed: completed
   pending_tab: Pending
   pending_tasks: Pending Tasks
   related: 're:'
