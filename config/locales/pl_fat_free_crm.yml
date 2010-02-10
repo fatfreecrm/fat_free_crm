@@ -72,9 +72,9 @@ pl:
   due_today: Dziś
   due_tomorrow: Jutro
   due_this_week: W tym tygodniu
-  due_next_week: w nast. tygodniu
+  due_next_week: W nast. tygodniu
   due_later: Później
-  due_specific_date: Na Konkretnej Daty... # ?!
+  due_specific_date: Na dany dzień...
 
   completed_today: Dziś
   completed_yesterday: Wczoraj
@@ -345,10 +345,9 @@ pl:
   linked_in: LinkedIn
   myself: mnie
 
-  # TODO
-  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.  
-  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
+  permissions_intro_private: Domyślnie tylko Ty będziesz miał dostęp do {{value}}. Można to poźniej zmienić.
+  permissions_intro_public: Domyślnie wszyscy użytkownicy będą mieli dostęp do {{value}}. Można to poźniej zmienić.
+  permissions_intro_shared: Domyślnie tylko wybrani użytkownicy będą mieli dostęp do {{value}}. Można to poźniej zmienić.
 
   referred_by: Polecony przez
   referred_by_small: polecony przez
@@ -369,10 +368,9 @@ pl:
   lead: Lead
   lead_info_small: lead
 
-  # TODO
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
+  lead_permissions_intro_private: Domyślnie prawa dostępu zostaną skopiowane z kampanii albo tylko Ty będziesz miał dostęp. Możesz zmienić to później.
+  lead_permissions_intro_public: Domyślnie prawa dostępu zostaną skopiowane z kampanii albo wszyscy użytkownicy będą mieli dostęp. Możesz zmienić to później.
+  lead_permissions_intro_shared: Domyślnie prawa dostępu zostaną skopiowane z kampanii albo tylko wybrani użytkownicy będą mieli dostęp. Możesz zmienić to później.
 
   lead_small: lead
   lead_status_small: status leada
