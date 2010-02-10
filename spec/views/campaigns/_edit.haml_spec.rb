@@ -13,6 +13,7 @@ describe "/campaigns/_edit.html.haml" do
     template.should_receive(:render).with(hash_including(:partial => "campaigns/top_section"))
     template.should_receive(:render).with(hash_including(:partial => "campaigns/objectives"))
     template.should_receive(:render).with(hash_including(:partial => "campaigns/permissions"))
+    template.should_receive(:render).with(hash_including(:partial => "common/background_info"))
     render "/campaigns/_edit.html.haml"
 
     response.should have_tag("form[class=edit_campaign]") do

@@ -508,6 +508,8 @@ pt-BR:
   recent_items: Itens recentes
   search_assets: Buscar {{value}}
   time_ago: "há {{value}} atrás"
+  background_info: Informações gerais
+  background_info_intro: Info fundo opcional, você pode mudar depois.  
 
   # Views -> Layout.
   #----------------------------------------------------------------------------

@@ -35,6 +35,7 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #  email            :string(64)
+#  background_info  :string(255)
 #
 class Account < ActiveRecord::Base
   belongs_to  :user

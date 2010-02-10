@@ -510,6 +510,8 @@ pl:
   recent_items: Ostatnio oglądane
   search_assets: Przeszukaj {{value}}
   time_ago: "{{value}} temu"
+  background_info: Informacje ogólne
+  background_info_intro: Opcjonalnie info tło, będzie można później zmienić.
 
   # Views -> Layout.
   #----------------------------------------------------------------------------

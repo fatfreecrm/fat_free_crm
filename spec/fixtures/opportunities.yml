@@ -18,6 +18,7 @@
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  background_info :string(255)
 #
 
 <%
@@ -43,4 +44,5 @@ opportunity_<%= i %>:
   closes_on   : <%= Date.today + (rand(100) + 10).days %>
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
+  background_info : <%= Faker::Lorem.sentence %>
 <% end %>

@@ -45,5 +45,10 @@
         #{t :n_a}
     %tt #{t :campaign}:
 
+  - unless @lead.background_info.empty?
+    %br
+    %b #{t :background_info}
+    %div= auto_link(simple_format h(@lead.background_info))
+
   = hook(:show_lead_sidebar_bottom, self, :lead => @lead)
 

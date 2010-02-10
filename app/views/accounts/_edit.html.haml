@@ -6,6 +6,7 @@
     = render :partial => "accounts/top_section",  :locals => { :f => f, :edit => true }
     = render :partial => "accounts/contact_info", :locals => { :f => f, :edit => true }
     = render :partial => "accounts/permissions",  :locals => { :f => f, :edit => true }
+    = render :partial => "common/background_info",  :locals => { :f => f, :edit => true }    
     .buttonbar
       = f.submit t :save_account 
       #{t :or} 
