@@ -344,7 +344,12 @@ pl:
   facebook: Facebook
   linked_in: LinkedIn
   myself: mnie
-  permissions_intro: Domyślnie tylko Ty będziesz miał dostęp do {{value}}. Można to poźniej zmienić.
+
+  # TODO
+  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.  
+  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
+
   referred_by: Polecony przez
   referred_by_small: polecony przez
   save_contact: Zapisz kontakt
@@ -363,7 +368,12 @@ pl:
   create_opp_for_contact: Opcjonalnie możesz dodać szansę do {{value}} podając nazwę, aktualną fazę, zakładaną datę zamknięcia, prawdopodobieństwo sprzedaży, kwotę sprzedaży i oferowany rabat.
   lead: Lead
   lead_info_small: lead
-  lead_permissions_intro: Domyślnie prawa dostępu zostaną skopiowane z kampanii albo ustawione na Prywatny. Możesz zmienić to później.
+
+  # TODO
+  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
+
   lead_small: lead
   lead_status_small: status leada
   lead_summary: Lead
