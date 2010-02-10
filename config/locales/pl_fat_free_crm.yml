@@ -3,7 +3,7 @@ pl:
 
   # Generic terms.
   #----------------------------------------------------------------------------
-  all: Wszystko # not used?
+  all: Wszystko
   at: /
   here: tutaj
   no_button: 'Nie'
@@ -432,7 +432,7 @@ pl:
   due: Termin
   feel_free: Możesz
   move_to: przesuń na
-  no_tasks: "NIe masz żadnych zadań na {{value}}"
+  no_tasks: "Nie masz żadnych zadań na {{value}}"
   pending_tab: Otwarte
   pending_tasks: otwarte zadania
   related: 'pow.:'
@@ -500,7 +500,7 @@ pl:
   me: mnie
   n_a: N/A
   name: Nazwa
-  no_match: NIe znaleziono {{value}}
+  no_match: Nie znaleziono {{value}}
   no_recent_items: Nie ma nic do wyświetlenia.
   options: Opcje
   permissions: Dostęp
