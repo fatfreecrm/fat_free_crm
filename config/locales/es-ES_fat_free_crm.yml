@@ -506,8 +506,8 @@ es-ES:
   recent_items: Elementos recientes
   search_assets: Buscar {{value}}
   time_ago: "hace {{value}}"
-  background_info: Información previa
-  background_info_intro: Información previa opcional, puede modificarla más tarde.
+  background_info: Antecedentes
+  background_info_intro: Información de referencia previa opcional, puede modificarla más tarde.
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
