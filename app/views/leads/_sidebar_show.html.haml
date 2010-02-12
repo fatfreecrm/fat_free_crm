@@ -45,7 +45,7 @@
         #{t :n_a}
     %tt #{t :campaign}:
 
-  - unless @lead.background_info.empty?
+  - if @lead.background_info && !@lead.background_info.empty?
     %br
     %b #{t :background_info}
     %div= auto_link(simple_format h(@lead.background_info))

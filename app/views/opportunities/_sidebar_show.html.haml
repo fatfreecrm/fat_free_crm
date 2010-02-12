@@ -48,7 +48,7 @@
         #{t :n_a}
     %tt #{t :campaign}:
 
-  - unless @opportunity.background_info.empty?
+  - if @opportunity.background_info && !@opportunity.background_info.empty?
     %br
     %b #{t :background_info}
     %div= auto_link(simple_format h(@opportunity.background_info))

@@ -25,7 +25,7 @@
     %b #{t :shipping_address}
     %div= @account.shipping_address.n2br if @account.shipping_address
 
-  - unless @account.background_info.empty?
+  - if @account.background_info && !@account.background_info.empty?
     %b #{t :background_info}
     %div= auto_link(simple_format h(@account.background_info))
 

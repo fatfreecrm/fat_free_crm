@@ -28,7 +28,7 @@
 
   = web_presence_icons(@contact)
 
-  - unless @contact.background_info.empty?
+  - if @contact.background_info && !@contact.background_info.empty?
     %b #{t :background_info}
     %div= auto_link(simple_format h(@contact.background_info))
 
