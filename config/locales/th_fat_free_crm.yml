@@ -567,3 +567,9 @@ th:
     login:
       one: 'เข้าสู่ระบบหนึ่งครั้ง'
       other: 'เข้าสู่ระบบ {{count}} ครั้ง'
+
+  calendar_date_select:
+    ok: OK
+    now: Now
+    today: Today
+    clear: Clear

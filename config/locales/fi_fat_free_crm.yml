@@ -1,3 +1,10 @@
 fi:
 
   language: Finnish (Suomi)
+
+  calendar_date_select:
+    ok: OK
+    now: Nyt
+    today: Tänään
+    clear: Clear
+

@@ -582,3 +582,10 @@ ru:
       few: 'заходил(а) {{count}} раза'
       many: 'заходил(а) {{count}} раз'
       other: 'заходил(а) {{count}} раз'
+
+  calendar_date_select:
+    ok: OK
+    now: Сейчас
+    today: Сегодня
+    clear: Очистить
+

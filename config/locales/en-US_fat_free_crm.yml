@@ -568,3 +568,9 @@ en-US:
     login:
       one: '1 login'
       other: '{{count}} logins'
+
+  calendar_date_select:
+    ok: OK
+    now: Now
+    today: Today
+    clear: Clear

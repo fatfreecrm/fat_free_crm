@@ -573,3 +573,11 @@ pl:
       one: '1 logowanie'
       few: '{{count}} logowania'
       other: '{{count}} logowań'
+
+  calendar_date_select:
+    ok: OK
+    now: Teraz
+    today: Dziś
+    clear: Clear
+
+

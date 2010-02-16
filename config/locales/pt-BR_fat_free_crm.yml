@@ -567,3 +567,9 @@ pt-BR:
     login:
       one: '1 login'
       other: '{{count}} logins'
+
+  calendar_date_select:
+    ok: OK
+    now: Agora
+    today: Hoje
+    clear: Limpar
