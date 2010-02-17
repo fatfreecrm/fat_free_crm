@@ -8,7 +8,7 @@
     %div= @lead.title unless @lead.title.blank?
     %div= @lead.company unless @lead.company.blank?
 
-  %div= @lead.address.n2br if @lead.address
+  %div= render :partial => "common/address_show", :locals => { :asset => @lead, :type => 'business', :title => :address }
 
   %div
     - if @lead.phone

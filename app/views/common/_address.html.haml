@@ -1,0 +1,33 @@
+- address_type = type.camelize
+- address_attr = "#{type}_address"
+- address = get_address(asset, address_attr)
+
+- f.fields_for(address_attr.to_sym) do |a|
+  = a.hidden_field :address_type, :value => address_type
+  - if Setting.single_address_field == true
+    .label #{t title}:
+    = a.text_area :full_address, :style =>"width:240px", :rows => 4
+  - else
+    %table{ :width => 240, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td{ :valign => :top, :colspan => 3}      
+          .label #{t title}:
+          = a.text_field :street1, :style => "width:240px;"
+          %br
+          = a.text_field :street2, :style => "width:240px;"
+      %tr
+        %td{ :valign => :top }
+          .label #{t :city}:
+          = a.text_field :city, :style => "width:110px;"
+        %td= spacer
+        %td{ :valign => :top }
+          .label #{t :zipcode}:
+          = a.text_field :zipcode, :style => "width:110px;"
+      %tr
+        %td{ :valign => :top }
+          .label #{t :state}:
+          = a.text_field :state, :style => "width:110px;"
+        %td= spacer
+        %td{ :valign => :top }
+          .label #{t :country}:
+          = a.country_select(:country, nil, {:prompt => t(:select_country)}, {:style => "width:110px;"})

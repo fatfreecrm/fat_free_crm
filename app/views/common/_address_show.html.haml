@@ -1,0 +1,14 @@
+- address_attr = "#{type}_address"
+- address = get_address(asset, address_attr)
+
+- unless is_address_empty(address)
+  - if Setting.single_address_field == true
+    %div
+      %b #{t title}
+      %br
+      = h(address.full_address).n2br
+  - else
+    %div
+      %b #{t title}
+      %br
+      = h("#{address.street1} #{address.street2} #{address.zipcode} #{address.city} #{address.state} #{country_name(address.country)}")

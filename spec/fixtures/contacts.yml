@@ -23,7 +23,6 @@
 #  linkedin    :string(128)
 #  facebook    :string(128)
 #  twitter     :string(128)
-#  address     :string(255)
 #  born_on     :date
 #  do_not_call :boolean(1)      not null
 #  deleted_at  :datetime
@@ -61,9 +60,6 @@ contact_<%= i %>:
   linkedin    : <%= "http://www.linkedin.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
   facebook    : <%= "http://www.facebook.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
   twitter     : <%= "http://www.twitter.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
-  address     : |
-                <%= Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-                <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
   born_on     : <%= Date.today - (rand(20) + 20).years - rand(200).days %>
   do_not_call : false
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>

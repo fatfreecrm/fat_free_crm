@@ -17,13 +17,9 @@
     - if @account.fax
       #{t :fax}: <b>#{@account.fax}</b><br />
 
-  - if @account.billing_address
-    %b #{t :billing_address}
-    %div= @account.billing_address.n2br if @account.billing_address
+  %div= render :partial => "common/address_show", :locals => { :asset => @account, :type => 'billing', :title => :billing_address }
 
-  - if @account.shipping_address && (@account.shipping_address != @account.billing_address)
-    %b #{t :shipping_address}
-    %div= @account.shipping_address.n2br if @account.shipping_address
+  %div= render :partial => "common/address_show", :locals => { :asset => @account, :type => 'shipping', :title => :shipping_address }
 
   - if @account.background_info && !@account.background_info.empty?
     %b #{t :background_info}
