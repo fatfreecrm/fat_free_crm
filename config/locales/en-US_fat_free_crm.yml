@@ -324,7 +324,6 @@ en-US:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Address
   alt_email_small: Other
   blog: Website/Blog
   contact: Contact
@@ -503,6 +502,11 @@ en-US:
   time_ago: "{{value}} ago"
   background_info: Background information
   background_info_intro: Optional background info, you can change later.
+  address: Address
+  city: City
+  zipcode: Zip Code
+  state: State/Region
+  country: Country
 
   # Views -> Layout.
   #----------------------------------------------------------------------------

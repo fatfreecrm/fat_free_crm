@@ -329,7 +329,6 @@ es-ES:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Dirección
   alt_email_small: Otra
   blog: Sitio web/blog
   contact: Contacto
@@ -508,6 +507,11 @@ es-ES:
   time_ago: "hace {{value}}"
   background_info: Información relevante
   background_info_intro: Información relevante opcional, puede modificarla más tarde.
+  address: Dirección
+  city: Ciudad
+  zipcode: Código postal
+  state: Estado/Región
+  country: País 
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
