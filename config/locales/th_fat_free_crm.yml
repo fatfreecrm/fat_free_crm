@@ -186,6 +186,7 @@ th:
   #----------------------------------------------------------------------------
   "option_amount*probability": จำนวนถ่วงน้ำหนัก
   activity_options: แสดง{{models}}ที่เกิดขึ้น โดย{{user}} ในช่วง{{period}}ที่ผ่านมา.
+  all_users: ผู้ใช้ทุกคน
   option_after: หลัง
   option_all: ทั้งหมด
   option_all_users: ผู้ใช้ทุกคน

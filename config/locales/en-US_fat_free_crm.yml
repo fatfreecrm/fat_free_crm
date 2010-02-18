@@ -186,9 +186,10 @@ en-US:
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
   activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}.
+  all_users: all users
   option_after: after
   option_all: all
-  option_all_users: all users
+  option_all_users: All Users
   option_amount: amount
   option_before: before
   option_brief: brief

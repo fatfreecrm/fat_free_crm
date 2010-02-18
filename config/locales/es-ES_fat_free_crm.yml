@@ -191,6 +191,7 @@ es-ES:
   #----------------------------------------------------------------------------
   "option_amount*probability": valor ponderado 
   activity_options: Mostrar {{models}} las actividades realizadas por {{user}} en {{period}}.
+  all_users: todos los usuarios
   option_after: después de
   option_all: todas
   option_all_users: todos los usuarios
