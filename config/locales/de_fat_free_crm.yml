@@ -246,3 +246,8 @@ de:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
   
+  calendar_date_select:
+    ok: OK
+    now: Jetzt
+    today: Heute
+    clear: Clear
