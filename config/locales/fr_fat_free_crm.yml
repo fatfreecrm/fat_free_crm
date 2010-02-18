@@ -1,3 +1,10 @@
 fr:
 
   language: Français
+
+  calendar_date_select:
+    ok: OK
+    now: Maintenant
+    today: "Aujourd'hui"
+    clear: Clear
+

@@ -572,3 +572,10 @@ es-ES:
     login:
       one: '1 conexión'
       other: '{{count}} conexiones'
+
+  calendar_date_select:
+    ok: Cancelar
+    now: Ahora
+    today: Hoy
+    clear: Limpiar
+

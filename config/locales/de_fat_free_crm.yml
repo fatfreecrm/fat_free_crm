@@ -229,3 +229,9 @@ de:
   # models/account
   #----------------------------------------------------------------------------
   missing_account_name: "^Bitte Namen der Firma angeben."
+
+  calendar_date_select:
+    ok: OK
+    now: Jetzt
+    today: Heute
+    clear: Clear
