@@ -434,6 +434,9 @@ pt-BR:
   feel_free: Sinta-se livre para
   move_to: mover para
   no_tasks: "Você não tem nenhum atividade {{value}}"
+  no_tasks_pending: pending # TODO
+  no_tasks_assigned: assigned # TODO
+  no_tasks_completed: completed # TODO
   pending_tab: Pendente
   pending_tasks: Tarefas pendentes
   related: 're:'

@@ -435,6 +435,9 @@ th:
   feel_free: กรอกข้อมูลได้เลย
   move_to: ย้ายไป
   no_tasks: "คุณไม่มีภารกิจ{{value}}"
+  no_tasks_pending: pending # TODO
+  no_tasks_assigned: assigned # TODO
+  no_tasks_completed: completed # TODO
   pending_tab: งานค้าง
   pending_tasks: งานคงค้าง
   related: 're:'

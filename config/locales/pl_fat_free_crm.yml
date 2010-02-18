@@ -433,14 +433,10 @@ pl:
   due: Termin
   feel_free: Możesz
   move_to: przesuń na
-<<<<<<< HEAD
-  no_tasks: "Nie masz żadnych zadań na {{value}}"
-=======
   no_tasks: "Nie masz żadnych {{value}} zadań"
   no_tasks_pending: otwartych
   no_tasks_assigned: przypisanych
   no_tasks_completed: zakończonych
->>>>>>> 08fcf0d... Fixed no tasks translation (added messages to pl and en-US)
   pending_tab: Otwarte
   pending_tasks: otwarte zadania
   related: 'pow.:'

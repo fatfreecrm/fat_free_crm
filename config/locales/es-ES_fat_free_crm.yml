@@ -432,6 +432,9 @@ es-ES:
   feel_free: Puede
   move_to: mover a
   no_tasks: "No tiene tareas {{value}}"
+  no_tasks_pending: pending # TODO
+  no_tasks_assigned: assigned # TODO
+  no_tasks_completed: completed # TODO
   pending_tab: Pendientes
   pending_tasks: Tareas Pendientes
   related: 're:'
