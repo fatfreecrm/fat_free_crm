@@ -49,6 +49,14 @@
 #   :needs_approval -- users can sign up but must be approved before they can use the system.
 :user_signup: :allowed
 
+# Default records permissions
+#------------------------------------------------------------------------------
+# Set the defaults permission for new records. Possible values are:
+#   Private        -- private access, only for the creator of the record. This is the default.
+#   Public         -- public access, share with everyone.
+#   Shared         -- shared with selected accounts, should be selected by the user.
+:default_access: "Private"
+
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------
 :tabs: [

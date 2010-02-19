@@ -32,7 +32,7 @@ class AuthenticationsController < ApplicationController
     if @authentication.save && !@authentication.user.suspended?
       flash[:notice] = t(:msg_welcome)
       if @authentication.user.login_count > 1 && @authentication.user.last_login_at?
-        flash[:notice] << " " << t(:msg_last_login, @authentication.user.last_login_at.to_s(:mmddhhss))
+        flash[:notice] << " " << t(:msg_last_login, l(@authentication.user.last_login_at, :format => :mmddhhss))
       end
       redirect_back_or_default root_url
     else

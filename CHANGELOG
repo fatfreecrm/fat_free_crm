@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Feb 9, 2010
+---------------------------------------------------------------------
+- Default permissions are now configurable in settings.yml (thanks, Jose Luis!)
+- More localization tweaks for date formats and tasks (thanks, Kamil and Yura!)
+- Minor refactoring.
+
 Sun, Feb 7, 2010
 ---------------------------------------------------------------------
 - Updated Russian locale files (thanks, Roman!)

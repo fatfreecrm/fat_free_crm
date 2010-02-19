@@ -3,7 +3,7 @@ pl:
 
   # Generic terms.
   #----------------------------------------------------------------------------
-  all: Wszystko # not used?
+  all: Wszystko
   at: /
   here: tutaj
   no_button: 'Nie'
@@ -72,8 +72,9 @@ pl:
   due_today: Dziś
   due_tomorrow: Jutro
   due_this_week: W tym tygodniu
-  due_next_week: w nast. tygodniu
+  due_next_week: W nast. tygodniu
   due_later: Później
+  due_specific_date: Na dany dzień...
 
   completed_today: Dziś
   completed_yesterday: Wczoraj
@@ -83,12 +84,12 @@ pl:
 
   # Models/Activity.
   #----------------------------------------------------------------------------
-  one_hour: godzinę
-  one_day: dzień
-  two_days: dwa dni
-  one_week: tydzień
-  two_weeks: dwa tygodnie
-  one_month: miesiąc
+  one_hour: ostatnią godzinę
+  one_day: ostatni dzień
+  two_days: ostatnie dwa dni
+  one_week: ostatni tydzień
+  two_weeks: ostatnie dwa tygodnie
+  one_month: ostatni miesiąc
 
   # Model Validations.
   #----------------------------------------------------------------------------
@@ -172,7 +173,7 @@ pl:
   msg_goodbye: Zostałeś wylogowany. Dziękujemy za używanie Fat Free CRM!
   msg_invalid_password: "^Proszę prawidłowo podać aktualne hasło"
   msg_invalig_login: Nieprawidłowy użytkownik lub hasło.
-  msg_last_login: "Ostatnio zalogowany: {{value}}."
+  msg_last_login: "Ostatnio zalogowany {{value}}."
   msg_login_needed: Musisz być zalogowany, by mieć dostęp do tej strony.
   msg_logout_needed: Musisz być wylogowany, by mieć dostęp do tej strony.
   msg_password_changed: Twoje hasło zostało zmienione.
@@ -186,7 +187,8 @@ pl:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": kwoty ważonej
-  activity_options: Pokaż {{models}} zmieniane przez {{user}} przez ostatnie {{period}}.
+  activity_options: Pokaż {{models}} zmieniane przez {{user}} przez {{period}}.
+  all_users: wszystkich
   option_after: po nazwisku
   option_all: wszystko
   option_all_users: wszystkich
@@ -252,7 +254,7 @@ pl:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Zapomniałeś hasło
+  forgot_password: Zapomniałem hasła
   login: Zaloguj
   no_account: Czy posiadasz konto?
   remember_me: Pamiętaj mnie na tym komputerze
@@ -343,7 +345,11 @@ pl:
   facebook: Facebook
   linked_in: LinkedIn
   myself: mnie
-  permissions_intro: Domyślnie tylko Ty będziesz miał dostęp do {{value}}. Można to poźniej zmienić.
+
+  permissions_intro_private: Domyślnie tylko Ty będziesz miał dostęp do {{value}}. Można to poźniej zmienić.
+  permissions_intro_public: Domyślnie wszyscy użytkownicy będą mieli dostęp do {{value}}. Można to poźniej zmienić.
+  permissions_intro_shared: Domyślnie tylko wybrani użytkownicy będą mieli dostęp do {{value}}. Można to poźniej zmienić.
+
   referred_by: Polecony przez
   referred_by_small: polecony przez
   save_contact: Zapisz kontakt
@@ -362,7 +368,11 @@ pl:
   create_opp_for_contact: Opcjonalnie możesz dodać szansę do {{value}} podając nazwę, aktualną fazę, zakładaną datę zamknięcia, prawdopodobieństwo sprzedaży, kwotę sprzedaży i oferowany rabat.
   lead: Lead
   lead_info_small: lead
-  lead_permissions_intro: Domyślnie prawa dostępu zostaną skopiowane z kampanii albo ustawione na Prywatny. Możesz zmienić to później.
+
+  lead_permissions_intro_private: Domyślnie prawa dostępu zostaną skopiowane z kampanii albo tylko Ty będziesz miał dostęp. Możesz zmienić to później.
+  lead_permissions_intro_public: Domyślnie prawa dostępu zostaną skopiowane z kampanii albo wszyscy użytkownicy będą mieli dostęp. Możesz zmienić to później.
+  lead_permissions_intro_shared: Domyślnie prawa dostępu zostaną skopiowane z kampanii albo tylko wybrani użytkownicy będą mieli dostęp. Możesz zmienić to później.
+
   lead_small: lead
   lead_status_small: status leada
   lead_summary: Lead
@@ -419,11 +429,14 @@ pl:
   completed_tab: Zakończone
   completed_tasks: Zakończone zadania
   create_task: Dodaj zadanie
-  create_task_small: dodaj nowe zadanie
+  create_task_small: dodać nowe zadanie
   due: Termin
   feel_free: Możesz
   move_to: przesuń na
-  no_tasks: "NIe masz żadnych zadań na {{value}}"
+  no_tasks: "Nie masz żadnych {{value}} zadań"
+  no_tasks_pending: otwartych
+  no_tasks_assigned: przypisanych
+  no_tasks_completed: zakończonych
   pending_tab: Otwarte
   pending_tasks: otwarte zadania
   related: 'pow.:'
@@ -458,7 +471,7 @@ pl:
   action_rescheduled: zmienił/a termin
   action_updated: zmienił/a
   action_viewed: oglądał/a
-  action_won: wygral/a
+  action_won: wygrał/a
   no_activity_records: Brak czynności dla tych ustawień.
   recent_activity: Ostatnie czynności
   recent_activity_options: Opcje ostatnich czynności
@@ -491,7 +504,7 @@ pl:
   me: mnie
   n_a: N/A
   name: Nazwa
-  no_match: NIe znaleziono {{value}}
+  no_match: Nie znaleziono {{value}}
   no_recent_items: Nie ma nic do wyświetlenia.
   options: Opcje
   permissions: Dostęp
@@ -553,6 +566,8 @@ pl:
   users: Użytkownicy
   users_small: użytkowników
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact: 
       one: '1 kontakt'
@@ -574,10 +589,20 @@ pl:
       few: '{{count}} logowania'
       other: '{{count}} logowań'
 
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%d.%m.%Y"
+      mmdd: "%e %b"
+      mmddyy: "%e %b %Y"
+
+  time:
+    formats:
+      mmddhhss: "%e %b o %H:%M"
+
   calendar_date_select:
     ok: OK
     now: Teraz
     today: Dziś
     clear: Clear
-
-

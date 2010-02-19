@@ -190,7 +190,7 @@ class TasksController < ApplicationController
     @view = params[:view] || "pending"
 
     update_session do |filters|
-      if params[:checked] == "true"
+      if params[:checked].true?
         filters << params[:filter]
       else
         filters.delete(params[:filter])

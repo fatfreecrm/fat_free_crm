@@ -3,7 +3,7 @@
 = subtitle :account_permissions, collapsed, t(:permissions)
 .section
   %small#account_permissions_intro{ hidden_if(!collapsed) }
-    = t(:permissions_intro, t(:account_small)) unless edit
+    = get_default_permissions_intro(@account.access, t(:account_small)) unless edit
   #account_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide()"

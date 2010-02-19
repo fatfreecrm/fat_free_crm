@@ -186,9 +186,10 @@ en-US:
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
   activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}.
+  all_users: all users
   option_after: after
   option_all: all
-  option_all_users: all users
+  option_all_users: All Users
   option_amount: amount
   option_before: before
   option_brief: brief
@@ -260,7 +261,6 @@ en-US:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Account
-  account_permissions_intro: By default only you will have access to the account. You can change account permissions later.
   account_small: account
   accounts: Accounts
   accounts_options: Accounts Options
@@ -342,7 +342,9 @@ en-US:
   facebook: Facebook
   linked_in: LinkedIn
   myself: Myself
-  permissions_intro: By default only you will have access to the {{value}}. You can change permissions later.
+  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.  
+  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
   referred_by: Referred by
   referred_by_small: referred by
   save_contact: Save Contact
@@ -361,7 +363,9 @@ en-US:
   create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
   lead: Lead
   lead_info_small: lead contact
-  lead_permissions_intro: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
   lead_small: lead
   lead_status_small: lead status
   lead_summary: Lead Summary
@@ -423,6 +427,9 @@ en-US:
   feel_free: Feel free to
   move_to: move to
   no_tasks: "You don't have any {{value}} tasks"
+  no_tasks_pending: pending
+  no_tasks_assigned: assigned
+  no_tasks_completed: completed
   pending_tab: Pending
   pending_tasks: Pending Tasks
   related: 're:'
@@ -552,6 +559,8 @@ en-US:
   users: Users
   users_small: users
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact: 
       one: '1 contact'
@@ -569,6 +578,18 @@ en-US:
       one: '1 login'
       other: '{{count}} logins'
 
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"
+      
   calendar_date_select:
     ok: OK
     now: Now

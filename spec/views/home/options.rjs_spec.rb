@@ -13,6 +13,10 @@ describe "/home/options.rjs" do
   
     response.should have_rjs("options") do |rjs|
       with_tag("input[type=hidden]") # @current_user
+
+      user_menu = "onLoading:function(request){$('user').update('all users'); " +
+                  "$('loading').show()}, parameters:{ user: 'all_users' }}); } } }"
+      with_tag("script", /#{Regexp.escape(user_menu)}/)
     end
     response.should include_text('crm.flip_form("options")')
     response.should include_text('crm.set_title("title", "Recent Activity Options")')

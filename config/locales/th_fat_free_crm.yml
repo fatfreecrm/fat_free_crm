@@ -72,6 +72,7 @@ th:
   due_this_week: "อาทิตย์นี้"
   due_next_week: "อาทิตย์หน้า"
   due_later: "วันหลัง"
+  due_specific_date: On Specific Date... # TODO
 
   completed_today: "วันนี้"
   completed_yesterday: "เมื่อวานนี้"
@@ -185,6 +186,7 @@ th:
   #----------------------------------------------------------------------------
   "option_amount*probability": จำนวนถ่วงน้ำหนัก
   activity_options: แสดง{{models}}ที่เกิดขึ้น โดย{{user}} ในช่วง{{period}}ที่ผ่านมา.
+  all_users: ผู้ใช้ทุกคน
   option_after: หลัง
   option_all: ทั้งหมด
   option_all_users: ผู้ใช้ทุกคน
@@ -341,6 +343,12 @@ th:
   facebook: Facebook
   linked_in: LinkedIn
   myself: ตัวฉัน
+
+  # TODO
+  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.  
+  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
+
   permissions_intro: เบื้องต้นจะมีเฉพาะคุณเท่านั้นที่เห็น {{value}} แต่สามารถเปลี่ยนได้ในภายหลัง
   referred_by: แนะนำโดย
   referred_by_small: แนะนำโดย
@@ -360,7 +368,12 @@ th:
   create_opp_for_contact: คุณสามารถสร้าง โอกาศปิดการขาย สำหรับ {{value}} ผู้ติดต่อ โดยกำหนดชื่อ สถานะปัจจุบัน คาดการวันปิด โอกาสปิดการขาย มูลค่า และส่วนลด
   lead: ผู้สนใจ
   lead_info_small: ที่อยู่ผู้สนใจ
-  lead_permissions_intro: ในเบื้องต้นสิทธิ์จะถูกนำไปใช้ในแคมเปณ หรือกำหนดเป็นดูได้คนเดียว แต่สามารถเปลี่ยนได้ในภายหลัง
+
+  # TODO
+  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
+
   lead_small: ผู้สนใจ
   lead_status_small: สถานะของผู้สนใจ
   lead_summary: สรุปผู้สนใจ
@@ -422,6 +435,9 @@ th:
   feel_free: กรอกข้อมูลได้เลย
   move_to: ย้ายไป
   no_tasks: "คุณไม่มีภารกิจ{{value}}"
+  no_tasks_pending: pending # TODO
+  no_tasks_assigned: assigned # TODO
+  no_tasks_completed: completed # TODO
   pending_tab: งานค้าง
   pending_tasks: งานคงค้าง
   related: 're:'
@@ -551,6 +567,8 @@ th:
   users: ผู้ใช้
   users_small: ผู้ใช้ # TODO
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact:
       one: 'ผู้ติดต่อหนึ่งคน'
@@ -568,6 +586,18 @@ th:
       one: 'เข้าสู่ระบบหนึ่งครั้ง'
       other: 'เข้าสู่ระบบ {{count}} ครั้ง'
 
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"
+      
   calendar_date_select:
     ok: OK
     now: Now

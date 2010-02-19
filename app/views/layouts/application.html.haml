@@ -13,10 +13,6 @@
     - unless tabless_layout?
       = javascript_include_tag "crm_classes.js", "calendar_date_select/calendar_date_select.js", "calendar_date_select/format_american.js", :cache => "cache/classes"
     %script{:type => "text/javascript"}= yield :javascript
-    = update_page_tag do |page|
-      - page.assign '_translations', { 'OK' => t('calendar_date_select.ok'), 'Now' => t('calendar_date_select.now'), 'Today' => t('calendar_date_select.today'), 'Clear' => t('calendar_date_select.clear') }
-      - page.assign 'Date.weekdays', t('date.abbr_day_names')
-      - page.assign 'Date.months', t('date.month_names')[1..-1]
 
   %body
     = render :partial => "layouts/header"
@@ -25,6 +21,9 @@
     - else
       = render :partial => "layouts/tabbed"
       = render :partial => "layouts/footer"
+
+    - unless tabless_layout? || I18n.locale == "en-US"
+      = localize_calendar_date_select
     %script{:type => "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
