@@ -7,35 +7,35 @@
   #account_contact{ hidden_if(collapsed) }
     %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
       %tr
+        %td{ :valign => :top, :colspan => 3 }
+          %table{ :width => "100%", :cellpadding => 0, :cellspacing => 0 }
+            %tr
+              %td{ :valign => :top }
+                .label #{t :phone_toll_free}:
+                = f.text_field :toll_free_phone, :style => "width:154px"
+              %td= spacer
+              %td{ :valign => :top }
+                .label #{t :phone}:
+                = f.text_field :phone, :style => "width:154px"
+              %td= spacer
+              %td{ :valign => :top }
+                .label #{t :fax}:
+                = f.text_field :fax, :style => "width:154px"
+      %tr
         %td{ :valign => :top }
           .label.top #{t :website}:
           = f.text_field :website, :style => "width:240px"
         %td= spacer
         %td{ :valign => :top }
           .label.top Email:
-          = f.text_field :email, :style => "width:240px" 
-      %tr        
-        %td{ :valign => :top }
-          .label #{t :phone}:
-          = f.text_field :phone, :style => "width:240px"        
-        %td= spacer
-        %td{ :valign => :top }
-          .label.top #{t :phone_toll_free}:
-          = f.text_field :toll_free_phone, :style => "width:240px"
+          = f.text_field :email, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label #{t :fax}:
-          = f.text_field :fax, :style => "width:240px"
-      %tr
-        %td{ :valign => :top }
-          .label #{t :billing_address}:
-          = f.text_area :billing_address, :style =>"width:240px", :rows => 4
+          = render :partial => "common/address", :locals => { :f => f, :asset => @account, :type => 'billing', :title => :billing_address }
         %td= spacer
         %td{ :valign => :top }
-          .label
-            #{t :shipping_address}:
-            = link_to_function t(:same_as_billing), %/$("account_shipping_address").value = $("account_billing_address").value/
-          = f.text_area :shipping_address, :style =>"width:240px", :rows => 4
+          = render :partial => "common/address", :locals => { :f => f, :asset => @account, :type => 'shipping', :title => :shipping_address }
+          = copy_address_function('account_shipping_address', 'account_billing_address')
 
 
 

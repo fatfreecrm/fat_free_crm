@@ -15,3 +15,4 @@
     %div{:style => "float:right;"}
       %b= @lead_status_total[:all]
     %b #{t :total_leads}
+  = hook(:index_lead_sidebar_bottom, self)

@@ -5,23 +5,24 @@
       %b= link_to(truncate(@account.website, :length => 30), @account.website.to_url, :popup => true, :title => t(:open_in_window, @account.website))
   - if @account.email
     %div
-      %b= link_to(truncate(@account.email, :length => 30), "mailto:" << @account.email.to_s, :title => t(:mail_to, @account.email))      
+      %b= link_to(truncate(@account.email, :length => 30), "mailto:" << @account.email.to_s, :title => @account.email)
+
   %div
     - if @account.toll_free_phone
-      == #{t :phone_toll_free}: <b>#{@account.toll_free_phone}</b><br />
+      #{t :phone_toll_free}: <b>#{@account.toll_free_phone}</b><br />
 
     - if @account.phone
-      == #{t :phone}: <b>#{@account.phone}</b><br />
+      #{t :phone}: <b>#{@account.phone}</b><br />
 
     - if @account.fax
-      == #{t :fax}: <b>#{@account.fax}</b><br />
+      #{t :fax}: <b>#{@account.fax}</b><br />
 
-  - if @account.billing_address
-    %b #{t :billing_address}
-    %div= @account.billing_address.n2br if @account.billing_address
+  %div= render :partial => "common/address_show", :locals => { :asset => @account, :type => 'billing', :title => :billing_address }
 
-  - if @account.shipping_address && (@account.shipping_address != @account.billing_address)
-    %b #{t :shipping_address}
-    %div= @account.shipping_address.n2br if @account.shipping_address
+  %div= render :partial => "common/address_show", :locals => { :asset => @account, :type => 'shipping', :title => :shipping_address }
+
+  - if @account.background_info && !@account.background_info.empty?
+    %b #{t :background_info}
+    %div= auto_link(simple_format h(@account.background_info))
 
   = hook(:show_account_sidebar_bottom, self, :account => @account)

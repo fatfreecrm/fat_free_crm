@@ -5,6 +5,7 @@
   = render :partial => "campaigns/top_section", :locals => { :f => f }
   = render :partial => "campaigns/objectives",  :locals => { :f => f }
   = render :partial => "campaigns/permissions", :locals => { :f => f }
+  = render :partial => "common/background_info",  :locals => { :f => f }
   .buttonbar
     = f.submit t(:create_campaign)
     #{t :or}

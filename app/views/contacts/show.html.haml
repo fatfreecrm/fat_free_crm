@@ -8,8 +8,8 @@
 
 %div#edit_contact{ hidden }
 
-= render :partial => "common/new_comment", :locals => { :commentable => @contact }
-= render :partial => "common/comment", :collection => @contact.comments
+= render :partial => "comments/new", :locals => { :commentable => @contact }
+= render :partial => "comments/comment", :collection => @contact.comments
 
 -#-----------------------------------------------------------------------------
 %br

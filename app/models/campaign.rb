@@ -39,6 +39,7 @@
 #  deleted_at          :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
+#  background_info  :string(255)
 #
 class Campaign < ActiveRecord::Base
   belongs_to  :user

@@ -5,6 +5,7 @@
   = render :partial => "accounts/top_section",  :locals => { :f => f }
   = render :partial => "accounts/contact_info", :locals => { :f => f }
   = render :partial => "accounts/permissions",  :locals => { :f => f }
+  = render :partial => "common/background_info",  :locals => { :f => f }
   .buttonbar
     = f.submit t :create_account
     #{t :or} 

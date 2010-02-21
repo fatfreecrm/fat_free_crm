@@ -72,6 +72,7 @@ en-US:
   due_this_week: This Week
   due_next_week: Next Week
   due_later: Sometime Later
+  due_specific_date: On Specific Date...
 
   completed_today: Today
   completed_yesterday: Yesterday
@@ -250,7 +251,7 @@ en-US:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Forgot Password?
+  forgot_password: Forgot Password
   login: Login
   no_account: Do not have an account?
   remember_me: Remember Me
@@ -274,7 +275,7 @@ en-US:
   open_in_window: Open {{value}} in a new window
   mail_to: Mail to {{value}}
   phone_small: phone
-  phone_toll_free: Toll-free phone 
+  phone_toll_free: Toll-free
   keep_private: Keep it private, do not share with others
   make_public: Share it with everyone
   same_as_billing: same as billing
@@ -324,7 +325,6 @@ en-US:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Address
   alt_email_small: Other
   blog: Website/Blog
   contact: Contact
@@ -460,6 +460,7 @@ en-US:
   action_rescheduled: rescheduled
   action_updated: updated
   action_viewed: viewed
+  action_won: won
   no_activity_records: No activity records found.
   recent_activity: Recent Activity
   recent_activity_options: Recent Activity Options
@@ -473,6 +474,7 @@ en-US:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Add Note
+  save_note: Save Note
   add_note_help: Add a new note...
   edit_note: Edit Note
   added_ago: added {{value}} ago
@@ -500,6 +502,13 @@ en-US:
   recent_items: Recent Items
   search_assets: Search {{value}}
   time_ago: "{{value}} ago"
+  background_info: Background information
+  background_info_intro: Optional background info, you can change later.
+  address: Address
+  city: City
+  zipcode: Zip Code
+  state: State/Region
+  country: Country
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -552,7 +561,10 @@ en-US:
   user_suspended: Suspended
   user_suspended_on: suspended on {{value}}
   users: Users
+  users_small: users
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact: 
       one: '1 contact'
@@ -569,3 +581,16 @@ en-US:
     login:
       one: '1 login'
       other: '{{count}} logins'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"
+      

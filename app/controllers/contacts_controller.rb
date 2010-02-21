@@ -181,7 +181,7 @@ class ContactsController < ApplicationController
   # GET /contacts/options                                                  AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @per_page = @current_user.pref[:contacts_per_page] || Contact.per_page
       @outline  = @current_user.pref[:contacts_outline]  || Contact.outline
       @sort_by  = @current_user.pref[:contacts_sort_by]  || Contact.sort_by

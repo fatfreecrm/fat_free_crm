@@ -1,6 +1,6 @@
 id = dom_id(@task)
 
-if params[:cancel] == "true" # <----------------- Hide [Edit Task]
+if params[:cancel].true?     # <----------------- Hide [Edit Task]
 
   partial = (@task.assigned_to && @task.assigned_to != @current_user.id) ? "assigned" : "pending"
   page[id].replace_html :partial => partial, :collection => [ @task ], :locals => { :bucket => @task.bucket }

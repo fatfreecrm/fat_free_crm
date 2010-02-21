@@ -7,6 +7,46 @@ describe AuthenticationsController do
     logout
   end
 
+  # Authentication filters
+  #----------------------------------------------------------------------------
+  describe "authentication filters" do
+    describe "user must not be logged" do
+      describe "DELETE authentication (logout form)" do
+        it "displays must be logged msg and redirects to login page" do
+          delete :destroy
+          flash[:notice].should_not == nil
+          flash[:notice].should =~ /^You must be logged in/
+          response.should redirect_to(login_url)
+        end
+      end
+    end
+
+    describe "user must not be logged" do
+      before(:each) do
+        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
+        @controller.stub!(:current_user).and_return(@user)
+      end
+
+      describe "GET authentication (login form)" do
+        it "displays must be logged out msg and redirects to profile page" do
+          get :new
+          flash[:notice].should_not == nil
+          flash[:notice].should =~ /^You must be logged out/
+          response.should redirect_to(profile_url)
+        end
+      end
+
+      describe "POST authentication" do
+        it "displays must be logged out msg and redirects to profile page" do
+          post :create, :authentication => @login
+          flash[:notice].should_not == nil
+          flash[:notice].should =~ /^You must be logged out/
+          response.should redirect_to(profile_url)
+        end
+      end
+    end
+  end
+
   # POST /authentications
   # POST /authentications.xml                                              HTML
   #----------------------------------------------------------------------------

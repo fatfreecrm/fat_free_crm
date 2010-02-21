@@ -145,17 +145,12 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def highlightable(id = nil, use_hide_and_show = false)
-    if use_hide_and_show
-      show = (id ? "$('#{id}').show()" : "")
-      hide = (id ? "$('#{id}').hide()" : "")
-    else
-      show = (id ? "$('#{id}').style.visibility='visible'" : "")
-      hide = (id ? "$('#{id}').style.visibility='hidden'" : "")
-    end
-    {
-      :onmouseover => "this.style.background='seashell'; #{show}",
-      :onmouseout  => "this.style.background='white'; #{hide}"
+  def highlightable(id = nil, color = {})
+    color = { :on => "seashell", :off => "white" }.merge(color)
+    show = (id ? "$('#{id}').style.visibility='visible'" : "")
+    hide = (id ? "$('#{id}').style.visibility='hidden'" : "")
+    { :onmouseover => "this.style.background='#{color[:on]}'; #{show}",
+      :onmouseout  => "this.style.background='#{color[:off]}'; #{hide}"
     }
   end
 
@@ -274,12 +269,14 @@ module ApplicationHelper
     "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/images/avatar.jpg"
   end
 
-  # Returns true if partial template exists. Note that the file name of the
-  # partial starts with underscore.
+  # Returns default permissions intro.
   #----------------------------------------------------------------------------
-  def partial_exist?(partial, extension = '.html.haml')
-    filename = partial.sub(%r{/([^/]*)$}, '/_\\1') + extension
-    FileTest.exist?(File.join(RAILS_ROOT, 'app', 'views', filename))
+  def get_default_permissions_intro(access, text)
+    case access
+      when "Private" then t(:permissions_intro_private, text)
+      when "Public"  then t(:permissions_intro_public,  text)
+      when "Shared"  then t(:permissions_intro_shared,  text)
+    end
   end
   
   # Returns default permissions intro

@@ -17,6 +17,7 @@ describe "/contacts/_create.html.haml" do
     template.should_receive(:render).with(hash_including(:partial => "contacts/extra"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/web"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/permissions"))
+    template.should_receive(:render).with(hash_including(:partial => "common/background_info"))
 
     render "/contacts/_create.html.haml"
     response.should have_tag("form[class=new_contact]")
