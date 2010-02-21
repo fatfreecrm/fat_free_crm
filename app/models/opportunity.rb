@@ -35,6 +35,7 @@
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  background_info  :string(255)
 #
 class Opportunity < ActiveRecord::Base
   belongs_to  :user

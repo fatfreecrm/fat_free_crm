@@ -274,6 +274,7 @@ en-US:
   intro: You can add {{value}} information later.
   mobile_small: mobile
   open_in_window: Open {{value}} in a new window
+  mail_to: Mail to {{value}}
   phone_small: phone
   phone_toll_free: Toll-free
   keep_private: Keep it private, do not share with others
@@ -325,7 +326,6 @@ en-US:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Address
   alt_email_small: Other
   blog: Website/Blog
   contact: Contact
@@ -480,6 +480,7 @@ en-US:
   add_note: Add Note
   save_note: Save Note
   add_note_help: Add a new note...
+  edit_note: Edit Note
   added_ago: added {{value}} ago
   added_by: added {{time_ago}} ago by {{user}} 
   back: Back
@@ -505,6 +506,13 @@ en-US:
   recent_items: Recent Items
   search_assets: Search {{value}}
   time_ago: "{{value}} ago"
+  background_info: Background information
+  background_info_intro: Optional background info, you can change later.
+  address: Address
+  city: City
+  zipcode: Zip Code
+  state: State/Region
+  country: Country
 
   # Views -> Layout.
   #----------------------------------------------------------------------------

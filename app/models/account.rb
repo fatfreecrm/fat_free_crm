@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 23
+# Schema version: 26
 #
 # Table name: accounts
 #
@@ -29,12 +29,11 @@
 #  toll_free_phone  :string(32)
 #  phone            :string(32)
 #  fax              :string(32)
-#  billing_address  :string(255)
-#  shipping_address :string(255)
 #  deleted_at       :datetime
 #  created_at       :datetime
 #  updated_at       :datetime
 #  email            :string(64)
+#  background_info  :string(255)
 #
 class Account < ActiveRecord::Base
   belongs_to  :user
@@ -45,7 +44,12 @@ class Account < ActiveRecord::Base
   has_many    :opportunities, :through => :account_opportunities, :uniq => true, :order => "opportunities.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
+  has_one     :billing_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Billing'"
+  has_one     :shipping_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Shipping'"  
 
+  accepts_nested_attributes_for :billing_address, :allow_destroy => true
+  accepts_nested_attributes_for :shipping_address, :allow_destroy => true
+  
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ? ", user.id ] } }
   named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ? ", user.id ] } }
 

@@ -8,6 +8,7 @@
     = render :partial => "leads/contact",     :locals => { :f => f, :edit => true }
     = render :partial => "leads/web",         :locals => { :f => f, :edit => true }
     = render :partial => "leads/permissions", :locals => { :f => f, :edit => true }
+    = render :partial => "common/background_info",  :locals => { :f => f, :edit => true }
     .buttonbar
       = f.submit t :save_lead
       #{t :or}

@@ -328,7 +328,6 @@ pl:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Adres
   alt_email_small: Inny
   blog: Website/Blog
   contact: Kontakt
@@ -512,7 +511,14 @@ pl:
   recent_items: Ostatnio oglądane
   search_assets: Przeszukaj {{value}}
   time_ago: "{{value}} temu"
-
+  background_info: Informacje ogólne
+  background_info_intro: Opcjonalnie info tło, będzie można później zmienić.
+  address: Adres
+  city: Miasto
+  zipcode: Kod pocztowy
+  state: stan
+  country: kraj
+    
   # Views -> Layout.
   #----------------------------------------------------------------------------
   about: O produkcie

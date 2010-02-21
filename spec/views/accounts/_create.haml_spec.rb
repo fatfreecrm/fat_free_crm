@@ -13,6 +13,7 @@ describe "/accounts/_create.html.haml" do
     template.should_receive(:render).with(hash_including(:partial => "accounts/top_section"))
     template.should_receive(:render).with(hash_including(:partial => "accounts/contact_info"))
     template.should_receive(:render).with(hash_including(:partial => "accounts/permissions"))
+    template.should_receive(:render).with(hash_including(:partial => "common/background_info"))
 
     render "/accounts/_create.html.haml"
     response.should have_tag("form[class=new_account]")

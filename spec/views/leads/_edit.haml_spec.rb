@@ -17,6 +17,7 @@ describe "/leads/edit.html.erb" do
     template.should_receive(:render).with(hash_including(:partial => "leads/contact"))
     template.should_receive(:render).with(hash_including(:partial => "leads/web"))
     template.should_receive(:render).with(hash_including(:partial => "leads/permissions"))
+    template.should_receive(:render).with(hash_including(:partial => "common/background_info"))
 
     render "/leads/_edit.html.haml"
     response.should have_tag("form[class=edit_lead]") do

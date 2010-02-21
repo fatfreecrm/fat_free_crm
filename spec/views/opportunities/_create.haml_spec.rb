@@ -16,6 +16,7 @@ describe "/opportunities/_create.html.haml" do
   it "should render [create opportunity] form" do
     template.should_receive(:render).with(hash_including(:partial => "opportunities/top_section"))
     template.should_receive(:render).with(hash_including(:partial => "opportunities/permissions"))
+    template.should_receive(:render).with(hash_including(:partial => "common/background_info"))
 
     render "/opportunities/_create.html.haml"
     response.should have_tag("form[class=new_opportunity]")

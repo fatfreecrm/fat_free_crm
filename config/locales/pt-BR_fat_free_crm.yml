@@ -326,7 +326,6 @@ pt-BR:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Endereço
   alt_email_small: Outro
   blog: Website/Blog
   contact: Contato
@@ -512,6 +511,13 @@ pt-BR:
   recent_items: Itens recentes
   search_assets: Buscar {{value}}
   time_ago: "há {{value}} atrás"
+  background_info: Informações gerais
+  background_info_intro: Info fundo opcional, você pode mudar depois.  
+  address: Endereço
+  city: Ciudade
+  zipcode: CEP
+  state: Membro/Região
+  country: Campo
 
   # Views -> Layout.
   #----------------------------------------------------------------------------

@@ -1,0 +1,9 @@
+- edit ||= false
+- asset = controller.controller_name.singularize
+- collapsed = session["#{asset}_background_info".to_sym].nil?
+= subtitle "#{asset}_background_info".to_sym, collapsed, t(:background_info)
+.section
+  %small#background_info_intro{ hidden_if(!collapsed) }
+    = t(:background_info_intro) unless edit
+  #background_info{ hidden_if(collapsed) }
+    = f.text_area :background_info, :style =>"width:480px", :rows => 4

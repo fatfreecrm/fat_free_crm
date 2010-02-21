@@ -57,6 +57,17 @@
 #   Shared         -- shared with selected accounts, should be selected by the user.
 :default_access: "Private"
 
+# Addresses format
+#------------------------------------------------------------------------------
+# Sets the format for all address (accounts/contacts/leads...), single/splitted
+#   true           -- use single blob field to store de complete address. This is the default.
+#   false          -- split the address in street1, street2, city, state, zipcode.
+# IMPORTANT: - The migration 26 will copy existing addresses fields in contact, account and leads
+#              to street1 and full_address to be able to use:
+#                - if single_address_field=true the Address.full_address will be used
+#                - if single_address_field=false all the split address field will be used except full_address
+:single_address_field: true
+
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------
 :tabs: [

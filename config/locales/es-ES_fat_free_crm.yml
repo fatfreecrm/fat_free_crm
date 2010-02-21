@@ -279,6 +279,7 @@ es-ES:
   intro: Puede añadir información de {{value}} más tarde.
   mobile_small: móvil
   open_in_window: Abrir {{value}} en una ventana nueva
+  mail_to: Correo electrónico a {{value}}
   phone_small: teléfono
   phone_toll_free: Llamada gratuita 
   keep_private: Uso privado, no compartir con otros
@@ -330,7 +331,6 @@ es-ES:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Dirección
   alt_email_small: Otra
   blog: Sitio web/blog
   contact: Contacto
@@ -485,6 +485,7 @@ es-ES:
   add_note: Añadir Nota
   save_note: Guardar Nota
   add_note_help: Añadir una nueva nota...
+  edit_note: Editar Nota  
   added_ago: añadida hace {{value}}
   added_by: añadida hace {{time_ago}} por {{user}} 
   back: atrás
@@ -510,6 +511,13 @@ es-ES:
   recent_items: Elementos recientes
   search_assets: Buscar {{value}}
   time_ago: "hace {{value}}"
+  background_info: Información relevante
+  background_info_intro: Información relevante opcional, puede modificarla más tarde.
+  address: Dirección
+  city: Ciudad
+  zipcode: Código postal
+  state: Estado/Región
+  country: País 
 
   # Views -> Layout.
   #----------------------------------------------------------------------------

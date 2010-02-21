@@ -53,8 +53,6 @@ Factory.define :account do |a|
   a.toll_free_phone     { Faker::PhoneNumber.phone_number }
   a.phone               { Faker::PhoneNumber.phone_number }
   a.fax                 { Faker::PhoneNumber.phone_number }
-  a.billing_address     { Factory.next(:address) }
-  a.shipping_address    { Factory.next(:address) }
   a.deleted_at          nil
   a.updated_at          { Factory.next(:time) }
   a.created_at          { Factory.next(:time) }
@@ -87,6 +85,22 @@ Factory.define :activity do |a|
   a.private             false
   a.updated_at          { Factory.next(:time) }
   a.created_at          { Factory.next(:time) }
+end
+
+#----------------------------------------------------------------------------
+Factory.define :address do |a|
+  a.addressable         { raise "Please specify :addressable for the address" }
+  a.street1             { Faker::Address.street_address }
+  a.street2             { Faker::Address.street_address }   
+  a.city                { Faker::Address.city }
+  a.state               { Faker::Address.us_state_abbr }
+  a.zipcode             { Faker::Address.zip_code }
+  a.country             { Faker::Address.country }
+  a.full_address        { Factory.next(:address) }
+  a.address_type        { %w(Business Billing Shipping).rand }
+  a.updated_at          { Factory.next(:time) }
+  a.created_at          { Factory.next(:time) }
+  a.deleted_at          nil
 end
 
 #----------------------------------------------------------------------------
@@ -155,7 +169,6 @@ Factory.define :contact do |c|
   c.linkedin            { Factory.next(:website) }
   c.twitter             { Factory.next(:website) }
   c.do_not_call         false
-  c.address             { Factory.next(:address) }
   c.born_on             "1992-10-10"
   c.deleted_at          nil
   c.updated_at          { Factory.next(:time) }
@@ -195,7 +208,6 @@ Factory.define :lead do |l|
   l.alt_email           { Faker::Internet.email }
   l.phone               { Faker::PhoneNumber.phone_number }
   l.mobile              { Faker::PhoneNumber.phone_number }
-  l.address             { Factory.next(:address) }
   l.deleted_at          nil
   l.updated_at          { Factory.next(:time) }
   l.created_at          { Factory.next(:time) }
