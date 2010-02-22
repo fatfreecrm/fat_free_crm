@@ -53,6 +53,7 @@ Factory.define :account do |a|
   a.toll_free_phone     { Faker::PhoneNumber.phone_number }
   a.phone               { Faker::PhoneNumber.phone_number }
   a.fax                 { Faker::PhoneNumber.phone_number }
+  a.background_info     { Faker::Lorem.paragraph }
   a.deleted_at          nil
   a.updated_at          { Factory.next(:time) }
   a.created_at          { Factory.next(:time) }
@@ -131,6 +132,7 @@ Factory.define :campaign do |c|
   c.ends_on             { Factory.next(:date) }
   c.starts_on           { Factory.next(:date) }
   c.objectives          { Faker::Lorem::paragraph }
+  c.background_info     { Faker::Lorem.paragraph }
   c.deleted_at          nil
   c.updated_at          { Factory.next(:time) }
   c.created_at          { Factory.next(:time) }
@@ -170,6 +172,7 @@ Factory.define :contact do |c|
   c.twitter             { Factory.next(:website) }
   c.do_not_call         false
   c.born_on             "1992-10-10"
+  c.background_info     { Faker::Lorem.paragraph }
   c.deleted_at          nil
   c.updated_at          { Factory.next(:time) }
   c.created_at          { Factory.next(:time) }
@@ -208,6 +211,7 @@ Factory.define :lead do |l|
   l.alt_email           { Faker::Internet.email }
   l.phone               { Faker::PhoneNumber.phone_number }
   l.mobile              { Faker::PhoneNumber.phone_number }
+  l.background_info     { Faker::Lorem.paragraph }
   l.deleted_at          nil
   l.updated_at          { Factory.next(:time) }
   l.created_at          { Factory.next(:time) }
@@ -226,6 +230,7 @@ Factory.define :opportunity do |o|
   o.amount              { rand(1000) }
   o.discount            { rand(100) }
   o.closes_on           { Factory.next(:date) }
+  o.background_info     { Faker::Lorem.paragraph }
   o.deleted_at          nil
   o.updated_at          { Factory.next(:time) }
   o.created_at          { Factory.next(:time) }

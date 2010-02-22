@@ -512,8 +512,7 @@ ru:
   recent_items: Недавние Объекты
   search_assets: Поиск - {{value}}
   ago: "{{value}} назад"
-  background_info: Справочная информация
-  background_info_intro: Факультативный справочная информация, позднее можно будет изменить.
+  background_info: Дополнительная информация
   address: Адрес
   city: деловой центр Лондона
   zipcode: почтовый индекс

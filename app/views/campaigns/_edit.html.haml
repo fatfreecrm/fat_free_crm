@@ -6,7 +6,6 @@
     = render :partial => "campaigns/top_section", :locals => { :f => f, :edit => true }
     = render :partial => "campaigns/objectives",  :locals => { :f => f, :edit => true }
     = render :partial => "campaigns/permissions", :locals => { :f => f, :edit => true }
-    = render :partial => "common/background_info",  :locals => { :f => f, :edit => true }
     .buttonbar
       = f.submit t(:save_campaign)
       #{t :or}

@@ -1,19 +1,26 @@
 .section
-  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+  %table(width="500" cellpadding="0" cellspacing="0")
     %tr
-      %td{ :colspan => 5, :valign => :top }
+      %td(valign="top" colspan="5")
         .label.top.req #{t :name}:
         = f.text_field :name, :style => "width:500px"
     %tr
-      %td{ :valign => :top }
+      %td(valign="top")
         .label #{t :start_date}:
         = f.text_field :starts_on, :value => f.object.starts_on ? l(f.object.starts_on, :format => :mmddyyyy) : "", :style => "width:110px", :autocomplete => :off
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label #{t :end_date}:
         = f.text_field :ends_on, :value => f.object.ends_on ? l(f.object.ends_on, :format => :mmddyyyy) : "", :style => "width:110px", :autocomplete => :off
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label #{t :status}:
         = f.select :status, Setting.unroll(:campaign_status), { :selected => (@campaign.status || "planned").to_sym }, { :style => "width:250px" }
+
+    - if Setting.background_info.include?(:campaign)
+      %tr
+        %td(valign="top" colspan="5")
+          .label= t(:background_info) << ':'
+          = f.text_area :background_info, :style =>"width:500px", :rows => 3
+
     = hook(:campaign_top_section_bottom, self, :f => f)

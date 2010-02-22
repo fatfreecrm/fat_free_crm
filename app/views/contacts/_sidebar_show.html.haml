@@ -28,8 +28,8 @@
 
   = web_presence_icons(@contact)
 
-  - if @contact.background_info && !@contact.background_info.empty?
-    %b #{t :background_info}
-    %div= auto_link(simple_format h(@contact.background_info))
+  - unless @contact.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format h(@contact.background_info))
 
   = hook(:show_contact_sidebar_bottom, self, :contact => @contact)

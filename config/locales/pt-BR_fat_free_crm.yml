@@ -512,7 +512,6 @@ pt-BR:
   search_assets: Buscar {{value}}
   time_ago: "há {{value}} atrás"
   background_info: Informações gerais
-  background_info_intro: Info fundo opcional, você pode mudar depois.  
   address: Endereço
   city: Ciudade
   zipcode: CEP

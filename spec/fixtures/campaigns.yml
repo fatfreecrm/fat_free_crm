@@ -138,7 +138,7 @@ campaign<%= i %>:
   starts_on           : <%= starts %>
   ends_on             : <%= starts + rand(50).days %>
   objectives          : <%= Faker::Lorem.sentence %>
+  background_info     : <%= Faker::Lorem.paragraph %>
   created_at          : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at          : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
-  background_info     : <%= Faker::Lorem.sentence %>
 <% end %>

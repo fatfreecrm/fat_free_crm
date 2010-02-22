@@ -21,8 +21,8 @@
 
   %div= render :partial => "common/address_show", :locals => { :asset => @account, :type => 'shipping', :title => :shipping_address }
 
-  - if @account.background_info && !@account.background_info.empty?
-    %b #{t :background_info}
-    %div= auto_link(simple_format h(@account.background_info))
+  - unless @account.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format h(@account.background_info))
 
   = hook(:show_account_sidebar_bottom, self, :account => @account)

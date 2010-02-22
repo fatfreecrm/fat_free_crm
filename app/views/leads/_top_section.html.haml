@@ -1,19 +1,26 @@
 .section
-  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+  %table(width="500" cellpadding="0" cellspacing="0")
     %tr
-      %td{ :valign => :top }
+      %td(valign="top")
         .label.top.req #{t :first_name}:
         = f.text_field :first_name, :style => "width:240px"
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label.top.req #{t :last_name}:
         = f.text_field :last_name, :style => "width:240px"
     %tr
-      %td{ :valign => :top }
+      %td(valign="top")
         .label #{t :email}:
         = f.text_field :email, :style => "width:240px"
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label #{t :phone}:
         = f.text_field :phone, :style => "width:240px"
+
+    - if Setting.background_info.include?(:lead)
+      %tr
+        %td(valign="top" colspan="3")
+          .label= t(:background_info) << ':'
+          = f.text_area :background_info, :style =>"width:500px", :rows => 3
+
     = hook(:lead_top_section_bottom, self, :f => f)

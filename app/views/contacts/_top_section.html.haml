@@ -1,42 +1,49 @@
 .section
-  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+  %table(width="500" cellpadding="0" cellspacing="0")
     %tr
-      %td{ :valign => :top }
+      %td(valign="top")
         .label.top.req #{t :first_name}:
         = f.text_field :first_name, :style => "width:240px"
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label.top.req #{t :last_name}:
         = f.text_field :last_name, :style => "width:240px"
     %tr
-      %td{ :valign => :top }
+      %td(valign="top")
         .label #{t :email}:
         = f.text_field :email, :style => "width:240px"
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label #{t :phone}:
         = f.text_field :phone, :style => "width:240px"
-  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+
+  %table(width="500" cellpadding="0" cellspacing="0")
     - fields_for(@account) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :assigned_to
       %tr
-        %td{ :valign => :top }
+        %td(valign="top")
           .label
             #{t :account}
             %span#account_create_title
               (#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(1); return false;'>#{t :select_existing}</a>):
             %span#account_select_title
               (<a href='#' onclick='crm.create_account(1); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):
-            %span#account_disabled_title :
-              
+            %span#account_disabled_title :              
 
           = collection_select :account, :id, @accounts, :id, :name, { :selected => @account.id || 0 }, { :style => "width:330px; display:none;" }
           = a.text_field :name, :style => "width:324px; display:none;"
         %td= spacer
-        %td{ :valign => :top }
+        %td(valign="top")
           .label #{t :assigned_to}:
           = collection_select :contact, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
+
+      - if Setting.background_info.include?(:contact)
+        %tr
+          %td(valign="top" colspan="3")
+            .label= t(:background_info) << ':'
+            = f.text_area :background_info, :style =>"width:500px", :rows => 3
+
       = hook(:contact_top_section_bottom, self, :f => f)
 
 

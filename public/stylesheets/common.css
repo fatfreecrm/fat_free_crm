@@ -345,6 +345,8 @@
   background: floralwhite; }
 .panel#summary {
   background: oldlace; }
+  .panel#summary p {
+    margin: 4px 0px 4px 0px; }
 
 .selector {
   color: black;

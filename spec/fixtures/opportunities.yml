@@ -42,7 +42,7 @@ opportunity_<%= i %>:
   probability : <%= %w(won lost).include?(the_stage) ? 100 : (rand(8) + 1) * 10 %>
   amount      : <%= (rand(8) + 1) * 100_000 %>
   closes_on   : <%= Date.today + (rand(100) + 10).days %>
+  background_info : <%= Faker::Lorem.paragraph %>
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
-  background_info : <%= Faker::Lorem.sentence %>
 <% end %>

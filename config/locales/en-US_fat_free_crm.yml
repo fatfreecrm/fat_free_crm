@@ -506,8 +506,7 @@ en-US:
   recent_items: Recent Items
   search_assets: Search {{value}}
   time_ago: "{{value}} ago"
-  background_info: Background information
-  background_info_intro: Optional background info, you can change later.
+  background_info: Background
   address: Address
   city: City
   zipcode: Zip Code
