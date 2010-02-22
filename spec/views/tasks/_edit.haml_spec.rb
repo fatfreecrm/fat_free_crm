@@ -26,6 +26,19 @@ describe "/tasks/edit.html.erb" do
     end
   end
 
+  it "should render background info if Settings request so" do
+    Setting.background_info = [ :task ]
+    render "/tasks/_edit.html.haml"
+
+    response.should have_tag("textarea[id=task_background_info]")
+  end
+
+  it "should not render background info if Settings do not request so" do
+    Setting.background_info = []
+    render "/tasks/_edit.html.haml"
+
+    response.should_not have_tag("textarea[id=task_background_info]")
+  end
 end
 
 

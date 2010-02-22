@@ -10,7 +10,7 @@
 
   .indent
     = link_to(assigned.assignee.full_name, user_path(assigned.assignee)) + ": "
-    = h(assigned.name)
+    = auto_link h(assigned.name)
     - if assigned.asset_id?
       == #{t :related} #{link_to(h(assigned.asset.name), polymorphic_url(assigned.asset))}
     &ndash;
@@ -28,4 +28,6 @@
       - else
         %span.cool
         == #{t :task_due_today}.
-      
+    - unless assigned.background_info.blank?
+      %div
+        %dt= h(assigned.background_info)

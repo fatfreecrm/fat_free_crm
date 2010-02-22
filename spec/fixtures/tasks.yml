@@ -13,6 +13,7 @@
 #  priority     :string(32)
 #  category     :string(32)
 #  bucket       :string(32)
+#  background_info :string(255)
 #  due_at       :datetime
 #  completed_at :datetime
 #  deleted_at   :datetime
@@ -53,8 +54,10 @@ task<%= i %>:
   name         : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "") %>
   asset_id     : <%= asset %>
   asset_type   : <%= %w(Account Campaign Contact Lead Opportunity).rand if asset %>
-  category     : <%= category[rand(category.size)] %>
+  category     : <%= category.rand %>
   bucket       : <%= bucket %>
+  background_info :
+# background_info : <%= Faker::Lorem.paragraph[0,255] %>
   due_at       : <%= due_at %>
   completed_at : <%= completed_by ? Date.today - rand(5).days : "" %>
   created_at   : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>

@@ -1,11 +1,11 @@
 .section
-  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+  %table(width="500" cellpadding="0" cellspacing="0")
     %tr
-      %td{ :valign => :top, :colspan => 5 }
+      %td(valign="top" colspan="5")
         .label.top.req #{t :name}:
         = f.text_field :name, :style => "width:500px"
     %tr
-      %td{ :valign => :top }
+      %td(valign="top")
         .label.req #{t :due}:
         - bucket = (params[:bucket].blank? ? @task.bucket : params[:bucket]) || "due_asap"
         - if @task.bucket != "specific_time"
@@ -15,10 +15,18 @@
           = f.select :bucket, @bucket, { :selected => :specific_time }, { :style => "width:160px; display:none;", :onchange => "crm.flip_calendar(this.value)" }
           = f.text_field :calendar, :value => l(f.object.due_at.to_date, :format => :mmddyyyy), :style => "width:160px;", :autocomplete => :off
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label.req #{t :assign_to}:
         = collection_select :task, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px", :disabled => @task.assigned_to == @current_user.id }
       %td= spacer
-      %td{ :valign => :top }
+      %td(valign="top")
         .label.req #{t :category}:
         = f.select :category, @category, { :selected => @task.category.blank? ? nil : @task.category.to_sym, :include_blank => t(:select_blank) }, { :style => "width:160px" }
+
+    - if Setting.background_info.include?(:task)
+      %tr
+        %td(valign="top" colspan="5")
+          .label= t(:extra_info).capitalize << ':'
+          = f.text_area :background_info, :style =>"width:500px", :rows => 3
+
+    = hook(:task_top_section_bottom, self, :f => f)

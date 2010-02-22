@@ -72,13 +72,9 @@
 #     - :contact
 #     - :lead
 #     - :opportunity
+#     - :task
 #
-:background_info:
-  - :account
-  - :campaign
-  - :contact
-  - :lead
-  - :opportunity
+:background_info: []
 
 # Address format.
 #------------------------------------------------------------------------------

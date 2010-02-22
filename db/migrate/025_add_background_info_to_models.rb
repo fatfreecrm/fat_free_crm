@@ -5,6 +5,7 @@ class AddBackgroundInfoToModels < ActiveRecord::Migration
     add_column :contacts, :background_info, :string
     add_column :leads, :background_info, :string
     add_column :opportunities, :background_info, :string
+    add_column :tasks, :background_info, :string
   end
 
   def self.down
@@ -13,5 +14,6 @@ class AddBackgroundInfoToModels < ActiveRecord::Migration
     remove_column :contacts, :background_info
     remove_column :leads, :background_info
     remove_column :opportunities, :background_info
+    remove_column :tasks, :background_info
   end
 end

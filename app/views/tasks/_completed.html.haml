@@ -8,7 +8,7 @@
     = link_to_task_delete(completed, bucket) + "&nbsp;" if @current_user == completed.user
 
   .indent
-    %strike= h(completed.name)
+    %strike= auto_link h(completed.name)
     - if completed.asset_id?
       == #{t :related} #{link_to(h(completed.asset.name), polymorphic_url(completed.asset))}
     &ndash;
@@ -16,4 +16,6 @@
       %span.cool
         -# :task_completed_by: "completed {{time_ago}} ago by {{user}}"
         = t(:task_completed_by, :time_ago => distance_of_time_in_words(completed.completed_at, Time.now), :user => ((completed.completor.id != @current_user.id) ? link_to(completed.completor.full_name, user_path(completed.completor)) : t(:me)))
-      
+    - unless completed.background_info.blank?
+      %div
+        %dt= h(completed.background_info)
