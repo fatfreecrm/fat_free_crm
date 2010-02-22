@@ -22,20 +22,22 @@
   require "faker"
   puts "Loading addresses..."
 
+  type = %w(Business Billing Shipping)
   addressable = %w(Account Contact Lead)
+
   for i in (1 .. rand(200) + 200) do
 %>
 address_<%= i %>:
   id               : <%= i %>
-  user_id          : <%= rand(8) + 1 %>
+  address_type     : <%= type.rand %>
   addressable_id   : <%= rand(15) + 1 %>
-  addressable_type : <%= addressable[rand(commentable.size)] %>
-  street1          : <%= Faker::Address.street_address %>
-  street2          : <%= Faker::Address.street_address %>   
-  city             : <%= Faker::Address.city }
-  state            : <%= Faker::Address.us_state_abbr }
-  a.zipcode        : <%= Faker::Address.zip_code }
-  a.country        : <%= Faker::Address.country }
-  a.full_address   : <%= Factory.next(:address) }
+  addressable_type : <%= addressable.rand %>
+  street1          : <%= street1 = Faker::Address.street_address %>
+  street2          : <%= street2 = Faker::Address.street_address %>
+  city             : <%= city    = Faker::Address.city %>
+  state            : <%= state   = Faker::Address.us_state_abbr %>
+  zipcode          : <%= zipcode = Faker::Address.zip_code %>
+  country          : <%= country = Faker::Address.uk_country %>
+  full_address     : <%= "#{street1} #{street2} #{city}, #{state} #{zipcode} #{country}" %>
 
 <% end %>

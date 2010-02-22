@@ -95,7 +95,7 @@ Factory.define :address do |a|
   a.city                { Faker::Address.city }
   a.state               { Faker::Address.us_state_abbr }
   a.zipcode             { Faker::Address.zip_code }
-  a.country             { Faker::Address.country }
+  a.country             { Faker::Address.uk_country }
   a.full_address        { Factory.next(:address) }
   a.address_type        { %w(Business Billing Shipping).rand }
   a.updated_at          { Factory.next(:time) }
