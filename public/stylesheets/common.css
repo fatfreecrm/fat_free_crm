@@ -199,22 +199,24 @@
   background: #f2f2f2;
   margin: 2px 0px 0px 0px;
   overflow: hidden;
-  padding: 4px; }
+  padding: 4px;
+  list-style: none; }
   .comment input[type=text] {
     border: 1px #cfcfcf solid;
     color: grey;
     font-size: 11px;
+    margin: 3px 0px 0px 0px;
     padding: 3px;
     width: 500px; }
   .comment textarea {
     font-size: 11px;
     height: 110px;
+    margin: 3px 0px 0px 0px;
     padding: 3px;
     width: 500px; }
   .comment .gravatar {
-    background: #f2f2f2;
     float: left;
-    padding: 0px 10px 5px 0px; }
+    margin: 3px 10px 3px 3px; }
   .comment .body {
     display: inline;
     font-size: 11px; }

@@ -1,6 +1,6 @@
 id = dom_id(@lead)
 
-if params[:cancel] == "true" # <----------------- Hide [Convert Lead]
+if params[:cancel].true?     # <----------------- Hide [Convert Lead]
 
   if called_from_landing_page?
     page.call "crm.flip_form", :convert_lead
@@ -23,7 +23,7 @@ else # <----------------------------------------  Show [Convert Lead] form.
     page.call "crm.hide_form", :create_lead       # Hide [Create Lead] form if any.
     page[id].replace_html :partial => "convert"   # Show [Convert Lead] form.
 
-  elsif params[:cancel] == "false"                # Called from title of the lead landing page...
+  elsif params[:cancel].false?                    # Called from title of the lead landing page...
     page[:convert_lead].replace_html :partial => "convert"
     page.call "crm.hide_form", :edit_lead
     page.call "crm.flip_form", :convert_lead

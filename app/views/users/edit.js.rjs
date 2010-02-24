@@ -1,4 +1,4 @@
-if params[:cancel] == "true"
+if params[:cancel].true?
   page.call "crm.flip_form", :edit_profile
   page.call "crm.set_title", :edit_profile, t(:my_profile)
 else

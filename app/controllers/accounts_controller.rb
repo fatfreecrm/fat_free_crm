@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @account = Account.new(:user => @current_user)
+    @account = Account.new(:user => @current_user, :access => Setting.default_access)
     @users = User.except(@current_user).all
     if params[:related]
       model, id = params[:related].split("_")
@@ -159,7 +159,7 @@ class AccountsController < ApplicationController
   # GET /accounts/options                                                 AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @per_page = @current_user.pref[:accounts_per_page] || Account.per_page
       @outline  = @current_user.pref[:accounts_outline]  || Account.outline
       @sort_by  = @current_user.pref[:accounts_sort_by]  || Account.sort_by

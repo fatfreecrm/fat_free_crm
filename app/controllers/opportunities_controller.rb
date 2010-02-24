@@ -56,7 +56,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
-    @opportunity = Opportunity.new(:user => @current_user, :stage => "prospecting")
+    @opportunity = Opportunity.new(:user => @current_user, :stage => "prospecting", :access => Setting.default_access)
     @users       = User.except(@current_user).all
     @account     = Account.new(:user => @current_user)
     @accounts    = Account.my(@current_user).all(:order => "name")
@@ -193,7 +193,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/options                                             AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @per_page = @current_user.pref[:opportunities_per_page] || Opportunity.per_page
       @outline  = @current_user.pref[:opportunities_outline]  || Opportunity.outline
       @sort_by  = @current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by

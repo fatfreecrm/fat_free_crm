@@ -77,6 +77,7 @@ es-ES:
   due_this_week: Ésta semana
   due_next_week: Próxima semana
   due_later: En el futuro
+  due_specific_date: En Fecha Específica... # ?!
 
   completed_today: Hoy
   completed_yesterday: Ayer
@@ -190,6 +191,7 @@ es-ES:
   #----------------------------------------------------------------------------
   "option_amount*probability": valor ponderado 
   activity_options: Mostrar {{models}} las actividades realizadas por {{user}} en {{period}}.
+  all_users: todos los usuarios
   option_after: después de
   option_all: todas
   option_all_users: todos los usuarios
@@ -255,7 +257,7 @@ es-ES:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: ¿Ha olvidado la contraseña?
+  forgot_password: ¿Ha olvidado la contraseña
   login: Iniciar sesión
   no_account: ¿No tiene una cuenta?
   remember_me: Recordar mis datos
@@ -264,7 +266,6 @@ es-ES:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Cuenta
-  account_permissions_intro: Por defecto sólo usted tendrá acceso a la cuenta. Puede cambiar los permisos más tarde.
   account_small: cuenta
   accounts: Cuentas
   accounts_options: Opciones de Cuenta
@@ -345,8 +346,10 @@ es-ES:
   extra_info_small: éste contacto 
   facebook: Facebook
   linked_in: LinkedIn
-  myself: Mí 
-  permissions_intro: Por defecto sólo usted tendrá acceso a {{value}}. Puede cambiar los permisos más tarde.
+  myself: Mí
+  permissions_intro_private: Por defecto sólo usted tendrá acceso a {{value}}. Puede cambiar los permisos más tarde.  
+  permissions_intro_public: Por defecto todos los usuarios tendrán acceso a {{value}}. Puede cambiar los permisos más tarde.
+  permissions_intro_shared: Por defecto sólo los usuarios seleccionados tendrán acceso a {{value}}. Puede cambiar los permisos más tarde.  
   referred_by: Referencias
   referred_by_small: referencias
   save_contact: Guardar contacto
@@ -365,7 +368,9 @@ es-ES:
   create_opp_for_contact: De forma opcional puede crear una oportunidad para el contacto {{value}} atribuyéndole un nombre, su estado actual, una fecha de cierre estimada, la probabilidad de ventas, valor de la transacción y descuento ofertado.
   lead: Iniciativa
   lead_info_small: contacto de iniciativa
-  lead_permissions_intro: Por defecto los permisos se copiarán de la campaña o estarán configurados de forma privada. Puede cambiar los permisos de la iniciativa más tarde.
+  lead_permissions_intro_private: Por defecto los permisos se copiarán de la campaña o estarán configurados de forma privada. Puede cambiar los permisos de la iniciativa más tarde.
+  lead_permissions_intro_public: Por defecto los permisos se copiarán de la campaña o estarán configurados de forma pública. Puede cambiar los permisos de la iniciativa más tarde.  
+  lead_permissions_intro_shared: Por defecto los permisos se copiarán de la campaña o estarán compartidos con los usuarios seleccionados. Puede cambiar los permisos de la iniciativa más tarde.  
   lead_small: iniciativa
   lead_status_small: estado de la iniciativa
   lead_summary: Resumen de iniciativas
@@ -427,6 +432,9 @@ es-ES:
   feel_free: Puede
   move_to: mover a
   no_tasks: "No tiene tareas {{value}}"
+  no_tasks_pending: pending # TODO
+  no_tasks_assigned: assigned # TODO
+  no_tasks_completed: completed # TODO
   pending_tab: Pendientes
   pending_tasks: Tareas Pendientes
   related: 're:'
@@ -461,6 +469,7 @@ es-ES:
   action_rescheduled: modificó fecha de finalización de 
   action_updated: actualizó
   action_viewed: vió
+  action_won: conseguida
   no_activity_records: Ningún registro encontrado.
   recent_activity: Actividad reciente
   recent_activity_options: Opciones de actividad reciente
@@ -474,6 +483,7 @@ es-ES:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Añadir Nota
+  save_note: Guardar Nota
   add_note_help: Añadir una nueva nota...
   added_ago: añadida hace {{value}}
   added_by: añadida hace {{time_ago}} por {{user}} 
@@ -552,7 +562,10 @@ es-ES:
   user_suspended: Suspendido
   user_suspended_on: suspendido el {{value}}
   users: Usuarios
+  users_small: usuarios
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact: 
       one: '1 contacto'
@@ -569,3 +582,21 @@ es-ES:
     login:
       one: '1 conexión'
       other: '{{count}} conexiones'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"
+
+  calendar_date_select:
+    ok: Cancelar
+    now: Ahora
+    today: Hoy
+    clear: Limpiar

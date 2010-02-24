@@ -3,5 +3,7 @@
 - sidebar = "admin/#{sidebar}" if controller.class.to_s.starts_with?("Admin::")
 
 = yield(:sidebar)
-= render(:partial => sidebar) if partial_exist?(sidebar)
+- begin
+  = render :partial => sidebar
+  - rescue MissingTemplate
 = render :partial => "common/recently"

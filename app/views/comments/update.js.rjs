@@ -1,0 +1,10 @@
+id = dom_id(@comment)
+
+if @comment.errors.empty?
+  page[id].replace :partial => "comment", :collection => [ @comment ]
+  page[id].visual_effect :highlight, :duration => 1.0
+else  
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:comment_comment].focus
+end

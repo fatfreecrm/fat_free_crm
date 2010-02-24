@@ -8,8 +8,8 @@
 
 %div#edit_account{ hidden }
 
-= render :partial => "common/new_comment", :locals => { :commentable => @account }
-= render :partial => "common/comment", :collection => @account.comments
+= render :partial => "comments/new", :locals => { :commentable => @account }
+= render :partial => "comments/comment", :collection => @account.comments
 
 -#-----------------------------------------------------------------------------
 %br

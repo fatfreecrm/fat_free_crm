@@ -13,7 +13,7 @@
           = f.text_field :calendar, :style => "width:160px; display:none;", :autocomplete => :off
         - else
           = f.select :bucket, @bucket, { :selected => :specific_time }, { :style => "width:160px; display:none;", :onchange => "crm.flip_calendar(this.value)" }
-          = f.text_field :calendar, :value => f.object.due_at.to_date.to_s(:mmddyyyy), :style => "width:160px;", :autocomplete => :off
+          = f.text_field :calendar, :value => l(f.object.due_at.to_date, :format => :mmddyyyy), :style => "width:160px;", :autocomplete => :off
       %td= spacer
       %td{ :valign => :top }
         .label.req #{t :assign_to}:

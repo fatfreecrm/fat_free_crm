@@ -55,7 +55,7 @@ class ContactsController < ApplicationController
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @contact  = Contact.new(:user => @current_user)
+    @contact  = Contact.new(:user => @current_user, :access => Setting.default_access)
     @account  = Account.new(:user => @current_user)
     @users    = User.except(@current_user).all
     @accounts = Account.my(@current_user).all(:order => "name")
@@ -181,7 +181,7 @@ class ContactsController < ApplicationController
   # GET /contacts/options                                                  AJAX
   #----------------------------------------------------------------------------
   def options
-    unless params[:cancel] == "true"
+    unless params[:cancel].true?
       @per_page = @current_user.pref[:contacts_per_page] || Contact.per_page
       @outline  = @current_user.pref[:contacts_outline]  || Contact.outline
       @sort_by  = @current_user.pref[:contacts_sort_by]  || Contact.sort_by

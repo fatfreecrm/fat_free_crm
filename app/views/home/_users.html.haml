@@ -1,6 +1,6 @@
-- users = [ t(:option_all_users) ] + User.all(:order => "first_name, last_name").map(&:full_name)
-- sort_by_menu_items = users.inject([]) do | items, user|
-  - items << %Q[{ name: "#{user}", on_select: function() { #{redraw(:user, user == users.first ? user.downcase! : user, url_for(:action => :redraw))} } }]
+- users = [[ "all_users", t(:option_all_users) ]] + User.all(:order => "first_name, last_name").map {|u| [u.full_name, u.full_name]}
+- sort_by_menu_items = users.inject([]) do |items, (key, value)|
+  - items << %Q[{ name: "#{value}", on_select: function() { #{redraw(:user, [ key, (value == t(:option_all_users) ? value.downcase : value) ], url_for(:action => :redraw))} } }]
 
 :plain
   new crm.Menu({

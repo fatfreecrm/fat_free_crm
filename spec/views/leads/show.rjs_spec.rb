@@ -11,8 +11,8 @@ describe "/leads/show.html.haml" do
   end
 
   it "should render lead landing page" do
-    template.should_receive(:render).with(hash_including(:partial => "common/new_comment"))
-    template.should_receive(:render).with(hash_including(:partial => "common/comment"))
+    template.should_receive(:render).with(hash_including(:partial => "comments/new"))
+    template.should_receive(:render).with(hash_including(:partial => "comments/comment"))
 
     render "/leads/show.html.haml"
     response.should have_tag("div[id=edit_lead]")
