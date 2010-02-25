@@ -21,7 +21,7 @@ fr:
 
   # Settings.
   #----------------------------------------------------------------------------
-  tab_dashboard: Tableau de bord
+  tab_dashboard: Résumé
   tab_tasks: Tâches 
   tab_campaigns: Campagnes
   tab_leads: Pistes
@@ -39,7 +39,7 @@ fr:
   completed: Complétée
   called_off: Abandonné
 
-  new: nouveau
+  new: Nouveau
   contacted: Contacté
   converted: Converti
   rejected: Rejeté
@@ -197,7 +197,7 @@ fr:
   option_all_users: Tous les utilisateurs
   option_amount: montant
   option_before: avant
-  option_brief: brief
+  option_brief: court
   option_closes_on: date de clôture
   option_company: société
   option_created_at: date de création
@@ -242,7 +242,7 @@ fr:
   new_password: Nouveau mot de passe
   password: Mot de passe
   password_confirmation: Confirmez le nouveau mot de passe
-  phone: Phone
+  phone: Téléphone
   profile: Profile
   profile_language: Langue
   save_profile: Enregistrer le profile
@@ -258,7 +258,7 @@ fr:
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
   forgot_password: Mot de passe oublié
-  login: Identifiant
+  login: Connection
   no_account: Vous ne possédez pas de compte?
   remember_me: Se souvenir de moi
   sign_up_now: "S'enregistrer maintenant!"
@@ -280,7 +280,7 @@ fr:
   mobile_small: mobile
   open_in_window: Ouvrir {{value}} dans une nouvelle fenêtre
   phone_small: téléphone
-  phone_toll_free: Toll-free
+  phone_toll_free: Tel. gratuit
   keep_private: Garder privé, ne pas partager avec les autres
   make_public: Partager avec tous
   same_as_billing: identique à facturation
@@ -346,7 +346,7 @@ fr:
   extra_info_small: contact supplémentaire
   facebook: Facebook
   linked_in: LinkedIn
-  myself: Myself
+  myself: Moi-même
   permissions_intro_private: Par défaut vous seul aurez accès à {{value}}. Vous pouvez modifier les permissions ultérieurement.
   permissions_intro_public: Par défaut tous les utilisateurs auront accès à {{value}}. Vous pouvez modifier les permissions ultérieurement.
   permissions_intro_shared: Par défaut seul les utilisateurs sélectionnés auront accès à {{value}}.  Vous pouvez modifier les permissions ultérieurement.
@@ -450,7 +450,7 @@ fr:
   task_due_now: échoit maintenant
   task_due_today: "échoit aujourd'hui"
   task_from: De {{value}}
-  task_overdue: en retard, à échoyait le
+  task_overdue: en retard, échoyait le
   task_pending: La tâche à été mise en attente.
   task_small: tâches
   tasks: Taches
@@ -503,7 +503,7 @@ fr:
   n_a: N/A
   name: Nom
   no_match: Acun(e) {{value}} ne correspond
-  no_recent_items: "Il n'y rien de récent a afficher"
+  no_recent_items: "Il n'y rien de récent à afficher"
   options: Options
   permissions: Permissions
   please_retry: tentez une autre requête.
