@@ -172,6 +172,25 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  create_contact: function() {
+    if ($("contact_business_address_attributes_country")) {
+      this.clear_all_hints();
+    }
+    $("account_assigned_to").value = $F("contact_assigned_to");
+    if ($("account_id").visible()) {
+      $("account_id").enable();
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  save_contact: function() {
+    if ($("contact_business_address_attributes_country")) {
+      this.clear_all_hints();
+    }
+    $("account_assigned_to").value = $F("contact_assigned_to");
+  },
+
+  //----------------------------------------------------------------------------
   flip_calendar: function(value) {
     if (value == "specific_time") {
       $("task_bucket").toggle(); // Hide dropdown.
@@ -261,6 +280,13 @@ var crm = {
     }
     el.style.color = 'black'
     el.setAttribute('hint', false);
+  },
+
+  //----------------------------------------------------------------------------
+  clear_all_hints: function() {
+    $$("input[hint=true]").each( function(field) {
+      field.value = '';
+    }.bind(this));
   },
 
   //----------------------------------------------------------------------------

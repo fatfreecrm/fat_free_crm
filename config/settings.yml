@@ -79,10 +79,10 @@
 # Address format.
 #------------------------------------------------------------------------------
 # Sets the address format for Accounts, Contacts, and Leads.
-#   true  -- use single text area field to enter the entire address. This is the default.
-#   false -- use separate street1, street2, city, state, zipcode, and country field.
+#   true  -- use separate street1, street2, city, state, zipcode, and country field.
+#   false -- use single text area field to enter the entire address. This is the default.
 #
-:single_address_field: true
+:compound_address: false
 
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------

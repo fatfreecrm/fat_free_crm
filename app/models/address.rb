@@ -26,4 +26,15 @@ class Address < ActiveRecord::Base
   named_scope :business, :conditions => "address_type='Business'"
   named_scope :billing,  :conditions => "address_type='Billing'"
   named_scope :shipping, :conditions => "address_type='Shipping'"
+
+  # Checks if the address is blank for both single and compound addresses.
+  #----------------------------------------------------------------------------
+  def blank?
+    if Setting.compound_address
+      %w(street1 street2 city state zipcode country).all? { |attr| self.send(attr).blank? }
+    else
+      self.full_address.blank?
+    end
+  end
+
 end

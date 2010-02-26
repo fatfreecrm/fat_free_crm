@@ -24,13 +24,4 @@ module AddressesHelper
     asset.send(type.to_sym)
   end
 
-  # Checks if an address is empty (single and splitted).
-  #----------------------------------------------------------------------------  
-  def address_empty?(address)
-    if Setting.single_address_field
-      address.full_address.blank?
-    else
-      %w(street1 street2 city state zipcode country).all? { |field| address.send(field).blank? }
-    end
-  end
 end
