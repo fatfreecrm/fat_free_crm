@@ -298,4 +298,26 @@ module ApplicationHelper
     end
   end  
 
+  # Render a text field that is part of compound address.
+  #----------------------------------------------------------------------------
+  def address_field(form, object, attribute, extra_styles)
+    hint = "#{t(attribute)}..."
+    if object.send(attribute).blank?
+      object.send("#{attribute}=", hint)
+      form.text_field(attribute,
+        :hint    => true,
+        :style   => "margin-top: 6px; color:silver; #{extra_styles}",
+        :onfocus => "crm.hide_hint(this)",
+        :onblur  => "crm.show_hint(this, '#{hint}')"
+      )
+    else
+      form.text_field(attribute,
+        :hint    => false,
+        :style   => "margin-top: 6px; #{extra_styles}",
+        :onfocus => "crm.hide_hint(this, '#{escape_javascript(object.send(attribute))}')",
+        :onblur  => "crm.show_hint(this, '#{hint}')"
+      )
+    end
+  end
+
 end

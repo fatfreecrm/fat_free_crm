@@ -3,12 +3,12 @@ class CreateAddresses < ActiveRecord::Migration
     create_table :addresses do |t|
       t.string :street1
       t.string :street2
-      t.string :city
-      t.string :state
-      t.string :zipcode
-      t.string :country, :limit => 2 
+      t.string :city,    :limit => 64
+      t.string :state,   :limit => 64
+      t.string :zipcode, :limit => 16
+      t.string :country, :limit => 64
       t.string :full_address
-      t.string :address_type
+      t.string :address_type, :limit => 16
  
       t.references :addressable, :polymorphic => true
  
@@ -42,5 +42,9 @@ class CreateAddresses < ActiveRecord::Migration
  
   def self.down
     drop_table :addresses
+    add_column(:contacts, :address, :string)
+    add_column(:accounts, :billing_address, :string)
+    add_column(:accounts, :shipping_address, :string)
+    add_column(:leads,    :address, :string)
   end
 end

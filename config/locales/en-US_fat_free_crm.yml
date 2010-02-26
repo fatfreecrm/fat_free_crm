@@ -508,9 +508,11 @@ en-US:
   time_ago: "{{value}} ago"
   background_info: Background
   address: Address
+  street1: Street 1 # NEW
+  street2: Street 2 # NEW
   city: City
   zipcode: Zip Code
-  state: State/Region
+  state: State
   country: Country
 
   # Views -> Layout.

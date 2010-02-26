@@ -16,40 +16,21 @@
 #------------------------------------------------------------------------------
 
 module AddressesHelper
-  
-  # Setups a new address for forms and views (complex nested forms)
+
+  # Sets up new address when used in forms.
   #----------------------------------------------------------------------------
   def get_address(asset, type)
     asset.send("build_#{type}".to_sym) if asset.send(type.to_sym).nil?
-
     asset.send(type.to_sym)
   end
 
-  # Generates the js code for copy from one address to another (used in accounts)
-  #------------------------------------------------------------------------------  
-  def copy_address_function(from, to)
-    if Setting.single_address_field == true
-      link_to_function t(:same_as_billing), %/$("#{from}_attributes_full_address").value = $("#{to}_attributes_full_address").value/
-    else
-      text = ""
-      ['street1', 'street2', 'city', 'state', 'zipcode', 'country'].each do |field|
-        text += "$(\"#{from}_attributes_#{field}\").value = $(\"#{to}_attributes_#{field}\").value;"
-      end
-      link_to_function t(:same_as_billing), %/#{text}/
-    end   
-  end
-  
-  # Checks if an address is empty (single and splitted)
+  # Checks if an address is empty (single and splitted).
   #----------------------------------------------------------------------------  
-  def is_address_empty(address)
-    if Setting.single_address_field == true
-      address.full_address.nil? || address.full_address.empty?
+  def address_empty?(address)
+    if Setting.single_address_field
+      address.full_address.blank?
     else
-      is_empty = true
-      ['street1', 'street2', 'city', 'state', 'zipcode', 'country'].each do |field|
-        is_empty = false unless address.send(field).nil? || address.send(field).empty?
-      end
-      is_empty
+      %w(street1 street2 city state zipcode country).all? { |field| address.send(field).blank? }
     end
   end
 end

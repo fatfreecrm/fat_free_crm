@@ -17,7 +17,7 @@
 
 var crm = {
 
-  EXPANDED      :  "&#9660;",
+  EXPANDED      : "&#9660;",
   COLLAPSED     : "&#9658;",
   request       : null,
   autocompleter : null,
@@ -239,6 +239,47 @@ var crm = {
     if (!sticky) {
       setTimeout("Effect.Fade('flash')", 3000);
     }
+  },
+
+  //----------------------------------------------------------------------------
+  show_hint: function(el, hint) {
+    if (el.value == '') {
+      el.value = hint;
+      el.style.color = 'silver'
+      el.setAttribute('hint', true);
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  hide_hint: function(el, value) {
+    if (arguments.length == 2) {
+      el.value = value;
+    } else {
+      if (el.getAttribute('hint') == "true") {
+        el.value = '';
+      }
+    }
+    el.style.color = 'black'
+    el.setAttribute('hint', false);
+  },
+
+  //----------------------------------------------------------------------------
+  copy_address: function(from, to) {
+    $(from + "_attributes_full_address").value = $(to + "_attributes_full_address").value;
+  },
+
+  //----------------------------------------------------------------------------
+  copy_compound_address: function(from, to) {
+    $w("street1 street2 city state zipcode").each( function(field) {
+      var source = $(from + "_attributes_" + field);
+      var destination = $(to + "_attributes_" + field);
+      if (source.getAttribute('hint') != "true") {
+        this.hide_hint(destination, source.value);
+      }
+    }.bind(this));
+
+    // Country dropdown needs special treatment ;-)
+    $(to + "_attributes_country").selectedIndex = $(from + "_attributes_country").selectedIndex;
   },
 
   //----------------------------------------------------------------------------
