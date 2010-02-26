@@ -24,10 +24,10 @@ var crm = {
   base_url      : "",
 
   //----------------------------------------------------------------------------
-  date_select_popup: function(id, dropdown_id) {
+  date_select_popup: function(id, dropdown_id, show_time) {
     $(id).observe("focus", function() {
       if (!$(id).calendar_was_shown) {    // The field recieved initial focus, show the calendar.
-        var calendar = new CalendarDateSelect(this, { month_year: "label",  year_range: 10, before_close: function() { this.calendar_was_shown = true } });
+        var calendar = new CalendarDateSelect(this, { month_year: "label",  year_range: 10, time: show_time, before_close: function() { this.calendar_was_shown = true } });
         if (dropdown_id) {
           calendar.buttons_div.build("span", { innerHTML: " | ", className: "button_seperator" });
           calendar.buttons_div.build("a", { innerHTML: "Back to List", href: "#", onclick: function() {

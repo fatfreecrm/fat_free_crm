@@ -203,3 +203,5 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
+
+task_calendar_with_time: true
