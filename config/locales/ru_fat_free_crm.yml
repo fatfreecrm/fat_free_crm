@@ -615,7 +615,7 @@ ru:
 
   time:
     formats:
-      mmddhhss: "%b %e at %l:%M%p"
+      mmddhhss: "%d %B в %H:%M"
 
   calendar_date_select:
     ok: OK
