@@ -622,3 +622,6 @@ ru:
     now: Сейчас
     today: Сегодня
     clear: Очистить
+
+  # Default is Finnish (31.12.2009 17:00)
+  calendar_date_select_format: finnish
