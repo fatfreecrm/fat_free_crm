@@ -93,6 +93,20 @@
 #
 task_calendar_with_time: false
 
+# Sets the email dropbox feature, this are the connections settings for 
+# the imap account, server and folders.
+#------------------------------------------------------------------------------
+#:email_dropbox:
+#  :server                 : imap.server.com
+#  :port                   : 993
+#  :ssl                    : true
+#  :user                   : user/email
+#  :dropbox_email          : email
+#  :password               : xxxxx
+#  :scan_folder            : inbox
+#  :move_to_folder         : ffc
+#  :move_invalid_to_folder : non_ffc
+
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------
 :tabs: [
