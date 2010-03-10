@@ -84,11 +84,13 @@
 #
 :compound_address: false
 
+# Dropdown calendar format.
+#------------------------------------------------------------------------------
 # The following setting controls whether to show time in dropdown calendar
 # when scheduling a task for specific date.
 #   true  -- allow selecting date and time.
 #   false -- allow selecting date only. This is the default.
-#------------------------------------------------------------------------------
+#
 task_calendar_with_time: false
 
 # Main and Admin Tabs.
