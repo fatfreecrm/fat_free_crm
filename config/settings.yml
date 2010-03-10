@@ -104,8 +104,9 @@ task_calendar_with_time: false
 #  :dropbox_email          : email
 #  :password               : xxxxx
 #  :scan_folder            : inbox
-#  :move_to_folder         : ffc
-#  :move_invalid_to_folder : non_ffc
+#  :move_to_folder         : ffc      # Optional
+#  :move_invalid_to_folder : non_ffc  # Optional
+#  :debug                  : false
 
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------

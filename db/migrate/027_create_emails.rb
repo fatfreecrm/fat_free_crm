@@ -10,8 +10,9 @@ class CreateEmails < ActiveRecord::Migration
       t.string      :bcc          
       t.string      :subject          
       t.text        :body
-      t.datetime    :sent_at    
-      t.datetime    :received_at    
+      t.datetime    :sent_at # Not obtained for now
+      t.datetime    :received_at
+      t.datetime    :deleted_at
       t.timestamps
     end
   end
