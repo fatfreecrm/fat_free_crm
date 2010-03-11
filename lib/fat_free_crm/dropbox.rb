@@ -95,9 +95,9 @@ module FatFreeCRM
     #------------------------------------------------------------------------------     
     def archive(uid)
       if @settings[:move_to_folder]
-        @imap.uid_copy(@current_uid, @settings[:move_to_folder])   
+        @imap.uid_copy(uid, @settings[:move_to_folder])
       end      
-      @imap.uid_store(@current_uid, "+FLAGS", [:Seen])  
+      @imap.uid_store(uid, "+FLAGS", [:Seen])
     end    
 
     # Checks if an email is valid (plain text and is from an email of valid user)
