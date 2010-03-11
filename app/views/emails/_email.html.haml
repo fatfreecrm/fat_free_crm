@@ -1,0 +1,10 @@
+%li[email]{ highlightable(dom_id(email, :tools), :off => "#f2f2f2") }
+  .body
+    = link_to avatar_for(email.user, :size => "25x25"), user_path(email)
+    .tools{ invisible, :id => dom_id(email, :tools) }
+      = link_to_edit(email) + " | "
+      = link_to_delete(email) + "&nbsp;"
+
+    = "#{h(email.to)} #{link_to_remote(h(email.subject), :method => :get, :url => edit_email_path(email))}"
+    %tt= t(:time_ago, distance_of_time_in_words(Time.now, email.created_at))
+    %dt= auto_link(simple_format h(email.body))

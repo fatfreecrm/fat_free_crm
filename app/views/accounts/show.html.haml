@@ -9,7 +9,7 @@
 %div#edit_account{ hidden }
 
 = render :partial => "comments/new", :locals => { :commentable => @account }
-= render :partial => "comments/comment", :collection => @account.comments
+= render :partial => "common/timeline", :collection => @timeline
 
 -#-----------------------------------------------------------------------------
 %br
@@ -34,5 +34,11 @@
 .remote#create_opportunity{ hidden }
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @account.opportunities
+
+-#-----------------------------------------------------------------------------
+%br
+.subtitle#list_emails_title #{t :emails}
+.list#emails
+  = render :partial => "emails/email", :collection => @account.emails
 
 = hook(:show_account_bottom, self)

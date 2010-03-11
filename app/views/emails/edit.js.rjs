@@ -1,0 +1,11 @@
+id = dom_id(@email)
+
+if params[:cancel].true?     # <----------------- Hide [Edit Email]
+  page[id].replace :partial => "email", :collection => [ @email ]
+
+else # <----------------------------------------- Show [Edit Email] form.
+
+  page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+  page[id].replace_html :partial => "edit", :locals => { :mediator => @email.mediator }
+  page[dom_id(@email, :text)].focus
+end
