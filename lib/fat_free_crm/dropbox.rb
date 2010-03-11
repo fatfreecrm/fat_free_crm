@@ -58,7 +58,7 @@ module FatFreeCRM
             end
           end              
         rescue Exception => e
-          logger.error "Dropbox - Problem processing email: #{e}"
+          log("Problem processing email: #{e}", email)
           next
         end
       end # loop
@@ -74,6 +74,7 @@ module FatFreeCRM
         @imap.select(@settings[:scan_folder]) if select == true
       rescue Exception => e
         logger.error "Dropbox - Problem setting connection with imap server: #{e}"
+        exit
       end
     end
 
@@ -93,22 +94,21 @@ module FatFreeCRM
 
     # Archive message (valid) action based on settings from settings.yml
     #------------------------------------------------------------------------------     
-    def archive(uid)
+    def archive
       if @settings[:move_to_folder]
-        @imap.uid_copy(uid, @settings[:move_to_folder])
+        @imap.uid_copy(@current_uid, @settings[:move_to_folder])
       end      
-      @imap.uid_store(uid, "+FLAGS", [:Seen])
+      @imap.uid_store(@current_uid, "+FLAGS", [:Seen])
     end    
 
     # Checks if an email is valid (plain text and is from an email of valid user)
-    # TODO: Change find_by_email to not return disabled users
     #------------------------------------------------------------------------------     
     def is_valid(email)      
       if email.content_type != "text/plain"
         log("Discarding... not text/plain", email)
         return false
       end
-      User.find_by_email(email.from.first.downcase) || nil
+      User.find(:first, :conditions => ['email = ? and suspended_at is null', email.from.first.downcase]) || nil
     end
 
     # Checks the email to detect entity on the first line (forward to Campaing/Opportunity)
@@ -157,17 +157,16 @@ module FatFreeCRM
     def process_entity(email, entity)
       asset = entity[:type].constantize.find(:first, :conditions => ['name LIKE ?', "%#{entity[:name].chomp.strip}%"], :order => "updated_at DESC")     
       if asset.blank? 
+        log("not found entity #{entity[:type]} with name #{entity[:name].chomp.strip}", email)
         notify("not_found_entity")
       else
         add_to(email, [asset])
       end
-      archive(email)
     end
 
     # Add mail to assets. assets should be an array of asset objects
     #--------------------------------------------------------------------------------------    
     def add_to(email, assets)
-      # TODO: Check permissions before insert, or in check assets better
       if email.to.blank?
         log("Discarding... missing To header", email)
       else
@@ -176,10 +175,24 @@ module FatFreeCRM
       email.cc.blank? ? cc = "" : cc = email.cc.join(", ")
       
       assets.each do |asset|
-        Email.create(:imap_message_id => email.message_id, :user => @user, :mediator => asset, :from => email.from.first, :to => to, :cc => cc, :subject => email.subject, :body => email.body, :received_at => email.date)
-        log("Added email to asset #{asset.class.to_s} with name #{asset.name}", email)
+        if has_permissions_on(asset)  
+          Email.create(:imap_message_id => email.message_id, :user => @user, :mediator => asset, :from => email.from.first, :to => to, :cc => cc, :subject => email.subject, :body => email.body, :received_at => email.date)
+          archive
+          log("Added email to asset #{asset.class.to_s} with name #{asset.name}", email)
+          notify("succefully added email")
+        else
+          discard
+          log("Discarding... missing permissions in #{asset.class.to_s}=>#{asset.name} for user #{@user.username}", email)
+        end
       end
-      archive(email)
+    end
+
+    def has_permissions_on(asset)
+      return true if asset.access == "Public"
+      return true if asset.access == "Private" && (asset.user_id == @user.id || asset.assigned_to == @user.id)
+      return true if (asset.user_id == @user.id || asset.assigned_to == @user.id) || ! Permission.find(:first, :conditions => ['user_id = ? and asset_id = ? and asset_type = ?', @user.id, asset.id, asset.class.to_s]).blank?
+      
+      return false    
     end
 
     # Notify users with the results of the operations (feedback from dropbox)
