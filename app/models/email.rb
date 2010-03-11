@@ -42,4 +42,11 @@ class Email < ActiveRecord::Base
   belongs_to :user
   
   acts_as_paranoid
+  after_create :log_activity
+  
+  private
+  def log_activity
+    current_user = User.find(user_id)
+    Activity.log(current_user, mediator, :dropboxed) if current_user
+  end  
 end

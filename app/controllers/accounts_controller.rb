@@ -41,6 +41,8 @@ class AccountsController < ApplicationController
     @account = Account.my(@current_user).find(params[:id])
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
+    
+    @timeline = Timeline.find(@account)
 
     respond_to do |format|
       format.html # show.html.haml

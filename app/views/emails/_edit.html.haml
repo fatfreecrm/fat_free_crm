@@ -1,0 +1,13 @@
+- class_name = mediator.class.name.downcase
+.email{:style => "margin: 5px 0px 0px 0px"}
+  = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
+  - remote_form_for(@email) do |f|
+    = hidden_field_tag "comment[user_id]", @current_user.id
+    = hidden_field_tag "comment[mediator_id]", mediator.id
+    = hidden_field_tag "comment[mediator_type]", class_name.capitalize
+    = f.text_area :body, :id => dom_id(@email, :text)
+    %div{:style => "padding:6px 0px 0px 40px;"}
+      = f.submit t(:save_mail)
+      #{t :or}
+      = link_to_remote(t(:cancel), :url => send("edit_email_url", mediator), :method => :get, :with => "'cancel=true'")
+

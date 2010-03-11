@@ -227,6 +227,38 @@
     padding: 0px;
     margin: -10px 0px 0px 36px; }
 
+.email {
+  background: #f2f2f2;
+  margin: 2px 0px 0px 0px;
+  overflow: hidden;
+  padding: 4px;
+  list-style: none; }
+  .email input[type=text] {
+    border: 1px #cfcfcf solid;
+    color: grey;
+    font-size: 11px;
+    margin: 3px 0px 0px 0px;
+    padding: 3px;
+    width: 500px; }
+  .email textarea {
+    font-size: 11px;
+    height: 110px;
+    margin: 3px 0px 0px 0px;
+    padding: 3px;
+    width: 500px; }
+  .email .gravatar {
+    float: left;
+    margin: 3px 10px 3px 3px; }
+  .email .body {
+    display: inline;
+    font-size: 11px; }
+  .email tt {
+    font-size: 10px;
+    color: #666666; }
+  .email dt {
+    padding: 0px;
+    margin: -10px 0px 0px 36px; }
+
 #paginate {
   float: right;
   font-size: 10px;

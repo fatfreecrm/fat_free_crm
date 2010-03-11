@@ -1,4 +1,6 @@
 class EmailsController < ApplicationController
+  before_filter :require_user
+  
   # GET /email
   # GET /email.xml
   def index
@@ -21,65 +23,58 @@ class EmailsController < ApplicationController
     end
   end
 
-  # GET /email/new
-  # GET /email/new.xml
-  def new
-    @email = Email.new
-
-    respond_to do |format|
-      format.html # new.haml
-      format.xml  { render :xml => @email }
-    end
-  end
-
-  # GET /email/1/edit
+  # GET /emails/1/edit                                                   AJAX
+  #----------------------------------------------------------------------------
   def edit
     @email = Email.find(params[:id])
-  end
 
-  # POST /email
-  # POST /email.xml
-  def create
-    @email = Email.new(params[:email])
-
-    respond_to do |format|
-      if @email.save
-        flash[:notice] = 'Email was successfully created.'
-        format.html { redirect_to(email_path(@email)) }
-        format.xml  { render :xml => @email, :status => :created, :location => @email }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
-      end
+    if @email.mediator
+      @email.mediator_type.constantize.my(@current_user).find(@email.mediator.id)
+    else
+      raise ActiveRecord::RecordNotFound
     end
+
+  rescue ActiveRecord::RecordNotFound # Kicks in if mediator asset was not found.
+    respond_to_related_not_found(params[:email][:email_type].downcase, :js, :xml)
   end
 
-  # PUT /email/1
-  # PUT /email/1.xml
+  # PUT /emails/1
+  # PUT /emails/1.xml                                                      AJAX
+  #----------------------------------------------------------------------------
   def update
     @email = Email.find(params[:id])
 
     respond_to do |format|
       if @email.update_attributes(params[:email])
-        flash[:notice] = 'Email was successfully updated.'
-        format.html { redirect_to(email_path(@email)) }
+        format.js
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.js
         format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
       end
     end
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
-  # DELETE /email/1
-  # DELETE /email/1.xml
+  # DELETE /emails/1
+  # DELETE /emails/1.xml                                                  AJAX
+  #----------------------------------------------------------------------------
   def destroy
     @email = Email.find(params[:id])
-    @email.destroy
 
     respond_to do |format|
-      format.html { redirect_to(emails_url) }
-      format.xml  { head :ok }
+      if @email.destroy
+        format.js   # destroy.js.rjs
+        format.xml  { render :xml => @email, :status => :deleted, :location => @email }
+      else
+        format.js   # destroy.js.rjs
+        format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
+      end
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)    
   end
+  
 end
