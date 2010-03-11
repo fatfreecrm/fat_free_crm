@@ -167,6 +167,7 @@ module FatFreeCRM
     # Add mail to assets. assets should be an array of asset objects
     #--------------------------------------------------------------------------------------    
     def add_to(email, assets)
+      # TODO: Check permissions before insert, or in check assets better
       if email.to.blank?
         log("Discarding... missing To header", email)
       else
@@ -222,7 +223,7 @@ module FatFreeCRM
       RAILS_DEFAULT_LOGGER
     end    
     
-    # Centralized loggin
+    # Centralized logging
     #--------------------------------------------------------------------------------------      
     def log(msg, email)  
       logger.info "dropbox - #{msg} in email #{email.message_id} from #{email.from} with subject #{email.subject}" if @settings[:debug]
