@@ -36,7 +36,7 @@ module FatFreeCRM
         begin  
           @current_uid = uid
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
-          unless @current_user = is_valid(email)
+          unless @current_user = validate_and_find_user(email)
             discard
           else                    
             # Search for ENTITIES [Campaign/Opportunity] on the first line of body (identify forwarded emails)
@@ -105,12 +105,12 @@ module FatFreeCRM
 
     # Checks if an email is valid (plain text and is from an email of valid user)
     #------------------------------------------------------------------------------     
-    def is_valid(email)      
+    def validate_and_find_user(email)
       if email.content_type != "text/plain"
         log("Discarding... not text/plain", email)
-        return false
+        return nil
       end
-      User.find(:first, :conditions => ['email = ? and suspended_at is null', email.from.first.downcase]) || nil
+      User.first(:conditions => ['email = ? AND suspended_at IS NULL', email.from.first.downcase])
     end
 
     # Checks the email to detect entity on the first line (forward to Campaing/Opportunity)
