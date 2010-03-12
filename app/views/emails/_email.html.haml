@@ -7,10 +7,14 @@
       = link_to_delete(email) + "&nbsp;"
 
     %div  
-      = link_to_function "<small>#{ true ? '&#9658;' : '&#9660;' }</small> #{truncate(h(email.subject), :length => 60)} - #{t(:time_ago, distance_of_time_in_words(Time.now, email.created_at))}", 'crm.flip_subtitle(this)'
+      = link_to_function "<small>#{ true ? '&#9658;' : '&#9660;' }</small> #{t :email}: #{truncate(h(email.subject), :length => 60)} - #{t(:time_ago, distance_of_time_in_words(Time.now, email.created_at))}", 'crm.flip_subtitle(this)'
     
     %div
       %small#email_intro{ hidden_if(!collapsed) }
         = truncate(h(email.body.gsub("\n"," .. ")), :length => 100)
       #email{ hidden_if(collapsed) }       
-        %dt= auto_link(simple_format h(email.body))
+        %dt
+          %br
+          = "#{email.user.full_name} #{t(:to)} #{email.to}"
+          = "#{t :cc} #{email.cc}" unless email.cc.blank?
+          = auto_link(simple_format h(email.body))

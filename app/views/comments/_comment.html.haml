@@ -7,7 +7,7 @@
       = link_to_delete(comment) + "&nbsp;"
 
     %div  
-      = link_to_function "<small>#{ true ? '&#9658;' : '&#9660;' }</small> #{comment.user.full_name} - #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}", 'crm.flip_subtitle(this)'
+      = link_to_function "<small>#{ true ? '&#9658;' : '&#9660;' }</small> #{t :note}: #{comment.user.full_name} - #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}", 'crm.flip_subtitle(this)'
     
     %div
       %small#comment_intro{ hidden_if(!collapsed) }
