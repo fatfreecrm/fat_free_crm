@@ -72,7 +72,6 @@ describe "IMAP Dropbox" do
     end
   end
 
-  # Archive message (valid) action based on settings from settings.yml
   #------------------------------------------------------------------------------     
   describe "Arciving a message" do
     before(:each) do
@@ -92,6 +91,41 @@ describe "IMAP Dropbox" do
       @imap.should_not_receive(:uid_copy)
       @imap.should_receive(:uid_store).once.with(@current_uid, "+FLAGS", [:Seen])
       @crawler.archive
+    end
+  end
+
+  #------------------------------------------------------------------------------
+  describe "Validating a message" do
+    before(:each) do
+      @email = mock
+      @from = [ "Aaron@Example.Com", "Ben@Example.com" ]
+      @email.stub!(:from).and_return(@from)
+    end
+
+    it "should discard email if its contents type is not text/plain" do
+      @email.stub!(:content_type).and_return("text/html")
+      @crawler.validate_and_find_user(@email).should == nil
+    end
+
+    describe "text/plain emails" do
+      before(:each) do
+        @email.stub!(:content_type).and_return("text/plain")
+      end
+
+      it "should accept text/plain email if there is non-suspended user that matches From: field" do
+        @user = Factory(:user, :email => @from.first, :suspended_at => nil)
+        @crawler.validate_and_find_user(@email).should == @user
+      end
+
+      it "should discard text/plain email if user doesn't match From: field" do
+        Factory(:user, :email => "nobody@example.com")
+        @crawler.validate_and_find_user(@email).should == nil
+      end
+
+      it "should discard text/plain email if user matches From: field but is suspended" do
+        Factory(:user, :email => @from.first, :suspended_at => Time.now)
+        @crawler.validate_and_find_user(@email).should == nil
+      end
     end
   end
 
