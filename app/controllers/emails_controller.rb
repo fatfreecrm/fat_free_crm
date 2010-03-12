@@ -34,8 +34,8 @@ class EmailsController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
 
-  rescue ActiveRecord::RecordNotFound # Kicks in if mediator asset was not found.
-    respond_to_related_not_found(params[:email][:email_type].downcase, :js, :xml)
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
   end
 
   # PUT /emails/1
