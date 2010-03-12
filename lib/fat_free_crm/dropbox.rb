@@ -34,7 +34,7 @@ module FatFreeCRM
         begin  
           @current_uid = uid
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
-          unless @user = is_valid(email)
+          unless @current_user = is_valid(email)
             discard
           else                    
             # Search for ENTITIES [Campaign/Opportunity] on the first line of body (identify forwarded emails)
@@ -51,7 +51,6 @@ module FatFreeCRM
                   log("Detected forward", email)
                   add_to(email, forwarded_asset)
                 else
-                  log("Discarding", email)
                   discard
                 end              
               end            
@@ -116,11 +115,32 @@ module FatFreeCRM
     def is_for_entity(email)
       ENTITIES.each do |entity|
         if email.body.split("\n").first.include? entity
-          return { :type => entity, :name => email.body.split("\n").first.gsub(entity, "") }
+          return { :type => entity, :name => email.body.split("\n").first.gsub(entity, "").chomp.strip }
         end
       end
       return false
     end   
+
+    # Process allready identified entity mark
+    #--------------------------------------------------------------------------------------    
+    def process_entity(email, entity)
+      asset = entity[:type].constantize.find(:first, :conditions => ['name LIKE ?', "%#{entity[:name]}%"], :order => "updated_at DESC")     
+      if asset.blank? 
+        log("entity not found (will try to create new): #{entity[:type]} with name #{entity[:name]}", email)
+        asset = entity[:type].constantize.create(get_new_entity_defaults(email, entity))
+        add_to(email, [asset])
+      else
+        add_to(email, [asset])
+      end
+    end
+    
+    def get_new_entity_defaults(email, entity)
+      # TODO: Maybe the defaults should be more settings
+      defaults = { :user => @current_user, :name => entity[:name], :access => Setting.default_access }
+      defaults[:status] = "planned" if entity[:type] == "Campaign"
+      defaults[:stage] = "prospecting" if entity[:type] == "Opportunity"
+      defaults
+    end
 
     # Checks the email to detect assets on to/bcc addresses
     #--------------------------------------------------------------------------------------     
@@ -152,18 +172,6 @@ module FatFreeCRM
       detected_assets      
     end
 
-    # Process allready identified entity mark
-    #--------------------------------------------------------------------------------------    
-    def process_entity(email, entity)
-      asset = entity[:type].constantize.find(:first, :conditions => ['name LIKE ?', "%#{entity[:name].chomp.strip}%"], :order => "updated_at DESC")     
-      if asset.blank? 
-        log("not found entity #{entity[:type]} with name #{entity[:name].chomp.strip}", email)
-        notify("not_found_entity")
-      else
-        add_to(email, [asset])
-      end
-    end
-
     # Add mail to assets. assets should be an array of asset objects
     #--------------------------------------------------------------------------------------    
     def add_to(email, assets)
@@ -176,21 +184,21 @@ module FatFreeCRM
       
       assets.each do |asset|
         if has_permissions_on(asset)  
-          Email.create(:imap_message_id => email.message_id, :user => @user, :mediator => asset, :from => email.from.first, :to => to, :cc => cc, :subject => email.subject, :body => email.body, :received_at => email.date)
+          Email.create(:imap_message_id => email.message_id, :user => @current_user, :mediator => asset, :from => email.from.first, :to => to, :cc => cc, :subject => email.subject, :body => email.body, :received_at => email.date)
           archive
           log("Added email to asset #{asset.class.to_s} with name #{asset.name}", email)
           notify("succefully added email")
         else
           discard
-          log("Discarding... missing permissions in #{asset.class.to_s}=>#{asset.name} for user #{@user.username}", email)
+          log("Discarding... missing permissions in #{asset.class.to_s}=>#{asset.name} for user #{@current_user.username}", email)
         end
       end
     end
 
     def has_permissions_on(asset)
       return true if asset.access == "Public"
-      return true if asset.access == "Private" && (asset.user_id == @user.id || asset.assigned_to == @user.id)
-      return true if (asset.user_id == @user.id || asset.assigned_to == @user.id) || ! Permission.find(:first, :conditions => ['user_id = ? and asset_id = ? and asset_type = ?', @user.id, asset.id, asset.class.to_s]).blank?
+      return true if asset.access == "Private" && (asset.user_id == @current_user.id || asset.assigned_to == @current_user.id)
+      return true if (asset.user_id == @current_user.id || asset.assigned_to == @current_user.id) || ! Permission.find(:first, :conditions => ['user_id = ? and asset_id = ? and asset_type = ?', @current_user.id, asset.id, asset.class.to_s]).blank?
       
       return false    
     end
