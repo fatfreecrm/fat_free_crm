@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 23
+# Schema version: 27
 #
 # Table name: campaigns
 #
@@ -22,8 +22,8 @@
 #  deleted_at          :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
+#  background_info     :string(255)
 #
-
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Campaign do

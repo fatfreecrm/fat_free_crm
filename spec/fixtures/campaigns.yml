@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 23
+# Schema version: 27
 #
 # Table name: campaigns
 #
@@ -24,7 +24,6 @@
 #  updated_at          :datetime
 #  background_info     :string(255)
 #
-
 <%
   puts "Loading campaigns..."
   status = %w(planned started completed planned started completed on_hold called_off)
