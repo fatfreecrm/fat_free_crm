@@ -16,26 +16,26 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 23
+# Schema version: 27
 #
 # Table name: opportunities
 #
-#  id          :integer(4)      not null, primary key
-#  user_id     :integer(4)
-#  campaign_id :integer(4)
-#  assigned_to :integer(4)
-#  name        :string(64)      default(""), not null
-#  access      :string(8)       default("Private")
-#  source      :string(32)
-#  stage       :string(32)
-#  probability :integer(4)
-#  amount      :decimal(12, 2)
-#  discount    :decimal(12, 2)
-#  closes_on   :date
-#  deleted_at  :datetime
-#  created_at  :datetime
-#  updated_at  :datetime
-#  background_info  :string(255)
+#  id              :integer(4)      not null, primary key
+#  user_id         :integer(4)
+#  campaign_id     :integer(4)
+#  assigned_to     :integer(4)
+#  name            :string(64)      default(""), not null
+#  access          :string(8)       default("Private")
+#  source          :string(32)
+#  stage           :string(32)
+#  probability     :integer(4)
+#  amount          :decimal(12, 2)
+#  discount        :decimal(12, 2)
+#  closes_on       :date
+#  deleted_at      :datetime
+#  created_at      :datetime
+#  updated_at      :datetime
+#  background_info :string(255)
 #
 class Opportunity < ActiveRecord::Base
   belongs_to  :user

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 23
+# Schema version: 27
 #
 # Table name: users
 #
@@ -33,7 +33,6 @@
 #  admin             :boolean(1)      not null
 #  suspended_at      :datetime
 #
-
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe User do

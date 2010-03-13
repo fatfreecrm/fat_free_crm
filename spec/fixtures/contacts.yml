@@ -1,36 +1,35 @@
 # == Schema Information
-# Schema version: 23
+# Schema version: 27
 #
 # Table name: contacts
 #
-#  id          :integer(4)      not null, primary key
-#  user_id     :integer(4)
-#  lead_id     :integer(4)
-#  assigned_to :integer(4)
-#  reports_to  :integer(4)
-#  first_name  :string(64)      default(""), not null
-#  last_name   :string(64)      default(""), not null
-#  access      :string(8)       default("Private")
-#  title       :string(64)
-#  department  :string(64)
-#  source      :string(32)
-#  email       :string(64)
-#  alt_email   :string(64)
-#  phone       :string(32)
-#  mobile      :string(32)
-#  fax         :string(32)
-#  blog        :string(128)
-#  linkedin    :string(128)
-#  facebook    :string(128)
-#  twitter     :string(128)
-#  born_on     :date
-#  do_not_call :boolean(1)      not null
-#  deleted_at  :datetime
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id              :integer(4)      not null, primary key
+#  user_id         :integer(4)
+#  lead_id         :integer(4)
+#  assigned_to     :integer(4)
+#  reports_to      :integer(4)
+#  first_name      :string(64)      default(""), not null
+#  last_name       :string(64)      default(""), not null
+#  access          :string(8)       default("Private")
+#  title           :string(64)
+#  department      :string(64)
+#  source          :string(32)
+#  email           :string(64)
+#  alt_email       :string(64)
+#  phone           :string(32)
+#  mobile          :string(32)
+#  fax             :string(32)
+#  blog            :string(128)
+#  linkedin        :string(128)
+#  facebook        :string(128)
+#  twitter         :string(128)
+#  born_on         :date
+#  do_not_call     :boolean(1)      not null
+#  deleted_at      :datetime
+#  created_at      :datetime
+#  updated_at      :datetime
 #  background_info :string(255)
 #
-
 <% 
   require "faker"
   puts "Loading contacts..."
@@ -62,8 +61,7 @@ contact_<%= i %>:
   twitter     : <%= %[http://www.twitter.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
   born_on     : <%= Date.today - (rand(20) + 20).years - rand(200).days %>
   do_not_call : false
-  background_info :
-# background_info : <%= Faker::Lorem.paragraph[0,255] %>
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
+  background_info : <%= Faker::Lorem.paragraph[0,255] %>
 <% end %>

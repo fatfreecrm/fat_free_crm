@@ -1,26 +1,25 @@
 # == Schema Information
-# Schema version: 23
+# Schema version: 27
 #
 # Table name: opportunities
 #
-#  id          :integer(4)      not null, primary key
-#  user_id     :integer(4)
-#  campaign_id :integer(4)
-#  assigned_to :integer(4)
-#  name        :string(64)      default(""), not null
-#  access      :string(8)       default("Private")
-#  source      :string(32)
-#  stage       :string(32)
-#  probability :integer(4)
-#  amount      :decimal(12, 2)
-#  discount    :decimal(12, 2)
-#  closes_on   :date
-#  deleted_at  :datetime
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id              :integer(4)      not null, primary key
+#  user_id         :integer(4)
+#  campaign_id     :integer(4)
+#  assigned_to     :integer(4)
+#  name            :string(64)      default(""), not null
+#  access          :string(8)       default("Private")
+#  source          :string(32)
+#  stage           :string(32)
+#  probability     :integer(4)
+#  amount          :decimal(12, 2)
+#  discount        :decimal(12, 2)
+#  closes_on       :date
+#  deleted_at      :datetime
+#  created_at      :datetime
+#  updated_at      :datetime
 #  background_info :string(255)
 #
-
 <%
   require "faker"
   puts "Loading opportunities..."
@@ -43,7 +42,7 @@ opportunity_<%= i %>:
   amount      : <%= (rand(8) + 1) * 100_000 %>
   closes_on   : <%= Date.today + (rand(100) + 10).days %>
   background_info :
-# background_info : <%= Faker::Lorem.paragraph[0,255] %>
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
+  background_info : <%= Faker::Lorem.paragraph[0,255] %>
 <% end %>
