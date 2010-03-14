@@ -110,7 +110,7 @@ module FatFreeCRM
         log("Discarding... not text/plain", email)
         return nil
       end
-      User.first(:conditions => ['email = ? AND suspended_at IS NULL', email.from.first.downcase])
+      User.first(:conditions => ['email = ? AND suspended_at IS NULL', email.sent_from.first.downcase])
     end
 
     # Checks the email to detect entity on the first line (forward to Campaing/Opportunity)
@@ -149,7 +149,7 @@ module FatFreeCRM
     #--------------------------------------------------------------------------------------     
     def is_for_recipients(email)
       # Find assets on to, cc email addresses
-      email.to.blank? ? to = [] : to = email.to
+      email.sent_to.blank? ? to = [] : to = email.sent_to
       email.cc.blank? ? cc = [] : cc = email.cc
       recipients = to + cc - [@settings[:dropbox_email]]      
       detect_assets(email, recipients)
@@ -179,7 +179,7 @@ module FatFreeCRM
 
     def new_contacts_or_discard(email)
       # Find assets on to, cc email addresses
-      email.to.blank? ? to = [] : to = email.to
+      email.sent_to.blank? ? to = [] : to = email.sent_to
       email.cc.blank? ? cc = [] : cc = email.cc
       recipients = to + cc - [@settings[:dropbox_email]]
       unless recipients.blank? # mails in to/cc
@@ -220,16 +220,16 @@ module FatFreeCRM
     # Add mail to assets. assets should be an array of asset objects
     #--------------------------------------------------------------------------------------    
     def add_to(email, assets)
-      if email.to.blank?
+      if email.sent_to.blank?
         log("Discarding... missing To header", email)
       else
-        to = email.to.join(", ")
+        to = email.sent_to.join(", ")
       end
       email.cc.blank? ? cc = "" : cc = email.cc.join(", ")
       
       assets.each do |asset|
         if has_permissions_on(asset)  
-          Email.create(:imap_message_id => email.message_id, :user => @current_user, :mediator => asset, :from => email.from.first, :to => to, :cc => cc, :subject => email.subject, :body => email.body, :received_at => email.date)
+          Email.create(:imap_message_id => email.message_id, :user => @current_user, :mediator => asset, :from => email.sent_from.first, :to => to, :cc => cc, :subject => email.subject, :body => email.body, :received_at => email.date)
           archive
           log("Added email to asset #{asset.class.to_s} with name #{asset.name}", email)
           notify("succefully added email")
@@ -292,7 +292,7 @@ module FatFreeCRM
     # Centralized logging
     #--------------------------------------------------------------------------------------      
     def log(msg, email)  
-      logger.info "dropbox - #{msg} in email #{email.message_id} from #{email.from} with subject #{email.subject}" if @settings[:debug]
+      logger.info "dropbox - #{msg} in email #{email.message_id} from #{email.sent_from} with subject #{email.subject}" if @settings[:debug]
     end
     
   end # class Dropbox
