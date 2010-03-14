@@ -20,3 +20,31 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #
+<% 
+  require "faker"
+  puts "Loading emails..."
+
+  users = %w(aaron bed cindy dan elizabeth frank george heather)
+  mediators = %w(Account Campaign Contact Lead Opportunity)
+
+  for i in (1 .. rand(250) + 500) do
+    user = rand(users.size)
+%>
+email_<%= i %>:
+  id              : <%= i %>
+  imap_message_id : <%= Digest::MD5.hexdigest(i.to_s) << "@" << Faker::Internet.domain_name %>
+  user_id         : <%= user + 1 %>
+  mediator_id     : <%= rand(100) + 1 %>
+  mediator_type   : <%= mediators.rand %>
+  from            : <%= Faker::Internet.email %>
+  to              : <%= users[user] + "@example.com" %>
+  cc              : <%= users.rand + "@example.com" %>
+  bcc             : <%= users.rand + "@example.com" %>
+  subject         : <%= Faker::Lorem.sentence %>
+  body            : <%= Faker::Lorem.paragraph(rand(10) + 1) %>
+  sent_at         :
+  received_at     :
+  deleted_at      :
+  created_at      :
+  updated_at      :
+<% end %>
