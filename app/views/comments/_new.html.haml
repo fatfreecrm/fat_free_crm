@@ -1,6 +1,9 @@
 - class_name = commentable.class.name.downcase
-.comment#comment_new{:style => "margin: 5px 0px 0px 0px"}
+.comment#comment_new{ highlightable(:comment_new_tools, :off => "#f2f2f2") }
   = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
+  .tools#comment_new_tools{ invisible }
+    = link_to("Expand All", "#") + " | "
+    = link_to("Collapse All", "#") + "&nbsp;"
   #post{ hidden_if(session["#{class_name}_new_comment"].nil?) }
     - remote_form_for(@comment) do |f|
       = hidden_field_tag "comment[user_id]", @current_user.id
@@ -13,4 +16,3 @@
         = link_to_remote(t(:cancel), :url => send("new_#{class_name}_comment_url", commentable), :method => :get, :with => "'cancel=true'")
   #ask{ hidden_if(session["#{class_name}_new_comment"])}
     = text_field_tag :post_new_note, t(:add_note_help), :onclick => remote_function(:url => send("new_#{class_name}_comment_url", commentable), :method => :get)
-
