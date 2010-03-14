@@ -35,10 +35,4 @@
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @account.opportunities
 
--#-----------------------------------------------------------------------------
-%br
-.subtitle#list_emails_title #{t :emails}
-.list#emails
-  = render :partial => "emails/email", :collection => @account.emails
-
 = hook(:show_account_bottom, self)

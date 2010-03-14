@@ -37,12 +37,16 @@ email_<%= i %>:
   user_id         : <%= user + 1 %>
   mediator_id     : <%= rand(100) + 1 %>
   mediator_type   : <%= mediators.rand %>
-  from            : <%= Faker::Internet.email %>
-  to              : <%= users[user] + "@example.com" %>
+  sent_from       : <%= Faker::Internet.email %>
+  sent_to         : <%= users[user] + "@example.com" %>
   cc              : <%= users.rand + "@example.com" %>
   bcc             : <%= users.rand + "@example.com" %>
-  subject         : <%= Faker::Lorem.sentence %>
-  body            : <%= Faker::Lorem.paragraph(rand(10) + 1) %>
+  subject         : <%= Faker::Lorem.sentence[0..-2] %>
+  body            : |
+                     <%= Faker::Lorem.paragraph(rand(10) + 5) %>
+                     <%= "\n" %>
+                     <%= Faker::Lorem.paragraph(rand(10) + 5) %>
+  header          :
   sent_at         :
   received_at     :
   deleted_at      :

@@ -374,6 +374,30 @@ tt {
     .comment dt p {
       margin: 10px 0px 0px 0px; }
 
+.email {
+  background: #f2f2f2;
+  border-bottom: 1px gainsboro solid;
+  margin: 2px 0px 0px 0px;
+  overflow: hidden;
+  padding: 4px;
+  list-style: none; }
+  .email .gravatar {
+    float: left;
+    margin: 3px 10px 3px 3px; }
+  .email .subject {
+    color: black; }
+  .email .body {
+    display: inline;
+    font-size: 11px; }
+  .email tt {
+    font-size: 10px;
+    color: #666666; }
+  .email dt {
+    padding: 0px;
+    margin: -10px 0px 0px 36px; }
+    .email dt p {
+      margin: 10px 0px 0px 0px; }
+
 #paginate {
   float: right;
   font-size: 10px;
