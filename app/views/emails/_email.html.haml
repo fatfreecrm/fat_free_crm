@@ -1,20 +1,23 @@
+- truncated = h(truncate(email.body.gsub("\n", " "), :length => 125 - email.subject.size))
+- formatted = simple_format h(email.body)
 - collapsed = true
+
 %li[email]{ highlightable(dom_id(email, :tools), :off => "#f2f2f2") }
   .body
-    = link_to avatar_for(email.user, :size => "25x25"), user_path(email)
+    = link_to avatar_for(email.user, :size => "25x25"), user_path(email.user)
     .tools{ invisible, :id => dom_id(email, :tools) }
-      = link_to_edit(email) + " | "
       = link_to_delete(email) + "&nbsp;"
 
-    %div  
-      = link_to_function "<small>#{ true ? '&#9658;' : '&#9660;' }</small> #{t :email}: #{truncate(h(email.subject), :length => 60)} - #{t(:time_ago, distance_of_time_in_words(Time.now, email.created_at))}", 'crm.flip_subtitle(this)'
-    
-    %div
-      %small#email_intro{ hidden_if(!collapsed) }
-        = truncate(h(email.body.gsub("\n"," .. ")), :length => 100)
-      #email{ hidden_if(collapsed) }       
-        %dt
-          %br
-          = "#{email.user.full_name} #{t(:to)} #{email.to}"
-          = "#{t :cc} #{email.cc}" unless email.cc.blank?
-          = auto_link(simple_format h(email.body))
+    %tt
+      = "To " << link_to(email.user.full_name, user_path(email.user))
+      = "from " << auto_link(email.sent_from) << ", sent on "
+      = l(email.sent_at, :format => :mmddhhss)
+      = " | " + link_to_function(collapsed ? "More..." : "Less...", "crm.flip_comment(this, 'More...', 'Less...')")
+
+    %dt{ hidden_if(!collapsed), :id => dom_id(email, :truncated) }
+      %p
+        = h(email.subject)
+        %tt= " - " << truncated
+    %dt{ hidden_if(collapsed), :id => dom_id(email, :formatted) }
+      %p= h(email.subject)
+      = auto_link(formatted)
