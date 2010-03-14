@@ -228,6 +228,22 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  flip_comment: function(link, more, less) {
+    if (link.innerHTML == more) {
+      var body = Element.next(Element.up(link));
+      body.hide();
+      $(body.id.replace('truncated', 'formatted')).show();  // expand
+      link.innerHTML = less;
+    } else {
+      var body = Element.next(Element.next(Element.up(link)));
+      body.hide();
+      $(body.id.replace('formatted', 'truncated')).show();  // collapse
+      link.innerHTML = more;
+    }
+    // TODO: send Ajax request to save expand/collapse state.
+  },
+
+  //----------------------------------------------------------------------------
   reschedule_task: function(id, bucket) {
     $("task_bucket").value = bucket;
     $("edit_task_" + id).onsubmit();
