@@ -99,7 +99,7 @@ describe "IMAP Dropbox" do
     before(:each) do
       @email = mock
       @from = [ "Aaron@Example.Com", "Ben@Example.com" ]
-      @email.stub!(:from).and_return(@from)
+      @email.stub!(:sent_from).and_return(@from)
     end
 
     it "should discard email if its contents type is not text/plain" do

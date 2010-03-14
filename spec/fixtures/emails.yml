@@ -8,12 +8,13 @@
 #  user_id         :integer(4)
 #  mediator_id     :integer(4)
 #  mediator_type   :string(255)
-#  from            :string(255)     not null
-#  to              :string(255)     not null
+#  sent_from       :string(255)     not null
+#  sent_to         :string(255)     not null
 #  cc              :string(255)
 #  bcc             :string(255)
 #  subject         :string(255)
 #  body            :text
+#  header          :text
 #  sent_at         :datetime
 #  received_at     :datetime
 #  deleted_at      :datetime
