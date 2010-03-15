@@ -343,10 +343,9 @@ pt-BR:
   linked_in: LinkedIn
   myself: Eu
 
-  # TODO
-  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.  
-  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
+  permissions_intro_private: Por padrão, somente você terá acesso em {{value}}. Você pode mudar as permissões depois.
+  permissions_intro_public: Por padrão, todos os usuários terão acesso em {{value}}. Você pode mudar as permissões depois..
+  permissions_intro_shared: Por padrão, somente os usuários selecionados terão acesso em {{value}}. Você pode mudar as permissões depois..
 
   referred_by: Referred by
   referred_by_small: referred by
@@ -367,10 +366,9 @@ pt-BR:
   lead: Lead
   lead_info_small: contato do lead
 
-  # TODO
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
+  lead_permissions_intro_private: Por padrão, as permissões seráo copiadas da campanha ou ficarão privadas. Você pode mudar as permissões do 'lead' depois.
+  lead_permissions_intro_public: Por padrão, as permissões sérão copiadas do campanha ou ficarão públicas. Você pode mudar as permissões do 'lead' depois.
+  lead_permissions_intro_shared: Por padrão, as permissões serão compiadas da campanha ou serão compartilhadas com os usuários especificados. Você pode mudar as permissões do 'lead' depois.
 
   lead_small: lead
   lead_status_small: situação do lead
@@ -433,9 +431,9 @@ pt-BR:
   feel_free: Sinta-se livre para
   move_to: mover para
   no_tasks: "Você não tem nenhum atividade {{value}}"
-  no_tasks_pending: pending # TODO
-  no_tasks_assigned: assigned # TODO
-  no_tasks_completed: completed # TODO
+  no_tasks_pending: pendente
+  no_tasks_assigned: atribuída
+  no_tasks_completed: terminada
   pending_tab: Pendente
   pending_tasks: Tarefas pendentes
   related: 're:'
