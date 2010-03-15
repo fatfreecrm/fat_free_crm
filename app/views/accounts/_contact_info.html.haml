@@ -31,14 +31,10 @@
           = f.text_field :email, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          .label #{t :billing_address}:
-          = f.text_area :billing_address, :style =>"width:240px", :rows => 4
+          = render :partial => "common/address", :locals => { :f => f, :asset => @account, :type => :billing, :title => :billing_address }
         %td= spacer
         %td{ :valign => :top }
-          .label
-            #{t :shipping_address}:
-            = link_to_function t(:same_as_billing), %/$("account_shipping_address").value = $("account_billing_address").value/
-          = f.text_area :shipping_address, :style =>"width:240px", :rows => 4
+          = render :partial => "common/address", :locals => { :f => f, :asset => @account, :type => :shipping, :title => :shipping_address, :same_as_billing => true }
 
 
 

@@ -78,4 +78,8 @@
     %dt= number_to_currency(@campaign.revenue, :precision => 0) || t(:n_a)
     %tt== #{t :revenue}: #{performance(@campaign.revenue, @campaign.target_revenue)}
 
+  - unless @campaign.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format h(@campaign.background_info))
+
   = hook(:show_campaign_sidebar_bottom, self, :campaign => @campaign)

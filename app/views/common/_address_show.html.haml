@@ -1,0 +1,17 @@
+- address_attr = "#{type}_address"
+- address = get_address(asset, address_attr)
+
+- unless address.blank?
+  - if Setting.compound_address
+    %div
+      %b #{t title}
+      %br= h address.street1
+      - unless address.street2.blank?
+        %br= h address.street2
+      %br= h "#{address.city}, #{address.state} #{address.zipcode}"
+      - unless address.country.blank?
+        %br= h address.country
+  - else
+    %div
+      %b #{t title}
+      %br= h(address.full_address).n2br

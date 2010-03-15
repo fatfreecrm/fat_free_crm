@@ -4,6 +4,51 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Mar 9, 2010
+---------------------------------------------------------------------
+- Check if new [background_info] setting is properly loaded.
+- Merged in dropdown calendar localization patches (thanks, Yura!)
+- Updated list of contributors.
+- Version 0.9.10
+
+Fri, Feb 26, 2010
+---------------------------------------------------------------------
+- More work on to support scheduling tasks with specific time deadline.
+
+Thu, Feb 25, 2010
+---------------------------------------------------------------------
+- Refactored compound address code to support field hints.
+- Added French locale (thanks, Cédric!)
+
+Wed, Feb 24, 2010
+---------------------------------------------------------------------
+- Added new hook hook in user profile template (thanks, Jose Luis!)
+
+Sun, Feb 21, 2010
+---------------------------------------------------------------------
+- Added :background_info option to Settings making it optional
+- Refactored background info in forms and sidebar views
+- Fixed fixtures and factories for the new Address model
+
+Fri, Feb 19, 2010
+---------------------------------------------------------------------
+- Added support for creating tasks with specific time deadline (thanks, Yura!)
+
+Wed, Feb 17, 2010
+---------------------------------------------------------------------
+- Added support for compound addresses (thanks, Jose Luis!)
+- Fixed for :quote_ident issue with Postgres (thanks, Matt!)
+- Added missing translations to the rest of locale files.
+
+Tue, Feb 16, 2010
+---------------------------------------------------------------------
+- Added localization support for dropdown calendar (thanks, Yura!)
+
+Wed, Feb 10, 2010
+---------------------------------------------------------------------
+- Added background info field to all major models (thanks, Jose Luis!)
+- Added hook to sidebar index template (thanks, Jose Luis!)
+
 Tue, Feb 9, 2010
 ---------------------------------------------------------------------
 - Default permissions are now configurable in settings.yml (thanks, Jose Luis!)

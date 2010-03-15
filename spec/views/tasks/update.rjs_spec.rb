@@ -144,7 +144,8 @@ describe "/tasks/update.js.rjs" do
     @task.errors.add(:error)
 
     render
-    response.should include_text(%Q/$("task_#{@task.id}").visualEffect("shake"/)
+    response.should include_text(%/$("task_#{@task.id}").visualEffect("shake"/)
+    response.should include_text(%/$("task_submit").enable()/)
   end
 
 end

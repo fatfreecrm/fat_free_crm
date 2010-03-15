@@ -18,6 +18,7 @@
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  background_info :string(255)
 #
 
 <%
@@ -36,11 +37,13 @@ opportunity_<%= i %>:
   assigned_to : <%= rand(8) + 1 %>
   name        : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "")[0, 64] %> # name has a limit of 64 characters.
   access      : Public
-  source      : <%= source[rand(source.size)] %>
-  stage       : <%= the_stage = stage[rand(stage.size)] %>
+  source      : <%= source.rand %>
+  stage       : <%= the_stage = stage.rand %>
   probability : <%= %w(won lost).include?(the_stage) ? 100 : (rand(8) + 1) * 10 %>
   amount      : <%= (rand(8) + 1) * 100_000 %>
   closes_on   : <%= Date.today + (rand(100) + 10).days %>
+  background_info :
+# background_info : <%= Faker::Lorem.paragraph[0,255] %>
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>

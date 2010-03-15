@@ -6,7 +6,10 @@
   = render :partial => "accounts/contact_info", :locals => { :f => f }
   = render :partial => "accounts/permissions",  :locals => { :f => f }
   .buttonbar
-    = f.submit t :create_account
+    - if Setting.compound_address
+      = f.submit t(:create_account), :onclick => "crm.clear_all_hints()"
+    - else
+      = f.submit t(:create_account)
     #{t :or} 
     = link_to_cancel new_account_path
     

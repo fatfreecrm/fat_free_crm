@@ -326,7 +326,6 @@ th:
 
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: ที่อยู่
   alt_email_small: อื่นๆ
   blog: website/blog
   contact: ที่อยู่ติดต่อ
@@ -513,7 +512,13 @@ th:
   recent_items: เอกสารล่าสุด
   search_assets: ค้นหา{{value}}
   ago: "{{value}}ที่ผ่านมา"
-
+  background_info: หลัง ข้อมูล
+  address: ที่อยู่
+  city: แถบค้าขายของลอนกดอน
+  zipcode: รหัส ไปรษณีย์
+  state: สภาพ
+  country: ประเทศ
+    
   # Views -> Layout.
   #----------------------------------------------------------------------------
   about: เกี่ยวกับ

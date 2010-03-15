@@ -1,0 +1,45 @@
+- address_type = type.to_s.camelize
+- address_attr = "#{type}_address"
+- address = get_address(asset, address_attr)
+
+- same_as_billing ||= false
+
+- f.fields_for(address_attr.to_sym) do |a|
+  = a.hidden_field :address_type, :value => address_type
+  - unless Setting.compound_address
+    - if same_as_billing
+      %div
+        %span(style="float:right")
+          = link_to_function(t(:same_as_billing), "crm.copy_address('account_shipping_address', 'account_billing_address')")
+        .label #{t title}:
+    - else
+      .label #{t title}:
+    = a.text_area :full_address, :style =>"width:240px", :rows => 4
+  - else
+    %table(width="240" cellpadding="0" cellspacing="0")
+      %tr
+        %td(valign="top")
+          - if same_as_billing
+            %div
+              %span(style="float:right")
+                = link_to_function(t(:same_as_billing), "crm.copy_compound_address('account_billing_address', 'account_shipping_address')")
+              .label #{t title}:
+          - else
+            .label #{t title}:
+          = address_field(a, address, :street1, "width:240px; margin-top:3px")
+          %br
+          = address_field(a, address, :street2, "width:240px;")
+    %table(width="240" cellpadding="0" cellspacing="0")
+      %tr
+        %td(valign="top")
+          = address_field(a, address, :city, "width:165px;")
+        %td= spacer
+        %td(valign="top")
+          = address_field(a, address, :state, "width:60px;")
+    %table(width="240" cellpadding="0" cellspacing="0")
+      %tr
+        %td(valign="top")
+          = address_field(a, address, :zipcode, "width:80px;")
+        %td= spacer
+        %td(valign="top")
+          = a.country_select(:country, nil, {:prompt => t(:select_blank)}, {:style => "width:150px; margin-top:6px"})

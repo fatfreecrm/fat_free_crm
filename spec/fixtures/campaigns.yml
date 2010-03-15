@@ -22,6 +22,7 @@
 #  deleted_at          :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
+#  background_info     :string(255)
 #
 
 <%
@@ -126,7 +127,7 @@ campaign<%= i %>:
   user_id             : <%= rand(8) + 1 %>
   name                : <%= names[i-1] %>
   access              : Public
-  status              : <%= status[rand(status.size)] %>
+  status              : <%= status.rand %>
   budget              : <%= rand(500) * 1000 %>
   target_leads        : <%= rand(200) + 100 %>
   target_conversion   : <%= rand(20) + 5 %>
@@ -137,6 +138,8 @@ campaign<%= i %>:
   starts_on           : <%= starts %>
   ends_on             : <%= starts + rand(50).days %>
   objectives          : <%= Faker::Lorem.sentence %>
+  background_info     :
+# background_info     : <%= Faker::Lorem.paragraph[0,255] %>
   created_at          : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at          : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>

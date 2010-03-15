@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 23
+# Schema version: 24
 #
 # Table name: accounts
 #
@@ -12,12 +12,11 @@
 #  toll_free_phone  :string(32)
 #  phone            :string(32)
 #  fax              :string(32)
-#  billing_address  :string(255)
-#  shipping_address :string(255)
 #  deleted_at       :datetime
 #  created_at       :datetime
 #  updated_at       :datetime
 #  email            :string(64)
+#  background_info  :string(255)
 #
 
 <%
@@ -37,13 +36,9 @@ account<%= i %>:
   toll_free_phone  : 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
   phone            : <%= Faker::PhoneNumber.phone_number %>
   fax              : <%= Faker::PhoneNumber.phone_number %>
-  billing_address  : |
-                     <%= addr1 = Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-                     <%= addr2 = Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
-  shipping_address : |
-                     <%= addr1 %>
-                     <%= addr2 %>
+  email            : info@<%= company.downcase.gsub(/\W/, "") %>.com
+  background_info  :
+# background_info  : <%= Faker::Lorem.paragraph[0,255] %>
   created_at       : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at       : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
-  email            : info@<%= company.downcase.gsub(/\W/, "") %>.com
 <% end %>

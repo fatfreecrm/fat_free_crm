@@ -8,7 +8,7 @@
     %div= @lead.title unless @lead.title.blank?
     %div= @lead.company unless @lead.company.blank?
 
-  %div= @lead.address.n2br if @lead.address
+  %div= render :partial => "common/address_show", :locals => { :asset => @lead, :type => 'business', :title => :address }
 
   %div
     - if @lead.phone
@@ -44,6 +44,10 @@
       - else
         #{t :n_a}
     %tt #{t :campaign}:
+
+  - unless @lead.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format h(@lead.background_info))
 
   = hook(:show_lead_sidebar_bottom, self, :lead => @lead)
 

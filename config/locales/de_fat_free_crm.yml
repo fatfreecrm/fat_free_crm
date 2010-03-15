@@ -194,6 +194,7 @@ de:
   brief: kurz
   long: lang
   or: oder
+  background_info: Hintergrund-Informationen
 
   # views/opportunities
   #----------------------------------------------------------------------------

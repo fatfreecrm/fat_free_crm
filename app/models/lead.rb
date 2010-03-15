@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 23
+# Schema version: 26
 #
 # Table name: leads
 #
@@ -40,12 +40,12 @@
 #  linkedin    :string(128)
 #  facebook    :string(128)
 #  twitter     :string(128)
-#  address     :string(255)
 #  rating      :integer(4)      default(0), not null
 #  do_not_call :boolean(1)      not null
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  background_info  :string(255)
 #
 class Lead < ActiveRecord::Base
   belongs_to  :user
@@ -54,7 +54,10 @@ class Lead < ActiveRecord::Base
   has_one     :contact, :dependent => :nullify # On destroy keep the contact, but nullify its lead_id
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
+  has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Business'"
 
+  accepts_nested_attributes_for :business_address, :allow_destroy => true
+  
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
   named_scope :converted, :conditions => "status='converted'"
   named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }

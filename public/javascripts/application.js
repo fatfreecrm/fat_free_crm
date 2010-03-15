@@ -17,17 +17,17 @@
 
 var crm = {
 
-  EXPANDED      :  "&#9660;",
+  EXPANDED      : "&#9660;",
   COLLAPSED     : "&#9658;",
   request       : null,
   autocompleter : null,
   base_url      : "",
 
   //----------------------------------------------------------------------------
-  date_select_popup: function(id, dropdown_id) {
+  date_select_popup: function(id, dropdown_id, show_time) {
     $(id).observe("focus", function() {
       if (!$(id).calendar_was_shown) {    // The field recieved initial focus, show the calendar.
-        var calendar = new CalendarDateSelect(this, { month_year: "label",  year_range: 10, before_close: function() { this.calendar_was_shown = true } });
+        var calendar = new CalendarDateSelect(this, { month_year: "label",  year_range: 10, time: show_time, before_close: function() { this.calendar_was_shown = true } });
         if (dropdown_id) {
           calendar.buttons_div.build("span", { innerHTML: " | ", className: "button_seperator" });
           calendar.buttons_div.build("a", { innerHTML: "Back to List", href: "#", onclick: function() {
@@ -172,6 +172,25 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  create_contact: function() {
+    if ($("contact_business_address_attributes_country")) {
+      this.clear_all_hints();
+    }
+    $("account_assigned_to").value = $F("contact_assigned_to");
+    if ($("account_id").visible()) {
+      $("account_id").enable();
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  save_contact: function() {
+    if ($("contact_business_address_attributes_country")) {
+      this.clear_all_hints();
+    }
+    $("account_assigned_to").value = $F("contact_assigned_to");
+  },
+
+  //----------------------------------------------------------------------------
   flip_calendar: function(value) {
     if (value == "specific_time") {
       $("task_bucket").toggle(); // Hide dropdown.
@@ -239,6 +258,54 @@ var crm = {
     if (!sticky) {
       setTimeout("Effect.Fade('flash')", 3000);
     }
+  },
+
+  //----------------------------------------------------------------------------
+  show_hint: function(el, hint) {
+    if (el.value == '') {
+      el.value = hint;
+      el.style.color = 'silver'
+      el.setAttribute('hint', true);
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  hide_hint: function(el, value) {
+    if (arguments.length == 2) {
+      el.value = value;
+    } else {
+      if (el.getAttribute('hint') == "true") {
+        el.value = '';
+      }
+    }
+    el.style.color = 'black'
+    el.setAttribute('hint', false);
+  },
+
+  //----------------------------------------------------------------------------
+  clear_all_hints: function() {
+    $$("input[hint=true]").each( function(field) {
+      field.value = '';
+    }.bind(this));
+  },
+
+  //----------------------------------------------------------------------------
+  copy_address: function(from, to) {
+    $(from + "_attributes_full_address").value = $(to + "_attributes_full_address").value;
+  },
+
+  //----------------------------------------------------------------------------
+  copy_compound_address: function(from, to) {
+    $w("street1 street2 city state zipcode").each( function(field) {
+      var source = $(from + "_attributes_" + field);
+      var destination = $(to + "_attributes_" + field);
+      if (source.getAttribute('hint') != "true") {
+        this.hide_hint(destination, source.value);
+      }
+    }.bind(this));
+
+    // Country dropdown needs special treatment ;-)
+    $(to + "_attributes_country").selectedIndex = $(from + "_attributes_country").selectedIndex;
   },
 
   //----------------------------------------------------------------------------

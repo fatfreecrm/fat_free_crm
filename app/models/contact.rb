@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 23
+# Schema version: 26
 #
 # Table name: contacts
 #
@@ -40,12 +40,12 @@
 #  linkedin    :string(128)
 #  facebook    :string(128)
 #  twitter     :string(128)
-#  address     :string(255)
 #  born_on     :date
 #  do_not_call :boolean(1)      not null
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  background_info  :string(255)
 #
 class Contact < ActiveRecord::Base
   belongs_to  :user
@@ -57,6 +57,9 @@ class Contact < ActiveRecord::Base
   has_many    :opportunities, :through => :contact_opportunities, :uniq => true, :order => "opportunities.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
+  has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Business'"
+
+  accepts_nested_attributes_for :business_address, :allow_destroy => true
 
   named_scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
   named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
@@ -113,10 +116,12 @@ class Contact < ActiveRecord::Base
       :assigned_to => params[:account][:assigned_to],
       :access      => params[:access]
     }
-    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter address do_not_call).each do |name|
+    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter do_not_call background_info).each do |name|
       attributes[name] = model.send(name.intern)
     end
+    
     contact = Contact.new(attributes)
+    contact.business_address = Address.new(:street1 => model.business_address.street1, :street2 => model.business_address.street2, :city => model.business_address.city, :state => model.business_address.state, :zipcode => model.business_address.zipcode, :country => model.business_address.country, :full_address => model.business_address.full_address, :address_type => "Business") unless model.business_address.nil?
 
     # Save the contact only if the account and the opportunity have no errors.
     if account.errors.empty? && opportunity.errors.empty?

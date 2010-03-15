@@ -9,6 +9,9 @@
   = render :partial => "leads/web",         :locals => { :f => f }
   = render :partial => "leads/permissions", :locals => { :f => f }
   .buttonbar
-    = f.submit t :create_lead
+    - if Setting.compound_address
+      = f.submit t(:create_lead), :onclick => "crm.clear_all_hints()"
+    - else
+      = f.submit t(:create_lead)
     #{t :or}
     = link_to_cancel new_lead_path

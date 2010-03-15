@@ -1,0 +1,46 @@
+# == Schema Information
+# Schema version: 26
+#
+# Table name: address
+#
+#  id                 :integer(4)      not null, primary key
+#  street1            :string(255)
+#  street2            :string(255)
+#  city               :string(255)
+#  state              :string(255)
+#  zipcode            :string(255)
+#  country            :string(2)
+#  full_address       :string(255)
+#  address_type       :string(255)
+#  addressable_id     :integer(4)
+#  addressable_type   :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  deleted_at         :datetime
+
+<% 
+  require "faker"
+  puts "Loading addresses..."
+
+  type = %w(Billing Shipping)
+  addressable = %w(Account Contact Lead)
+
+  for i in (1 .. rand(200) + 200) do
+%>
+address_<%= i %>:
+  id               : <%= i %>
+  addressable_id   : <%= i %>
+  addressable_type : <%= asset = addressable.rand %>
+  address_type     : <%= asset == 'Account' ? type.rand : 'Business' %>
+  street1          : <%= street1 = Faker::Address.street_address %>
+  street2          : <%= street2 = Faker::Address.street_address %>
+  city             : <%= city    = Faker::Address.city %>
+  state            : <%= state   = Faker::Address.us_state_abbr %>
+  zipcode          : <%= zipcode = Faker::Address.zip_code %>
+  country          : USA
+  full_address     : |
+                      <%= street1 %>
+                      <%= street2 %>
+                      <%= "#{city}, #{state} #{zipcode}" %>
+                      USA
+<% end %>

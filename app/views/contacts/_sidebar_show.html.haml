@@ -11,7 +11,7 @@
   - unless @contact.department.blank?
     = t(:department_small, h(@contact.department))
 
-  %div= h(@contact.address).n2br if @contact.address
+  %div= render :partial => "common/address_show", :locals => { :asset => @contact, :type => 'business', :title => :address }
 
   %div
     - unless @contact.phone.blank?
@@ -27,5 +27,9 @@
       == #{t :alt_email_small}: <b>#{link_to(h(@contact.alt_email), "mailto:" + @contact.alt_email)}</b><br />
 
   = web_presence_icons(@contact)
+
+  - unless @contact.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format h(@contact.background_info))
 
   = hook(:show_contact_sidebar_bottom, self, :contact => @contact)

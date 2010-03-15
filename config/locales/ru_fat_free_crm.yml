@@ -326,7 +326,6 @@ ru:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Адрес
   alt_email_small: Доп. e-mail
   blog: Блог/Интернет-страница
   contact: Контакт
@@ -513,7 +512,13 @@ ru:
   recent_items: Недавние Объекты
   search_assets: Поиск - {{value}}
   ago: "{{value}} назад"
-
+  background_info: Дополнительная информация
+  address: Адрес
+  city: деловой центр Лондона
+  zipcode: почтовый индекс
+  state: режим работы
+  country: страна
+  
   # Views -> Layout.
   #----------------------------------------------------------------------------
   about: О программе
@@ -617,3 +622,6 @@ ru:
     now: Сейчас
     today: Сегодня
     clear: Очистить
+
+  # Default is Finnish (31.12.2009 17:00)
+  calendar_date_select_format: finnish

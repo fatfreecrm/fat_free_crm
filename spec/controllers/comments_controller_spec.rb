@@ -233,7 +233,6 @@ describe CommentsController do
   # DELETE /comments/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-
     describe "AJAX request" do
       describe "with valid params" do
         COMMENTABLE.each do |asset|
@@ -243,14 +242,12 @@ describe CommentsController do
             Comment.stub!(:new).and_return(@comment)
 
             xhr :delete, :destroy, :id => @comment.id
-
             lambda { @comment.reload }.should raise_error(ActiveRecord::RecordNotFound)
             response.should render_template("comments/destroy")
           end
         end
       end
     end
-
   end
 
 end

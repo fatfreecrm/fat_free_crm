@@ -68,6 +68,7 @@ class User < ActiveRecord::Base
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
   named_scope :except, lambda { |user| { :conditions => [ "id != ? ", user.id ] } }
+  named_scope :by_name, :order => "first_name, last_name, email"
   default_scope :order => "id DESC" # Show newest users first.
 
   simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }

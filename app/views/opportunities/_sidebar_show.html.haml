@@ -48,4 +48,8 @@
         #{t :n_a}
     %tt #{t :campaign}:
 
+  - unless @opportunity.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format h(@opportunity.background_info))
+
   = hook(:show_opportunity_sidebar_bottom, self, :opportunity => @opportunity)
