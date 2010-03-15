@@ -18,6 +18,7 @@
 #  - Make options for: (attach email to accont of contact if has
 require 'net/imap'
 require 'tmail'
+include ActionController::UrlWriter
 
 module FatFreeCRM
   class Dropbox
@@ -26,7 +27,7 @@ module FatFreeCRM
     ASSETS   = [Account, Contact, Lead]
     
     def initialize
-      @settings = Setting[:email_dropbox]
+      @settings = Setting[:email_dropbox]            
     end
     
     def run
@@ -224,22 +225,23 @@ module FatFreeCRM
       else
         sent_to = email.to.join(", ")
       end
-      email.cc.blank? ? cc = "" : cc = email.cc.join(", ")
+      email.cc.blank? ? cc = "" : cc = email.cc.join(", ")      
+      mediator_links = []
       
       assets.each do |asset|
         if has_permissions_on(asset)  
           asset_type = asset.class.to_s
-          require 'ruby-debug';debugger
-          @settings[:associate_email_to_account] == true && (asset_type == "Contact" || asset_type == "Lead" || asset_type == "Opportunity") ? mediator = asset.account || asset : mediator = asset          
+          @settings[:associate_email_to_account] == true && (asset_type == "Contact" || asset_type == "Opportunity") ? mediator = asset.account || asset : mediator = asset          
           Email.create(:imap_message_id => email.message_id, :user => @current_user, :mediator => mediator, :sent_from => email.from.first, :sent_to => sent_to, :cc => cc, :subject => email.subject, :body => email.body, :received_at => email.date, :sent_at => email.date)
           archive
+          mediator_links << url_for(:host => @settings[:crm_host], :controller => mediator.class.to_s.downcase.pluralize, :action => "show", :id => mediator.id)
           log("Added email to asset #{mediator.class.to_s} with name #{mediator.name}", email)
-          notify("succefully added email")
         else
           discard
           log("Discarding... missing permissions in #{asset.class.to_s}=>#{asset.name} for user #{@current_user.username}", email)
         end
       end
+      notify(email, mediator_links) unless mediator_links.blank?
     end
 
     def has_permissions_on(asset)
@@ -252,8 +254,9 @@ module FatFreeCRM
 
     # Notify users with the results of the operations (feedback from dropbox)
     #--------------------------------------------------------------------------------------      
-    def notify(what)
-      puts "WE ARE NOTIFICATION #{what}"
+    def notify(email, mediator_links)      
+      ack_email = Notifier.create_dropbox_ack_notification(@current_user, @settings[:dropbox_email], email, mediator_links)
+      Notifier.deliver(ack_email)
     end
     
     # Setup imap folders in settings

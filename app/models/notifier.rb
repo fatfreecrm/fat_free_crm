@@ -26,4 +26,13 @@ class Notifier < ActionMailer::Base
     body          :edit_password_url => edit_password_url(user.perishable_token)
   end
 
+  #----------------------------------------------------------------------------
+  def dropbox_ack_notification(user, from, email, mediator_links)    
+    subject       "dropbox - Added email - #{email.subject}"
+    from          from
+    recipients    user.email
+    sent_on       Time.now
+    body          :mediator_links => mediator_links.join("\n"), :subject => email.subject, :body => email.body
+  end
+
 end
