@@ -1,6 +1,7 @@
 - truncated = simple_format h(truncate(comment.comment.gsub("\n", " "), :length => 125))
 - formatted = simple_format h(comment.comment)
-- collapsed = collapsable = formatted.size > 150
+- collapsable = formatted.size > 150
+- comment.state == "collapsed" && collapsable ? collapsed = true : collapsed = false
 
 %li[comment]{ highlightable(dom_id(comment, :tools), :off => "#f2f2f2") }
   .body
@@ -13,7 +14,7 @@
     %tt
       added note #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
       - if collapsable
-        = " | " + link_to_function(collapsed ? "More..." : "Less...", "crm.flip_comment(this, 'More...', 'Less...')")
+        = " | " + link_to_function(collapsed ? "More..." : "Less...", "crm.flip_comment(this, 'comment', #{comment.id}, 'More...', 'Less...')")
 
     - if collapsable
       %dt{ hidden_if(!collapsed), :id => dom_id(comment, :truncated) }

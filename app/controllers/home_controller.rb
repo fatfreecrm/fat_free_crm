@@ -60,6 +60,18 @@ class HomeController < ApplicationController
     render :nothing => true
   end
 
+  # GET /home/timeline_state                                              AJAX
+  #----------------------------------------------------------------------------
+  def timeline_state
+    model = params[:type].camelize.constantize
+    
+    item = model.find(params[:id])
+    item.state = params[:state]
+    item.save
+
+    render :nothing => true
+  end
+
   # GET /home/timezone                                                     AJAX
   #----------------------------------------------------------------------------
   def timezone
