@@ -228,19 +228,25 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  flip_comment: function(link, more, less) {
+  flip_comment: function(link, type, id, more, less) {
     if (link.innerHTML == more) {
       var body = Element.next(Element.up(link));
       body.hide();
       $(body.id.replace('truncated', 'formatted')).show();  // expand
       link.innerHTML = less;
+      state = "expanded";
     } else {
       var body = Element.next(Element.next(Element.up(link)));
       body.hide();
       $(body.id.replace('formatted', 'truncated')).show();  // collapse
       link.innerHTML = more;
+      state = "collapsed";
     }
-    // TODO: send Ajax request to save expand/collapse state.
+
+    new Ajax.Request(this.base_url + "/home/timeline_state", {
+      method     : "get",
+      parameters : { type : type, id : id, state : state }
+    });    
   },
 
   //----------------------------------------------------------------------------
