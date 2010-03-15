@@ -1,7 +1,7 @@
 class AddStateToTimelineObjects < ActiveRecord::Migration
   def self.up
-    add_column :comments, :state, :string, :default => "collapsed"
-    add_column :emails, :state, :string, :default => "collapsed"
+    add_column :comments, :state, :string, :default => "expanded"
+    add_column :emails, :state, :string, :default => "expanded"
   end
 
   def self.down
