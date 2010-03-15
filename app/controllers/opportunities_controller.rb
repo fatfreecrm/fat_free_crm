@@ -43,6 +43,8 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.my(@current_user).find(params[:id])
     @comment = Comment.new
 
+    @timeline = Timeline.find(@opportunity)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @opportunity }

@@ -43,6 +43,8 @@ class CampaignsController < ApplicationController
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
 
+    @timeline = Timeline.find(@campaign)
+
     respond_to do |format|
       format.html # show.html.haml
       format.xml  { render :xml => @campaign }
