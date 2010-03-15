@@ -48,7 +48,8 @@ class Opportunity < ActiveRecord::Base
   has_many    :contacts, :through => :contact_opportunities, :uniq => true, :order => "contacts.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
-
+  has_many    :emails, :as => :mediator
+  
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ?", user.id ] } }
   named_scope :assigned_to, lambda { |user| { :conditions => [ "assigned_to = ?" ,user.id ] } }
