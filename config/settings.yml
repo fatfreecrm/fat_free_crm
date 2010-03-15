@@ -96,18 +96,19 @@ task_calendar_with_time: false
 # Sets the email dropbox feature, this are the connections settings for 
 # the imap account, server and folders.
 #------------------------------------------------------------------------------
-:email_dropbox:
-  :server                     : imap.example.com
-  :port                       : 993
-  :ssl                        : true
-  :user                       : user@example.com
-  :password                   : password
-  :dropbox_email              : dropbox@example.com
-  :scan_folder                : inbox
-  :move_to_folder             : processed   # Optional
-  :move_invalid_to_folder     : invalid     # Optional
-  :associate_email_to_account : false       # Associate emails to the account (if has) of the contact or lead
-  :debug                      : false
+#:email_dropbox:
+#  :server                     : imap.example.com
+#  :port                       : 993
+#  :ssl                        : true
+#  :user                       : user@example.com
+#  :password                   : password
+#  :dropbox_email              : dropbox@example.com
+#  :scan_folder                : inbox
+#  :move_to_folder             : processed        # Optional
+#  :move_invalid_to_folder     : invalid          # Optional
+#  :associate_email_to_account : false            # Associate emails to the account (if has) of the contact or lead
+#  :crm_host                   : www.yourhost.com # Needed for notifications links
+#  :debug                      : false
   
 
 # Main and Admin Tabs.
