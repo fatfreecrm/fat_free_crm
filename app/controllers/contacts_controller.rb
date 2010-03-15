@@ -41,6 +41,8 @@ class ContactsController < ApplicationController
     @contact = Contact.my(@current_user).find(params[:id])
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
+    
+    @timeline = Timeline.find(@contact)
 
     respond_to do |format|
       format.html # show.html.erb

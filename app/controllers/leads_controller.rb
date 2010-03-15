@@ -42,6 +42,8 @@ class LeadsController < ApplicationController
     @lead = Lead.my(@current_user).find(params[:id])
     @comment = Comment.new
 
+    @timeline = Timeline.find(@lead)
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @lead }

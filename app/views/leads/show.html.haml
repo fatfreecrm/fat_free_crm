@@ -14,7 +14,7 @@
 %div#edit_lead{ hidden }
 
 = render :partial => "comments/new", :locals => { :commentable => @lead }
-= render :partial => "comments/comment", :collection => @lead.comments
+= render :partial => "common/timeline", :collection => @timeline
 
 -#-----------------------------------------------------------------------------
 %br

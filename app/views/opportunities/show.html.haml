@@ -9,7 +9,7 @@
 %div#edit_opportunity{ hidden }
 
 = render :partial => "comments/new", :locals => { :commentable => @opportunity }
-= render :partial => "comments/comment", :collection => @opportunity.comments
+= render :partial => "common/timeline", :collection => @timeline
 
 -#-----------------------------------------------------------------------------
 %br

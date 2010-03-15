@@ -9,7 +9,7 @@
 %div#edit_contact{ hidden }
 
 = render :partial => "comments/new", :locals => { :commentable => @contact }
-= render :partial => "comments/comment", :collection => @contact.comments
+= render :partial => "common/timeline", :collection => @timeline
 
 -#-----------------------------------------------------------------------------
 %br
