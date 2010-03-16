@@ -254,6 +254,16 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  flip_notes_and_emails: function(state, notes, emails) {
+    if (notes != "" || emails != "") {
+      new Ajax.Request(this.base_url + "/home/timeline", {
+        method     : "get",
+        parameters : { type : "", id : notes + "+" + emails, state : state }
+      });
+    }
+  },
+
+  //----------------------------------------------------------------------------
   reschedule_task: function(id, bucket) {
     $("task_bucket").value = bucket;
     $("edit_task_" + id).onsubmit();

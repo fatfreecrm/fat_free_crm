@@ -1,1 +1,2 @@
+page[:shown_notes].value = @comment.commentable.comments.map(&:id).join(',')
 page[dom_id(@comment)].visual_effect "blind_up", :duration => 0.25
