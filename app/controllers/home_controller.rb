@@ -71,8 +71,8 @@ class HomeController < ApplicationController
       render :nothing => true
     else
       comments, emails = params[:id].split("+")
-      Comment.update_all("state = '#{params[:state]}'", "id IN (#{comments})") unless comments.empty?
-      Email.update_all("state = '#{params[:state]}'", "id IN (#{emails})") unless emails.empty?
+      Comment.update_all("state = '#{params[:state]}'", "id IN (#{comments})") unless !comments || comments.empty?
+      Email.update_all("state = '#{params[:state]}'", "id IN (#{emails})") unless !emails || emails.empty?
       render(:update) { |page| page.call "document.location.reload" }
     end
 
