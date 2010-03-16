@@ -1,6 +1,5 @@
 - truncated = h(truncate(email.body.gsub("\n", " "), :length => 125 - email.subject.size))
 - formatted = simple_format h(email.body)
-- email.state == "collapsed" ? collapsed = true : collapsed = false
 
 %li[email]{ highlightable(dom_id(email, :tools), :off => "#f2f2f2") }
   .body
@@ -12,12 +11,12 @@
       = "To " << link_to(email.user.full_name, user_path(email.user))
       = "from " << auto_link(email.sent_from) << ", sent on "
       = l(email.sent_at, :format => :mmddhhss)
-      = " | " + link_to_function(collapsed ? "More..." : "Less...", "crm.flip_comment(this, 'email', #{email.id}, 'More...', 'Less...')")
+      = " | " + link_to_function(email.collapsed? ? "More..." : "Less...", "crm.flip_note_or_email(this, 'More...', 'Less...')")
 
-    %dt{ hidden_if(!collapsed), :id => dom_id(email, :truncated) }
+    %dt{ hidden_if(email.expanded?), :id => dom_id(email, :truncated) }
       %p
         = h(email.subject)
         %tt= " - " << truncated
-    %dt{ hidden_if(collapsed), :id => dom_id(email, :formatted) }
+    %dt{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
       %p= h(email.subject)
       = auto_link(formatted)
