@@ -17,7 +17,6 @@
 
 class Timeline
   def self.find(asset)
-    timeline = asset.comments + asset.emails
-    timeline.sort! { |x, y| y.created_at <=> x.created_at }
+    (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
   end
 end
