@@ -60,14 +60,13 @@ class HomeController < ApplicationController
     render :nothing => true
   end
 
-  # GET /home/timeline_state                                              AJAX
+  # GET /home/timeline                                                     AJAX
   #----------------------------------------------------------------------------
-  def timeline_state
+  def timeline
     model = params[:type].camelize.constantize
     
     item = model.find(params[:id])
-    item.state = params[:state]
-    item.save
+    item.update_attribute(:state, params[:state])
 
     render :nothing => true
   end

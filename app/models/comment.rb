@@ -41,6 +41,9 @@ class Comment < ActiveRecord::Base
   validates_presence_of :user, :commentable, :comment
   after_create :log_activity
 
+  def expanded?;  self.state == "Expanded";  end
+  def collapsed?; self.state == "Collapsed"; end
+
   private
   def log_activity
     authentication = Authentication.find

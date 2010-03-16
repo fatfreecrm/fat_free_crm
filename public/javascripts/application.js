@@ -228,24 +228,28 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  flip_comment: function(link, type, id, more, less) {
+  flip_note_or_email: function(link, more, less) {
+    var body, state;
+
     if (link.innerHTML == more) {
-      var body = Element.next(Element.up(link));
+      body = Element.next(Element.up(link));
       body.hide();
       $(body.id.replace('truncated', 'formatted')).show();  // expand
       link.innerHTML = less;
-      state = "expanded";
+      state = "Expanded";
     } else {
-      var body = Element.next(Element.next(Element.up(link)));
+      body = Element.next(Element.next(Element.up(link)));
       body.hide();
       $(body.id.replace('formatted', 'truncated')).show();  // collapse
       link.innerHTML = more;
-      state = "collapsed";
+      state = "Collapsed";
     }
+    // Ex: "formatted_email_42" => [ "formatted", "email", "42" ]
+    var arr = body.id.split("_");
 
-    new Ajax.Request(this.base_url + "/home/timeline_state", {
+    new Ajax.Request(this.base_url + "/home/timeline", {
       method     : "get",
-      parameters : { type : type, id : id, state : state }
+      parameters : { type : arr[1], id : arr[2], state : state }
     });    
   },
 
