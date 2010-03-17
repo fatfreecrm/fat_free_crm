@@ -258,7 +258,26 @@ var crm = {
     if (notes != "" || emails != "") {
       new Ajax.Request(this.base_url + "/home/timeline", {
         method     : "get",
-        parameters : { type : "", id : notes + "+" + emails, state : state }
+        parameters : { type : "", id : notes + "+" + emails, state : state },
+        onComplete : function() {
+          $("comment_new").adjacent("li").each( function(li) {
+            var a = li.select("tt a.toggle")[0];
+            var dt = li.select("dt");
+            if (state == "Expanded") {
+              dt[0].hide();
+              dt[1].show()
+              if (a.innerHTML != "Less...") {
+                a.innerHTML = "Less...";
+              }
+            } else {
+              dt[1].hide();
+              dt[0].show()
+              if (a.innerHTML != "More...") {
+                a.innerHTML = "More...";
+              }
+            }
+          }) // each(li)
+        }.bind(this) // onComplete
       });
     }
   },

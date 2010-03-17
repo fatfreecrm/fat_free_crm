@@ -63,19 +63,17 @@ class HomeController < ApplicationController
   # GET /home/timeline                                                     AJAX
   #----------------------------------------------------------------------------
   def timeline
-
     unless params[:type].empty?
       model = params[:type].camelize.constantize
       item = model.find(params[:id])
       item.update_attribute(:state, params[:state])
-      render :nothing => true
     else
       comments, emails = params[:id].split("+")
-      Comment.update_all("state = '#{params[:state]}'", "id IN (#{comments})") unless !comments || comments.empty?
-      Email.update_all("state = '#{params[:state]}'", "id IN (#{emails})") unless !emails || emails.empty?
-      render(:update) { |page| page.call "document.location.reload" }
+      Comment.update_all("state = '#{params[:state]}'", "id IN (#{comments})") unless comments.blank?
+      Email.update_all("state = '#{params[:state]}'", "id IN (#{emails})") unless emails.blank?
     end
 
+    render :nothing => true
   end
 
   # GET /home/timezone                                                     AJAX
