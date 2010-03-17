@@ -254,7 +254,10 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  flip_notes_and_emails: function(state, notes, emails) {
+  flip_notes_and_emails: function(state, more, less) {
+    var notes = $("shown_notes").value;
+    var emails = $("shown_emails").value;
+
     if (notes != "" || emails != "") {
       new Ajax.Request(this.base_url + "/home/timeline", {
         method     : "get",
@@ -264,16 +267,14 @@ var crm = {
             var a = li.select("tt a.toggle")[0];
             var dt = li.select("dt");
             if (state == "Expanded") {
-              dt[0].hide();
-              dt[1].show()
-              if (a.innerHTML != "Less...") {
-                a.innerHTML = "Less...";
+              dt[0].hide();  dt[1].show();
+              if (a.innerHTML != less) {
+                a.innerHTML = less;
               }
             } else {
-              dt[1].hide();
-              dt[0].show()
-              if (a.innerHTML != "More...") {
-                a.innerHTML = "More...";
+              dt[1].hide();  dt[0].show();
+              if (a.innerHTML != more) {
+                a.innerHTML = more;
               }
             }
           }) // each(li)

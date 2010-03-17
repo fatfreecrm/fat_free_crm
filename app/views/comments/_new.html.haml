@@ -3,13 +3,13 @@
 
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].
-  = hidden_field_tag :shown_notes, "#{commentable.comments.map(&:id).join(',')}"
-  = hidden_field_tag :shown_emails, "#{commentable.emails.map(&:id).join(',')}"
+  = hidden_field_tag :shown_notes, "#{commentable.comment_ids.join(',')}"
+  = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}"
 
   = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
   .tools#comment_new_tools{ invisible }
-    = link_to_function("Expand All", "crm.flip_notes_and_emails('Expanded', $('shown_notes').value, $('shown_emails').value)") << " | "
-    = link_to_function("Collapse All", "crm.flip_notes_and_emails('Collapsed', $('shown_notes').value, $('shown_emails').value)") << "&nbsp;"
+    = link_to_function("Expand All", "crm.flip_notes_and_emails('Expanded', 'More...', 'Less...')") << " | "
+    = link_to_function("Collapse All", "crm.flip_notes_and_emails('Collapsed', 'More...', 'Less...')") << "&nbsp;"
 
   #post{ hidden_if(session["#{class_name}_new_comment"].nil?) }
     - remote_form_for(@comment) do |f|
