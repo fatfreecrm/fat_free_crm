@@ -1,5 +1,5 @@
-- if @user == @current_user
-  %div(style="float:right")
+- if @user == @current_user && Setting.per_user_locale
+  %div#options(style="float:right")
     #{t :profile_language}: #{link_to(language_for(@current_user), "#", :id => :locale)}
 
 %table(cellspacing="0" cellpadding="0")
@@ -21,5 +21,5 @@
         = "#{t :phone}: <b>#{@user.phone}</b>" unless @user.phone.blank?
         = "#{t :mobile}: <b>#{@user.mobile}</b>" unless @user.mobile.blank?
 
-%script
-  = render :partial => "languages"
+- if Setting.per_user_locale
+  %script= render :partial => "languages"

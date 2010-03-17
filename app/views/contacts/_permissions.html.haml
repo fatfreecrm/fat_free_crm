@@ -3,7 +3,7 @@
 = subtitle :contact_permissions, collapsed, t(:permissions)
 .section
   %small#contact_permissions_intro{ hidden_if(!collapsed) }
-    = t(:permissions_intro, t(:contact_small)) unless edit
+    = get_default_permissions_intro(@contact.access, t(:contact_small)) unless edit
   #contact_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide();"

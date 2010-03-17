@@ -8,6 +8,6 @@
     = render :partial => "contacts/web",         :locals => { :f => f, :edit => true }
     = render :partial => "contacts/permissions", :locals => { :f => f, :edit => true }
     .buttonbar
-      = f.submit t(:save_contact), :onclick => %/$("account_assigned_to").value = $F("contact_assigned_to")/
+      = f.submit t(:save_contact), :onclick => "crm.save_contact()"
       #{t :or}
       = link_to_cancel edit_contact_path(@contact)

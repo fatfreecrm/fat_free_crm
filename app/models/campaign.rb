@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -39,6 +39,7 @@
 #  deleted_at          :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
+#  background_info  :string(255)
 #
 class Campaign < ActiveRecord::Base
   belongs_to  :user

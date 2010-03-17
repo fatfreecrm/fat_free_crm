@@ -19,6 +19,20 @@ describe "/accounts/_edit.html.haml" do
       with_tag "input[type=hidden][id=account_user_id][value=#{@account.user_id}]"
     end
   end
+
+  it "should render background info field if settings require so" do
+    Setting.background_info = [ :account ]
+
+    render "/accounts/_create.html.haml"
+    response.should have_tag("textarea[id=account_background_info]")
+  end
+
+  it "should not render background info field if settings do not require so" do
+    Setting.background_info = []
+
+    render "/accounts/_create.html.haml"
+    response.should_not have_tag("textarea[id=account_background_info]")
+  end
 end
 
 

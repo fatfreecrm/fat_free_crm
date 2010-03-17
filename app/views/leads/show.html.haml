@@ -13,8 +13,8 @@
 %div#convert_lead{ hidden }
 %div#edit_lead{ hidden }
 
-= render :partial => "common/new_comment", :locals => { :commentable => @lead }
-= render :partial => "common/comment", :collection => @lead.comments
+= render :partial => "comments/new", :locals => { :commentable => @lead }
+= render :partial => "comments/comment", :collection => @lead.comments
 
 -#-----------------------------------------------------------------------------
 %br

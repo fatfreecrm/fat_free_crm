@@ -43,6 +43,21 @@ describe "/opportunities/_edit.html.haml" do
     end
   end
 
+  it "should render background info field if settings require so" do
+    assigns[:users] = [ @current_user ]
+    assigns[:opportunity] = Factory(:opportunity)
+    Setting.background_info = [ :opportunity ]
+
+    render "/opportunities/_create.html.haml"
+    response.should have_tag("textarea[id=opportunity_background_info]")
+  end
+
+  it "should not render background info field if settings do not require so" do
+    assigns[:users] = [ @current_user ]
+    assigns[:opportunity] = Factory(:opportunity)
+    Setting.background_info = []
+
+    render "/opportunities/_create.html.haml"
+    response.should_not have_tag("textarea[id=opportunity_background_info]")
+  end
 end
-
-

@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -38,7 +38,11 @@ class ApplicationController < ActionController::Base
       I18n.locale = Setting.locale
     else
       # Pre-I18n settings that need to be reloaded. Use English message text since the actual locale is unknown.
-      raise FatFreeCRM::ObsoleteSettings, "It looks like you are upgrading from the older version of Fat Free CRM. Please review config/settings.yml file, and re-run<br><b>rake crm:settings:load</b> command."
+      raise FatFreeCRM::ObsoleteSettings, <<-OBSOLETE
+        It looks like you are upgrading from the older version of Fat Free CRM. Please review
+        <b>config/settings.yml</b> file, and re-run<br><b>rake crm:settings:load</b> command
+        in development and production environments.
+      OBSOLETE
     end
   end
 

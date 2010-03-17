@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 23
+# Schema version: 24
 #
 # Table name: accounts
 #
@@ -17,6 +17,7 @@
 #  deleted_at       :datetime
 #  created_at       :datetime
 #  updated_at       :datetime
+#  email            :string(64)
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')

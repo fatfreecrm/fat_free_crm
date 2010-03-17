@@ -23,12 +23,12 @@
 #  linkedin    :string(128)
 #  facebook    :string(128)
 #  twitter     :string(128)
-#  address     :string(255)
 #  rating      :integer(4)      default(0), not null
 #  do_not_call :boolean(1)      not null
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  background_info :string(255)
 #
 
 <%
@@ -51,23 +51,21 @@ lead<%= i %>:
   last_name   : <%= last_name = Faker::Name.last_name %>
   access      : Public
   company     : <%= Faker::Company.name %>
-  title       : <%= title[rand(title.size)] %>
-  source      : <%= source[rand(source.size)] %>
-  status      : <%= status[rand(status.size)] %>
+  title       : <%= title.rand %>
+  source      : <%= source.rand %>
+  status      : <%= status.rand %>
   rating      : <%= rand(5) %>
   referred_by : <%= Faker::Name.first_name + " " + Faker::Name.last_name if rand(10) < 5 %>
-  blog        : <%= "http://#{(first_name + last_name.first).downcase}.blogger.com" if rand(10) < 8 %>
-  linkedin    : <%= "http://www.linkedin.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
-  facebook    : <%= "http://www.facebook.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
-  twitter     : <%= "http://www.twitter.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
+  blog        : <%= %[http://#{(first_name + last_name.first).downcase}.blogger.com] if rand(10) < 8 %>
+  linkedin    : <%= %[http://www.linkedin.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
+  facebook    : <%= %[http://www.facebook.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
+  twitter     : <%= %[http://www.twitter.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
   email       : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
   alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) if rand(10) < 3 %>
   phone       : <%= Faker::PhoneNumber.phone_number if rand(10) < 5 %>
   mobile      : <%= Faker::PhoneNumber.phone_number if rand(10) < 3 %>
-  address     : |
-                <%= Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-                <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
   do_not_call : false
+  background_info : <%= Faker::Lorem.paragraph[0,255] %>
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>

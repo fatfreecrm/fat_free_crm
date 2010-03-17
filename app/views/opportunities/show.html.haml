@@ -8,8 +8,8 @@
 
 %div#edit_opportunity{ hidden }
 
-= render :partial => "common/new_comment", :locals => { :commentable => @opportunity }
-= render :partial => "common/comment", :collection => @opportunity.comments
+= render :partial => "comments/new", :locals => { :commentable => @opportunity }
+= render :partial => "comments/comment", :collection => @opportunity.comments
 
 -#-----------------------------------------------------------------------------
 %br

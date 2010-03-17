@@ -55,9 +55,11 @@
           %td{ :valign => :top }
             .label #{t :skype}:
             = f.text_field :skype, :style => "width:112px"
-
+    
     .buttonbar
       = f.submit t :save_profile
       #{t :or}
       = link_to_cancel edit_user_path(@user)
+      
+  = hook(:profile_user_bottom, self)
 %br

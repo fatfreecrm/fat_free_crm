@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -38,7 +38,7 @@ class Comment < ActiveRecord::Base
   default_scope :order => "created_at DESC"
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ? ", user.id ] } }
 
-  validates_presence_of :user_id, :commentable_id, :commentable_type, :comment
+  validates_presence_of :user, :commentable, :comment
   after_create :log_activity
 
   private

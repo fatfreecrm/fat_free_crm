@@ -1,5 +1,5 @@
 // Fat Free CRM
-// Copyright (C) 2008-2009 by Michael Dvorkin
+// Copyright (C) 2008-2010 by Michael Dvorkin
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -81,7 +81,9 @@
   :padding 20px
   :width 400px 
   :-moz-border-radius 6px
+  :-moz-box-shadow 5px 5px 15px #bbb, -5px 0px 15px #bbb
   :-webkit-border-radius 6px
+  :-webkit-box-shadow 5px 5px 15px #bbb, -5px 0px 15px #bbb
 
   input[type="text"], input[type="password"]
     :font-size 16px
@@ -98,7 +100,9 @@
   :background white
   :padding 8px 15px 15px 15px
   :-moz-border-radius 4px
+  :-moz-box-shadow 2px 2px 8px #bbb, -2px 0px 8px #bbb
   :-webkit-border-radius 4px
+  :-webkit-box-shadow 2px 2px 8px #bbb, -2px 0px 8px #bbb
   
 .sidebar
   :color #3f3f3f
@@ -237,6 +241,7 @@
   :margin 2px 0px 0px 0px
   :overflow hidden
   :padding 4px
+  :list-style none
   //  :-moz-border-radius
   //    :bottomleft 8px
   //    :bottomright 8px
@@ -248,18 +253,19 @@
     :border 1px #cfcfcf solid
     :color grey
     :font-size 11px
+    :margin 3px 0px 0px 0px
     :padding 3px
     :width 500px
   textarea
     :font-size 11px
     :height 110px
+    :margin 3px 0px 0px 0px
     :padding 3px
     :width 500px
 
   .gravatar
-    :background #f2f2f2
     :float left
-    :padding 0px 10px 5px 0px
+    :margin 3px 10px 3px 3px
 
   .body
     :display inline
@@ -362,10 +368,12 @@
 //------------------------------------------------------------------------------
 .filters, .panel
   :background snow
-  :margin 0px 0px 10px 0px
+  :margin 0px 0px 12px 0px
   :padding 6px 8px 6px 8px
   :-moz-border-radius 4px
   :-webkit-border-radius 4px
+  :-moz-box-shadow 2px 2px 8px #bbb, -2px 0px 8px #bbb
+  :-webkit-box-shadow 2px 2px 8px #bbb, -2px 0px 8px #bbb
 
 .filters
   h4
@@ -403,12 +411,15 @@
       :weight bold
     :margin 4px 0px 2px 0px
     :padding 2px 0px 2px 0px
-
+    
   &#recently
     :background floralwhite
 
   &#summary
     :background oldlace
+
+    p
+      :margin 4px 0px 4px 0px
 
 .selector
   :color black

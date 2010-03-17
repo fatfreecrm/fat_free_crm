@@ -23,12 +23,12 @@
 #  linkedin    :string(128)
 #  facebook    :string(128)
 #  twitter     :string(128)
-#  address     :string(255)
 #  born_on     :date
 #  do_not_call :boolean(1)      not null
 #  deleted_at  :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  background_info :string(255)
 #
 
 <% 
@@ -48,23 +48,22 @@ contact_<%= i %>:
   first_name  : <%= first_name = Faker::Name.first_name %>
   last_name   : <%= last_name = Faker::Name.last_name %>
   access      : Public
-  title       : <%= title[rand(title.size)] %>
+  title       : <%= title.rand %>
   department  :
-  source      : <%= source[rand(source.size)] %>
+  source      : <%= source.rand %>
   email       : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
   alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) %>
   phone       : <%= Faker::PhoneNumber.phone_number if rand(10) < 8 %>
   mobile      : <%= Faker::PhoneNumber.phone_number if rand(10) < 6 %>
   fax         : <%= Faker::PhoneNumber.phone_number if rand(10) < 4 %>
-  blog        : <%= "http://#{(first_name + last_name.first).downcase}.blogger.com" if rand(10) < 8 %>
-  linkedin    : <%= "http://www.linkedin.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
-  facebook    : <%= "http://www.facebook.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
-  twitter     : <%= "http://www.twitter.com/#{(first_name + last_name.first).downcase}" if rand(10) < 8 %>
-  address     : |
-                <%= Faker::Address.street_address + " " + Faker::Address.secondary_address %>
-                <%= Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code %>
+  blog        : <%= %[http://#{(first_name + last_name.first).downcase}.blogger.com] if rand(10) < 8 %>
+  linkedin    : <%= %[http://www.linkedin.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
+  facebook    : <%= %[http://www.facebook.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
+  twitter     : <%= %[http://www.twitter.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
   born_on     : <%= Date.today - (rand(20) + 20).years - rand(200).days %>
   do_not_call : false
+  background_info :
+# background_info : <%= Faker::Lorem.paragraph[0,255] %>
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>

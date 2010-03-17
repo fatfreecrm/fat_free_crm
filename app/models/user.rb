@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -68,6 +68,7 @@ class User < ActiveRecord::Base
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
   named_scope :except, lambda { |user| { :conditions => [ "id != ? ", user.id ] } }
+  named_scope :by_name, :order => "first_name, last_name, email"
   default_scope :order => "id DESC" # Show newest users first.
 
   simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }

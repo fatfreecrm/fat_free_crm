@@ -3,13 +3,13 @@
 #confirm{ hidden }
 .title_tools#menu
   = link_to_inline(:edit_account, edit_account_path(@account), :text => t(:edit)) + " | "
-  = link_to_function(t :delete, confirm_delete(@account))
+  = link_to_function(t(:delete) + '?', confirm_delete(@account))
 .title#edit_account_title= h(@account.name)
 
 %div#edit_account{ hidden }
 
-= render :partial => "common/new_comment", :locals => { :commentable => @account }
-= render :partial => "common/comment", :collection => @account.comments
+= render :partial => "comments/new", :locals => { :commentable => @account }
+= render :partial => "comments/comment", :collection => @account.comments
 
 -#-----------------------------------------------------------------------------
 %br

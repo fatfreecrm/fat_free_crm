@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -14,6 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
+
+if RUBY_VERSION.start_with?("1.9") && ActiveRecord::Base.connection.adapter_name.downcase == "mysql"
+  require "fat_free_crm/mysql_utf8.rb"
+end
 
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"

@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -32,7 +32,7 @@ class AuthenticationsController < ApplicationController
     if @authentication.save && !@authentication.user.suspended?
       flash[:notice] = t(:msg_welcome)
       if @authentication.user.login_count > 1 && @authentication.user.last_login_at?
-        flash[:notice] << " " << t(:msg_last_login, @authentication.user.last_login_at.to_s(:mmddhhss))
+        flash[:notice] << " " << t(:msg_last_login, l(@authentication.user.last_login_at, :format => :mmddhhss))
       end
       redirect_back_or_default root_url
     else

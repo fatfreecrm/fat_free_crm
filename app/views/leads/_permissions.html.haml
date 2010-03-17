@@ -3,7 +3,7 @@
 = subtitle :lead_permissions, collapsed, t(:permissions)
 .section
   %small#lead_permissions_intro{ hidden_if(!collapsed) }
-    = t(:lead_permissions_intro) unless edit
+    = get_lead_default_permissions_intro(@lead.access) unless edit
   #lead_permissions{ hidden_if(collapsed) }
     .radio_box
       = f.radio_button :access, "Private", :onclick => "$('people').hide();"

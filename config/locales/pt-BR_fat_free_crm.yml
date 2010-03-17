@@ -72,6 +72,7 @@ pt-BR:
   due_this_week: Esta semana
   due_next_week: Próxima semana
   due_later: Depois
+  due_specific_date: Em Data Específica... # ?!
 
   completed_today: Hoje
   completed_yesterday: Ontem
@@ -184,7 +185,8 @@ pt-BR:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: Exibir atividades em {{models}} feitas por {{user}} no(s) último(s) {{period}}
+  activity_options: Exibir atividades em {{models}} feitas por {{user}} no(s) último(s) {{period}}.
+  all_users: todos os usuários
   option_after: depois
   option_all: todos
   option_all_users: todos os usuários
@@ -250,7 +252,7 @@ pt-BR:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Esqueceu a senha?
+  forgot_password: Esqueceu a senha
   login: Login
   no_account: Não tem uma conta?
   remember_me: Me lembrar
@@ -324,7 +326,6 @@ pt-BR:
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  address: Endereço
   alt_email_small: Outro
   blog: Website/Blog
   contact: Contato
@@ -341,7 +342,11 @@ pt-BR:
   facebook: Facebook
   linked_in: LinkedIn
   myself: Eu
-  permissions_intro: Por padrão somente você terá acesso a {{value}}. Você pode mudar as permissões depois.
+
+  permissions_intro_private: Por padrão, somente você terá acesso em {{value}}. Você pode mudar as permissões depois.
+  permissions_intro_public: Por padrão, todos os usuários terão acesso em {{value}}. Você pode mudar as permissões depois..
+  permissions_intro_shared: Por padrão, somente os usuários selecionados terão acesso em {{value}}. Você pode mudar as permissões depois..
+
   referred_by: Referred by
   referred_by_small: referred by
   save_contact: Salvar contato
@@ -352,29 +357,33 @@ pt-BR:
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
-  leads: Leads
-  lead: Lead
-  lead_small: lead
-  leads_small: leads
-  create_lead: Novo lead
-  save_lead: Salvar lead
-  leads_options: Opções de Lead
   convert: Converter
-  reject: Rejeitar
-  status: Situação
-  source: Origem
-  rating: Rating
-  lead_info_small: contato do lead
-  lead_status_small: situação do lead
-  lead_permissions_intro: Por padrão, as permissões serão copiadas da campanha ou serão privadas. Você pode mudar as permissões do lead depois.
-  create_opp_for_contact: Você pode opcionalmente criar uma oportunidade para o contato {{value}}  especificando o nome, fase atual, data estimada de fechamento, probabilidade de venda, valor do acordo, e o desconto oferecido.
   convert_lead: Converter lead
-  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  total_leads: Total de leads
+  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  create_lead: Novo lead
+  create_opp_for_contact: Você pode opcionalmente criar uma oportunidade para o contato {{value}}  especificando o nome, fase atual, data estimada de fechamento, probabilidade de venda, valor do acordo, e o desconto oferecido.
+  lead: Lead
+  lead_info_small: contato do lead
+
+  lead_permissions_intro_private: Por padrão, as permissões seráo copiadas da campanha ou ficarão privadas. Você pode mudar as permissões do 'lead' depois.
+  lead_permissions_intro_public: Por padrão, as permissões sérão copiadas do campanha ou ficarão públicas. Você pode mudar as permissões do 'lead' depois.
+  lead_permissions_intro_shared: Por padrão, as permissões serão compiadas da campanha ou serão compartilhadas com os usuários especificados. Você pode mudar as permissões do 'lead' depois.
+
+  lead_small: lead
+  lead_status_small: situação do lead
   lead_summary: Lead Summary
-  reject_lead_confirm: Tem certeza que deseja rejeitar este lead?
+  leads: Leads
+  leads_options: Opções de Lead
+  leads_small: leads
   none: Nenhum
+  rating: Rating
+  reject: Rejeitar
+  reject_lead_confirm: Tem certeza que deseja rejeitar este lead?
+  save_lead: Salvar lead
+  source: Origem
+  status: Situação
+  total_leads: Total de leads
 
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
@@ -422,6 +431,9 @@ pt-BR:
   feel_free: Sinta-se livre para
   move_to: mover para
   no_tasks: "Você não tem nenhum atividade {{value}}"
+  no_tasks_pending: pendente
+  no_tasks_assigned: atribuída
+  no_tasks_completed: terminada
   pending_tab: Pendente
   pending_tasks: Tarefas pendentes
   related: 're:'
@@ -456,6 +468,7 @@ pt-BR:
   action_rescheduled: reagendado
   action_updated: atualziado
   action_viewed: visualizado
+  action_won: consuistado
   no_activity_records: Nenhum registro de atividade encontrado.
   recent_activity: Atividade recente
   recent_activity_options: Opções de atividade recente
@@ -469,6 +482,7 @@ pt-BR:
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Adicionar nota
+  save_note: Salvar nota
   add_note_help: Adicionar nova nota...
   added_ago: adicionado(a) há {{value}} atrás
   added_by: adicionado(a) há {{time_ago}} atrás por {{user}} 
@@ -480,6 +494,7 @@ pt-BR:
   could_not_find: "{{value}} não encontrado. Sinta-se livre para"
   could_not_find_matching: "Couldn't find {{value}} matching"
   create_new: cria um(a) novo(a)
+  select_existing: selecione existentes
   delete: Remover
   edit: Editar
   items_total: '{{count}} total.'
@@ -494,6 +509,12 @@ pt-BR:
   recent_items: Itens recentes
   search_assets: Buscar {{value}}
   time_ago: "há {{value}} atrás"
+  background_info: Informações gerais
+  address: Endereço
+  city: Ciudade
+  zipcode: CEP
+  state: Membro/Região
+  country: Campo
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -546,7 +567,10 @@ pt-BR:
   user_suspended: Suspenso
   user_suspended_on: suspenso em {{value}}
   users: Usuários
+  users_small: usuários
 
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     contact: 
       one: '1 contato'
@@ -563,3 +587,21 @@ pt-BR:
     login:
       one: '1 login'
       other: '{{count}} logins'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: "%m/%d/%Y"
+      mmdd: "%b %e"
+      mmddyy: "%b %e, %Y"
+
+  time:
+    formats:
+      mmddhhss: "%b %e at %l:%M%p"
+
+  calendar_date_select:
+    ok: OK
+    now: Agora
+    today: Hoje
+    clear: Limpar

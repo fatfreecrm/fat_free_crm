@@ -35,6 +35,15 @@ a {
     color: white;
     text-decoration: none; }
 
+#options a {
+  border-bottom: 1px dotted darkcyan;
+  color: darkcyan;
+  text-decoration: none; }
+  #options a:hover {
+    background: #e5e5e5;
+    border-bottom: 1px dotted darkblue;
+    color: darkblue; }
+
 abbr {
   font-size: 9px; }
 

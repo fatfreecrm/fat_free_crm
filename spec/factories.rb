@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -49,11 +49,11 @@ Factory.define :account do |a|
   a.name                { Faker::Company.name }
   a.access              "Public"
   a.website             { Factory.next(:website) }
+  a.email               { Faker::Internet.email }
   a.toll_free_phone     { Faker::PhoneNumber.phone_number }
   a.phone               { Faker::PhoneNumber.phone_number }
   a.fax                 { Faker::PhoneNumber.phone_number }
-  a.billing_address     { Factory.next(:address) }
-  a.shipping_address    { Factory.next(:address) }
+  a.background_info     { Faker::Lorem.paragraph[0,255] }
   a.deleted_at          nil
   a.updated_at          { Factory.next(:time) }
   a.created_at          { Factory.next(:time) }
@@ -89,6 +89,22 @@ Factory.define :activity do |a|
 end
 
 #----------------------------------------------------------------------------
+Factory.define :address do |a|
+  a.addressable         { raise "Please specify :addressable for the address" }
+  a.street1             { Faker::Address.street_address }
+  a.street2             { Faker::Address.street_address }   
+  a.city                { Faker::Address.city }
+  a.state               { Faker::Address.us_state_abbr }
+  a.zipcode             { Faker::Address.zip_code }
+  a.country             { Faker::Address.uk_country }
+  a.full_address        { Factory.next(:address) }
+  a.address_type        { %w(Business Billing Shipping).rand }
+  a.updated_at          { Factory.next(:time) }
+  a.created_at          { Factory.next(:time) }
+  a.deleted_at          nil
+end
+
+#----------------------------------------------------------------------------
 Factory.define :avatar do |a|
   a.user                { |a| a.association(:user) }
   a.entity              { raise "Please specify :entity for the avatar" }
@@ -102,7 +118,7 @@ end
 #----------------------------------------------------------------------------
 Factory.define :campaign do |c|
   c.user                { |a| a.association(:user) }
-  c.name                { Faker::Lorem.sentence[0..63] }
+  c.name                { Faker::Lorem.sentence[0,64] }
   c.assigned_to         nil
   c.access              "Public"
   c.status              { %w(planned started completed planned started completed on_hold called_off).rand }
@@ -115,7 +131,8 @@ Factory.define :campaign do |c|
   c.revenue             { rand(1000) }
   c.ends_on             { Factory.next(:date) }
   c.starts_on           { Factory.next(:date) }
-  c.objectives          { Faker::Lorem::paragraph }
+  c.objectives          { Faker::Lorem.paragraph[0,255] }
+  c.background_info     { Faker::Lorem.paragraph[0,255] }
   c.deleted_at          nil
   c.updated_at          { Factory.next(:time) }
   c.created_at          { Factory.next(:time) }
@@ -154,8 +171,8 @@ Factory.define :contact do |c|
   c.linkedin            { Factory.next(:website) }
   c.twitter             { Factory.next(:website) }
   c.do_not_call         false
-  c.address             { Factory.next(:address) }
   c.born_on             "1992-10-10"
+  c.background_info     { Faker::Lorem.paragraph[0,255] }
   c.deleted_at          nil
   c.updated_at          { Factory.next(:time) }
   c.created_at          { Factory.next(:time) }
@@ -194,7 +211,7 @@ Factory.define :lead do |l|
   l.alt_email           { Faker::Internet.email }
   l.phone               { Faker::PhoneNumber.phone_number }
   l.mobile              { Faker::PhoneNumber.phone_number }
-  l.address             { Factory.next(:address) }
+  l.background_info     { Faker::Lorem.paragraph[0,255] }
   l.deleted_at          nil
   l.updated_at          { Factory.next(:time) }
   l.created_at          { Factory.next(:time) }
@@ -205,7 +222,7 @@ Factory.define :opportunity do |o|
   o.user                { |a| a.association(:user) }
   o.campaign            { |a| a.association(:campaign) }
   o.assigned_to         nil
-  o.name                { Faker::Lorem.sentence[0..63] }
+  o.name                { Faker::Lorem.sentence[0,64] }
   o.access              "Public"
   o.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).rand }
   o.stage               { %w(prospecting analysis presentation proposal negotiation final_review won lost).rand }
@@ -213,6 +230,7 @@ Factory.define :opportunity do |o|
   o.amount              { rand(1000) }
   o.discount            { rand(100) }
   o.closes_on           { Factory.next(:date) }
+  o.background_info     { Faker::Lorem.paragraph[0,255] }
   o.deleted_at          nil
   o.updated_at          { Factory.next(:time) }
   o.created_at          { Factory.next(:time) }
@@ -251,11 +269,12 @@ Factory.define :task do |t|
   t.asset_type          nil
   t.assigned_to         nil
   t.completed_by        nil
-  t.name                { Faker::Lorem.sentence[0..63] }
+  t.name                { Faker::Lorem.sentence[0,64] }
   t.priority            nil
   t.category            { %w(call email follow_up lunch meeting money presentation trip).rand }
   t.bucket              "due_asap"
   t.due_at              { Factory.next(:time) }
+  t.background_info     { Faker::Lorem.paragraph[0,255] }
   t.completed_at        nil
   t.deleted_at          nil
   t.updated_at          { Factory.next(:time) }

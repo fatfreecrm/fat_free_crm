@@ -1,8 +1,9 @@
 %p
   = link_to_close url_for(:action => "options")
   = hidden_field_tag "account[user_id]", @current_user.id
+
   -# activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}
-  = t(:activity_options, :models => link_to(t(@asset).downcase, "#", :id => :asset), :user => link_to(@user, "#", :id => :user), :period => link_to(t(@duration).downcase, "#", :id => :duration))
+  = t(:activity_options, :models => link_to(t(@asset).downcase, "#", :id => :asset), :user => link_to(t(@user), "#", :id => :user), :period => link_to(t(@duration).downcase, "#", :id => :duration))
 %p
 
 %script

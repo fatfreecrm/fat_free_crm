@@ -1,5 +1,5 @@
 // Fat Free CRM
-// Copyright (C) 2008-2009 by Michael Dvorkin
+// Copyright (C) 2008-2010 by Michael Dvorkin
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -17,17 +17,17 @@
 
 var crm = {
 
-  EXPANDED      :  "&#9660;",
+  EXPANDED      : "&#9660;",
   COLLAPSED     : "&#9658;",
   request       : null,
   autocompleter : null,
   base_url      : "",
 
   //----------------------------------------------------------------------------
-  date_select_popup: function(id, dropdown_id) {
+  date_select_popup: function(id, dropdown_id, show_time) {
     $(id).observe("focus", function() {
       if (!$(id).calendar_was_shown) {    // The field recieved initial focus, show the calendar.
-        var calendar = new CalendarDateSelect(this, { month_year: "label",  year_range: 10, before_close: function() { this.calendar_was_shown = true } });
+        var calendar = new CalendarDateSelect(this, { month_year: "label",  year_range: 10, time: show_time, before_close: function() { this.calendar_was_shown = true } });
         if (dropdown_id) {
           calendar.buttons_div.build("span", { innerHTML: " | ", className: "button_seperator" });
           calendar.buttons_div.build("a", { innerHTML: "Back to List", href: "#", onclick: function() {
@@ -120,7 +120,9 @@ var crm = {
   // Hide accounts dropdown and show create new account edit field instead.
   //----------------------------------------------------------------------------
   create_account: function(and_focus) {
-    $("account_selector").update(" (create new or <a href='#' onclick='crm.select_account(1); return false;'>select existing</a>):");
+    $("account_disabled_title").hide();
+    $("account_select_title").hide();
+    $("account_create_title").show();
     $("account_id").hide();
     $("account_id").disable();
     $("account_name").enable();
@@ -134,7 +136,9 @@ var crm = {
   // Hide create account edit field and show accounts dropdown instead.
   //----------------------------------------------------------------------------
   select_account: function(and_focus) {
-    $("account_selector").update(" (<a href='#' onclick='crm.create_account(1); return false;'>create new</a> or select existing):");
+    $("account_disabled_title").hide();
+    $("account_create_title").hide();
+    $("account_select_title").show();
     $("account_name").hide();
     $("account_name").disable();
     $("account_id").enable();
@@ -147,7 +151,9 @@ var crm = {
   // Show accounts dropdown and disable it to prevent changing the account.
   //----------------------------------------------------------------------------
   select_existing_account: function() {
-    $("account_selector").update(":");
+    $("account_create_title").hide();
+    $("account_select_title").hide();
+    $("account_disabled_title").show();
     $("account_name").hide();
     $("account_name").disable();
     $("account_id").disable();
@@ -163,6 +169,25 @@ var crm = {
     } else {
       this.select_account();          // accounts dropdown
     }
+  },
+
+  //----------------------------------------------------------------------------
+  create_contact: function() {
+    if ($("contact_business_address_attributes_country")) {
+      this.clear_all_hints();
+    }
+    $("account_assigned_to").value = $F("contact_assigned_to");
+    if ($("account_id").visible()) {
+      $("account_id").enable();
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  save_contact: function() {
+    if ($("contact_business_address_attributes_country")) {
+      this.clear_all_hints();
+    }
+    $("account_assigned_to").value = $F("contact_assigned_to");
   },
 
   //----------------------------------------------------------------------------
@@ -233,6 +258,54 @@ var crm = {
     if (!sticky) {
       setTimeout("Effect.Fade('flash')", 3000);
     }
+  },
+
+  //----------------------------------------------------------------------------
+  show_hint: function(el, hint) {
+    if (el.value == '') {
+      el.value = hint;
+      el.style.color = 'silver'
+      el.setAttribute('hint', true);
+    }
+  },
+
+  //----------------------------------------------------------------------------
+  hide_hint: function(el, value) {
+    if (arguments.length == 2) {
+      el.value = value;
+    } else {
+      if (el.getAttribute('hint') == "true") {
+        el.value = '';
+      }
+    }
+    el.style.color = 'black'
+    el.setAttribute('hint', false);
+  },
+
+  //----------------------------------------------------------------------------
+  clear_all_hints: function() {
+    $$("input[hint=true]").each( function(field) {
+      field.value = '';
+    }.bind(this));
+  },
+
+  //----------------------------------------------------------------------------
+  copy_address: function(from, to) {
+    $(from + "_attributes_full_address").value = $(to + "_attributes_full_address").value;
+  },
+
+  //----------------------------------------------------------------------------
+  copy_compound_address: function(from, to) {
+    $w("street1 street2 city state zipcode").each( function(field) {
+      var source = $(from + "_attributes_" + field);
+      var destination = $(to + "_attributes_" + field);
+      if (source.getAttribute('hint') != "true") {
+        this.hide_hint(destination, source.value);
+      }
+    }.bind(this));
+
+    // Country dropdown needs special treatment ;-)
+    $(to + "_attributes_country").selectedIndex = $(from + "_attributes_country").selectedIndex;
   },
 
   //----------------------------------------------------------------------------

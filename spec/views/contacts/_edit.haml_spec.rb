@@ -45,6 +45,23 @@ describe "/contacts/edit.html.erb" do
     end
   end
 
+  it "should render background info field if settings require so" do
+    assigns[:users] = [ @current_user ]
+    assigns[:contact] = Factory(:contact)
+    Setting.background_info = [ :contact ]
+
+    render "/contacts/_create.html.haml"
+    response.should have_tag("textarea[id=contact_background_info]")
+  end
+
+  it "should not render background info field if settings do not require so" do
+    assigns[:users] = [ @current_user ]
+    assigns[:contact] = Factory(:contact)
+    Setting.background_info = []
+
+    render "/contacts/_create.html.haml"
+    response.should_not have_tag("textarea[id=contact_background_info]")
+  end
 end
 
 

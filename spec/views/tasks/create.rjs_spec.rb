@@ -117,6 +117,7 @@ describe "/tasks/create.js.rjs" do
     render
 
     response.should include_text('$("create_task").visualEffect("shake"')
+    response.should include_text(%/$("task_submit").enable()/)
   end
 
 end

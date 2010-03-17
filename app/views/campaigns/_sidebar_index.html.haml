@@ -15,3 +15,4 @@
     %div{:style => "float:right;"}
       %b= @campaign_status_total[:all]
     %b #{t :total_campaigns}
+  = hook(:index_campaign_sidebar_bottom, self)

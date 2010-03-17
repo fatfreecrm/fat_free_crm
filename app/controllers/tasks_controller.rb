@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2010 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -50,8 +50,8 @@ class TasksController < ApplicationController
   def new
     @view = params[:view] || "pending"
     @task = Task.new
-    @users = User.except(@current_user).all
-    @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
+    @users = User.except(@current_user).by_name.all
+    @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     if params[:related]
       model, id = params[:related].split("_")
@@ -72,8 +72,8 @@ class TasksController < ApplicationController
   def edit
     @view = params[:view] || "pending"
     @task = Task.tracked_by(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
-    @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
+    @users = User.except(@current_user).by_name.all
+    @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
     if params[:previous] =~ /(\d+)\z/
@@ -190,7 +190,7 @@ class TasksController < ApplicationController
     @view = params[:view] || "pending"
 
     update_session do |filters|
-      if params[:checked] == "true"
+      if params[:checked].true?
         filters << params[:filter]
       else
         filters.delete(params[:filter])
