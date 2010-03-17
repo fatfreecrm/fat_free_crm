@@ -33,7 +33,7 @@ class Notifier < ActionMailer::Base
     from          from
     recipients    user.email
     sent_on       Time.now
-    body          :mediator_links => mediator_links.join("\n"), :subject => email.subject, :body => email.body
+    body          :mediator_links => mediator_links.join("\n"), :subject => email.subject, :body => email.body_plain
   end
 
 end
