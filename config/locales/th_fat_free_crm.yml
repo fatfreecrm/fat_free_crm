@@ -578,6 +578,14 @@ th:
   users: ผู้ใช้
   users_small: ผู้ใช้ # TODO
 
+  # Dropbox.
+  #----------------------------------------------------------------------------
+  dropbox_ack_subject: dropbox - อีเมล์ เพิ่ม - {{subject}}
+  dropbox_ack_intro: สำเร็จ เพิ่ม อีเมล ที่ คุณ ส่ง ไป dropbox
+  dropbox_ack_to: เพิ่ม ลง ใน
+  subject: สาขา วิชา
+  body: ร่างกาย
+
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:

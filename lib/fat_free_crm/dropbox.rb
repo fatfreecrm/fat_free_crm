@@ -27,14 +27,15 @@ module FatFreeCRM
     ASSETS   = [Account, Contact, Lead]
     
     def initialize
-      @settings = Setting[:email_dropbox]            
+      @settings = Setting[:email_dropbox]
+      #I18n.locale = Setting.locale
     end
     
     def run
       connect
       # Loop on not seen emails
       @imap.uid_search(['NOT', 'SEEN']).each do |uid|        
-        begin  
+        #begin  
           @current_uid = uid
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
           unless @current_user = validate_and_find_user(email)
@@ -60,10 +61,10 @@ module FatFreeCRM
               end            
             end
           end              
-        rescue Exception => e
-          log("Problem processing email: #{e}", email)
-          next
-        end
+#        rescue Exception => e
+#          log("Problem processing email: #{e}", email)
+#          next
+#        end
       end # loop
       disconnect     
     end       
