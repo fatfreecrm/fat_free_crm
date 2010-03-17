@@ -568,6 +568,14 @@ en-US:
   users: Users
   users_small: users
 
+  # Dropbox.
+  #----------------------------------------------------------------------------
+  dropbox_ack_subject: dropbox - Added email - {{subject}}
+  dropbox_ack_intro: Succesfully added the email you sent to dropbox
+  dropbox_ack_to: Added to
+  subject: Subject
+  body: Body
+
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:

@@ -563,6 +563,14 @@ fr:
   user_suspended_on: suspendu le {{value}}
   users: Utilisateurs
   users_small: utilisateurs
+
+  # Dropbox.
+  #----------------------------------------------------------------------------
+  dropbox_ack_subject: dropbox - Ajouté email - {{subject}}
+  dropbox_ack_intro: D'ajouter l'email que vous avez envoyé à la sélection
+  dropbox_ack_to: Ajoutés aux
+  subject: Sujet
+  body: Corps
   
   # Pluralizations.
   #----------------------------------------------------------------------------

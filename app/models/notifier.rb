@@ -28,7 +28,8 @@ class Notifier < ActionMailer::Base
 
   #----------------------------------------------------------------------------
   def dropbox_ack_notification(user, from, email, mediator_links)    
-    subject       "dropbox - Added email - #{email.subject}"
+    I18n.locale = Setting.locale
+    subject       I18n.t(:dropbox_ack_subject, :subject => email.subject)
     from          from
     recipients    user.email
     sent_on       Time.now
