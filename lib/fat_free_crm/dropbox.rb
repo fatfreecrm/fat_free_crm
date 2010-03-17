@@ -17,7 +17,7 @@
 # TODO:
 #  - Make options for: (attach email to accont of contact if has
 require 'net/imap'
-require 'tmail'
+require "tmail_mail_extension"
 include ActionController::UrlWriter
 
 module FatFreeCRM
@@ -28,14 +28,13 @@ module FatFreeCRM
     
     def initialize
       @settings = Setting[:email_dropbox]
-      #I18n.locale = Setting.locale
     end
     
     def run
       connect
       # Loop on not seen emails
       @imap.uid_search(['NOT', 'SEEN']).each do |uid|        
-        #begin  
+        begin  
           @current_uid = uid
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
           unless @current_user = validate_and_find_user(email)
@@ -61,10 +60,10 @@ module FatFreeCRM
               end            
             end
           end              
-#        rescue Exception => e
-#          log("Problem processing email: #{e}", email)
-#          next
-#        end
+        rescue Exception => e
+          log("Problem processing email: #{e}", email)
+          next
+        end
       end # loop
       disconnect     
     end       
@@ -108,10 +107,7 @@ module FatFreeCRM
     # Checks if an email is valid (plain text and is from an email of valid user)
     #------------------------------------------------------------------------------     
     def validate_and_find_user(email)
-      if email.content_type != "text/plain"
-        log("Discarding... not text/plain", email)
-        return nil
-      end
+      return nil if email.body_plain == nil
       User.first(:conditions => ['email = ? AND suspended_at IS NULL', email.from.first.downcase])
     end
 
@@ -220,7 +216,7 @@ module FatFreeCRM
 
     # Add mail to assets. assets should be an array of asset objects
     #--------------------------------------------------------------------------------------    
-    def add_to(email, assets)
+    def add_to(email, assets)      
       if email.to.blank?
         log("Discarding... missing To header", email)
       else
@@ -232,8 +228,8 @@ module FatFreeCRM
       assets.each do |asset|
         if has_permissions_on(asset)  
           asset_type = asset.class.to_s
-          @settings[:associate_email_to_account] == true && (asset_type == "Contact" || asset_type == "Opportunity") ? mediator = asset.account || asset : mediator = asset          
-          Email.create(:imap_message_id => email.message_id, :user => @current_user, :mediator => mediator, :sent_from => email.from.first, :sent_to => sent_to, :cc => cc, :subject => email.subject, :body => email.body, :received_at => email.date, :sent_at => email.date)
+          @settings[:associate_email_to_account] == true && (asset_type == "Contact" || asset_type == "Opportunity") ? mediator = asset.account || asset : mediator = asset
+          Email.create(:imap_message_id => email.message_id, :user => @current_user, :mediator => mediator, :sent_from => email.from.first, :sent_to => sent_to, :cc => cc, :subject => email.subject, :body => email.body_plain, :received_at => email.date, :sent_at => email.date)
           archive
           mediator_links << url_for(:host => @settings[:crm_host], :controller => mediator.class.to_s.downcase.pluralize, :action => "show", :id => mediator.id)
           log("Added email to asset #{mediator.class.to_s} with name #{mediator.name}", email)
