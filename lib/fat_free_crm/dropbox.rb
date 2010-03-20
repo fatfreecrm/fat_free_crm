@@ -16,243 +16,289 @@
 #------------------------------------------------------------------------------
 # TODO:
 #  - Make options for: (attach email to accont of contact if has
-require 'net/imap'
+require "net/imap"
 require "tmail_mail_extension"
 include ActionController::UrlWriter
 
 module FatFreeCRM
   class Dropbox
     
-    ENTITIES = ["Campaign", "Opportunity"]
-    ASSETS   = [Account, Contact, Lead]
+    ASSETS   = [ Account, Contact, Lead ].freeze
+    KEYWORDS = %w(account campaign contact lead opportunity).freeze
     
+    #-------------------------------------------------------------------------------------- 
     def initialize
       @settings = Setting[:email_dropbox]
     end
     
+    #-------------------------------------------------------------------------------------- 
     def run
-      connect
-      # Loop on not seen emails
-      @imap.uid_search(['NOT', 'SEEN']).each do |uid|        
-        begin  
-          @current_uid = uid
+      connect! or return nil
+      with_new_emails do |uid, email|
+        process(uid, email)
+        archive(uid)
+      end
+    ensure
+      disconnect!
+    end
+
+    private
+
+    #-------------------------------------------------------------------------------------- 
+    def with_new_emails
+      @imap.uid_search(['NOT', 'SEEN']).each do |uid|
+        begin
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
-          unless @current_user = validate_and_find_user(email)
-            discard
-          else                    
-            # Search for ENTITIES [Campaign/Opportunity] on the first line of body (identify forwarded emails)
-            if entity = is_for_entity(email)
-              log("Detected entity", email)
-              process_entity(email, entity)
-            else
-              # Search for assets in email recipients
-              if recipients_assets = is_for_recipients(email)
-                log("Detected recipients", email)
-                add_to(email, recipients_assets)
-              else # Search forwarded emails
-                if forwarded_asset = is_forwarded(email)
-                  log("Detected forward", email)
-                  add_to(email, forwarded_asset)
-                else
-                  # Detect recipients and fwd emails and try to create new contacts, discard if none found
-                  new_contacts_or_discard(email)
-                end              
-              end            
-            end
-          end              
+          if is_valid?(email) && sent_from_known_user?(email)
+            yield(uid, email)
+          else
+            discard(uid)
+          end
         rescue Exception => e
+          if Rails.env == "test"
+            $stderr.puts e
+            $stderr.puts e.backtrace
+          end
           log("Problem processing email: #{e}", email)
-          next
+          discard(uid)
         end
-      end # loop
-      disconnect     
-    end       
-    
-    # Connects to the imap server with the loaded settings from settings.yml
-    #------------------------------------------------------------------------------    
-    def connect(select = true)
-      begin  
-        @imap = Net::IMAP.new(@settings[:server], @settings[:port], @settings[:ssl])
-        @imap.login(@settings[:user], @settings[:password])
-        @imap.select(@settings[:scan_folder]) if select == true
-      rescue Exception => e
-        logger.error "dropbox - Problem setting connection with imap server: #{e}"
-        exit
       end
     end
 
-    def disconnect
-      @imap.logout
-      @imap.disconnect      
+    # Email processing pipeline: each steps gets executed if previous one returns false.
+    #--------------------------------------------------------------------------------------
+    def process(uid, email)
+      with_explicit_keyword(email) do |keyword, name|
+        find_or_create_and_attach(email, keyword, name)
+      end and return
+
+      with_recipients(email) do |recipient|
+        find_and_attach(email, recipient)
+      end and return
+
+      with_forwarded_recipient(email) do |recipient|
+        find_and_attach(email, recipient)
+      end and return
+  
+      with_recipients(email, :parse => true) do |recipient|
+        create_and_attach(email, recipient)
+      end and return
+
+      with_forwarded_recipient(email, :parse => true) do |recipient|
+        create_and_attach(email, recipient)
+      end
+    end
+    
+    # Connects to the imap server with the loaded settings from settings.yml
+    #------------------------------------------------------------------------------    
+    def connect!
+      begin  
+        @imap = Net::IMAP.new(@settings[:server], @settings[:port], @settings[:ssl])
+        @imap.login(@settings[:user], @settings[:password])
+        @imap.select(@settings[:scan_folder])
+      rescue Exception => e
+        logger.error "dropbox - Problem setting connection with imap server: #{e}"
+        nil
+      end
+    end
+
+    #------------------------------------------------------------------------------    
+    def disconnect!
+      if @imap && !@imap.disconnected?
+        @imap.logout
+        @imap.disconnect
+      end
     end
 
     # Discard message (not valid) action based on settings from settings.yml
     #------------------------------------------------------------------------------ 
-    def discard
+    def discard(uid)
       if @settings[:move_invalid_to_folder]
-        @imap.uid_copy(@current_uid, @settings[:move_invalid_to_folder])   
+        @imap.uid_copy(uid, @settings[:move_invalid_to_folder])   
       end      
-      @imap.uid_store(@current_uid, "+FLAGS", [:Deleted])      
+      @imap.uid_store(uid, "+FLAGS", [:Deleted])      
     end
 
     # Archive message (valid) action based on settings from settings.yml
     #------------------------------------------------------------------------------     
-    def archive
+    def archive(uid)
       if @settings[:move_to_folder]
-        @imap.uid_copy(@current_uid, @settings[:move_to_folder])
+        @imap.uid_copy(uid, @settings[:move_to_folder])
       end      
-      @imap.uid_store(@current_uid, "+FLAGS", [:Seen])
+      @imap.uid_store(uid, "+FLAGS", [:Seen])
     end    
 
-    # Checks if an email is valid (plain text and is from an email of valid user)
-    #------------------------------------------------------------------------------     
-    def validate_and_find_user(email)
-      return nil if email.body_plain == nil
-      User.first(:conditions => ['email = ? AND suspended_at IS NULL', email.from.first.downcase])
+    #------------------------------------------------------------------------------
+    def is_valid?(email)
+      email.content_type == "text/plain"
+      # TODO: add logging
     end
 
-    # Checks the email to detect entity on the first line (forward to Campaing/Opportunity)
+    #------------------------------------------------------------------------------
+    def sent_from_known_user?(email)
+      !find_sender(email).nil?
+    end
+
+    #------------------------------------------------------------------------------
+    def find_sender(email)
+      @sender = User.first(:conditions => ['email = ? AND suspended_at IS NULL', email.from.first.downcase])
+    end
+
+    # Checks the email to detect keyword on the first line.
     #--------------------------------------------------------------------------------------     
-    def is_for_entity(email)
-      ENTITIES.each do |entity|
-        if email.body.split("\n").first.include? entity
-          return { :type => entity, :name => email.body.split("\n").first.gsub(entity, "").chomp.strip }
-        end
-      end
-      return false
-    end   
+    def with_explicit_keyword(email)
+      first_line = email.body.split("\n").first
 
-    # Process allready identified entity mark
-    #--------------------------------------------------------------------------------------    
-    def process_entity(email, entity)
-      asset = entity[:type].constantize.find(:first, :conditions => ['name LIKE ?', "%#{entity[:name]}%"], :order => "updated_at DESC")     
-      if asset.blank? 
-        log("entity not found (will try to create new): #{entity[:type]} with name #{entity[:name]}", email)
-        asset = entity[:type].constantize.create(get_new_entity_defaults(email, entity))
-        add_to(email, [asset])
-      else
-        add_to(email, [asset])
+      if first_line =~ %r|^[\./]?(#{KEYWORDS.join('|')})\s(.+)$|i
+        yield $1.capitalize, $2.strip
       end
-    end
-    
-    def get_new_entity_defaults(email, entity)
-      # TODO: Maybe the defaults should be more settings
-      defaults = { :user => @current_user, :name => entity[:name], :access => Setting.default_access }
-      defaults[:status] = "planned" if entity[:type] == "Campaign"
-      defaults[:stage] = "prospecting" if entity[:type] == "Opportunity"
-      defaults
-    end
+    end   
 
     # Checks the email to detect assets on to/bcc addresses
     #--------------------------------------------------------------------------------------     
-    def is_for_recipients(email)
-      # Find assets on to, cc email addresses
-      email.to.blank? ? to = [] : to = email.to
-      email.cc.blank? ? cc = [] : cc = email.cc
-      recipients = to + cc - [@settings[:dropbox_email]]      
-      detect_assets(email, recipients)
+    def with_recipients(email, options = {})
+      recipients = []
+      unless options[:parse]
+        # Plain email addresses.
+        recipients += email.to_addrs.map(&:address) unless email.to.blank?
+        recipients += email.cc_addrs.map(&:address) unless email.cc.blank?
+        recipients -= [ @settings[:dropbox_email] ]
+      else
+        # TMail::Address objects.
+        recipients += email.to_addrs unless email.to.blank?
+        recipients += email.cc_addrs unless email.cc.blank?
+        recipients -= [ TMail::Address.parse(@settings[:dropbox_email]) ]
+      end
+      recipients.inject(false) { |attached, recipient| attached ||= yield recipient }
     end
 
     # Checks the email to detect valid email address in body (first email), detect forwarded emails
     #----------------------------------------------------------------------------------------     
-    def is_forwarded(email)
-      # Find first email address in body
-      recipient = email.body.scan(/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/).first
-      detect_assets(email, [recipient])
-    end
-
-    # Detects assets on recipients emails
-    #----------------------------------------------------------------------------------------      
-    def detect_assets(email, recipients)
-      detected_assets = []
-      ASSETS.each do |asset|
-        recipients.each do |recipient|
-          asset.to_s == "Lead" ? detected = asset.find(:first, :conditions => ['email = ? and status != ?', recipient, "converted"], :order => "updated_at DESC") : detected = asset.find_by_email(recipient)
-          detected_assets << detected unless detected.blank?
-        end        
-      end
-      return nil if detected_assets.blank?
-      detected_assets      
-    end
-
-    def new_contacts_or_discard(email)
-      # Find assets on to, cc email addresses
-      email.to.blank? ? to = [] : to = email.to_addrs
-      email.cc.blank? ? cc = [] : cc = email.cc_addrs
-      recipients = to + cc - [TMail::Address.parse(@settings[:dropbox_email])]
-      unless recipients.blank? # mails addresses in to/cc
-        recipients.each do |recipient|        
-          log("creating new contact from #{recipient.spec}", email)
-          contact = Contact.create(get_new_contact_defaults(email, recipient))
-          add_to(email, [contact])      
-        end
-      else # Search FW emails, in body
-        recipient = email.body.scan(/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/).first
-        unless recipient.blank?
-          log("creating new contact from email #{recipient}, fwd emails", email)
-          contact = Contact.create(get_new_contact_defaults(email, TMail::Address.parse(recipient)))
-          add_to(email, [contact])           
-        else
-          discard
-        end
+    def with_forwarded_recipient(email, options = {})
+      if email.body =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
+        yield(options[:parse] ? TMail::Address.parse($1) : $1)
       end
     end
 
-    def get_new_contact_defaults(email, recipient)
-      defaults = { :user => @current_user, :first_name => "#{recipient.name || recipient.spec}", :last_name => "Autogenerated", :email => "#{recipient.spec}", :access => Setting.default_access }
-      
-      # Search for domain name in accounts
-      account = Account.find(:first, :conditions => ['email like ?', "%#{recipient.domain}"], :order => "updated_at DESC")
-      if account.blank?
-        log("creating new account (#{recipient.domain}) to the new contact from #{recipient.spec}", email)
-        defaults[:account] = Account.create(:user => @current_user, :name => recipient.domain, :access => Setting.default_access)
+
+    # Process allready identified keyword mark
+    #--------------------------------------------------------------------------------------    
+    def find_or_create_and_attach(email, keyword, name)
+      asset = keyword.constantize.first(:conditions => [ "name LIKE ?", "%#{name}%" ])
+      if asset
+        attach(email, asset) if sender_has_permissions_for?(asset)
       else
-        defaults[:account] = account
-        log("asociating new contact from #{recipient.spec} to account #{account.name}", email)
+        log("keyword not found (will try to create new): #{keyword} with name #{name}", email)
+        asset = keyword.constantize.create(default_values(email, keyword, name))
+        attach(email, asset)
       end
-      
+      true
+    end
+
+    #----------------------------------------------------------------------------------------      
+    def find_and_attach(email, recipient)
+      attached = false
+      ASSETS.each do |klass|
+        asset = klass.find_by_email(recipient)
+        if asset && sender_has_permissions_for?(asset)
+          attach(email, asset)
+          attached = true
+        end
+      end
+      attached
+    end
+
+    #----------------------------------------------------------------------------------------      
+    def create_and_attach(email, recipient)
+      contact = Contact.create!(default_values_for_contact(email, recipient))
+      attach(email, contact)
+    end
+
+    #----------------------------------------------------------------------------------------      
+    def attach(email, asset)
+      to = email.to.blank? ? nil : email.to.join(", ")
+      cc = email.cc.blank? ? nil : email.cc.join(", ")
+
+      Email.create(
+        :imap_message_id => email.message_id,
+        :user            => @sender,
+        :mediator        => asset,
+        :sent_from       => email.from.first,
+        :sent_to         => to,
+        :cc              => cc,
+        :subject         => email.subject,
+        :body            => email.body_plain,
+        :received_at     => email.date,
+        :sent_at         => email.date
+      )
+
+      if @settings[:attach_to_account] && asset.respond_to?(:account) && asset.account
+        Email.create(
+          :imap_message_id => email.message_id,
+          :user            => @sender,
+          :mediator        => asset.account,
+          :sent_from       => email.from.first,
+          :sent_to         => to,
+          :cc              => cc,
+          :subject         => email.subject,
+          :body            => email.body_plain,
+          :received_at     => email.date,
+          :sent_at         => email.date
+        )
+      end
+    end
+
+    #----------------------------------------------------------------------------------------      
+    def default_values(email, keyword, name)
+      defaults = { 
+        :user   => @sender,
+        :name   => name,
+        :access => Setting.default_access
+      }
+      defaults[:status] = "planned" if keyword == "Campaign"       # TODO: I18n
+      defaults[:stage] = "prospecting" if keyword == "Oportunity"
       defaults
     end
 
-    # Add mail to assets. assets should be an array of asset objects
-    #--------------------------------------------------------------------------------------    
-    def add_to(email, assets)      
-      if email.to.blank?
-        log("Discarding... missing To header", email)
-      else
-        sent_to = email.to.join(", ")
-      end
-      email.cc.blank? ? cc = "" : cc = email.cc.join(", ")      
-      mediator_links = []
+    #----------------------------------------------------------------------------------------      
+    def default_values_for_contact(email, recipient)
+      defaults = {
+        :user       => @sender,
+        :first_name => recipient.local.capitalize,
+        :last_name  => "(unknown)",
+        :email      => recipient.address,
+        :access     => Setting.default_access
+      }
       
-      assets.each do |asset|
-        if has_permissions_on(asset)  
-          asset_type = asset.class.to_s
-          @settings[:associate_email_to_account] == true && (asset_type == "Contact" || asset_type == "Opportunity") ? mediator = asset.account || asset : mediator = asset
-          Email.create(:imap_message_id => email.message_id, :user => @current_user, :mediator => mediator, :sent_from => email.from.first, :sent_to => sent_to, :cc => cc, :subject => email.subject, :body => email.body_plain, :received_at => email.date, :sent_at => email.date)
-          archive
-          mediator_links << url_for(:host => @settings[:crm_host], :controller => mediator.class.to_s.downcase.pluralize, :action => "show", :id => mediator.id)
-          log("Added email to asset #{mediator.class.to_s} with name #{mediator.name}", email)
-        else
-          discard
-          log("Discarding... missing permissions in #{asset.class.to_s}=>#{asset.name} for user #{@current_user.username}", email)
-        end
+      # Search for domain name in Accounts.
+      account = Account.first(:conditions => [ "email like ?", "%#{recipient.domain}" ])
+      if account
+        log("asociating new contact from #{addr.spec} to account #{account.name}", email)
+        defaults[:account] = account
+      else
+        log("creating new account (#{recipient.domain}) to the new contact from #{recipient.spec}", email)
+        defaults[:account] = Account.create(
+          :user   => @sender,
+          :name   => recipient.domain.capitalize,
+          :access => Setting.default_access
+        )
       end
-      notify(email, mediator_links) unless mediator_links.blank?
+      defaults
     end
 
-    def has_permissions_on(asset)
+    #--------------------------------------------------------------------------------------      
+    def sender_has_permissions_for?(asset)
       return true if asset.access == "Public"
-      return true if asset.access == "Private" && (asset.user_id == @current_user.id || asset.assigned_to == @current_user.id)
-      return true if (asset.user_id == @current_user.id || asset.assigned_to == @current_user.id) || ! Permission.find(:first, :conditions => ['user_id = ? and asset_id = ? and asset_type = ?', @current_user.id, asset.id, asset.class.to_s]).blank?
+      return true if asset.user_id == @sender.id || asset.assigned_to == @sender.id
+      return true if asset.access == "Shared" && Permission.count(:conditions => [ "user_id = ? AND asset_id = ? AND asset_type = ?", @sender.id, asset.id, asset.class.to_s ]) > 0
       
-      return false    
+      false    
     end
 
     # Notify users with the results of the operations (feedback from dropbox)
     #--------------------------------------------------------------------------------------      
     def notify(email, mediator_links)      
-      ack_email = Notifier.create_dropbox_ack_notification(@current_user, @settings[:dropbox_email], email, mediator_links)
+      ack_email = Notifier.create_dropbox_ack_notification(@sender, @settings[:dropbox_email], email, mediator_links)
       Notifier.deliver(ack_email)
     end
     

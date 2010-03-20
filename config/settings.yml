@@ -106,7 +106,7 @@ task_calendar_with_time: false
   :scan_folder                : inbox
   :move_to_folder             : processed        # Optional
   :move_invalid_to_folder     : invalid          # Optional
-  :associate_email_to_account : false            # Associate emails to the account (if has) of the contact or opportunity
+  :attach_to_account          : false            # Associate emails to the account (if has) of the contact or opportunity
   :crm_host                   : www.yourhost.com # Needed for notifications links
   :debug                      : false
   
