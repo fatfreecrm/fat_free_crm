@@ -48,7 +48,7 @@ describe "IMAP Dropbox" do
       mock_imap
       @imap.should_receive(:login).once.with(@settings[:user], @settings[:password])
       @imap.should_not_receive(:select).with(@settings[:scan_folder])
-      @crawler.send(:connect!)
+      @crawler.send(:connect!, :setup => true)
     end
 
     it "should raise the error if connection fails" do

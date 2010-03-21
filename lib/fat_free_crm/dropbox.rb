@@ -42,6 +42,31 @@ module FatFreeCRM
       disconnect!
     end
 
+    # Setup imap folders in settings
+    #--------------------------------------------------------------------------------------
+    def setup
+      puts "Dropbox: connecting to #{@settings[:server]}..."
+      connect!(:setup => true) or return nil
+      puts "Dropbox: logged in to #{@settings[:server]}, checking folders..."
+      folders = [ @settings[:scan_folder] ]
+      folders << @settings[:move_to_folder] unless @settings[:move_to_folder].blank?
+      folders << @settings[:move_invalid_to_folder] unless @settings[:move_invalid_to_folder].blank?
+
+      # Open (or create) destination folder in read-write mode.
+      folders.each do |folder|
+        if @imap.list("", folder)
+          puts "Dropbox: folder #{folder} OK"
+        else
+          puts "Dropbox: folder #{folder} missing, creating..."
+          @imap.create(folder)
+        end
+      end
+    rescue => e
+      puts "Dropbox: setup error #{e.inspect}"
+    ensure
+      disconnect!
+    end
+
     private
 
     #-------------------------------------------------------------------------------------- 
@@ -91,15 +116,14 @@ module FatFreeCRM
     
     # Connects to the imap server with the loaded settings from settings.yml
     #------------------------------------------------------------------------------    
-    def connect!
-      begin  
-        @imap = Net::IMAP.new(@settings[:server], @settings[:port], @settings[:ssl])
-        @imap.login(@settings[:user], @settings[:password])
-        @imap.select(@settings[:scan_folder])
-      rescue Exception => e
-        logger.error "dropbox - Problem setting connection with imap server: #{e}"
-        nil
-      end
+    def connect!(options = {})
+      @imap = Net::IMAP.new(@settings[:server], @settings[:port], @settings[:ssl])
+      @imap.login(@settings[:user], @settings[:password])
+      @imap.select(@settings[:scan_folder]) unless options[:setup]
+      @imap
+    rescue Exception => e
+      puts "Dropbox: could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
+      nil
     end
 
     #------------------------------------------------------------------------------    
@@ -300,35 +324,6 @@ module FatFreeCRM
     def notify(email, mediator_links)      
       ack_email = Notifier.create_dropbox_ack_notification(@sender, @settings[:dropbox_email], email, mediator_links)
       Notifier.deliver(ack_email)
-    end
-    
-    # Setup imap folders in settings
-    #--------------------------------------------------------------------------------------      
-    def setup
-      puts "dropbox - Checking folders in configuration"
-      connect(false)
-      folders = [@settings[:scan_folder]]
-      folders << @settings[:move_to_folder] unless @settings[:move_to_folder].blank?
-      folders << @settings[:move_invalid_to_folder] unless @settings[:move_invalid_to_folder].blank?
-      
-      # Open (or create) destination folder in read-write mode.
-      begin
-        folders.each do |@check_folder|             
-          @imap.select(@check_folder)
-          puts "dropbox - succefull selected folder '#{@check_folder}'"
-        end
-      rescue => e
-        begin
-          puts " - folder #{@check_folder} not found; creating..."
-          @imap.create(@check_folder)
-          @imap.select(@check_folder)
-          puts "dropbox - succefull created and selected folder '#{@check_folder}'"
-        rescue => ee
-          puts "Error: could not create folder #{@check_folder}: #{e}"
-          next
-        end
-      end  
-      
     end
 
     # Setup logger
