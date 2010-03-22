@@ -29,25 +29,29 @@ module FatFreeCRM
     #-------------------------------------------------------------------------------------- 
     def initialize
       @settings = Setting[:email_dropbox]
+      @archived, @discarded = 0, 0
     end
     
     #-------------------------------------------------------------------------------------- 
     def run
+      log "Dropbox: connecting to #{@settings[:server]}..."
       connect! or return nil
+      log "Dropbox: logged in to #{@settings[:server]}, new messages..."
       with_new_emails do |uid, email|
         process(uid, email)
         archive(uid)
       end
     ensure
+      log "Dropbox: messages processed: #{@archived + @discarded}, archived: #{@archived}, discarded: #{@discarded}."
       disconnect!
     end
 
     # Setup imap folders in settings
     #--------------------------------------------------------------------------------------
     def setup
-      puts "Dropbox: connecting to #{@settings[:server]}..."
+      log "Dropbox: connecting to #{@settings[:server]}..."
       connect!(:setup => true) or return nil
-      puts "Dropbox: logged in to #{@settings[:server]}, checking folders..."
+      log "Dropbox: logged in to #{@settings[:server]}, checking folders..."
       folders = [ @settings[:scan_folder] ]
       folders << @settings[:move_to_folder] unless @settings[:move_to_folder].blank?
       folders << @settings[:move_invalid_to_folder] unless @settings[:move_invalid_to_folder].blank?
@@ -55,14 +59,14 @@ module FatFreeCRM
       # Open (or create) destination folder in read-write mode.
       folders.each do |folder|
         if @imap.list("", folder)
-          puts "Dropbox: folder #{folder} OK"
+          log "Dropbox: folder #{folder} OK"
         else
-          puts "Dropbox: folder #{folder} missing, creating..."
+          log "Dropbox: folder #{folder} missing, creating..."
           @imap.create(folder)
         end
       end
     rescue => e
-      puts "Dropbox: setup error #{e.inspect}"
+      $stderr.puts "Dropbox: setup error #{e.inspect}"
     ensure
       disconnect!
     end
@@ -72,6 +76,7 @@ module FatFreeCRM
     #-------------------------------------------------------------------------------------- 
     def with_new_emails
       @imap.uid_search(['NOT', 'SEEN']).each do |uid|
+        log "Dropbox: fetching message..."
         begin
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
           if is_valid?(email) && sent_from_known_user?(email)
@@ -84,7 +89,7 @@ module FatFreeCRM
             $stderr.puts e
             $stderr.puts e.backtrace
           end
-          log("Problem processing email: #{e}", email)
+          log2("Problem processing email: #{e}", email)
           discard(uid)
         end
       end
@@ -122,15 +127,15 @@ module FatFreeCRM
       @imap.select(@settings[:scan_folder]) unless options[:setup]
       @imap
     rescue Exception => e
-      puts "Dropbox: could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
+      $stderr.puts "Dropbox: could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
       nil
     end
 
     #------------------------------------------------------------------------------    
     def disconnect!
-      if @imap && !@imap.disconnected?
+      if @imap
         @imap.logout
-        @imap.disconnect
+        @imap.disconnect unless @imap.disconnected?
       end
     end
 
@@ -141,6 +146,7 @@ module FatFreeCRM
         @imap.uid_copy(uid, @settings[:move_invalid_to_folder])   
       end      
       @imap.uid_store(uid, "+FLAGS", [:Deleted])      
+      @discarded += 1
     end
 
     # Archive message (valid) action based on settings from settings.yml
@@ -150,22 +156,27 @@ module FatFreeCRM
         @imap.uid_copy(uid, @settings[:move_to_folder])
       end      
       @imap.uid_store(uid, "+FLAGS", [:Seen])
+      @archived += 1
     end    
 
     #------------------------------------------------------------------------------
     def is_valid?(email)
-      email.content_type == "text/plain"
-      # TODO: add logging
+      valid = email.content_type != "text/html"
+      log "Dropbox: content type of the message is #{email.content_type}, discarding..." unless valid
+      valid
     end
 
     #------------------------------------------------------------------------------
     def sent_from_known_user?(email)
-      !find_sender(email).nil?
+      email_address = email.from.first.downcase
+      known = !find_sender(email_address).nil?
+      log "Dropbox: message sent by unknown user #{email_address}, discarding..." unless known
+      known
     end
 
     #------------------------------------------------------------------------------
-    def find_sender(email)
-      @sender = User.first(:conditions => ['email = ? AND suspended_at IS NULL', email.from.first.downcase])
+    def find_sender(email_address)
+      @sender = User.first(:conditions => [ "email = ? AND suspended_at IS NULL", email_address ])
     end
 
     # Checks the email to detect keyword on the first line.
@@ -212,7 +223,7 @@ module FatFreeCRM
       if asset
         attach(email, asset) if sender_has_permissions_for?(asset)
       else
-        log("keyword not found (will try to create new): #{keyword} with name #{name}", email)
+        log2("keyword not found (will try to create new): #{keyword} with name #{name}", email)
         asset = keyword.constantize.create(default_values(email, keyword, name))
         attach(email, asset)
       end
@@ -297,10 +308,10 @@ module FatFreeCRM
       # Search for domain name in Accounts.
       account = Account.first(:conditions => [ "email like ?", "%#{recipient.domain}" ])
       if account
-        log("asociating new contact from #{addr.spec} to account #{account.name}", email)
+        log2("asociating new contact from #{addr.spec} to account #{account.name}", email)
         defaults[:account] = account
       else
-        log("creating new account (#{recipient.domain}) to the new contact from #{recipient.spec}", email)
+        log2("creating new account (#{recipient.domain}) to the new contact from #{recipient.spec}", email)
         defaults[:account] = Account.create(
           :user   => @sender,
           :name   => recipient.domain.capitalize,
@@ -328,14 +339,14 @@ module FatFreeCRM
 
     # Setup logger
     #-------------------------------------------------------------------------------------- 
-    def logger
-      RAILS_DEFAULT_LOGGER
+    def log(message)
+      puts message unless Rails.env == "test"
     end    
     
     # Centralized logging
     #--------------------------------------------------------------------------------------      
-    def log(msg, email)  
-      logger.info "dropbox - #{msg} in email #{email.message_id} from #{email.from} with subject #{email.subject}" if @settings[:debug]
+    def log2(msg, email)  
+      RAILS_DEFAULT_LOGGER.info "dropbox - #{msg} in email #{email.message_id} from #{email.from} with subject #{email.subject}" if @settings[:debug]
     end
     
   end # class Dropbox
