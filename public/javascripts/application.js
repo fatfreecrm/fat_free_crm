@@ -266,15 +266,17 @@ var crm = {
           $("comment_new").adjacent("li").each( function(li) {
             var a = li.select("tt a.toggle")[0];
             var dt = li.select("dt");
-            if (state == "Expanded") {
-              dt[0].hide();  dt[1].show();
-              if (a.innerHTML != less) {
-                a.innerHTML = less;
-              }
-            } else {
-              dt[1].hide();  dt[0].show();
-              if (a.innerHTML != more) {
-                a.innerHTML = more;
+            if (typeof(a) != "undefined") {
+              if (state == "Expanded") {
+                dt[0].hide();  dt[1].show();
+                if (a.innerHTML != less) {
+                  a.innerHTML = less;
+                }
+              } else {
+                dt[1].hide();  dt[0].show();
+                if (a.innerHTML != more) {
+                  a.innerHTML = more;
+                }
               }
             }
           }) // each(li)
