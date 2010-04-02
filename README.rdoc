@@ -80,6 +80,9 @@ to http://localhost:3000
 
    $ ruby script/server
 
+When deploying with Phusion Passenger, also install rack 1.0.1 (otherwise Phusion Passenger will exit saying it couldn't find the Rails gem):
+   $ gem install rack -v 1.0.1
+
 
 === For Developers
 
