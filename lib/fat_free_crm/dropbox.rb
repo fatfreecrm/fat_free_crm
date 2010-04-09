@@ -34,24 +34,24 @@ module FatFreeCRM
     
     #-------------------------------------------------------------------------------------- 
     def run
-      log "Dropbox: connecting to #{@settings[:server]}..."
+      log "connecting to #{@settings[:server]}..."
       connect! or return nil
-      log "Dropbox: logged in to #{@settings[:server]}, new messages..."
+      log "logged in to #{@settings[:server]}, new messages..."
       with_new_emails do |uid, email|
         process(uid, email)
         archive(uid)
       end
     ensure
-      log "Dropbox: messages processed: #{@archived + @discarded}, archived: #{@archived}, discarded: #{@discarded}."
+      log "messages processed: #{@archived + @discarded}, archived: #{@archived}, discarded: #{@discarded}."
       disconnect!
     end
 
     # Setup imap folders in settings
     #--------------------------------------------------------------------------------------
     def setup
-      log "Dropbox: connecting to #{@settings[:server]}..."
+      log "connecting to #{@settings[:server]}..."
       connect!(:setup => true) or return nil
-      log "Dropbox: logged in to #{@settings[:server]}, checking folders..."
+      log "logged in to #{@settings[:server]}, checking folders..."
       folders = [ @settings[:scan_folder] ]
       folders << @settings[:move_to_folder] unless @settings[:move_to_folder].blank?
       folders << @settings[:move_invalid_to_folder] unless @settings[:move_invalid_to_folder].blank?
@@ -59,14 +59,14 @@ module FatFreeCRM
       # Open (or create) destination folder in read-write mode.
       folders.each do |folder|
         if @imap.list("", folder)
-          log "Dropbox: folder #{folder} OK"
+          log "folder #{folder} OK"
         else
-          log "Dropbox: folder #{folder} missing, creating..."
+          log "folder #{folder} missing, creating..."
           @imap.create(folder)
         end
       end
     rescue => e
-      $stderr.puts "Dropbox: setup error #{e.inspect}"
+      $stderr.puts "setup error #{e.inspect}"
     ensure
       disconnect!
     end
@@ -76,7 +76,7 @@ module FatFreeCRM
     #-------------------------------------------------------------------------------------- 
     def with_new_emails
       @imap.uid_search(['NOT', 'SEEN']).each do |uid|
-        log "Dropbox: fetching message..."
+        log "fetching message..."
         begin
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
           if is_valid?(email) && sent_from_known_user?(email)
@@ -89,7 +89,7 @@ module FatFreeCRM
             $stderr.puts e
             $stderr.puts e.backtrace
           end
-          log2("Problem processing email: #{e}", email)
+          log("error processing email: #{e}", email)
           discard(uid)
         end
       end
@@ -162,7 +162,7 @@ module FatFreeCRM
     #------------------------------------------------------------------------------
     def is_valid?(email)
       valid = email.content_type != "text/html"
-      log "Dropbox: content type of the message is #{email.content_type}, discarding..." unless valid
+      log("not a text message, discarding", email) unless valid
       valid
     end
 
@@ -170,7 +170,7 @@ module FatFreeCRM
     def sent_from_known_user?(email)
       email_address = email.from.first.downcase
       known = !find_sender(email_address).nil?
-      log "Dropbox: message sent by unknown user #{email_address}, discarding..." unless known
+      log("sent by unknown user #{email_address}, discarding", email) unless known
       known
     end
 
@@ -339,8 +339,13 @@ module FatFreeCRM
 
     # Setup logger
     #-------------------------------------------------------------------------------------- 
-    def log(message)
-      puts message unless Rails.env == "test"
+    def log(message, email = nil)
+      return if Rails.env == "test"
+      if email
+        puts "Dropbox: #{message}, From: #{email.from}, Subject: #{email.subject}"
+      else
+        puts "Dropbox: #{message}"
+      end
     end    
     
     # Centralized logging
