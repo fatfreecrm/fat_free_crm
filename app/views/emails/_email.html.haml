@@ -1,4 +1,4 @@
-- truncated = h(truncate(email.body.gsub("\n", " "), :length => 125 - email.subject.size))
+- truncated = h(truncate(email.body.to_s.gsub("\n", " "), :length => 125 - email.subject.to_s.size))
 - formatted = simple_format h(email.body)
 
 %li[email]{ highlightable(dom_id(email, :tools), :off => "#f2f2f2") }

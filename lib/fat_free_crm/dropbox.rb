@@ -262,7 +262,7 @@ module FatFreeCRM
         :sent_to         => to,
         :cc              => cc,
         :subject         => email.subject,
-        :body            => email.body_plain,
+        :body            => email.body_plain.to_s,
         :received_at     => email.date,
         :sent_at         => email.date
       )
@@ -276,7 +276,7 @@ module FatFreeCRM
           :sent_to         => to,
           :cc              => cc,
           :subject         => email.subject,
-          :body            => email.body_plain,
+          :body            => email.body_plain.to_s,
           :received_at     => email.date,
           :sent_at         => email.date
         )
