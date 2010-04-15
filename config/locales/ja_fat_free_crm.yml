@@ -1,93 +1,93 @@
-en-US:
-  language: English
+ja:
+  language: Japanese
 
   # Generic terms.
   #----------------------------------------------------------------------------
-  all: All
+  all: 全て
   at: at
-  here: here
-  no_button: 'No'
-  not_implemented: Not implemented yet.
-  or: or
-  select_none: '-- None --'
-  select_blank: '-- Select --'
-  yes_button: 'Yes'
+  here: こちら
+  no_button: 'いいえ'
+  not_implemented: まだ未実装です。
+  or: または
+  select_none: '-- なし --'
+  select_blank: '-- 選択 --'
+  yes_button: 'はい'
 
   # Settings.
   #----------------------------------------------------------------------------
-  tab_dashboard: Dashboard
-  tab_tasks: Tasks
-  tab_campaigns: Campaigns
-  tab_leads: Leads
-  tab_accounts: Accounts
-  tab_contacts: Contacts
-  tab_opportunities: Opportunities
+  tab_dashboard: ダッシュボード
+  tab_tasks: タスク
+  tab_campaigns: キャンペーン
+  tab_leads: リード
+  tab_accounts: 取引先
+  tab_contacts: 取引先責任者
+  tab_opportunities: 商談
 
-  admin_tab_users: Users
-  admin_tab_settings: Settings
-  admin_tab_plugins: Plugins
+  admin_tab_users: ユーザ
+  admin_tab_settings: 管理設定
+  admin_tab_plugins: プラグイン
 
-  planned: Planned
-  started: Started
-  on_hold: On Hold
-  completed: Completed
-  called_off: Called Off
+  planned: 計画済
+  started: 開始済
+  on_hold: 保留中
+  completed: 完了
+  called_off: 中止
 
-  new: New
-  contacted: Contacted
-  converted: Converted
-  rejected: Rejected
+  new: 新規
+  contacted: 連絡済
+  converted: コンバート済
+  rejected: 却下
 
-  cold_call: Cold Call
-  conference: Conference
-  online: Online Marketing
+  cold_call: 勧誘電話
+  conference: 会議
+  online: オンラインマーケティング
   referral: Referral
   self: Self Generated
-  web: Website
+  web: ウェブサイト
   word_of_mouth: Word of Mouth
-  other: Other
+  other: その他
 
-  prospecting: Prospecting
-  analysis: Analysis
-  presentation: Presentation
-  proposal: Proposal
-  negotiation: Negotiation
-  final_review: Final Review
-  won: Closed/Won
-  lost: Closed/Lost
+  prospecting: 見込み
+  analysis: 分析
+  presentation: プレゼンテーション
+  proposal: 提案
+  negotiation: 価格交渉
+  final_review: 最終交渉
+  won: 終/成立
+  lost: 終/失注
 
-  call: Call
-  email: Email
-  follow_up: Follow-up
-  lunch: Lunch
-  meeting: Meeting
+  call: 電話
+  email: Eメール
+  follow_up: フォローアップ
+  lunch: 昼食会
+  meeting: 会議
   money: Money
-  presentation: Presentation
-  trip: Trip
+  presentation: プレゼン
+  trip: 出張
 
-  overdue: Overdue
-  due_asap: As Soon As Possible
-  due_today: Today
-  due_tomorrow: Tomorrow
-  due_this_week: This Week
-  due_next_week: Next Week
-  due_later: Sometime Later
-  due_specific_date: On Specific Date...
+  overdue: 期限切れ
+  due_asap: できるだけ早く
+  due_today: 今日中
+  due_tomorrow: 明日中
+  due_this_week: 今週中
+  due_next_week: 来週中
+  due_later: 今後いつか
+  due_specific_date: 指定日...
 
-  completed_today: Today
-  completed_yesterday: Yesterday
-  completed_last_week: Last week
-  completed_this_month: This month
-  completed_last_month: Last month
+  completed_today: 今日
+  completed_yesterday: 昨日
+  completed_last_week: 先週
+  completed_this_month: 今月
+  completed_last_month: 先月
 
   # Models/Activity.
   #----------------------------------------------------------------------------
-  one_hour: One Hour
-  one_day: One Day
-  two_days: Two Days
-  one_week: One Week
-  two_weeks: Two Weeks
-  one_month: One Month
+  one_hour: 1時間
+  one_day: 1日
+  two_days: 2日
+  one_week: 1週間
+  two_weeks: 2週間
+  one_month: 1ヶ月
 
   # Model Validations.
   #----------------------------------------------------------------------------
@@ -186,123 +186,123 @@ en-US:
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
   activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}.
-  all_users: all users
-  option_after: after
-  option_all: all
-  option_all_users: All Users
-  option_amount: amount
-  option_before: before
-  option_brief: brief
-  option_closes_on: close date
-  option_company: company
-  option_created_at: date created
-  option_ends_on: end date
+  all_users: 全ユーザ
+  option_after: 前
+  option_all: 全て
+  option_all_users: 全ユーザ
+  option_amount: 金額
+  option_before: 後
+  option_brief: 簡略
+  option_closes_on: 終了日
+  option_company: 会社名
+  option_created_at: 作成日
+  option_ends_on: 終了日
   option_first_name: first name
   option_last_name: last name
   option_leads_count: actual leads
-  option_long: long
-  option_name: name
-  option_probability: probability
+  option_long: 詳細
+  option_name: 名前
+  option_probability: 確度
   option_rating: rating
   option_revenue: actual revenue
-  option_starts_on: start date
+  option_starts_on: 開始日
   option_target_leads: target leads
   option_target_revenue: target revenue
-  option_updated_at: date updated
-  show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
-  sort_by: Sort {{models}} by {{field}}.
-  sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name. 
+  option_updated_at: 更新日
+  show_per_page: "{{format}}書式で1ページ{{number}}件ずつ{{models}}を表示。"
+  sort_by: "{{field}}で{{models}}を並べ替える。"
+  sort_by_displaying: "last nameをfirst nameの{{position}}に表示にして、{{field}}で{{models}}を並べ替える。"
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
   aim: AOL IM
   already_signed_up: Already signed up?
-  alt_email: Alternative email
-  change_password: Change Password
-  company: Company
-  contact_info: Contact Information
-  current_password: Current password
-  edit_profile: Edit Profile
-  email: Email
+  alt_email: その他のEメール
+  change_password: パスワード変更
+  company: 会社名
+  contact_info: 連絡先情報
+  current_password: 現在のパスワード
+  edit_profile: プロフィール編集
+  email: Eメール
   first_name: First name
   google: Google IM
-  gravatar_help: Not familiar with Gravatars? Learn about Gravatars
-  image_file: Image file
-  image_help: The image file you upload will be automatically resized to 75 x 75 pixels. Supported formats are GIF, JPG, and PNG.
-  job_title: Title
+  gravatar_help: Gravatarsをご存知ない？ Gravatarsについては
+  image_file: 画像ファイル
+  image_help: アップロードされた画像ファイルは自動的に 75 x 75 ピクセルの大きさに調整されます。対応フォーマットは GIF, JPG, PNG です。
+  job_title: 役職
   last_name: Last name
-  login_now_link: Login Now!
-  mobile: Mobile
-  my_profile: My Profile
-  new_password: New password
-  password: Password
-  password_confirmation: Confirm new password
-  phone: Phone
-  profile: Profile
-  profile_language: Language
-  save_profile: Save Profile
+  login_now_link: 今すぐログイン！
+  mobile: 携帯電話
+  my_profile: 自分のプロフィール
+  new_password: 新しいパスワード
+  password: パスワード
+  password_confirmation: 新しいパスワードの確認
+  phone: 電話
+  profile: プロフィール
+  profile_language: 言語
+  save_profile: プロフィール保存
   sign_up: Sign Up
   sign_up_button: Sign Up
   skype: Skype
-  upload_picture: Upload Picture
-  use_gravatar: Use Gravatar
-  user: User
-  username: Username
+  upload_picture: 画像アップロード
+  use_gravatar: ユーザのGravatar
+  user: ユーザ
+  username: ユーザ名
   yahoo: Yahoo IM
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Forgot Password
-  login: Login
-  no_account: Do not have an account?
+  forgot_password: パスワードを忘れた場合
+  login: ログイン
+  no_account: アカウントがない場合
   remember_me: Remember Me
-  sign_up_now: Sign Up Now!
+  sign_up_now: 今すぐサインアップ！
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Account
-  account_small: account
-  accounts: Accounts
-  accounts_options: Accounts Options
-  accounts_small: accounts
-  assigned_to: Assigned to
-  billing_address: Billing address
-  create_account: Create Account
-  date_created: Date Created
-  date_updated: Date Updated
-  fax: Fax
-  intro: You can add {{value}} information later.
-  mobile_small: mobile
-  open_in_window: Open {{value}} in a new window
-  mail_to: Mail to {{value}}
-  phone_small: phone
-  phone_toll_free: Toll-free
-  keep_private: Keep it private, do not share with others
-  make_public: Share it with everyone
-  same_as_billing: same as billing
-  save_account: Save Account
-  share_with: Share it with the following people
-  shipping_address: Shipping address
+  account: 取引先
+  account_small: 取引先
+  accounts: 取引先
+  accounts_options: 取引先オプション
+  accounts_small: 取引先
+  assigned_to: 担当者
+  billing_address: 請求先住所
+  create_account: 取引先を作成
+  date_created: 作成日
+  date_updated: 更新日
+  fax: FAX
+  intro: "後で{{value}}の情報を追加することができます。"
+  mobile_small: 携帯電話
+  open_in_window: "新しいウィンドウで{{value}}を開く"
+  mail_to: "{{value}}へのメール"
+  phone_small: 電話
+  phone_toll_free: 通話無料
+  keep_private: 秘密扱いにして、他人と共有しない
+  make_public: 全員と共有する
+  same_as_billing: 請求先と同じ
+  save_account: 取引先を保存
+  share_with: 以下の人達と共有する
+  shipping_address: 発送先住所
   website: Website
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
   actual: Actual
   actual_performance: Actual Performance
-  budget: Budget
+  budget: 予算
   budget_label: Budget ($)
-  campaign: Campaign
+  campaign: キャンペーン
   campaign_and_leads: campaign and its leads
-  campaign_small: campaign
+  campaign_small: キャンペーン
   campaign_summary: Campaign Summary
   campaign_targets: Campaign Targets
-  campaigns: Campaigns
-  campaigns_options: Campaigns Options
-  campaigns_small: campaigns
+  campaigns: キャンペーン
+  campaigns_options: キャンペーンオプション
+  campaigns_small: キャンペーン
   conversion: Conversion
   conversion_label: Conversion (%)
   conversion_number: "{{value}} conversion" 
-  create_campaign: Create Campaign
+  create_campaign: キャンペーンを作成
   end_date: End date
   finished_on: completed on {{value}}
   finishes_in: finishes in {{value}}
@@ -314,43 +314,43 @@ en-US:
   revenue: Revenue
   revenue_label: Revenue ($)
   revenue_number: "{{value}} in revenue"
-  save_campaign: Save Campaign
+  save_campaign: キャンペーンを保存
   start_date: Start date
   started_ago: started {{value}} ago
   starts_in: starts in {{value}}
   starts_today: starts today!
   target: Target
-  total_campaigns: Total Campaigns
+  total_campaigns: キャンペーンの合計
   was_supposed_to_finish: was supposed to finish on {{value}}
   was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  alt_email_small: Other
+  alt_email_small: その他
   blog: Website/Blog
-  contact: Contact
-  contact_small: contact
-  contacts: Contacts
-  contacts_options: Contacts Options
-  contacts_small: contacts
-  create_contact: Create Contact
-  department: Department
-  department_small: '{{value}} department'
-  do_not_call: Do not call
-  extra_info: Extra Information
-  extra_info_small: extra contact
+  contact: 取引先責任者
+  contact_small: 取引先責任者
+  contacts: 取引先責任者
+  contacts_options: 取引先責任者オプション
+  contacts_small: 取引先責任者
+  create_contact: 取引先責任者を作成
+  department: 部署
+  department_small: '{{value}}部署'
+  do_not_call: 電話しない
+  extra_info: 追加情報
+  extra_info_small: 追加取引先責任者
   facebook: Facebook
   linked_in: LinkedIn
-  myself: Myself
-  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.  
-  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
+  myself: 自分自身
+  permissions_intro_private: "デフォルトでは、あなただけが{{value}}にアクセスできます。パーミッションは後で変更することができます。"
+  permissions_intro_public: "デフォルトでは、全ユーザが{{value}}にアクセスできます。パーミッションは後で変更することができます。"
+  permissions_intro_shared: "デフォルトでは、指定ユーザが{{value}}にアクセスできます。パーミッションは後で変更することができます。"
   referred_by: Referred by
   referred_by_small: referred by
-  save_contact: Save Contact
+  save_contact: 取引先責任者を保存
   twitter: Twitter
-  web_presence: Web Presence
-  web_presence_small: web presence
+  web_presence: Webサイト情報
+  web_presence_small: Webサイト
   works_at: "{{job_title}} at {{company}}"
 
   # Views -> Leads.
@@ -359,161 +359,161 @@ en-US:
   convert_lead: Convert Lead
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
   convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
-  create_lead: Create Lead
+  create_lead: リードを作成
   create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  lead: Lead
-  lead_info_small: lead contact
+  lead: リード
+  lead_info_small: リード連絡先
   lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
   lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
   lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
-  lead_small: lead
-  lead_status_small: lead status
+  lead_small: リード
+  lead_status_small: リードステータス
   lead_summary: Lead Summary
-  leads: Leads
-  leads_options: Leads Options
-  leads_small: leads
+  leads: リード
+  leads_options: リードオプション
+  leads_small: リード
   none: None
   rating: Rating
   reject: Reject
   reject_lead_confirm: Are you sure you want to reject this lead?
-  save_lead: Save Lead
+  save_lead: リードを保存
   source: Source
   status: Status
-  total_leads: Total Leads
+  total_leads: リードの合計
 
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
-  amount: Amount
-  close_date: Close date
-  closed_ago_on: closed {{time_ago}} ago on {{date}}
-  closes_today: expected to close today!
-  closing_date: closing date is {{value}}
-  create_opportunity: Create Opportunity
-  currency: ($)
+  amount: 金額
+  close_date: 終了日
+  closed_ago_on: "{{date}}の{{time_ago}}前に終了"
+  closes_today: 本日終了の見込み
+  closing_date: 終了日は{{value}}
+  create_opportunity: 商談を作成
+  currency: (円)
   days_late: Late by
   days_left: Days left
-  discount: Discount
-  discount_number: with {{value}} discount
-  expected_to_close: expected to close in {{time}} on {{date}}
+  discount: 値引き
+  discount_number: "値引き{{value}}"
+  expected_to_close: "{{date}}の{{time}}に終了の見込み"
   from: from
-  no_closing_date: no expected closing date
-  no_discount: with no discount
-  opportunities: Opportunities
-  opportunities_options: Opportunities Options
-  opportunities_small: opportunities
-  opportunity: Opportunity
-  opportunity_small: opportunity
+  no_closing_date: 予測終了日なし
+  no_discount: 値引きなし
+  opportunities: 商談
+  opportunities_options: 商談オプション
+  opportunities_small: 商談
+  opportunity: 商談
+  opportunity_small: 商談
   opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability" 
-  past_due: past due, was expected to close {{value}} ago
-  probability: Probability
-  probability_number: and {{value}} probability
-  save_opportunity: Save Opportunity
+  opportunity_summary_text: "{{amount}} {{discount}}値引きかつ確度{{probability}}"
+  past_due: "期限切れ、{{value}}前に終了見込み"
+  probability: 確度
+  probability_number: "かつ確度{{value}}"
+  save_opportunity: 商談を保存
   stage: Stage
-  total_opportunities: Total Opportunities
+  total_opportunities: 商談の合計
   weighted_amount: Weighted amount
 
   # Views -> Tasks.
   #----------------------------------------------------------------------------
-  assign_to: Assign to
-  assigned_tab: Assigned
-  assigned_tasks: Assigned Tasks
-  category: Category
-  completed_tab: Completed
-  completed_tasks: Completed Tasks
-  create_task: Create Task
-  create_task_small: create new task
-  due: Due
-  feel_free: Feel free to
+  assign_to: 担当
+  assigned_tab: 担当
+  assigned_tasks: 担当タスク
+  category: カテゴリ
+  completed_tab: 完了
+  completed_tasks: 完了タスク
+  create_task: タスクを作成
+  create_task_small: 新しいタスクを作成してください。
+  due: 期日
+  feel_free: どうぞお気軽に
   move_to: move to
   no_tasks: "You don't have any {{value}} tasks"
-  no_tasks_pending: pending
-  no_tasks_assigned: assigned
-  no_tasks_completed: completed
-  pending_tab: Pending
-  pending_tasks: Pending Tasks
+  no_tasks_pending: 未完了
+  no_tasks_assigned: 担当
+  no_tasks_completed: 完了
+  pending_tab: 未完了
+  pending_tasks: 未完了タスク
   related: 're:'
-  save_task: Save Task
+  save_task: タスクを保存
   task_assigned: The task has been assigned to {{value}}
   task_assigned_to: and assigned to {{value}}
   task_completed: completed
   task_completed_ago: completed {{value}} ago
   task_completed_by: completed {{time_ago}} ago by {{user}}
-  task_created: The task has been created
+  task_created: タスクが作成されました
   task_due_in: due in {{value}}
   task_due_later: due sometime soon
-  task_due_now: due now
-  task_due_today: due today
+  task_due_now: 今すぐ
+  task_due_today: 今日中
   task_from: From {{value}}
   task_overdue: late, was due on
   task_pending: The task has been moved to pending tasks
-  task_small: task
-  tasks: Tasks
-  total_tasks: Total {{value}}
-  view_assigned_tasks: view assigned tasks
+  task_small: タスク
+  tasks: タスク
+  total_tasks: "{{value}}の合計"
+  view_assigned_tasks: 担当タスクを表示
   view_pending_tasks: view pending tasks
 
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_commented: commented on
-  action_completed: completed
-  action_created: created
-  action_deleted: deleted
-  action_reassigned: reassigned
-  action_rejected: rejected
-  action_rescheduled: rescheduled
-  action_updated: updated
-  action_viewed: viewed
-  action_won: won
-  no_activity_records: No activity records found.
-  recent_activity: Recent Activity
-  recent_activity_options: Recent Activity Options
-  subject_account: account
-  subject_campaign: campaign
-  subject_contact: contact
-  subject_lead: lead
-  subject_opportunity: opportunity
-  subject_task: task
+  action_commented: コメントした
+  action_completed: 完了した
+  action_created: 作成した
+  action_deleted: 削除した
+  action_reassigned: 再割り当てした
+  action_rejected: 拒否した
+  action_rescheduled: 再スケジュールした
+  action_updated: 更新した
+  action_viewed: 表示した
+  action_won: 成立させた
+  no_activity_records: 活動の記録がありません。
+  recent_activity: 最近の活動
+  recent_activity_options: Recent Activity オプション
+  subject_account: 取引先責任者
+  subject_campaign: キャンペーン
+  subject_contact: 取引先責任者
+  subject_lead: リード
+  subject_opportunity: 商談
+  subject_task: タスク
 
   # Views -> Common.
   #----------------------------------------------------------------------------
-  add_note: Add Note
-  save_note: Save Note
-  add_note_help: Add a new note...
-  edit_note: Edit Note
-  added_ago: added {{value}} ago
-  added_by: added {{time_ago}} ago by {{user}} 
-  back: Back
-  cancel: Cancel
-  close_form: Close form
+  add_note: ノートを追加
+  save_note: ノートを保存
+  add_note_help: 新しいノートを追加...
+  edit_note: ノートを編集
+  added_ago: "{{value}} 前に追加"
+  added_by: "{{user}} により {{time_ago}} 前に追加"
+  back: 戻る
+  cancel: キャンセル
+  close_form: フォームを閉じる
   confirm_delete: Are you sure you want to delete this {{value}}?
   copy_permissions: Copy {{value}} permissions
-  could_not_find: "Couldn't find {{value}}. Feel free to"
-  could_not_find_matching: "Couldn't find {{value}} matching"
-  create_new: create new
-  select_existing: select existing
-  delete: Delete
-  edit: Edit
-  items_total: '{{count}} total.'
-  me: me
+  could_not_find: "{{value}}がありません。どうぞお気軽に"
+  could_not_find_matching: "マッチする{{value}}がありません。"
+  create_new: 新規作成してください -
+  select_existing: 既存から選択
+  delete: 削除
+  edit: 編集
+  items_total: '合計 {{count}}'
+  me: 自分
   n_a: N/A
-  name: Name
+  name: 名前
   no_match: No {{value}} match
   no_recent_items: There are no recent items to display yet.
-  options: Options
-  permissions: Permissions
+  options: オプション
+  permissions: パーミッション
   please_retry: please try another query.
-  recent_items: Recent Items
-  search_assets: Search {{value}}
-  time_ago: "{{value}} ago"
-  background_info: Background
-  address: Address
-  street1: Street 1 # NEW
-  street2: Street 2 # NEW
-  city: City
-  zipcode: Zip Code
-  state: State
-  country: Country
+  recent_items: 最近のアイテム
+  search_assets: "{{value}}を検索"
+  time_ago: "{{value}}前"
+  background_info: 背景
+  address: 住所
+  street1: 番地1
+  street2: 番地2
+  city: 市
+  zipcode: 郵便番号
+  state: 都道府県
+  country: 国
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -527,16 +527,16 @@ en-US:
   about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
   about_twitter: Twitter commit updates
   about_user_group: Discussion group for users
-  admin: Admin
-  logout: Logout
+  admin: 管理画面
+  logout: ログアウト
   quick_find: Quick find
-  welcome: Welcome
+  welcome: ようこそ
 
   # Views -> Comments.
   #----------------------------------------------------------------------------
-  edit_comment: Editing comment
-  show: Show
-  update: Update
+  edit_comment: コメント編集中
+  show: 表示
+  update: 更新
 
   # Views -> Passwords.
   #----------------------------------------------------------------------------
@@ -548,25 +548,25 @@ en-US:
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
   approve: Approve
-  create_user: Create User
-  last_seen: last seen {{value}} ago
-  personal_information: Personal Information
+  create_user: ユーザを作成
+  last_seen: "最後に見たのは{{value}}前"
+  personal_information: 個人情報
   reactivate: Reactivate
-  save_user: Save User
+  save_user: ユーザを保存
   suspend: Suspend
   user_active: Active
-  user_admin: Admin
+  user_admin: 管理者
   user_awaits_approval: awaits your approval
   user_confirm_delete: A user can only be deleted if no related assets are left behind.
-  user_is_admin: The user is Administrator
+  user_is_admin: このユーザは管理者
   user_never_logged_in: "hasn't logged in yet"
   user_signed_up: Signed Up
   user_signed_up_on: signed up on {{value}}
-  user_since: user since {{value}}
+  user_since: "{{value}}からのユーザ"
   user_suspended: Suspended
   user_suspended_on: suspended on {{value}}
-  users: Users
-  users_small: users
+  users: ユーザ
+  users_small: ユーザ
 
   # Pluralizations.
   #----------------------------------------------------------------------------
@@ -591,7 +591,7 @@ en-US:
   #----------------------------------------------------------------------------
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
+      mmddyyyy: "%Y/%m/%d"
       mmdd: "%b %e"
       mmddyy: "%b %e, %Y"
 

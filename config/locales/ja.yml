@@ -1,4 +1,4 @@
-en-US:
+ja:
   date:
     formats:
       # Use the strftime parameters for formats.
@@ -8,8 +8,8 @@ en-US:
       short: "%b %d"
       long: "%B %d, %Y"
       
-    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
-    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    day_names: [日曜, 月曜, 火曜, 水曜, 木曜, 金曜, 土曜]
+    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
       
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
@@ -47,12 +47,12 @@ en-US:
     currency:
       format:
         # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
-        format: "%u%n"
-        unit: "$"
+        format: "%n%u"
+        unit: "円"
         # These three are to override number.format and are optional
         separator: "."
         delimiter: ","
-        precision: 2
+        precision: 0
   
     # Used in number_to_percentage()
     percentage:
