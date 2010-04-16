@@ -1,195 +1,139 @@
+# Japanese translations for Ruby on Rails
+# by Akira Matsuda (ronnie@dio.jp)
+# AR error messages are basically taken from Ruby-GetText-Package. Thanks to Masao Mutoh.
+
 ja:
   date:
     formats:
-      # Use the strftime parameters for formats.
-      # When no format has been given, it uses default.
-      # You can provide other formats here if you like!
-      default: "%Y-%m-%d"
-      short: "%b %d"
-      long: "%B %d, %Y"
-      
-    day_names: [日曜, 月曜, 火曜, 水曜, 木曜, 金曜, 土曜]
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+      long: "%Y年%m月%d日(%a)"
+
+    day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
     abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
-      
-    # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
-    # Used in date_select and datime_select.
-    order: [ :year, :month, :day ]
+
+    month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+
+    order: [:year, :month, :day]
 
   time:
     formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      short: "%d %b %H:%M"
-      long: "%B %d, %Y %H:%M"
-    am: "am"
-    pm: "pm"
-      
-# Used in array.to_sentence.
+      default: "%Y/%m/%d %H:%M:%S"
+      short: "%y/%m/%d %H:%M"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %Z"
+    am: "午前"
+    pm: "午後"
+
   support:
     array:
-      words_connector: ", "
-      two_words_connector: " and "
-      last_word_connector: ", and "
+      sentence_connector: "と"
+      skip_last_comma: true
+      words_connector: "と"
+      two_words_connector: "と"
+      last_word_connector: "と"
+
+    select:
+      prompt: "選択してください。"
 
   number:
-    # Used in number_with_delimiter()
-    # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
     format:
-      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
       separator: "."
-      # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
       delimiter: ","
-      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
       precision: 3
-  
-    # Used in number_to_currency()
+
     currency:
       format:
-        # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
         format: "%n%u"
         unit: "円"
-        # These three are to override number.format and are optional
         separator: "."
         delimiter: ","
         precision: 0
-  
-    # Used in number_to_percentage()
+
     percentage:
       format:
-        # These three are to override number.format and are optional
-        # separator: 
         delimiter: ""
-        # precision: 
-  
-    # Used in number_to_precision()
+
     precision:
       format:
-        # These three are to override number.format and are optional
-        # separator:
         delimiter: ""
-        # precision:
-  
-    # Used in number_to_human_size()
+
     human:
       format:
-        # These three are to override number.format and are optional
-        # separator: 
         delimiter: ""
         precision: 1
       storage_units:
-        # Storage units output formatting.
-        # %u is the storage unit, %n is the number (default: 2 MB)
-        format: "%n %u"
+        format: "%n%u"
         units:
-          byte:
-            one:   "Byte"
-            other: "Bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
-  
-  # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
+          byte: "バイト"
+          kb: "キロバイト"
+          mb: "メガバイト"
+          gb: "ギガバイト"
+          tb: "テラバイト"
+
   datetime:
     distance_in_words:
-      half_a_minute: "half a minute"
+      half_a_minute: "30秒前後"
       less_than_x_seconds:
-        one:   "less than 1 second"
-        other: "less than {{count}} seconds"
+        one:   "1秒以内"
+        other: "{{count}}秒以内"
       x_seconds:
-        one:   "1 second"
-        other: "{{count}} seconds"
+        one:   "1秒"
+        other: "{{count}}秒"
       less_than_x_minutes:
-        one:   "less than a minute"
-        other: "less than {{count}} minutes"
+        one:   "1分以内"
+        other: "{{count}}分以内"
       x_minutes:
-        one:   "1 minute"
-        other: "{{count}} minutes"
+        one:   "1分"
+        other: "{{count}}分"
       about_x_hours:
-        one:   "about 1 hour"
-        other: "about {{count}} hours"
+        one:   "約1時間"
+        other: "約{{count}}時間"
       x_days:
-        one:   "1 day"
-        other: "{{count}} days"
+        one:   "1日"
+        other: "{{count}}日"
       about_x_months:
-        one:   "about 1 month"
-        other: "about {{count}} months"
+        one:   "約1ヶ月"
+        other: "約{{count}}ヶ月"
       x_months:
-        one:   "1 month"
-        other: "{{count}} months"
+        one:   "1ヶ月"
+        other: "{{count}}ヶ月"
       about_x_years:
-        one:   "about 1 year"
-        other: "about {{count}} years"
+        one:   "約{{count}}年"
+        other: "約{{count}}年"
       over_x_years:
-        one:   "over 1 year"
-        other: "over {{count}} years"
-    prompts:
-      year:   "Year"
-      month:  "Month"
-      day:    "Day"
-      hour:   "Hour"
-      minute: "Minute"
-      second: "Seconds"
+        one:   "{{count}}年以上"
+        other: "{{count}}年以上"
 
   activerecord:
     errors:
       template:
         header:
-          one:    "1 error prohibited this {{model}} from being saved"
-          other:  "{{count}} errors prohibited this {{model}} from being saved"
-        # The variable :count is also available
-        body: "There were problems with the following fields:"
-  
-      # The values :model, :attribute and :value are always available for interpolation
-      # The value :count is available when applicable. Can be used for pluralization.
+          one:   "{{model}}にエラーが発生しました。"
+          other: "{{model}}に{{count}}つのエラーが発生しました。"
+        body: "次の項目を確認してください。"
+
       messages:
-        inclusion: "is not included in the list"
-        exclusion: "is reserved"
-        invalid: "is invalid"
-        confirmation: "doesn't match confirmation"
-        accepted: "must be accepted"
-        empty: "can't be empty"
-        blank: "can't be blank"
-        too_long: "is too long (maximum is {{count}} characters)"
-        too_short: "is too short (minimum is {{count}} characters)"
-        wrong_length: "is the wrong length (should be {{count}} characters)"
-        taken: "has already been taken"
-        not_a_number: "is not a number"
-        greater_than: "must be greater than {{count}}"
-        greater_than_or_equal_to: "must be greater than or equal to {{count}}"
-        equal_to: "must be equal to {{count}}"
-        less_than: "must be less than {{count}}"
-        less_than_or_equal_to: "must be less than or equal to {{count}}"
-        odd: "must be odd"
-        even: "must be even"
-        # Append your own errors here or at the model/attributes scope.
-    
-      # You can define own errors for models or model attributes.
-      # The values :model, :attribute and :value are always available for interpolation.
-      #
-      # For example,
-      #   models:
-      #     user:
-      #       blank: "This is a custom blank message for {{model}}: {{attribute}}"
-      #       attributes:
-      #         login:
-      #           blank: "This is a custom blank message for User login"
-      # Will define custom blank validation message for User model and 
-      # custom blank validation message for login attribute of User model.
-      #models:
-    
-    # Translate model names. Used in Model.human_name().
-    #models:
-      # For example,
-      #   user: "Dude"
-      # will translate User model name to "Dude"
-    
-    # Translate model attribute names. Used in Model.human_attribute_name(attribute).
-    #attributes:
-      # For example,
-      #   user:
-      #     login: "Handle"
-      # will translate User attribute "login" as "Handle"
-    
-    
+        inclusion: "は一覧にありません。"
+        exclusion: "は予約されています。"
+        invalid: "は不正な値です。"
+        confirmation: "が一致しません。"
+        accepted: "を受諾してください。"
+        empty: "を入力してください。"
+        blank: "を入力してください。"
+        too_long: "は{{count}}文字以内で入力してください。"
+        too_short: "は{{count}}文字以上で入力してください。"
+        wrong_length: "は{{count}}文字で入力してください。"
+        taken: "はすでに存在します。"
+        not_a_number: "は数値で入力してください。"
+        greater_than: "は{{count}}より大きい値にしてください。"
+        greater_than_or_equal_to: "は{{count}}以上の値にしてください。"
+        equal_to: "は{{count}}にしてください。"
+        less_than: "は{{count}}より小さい値にしてください。"
+        less_than_or_equal_to: "は{{count}}以下の値にしてください。"
+        odd: "は奇数にしてください。"
+        even: "は偶数にしてください。"
+        record_invalid: "バリデーションに失敗しました。 {{errors}}"
+
+      full_messages:
+        format: "{{attribute}}{{message}}"
