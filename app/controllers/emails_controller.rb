@@ -2,63 +2,36 @@ class EmailsController < ApplicationController
   before_filter :require_user
   
   # GET /email
-  # GET /email.xml
-  def index
-    @emails = Email.find(:all)
-
-    respond_to do |format|
-      format.html # index.haml
-      format.xml  { render :xml => @emails }
-    end
-  end
+  # GET /email.xml                                              not implemented
+  #----------------------------------------------------------------------------
+  # def index
+  # end
 
   # GET /email/1
-  # GET /email/1.xml
-  def show
-    @email = Email.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.haml
-      format.xml  { render :xml => @email }
-    end
-  end
-
-  # GET /emails/1/edit                                                   AJAX
+  # GET /email/1.xml                                            not implemented
   #----------------------------------------------------------------------------
-  def edit
-    @email = Email.find(params[:id])
+  # def show
+  # end
 
-    if @email.mediator
-      @email.mediator_type.constantize.my(@current_user).find(@email.mediator.id)
-    else
-      raise ActiveRecord::RecordNotFound
-    end
+  # GET /emails/new
+  # GET /emails/new.xml                                         not implemented
+  #----------------------------------------------------------------------------
+  # def new
+  # end
 
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
-  end
+  # GET /emails/1/edit                                          not implemented
+  #----------------------------------------------------------------------------
+  # def edit
+  # end
 
   # PUT /emails/1
-  # PUT /emails/1.xml                                                      AJAX
+  # PUT /emails/1.xml                                           not implemented
   #----------------------------------------------------------------------------
-  def update
-    @email = Email.find(params[:id])
-
-    respond_to do |format|
-      if @email.update_attributes(params[:email])
-        format.js
-        format.xml  { head :ok }
-      else
-        format.js
-        format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
-      end
-    end
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
-  end
+  # def update
+  # end
 
   # DELETE /emails/1
-  # DELETE /emails/1.xml                                                  AJAX
+  # DELETE /emails/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def destroy
     @email = Email.find(params[:id])

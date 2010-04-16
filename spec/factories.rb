@@ -145,6 +145,7 @@ Factory.define :comment do |c|
   c.title               { Factory.next(:title) }
   c.private             false
   c.comment             { Faker::Lorem::paragraph }
+  c.state               "Expanded"
   c.updated_at          { Factory.next(:time) }
   c.created_at          { Factory.next(:time) }
 end
@@ -186,6 +187,26 @@ Factory.define :contact_opportunity do |c|
   c.deleted_at          nil
   c.updated_at          { Factory.next(:time) }
   c.created_at          { Factory.next(:time) }
+end
+
+#----------------------------------------------------------------------------
+Factory.define :email do |e|
+  e.imap_message_id     { "%08x" % rand(0xFFFFFFFF) }
+  e.user                { |e| a.association(:user) }
+  e.mediator            { raise "Please specify :mediator for the email" }
+  e.sent_from           { Faker::Internet.email }
+  e.sent_to             { Faker::Internet.email }
+  e.cc                  { Faker::Internet.email }
+  e.bcc                 nil
+  e.subject             { Faker::Lorem.sentence }
+  e.body                { Faker::Lorem.paragraph[0,255] }
+  e.header              nil
+  e.sent_at             { Factory.next(:time) }
+  e.received_at         { Factory.next(:time) }
+  e.deleted_at          nil
+  e.state               "Expanded"
+  e.updated_at          { Factory.next(:time) }
+  e.created_at          { Factory.next(:time) }
 end
 
 #----------------------------------------------------------------------------
