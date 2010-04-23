@@ -114,7 +114,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def jumpbox(current)
     [ :campaigns, :accounts, :leads, :contacts, :opportunities ].inject([]) do |html, controller|
-      html << link_to_function(controller.to_s.capitalize, "crm.jumper('#{controller}')", :class => (controller == current ? "selected" : ""))
+      html << link_to_function(t(("tab_" + controller.to_s).to_sym), "crm.jumper('#{controller}')", :class => (controller == current ? "selected" : ""))
     end.join(" | ")
   end
 
