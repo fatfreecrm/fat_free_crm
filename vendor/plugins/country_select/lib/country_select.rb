@@ -26,7 +26,6 @@ module ActionView
       # All the countries included in the country_options output.
         
       COUNTRIES = [
-        ['', ''],
         ['Andorra', 'AN'],
         ['United Arab Emirates', 'AE'],
         ['Afghanistan', 'AF'],

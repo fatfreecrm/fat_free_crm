@@ -17,7 +17,7 @@
         .label #{t :phone}:
         = f.text_field :phone, :style => "width:240px"
 
-    - if Setting.background_info.include?(:lead)
+    - if Setting.background_info && Setting.background_info.include?(:lead)
       %tr
         %td(valign="top" colspan="3")
           .label= t(:background_info) << ':'

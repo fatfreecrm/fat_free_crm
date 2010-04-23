@@ -22,8 +22,8 @@ de:
       long: "%A, %d. %B %Y, %H:%M Uhr"
       time: "%H:%M"
 
-    am: "vormittags"
-    pm: "nachmittags"
+    am: " vormittags"
+    pm: " nachmittags"
       
   datetime:
     distance_in_words:
@@ -47,16 +47,16 @@ de:
         other: 'etwa {{count}} Stunden'
       x_days:
         one: '1 Tag'
-        other: '{{count}} Tage'
+        other: '{{count}} Tagen'
       about_x_months:
         one: 'etwa 1 Monat'
         other: 'etwa {{count}} Monate'
       x_months:
         one: '1 Monat'
-        other: '{{count}} Monate'
+        other: '{{count}} Monaten'
       about_x_years:
         one: 'etwa 1 Jahr'
-        other: 'etwa {{count}} Jahre'
+        other: 'etwa {{count}} Jahren'
       over_x_years:
         one: 'mehr als 1 Jahr'
         other: 'mehr als {{count}} Jahre'

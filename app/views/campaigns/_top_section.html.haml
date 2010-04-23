@@ -17,7 +17,7 @@
         .label #{t :status}:
         = f.select :status, Setting.unroll(:campaign_status), { :selected => (@campaign.status || "planned").to_sym }, { :style => "width:250px" }
 
-    - if Setting.background_info.include?(:campaign)
+    - if Setting.background_info && Setting.background_info.include?(:campaign)
       %tr
         %td(valign="top" colspan="5")
           .label= t(:background_info) << ':'

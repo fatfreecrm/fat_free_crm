@@ -23,7 +23,7 @@
         .label.req #{t :category}:
         = f.select :category, @category, { :selected => @task.category.blank? ? nil : @task.category.to_sym, :include_blank => t(:select_blank) }, { :style => "width:160px" }
 
-    - if Setting.background_info.include?(:task)
+    - if Setting.background_info && Setting.background_info.include?(:task)
       %tr
         %td(valign="top" colspan="5")
           .label= t(:extra_info).capitalize << ':'

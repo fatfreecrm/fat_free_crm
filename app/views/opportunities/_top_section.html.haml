@@ -48,7 +48,7 @@
           .label.req #{t :assigned_to}:
           = collection_select :opportunity, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
 
-      - if Setting.background_info.include?(:opportunity)
+      - if Setting.background_info && Setting.background_info.include?(:opportunity)
         %tr
           %td(valign="top" colspan="3")
             .label= t(:background_info) << ':'
