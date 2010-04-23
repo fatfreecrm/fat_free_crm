@@ -545,6 +545,12 @@ ja:
   reset_password: Reset Password
   update_password_and_login: Update Password and Login
 
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  # TODO
+  back_to_crm: Back to Fat Free CRM
+  crm_admin_page: Fat Free CRM Administration
+
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
   approve: Approve

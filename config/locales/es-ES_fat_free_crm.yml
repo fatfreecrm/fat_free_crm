@@ -548,6 +548,12 @@ es-ES:
   reset_password: Restaurar contraseña
   update_password_and_login: Modificar contraseña y nombre de usuario
 
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  # TODO
+  back_to_crm: Back to Fat Free CRM
+  crm_admin_page: Fat Free CRM Administration
+
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
   approve: Aprobar

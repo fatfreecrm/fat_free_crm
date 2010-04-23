@@ -546,6 +546,12 @@ pt-BR:
   reset_password: Redefnir senha
   update_password_and_login: Atualizar senha e entrar.
 
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  # TODO
+  back_to_crm: Back to Fat Free CRM
+  crm_admin_page: Fat Free CRM Administration
+
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
   approve: Aprovar
