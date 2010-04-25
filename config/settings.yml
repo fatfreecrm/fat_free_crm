@@ -51,7 +51,7 @@
 #   :not_allowed    -- users can only be added by system administrator. This is the default.
 #   :needs_approval -- users can sign up but must be approved before they can use the system.
 #
-:user_signup: :allowed
+:user_signup: :not_allowed
 
 # Default records permissions.
 #------------------------------------------------------------------------------
