@@ -548,6 +548,12 @@ pl:
   reset_password: Odzyskaj hasło
   update_password_and_login: Zmień hasło i/lub nazwę użytkownika
 
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  # TODO
+  back_to_crm: Back to Fat Free CRM
+  crm_admin_page: Fat Free CRM Administration
+
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
   approve: Akceptuj

@@ -541,6 +541,12 @@ fr:
   reset_password: Ré-initialisation du mot de passe
   update_password_and_login: "Modification de l'identifiant et du mot de passe"
 
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  # TODO
+  back_to_crm: Back to Fat Free CRM
+  crm_admin_page: Fat Free CRM Administration
+
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
   approve: Approuver

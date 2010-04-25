@@ -589,3 +589,9 @@ de:
   yahoo: "Yahoo IM"
   yes_button: "Ja"
   zipcode: "Postleitzahl"
+
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  # TODO
+  back_to_crm: Back to Fat Free CRM
+  crm_admin_page: Fat Free CRM Administration
