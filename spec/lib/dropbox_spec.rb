@@ -274,6 +274,20 @@ describe "IMAP Dropbox" do
       @lead.emails.first.mediator.should == @lead
     end
 
+    it "should touch the asset" do
+      now = Time.zone.now
+      timezone = ActiveRecord::Base.default_timezone
+      begin
+        ActiveRecord::Base.default_timezone = :utc
+        @lead = Factory(:lead, :email => "ben@example.com", :access => "Public", :updated_at => 5.day.ago)
+
+        @crawler.run
+        @lead.reload.updated_at.to_i.should >= now.to_i
+      ensure
+        ActiveRecord::Base.default_timezone = timezone
+      end
+    end
+
     it "should move on if forwarded recipient did not match" do
       @crawler.should_receive(:with_forwarded_recipient).twice
       @crawler.run

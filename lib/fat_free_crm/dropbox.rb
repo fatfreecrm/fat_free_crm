@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-# TODO:
-#  - Make options for: (attach email to accont of contact if has
 require "net/imap"
 require "tmail_mail_extension"
 include ActionController::UrlWriter
@@ -46,7 +44,7 @@ module FatFreeCRM
       disconnect!
     end
 
-    # Setup imap folders in settings
+    # Setup imap folders in settings.
     #--------------------------------------------------------------------------------------
     def setup
       log "connecting to #{@settings[:server]}..."
@@ -266,6 +264,7 @@ module FatFreeCRM
         :received_at     => email.date,
         :sent_at         => email.date
       )
+      asset.touch
 
       if @settings[:attach_to_account] && asset.respond_to?(:account) && asset.account
         Email.create(
@@ -280,6 +279,7 @@ module FatFreeCRM
           :received_at     => email.date,
           :sent_at         => email.date
         )
+        asset.account.touch
       end
     end
 
