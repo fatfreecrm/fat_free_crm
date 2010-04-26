@@ -288,6 +288,13 @@ describe "IMAP Dropbox" do
       end
     end
 
+    it "should change lead's status (:new => :contacted)" do
+      @lead = Factory(:lead, :email => "ben@example.com", :access => "Public", :status => "new")
+
+      @crawler.run
+      @lead.reload.status.should == "contacted"
+    end
+
     it "should move on if forwarded recipient did not match" do
       @crawler.should_receive(:with_forwarded_recipient).twice
       @crawler.run

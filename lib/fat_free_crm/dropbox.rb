@@ -266,6 +266,10 @@ module FatFreeCRM
       )
       asset.touch
 
+      if asset.is_a?(Lead) && asset.status == "new"
+        asset.update_attribute(:status, "contacted")
+      end
+
       if @settings[:attach_to_account] && asset.respond_to?(:account) && asset.account
         Email.create(
           :imap_message_id => email.message_id,
