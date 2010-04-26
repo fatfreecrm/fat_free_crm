@@ -12,7 +12,8 @@ describe "/contacts/show.html.haml" do
 
   it "should render contact landing page" do
     template.should_receive(:render).with(hash_including(:partial => "comments/new"))
-    template.should_receive(:render).with(hash_including(:partial => "comments/comment"))
+    template.should_receive(:render).with(hash_including(:partial => "common/timeline"))
+    template.should_receive(:render).with(hash_including(:partial => "common/tasks"))
     template.should_receive(:render).with(hash_including(:partial => "opportunities/opportunity"))
 
     render "/contacts/show.html.haml"
