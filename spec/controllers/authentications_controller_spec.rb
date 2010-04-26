@@ -63,12 +63,12 @@ describe AuthenticationsController do
       end
 
       it "displays welcome message and redirects to the home page" do
-        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
+        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 0)
         @authentication.stub!(:user).and_return(@user)
 
         post :create, :authentication => @login
         flash[:notice].should_not == nil
-        flash[:notice].should !~ /last login/
+        flash[:notice].should_not =~ /last login/
         response.should redirect_to(root_url)
       end
 

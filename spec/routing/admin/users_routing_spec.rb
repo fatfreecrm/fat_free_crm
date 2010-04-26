@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Admin::UsersController do
   describe "route generation" do
     it "maps #index" do
-      route_for(:controller => "admin/users", :action => "index").should == "/admin/users"
+      route_for(:controller => "admin/users", :action => "index").should == "/admin"
     end
 
     it "maps #new" do
