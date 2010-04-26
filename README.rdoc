@@ -10,7 +10,7 @@ Here are the steps to get Fat Free CRM up and running on your system.
 === System Requirements
 
 * Ruby v1.8.6, v1.8.7, or v1.9.1
-* Ruby on Rails v2.3.4 (works with 2.3.2 and 2.3.3)
+* Ruby on Rails v2.3.5
 * MySQL v4.1.1 or later (v5+ is recommended) or SQLite v3.4 or later
 * ImageMagick (optional, only if you would like to use avatars)
 
@@ -80,7 +80,8 @@ to http://localhost:3000
 
    $ ruby script/server
 
-When deploying with Phusion Passenger, also install rack 1.0.1 (otherwise Phusion Passenger will exit saying it couldn't find the Rails gem):
+When deploying with Phusion Passenger, also install Rack 1.0.1:
+
    $ gem install rack -v 1.0.1
 
 
