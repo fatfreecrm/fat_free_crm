@@ -58,11 +58,8 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_complete(pending, bucket)
-    #onclick = "this.disable();"
-    onclick = ""
-    onclick << %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
+    onclick = %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
     onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "{ bucket: '#{bucket}' }")
-    onclick << "; return false"
   end
 
   #----------------------------------------------------------------------------

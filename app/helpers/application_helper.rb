@@ -238,11 +238,6 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def activate_facebox
-    %Q/document.observe("dom:loaded", function() { new Facebox('#{Setting.base_url}'); });/
-  end
-
-  #----------------------------------------------------------------------------
   def localize_calendar_date_select
     update_page_tag do |page|
       page.assign '_translations', { 'OK' => t('calendar_date_select.ok'), 'Now' => t('calendar_date_select.now'), 'Today' => t('calendar_date_select.today'), 'Clear' => t('calendar_date_select.clear') }
