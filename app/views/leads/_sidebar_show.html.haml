@@ -11,14 +11,14 @@
   %div= render :partial => "common/address_show", :locals => { :asset => @lead, :type => 'business', :title => :address }
 
   %div
-    - if @lead.phone
+    - if @lead.phone.present?
       == #{t :phone}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : @lead.phone}</b><br />
-    - if @lead.mobile
+    - if @lead.mobile.present?
       == #{t :mobile}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : @lead.mobile}</b><br />
-    - if @lead.email
-      == #{t :email}: <b>#{link_to(h(@lead.email), "mailto:" + @lead.email)}</b><br />
-    - if @lead.alt_email
-      == #{t :other}: <b>#{link_to(@lead.alt_email, "mailto:" + @lead.alt_email)}</b><br />
+    - if @lead.email.present?
+      == #{t :email}: <b>#{link_to_email(@lead.email)}</b><br />
+    - if @lead.alt_email.present?
+      == #{t :other}: <b>#{link_to_email(@lead.alt_email)}</b><br />
   = web_presence_icons(@lead)
 
   .caption #{t :lead_summary}

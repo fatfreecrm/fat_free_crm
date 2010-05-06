@@ -26,7 +26,7 @@ module FatFreeCRM
     
     #-------------------------------------------------------------------------------------- 
     def initialize
-      @settings = Setting[:email_dropbox]
+      @settings = Setting.email_dropbox
       @archived, @discarded = 0, 0
     end
     
@@ -195,12 +195,12 @@ module FatFreeCRM
         # Plain email addresses.
         recipients += email.to_addrs.map(&:address) unless email.to.blank?
         recipients += email.cc_addrs.map(&:address) unless email.cc.blank?
-        recipients -= [ @settings[:dropbox_email] ]
+        recipients -= [ @settings[:address] ]
       else
         # TMail::Address objects.
         recipients += email.to_addrs unless email.to.blank?
         recipients += email.cc_addrs unless email.cc.blank?
-        recipients -= [ TMail::Address.parse(@settings[:dropbox_email]) ]
+        recipients -= [ TMail::Address.parse(@settings[:address]) ]
       end
       recipients.inject(false) { |attached, recipient| attached ||= yield recipient }
     end
@@ -337,7 +337,7 @@ module FatFreeCRM
     # Notify users with the results of the operations (feedback from dropbox)
     #--------------------------------------------------------------------------------------      
     def notify(email, mediator_links)      
-      ack_email = Notifier.create_dropbox_ack_notification(@sender, @settings[:dropbox_email], email, mediator_links)
+      ack_email = Notifier.create_dropbox_ack_notification(@sender, @settings[:address], email, mediator_links)
       Notifier.deliver(ack_email)
     end
 

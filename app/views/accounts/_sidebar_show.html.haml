@@ -3,9 +3,9 @@
   - if @account.website
     %div
       %b= link_to(truncate(@account.website, :length => 30), @account.website.to_url, :popup => true, :title => t(:open_in_window, @account.website))
-  - if @account.email
+  - if @account.email.present?
     %div
-      %b= link_to(truncate(@account.email, :length => 30), "mailto:" << @account.email.to_s, :title => @account.email)
+      %b= link_to_email(@account.email, 30)
 
   %div
     - if @account.toll_free_phone

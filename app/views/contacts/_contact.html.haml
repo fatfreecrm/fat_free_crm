@@ -19,8 +19,8 @@
       = "&ndash; #{t :referred_by_small} #{contact.lead.referred_by}" if contact.lead and contact.lead.referred_by?
     - unless @current_user.preference[:contacts_outline] == "brief"
       %dt{ :style => "padding: 2px 0px 0px 0px" }
-        = link_to(h(contact.email), "mailto:" << contact.email.to_s) << " | " if contact.email?
-        = "#{t :phone_small}: <b>" + h(contact.phone) << "</b> | " if contact.phone?
-        = "#{t :mobile_small}: <b>" + h(contact.mobile) << "</b> | " if contact.mobile?
+        = link_to_email(contact.email) << " | " if contact.email.present?
+        = "#{t :phone_small}: <b>" + h(contact.phone) << "</b> | " if contact.phone.present?
+        = "#{t :mobile_small}: <b>" + h(contact.mobile) << "</b> | " if contact.mobile.present?
         = t(:added_ago, time_ago_in_words(contact.created_at))
       = hook(:contact_bottom, self, :contact => contact)

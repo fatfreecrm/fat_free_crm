@@ -9,7 +9,7 @@ describe "IMAP Dropbox" do
   def mock_imap
     @imap = mock
     @settings = @crawler.instance_variable_get("@settings")
-    @settings[:dropbox_email] = "dropbox@example.com"
+    @settings[:address] = "dropbox@example.com"
     Net::IMAP.stub!(:new).with(@settings[:server], @settings[:port], @settings[:ssl]).and_return(@imap)
   end
 

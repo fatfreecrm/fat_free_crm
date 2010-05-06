@@ -9,7 +9,7 @@
 
     %tt
       = "To " << link_to(email.user.full_name, user_path(email.user))
-      = "from " << auto_link(email.sent_from) << ", sent on "
+      = "from " << link_to_email(email.sent_from) << ", sent on "
       = l(email.sent_at, :format => :mmddhhss)
       = " | " + link_to_function(email.collapsed? ? "More..." : "Less...", "crm.flip_note_or_email(this, 'More...', 'Less...')", :class => "toggle")
 
