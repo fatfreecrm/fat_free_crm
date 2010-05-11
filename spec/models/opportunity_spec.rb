@@ -37,4 +37,47 @@ describe Opportunity do
     lambda { Factory(:opportunity, :name => "Hello", :user => @current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
   end
 
+  describe "Update existing opportunity" do
+    before(:each) do
+      @account = Factory(:account)
+      @opportunity = Factory(:opportunity, :account => @account)
+    end
+
+    it "should create new account if requested so" do
+      lambda { @opportunity.update_with_account_and_permissions({
+        :account => { :name => "New account" },
+        :opportunity => { :name => "Hello" }
+      })}.should change(Account, :count).by(1)
+      Account.last.name.should == "New account"
+      @opportunity.name.should == "Hello"
+    end
+
+    it "should update the account another account was selected" do
+      @another_account = Factory(:account)
+      lambda { @opportunity.update_with_account_and_permissions({
+        :account => { :id => @another_account.id },
+        :opportunity => { :name => "Hello" }
+      })}.should_not change(Account, :count)
+      @opportunity.account.should == @another_account
+      @opportunity.name.should == "Hello"
+    end
+
+    it "should drop existing Account if [create new account] is blank" do
+      lambda { @opportunity.update_with_account_and_permissions({
+        :account => { :name => "" },
+        :opportunity => { :name => "Hello" }
+      })}.should_not change(Account, :count)
+      @opportunity.account.should == nil
+      @opportunity.name.should == "Hello"
+    end
+
+    it "should drop existing Account if [-- None --] is selected from list of accounts" do
+      lambda { @opportunity.update_with_account_and_permissions({
+        :account => { :id => "" },
+        :opportunity => { :name => "Hello" }
+      })}.should_not change(Account, :count)
+      @opportunity.account.should == nil
+      @opportunity.name.should == "Hello"
+    end
+  end
 end
