@@ -102,8 +102,13 @@ class Contact < ActiveRecord::Base
   # Backend handler for [Update Contact] form (see contact/update).
   #----------------------------------------------------------------------------
   def update_with_account_and_permissions(params)
-    account = Account.create_or_select_for(self, params[:account], params[:users])
-    self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
+    if params[:account][:id] == "" || params[:account][:name] == ""
+      self.account = nil # Contact is not associated with the account anymore.
+      self.reload
+    else
+      account = Account.create_or_select_for(self, params[:account], params[:users])
+      self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
+    end
     self.update_with_permissions(params[:contact], params[:users])
   end
 

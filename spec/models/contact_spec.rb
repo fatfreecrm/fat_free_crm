@@ -34,7 +34,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Contact do
-
   before(:each) do
     login
   end
@@ -43,4 +42,47 @@ describe Contact do
     Contact.create!(:first_name => "Billy", :last_name => "Bones")
   end
 
+  describe "Update existing contact" do
+    before(:each) do
+      @account = Factory(:account)
+      @contact = Factory(:contact, :account => @account)
+    end
+
+    it "should create new account if requested so" do
+      lambda { @contact.update_with_account_and_permissions({
+        :account => { :name => "New account" },
+        :contact => { :first_name => "Billy" }
+      })}.should change(Account, :count).by(1)
+      Account.last.name.should == "New account"
+      @contact.first_name.should == "Billy"
+    end
+
+    it "should update the account another account was selected" do
+      @another_account = Factory(:account)
+      lambda { @contact.update_with_account_and_permissions({
+        :account => { :id => @another_account.id },
+        :contact => { :first_name => "Billy" }
+      })}.should_not change(Account, :count)
+      @contact.account.should == @another_account
+      @contact.first_name.should == "Billy"
+    end
+
+    it "should drop existing Account if [create new account] is blank" do
+      lambda { @contact.update_with_account_and_permissions({
+        :account => { :name => "" },
+        :contact => { :first_name => "Billy" }
+      })}.should_not change(Account, :count)
+      @contact.account.should == nil
+      @contact.first_name.should == "Billy"
+    end
+
+    it "should drop existing Account if [-- None --] is selected from list of accounts" do
+      lambda { @contact.update_with_account_and_permissions({
+        :account => { :id => "" },
+        :contact => { :first_name => "Billy" }
+      })}.should_not change(Account, :count)
+      @contact.account.should == nil
+      @contact.first_name.should == "Billy"
+    end
+  end
 end
