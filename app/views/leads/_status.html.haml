@@ -33,4 +33,4 @@
           - if @campaign && !edit # Create a lead from Campaign landing page: select current campaign and disable the dropdown.
             = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :selected => @campaign.id }, { :style => "width:100%", :disabled => true }
           - else
-            = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :selected => @lead.campaign_id, :include_blank => t(:none) }, { :style => "width:100%", :onchange => "crm.flip_campaign_permissions(this.value)" }
+            = collection_select :lead, :campaign_id, @campaigns, :id, :name, { :selected => @lead.campaign_id, :include_blank => t(:select_none) }, { :style => "width:100%", :onchange => "crm.flip_campaign_permissions(this.value)" }
