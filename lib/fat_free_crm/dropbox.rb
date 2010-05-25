@@ -1,21 +1,20 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 require "net/imap"
-require "tmail_mail_extension"
 include ActionController::UrlWriter
 
 module FatFreeCRM
@@ -34,7 +33,7 @@ module FatFreeCRM
     def run
       log "connecting to #{@settings[:server]}..."
       connect! or return nil
-      log "logged in to #{@settings[:server]}, new messages..."
+      log "logged in to #{@settings[:server]}, fetching new messages..."
       with_new_emails do |uid, email|
         process(uid, email)
         archive(uid)
@@ -133,7 +132,9 @@ module FatFreeCRM
     def disconnect!
       if @imap
         @imap.logout
-        @imap.disconnect unless @imap.disconnected?
+        unless @imap.disconnected?
+          @imap.disconnect rescue nil
+        end
       end
     end
 
@@ -214,16 +215,32 @@ module FatFreeCRM
     end
 
 
-    # Process allready identified keyword mark
+    # Process explicit keyword.
     #--------------------------------------------------------------------------------------    
     def find_or_create_and_attach(email, keyword, name)
-      asset = keyword.constantize.first(:conditions => [ "name LIKE ?", "%#{name}%" ])
+      klass = keyword.constantize
+      has_name = klass.column_names.include?("name")
+
+      if has_name
+        conditions = { :conditions => [ "name LIKE ?", "%#{name}%" ] }
+      else
+        first_name, *last_name = name.split
+        if last_name.empty? # Treat single name as last name.
+          conditions = { :conditions => [ "last_name LIKE ?", "%#{first_name}" ] }
+        else
+          conditions = { :conditions => [ "first_name LIKE ? AND last_name LIKE ?", "%#{first_name}", "%#{last_name.join(' ')}"] }
+        end
+      end
+
+      asset = klass.first(conditions)
       if asset
         attach(email, asset) if sender_has_permissions_for?(asset)
       else
-        log2("keyword not found (will try to create new): #{keyword} with name #{name}", email)
-        asset = keyword.constantize.create(default_values(email, keyword, name))
-        attach(email, asset)
+        if has_name # TODO: handle Lead and Contact
+          log "keyword #{keyword} not found, creating new one: #{name}", email
+          asset = klass.create(default_values(email, keyword, name))
+          attach(email, asset)
+        end
       end
       true
     end
@@ -287,6 +304,7 @@ module FatFreeCRM
       end
     end
 
+    # TODO: handle Leads anmd Contacts.
     #----------------------------------------------------------------------------------------      
     def default_values(email, keyword, name)
       defaults = { 
@@ -312,10 +330,10 @@ module FatFreeCRM
       # Search for domain name in Accounts.
       account = Account.first(:conditions => [ "email like ?", "%#{recipient.domain}" ])
       if account
-        log2("asociating new contact from #{addr.spec} to account #{account.name}", email)
+        log "asociating new contact #{addr.spec} with the account #{account.name}", email
         defaults[:account] = account
       else
-        log2("creating new account (#{recipient.domain}) to the new contact from #{recipient.spec}", email)
+        log "creating new account #{recipient.domain.capitalize} for the contact #{recipient.spec}", email
         defaults[:account] = Account.create(
           :user   => @sender,
           :name   => recipient.domain.capitalize,
@@ -341,22 +359,13 @@ module FatFreeCRM
       Notifier.deliver(ack_email)
     end
 
-    # Setup logger
+    # Centralized logging.
     #-------------------------------------------------------------------------------------- 
     def log(message, email = nil)
       return if Rails.env == "test"
-      if email
-        puts "Dropbox: #{message}, From: #{email.from}, Subject: #{email.subject}"
-      else
-        puts "Dropbox: #{message}"
-      end
+      puts "Dropbox: #{message}"
+      puts "  From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
     end    
-    
-    # Centralized logging
-    #--------------------------------------------------------------------------------------      
-    def log2(msg, email)  
-      RAILS_DEFAULT_LOGGER.info "dropbox - #{msg} in email #{email.message_id} from #{email.from} with subject #{email.subject}" if @settings[:debug]
-    end
     
   end # class Dropbox
 end # module FatFreeCRM
