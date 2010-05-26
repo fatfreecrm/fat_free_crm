@@ -33,7 +33,7 @@ module FatFreeCRM
     def run
       log "connecting to #{@settings[:server]}..."
       connect! or return nil
-      log "logged in to #{@settings[:server]}, fetching new messages..."
+      log "logged in to #{@settings[:server]}..."
       with_new_emails do |uid, email|
         process(uid, email)
         archive(uid)
@@ -73,9 +73,9 @@ module FatFreeCRM
     #-------------------------------------------------------------------------------------- 
     def with_new_emails
       @imap.uid_search(['NOT', 'SEEN']).each do |uid|
-        log "fetching message..."
         begin
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
+          log "fetched new message...", email
           if is_valid?(email) && sent_from_known_user?(email)
             yield(uid, email)
           else
@@ -86,7 +86,7 @@ module FatFreeCRM
             $stderr.puts e
             $stderr.puts e.backtrace
           end
-          log("error processing email: #{e}", email)
+          log "error processing email: #{e.inspect}", email
           discard(uid)
         end
       end
@@ -161,7 +161,7 @@ module FatFreeCRM
     #------------------------------------------------------------------------------
     def is_valid?(email)
       valid = email.content_type != "text/html"
-      log("not a text message, discarding", email) unless valid
+      log("not a text message, discarding") unless valid
       valid
     end
 
@@ -169,7 +169,7 @@ module FatFreeCRM
     def sent_from_known_user?(email)
       email_address = email.from.first.downcase
       known = !find_sender(email_address).nil?
-      log("sent by unknown user #{email_address}, discarding", email) unless known
+      log("sent by unknown user #{email_address}, discarding") unless known
       known
     end
 
@@ -219,28 +219,26 @@ module FatFreeCRM
     #--------------------------------------------------------------------------------------    
     def find_or_create_and_attach(email, keyword, name)
       klass = keyword.constantize
-      has_name = klass.column_names.include?("name")
+      has_name = %w(Account Campaign Opportunity).include?(keyword)
 
       if has_name
-        conditions = { :conditions => [ "name LIKE ?", "%#{name}%" ] }
+        asset = klass.first(:conditions => [ "name LIKE ?", "%#{name}%" ])
       else
         first_name, *last_name = name.split
-        if last_name.empty? # Treat single name as last name.
-          conditions = { :conditions => [ "last_name LIKE ?", "%#{first_name}" ] }
+        conditions = if last_name.empty? # Treat single name as last name.
+          [ "last_name LIKE ?", "%#{first_name}" ]
         else
-          conditions = { :conditions => [ "first_name LIKE ? AND last_name LIKE ?", "%#{first_name}", "%#{last_name.join(' ')}"] }
+          [ "first_name LIKE ? AND last_name LIKE ?", "%#{first_name}", "%#{last_name.join(' ')}"]
         end
+        asset = klass.first(:conditions => conditions)
       end
 
-      asset = klass.first(conditions)
       if asset
         attach(email, asset) if sender_has_permissions_for?(asset)
       else
-        if has_name # TODO: handle Lead and Contact
-          log "keyword #{keyword} not found, creating new one: #{name}", email
-          asset = klass.create(default_values(email, keyword, name))
-          attach(email, asset)
-        end
+        log "#{keyword} #{name} not found, creating new one..."
+        asset = klass.create(default_values(email, keyword, name))
+        attach(email, asset)
       end
       true
     end
@@ -304,16 +302,24 @@ module FatFreeCRM
       end
     end
 
-    # TODO: handle Leads anmd Contacts.
     #----------------------------------------------------------------------------------------      
     def default_values(email, keyword, name)
       defaults = { 
         :user   => @sender,
-        :name   => name,
         :access => Setting.default_access
       }
-      defaults[:status] = "planned" if keyword == "Campaign"       # TODO: I18n
-      defaults[:stage] = "prospecting" if keyword == "Oportunity"
+      case keyword
+      when "Account", "Campaign", "Opportunity"
+        defaults[:name] = name
+        defaults[:status] = "planned" if keyword == "Campaign"      # TODO: I18n
+        defaults[:stage] = "prospecting" if keyword == "Oportunity" # TODO: I18n
+      when "Contact", "Lead"
+        first_name, *last_name = name.split
+        defaults[:first_name] = first_name
+        defaults[:last_name] = (last_name.any? ? last_name.join(" ") : "(unknown)")
+        defaults[:status] = "contacted" if keyword == "Lead"        # TODO: I18n
+      end
+
       defaults
     end
 
@@ -330,10 +336,10 @@ module FatFreeCRM
       # Search for domain name in Accounts.
       account = Account.first(:conditions => [ "email like ?", "%#{recipient.domain}" ])
       if account
-        log "asociating new contact #{addr.spec} with the account #{account.name}", email
+        log "asociating new contact #{addr.spec} with the account #{account.name}"
         defaults[:account] = account
       else
-        log "creating new account #{recipient.domain.capitalize} for the contact #{recipient.spec}", email
+        log "creating new account #{recipient.domain.capitalize} for the contact #{recipient.spec}"
         defaults[:account] = Account.create(
           :user   => @sender,
           :name   => recipient.domain.capitalize,

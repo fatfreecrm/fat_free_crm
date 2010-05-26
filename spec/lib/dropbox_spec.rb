@@ -199,7 +199,7 @@ describe "IMAP Dropbox" do
       Factory(:user, :email => "aaron@example.com")
     end
 
-    it "should find the asset and attach the email message" do
+    it "should find the named asset and attach the email message" do
       mock_message(EMAIL[:first_line])
       @campaign = Factory(:campaign, :name => "Got milk!?")
       @crawler.should_receive(:archive).once
@@ -210,7 +210,7 @@ describe "IMAP Dropbox" do
       @campaign.emails.first.mediator.should == @campaign
     end
 
-    it "should create the asset and attach the email message" do
+    it "should create the named asset and attach the email message" do
       mock_message(EMAIL[:first_line])
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
@@ -220,6 +220,53 @@ describe "IMAP Dropbox" do
       @campaign.should be_instance_of(Campaign)
       @campaign.emails.size.should == 1
       @campaign.emails.first.mediator.should == @campaign
+    end
+
+    it "should find the lead and attach the email message" do
+      mock_message(EMAIL[:first_line_lead])
+      @lead = Factory(:lead, :first_name => "Cindy", :last_name => "Cluster")
+      @crawler.should_receive(:archive).once
+      @crawler.should_not_receive(:with_recipients)
+      @crawler.run
+
+      @lead.emails.size.should == 1
+      @lead.emails.first.mediator.should == @lead
+    end
+
+    it "should create the lead and attach the email message" do
+      mock_message(EMAIL[:first_line_lead])
+      @crawler.should_receive(:archive).once
+      @crawler.should_not_receive(:with_recipients)
+      @crawler.run
+
+      @lead = Lead.first(:conditions => "first_name = 'Cindy' AND last_name = 'Cluster'")
+      @lead.should be_instance_of(Lead)
+      @lead.status.should == "contacted"
+      @lead.emails.size.should == 1
+      @lead.emails.first.mediator.should == @lead
+    end
+
+    it "should find the contact and attach the email message" do
+      mock_message(EMAIL[:first_line_contact])
+      @contact = Factory(:contact, :first_name => "Cindy", :last_name => "Cluster")
+      @crawler.should_receive(:archive).once
+      @crawler.should_not_receive(:with_recipients)
+      @crawler.run
+
+      @contact.emails.size.should == 1
+      @contact.emails.first.mediator.should == @contact
+    end
+
+    it "should create the contact and attach the email message" do
+      mock_message(EMAIL[:first_line_contact])
+      @crawler.should_receive(:archive).once
+      @crawler.should_not_receive(:with_recipients)
+      @crawler.run
+
+      @contact = Contact.first(:conditions => "first_name = 'Cindy' AND last_name = 'Cluster'")
+      @contact.should be_instance_of(Contact)
+      @contact.emails.size.should == 1
+      @contact.emails.first.mediator.should == @contact
     end
 
     it "should move on if first line has no keyword" do
