@@ -495,7 +495,9 @@ en-US:
   delete: Delete
   edit: Edit
   items_total: '{{count}} total.'
+  less: Less...
   me: me
+  more: More...
   n_a: N/A
   name: Name
   no_match: No {{value}} match

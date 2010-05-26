@@ -498,7 +498,9 @@ pt-BR:
   delete: Remover
   edit: Editar
   items_total: '{{count}} total.'
+  less: Less... # TODO
   me: mim
+  more: More... # TODO
   n_a: N/A
   name: Nome
   no_match: 'No {{value}} match'

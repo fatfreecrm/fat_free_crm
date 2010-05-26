@@ -501,7 +501,9 @@ th:
   delete: ลบ
   edit: แก้ไข
   items_total: '{{count}} ทั้งหมด'
+  less: Less... # TODO
   me: ฉัน
+  more: More... # TODO
   n_a: N/A
   name: ชื่อ
   no_match: ไม่มี{{value}}ที่ตรงกับ

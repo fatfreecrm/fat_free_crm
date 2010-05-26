@@ -293,6 +293,7 @@ de:
   leads: "Anfragen"
   leads_options: "Anfrage-Einstellungen"
   leads_small: "Anfragen"
+  less: "Less..." # TODO
   linked_in: "LinkedIn"
   login: "Login"
   login_now_link: "Login!"
@@ -308,6 +309,7 @@ de:
   mobile: "Mobiltelefon"
   mobile_small: "Mobiltelefon"
   money: "Geld"
+  more: "More..." # TODO
   move_to: "verschiebe auf"
   msg_account_created: "Ihr Konto wurde angelegt und wartet auf die Freigabe durch den Systemadministrator."
   msg_account_not_approved: "Ihr Konto wurde noch nicht freigegeben."

@@ -500,7 +500,9 @@ pl:
   delete: Usuń
   edit: Zmień
   items_total: '{{count}} razem.'
+  less: Less... # TODO
   me: mnie
+  more: More... # TODO
   n_a: N/A
   name: Nazwa
   no_match: Nie znaleziono {{value}}

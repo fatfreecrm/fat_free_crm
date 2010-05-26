@@ -258,6 +258,9 @@
     .mail dt p {
       margin: 10px 0px 0px 0px; }
 
+.toggle {
+  font-weight: normal; }
+
 #paginate {
   float: right;
   font-size: 10px;

@@ -501,7 +501,9 @@ ru:
   delete: Удалить
   edit: Изменить
   items_total: Всего {{count}}.
+  less: Less... # TODO
   me: я
+  more: More... # TODO
   n_a: -
   name: Название
   no_match: "{{value}} не найдены"
