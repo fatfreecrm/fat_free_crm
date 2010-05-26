@@ -464,6 +464,7 @@ es-ES:
   action_completed: completó
   action_created: creó
   action_deleted: eliminó
+  action_email: exchanged emails with # TODO
   action_reassigned: reasignó
   action_rejected: rechazó
   action_rescheduled: modificó fecha de finalización de 

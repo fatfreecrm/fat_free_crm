@@ -23,6 +23,7 @@ de:
   action_completed: "vollständig"
   action_created: "erstellt"
   action_deleted: "gelöscht"
+  action_email: "exchanged emails with" # TODO
   action_reassigned: "neu zugeordnet"
   action_rejected: "abgelehnt"
   action_rescheduled: "neu geplant"

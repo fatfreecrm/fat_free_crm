@@ -459,6 +459,7 @@ ja:
   action_completed: 完了した
   action_created: 作成した
   action_deleted: 削除した
+  action_email: exchanged emails with # TODO
   action_reassigned: 再割り当てした
   action_rejected: 拒否した
   action_rescheduled: 再スケジュールした

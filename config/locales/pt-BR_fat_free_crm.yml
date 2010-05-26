@@ -463,6 +463,7 @@ pt-BR:
   action_completed: terminado
   action_created: criado
   action_deleted: removido
+  action_email: exchanged emails with # TODO
   action_reassigned: reassigned
   action_rejected: rejeitado
   action_rescheduled: reagendado

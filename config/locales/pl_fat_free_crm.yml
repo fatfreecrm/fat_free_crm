@@ -465,6 +465,7 @@ pl:
   action_completed: ukończył/a
   action_created: utworzył/a
   action_deleted: usunięto
+  action_email: exchanged emails with # TODO
   action_reassigned: zmienił/a przypisanie
   action_rejected: oznaczył/a jako Stracony
   action_rescheduled: zmienił/a termin

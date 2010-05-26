@@ -466,6 +466,7 @@ ru:
   action_completed: завершил(а)
   action_created: добавил(а)
   action_deleted: удалил(а)
+  action_email: exchanged emails with # TODO
   action_reassigned: перепоручил(а)
   action_rejected: закрыл(а)
   action_rescheduled: перенес(ла)

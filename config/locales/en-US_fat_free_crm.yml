@@ -459,6 +459,7 @@ en-US:
   action_completed: completed
   action_created: created
   action_deleted: deleted
+  action_email: exchanged emails with
   action_reassigned: reassigned
   action_rejected: rejected
   action_rescheduled: rescheduled

@@ -466,6 +466,7 @@ th:
   action_completed: เสร็จสมบูรณ์
   action_created: สร้าง
   action_deleted: ลบ
+  action_email: exchanged emails with # TODO
   action_reassigned: มอบหมายให้คนอื่น
   action_rejected: ยกเลิกแล้ว
   action_rescheduled: ใส่กำหนดการ

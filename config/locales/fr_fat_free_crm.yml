@@ -462,6 +462,7 @@ fr:
   action_completed: Complété
   action_created: créé
   action_deleted: supprimé
+  action_email: exchanged emails with # TODO
   action_reassigned: réassigné
   action_rejected: rejeté
   action_rescheduled: re-planifié
