@@ -459,6 +459,7 @@ ja:
   action_completed: 完了した
   action_created: 作成した
   action_deleted: 削除した
+  action_email: exchanged emails with # TODO
   action_reassigned: 再割り当てした
   action_rejected: 拒否した
   action_rescheduled: 再スケジュールした
@@ -495,7 +496,9 @@ ja:
   delete: 削除
   edit: 編集
   items_total: '合計 {{count}}'
+  less: Less... # TODO
   me: 自分
+  more: More... # TODO
   n_a: N/A
   name: 名前
   no_match: No {{value}} match

@@ -44,7 +44,7 @@
       - else
         %span.warn #{t :user_never_logged_in}
     %dt{ :style => "padding: 2px 0px 0px 0px" }
-      = link_to(user.email, "mailto:" << user.email.to_s) << " | "
+      = link_to_email(user.email.to_s) << " | "
       = "#{t :phone_small}: <b>" + user.phone << "</b> | " if user.phone?
       = "#{t :mobile_small}: <b>" + user.mobile << "</b> | " if user.mobile?
 

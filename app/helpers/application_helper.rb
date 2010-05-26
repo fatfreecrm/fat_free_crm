@@ -111,6 +111,18 @@ module ApplicationHelper
     )
   end
 
+  # Bcc: to dropbox address if the dropbox has been set up.
+  #----------------------------------------------------------------------------
+  def link_to_email(email, length = nil)
+    name = (length ? truncate(email, :length => length) : email)
+    if Setting.email_dropbox && Setting.email_dropbox[:address].present?
+      mailto = "#{email}?bcc=#{Setting.email_dropbox[:address]}"
+    else
+      mailto = email
+    end
+    link_to(h(name), "mailto:#{mailto}", :title => email)
+  end
+
   #----------------------------------------------------------------------------
   def jumpbox(current)
     [ :campaigns, :accounts, :leads, :contacts, :opportunities ].inject([]) do |html, controller|

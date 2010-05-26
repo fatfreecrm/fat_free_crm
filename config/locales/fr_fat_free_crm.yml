@@ -2,8 +2,6 @@
 # Translation by Cédric Brancourt aka Electron-libre
 # cedric.brancourt@gmail.com
 
-
-
 fr:
   language: Français
 
@@ -464,6 +462,7 @@ fr:
   action_completed: Complété
   action_created: créé
   action_deleted: supprimé
+  action_email: exchanged emails with # TODO
   action_reassigned: réassigné
   action_rejected: rejeté
   action_rescheduled: re-planifié
@@ -499,7 +498,9 @@ fr:
   delete: Supprimer
   edit: Modifier
   items_total: '{{count}} total.'
+  less: Less... # TODO
   me: moi
+  more: More... # TODO
   n_a: N/A
   name: Nom
   no_match: Acun(e) {{value}} ne correspond

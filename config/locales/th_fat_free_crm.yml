@@ -466,6 +466,7 @@ th:
   action_completed: เสร็จสมบูรณ์
   action_created: สร้าง
   action_deleted: ลบ
+  action_email: exchanged emails with # TODO
   action_reassigned: มอบหมายให้คนอื่น
   action_rejected: ยกเลิกแล้ว
   action_rescheduled: ใส่กำหนดการ
@@ -501,7 +502,9 @@ th:
   delete: ลบ
   edit: แก้ไข
   items_total: '{{count}} ทั้งหมด'
+  less: Less... # TODO
   me: ฉัน
+  more: More... # TODO
   n_a: N/A
   name: ชื่อ
   no_match: ไม่มี{{value}}ที่ตรงกับ

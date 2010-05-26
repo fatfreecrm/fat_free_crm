@@ -459,6 +459,7 @@ en-US:
   action_completed: completed
   action_created: created
   action_deleted: deleted
+  action_email: exchanged emails with
   action_reassigned: reassigned
   action_rejected: rejected
   action_rescheduled: rescheduled
@@ -495,7 +496,9 @@ en-US:
   delete: Delete
   edit: Edit
   items_total: '{{count}} total.'
+  less: Less...
   me: me
+  more: More...
   n_a: N/A
   name: Name
   no_match: No {{value}} match

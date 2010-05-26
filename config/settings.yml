@@ -97,19 +97,16 @@ task_calendar_with_time: false
 # the imap account, server and folders.
 #------------------------------------------------------------------------------
 :email_dropbox:
-  :server                     : imap.example.com
-  :port                       : 993
-  :ssl                        : true
-  :user                       : user@example.com
-  :password                   : password
-  :dropbox_email              : dropbox@example.com
-  :scan_folder                : inbox
-  :move_to_folder             : processed        # Optional
-  :move_invalid_to_folder     : invalid          # Optional
-  :attach_to_account          : false            # Attach emails to contact's account, if any. The same rule applies to opportunities.
-  :crm_host                   : www.yourhost.com # Needed for notifications links
-  :debug                      : false
-  
+  :server                     : imap.example.com      # IMAP server name.
+  :port                       : 993                   # IMAP server port number.
+  :ssl                        : true                  # True for secure IMAP connection, false othewise.
+  :address                    : dropbox@example.com   # Dropbox email address.
+  :user                       : user@example.com      # User to login to the IMAP server.
+  :password                   : password              # Password to login to the IMAP server.
+  :scan_folder                : inbox                 # Folder to scan for dropbox messages.
+  :move_to_folder             : processed             # Optional: folder to move processed messages to.
+  :move_invalid_to_folder     : invalid               # Optional: folder to move invalid messages to.
+  :attach_to_account          : false                 # Attach emails to contact's account, if any. The same rule applies to opportunities.
 
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------

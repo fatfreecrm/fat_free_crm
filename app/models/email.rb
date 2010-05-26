@@ -51,6 +51,6 @@ class Email < ActiveRecord::Base
   private
   def log_activity
     current_user = User.find(user_id)
-    Activity.log(current_user, mediator, :dropboxed) if current_user
+    Activity.log(current_user, mediator, :email) if current_user
   end  
 end

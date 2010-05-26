@@ -22,9 +22,9 @@
       == #{t :fax}: <b>#{@contact.do_not_call ? content_tag(:strike, h(@contact.fax)) : h(@contact.fax)}</b><br />
   %div
     - unless @contact.email.blank?
-      == #{t :email}: <b>#{link_to(h(@contact.email), "mailto:" + @contact.email)}</b><br />
+      == #{t :email}: <b>#{link_to_email(@contact.email)}</b><br />
     - unless @contact.alt_email.blank?
-      == #{t :alt_email_small}: <b>#{link_to(h(@contact.alt_email), "mailto:" + @contact.alt_email)}</b><br />
+      == #{t :alt_email_small}: <b>#{link_to_email(@contact.alt_email)}</b><br />
 
   = web_presence_icons(@contact)
 

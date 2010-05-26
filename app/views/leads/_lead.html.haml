@@ -20,7 +20,6 @@
     = link_to(h(lead.full_name(@current_user.preference[:leads_naming])), lead)
     %tt
       - if lead.company? && lead.title?
-        -# works_at: "{{job_title}} at {{company}}"
         = t(:works_at, :job_title => lead.title, :company => lead.company)
       - else
         = lead.company if lead.company?
@@ -30,8 +29,8 @@
     - unless @current_user.preference[:leads_outline] == "brief"
       %dt
         = stars_for(lead) + " | "
-        = link_to(h(lead.email), "mailto:" << lead.email.to_s) << " | " if lead.email?
-        = "#{t :phone_small}: " + lead.phone  << " | " if lead.phone?
-        = "#{t :mobile_small}: " + lead.mobile << " | " if lead.mobile?
+        = link_to_email(lead.email) << " | " if lead.email.present?
+        = "#{t :phone_small}: " + lead.phone  << " | " if lead.phone.present?
+        = "#{t :mobile_small}: " + lead.mobile << " | " if lead.mobile.present?
         = t(:added_ago, time_ago_in_words(lead.created_at))
       = hook(:lead_bottom, self, :lead => lead)

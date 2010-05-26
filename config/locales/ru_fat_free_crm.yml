@@ -466,6 +466,7 @@ ru:
   action_completed: завершил(а)
   action_created: добавил(а)
   action_deleted: удалил(а)
+  action_email: exchanged emails with # TODO
   action_reassigned: перепоручил(а)
   action_rejected: закрыл(а)
   action_rescheduled: перенес(ла)
@@ -501,7 +502,9 @@ ru:
   delete: Удалить
   edit: Изменить
   items_total: Всего {{count}}.
+  less: Less... # TODO
   me: я
+  more: More... # TODO
   n_a: -
   name: Название
   no_match: "{{value}} не найдены"

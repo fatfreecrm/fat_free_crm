@@ -464,6 +464,7 @@ es-ES:
   action_completed: completó
   action_created: creó
   action_deleted: eliminó
+  action_email: exchanged emails with # TODO
   action_reassigned: reasignó
   action_rejected: rechazó
   action_rescheduled: modificó fecha de finalización de 
@@ -500,7 +501,9 @@ es-ES:
   delete: Eliminar
   edit: Editar
   items_total: 'total {{count}}.'
+  less: Less... # TODO
   me: mí
+  more: More... # TODO
   n_a: N/A
   name: Nombre
   no_match: No coincidencia con {{value}}

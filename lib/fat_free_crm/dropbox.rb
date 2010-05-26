@@ -1,21 +1,20 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 require "net/imap"
-require "tmail_mail_extension"
 include ActionController::UrlWriter
 
 module FatFreeCRM
@@ -26,7 +25,7 @@ module FatFreeCRM
     
     #-------------------------------------------------------------------------------------- 
     def initialize
-      @settings = Setting[:email_dropbox]
+      @settings = Setting.email_dropbox
       @archived, @discarded = 0, 0
     end
     
@@ -34,7 +33,7 @@ module FatFreeCRM
     def run
       log "connecting to #{@settings[:server]}..."
       connect! or return nil
-      log "logged in to #{@settings[:server]}, new messages..."
+      log "logged in to #{@settings[:server]}..."
       with_new_emails do |uid, email|
         process(uid, email)
         archive(uid)
@@ -74,9 +73,9 @@ module FatFreeCRM
     #-------------------------------------------------------------------------------------- 
     def with_new_emails
       @imap.uid_search(['NOT', 'SEEN']).each do |uid|
-        log "fetching message..."
         begin
           email = TMail::Mail.parse(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
+          log "fetched new message...", email
           if is_valid?(email) && sent_from_known_user?(email)
             yield(uid, email)
           else
@@ -87,7 +86,7 @@ module FatFreeCRM
             $stderr.puts e
             $stderr.puts e.backtrace
           end
-          log("error processing email: #{e}", email)
+          log "error processing email: #{e.inspect}", email
           discard(uid)
         end
       end
@@ -133,7 +132,9 @@ module FatFreeCRM
     def disconnect!
       if @imap
         @imap.logout
-        @imap.disconnect unless @imap.disconnected?
+        unless @imap.disconnected?
+          @imap.disconnect rescue nil
+        end
       end
     end
 
@@ -160,7 +161,7 @@ module FatFreeCRM
     #------------------------------------------------------------------------------
     def is_valid?(email)
       valid = email.content_type != "text/html"
-      log("not a text message, discarding", email) unless valid
+      log("not a text message, discarding") unless valid
       valid
     end
 
@@ -168,7 +169,7 @@ module FatFreeCRM
     def sent_from_known_user?(email)
       email_address = email.from.first.downcase
       known = !find_sender(email_address).nil?
-      log("sent by unknown user #{email_address}, discarding", email) unless known
+      log("sent by unknown user #{email_address}, discarding") unless known
       known
     end
 
@@ -195,12 +196,12 @@ module FatFreeCRM
         # Plain email addresses.
         recipients += email.to_addrs.map(&:address) unless email.to.blank?
         recipients += email.cc_addrs.map(&:address) unless email.cc.blank?
-        recipients -= [ @settings[:dropbox_email] ]
+        recipients -= [ @settings[:address] ]
       else
         # TMail::Address objects.
         recipients += email.to_addrs unless email.to.blank?
         recipients += email.cc_addrs unless email.cc.blank?
-        recipients -= [ TMail::Address.parse(@settings[:dropbox_email]) ]
+        recipients -= [ TMail::Address.parse(@settings[:address]) ]
       end
       recipients.inject(false) { |attached, recipient| attached ||= yield recipient }
     end
@@ -214,15 +215,29 @@ module FatFreeCRM
     end
 
 
-    # Process allready identified keyword mark
+    # Process explicit keyword.
     #--------------------------------------------------------------------------------------    
     def find_or_create_and_attach(email, keyword, name)
-      asset = keyword.constantize.first(:conditions => [ "name LIKE ?", "%#{name}%" ])
+      klass = keyword.constantize
+      has_name = %w(Account Campaign Opportunity).include?(keyword)
+
+      if has_name
+        asset = klass.first(:conditions => [ "name LIKE ?", "%#{name}%" ])
+      else
+        first_name, *last_name = name.split
+        conditions = if last_name.empty? # Treat single name as last name.
+          [ "last_name LIKE ?", "%#{first_name}" ]
+        else
+          [ "first_name LIKE ? AND last_name LIKE ?", "%#{first_name}", "%#{last_name.join(' ')}"]
+        end
+        asset = klass.first(:conditions => conditions)
+      end
+
       if asset
         attach(email, asset) if sender_has_permissions_for?(asset)
       else
-        log2("keyword not found (will try to create new): #{keyword} with name #{name}", email)
-        asset = keyword.constantize.create(default_values(email, keyword, name))
+        log "#{keyword} #{name} not found, creating new one..."
+        asset = klass.create(default_values(email, keyword, name))
         attach(email, asset)
       end
       true
@@ -291,11 +306,20 @@ module FatFreeCRM
     def default_values(email, keyword, name)
       defaults = { 
         :user   => @sender,
-        :name   => name,
         :access => Setting.default_access
       }
-      defaults[:status] = "planned" if keyword == "Campaign"       # TODO: I18n
-      defaults[:stage] = "prospecting" if keyword == "Oportunity"
+      case keyword
+      when "Account", "Campaign", "Opportunity"
+        defaults[:name] = name
+        defaults[:status] = "planned" if keyword == "Campaign"      # TODO: I18n
+        defaults[:stage] = "prospecting" if keyword == "Oportunity" # TODO: I18n
+      when "Contact", "Lead"
+        first_name, *last_name = name.split
+        defaults[:first_name] = first_name
+        defaults[:last_name] = (last_name.any? ? last_name.join(" ") : "(unknown)")
+        defaults[:status] = "contacted" if keyword == "Lead"        # TODO: I18n
+      end
+
       defaults
     end
 
@@ -312,10 +336,10 @@ module FatFreeCRM
       # Search for domain name in Accounts.
       account = Account.first(:conditions => [ "email like ?", "%#{recipient.domain}" ])
       if account
-        log2("asociating new contact from #{addr.spec} to account #{account.name}", email)
+        log "asociating new contact #{addr.spec} with the account #{account.name}"
         defaults[:account] = account
       else
-        log2("creating new account (#{recipient.domain}) to the new contact from #{recipient.spec}", email)
+        log "creating new account #{recipient.domain.capitalize} for the contact #{recipient.spec}"
         defaults[:account] = Account.create(
           :user   => @sender,
           :name   => recipient.domain.capitalize,
@@ -337,26 +361,17 @@ module FatFreeCRM
     # Notify users with the results of the operations (feedback from dropbox)
     #--------------------------------------------------------------------------------------      
     def notify(email, mediator_links)      
-      ack_email = Notifier.create_dropbox_ack_notification(@sender, @settings[:dropbox_email], email, mediator_links)
+      ack_email = Notifier.create_dropbox_ack_notification(@sender, @settings[:address], email, mediator_links)
       Notifier.deliver(ack_email)
     end
 
-    # Setup logger
+    # Centralized logging.
     #-------------------------------------------------------------------------------------- 
     def log(message, email = nil)
       return if Rails.env == "test"
-      if email
-        puts "Dropbox: #{message}, From: #{email.from}, Subject: #{email.subject}"
-      else
-        puts "Dropbox: #{message}"
-      end
+      puts "Dropbox: #{message}"
+      puts "  From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
     end    
-    
-    # Centralized logging
-    #--------------------------------------------------------------------------------------      
-    def log2(msg, email)  
-      RAILS_DEFAULT_LOGGER.info "dropbox - #{msg} in email #{email.message_id} from #{email.from} with subject #{email.subject}" if @settings[:debug]
-    end
     
   end # class Dropbox
 end # module FatFreeCRM

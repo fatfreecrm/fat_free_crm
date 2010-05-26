@@ -463,6 +463,7 @@ pt-BR:
   action_completed: terminado
   action_created: criado
   action_deleted: removido
+  action_email: exchanged emails with # TODO
   action_reassigned: reassigned
   action_rejected: rejeitado
   action_rescheduled: reagendado
@@ -498,7 +499,9 @@ pt-BR:
   delete: Remover
   edit: Editar
   items_total: '{{count}} total.'
+  less: Less... # TODO
   me: mim
+  more: More... # TODO
   n_a: N/A
   name: Nome
   no_match: 'No {{value}} match'
