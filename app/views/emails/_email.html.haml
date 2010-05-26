@@ -1,7 +1,7 @@
 - truncated = h(truncate(email.body.to_s.gsub("\n", " "), :length => 125 - email.subject.to_s.size))
 - formatted = simple_format h(email.body)
 
-%li[email]{ highlightable(dom_id(email, :tools), :off => "#f2f2f2") }
+%li.mail{ highlightable(dom_id(email, :tools), :off => "#f2f2f2"), :id => dom_id(email) }
   .body
     = link_to avatar_for(email.user, :size => "25x25"), user_path(email.user)
     .tools{ invisible, :id => dom_id(email, :tools) }

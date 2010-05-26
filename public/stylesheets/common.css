@@ -234,28 +234,28 @@
     .comment dt p {
       margin: 10px 0px 0px 0px; }
 
-.email {
+.mail {
   background: #f2f2f2;
   border-bottom: 1px gainsboro solid;
   margin: 2px 0px 0px 0px;
   overflow: hidden;
   padding: 4px;
   list-style: none; }
-  .email .gravatar {
+  .mail .gravatar {
     float: left;
     margin: 3px 10px 3px 3px; }
-  .email .subject {
+  .mail .subject {
     color: black; }
-  .email .body {
+  .mail .body {
     display: inline;
     font-size: 11px; }
-  .email tt {
+  .mail tt {
     font-size: 10px;
     color: #666666; }
-  .email dt {
+  .mail dt {
     padding: 0px;
     margin: -10px 0px 0px 36px; }
-    .email dt p {
+    .mail dt p {
       margin: 10px 0px 0px 0px; }
 
 #paginate {

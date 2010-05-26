@@ -107,8 +107,6 @@ task_calendar_with_time: false
   :move_to_folder             : processed             # Optional: folder to move processed messages to.
   :move_invalid_to_folder     : invalid               # Optional: folder to move invalid messages to.
   :attach_to_account          : false                 # Attach emails to contact's account, if any. The same rule applies to opportunities.
-  :debug                      : false
-  
 
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------
