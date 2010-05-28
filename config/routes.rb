@@ -7,12 +7,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :passwords
   map.resources :comments
   map.resources :emails
-  map.resources :tasks,         :has_many => :comments, :member => { :complete => :put }
+  map.resources :tasks,         :has_many => :comments, :member => { :complete => :put, :discard => :post }
   map.resources :accounts,      :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }
   map.resources :campaigns,     :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }
-  map.resources :leads,         :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }, :member => { :convert => :get, :promote => :put, :reject => :put }
-  map.resources :contacts,      :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }
-  map.resources :opportunities, :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }
+  map.resources :leads,         :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }, :member => { :convert => :get, :discard => :post, :promote => :put, :reject => :put }
+  map.resources :contacts,      :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }, :member => { :discard => :post }
+  map.resources :opportunities, :has_many => :comments, :collection => { :search => :get, :auto_complete => :post, :options => :get, :redraw => :post }, :member => { :discard => :post }
 
   map.signup  "signup",  :controller => "users",           :action => "new"
   map.profile "profile", :controller => "users",           :action => "show"

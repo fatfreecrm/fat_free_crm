@@ -97,6 +97,20 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
+  def link_to_discard(model)
+    name = model.class.name.downcase
+    current_url = (request.xhr? ? request.referer : request.request_uri)
+    parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
+
+    link_to_remote("Discard", #t(:discard),
+      :method => :post,
+      :url    => send("discard_#{name}_path", model),
+      :with   => "{ parent: '#{parent.singularize}', parent_id: #{parent_id} }",
+      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+    )
+  end
+
+  #----------------------------------------------------------------------------
   def link_to_cancel(url)
     link_to_remote(t(:cancel), :url => url, :method => :get, :with => "{ cancel: true }")
   end
@@ -325,6 +339,16 @@ module ApplicationHelper
         :onblur  => "crm.show_hint(this, '#{hint}')"
       )
     end
+  end
+
+  # Return true if:
+  #   - it's an Ajax request made from the asset landing page (i.e. create opportunity
+  #     from a contact landing page) OR
+  #   - we're actually showing asset landing page.
+  #----------------------------------------------------------------------------
+  def shown_on_landing_page?
+    !!((request.xhr? && request.referer =~ %r|/\w+/\d+|) ||
+       (!request.xhr? && request.request_uri =~ %r|/\w+/\d+|))
   end
 
 end

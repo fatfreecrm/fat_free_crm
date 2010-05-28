@@ -177,6 +177,18 @@ class OpportunitiesController < ApplicationController
     respond_to_not_found(:html, :js, :xml)
   end
 
+  # POST /opportunities/1/discard
+  # POST /opportunities/1/discard.xml                                      AJAX
+  #----------------------------------------------------------------------------
+  def discard
+    @opportunity = Opportunity.my(@current_user).find(params[:id])
+    parent = params[:parent].classify.constantize.find(params[:parent_id])
+    parent.opportunities.delete(@opportunity)
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
+  end
+
   # GET /campaigns/search/query                                           AJAX
   #----------------------------------------------------------------------------
   def search
