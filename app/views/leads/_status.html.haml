@@ -14,7 +14,7 @@
         %td= spacer
         %td{ :valign => :top }
           .label.top #{t :status}:
-          = f.select :status, Setting.unroll(:lead_status), { :selected => (@lead.status || "new").to_sym }, { :style => "width:160px" }
+          = f.select :status, lead_status_codes_for(@lead), { :selected => (@lead.status || "new").to_sym }, { :style => "width:160px" }
         %td= spacer
         %td{ :valign => :top }
           .label.top #{t :source}:
