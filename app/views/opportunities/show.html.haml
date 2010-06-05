@@ -13,6 +13,9 @@
 
 -#-----------------------------------------------------------------------------
 %br
+.subtitle_tools
+  = link_to("<abbr>&#9658;</abbr> Select Task", "#", :id => "select_task")
+.subtitle_tools= "&nbsp;|&nbsp;"
 = inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@opportunity), :text => t(:create_task) }
 .subtitle#create_task_title #{t :tasks}
 .remote#create_task{ hidden }
@@ -21,10 +24,60 @@
 
 -#-----------------------------------------------------------------------------
 %br
+.subtitle_tools
+  = link_to("<abbr>&#9658;</abbr> Select Contact", "#", :id => "select_contact")
+.subtitle_tools= "&nbsp;|&nbsp;"
 = inline :create_contact, new_contact_path, { :class => "subtitle_tools", :related => dom_id(@opportunity), :text => t(:create_contact) }
+
 .subtitle#create_contact_title #{t :contacts}
 .remote#create_contact{ hidden }
 .list#contacts
   = render :partial => "contacts/contact", :collection => @opportunity.contacts
 
 = hook(:show_opportunity_bottom, self)
+
+= content_for(:javascript_epilogue) do
+  :plain
+    document.observe("dom:loaded", function() {
+      new crm.Popup({
+        trigger     : "select_contact",
+        target      : "jumpbox",
+        under       : "select_contact",
+        appear      : 0.3,
+        fade        : 0.3,
+        before_show : function() {
+          $("select_contact").innerHTML = "<abbr>&#9660;</abbr> Select Contact"
+          $("jumpbox_menu").hide();
+          $("jumpbox_label").innerHTML = "Contacts:"
+          $("jumpbox_label").show();
+          crm.auto_complete("contacts");
+        },
+        after_show  : function() {
+          $("auto_complete_query").focus();
+        },
+        after_hide  : function() {
+          $("select_contact").innerHTML = "<abbr>&#9658;</abbr> Select Contact"
+        }
+      });
+
+      new crm.Popup({
+        trigger     : "select_task",
+        target      : "jumpbox",
+        under       : "select_task",
+        appear      : 0.3,
+        fade        : 0.3,
+        before_show : function() {
+          $("select_task").innerHTML = "<abbr>&#9660;</abbr> Select Task"
+          $("jumpbox_menu").hide();
+          $("jumpbox_label").innerHTML = "Tasks:"
+          $("jumpbox_label").show();
+          crm.auto_complete("tasks");
+        },
+        after_show  : function() {
+          $("auto_complete_query").focus();
+        },
+        after_hide  : function() {
+          $("select_task").innerHTML = "<abbr>&#9658;</abbr> Select Task"
+        }
+      });
+    });

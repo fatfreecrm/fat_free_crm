@@ -91,13 +91,15 @@ tt {
     -moz-border-radius-bottomright: 6px;
     -webkit-border-bottom-left-radius: 6px;
     -webkit-border-bottom-right-radius: 6px; }
-    #header #jumpbox a {
+    #header #jumpbox #jumpbox_menu a {
       color: white;
       padding: 0px 0px 4px 0px; }
-      #header #jumpbox a.selected {
+      #header #jumpbox #jumpbox_menu a.selected {
         color: navy; }
-      #header #jumpbox a:hover {
+      #header #jumpbox #jumpbox_menu a:hover {
         background: steelblue; }
+    #header #jumpbox #jumpbox_label {
+      color: white; }
     #header #jumpbox input {
       margin: 2px 0px 0px 0px; }
 

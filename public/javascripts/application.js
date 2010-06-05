@@ -390,7 +390,7 @@ var crm = {
   //----------------------------------------------------------------------------
   jumper: function(controller) {
     var name = controller.capitalize();
-    $$("#jumpbox a").each(function(link) {
+    $$("#jumpbox_menu a").each(function(link) {
       if (link.innerHTML == name) {
         link.addClassName("selected");
       } else {
