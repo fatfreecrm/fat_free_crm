@@ -683,6 +683,41 @@ describe OpportunitiesController do
 
   end
 
+  # POST /opportunities/1/discard
+  # POST /opportunities/1/discard.xml                                      AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST discard" do
+    before do
+      @account = Factory(:account)
+      @opportunity = Factory(:opportunity)
+      @account.opportunities << @opportunity
+      request.env["HTTP_REFERER"] = "http://localhost/account/#{@account.id}"
+    end
+
+    it "should discard the opportunity without deleting it" do
+      xhr :post, :discard, :id => @opportunity.id, :parent => "account", :parent_id => @account.id
+      assigns[:opportunity].should == @opportunity.reload # The opportunity should still exist.
+      @account.opportunities.should == []                 # But no longer associated with the account.
+      response.should render_template("opportunities/discard")
+    end
+
+    it "should display flash warning when the opportunity is no longer available" do
+      @opportunity.destroy
+
+      xhr :post, :discard, :id => @opportunity.id, :parent => "account", :parent_id => @account.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+
+    it "should display flash warning when the parent object is no longer available" do
+      @account.destroy
+
+      xhr :post, :discard, :id => @opportunity.id, :parent => "account", :parent_id => @account.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+  end
+
   # GET /opportunities/search/query                                                AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
