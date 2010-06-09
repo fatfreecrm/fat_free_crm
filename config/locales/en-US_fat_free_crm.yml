@@ -507,8 +507,13 @@ en-US:
   permissions: Permissions
   please_retry: please try another query.
   recent_items: Recent Items
+  select_contact: Select Contact
+  select_lead: Select Lead
+  select_task: Select Task
+  select_opportunity: Select Opportunity
   search_assets: Search {{value}}
   time_ago: "{{value}} ago"
+
   background_info: Background
   address: Address
   street1: Street 1 # NEW

@@ -11,27 +11,15 @@
 = render :partial => "comments/new", :locals => { :commentable => @account }
 = render :partial => "common/timeline", :collection => @timeline
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@account), :text=> t(:create_task) }
-.subtitle#create_task_title #{t :tasks}
-.remote#create_task{ hidden }
+= section(@account, :tasks)
 .log#tasks
   = render :partial => "common/tasks"
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_contact, new_contact_path, { :class => "subtitle_tools", :related => dom_id(@account), :text=> t(:create_contact) }
-.subtitle#create_contact_title #{t :contacts}
-.remote#create_contact{ hidden }
+= section(@account, :contacts)
 .list#contacts
   = render :partial => "contacts/contact", :collection => @account.contacts
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@account), :text=> t(:create_opportunity) }
-.subtitle#create_opportunity_title #{t :opportunities}
-.remote#create_opportunity{ hidden }
+= section(@account, :opportunities)
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @account.opportunities
 

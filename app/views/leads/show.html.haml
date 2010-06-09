@@ -16,11 +16,7 @@
 = render :partial => "comments/new", :locals => { :commentable => @lead }
 = render :partial => "common/timeline", :collection => @timeline
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@lead), :text => t(:create_task) }
-.subtitle#create_task_title #{t :tasks}
-.remote#create_task{ hidden }
+= section(@lead, :tasks)
 .log#tasks
   = render :partial => "common/tasks"
 

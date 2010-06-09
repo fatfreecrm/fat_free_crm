@@ -54,8 +54,18 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def inline(id, url, options = {})
-    content_tag("div", link_to_inline(id, url, options), :class => options[:class] || "title_tools")
+  def section(related, assets)
+    asset = assets.to_s.singularize
+    create_id  = :"create_#{asset}"
+    select_id  = :"select_#{asset}"
+    create_url = controller.send(:"new_#{asset}_path")
+
+    html = "<br />"
+    html << content_tag(:div, link_to(t(select_id), "#", :id => select_id), :class => "subtitle_tools")
+    html << content_tag(:div, "&nbsp;|&nbsp;", :class => "subtitle_tools")
+    html << content_tag(:div, link_to_inline(create_id, create_url, :related => dom_id(related), :text=> t(create_id)), :class => "subtitle_tools")
+    html << content_tag(:div, t(assets), :class => :subtitle, :id => :"create_#{asset}_title")
+    html << content_tag(:div, "", :class => :remote, :id => create_id, :style => "display:none;")
   end
 
   #----------------------------------------------------------------------------
