@@ -69,6 +69,17 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
+  def load_select_popups_for(*assets)
+    js = assets.inject("") do |str, asset|
+      str << render(:partial => "common/select_popup", :locals => { :popup => asset })
+    end
+
+    content_for(:javascript_epilogue) do
+      "document.observe('dom:loaded', function() { #{js} });"
+    end
+  end
+
+  #----------------------------------------------------------------------------
   def link_to_inline(id, url, options = {})
     text = options[:text] || id.to_s.titleize
     text = (arrow_for(id) << "&nbsp;" << text) unless options[:plain]

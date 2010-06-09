@@ -20,4 +20,6 @@
 .log#tasks
   = render :partial => "common/tasks"
 
+= load_select_popups_for(:tasks)
+
 = hook(:show_lead_bottom, self)

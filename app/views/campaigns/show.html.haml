@@ -23,4 +23,6 @@
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @campaign.opportunities
 
+= load_select_popups_for(:tasks, :leads, :opportunities)
+
 = hook(:show_campaign_bottom, self)
