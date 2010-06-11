@@ -23,7 +23,7 @@ module Admin::ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_edit(model)
-    name = model.class.name.downcase
+    name = model.class.name.underscore.downcase
     link_to_remote(t(:edit),
       :method => :get,
       :url    => send("edit_admin_#{name}_path", model),
