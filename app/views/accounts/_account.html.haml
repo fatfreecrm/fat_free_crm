@@ -1,4 +1,4 @@
-- amount = account.opportunities.sum(:amount)
+- amount = account.opportunities.not_lost.sum(:amount)
 %li[account]{ highlightable(dom_id(account, :tools)) }
   - if amount != 0.0
     .strip.some= number_to_currency(amount, :precision => 0)

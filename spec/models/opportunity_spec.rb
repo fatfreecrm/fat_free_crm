@@ -80,4 +80,17 @@ describe Opportunity do
       @opportunity.name.should == "Hello"
     end
   end
+
+  describe "Named scopes" do
+    it "should find non-closed opportunities" do
+      @opportunities = [
+        Factory(:opportunity, :stage => "analysis", :amount => 1),
+        Factory(:opportunity, :stage => "won",      :amount => 2),
+        Factory(:opportunity, :stage => "lost",     :amount => 7)
+      ]
+      Opportunity.sum(:amount).should == 10
+      Opportunity.not_lost.sum(:amount).should == 3
+    end
+  end
+
 end
