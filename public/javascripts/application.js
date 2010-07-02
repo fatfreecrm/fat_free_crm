@@ -411,10 +411,9 @@ var crm = {
       afterUpdateElement: function(text, el) {
         if (el.id) {      // Autocomplete entry found.
           if (related) {  // Attach to related asset.
-            console.log("attaching to " + related);
             new Ajax.Request(this.base_url + "/" + related + "/attach", {
               method     : "put",
-              parameters : { asset : controller, id : escape(el.id) }
+              parameters : { assets : controller, asset_id : escape(el.id) }
             });
           } else {        // Quick Find: redirect to asset#show.
             window.location.href = this.base_url + "/" + controller + "/" + escape(el.id);

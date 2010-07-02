@@ -177,6 +177,27 @@ class OpportunitiesController < ApplicationController
     respond_to_not_found(:html, :js, :xml)
   end
 
+  # PUT /opportunities/1/attach
+  # PUT /opportunities/1/attach.xml                                        AJAX
+  #----------------------------------------------------------------------------
+  def attach
+    @opportunity = Opportunity.my(@current_user).find(params[:id])
+
+    unless @opportunity.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
+      @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+      @opportunity.send(params[:assets]) << @attachment
+      @attached = true
+    end
+
+    respond_to do |format|
+      format.js
+      format.xml  { render :xml => @opportunities.to_xml }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
+  end
+
   # POST /opportunities/1/discard
   # POST /opportunities/1/discard.xml                                      AJAX
   #----------------------------------------------------------------------------
@@ -184,6 +205,11 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.my(@current_user).find(params[:id])
     parent = params[:parent].classify.constantize.find(params[:parent_id])
     parent.opportunities.delete(@opportunity)
+
+    respond_to do |format|
+      format.js
+      format.xml  { render :xml => @opportunities.to_xml }
+    end
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:html, :js, :xml)

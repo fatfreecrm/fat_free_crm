@@ -164,6 +164,43 @@ class ContactsController < ApplicationController
     respond_to_not_found(:html, :js, :xml)
   end
 
+  # PUT /contacts/1/attach
+  # PUT /contacts/1/attach.xml                                             AJAX
+  #----------------------------------------------------------------------------
+  def attach
+    @contact = Contact.my(@current_user).find(params[:id])
+    unless @contact.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
+      @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+      @contact.send(params[:assets]) << @attachment
+      @attached = true
+    end
+
+    respond_to do |format|
+      format.js
+      format.xml  { render :xml => @contacts.to_xml }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
+  end
+
+  # POST /contacts/1/discard
+  # POST /contacts/1/discard.xml                                           AJAX
+  #----------------------------------------------------------------------------
+  def discard
+    @contact = Contact.my(@current_user).find(params[:id])
+    parent = params[:parent].classify.constantize.find(params[:parent_id])
+    parent.contacts.delete(@contact)
+
+    respond_to do |format|
+      format.js
+      format.xml  { render :xml => @contacts.to_xml }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
+  end
+
   # GET /contacts/search/query                                             AJAX
   #----------------------------------------------------------------------------
   def search

@@ -5,6 +5,7 @@
 
   .tools{ invisible, :id => dom_id(contact, :tools) }
     = link_to_edit(contact) + " | "
+    = link_to_discard(contact) + " | " if shown_on_landing_page?
     = link_to_delete(contact) + "&nbsp;"
 
   .indentslim
