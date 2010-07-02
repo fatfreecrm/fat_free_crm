@@ -166,12 +166,32 @@ class ApplicationController < ActionController::Base
     @query = params[:auto_complete_query]
     @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
     if @auto_complete.empty?
-      @auto_complete = self.controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
+      @auto_complete = controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
     else
       @auto_complete = @auto_complete.last
     end
-    session[:auto_complete] = self.controller_name.to_sym
+    session[:auto_complete] = controller_name.to_sym
     render :template => "common/auto_complete", :layout => nil
+  end
+
+  # Attach handler for all core controllers.
+  #----------------------------------------------------------------------------
+  def attach
+    model = controller_name.classify.constantize.my(@current_user).find(params[:id])
+
+    unless model.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
+      @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+      model.send(params[:assets]) << @attachment
+      @attached = true
+    end
+
+    respond_to do |format|
+      format.js  { render :template => "common/attach" }
+      format.xml { render :xml => model.to_xml }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
   end
 
   # Proxy current page for any of the controllers by storing it in a session.

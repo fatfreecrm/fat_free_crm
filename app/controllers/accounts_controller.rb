@@ -18,6 +18,7 @@
 class AccountsController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :attach, :only => :attach
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
@@ -153,6 +154,11 @@ class AccountsController < ApplicationController
       format.xml  { render :xml => @accounts.to_xml }
     end
   end
+
+  # PUT /accounts/1/attach
+  # PUT /accounts/1/attach.xml                                             AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :attach, :only => :attach
 
   # POST /accounts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------

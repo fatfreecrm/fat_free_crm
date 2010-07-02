@@ -17,6 +17,7 @@
 class ContactsController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :attach, :only => :attach
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
@@ -167,22 +168,7 @@ class ContactsController < ApplicationController
   # PUT /contacts/1/attach
   # PUT /contacts/1/attach.xml                                             AJAX
   #----------------------------------------------------------------------------
-  def attach
-    @contact = Contact.my(@current_user).find(params[:id])
-    unless @contact.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
-      @attachment = params[:assets].classify.constantize.find(params[:asset_id])
-      @contact.send(params[:assets]) << @attachment
-      @attached = true
-    end
-
-    respond_to do |format|
-      format.js  { render :template => "common/attach" }
-      format.xml { render :xml => @contact.to_xml }
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
-  end
+  # Handled by before_filter :attach, :only => :attach
 
   # POST /contacts/1/discard
   # POST /contacts/1/discard.xml                                           AJAX

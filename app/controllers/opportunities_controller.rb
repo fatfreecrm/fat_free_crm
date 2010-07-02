@@ -20,6 +20,7 @@ class OpportunitiesController < ApplicationController
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :load_settings
   before_filter :get_data_for_sidebar, :only => :index
+  before_filter :attach, :only => :attach
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
@@ -180,23 +181,7 @@ class OpportunitiesController < ApplicationController
   # PUT /opportunities/1/attach
   # PUT /opportunities/1/attach.xml                                        AJAX
   #----------------------------------------------------------------------------
-  def attach
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
-
-    unless @opportunity.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
-      @attachment = params[:assets].classify.constantize.find(params[:asset_id])
-      @opportunity.send(params[:assets]) << @attachment
-      @attached = true
-    end
-
-    respond_to do |format|
-      format.js  { render :template => "common/attach" }
-      format.xml { render :xml => @opportunity.to_xml }
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
-  end
+  # Handled by before_filter :attach, :only => :attach
 
   # POST /opportunities/1/discard
   # POST /opportunities/1/discard.xml                                      AJAX
