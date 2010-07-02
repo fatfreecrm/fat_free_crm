@@ -19,6 +19,6 @@
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @contact.opportunities
 
-= load_select_popups_for(:tasks, :opportunities)
+= load_select_popups_for(@contact, :tasks, :opportunities)
 
 = hook(:show_contact_bottom, self)

@@ -69,9 +69,9 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def load_select_popups_for(*assets)
+  def load_select_popups_for(related, *assets)
     js = assets.inject("") do |str, asset|
-      str << render(:partial => "common/select_popup", :locals => { :popup => asset })
+      str << render(:partial => "common/select_popup", :locals => { :related => related, :popup => asset })
     end
 
     content_for(:javascript_epilogue) do
