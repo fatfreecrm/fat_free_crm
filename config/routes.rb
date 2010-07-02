@@ -9,21 +9,24 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :emails
 
   map.resources :tasks,
-    :has_many => :comments,
+    :collection => {
+      :auto_complete => :post
+    },
     :member => {
       :attach   => :put,
       :complete => :put,
       :discard  => :post
-  }
+    }
 
   map.resources :leads,
-    :has_many => :comments,
+    :has_many => [ :comments, :emails ],
     :collection => {
       :auto_complete => :post,
       :options => :get,
       :redraw  => :post,
       :search  => :get
-    }, :member => {
+    },
+    :member => {
       :attach  => :put,
       :convert => :get,
       :discard => :post,
@@ -33,7 +36,7 @@ ActionController::Routing::Routes.draw do |map|
 
   [ :accounts, :campaigns, :contacts, :opportunities ].each do |resource|
     map.resources resource,
-      :has_many => :comments,
+      :has_many => [ :comments, :emails ],
       :collection => {
         :auto_complete => :post,
         :options => :get,
