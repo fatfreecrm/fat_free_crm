@@ -108,6 +108,11 @@ class Task < ActiveRecord::Base
     self.user == user && assignee && assignee != user
   end
 
+  #----------------------------------------------------------------------------
+  def completed?
+    !!self.completed_at
+  end
+
   # Matcher for the :tracked_by? named scope.
   #----------------------------------------------------------------------------
   def tracked_by?(user)

@@ -1,0 +1,18 @@
+partial = params[:assets].singularize
+
+if @attached
+  if partial == "task"
+    view = if @attachment.completed?
+      "completed"
+    elsif @attachment.my?(@current_user)
+      "pending"
+    else
+      "assigned"
+    end
+    page.insert_html :top, :tasks, :partial => "tasks/#{view}", :collection => [ @attachment ], :locals => { :bucket => @attachment.computed_bucket }
+  else
+    page.insert_html :top, params[:assets], :partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]
+  end
+end
+
+page["#{partial}_#{params[:asset_id]}"].visual_effect :highlight, :duration => 1.5

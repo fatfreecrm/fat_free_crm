@@ -176,8 +176,8 @@ class ContactsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js
-      format.xml  { render :xml => @contacts.to_xml }
+      format.js  { render :template => "common/attach" }
+      format.xml { render :xml => @contact.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -194,7 +194,7 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.xml  { render :xml => @contacts.to_xml }
+      format.xml { render :xml => @contact.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound

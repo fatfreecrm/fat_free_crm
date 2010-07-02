@@ -190,8 +190,8 @@ class OpportunitiesController < ApplicationController
     end
 
     respond_to do |format|
-      format.js
-      format.xml  { render :xml => @opportunities.to_xml }
+      format.js  { render :template => "common/attach" }
+      format.xml { render :xml => @opportunity.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -208,7 +208,7 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.xml  { render :xml => @opportunities.to_xml }
+      format.xml { render :xml => @opportunity.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound

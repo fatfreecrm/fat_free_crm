@@ -1,5 +1,0 @@
-partial = params[:assets].singularize
-if @attached
-  page.insert_html :top, params[:assets], :partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]
-end
-page["#{partial}_#{params[:asset_id]}"].visual_effect :highlight, :duration => 1.5
