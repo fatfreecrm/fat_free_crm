@@ -13,7 +13,8 @@ ActionController::Routing::Routes.draw do |map|
       :auto_complete => :post
     },
     :member => {
-      :complete => :put
+      :complete => :put,
+      :discard => :post
     }
 
   map.resources :leads,

@@ -185,6 +185,23 @@ class TasksController < ApplicationController
     respond_to_not_found(:js, :xml)
   end
 
+  # POST /tasks/1/discard
+  # POST /tasks/1/discard.xml                                              AJAX
+  #----------------------------------------------------------------------------
+  def discard
+    @task = Task.my(@current_user).find(params[:id])
+    parent = params[:parent].classify.constantize.find(params[:parent_id])
+    parent.tasks.delete(@task)
+
+    respond_to do |format|
+      format.js
+      format.xml { render :xml => @task.to_xml }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
+  end
+
   # POST /tasks/auto_complete/query                                        AJAX
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
