@@ -160,7 +160,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Autocomplete handler for all core controllers.
+  # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
@@ -174,20 +174,49 @@ class ApplicationController < ActionController::Base
     render :template => "common/auto_complete", :layout => nil
   end
 
-  # Attach handler for all core controllers.
+  # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
   def attach
     model = controller_name.classify.constantize.my(@current_user).find(params[:id])
 
     unless model.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
       @attachment = params[:assets].classify.constantize.find(params[:asset_id])
-      model.send(params[:assets]) << @attachment
+      if model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
+        @attachment.update_attribute(:campaign_id, model.id)
+        @attachment.send("increment_#{params[:assets]}_count")
+        @campaign = @attachment.campaign
+      else
+        model.send(params[:assets]) << @attachment
+      end
       @attached = true
     end
 
     respond_to do |format|
       format.js  { render :template => "common/attach" }
       format.xml { render :xml => model.to_xml }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
+  end
+
+  # Common discard handler for all core controllers.
+  #----------------------------------------------------------------------------
+  def discard
+    model = controller_name.classify.constantize.my(@current_user).find(params[:id])
+    @attachment = params[:attachment].constantize.find(params[:attachment_id])
+
+    if model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
+      @attachment.send("decrement_#{params[:attachment].tableize}_count")
+      @attachment.update_attribute(:campaign_id, nil)
+      @campaign = model.reload
+    else
+      model.send(params[:attachment].tableize).delete(@attachment)
+    end
+
+    respond_to do |format|
+      format.js  { render :template => "common/discard" }
+      format.xml { render :xml => @model.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound

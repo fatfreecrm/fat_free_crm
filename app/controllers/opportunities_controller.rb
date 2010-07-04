@@ -21,6 +21,7 @@ class OpportunitiesController < ApplicationController
   before_filter :load_settings
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :attach, :only => :attach
+  before_filter :discard, :only => :discard
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
@@ -186,19 +187,11 @@ class OpportunitiesController < ApplicationController
   # POST /opportunities/1/discard
   # POST /opportunities/1/discard.xml                                      AJAX
   #----------------------------------------------------------------------------
-  def discard
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
-    parent = params[:parent].classify.constantize.find(params[:parent_id])
-    parent.opportunities.delete(@opportunity)
+  # Handled by before_filter :discard, :only => :discard
 
-    respond_to do |format|
-      format.js
-      format.xml { render :xml => @opportunity.to_xml }
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
-  end
+  # POST /opportunities/auto_complete/query                                AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   # GET /campaigns/search/query                                           AJAX
   #----------------------------------------------------------------------------
@@ -210,10 +203,6 @@ class OpportunitiesController < ApplicationController
       format.xml  { render :xml => @opportunities.to_xml }
     end
   end
-
-  # POST /opportunities/auto_complete/query                                AJAX
-  #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   # GET /opportunities/options                                             AJAX
   #----------------------------------------------------------------------------

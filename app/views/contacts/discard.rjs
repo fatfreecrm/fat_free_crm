@@ -1,1 +1,0 @@
-page[dom_id(@contact)].visual_effect :blind_up, :duration => 0.25

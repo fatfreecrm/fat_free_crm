@@ -18,6 +18,7 @@ class ContactsController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :attach, :only => :attach
+  before_filter :discard, :only => :discard
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
@@ -173,19 +174,11 @@ class ContactsController < ApplicationController
   # POST /contacts/1/discard
   # POST /contacts/1/discard.xml                                           AJAX
   #----------------------------------------------------------------------------
-  def discard
-    @contact = Contact.my(@current_user).find(params[:id])
-    parent = params[:parent].classify.constantize.find(params[:parent_id])
-    parent.contacts.delete(@contact)
+  # Handled by before_filter :discard, :only => :discard
 
-    respond_to do |format|
-      format.js
-      format.xml { render :xml => @contact.to_xml }
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
-  end
+  # POST /contacts/auto_complete/query                                     AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   # GET /contacts/search/query                                             AJAX
   #----------------------------------------------------------------------------
@@ -197,10 +190,6 @@ class ContactsController < ApplicationController
       format.xml  { render :xml => @contacts.to_xml }
     end
   end
-
-  # POST /contacts/auto_complete/query                                     AJAX
-  #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   # GET /contacts/options                                                  AJAX
   #----------------------------------------------------------------------------

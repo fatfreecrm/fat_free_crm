@@ -14,6 +14,7 @@
       = link_to_reject(lead) + " | "
     - else
       = "<font color='silver'>#{t :reject}</font> | "
+    = link_to_discard(lead) + " | " if shown_on_landing_page?
     = link_to_delete(lead) + "&nbsp;"
 
   .indent

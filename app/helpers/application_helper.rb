@@ -125,8 +125,8 @@ module ApplicationHelper
 
     link_to_remote("Discard", #t(:discard),
       :method => :post,
-      :url    => send("discard_#{name}_path", model),
-      :with   => "{ parent: '#{parent.singularize}', parent_id: #{parent_id} }",
+      :url    => url_for(:controller => parent, :action => :discard, :id => parent_id),
+      :with   => "{ attachment: '#{model.class.name}', attachment_id: #{model.id} }",
       :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end

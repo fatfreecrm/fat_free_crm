@@ -12,7 +12,11 @@ if @attached
     page.insert_html :top, :tasks, :partial => "tasks/#{view}", :collection => [ @attachment ], :locals => { :bucket => @attachment.computed_bucket }
   else
     page.insert_html :top, params[:assets], :partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]
+    if called_from_landing_page?("campaigns")
+      page << refresh_sidebar_for(:campaigns, :show, :summary)
+    end
   end
+
 end
 
 page["#{partial}_#{params[:asset_id]}"].visual_effect :highlight, :duration => 1.5

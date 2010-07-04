@@ -205,7 +205,6 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def notify_assignee
-    # logger.p self.new_record? ? "create" : "update"
     if self.assigned_to
       # Notify assignee.
     end
