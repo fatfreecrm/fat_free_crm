@@ -459,12 +459,12 @@ pt-BR:
  
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_commented: commented on
+  action_commented: comentada em
   action_completed: terminado
   action_created: criado
   action_deleted: removido
-  action_email: exchanged emails with # TODO
-  action_reassigned: reassigned
+  action_email: trocar e-mails com
+  action_reassigned: reatribuída
   action_rejected: rejeitado
   action_rescheduled: reagendado
   action_updated: atualziado
@@ -499,9 +499,9 @@ pt-BR:
   delete: Remover
   edit: Editar
   items_total: '{{count}} total.'
-  less: Less... # TODO
+  less: Menos...
   me: mim
-  more: More... # TODO
+  more: Mais...
   n_a: N/A
   name: Nome
   no_match: 'No {{value}} match'
@@ -552,9 +552,8 @@ pt-BR:
 
   # Views -> Admin
   #----------------------------------------------------------------------------
-  # TODO
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: Voltar ao Fat Free CRM
+  crm_admin_page: Administração do Fat Free CRM
 
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
