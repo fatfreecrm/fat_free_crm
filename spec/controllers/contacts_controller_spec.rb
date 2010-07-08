@@ -553,6 +553,19 @@ describe ContactsController do
     end
   end
 
+  # POST /contacts/1/discard
+  # POST /contacts/1/discard.xml                                           AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST discard" do
+    before(:each) do
+      @attachment = Factory(:opportunity)
+      @model = Factory(:contact)
+      @model.opportunities << @attachment
+    end
+
+    it_should_behave_like("discard")
+  end
+
   # POST /contacts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do

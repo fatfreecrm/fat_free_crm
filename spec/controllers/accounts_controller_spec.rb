@@ -421,6 +421,19 @@ describe AccountsController do
     end
   end
 
+  # POST /accounts/1/discard
+  # POST /accounts/1/discard.xml                                           AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST discard" do
+    before(:each) do
+      @attachment = Factory(:contact)
+      @model = Factory(:account)
+      @model.contacts << @attachment
+    end
+
+    it_should_behave_like("discard")
+  end
+
   # POST /accounts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
