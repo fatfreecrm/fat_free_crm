@@ -27,8 +27,9 @@ module SimpleColumnSearch
     named_scope options[:name], lambda { |terms|
       terms = options[:escape].call(terms) if options[:escape]    
       conditions = terms.split.inject(nil) do |acc, term|
-        pattern = 
-          case(options[:match])
+        patterns = columns.inject([]) do |arr, column|
+          match = (options[:match].is_a?(Proc) ? options[:match].call(column) : options[:match])
+          arr << case match
           when :exact
             term
           when :start
@@ -40,7 +41,8 @@ module SimpleColumnSearch
           else
             raise "Unexpected match type: #{options[:match]}"
           end
-        merge_conditions  acc, [columns.collect { |column| "#{table_name}.#{column} #{like} :pattern" }.join(' OR '), { :pattern => pattern }]
+        end
+        merge_conditions acc, [ columns.collect { |column| "#{table_name}.#{column} #{like} ?" }.join(' OR '), *patterns ]
       end
     
       { :conditions => conditions }
