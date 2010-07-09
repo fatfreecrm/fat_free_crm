@@ -486,13 +486,31 @@ describe CampaignsController do
   # POST /campaigns/1/discard.xml                                          AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST discard" do
-    before(:each) do
-      @attachment = Factory(:lead)
-      @model = Factory(:campaign)
-      @model.leads << @attachment
+    describe "tasks" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:task, :asset => @model)
+      end
+      it_should_behave_like("discard")
     end
 
-    it_should_behave_like("discard")
+    describe "leads" do
+      before do
+        @attachment = Factory(:lead)
+        @model = Factory(:campaign)
+        @model.leads << @attachment
+      end
+      it_should_behave_like("discard")
+    end
+
+    describe "opportunities" do
+      before do
+        @attachment = Factory(:opportunity)
+        @model = Factory(:campaign)
+        @model.opportunities << @attachment
+      end
+      it_should_behave_like("discard")
+    end
   end
 
   # POST /campaigns/auto_complete/query                                    AJAX
