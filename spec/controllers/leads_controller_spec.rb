@@ -895,6 +895,19 @@ describe LeadsController do
     end
   end
 
+  # PUT /leads/1/attach
+  # PUT /leads/1/attach.xml                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:lead)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
   # POST /leads/1/discard
   # POST /leads/1/discard.xml                                              AJAX
   #----------------------------------------------------------------------------

@@ -482,6 +482,35 @@ describe CampaignsController do
     end
   end
 
+  # PUT /campaigns/1/attach
+  # PUT /campaigns/1/attach.xml                                            AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "leads" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:lead, :campaign => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "opportunities" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:opportunity, :campaign => nil)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
   # POST /campaigns/1/discard
   # POST /campaigns/1/discard.xml                                          AJAX
   #----------------------------------------------------------------------------

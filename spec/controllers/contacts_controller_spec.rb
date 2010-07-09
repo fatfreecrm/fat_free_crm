@@ -553,6 +553,27 @@ describe ContactsController do
     end
   end
 
+  # PUT /contacts/1/attach
+  # PUT /contacts/1/attach.xml                                             AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:contact)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "opportunities" do
+      before do
+        @model = Factory(:contact)
+        @attachment = Factory(:opportunity)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
   # POST /contacts/1/discard
   # POST /contacts/1/discard.xml                                           AJAX
   #----------------------------------------------------------------------------

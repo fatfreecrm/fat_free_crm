@@ -711,6 +711,27 @@ describe OpportunitiesController do
     end
   end
 
+  # PUT /opportunities/1/attach
+  # PUT /opportunities/1/attach.xml                                        AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:opportunity)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "contacts" do
+      before do
+        @model = Factory(:opportunity)
+        @attachment = Factory(:contact)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
   # POST /opportunities/1/discard
   # POST /opportunities/1/discard.xml                                      AJAX
   #----------------------------------------------------------------------------
