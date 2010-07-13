@@ -70,6 +70,17 @@ class Campaign < ActiveRecord::Base
   def self.per_page ; 20     ; end
   def self.outline  ; "long" ; end
 
+  # Discard given attachment from the campaign.
+  #----------------------------------------------------------------------------
+  def discard!(attachment)
+    if attachment.is_a?(Task)
+      attachment.update_attribute(:asset, nil)
+    else # Leads, Opportunities
+      attachment.send("decrement_#{attachment.class.name.tableize}_count")
+      attachment.update_attribute(:campaign, nil)
+    end
+  end
+
   private
   # Make sure end date > start date.
   #----------------------------------------------------------------------------

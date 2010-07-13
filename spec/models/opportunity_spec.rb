@@ -93,4 +93,29 @@ describe Opportunity do
     end
   end
 
+  describe "Discard" do
+    before do
+      @opportunity = Factory(:opportunity)
+    end
+
+    it "should discard a task" do
+      @task = Factory(:task, :asset => @opportunity, :user => @current_user)
+      @opportunity.tasks.count.should == 1
+
+      @opportunity.discard!(@task)
+      @opportunity.reload.tasks.should == []
+      @opportunity.tasks.count.should == 0
+    end
+
+    it "should discard an contact" do
+      @contact = Factory(:contact)
+      @opportunity.contacts << @contact
+      @opportunity.contacts.count.should == 1
+
+      @opportunity.discard!(@contact)
+      @opportunity.contacts.should == []
+      @opportunity.contacts.count.should == 0
+    end
+  end
+
 end

@@ -101,6 +101,15 @@ class Opportunity < ActiveRecord::Base
     self.update_with_permissions(params[:opportunity], params[:users])
   end
 
+  # Discard given attachment from the opportunity.
+  #----------------------------------------------------------------------------
+  def discard!(attachment)
+    if attachment.is_a?(Task)
+      attachment.update_attribute(:asset, nil)
+    else # Contacts
+      self.send(attachment.class.name.tableize).delete(attachment)
+    end
+  end
 
   # Class methods.
   #----------------------------------------------------------------------------

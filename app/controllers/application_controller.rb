@@ -205,15 +205,8 @@ class ApplicationController < ActionController::Base
   def discard
     model = controller_name.classify.constantize.my(@current_user).find(params[:id])
     @attachment = params[:attachment].constantize.find(params[:attachment_id])
-    if model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
-      @attachment.send("decrement_#{params[:attachment].tableize}_count")
-      @attachment.update_attribute(:campaign_id, nil)
-      @campaign = model.reload
-    elsif @attachment.is_a?(Task)
-      @attachment.update_attributes(:asset_id => nil, :asset_type => nil)
-    else
-      model.send(params[:attachment].tableize).delete(@attachment)
-    end
+    model.discard!(@attachment)
+    @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
       format.js  { render :template => "common/discard" }

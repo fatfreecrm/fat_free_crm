@@ -77,6 +77,16 @@ class Account < ActiveRecord::Base
     location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ").strip if location
   end
 
+  # Discard given attachment from the account.
+  #----------------------------------------------------------------------------
+  def discard!(attachment)
+    if attachment.is_a?(Task)
+      attachment.update_attribute(:asset, nil)
+    else # Contacts, Opportunities
+      self.send(attachment.class.name.tableize).delete(attachment)
+    end
+  end
+
   # Class methods.
   #----------------------------------------------------------------------------
   def self.create_or_select_for(model, params, users)

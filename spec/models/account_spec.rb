@@ -30,4 +30,38 @@ describe Account do
     Account.create!(:name => "Test Account", :user => Factory(:user))
   end
 
+  describe "Discard" do
+    before do
+      @account = Factory(:account)
+    end
+
+    it "should discard a task" do
+      @task = Factory(:task, :asset => @account, :user => @current_user)
+      @account.tasks.count.should == 1
+
+      @account.discard!(@task)
+      @account.reload.tasks.should == []
+      @account.tasks.count.should == 0
+    end
+
+    it "should discard a contact" do
+      @contact = Factory(:contact)
+      @account.contacts << @contact
+      @account.contacts.count.should == 1
+
+      @account.discard!(@contact)
+      @account.contacts.should == []
+      @account.contacts.count.should == 0
+    end
+
+    it "should discard an opportunity" do
+      @opportunity = Factory(:opportunity)
+      @account.opportunities << @opportunity
+      @account.opportunities.count.should == 1
+
+      @account.discard!(@opportunity)
+      @account.opportunities.should == []
+      @account.opportunities.count.should == 0
+    end
+  end
 end

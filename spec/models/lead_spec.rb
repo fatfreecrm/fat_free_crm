@@ -42,4 +42,18 @@ describe Lead do
     Lead.create!(:first_name => "Billy", :last_name => "Bones")
   end
 
+  describe "Discard" do
+    before do
+      @lead = Factory(:lead)
+    end
+
+    it "should discard a task" do
+      @task = Factory(:task, :asset => @lead, :user => @current_user)
+      @lead.tasks.count.should == 1
+
+      @lead.discard!(@task)
+      @lead.reload.tasks.should == []
+      @lead.tasks.count.should == 0
+    end
+  end
 end

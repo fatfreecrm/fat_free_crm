@@ -35,4 +35,37 @@ describe Campaign do
   it "should create a new instance given valid attributes" do
     Campaign.create!(:name => "Campaign", :user => Factory(:user))
   end
+
+  describe "Detach" do
+    before do
+      @campaign = Factory(:campaign, :leads_count => 42, :opportunities_count => 42)
+    end
+
+    it "should discard a task" do
+      @task = Factory(:task, :asset => @campaign, :user => @current_user)
+      @campaign.tasks.count.should == 1
+
+      @campaign.discard!(@task)
+      @campaign.reload.tasks.should == []
+      @campaign.tasks.count.should == 0
+    end
+
+    it "should discard a lead" do
+      @lead = Factory(:lead, :campaign => @campaign)
+      @campaign.reload.leads_count.should == 43
+
+      @campaign.discard!(@lead)
+      @campaign.leads.should == []
+      @campaign.reload.leads_count.should == 42
+    end
+
+    it "should discard an opportunity" do
+      @opportunity = Factory(:opportunity, :campaign => @campaign)
+      @campaign.reload.opportunities_count.should == 43
+    
+      @campaign.discard!(@opportunity)
+      @campaign.opportunities.should == []
+      @campaign.reload.opportunities_count.should == 42
+    end
+  end
 end

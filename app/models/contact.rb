@@ -115,6 +115,16 @@ class Contact < ActiveRecord::Base
     self.update_with_permissions(params[:contact], params[:users])
   end
 
+  # Discard given attachment from the contact.
+  #----------------------------------------------------------------------------
+  def discard!(attachment)
+    if attachment.is_a?(Task)
+      attachment.update_attribute(:asset, nil)
+    else # Opportunities
+      self.send(attachment.class.name.tableize).delete(attachment)
+    end
+  end
+
   # Class methods.
   #----------------------------------------------------------------------------
   def self.create_for(model, account, opportunity, params)

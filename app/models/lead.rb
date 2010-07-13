@@ -131,6 +131,12 @@ class Lead < ActiveRecord::Base
     update_attribute(:status, "rejected")
   end
 
+  # Discard a task from the lead.
+  #----------------------------------------------------------------------------
+  def discard!(task)
+    task.update_attribute(:asset, nil)
+  end
+
   #----------------------------------------------------------------------------
   def full_name(format = nil)
     if format.nil? || format == "before"
