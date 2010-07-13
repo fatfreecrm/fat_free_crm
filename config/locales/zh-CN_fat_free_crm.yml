@@ -493,6 +493,7 @@ zh-CN:
   create_new: 创建新
   select_existing: 选择已有
   delete: 删除
+  discard: Discard # TODO
   edit: 编辑
   items_total: '{{count}} 总计'
   me: 自己

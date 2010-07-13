@@ -222,6 +222,7 @@ de:
   days_late: "Verspätet um"
   days_left: "Tage verfügbar"
   delete: "Löschen"
+  discard: Discard # TODO
   delete_link: "Löschen?"
   department: "Abteilung"
   department_small: "{{value}} Abteilung"

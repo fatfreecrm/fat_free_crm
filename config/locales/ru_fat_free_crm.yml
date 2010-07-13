@@ -500,6 +500,7 @@ ru:
   create_new: добавить новый
   select_existing: выбрать существующий
   delete: Удалить
+  discard: Сбросить
   edit: Изменить
   items_total: Всего {{count}}.
   less: Less... # TODO

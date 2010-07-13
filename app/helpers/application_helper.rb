@@ -123,7 +123,7 @@ module ApplicationHelper
     current_url = (request.xhr? ? request.referer : request.request_uri)
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
-    link_to_remote("Discard", #t(:discard),
+    link_to_remote(t(:discard),
       :method => :post,
       :url    => url_for(:controller => parent, :action => :discard, :id => parent_id),
       :with   => "{ attachment: '#{model.class.name}', attachment_id: #{model.id} }",

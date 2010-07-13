@@ -494,6 +494,7 @@ en-US:
   create_new: create new
   select_existing: select existing
   delete: Delete
+  discard: Discard
   edit: Edit
   items_total: '{{count}} total.'
   less: Less...
