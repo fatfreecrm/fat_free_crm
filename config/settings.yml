@@ -126,7 +126,16 @@ task_calendar_with_time: false
   { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
 
-# Campaign Status.
+# Campaign Status. To add custom status use string value, for example:
+#
+# campaign_status:
+#   - :planned
+#   - :started
+#   - :completed
+#   - :on_hold
+#   - :called_off
+#   - "Custom"
+#
 #------------------------------------------------------------------------------
 campaign_status:
   - :planned
@@ -178,7 +187,6 @@ opportunity_stage:
   - :final_review
   - :won
   - :lost
-  - "Custom"
 
 opportunity_stage_color:
   :prospecting  : lavender
