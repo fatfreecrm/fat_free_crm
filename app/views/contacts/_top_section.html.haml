@@ -21,6 +21,7 @@
     - fields_for(@account) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :assigned_to
+      = a.hidden_field :access, :value => Setting.default_access
       %tr
         %td(valign="top")
           .label
