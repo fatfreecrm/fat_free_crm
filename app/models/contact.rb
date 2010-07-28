@@ -71,7 +71,7 @@ class Contact < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   acts_as_paranoid
-  sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "last_name ASC"
 
   validates_presence_of :first_name, :message => :missing_first_name
   validates_presence_of :last_name, :message => :missing_last_name
