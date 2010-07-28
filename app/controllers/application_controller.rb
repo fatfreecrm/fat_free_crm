@@ -178,18 +178,20 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def attach
     model = controller_name.classify.constantize.my(@current_user).find(params[:id])
-
-    unless model.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
-      @attachment = params[:assets].classify.constantize.find(params[:asset_id])
-      if model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
-        @attachment.update_attribute(:campaign_id, model.id)
-        @attachment.send("increment_#{params[:assets]}_count")
-        @campaign = @attachment.campaign
-      else
-        model.send(params[:assets]) << @attachment
-      end
-      @attached = true
-    end
+    @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+    @attached = model.attach!(@attachment)
+    
+    # unless model.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
+    #   @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+    #   if model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
+    #     @attachment.update_attribute(:campaign_id, model.id)
+    #     @attachment.send("increment_#{params[:assets]}_count")
+    #     @campaign = @attachment.campaign
+    #   else
+    #     model.send(params[:assets]) << @attachment
+    #   end
+    #   @attached = true
+    # end
 
     respond_to do |format|
       format.js  { render :template => "common/attach" }

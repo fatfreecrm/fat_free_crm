@@ -77,6 +77,13 @@ class Account < ActiveRecord::Base
     location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ").strip if location
   end
 
+  # Attach given attachment to the account.
+  #----------------------------------------------------------------------------
+  def attach!(attachment)
+    return false if self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+    true
+  end
+
   # Discard given attachment from the account.
   #----------------------------------------------------------------------------
   def discard!(attachment)

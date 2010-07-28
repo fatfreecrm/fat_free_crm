@@ -30,6 +30,24 @@ describe Account do
     Account.create!(:name => "Test Account", :user => Factory(:user))
   end
 
+  describe "Attach" do
+    before do
+      @account = Factory(:account)
+    end
+
+    it "should return false when attaching existing asset" do
+      @task = Factory(:task, :asset => @account, :user => @current_user)
+      @contact = Factory(:contact)
+      @account.contacts << @contact
+      @opportunity = Factory(:opportunity)
+      @account.opportunities << @opportunity
+
+      @account.attach!(@task).should == false
+      @account.attach!(@contact).should == false
+      @account.attach!(@opportunity).should == false
+    end
+  end
+
   describe "Discard" do
     before do
       @account = Factory(:account)
