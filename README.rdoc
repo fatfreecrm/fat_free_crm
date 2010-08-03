@@ -39,6 +39,10 @@ of the database create the actual database configuration file, for example:
 
    $ cp config/database.mysql.yml config/database.yml
 
+Install required gems for test environments:
+
+   $ rake gems:install RAILS_ENV=test
+
 Edit config/database.yml and specify database names and authentication
 details. Once you have database configuration file ready run rake to create
 the database:
@@ -95,6 +99,11 @@ the concepts:
    http://github.com/michaeldv/crm_sample_tabs/tree/master
    http://github.com/michaeldv/crm_web_to_lead/tree/master
    http://github.com/michaeldv/crm_tags/tree/master
+
+
+=== Links
+
+* How to install fat_free_crm on Apache2/Passenger on Ubuntu 8.04 LTS: http://gist.github.com/506622
 
 
 === License
