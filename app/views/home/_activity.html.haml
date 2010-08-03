@@ -1,6 +1,6 @@
 %li[activity]
   .tools
-    %small= l(activity.created_at + Time.now.utc_offset, :format => :mmddhhss).capitalize
+    %small= l(activity.created_at + Time.now.utc_offset, :format => :short)
   %tt
     = link_to avatar_for(activity.user, :size => "16x16"), user_path(activity.user)
 
