@@ -19,8 +19,8 @@ de:
   accounts: Firmen
   accounts_options: "Firmen-Optionen"
   accounts_small: Firmen
-  action_commented: "kommentiert am"
-  action_completed: "vollständig"
+  action_commented: "kommentiert"
+  action_completed: "erledigt"
   action_created: "erstellt"
   action_deleted: "gelöscht"
   action_email: "exchanged emails with" # TODO
@@ -89,6 +89,7 @@ de:
             username: 
               missing_username: "^Bitte geben Sie einen Benutzernamen an."
               username_taken: "^Dieser Benutzername ist schon vergeben."
+  activity_text: "{{user}} hat {{type}} {{subject}} {{action}}"
   activity_options: "Zeige {{models}} Aktivitäten, die {{user}} in der/den letzten {{period}} unternommen hat."
   actual: "Aktuell"
   actual_performance: "Aktuelle Leistung"
