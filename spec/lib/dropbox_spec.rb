@@ -94,7 +94,7 @@ describe "IMAP Dropbox" do
   end
 
   #------------------------------------------------------------------------------     
-  describe "Arciving a message" do
+  describe "Archiving a message" do
     before(:each) do
       mock_connect
       @uid = mock
