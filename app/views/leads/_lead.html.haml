@@ -25,7 +25,9 @@
         = lead.company if lead.company?
         = lead.title if lead.title?
       -#= link_to(h(lead.campaign.name), lead.campaign) if lead.campaign_id
-      = "&ndash; #{t :referred_by_small} #{lead.referred_by}" if lead.referred_by?
+      - if lead.referred_by?
+        &ndash;
+        = "#{t :referred_by_small} #{lead.referred_by}"
     - unless @current_user.preference[:leads_outline] == "brief"
       %dt
         = stars_for(lead) + " | "
