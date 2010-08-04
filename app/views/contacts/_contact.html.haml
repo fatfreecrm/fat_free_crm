@@ -5,7 +5,7 @@
 
   .tools{ invisible, :id => dom_id(contact, :tools) }
     = link_to_edit(contact) + " | "
-    = link_to_delete(contact) + "&nbsp;"
+    = link_to_delete(contact)
 
   .indentslim
     = link_to(h(contact.full_name(@current_user.preference[:contacts_naming])), contact)

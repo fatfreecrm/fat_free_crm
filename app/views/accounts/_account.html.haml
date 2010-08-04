@@ -7,7 +7,7 @@
 
   .tools{ invisible, :id => dom_id(account, :tools) }
     = link_to_edit(account) + " | "
-    = link_to_delete(account) + "&nbsp;"
+    = link_to_delete(account)
 
   .indent
     = link_to(h(account.name), account) << " &ndash; "
