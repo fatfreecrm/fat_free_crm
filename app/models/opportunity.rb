@@ -39,7 +39,6 @@
 #
 class Opportunity < ActiveRecord::Base
   belongs_to  :user
-  belongs_to  :account
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_one     :account_opportunity, :dependent => :destroy
@@ -53,7 +52,7 @@ class Opportunity < ActiveRecord::Base
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ?", user.id ] } }
   named_scope :assigned_to, lambda { |user| { :conditions => [ "assigned_to = ?" ,user.id ] } }
-  named_scope :not_lost, { :conditions => 'opportunities.stage != "lost"'}
+  named_scope :not_lost, { :conditions => "opportunities.stage <> 'lost'"}
 
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   uses_user_permissions

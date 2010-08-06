@@ -20,7 +20,7 @@ en-US:
   time:
     formats:
       default: "%a, %d %b %Y %H:%M:%S %z"
-      short: "%d %b %H:%M"
+      short: "%b %d at %H:%I%p"
       long: "%B %d, %Y %H:%M"
     am: "am"
     pm: "pm"

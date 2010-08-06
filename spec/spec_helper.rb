@@ -40,6 +40,14 @@ Spec::Runner.configure do |config|
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
 
   config.include(SharedControllerSpecs, :type => :controller)
+
+  config.after(:each, :type => :view) do
+    # detect html-quoted entities in all rendered responses
+    if response && response.body
+      response.body.should_not match /&amp;\S{1,6};/
+    end
+  end
+
   #
   # == Notes
   #

@@ -7,7 +7,7 @@
   .tools{ invisible, :id => dom_id(opportunity, :tools) }
     = link_to_edit(opportunity) + " | "
     = link_to_discard(opportunity) + " | " if shown_on_landing_page?
-    = link_to_delete(opportunity) + "&nbsp;"
+    = link_to_delete(opportunity)
 
   .indent
     = link_to(h(opportunity.name), opportunity)

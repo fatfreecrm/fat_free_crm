@@ -9,7 +9,7 @@
   = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
   .tools#comment_new_tools{ invisible }
     = link_to_function("Expand All", "crm.flip_notes_and_emails('Expanded', 'More...', 'Less...')") << " | "
-    = link_to_function("Collapse All", "crm.flip_notes_and_emails('Collapsed', 'More...', 'Less...')") << "&nbsp;"
+    = link_to_function("Collapse All", "crm.flip_notes_and_emails('Collapsed', 'More...', 'Less...')")
 
   #post{ hidden_if(session["#{class_name}_new_comment"].nil?) }
     - remote_form_for(@comment) do |f|
