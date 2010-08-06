@@ -9,8 +9,8 @@ Here are the steps to get Fat Free CRM up and running on your system.
 
 === System Requirements
 
-* Ruby v1.8.6, v1.8.7, or v1.9.1
-* Ruby on Rails v2.3.5
+* Ruby v1.8.7 or v1.9.2
+* Ruby on Rails v2.3.8
 * MySQL v4.1.1 or later (v5+ is recommended) or SQLite v3.4 or later
 * ImageMagick (optional, only if you would like to use avatars)
 
@@ -38,10 +38,6 @@ for MySQL and +config+/+database+.+sqlite+.+yml+ for SQLite. Based on your choic
 of the database create the actual database configuration file, for example:
 
    $ cp config/database.mysql.yml config/database.yml
-
-Install required gems for test environments:
-
-   $ rake gems:install RAILS_ENV=test
 
 Edit config/database.yml and specify database names and authentication
 details. Once you have database configuration file ready run rake to create
@@ -99,11 +95,6 @@ the concepts:
    http://github.com/michaeldv/crm_sample_tabs/tree/master
    http://github.com/michaeldv/crm_web_to_lead/tree/master
    http://github.com/michaeldv/crm_tags/tree/master
-
-
-=== Links
-
-* How to install fat_free_crm on Apache2/Passenger on Ubuntu 8.04 LTS: http://gist.github.com/506622
 
 
 === License
