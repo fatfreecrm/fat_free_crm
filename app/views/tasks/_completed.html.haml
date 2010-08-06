@@ -5,7 +5,7 @@
     .strip.white #{t :other}
 
   .tools{ invisible, :id => dom_id(completed, :tools) }
-    = link_to_task_delete(completed, bucket) + "&nbsp;" if @current_user == completed.user
+    = link_to_task_delete(completed, bucket) if @current_user == completed.user
 
   .indent
     %strike= auto_link h(completed.name)

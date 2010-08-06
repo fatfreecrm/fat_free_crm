@@ -167,7 +167,7 @@ module FatFreeCRM
 
     #------------------------------------------------------------------------------
     def sent_from_known_user?(email)
-      email_address = email.from.first.downcase
+      email_address = email.from.first
       known = !find_sender(email_address).nil?
       log("sent by unknown user #{email_address}, discarding") unless known
       known
@@ -175,7 +175,7 @@ module FatFreeCRM
 
     #------------------------------------------------------------------------------
     def find_sender(email_address)
-      @sender = User.first(:conditions => [ "email = ? AND suspended_at IS NULL", email_address ])
+      @sender = User.first(:conditions => [ "lower(email) = ? AND suspended_at IS NULL", email_address.downcase ])
     end
 
     # Checks the email to detect keyword on the first line.
