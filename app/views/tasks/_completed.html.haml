@@ -6,7 +6,7 @@
 
   .tools{ invisible, :id => dom_id(completed, :tools) }
     - if shown_on_landing_page?
-      = link_to_discard(completed) + (@current_user == completed.user ? " | " : "&nbsp;")
+      = link_to_discard(completed) + (@current_user == completed.user ? ' | ' : '')
     = link_to_task_delete(completed, bucket) if @current_user == completed.user
 
   .indent

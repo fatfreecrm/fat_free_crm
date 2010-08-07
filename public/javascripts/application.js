@@ -413,7 +413,8 @@ var crm = {
           if (related) {  // Attach to related asset.
             new Ajax.Request(this.base_url + "/" + related + "/attach", {
               method     : "put",
-              parameters : { assets : controller, asset_id : escape(el.id) }
+              parameters : { assets : controller, asset_id : escape(el.id) },
+              onComplete : function() { $("jumpbox").hide(); }
             });
           } else {        // Quick Find: redirect to asset#show.
             window.location.href = this.base_url + "/" + controller + "/" + escape(el.id);
