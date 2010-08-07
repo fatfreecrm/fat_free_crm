@@ -100,6 +100,14 @@ class Opportunity < ActiveRecord::Base
     self.update_with_permissions(params[:opportunity], params[:users])
   end
 
+  # Attach given attachment to the opportunity if it hasn't been attached already.
+  #----------------------------------------------------------------------------
+  def attach!(attachment)
+    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      self.send(attachment.class.name.tableize) << attachment
+    end
+  end
+
   # Discard given attachment from the opportunity.
   #----------------------------------------------------------------------------
   def discard!(attachment)

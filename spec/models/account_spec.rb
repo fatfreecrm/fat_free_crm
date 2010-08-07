@@ -35,16 +35,26 @@ describe Account do
       @account = Factory(:account)
     end
 
-    it "should return false when attaching existing asset" do
+    it "should return nil when attaching existing asset" do
       @task = Factory(:task, :asset => @account, :user => @current_user)
       @contact = Factory(:contact)
       @account.contacts << @contact
       @opportunity = Factory(:opportunity)
       @account.opportunities << @opportunity
 
-      @account.attach!(@task).should == false
-      @account.attach!(@contact).should == false
-      @account.attach!(@opportunity).should == false
+      @account.attach!(@task).should == nil
+      @account.attach!(@contact).should == nil
+      @account.attach!(@opportunity).should == nil
+    end
+
+    it "should return non-empty list of attachments when attaching new asset" do
+      @task = Factory(:task, :user => @current_user)
+      @contact = Factory(:contact)
+      @opportunity = Factory(:opportunity)
+
+      @account.attach!(@task).should == [ @task ]
+      @account.attach!(@contact).should == [ @contact ]
+      @account.attach!(@opportunity).should == [ @opportunity ]
     end
   end
 

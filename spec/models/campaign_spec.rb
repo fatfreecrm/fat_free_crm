@@ -36,6 +36,47 @@ describe Campaign do
     Campaign.create!(:name => "Campaign", :user => Factory(:user))
   end
 
+  describe "Attach" do
+    before do
+      @campaign = Factory(:campaign)
+    end
+
+    it "should return nil when attaching existing asset" do
+      @task = Factory(:task, :asset => @campaign, :user => @current_user)
+      @lead = Factory(:lead, :campaign => @campaign)
+      @opportunity = Factory(:opportunity, :campaign => @campaign)
+
+      @campaign.attach!(@task).should == nil
+      @campaign.attach!(@lead).should == nil
+      @campaign.attach!(@opportunity).should == nil
+    end
+
+    it "should return non-empty list of attachments when attaching new asset" do
+      @task = Factory(:task, :user => @current_user)
+      @lead = Factory(:lead)
+      @opportunity = Factory(:opportunity)
+
+      @campaign.attach!(@task).should == [ @task ]
+      @campaign.attach!(@lead).should == [ @lead ]
+      @campaign.attach!(@opportunity).should == [ @opportunity ]
+    end
+
+    it "should increment leads count when attaching a new lead" do
+      @leads_count = @campaign.leads_count
+      @lead = Factory(:lead)
+
+      @campaign.attach!(@lead)
+      @campaign.reload.leads_count.should == @leads_count + 1
+    end
+
+    it "should increment opportunities count when attaching new opportunity" do
+      @opportunities_count = @campaign.opportunities_count
+      @opportunity = Factory(:opportunity)
+      @campaign.attach!(@opportunity)
+      @campaign.reload.opportunities_count.should == @opportunities_count + 1
+    end
+  end
+
   describe "Detach" do
     before do
       @campaign = Factory(:campaign, :leads_count => 42, :opportunities_count => 42)

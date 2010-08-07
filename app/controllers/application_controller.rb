@@ -180,22 +180,11 @@ class ApplicationController < ActionController::Base
     model = controller_name.classify.constantize.my(@current_user).find(params[:id])
     @attachment = params[:assets].classify.constantize.find(params[:asset_id])
     @attached = model.attach!(@attachment)
-    
-    # unless model.send("#{params[:assets].singularize}_ids").include?(params[:asset_id].to_i)
-    #   @attachment = params[:assets].classify.constantize.find(params[:asset_id])
-    #   if model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
-    #     @attachment.update_attribute(:campaign_id, model.id)
-    #     @attachment.send("increment_#{params[:assets]}_count")
-    #     @campaign = @attachment.campaign
-    #   else
-    #     model.send(params[:assets]) << @attachment
-    #   end
-    #   @attached = true
-    # end
+    @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
       format.js  { render :template => "common/attach" }
-      format.xml { render :xml => model.to_xml }
+      format.xml { render :xml => model.reload.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -212,7 +201,7 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.js  { render :template => "common/discard" }
-      format.xml { render :xml => @model.to_xml }
+      format.xml { render :xml => model.reload.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound

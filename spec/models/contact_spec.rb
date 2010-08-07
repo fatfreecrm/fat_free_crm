@@ -85,6 +85,29 @@ describe Contact do
     end
   end
 
+  describe "Attach" do
+    before do
+      @contact = Factory(:contact)
+    end
+
+    it "should return nil when attaching existing asset" do
+      @task = Factory(:task, :asset => @contact, :user => @current_user)
+      @opportunity = Factory(:opportunity)
+      @contact.opportunities << @opportunity
+
+      @contact.attach!(@task).should == nil
+      @contact.attach!(@opportunity).should == nil
+    end
+
+    it "should return non-empty list of attachments when attaching new asset" do
+      @task = Factory(:task, :user => @current_user)
+      @opportunity = Factory(:opportunity)
+
+      @contact.attach!(@task).should == [ @task ]
+      @contact.attach!(@opportunity).should == [ @opportunity ]
+    end
+  end
+
   describe "Discard" do
     before do
       @contact = Factory(:contact)

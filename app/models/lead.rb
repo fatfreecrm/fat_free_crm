@@ -131,6 +131,14 @@ class Lead < ActiveRecord::Base
     update_attribute(:status, "rejected")
   end
 
+  # Attach a task to the lead if it hasn't been attached already.
+  #----------------------------------------------------------------------------
+  def attach!(task)
+    unless self.task_ids.include?(task.id)
+      self.tasks << task
+    end
+  end
+
   # Discard a task from the lead.
   #----------------------------------------------------------------------------
   def discard!(task)

@@ -115,6 +115,14 @@ class Contact < ActiveRecord::Base
     self.update_with_permissions(params[:contact], params[:users])
   end
 
+  # Attach given attachment to the contact if it hasn't been attached already.
+  #----------------------------------------------------------------------------
+  def attach!(attachment)
+    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      self.send(attachment.class.name.tableize) << attachment
+    end
+  end
+
   # Discard given attachment from the contact.
   #----------------------------------------------------------------------------
   def discard!(attachment)

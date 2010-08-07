@@ -32,7 +32,7 @@ module SharedControllerSpecs
       xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
       @model.send(@attachment.class.name.tableize).should include(@attachment)
       assigns[:attachment].should == @attachment
-      assigns[:attached].should == true
+      assigns[:attached].should == [ @attachment ]
       if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
         assigns[:campaign].should == @attachment.reload.campaign
       end
