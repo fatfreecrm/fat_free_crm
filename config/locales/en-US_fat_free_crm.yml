@@ -323,6 +323,7 @@ en-US:
   total_campaigns: Total Campaigns
   was_supposed_to_finish: was supposed to finish on %{value}
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
+  was_supposed_to_start_in: was supposed to start in %{starts_in}} on %{start_date}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------

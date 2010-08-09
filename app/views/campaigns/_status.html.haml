@@ -2,10 +2,15 @@
   - case campaign.status.to_sym
     - when :started
       - if campaign.starts_on
-        = t(:started_ago, time_ago_in_words(campaign.starts_on))
+        - if campaign.starts_on > Date.today
+          %span.warn= t(:was_supposed_to_start_in, :starts_in => time_ago_in_words(campaign.starts_on), :start_date => campaign.starts_on.strftime('%b %e, %Y'))
+        - else
+          = t(:started_ago, time_ago_in_words(campaign.starts_on))
+          = ' (' + campaign.starts_on.strftime('%b %e, %Y') + ')'
         - if campaign.ends_on
           - if campaign.ends_on > Date.today
             %span>= ", " + t(:finishes_in, distance_of_time_in_words(Date.today, campaign.ends_on))
+            = ' (' + campaign.ends_on.strftime('%b %e, %Y') + ')'
           - else
             %span.warn= "(" + t(:was_supposed_to_finish, campaign.starts_on.strftime('%b %e, %Y')) + ")"
       - else
