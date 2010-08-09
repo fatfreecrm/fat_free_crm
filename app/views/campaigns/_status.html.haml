@@ -10,9 +10,9 @@
         - if campaign.ends_on
           - if campaign.ends_on > Date.today
             %span>= ", " + t(:finishes_in, distance_of_time_in_words(Date.today, campaign.ends_on))
-            = ' (' + campaign.ends_on.strftime('%b %e, %Y') + ')'
+            = ' (' << campaign.ends_on.strftime('%b %e, %Y') << ')'
           - else
-            %span.warn= "(" + t(:was_supposed_to_finish, campaign.starts_on.strftime('%b %e, %Y')) + ")"
+            %span.warn= "(" << t(:was_supposed_to_finish, campaign.starts_on.strftime('%b %e, %Y')) << ")"
       - else
         %span.warn> #{t :no_start_date}
     - when :planned

@@ -39,6 +39,7 @@
             = assigned.due_at.localtime.strftime('%b %e')
           - elsif assigned.due_at > Date.today
             = t(:task_due_in, distance_of_time_in_words(Time.now, assigned.due_at.localtime.end_of_day))
+            = ' (' << assigned.due_at.localtime.strftime('%b %e') << ')'
           - else
             %span.cool= t(:task_due_today)
 

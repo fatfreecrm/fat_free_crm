@@ -439,7 +439,7 @@ en-US:
   task_assigned_to: and assigned to %{value}
   task_completed: completed
   task_completed_ago: completed %{value} ago
-  task_completed_by: completed %{time_ago} ago by %{user}
+  task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
   task_created: The task has been created
   task_due_in: due in %{value}
   task_due_later: due sometime soon
