@@ -179,7 +179,7 @@ en-US:
   msg_password_updated: Password was successfully updated.
   msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
   msg_require_admin: You must be Administrator to access this page.
-  msg_successful_signup: Successfull signup, welcome to Fat Free CRM!
+  msg_successful_signup: Successful signup, welcome to Fat Free CRM!
   msg_welcome: Welcome to Fat Free CRM!
 
   # Options.
