@@ -29,6 +29,10 @@ Rails::Initializer.run do |config|
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
+  # Fat Free CRM plugins that access any models must be loaded
+  # after the 'simple_column_search' plugin
+  config.plugins = [ :simple_column_search, :all]
+
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
@@ -57,3 +61,4 @@ Rails::Initializer.run do |config|
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.sendmail_settings = { :location  => "/usr/sbin/sendmail", :arguments => "-i -t" }
 end
+
