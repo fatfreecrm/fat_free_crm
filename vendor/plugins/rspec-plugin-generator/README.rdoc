@@ -1,0 +1,6 @@
+For usage docs:
+
+  ./script/generate rspec_plugin
+
+Based off the Rails plugin generator.
+database.yml/schema.rb/spec_helper.rb based off of Chapter 8 of "Rails Plugins: Extending Rails Beyond the Core" by James Adam
