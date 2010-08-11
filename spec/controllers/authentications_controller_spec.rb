@@ -139,3 +139,4 @@ describe AuthenticationsController do
   end # POST authenticate
 
 end
+
