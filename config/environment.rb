@@ -31,7 +31,6 @@ Rails::Initializer.run do |config|
 
   # Fat Free CRM plugins that access any models must be loaded
   # after the 'simple_column_search' plugin
-  config.plugins = [ :simple_column_search, :all]
 
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
