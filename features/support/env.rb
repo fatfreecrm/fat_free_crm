@@ -59,7 +59,7 @@ Spork.each_run do
   if defined?(ActiveRecord::Base)
     begin
       require 'database_cleaner'
-      DatabaseCleaner.strategy = :truncation, {:except => [:settings]}
+      DatabaseCleaner.strategy = :truncation, {:except => ['settings']}
     rescue LoadError => ignore_if_database_cleaner_not_present
     end
   end
