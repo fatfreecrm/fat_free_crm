@@ -53,5 +53,4 @@ module Admin::ApplicationHelper
       page[:menu].replace_html "#{question} #{yes} : #{no}"
     end
   end
-
 end
