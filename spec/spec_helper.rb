@@ -15,18 +15,14 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require 'rubygems'
-require 'spork'
+  # This code will be run each time you run your specs.
 
-Spork.prefork do
-  # Loading more in this block will cause your tests to run faster. However,
-  # if you change any configuration or code from libraries loaded here, you'll
-  # need to restart spork for it take effect.
 
   # This file is copied to ~/spec when you run 'ruby script/generate rspec'
   # from the project root directory.
   ENV["RAILS_ENV"] ||= 'test'
   require File.dirname(__FILE__) + "/../config/environment"
+
   require 'spec/autorun'
   require 'spec/rails'
   require "factory_girl"
@@ -38,6 +34,9 @@ Spork.prefork do
   end
 
   VIEWS = %w(pending assigned completed).freeze
+
+  # Load default settings from config/settings.yml
+  Factory(:default_settings)
 
   Spec::Runner.configure do |config|
     # If you're not using ActiveRecord you should remove these
@@ -61,9 +60,6 @@ Spork.prefork do
     #
     # For more information take a look at Spec::Runner::Configuration and Spec::Runner
   end
-
-  # Load default settings from config/settings.yml
-  Factory(:default_settings)
 
   # See vendor/plugins/authlogic/lib/authlogic/test_case.rb
   #----------------------------------------------------------------------------
@@ -144,11 +140,4 @@ Spork.prefork do
       Time.stub(:now).and_return(adjusted_time)
     end
   end
-
-end
-
-Spork.each_run do
-  # This code will be run each time you run your specs.
-
-end
 
