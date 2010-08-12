@@ -16,12 +16,12 @@ git submodule update}
 
     submodules.each do |submodule|
       submodule_name = submodule.split("/").last
-      subpush_cmd = "!git push && cd ../../.. && git add #{submodule} && \
+      xpush_cmd = "!git push && cd ../../.. && git add #{submodule} && \
 git commit -m 'Updated #{submodule_name} submodule'"
-      system("cd #{submodule} && git config alias.subpush \"#{subpush_cmd}\"")
+      system("cd #{submodule} && git config alias.xpush \"#{xpush_cmd}\"")
     end
 
-    puts "=== Installed `git subpush` command on all submodules.\n    (Use it to push the submodule and commit the change to the superproject.)"
+    puts "=== Installed `git xpush` command on all submodules.\n    (Use it to push the submodule and commit the change to the superproject.)"
   end
 end
 
