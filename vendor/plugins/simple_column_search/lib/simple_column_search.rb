@@ -1,14 +1,14 @@
 require 'rubygems'
-require 'activerecord'
+require 'active_record'
 
 module SimpleColumnSearch
   # Adds a Model.search('term1 term2') method that searches across SEARCH_COLUMNS
   # for ANDed TERMS ORed across columns.
-  #   
+  #
   #  class User
   #    simple_column_search :first_name, :last_name
   #  end
-  #  
+  #
   #  User.search('elijah')          # => anyone with first or last name elijah
   #  User.search('miller')          # => anyone with first or last name miller
   #  User.search('elijah miller')
@@ -25,7 +25,7 @@ module SimpleColumnSearch
     like = connection.adapter_name == "PostgreSQL" ? "ILIKE" : "LIKE"
 
     named_scope options[:name], lambda { |terms|
-      terms = options[:escape].call(terms) if options[:escape]    
+      terms = options[:escape].call(terms) if options[:escape]
       conditions = terms.split.inject(nil) do |acc, term|
         patterns = columns.inject([]) do |arr, column|
           match = (options[:match].is_a?(Proc) ? options[:match].call(column) : options[:match])
@@ -44,9 +44,10 @@ module SimpleColumnSearch
         end
         merge_conditions acc, [ columns.collect { |column| "#{table_name}.#{column} #{like} ?" }.join(' OR '), *patterns ]
       end
-    
+
       { :conditions => conditions }
     }
   end
-  
+
 end
+
