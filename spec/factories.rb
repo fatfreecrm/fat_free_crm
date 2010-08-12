@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :account do |a|
-  a.user                { |a| a.association(:user) } 
+  a.user                { |a| a.association(:user) }
   a.assigned_to         nil
   a.name                { Faker::Company.name }
   a.access              "Public"
@@ -79,7 +79,7 @@ end
 
 #----------------------------------------------------------------------------
 Factory.define :activity do |a|
-  a.user                { |a| a.association(:user) } 
+  a.user                { |a| a.association(:user) }
   a.subject             { raise "Please specify :subject for the activity" }
   a.action              nil
   a.info                nil
@@ -92,7 +92,7 @@ end
 Factory.define :address do |a|
   a.addressable         { raise "Please specify :addressable for the address" }
   a.street1             { Faker::Address.street_address }
-  a.street2             { Faker::Address.street_address }   
+  a.street2             { Faker::Address.street_address }
   a.city                { Faker::Address.city }
   a.state               { Faker::Address.us_state_abbr }
   a.zipcode             { Faker::Address.zip_code }
@@ -192,7 +192,7 @@ end
 #----------------------------------------------------------------------------
 Factory.define :email do |e|
   e.imap_message_id     { "%08x" % rand(0xFFFFFFFF) }
-  e.user                { |e| a.association(:user) }
+  e.user                { |a| a.association(:user) }
   e.mediator            { raise "Please specify :mediator for the email" }
   e.sent_from           { Faker::Internet.email }
   e.sent_to             { Faker::Internet.email }
@@ -361,3 +361,4 @@ Factory.define :default_settings, :parent => :setting do |s|
     Factory(key.to_sym) # <--- That's where the data gets loaded.
   end
 end
+
