@@ -4,3 +4,6 @@
 [submodule "vendor/plugins/crm_super_tags"]
 	path = vendor/plugins/crm_super_tags
 	url = git@github.com:crossroads/crm_super_tags.git
+[submodule "vendor/plugins/crm_tags"]
+	path = vendor/plugins/crm_tags
+	url = http://github.com/michaeldv/crm_tags.git
