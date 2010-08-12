@@ -15,129 +15,125 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-  # This code will be run each time you run your specs.
+# This file is copied to ~/spec when you run 'ruby script/generate rspec'
+# from the project root directory.
+ENV["RAILS_ENV"] ||= 'test'
+require File.dirname(__FILE__) + "/../config/environment"
 
+require 'spec/autorun'
+require 'spec/rails'
+require "factory_girl"
+require RAILS_ROOT + "/spec/factories"
 
-  # This file is copied to ~/spec when you run 'ruby script/generate rspec'
-  # from the project root directory.
-  ENV["RAILS_ENV"] ||= 'test'
-  require File.dirname(__FILE__) + "/../config/environment"
+# Load shared behavior modules to be included by Runner config.
+Dir[File.dirname(__FILE__) + "/shared/*.rb"].map do |file|
+  require file
+end
 
-  require 'spec/autorun'
-  require 'spec/rails'
-  require "factory_girl"
-  require RAILS_ROOT + "/spec/factories"
+VIEWS = %w(pending assigned completed).freeze
 
-  # Load shared behavior modules to be included by Runner config.
-  Dir[File.dirname(__FILE__) + "/shared/*.rb"].map do |file|
-    require file
-  end
+# Load default settings from config/settings.yml
+Factory(:default_settings)
 
-  VIEWS = %w(pending assigned completed).freeze
+Spec::Runner.configure do |config|
+  # If you're not using ActiveRecord you should remove these
+  # lines, delete config/database.yml and disable :active_record
+  # in your config/boot.rb
+  config.use_transactional_fixtures = true
+  config.use_instantiated_fixtures  = false
+  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
 
-  # Load default settings from config/settings.yml
-  Factory(:default_settings)
+  config.include(SharedControllerSpecs, :type => :controller)
 
-  Spec::Runner.configure do |config|
-    # If you're not using ActiveRecord you should remove these
-    # lines, delete config/database.yml and disable :active_record
-    # in your config/boot.rb
-    config.use_transactional_fixtures = true
-    config.use_instantiated_fixtures  = false
-    config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
-
-    config.include(SharedControllerSpecs, :type => :controller)
-
-    config.after(:each, :type => :view) do
-      # detect html-quoted entities in all rendered responses
-      if response && response.body
-        response.body.should_not match /&amp;\S{1,6};/
-      end
-    end
-
-    #
-    # == Notes
-    #
-    # For more information take a look at Spec::Runner::Configuration and Spec::Runner
-  end
-
-  # See vendor/plugins/authlogic/lib/authlogic/test_case.rb
-  #----------------------------------------------------------------------------
-  def activate_authlogic
-    Authlogic::Session::Base.controller = (@request && Authlogic::TestCase::RailsRequestAdapter.new(@request)) || controller
-  end
-
-  # Note: Authentication is NOT ActiveRecord model, so we mock and stub it using RSpec.
-  #----------------------------------------------------------------------------
-  def login(user_stubs = {}, session_stubs = {})
-    User.current_user = @current_user = Factory(:user, user_stubs)
-    @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
-    Authentication.stub!(:find).and_return(@current_user_session)
-    set_timezone
-  end
-  alias :require_user :login
-
-  #----------------------------------------------------------------------------
-  def login_and_assign(user_stubs = {}, session_stubs = {})
-    login(user_stubs, session_stubs)
-    assigns[:current_user] = @current_user
-  end
-
-  #----------------------------------------------------------------------------
-  def logout
-    @current_user = nil
-    @current_user_session = nil
-    Authentication.stub!(:find).and_return(nil)
-  end
-  alias :require_no_user :logout
-
-  #----------------------------------------------------------------------------
-  def current_user
-    @current_user
-  end
-
-  #----------------------------------------------------------------------------
-  def current_user_session
-    @current_user_session
-  end
-
-  #----------------------------------------------------------------------------
-  def set_current_tab(tab)
-    controller.session[:current_tab] = tab
-  end
-
-  #----------------------------------------------------------------------------
-  def stub_task(view)
-    if view == "completed"
-      assigns[:task] = Factory(:task, :completed_at => Time.now - 1.minute)
-    elsif view == "assigned"
-      assigns[:task] = Factory(:task, :assignee => Factory(:user))
-    else
-      assigns[:task] = Factory(:task)
+  config.after(:each, :type => :view) do
+    # detect html-quoted entities in all rendered responses
+    if response && response.body
+      response.body.should_not match /&amp;\S{1,6};/
     end
   end
 
-  #----------------------------------------------------------------------------
-  def stub_task_total(view = "pending")
-    settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject({ :all => 0 }) { |hash, key| hash[key] = 1; hash }
-  end
+  #
+  # == Notes
+  #
+  # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+end
 
-  # Get current server timezone and set it (see rake time:zones:local for details).
-  #----------------------------------------------------------------------------
-  def set_timezone
-    offset = [ Time.now.beginning_of_year.utc_offset, Time.now.beginning_of_year.change(:month => 7).utc_offset ].min
-    offset *= 3600 if offset.abs < 13
-    Time.zone = ActiveSupport::TimeZone.all.select { |zone| zone.utc_offset == offset }.first
-  end
+# See vendor/plugins/authlogic/lib/authlogic/test_case.rb
+#----------------------------------------------------------------------------
+def activate_authlogic
+  Authlogic::Session::Base.controller = (@request && Authlogic::TestCase::RailsRequestAdapter.new(@request)) || controller
+end
 
-  # Adjusts current timezone by given offset (in seconds).
-  #----------------------------------------------------------------------------
-  def adjust_timezone(offset)
-    if offset
-      ActiveSupport::TimeZone[offset]
-      adjusted_time = Time.now + offset.seconds
-      Time.stub(:now).and_return(adjusted_time)
-    end
-  end
+# Note: Authentication is NOT ActiveRecord model, so we mock and stub it using RSpec.
+#----------------------------------------------------------------------------
+def login(user_stubs = {}, session_stubs = {})
+  User.current_user = @current_user = Factory(:user, user_stubs)
+  @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
+  Authentication.stub!(:find).and_return(@current_user_session)
+  set_timezone
+end
+alias :require_user :login
 
+#----------------------------------------------------------------------------
+def login_and_assign(user_stubs = {}, session_stubs = {})
+  login(user_stubs, session_stubs)
+  assigns[:current_user] = @current_user
+end
+
+#----------------------------------------------------------------------------
+def logout
+  @current_user = nil
+  @current_user_session = nil
+  Authentication.stub!(:find).and_return(nil)
+end
+alias :require_no_user :logout
+
+#----------------------------------------------------------------------------
+def current_user
+  @current_user
+end
+
+#----------------------------------------------------------------------------
+def current_user_session
+  @current_user_session
+end
+
+#----------------------------------------------------------------------------
+def set_current_tab(tab)
+  controller.session[:current_tab] = tab
+end
+
+#----------------------------------------------------------------------------
+def stub_task(view)
+  if view == "completed"
+    assigns[:task] = Factory(:task, :completed_at => Time.now - 1.minute)
+  elsif view == "assigned"
+    assigns[:task] = Factory(:task, :assignee => Factory(:user))
+  else
+    assigns[:task] = Factory(:task)
+  end
+end
+
+#----------------------------------------------------------------------------
+def stub_task_total(view = "pending")
+  settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
+  settings.inject({ :all => 0 }) { |hash, key| hash[key] = 1; hash }
+end
+
+# Get current server timezone and set it (see rake time:zones:local for details).
+#----------------------------------------------------------------------------
+def set_timezone
+  offset = [ Time.now.beginning_of_year.utc_offset, Time.now.beginning_of_year.change(:month => 7).utc_offset ].min
+  offset *= 3600 if offset.abs < 13
+  Time.zone = ActiveSupport::TimeZone.all.select { |zone| zone.utc_offset == offset }.first
+end
+
+# Adjusts current timezone by given offset (in seconds).
+#----------------------------------------------------------------------------
+def adjust_timezone(offset)
+  if offset
+    ActiveSupport::TimeZone[offset]
+    adjusted_time = Time.now + offset.seconds
+    Time.stub(:now).and_return(adjusted_time)
+  end
+end
