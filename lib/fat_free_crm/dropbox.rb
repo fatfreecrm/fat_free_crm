@@ -82,7 +82,7 @@ module FatFreeCRM
             discard(uid)
           end
         rescue Exception => e
-          if Rails.env == "test"
+          if Rails.env != 'production'
             $stderr.puts e
             $stderr.puts e.backtrace
           end
