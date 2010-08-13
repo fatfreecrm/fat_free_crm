@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -53,12 +53,14 @@ module FatFreeCRM
         options = main_or_admin.dup   # ...and use :main as default.
         main_or_admin = :main
       end
-      tabs = FatFreeCRM::Tabs.send(main_or_admin)
-      if tabs                         # Might be nil when running rake task (ex: rake crm:setup).
-        if block_given?
-          yield tabs
-        else
-          tabs << options if options
+      if ActiveRecord::Base.connection.table_exists?("settings")
+        tabs = FatFreeCRM::Tabs.send(main_or_admin)
+        if tabs                       # Might be nil when running rake task (ex: rake crm:setup).
+          if block_given?
+            yield tabs
+          else
+            tabs << options if options
+          end
         end
       end
     end
@@ -69,7 +71,7 @@ module FatFreeCRM
       private :new  # For the outside world new plugins can only be created through self.register.
 
       def register(id, initializer = nil, &block)
-        if initializer && ENV['RAILS_ENV'] == "development"
+        if initializer && Rails.env == "development"
           initializer.configuration.cache_classes = true # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
         end
         plugin = new(id, initializer)
@@ -88,3 +90,4 @@ module FatFreeCRM
 
   end # class Plugin
 end # module FatFreeCRM
+
