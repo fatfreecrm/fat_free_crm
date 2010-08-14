@@ -30,7 +30,7 @@
               (#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(1); return false;'>#{t :select_existing}</a>):
             %span#account_select_title
               (<a href='#' onclick='crm.create_account(1); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):
-            %span#account_disabled_title :              
+            %span#account_disabled_title :
 
           -# Add [-- None --] account choice when editing existing contact that has an account.
           - options = { :selected => @account.id || 0 }
@@ -51,4 +51,4 @@
 
       = hook(:contact_top_section_bottom, self, :f => f)
 
-
+= hook(:contact_top_section_after, self, :f => f)

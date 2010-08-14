@@ -14,4 +14,7 @@
         %td(valign="top" colspan="3")
           .label= t(:background_info) << ':'
           = f.text_area :background_info, :style =>"width:500px", :rows => 3
+
     = hook(:account_top_section_bottom, self, :f => f)
+
+= hook(:account_top_section_after, self, :f => f)
