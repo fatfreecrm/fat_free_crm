@@ -145,11 +145,11 @@ campaign_status:
   - :called_off
 
 campaign_status_color:
-  :planned    : palegreen
-  :started    : paleturquoise
-  :completed  : bisque
-  :on_hold    : pink
-  :called_off : thistle
+  :planned    : Gold
+  :started    : Turquoise
+  :completed  : Lime
+  :on_hold    : Orchid
+  :called_off : OrangeRed
 
 # Lead Status and Source.
 #------------------------------------------------------------------------------
@@ -160,10 +160,10 @@ lead_status:
   - :rejected
 
 lead_status_color:
-  :new       : palegreen
-  :contacted : paleturquoise
-  :converted : bisque
-  :rejected  : thistle
+  :new       : Silver
+  :contacted : Turquoise
+  :converted : Lime
+  :rejected  : OrangeRed
 
 lead_source:
   - :campaign
@@ -189,14 +189,14 @@ opportunity_stage:
   - :lost
 
 opportunity_stage_color:
-  :prospecting  : lavender
-  :analysis     : mistyrose
-  :presentation : wheat
-  :proposal     : thistle
-  :negotiation  : skyblue
-  :final_review : aquamarine
-  :won          : lightgreen
-  :lost         : pink
+  :prospecting  : Silver
+  :analysis     : PaleGoldenRod
+  :presentation : Salmon
+  :proposal     : Gold
+  :negotiation  : Orchid
+  :final_review : Turquoise
+  :won          : Lime
+  :lost         : OrangeRed
 
 # Task Category, Due Date, and Completed Date.
 #------------------------------------------------------------------------------
@@ -211,14 +211,14 @@ task_category:
   - :trip
 
 task_category_color:
-  :call         : lavender
-  :email        : paleturquoise
-  :follow_up    : mistyrose
-  :lunch        : wheat
-  :meeting      : thistle
-  :money        : lightgreen
-  :presentation : aquamarine
-  :trip         : skyblue
+  :call         : Silver
+  :email        : Turquoise
+  :follow_up    : Gold
+  :lunch        : Tomato
+  :meeting      : Orchid
+  :money        : Lime
+  :presentation : Salmon
+  :trip         : Turquoise
 
 task_bucket:
   - :overdue
@@ -235,3 +235,4 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
+

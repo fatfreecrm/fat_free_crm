@@ -2,9 +2,9 @@
 - content_for :styles do
 
   - if models.include?(:account)
-    li.account .none { background: gainsboro; color: white; }
-    li.account .some { background: palegreen; }
-  
+    li.account .none { background: gainsboro; color: gray; }
+    li.account .some { background: lime; }
+
   - if models.include?(:campaign)
     - Setting.campaign_status_color.each do |key, value|
       li.campaign .#{key} { background:#{value}; }
@@ -28,3 +28,4 @@
     li.user .signed_up { background: lightsalmon; }
 
   = hook(:inline_styles, self)
+
