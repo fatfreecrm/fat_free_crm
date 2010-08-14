@@ -306,7 +306,7 @@ module FatFreeCRM
     def default_values(email, keyword, name)
       defaults = { 
         :user   => @sender,
-        :access => Setting.default_access
+        :access => default_access
       }
       case keyword
       when "Account", "Campaign", "Opportunity"
@@ -330,7 +330,7 @@ module FatFreeCRM
         :first_name => recipient.local.capitalize,
         :last_name  => "(unknown)",
         :email      => recipient.address,
-        :access     => Setting.default_access
+        :access     => default_access
       }
       
       # Search for domain name in Accounts.
@@ -343,10 +343,15 @@ module FatFreeCRM
         defaults[:account] = Account.create(
           :user   => @sender,
           :name   => recipient.domain.capitalize,
-          :access => Setting.default_access
+          :access => default_access
         )
       end
       defaults
+    end
+    
+    def default_access
+      # If Shared then default to Private because we don't know how to choose anyone to share it with here
+      Setting.default_access == "Shared" ? 'Private' : Setting.default_access
     end
 
     #--------------------------------------------------------------------------------------      
