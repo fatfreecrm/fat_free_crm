@@ -2,7 +2,7 @@
   - if lead.status
     .strip{:class => lead.status} #{t(lead.status)}
   - else
-    .strip.white #{t :other}
+    .strip{:style => "color: gray;"} #{t :other}
 
   .tools{ invisible, :id => dom_id(lead, :tools) }
     = link_to_edit(lead) + " | "
@@ -37,3 +37,4 @@
         = "#{t :mobile_small}: " + lead.mobile << " | " if lead.mobile.present?
         = t(:added_ago, time_ago_in_words(lead.created_at))
       = hook(:lead_bottom, self, :lead => lead)
+
