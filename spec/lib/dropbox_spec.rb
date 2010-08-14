@@ -378,5 +378,30 @@ describe "IMAP Dropbox" do
       @contact.emails.first.mediator.should == @contact
     end
   end
+  
+  #------------------------------------------------------------------------------ 
+  
+  describe "Default values" do
+    
+    describe "'access'" do
+    
+      it "should be 'Private' if default setting is 'Private'" do
+        Setting.stub!(:default_access).and_return('Private')
+        @crawler.send(:default_access).should == "Private"
+      end
+      
+      it "should be 'Public' if default setting is 'Public'" do
+        Setting.stub!(:default_access).and_return('Public')
+        @crawler.send(:default_access).should == "Public"
+      end
+      
+      it "should be 'Private' if default setting is 'Shared'" do
+        Setting.stub!(:default_access).and_return('Shared')
+        @crawler.send(:default_access).should == "Private"
+      end
+      
+    end
+      
+  end
 
 end
