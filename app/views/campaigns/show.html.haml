@@ -11,28 +11,18 @@
 = render :partial => "comments/new", :locals => { :commentable => @campaign }
 = render :partial => "common/timeline", :collection => @timeline
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@campaign), :text => t(:create_task) }
-.subtitle#create_task_title #{t :tasks}
-.remote#create_task{ hidden }
+= section(@campaign, :tasks)
 .log#tasks
   = render :partial => "common/tasks"
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_lead, new_lead_path, { :class => "subtitle_tools", :related => dom_id(@campaign), :text => t(:create_lead) }
-.subtitle#create_lead_title #{t :leads}
-.remote#create_lead{ hidden }
+= section(@campaign, :leads)
 .list#leads
   = render :partial => "leads/lead", :collection => @campaign.leads
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_opportunity, new_opportunity_path, { :class => "subtitle_tools", :related => dom_id(@campaign), :text => t(:create_opportunity) }
-.subtitle#create_opportunity_title #{t :opportunities}
-.remote#create_opportunity{ hidden }
+= section(@campaign, :opportunities)
 .list#opportunities
   = render :partial => "opportunities/opportunity", :collection => @campaign.opportunities
+
+= load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
 
 = hook(:show_campaign_bottom, self)

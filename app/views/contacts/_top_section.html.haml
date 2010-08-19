@@ -21,6 +21,7 @@
     - fields_for(@account) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :assigned_to
+      = a.hidden_field :access, :value => Setting.default_access
       %tr
         %td(valign="top")
           .label
@@ -29,7 +30,7 @@
               (#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(1); return false;'>#{t :select_existing}</a>):
             %span#account_select_title
               (<a href='#' onclick='crm.create_account(1); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):
-            %span#account_disabled_title :              
+            %span#account_disabled_title :
 
           -# Add [-- None --] account choice when editing existing contact that has an account.
           - options = { :selected => @account.id || 0 }
@@ -50,4 +51,4 @@
 
       = hook(:contact_top_section_bottom, self, :f => f)
 
-
+= hook(:contact_top_section_after, self, :f => f)

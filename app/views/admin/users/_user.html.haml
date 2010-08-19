@@ -23,9 +23,9 @@
         = "<font color='silver'>#{t :suspend}!</font> | "
 
       - if user != @current_user
-        = link_to_confirm(user) << "&nbsp;"
+        = link_to_confirm(user)
       - else
-        %span.grayed #{t :delete}?&nbsp;
+        %span.grayed #{t :delete}?
 
     %span.black #{link_to(h(user.full_name), user)} (#{user.username})
     %tt

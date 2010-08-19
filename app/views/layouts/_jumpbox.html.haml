@@ -8,15 +8,25 @@
         under       : "welcome",
         appear      : 0.3,
         fade        : 0.3,
-        before_show : function() { $("jumper").className = "selected"; },
-        after_show  : function() { $("auto_complete_query").focus(); },
-        after_hide  : function() { $("jumper").className = ""; }
+        before_show : function() {
+          $("jumper").className = "selected";
+          $("jumpbox_label").innerHTML = ""
+          $("jumpbox_label").hide();
+          $("jumpbox_menu").show();
+          crm.auto_complete("#{current_auto_complete}");
+        },
+        after_show  : function() {
+          $("auto_complete_query").focus();
+        },
+        after_hide  : function() {
+          $("jumper").className = "";
+        }
       });
-      crm.auto_complete("#{current_auto_complete}");
     });
 
 #jumpbox{ hidden }
-  = jumpbox(current_auto_complete)
+  %span#jumpbox_menu= jumpbox(current_auto_complete)
+  %span#jumpbox_label{ hidden }
   %br
     = text_field_tag "auto_complete_query", nil, :style => "width: 310px", :autocomplete => :off
     .auto_complete#auto_complete_dropdown

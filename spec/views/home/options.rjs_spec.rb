@@ -9,6 +9,11 @@ describe "/home/options.rjs" do
 
   it "should render [options.html.haml] template into :options div and show it" do
     params[:cancel] = nil
+
+    assigns[:asset] = "all"
+    assigns[:user] = "all_users"
+    assigns[:duration] = "two_days"
+
     render "home/options.js.rjs"
   
     response.should have_rjs("options") do |rjs|

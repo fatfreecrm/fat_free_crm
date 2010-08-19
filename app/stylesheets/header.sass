@@ -1,30 +1,30 @@
 // Fat Free CRM
 // Copyright (C) 2008-2010 by Michael Dvorkin
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-!color_header                = "skyblue"
-!color_header_background     = #1e4262
-!color_logo                  = "greenyellow"
+!color_header                = #CD7570
+!color_header_background     = #330000
+!color_logo                  = "white"
 
 !color_tab                   = "white"
-!color_tab_background        = #466bb1
-!color_active_tab            = "navy"
-!color_active_tab_background = "azure"
-!color_hover_tab             = "navy"
-!color_hover_tab_background  = #97baff
+!color_tab_background        = #860000
+!color_active_tab            = #330000
+!color_active_tab_background = "white"
+!color_hover_tab             = #330000
+!color_hover_tab_background  = #CD7570
 
 !size_tab_height             = 24px
 !size_tab_width              = 80px
@@ -75,13 +75,16 @@
     :-webkit-border
       :bottom-left-radius 6px
       :bottom-right-radius 6px
-    a
+    #jumpbox_menu
+      a
+        :color white
+        :padding 0px 0px 4px 0px
+        &.selected
+          :color #330000
+        &:hover
+          :background steelblue
+    #jumpbox_label
       :color white
-      :padding 0px 0px 4px 0px
-      &.selected
-        :color navy
-      &:hover
-        :background steelblue
     input
       :margin 2px 0px 0px 0px
 #tabs
@@ -129,3 +132,4 @@
   :color = !color_footer
   :font-size 10px
   :padding 0px 0px 0px 16px
+

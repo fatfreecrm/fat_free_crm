@@ -9,8 +9,8 @@ Here are the steps to get Fat Free CRM up and running on your system.
 
 === System Requirements
 
-* Ruby v1.8.6, v1.8.7, or v1.9.1
-* Ruby on Rails v2.3.5
+* Ruby v1.8.7 or v1.9.2
+* Ruby on Rails v2.3.8
 * MySQL v4.1.1 or later (v5+ is recommended) or SQLite v3.4 or later
 * ImageMagick (optional, only if you would like to use avatars)
 
@@ -95,6 +95,13 @@ the concepts:
    http://github.com/michaeldv/crm_sample_tabs/tree/master
    http://github.com/michaeldv/crm_web_to_lead/tree/master
    http://github.com/michaeldv/crm_tags/tree/master
+
+
+Additional information for developing on the Crossroads fat_free_crm fork:
+
+* clone the repo - git clone git@github.com:crossroads/fat_free_crm.git
+* initialise submodules - git submodule init
+* install git hooks for submodules - rake git:install_hooks
 
 
 === License

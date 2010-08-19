@@ -1,0 +1,34 @@
+Description:
+    The rspec_plugin generator creates stubs for a new plugin.
+
+    The generator takes a plugin name as its argument.  The plugin name may be
+    given in CamelCase or under_score and should not be suffixed with 'Plugin'.
+
+    The generator creates a plugin directory in vendor/plugins that includes
+    both init.rb and README.rdoc files as well as lib, task, and spec directories.
+    
+    You can also set up a database connection that's independent from the main
+    app using --with-database
+
+    It's also possible to generate stub files for a generator to go with the
+    plugin by using --with-generator
+
+Example:
+    ./script/generate rspec_plugin BrowserFilters
+
+    This will create:
+        vendor/plugins/browser_filters/README.rdoc
+        vendor/plugins/browser_filters/init.rb
+        vendor/plugins/browser_filters/install.rb
+        vendor/plugins/browser_filters/lib/browser_filters.rb
+        vendor/plugins/browser_filters/spec/browser_filters_spec.rb
+        vendor/plugins/browser_filters/tasks/browser_filters_tasks.rake
+        
+    --with-database will add:
+        vendor/plugins/browser_filters/db/database.yml
+        vendor/plugins/browser_filters/db/schema.rb
+
+    --with-generator will add:
+        vendor/plugins/browser_filters/generators/browser_filters/browser_filters_generator.rb
+        vendor/plugins/browser_filters/generators/browser_filters/USAGE
+        vendor/plugins/browser_filters/generators/browser_filters/templates/

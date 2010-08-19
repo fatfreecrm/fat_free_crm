@@ -11,20 +11,14 @@
 = render :partial => "comments/new", :locals => { :commentable => @opportunity }
 = render :partial => "common/timeline", :collection => @timeline
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_task, new_task_path, { :class => "subtitle_tools", :related => dom_id(@opportunity), :text => t(:create_task) }
-.subtitle#create_task_title #{t :tasks}
-.remote#create_task{ hidden }
+= section(@opportunity, :tasks)
 .log#tasks
   = render :partial => "common/tasks"
 
--#-----------------------------------------------------------------------------
-%br
-= inline :create_contact, new_contact_path, { :class => "subtitle_tools", :related => dom_id(@opportunity), :text => t(:create_contact) }
-.subtitle#create_contact_title #{t :contacts}
-.remote#create_contact{ hidden }
+= section(@opportunity, :contacts)
 .list#contacts
   = render :partial => "contacts/contact", :collection => @opportunity.contacts
+
+= load_select_popups_for(@opportunity, :tasks, :contacts)
 
 = hook(:show_opportunity_bottom, self)

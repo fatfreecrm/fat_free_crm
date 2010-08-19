@@ -390,18 +390,18 @@ var crm = {
   //----------------------------------------------------------------------------
   jumper: function(controller) {
     var name = controller.capitalize();
-    $$("#jumpbox a").each(function(link) {
+    $$("#jumpbox_menu a").each(function(link) {
       if (link.innerHTML == name) {
         link.addClassName("selected");
       } else {
         link.removeClassName("selected");
       }
     });
-    this.auto_complete(controller, true);
+    this.auto_complete(controller, null, true);
   },
 
   //----------------------------------------------------------------------------
-  auto_complete: function(controller, focus) {
+  auto_complete: function(controller, related, focus) {
     if (this.autocompleter) {
       Event.stopObserving(this.autocompleter.element);
       delete this.autocompleter;
@@ -409,13 +409,21 @@ var crm = {
     this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", { 
       frequency: 0.25,
       afterUpdateElement: function(text, el) {
-        if (el.id) {  // found: redirect to #show
-          window.location.href = this.base_url + "/" + controller + "/" + escape(el.id);
-        } else {      // not found: refresh current page
+        if (el.id) {      // Autocomplete entry found.
+          if (related) {  // Attach to related asset.
+            new Ajax.Request(this.base_url + "/" + related + "/attach", {
+              method     : "put",
+              parameters : { assets : controller, asset_id : escape(el.id) },
+              onComplete : function() { $("jumpbox").hide(); }
+            });
+          } else {        // Quick Find: redirect to asset#show.
+            window.location.href = this.base_url + "/" + controller + "/" + escape(el.id);
+          }
+        } else {          // Autocomplete entry not found: refresh current page.
           $("auto_complete_query").value = "";
           window.location.href = window.location.href;
         }
-      }.bind(this)    // binding for this.base_url
+      }.bind(this)        // Binding for this.base_url.
     });
     $("auto_complete_dropdown").update("");
     $("auto_complete_query").value = "";

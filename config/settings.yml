@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -91,9 +91,9 @@
 #   true  -- allow selecting date and time.
 #   false -- allow selecting date only. This is the default.
 #
-task_calendar_with_time: false
+task_calendar_with_time: true
 
-# Sets the email dropbox feature, this are the connections settings for 
+# Sets the email dropbox feature, this are the connections settings for
 # the imap account, server and folders.
 #------------------------------------------------------------------------------
 :email_dropbox:
@@ -126,7 +126,16 @@ task_calendar_with_time: false
   { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
 
-# Campaign Status.
+# Campaign Status. To add custom status use string value, for example:
+#
+# campaign_status:
+#   - :planned
+#   - :started
+#   - :completed
+#   - :on_hold
+#   - :called_off
+#   - "Custom"
+#
 #------------------------------------------------------------------------------
 campaign_status:
   - :planned
@@ -136,11 +145,11 @@ campaign_status:
   - :called_off
 
 campaign_status_color:
-  :planned    : palegreen
-  :started    : paleturquoise
-  :completed  : bisque
-  :on_hold    : pink
-  :called_off : thistle
+  :planned    : Gold
+  :started    : Turquoise
+  :completed  : Lime
+  :on_hold    : Orchid
+  :called_off : OrangeRed
 
 # Lead Status and Source.
 #------------------------------------------------------------------------------
@@ -151,10 +160,10 @@ lead_status:
   - :rejected
 
 lead_status_color:
-  :new       : palegreen
-  :contacted : paleturquoise
-  :converted : bisque
-  :rejected  : thistle
+  :new       : Silver
+  :contacted : Turquoise
+  :converted : Lime
+  :rejected  : OrangeRed
 
 lead_source:
   - :campaign
@@ -178,17 +187,16 @@ opportunity_stage:
   - :final_review
   - :won
   - :lost
-  - "Custom"
 
 opportunity_stage_color:
-  :prospecting  : lavender
-  :analysis     : mistyrose
-  :presentation : wheat
-  :proposal     : thistle
-  :negotiation  : skyblue
-  :final_review : aquamarine
-  :won          : lightgreen
-  :lost         : pink
+  :prospecting  : Silver
+  :analysis     : PaleGoldenRod
+  :presentation : Salmon
+  :proposal     : Gold
+  :negotiation  : Orchid
+  :final_review : Turquoise
+  :won          : Lime
+  :lost         : OrangeRed
 
 # Task Category, Due Date, and Completed Date.
 #------------------------------------------------------------------------------
@@ -203,14 +211,14 @@ task_category:
   - :trip
 
 task_category_color:
-  :call         : lavender
-  :email        : paleturquoise
-  :follow_up    : mistyrose
-  :lunch        : wheat
-  :meeting      : thistle
-  :money        : lightgreen
-  :presentation : aquamarine
-  :trip         : skyblue
+  :call         : Silver
+  :email        : Turquoise
+  :follow_up    : Gold
+  :lunch        : Tomato
+  :meeting      : Orchid
+  :money        : Lime
+  :presentation : Salmon
+  :trip         : Turquoise
 
 task_bucket:
   - :overdue
@@ -227,3 +235,4 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
+

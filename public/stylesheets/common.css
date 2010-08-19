@@ -1,6 +1,6 @@
 .title {
   border-bottom: 1px gray solid;
-  color: #342d7e;
+  color: black;
   font-size: 17px;
   font-weight: bold;
   padding-bottom: 2px; }
@@ -46,7 +46,7 @@
 
 .standalone {
   background: whitesmoke;
-  border: 20px lightsteelblue solid;
+  border: 20px #860000 solid;
   margin: 75px auto 6px auto;
   padding: 20px;
   width: 400px;
@@ -100,7 +100,7 @@
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: navy; }
+  color: #330000; }
 
 .intro {
   color: dimgray;
@@ -125,7 +125,7 @@
     border-left: 1px gainsboro solid;
     border-bottom: 1px grey solid;
     border-right: 1px grey solid;
-    color: navy;
+    color: #330000;
     cursor: pointer;
     height: 16px;
     margin: 3px;
@@ -344,7 +344,7 @@
   -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
 
 .filters h4 {
-  color: navy;
+  color: #330000;
   font-size: 12px;
   font-weight: bold; }
 .filters input[type=text] {
@@ -370,7 +370,7 @@
     border-bottom: none; }
 .panel .caption {
   border-bottom: 1px grey solid;
-  color: navy;
+  color: #330000;
   font-size: 12px;
   font-weight: bold;
   margin: 4px 0px 2px 0px;

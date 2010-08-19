@@ -2,7 +2,7 @@
   - if lead.status
     .strip{:class => lead.status} #{t(lead.status)}
   - else
-    .strip.white #{t :other}
+    .strip{:style => "color: gray;"} #{t :other}
 
   .tools{ invisible, :id => dom_id(lead, :tools) }
     = link_to_edit(lead) + " | "
@@ -14,7 +14,8 @@
       = link_to_reject(lead) + " | "
     - else
       = "<font color='silver'>#{t :reject}</font> | "
-    = link_to_delete(lead) + "&nbsp;"
+    = link_to_discard(lead) + " | " if shown_on_landing_page?
+    = link_to_delete(lead)
 
   .indent
     = link_to(h(lead.full_name(@current_user.preference[:leads_naming])), lead)
@@ -25,7 +26,9 @@
         = lead.company if lead.company?
         = lead.title if lead.title?
       -#= link_to(h(lead.campaign.name), lead.campaign) if lead.campaign_id
-      = "&ndash; #{t :referred_by_small} #{lead.referred_by}" if lead.referred_by?
+      - if lead.referred_by?
+        &ndash;
+        = "#{t :referred_by_small} #{lead.referred_by}"
     - unless @current_user.preference[:leads_outline] == "brief"
       %dt
         = stars_for(lead) + " | "
@@ -34,3 +37,4 @@
         = "#{t :mobile_small}: " + lead.mobile << " | " if lead.mobile.present?
         = t(:added_ago, time_ago_in_words(lead.created_at))
       = hook(:lead_bottom, self, :lead => lead)
+

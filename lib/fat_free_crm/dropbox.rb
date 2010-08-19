@@ -82,7 +82,7 @@ module FatFreeCRM
             discard(uid)
           end
         rescue Exception => e
-          if Rails.env == "test"
+          if ["test", "development"].include?(Rails.env)
             $stderr.puts e
             $stderr.puts e.backtrace
           end
@@ -167,7 +167,7 @@ module FatFreeCRM
 
     #------------------------------------------------------------------------------
     def sent_from_known_user?(email)
-      email_address = email.from.first.downcase
+      email_address = email.from.first
       known = !find_sender(email_address).nil?
       log("sent by unknown user #{email_address}, discarding") unless known
       known
@@ -175,7 +175,7 @@ module FatFreeCRM
 
     #------------------------------------------------------------------------------
     def find_sender(email_address)
-      @sender = User.first(:conditions => [ "email = ? AND suspended_at IS NULL", email_address ])
+      @sender = User.first(:conditions => [ "lower(email) = ? AND suspended_at IS NULL", email_address.downcase ])
     end
 
     # Checks the email to detect keyword on the first line.
@@ -306,7 +306,7 @@ module FatFreeCRM
     def default_values(email, keyword, name)
       defaults = { 
         :user   => @sender,
-        :access => Setting.default_access
+        :access => default_access
       }
       case keyword
       when "Account", "Campaign", "Opportunity"
@@ -330,7 +330,7 @@ module FatFreeCRM
         :first_name => recipient.local.capitalize,
         :last_name  => "(unknown)",
         :email      => recipient.address,
-        :access     => Setting.default_access
+        :access     => default_access
       }
       
       # Search for domain name in Accounts.
@@ -343,10 +343,15 @@ module FatFreeCRM
         defaults[:account] = Account.create(
           :user   => @sender,
           :name   => recipient.domain.capitalize,
-          :access => Setting.default_access
+          :access => default_access
         )
       end
       defaults
+    end
+    
+    def default_access
+      # If Shared then default to Private because we don't know how to choose anyone to share it with here
+      Setting.default_access == "Shared" ? 'Private' : Setting.default_access
     end
 
     #--------------------------------------------------------------------------------------      

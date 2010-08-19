@@ -494,6 +494,7 @@ ja:
   create_new: 新規作成してください -
   select_existing: 既存から選択
   delete: 削除
+  discard: Discard # TODO
   edit: 編集
   items_total: '合計 {{count}}'
   less: Less... # TODO

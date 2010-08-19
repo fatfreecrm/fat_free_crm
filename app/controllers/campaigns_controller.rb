@@ -19,6 +19,8 @@ class CampaignsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :attach, :only => :attach
+  before_filter :discard, :only => :discard
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
@@ -154,6 +156,16 @@ class CampaignsController < ApplicationController
       format.xml  { render :xml => @campaigns.to_xml }
     end
   end
+
+  # PUT /campaigns/1/attach
+  # PUT /campaigns/1/attach.xml                                            AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :attach, :only => :attach
+
+  # PUT /campaigns/1/discard
+  # PUT /campaigns/1/discard.xml                                           AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :discard, :only => :discard
 
   # POST /campaigns/auto_complete/query                                    AJAX
   #----------------------------------------------------------------------------

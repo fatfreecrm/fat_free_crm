@@ -18,7 +18,8 @@
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
-require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
+require File.dirname(__FILE__) + "/../config/environment"
+
 require 'spec/autorun'
 require 'spec/rails'
 require "factory_girl"
@@ -31,6 +32,9 @@ end
 
 VIEWS = %w(pending assigned completed).freeze
 
+# Load default settings from config/settings.yml
+Factory(:default_settings)
+
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
@@ -40,14 +44,19 @@ Spec::Runner.configure do |config|
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
 
   config.include(SharedControllerSpecs, :type => :controller)
+
+  config.after(:each, :type => :view) do
+    # detect html-quoted entities in all rendered responses
+    if response && response.body
+      response.body.should_not match /&amp;\S{1,6};/
+    end
+  end
+
   #
   # == Notes
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
-
-# Load default settings from config/settings.yml
-Factory(:default_settings)
 
 # See vendor/plugins/authlogic/lib/authlogic/test_case.rb
 #----------------------------------------------------------------------------

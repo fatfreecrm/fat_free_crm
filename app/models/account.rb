@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ? ", user.id ] } }
   named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ? ", user.id ] } }
 
-  simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  simple_column_search :name, :email, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   uses_user_permissions
   acts_as_commentable
   acts_as_paranoid
@@ -75,6 +75,24 @@ class Account < ActiveRecord::Base
     return "" unless self[:billing_address]
     location = self[:billing_address].strip.split("\n").last
     location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ").strip if location
+  end
+
+  # Attach given attachment to the account if it hasn't been attached already.
+  #----------------------------------------------------------------------------
+  def attach!(attachment)
+    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      self.send(attachment.class.name.tableize) << attachment
+    end
+  end
+
+  # Discard given attachment from the account.
+  #----------------------------------------------------------------------------
+  def discard!(attachment)
+    if attachment.is_a?(Task)
+      attachment.update_attribute(:asset, nil)
+    else # Contacts, Opportunities
+      self.send(attachment.class.name.tableize).delete(attachment)
+    end
   end
 
   # Class methods.

@@ -3,7 +3,7 @@
 
   .tools{ invisible, :id => dom_id(campaign, :tools) }
     = link_to_edit(campaign) + " | "
-    = link_to_delete(campaign) + "&nbsp;"
+    = link_to_delete(campaign)
 
   .indent
     = link_to(h(campaign.name), campaign)

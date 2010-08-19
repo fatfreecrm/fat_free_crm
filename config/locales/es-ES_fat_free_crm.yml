@@ -499,6 +499,7 @@ es-ES:
   create_new: Crear
   select_existing: seleccione existentes
   delete: Eliminar
+  discard: Discard # TODO
   edit: Editar
   items_total: 'total {{count}}.'
   less: Less... # TODO

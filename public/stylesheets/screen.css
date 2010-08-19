@@ -57,12 +57,12 @@ tt {
   font-size: 12px; }
 
 #header {
-  background: #1e4262;
-  color: skyblue;
+  background: #330000;
+  color: #cd7570;
   padding: 8px 16px 8px 16px; }
   #header h3 a {
-    background: #1e4262;
-    color: greenyellow;
+    background: #330000;
+    color: white;
     font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
   #header #welcome {
@@ -73,7 +73,7 @@ tt {
       padding: 1px 4px 2px 4px;
       text-decoration: none; }
       #header #welcome a:hover {
-        background: #1e4262;
+        background: #330000;
         color: yellow; }
     #header #welcome a.selected {
       background: steelblue;
@@ -91,18 +91,20 @@ tt {
     -moz-border-radius-bottomright: 6px;
     -webkit-border-bottom-left-radius: 6px;
     -webkit-border-bottom-right-radius: 6px; }
-    #header #jumpbox a {
+    #header #jumpbox #jumpbox_menu a {
       color: white;
       padding: 0px 0px 4px 0px; }
-      #header #jumpbox a.selected {
-        color: navy; }
-      #header #jumpbox a:hover {
+      #header #jumpbox #jumpbox_menu a.selected {
+        color: #330000; }
+      #header #jumpbox #jumpbox_menu a:hover {
         background: steelblue; }
+    #header #jumpbox #jumpbox_label {
+      color: white; }
     #header #jumpbox input {
       margin: 2px 0px 0px 0px; }
 
 #tabs {
-  background: #1e4262;
+  background: #330000;
   height: 24px;
   padding: 0px;
   text-align: center;
@@ -114,7 +116,7 @@ tt {
     margin: 0px 4px 0px 16px;
     width: 80px; }
   #tabs a:link, #tabs a:visited {
-    background: #466bb1;
+    background: #860000;
     color: white;
     float: left;
     padding: 4px 8px 5px 8px;
@@ -126,11 +128,11 @@ tt {
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px; }
   #tabs a:hover {
-    background: #97baff;
-    color: navy; }
+    background: #cd7570;
+    color: #330000; }
   #tabs a:link.active, #tabs a:visited.active {
-    background: azure;
-    color: navy;
+    background: white;
+    color: #330000;
     text-decoration: none; }
 
 #footer {
@@ -140,7 +142,7 @@ tt {
 
 .title {
   border-bottom: 1px gray solid;
-  color: #342d7e;
+  color: black;
   font-size: 17px;
   font-weight: bold;
   padding-bottom: 2px; }
@@ -186,7 +188,7 @@ tt {
 
 .standalone {
   background: whitesmoke;
-  border: 20px lightsteelblue solid;
+  border: 20px #860000 solid;
   margin: 75px auto 6px auto;
   padding: 20px;
   width: 400px;
@@ -240,7 +242,7 @@ tt {
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: navy; }
+  color: #330000; }
 
 .intro {
   color: dimgray;
@@ -265,7 +267,7 @@ tt {
     border-left: 1px gainsboro solid;
     border-bottom: 1px grey solid;
     border-right: 1px grey solid;
-    color: navy;
+    color: #330000;
     cursor: pointer;
     height: 16px;
     margin: 3px;
@@ -484,7 +486,7 @@ tt {
   -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
 
 .filters h4 {
-  color: navy;
+  color: #330000;
   font-size: 12px;
   font-weight: bold; }
 .filters input[type=text] {
@@ -510,7 +512,7 @@ tt {
     border-bottom: none; }
 .panel .caption {
   border-bottom: 1px grey solid;
-  color: navy;
+  color: #330000;
   font-size: 12px;
   font-weight: bold;
   margin: 4px 0px 2px 0px;

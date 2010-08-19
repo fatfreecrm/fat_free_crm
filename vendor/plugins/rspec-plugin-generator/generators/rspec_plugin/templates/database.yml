@@ -1,0 +1,3 @@
+sqlite3:
+  :adapter: sqlite3
+  :database: vendor/plugins/<%= file_name %>/spec/db/<%= file_name %>.sqlite3.db

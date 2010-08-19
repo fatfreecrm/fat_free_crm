@@ -421,6 +421,58 @@ describe AccountsController do
     end
   end
 
+  # PUT /accounts/1/attach
+  # PUT /accounts/1/attach.xml                                             AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:account)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "contacts" do
+      before do
+        @model = Factory(:account)
+        @attachment = Factory(:contact, :account => nil)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
+  # POST /accounts/1/discard
+  # POST /accounts/1/discard.xml                                           AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST discard" do
+    describe "tasks" do
+      before do
+        @model = Factory(:account)
+        @attachment = Factory(:task, :asset => @model)
+      end
+      it_should_behave_like("discard")
+    end
+
+    describe "contacts" do
+      before do
+        @attachment = Factory(:contact)
+        @model = Factory(:account)
+        @model.contacts << @attachment
+      end
+      it_should_behave_like("discard")
+    end
+
+    describe "opportunities" do
+      before do
+        @attachment = Factory(:opportunity)
+        @model = Factory(:account)
+        @model.opportunities << @attachment
+      end
+      it_should_behave_like("discard")
+    end
+  end
+
   # POST /accounts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do

@@ -70,6 +70,31 @@ class Campaign < ActiveRecord::Base
   def self.per_page ; 20     ; end
   def self.outline  ; "long" ; end
 
+  # Attach given attachment to the campaign if it hasn't been attached already.
+  #----------------------------------------------------------------------------
+  def attach!(attachment)
+    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      if attachment.is_a?(Task)
+        self.send(attachment.class.name.tableize) << attachment
+      else # Leads, Opportunities
+        attachment.update_attribute(:campaign, self)
+        attachment.send("increment_#{attachment.class.name.tableize}_count")
+        [ attachment ]
+      end
+    end
+  end
+
+  # Discard given attachment from the campaign.
+  #----------------------------------------------------------------------------
+  def discard!(attachment)
+    if attachment.is_a?(Task)
+      attachment.update_attribute(:asset, nil)
+    else # Leads, Opportunities
+      attachment.send("decrement_#{attachment.class.name.tableize}_count")
+      attachment.update_attribute(:campaign, nil)
+    end
+  end
+
   private
   # Make sure end date > start date.
   #----------------------------------------------------------------------------

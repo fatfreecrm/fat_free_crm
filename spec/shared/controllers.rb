@@ -27,4 +27,69 @@ module SharedControllerSpecs
     end
   end
 
+  describe "attach", :shared => true do
+    it "should attach existing asset to the parent asset of different type" do
+      xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
+      @model.send(@attachment.class.name.tableize).should include(@attachment)
+      assigns[:attachment].should == @attachment
+      assigns[:attached].should == [ @attachment ]
+      if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
+        assigns[:campaign].should == @attachment.reload.campaign
+      end
+      response.should render_template("common/attach")
+    end
+
+    it "should not attach the asset that is already attached" do
+      if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
+        @attachment.update_attribute(:campaign_id, @model.id)
+      else
+        @model.send(@attachment.class.name.tableize) << @attachment
+      end
+
+      xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
+      assigns[:attached].should == nil
+      response.should render_template("common/attach")
+    end
+
+    it "should display flash warning when the model is no longer available" do
+      @model.destroy
+
+      xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+    it "should display flash warning when the attachment is no longer available" do
+      @attachment.destroy
+
+      xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+  end
+
+  describe "discard", :shared => true do
+    it "should discard the attachment without deleting it" do
+      xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
+      assigns[:attachment].should == @attachment.reload               # The attachment should still exist.
+      @model.send("#{@attachment.class.name.tableize}").should == []  # But no longer associated with the model.
+      response.should render_template("common/discard")
+    end
+
+    it "should display flash warning when the model is no longer available" do
+      @model.destroy
+
+      xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+
+    it "should display flash warning when the attachment is no longer available" do
+      @attachment.destroy
+
+      xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
+      flash[:warning].should_not == nil
+      response.body.should == "window.location.reload();"
+    end
+  end
+
 end

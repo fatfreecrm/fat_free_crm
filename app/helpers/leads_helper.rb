@@ -90,4 +90,15 @@ module LeadsHelper
     end
   end
 
+  # Do not offer :converted status choice if we are creating a new lead or
+  # editing existing lead that hasn't been converted before.
+  #----------------------------------------------------------------------------
+  def lead_status_codes_for(lead)
+    if lead.status != "converted" && (lead.new_record? || lead.contact.nil?)
+      Setting.unroll(:lead_status).delete_if { |status| status.last == :converted }
+    else
+      Setting.unroll(:lead_status)
+    end
+  end
+
 end

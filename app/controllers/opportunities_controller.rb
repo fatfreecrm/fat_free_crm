@@ -20,6 +20,8 @@ class OpportunitiesController < ApplicationController
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :load_settings
   before_filter :get_data_for_sidebar, :only => :index
+  before_filter :attach, :only => :attach
+  before_filter :discard, :only => :discard
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
@@ -177,6 +179,20 @@ class OpportunitiesController < ApplicationController
     respond_to_not_found(:html, :js, :xml)
   end
 
+  # PUT /opportunities/1/attach
+  # PUT /opportunities/1/attach.xml                                        AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :attach, :only => :attach
+
+  # POST /opportunities/1/discard
+  # POST /opportunities/1/discard.xml                                      AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :discard, :only => :discard
+
+  # POST /opportunities/auto_complete/query                                AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :auto_complete, :only => :auto_complete
+
   # GET /campaigns/search/query                                           AJAX
   #----------------------------------------------------------------------------
   def search
@@ -187,10 +203,6 @@ class OpportunitiesController < ApplicationController
       format.xml  { render :xml => @opportunities.to_xml }
     end
   end
-
-  # POST /opportunities/auto_complete/query                                AJAX
-  #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   # GET /opportunities/options                                             AJAX
   #----------------------------------------------------------------------------
