@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ module ApplicationHelper
       raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake crm:setup</b> command."
     end
   end
-  
+
   #----------------------------------------------------------------------------
   def tabless_layout?
     %w(authentications passwords).include?(controller.controller_name) ||
@@ -331,7 +331,7 @@ module ApplicationHelper
       when "Shared"  then t(:permissions_intro_shared,  text)
     end
   end
-  
+
   # Returns default permissions intro
   #----------------------------------------------------------------------------
   def get_default_permissions_intro(access, text)
@@ -340,7 +340,7 @@ module ApplicationHelper
       when "Public" then t(:permissions_intro_public, text)
       when "Shared" then t(:permissions_intro_shared, text)
     end
-  end  
+  end
 
   # Render a text field that is part of compound address.
   #----------------------------------------------------------------------------
