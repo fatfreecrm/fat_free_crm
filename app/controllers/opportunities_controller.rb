@@ -23,6 +23,7 @@ class OpportunitiesController < ApplicationController
   before_filter :attach, :only => :attach
   before_filter :discard, :only => :discard
   before_filter :auto_complete, :only => :auto_complete
+  before_filter :set_params, :only => [:index, :redraw, :filter]
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /opportunities
@@ -193,7 +194,7 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
 
-  # GET /campaigns/search/query                                           AJAX
+  # GET /opportunities/search/query                                        AJAX
   #----------------------------------------------------------------------------
   def search
     @opportunities = get_opportunities(:query => params[:query], :page => 1)
@@ -217,9 +218,6 @@ class OpportunitiesController < ApplicationController
   # POST /opportunities/redraw                                             AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
-    @current_user.pref[:opportunities_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
     @opportunities = get_opportunities(:page => 1)
     render :action => :index
   end
@@ -227,7 +225,6 @@ class OpportunitiesController < ApplicationController
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
-    session[:filter_by_opportunity_stage] = params[:stage]
     @opportunities = get_opportunities(:page => 1)
     render :action => :index
   end
@@ -299,6 +296,13 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def load_settings
     @stage = Setting.unroll(:opportunity_stage)
+  end
+  
+  def set_params
+    @current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
+    @current_user.pref[:opportunities_outline]  = params[:outline]  if params[:outline]
+    @current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
+    session[:filter_by_opportunity_stage] = params[:stage] if params[:stage]
   end
 
 end
