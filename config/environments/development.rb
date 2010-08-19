@@ -22,3 +22,6 @@ if File.exists?(File.join(RAILS_ROOT, 'tmp', 'debug.txt'))
   Debugger.start_remote
   File.delete(File.join(RAILS_ROOT, 'tmp', 'debug.txt'))
 end
+
+require 'ap'
+
