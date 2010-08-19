@@ -67,7 +67,7 @@ module LeadsHelper
   #----------------------------------------------------------------------------
   def lead_status_checbox(status, count)
     checked = (session[:filter_by_lead_status] ? session[:filter_by_lead_status].split(",").include?(status.to_s) : count.to_i > 0)
-    check_box_tag("status[]", status, checked, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+    check_box_tag("status[]", status, checked, :id => status, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
   end
   
   # Returns default permissions intro for leads
