@@ -1,4 +1,4 @@
-class RspecPluginGenerator < Rails::Generator::NamedBase
+class FfcrmPluginGenerator < Rails::Generator::NamedBase
   attr_reader :plugin_path, :with_database
 
   def initialize(runtime_args, runtime_options = {})
@@ -15,6 +15,10 @@ class RspecPluginGenerator < Rails::Generator::NamedBase
       m.directory "#{plugin_path}/lib"
       m.directory "#{plugin_path}/tasks"
       m.directory "#{plugin_path}/spec"
+      m.directory "#{plugin_path}/features"
+      m.directory "#{plugin_path}/features/step_definitions"
+      m.directory "#{plugin_path}/features/support"
+      m.directory "#{plugin_path}/config"
 
       m.template "plugin:README",       "#{plugin_path}/README"
       m.template "plugin:init.rb",      "#{plugin_path}/init.rb"
@@ -23,8 +27,13 @@ class RspecPluginGenerator < Rails::Generator::NamedBase
       m.template "Rakefile",            "#{plugin_path}/Rakefile"
       m.template "plugin:plugin.rb",    "#{plugin_path}/lib/#{file_name}.rb"
       m.template "plugin:tasks.rake",   "#{plugin_path}/tasks/#{file_name}_tasks.rake"
-      m.template "spec_helper.rb",      "#{plugin_path}/spec/spec_helper.rb"
-      m.template "spec.rb",             "#{plugin_path}/spec/#{file_name}_spec.rb"
+      m.template "spec/spec_helper.rb", "#{plugin_path}/spec/spec_helper.rb"
+      m.template "spec/spec.rb",        "#{plugin_path}/spec/#{file_name}_spec.rb"
+      m.template "spec/factories.rb",   "#{plugin_path}/spec/factories.rb"
+      m.template "features/feature.feature",           "#{plugin_path}/features/#{file_name}.feature"
+      m.template "features/step_definitions/steps.rb", "#{plugin_path}/features/step_definitions/#{file_name}_steps.rb"
+      m.template "features/support/plugin.rb",         "#{plugin_path}/features/support/plugin.rb"
+      m.template "cucumber.yml",        "#{plugin_path}/config/cucumber.yml"
 
       if @with_generator
         m.directory "#{plugin_path}/generators"
