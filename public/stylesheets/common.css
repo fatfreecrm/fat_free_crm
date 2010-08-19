@@ -39,6 +39,8 @@
   .check_box input {
     position: relative;
     top: -3px; }
+  .check_box label {
+    font-size: 11px; }
 
 .tabless {
   margin: auto;
