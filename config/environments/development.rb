@@ -23,5 +23,9 @@ if File.exists?(File.join(RAILS_ROOT, 'tmp', 'debug.txt'))
   File.delete(File.join(RAILS_ROOT, 'tmp', 'debug.txt'))
 end
 
-require 'ap'
+# Optionally load 'awesome_print' for debugging in development mode.
+begin
+  require 'ap'
+rescue LoadError
+end
 
