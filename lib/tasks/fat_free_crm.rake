@@ -83,6 +83,7 @@ namespace :crm do
     end
     if proceed
       Rake::Task["db:migrate:reset"].invoke
+      Rake::Task["db:migrate:plugins"].invoke
       Rake::Task["crm:settings:load"].invoke
       Rake::Task["crm:setup:admin"].invoke
     end
@@ -191,3 +192,4 @@ namespace :crm do
     end
   end
 end
+
