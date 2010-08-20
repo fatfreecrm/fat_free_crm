@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 class ApplicationController < ActionController::Base
-  helper(application_helpers)
+  #~ helper(application_helpers)
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
 

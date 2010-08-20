@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -31,16 +31,17 @@ module LeadsHelper
 
   #----------------------------------------------------------------------------
   def link_to_convert(lead)
-    link_to_remote(t(:convert),
+    link_to(t(:convert),
       :method => :get,
       :url    => convert_lead_path(lead),
-      :with   => "{ previous: crm.find_form('edit_lead') }"
+      :with   => "{ previous: crm.find_form('edit_lead') }",
+      :remote => true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_reject(lead)
-    link_to_remote(t(:reject) + "!", :method => :put, :url => reject_lead_path(lead))
+    link_to(t(:reject) + "!", :method => :put, :url => reject_lead_path(lead), :remote => true)
   end
 
   #----------------------------------------------------------------------------
@@ -69,7 +70,7 @@ module LeadsHelper
     checked = (session[:filter_by_lead_status] ? session[:filter_by_lead_status].split(",").include?(status.to_s) : count.to_i > 0)
     check_box_tag("status[]", status, checked, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
   end
-  
+
   # Returns default permissions intro for leads
   #----------------------------------------------------------------------------
   def get_lead_default_permissions_intro(access)
@@ -78,7 +79,7 @@ module LeadsHelper
       when "Public" then t(:lead_permissions_intro_public, t(:opportunity_small))
       when "Shared" then t(:lead_permissions_intro_shared, t(:opportunity_small))
     end
-  end  
+  end
 
   # Returns default permissions intro for leads.
   #----------------------------------------------------------------------------

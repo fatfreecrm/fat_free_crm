@@ -25,10 +25,11 @@ module Admin::ApplicationHelper
   def link_to_edit(model)
     name = model.class.name.underscore.gsub('/','_')
 
-    link_to_remote(t(:edit),
+    link_to(t(:edit),
       :method => :get,
       :url    => send("edit_admin_#{name}_path", model),
-      :with   => "{ previous: crm.find_form('edit_admin_#{name}') }"
+      :with   => "{ previous: crm.find_form('edit_admin_#{name}') }",
+      :remote => true
     )
   end
 
@@ -36,10 +37,11 @@ module Admin::ApplicationHelper
   def link_to_delete(model)
     name = model.class.name.underscore.gsub('/','_')
 
-    link_to_remote(t(:delete) + "!",
+    link_to(t(:delete) + "!",
       :method => :delete,
       :url    => send("admin_#{name}_path", model),
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1"),
+      :remote => true
     )
   end
 

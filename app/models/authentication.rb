@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -18,6 +18,10 @@
 class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord model.
   authenticate_with User
   after_save :check_if_suspended
+
+  def to_key
+    id ? id : nil
+  end
 
   private
 
@@ -55,5 +59,4 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
   def check_if_suspended
     self.errors.add_to_base(I18n.t(:msg_account_suspended)) if self.user.suspended?
   end
-
 end

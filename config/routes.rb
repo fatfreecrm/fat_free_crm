@@ -1,5 +1,6 @@
 CrossroadsCrm::Application.routes.draw do
 
+  root :to => 'home#index'
   match '/' => 'home#index'
 
   resource :authentication

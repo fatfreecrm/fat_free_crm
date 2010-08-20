@@ -30,19 +30,19 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: #df9;
+  background: #ddff99;
   color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {
-  background: #df9;
+  background: #ddff99;
   border: 5px limegreen solid;
   font-size: 14px;
   margin: 50px auto;
   padding: 50px;
   width: 450px;
-  -moz-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999;
-  -webkit-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999; }
+  -moz-box-shadow: 5px 5px 15px #999999, -5px 0px 15px #999999;
+  -webkit-box-shadow: 5px 5px 15px #999999, -5px 0px 15px #999999; }
 
 div.auto_complete {
   background: white;
@@ -78,22 +78,22 @@ div.auto_complete {
   font-size: 11px;
   margin: 6px 0px 0px 0px; }
   .pagination a, .pagination span {
-    padding: .2em .5em;
+    padding: 0.2em 0.5em;
     display: block;
     float: left;
     margin: 0px 2px 0px 0px; }
   .pagination span.disabled {
-    color: #999;
-    border: 1px solid #DDD; }
+    color: #999999;
+    border: 1px solid #dddddd; }
   .pagination span.current {
     font-weight: bold;
-    background: #2E6AB1;
+    background: #2e6ab1;
     color: white;
-    border: 1px solid #2E6AB1; }
+    border: 1px solid #2e6ab1; }
   .pagination a {
     text-decoration: none;
-    color: #105CB6;
-    border: 1px solid #9AAFE5; }
+    color: #105cb6;
+    border: 1px solid #9aafe5; }
     .pagination a:hover, .pagination a:focus {
       color: navy;
       background: lightyellow;

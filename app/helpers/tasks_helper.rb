@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -39,20 +39,22 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_edit(task, bucket)
-    link_to_remote(t(:edit),
+    link_to(t(:edit),
       :url    => edit_task_path(task),
       :method => :get,
-      :with   => "{ bucket: '#{bucket}', view: '#{@view}', previous: crm.find_form('edit_task') }"
+      :with   => "{ bucket: '#{bucket}', view: '#{@view}', previous: crm.find_form('edit_task') }",
+      :remote => true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_task_delete(task, bucket)
-    link_to_remote(t(:delete) + "!",
+    link_to(t(:delete) + "!",
       :url    => task_path(task),
       :method => :delete,
       :with   => "{ bucket: '#{bucket}', view: '#{@view}' }",
-      :before => visual_effect(:highlight, dom_id(task), :startcolor => "#ffe4e1")
+      :before => visual_effect(:highlight, dom_id(task), :startcolor => "#ffe4e1"),
+      :remote => true
     )
   end
 

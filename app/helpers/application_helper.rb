@@ -47,9 +47,10 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-      link_to_remote("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}",
+      link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}",
         :url => url_for(:controller => :home, :action => :toggle, :id => id),
-        :before => "crm.flip_subtitle(this)"
+        :before => "crm.flip_subtitle(this)",
+        :remote => true
       ), :class => "subtitle")
   end
 
@@ -85,10 +86,11 @@ module ApplicationHelper
     text = (arrow_for(id) + text) unless options[:plain]
     related = (options[:related] ? ", related: '#{options[:related]}'" : "")
 
-    link_to_remote(text,
+    link_to(text,
       :url    => url,
       :method => :get,
-      :with   => "{ cancel: Element.visible('#{id}')#{related} }"
+      :with   => "{ cancel: Element.visible('#{id}')#{related} }",
+      :remote => true
     )
   end
 
@@ -100,20 +102,22 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_edit(model)
     name = model.class.name.underscore.downcase
-    link_to_remote(t(:edit),
+    link_to(t(:edit),
       :method => :get,
       :url    => send("edit_#{name}_path", model),
-      :with   => "{ previous: crm.find_form('edit_#{name}') }"
+      :with   => "{ previous: crm.find_form('edit_#{name}') }",
+      :remote => true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_delete(model)
     name = model.class.name.underscore.downcase
-    link_to_remote(t(:delete) + "!",
+    link_to(t(:delete) + "!",
       :method => :delete,
       :url    => send("#{name}_path", model),
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1"),
+      :remote => true
     )
   end
 
@@ -123,17 +127,22 @@ module ApplicationHelper
     current_url = (request.xhr? ? request.referer : request.request_uri)
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
-    link_to_remote(t(:discard),
+    link_to(t(:discard),
       :method => :post,
       :url    => url_for(:controller => parent, :action => :discard, :id => parent_id),
       :with   => "{ attachment: '#{model.class.name}', attachment_id: #{model.id} }",
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1"),
+      :remote => true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_cancel(url)
-    link_to_remote(t(:cancel), :url => url, :method => :get, :with => "{ cancel: true }")
+    link_to(t(:cancel),
+      :url => url,
+      :method => :get,
+      :with => "{ cancel: true }",
+      :remote => true)
   end
 
   #----------------------------------------------------------------------------

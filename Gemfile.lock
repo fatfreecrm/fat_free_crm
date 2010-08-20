@@ -31,7 +31,7 @@ GEM
     acts-as-taggable-on (2.0.6)
     arel (0.4.0)
       activesupport (>= 3.0.0.beta)
-    authlogic (2.1.5)
+    authlogic (2.1.6)
       activesupport
     builder (2.1.2)
     erubis (2.6.6)
@@ -49,6 +49,9 @@ GEM
       treetop (>= 1.4.5)
     mime-types (1.16)
     mysql (2.8.1)
+    paperclip (2.3.3)
+      activerecord
+      activesupport
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.9)
@@ -84,10 +87,11 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on
-  authlogic
+  authlogic (>= 2.1.6)
   faker (= 0.3.1)
   haml
   mysql
+  paperclip
   rails (>= 3.0.0.rc)
   test-unit (= 1.2.3)
   will_paginate (>= 3.0.pre)
