@@ -28,6 +28,7 @@ GEM
       activemodel (= 3.0.0.rc)
       activesupport (= 3.0.0.rc)
     activesupport (3.0.0.rc)
+    acts-as-taggable-on (2.0.6)
     arel (0.4.0)
       activesupport (>= 3.0.0.beta)
     authlogic (2.1.5)
@@ -76,16 +77,17 @@ GEM
     treetop (1.4.8)
       polyglot (>= 0.3.1)
     tzinfo (0.3.22)
-    will_paginate (2.3.14)
+    will_paginate (3.0.pre2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on
   authlogic
   faker (= 0.3.1)
   haml
   mysql
-  rails (= 3.0.0.rc)
+  rails (>= 3.0.0.rc)
   test-unit (= 1.2.3)
-  will_paginate (= 2.3.14)
+  will_paginate (>= 3.0.pre)
