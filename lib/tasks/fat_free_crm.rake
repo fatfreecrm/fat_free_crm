@@ -31,7 +31,7 @@ namespace :crm do
     desc "Load default application settings"
     task :load => :environment do
       plugin = ENV["PLUGIN"]
-      yaml = Rails.root + (plugin ? "/vendor/plugins/#{plugin}" : "") + "/config/settings.yml"
+      yaml = File.join(Rails.root, (plugin ? "/vendor/plugins/#{plugin}" : "") + "/config/settings.yml")
       begin
         settings = YAML.load_file(yaml)
       rescue
