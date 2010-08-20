@@ -20,10 +20,10 @@ CrossroadsCrm::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
-  if File.exists?(File.join(RAILS_ROOT, 'tmp', 'debug.txt'))
+  if File.exists?(File.join(Rails.root, 'tmp', 'debug.txt'))
     require 'ruby-debug'
     Debugger.wait_connection = true
     Debugger.start_remote
-    File.delete(File.join(RAILS_ROOT, 'tmp', 'debug.txt'))
+    File.delete(File.join(Rails.root, 'tmp', 'debug.txt'))
   end
 end
