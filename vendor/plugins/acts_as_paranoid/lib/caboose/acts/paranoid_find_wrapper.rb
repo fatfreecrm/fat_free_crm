@@ -50,6 +50,8 @@ module Caboose #:nodoc:
 
       module ClassMethods
         def acts_as_paranoid_with_find_wrapper(options = {})
+          include InstanceMethods
+
           unless paranoid? # don't let AR call this twice
             acts_as_paranoid_without_find_wrapper(options)
             class << self
@@ -57,7 +59,6 @@ module Caboose #:nodoc:
               alias_method :validate_find_options_without_find_wrapper, :validate_find_options
             end
           end
-          include InstanceMethods
         end
       end
 
@@ -69,15 +70,15 @@ module Caboose #:nodoc:
         module ClassMethods
           # This is a wrapper for the regular "find" so you can pass acts_as_paranoid related
           # options and determine which finder to call.
-          def find(*args)
-            options = args.extract_options!
-            # Determine who to call.
-            finder_option = VALID_PARANOID_FIND_OPTIONS.detect { |key| options.delete(key) } || :without_find_wrapper
-            finder_method = "find_#{finder_option}".to_sym
-            # Put back the options in the args now that they don't include the extended keys.
-            args << options
-            send(finder_method, *args)
-          end
+          # def find(*args)
+          #   options = args.extract_options!
+          #   # Determine who to call.
+          #   finder_option = VALID_PARANOID_FIND_OPTIONS.detect { |key| options.delete(key) } || :without_find_wrapper
+          #   finder_method = "find_#{finder_option}".to_sym
+          #   # Put back the options in the args now that they don't include the extended keys.
+          #   args << options
+          #   send(finder_method, *args)
+          # end
 
           protected
 

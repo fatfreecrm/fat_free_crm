@@ -53,6 +53,8 @@ module Caboose #:nodoc:
 
       module ClassMethods
         def acts_as_paranoid(options = {})
+          include InstanceMethods
+
           unless paranoid? # don't let AR call this twice
             cattr_accessor :deleted_attribute
             self.deleted_attribute = options[:with] || :deleted_at
@@ -63,7 +65,6 @@ module Caboose #:nodoc:
               alias_method :delete_all!,                :delete_all
             end
           end
-          include InstanceMethods
         end
 
         def paranoid?
