@@ -20,8 +20,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
 
-  protect_from_forgery
-
   before_filter :set_context
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"

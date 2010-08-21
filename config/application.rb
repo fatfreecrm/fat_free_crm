@@ -50,5 +50,7 @@ module CrossroadsCrm
     config.action_mailer.default_content_type = "text/plain"
     config.action_mailer.delivery_method = :sendmail
     config.action_mailer.sendmail_settings = { :location  => "/usr/sbin/sendmail", :arguments => "-i -t" }
+
+    config.action_controller.allow_forgery_protection = false
   end
 end
