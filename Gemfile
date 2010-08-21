@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '>=3.0.0.rc'
 
+gem 'acts_as_commentable'
 gem 'acts-as-taggable-on'
 gem 'authlogic', '>=2.1.6'
 gem 'faker', '0.3.1'

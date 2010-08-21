@@ -29,6 +29,7 @@ GEM
       activesupport (= 3.0.0.rc)
     activesupport (3.0.0.rc)
     acts-as-taggable-on (2.0.6)
+    acts_as_commentable (3.0.0)
     archive-tar-minitar (0.5.2)
     arel (0.4.0)
       activesupport (>= 3.0.0.beta)
@@ -101,6 +102,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on
+  acts_as_commentable
   authlogic (>= 2.1.6)
   faker (= 0.3.1)
   haml
