@@ -90,4 +90,3 @@ module FatFreeCRM
 
   end # class Plugin
 end # module FatFreeCRM
-

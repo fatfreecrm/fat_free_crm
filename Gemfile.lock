@@ -29,11 +29,13 @@ GEM
       activesupport (= 3.0.0.rc)
     activesupport (3.0.0.rc)
     acts-as-taggable-on (2.0.6)
+    archive-tar-minitar (0.5.2)
     arel (0.4.0)
       activesupport (>= 3.0.0.beta)
     authlogic (2.1.6)
       activesupport
     builder (2.1.2)
+    columnize (0.3.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faker (0.3.1)
@@ -43,6 +45,8 @@ GEM
       rubyforge (>= 2.0.4)
     i18n (0.4.1)
     json_pure (1.4.3)
+    linecache19 (0.5.11)
+      ruby_core_source (>= 0.1.4)
     mail (2.2.5)
       activesupport (>= 2.3.6)
       mime-types
@@ -72,6 +76,16 @@ GEM
       rake (>= 0.8.3)
       thor (~> 0.14.0)
     rake (0.8.7)
+    ruby-debug-base19 (0.11.23)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby_core_source (0.1.4)
+      archive-tar-minitar (>= 0.5.2)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     test-unit (1.2.3)
@@ -80,7 +94,7 @@ GEM
     treetop (1.4.8)
       polyglot (>= 0.3.1)
     tzinfo (0.3.22)
-    will_paginate (3.0.pre2)
+    will_paginate (2.3.14)
 
 PLATFORMS
   ruby
@@ -93,5 +107,6 @@ DEPENDENCIES
   mysql
   paperclip
   rails (>= 3.0.0.rc)
+  ruby-debug19
   test-unit (= 1.2.3)
-  will_paginate (>= 3.0.pre)
+  will_paginate (= 2.3.14)

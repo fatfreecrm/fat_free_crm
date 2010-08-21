@@ -1,5 +1,0 @@
-= acts_as_paranoid
-
-Overrides some basic methods for the current model so that calling #destroy sets a 'deleted_at' field to the current timestamp.  ActiveRecord is required.
-
-http://github.com/technoweenie/acts_as_paranoid

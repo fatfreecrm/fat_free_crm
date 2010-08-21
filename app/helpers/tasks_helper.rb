@@ -39,8 +39,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_edit(task, bucket)
-    link_to(t(:edit),
-      :url    => edit_task_path(task),
+    link_to(t(:edit), edit_task_path(task),
       :method => :get,
       :with   => "{ bucket: '#{bucket}', view: '#{@view}', previous: crm.find_form('edit_task') }",
       :remote => true
@@ -49,8 +48,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_delete(task, bucket)
-    link_to(t(:delete) + "!",
-      :url    => task_path(task),
+    link_to(t(:delete) + "!", task_path(task),
       :method => :delete,
       :with   => "{ bucket: '#{bucket}', view: '#{@view}' }",
       :before => visual_effect(:highlight, dom_id(task), :startcolor => "#ffe4e1"),

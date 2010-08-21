@@ -21,19 +21,18 @@ module LeadsHelper
   #----------------------------------------------------------------------------
   def stars_for(lead)
     if lead.rating == RATING_STARS
-      "&#9733;" * RATING_STARS
+      "&#9733;".html_safe * RATING_STARS
     elsif lead.rating.nil? || lead.rating == 0
-      %(<font color="gainsboro">#{"&#9733;" * RATING_STARS}</font>)
+      %(<font color="gainsboro">#{"&#9733;" * RATING_STARS}</font>).html_safe
     else
-      "&#9733;" * lead.rating + %(<font color="gainsboro">#{"&#9733;" * (RATING_STARS - lead.rating)}</font>)
+      "&#9733;".html_safe * lead.rating + %(<font color="gainsboro">#{"&#9733;" * (RATING_STARS - lead.rating)}</font>).html_safe
     end
   end
 
   #----------------------------------------------------------------------------
   def link_to_convert(lead)
-    link_to(t(:convert),
+    link_to(t(:convert), convert_lead_path(lead),
       :method => :get,
-      :url    => convert_lead_path(lead),
       :with   => "{ previous: crm.find_form('edit_lead') }",
       :remote => true
     )
@@ -41,12 +40,12 @@ module LeadsHelper
 
   #----------------------------------------------------------------------------
   def link_to_reject(lead)
-    link_to(t(:reject) + "!", :method => :put, :url => reject_lead_path(lead), :remote => true)
+    link_to(t(:reject) + "!", reject_lead_path(lead), :method => :put, :remote => true)
   end
 
   #----------------------------------------------------------------------------
   def confirm_reject(lead)
-    question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>)
+    question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>).html_safe
     yes = link_to(t(:yes_button), reject_lead_path(lead), :method => :put)
     no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
     update_page do |page|
@@ -68,7 +67,7 @@ module LeadsHelper
   #----------------------------------------------------------------------------
   def lead_status_checbox(status, count)
     checked = (session[:filter_by_lead_status] ? session[:filter_by_lead_status].split(",").include?(status.to_s) : count.to_i > 0)
-    check_box_tag("status[]", status, checked, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+    check_box_tag("status[]", status, checked, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/'status=' + $$('input[name='status[]']').findAll(function (el) { return el.checked }).pluck('value')/))
   end
 
   # Returns default permissions intro for leads

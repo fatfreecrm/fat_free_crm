@@ -28,8 +28,7 @@ class AjaxWillPaginate < WillPaginate::LinkRenderer
   # like /controller?page=N
   #----------------------------------------------------------------------------
   def page_link(page, text, attributes = {})
-    @template.link_to(text, {
-      :url     => url_for(page).sub(/(#{Setting.base_url}\/\w+)\/[^\?]+\?/, "\\1?"),
+    @template.link_to(text, url_for(page).sub(/(#{Setting.base_url}\/\w+)\/[^\?]+\?/, "\\1?"), {
       :method  => :get,
       :loading => "$('paging').show()",
       :success => "$('paging').hide()",

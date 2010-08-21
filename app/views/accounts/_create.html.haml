@@ -1,4 +1,5 @@
-- form_for(@account, :html => one_submit_only(:account), :remote => true) do |f|
+
+= form_for(@account, :html => one_submit_only(:account), :remote => true) do |f|
   = link_to_close new_account_path
   = hidden_field_tag "account[user_id]", @current_user.id
   = f.error_messages

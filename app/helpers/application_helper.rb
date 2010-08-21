@@ -47,10 +47,9 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-      link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}",
-        :url => url_for(:controller => :home, :action => :toggle, :id => id),
-        :before => "crm.flip_subtitle(this)",
-        :remote => true
+      link_to_remote("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
+        :url    => url_for(:controller => :home, :action => :toggle, :id => id),
+        :before => "crm.flip_subtitle(this)"
       ), :class => "subtitle")
   end
 
@@ -63,7 +62,7 @@ module ApplicationHelper
 
     html = "<br />"
     html << content_tag(:div, link_to(t(select_id), "#", :id => select_id), :class => "subtitle_tools")
-    html << content_tag(:div, "&nbsp;|&nbsp;", :class => "subtitle_tools")
+    html << content_tag(:div, "&nbsp;|&nbsp;".html_safe, :class => "subtitle_tools")
     html << content_tag(:div, link_to_inline(create_id, create_url, :related => dom_id(related), :text=> t(create_id)), :class => "subtitle_tools")
     html << content_tag(:div, t(assets), :class => :subtitle, :id => :"create_#{asset}_title")
     html << content_tag(:div, "", :class => :remote, :id => create_id, :style => "display:none;")
@@ -86,38 +85,35 @@ module ApplicationHelper
     text = (arrow_for(id) + text) unless options[:plain]
     related = (options[:related] ? ", related: '#{options[:related]}'" : "")
 
-    link_to(text,
-      :url    => url,
+    link_to_remote(text,
+      :url => url,
       :method => :get,
-      :with   => "{ cancel: Element.visible('#{id}')#{related} }",
-      :remote => true
+      :with   => "{ cancel: Element.visible('#{id}')#{related} }"
     )
   end
 
   #----------------------------------------------------------------------------
   def arrow_for(id)
-    content_tag(:span, "&#9658;", :id => "#{id}_arrow", :class => :arrow)
+    content_tag(:span, "&#9658;".html_safe, :id => "#{id}_arrow", :class => :arrow)
   end
 
   #----------------------------------------------------------------------------
   def link_to_edit(model)
     name = model.class.name.underscore.downcase
-    link_to(t(:edit),
+    link_to_remote(t(:edit),
+      :url    => url_for(:id => model, :action => :edit),
       :method => :get,
-      :url    => send("edit_#{name}_path", model),
-      :with   => "{ previous: crm.find_form('edit_#{name}') }",
-      :remote => true
+      :with   => "{ previous: crm.find_form('edit_#{name}') }"
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_delete(model)
     name = model.class.name.underscore.downcase
-    link_to(t(:delete) + "!",
+    link_to_remote(t(:delete) + "!",
+      :url    => url_for(model),
       :method => :delete,
-      :url    => send("#{name}_path", model),
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1"),
-      :remote => true
+      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
 
@@ -127,22 +123,20 @@ module ApplicationHelper
     current_url = (request.xhr? ? request.referer : request.request_uri)
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
-    link_to(t(:discard),
-      :method => :post,
+    link_to_remote(t(:discard),
       :url    => url_for(:controller => parent, :action => :discard, :id => parent_id),
+      :method => :post,
       :with   => "{ attachment: '#{model.class.name}', attachment_id: #{model.id} }",
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1"),
-      :remote => true
+      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_cancel(url)
-    link_to(t(:cancel),
-      :url => url,
+    link_to_remote(t(:cancel),
+      :url    => url,
       :method => :get,
-      :with => "{ cancel: true }",
-      :remote => true)
+      :with   => "{ cancel: true }")
   end
 
   #----------------------------------------------------------------------------
@@ -214,7 +208,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def confirm_delete(model)
-    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>)
+    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>).html_safe
     yes = link_to(t(:yes_button), model, :method => :delete)
     no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
     update_page do |page|
