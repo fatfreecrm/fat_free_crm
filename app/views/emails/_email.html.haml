@@ -8,10 +8,10 @@
       = link_to_delete(email)
 
     %tt
-      = "To " << link_to(email.user.full_name, user_path(email.user))
-      = "from " << link_to_email(email.sent_from) << ", sent on "
+      = "To ".html_safe << link_to(email.user.full_name, user_path(email.user))
+      = "from ".html_safe << link_to_email(email.sent_from) << ", sent on ".html_safe
       = l(email.sent_at, :format => :mmddhhss)
-      = " | " + link_to_function(email.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
+      = " | ".html_safe + link_to_function(email.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
 
     %dt{ hidden_if(email.expanded?), :id => dom_id(email, :truncated) }
       %p

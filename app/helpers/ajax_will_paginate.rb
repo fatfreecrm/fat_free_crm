@@ -15,24 +15,37 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class AjaxWillPaginate < WillPaginate::LinkRenderer
+class AjaxWillPaginate < WillPaginate::ViewHelpers::LinkRenderer
 
   def prepare(collection, options, template)
     @remote = options.delete(:remote) || {}
     super
   end
 
-  protected
+protected
+
+  def page_number(page)
+    unless page == current_page
+      link(page, page, :rel => rel_value(page))
+    else
+      tag(:span, page, :class => 'current')
+    end
+  end
+
+private
+
   # "Ajaxify" page links by using :remote => true. Also remove the
   # action part from the url, so it always points to :index and looks
   # like /controller?page=N
   #----------------------------------------------------------------------------
-  def page_link(page, text, attributes = {})
-    @template.link_to(text, url_for(page).sub(/(#{Setting.base_url}\/\w+)\/[^\?]+\?/, "\\1?"), {
+  def link(text, target, attributes = {})
+    # TODO: figure out where the next and previous links are defined
+    text = text.html_safe if String === text
+    @template.link_to_remote(text, {
+      :url     => url(target).sub(/(#{Setting.base_url}\/\w+)\/[^\?]+\?/, "\\1?"),
       :method  => :get,
       :loading => "$('paging').show()",
-      :success => "$('paging').hide()",
-      :remote  => true
+      :success => "$('paging').hide()"
     }.merge(@remote))
   end
 

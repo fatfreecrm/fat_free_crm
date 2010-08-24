@@ -60,10 +60,10 @@ module ApplicationHelper
     select_id  = :"select_#{asset}"
     create_url = controller.send(:"new_#{asset}_path")
 
-    html = "<br />"
+    html = "<br />".html_safe
     html << content_tag(:div, link_to(t(select_id), "#", :id => select_id), :class => "subtitle_tools")
     html << content_tag(:div, "&nbsp;|&nbsp;".html_safe, :class => "subtitle_tools")
-    html << content_tag(:div, link_to_inline(create_id, create_url, :related => dom_id(related), :text=> t(create_id)), :class => "subtitle_tools")
+    html << content_tag(:div, link_to_inline(create_id, create_url, :related => dom_id(related), :text => t(create_id)), :class => "subtitle_tools")
     html << content_tag(:div, t(assets), :class => :subtitle, :id => :"create_#{asset}_title")
     html << content_tag(:div, "", :class => :remote, :id => create_id, :style => "display:none;")
   end
@@ -307,7 +307,7 @@ module ApplicationHelper
     if model.avatar
       image_tag(model.avatar.image.url(Avatar.styles[args[:size]]), args)
     elsif model.email
-      gravatar(model.email, { :default => default_avatar_url }.merge(args))
+      image_tag(Gravatar.new(model.email, :default => default_avatar_url).image_url, args)
     else
       image_tag("avatar.jpg", args)
     end
@@ -317,7 +317,7 @@ module ApplicationHelper
   # gravatar plugin (see vendor/plugins/gravatar/lib/gravatar.rb)
   #----------------------------------------------------------------------------
   def gravatar_for(model, args = {})
-    super(model, { :default => default_avatar_url }.merge(args))
+    image_tag(Gravatar.new(model.email, :default => default_avatar_url).image_url, args)
   end
 
   #----------------------------------------------------------------------------
