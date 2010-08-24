@@ -3,6 +3,7 @@
 #
 # Usage (add the following to your deploy.rb):
 #
+#    load 'recipes/prompt'
 #    load 'recipes/stack'
 #    set :mysql_version, "2.8.1" (if different to default below)
 #    set :gems_to_install, []
@@ -14,7 +15,7 @@
 #
 
 # 
-# Other useful commands
+# Useful commands
 #
 # cap stack - install operating system packages and setup rails folders
 # cap update:os - runs yum update
@@ -24,7 +25,7 @@
 
 #
 # Defaults
-#  - should be overriden in deploy.rb but MUST come after load 'recipes/stack'
+#  - can be overriden or appended in deploy.rb but MUST come after load 'recipes/stack'
 #
 set :yum_packages_to_install, "aspell gcc gcc-c++ bzip2-devel zlib-devel make openssl-devel httpd-devel \
 libstdc++-devel freeimage-devel clamav-devel mysql-devel readline-devel ruby ruby-rdoc ruby-ri ruby-irb \
@@ -107,7 +108,7 @@ namespace 'files' do
     run "if [ -d #{release_path}/ ]; then chmod -R 755 #{release_path}/; fi"
   end
 
-  desc "Create the database.yml file"
+  desc "Create the mysql database and database.yml"
   task :create_database_yml do
     prompt_with_default("Database name", :db_name, "gh3_preview")
     prompt_with_default("Database username", :db_username, "gh3_preview")
@@ -127,14 +128,9 @@ production:
   timeout:  5
     EOF
     put database_yml, "#{deploy_to}/shared/database.yml"
-    # TODO: extend this to add mysql user/password with these details
-    #run("grep \"PASSWORD(\" /etc/mysql.d/grants.sql | cut -d \"'\" -f 6") do |channel, stream, data|
-    #  set :pass, data
-    #end
-    #run "echo #{pass}"
-    # now login and set the new user password
-    #CREATE DATABASE <db_name>;
-    #
+    run("grep \"PASSWORD(\" /etc/mysql.d/grants.sql | cut -d \"'\" -f 6") { |channel, stream, data| set :pass, data }
+    run "mysql -u root --password=#{pass.chomp} -e 'CREATE database #{db_name};'"
+    run "mysql -u root --password=#{pass.chomp} -e \"GRANT ALL ON #{db_name}.* TO '#{db_username}'@'#{db_host}' IDENTIFIED BY '#{db_password}';\""
   end
   
   desc "Ensure the database.yml file is linked to current/config"

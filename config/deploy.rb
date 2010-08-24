@@ -9,10 +9,10 @@ set :default_stage, "preview"
 set :passenger_version, "2.2.15"
 
 #
-# To get going from scratch
+# To get going from scratch:
 #
 # cap deploy:cold
-# Then either "cap crm:demo" OR "cap crm:settings"
+# cap crm:settings ( or cap crm:demo )
 # cap crm:setup:admin
 # 
 
