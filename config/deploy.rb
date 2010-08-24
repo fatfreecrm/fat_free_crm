@@ -1,22 +1,20 @@
-set :application, "fat-free-crm"
-
 require 'capistrano/ext/multistage'
 require 'capistrano_colors'
 load 'recipes/prompt'
 load 'recipes/stack'
 load 'recipes/passenger'
 
+set :application, "fat-free-crm"
 set :default_stage, "preview"
 set :passenger_version, "2.2.15"
 
-namespace :deploy do
-
-  desc "Update gems using rake gems:install"
-  task :install_gems do
-    run "cd #{release_path} && RAILS_ENV=production rake gems:install"
-  end
-
-end
+#
+# To get going from scratch
+#
+# cap deploy:cold
+# Then either "cap crm:demo" OR "cap crm:settings"
+# cap crm:setup:admin
+# 
 
 namespace :crm do
 
@@ -42,6 +40,3 @@ namespace :crm do
   end
 
 end
-
-after "deploy:update_code", "deploy:install_gems"
-after "deploy:update_code", "files:symlink_database_yml"

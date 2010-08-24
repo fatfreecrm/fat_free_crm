@@ -42,7 +42,7 @@ namespace :stack do
   task :default do
     update.os
     install.default
-    files.setup
+    deploy.setup
     files.create_database_yml
     files.set_permissions
   end
@@ -97,25 +97,14 @@ namespace :update do
 end
 
 namespace 'files' do
-
-  desc "Create shared directories"
-  task :setup do
-    run "if [ ! -d #{deploy_to}/shared ]; then mkdir --parents #{deploy_to}/shared; fi"
-    run "if [ ! -d #{deploy_to}/shared/pids ]; then mkdir --parents #{deploy_to}/shared/pids; fi"
-    run "if [ ! -d #{deploy_to}/shared/log ]; then mkdir --parents #{deploy_to}/shared/log; fi"
-    run "if [ ! -d #{deploy_to}/shared/.ruby_inline ]; then mkdir --parents #{deploy_to}/shared/.ruby_inline; fi"
-    run "if [ ! -d #{deploy_to}/shared/system ]; then mkdir --parents #{deploy_to}/shared/system; fi"
-    run "if [ ! -d #{deploy_to}/releases ]; then mkdir --parents #{deploy_to}/releases; fi"
-  end
   
   desc "Setting proper permissions on shared directory"
   task :set_permissions do
-    # shared folder
     run "chown -R apache:apache #{deploy_to}/shared/"
     run "chmod -R 755 #{deploy_to}/shared/"
     # during deployments
-    run "if [ #{release_path}/ ]; then chown -R apache:apache #{release_path}/; fi"
-    run "if [ #{release_path}/ ]; then chmod -R 755 #{release_path}/; fi"
+    run "if [ -d #{release_path}/ ]; then chown -R apache:apache #{release_path}/; fi"
+    run "if [ -d #{release_path}/ ]; then chmod -R 755 #{release_path}/; fi"
   end
 
   desc "Create the database.yml file"
@@ -155,9 +144,19 @@ production:
   
 end
 
+namespace :deploy do
+
+  desc "Update gems using rake gems:install"
+  task :install_gems do
+    run "cd #{release_path} && RAILS_ENV=production rake gems:install"
+  end
+
+end
+
 #
 # Hooks
 #
 before "deploy:cold", "stack"
 after "deploy:update_code", "files:symlink_database_yml"
+after "deploy:update_code", "deploy:install_gems"
 before "deploy:symlink", "files:set_permissions"
