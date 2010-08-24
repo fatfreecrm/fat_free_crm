@@ -7,7 +7,7 @@
       %small #{t :image_help}
 
     %div #{t :image_file}:
-    - fields_for(Avatar) do |a|
+    = fields_for(Avatar) do |a|
       %div= a.file_field :image
 
     .buttonbar
