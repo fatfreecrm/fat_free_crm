@@ -86,7 +86,7 @@ module ApplicationHelper
     related = (options[:related] ? ", related: '#{options[:related]}'" : "")
 
     link_to_remote(text,
-      :url => url,
+      :url    => url,
       :method => :get,
       :with   => "{ cancel: Element.visible('#{id}')#{related} }"
     )
@@ -98,20 +98,20 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def link_to_edit(model)
+  def link_to_edit(model, params = {})
     name = model.class.name.underscore.downcase
     link_to_remote(t(:edit),
-      :url    => url_for(:id => model, :action => :edit),
+      :url    => params[:url] || url_for(:id => model, :action => :edit),
       :method => :get,
       :with   => "{ previous: crm.find_form('edit_#{name}') }"
     )
   end
 
   #----------------------------------------------------------------------------
-  def link_to_delete(model)
+  def link_to_delete(model, params = {})
     name = model.class.name.underscore.downcase
     link_to_remote(t(:delete) + "!",
-      :url    => url_for(model),
+      :url    => params[:url] || url_for(model),
       :method => :delete,
       :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
@@ -132,9 +132,9 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def link_to_cancel(url)
+  def link_to_cancel(url, params = {})
     link_to_remote(t(:cancel),
-      :url    => url,
+      :url    => params[:url] || url,
       :method => :get,
       :with   => "{ cancel: true }")
   end
@@ -207,9 +207,9 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def confirm_delete(model)
+  def confirm_delete(model, params = {})
     question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>).html_safe
-    yes = link_to(t(:yes_button), model, :method => :delete)
+    yes = link_to(t(:yes_button), params[:url] || model, :method => :delete)
     no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
     update_page do |page|
       page << "$('confirm').update($('menu').innerHTML)"
@@ -313,10 +313,10 @@ module ApplicationHelper
     end
   end
 
-  # Add default avatar image and invoke original :gravatar_for defined by the
-  # gravatar plugin (see vendor/plugins/gravatar/lib/gravatar.rb)
+  # Add default avatar image
   #----------------------------------------------------------------------------
   def gravatar_for(model, args = {})
+    args[:class] ||= "gravatar"
     image_tag(Gravatar.new(model.email, :default => default_avatar_url).image_url, args)
   end
 

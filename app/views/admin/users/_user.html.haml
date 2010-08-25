@@ -13,7 +13,7 @@
 
   .indentfull
     .tools{ invisible, :id => dom_id(user, :tools) }
-      = link_to_edit(user) << " | "
+      = link_to_edit(user, :url => edit_admin_user_path(user)) << " | "
 
       - if user.suspended?
         = link_to_reactivate(user) << " | "

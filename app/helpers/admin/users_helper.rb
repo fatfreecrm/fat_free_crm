@@ -17,30 +17,20 @@
 
 module Admin::UsersHelper
 
-  #~ #----------------------------------------------------------------------------
-  #~ def link_to_suspend(user)
-    #~ link_to(t(:suspend) + "!", :method => :put, :url => suspend_admin_user_path(user), :remote => true)
-  #~ end
+  #----------------------------------------------------------------------------
+  def link_to_suspend(user)
+    link_to(t(:suspend) + "!", :method => :put, :url => suspend_admin_user_path(user), :remote => true)
+  end
 
-  #~ #----------------------------------------------------------------------------
-  #~ def link_to_reactivate(user)
-    #~ name = user.awaits_approval? ? t(:approve) + "!" : t(:reactivate) + "!"
-    #~ link_to(name, :method => :put, :url => reactivate_admin_user_path(user), :remote => true)
-  #~ end
+  #----------------------------------------------------------------------------
+  def link_to_reactivate(user)
+    name = user.awaits_approval? ? t(:approve) + "!" : t(:reactivate) + "!"
+    link_to(name, :method => :put, :url => reactivate_admin_user_path(user), :remote => true)
+  end
 
-  #~ #----------------------------------------------------------------------------
-  #~ def link_to_confirm(user)
-    #~ link_to(t(:delete) + "?", :method => :get, :url => confirm_admin_user_path(user), :remote => true)
-  #~ end
-
-  #~ #----------------------------------------------------------------------------
-  #~ def link_to_delete(user)
-    #~ link_to(t(:yes_button),
-      #~ :method => :delete,
-      #~ :url => admin_user_path(user),
-      #~ :before => visual_effect(:highlight, dom_id(user), :startcolor => "#ffe4e1"),
-      #~ :remote => true
-    #~ )
-  #~ end
+  #----------------------------------------------------------------------------
+  def link_to_confirm(user)
+    link_to(t(:delete) + "?", :method => :get, :url => confirm_admin_user_path(user), :remote => true)
+  end
 
 end

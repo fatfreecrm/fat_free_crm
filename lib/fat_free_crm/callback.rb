@@ -61,7 +61,7 @@ module FatFreeCRM
     module Helper
       def hook(method, caller, context = {})
         data = FatFreeCRM::Callback.hook(method, caller, context)
-        caller.is_haml? ? data.join : data
+        caller.is_haml? ? data.join.html_safe : data
       end
     end # module Helper
 
