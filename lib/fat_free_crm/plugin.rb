@@ -15,6 +15,13 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
+Rails::Plugin.class_eval do
+  def initializer
+    ActiveSupport::Deprecation.warn "Rails::Plugin initializer is depricated use Railties instead"
+    self
+  end
+end
+
 module FatFreeCRM
   class Plugin
     @@list = {} # List of added plugins.
@@ -36,10 +43,11 @@ module FatFreeCRM
     # Preload other plugins that are required by the plugin being loaded.
     #--------------------------------------------------------------------------
     def dependencies(*plugins)
-      plugin_path = @initializer.configuration.plugin_paths.first
+      ActiveSupport::Deprecation.warn "Fat Free CRM Plugin dependencies are depricated, please use gem dependencies instead"
+
       plugins.each do |name|
-        plugin = Rails::Plugin.new("#{plugin_path}/#{name}")
-        plugin.load(@initializer)
+        plugin_path = File.join(Rails.root, 'vendor/plugins', name.to_s)
+        @initializer.require_dependency(File.join(plugin_path, 'init.rb')) if File.directory?(plugin_path)
       end
     end
 
@@ -71,9 +79,6 @@ module FatFreeCRM
       private :new  # For the outside world new plugins can only be created through self.register.
 
       def register(id, initializer = nil, &block)
-        if initializer && ENV['RAILS_ENV'] == "development"
-          initializer.configuration.cache_classes = true # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
-        end
         plugin = new(id, initializer)
         plugin.instance_eval(&block)            # Grab plugin properties.
         plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
