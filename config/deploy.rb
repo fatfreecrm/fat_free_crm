@@ -40,3 +40,13 @@ namespace :crm do
   end
 
 end
+
+namespace :git do
+  namespace :submodules do
+    task :update do
+      run "cd #{release_path} && git submodule init"
+      run "cd #{release_path} && git submodule update"
+    end
+  end
+end
+before 'deploy:finalize_update', 'git:submodules:update'
