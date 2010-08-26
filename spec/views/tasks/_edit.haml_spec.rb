@@ -13,14 +13,14 @@ describe "/tasks/edit.html.erb" do
 
   it "should render [edit task] form" do
     view.should_receive(:render).with(hash_including(:partial => "tasks/top_section"))
-    render "/tasks/_edit.html.haml"
+    render
 
     rendered.should have_tag("form[class=edit_task]")
   end
 
   [ "As Soon As Possible", "Today", "Tomorrow", "This Week", "Next Week", "Sometime Later" ].each do |day|
     it "should render move to [#{day}] link" do
-      render "/tasks/_edit.html.haml"
+      render
 
       rendered.should have_tag("a[onclick^=crm.reschedule]", :text => day)
     end
@@ -28,14 +28,14 @@ describe "/tasks/edit.html.erb" do
 
   it "should render background info if Settings request so" do
     Setting.background_info = [ :task ]
-    render "/tasks/_edit.html.haml"
+    render
 
     rendered.should have_tag("textarea[id=task_background_info]")
   end
 
   it "should not render background info if Settings do not request so" do
     Setting.background_info = []
-    render "/tasks/_edit.html.haml"
+    render
 
     rendered.should_not have_tag("textarea[id=task_background_info]")
   end

@@ -11,7 +11,7 @@ describe "/opportunities/index.js.rjs" do
   it "should render [opportunity] template with @opportunities collection if there are opportunities" do
     assigns[:opportunities] = [ Factory(:opportunity, :id => 42) ].paginate
 
-    render "/opportunities/index.js.rjs"
+    render
     rendered.should have_rjs("opportunities") do |rjs|
       with_tag("li[id=opportunity_#{42}]")
     end
@@ -21,7 +21,7 @@ describe "/opportunities/index.js.rjs" do
   it "should render [empty] template if @opportunities collection if there are no opportunities" do
     assigns[:opportunities] = [].paginate
 
-    render "/opportunities/index.js.rjs"
+    render
     rendered.should have_rjs("opportunities") do |rjs|
       with_tag("div[id=empty]")
     end

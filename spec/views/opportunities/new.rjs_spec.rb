@@ -14,14 +14,14 @@ describe "/opportunities/new.js.rjs" do
   end
  
   it "should toggle empty message div if it exists" do
-    render "opportunities/new.js.rjs"
+    render
 
     rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Opportunities index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-    render "opportunities/new.js.rjs"
+    render
 
     rendered.should include_text('crm.hide_form("options")')
   end
@@ -29,7 +29,7 @@ describe "/opportunities/new.js.rjs" do
   describe "new opportunity" do
     it "should render [new.html.haml] template into :create_opportunity div" do
       params[:cancel] = nil
-      render "opportunities/new.js.rjs"
+      render
     
       rendered.should have_rjs("create_opportunity") do |rjs|
         with_tag("form[class=new_opportunity]")
@@ -38,7 +38,7 @@ describe "/opportunities/new.js.rjs" do
 
     it "should call JavaScript functions to load Calendar popup" do
       params[:cancel] = nil
-      render "opportunities/new.js.rjs"
+      render
 
       rendered.should include_text('crm.flip_form("create_opportunity")')
       rendered.should include_text('crm.date_select_popup("opportunity_closes_on")')
@@ -48,7 +48,7 @@ describe "/opportunities/new.js.rjs" do
   describe "cancel new opportunity" do
     it "should hide [create campaign] form" do
       params[:cancel] = "true"
-      render "opportunities/new.js.rjs"
+      render
 
       rendered.should_not have_rjs("create_opportunity")
       rendered.should include_text('crm.flip_form("create_opportunity")')

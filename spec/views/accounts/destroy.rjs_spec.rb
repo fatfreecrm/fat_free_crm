@@ -7,7 +7,7 @@ describe "/accounts/destroy.js.rjs" do
     login_and_assign
     assigns[:account] = @account = Factory(:account)
     assigns[:accounts] = [ @account ].paginate
-    render "accounts/destroy.js.rjs"
+    render
   end
 
   it "should blind up destroyed account partial" do

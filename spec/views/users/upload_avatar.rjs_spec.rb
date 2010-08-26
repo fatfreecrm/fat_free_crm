@@ -15,7 +15,7 @@ describe "/users/upload_avatar.js.rjs" do
     end
 
     it "should flip [Upload Avatar] form" do
-      render "users/upload_avatar.js.rjs"
+      render
       rendered.should_not have_rjs("user_#{@user.id}")
       rendered.should include_text('crm.flip_form("upload_avatar"')
       rendered.should include_text('crm.set_title("upload_avatar", "My Profile")')
@@ -31,7 +31,7 @@ describe "/users/upload_avatar.js.rjs" do
     end
 
     it "should redraw the [Upload Avatar] form and shake it" do
-      render "users/upload_avatar.js.rjs"
+      render
       rendered.should have_rjs("upload_avatar") do |rjs|
         with_tag("form[class=edit_user]")
       end

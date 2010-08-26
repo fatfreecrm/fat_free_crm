@@ -17,7 +17,7 @@ describe "/contacts/edit.html.erb" do
     view.should_receive(:render).with(hash_including(:partial => "contacts/web"))
     view.should_receive(:render).with(hash_including(:partial => "contacts/permissions"))
 
-    render "/contacts/_edit.html.haml"
+    render
     rendered.should have_tag("form[class=edit_contact]") do
       with_tag "input[type=hidden][id=contact_user_id][value=#{@contact.user_id}]"
     end
@@ -27,7 +27,7 @@ describe "/contacts/edit.html.erb" do
     assigns[:users] = [ @current_user ]
     assigns[:contact] = Factory(:contact, :assignee => nil)
 
-    render "/contacts/_edit.html.haml"
+    render
     rendered.should have_tag("select[id=contact_assigned_to]") do |options|
       options.to_s.should_not include_text(%Q/selected="selected"/)
     end
@@ -38,7 +38,7 @@ describe "/contacts/edit.html.erb" do
     assigns[:users] = [ @current_user, @user ]
     assigns[:contact] = Factory(:contact, :assignee => @user)
 
-    render "/contacts/_edit.html.haml"
+    render
     rendered.should have_tag("select[id=contact_assigned_to]") do |options|
       with_tag "option[selected=selected]"
       with_tag "option[value=#{@user.id}]"
@@ -50,7 +50,7 @@ describe "/contacts/edit.html.erb" do
     assigns[:contact] = Factory(:contact)
     Setting.background_info = [ :contact ]
 
-    render "/contacts/_create.html.haml"
+    render
     rendered.should have_tag("textarea[id=contact_background_info]")
   end
 
@@ -59,7 +59,7 @@ describe "/contacts/edit.html.erb" do
     assigns[:contact] = Factory(:contact)
     Setting.background_info = []
 
-    render "/contacts/_create.html.haml"
+    render
     rendered.should_not have_tag("textarea[id=contact_background_info]")
   end
 end

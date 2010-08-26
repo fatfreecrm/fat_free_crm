@@ -10,17 +10,17 @@ describe "/users/update.js.rjs" do
 
   describe "no errors:" do
     it "should flip [Edit Profile] form" do
-      render "users/update.js.rjs"
+      render
       rendered.should include_text('crm.flip_form("edit_profile")')
     end
 
     it "should update Welcome, user!" do
-      render "users/update.js.rjs"
+      render
       rendered.should have_rjs("welcome_username")
     end
 
     it "should update actual user profile information" do
-      render "users/update.js.rjs"
+      render
       rendered.should have_rjs("profile")
     end
   end # no errors
@@ -31,7 +31,7 @@ describe "/users/update.js.rjs" do
     end
 
     it "should redraw the [Edit Profile] form and shake it" do
-      render "users/update.js.rjs"
+      render
       rendered.should have_rjs("edit_profile") do |rjs|
         with_tag("form[class=edit_user]")
       end
@@ -40,7 +40,7 @@ describe "/users/update.js.rjs" do
     end
     
     it "should keep welcome or profile information intact" do
-      render "users/update.js.rjs"
+      render
       rendered.should_not have_rjs("welcome_username")
       rendered.should_not have_rjs("profile")
     end

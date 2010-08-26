@@ -21,13 +21,13 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should flip [edit_opportunity] form" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should_not have_rjs("opportunity_#{@opportunity.id}")
         rendered.should include_text('crm.flip_form("edit_opportunity"')
       end
 
       it "should update sidebar" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
@@ -42,7 +42,7 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should replace [Edit Opportunity] with opportunity partial and highligh it" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
           with_tag("li[id=opportunity_#{@opportunity.id}]")
         end
@@ -50,7 +50,7 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should update sidebar" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
@@ -65,14 +65,14 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should update recently viewed items" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should have_rjs("recently") do |rjs|
           with_tag("div[class=caption]")
         end
       end
  
       it "should replace [Edit Opportunity] with opportunity partial and highligh it" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
           with_tag("li[id=opportunity_#{@opportunity.id}]")
         end
@@ -92,7 +92,7 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should redraw the [edit_opportunity] form and shake it" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should have_rjs("edit_opportunity") do |rjs|
           with_tag("form[class=edit_opportunity]")
         end
@@ -108,7 +108,7 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should redraw the [edit_opportunity] form and shake it" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
           with_tag("form[class=edit_opportunity]")
         end
@@ -124,14 +124,14 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should show disabled accounts dropdown when called from accounts landing page" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should include_text("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
       end
 
       it "should update related campaign sidebar from campaign landing page" do
         assigns[:campaign] = campaign = Factory(:campaign)
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-        render "opportunities/create.js.rjs"
+        render
 
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[class=panel][id=summary]")
@@ -140,7 +140,7 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should redraw the [edit_opportunity] form and shake it" do
-        render "opportunities/update.js.rjs"
+        render
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
           with_tag("form[class=edit_opportunity]")
         end

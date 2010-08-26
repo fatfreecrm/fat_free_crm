@@ -10,14 +10,14 @@ describe "/accounts/new.js.rjs" do
   end
  
   it "should toggle empty message div if it exists" do
-    render "accounts/new.js.rjs"
+    render
 
     rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Accounts index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
-    render "accounts/new.js.rjs"
+    render
 
     rendered.should include_text('crm.hide_form("options")')
   end
@@ -25,7 +25,7 @@ describe "/accounts/new.js.rjs" do
   describe "new account" do
     it "should render [new.html.haml] template into :create_account div" do
       params[:cancel] = nil
-      render "accounts/new.js.rjs"
+      render
     
       rendered.should have_rjs("create_account") do |rjs|
         with_tag("form[class=new_account]")
@@ -37,7 +37,7 @@ describe "/accounts/new.js.rjs" do
   describe "cancel new account" do
     it "should hide [create account] form()" do
       params[:cancel] = "true"
-      render "accounts/new.js.rjs"
+      render
     
       rendered.should_not have_rjs("create_account")
       rendered.should include_text('crm.flip_form("create_account");')

@@ -11,13 +11,13 @@ describe "/campaigns/options.rjs" do
   end
 
   it "should toggle empty message div if it exists" do
-    render "campaigns/options.js.rjs"
+    render
 
     rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide [Create Campaign] form if it's visible" do
-    render "campaigns/options.js.rjs"
+    render
 
     rendered.should include_text('crm.hide_form("create_campaign")')
   end
@@ -25,7 +25,7 @@ describe "/campaigns/options.rjs" do
   describe "campaign options" do
     it "should render [options.html.haml] template into :options div and show it" do
       params[:cancel] = nil
-      render "campaigns/options.js.rjs"
+      render
     
       rendered.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
@@ -40,14 +40,14 @@ describe "/campaigns/options.rjs" do
       view.should_receive(:render).with(:partial => "common/per_page")
       view.should_receive(:render).with(:partial => "common/outline")
 
-      render "campaigns/options.js.rjs"
+      render
     end
   end
   
   describe "cancel campaign options" do
     it "should hide campaign options form" do
       params[:cancel] = "true"
-      render "campaigns/options.js.rjs"
+      render
 
       rendered.should_not have_rjs("options")
       rendered.should include_text('crm.flip_form("options")')

@@ -19,13 +19,13 @@ describe "/contacts/update.js.rjs" do
       end
 
       it "should flip [edit_contact] form" do
-        render "contacts/update.js.rjs"
+        render
         rendered.should_not have_rjs("contact_#{@contact.id}")
         rendered.should include_text('crm.flip_form("edit_contact"')
       end
 
       it "should update sidebar" do
-        render "contacts/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
@@ -42,7 +42,7 @@ describe "/contacts/update.js.rjs" do
       it "should replace [Edit Contact] with contact partial and highligh it" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
-        render "contacts/update.js.rjs"
+        render
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("li[id=contact_#{@contact.id}]")
         end
@@ -50,7 +50,7 @@ describe "/contacts/update.js.rjs" do
       end
 
       it "should update sidebar" do
-        render "contacts/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=recently]")
         end
@@ -65,7 +65,7 @@ describe "/contacts/update.js.rjs" do
       it "should replace [Edit Contact] with contact partial and highligh it" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
-        render "contacts/update.js.rjs"
+        render
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("li[id=contact_#{@contact.id}]")
         end
@@ -73,7 +73,7 @@ describe "/contacts/update.js.rjs" do
       end
 
       it "should update recently viewed items" do
-        render "contacts/update.js.rjs"
+        render
         rendered.should have_rjs("recently") do |rjs|
           with_tag("div[class=caption]")
         end
@@ -92,7 +92,7 @@ describe "/contacts/update.js.rjs" do
       end
 
       it "should redraw the [edit_contact] form and shake it" do
-        render "contacts/update.js.rjs"
+        render
         rendered.should have_rjs("edit_contact") do |rjs|
           with_tag("form[class=edit_contact]")
         end
@@ -108,7 +108,7 @@ describe "/contacts/update.js.rjs" do
       end
 
       it "should redraw the [edit_contact] form and shake it" do
-        render "contacts/update.js.rjs"
+        render
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("form[class=edit_contact]")
         end
@@ -124,12 +124,12 @@ describe "/contacts/update.js.rjs" do
       end
 
       it "errors: should show disabled accounts dropdown" do
-        render "contacts/update.js.rjs"
+        render
         rendered.should include_text("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
       end
 
       it "should redraw the [edit_contact] form and shake it" do
-        render "contacts/update.js.rjs"
+        render
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("form[class=edit_contact]")
         end

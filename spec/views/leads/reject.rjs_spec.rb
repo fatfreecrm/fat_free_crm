@@ -10,7 +10,7 @@ describe "/leads/reject.js.rjs" do
   end
 
   it "should refresh current lead partial" do
-    render "leads/reject.js.rjs"
+    render
 
     rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
       with_tag("li[id=lead_#{@lead.id}]")
@@ -20,7 +20,7 @@ describe "/leads/reject.js.rjs" do
 
   it "should update sidebar filters when called from index page" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
-    render "leads/reject.js.rjs"
+    render
 
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=filters]")
@@ -29,7 +29,7 @@ describe "/leads/reject.js.rjs" do
   end
 
   it "should update sidebar summary when called from landing page" do
-    render "leads/reject.js.rjs"
+    render
 
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=summary]")
@@ -40,7 +40,7 @@ describe "/leads/reject.js.rjs" do
   it "should update campaign sidebar if called from campaign landing page" do
     assigns[:campaign] = campaign = Factory(:campaign)
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-    render "leads/reject.js.rjs"
+    render
 
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[class=panel][id=summary]")

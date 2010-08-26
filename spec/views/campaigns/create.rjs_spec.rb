@@ -12,7 +12,7 @@ describe "/campaigns/create.js.rjs" do
       assigns[:campaign] = @campaign = Factory(:campaign)
       assigns[:campaigns] = [ @campaign ].paginate
       assigns[:campaign_status_total] = { :called_off => 1, "Explicit" => 1 }
-      render "campaigns/create.js.rjs"
+      render
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
@@ -39,7 +39,7 @@ describe "/campaigns/create.js.rjs" do
       assigns[:campaign] = Factory.build(:campaign, :name => nil) # make it invalid
       assigns[:users] = [ Factory(:user) ]
   
-      render "campaigns/create.js.rjs"
+      render
   
       rendered.should have_rjs("create_campaign") do |rjs|
         with_tag("form[class=new_campaign]")

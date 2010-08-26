@@ -12,7 +12,7 @@ describe "/opportunities/index.html.erb" do
     assigns[:opportunities] = [ Factory(:opportunity) ].paginate
     view.should_receive(:render).with(hash_including(:partial => "opportunity"))
     view.should_receive(:render).with(:partial => "common/paginate")
-    render "/opportunities/index.html.haml"
+    render
   end
 
   it "should render a message if there're no opportunities" do
@@ -20,7 +20,7 @@ describe "/opportunities/index.html.erb" do
     view.should_not_receive(:render).with(hash_including(:partial => "opportunities"))
     view.should_receive(:render).with(:partial => "common/empty")
     view.should_receive(:render).with(:partial => "common/paginate")
-    render "/opportunities/index.html.haml"
+    render
   end
 
 end

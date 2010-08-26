@@ -12,7 +12,7 @@ describe "admin/users/_create.html.haml" do
   it "renders [Create User] form" do
     view.should_receive(:render).with(hash_including(:partial => "admin/users/profile"))
 
-    render "admin/users/_create.html.haml"
+    render
     rendered.should have_tag("form[class=new_user]")
   end
 end

@@ -11,7 +11,7 @@ describe "/leads/index.html.haml" do
     assigns[:leads] = [ Factory(:lead) ].paginate(:page => 1, :per_page => 20)
     view.should_receive(:render).with(hash_including(:partial => "lead"))
     view.should_receive(:render).with(:partial => "common/paginate")
-    render "/leads/index.html.haml"
+    render
   end
 
   it "should render a message if there're no leads" do
@@ -19,7 +19,7 @@ describe "/leads/index.html.haml" do
     view.should_not_receive(:render).with(hash_including(:partial => "leads"))
     view.should_receive(:render).with(:partial => "common/empty")
     view.should_receive(:render).with(:partial => "common/paginate")
-    render "/leads/index.html.haml"
+    render
   end
 
 end

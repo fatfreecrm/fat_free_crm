@@ -12,13 +12,13 @@ describe "/leads/options.rjs" do
   end
 
   it "should toggle empty message div if it exists" do
-    render "leads/options.js.rjs"
+    render
 
     rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide [Create Lead] form if it's visible" do
-    render "leads/options.js.rjs"
+    render
 
     rendered.should include_text('crm.hide_form("create_lead")')
   end
@@ -26,7 +26,7 @@ describe "/leads/options.rjs" do
   describe "lead options" do
     it "should render [options.html.haml] template into :options div and show it" do
       params[:cancel] = nil
-      render "leads/options.js.rjs"
+      render
     
       rendered.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
@@ -42,14 +42,14 @@ describe "/leads/options.rjs" do
       view.should_receive(:render).with(:partial => "common/outline")
       view.should_receive(:render).with(:partial => "common/naming")
 
-      render "leads/options.js.rjs"
+      render
     end
   end
   
   describe "cancel lead options" do
     it "should hide lead options form" do
       params[:cancel] = "true"
-      render "leads/options.js.rjs"
+      render
 
       rendered.should_not have_rjs("options")
       rendered.should include_text('crm.flip_form("options")')

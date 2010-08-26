@@ -18,13 +18,13 @@ describe "/campaigns/update.js.rjs" do
       end
       
       it "should flip [edit_campaign] form" do
-        render "campaigns/update.js.rjs"
+        render
         rendered.should_not have_rjs("campaign_#{@campaign.id}")
         rendered.should include_text('crm.flip_form("edit_campaign"')
       end
   
       it "should update sidebar" do
-        render "campaigns/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
@@ -39,7 +39,7 @@ describe "/campaigns/update.js.rjs" do
       end
 
       it "should replace [Edit Campaign] with campaign partial and highligh it" do
-        render "campaigns/update.js.rjs"
+        render
         rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("li[id=campaign_#{@campaign.id}]")
         end
@@ -56,7 +56,7 @@ describe "/campaigns/update.js.rjs" do
       end
 
       it "should redraw the [edit_campaign] form and shake it" do
-        render "campaigns/update.js.rjs"
+        render
         rendered.should have_rjs("edit_campaign") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
@@ -74,7 +74,7 @@ describe "/campaigns/update.js.rjs" do
       end
     
       it "should redraw the [edit_campaign] form and shake it" do
-        render "campaigns/update.js.rjs"
+        render
         rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("form[class=edit_campaign]")
         end

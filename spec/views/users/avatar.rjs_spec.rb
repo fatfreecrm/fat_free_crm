@@ -11,13 +11,13 @@ describe "/users/avatar.js.rjs" do
   it "cancel: should hide [Upload Avatar] form and restore title" do
     params[:cancel] = "true"
     
-    render "users/avatar.js.rjs"
+    render
     rendered.should include_text('crm.flip_form("upload_avatar")')
     rendered.should include_text('crm.set_title("upload_avatar", "My Profile")')
   end
 
   it "edit profile: should hide [Edit Profile] and [Change Password] forms and show [Upload Avatar]" do
-    render "users/avatar.js.rjs"
+    render
 
     rendered.should have_rjs("upload_avatar") do |rjs|
       with_tag("form[class=edit_user]")

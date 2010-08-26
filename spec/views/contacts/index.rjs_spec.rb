@@ -10,7 +10,7 @@ describe "/contacts/index.js.rjs" do
   it "should render [contact] template with @contacts collection if there are contacts" do
     assigns[:contacts] = [ Factory(:contact, :id => 42) ].paginate
 
-    render "/contacts/index.js.rjs"
+    render
     rendered.should have_rjs("contacts") do |rjs|
       with_tag("li[id=contact_#{42}]")
     end
@@ -20,7 +20,7 @@ describe "/contacts/index.js.rjs" do
   it "should render [empty] template if @contacts collection if there are no contacts" do
     assigns[:contacts] = [].paginate
 
-    render "/contacts/index.js.rjs"
+    render
     rendered.should have_rjs("contacts") do |rjs|
       with_tag("div[id=empty]")
     end

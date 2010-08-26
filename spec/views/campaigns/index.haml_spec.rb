@@ -11,7 +11,7 @@ describe "/campaigns/index.html.haml" do
     assigns[:campaigns] = [ Factory(:campaign) ]
     view.should_receive(:render).with(hash_including(:partial => "campaign"))
     view.should_receive(:render).with(:partial => "common/paginate")
-    render "/campaigns/index.html.haml"
+    render
   end
 
   it "should render a message if there're no campaigns" do
@@ -19,7 +19,7 @@ describe "/campaigns/index.html.haml" do
     view.should_not_receive(:render).with(hash_including(:partial => "campaigns"))
     view.should_receive(:render).with(:partial => "common/empty")
     view.should_receive(:render).with(:partial => "common/paginate")
-    render "/campaigns/index.html.haml"
+    render
   end
 
 end

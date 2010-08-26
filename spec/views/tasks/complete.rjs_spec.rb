@@ -19,7 +19,7 @@ describe "/tasks/edit.js.rjs" do
     it "should fade out completed task partial" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
-      render "tasks/complete.js.rjs"
+      render
       rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("fade"/)
       rendered.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
     end
@@ -30,7 +30,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:empty_bucket] = :due_asap
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
-      render "tasks/complete.js.rjs"
+      render
       rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
@@ -44,7 +44,7 @@ describe "/tasks/edit.js.rjs" do
       @task = Factory(:task, :completed_at => Time.now, :completor => @current_user)
       assigns[:task] = @task
 
-      render "tasks/complete.js.rjs"
+      render
       rendered.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
@@ -56,7 +56,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:task] = @task
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
   
-      render "tasks/complete.js.rjs"
+      render
       rendered.should have_rjs("recently") do |rjs|
         with_tag("div[class=caption]")
       end

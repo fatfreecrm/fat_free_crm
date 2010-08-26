@@ -16,7 +16,7 @@ describe "/leads/create.js.rjs" do
     end
 
     it "should hide [Create Lead] form and insert lead partial" do
-      render "leads/create.js.rjs"
+      render
 
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=lead_#{@lead.id}]")
@@ -26,7 +26,7 @@ describe "/leads/create.js.rjs" do
 
     it "should update sidebar when called from leads index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
-      render "leads/create.js.rjs"
+      render
 
       rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
@@ -37,7 +37,7 @@ describe "/leads/create.js.rjs" do
 
     it "should update pagination when called from leads index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
-      render "leads/create.js.rjs"
+      render
 
       rendered.should have_rjs("paginate")
     end
@@ -45,7 +45,7 @@ describe "/leads/create.js.rjs" do
     it "should update related asset sidebar from related asset" do
       assigns[:campaign] = campaign = Factory(:campaign)
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-      render "leads/create.js.rjs"
+      render
 
       rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[class=panel][id=summary]")
@@ -59,7 +59,7 @@ describe "/leads/create.js.rjs" do
       assigns[:lead] = Factory.build(:lead, :first_name => nil) # make it invalid
       assigns[:users] = [ Factory(:user) ]
   
-      render "leads/create.js.rjs"
+      render
   
       rendered.should have_rjs("create_lead") do |rjs|
         with_tag("form[class=new_lead]")

@@ -11,7 +11,7 @@ describe "/contacts/index.html.erb" do
     assigns[:contacts] = [ Factory(:contact) ].paginate
     view.should_receive(:render).with(hash_including(:partial => "contact"))
     view.should_receive(:render).with(:partial => "common/paginate")
-    render "/contacts/index.html.haml"
+    render
   end
 
   it "should render a message if there're no contacts" do
@@ -19,7 +19,7 @@ describe "/contacts/index.html.erb" do
     view.should_not_receive(:render).with(hash_including(:partial => "contact"))
     view.should_receive(:render).with(:partial => "common/empty")
     view.should_receive(:render).with(:partial => "common/paginate")
-    render "/contacts/index.html.haml"
+    render
   end
 
 end

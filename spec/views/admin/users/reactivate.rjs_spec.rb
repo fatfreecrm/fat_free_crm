@@ -9,7 +9,7 @@ describe "admin/users/reactivate.js.rjs" do
   end
 
   it "reloads the requested user partial" do
-    render "admin/users/reactivate.js.rjs"
+    render
 
     rendered.should have_rjs("user_#{@user.id}") do |rjs|
       with_tag("li[id=user_#{@user.id}]")

@@ -10,14 +10,14 @@ describe "/campaigns/new.js.rjs" do
   end
 
   it "should toggle empty message div if it exists" do
-    render "campaigns/new.js.rjs"
+    render
 
     rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Campaigns index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns"
-    render "campaigns/new.js.rjs"
+    render
 
     rendered.should include_text('crm.hide_form("options")')
   end
@@ -25,7 +25,7 @@ describe "/campaigns/new.js.rjs" do
   describe "new campaign" do
     it "should render [new.html.haml] template into :create_campaign div" do
       params[:cancel] = nil
-      render "campaigns/new.js.rjs"
+      render
     
       rendered.should have_rjs("create_campaign") do |rjs|
         with_tag("form[class=new_campaign]")
@@ -34,7 +34,7 @@ describe "/campaigns/new.js.rjs" do
 
     it "should call JavaScript functions to load Calendar popup" do
       params[:cancel] = nil
-      render "campaigns/new.js.rjs"
+      render
 
       rendered.should include_text('crm.flip_form("create_campaign")')
       rendered.should include_text('crm.date_select_popup("campaign_starts_on")')
@@ -45,7 +45,7 @@ describe "/campaigns/new.js.rjs" do
   describe "cancel new campaign" do
     it "should hide [create campaign] form" do
       params[:cancel] = "true"
-      render "campaigns/new.js.rjs"
+      render
 
       rendered.should_not have_rjs("create_campaign")
       rendered.should include_text('crm.flip_form("create_campaign")')

@@ -10,7 +10,7 @@ describe "/comments/new.html.erb" do
   end
 
   it "should render new form" do
-    render "/comments/new.js.rjs"
+    render
     
     rendered.should include_text("hide()")
     rendered.should include_text("show()")

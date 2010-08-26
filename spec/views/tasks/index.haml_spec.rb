@@ -21,7 +21,7 @@ describe "/tasks/index.html.haml" do
       view.should_receive(:render).with(hash_including(:partial => view)).exactly(number_of_buckets).times
       view.should_not_receive(:render).with(:partial => "empty")
 
-      render "/tasks/index.html.haml"
+      render
     end
   end
 
@@ -32,7 +32,7 @@ describe "/tasks/index.html.haml" do
 
       view.should_receive(:render).with(:partial => "empty")
 
-      render "/tasks/index.html.haml"
+      render
     end
   end
 

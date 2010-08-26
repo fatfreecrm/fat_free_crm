@@ -12,7 +12,7 @@ describe "admin/users/index.js.rjs" do
     bob = Factory(:user)
     assigns[:users] = [ amy, bob ].paginate
 
-    render "admin/users/index.js.rjs"
+    render
     rendered.should have_rjs("users") do |rjs|
       with_tag("li[id=user_#{amy.id}]")
       with_tag("li[id=user_#{bob.id}]")

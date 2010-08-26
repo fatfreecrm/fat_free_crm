@@ -13,14 +13,14 @@ describe "/leads/new.js.rjs" do
   end
 
   it "should toggle empty message div if it exists" do
-    render "leads/new.js.rjs"
+    render
 
     rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Leads index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
-    render "leads/new.js.rjs"
+    render
 
     rendered.should include_text('crm.hide_form("options")')
   end
@@ -28,7 +28,7 @@ describe "/leads/new.js.rjs" do
   describe "new lead" do
     it "should render [new.html.haml] template into :create_lead div" do
       params[:cancel] = nil
-      render "leads/new.js.rjs"
+      render
 
       rendered.should have_rjs("create_lead") do |rjs|
         with_tag("form[class=new_lead]")
@@ -40,7 +40,7 @@ describe "/leads/new.js.rjs" do
   describe "cancel new lead" do
     it "should hide [create_lead] form" do
       params[:cancel] = "true"
-      render "leads/new.js.rjs"
+      render
 
       rendered.should_not have_rjs("create_lead")
       rendered.should include_text('crm.flip_form("create_lead");')

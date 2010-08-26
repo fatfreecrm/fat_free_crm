@@ -14,7 +14,7 @@ describe "/contacts/edit.js.rjs" do
   it "cancel from contact index page: should replace [Edit Contact] form with contact partial" do
     params[:cancel] = "true"
     
-    render "contacts/edit.js.rjs"
+    render
     rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
       with_tag("li[id=contact_#{@contact.id}]")
     end
@@ -24,7 +24,7 @@ describe "/contacts/edit.js.rjs" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
     params[:cancel] = "true"
     
-    render "contacts/edit.js.rjs"
+    render
     rendered.should include_text('crm.flip_form("edit_contact"')
   end
 
@@ -32,7 +32,7 @@ describe "/contacts/edit.js.rjs" do
     params[:cancel] = nil
     assigns[:previous] = previous = Factory(:contact, :user => @current_user)
     
-    render "contacts/edit.js.rjs"
+    render
     rendered.should have_rjs("contact_#{previous.id}") do |rjs|
       with_tag("li[id=contact_#{previous.id}]")
     end
@@ -42,14 +42,14 @@ describe "/contacts/edit.js.rjs" do
     params[:cancel] = nil
     assigns[:previous] = previous = 41
 
-    render "contacts/edit.js.rjs"
+    render
     rendered.should include_text(%Q/crm.flick("contact_#{previous}", "remove");/)
   end
   
   it "edit from contacts index page: should turn off highlight, hide [Create Contact] form, and replace current contact with [Edit Contact] form" do
     params[:cancel] = nil
     
-    render "contacts/edit.js.rjs"
+    render
     rendered.should include_text(%Q/crm.highlight_off("contact_#{@contact.id}");/)
     rendered.should include_text('crm.hide_form("create_contact")')
     rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
@@ -60,7 +60,7 @@ describe "/contacts/edit.js.rjs" do
   it "edit from contact landing page: should show [Edit Contact] form" do
     params[:cancel] = "false"
     
-    render "contacts/edit.js.rjs"
+    render
     rendered.should have_rjs("edit_contact") do |rjs|
       with_tag("form[class=edit_contact]")
     end
@@ -69,7 +69,7 @@ describe "/contacts/edit.js.rjs" do
   
   it "should show handle new or existing account for the contact" do
 
-    render "contacts/edit.js.rjs"
+    render
     rendered.should include_text("crm.create_or_select_account")
   end
 

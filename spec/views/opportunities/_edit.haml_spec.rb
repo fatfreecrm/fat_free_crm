@@ -13,7 +13,7 @@ describe "/opportunities/_edit.html.haml" do
   it "should render [edit opportunity] form" do
     assigns[:users] = [ @current_user ]
     assigns[:opportunity] = @opportunity = Factory(:opportunity, :campaign => @campaign = Factory(:campaign))
-    render "/opportunities/_edit.html.haml"
+    render
 
     rendered.should have_tag("form[class=edit_opportunity]") do
       with_tag "input[type=hidden][id=opportunity_user_id][value=#{@opportunity.user_id}]"
@@ -24,7 +24,7 @@ describe "/opportunities/_edit.html.haml" do
   it "should pick default assignee (Myself)" do
     assigns[:users] = [ @current_user ]
     assigns[:opportunity] = Factory(:opportunity, :assignee => nil)
-    render "/opportunities/_edit.html.haml"
+    render
 
     rendered.should have_tag("select[id=opportunity_assigned_to]") do |options|
       options.to_s.should_not include_text(%Q/selected="selected"/)
@@ -35,7 +35,7 @@ describe "/opportunities/_edit.html.haml" do
     @user = Factory(:user)
     assigns[:users] = [ @current_user, @user ]
     assigns[:opportunity] = Factory(:opportunity, :assignee => @user)
-    render "/opportunities/_edit.html.haml"
+    render
 
     rendered.should have_tag("select[id=opportunity_assigned_to]") do |options|
       with_tag "option[selected=selected]"
@@ -48,7 +48,7 @@ describe "/opportunities/_edit.html.haml" do
     assigns[:opportunity] = Factory(:opportunity)
     Setting.background_info = [ :opportunity ]
 
-    render "/opportunities/_create.html.haml"
+    render
     rendered.should have_tag("textarea[id=opportunity_background_info]")
   end
 
@@ -57,7 +57,7 @@ describe "/opportunities/_edit.html.haml" do
     assigns[:opportunity] = Factory(:opportunity)
     Setting.background_info = []
 
-    render "/opportunities/_create.html.haml"
+    render
     rendered.should_not have_tag("textarea[id=opportunity_background_info]")
   end
 end

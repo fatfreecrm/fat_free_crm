@@ -18,13 +18,13 @@ describe "/leads/update.js.rjs" do
       end
 
       it "should flip [edit_lead] form" do
-        render "leads/update.js.rjs"
+        render
         rendered.should_not have_rjs("lead_#{@lead.id}")
         rendered.should include_text('crm.flip_form("edit_lead"')
       end
 
       it "should update sidebar" do
-        render "leads/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
         end
@@ -38,7 +38,7 @@ describe "/leads/update.js.rjs" do
       end
 
       it "should replace [Edit Lead] with lead partial and highligh it" do
-        render "leads/update.js.rjs"
+        render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
@@ -46,7 +46,7 @@ describe "/leads/update.js.rjs" do
       end
 
       it "should update sidebar" do
-        render "leads/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
@@ -62,7 +62,7 @@ describe "/leads/update.js.rjs" do
       end
 
       it "should replace [Edit Lead] with lead partial and highligh it" do
-        render "leads/update.js.rjs"
+        render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
@@ -71,7 +71,7 @@ describe "/leads/update.js.rjs" do
 
       it "should update campaign sidebar" do
         assigns[:campaign] = campaign = Factory(:campaign)
-        render "leads/create.js.rjs"
+        render
 
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[class=panel][id=summary]")
@@ -93,7 +93,7 @@ describe "/leads/update.js.rjs" do
       end
 
       it "should redraw the [edit_lead] form and shake it" do
-        render "leads/update.js.rjs"
+        render
         rendered.should have_rjs("edit_lead") do |rjs|
           with_tag("form[class=edit_lead]")
         end
@@ -108,7 +108,7 @@ describe "/leads/update.js.rjs" do
       end
 
       it "should redraw the [edit_lead] form and shake it" do
-        render "leads/update.js.rjs"
+        render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
@@ -123,7 +123,7 @@ describe "/leads/update.js.rjs" do
       end
 
       it "should redraw the [edit_lead] form and shake it" do
-        render "leads/update.js.rjs"
+        render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end

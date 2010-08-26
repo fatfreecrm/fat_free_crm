@@ -20,7 +20,7 @@ describe "/tasks/destroy.js.rjs" do
       it "should blind up out destroyed task partial" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
-        render "tasks/destroy.js.rjs"
+        render
         rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
         rendered.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
       end
@@ -28,7 +28,7 @@ describe "/tasks/destroy.js.rjs" do
       it "should update tasks sidebar" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
-        render "tasks/destroy.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
@@ -44,7 +44,7 @@ describe "/tasks/destroy.js.rjs" do
       assigns[:task] = @task
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
-      render "tasks/destroy.js.rjs"
+      render
       rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
       rendered.should_not include_text(%Q/$("list_due_asap").visualEffect("fade"/) # bucket is not empty
     end

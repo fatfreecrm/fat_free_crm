@@ -17,13 +17,13 @@ describe "/accounts/update.js.rjs" do
       end
 
       it "should flip [edit_account] form" do
-        render "accounts/update.js.rjs"
+        render
         rendered.should_not have_rjs("account_#{@account.id}")
         rendered.should include_text('crm.flip_form("edit_account"')
       end
 
       it "should update sidebar" do
-        render "accounts/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
@@ -38,7 +38,7 @@ describe "/accounts/update.js.rjs" do
       end
 
       it "should update sidebar" do
-        render "accounts/update.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
@@ -47,7 +47,7 @@ describe "/accounts/update.js.rjs" do
  
       it "should replace [edit_account] form with account partial and highligh it" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
-        render "accounts/update.js.rjs"
+        render
  
         rendered.should have_rjs("account_#{@account.id}") do |rjs|
           with_tag("li[id=account_#{@account.id}]")
@@ -68,7 +68,7 @@ describe "/accounts/update.js.rjs" do
       end
 
       it "should redraw the [edit_account] form and shake it" do
-        render "accounts/update.js.rjs"
+        render
  
         rendered.should have_rjs("edit_account") do |rjs|
           with_tag("form[class=edit_account]")
@@ -84,7 +84,7 @@ describe "/accounts/update.js.rjs" do
       end
 
       it "should redraw the [edit_account] form and shake it" do
-        render "accounts/update.js.rjs"
+        render
  
         rendered.should have_rjs("account_#{@account.id}") do |rjs|
           with_tag("form[class=edit_account]")

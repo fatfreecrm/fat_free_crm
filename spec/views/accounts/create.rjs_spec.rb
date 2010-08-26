@@ -13,7 +13,7 @@ describe "/accounts/create.js.rjs" do
     before(:each) do
       assigns[:account] = @account = Factory(:account)
       assigns[:accounts] = [ @account ].paginate
-      render "accounts/create.js.rjs"
+      render
     end
 
     it "should hide [Create Account] form and insert account partial" do
@@ -39,7 +39,7 @@ describe "/accounts/create.js.rjs" do
     it "should re-render [create.html.haml] template in :create_account div" do
       assigns[:account] = Factory.build(:account, :name => nil) # make it invalid
       assigns[:users] = [ @current_user ]
-      render "accounts/create.js.rjs"
+      render
 
       rendered.should have_rjs("create_account") do |rjs|
         with_tag("form[class=new_account]")

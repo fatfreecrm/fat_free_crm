@@ -25,13 +25,13 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should flip [Convert Lead] form" do
-        render "leads/promote.js.rjs"
+        render
         rendered.should_not have_rjs("lead_#{@lead.id}")
         rendered.should include_text('crm.flip_form("convert_lead"')
       end
 
       it "should update sidebar" do
-        render "leads/promote.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
@@ -46,7 +46,7 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should replace [Convert Lead] with lead partial and highligh it" do
-        render "leads/promote.js.rjs"
+        render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
@@ -54,7 +54,7 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should update sidebar" do
-        render "leads/promote.js.rjs"
+        render
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
@@ -72,7 +72,7 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should replace [Convert Lead] with lead partial and highligh it" do
-        render "leads/promote.js.rjs"
+        render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
@@ -80,7 +80,7 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should update campaign sidebar" do
-        render "leads/promote.js.rjs"
+        render
 
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[class=panel][id=summary]")
@@ -89,7 +89,7 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should insert new opportunity if any" do
-        render "leads/promote.js.rjs"
+        render
 
         rendered.should have_rjs(:insert, :top) do |rjs|
           with_tag("li[id=opportunity_#{@opportunity.id}]")
@@ -110,7 +110,7 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should redraw the [Convert Lead] form and shake it" do
-        render "leads/promote.js.rjs"
+        render
         rendered.should have_rjs("convert_lead") do |rjs|
           with_tag("form[class=edit_lead]")
         end
@@ -124,7 +124,7 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should redraw the [Convert Lead] form and shake it" do
-        render "leads/promote.js.rjs"
+        render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
@@ -138,7 +138,7 @@ describe "/leads/promote.js.rjs" do
       end
 
       it "should redraw the [Convert Lead] form and shake it" do
-        render "leads/promote.js.rjs"
+        render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
@@ -147,7 +147,7 @@ describe "/leads/promote.js.rjs" do
     end
 
     it "should handle new or existing account and set up calendar field" do
-      render "leads/promote.js.rjs"
+      render
       rendered.should include_text("crm.create_or_select_account")
       rendered.should include_text('crm.date_select_popup("opportunity_closes_on")')
       rendered.should include_text('$("account_name").focus()')

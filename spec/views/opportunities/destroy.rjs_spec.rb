@@ -11,14 +11,14 @@ describe "/opportunities/destroy.js.rjs" do
   end
 
   it "should blind up destroyed opportunity partial" do
-    render "opportunities/destroy.js.rjs"
+    render
     rendered.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("blind_up"/)
   end
 
   it "should update opportunities sidebar when called from opportunities index" do
     assigns[:opportunities] = [ @opportunity ].paginate
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-    render "opportunities/destroy.js.rjs"
+    render
 
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
@@ -29,7 +29,7 @@ describe "/opportunities/destroy.js.rjs" do
   it "should update pagination when called from opportunities index" do
     assigns[:opportunities] = [ @opportunity ].paginate
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-    render "opportunities/destroy.js.rjs"
+    render
 
     rendered.should have_rjs("paginate")
   end
@@ -37,7 +37,7 @@ describe "/opportunities/destroy.js.rjs" do
   it "should update related campaign sidebar when called from related campaign" do
     assigns[:campaign] = campaign = Factory(:campaign)
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-    render "opportunities/destroy.js.rjs"
+    render
 
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[class=panel][id=summary]")
@@ -47,7 +47,7 @@ describe "/opportunities/destroy.js.rjs" do
 
   it "should update recently viewed items when called from related asset" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
-    render "opportunities/destroy.js.rjs"
+    render
 
     rendered.should have_rjs("recently")
   end

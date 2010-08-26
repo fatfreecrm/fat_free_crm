@@ -16,7 +16,7 @@ describe "/opportunities/edit.js.rjs" do
   it "cancel from opportunity index page: should replace [Edit Opportunity] form with opportunity partial" do
     params[:cancel] = "true"
     
-    render "opportunities/edit.js.rjs"
+    render
     rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
       with_tag("li[id=opportunity_#{@opportunity.id}]")
     end
@@ -26,7 +26,7 @@ describe "/opportunities/edit.js.rjs" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
     params[:cancel] = "true"
     
-    render "opportunities/edit.js.rjs"
+    render
     rendered.should include_text('crm.flip_form("edit_opportunity"')
   end
 
@@ -34,7 +34,7 @@ describe "/opportunities/edit.js.rjs" do
     params[:cancel] = nil
     assigns[:previous] = previous = Factory(:opportunity, :user => @current_user)
 
-    render "opportunities/edit.js.rjs"
+    render
     rendered.should have_rjs("opportunity_#{previous.id}") do |rjs|
       with_tag("li[id=opportunity_#{previous.id}]")
     end
@@ -44,14 +44,14 @@ describe "/opportunities/edit.js.rjs" do
     params[:cancel] = nil
     assigns[:previous] = previous = 41
 
-    render "opportunities/edit.js.rjs"
+    render
     rendered.should include_text(%Q/crm.flick("opportunity_#{previous}", "remove");/)
   end
   
   it "edit from opportunities index page: should turn off highlight, hide [Create Opportunity] form, and replace current opportunity with [Edit Opportunity] form" do
     params[:cancel] = nil
     
-    render "opportunities/edit.js.rjs"
+    render
     rendered.should include_text(%Q/crm.highlight_off("opportunity_#{@opportunity.id}");/)
     rendered.should include_text('crm.hide_form("create_opportunity")')
     rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
@@ -62,7 +62,7 @@ describe "/opportunities/edit.js.rjs" do
   it "edit from opportunity landing page: should show [Edit Opportunity] form" do
     params[:cancel] = "false"
     
-    render "opportunities/edit.js.rjs"
+    render
     rendered.should have_rjs("edit_opportunity") do |rjs|
       with_tag("form[class=edit_opportunity]")
     end
@@ -71,7 +71,7 @@ describe "/opportunities/edit.js.rjs" do
   
   it "edit: should handle new or existing account for the opportunity" do
 
-    render "opportunities/edit.js.rjs"
+    render
     rendered.should include_text("crm.create_or_select_account")
   end
 

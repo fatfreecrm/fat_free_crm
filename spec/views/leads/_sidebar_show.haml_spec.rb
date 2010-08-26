@@ -15,7 +15,7 @@ describe "/leads/show.html.haml" do
   end
   
   it "should render working web presence links whether a protocol is provided or not" do
-    render "leads/_sidebar_show.html.haml"
+    render
     rendered.should have_tag("a[href=http://www.blogger.com/home]")
     rendered.should have_tag("a[href=http://www.linkedin.com]")
     rendered.should have_tag("a[href=http://twitter.com/account]")

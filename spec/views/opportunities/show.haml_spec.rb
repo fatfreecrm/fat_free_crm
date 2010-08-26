@@ -16,7 +16,7 @@ describe "/opportunities/show.html.haml" do
     view.should_receive(:render).with(hash_including(:partial => "common/tasks"))
     view.should_receive(:render).with(hash_including(:partial => "contacts/contact"))
 
-    render "/opportunities/show.html.haml"
+    render
 
     rendered.should have_tag("div[id=edit_opportunity]")
   end

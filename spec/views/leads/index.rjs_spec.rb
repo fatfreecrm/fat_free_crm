@@ -10,7 +10,7 @@ describe "/leads/index.js.rjs" do
   it "should render [lead] template with @leads collection if there are leads" do
     assigns[:leads] = [ Factory(:lead, :id => 42) ].paginate(:page => 1, :per_page => 20)
 
-    render "/leads/index.js.rjs"
+    render
     rendered.should have_rjs("leads") do |rjs|
       with_tag("li[id=lead_#{42}]")
     end
@@ -20,7 +20,7 @@ describe "/leads/index.js.rjs" do
   it "should render [empty] template if @leads collection if there are no leads" do
     assigns[:leads] = [].paginate(:page => 1, :per_page => 20)
 
-    render "/leads/index.js.rjs"
+    render
     rendered.should have_rjs("leads") do |rjs|
       with_tag("div[id=empty]")
     end

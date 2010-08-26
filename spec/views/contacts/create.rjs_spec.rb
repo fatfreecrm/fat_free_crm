@@ -14,7 +14,7 @@ describe "/contacts/create.js.rjs" do
     end
 
     it "should hide [Create Contact] form and insert contact partial" do
-      render "contacts/create.js.rjs"
+      render
 
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=contact_#{@contact.id}]")
@@ -24,7 +24,7 @@ describe "/contacts/create.js.rjs" do
 
     it "should refresh sidebar when called from contacts index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
-      render "contacts/create.js.rjs"
+      render
 
       rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=recently]")
@@ -33,13 +33,13 @@ describe "/contacts/create.js.rjs" do
 
     it "should update pagination when called from contacts index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
-      render "contacts/create.js.rjs"
+      render
 
       rendered.should have_rjs("paginate")
     end
 
     it "should update recently viewed items when called from related asset" do
-      render "contacts/create.js.rjs"
+      render
 
       rendered.should have_rjs("recently") do |rjs|
         with_tag("div[class=caption]")
@@ -56,7 +56,7 @@ describe "/contacts/create.js.rjs" do
       assigns[:account] = @account
       assigns[:accounts] = [ @account ]
 
-      render "contacts/create.js.rjs"
+      render
 
       rendered.should have_rjs("create_contact") do |rjs|
         with_tag("form[class=new_contact]")

@@ -14,7 +14,7 @@ describe "/campaigns/_edit.html.haml" do
     view.should_receive(:render).with(hash_including(:partial => "campaigns/objectives"))
     view.should_receive(:render).with(hash_including(:partial => "campaigns/permissions"))
 
-    render "/campaigns/_edit.html.haml"
+    render
     rendered.should have_tag("form[class=edit_campaign]") do
       with_tag "input[type=hidden][id=campaign_user_id][value=#{@campaign.user_id}]"
     end
@@ -23,14 +23,14 @@ describe "/campaigns/_edit.html.haml" do
   it "should render background info field if settings require so" do
     Setting.background_info = [ :campaign ]
 
-    render "/campaigns/_create.html.haml"
+    render
     rendered.should have_tag("textarea[id=campaign_background_info]")
   end
 
   it "should not render background info field if settings do not require so" do
     Setting.background_info = []
 
-    render "/campaigns/_create.html.haml"
+    render
     rendered.should_not have_tag("textarea[id=campaign_background_info]")
   end
 end

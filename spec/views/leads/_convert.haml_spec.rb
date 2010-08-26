@@ -17,7 +17,7 @@ describe "/leads/convert.html.erb" do
     view.should_receive(:render).with(hash_including(:partial => "leads/opportunity"))
     view.should_receive(:render).with(hash_including(:partial => "leads/convert_permissions"))
 
-    render "/leads/_convert.html.haml"
+    render
     rendered.should have_tag("form[class=edit_lead]")
   end
 

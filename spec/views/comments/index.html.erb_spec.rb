@@ -11,7 +11,7 @@ describe "/comments/index.html.erb" do
   end
 
   it "should render list of comments" do
-    render "/comments/index.html.erb"
+    render
   end
 end
 

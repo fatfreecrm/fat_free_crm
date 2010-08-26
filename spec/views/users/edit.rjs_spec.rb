@@ -11,13 +11,13 @@ describe "/users/edit.js.rjs" do
   it "cancel: should hide [Edit Profile] form and restore title" do
     params[:cancel] = "true"
     
-    render "users/edit.js.rjs"
+    render
     rendered.should include_text('crm.flip_form("edit_profile")')
     rendered.should include_text('crm.set_title("edit_profile", "My Profile")')
   end
 
   it "edit profile: should hide [Upload Avatar] and [Change Password] forms and show [Edit Profile]" do
-    render "users/edit.js.rjs"
+    render
 
     rendered.should have_rjs("edit_profile") do |rjs|
       with_tag("form[class=edit_user]")

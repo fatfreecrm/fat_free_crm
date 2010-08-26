@@ -16,7 +16,7 @@ describe "/opportunities/create.js.rjs" do
     end
 
     it "should hide [Create Opportunity] form and insert opportunity partial" do
-      render "opportunities/create.js.rjs"
+      render
 
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=opportunity_#{@opportunity.id}]")
@@ -26,7 +26,7 @@ describe "/opportunities/create.js.rjs" do
 
     it "should update sidebar filters and recently viewed items when called from opportunities page" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-      render "opportunities/create.js.rjs"
+      render
 
       rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
@@ -36,7 +36,7 @@ describe "/opportunities/create.js.rjs" do
 
     it "should update pagination when called from opportunities index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-      render "opportunities/create.js.rjs"
+      render
 
       rendered.should have_rjs("paginate")
     end
@@ -44,7 +44,7 @@ describe "/opportunities/create.js.rjs" do
     it "should update related campaign sidebar when called from related campaign" do
       assigns[:campaign] = campaign = Factory(:campaign)
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-      render "opportunities/create.js.rjs"
+      render
 
       rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[class=panel][id=summary]")
@@ -54,7 +54,7 @@ describe "/opportunities/create.js.rjs" do
 
     it "should update recently viewed items when called from related asset" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
-      render "opportunities/create.js.rjs"
+      render
 
       rendered.should have_rjs("recently") do |rjs|
         with_tag("div[class=caption]")
@@ -70,7 +70,7 @@ describe "/opportunities/create.js.rjs" do
       assigns[:account] = @account
       assigns[:accounts] = [ @account ]
   
-      render "opportunities/create.js.rjs"
+      render
   
       rendered.should have_rjs("create_opportunity") do |rjs|
         with_tag("form[class=new_opportunity]")

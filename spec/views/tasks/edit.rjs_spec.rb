@@ -18,7 +18,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:view] = view
       assigns[:task] = @task
     
-      render "tasks/edit.js.rjs"
+      render
       rendered.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
@@ -33,7 +33,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:view] = view
       assigns[:task] = stub_task(view)
 
-      render "tasks/edit.js.rjs"
+      render
       rendered.should include_text('crm.hide_form("create_task"')
     end
 
@@ -43,7 +43,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:view] = view
       assigns[:task] = stub_task(view)
 
-      render "tasks/edit.js.rjs"
+      render
       rendered.should have_rjs("task_#{@previous.id}") do |rjs|
         with_tag("li[id=task_#{@previous.id}]")
       end
@@ -55,7 +55,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:view] = view
       assigns[:task] = stub_task(view)
 
-      render "tasks/edit.js.rjs"
+      render
       rendered.should include_text(%Q/crm.flick("task_41", "remove");/)
     end
 
@@ -64,7 +64,7 @@ describe "/tasks/edit.js.rjs" do
       assigns[:view] = view
       assigns[:task] = @task
 
-      render "tasks/edit.js.rjs"
+      render
       rendered.should include_text(%Q/crm.highlight_off("task_#{@task.id}");/)
       rendered.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("form[class=edit_task]")

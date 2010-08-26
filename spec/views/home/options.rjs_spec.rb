@@ -14,7 +14,7 @@ describe "/home/options.rjs" do
     assigns[:user] = "all_users"
     assigns[:duration] = "two_days"
 
-    render "home/options.js.rjs"
+    render
   
     rendered.should have_rjs("options") do |rjs|
       with_tag("input[type=hidden]") # @current_user
@@ -31,12 +31,12 @@ describe "/home/options.rjs" do
     params[:cancel] = nil
     view.should_receive(:render).with(:partial => "options")
   
-    render "home/options.js.rjs"
+    render
   end
   
   it "should hide options form on Cancel" do
     params[:cancel] = "true"
-    render "home/options.js.rjs"
+    render
 
     rendered.should_not have_rjs("options")
     rendered.should include_text('crm.flip_form("options")')

@@ -8,7 +8,7 @@ describe "/campaigns/destroy.js.rjs" do
     assigns[:campaign] = @campaign = Factory(:campaign, :user => @current_user)
     assigns[:campaigns] = [ @campaign ].paginate
     assigns[:campaign_status_total] = { :called_off => 1, :completed => 1, :on_hold => 1, :planned => 1, :started => 1, :other => 1, :all => 6 }
-    render "campaigns/destroy.js.rjs"
+    render
   end
 
   it "should blind up destroyed campaign partial" do
