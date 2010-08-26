@@ -27,3 +27,10 @@ FatFreeCrm::Application.configure do
     File.delete(File.join(Rails.root, 'tmp', 'debug.txt'))
   end
 end
+
+# Optionally load 'awesome_print' for debugging in development mode.
+begin
+  require 'ap'
+rescue LoadError
+end
+

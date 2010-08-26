@@ -21,7 +21,11 @@ module OpportunitiesHelper
   #----------------------------------------------------------------------------
   def opportunity_stage_checbox(stage, count)
     checked = (session[:filter_by_opportunity_stage] ? session[:filter_by_opportunity_stage].split(",").include?(stage.to_s) : count.to_i > 0)
+<<<<<<< HEAD
+    check_box_tag("stage[]", stage, checked, :id => stage, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"stage=" + $$("input[name='stage[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+=======
     check_box_tag("stage[]", stage, checked, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/'stage=' + $$('input[name='stage[]']').findAll(function (el) { return el.checked }).pluck('value')/))
+>>>>>>> fcc84ac502ed9eae19c016da4ee1059d0decacb7
   end
 
 end

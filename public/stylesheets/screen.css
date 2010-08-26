@@ -181,6 +181,8 @@ tt {
   .check_box input {
     position: relative;
     top: -3px; }
+  .check_box label {
+    font-size: 11px; }
 
 .tabless {
   margin: auto;
@@ -256,7 +258,7 @@ tt {
   padding: 4px 15px 8px 15px; }
 
 .remote {
-  border: 5px lightblue solid;
+  border: 5px lightgrey solid;
   background: whitesmoke;
   margin: 0px;
   padding: 0px 10px 0px 10px;
@@ -612,8 +614,8 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: #df9;
-  color: darkgreen;
+  background: khaki;
+  color: #200;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {
