@@ -3,6 +3,7 @@ require 'capistrano_colors'
 load 'recipes/prompt'
 load 'recipes/stack'
 load 'recipes/passenger'
+load 'recipes/whenever'
 
 set :application, "fat-free-crm"
 set :default_stage, "preview"
@@ -41,6 +42,7 @@ namespace :crm do
 
 end
 
+before 'deploy:finalize_update', 'git:submodules:update'
 namespace :git do
   namespace :submodules do
     task :update do
@@ -49,12 +51,11 @@ namespace :git do
     end
   end
 end
-before 'deploy:finalize_update', 'git:submodules:update'
 
+after 'deploy:update_code', 'deploy:update_settings'
 namespace :deploy do
   desc "Update settings file with server specific attributes (runs a server-side sed script)"
   task :update_settings do
     run "if [ -f #{shared_path}/settings.sed ]; then sed -i -f #{shared_path}/settings.sed #{release_path}/config/settings.yml; fi"
   end
 end
-after 'deploy:update_code', 'deploy:update_settings'
