@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require "faker"
+require 'ffaker'
 
 Factory.sequence :address do |x|
   Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
@@ -352,7 +352,7 @@ Factory.define :default_settings, :parent => :setting do |s|
     ActiveRecord::Base.connection.execute("TRUNCATE settings")
   end
 
-  settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
+  settings = YAML.load_file("#{::Rails.root}/config/settings.yml")
   settings.keys.each do |key|
     Factory.define key.to_sym, :parent => :setting do |factory|
       factory.name key.to_s

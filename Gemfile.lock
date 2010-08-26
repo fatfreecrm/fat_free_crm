@@ -67,7 +67,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     factory_girl (1.3.2)
-    faker (0.3.1)
+    ffaker (0.4.0)
     ffi (0.6.3)
       rake (>= 0.8.7)
     gherkin (2.1.5)
@@ -164,7 +164,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   factory_girl
-  faker
+  ffaker
   gravatar-ultimate!
   haml (>= 3.0.17)
   mysql (>= 2.8.1)

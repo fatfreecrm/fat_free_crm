@@ -12,10 +12,20 @@ gem 'paperclip', '>= 2.3.3'
 gem 'simple_column_search', '>= 1.0.1'
 gem 'will_paginate', '>= 3.0.pre2'
 
-group :cucumber, :test do
+group :cucumber, :development, :test do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
   gem 'rspec-rails', '>= 2.0.0.beta.20'
-  gem 'faker'
+
+  if RUBY_VERSION.to_f >= 1.9
+    # gem install ruby-debug19 -- --with-ruby-include=/home/user/.rvm/src/ruby-1.9.2-head/
+    gem 'ruby-debug19'
+  else
+    gem 'ruby-debug'
+  end
+end
+
+group :cucumber, :test do
+  gem 'ffaker'
   gem 'factory_girl'
 end
 
@@ -29,13 +39,4 @@ end
 group :test do
   gem 'shoulda'
   gem 'autotest-rails'
-end
-
-group :cucumber, :development, :test do
-  if RUBY_VERSION.to_f >= 1.9
-    # gem install ruby-debug19 -- --with-ruby-include=/home/user/.rvm/src/ruby-1.9.2-head/
-    gem 'ruby-debug19'
-  else
-    gem 'ruby-debug'
-  end
 end

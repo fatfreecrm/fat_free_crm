@@ -1,47 +1,33 @@
-# Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http:#www.gnu.org/licenses/>.
-#------------------------------------------------------------------------------
-
-# This file is copied to ~/spec when you run 'ruby script/generate rspec'
-# from the project root directory.
+# This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
-require File.dirname(__FILE__) + "/../config/environment"
+require File.expand_path("../../config/environment", __FILE__)
+require 'rspec/rails'
+require 'factory_girl'
+require "#{::Rails.root}/spec/factories"
 
-require 'spec/autorun'
-require 'spec/rails'
-require "factory_girl"
-require RAILS_ROOT + "/spec/factories"
+# Requires supporting ruby files with custom matchers and macros, etc,
+# in spec/support/ and its subdirectories.
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 # Load shared behavior modules to be included by Runner config.
-Dir[File.dirname(__FILE__) + "/shared/*.rb"].map do |file|
-  require file
-end
+Dir[File.dirname(__FILE__) + "/shared/*.rb"].map {|f| require f}
 
 VIEWS = %w(pending assigned completed).freeze
 
 # Load default settings from config/settings.yml
 Factory(:default_settings)
 
-Spec::Runner.configure do |config|
-  # If you're not using ActiveRecord you should remove these
-  # lines, delete config/database.yml and disable :active_record
-  # in your config/boot.rb
-  config.use_transactional_fixtures = true
-  config.use_instantiated_fixtures  = false
-  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+RSpec.configure do |config|
+  # == Mock Framework
+  #
+  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
+  #
+  # config.mock_with :mocha
+  # config.mock_with :flexmock
+  # config.mock_with :rr
+  config.mock_with :rspec
+
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.include(SharedControllerSpecs, :type => :controller)
 
@@ -52,10 +38,10 @@ Spec::Runner.configure do |config|
     end
   end
 
-  #
-  # == Notes
-  #
-  # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+  # If you're not using ActiveRecord, or you'd prefer not to run each of your
+  # examples within a transaction, comment the following line or assign false
+  # instead of true.
+  config.use_transactional_fixtures = true
 end
 
 # See vendor/plugins/authlogic/lib/authlogic/test_case.rb
