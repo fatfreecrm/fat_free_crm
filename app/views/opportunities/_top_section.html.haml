@@ -27,7 +27,7 @@
         .label #{t :discount} #{t :currency}:
         = f.text_field :discount, :style => "width:110px; text-align:right;"
 
-  - fields_for(@account) do |a|
+  = fields_for(@account) do |a|
     = a.hidden_field :user_id
     = a.hidden_field :access
     = a.hidden_field :assigned_to

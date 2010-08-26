@@ -1,4 +1,5 @@
-- remote_form_for(@task, :html => one_submit_only(:task)) do |f|
+
+= form_for(@task, :html => one_submit_only(:task), :remote => true) do |f|
   = link_to_close new_task_path + "?view=#{@view}"
   = hidden_field_tag :view, @view
   = hidden_field_tag "task[user_id]", @current_user.id

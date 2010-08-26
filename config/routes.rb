@@ -1,96 +1,123 @@
-ActionController::Routing::Routes.draw do |map|
+CrossroadsCrm::Application.routes.draw do
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  map.root      :controller => "home", :action => "index"
-  map.resource  :authentication
-  map.resources :users, :member => { :avatar => :get, :upload_avatar => :put, :password => :get, :change_password => :put }
-  map.resources :passwords
-  map.resources :comments
-  map.resources :emails
+  root :to => 'home#index'
+  match '/' => 'home#index'
 
-  map.resources :tasks,
-    :collection => {
-      :auto_complete => :post
-    },
-    :member => {
-      :complete => :put
-    }
+  resource :authentication
 
-  map.resources :leads,
-    :has_many => [ :comments, :emails ],
-    :collection => {
-      :auto_complete => :post,
-      :options => :get,
-      :redraw  => :post,
-      :search  => :get
-    },
-    :member => {
-      :attach  => :put,
-      :convert => :get,
-      :discard => :post,
-      :promote => :put,
-      :reject  => :put
-    }
-
-  [ :accounts, :campaigns, :contacts, :opportunities ].each do |resource|
-    map.resources resource,
-      :has_many => [ :comments, :emails ],
-      :collection => {
-        :auto_complete => :post,
-        :options => :get,
-        :redraw  => :post,
-        :search  => :get
-      },
-      :member => {
-        :attach  => :put,
-        :discard => :post
-      }
+  resources :users do
+    member do
+      get :avatar
+      put :upload_avatar
+      get :password
+      put :change_password
+    end
   end
 
-  map.signup  "signup",  :controller => "users",           :action => "new"
-  map.profile "profile", :controller => "users",           :action => "show"
-  map.login   "login",   :controller => "authentications", :action => "new"
-  map.logout  "logout",  :controller => "authentications", :action => "destroy"
-  map.admin   "admin",   :controller => "admin/users",     :action => "index"
+  resources :passwords
 
-  map.namespace :admin do |admin|
-    admin.resources :users, :collection => { :search => :get, :auto_complete => :post }, :member => { :suspend => :put, :reactivate => :put, :confirm => :get }
-    admin.resources :settings
-    admin.resources :plugins
+  resources :comments
+
+  resources :emails
+
+  resources :tasks do
+    collection do
+      post :auto_complete
+    end
+    member do
+      put :complete
+    end
   end
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
+  resources :leads do
+    collection do
+      post :auto_complete
+      get :options
+      post :redraw
+      get :search
+    end
+    member do
+      put :attach
+      get :convert
+      post :discard
+      put :promote
+      put :reject
+    end
+  end
 
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
+  resources :accounts do
+    collection do
+      post :auto_complete
+      get :options
+      post :redraw
+      get :search
+    end
+    member do
+      put :attach
+      post :discard
+    end
+  end
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
+  resources :campaigns do
+    collection do
+      post :auto_complete
+      get :options
+      post :redraw
+      get :search
+    end
+    member do
+      put :attach
+      post :discard
+    end
+  end
 
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+  resources :contacts do
+    collection do
+      post :auto_complete
+      get :options
+      post :redraw
+      get :search
+    end
+    member do
+      put :attach
+      post :discard
+    end
+  end
 
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
+  resources :opportunities do
+    collection do
+      post :auto_complete
+      get :options
+      post :redraw
+      get :search
+    end
+    member do
+      put :attach
+      post :discard
+    end
+  end
 
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
+  match 'signup' => 'users#new', :as => :signup
+  match 'profile' => 'users#show', :as => :profile
+  match 'login' => 'authentications#new', :as => :login
+  match 'logout' => 'authentications#destroy', :as => :logout
+  match 'admin' => 'admin/users#index', :as => :admin
 
-  # See how all your routes lay out with "rake routes"
+  namespace :admin do
+    resources :users do
+      collection do
+        get :search
+        post :auto_complete
+      end
+      member do
+        put :suspend
+        put :reactivate
+        get :confirm
+      end
+    end
+    resources :settings
+    resources :plugins
+  end
 
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing the them or commenting them out if you're using named routes and resources.
-  
-  map.connect ":controller/:action/:id"
-  map.connect ":controller/:action/:id.:format"
+  match '/:controller(/:action(/:id))'
 end

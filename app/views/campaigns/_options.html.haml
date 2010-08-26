@@ -7,10 +7,11 @@
   - current_naming  = t("option_#{@naming}")
 
   -# sort_by: Sort {{models}} by {{field}}.
-  = t(:sort_by, :models => t(:campaigns_small), :field => link_to(current_sort_by, "#", :id => :sort_by))
+  = t(:sort_by, :models => t(:campaigns_small), :field => link_to(current_sort_by, "#", :id => :sort_by)).html_safe
 
-  -# show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
-  = t(:show_per_page, :number => link_to(@per_page, "#", :id => :per_page), :models => t(:campaigns_small), :format => link_to(current_outline, "#", :id => :outline))
+  -# show_per_page: Show {{number}} {{models}} per page using {{format}} format.
+  = t(:show_per_page, :number => link_to(@per_page, "#", :id => :per_page), :models => t(:campaigns_small), :format => link_to(current_outline, "#", :id => :outline)).html_safe
+
 %p
 
 %script

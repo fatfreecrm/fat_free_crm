@@ -9,6 +9,10 @@ Wed, May 5, 2010
 - Added migration to have index on permissions (thanks, Yura!)
 - Added link_to_email to Bcc: to dropbox if it has been set up (closes LH #183).
 
+Mon, May 3, 2010
+---------------------------------------------------------------------
+- Pushed [rails3] branch to Github, let the porting start :-)
+
 Thu, Apr 29, 2010
 ---------------------------------------------------------------------
 - Replaced Facebox with Modalbox (closes LH #170).

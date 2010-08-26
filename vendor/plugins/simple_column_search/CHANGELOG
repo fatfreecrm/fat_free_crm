@@ -1,3 +1,5 @@
+v1.0.1. Rails 3 compatibility, thanks Tom Wilson [twilson63]
+
 v1.0.0. PostgreSQL support, Rit Li [rit]
 
 v0.1.2. Fixed initialization when used as a plugin.

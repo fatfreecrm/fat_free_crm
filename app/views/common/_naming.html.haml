@@ -1,5 +1,4 @@
-- naming_menu_items = %w(before after).inject([]) do |items, naming|
-  - items << options_menu_item(:naming, naming)
+- naming_menu_items = %w(before after).inject([]) { |items, naming| items << options_menu_item(:naming, naming) }
 
 :plain
   new crm.Menu({

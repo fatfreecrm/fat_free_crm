@@ -1,4 +1,4 @@
-require "source_annotation_extractor"
+#~ require "source_annotation_extractor"
 
 # Modified version of the SourceAnnotationExtractor from rails/lib/source_annotation_extractor.rb;
 # searches executable code that calls a hook.

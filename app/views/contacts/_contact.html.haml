@@ -23,7 +23,7 @@
     - unless @current_user.preference[:contacts_outline] == "brief"
       %dt{ :style => "padding: 2px 0px 0px 0px" }
         = link_to_email(contact.email) << " | " if contact.email.present?
-        = "#{t :phone_small}: <b>" + h(contact.phone) << "</b> | " if contact.phone.present?
-        = "#{t :mobile_small}: <b>" + h(contact.mobile) << "</b> | " if contact.mobile.present?
+        = "#{t :phone_small}: <b>".html_safe + h(contact.phone) << "</b> | ".html_safe if contact.phone.present?
+        = "#{t :mobile_small}: <b>".html_safe + h(contact.mobile) << "</b> | ".html_safe if contact.mobile.present?
         = t(:added_ago, time_ago_in_words(contact.created_at))
       = hook(:contact_bottom, self, :contact => contact)

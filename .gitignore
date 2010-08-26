@@ -3,13 +3,14 @@ coverage/*
 db/schema.rb
 db/*.sql*
 log/*.log
-tmp/**/*
 public/avatars/**/*
 public/javascripts/cache/*.js
 public/stylesheets/cache/*.css
 nbproject
+tmp/**/*
+.bundle
 .idea/
 .DS_Store
 *~
 *.swp
-
+*.rails2

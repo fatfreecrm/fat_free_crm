@@ -21,36 +21,4 @@ module Admin::ApplicationHelper
     super(FatFreeCRM::Tabs.admin)
   end
 
-  #----------------------------------------------------------------------------
-  def link_to_edit(model)
-    name = model.class.name.underscore.gsub('/','_')
-
-    link_to_remote(t(:edit),
-      :method => :get,
-      :url    => send("edit_admin_#{name}_path", model),
-      :with   => "{ previous: crm.find_form('edit_admin_#{name}') }"
-    )
-  end
-
-  #----------------------------------------------------------------------------
-  def link_to_delete(model)
-    name = model.class.name.underscore.gsub('/','_')
-
-    link_to_remote(t(:delete) + "!",
-      :method => :delete,
-      :url    => send("admin_#{name}_path", model),
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
-    )
-  end
-
-  #----------------------------------------------------------------------------
-  def confirm_delete(model)
-    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>)
-    yes = link_to(t(:yes_button), [:admin, model], :method => :delete)
-    no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
-    update_page do |page|
-      page << "$('confirm').update($('menu').innerHTML)"
-      page[:menu].replace_html "#{question} #{yes} : #{no}"
-    end
-  end
 end

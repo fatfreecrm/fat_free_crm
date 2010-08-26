@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ module ApplicationHelper
       raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake crm:setup</b> command."
     end
   end
-  
+
   #----------------------------------------------------------------------------
   def tabless_layout?
     %w(authentications passwords).include?(controller.controller_name) ||
@@ -47,8 +47,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-      link_to_remote("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}",
-        :url => url_for(:controller => :home, :action => :toggle, :id => id),
+      link_to_remote("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
+        :url    => url_for(:controller => :home, :action => :toggle, :id => id),
         :before => "crm.flip_subtitle(this)"
       ), :class => "subtitle")
   end
@@ -60,10 +60,10 @@ module ApplicationHelper
     select_id  = :"select_#{asset}"
     create_url = controller.send(:"new_#{asset}_path")
 
-    html = "<br />"
+    html = "<br />".html_safe
     html << content_tag(:div, link_to(t(select_id), "#", :id => select_id), :class => "subtitle_tools")
-    html << content_tag(:div, "&nbsp;|&nbsp;", :class => "subtitle_tools")
-    html << content_tag(:div, link_to_inline(create_id, create_url, :related => dom_id(related), :text=> t(create_id)), :class => "subtitle_tools")
+    html << content_tag(:div, "&nbsp;|&nbsp;".html_safe, :class => "subtitle_tools")
+    html << content_tag(:div, link_to_inline(create_id, create_url, :related => dom_id(related), :text => t(create_id)), :class => "subtitle_tools")
     html << content_tag(:div, t(assets), :class => :subtitle, :id => :"create_#{asset}_title")
     html << content_tag(:div, "", :class => :remote, :id => create_id, :style => "display:none;")
   end
@@ -94,25 +94,25 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def arrow_for(id)
-    content_tag(:span, "&#9658;", :id => "#{id}_arrow", :class => :arrow)
+    content_tag(:span, "&#9658;".html_safe, :id => "#{id}_arrow", :class => :arrow)
   end
 
   #----------------------------------------------------------------------------
-  def link_to_edit(model)
+  def link_to_edit(model, params = {})
     name = model.class.name.underscore.downcase
     link_to_remote(t(:edit),
+      :url    => params[:url] || url_for(:id => model, :action => :edit),
       :method => :get,
-      :url    => send("edit_#{name}_path", model),
       :with   => "{ previous: crm.find_form('edit_#{name}') }"
     )
   end
 
   #----------------------------------------------------------------------------
-  def link_to_delete(model)
+  def link_to_delete(model, params = {})
     name = model.class.name.underscore.downcase
     link_to_remote(t(:delete) + "!",
+      :url    => params[:url] || url_for(model),
       :method => :delete,
-      :url    => send("#{name}_path", model),
       :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
@@ -124,16 +124,19 @@ module ApplicationHelper
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
     link_to_remote(t(:discard),
-      :method => :post,
       :url    => url_for(:controller => parent, :action => :discard, :id => parent_id),
+      :method => :post,
       :with   => "{ attachment: '#{model.class.name}', attachment_id: #{model.id} }",
       :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
 
   #----------------------------------------------------------------------------
-  def link_to_cancel(url)
-    link_to_remote(t(:cancel), :url => url, :method => :get, :with => "{ cancel: true }")
+  def link_to_cancel(url, params = {})
+    link_to_remote(t(:cancel),
+      :url    => params[:url] || url,
+      :method => :get,
+      :with   => "{ cancel: true }")
   end
 
   #----------------------------------------------------------------------------
@@ -204,9 +207,9 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def confirm_delete(model)
-    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>)
-    yes = link_to(t(:yes_button), model, :method => :delete)
+  def confirm_delete(model, params = {})
+    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>).html_safe
+    yes = link_to(t(:yes_button), params[:url] || model, :method => :delete)
     no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
     update_page do |page|
       page << "$('confirm').update($('menu').innerHTML)"
@@ -304,17 +307,17 @@ module ApplicationHelper
     if model.avatar
       image_tag(model.avatar.image.url(Avatar.styles[args[:size]]), args)
     elsif model.email
-      gravatar(model.email, { :default => default_avatar_url }.merge(args))
+      image_tag(Gravatar.new(model.email, :default => default_avatar_url).image_url, args)
     else
       image_tag("avatar.jpg", args)
     end
   end
 
-  # Add default avatar image and invoke original :gravatar_for defined by the
-  # gravatar plugin (see vendor/plugins/gravatar/lib/gravatar.rb)
+  # Add default avatar image
   #----------------------------------------------------------------------------
   def gravatar_for(model, args = {})
-    super(model, { :default => default_avatar_url }.merge(args))
+    args[:class] ||= "gravatar"
+    image_tag(Gravatar.new(model.email, :default => default_avatar_url).image_url, args)
   end
 
   #----------------------------------------------------------------------------
@@ -331,7 +334,7 @@ module ApplicationHelper
       when "Shared"  then t(:permissions_intro_shared,  text)
     end
   end
-  
+
   # Returns default permissions intro
   #----------------------------------------------------------------------------
   def get_default_permissions_intro(access, text)
@@ -340,7 +343,7 @@ module ApplicationHelper
       when "Public" then t(:permissions_intro_public, text)
       when "Shared" then t(:permissions_intro_shared, text)
     end
-  end  
+  end
 
   # Render a text field that is part of compound address.
   #----------------------------------------------------------------------------

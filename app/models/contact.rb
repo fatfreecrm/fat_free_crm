@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -59,11 +59,11 @@ class Contact < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Business'"
   has_many    :emails, :as => :mediator
-  
+
   accepts_nested_attributes_for :business_address, :allow_destroy => true
 
-  named_scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
-  named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
+  scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
+  scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
 
   simple_column_search :first_name, :last_name, :email,
     :match => lambda { |column| column == :email ? :middle : :start },
@@ -145,7 +145,7 @@ class Contact < ActiveRecord::Base
     %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter do_not_call background_info).each do |name|
       attributes[name] = model.send(name.intern)
     end
-    
+
     contact = Contact.new(attributes)
     contact.business_address = Address.new(:street1 => model.business_address.street1, :street2 => model.business_address.street2, :city => model.business_address.city, :state => model.business_address.state, :zipcode => model.business_address.zipcode, :country => model.business_address.country, :full_address => model.business_address.full_address, :address_type => "Business") unless model.business_address.nil?
 

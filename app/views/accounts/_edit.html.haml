@@ -1,5 +1,5 @@
 .remote
-  - remote_form_for(@account, :html => one_submit_only(:account)) do |f|
+  = form_for(@account, :html => one_submit_only(:account), :remote => true) do |f|
     = link_to_close edit_account_path(@account)
     = f.hidden_field :user_id
     = f.error_messages
@@ -11,5 +11,5 @@
         = f.submit t(:save_account), :onclick => "crm.clear_all_hints()"
       - else
         = f.submit t(:save_account)
-      #{t :or} 
+      #{t :or}
       = link_to_cancel edit_account_path(@account)

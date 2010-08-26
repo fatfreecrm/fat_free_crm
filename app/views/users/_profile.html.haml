@@ -1,5 +1,5 @@
 .remote
-  - remote_form_for(@user, :html => one_submit_only(:user)) do |f|
+  = form_for(@user, :html => one_submit_only(:user), :remote => true) do |f|
     = link_to_close edit_user_path(@user)
     = f.error_messages
     .section
@@ -55,11 +55,11 @@
           %td{ :valign => :top }
             .label #{t :skype}:
             = f.text_field :skype, :style => "width:112px"
-    
+
     .buttonbar
       = f.submit t :save_profile
       #{t :or}
       = link_to_cancel edit_user_path(@user)
-      
+
   = hook(:profile_user_bottom, self)
 %br

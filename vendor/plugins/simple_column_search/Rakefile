@@ -1,4 +1,4 @@
-require 'spec/rake/spectask'
+#require 'spec/rake/spectask'
 
 require 'echoe'
 Echoe.new 'simple_column_search' do |p|

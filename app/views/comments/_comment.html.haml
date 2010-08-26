@@ -13,7 +13,7 @@
     %tt
       added note #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
       - if collapsable
-        = " | " + link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
+        = " | ".html_safe + link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
 
     - if collapsable
       %dt{ hidden_if(comment.expanded?), :id => dom_id(comment, :truncated) }

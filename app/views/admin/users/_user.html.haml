@@ -13,14 +13,14 @@
 
   .indentfull
     .tools{ invisible, :id => dom_id(user, :tools) }
-      = link_to_edit(user) << " | "
+      = link_to_edit(user, :url => edit_admin_user_path(user)) << " | "
 
       - if user.suspended?
         = link_to_reactivate(user) << " | "
       - elsif user != @current_user
         = link_to_suspend(user) << " | "
       - else
-        = "<font color='silver'>#{t :suspend}!</font> | "
+        = "<font color='silver'>#{t :suspend}!</font> | ".html_safe
 
       - if user != @current_user
         = link_to_confirm(user)
@@ -45,8 +45,8 @@
         %span.warn #{t :user_never_logged_in}
     %dt{ :style => "padding: 2px 0px 0px 0px" }
       = link_to_email(user.email.to_s) << " | "
-      = "#{t :phone_small}: <b>" + user.phone << "</b> | " if user.phone?
-      = "#{t :mobile_small}: <b>" + user.mobile << "</b> | " if user.mobile?
+      = "#{t :phone_small}: <b>".html_safe + user.phone << "</b> | ".html_safe if user.phone?
+      = "#{t :mobile_small}: <b>".html_safe + user.mobile << "</b> | ".html_safe if user.mobile?
 
       - if !user.suspended?
         %span #{t(:user_since, l(user.created_at.to_date, :format => :mmddyy))}

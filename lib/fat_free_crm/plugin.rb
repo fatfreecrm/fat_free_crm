@@ -15,6 +15,16 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
+Rails::Plugin.class_eval do
+  def initializer
+    ActiveSupport::Deprecation.warn "Rails::Plugin initializer is depricated use Railties instead"
+    if ENV['RAILS_ENV'] == "development"
+      config.cache_classes = true # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
+    end
+    self
+  end
+end
+
 module FatFreeCRM
   class Plugin
     @@list = {} # List of added plugins.
@@ -36,10 +46,17 @@ module FatFreeCRM
     # Preload other plugins that are required by the plugin being loaded.
     #--------------------------------------------------------------------------
     def dependencies(*plugins)
-      plugin_path = @initializer.configuration.plugin_paths.first
+      ActiveSupport::Deprecation.warn "Fat Free CRM Plugin dependencies are depricated, please use gem dependencies instead"
+
+      plugins << :prototype_legacy_helper
+
       plugins.each do |name|
-        plugin = Rails::Plugin.new("#{plugin_path}/#{name}")
-        plugin.load(@initializer)
+        plugin_path = File.join(Rails.root, 'vendor/plugins', name.to_s)
+        if File.directory?(plugin_path)
+          @initializer.send(:eval, File.read(File.join(plugin_path, 'init.rb')))
+        else
+          require name.to_s
+        end
       end
     end
 
@@ -71,13 +88,12 @@ module FatFreeCRM
       private :new  # For the outside world new plugins can only be created through self.register.
 
       def register(id, initializer = nil, &block)
-        if initializer && ENV['RAILS_ENV'] == "development"
-          initializer.configuration.cache_classes = true # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
+        unless @@list.include?(id)
+          plugin = new(id, initializer)
+          plugin.instance_eval(&block)            # Grab plugin properties.
+          plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
+          @@list[id] = plugin
         end
-        plugin = new(id, initializer)
-        plugin.instance_eval(&block)            # Grab plugin properties.
-        plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
-        @@list[id] = plugin
       end
       alias_method :<<, :register
 
@@ -90,4 +106,3 @@ module FatFreeCRM
 
   end # class Plugin
 end # module FatFreeCRM
-

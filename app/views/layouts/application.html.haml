@@ -1,5 +1,5 @@
-!!!
-%html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => :en,  :lang => :en }
+!!!5
+%html
   %head
     %meta{ "http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
     %title Fat Free CRM
@@ -15,6 +15,7 @@
     = hook(:javascript_includes, self)
 
     %script{:type => "text/javascript"}= yield :javascript
+    = csrf_meta_tag
 
   %body
     = render :partial => "layouts/header"

@@ -1,8 +1,0 @@
-widget_1:
-  id: 1
-  title: 'widget 1'
-widget_2:
-  id: 2
-  title: 'deleted widget 2'
-  deleted_at: '2005-01-01 00:00:00'
-  category_id: 3

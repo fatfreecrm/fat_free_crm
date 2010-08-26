@@ -1,4 +1,5 @@
-- remote_form_for(@lead, :html => one_submit_only(:lead)) do |f|
+
+= form_for(@lead, :html => one_submit_only(:lead), :remote => true) do |f|
   = link_to_close new_lead_path
   = hidden_field_tag "campaign", "#{@campaign.id if @campaign}"
   = hidden_field_tag "lead[user_id]", @current_user.id

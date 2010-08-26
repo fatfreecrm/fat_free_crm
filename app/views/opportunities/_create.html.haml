@@ -1,4 +1,5 @@
-- remote_form_for(@opportunity, :html => one_submit_only(:opportunity)) do |f|
+
+= form_for(@opportunity, :html => one_submit_only(:opportunity), :remote => true) do |f|
   = link_to_close new_opportunity_path
   = hidden_field_tag "contact",  "#{@contact.id  if @contact}"
   = hidden_field_tag "campaign", "#{@campaign.id if @campaign}"
