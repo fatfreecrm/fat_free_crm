@@ -7,14 +7,14 @@ describe "/tasks/destroy.js.rjs" do
     login_and_assign
   end
 
-  VIEWS.each do |view|
-    describe "destroy from Tasks tab (#{view} view)" do
+  VIEWS.each do |status|
+    describe "destroy from Tasks tab (#{status} view)" do
       before(:each) do
         @task = Factory(:task)
         assigns[:task] = @task
-        assigns[:view] = view
+        assigns[:view] = status
         assigns[:empty_bucket] = :due_asap
-        assigns[:task_total] = stub_task_total(view)
+        assigns[:task_total] = stub_task_total(status)
       end
 
       it "should blind up out destroyed task partial" do

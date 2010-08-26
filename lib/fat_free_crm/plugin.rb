@@ -46,8 +46,6 @@ module FatFreeCRM
     # Preload other plugins that are required by the plugin being loaded.
     #--------------------------------------------------------------------------
     def dependencies(*plugins)
-      ActiveSupport::Deprecation.warn "Fat Free CRM Plugin dependencies are depricated, please use gem dependencies instead"
-
       plugins << :prototype_legacy_helper
 
       plugins.each do |name|

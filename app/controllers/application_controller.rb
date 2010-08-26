@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-      flash[:notice] = t(:msg_login_needed) if request.request_uri != "/"
+      flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
       redirect_to login_url
       false
     end
@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
 
   #----------------------------------------------------------------------------
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.fullpath
   end
 
   #----------------------------------------------------------------------------

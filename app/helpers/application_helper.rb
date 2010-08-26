@@ -120,7 +120,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_discard(model)
     name = model.class.name.downcase
-    current_url = (request.xhr? ? request.referer : request.request_uri)
+    current_url = (request.xhr? ? request.referer : request.fullpath)
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
     link_to_remote(t(:discard),

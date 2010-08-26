@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
-  
+
   # Delete this example and add some real ones or delete this file.
   it "should be included in the object returned by #helper" do
     included_modules = (class << helper; self; end).send :included_modules
@@ -32,7 +32,7 @@ describe ApplicationHelper do
 
   it "link_to_discard" do
     lead = Factory(:lead)
-    request.stub!(:request_uri).and_return("http://www.example.com/leads/#{lead.id}")
+    request.stub!(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
 
     link = helper.link_to_discard(lead)
     link.should =~ %r|leads/#{lead.id}/discard|
@@ -48,7 +48,7 @@ describe ApplicationHelper do
 
     it "should return true for regular request to display asset landing page" do
       request.stub!(:xhr?).and_return(false)
-      request.stub!(:request_uri).and_return("http://www.example.com/leads/123")
+      request.stub!(:fullpath).and_return("http://www.example.com/leads/123")
       helper.shown_on_landing_page?.should == true
     end
 
@@ -60,7 +60,7 @@ describe ApplicationHelper do
 
     it "should return false for regular request to display page other than asset landing page" do
       request.stub!(:xhr?).and_return(false)
-      request.stub!(:request_uri).and_return("http://www.example.com/leads")
+      request.stub!(:fullpath).and_return("http://www.example.com/leads")
       helper.shown_on_landing_page?.should == false
     end
   end

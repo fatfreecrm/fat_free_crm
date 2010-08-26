@@ -7,13 +7,13 @@ describe "/tasks/create.js.rjs" do
     login_and_assign
   end
 
-  (VIEWS - %w(completed)).each do |view|
-    describe "create from #{view} tasks page" do
+  (VIEWS - %w(completed)).each do |status|
+    describe "create from #{status} tasks page" do
       before(:each) do
-        assigns[:view] = view
-        assigns[:task] = @task = stub_task(view)
-        assigns[:task_total] = stub_task_total(view)
-        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{view}"
+        assigns[:view] = status
+        assigns[:task] = @task = stub_task(status)
+        assigns[:task_total] = stub_task_total(status)
+        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{status}"
         render
       end
 
@@ -25,7 +25,7 @@ describe "/tasks/create.js.rjs" do
       end
 
       it "should update tasks title" do
-        if view == "assigned"
+        if status == "assigned"
           rendered.should include_text('$("title").update("Assigned Tasks")')
         else
           rendered.should include_text('$("title").update("Tasks")')
@@ -47,7 +47,7 @@ describe "/tasks/create.js.rjs" do
     assigns[:task] = Factory(:task, :id => 42, :assignee => Factory(:user))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
-    
+
     rendered.should include_text('$("flash").update(')
     rendered.should include_text('crm.flash("notice", true)')
   end
@@ -68,7 +68,7 @@ describe "/tasks/create.js.rjs" do
     assigns[:task] = Factory(:task, :id => 42, :assignee => nil)
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
-    
+
     rendered.should include_text('$("flash").update(')
     rendered.should include_text('crm.flash("notice", true)')
   end
@@ -84,11 +84,11 @@ describe "/tasks/create.js.rjs" do
     end
   end
 
-  (VIEWS - %w(assigned)).each do |view|
+  (VIEWS - %w(assigned)).each do |status|
     describe "create from outside the Tasks tab" do
       before(:each) do
         @task = Factory(:task, :id => 42)
-        assigns[:view] = view
+        assigns[:view] = status
         assigns[:task] = @task
         render
       end
@@ -97,7 +97,7 @@ describe "/tasks/create.js.rjs" do
         rendered.should include_text('$("create_task_title").update("Tasks")')
       end
 
-      it "should insert #{view} partial and highlight it" do
+      it "should insert #{status} partial and highlight it" do
         rendered.should have_rjs(:insert, :top) do |rjs|
           with_tag("li[id=task_#{@task.id}]")
         end

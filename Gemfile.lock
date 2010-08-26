@@ -150,6 +150,10 @@ GEM
       polyglot (>= 0.3.1)
     trollop (1.16.2)
     tzinfo (0.3.23)
+    webrat (0.7.2.beta.1)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
     will_paginate (3.0.pre2)
 
 PLATFORMS
@@ -176,4 +180,5 @@ DEPENDENCIES
   simple_column_search (>= 1.0.1)
   spork
   test-unit (= 1.2.3)
+  webrat
   will_paginate (>= 3.0.pre2)

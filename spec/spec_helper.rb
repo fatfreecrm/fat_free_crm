@@ -29,12 +29,14 @@ RSpec.configure do |config|
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  config.include Webrat::HaveTagMatcher
+
   config.include(SharedControllerSpecs, :type => :controller)
 
   config.after(:each, :type => :view) do
     # detect html-quoted entities in all rendered responses
-    if rendered && rendered.body
-      rendered.body.should_not match /&amp;\S{1,6};/
+    if rendered
+      rendered.should_not match /&amp;\S{1,6};/
     end
   end
 
