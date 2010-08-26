@@ -20,5 +20,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every 5.minutes do
-  rake "crm:dropbox:run"
+  rake "crm:dropbox:run", :output => "log/dropbox_cron.log"
 end
