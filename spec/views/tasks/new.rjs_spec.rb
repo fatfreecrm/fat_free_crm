@@ -14,7 +14,7 @@ describe "/tasks/new.html.haml" do
   it "should toggle empty message div if it exists" do
     render "tasks/new.js.rjs"
 
-    response.should include_text('crm.flick("empty", "toggle")')
+    rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   describe "new task" do
@@ -22,10 +22,10 @@ describe "/tasks/new.html.haml" do
       params[:cancel] = nil
       render "tasks/new.js.rjs"
     
-      response.should have_rjs("create_task") do |rjs|
+      rendered.should have_rjs("create_task") do |rjs|
         with_tag("form[class=new_task]")
       end
-      response.should include_text('crm.flip_form("create_task");')
+      rendered.should include_text('crm.flip_form("create_task");')
     end
 
     it "should call JavaScript functions to load Calendar popup without time selector" do
@@ -33,7 +33,7 @@ describe "/tasks/new.html.haml" do
       Setting.task_calendar_with_time = false
       render "tasks/new.js.rjs"
 
-      response.should include_text('crm.date_select_popup("task_calendar", "task_bucket", false)')
+      rendered.should include_text('crm.date_select_popup("task_calendar", "task_bucket", false)')
     end
 
     it "should call JavaScript functions to load Calendar popup with time selector" do
@@ -41,7 +41,7 @@ describe "/tasks/new.html.haml" do
       Setting.task_calendar_with_time = true
       render "tasks/new.js.rjs"
 
-      response.should include_text('crm.date_select_popup("task_calendar", "task_bucket", true)')
+      rendered.should include_text('crm.date_select_popup("task_calendar", "task_bucket", true)')
     end
   end
 
@@ -50,8 +50,8 @@ describe "/tasks/new.html.haml" do
       params[:cancel] = "true"
       render "tasks/new.js.rjs"
 
-      response.should_not have_rjs("create_task")
-      response.should include_text('crm.flip_form("create_task");')
+      rendered.should_not have_rjs("create_task")
+      rendered.should include_text('crm.flip_form("create_task");')
     end
   end
 

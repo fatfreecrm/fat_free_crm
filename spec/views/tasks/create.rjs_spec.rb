@@ -13,31 +13,31 @@ describe "/tasks/create.js.rjs" do
         assigns[:view] = view
         assigns[:task] = @task = stub_task(view)
         assigns[:task_total] = stub_task_total(view)
-        request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{view}"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{view}"
         render
       end
 
       it "should hide [Create Task] form and insert task partial" do
-        response.should have_rjs(:insert, :top) do |rjs|
+        rendered.should have_rjs(:insert, :top) do |rjs|
           with_tag("li[id=task_#{@task.id}]")
         end
-        response.should include_text(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+        rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
       end
 
       it "should update tasks title" do
         if view == "assigned"
-          response.should include_text('$("title").update("Assigned Tasks")')
+          rendered.should include_text('$("title").update("Assigned Tasks")')
         else
-          response.should include_text('$("title").update("Tasks")')
+          rendered.should include_text('$("title").update("Tasks")')
         end
       end
 
       it "should update tasks sidebar" do
-        response.should have_rjs("sidebar") do |rjs|
+        rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        response.should include_text(%Q/$("filters").visualEffect("shake"/)
+        rendered.should include_text(%Q/$("filters").visualEffect("shake"/)
       end
     end
   end
@@ -45,20 +45,20 @@ describe "/tasks/create.js.rjs" do
   it "should show flash message when assigning a task from pending tasks view" do
     assigns[:view] = "pending"
     assigns[:task] = Factory(:task, :id => 42, :assignee => Factory(:user))
-    request.env["HTTP_REFERER"] = "http://localhost/tasks"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
     
-    response.should include_text('$("flash").update(')
-    response.should include_text('crm.flash("notice", true)')
+    rendered.should include_text('$("flash").update(')
+    rendered.should include_text('crm.flash("notice", true)')
   end
 
   it "should update recent items when assigning a task from pending tasks view" do
     assigns[:view] = "pending"
     assigns[:task] = Factory(:task, :id => 42, :assignee => Factory(:user))
-    request.env["HTTP_REFERER"] = "http://localhost/tasks"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
-    response.should have_rjs("recently") do |rjs|
+    rendered.should have_rjs("recently") do |rjs|
       with_tag("div[class=caption]", :text => "Recent Items")
     end
   end
@@ -66,20 +66,20 @@ describe "/tasks/create.js.rjs" do
   it "should show flash message when creating a pending task from assigned tasks view" do
     assigns[:view] = "assigned"
     assigns[:task] = Factory(:task, :id => 42, :assignee => nil)
-    request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
     
-    response.should include_text('$("flash").update(')
-    response.should include_text('crm.flash("notice", true)')
+    rendered.should include_text('$("flash").update(')
+    rendered.should include_text('crm.flash("notice", true)')
   end
 
   it "should update recent items when creating a pending task from assigned tasks view" do
     assigns[:view] = "assigned"
     assigns[:task] = Factory(:task, :id => 42, :assignee => nil)
-    request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
-    response.should have_rjs("recently") do |rjs|
+    rendered.should have_rjs("recently") do |rjs|
       with_tag("div[class=caption]", :text => "Recent Items")
     end
   end
@@ -94,18 +94,18 @@ describe "/tasks/create.js.rjs" do
       end
 
       it "should update tasks title" do
-        response.should include_text('$("create_task_title").update("Tasks")')
+        rendered.should include_text('$("create_task_title").update("Tasks")')
       end
 
       it "should insert #{view} partial and highlight it" do
-        response.should have_rjs(:insert, :top) do |rjs|
+        rendered.should have_rjs(:insert, :top) do |rjs|
           with_tag("li[id=task_#{@task.id}]")
         end
-        response.should include_text(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+        rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
       end
 
       it "should update recently viewed items" do
-        response.should have_rjs("recently") do |rjs|
+        rendered.should have_rjs("recently") do |rjs|
           with_tag("div[class=caption]", :text => "Recent Items")
         end
       end
@@ -116,8 +116,8 @@ describe "/tasks/create.js.rjs" do
     assigns[:task] = Factory.build(:task, :name => nil) # make it invalid
     render
 
-    response.should include_text('$("create_task").visualEffect("shake"')
-    response.should include_text(%/$("task_submit").enable()/)
+    rendered.should include_text('$("create_task").visualEffect("shake"')
+    rendered.should include_text(%/$("task_submit").enable()/)
   end
 
 end

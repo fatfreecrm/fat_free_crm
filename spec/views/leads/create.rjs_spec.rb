@@ -18,36 +18,36 @@ describe "/leads/create.js.rjs" do
     it "should hide [Create Lead] form and insert lead partial" do
       render "leads/create.js.rjs"
 
-      response.should have_rjs(:insert, :top) do |rjs|
+      rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=lead_#{@lead.id}]")
       end
-      response.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+      rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
     end
 
     it "should update sidebar when called from leads index" do
-      request.env["HTTP_REFERER"] = "http://localhost/leads"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       render "leads/create.js.rjs"
 
-      response.should have_rjs("sidebar") do |rjs|
+      rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
-      response.should include_text('$("filters").visualEffect("shake"')
+      rendered.should include_text('$("filters").visualEffect("shake"')
     end
 
     it "should update pagination when called from leads index" do
-      request.env["HTTP_REFERER"] = "http://localhost/leads"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       render "leads/create.js.rjs"
 
-      response.should have_rjs("paginate")
+      rendered.should have_rjs("paginate")
     end
 
     it "should update related asset sidebar from related asset" do
       assigns[:campaign] = campaign = Factory(:campaign)
-      request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
       render "leads/create.js.rjs"
 
-      response.should have_rjs("sidebar") do |rjs|
+      rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[class=panel][id=summary]")
         with_tag("div[class=panel][id=recently]")
       end
@@ -61,10 +61,10 @@ describe "/leads/create.js.rjs" do
   
       render "leads/create.js.rjs"
   
-      response.should have_rjs("create_lead") do |rjs|
+      rendered.should have_rjs("create_lead") do |rjs|
         with_tag("form[class=new_lead]")
       end
-      response.should include_text('$("create_lead").visualEffect("shake"')
+      rendered.should include_text('$("create_lead").visualEffect("shake"')
 
     end
   end

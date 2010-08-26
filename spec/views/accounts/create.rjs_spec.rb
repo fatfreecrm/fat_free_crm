@@ -17,18 +17,18 @@ describe "/accounts/create.js.rjs" do
     end
 
     it "should hide [Create Account] form and insert account partial" do
-      response.should have_rjs(:insert, :top) do |rjs|
+      rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=account_#{@account.id}]")
       end
-      response.should include_text(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
+      rendered.should include_text(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
     end
 
     it "should update pagination" do
-      response.should have_rjs("paginate")
+      rendered.should have_rjs("paginate")
     end
 
     it "should refresh accounts sidebar" do
-      response.should have_rjs("sidebar") do |rjs|
+      rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
@@ -41,10 +41,10 @@ describe "/accounts/create.js.rjs" do
       assigns[:users] = [ @current_user ]
       render "accounts/create.js.rjs"
 
-      response.should have_rjs("create_account") do |rjs|
+      rendered.should have_rjs("create_account") do |rjs|
         with_tag("form[class=new_account]")
       end
-      response.should include_text('$("create_account").visualEffect("shake"')
+      rendered.should include_text('$("create_account").visualEffect("shake"')
     end
   end
 

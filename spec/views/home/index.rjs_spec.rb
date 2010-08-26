@@ -11,7 +11,7 @@ describe "/home/index.js.rjs" do
     assigns[:activities] = [ Factory(:activity, :id => 42, :action => "updated", :subject => Factory(:account)) ]
 
     render "/home/index.js.rjs"
-    response.should have_rjs("activities") do |rjs|
+    rendered.should have_rjs("activities") do |rjs|
       with_tag("li[id=activity_42]")
     end
   end
@@ -20,8 +20,8 @@ describe "/home/index.js.rjs" do
     assigns[:activities] = []
   
     render "/home/index.js.rjs"
-    response.should have_rjs("activities")
-    response.body.should include("No activity records found.")
+    rendered.should have_rjs("activities")
+    rendered.body.should include("No activity records found.")
   end
 
 end

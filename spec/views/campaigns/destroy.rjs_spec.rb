@@ -12,18 +12,18 @@ describe "/campaigns/destroy.js.rjs" do
   end
 
   it "should blind up destroyed campaign partial" do
-    response.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("blind_up"/)
+    rendered.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("blind_up"/)
   end
 
   it "should update Campaigns sidebar" do
-    response.should have_rjs("sidebar") do |rjs|
+    rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
     end
-    response.should include_text('$("filters").visualEffect("shake"')
+    rendered.should include_text('$("filters").visualEffect("shake"')
   end
 
   it "should update pagination" do
-    response.should have_rjs("paginate")
+    rendered.should have_rjs("paginate")
   end
 
 end

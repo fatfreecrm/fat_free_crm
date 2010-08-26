@@ -15,14 +15,14 @@ describe "/contacts/new.js.rjs" do
   it "should toggle empty message div if it exists" do
     render "contacts/new.js.rjs"
 
-    response.should include_text('crm.flick("empty", "toggle")')
+    rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Contacts index" do
-    request.env["HTTP_REFERER"] = "http://localhost/contacts"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
     render "contacts/new.js.rjs"
 
-    response.should include_text('crm.hide_form("options")')
+    rendered.should include_text('crm.hide_form("options")')
   end
 
   describe "new contact" do
@@ -30,7 +30,7 @@ describe "/contacts/new.js.rjs" do
       params[:cancel] = nil
       render "contacts/new.js.rjs"
     
-      response.should have_rjs("create_contact") do |rjs|
+      rendered.should have_rjs("create_contact") do |rjs|
         with_tag("form[class=new_contact]")
       end
     end
@@ -41,8 +41,8 @@ describe "/contacts/new.js.rjs" do
       params[:cancel] = "true"
       render "contacts/new.js.rjs"
     
-      response.should_not have_rjs("create_contact")
-      response.should include_text('crm.flip_form("create_contact");')
+      rendered.should_not have_rjs("create_contact")
+      rendered.should include_text('crm.flip_form("create_contact");')
     end
   end
 

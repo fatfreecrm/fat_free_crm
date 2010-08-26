@@ -16,18 +16,18 @@ describe "/campaigns/create.js.rjs" do
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
-      response.should have_rjs(:insert, :top) do |rjs|
+      rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=campaign_#{@campaign.id}]")
       end
-      response.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
+      rendered.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
     end
 
     it "should update pagination" do
-      response.should have_rjs("paginate")
+      rendered.should have_rjs("paginate")
     end
     
     it "should update Campaigns sidebar filters" do
-      response.should have_rjs("sidebar") do |rjs|
+      rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
@@ -41,12 +41,12 @@ describe "/campaigns/create.js.rjs" do
   
       render "campaigns/create.js.rjs"
   
-      response.should have_rjs("create_campaign") do |rjs|
+      rendered.should have_rjs("create_campaign") do |rjs|
         with_tag("form[class=new_campaign]")
       end
-      response.should include_text('$("create_campaign").visualEffect("shake"')
-      response.should include_text('crm.date_select_popup("campaign_starts_on")')
-      response.should include_text('crm.date_select_popup("campaign_ends_on")')
+      rendered.should include_text('$("create_campaign").visualEffect("shake"')
+      rendered.should include_text('crm.date_select_popup("campaign_starts_on")')
+      rendered.should include_text('crm.date_select_popup("campaign_ends_on")')
     end
   end
 

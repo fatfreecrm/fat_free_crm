@@ -16,14 +16,14 @@ describe "admin/users/create.js.rjs" do
     it "should hide [Create User] form and insert user partial" do
       render
 
-      response.should have_rjs(:insert, :top) do |rjs|
+      rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=user_#{@user.id}]")
       end
-      response.should include_text(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
+      rendered.should include_text(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
     end
 
     # it "should update pagination" do
-    #   response.should have_rjs("paginate")
+    #   rendered.should have_rjs("paginate")
     # end
   end
 
@@ -33,10 +33,10 @@ describe "admin/users/create.js.rjs" do
       assigns[:users] = [ @current_user ]
       render
 
-      response.should have_rjs("create_user") do |rjs|
+      rendered.should have_rjs("create_user") do |rjs|
         with_tag("form[class=new_user]")
       end
-      response.should include_text('$("create_user").visualEffect("shake"')
+      rendered.should include_text('$("create_user").visualEffect("shake"')
     end
   end
 

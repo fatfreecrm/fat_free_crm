@@ -19,7 +19,7 @@ describe "/accounts/index.html.haml" do
       assigns[:auto_complete] = [ @auto_complete ]
       
       render "common/auto_complete.html.haml"
-      response.should have_tag("ul", :count => 1) do |list|
+      rendered.should have_tag("ul", :count => 1) do |list|
         unless model == :lead
           list.should have_tag("li", :id => @auto_complete.id, :text => @auto_complete.name)
         else
@@ -33,7 +33,7 @@ describe "/accounts/index.html.haml" do
       assigns[:auto_complete] = []
 
       render "common/auto_complete.html.haml"
-      response.should have_tag("ul", :count => 1) do |list|
+      rendered.should have_tag("ul", :count => 1) do |list|
         with_tag("li", :id => nil, :count => 1, :text => /^No/)
       end
     end

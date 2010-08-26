@@ -15,14 +15,14 @@ describe "/leads/new.js.rjs" do
   it "should toggle empty message div if it exists" do
     render "leads/new.js.rjs"
 
-    response.should include_text('crm.flick("empty", "toggle")')
+    rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Leads index" do
-    request.env["HTTP_REFERER"] = "http://localhost/leads"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render "leads/new.js.rjs"
 
-    response.should include_text('crm.hide_form("options")')
+    rendered.should include_text('crm.hide_form("options")')
   end
 
   describe "new lead" do
@@ -30,10 +30,10 @@ describe "/leads/new.js.rjs" do
       params[:cancel] = nil
       render "leads/new.js.rjs"
 
-      response.should have_rjs("create_lead") do |rjs|
+      rendered.should have_rjs("create_lead") do |rjs|
         with_tag("form[class=new_lead]")
       end
-      response.should include_text('crm.flip_form("create_lead")')
+      rendered.should include_text('crm.flip_form("create_lead")')
     end
   end
 
@@ -42,8 +42,8 @@ describe "/leads/new.js.rjs" do
       params[:cancel] = "true"
       render "leads/new.js.rjs"
 
-      response.should_not have_rjs("create_lead")
-      response.should include_text('crm.flip_form("create_lead");')
+      rendered.should_not have_rjs("create_lead")
+      rendered.should include_text('crm.flip_form("create_lead");')
     end
   end
 

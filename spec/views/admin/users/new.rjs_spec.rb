@@ -13,7 +13,7 @@ describe "admin/users/new.js.rjs" do
       params[:cancel] = nil
       render "admin/users/new.js.rjs"
     
-      response.should have_rjs("create_user") do |rjs|
+      rendered.should have_rjs("create_user") do |rjs|
         with_tag("form[class=new_user]")
       end
     end
@@ -24,8 +24,8 @@ describe "admin/users/new.js.rjs" do
       params[:cancel] = "true"
       render "admin/users/new.js.rjs"
     
-      response.should_not have_rjs("create_user")
-      response.should include_text('crm.flip_form("create_user");')
+      rendered.should_not have_rjs("create_user")
+      rendered.should include_text('crm.flip_form("create_user");')
     end
   end
 

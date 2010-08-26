@@ -13,13 +13,13 @@ describe "/campaigns/options.rjs" do
   it "should toggle empty message div if it exists" do
     render "campaigns/options.js.rjs"
 
-    response.should include_text('crm.flick("empty", "toggle")')
+    rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide [Create Campaign] form if it's visible" do
     render "campaigns/options.js.rjs"
 
-    response.should include_text('crm.hide_form("create_campaign")')
+    rendered.should include_text('crm.hide_form("create_campaign")')
   end
 
   describe "campaign options" do
@@ -27,18 +27,18 @@ describe "/campaigns/options.rjs" do
       params[:cancel] = nil
       render "campaigns/options.js.rjs"
     
-      response.should have_rjs("options") do |rjs|
+      rendered.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
       end
-      response.should include_text('crm.flip_form("options")')
-      response.should include_text('crm.set_title("create_campaign", "Campaigns Options")')
+      rendered.should include_text('crm.flip_form("options")')
+      rendered.should include_text('crm.set_title("create_campaign", "Campaigns Options")')
     end
 
     it "should call JavaScript functions to load preferences menus" do
       params[:cancel] = nil
-      template.should_receive(:render).with(:partial => "common/sort_by")
-      template.should_receive(:render).with(:partial => "common/per_page")
-      template.should_receive(:render).with(:partial => "common/outline")
+      view.should_receive(:render).with(:partial => "common/sort_by")
+      view.should_receive(:render).with(:partial => "common/per_page")
+      view.should_receive(:render).with(:partial => "common/outline")
 
       render "campaigns/options.js.rjs"
     end
@@ -49,9 +49,9 @@ describe "/campaigns/options.rjs" do
       params[:cancel] = "true"
       render "campaigns/options.js.rjs"
 
-      response.should_not have_rjs("options")
-      response.should include_text('crm.flip_form("options")')
-      response.should include_text('crm.set_title("create_campaign", "Campaigns")')
+      rendered.should_not have_rjs("options")
+      rendered.should include_text('crm.flip_form("options")')
+      rendered.should include_text('crm.set_title("create_campaign", "Campaigns")')
     end
   end
 

@@ -14,13 +14,13 @@ describe "/opportunities/options.rjs" do
   it "should toggle empty message div if it exists" do
     render "opportunities/options.js.rjs"
 
-    response.should include_text('crm.flick("empty", "toggle")')
+    rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide [Create Opportunity] form if it's visible" do
     render "opportunities/options.js.rjs"
 
-    response.should include_text('crm.hide_form("create_opportunity")')
+    rendered.should include_text('crm.hide_form("create_opportunity")')
   end
 
   describe "opportunity options" do
@@ -28,18 +28,18 @@ describe "/opportunities/options.rjs" do
       params[:cancel] = nil
       render "opportunities/options.js.rjs"
     
-      response.should have_rjs("options") do |rjs|
+      rendered.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
       end
-      response.should include_text('crm.flip_form("options")')
-      response.should include_text('crm.set_title("create_opportunity", "Opportunities Options")')
+      rendered.should include_text('crm.flip_form("options")')
+      rendered.should include_text('crm.set_title("create_opportunity", "Opportunities Options")')
     end
 
     it "should call JavaScript functions to load preferences menus" do
       params[:cancel] = nil
-      template.should_receive(:render).with(:partial => "common/sort_by")
-      template.should_receive(:render).with(:partial => "common/per_page")
-      template.should_receive(:render).with(:partial => "common/outline")
+      view.should_receive(:render).with(:partial => "common/sort_by")
+      view.should_receive(:render).with(:partial => "common/per_page")
+      view.should_receive(:render).with(:partial => "common/outline")
 
       render "opportunities/options.js.rjs"
     end
@@ -50,9 +50,9 @@ describe "/opportunities/options.rjs" do
       params[:cancel] = "true"
       render "opportunities/options.js.rjs"
 
-      response.should_not have_rjs("options")
-      response.should include_text('crm.flip_form("options")')
-      response.should include_text('crm.set_title("create_opportunity", "Opportunities")')
+      rendered.should_not have_rjs("options")
+      rendered.should include_text('crm.flip_form("options")')
+      rendered.should include_text('crm.set_title("create_opportunity", "Opportunities")')
     end
   end
 

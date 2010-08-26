@@ -33,8 +33,8 @@ RSpec.configure do |config|
 
   config.after(:each, :type => :view) do
     # detect html-quoted entities in all rendered responses
-    if response && response.body
-      response.body.should_not match /&amp;\S{1,6};/
+    if rendered && rendered.body
+      rendered.body.should_not match /&amp;\S{1,6};/
     end
   end
 
@@ -54,7 +54,7 @@ end
 #----------------------------------------------------------------------------
 def login(user_stubs = {}, session_stubs = {})
   User.current_user = @current_user = Factory(:user, user_stubs)
-  @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
+  @current_user_session = mock(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
   set_timezone
 end

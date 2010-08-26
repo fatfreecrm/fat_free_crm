@@ -13,17 +13,17 @@ describe "/campaigns/edit.js.rjs" do
     params[:cancel] = "true"
     
     render "campaigns/edit.js.rjs"
-    response.should have_rjs("campaign_#{@campaign.id}") do |rjs|
+    rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
       with_tag("li[id=campaign_#{@campaign.id}]")
     end
   end
 
   it "cancel from campaign landing page: should hide [Edit Campaign] form" do
-    request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
     params[:cancel] = "true"
     
     render "campaigns/edit.js.rjs"
-    response.should include_text('crm.flip_form("edit_campaign"')
+    rendered.should include_text('crm.flip_form("edit_campaign"')
   end
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
@@ -31,7 +31,7 @@ describe "/campaigns/edit.js.rjs" do
     assigns[:previous] = previous = Factory(:campaign, :user => @current_user)
     
     render "campaigns/edit.js.rjs"
-    response.should have_rjs("campaign_#{previous.id}") do |rjs|
+    rendered.should have_rjs("campaign_#{previous.id}") do |rjs|
       with_tag("li[id=campaign_#{previous.id}]")
     end
   end
@@ -41,16 +41,16 @@ describe "/campaigns/edit.js.rjs" do
     assigns[:previous] = previous = 41
 
     render "campaigns/edit.js.rjs"
-    response.should include_text(%Q/crm.flick("campaign_#{previous}", "remove");/)
+    rendered.should include_text(%Q/crm.flick("campaign_#{previous}", "remove");/)
   end
   
   it "edit from campaigns index page: should turn off highlight, hide [Create Campaign], and replace current campaign with [Edit Campaign] form" do
     params[:cancel] = nil
     
     render "campaigns/edit.js.rjs"
-    response.should include_text(%Q/crm.highlight_off("campaign_#{@campaign.id}");/)
-    response.should include_text('crm.hide_form("create_campaign")')
-    response.should have_rjs("campaign_#{@campaign.id}") do |rjs|
+    rendered.should include_text(%Q/crm.highlight_off("campaign_#{@campaign.id}");/)
+    rendered.should include_text('crm.hide_form("create_campaign")')
+    rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
       with_tag("form[class=edit_campaign]")
     end
   end
@@ -59,19 +59,19 @@ describe "/campaigns/edit.js.rjs" do
     params[:cancel] = "false"
     
     render "campaigns/edit.js.rjs"
-    response.should have_rjs("edit_campaign") do |rjs|
+    rendered.should have_rjs("edit_campaign") do |rjs|
       with_tag("form[class=edit_campaign]")
     end
-    response.should include_text('crm.flip_form("edit_campaign"')
+    rendered.should include_text('crm.flip_form("edit_campaign"')
   end
   
   it "should call JavaScript to set up popup Calendar" do
     params[:cancel] = nil
 
     render "campaigns/edit.js.rjs"
-    response.should include_text('crm.date_select_popup("campaign_starts_on")')
-    response.should include_text('crm.date_select_popup("campaign_ends_on")')
-    response.should include_text('$("campaign_name").focus()')
+    rendered.should include_text('crm.date_select_popup("campaign_starts_on")')
+    rendered.should include_text('crm.date_select_popup("campaign_ends_on")')
+    rendered.should include_text('$("campaign_name").focus()')
   end
 
 end

@@ -14,36 +14,36 @@ describe "/campaigns/update.js.rjs" do
   describe "no errors:" do
     describe "on landing page -" do
       before(:each) do
-        request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
       
       it "should flip [edit_campaign] form" do
         render "campaigns/update.js.rjs"
-        response.should_not have_rjs("campaign_#{@campaign.id}")
-        response.should include_text('crm.flip_form("edit_campaign"')
+        rendered.should_not have_rjs("campaign_#{@campaign.id}")
+        rendered.should include_text('crm.flip_form("edit_campaign"')
       end
   
       it "should update sidebar" do
         render "campaigns/update.js.rjs"
-        response.should have_rjs("sidebar") do |rjs|
+        rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        response.should include_text('$("summary").visualEffect("shake"')
+        rendered.should include_text('$("summary").visualEffect("shake"')
       end
     end
 
     describe "on index page -" do
       before(:each) do
-        request.env["HTTP_REFERER"] = "http://localhost/campaigns"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns"
       end
 
       it "should replace [Edit Campaign] with campaign partial and highligh it" do
         render "campaigns/update.js.rjs"
-        response.should have_rjs("campaign_#{@campaign.id}") do |rjs|
+        rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("li[id=campaign_#{@campaign.id}]")
         end
-        response.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
+        rendered.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
       end
     end
   end # no errors
@@ -52,36 +52,36 @@ describe "/campaigns/update.js.rjs" do
     describe "on landing page -" do
       before(:each) do
         @campaign.errors.add(:error)
-        request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
       it "should redraw the [edit_campaign] form and shake it" do
         render "campaigns/update.js.rjs"
-        response.should have_rjs("edit_campaign") do |rjs|
+        rendered.should have_rjs("edit_campaign") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
-        response.should include_text('crm.date_select_popup("campaign_starts_on")')
-        response.should include_text('crm.date_select_popup("campaign_ends_on")')
-        response.should include_text('$("edit_campaign").visualEffect("shake"')
-        response.should include_text('focus()')
+        rendered.should include_text('crm.date_select_popup("campaign_starts_on")')
+        rendered.should include_text('crm.date_select_popup("campaign_ends_on")')
+        rendered.should include_text('$("edit_campaign").visualEffect("shake"')
+        rendered.should include_text('focus()')
       end
     end
 
     describe "on index page -" do
       before(:each) do
         @campaign.errors.add(:error)
-        request.env["HTTP_REFERER"] = "http://localhost/campaigns"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns"
       end
     
       it "should redraw the [edit_campaign] form and shake it" do
         render "campaigns/update.js.rjs"
-        response.should have_rjs("campaign_#{@campaign.id}") do |rjs|
+        rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
-        response.should include_text('crm.date_select_popup("campaign_starts_on")')
-        response.should include_text('crm.date_select_popup("campaign_ends_on")')
-        response.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("shake"/)
-        response.should include_text('focus()')
+        rendered.should include_text('crm.date_select_popup("campaign_starts_on")')
+        rendered.should include_text('crm.date_select_popup("campaign_ends_on")')
+        rendered.should include_text(%Q/$("campaign_#{@campaign.id}").visualEffect("shake"/)
+        rendered.should include_text('focus()')
       end
     end
   end # errors

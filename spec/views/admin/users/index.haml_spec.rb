@@ -9,8 +9,8 @@ describe "/admin/users/index.html.haml" do
 
   it "renders a list of users" do
     assigns[:users] = [ Factory(:user) ].paginate
-    template.should_receive(:render).with(hash_including(:partial => "user"))
-    template.should_receive(:render).with(:partial => "common/paginate")
+    view.should_receive(:render).with(hash_including(:partial => "user"))
+    view.should_receive(:render).with(:partial => "common/paginate")
     render "/admin/users/index.html.haml"
   end
 end

@@ -10,12 +10,12 @@ describe "/accounts/_edit.html.haml" do
   end
 
   it "should render [edit account] form" do
-    template.should_receive(:render).with(hash_including(:partial => "accounts/top_section"))
-    template.should_receive(:render).with(hash_including(:partial => "accounts/contact_info"))
-    template.should_receive(:render).with(hash_including(:partial => "accounts/permissions"))
+    view.should_receive(:render).with(hash_including(:partial => "accounts/top_section"))
+    view.should_receive(:render).with(hash_including(:partial => "accounts/contact_info"))
+    view.should_receive(:render).with(hash_including(:partial => "accounts/permissions"))
 
     render "/accounts/_edit.html.haml"
-    response.should have_tag("form[class=edit_account]") do
+    rendered.should have_tag("form[class=edit_account]") do
       with_tag "input[type=hidden][id=account_user_id][value=#{@account.user_id}]"
     end
   end
@@ -24,14 +24,14 @@ describe "/accounts/_edit.html.haml" do
     Setting.background_info = [ :account ]
 
     render "/accounts/_create.html.haml"
-    response.should have_tag("textarea[id=account_background_info]")
+    rendered.should have_tag("textarea[id=account_background_info]")
   end
 
   it "should not render background info field if settings do not require so" do
     Setting.background_info = []
 
     render "/accounts/_create.html.haml"
-    response.should_not have_tag("textarea[id=account_background_info]")
+    rendered.should_not have_tag("textarea[id=account_background_info]")
   end
 end
 

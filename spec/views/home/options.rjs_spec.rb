@@ -16,20 +16,20 @@ describe "/home/options.rjs" do
 
     render "home/options.js.rjs"
   
-    response.should have_rjs("options") do |rjs|
+    rendered.should have_rjs("options") do |rjs|
       with_tag("input[type=hidden]") # @current_user
 
       user_menu = "onLoading:function(request){$('user').update('all users'); " +
                   "$('loading').show()}, parameters:{ user: 'all_users' }}); } } }"
       with_tag("script", /#{Regexp.escape(user_menu)}/)
     end
-    response.should include_text('crm.flip_form("options")')
-    response.should include_text('crm.set_title("title", "Recent Activity Options")')
+    rendered.should include_text('crm.flip_form("options")')
+    rendered.should include_text('crm.set_title("title", "Recent Activity Options")')
   end
 
   it "should load :options partial with JavaScript code for menus" do
     params[:cancel] = nil
-    template.should_receive(:render).with(:partial => "options")
+    view.should_receive(:render).with(:partial => "options")
   
     render "home/options.js.rjs"
   end
@@ -38,9 +38,9 @@ describe "/home/options.rjs" do
     params[:cancel] = "true"
     render "home/options.js.rjs"
 
-    response.should_not have_rjs("options")
-    response.should include_text('crm.flip_form("options")')
-    response.should include_text('crm.set_title("title", "Recent Activity")')
+    rendered.should_not have_rjs("options")
+    rendered.should include_text('crm.flip_form("options")')
+    rendered.should include_text('crm.set_title("title", "Recent Activity")')
   end
 
 end
