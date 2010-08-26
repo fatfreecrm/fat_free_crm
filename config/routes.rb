@@ -1,4 +1,4 @@
-CrossroadsCrm::Application.routes.draw do
+FatFreeCrm::Application.routes.draw do
 
   root :to => 'home#index'
   match '/' => 'home#index'
