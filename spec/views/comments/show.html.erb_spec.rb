@@ -7,7 +7,7 @@ describe "/comments/show.html.erb" do
   end
 
   it "should render attributes in <p>" do
-    render "/comments/show.html.erb"
+    render
   end
 end
 

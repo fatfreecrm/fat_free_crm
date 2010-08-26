@@ -16,47 +16,47 @@ describe "/opportunities/create.js.rjs" do
     end
 
     it "should hide [Create Opportunity] form and insert opportunity partial" do
-      render "opportunities/create.js.rjs"
+      render
 
-      response.should have_rjs(:insert, :top) do |rjs|
+      rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=opportunity_#{@opportunity.id}]")
       end
-      response.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
+      rendered.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
     end
 
     it "should update sidebar filters and recently viewed items when called from opportunities page" do
-      request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-      render "opportunities/create.js.rjs"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+      render
 
-      response.should have_rjs("sidebar") do |rjs|
+      rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
     end
 
     it "should update pagination when called from opportunities index" do
-      request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-      render "opportunities/create.js.rjs"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+      render
 
-      response.should have_rjs("paginate")
+      rendered.should have_rjs("paginate")
     end
 
     it "should update related campaign sidebar when called from related campaign" do
       assigns[:campaign] = campaign = Factory(:campaign)
-      request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-      render "opportunities/create.js.rjs"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+      render
 
-      response.should have_rjs("sidebar") do |rjs|
+      rendered.should have_rjs("sidebar") do |rjs|
         with_tag("div[class=panel][id=summary]")
         with_tag("div[class=panel][id=recently]")
       end
     end
 
     it "should update recently viewed items when called from related asset" do
-      request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
-      render "opportunities/create.js.rjs"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+      render
 
-      response.should have_rjs("recently") do |rjs|
+      rendered.should have_rjs("recently") do |rjs|
         with_tag("div[class=caption]")
       end
     end
@@ -70,14 +70,14 @@ describe "/opportunities/create.js.rjs" do
       assigns[:account] = @account
       assigns[:accounts] = [ @account ]
   
-      render "opportunities/create.js.rjs"
+      render
   
-      response.should have_rjs("create_opportunity") do |rjs|
+      rendered.should have_rjs("create_opportunity") do |rjs|
         with_tag("form[class=new_opportunity]")
       end
-      response.should include_text('$("create_opportunity").visualEffect("shake"')
-      response.should include_text("crm.create_or_select_account")
-      response.should include_text("crm.date_select_popup")
+      rendered.should include_text('$("create_opportunity").visualEffect("shake"')
+      rendered.should include_text("crm.create_or_select_account")
+      rendered.should include_text("crm.date_select_popup")
     end
   end
 

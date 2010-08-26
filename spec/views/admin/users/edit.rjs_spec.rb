@@ -12,7 +12,7 @@ describe "admin/users/edit.js.rjs" do
     params[:cancel] = "true"
     render
 
-    response.should have_rjs("user_#{@user.id}") do |rjs|
+    rendered.should have_rjs("user_#{@user.id}") do |rjs|
       with_tag("li[id=user_#{@user.id}]")
     end
   end
@@ -21,7 +21,7 @@ describe "admin/users/edit.js.rjs" do
     assigns[:previous] = previous = Factory(:user)
     render
 
-    response.should have_rjs("user_#{previous.id}") do |rjs|
+    rendered.should have_rjs("user_#{previous.id}") do |rjs|
       with_tag("li[id=user_#{previous.id}]")
     end
   end
@@ -30,15 +30,15 @@ describe "admin/users/edit.js.rjs" do
     assigns[:previous] = previous = 41
     render
 
-    response.should include_text(%Q/crm.flick("user_#{previous}", "remove");/)
+    rendered.should include_text(%Q/crm.flick("user_#{previous}", "remove");/)
   end
 
   it "edit turns off highlight, hides [Create User] form, and replaces current user with [Edit User] form" do
     render
 
-    response.should include_text(%Q/crm.highlight_off("user_#{@user.id}");/)
-    response.should include_text('crm.hide_form("create_user")')
-    response.should have_rjs("user_#{@user.id}") do |rjs|
+    rendered.should include_text(%Q/crm.highlight_off("user_#{@user.id}");/)
+    rendered.should include_text('crm.hide_form("create_user")')
+    rendered.should have_rjs("user_#{@user.id}") do |rjs|
       with_tag("form[class=edit_user]")
     end
   end

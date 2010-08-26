@@ -11,12 +11,12 @@ describe "/leads/show.html.haml" do
   end
 
   it "should render lead landing page" do
-    template.should_receive(:render).with(hash_including(:partial => "comments/new"))
-    template.should_receive(:render).with(hash_including(:partial => "common/timeline"))
-    template.should_receive(:render).with(hash_including(:partial => "common/tasks"))
+    view.should_receive(:render).with(hash_including(:partial => "comments/new"))
+    view.should_receive(:render).with(hash_including(:partial => "common/timeline"))
+    view.should_receive(:render).with(hash_including(:partial => "common/tasks"))
 
-    render "/leads/show.html.haml"
-    response.should have_tag("div[id=edit_lead]")
+    render
+    rendered.should have_tag("div[id=edit_lead]")
   end
 
 end

@@ -12,13 +12,13 @@ describe "/contacts/edit.html.erb" do
   it "should render [edit contact] form" do
     assigns[:contact] = @contact = Factory(:contact)
     assigns[:users] = [ @current_user ]
-    template.should_receive(:render).with(hash_including(:partial => "contacts/top_section"))
-    template.should_receive(:render).with(hash_including(:partial => "contacts/extra"))
-    template.should_receive(:render).with(hash_including(:partial => "contacts/web"))
-    template.should_receive(:render).with(hash_including(:partial => "contacts/permissions"))
+    view.should_receive(:render).with(hash_including(:partial => "contacts/top_section"))
+    view.should_receive(:render).with(hash_including(:partial => "contacts/extra"))
+    view.should_receive(:render).with(hash_including(:partial => "contacts/web"))
+    view.should_receive(:render).with(hash_including(:partial => "contacts/permissions"))
 
-    render "/contacts/_edit.html.haml"
-    response.should have_tag("form[class=edit_contact]") do
+    render
+    rendered.should have_tag("form[class=edit_contact]") do
       with_tag "input[type=hidden][id=contact_user_id][value=#{@contact.user_id}]"
     end
   end
@@ -27,8 +27,8 @@ describe "/contacts/edit.html.erb" do
     assigns[:users] = [ @current_user ]
     assigns[:contact] = Factory(:contact, :assignee => nil)
 
-    render "/contacts/_edit.html.haml"
-    response.should have_tag("select[id=contact_assigned_to]") do |options|
+    render
+    rendered.should have_tag("select[id=contact_assigned_to]") do |options|
       options.to_s.should_not include_text(%Q/selected="selected"/)
     end
   end
@@ -38,8 +38,8 @@ describe "/contacts/edit.html.erb" do
     assigns[:users] = [ @current_user, @user ]
     assigns[:contact] = Factory(:contact, :assignee => @user)
 
-    render "/contacts/_edit.html.haml"
-    response.should have_tag("select[id=contact_assigned_to]") do |options|
+    render
+    rendered.should have_tag("select[id=contact_assigned_to]") do |options|
       with_tag "option[selected=selected]"
       with_tag "option[value=#{@user.id}]"
     end
@@ -50,8 +50,8 @@ describe "/contacts/edit.html.erb" do
     assigns[:contact] = Factory(:contact)
     Setting.background_info = [ :contact ]
 
-    render "/contacts/_create.html.haml"
-    response.should have_tag("textarea[id=contact_background_info]")
+    render
+    rendered.should have_tag("textarea[id=contact_background_info]")
   end
 
   it "should not render background info field if settings do not require so" do
@@ -59,8 +59,8 @@ describe "/contacts/edit.html.erb" do
     assigns[:contact] = Factory(:contact)
     Setting.background_info = []
 
-    render "/contacts/_create.html.haml"
-    response.should_not have_tag("textarea[id=contact_background_info]")
+    render
+    rendered.should_not have_tag("textarea[id=contact_background_info]")
   end
 end
 

@@ -14,44 +14,44 @@ describe "/opportunities/new.js.rjs" do
   end
  
   it "should toggle empty message div if it exists" do
-    render "opportunities/new.js.rjs"
+    render
 
-    response.should include_text('crm.flick("empty", "toggle")')
+    rendered.should include_text('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Opportunities index" do
-    request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-    render "opportunities/new.js.rjs"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+    render
 
-    response.should include_text('crm.hide_form("options")')
+    rendered.should include_text('crm.hide_form("options")')
   end
 
   describe "new opportunity" do
     it "should render [new.html.haml] template into :create_opportunity div" do
       params[:cancel] = nil
-      render "opportunities/new.js.rjs"
+      render
     
-      response.should have_rjs("create_opportunity") do |rjs|
+      rendered.should have_rjs("create_opportunity") do |rjs|
         with_tag("form[class=new_opportunity]")
       end
     end
 
     it "should call JavaScript functions to load Calendar popup" do
       params[:cancel] = nil
-      render "opportunities/new.js.rjs"
+      render
 
-      response.should include_text('crm.flip_form("create_opportunity")')
-      response.should include_text('crm.date_select_popup("opportunity_closes_on")')
+      rendered.should include_text('crm.flip_form("create_opportunity")')
+      rendered.should include_text('crm.date_select_popup("opportunity_closes_on")')
     end
   end
   
   describe "cancel new opportunity" do
     it "should hide [create campaign] form" do
       params[:cancel] = "true"
-      render "opportunities/new.js.rjs"
+      render
 
-      response.should_not have_rjs("create_opportunity")
-      response.should include_text('crm.flip_form("create_opportunity")')
+      rendered.should_not have_rjs("create_opportunity")
+      rendered.should include_text('crm.flip_form("create_opportunity")')
     end
   end
 

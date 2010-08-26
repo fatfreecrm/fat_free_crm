@@ -9,11 +9,11 @@ describe "admin/users/reactivate.js.rjs" do
   end
 
   it "reloads the requested user partial" do
-    render "admin/users/reactivate.js.rjs"
+    render
 
-    response.should have_rjs("user_#{@user.id}") do |rjs|
+    rendered.should have_rjs("user_#{@user.id}") do |rjs|
       with_tag("li[id=user_#{@user.id}]")
     end
-    response.should include_text(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
+    rendered.should include_text(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
   end
 end

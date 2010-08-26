@@ -10,10 +10,10 @@ describe "admin/users/_create.html.haml" do
   end
 
   it "renders [Create User] form" do
-    template.should_receive(:render).with(hash_including(:partial => "admin/users/profile"))
+    view.should_receive(:render).with(hash_including(:partial => "admin/users/profile"))
 
-    render "admin/users/_create.html.haml"
-    response.should have_tag("form[class=new_user]")
+    render
+    rendered.should have_tag("form[class=new_user]")
   end
 end
 

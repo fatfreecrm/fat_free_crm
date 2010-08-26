@@ -15,7 +15,7 @@ describe "admin/users/destroy.js.rjs" do
     it "blinds up destroyed user partial" do
       render
 
-      response.should include_text(%Q/$("user_#{@user.id}").visualEffect("blind_up"/)
+      rendered.should include_text(%Q/$("user_#{@user.id}").visualEffect("blind_up"/)
     end
   end
 
@@ -27,20 +27,20 @@ describe "admin/users/destroy.js.rjs" do
     it "should remove confirmation panel" do
       render
 
-      response.should include_text(%Q/crm.flick("#{dom_id(@user, :confirm)}", "remove");/)
+      rendered.should include_text(%Q/crm.flick("#{dom_id(@user, :confirm)}", "remove");/)
     end
 
     it "should shake user partial" do
       render
 
-      response.should include_text(%Q/$("user_#{@user.id}").visualEffect("shake"/)
+      rendered.should include_text(%Q/$("user_#{@user.id}").visualEffect("shake"/)
     end
 
     it "should show flash message" do
       render
 
-      response.should have_rjs("flash")
-      response.should include_text('crm.flash("warning")')
+      rendered.should have_rjs("flash")
+      rendered.should include_text('crm.flash("warning")')
     end
   end
 end

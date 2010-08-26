@@ -1,4 +1,4 @@
-CrossroadsCrm::Application.routes.draw do
+FatFreeCrm::Application.routes.draw do
 
   root :to => 'home#index'
   match '/' => 'home#index'
@@ -118,6 +118,4 @@ CrossroadsCrm::Application.routes.draw do
     resources :settings
     resources :plugins
   end
-
-  match '/:controller(/:action(/:id))'
 end
