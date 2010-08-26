@@ -50,3 +50,11 @@ namespace :git do
   end
 end
 before 'deploy:finalize_update', 'git:submodules:update'
+
+namespace :deploy do
+  desc "Update settings file with server specific attributes (runs a server-side sed script)"
+  task :update_settings do
+    run "if [ -f #{shared_path}/settings.sed ]; then sed -i -f #{shared_path}/settings.sed #{release_path}/config/settings.yml; fi"
+  end
+end
+after 'deploy:update_code', 'deploy:update_settings'
