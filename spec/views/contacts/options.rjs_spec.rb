@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/options.rjs" do
+describe "/contacts/options.js.rjs" do
   include ContactsHelper
-  
+
   before(:each) do
     login_and_assign
     assigns[:sort_by]  = "contacts.first_name ASC"
@@ -27,7 +27,7 @@ describe "/contacts/options.rjs" do
     it "should render [options.html.haml] template into :options div and show it" do
       params[:cancel] = nil
       render
-    
+
       rendered.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
       end
@@ -45,7 +45,7 @@ describe "/contacts/options.rjs" do
       render
     end
   end
-  
+
   describe "cancel contact options" do
     it "should hide contact options form" do
       params[:cancel] = "true"

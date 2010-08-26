@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/index.html.haml" do
+describe "/common/auto_complete.html.haml" do
   include AccountsHelper
-  
+
   before(:each) do
     login_and_assign
   end
@@ -17,7 +17,7 @@ describe "/accounts/index.html.haml" do
         Factory(model, :name => "Hello, World!")
       end
       assigns[:auto_complete] = [ @auto_complete ]
-      
+
       render
       rendered.should have_tag("ul", :count => 1) do |list|
         unless model == :lead

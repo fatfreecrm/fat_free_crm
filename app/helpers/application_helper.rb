@@ -374,7 +374,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def shown_on_landing_page?
     !!((request.xhr? && request.referer =~ %r|/\w+/\d+|) ||
-       (!request.xhr? && request.request_uri =~ %r|/\w+/\d+|))
+       (!request.xhr? && request.fullpath =~ %r|/\w+/\d+|))
   end
 
 end
