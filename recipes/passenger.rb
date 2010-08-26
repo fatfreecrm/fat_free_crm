@@ -13,19 +13,18 @@
 # config/httpd-rails.conf
 # config/passenger.conf
 #
-# Depends on stack.rb
+# Hooks transparently into stack.rb if it exists
 #
 
 namespace :deploy do
 
-  task :start do ; end
-  task :stop do ; end
-  
-  desc "Restart passenger by restarting httpd"
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "/etc/init.d/httpd restart"
+  %w(start stop restart reload).each do |t|
+    desc "#{t.capitalize} passenger using httpd"
+    task "#{t.to_sym}", :roles => :app, :except => { :no_release => true } do
+      run "/etc/init.d/httpd #{t}"
+    end
   end
-
+  
 end
 
 namespace :passenger do
@@ -51,4 +50,4 @@ namespace :passenger do
 end
 
 before "deploy:symlink", "passenger:symlink"
-after "install:httpd", "passenger:install" # requires stack
+after("install:httpd", "passenger:install") if find_task('install:httpd')
