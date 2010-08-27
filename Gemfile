@@ -5,11 +5,11 @@ gem 'rails', '>= 3.0.0.rc2'
 gem 'acts_as_commentable', '>= 3.0.0'
 gem 'acts-as-taggable-on', '>= 2.0.6'
 gem 'authlogic', '>= 2.1.6'
-gem 'gravatar-ultimate', :path => '/home/warp/projects/gravatar/' #:git => 'git://github.com/crossroads/gravatar.git'
+gem 'gravatar-ultimate', :git => 'git://github.com/crossroads/gravatar.git'
 gem 'haml', '>= 3.0.17'
 gem 'mysql', '>= 2.8.1'
 gem 'paperclip', '>= 2.3.3'
-gem 'simple_column_search', '>= 1.0.1'
+gem 'simple_column_search', :git => 'git://github.com/crossroads/simple_column_search.git'
 gem 'will_paginate', '>= 3.0.pre2'
 
 group :cucumber, :development, :test do

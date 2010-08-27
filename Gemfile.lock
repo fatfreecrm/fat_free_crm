@@ -1,8 +1,15 @@
-PATH
-  remote: /home/warp/projects/gravatar
+GIT
+  remote: git://github.com/crossroads/gravatar.git
+  revision: 78267ee
   specs:
     gravatar-ultimate (1.0.0)
       sc-core-ext (>= 1.2.0)
+
+GIT
+  remote: git://github.com/crossroads/simple_column_search.git
+  revision: 0c5c2de
+  specs:
+    simple_column_search (1.0.1)
 
 GEM
   remote: http://rubygems.org/
@@ -140,7 +147,6 @@ GEM
       json_pure
       rubyzip
     shoulda (2.11.3)
-    simple_column_search (1.0.1)
     spork (0.8.4)
     term-ansicolor (1.0.5)
     test-unit (1.2.3)
@@ -177,7 +183,7 @@ DEPENDENCIES
   rspec-rails (>= 2.0.0.beta.20)
   ruby-debug19
   shoulda
-  simple_column_search (>= 1.0.1)
+  simple_column_search!
   spork
   test-unit (= 1.2.3)
   webrat
