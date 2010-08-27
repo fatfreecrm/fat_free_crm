@@ -12,7 +12,7 @@ describe "/tasks/edit.html.erb" do
   end
 
   it "should render [edit task] form" do
-    view.should_receive(:render).with(hash_including(:partial => "tasks/top_section"))
+    view.should render_template(:partial => "tasks/_top_section")
     render
 
     rendered.should have_tag("form[class=edit_task]")

@@ -126,3 +126,9 @@ def adjust_timezone(offset)
     Time.stub(:now).and_return(adjusted_time)
   end
 end
+
+ActionView::TestCase::TestController.class_eval do
+  def self.controller_name
+    @controller_name ||= controller_path.split("/").last
+  end
+end

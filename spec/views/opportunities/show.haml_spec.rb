@@ -11,10 +11,10 @@ describe "/opportunities/show.html.haml" do
   end
 
   it "should render opportunity landing page" do
-    view.should_receive(:render).with(hash_including(:partial => "comments/new"))
-    view.should_receive(:render).with(hash_including(:partial => "common/timeline"))
-    view.should_receive(:render).with(hash_including(:partial => "common/tasks"))
-    view.should_receive(:render).with(hash_including(:partial => "contacts/contact"))
+    view.should render_template(:partial => "comments/_new")
+    view.should render_template(:partial => "common/_timeline")
+    view.should render_template(:partial => "common/_tasks")
+    view.should render_template(:partial => "contacts/_contact")
 
     render
 

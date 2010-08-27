@@ -12,10 +12,10 @@ describe "/contacts/edit.html.erb" do
   it "should render [edit contact] form" do
     assign(:contact, @contact = Factory(:contact))
     assign(:users, [ @current_user ])
-    view.should_receive(:render).with(hash_including(:partial => "contacts/top_section"))
-    view.should_receive(:render).with(hash_including(:partial => "contacts/extra"))
-    view.should_receive(:render).with(hash_including(:partial => "contacts/web"))
-    view.should_receive(:render).with(hash_including(:partial => "contacts/permissions"))
+    view.should render_template(:partial => "contacts/_top_section")
+    view.should render_template(:partial => "contacts/_extra")
+    view.should render_template(:partial => "contacts/_web")
+    view.should render_template(:partial => "contacts/_permissions")
 
     render
     rendered.should have_tag("form[class=edit_contact]") do

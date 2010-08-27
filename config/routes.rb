@@ -118,4 +118,6 @@ FatFreeCrm::Application.routes.draw do
     resources :settings
     resources :plugins
   end
+
+  match '/home(/:action(/:id))', :controller => :home
 end

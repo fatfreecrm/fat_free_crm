@@ -10,9 +10,9 @@ describe "/campaigns/_create.html.haml" do
   end
 
   it "should render [create campaign] form" do
-    view.should_receive(:render).with(hash_including(:partial => "campaigns/top_section"))
-    view.should_receive(:render).with(hash_including(:partial => "campaigns/objectives"))
-    view.should_receive(:render).with(hash_including(:partial => "campaigns/permissions"))
+    view.should render_template(:partial => "campaigns/_top_section")
+    view.should render_template(:partial => "campaigns/_objectives")
+    view.should render_template(:partial => "campaigns/_permissions")
 
     render
     rendered.should have_tag("form[class=new_campaign]")

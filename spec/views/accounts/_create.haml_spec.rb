@@ -10,11 +10,12 @@ describe "/accounts/_create.html.haml" do
   end
 
   it "should render [create account] form" do
-    view.should_receive(:render).with(hash_including(:partial => "accounts/top_section"))
-    view.should_receive(:render).with(hash_including(:partial => "accounts/contact_info"))
-    view.should_receive(:render).with(hash_including(:partial => "accounts/permissions"))
-
     render
+
+    view.should render_template(:partial => "_top_section")
+    view.should render_template(:partial => "_contact_info")
+    view.should render_template(:partial => "_permissions")
+
     rendered.should have_tag("form[class=new_account]")
   end
 

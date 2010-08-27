@@ -10,13 +10,14 @@ describe "/accounts/_edit.html.haml" do
   end
 
   it "should render [edit account] form" do
-    view.should_receive(:render).with(hash_including(:partial => "accounts/top_section"))
-    view.should_receive(:render).with(hash_including(:partial => "accounts/contact_info"))
-    view.should_receive(:render).with(hash_including(:partial => "accounts/permissions"))
-
     render
-    rendered.should have_tag("form[class=edit_account]") do
-      with_tag "input[type=hidden][id=account_user_id][value=#{@account.user_id}]"
+
+    view.should render_template(:partial => "_top_section")
+    view.should render_template(:partial => "_contact_info")
+    view.should render_template(:partial => "_permissions")
+
+    rendered.should have_tag("form[class=edit_account]") do |form|
+      form.should have_tag "input[type=hidden][id=account_user_id][value='#{@account.user_id}']"
     end
   end
 

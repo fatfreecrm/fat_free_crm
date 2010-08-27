@@ -11,16 +11,15 @@ describe "/accounts/show.html.haml" do
   end
 
   it "should render account landing page" do
-    view.should_receive(:render).with(hash_including(:partial => "comments/new"))
-    view.should_receive(:render).with(hash_including(:partial => "common/timeline"))
-    view.should_receive(:render).with(hash_including(:partial => "common/tasks"))
-    view.should_receive(:render).with(hash_including(:partial => "contacts/contact"))
-    view.should_receive(:render).with(hash_including(:partial => "opportunities/opportunity"))
-
     render
+
+    view.should render_template(:partial => "comments/_new")
+    view.should render_template(:partial => "common/_timeline")
+    view.should render_template(:partial => "common/_tasks")
+    view.should render_template(:partial => "contacts/_contact")
+    view.should render_template(:partial => "opportunities/_opportunity")
 
     rendered.should have_tag("div[id=edit_account]")
   end
 
 end
-

@@ -12,11 +12,11 @@ describe "/leads/edit.html.erb" do
   end
 
   it "should render [edit lead] form" do
-    view.should_receive(:render).with(hash_including(:partial => "leads/top_section"))
-    view.should_receive(:render).with(hash_including(:partial => "leads/status"))
-    view.should_receive(:render).with(hash_including(:partial => "leads/contact"))
-    view.should_receive(:render).with(hash_including(:partial => "leads/web"))
-    view.should_receive(:render).with(hash_including(:partial => "leads/permissions"))
+    view.should render_template(:partial => "leads/_top_section")
+    view.should render_template(:partial => "leads/_status")
+    view.should render_template(:partial => "leads/_contact")
+    view.should render_template(:partial => "leads/_web")
+    view.should render_template(:partial => "leads/_permissions")
 
     render
     rendered.should have_tag("form[class=edit_lead]") do
