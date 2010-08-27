@@ -9,7 +9,7 @@ describe "/leads/index.html.haml" do
 
   it "should render list of accounts if list of leads is not empty" do
     assign(:leads, [ Factory(:lead) ].paginate(:page => 1, :per_page => 20))
-    view.should_receive(:render).with(hash_including(:partial => "lead"))
+    view.should render_template(:partial => "_lead")
     view.should_receive(:render).with(:partial => "common/paginate")
     render
   end

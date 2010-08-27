@@ -10,7 +10,7 @@ describe "/opportunities/index.html.erb" do
 
   it "should render list of accounts if list of opportunities is not empty" do
     assign(:opportunities, [ Factory(:opportunity) ].paginate)
-    view.should_receive(:render).with(hash_including(:partial => "opportunity"))
+    view.should render_template(:partial => "_opportunity")
     view.should_receive(:render).with(:partial => "common/paginate")
     render
   end

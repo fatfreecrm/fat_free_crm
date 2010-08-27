@@ -9,7 +9,7 @@ describe "/home/index.html.haml" do
 
   it "should render list of activities if it's not empty" do
     assign(:activities, [ Factory(:activity, :action => "updated", :subject => Factory(:account)) ])
-    view.should_receive(:render).with(hash_including(:partial => "activity"))
+    view.should render_template(:partial => "_activity")
     render
   end
 

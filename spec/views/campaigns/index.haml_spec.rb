@@ -9,7 +9,7 @@ describe "/campaigns/index.html.haml" do
 
   it "should render list of accounts if list of campaigns is not empty" do
     assign(:campaigns, [ Factory(:campaign) ])
-    view.should_receive(:render).with(hash_including(:partial => "campaign"))
+    view.should render_template(:partial => "_campaign")
     view.should_receive(:render).with(:partial => "common/paginate")
     render
   end
