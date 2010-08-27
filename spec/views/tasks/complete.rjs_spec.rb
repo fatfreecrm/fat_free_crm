@@ -10,10 +10,10 @@ describe "/tasks/edit.js.rjs" do
   describe "complete from Tasks tab (pending view)" do
     before(:each) do
       @task = Factory(:task)
-      assigns[:task] = @task
-      assigns[:view] = "pending"
-      assigns[:empty_bucket] = :due_asap
-      assigns[:task_total] = stub_task_total("pending")
+      assign(:task, @task)
+      assign(:view, "pending")
+      assign(:empty_bucket, :due_asap)
+      assign(:task_total, stub_task_total("pending"))
     end
 
     it "should fade out completed task partial" do
@@ -25,9 +25,9 @@ describe "/tasks/edit.js.rjs" do
     end
 
     it "should update tasks sidebar" do
-      assigns[:task] = Factory(:task)
-      assigns[:view] = "pending"
-      assigns[:empty_bucket] = :due_asap
+      assign(:task, Factory(:task))
+      assign(:view, "pending")
+      assign(:empty_bucket, :due_asap)
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
@@ -42,7 +42,7 @@ describe "/tasks/edit.js.rjs" do
   describe "complete from related asset" do
     it "should replace pending partial with the completed one" do
       @task = Factory(:task, :completed_at => Time.now, :completor => @current_user)
-      assigns[:task] = @task
+      assign(:task, @task)
 
       render
       rendered.should have_rjs("task_#{@task.id}") do |rjs|
@@ -53,7 +53,7 @@ describe "/tasks/edit.js.rjs" do
 
     it "should update recently viewed items" do
       @task = Factory(:task, :completed_at => Time.now, :completor => @current_user)
-      assigns[:task] = @task
+      assign(:task, @task)
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
   
       render

@@ -7,7 +7,7 @@ describe "/accounts/options.rjs" do
     login_and_assign
     assigns[:sort_by]  = "accounts.name ASC"
     assigns[:outline]  = "option_long"
-    assigns[:per_page] = 20
+    assign(:per_page, 20)
   end
 
   it "should toggle empty message div if it exists" do

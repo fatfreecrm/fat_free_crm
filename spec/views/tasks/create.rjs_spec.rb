@@ -10,9 +10,9 @@ describe "/tasks/create.js.rjs" do
   (VIEWS - %w(completed)).each do |status|
     describe "create from #{status} tasks page" do
       before(:each) do
-        assigns[:view] = status
-        assigns[:task] = @task = stub_task(status)
-        assigns[:task_total] = stub_task_total(status)
+        assign(:view, status)
+        assign(:task, @task = stub_task(status))
+        assign(:task_total, stub_task_total(status))
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{status}"
         render
       end
@@ -43,8 +43,8 @@ describe "/tasks/create.js.rjs" do
   end
 
   it "should show flash message when assigning a task from pending tasks view" do
-    assigns[:view] = "pending"
-    assigns[:task] = Factory(:task, :id => 42, :assignee => Factory(:user))
+    assign(:view, "pending")
+    assign(:task, Factory(:task, :id => 42, :assignee => Factory(:user)))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
@@ -53,8 +53,8 @@ describe "/tasks/create.js.rjs" do
   end
 
   it "should update recent items when assigning a task from pending tasks view" do
-    assigns[:view] = "pending"
-    assigns[:task] = Factory(:task, :id => 42, :assignee => Factory(:user))
+    assign(:view, "pending")
+    assign(:task, Factory(:task, :id => 42, :assignee => Factory(:user)))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
@@ -64,8 +64,8 @@ describe "/tasks/create.js.rjs" do
   end
 
   it "should show flash message when creating a pending task from assigned tasks view" do
-    assigns[:view] = "assigned"
-    assigns[:task] = Factory(:task, :id => 42, :assignee => nil)
+    assign(:view, "assigned")
+    assign(:task, Factory(:task, :id => 42, :assignee => nil))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
@@ -74,8 +74,8 @@ describe "/tasks/create.js.rjs" do
   end
 
   it "should update recent items when creating a pending task from assigned tasks view" do
-    assigns[:view] = "assigned"
-    assigns[:task] = Factory(:task, :id => 42, :assignee => nil)
+    assign(:view, "assigned")
+    assign(:task, Factory(:task, :id => 42, :assignee => nil))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
@@ -88,8 +88,8 @@ describe "/tasks/create.js.rjs" do
     describe "create from outside the Tasks tab" do
       before(:each) do
         @task = Factory(:task, :id => 42)
-        assigns[:view] = status
-        assigns[:task] = @task
+        assign(:view, status)
+        assign(:task, @task)
         render
       end
 
@@ -113,7 +113,7 @@ describe "/tasks/create.js.rjs" do
   end
 
   it "create failure: should re-render [create.html.haml] template in :create_task div" do
-    assigns[:task] = Factory.build(:task, :name => nil) # make it invalid
+    assign(:task, Factory.build(:task, :name => nil) # make it invalid)
     render
 
     rendered.should include_text('$("create_task").visualEffect("shake"')

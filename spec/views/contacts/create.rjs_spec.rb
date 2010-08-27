@@ -9,8 +9,8 @@ describe "/contacts/create.js.rjs" do
 
   describe "create success" do
     before(:each) do
-      assigns[:contact] = @contact = Factory(:contact)
-      assigns[:contacts] = [ @contact ].paginate
+      assign(:contact, @contact = Factory(:contact))
+      assign(:contacts, [ @contact ].paginate)
     end
 
     it "should hide [Create Contact] form and insert contact partial" do
@@ -49,12 +49,12 @@ describe "/contacts/create.js.rjs" do
   
   describe "create failure" do
     it "create (failure): should re-render [create.html.haml] template in :create_contact div" do
-      assigns[:contact] = Factory.build(:contact, :first_name => nil) # make it invalid
+      assign(:contact, Factory.build(:contact, :first_name => nil) # make it invalid)
       @current_user = Factory(:user)
       @account = Factory(:account)
-      assigns[:users] = [ @current_user ]
-      assigns[:account] = @account
-      assigns[:accounts] = [ @account ]
+      assign(:users, [ @current_user ])
+      assign(:account, @account)
+      assign(:accounts, [ @account ])
 
       render
 

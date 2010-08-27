@@ -6,12 +6,12 @@ describe "/opportunities/update.js.rjs" do
   before(:each) do
     login_and_assign
 
-    assigns[:opportunity] = @opportunity = Factory(:opportunity, :user => @current_user, :assignee => Factory(:user))
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ]
-    assigns[:stage] = Setting.unroll(:opportunity_stage)
-    assigns[:opportunity_stage_total] = { :prospecting => 1, "Custom" => 1 }
+    assign(:opportunity, @opportunity = Factory(:opportunity, :user => @current_user, :assignee => Factory(:user)))
+    assign(:users, [ @current_user ])
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ])
+    assign(:stage, Setting.unroll(:opportunity_stage))
+    assign(:opportunity_stage_total, { :prospecting => 1, "Custom" => 1 })
   end
 
   describe "no errors:" do
@@ -129,7 +129,7 @@ describe "/opportunities/update.js.rjs" do
       end
 
       it "should update related campaign sidebar from campaign landing page" do
-        assigns[:campaign] = campaign = Factory(:campaign)
+        assign(:campaign, campaign = Factory(:campaign))
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
         render
 

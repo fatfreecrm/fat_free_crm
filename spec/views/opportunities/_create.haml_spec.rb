@@ -5,12 +5,12 @@ describe "/opportunities/_create.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:opportunity] = Factory.build(:opportunity)
+    assign(:opportunity, Factory.build(:opportunity))
     @account = Factory(:account)
-    assigns[:account] = @account
-    assigns[:accounts] = [ @account ]
-    assigns[:users] = [ @current_user ]
-    assigns[:stage] = Setting.unroll(:opportunity_stage)
+    assign(:account, @account)
+    assign(:accounts, [ @account ])
+    assign(:users, [ @current_user ])
+    assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "should render [create opportunity] form" do

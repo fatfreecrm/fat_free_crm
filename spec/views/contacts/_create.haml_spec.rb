@@ -6,10 +6,10 @@ describe "/contacts/_create.html.haml" do
   before(:each) do
     login_and_assign
     @account = Factory(:account)
-    assigns[:contact] = Contact.new
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account
-    assigns[:accounts] = [ @account ]
+    assign(:contact, Contact.new)
+    assign(:users, [ @current_user ])
+    assign(:account, @account)
+    assign(:accounts, [ @account ])
   end
 
   it "should render [create contact] form" do

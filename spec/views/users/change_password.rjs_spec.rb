@@ -5,7 +5,7 @@ describe "/users/change_password.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:user] = @user = @current_user
+    assign(:user, @user = @current_user)
   end
 
   describe "no errors:" do

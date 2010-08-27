@@ -16,7 +16,7 @@ describe "/common/auto_complete.html.haml" do
       else
         Factory(model, :name => "Hello, World!")
       end
-      assigns[:auto_complete] = [ @auto_complete ]
+      assign(:auto_complete, [ @auto_complete ])
 
       render
       rendered.should have_tag("ul", :count => 1) do |list|
@@ -29,8 +29,8 @@ describe "/common/auto_complete.html.haml" do
     end
 
     it "should render a message if #{model} doesn't match the query" do
-      assigns[:query] = "Hello"
-      assigns[:auto_complete] = []
+      assign(:query, "Hello")
+      assign(:auto_complete, [])
 
       render
       rendered.should have_tag("ul", :count => 1) do |list|

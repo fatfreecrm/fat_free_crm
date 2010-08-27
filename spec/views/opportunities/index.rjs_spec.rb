@@ -5,11 +5,11 @@ describe "/opportunities/index.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:stage] = Setting.unroll(:opportunity_stage)
+    assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "should render [opportunity] template with @opportunities collection if there are opportunities" do
-    assigns[:opportunities] = [ Factory(:opportunity, :id => 42) ].paginate
+    assign(:opportunities, [ Factory(:opportunity, :id => 42) ].paginate)
 
     render
     rendered.should have_rjs("opportunities") do |rjs|
@@ -19,7 +19,7 @@ describe "/opportunities/index.js.rjs" do
   end
 
   it "should render [empty] template if @opportunities collection if there are no opportunities" do
-    assigns[:opportunities] = [].paginate
+    assign(:opportunities, [].paginate)
 
     render
     rendered.should have_rjs("opportunities") do |rjs|

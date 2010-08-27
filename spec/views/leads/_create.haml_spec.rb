@@ -5,10 +5,10 @@ describe "/leads/_create.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:lead] = Factory.build(:lead)
-    assigns[:users] = [ @current_user ]
-    assigns[:campaign] = @campaign = Factory(:campaign)
-    assigns[:campaigns] = [ @campaign ]
+    assign(:lead, Factory.build(:lead))
+    assign(:users, [ @current_user ])
+    assign(:campaign, @campaign = Factory(:campaign))
+    assign(:campaigns, [ @campaign ])
   end
 
   it "should render [create lead] form" do

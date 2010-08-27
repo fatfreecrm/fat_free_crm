@@ -11,7 +11,7 @@ describe "/users/upload_avatar.js.rjs" do
     before(:each) do
       @avatar = Factory(:avatar, :entity => @current_user)
       @current_user.stub!(:avatar).and_return(@avatar)
-      assigns[:user] = @user = @current_user
+      assign(:user, @user = @current_user)
     end
 
     it "should flip [Upload Avatar] form" do
@@ -27,7 +27,7 @@ describe "/users/upload_avatar.js.rjs" do
       @avatar = Factory(:avatar, :entity => @current_user)
       @avatar.errors.add(:image, "error")
       @current_user.stub!(:avatar).and_return(@avatar)
-      assigns[:user] = @user = @current_user
+      assign(:user, @user = @current_user)
     end
 
     it "should redraw the [Upload Avatar] form and shake it" do

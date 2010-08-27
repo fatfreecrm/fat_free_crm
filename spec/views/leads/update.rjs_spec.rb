@@ -5,10 +5,10 @@ describe "/leads/update.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:lead] = @lead = Factory(:lead, :user => @current_user, :assignee => Factory(:user))
-    assigns[:users] = [ @current_user ]
-    assigns[:campaigns] = [ Factory(:campaign) ]
-    assigns[:lead_status_total] = { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 }
+    assign(:lead, @lead = Factory(:lead, :user => @current_user, :assignee => Factory(:user)))
+    assign(:users, [ @current_user ])
+    assign(:campaigns, [ Factory(:campaign) ])
+    assign(:lead_status_total, { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 })
   end
 
   describe "no errors:" do
@@ -57,7 +57,7 @@ describe "/leads/update.js.rjs" do
 
     describe "on related asset page -" do
       before(:each) do
-        assigns[:campaign] = Factory(:campaign)
+        assign(:campaign, Factory(:campaign))
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
@@ -70,7 +70,7 @@ describe "/leads/update.js.rjs" do
       end
 
       it "should update campaign sidebar" do
-        assigns[:campaign] = campaign = Factory(:campaign)
+        assign(:campaign, campaign = Factory(:campaign))
         render
 
         rendered.should have_rjs("sidebar") do |rjs|

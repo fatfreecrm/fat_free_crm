@@ -5,14 +5,14 @@ describe "/opportunities/_edit.html.haml" do
   
   before(:each) do
     login_and_assign
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ]
-    assigns[:stage] = Setting.unroll(:opportunity_stage)
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ])
+    assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "should render [edit opportunity] form" do
-    assigns[:users] = [ @current_user ]
-    assigns[:opportunity] = @opportunity = Factory(:opportunity, :campaign => @campaign = Factory(:campaign))
+    assign(:users, [ @current_user ])
+    assign(:opportunity, @opportunity = Factory(:opportunity, :campaign => @campaign = Factory(:campaign)))
     render
 
     rendered.should have_tag("form[class=edit_opportunity]") do
@@ -22,8 +22,8 @@ describe "/opportunities/_edit.html.haml" do
   end
 
   it "should pick default assignee (Myself)" do
-    assigns[:users] = [ @current_user ]
-    assigns[:opportunity] = Factory(:opportunity, :assignee => nil)
+    assign(:users, [ @current_user ])
+    assign(:opportunity, Factory(:opportunity, :assignee => nil))
     render
 
     rendered.should have_tag("select[id=opportunity_assigned_to]") do |options|
@@ -33,8 +33,8 @@ describe "/opportunities/_edit.html.haml" do
 
   it "should show correct assignee" do
     @user = Factory(:user)
-    assigns[:users] = [ @current_user, @user ]
-    assigns[:opportunity] = Factory(:opportunity, :assignee => @user)
+    assign(:users, [ @current_user, @user ])
+    assign(:opportunity, Factory(:opportunity, :assignee => @user))
     render
 
     rendered.should have_tag("select[id=opportunity_assigned_to]") do |options|
@@ -44,8 +44,8 @@ describe "/opportunities/_edit.html.haml" do
   end
 
   it "should render background info field if settings require so" do
-    assigns[:users] = [ @current_user ]
-    assigns[:opportunity] = Factory(:opportunity)
+    assign(:users, [ @current_user ])
+    assign(:opportunity, Factory(:opportunity))
     Setting.background_info = [ :opportunity ]
 
     render
@@ -53,8 +53,8 @@ describe "/opportunities/_edit.html.haml" do
   end
 
   it "should not render background info field if settings do not require so" do
-    assigns[:users] = [ @current_user ]
-    assigns[:opportunity] = Factory(:opportunity)
+    assign(:users, [ @current_user ])
+    assign(:opportunity, Factory(:opportunity))
     Setting.background_info = []
 
     render

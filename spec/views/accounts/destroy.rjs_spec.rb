@@ -5,8 +5,8 @@ describe "/accounts/destroy.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ].paginate
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ].paginate)
     render
   end
 

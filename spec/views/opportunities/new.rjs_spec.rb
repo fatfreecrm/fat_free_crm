@@ -6,11 +6,11 @@ describe "/opportunities/new.js.rjs" do
   before(:each) do
     login_and_assign
     @account = Factory(:account)
-    assigns[:opportunity] = Opportunity.new(:user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account
-    assigns[:accounts] = [ @account ]
-    assigns[:stage] = Setting.unroll(:opportunity_stage)
+    assign(:opportunity, Opportunity.new(:user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:account, @account)
+    assign(:accounts, [ @account ])
+    assign(:stage, Setting.unroll(:opportunity_stage))
   end
  
   it "should toggle empty message div if it exists" do

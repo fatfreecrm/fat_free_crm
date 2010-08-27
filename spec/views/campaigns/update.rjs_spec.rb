@@ -5,10 +5,10 @@ describe "/campaigns/update.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:campaign] = @campaign = Factory(:campaign, :user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:status] = Setting.campaign_status
-    assigns[:campaign_status_total] = { :called_off => 1, "Explicit" => 1 }
+    assign(:campaign, @campaign = Factory(:campaign, :user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:status, Setting.campaign_status)
+    assign(:campaign_status_total, { :called_off => 1, "Explicit" => 1 })
   end
  
   describe "no errors:" do

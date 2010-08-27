@@ -5,10 +5,10 @@ describe "/tasks/edit.html.erb" do
   
   before(:each) do
     login_and_assign
-    assigns[:task] = Factory(:task, :asset => Factory(:account), :bucket => "due_asap")
-    assigns[:users] = [ @current_user ]
-    assigns[:bucket] = %w(due_asap due_today)
-    assigns[:category] = %w(meeting money)
+    assign(:task, Factory(:task, :asset => Factory(:account), :bucket => "due_asap"))
+    assign(:users, [ @current_user ])
+    assign(:bucket, %w(due_asap due_today))
+    assign(:category, %w(meeting money))
   end
 
   it "should render [edit task] form" do

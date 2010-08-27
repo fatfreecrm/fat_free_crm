@@ -5,10 +5,10 @@ describe "/contacts/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:contact] = @contact = Factory(:contact, :user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ]
+    assign(:contact, @contact = Factory(:contact, :user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ])
   end
 
   it "cancel from contact index page: should replace [Edit Contact] form with contact partial" do
@@ -30,7 +30,7 @@ describe "/contacts/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Contact] for and replace it with contact partial" do
     params[:cancel] = nil
-    assigns[:previous] = previous = Factory(:contact, :user => @current_user)
+    assign(:previous, previous = Factory(:contact, :user => @current_user))
     
     render
     rendered.should have_rjs("contact_#{previous.id}") do |rjs|
@@ -40,7 +40,7 @@ describe "/contacts/edit.js.rjs" do
 
   it "edit: should hide and remove previously open [Edit Contact] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = previous = 41
+    assign(:previous, previous = 41)
 
     render
     rendered.should include_text(%Q/crm.flick("contact_#{previous}", "remove");/)

@@ -5,8 +5,8 @@ describe "admin/users/_create.html.haml" do
   
   before(:each) do
     login_and_assign(:admin => true)
-    assigns[:user] = User.new
-    assigns[:users] = [ @current_user ]
+    assign(:user, User.new)
+    assign(:users, [ @current_user ])
   end
 
   it "renders [Create User] form" do

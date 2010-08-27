@@ -8,7 +8,7 @@ describe "/home/index.js.rjs" do
   end
 
   it "should render [activity] template with @activities collection" do
-    assigns[:activities] = [ Factory(:activity, :id => 42, :action => "updated", :subject => Factory(:account)) ]
+    assign(:activities, [ Factory(:activity, :id => 42, :action => "updated", :subject => Factory(:account)) ])
 
     render
     rendered.should have_rjs("activities") do |rjs|
@@ -17,7 +17,7 @@ describe "/home/index.js.rjs" do
   end
 
   it "should render a message if there're no activities" do
-    assigns[:activities] = []
+    assign(:activities, [])
   
     render
     rendered.should have_rjs("activities")

@@ -4,7 +4,7 @@ describe "/comments/index.html.erb" do
   include CommentsHelper
   
   before(:each) do
-    assigns[:comments] = [
+    assign(:comments, [)
       stub_model(Comment),
       stub_model(Comment)
     ]

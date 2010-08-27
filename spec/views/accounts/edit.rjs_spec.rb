@@ -5,8 +5,8 @@ describe "/accounts/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:account] = @account = Factory(:account, :user => @current_user)
-    assigns[:users] = [ @current_user ]
+    assign(:account, @account = Factory(:account, :user => @current_user))
+    assign(:users, [ @current_user ])
   end
 
   it "cancel from accounts index page: should replace [Edit Account] form with account partial" do
@@ -28,7 +28,7 @@ describe "/accounts/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Account] for and replace it with account partial" do
     params[:cancel] = nil
-    assigns[:previous] = previous = Factory(:account, :user => @current_user)
+    assign(:previous, previous = Factory(:account, :user => @current_user))
     
     render
     rendered.should have_rjs("account_#{previous.id}") do |rjs|
@@ -38,7 +38,7 @@ describe "/accounts/edit.js.rjs" do
 
   it "edit: should remove previously open [Edit Account] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = previous = 41
+    assign(:previous, previous = 41)
 
     render
     rendered.should include_text(%Q/crm.flick("account_#{previous}", "remove");/)

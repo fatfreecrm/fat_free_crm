@@ -5,8 +5,8 @@ describe "/contacts/destroy.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:contact] = @contact = Factory(:contact)
-    assigns[:contacts] = [ @contact ].paginate
+    assign(:contact, @contact = Factory(:contact))
+    assign(:contacts, [ @contact ].paginate)
   end
 
   it "should blind up destroyed contact partial" do

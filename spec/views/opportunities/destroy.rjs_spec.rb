@@ -5,9 +5,9 @@ describe "/opportunities/destroy.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:opportunity] = @opportunity = Factory(:opportunity)
-    assigns[:stage] = Setting.unroll(:opportunity_stage)
-    assigns[:opportunity_stage_total] = { :prospecting => 1, "Custom" => 1 }
+    assign(:opportunity, @opportunity = Factory(:opportunity))
+    assign(:stage, Setting.unroll(:opportunity_stage))
+    assign(:opportunity_stage_total, { :prospecting => 1, "Custom" => 1 })
   end
 
   it "should blind up destroyed opportunity partial" do
@@ -16,7 +16,7 @@ describe "/opportunities/destroy.js.rjs" do
   end
 
   it "should update opportunities sidebar when called from opportunities index" do
-    assigns[:opportunities] = [ @opportunity ].paginate
+    assign(:opportunities, [ @opportunity ].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
@@ -27,7 +27,7 @@ describe "/opportunities/destroy.js.rjs" do
   end
 
   it "should update pagination when called from opportunities index" do
-    assigns[:opportunities] = [ @opportunity ].paginate
+    assign(:opportunities, [ @opportunity ].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
@@ -35,7 +35,7 @@ describe "/opportunities/destroy.js.rjs" do
   end
 
   it "should update related campaign sidebar when called from related campaign" do
-    assigns[:campaign] = campaign = Factory(:campaign)
+    assign(:campaign, campaign = Factory(:campaign))
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 

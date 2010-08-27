@@ -5,8 +5,8 @@ describe "/campaigns/_create.html.haml" do
   
   before(:each) do
     login_and_assign
-    assigns[:campaign] = Campaign.new
-    assigns[:users] = [ @current_user ]
+    assign(:campaign, Campaign.new)
+    assign(:users, [ @current_user ])
   end
 
   it "should render [create campaign] form" do

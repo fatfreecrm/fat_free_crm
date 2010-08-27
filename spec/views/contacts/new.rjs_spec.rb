@@ -6,10 +6,10 @@ describe "/contacts/new.js.rjs" do
   before(:each) do
     login_and_assign
     @account = Factory(:account)
-    assigns[:contact] = Contact.new(:user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account
-    assigns[:accounts] = [ @account ]
+    assign(:contact, Contact.new(:user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:account, @account)
+    assign(:accounts, [ @account ])
   end
 
   it "should toggle empty message div if it exists" do

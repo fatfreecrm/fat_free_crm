@@ -5,9 +5,9 @@ describe "/leads/show.html.haml" do
   
   before(:each) do
     login_and_assign
-    assigns[:users] = [ @current_user ]
-    assigns[:comment] = Comment.new
-    assigns[:lead] = Factory(:lead, 
+    assign(:users, [ @current_user ])
+    assign(:comment, Comment.new)
+    assign(:lead, Factory(:lead, )
                              :blog => 'http://www.blogger.com/home',
                              :linkedin => 'www.linkedin.com',
                              :twitter => 'twitter.com/account',

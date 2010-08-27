@@ -5,7 +5,7 @@ describe "/authentications/new.html.haml" do
 
   before(:each) do
     activate_authlogic
-    assigns[:authentication] = @authentication = Authentication.new
+    assign(:authentication, @authentication = Authentication.new)
   end
 
   it "renders the login form without signup link" do

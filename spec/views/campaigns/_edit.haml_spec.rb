@@ -5,8 +5,8 @@ describe "/campaigns/_edit.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:campaign] = @campaign = Factory(:campaign)
-    assigns[:users] = [ @current_user ]
+    assign(:campaign, @campaign = Factory(:campaign))
+    assign(:users, [ @current_user ])
   end
 
   it "should render [edit campaign] form" do

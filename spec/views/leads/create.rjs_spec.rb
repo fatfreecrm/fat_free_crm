@@ -5,14 +5,14 @@ describe "/leads/create.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:campaigns] = [ Factory(:campaign) ]
+    assign(:campaigns, [ Factory(:campaign) ])
   end
 
   describe "create success" do
     before(:each) do
-      assigns[:lead] = @lead = Factory(:lead)
-      assigns[:leads] = [ @lead ].paginate
-      assigns[:lead_status_total] = { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 }
+      assign(:lead, @lead = Factory(:lead))
+      assign(:leads, [ @lead ].paginate)
+      assign(:lead_status_total, { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 })
     end
 
     it "should hide [Create Lead] form and insert lead partial" do
@@ -43,7 +43,7 @@ describe "/leads/create.js.rjs" do
     end
 
     it "should update related asset sidebar from related asset" do
-      assigns[:campaign] = campaign = Factory(:campaign)
+      assign(:campaign, campaign = Factory(:campaign))
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
       render
 
@@ -56,8 +56,8 @@ describe "/leads/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_lead div" do
-      assigns[:lead] = Factory.build(:lead, :first_name => nil) # make it invalid
-      assigns[:users] = [ Factory(:user) ]
+      assign(:lead, Factory.build(:lead, :first_name => nil) # make it invalid)
+      assign(:users, [ Factory(:user) ])
   
       render
   

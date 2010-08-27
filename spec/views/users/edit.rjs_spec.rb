@@ -5,7 +5,7 @@ describe "/users/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:user] = @user = @current_user
+    assign(:user, @user = @current_user)
   end
 
   it "cancel: should hide [Edit Profile] form and restore title" do

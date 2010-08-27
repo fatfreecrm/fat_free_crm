@@ -6,10 +6,10 @@ describe "/contacts/update.js.rjs" do
   before(:each) do
     login_and_assign
     
-    assigns[:contact] = @contact = Factory(:contact, :user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ]
+    assign(:contact, @contact = Factory(:contact, :user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ])
   end
 
   describe "no errors:" do

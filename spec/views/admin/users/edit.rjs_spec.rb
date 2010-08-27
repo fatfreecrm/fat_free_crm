@@ -5,7 +5,7 @@ describe "admin/users/edit.js.rjs" do
   
   before(:each) do
     login_and_assign(:admin => true)
-    assigns[:user] = @user = Factory(:user)
+    assign(:user, @user = Factory(:user))
   end
 
   it "cancel replaces [Edit User] form with user partial" do
@@ -18,7 +18,7 @@ describe "admin/users/edit.js.rjs" do
   end
 
   it "edit hides previously open [Edit User] and replaces it with user partial" do
-    assigns[:previous] = previous = Factory(:user)
+    assign(:previous, previous = Factory(:user))
     render
 
     rendered.should have_rjs("user_#{previous.id}") do |rjs|
@@ -27,7 +27,7 @@ describe "admin/users/edit.js.rjs" do
   end
 
   it "edit removes previously open [Edit User] if it's no longer available" do
-    assigns[:previous] = previous = 41
+    assign(:previous, previous = 41)
     render
 
     rendered.should include_text(%Q/crm.flick("user_#{previous}", "remove");/)

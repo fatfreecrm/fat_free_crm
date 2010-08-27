@@ -6,10 +6,10 @@ describe "/leads/new.js.rjs" do
   before(:each) do
     login_and_assign
     @campaign = Factory(:campaign)
-    assigns[:lead] = Lead.new(:user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:campaign] = @campaign
-    assigns[:campaigns] = [ @campaign ]
+    assign(:lead, Lead.new(:user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:campaign, @campaign)
+    assign(:campaigns, [ @campaign ])
   end
 
   it "should toggle empty message div if it exists" do

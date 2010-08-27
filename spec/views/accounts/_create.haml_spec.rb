@@ -2,11 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/accounts/_create.html.haml" do
   include AccountsHelper
-  
+
   before(:each) do
     login_and_assign
-    assigns[:account] = Account.new
-    assigns[:users] = [ @current_user ]
+    assign(:account, Account.new)
+    assign(:users, [ @current_user ])
   end
 
   it "should render [create account] form" do
@@ -33,5 +33,3 @@ describe "/accounts/_create.html.haml" do
   end
 
 end
-
-

@@ -8,7 +8,7 @@ describe "/contacts/options.js.rjs" do
     assigns[:sort_by]  = "contacts.first_name ASC"
     assigns[:outline]  = "option_long"
     assigns[:naming]   = "option_before"
-    assigns[:per_page] = 20
+    assign(:per_page, 20)
   end
 
   it "should toggle empty message div if it exists" do

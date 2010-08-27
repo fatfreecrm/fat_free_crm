@@ -5,9 +5,9 @@ describe "/contacts/show.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:contact] = Factory(:contact, :id => 42)
-    assigns[:users] = [ @current_user ]
-    assigns[:comment] = Comment.new
+    assign(:contact, Factory(:contact, :id => 42))
+    assign(:users, [ @current_user ])
+    assign(:comment, Comment.new)
   end
 
   it "should render contact landing page" do

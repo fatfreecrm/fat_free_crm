@@ -5,7 +5,7 @@ describe "admin/users/update.js.rjs" do
   
   before(:each) do
     login_and_assign(:admin => true)
-    assigns[:user] = @user = Factory(:user)
+    assign(:user, @user = Factory(:user))
   end
 
   describe "no errors:" do

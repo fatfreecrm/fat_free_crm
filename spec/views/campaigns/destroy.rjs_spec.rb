@@ -5,9 +5,9 @@ describe "/campaigns/destroy.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:campaign] = @campaign = Factory(:campaign, :user => @current_user)
-    assigns[:campaigns] = [ @campaign ].paginate
-    assigns[:campaign_status_total] = { :called_off => 1, :completed => 1, :on_hold => 1, :planned => 1, :started => 1, :other => 1, :all => 6 }
+    assign(:campaign, @campaign = Factory(:campaign, :user => @current_user))
+    assign(:campaigns, [ @campaign ].paginate)
+    assign(:campaign_status_total, { :called_off => 1, :completed => 1, :on_hold => 1, :planned => 1, :started => 1, :other => 1, :all => 6 })
     render
   end
 

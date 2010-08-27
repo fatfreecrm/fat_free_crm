@@ -6,17 +6,17 @@ describe "/leads/promote.js.rjs" do
   before(:each) do
     login_and_assign
 
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ]
-    assigns[:contact] = Factory(:contact)
-    assigns[:opportunity] = Factory(:opportunity)
-    assigns[:lead_status_total] = { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 }
+    assign(:users, [ @current_user ])
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ])
+    assign(:contact, Factory(:contact))
+    assign(:opportunity, Factory(:opportunity))
+    assign(:lead_status_total, { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 })
   end
 
   describe "no errors :" do
     before(:each) do
-      assigns[:lead] = @lead = Factory(:lead, :status => "converted", :user => @current_user, :assignee => @current_user)
+      assign(:lead, @lead = Factory(:lead, :status => "converted", :user => @current_user, :assignee => @current_user))
     end
 
     describe "from lead landing page -" do
@@ -66,9 +66,9 @@ describe "/leads/promote.js.rjs" do
     describe "from related campaign page -" do
       before(:each) do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
-        assigns[:campaign] = Factory(:campaign)
-        assigns[:stage] = Setting.unroll(:opportunity_stage)
-        assigns[:opportunity] = @opportunity = Factory(:opportunity)
+        assign(:campaign, Factory(:campaign))
+        assign(:stage, Setting.unroll(:opportunity_stage))
+        assign(:opportunity, @opportunity = Factory(:opportunity))
       end
 
       it "should replace [Convert Lead] with lead partial and highligh it" do
@@ -101,7 +101,7 @@ describe "/leads/promote.js.rjs" do
   
   describe "validation errors:" do
     before(:each) do
-      assigns[:lead] = @lead = Factory(:lead, :status => "new", :user => @current_user, :assignee => @current_user)
+      assign(:lead, @lead = Factory(:lead, :status => "new", :user => @current_user, :assignee => @current_user))
     end
 
     describe "from lead landing page -" do

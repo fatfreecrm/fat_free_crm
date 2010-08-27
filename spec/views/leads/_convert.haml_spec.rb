@@ -6,11 +6,11 @@ describe "/leads/convert.html.erb" do
   before(:each) do
     login_and_assign
     @account = Factory(:account)
-    assigns[:lead] = Factory(:lead)
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account
-    assigns[:accounts] = [ @account ]
-    assigns[:opportunity] = Factory(:opportunity)
+    assign(:lead, Factory(:lead))
+    assign(:users, [ @current_user ])
+    assign(:account, @account)
+    assign(:accounts, [ @account ])
+    assign(:opportunity, Factory(:opportunity))
   end
 
   it "should render [convert lead] form" do

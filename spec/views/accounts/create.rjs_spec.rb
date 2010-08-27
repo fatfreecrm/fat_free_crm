@@ -11,8 +11,8 @@ describe "/accounts/create.js.rjs" do
   # core object Account partial is not embedded.
   describe "create success" do
     before(:each) do
-      assigns[:account] = @account = Factory(:account)
-      assigns[:accounts] = [ @account ].paginate
+      assign(:account, @account = Factory(:account))
+      assign(:accounts, [ @account ].paginate)
       render
     end
 
@@ -37,8 +37,8 @@ describe "/accounts/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_account div" do
-      assigns[:account] = Factory.build(:account, :name => nil) # make it invalid
-      assigns[:users] = [ @current_user ]
+      assign(:account, Factory.build(:account, :name => nil) # make it invalid)
+      assign(:users, [ @current_user ])
       render
 
       rendered.should have_rjs("create_account") do |rjs|

@@ -5,7 +5,7 @@ describe "/users/avatar.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:user] = @current_user
+    assign(:user, @current_user)
   end
 
   it "cancel: should hide [Upload Avatar] form and restore title" do

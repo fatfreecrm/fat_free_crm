@@ -5,10 +5,10 @@ describe "/leads/edit.html.erb" do
   
   before(:each) do
     login_and_assign
-    assigns[:lead] = @lead = Factory(:lead)
-    assigns[:users] = [ @current_user ]
-    assigns[:campaign] = @campaign = Factory(:campaign)
-    assigns[:campaigns] = [ @campaign ]
+    assign(:lead, @lead = Factory(:lead))
+    assign(:users, [ @current_user ])
+    assign(:campaign, @campaign = Factory(:campaign))
+    assign(:campaigns, [ @campaign ])
   end
 
   it "should render [edit lead] form" do

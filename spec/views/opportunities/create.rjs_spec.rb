@@ -5,14 +5,14 @@ describe "/opportunities/create.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:stage] = Setting.unroll(:opportunity_stage)
+    assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   describe "create success" do
     before(:each) do
-      assigns[:opportunity] = @opportunity = Factory(:opportunity)
-      assigns[:opportunities] = [ @opportunities ].paginate
-      assigns[:opportunity_stage_total] = { :prospecting => 10, :final_review => 1, :won => 2, :all => 20, :analysis => 1, :lost => 0, :presentation => 2, :other => 0, :proposal => 1, :negotiation => 2 }
+      assign(:opportunity, @opportunity = Factory(:opportunity))
+      assign(:opportunities, [ @opportunities ].paginate)
+      assign(:opportunity_stage_total, { :prospecting => 10, :final_review => 1, :won => 2, :all => 20, :analysis => 1, :lost => 0, :presentation => 2, :other => 0, :proposal => 1, :negotiation => 2 })
     end
 
     it "should hide [Create Opportunity] form and insert opportunity partial" do
@@ -42,7 +42,7 @@ describe "/opportunities/create.js.rjs" do
     end
 
     it "should update related campaign sidebar when called from related campaign" do
-      assigns[:campaign] = campaign = Factory(:campaign)
+      assign(:campaign, campaign = Factory(:campaign))
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
       render
 
@@ -64,11 +64,11 @@ describe "/opportunities/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_opportunity div" do
-      assigns[:opportunity] = Factory.build(:opportunity, :name => nil) # make it invalid
+      assign(:opportunity, Factory.build(:opportunity, :name => nil) # make it invalid)
       @account = Factory(:account)
-      assigns[:users] = [ Factory(:user) ]
-      assigns[:account] = @account
-      assigns[:accounts] = [ @account ]
+      assign(:users, [ Factory(:user) ])
+      assign(:account, @account)
+      assign(:accounts, [ @account ])
   
       render
   

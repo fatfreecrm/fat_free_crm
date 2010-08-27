@@ -5,9 +5,9 @@ describe "/leads/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:lead] = @lead = Factory(:lead, :status => "new", :user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:campaigns] = [ Factory(:campaign) ]
+    assign(:lead, @lead = Factory(:lead, :status => "new", :user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:campaigns, [ Factory(:campaign) ])
   end
 
   it "cancel from lead index page: should replace [Edit Lead] form with lead partial" do
@@ -29,7 +29,7 @@ describe "/leads/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assigns[:previous] = previous = Factory(:lead, :user => @current_user)
+    assign(:previous, previous = Factory(:lead, :user => @current_user))
 
     render
     rendered.should have_rjs("lead_#{previous.id}") do |rjs|
@@ -39,7 +39,7 @@ describe "/leads/edit.js.rjs" do
 
   it "edit: should remove previously open [Edit Lead] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = previous = 41
+    assign(:previous, previous = 41)
 
     render
     rendered.should include_text(%Q/crm.flick("lead_#{previous}", "remove");/)
@@ -69,7 +69,7 @@ describe "/leads/edit.js.rjs" do
 
   it "edit from lead landing page: should not attempt to hide [Convert Lead] if the lead is already converted" do
     params[:cancel] = "false"
-    assigns[:lead] = Factory(:lead, :status => "converted", :user => @current_user)
+    assign(:lead, Factory(:lead, :status => "converted", :user => @current_user))
 
     render
     rendered.should_not include_text('crm.hide_form("convert_lead"')

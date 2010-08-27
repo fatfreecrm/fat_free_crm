@@ -7,7 +7,7 @@ describe "/opportunities/options.rjs" do
     login_and_assign
     assigns[:sort_by]  = "opportunities.name ASC"
     assigns[:outline]  = "option_long"
-    assigns[:per_page] = 20
+    assign(:per_page, 20)
     assigns[:stage]    = Setting.unroll(:opportunity_stage)
   end
 

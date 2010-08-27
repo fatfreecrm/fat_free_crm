@@ -27,7 +27,6 @@ end
 group :cucumber, :test do
   gem 'ffaker'
   gem 'factory_girl'
-  gem 'webrat'
 end
 
 group :cucumber do
@@ -40,4 +39,5 @@ end
 group :test do
   gem 'shoulda'
   gem 'autotest-rails'
+  gem 'webrat'
 end

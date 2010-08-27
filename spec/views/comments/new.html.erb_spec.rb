@@ -4,7 +4,7 @@ describe "/comments/new.html.erb" do
   include CommentsHelper
   
   before(:each) do
-    assigns[:comment] = stub_model(Comment,
+    assign(:comment, stub_model(Comment,)
       :new_record? => true
     )
   end

@@ -2,11 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/accounts/_edit.html.haml" do
   include AccountsHelper
-  
+
   before(:each) do
     login_and_assign
-    assigns[:account] = @account = Factory(:account)
-    assigns[:users] = [ @current_user ]
+    assign(:account, @account = Factory(:account))
+    assign(:users, [ @current_user ])
   end
 
   it "should render [edit account] form" do
@@ -34,5 +34,3 @@ describe "/accounts/_edit.html.haml" do
     rendered.should_not have_tag("textarea[id=account_background_info]")
   end
 end
-
-

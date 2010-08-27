@@ -5,8 +5,8 @@ describe "/campaigns/edit.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:campaign] = @campaign = Factory(:campaign, :user => @current_user)
-    assigns[:users] = [ @current_user ]
+    assign(:campaign, @campaign = Factory(:campaign, :user => @current_user))
+    assign(:users, [ @current_user ])
   end
 
   it "cancel from campaign index page: should replace [Edit Campaign] form with campaign partial" do
@@ -28,7 +28,7 @@ describe "/campaigns/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
     params[:cancel] = nil
-    assigns[:previous] = previous = Factory(:campaign, :user => @current_user)
+    assign(:previous, previous = Factory(:campaign, :user => @current_user))
     
     render
     rendered.should have_rjs("campaign_#{previous.id}") do |rjs|
@@ -38,7 +38,7 @@ describe "/campaigns/edit.js.rjs" do
 
   it "edit: should remove previously open [Edit Campaign] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = previous = 41
+    assign(:previous, previous = 41)
 
     render
     rendered.should include_text(%Q/crm.flick("campaign_#{previous}", "remove");/)

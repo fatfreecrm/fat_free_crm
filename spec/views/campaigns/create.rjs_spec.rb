@@ -9,9 +9,9 @@ describe "/campaigns/create.js.rjs" do
 
   describe "create success" do
     before(:each) do
-      assigns[:campaign] = @campaign = Factory(:campaign)
-      assigns[:campaigns] = [ @campaign ].paginate
-      assigns[:campaign_status_total] = { :called_off => 1, "Explicit" => 1 }
+      assign(:campaign, @campaign = Factory(:campaign))
+      assign(:campaigns, [ @campaign ].paginate)
+      assign(:campaign_status_total, { :called_off => 1, "Explicit" => 1 })
       render
     end
 
@@ -36,8 +36,8 @@ describe "/campaigns/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_campaign div" do
-      assigns[:campaign] = Factory.build(:campaign, :name => nil) # make it invalid
-      assigns[:users] = [ Factory(:user) ]
+      assign(:campaign, Factory.build(:campaign, :name => nil) # make it invalid)
+      assign(:users, [ Factory(:user) ])
   
       render
   

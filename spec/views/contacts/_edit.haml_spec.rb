@@ -5,13 +5,13 @@ describe "/contacts/edit.html.erb" do
   
   before(:each) do
     login_and_assign
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ]
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ])
   end
 
   it "should render [edit contact] form" do
-    assigns[:contact] = @contact = Factory(:contact)
-    assigns[:users] = [ @current_user ]
+    assign(:contact, @contact = Factory(:contact))
+    assign(:users, [ @current_user ])
     view.should_receive(:render).with(hash_including(:partial => "contacts/top_section"))
     view.should_receive(:render).with(hash_including(:partial => "contacts/extra"))
     view.should_receive(:render).with(hash_including(:partial => "contacts/web"))
@@ -24,8 +24,8 @@ describe "/contacts/edit.html.erb" do
   end
 
   it "should pick default assignee (Myself)" do
-    assigns[:users] = [ @current_user ]
-    assigns[:contact] = Factory(:contact, :assignee => nil)
+    assign(:users, [ @current_user ])
+    assign(:contact, Factory(:contact, :assignee => nil))
 
     render
     rendered.should have_tag("select[id=contact_assigned_to]") do |options|
@@ -35,8 +35,8 @@ describe "/contacts/edit.html.erb" do
 
   it "should show correct assignee" do
     @user = Factory(:user)
-    assigns[:users] = [ @current_user, @user ]
-    assigns[:contact] = Factory(:contact, :assignee => @user)
+    assign(:users, [ @current_user, @user ])
+    assign(:contact, Factory(:contact, :assignee => @user))
 
     render
     rendered.should have_tag("select[id=contact_assigned_to]") do |options|
@@ -46,8 +46,8 @@ describe "/contacts/edit.html.erb" do
   end
 
   it "should render background info field if settings require so" do
-    assigns[:users] = [ @current_user ]
-    assigns[:contact] = Factory(:contact)
+    assign(:users, [ @current_user ])
+    assign(:contact, Factory(:contact))
     Setting.background_info = [ :contact ]
 
     render
@@ -55,8 +55,8 @@ describe "/contacts/edit.html.erb" do
   end
 
   it "should not render background info field if settings do not require so" do
-    assigns[:users] = [ @current_user ]
-    assigns[:contact] = Factory(:contact)
+    assign(:users, [ @current_user ])
+    assign(:contact, Factory(:contact))
     Setting.background_info = []
 
     render

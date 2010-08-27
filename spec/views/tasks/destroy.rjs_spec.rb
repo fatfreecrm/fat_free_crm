@@ -11,10 +11,10 @@ describe "/tasks/destroy.js.rjs" do
     describe "destroy from Tasks tab (#{status} view)" do
       before(:each) do
         @task = Factory(:task)
-        assigns[:task] = @task
-        assigns[:view] = status
-        assigns[:empty_bucket] = :due_asap
-        assigns[:task_total] = stub_task_total(status)
+        assign(:task, @task)
+        assign(:view, status)
+        assign(:empty_bucket, :due_asap)
+        assign(:task_total, stub_task_total(status))
       end
 
       it "should blind up out destroyed task partial" do
@@ -41,7 +41,7 @@ describe "/tasks/destroy.js.rjs" do
   describe "destroy from related asset" do
     it "should blind up out destroyed task partial" do
       @task = Factory(:task)
-      assigns[:task] = @task
+      assign(:task, @task)
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
       render

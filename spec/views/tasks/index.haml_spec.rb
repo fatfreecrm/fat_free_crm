@@ -14,8 +14,8 @@ describe "/tasks/index.html.haml" do
     end
 
     it "should render list of #{status} tasks if list of tasks is not empty" do
-      assigns[:view] = status
-      assigns[:tasks] = { :due_asap => [ @asap ], :due_today => [ @today ] }
+      assign(:view, status)
+      assign(:tasks, { :due_asap => [ @asap ], :due_today => [ @today ] })
 
       number_of_buckets = (status == "completed" ? Setting.task_completed : Setting.task_bucket).size
       view.should_receive(:render).with(hash_including(:partial => status)).exactly(number_of_buckets).times
@@ -27,8 +27,8 @@ describe "/tasks/index.html.haml" do
 
   VIEWS.each do |status|
     it "should render a message if there're no #{status} tasks" do
-      assigns[:view] = status
-      assigns[:tasks] = { :due_asap => [], :due_today => [] }
+      assign(:view, status)
+      assign(:tasks, { :due_asap => [], :due_today => [] })
 
       view.should_receive(:render).with(:partial => "empty")
 

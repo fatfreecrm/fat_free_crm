@@ -6,11 +6,11 @@ describe "/leads/convert.js.rjs" do
   before(:each) do
     login_and_assign
     
-    assigns[:lead] = @lead = Factory(:lead, :user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ]
-    assigns[:opportunity] = Factory(:opportunity)
+    assign(:lead, @lead = Factory(:lead, :user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ])
+    assign(:opportunity, Factory(:opportunity))
   end
 
   it "cancel from lead index page: should replace [Convert Lead] form with lead partial" do
@@ -32,7 +32,7 @@ describe "/leads/convert.js.rjs" do
   
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assigns[:previous] = previous = Factory(:lead, :user => @current_user)
+    assign(:previous, previous = Factory(:lead, :user => @current_user))
 
     render
     rendered.should have_rjs("lead_#{previous.id}") do |rjs|
@@ -42,7 +42,7 @@ describe "/leads/convert.js.rjs" do
 
   it "convert: should remove previously open [Convert Lead] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = previous = 41
+    assign(:previous, previous = 41)
 
     render
     rendered.should include_text(%Q/crm.flick("lead_#{previous}", "remove");/)

@@ -5,8 +5,8 @@ describe "/leads/reject.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:lead] = @lead = Factory(:lead, :status => "new")
-    assigns[:lead_status_total] = { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 }
+    assign(:lead, @lead = Factory(:lead, :status => "new"))
+    assign(:lead_status_total, { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 })
   end
 
   it "should refresh current lead partial" do
@@ -38,7 +38,7 @@ describe "/leads/reject.js.rjs" do
   end
 
   it "should update campaign sidebar if called from campaign landing page" do
-    assigns[:campaign] = campaign = Factory(:campaign)
+    assign(:campaign, campaign = Factory(:campaign))
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 

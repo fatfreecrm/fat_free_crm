@@ -9,8 +9,8 @@ describe "admin/users/create.js.rjs" do
 
   describe "create success" do
     before(:each) do
-      assigns[:user] = @user = Factory(:user)
-      assigns[:users] = [ @user ] # .paginate
+      assign(:user, @user = Factory(:user))
+      assign(:users, [ @user ] # .paginate)
     end
 
     it "should hide [Create User] form and insert user partial" do
@@ -29,8 +29,8 @@ describe "admin/users/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_user div" do
-      assigns[:user] = Factory.build(:user, :username => nil) # make it invalid
-      assigns[:users] = [ @current_user ]
+      assign(:user, Factory.build(:user, :username => nil) # make it invalid)
+      assign(:users, [ @current_user ])
       render
 
       rendered.should have_rjs("create_user") do |rjs|

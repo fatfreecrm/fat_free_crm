@@ -8,13 +8,13 @@ describe "/home/index.html.haml" do
   end
 
   it "should render list of activities if it's not empty" do
-    assigns[:activities] = [ Factory(:activity, :action => "updated", :subject => Factory(:account)) ]
+    assign(:activities, [ Factory(:activity, :action => "updated", :subject => Factory(:account)) ])
     view.should_receive(:render).with(hash_including(:partial => "activity"))
     render
   end
 
   it "should render a message if there're no activities" do
-    assigns[:activities] = []
+    assign(:activities, [])
     view.should_not_receive(:render).with(hash_including(:partial => "activity"))
 
     render

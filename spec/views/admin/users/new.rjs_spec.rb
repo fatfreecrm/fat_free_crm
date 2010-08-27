@@ -5,7 +5,7 @@ describe "admin/users/new.js.rjs" do
 
   before(:each) do
     login_and_assign(:admin => true)
-    assigns[:user] = User.new
+    assign(:user, User.new)
   end
 
   describe "new user" do

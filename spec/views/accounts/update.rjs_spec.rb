@@ -6,8 +6,8 @@ describe "/accounts/update.js.rjs" do
   before(:each) do
     login_and_assign
 
-    assigns[:account] = @account = Factory(:account, :user => @current_user)
-    assigns[:users] = [ @current_user ]
+    assign(:account, @account = Factory(:account, :user => @current_user))
+    assign(:users, [ @current_user ])
   end
 
   describe "no errors:" do

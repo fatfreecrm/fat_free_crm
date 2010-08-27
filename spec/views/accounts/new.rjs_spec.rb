@@ -5,8 +5,8 @@ describe "/accounts/new.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:account] = Account.new(:user => @current_user)
-    assigns[:users] = [ @current_user ]
+    assign(:account, Account.new(:user => @current_user))
+    assign(:users, [ @current_user ])
   end
  
   it "should toggle empty message div if it exists" do

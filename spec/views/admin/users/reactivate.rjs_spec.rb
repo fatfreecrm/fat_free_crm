@@ -5,7 +5,7 @@ describe "admin/users/reactivate.js.rjs" do
 
   before(:each) do
     login_and_assign(:admin => true)
-    assigns[:user] = @user = Factory(:user, :suspended_at => Time.now.yesterday)
+    assign(:user, @user = Factory(:user, :suspended_at => Time.now.yesterday))
   end
 
   it "reloads the requested user partial" do

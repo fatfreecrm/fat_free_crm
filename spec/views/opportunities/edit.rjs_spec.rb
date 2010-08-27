@@ -6,11 +6,11 @@ describe "/opportunities/edit.js.rjs" do
   before(:each) do
     login_and_assign
     
-    assigns[:opportunity] = @opportunity = Factory(:opportunity, :user => @current_user)
-    assigns[:users] = [ @current_user ]
-    assigns[:account] = @account = Factory(:account)
-    assigns[:accounts] = [ @account ]
-    assigns[:stage] = Setting.unroll(:opportunity_stage)
+    assign(:opportunity, @opportunity = Factory(:opportunity, :user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:account, @account = Factory(:account))
+    assign(:accounts, [ @account ])
+    assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "cancel from opportunity index page: should replace [Edit Opportunity] form with opportunity partial" do
@@ -32,7 +32,7 @@ describe "/opportunities/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Opportunity] for and replace it with opportunity partial" do
     params[:cancel] = nil
-    assigns[:previous] = previous = Factory(:opportunity, :user => @current_user)
+    assign(:previous, previous = Factory(:opportunity, :user => @current_user))
 
     render
     rendered.should have_rjs("opportunity_#{previous.id}") do |rjs|
@@ -42,7 +42,7 @@ describe "/opportunities/edit.js.rjs" do
 
   it "edit: remove previously open [Edit Opportunity] if it's no longer available" do
     params[:cancel] = nil
-    assigns[:previous] = previous = 41
+    assign(:previous, previous = 41)
 
     render
     rendered.should include_text(%Q/crm.flick("opportunity_#{previous}", "remove");/)

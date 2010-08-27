@@ -9,7 +9,7 @@ describe "admin/users/destroy.js.rjs" do
 
   describe "user got deleted" do
     before(:each) do
-      assigns[:user] = @user = Factory(:user).destroy
+      assign(:user, @user = Factory(:user).destroy)
     end
 
     it "blinds up destroyed user partial" do
@@ -21,7 +21,7 @@ describe "admin/users/destroy.js.rjs" do
 
   describe "user was not deleted" do
     before(:each) do
-      assigns[:user] = @user = Factory(:user)
+      assign(:user, @user = Factory(:user))
     end
 
     it "should remove confirmation panel" do
