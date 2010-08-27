@@ -1,8 +1,8 @@
 # Install required pancakes
 yum --quiet -y install ruby ruby-devel gcc rubygems
-/usr/bin/gem install rake -v=0.8.7 --no-rdoc --no-ri
-/usr/bin/gem install rails -v=2.3.8 --no-rdoc --no-ri
-/usr/bin/gem install ci_reporter -v=1.6.2 --no-rdoc --no-ri
+if ! (gem list | grep "rake (0.8.7)"); then gem install rake -v=0.8.7 --no-rdoc --no-ri; fi;
+if ! (gem list | grep "rails (2.3.8)"); then gem install rails -v=2.3.8 --no-rdoc --no-ri; fi;
+if ! (gem list | grep "ci_reporter (1.6.2)"); then gem install ci_reporter -v=1.6.2 --no-rdoc --no-ri; fi;
 
 # Create Database Configuration File
 cat << EOF > config/database.yml
@@ -16,6 +16,7 @@ test:
 EOF
 
 # Cleanup after the previous run.
+ll ./spec/reports/ # stub to tell us if old files are still there REMOVE
 rm -rf ./spec/reports/*
 
 RAILS_ENV=test rake db:create
