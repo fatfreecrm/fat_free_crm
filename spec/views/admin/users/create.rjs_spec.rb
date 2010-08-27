@@ -10,7 +10,7 @@ describe "admin/users/create.js.rjs" do
   describe "create success" do
     before(:each) do
       assign(:user, @user = Factory(:user))
-      assign(:users, [ @user ] # .paginate)
+      assign(:users, [ @user ]) # .paginate
     end
 
     it "should hide [Create User] form and insert user partial" do
@@ -19,7 +19,7 @@ describe "admin/users/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=user_#{@user.id}]")
       end
-      rendered.should include_text(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
+      rendered.should match(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
     end
 
     # it "should update pagination" do
@@ -29,17 +29,15 @@ describe "admin/users/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_user div" do
-      assign(:user, Factory.build(:user, :username => nil) # make it invalid)
+      assign(:user, Factory.build(:user, :username => nil)) # make it invalid
       assign(:users, [ @current_user ])
       render
 
       rendered.should have_rjs("create_user") do |rjs|
         with_tag("form[class=new_user]")
       end
-      rendered.should include_text('$("create_user").visualEffect("shake"')
+      rendered.should match('$("create_user").visualEffect("shake"')
     end
   end
 
 end
-
-

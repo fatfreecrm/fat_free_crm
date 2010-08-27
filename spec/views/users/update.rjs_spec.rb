@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/users/update.js.rjs" do
   include UsersHelper
-  
+
   before(:each) do
     login_and_assign
     assign(:user, @user = @current_user)
@@ -11,7 +11,7 @@ describe "/users/update.js.rjs" do
   describe "no errors:" do
     it "should flip [Edit Profile] form" do
       render
-      rendered.should include_text('crm.flip_form("edit_profile")')
+      rendered.should match('crm.flip_form("edit_profile")')
     end
 
     it "should update Welcome, user!" do
@@ -27,7 +27,7 @@ describe "/users/update.js.rjs" do
 
   describe "validation errors :" do
     before(:each) do
-      @user.errors.add(:error)
+      @user.errors.add(:first_name)
     end
 
     it "should redraw the [Edit Profile] form and shake it" do
@@ -35,10 +35,10 @@ describe "/users/update.js.rjs" do
       rendered.should have_rjs("edit_profile") do |rjs|
         with_tag("form[class=edit_user]")
       end
-      rendered.should include_text('$("edit_profile").visualEffect("shake"')
-      rendered.should include_text('$("user_email").focus()')
+      rendered.should match('$("edit_profile").visualEffect("shake"')
+      rendered.should match('$("user_email").focus()')
     end
-    
+
     it "should keep welcome or profile information intact" do
       render
       rendered.should_not have_rjs("welcome_username")

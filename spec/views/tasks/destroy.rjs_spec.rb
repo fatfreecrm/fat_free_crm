@@ -21,8 +21,8 @@ describe "/tasks/destroy.js.rjs" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
         render
-        rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
-        rendered.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
+        rendered.should match(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
+        rendered.should match(%Q/$("list_due_asap").visualEffect("fade"/)
       end
 
       it "should update tasks sidebar" do
@@ -33,7 +33,7 @@ describe "/tasks/destroy.js.rjs" do
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        rendered.should include_text(%Q/$("filters").visualEffect("shake"/)
+        rendered.should match(%Q/$("filters").visualEffect("shake"/)
       end
     end
   end
@@ -45,8 +45,8 @@ describe "/tasks/destroy.js.rjs" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
       render
-      rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
-      rendered.should_not include_text(%Q/$("list_due_asap").visualEffect("fade"/) # bucket is not empty
+      rendered.should match(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
+      rendered.should_not match(%Q/$("list_due_asap").visualEffect("fade"/) # bucket is not empty
     end
   end
 

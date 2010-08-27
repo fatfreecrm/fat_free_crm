@@ -23,8 +23,8 @@ describe "/home/options.rjs" do
                   "$('loading').show()}, parameters:{ user: 'all_users' }}); } } }"
       with_tag("script", /#{Regexp.escape(user_menu)}/)
     end
-    rendered.should include_text('crm.flip_form("options")')
-    rendered.should include_text('crm.set_title("title", "Recent Activity Options")')
+    rendered.should match('crm.flip_form("options")')
+    rendered.should match('crm.set_title("title", "Recent Activity Options")')
   end
 
   it "should load :options partial with JavaScript code for menus" do
@@ -39,8 +39,8 @@ describe "/home/options.rjs" do
     render
 
     rendered.should_not have_rjs("options")
-    rendered.should include_text('crm.flip_form("options")')
-    rendered.should include_text('crm.set_title("title", "Recent Activity")')
+    rendered.should match('crm.flip_form("options")')
+    rendered.should match('crm.set_title("title", "Recent Activity")')
   end
 
 end

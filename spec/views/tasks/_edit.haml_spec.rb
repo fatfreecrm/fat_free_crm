@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/tasks/edit.html.erb" do
   include TasksHelper
-  
+
   before(:each) do
     login_and_assign
     assign(:task, Factory(:task, :asset => Factory(:account), :bucket => "due_asap"))
@@ -12,8 +12,9 @@ describe "/tasks/edit.html.erb" do
   end
 
   it "should render [edit task] form" do
-    view.should render_template(:partial => "tasks/_top_section")
     render
+
+    view.should render_template(:partial => "tasks/_top_section")
 
     rendered.should have_tag("form[class=edit_task]")
   end

@@ -12,14 +12,14 @@ describe "/accounts/new.js.rjs" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include_text('crm.flick("empty", "toggle")')
+    rendered.should match('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Accounts index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
     render
 
-    rendered.should include_text('crm.hide_form("options")')
+    rendered.should match('crm.hide_form("options")')
   end
 
   describe "new account" do
@@ -30,7 +30,7 @@ describe "/accounts/new.js.rjs" do
       rendered.should have_rjs("create_account") do |rjs|
         with_tag("form[class=new_account]")
       end
-      rendered.should include_text('crm.flip_form("create_account");')
+      rendered.should match('crm.flip_form("create_account");')
     end
   end
   
@@ -40,7 +40,7 @@ describe "/accounts/new.js.rjs" do
       render
     
       rendered.should_not have_rjs("create_account")
-      rendered.should include_text('crm.flip_form("create_account");')
+      rendered.should match('crm.flip_form("create_account");')
     end
   end
 

@@ -23,9 +23,9 @@ describe "/tasks/edit.js.rjs" do
         with_tag("li[id=task_#{@task.id}]")
       end
       if view == "pending"
-        rendered.should include_text('type=\\"checkbox\\"')
+        rendered.should match('type=\\"checkbox\\"')
       else
-        rendered.should_not include_text('type=\\"checkbox\\"')
+        rendered.should_not match('type=\\"checkbox\\"')
       end
     end
 
@@ -34,7 +34,7 @@ describe "/tasks/edit.js.rjs" do
       assign(:task, stub_task(view))
 
       render
-      rendered.should include_text('crm.hide_form("create_task"')
+      rendered.should match('crm.hide_form("create_task"')
     end
 
     it "edit: should hide previously open [Edit Task] form" do
@@ -56,7 +56,7 @@ describe "/tasks/edit.js.rjs" do
       assign(:task, stub_task(view))
 
       render
-      rendered.should include_text(%Q/crm.flick("task_41", "remove");/)
+      rendered.should match(%Q/crm.flick("task_41", "remove");/)
     end
 
     it "edit: should turn off highlight and replace current task with [Edit Task] form" do
@@ -65,11 +65,11 @@ describe "/tasks/edit.js.rjs" do
       assign(:task, @task)
 
       render
-      rendered.should include_text(%Q/crm.highlight_off("task_#{@task.id}");/)
+      rendered.should match(%Q/crm.highlight_off("task_#{@task.id}");/)
       rendered.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("form[class=edit_task]")
       end
-      rendered.should include_text('$("task_name").focus()')
+      rendered.should match('$("task_name").focus()')
     end
 
   end

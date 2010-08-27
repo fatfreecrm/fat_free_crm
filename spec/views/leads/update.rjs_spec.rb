@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/leads/update.js.rjs" do
   include LeadsHelper
-  
+
   before(:each) do
     login_and_assign
     assign(:lead, @lead = Factory(:lead, :user => @current_user, :assignee => Factory(:user)))
@@ -20,7 +20,7 @@ describe "/leads/update.js.rjs" do
       it "should flip [edit_lead] form" do
         render
         rendered.should_not have_rjs("lead_#{@lead.id}")
-        rendered.should include_text('crm.flip_form("edit_lead"')
+        rendered.should match('crm.flip_form("edit_lead"')
       end
 
       it "should update sidebar" do
@@ -28,7 +28,7 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
         end
-        rendered.should include_text('$("summary").visualEffect("shake"')
+        rendered.should match('$("summary").visualEffect("shake"')
       end
     end
 
@@ -42,7 +42,7 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
-        rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -51,7 +51,7 @@ describe "/leads/update.js.rjs" do
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        rendered.should include_text('$("filters").visualEffect("shake"')
+        rendered.should match('$("filters").visualEffect("shake"')
       end
     end
 
@@ -66,7 +66,7 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
-        rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
       it "should update campaign sidebar" do
@@ -84,7 +84,7 @@ describe "/leads/update.js.rjs" do
 
   describe "validation errors :" do
     before(:each) do
-      @lead.errors.add(:error)
+      @lead.errors.add(:first_name)
     end
 
     describe "on landing page -" do
@@ -97,8 +97,8 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("edit_lead") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should include_text('$("edit_lead").visualEffect("shake"')
-        rendered.should include_text('focus()')
+        rendered.should match('$("edit_lead").visualEffect("shake"')
+        rendered.should match('focus()')
       end
     end
 
@@ -112,8 +112,8 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
-        rendered.should include_text('focus()')
+        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should match('focus()')
       end
     end
 
@@ -127,8 +127,8 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
-        rendered.should include_text('focus()')
+        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should match('focus()')
       end
     end
   end # errors

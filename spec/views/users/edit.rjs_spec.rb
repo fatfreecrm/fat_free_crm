@@ -12,8 +12,8 @@ describe "/users/edit.js.rjs" do
     params[:cancel] = "true"
     
     render
-    rendered.should include_text('crm.flip_form("edit_profile")')
-    rendered.should include_text('crm.set_title("edit_profile", "My Profile")')
+    rendered.should match('crm.flip_form("edit_profile")')
+    rendered.should match('crm.set_title("edit_profile", "My Profile")')
   end
 
   it "edit profile: should hide [Upload Avatar] and [Change Password] forms and show [Edit Profile]" do
@@ -22,10 +22,10 @@ describe "/users/edit.js.rjs" do
     rendered.should have_rjs("edit_profile") do |rjs|
       with_tag("form[class=edit_user]")
     end
-    rendered.should include_text('crm.hide_form("upload_avatar")')
-    rendered.should include_text('crm.hide_form("change_password")')
-    rendered.should include_text('crm.flip_form("edit_profile")')
-    rendered.should include_text('crm.set_title("edit_profile"')
+    rendered.should match('crm.hide_form("upload_avatar")')
+    rendered.should match('crm.hide_form("change_password")')
+    rendered.should match('crm.flip_form("edit_profile")')
+    rendered.should match('crm.set_title("edit_profile"')
   end
 
 end

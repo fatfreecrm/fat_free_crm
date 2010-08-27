@@ -19,8 +19,8 @@ describe "/tasks/update.js.rjs" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
       render
 
-      rendered.should include_text(%Q/$("task_#{@task.id}").replace("")/)
-      rendered.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
+      rendered.should match(%Q/$("task_#{@task.id}").replace("")/)
+      rendered.should match(%Q/$("list_due_asap").visualEffect("fade"/)
     end
 
     it "from Tasks tab: should show updated task in a new bucket" do
@@ -29,7 +29,7 @@ describe "/tasks/update.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
-      rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+      rendered.should match(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
     end
 
     it "from Tasks tab: should update tasks sidebar" do
@@ -40,7 +40,7 @@ describe "/tasks/update.js.rjs" do
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
-      rendered.should include_text(%Q/$("filters").visualEffect("shake"/)
+      rendered.should match(%Q/$("filters").visualEffect("shake"/)
     end
 
     it "from asset page: should update task partial in place" do
@@ -72,9 +72,9 @@ describe "/tasks/update.js.rjs" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include_text(%Q/$("task_#{@task.id}").replace("")/)
-      rendered.should include_text('("flash").update(')
-      rendered.should include_text('crm.flash("notice", true)')
+      rendered.should match(%Q/$("task_#{@task.id}").replace("")/)
+      rendered.should match('("flash").update(')
+      rendered.should match('crm.flash("notice", true)')
     end
 
     it "assigned tasks to me from Tasks tab: should remove the task and show flash message (pending)" do
@@ -85,9 +85,9 @@ describe "/tasks/update.js.rjs" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
       render
-      rendered.should include_text(%Q/$("task_#{@task.id}").replace("")/)
-      rendered.should include_text('("flash").update(')
-      rendered.should include_text('crm.flash("notice", true)')
+      rendered.should match(%Q/$("task_#{@task.id}").replace("")/)
+      rendered.should match('("flash").update(')
+      rendered.should match('crm.flash("notice", true)')
     end
 
     it "assigned tasks to somebody else from Tasks tab: should re-render task partial" do
@@ -113,7 +113,7 @@ describe "/tasks/update.js.rjs" do
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
-      rendered.should include_text(%Q/$("filters").visualEffect("shake"/)
+      rendered.should match(%Q/$("filters").visualEffect("shake"/)
     end
 
     it "from asset page: should should re-render task partial" do
@@ -141,11 +141,11 @@ describe "/tasks/update.js.rjs" do
   it "error: should re-disiplay [Edit Task] form and shake it" do
     assign(:task_before_update, Factory(:task))
     assign(:task, @task = Factory(:task))
-    @task.errors.add(:error)
+    @task.errors.add(:name)
 
     render
-    rendered.should include_text(%/$("task_#{@task.id}").visualEffect("shake"/)
-    rendered.should include_text(%/$("task_submit").enable()/)
+    rendered.should match(%/$("task_#{@task.id}").visualEffect("shake"/)
+    rendered.should match(%/$("task_submit").enable()/)
   end
 
 end

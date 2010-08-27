@@ -15,14 +15,14 @@ describe "/contacts/new.js.rjs" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include_text('crm.flick("empty", "toggle")')
+    rendered.should match('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Contacts index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
     render
 
-    rendered.should include_text('crm.hide_form("options")')
+    rendered.should match('crm.hide_form("options")')
   end
 
   describe "new contact" do
@@ -42,7 +42,7 @@ describe "/contacts/new.js.rjs" do
       render
     
       rendered.should_not have_rjs("create_contact")
-      rendered.should include_text('crm.flip_form("create_contact");')
+      rendered.should match('crm.flip_form("create_contact");')
     end
   end
 

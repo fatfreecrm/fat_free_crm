@@ -20,7 +20,7 @@ describe "/accounts/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=account_#{@account.id}]")
       end
-      rendered.should include_text(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
+      rendered.should match(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
     end
 
     it "should update pagination" do
@@ -37,14 +37,14 @@ describe "/accounts/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_account div" do
-      assign(:account, Factory.build(:account, :name => nil) # make it invalid)
+      assign(:account, Factory.build(:account, :name => nil)) # make it invalid
       assign(:users, [ @current_user ])
       render
 
       rendered.should have_rjs("create_account") do |rjs|
         with_tag("form[class=new_account]")
       end
-      rendered.should include_text('$("create_account").visualEffect("shake"')
+      rendered.should match('$("create_account").visualEffect("shake"')
     end
   end
 

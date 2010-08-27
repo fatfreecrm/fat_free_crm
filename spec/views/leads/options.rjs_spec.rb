@@ -5,22 +5,22 @@ describe "/leads/options.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:sort_by]  = "leads.first_name ASC"
-    assigns[:outline]  = "option_long"
-    assigns[:naming]   = "option_before"
+    assign(:sort_by, "leads.first_name ASC")
+    assign(:outline, "option_long")
+    assign(:naming, "option_before")
     assign(:per_page, 20)
   end
 
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include_text('crm.flick("empty", "toggle")')
+    rendered.should match('crm.flick("empty", "toggle")')
   end
 
   it "should hide [Create Lead] form if it's visible" do
     render
 
-    rendered.should include_text('crm.hide_form("create_lead")')
+    rendered.should match('crm.hide_form("create_lead")')
   end
 
   describe "lead options" do
@@ -31,8 +31,8 @@ describe "/leads/options.rjs" do
       rendered.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
       end
-      rendered.should include_text('crm.flip_form("options")')
-      rendered.should include_text('crm.set_title("create_lead", "Leads Options")')
+      rendered.should match('crm.flip_form("options")')
+      rendered.should match('crm.set_title("create_lead", "Leads Options")')
     end
 
     it "should call JavaScript functions to load preferences menus" do
@@ -52,8 +52,8 @@ describe "/leads/options.rjs" do
       render
 
       rendered.should_not have_rjs("options")
-      rendered.should include_text('crm.flip_form("options")')
-      rendered.should include_text('crm.set_title("create_lead", "Leads")')
+      rendered.should match('crm.flip_form("options")')
+      rendered.should match('crm.set_title("create_lead", "Leads")')
     end
   end
 

@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/opportunities/update.js.rjs" do
   include OpportunitiesHelper
-  
+
   before(:each) do
     login_and_assign
 
@@ -23,7 +23,7 @@ describe "/opportunities/update.js.rjs" do
       it "should flip [edit_opportunity] form" do
         render
         rendered.should_not have_rjs("opportunity_#{@opportunity.id}")
-        rendered.should include_text('crm.flip_form("edit_opportunity"')
+        rendered.should match('crm.flip_form("edit_opportunity"')
       end
 
       it "should update sidebar" do
@@ -32,7 +32,7 @@ describe "/opportunities/update.js.rjs" do
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        rendered.should include_text('$("summary").visualEffect("shake"')
+        rendered.should match('$("summary").visualEffect("shake"')
       end
     end
 
@@ -46,7 +46,7 @@ describe "/opportunities/update.js.rjs" do
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
           with_tag("li[id=opportunity_#{@opportunity.id}]")
         end
-        rendered.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
+        rendered.should match(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -55,7 +55,7 @@ describe "/opportunities/update.js.rjs" do
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        rendered.should include_text('$("filters").visualEffect("shake"')
+        rendered.should match('$("filters").visualEffect("shake"')
       end
     end
 
@@ -70,20 +70,20 @@ describe "/opportunities/update.js.rjs" do
           with_tag("div[class=caption]")
         end
       end
- 
+
       it "should replace [Edit Opportunity] with opportunity partial and highligh it" do
         render
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
           with_tag("li[id=opportunity_#{@opportunity.id}]")
         end
-        rendered.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
+        rendered.should match(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
       end
     end
   end
 
   describe "validation errors:" do
     before(:each) do
-      @opportunity.errors.add(:error)
+      @opportunity.errors.add(:name)
     end
 
     describe "on opportunity landing page -" do
@@ -96,9 +96,9 @@ describe "/opportunities/update.js.rjs" do
         rendered.should have_rjs("edit_opportunity") do |rjs|
           with_tag("form[class=edit_opportunity]")
         end
-        rendered.should include_text('crm.create_or_select_account(false)')
-        rendered.should include_text('$("edit_opportunity").visualEffect("shake"')
-        rendered.should include_text('focus()')
+        rendered.should match('crm.create_or_select_account(false)')
+        rendered.should match('$("edit_opportunity").visualEffect("shake"')
+        rendered.should match('focus()')
       end
     end
 
@@ -112,9 +112,9 @@ describe "/opportunities/update.js.rjs" do
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
           with_tag("form[class=edit_opportunity]")
         end
-        rendered.should include_text('crm.create_or_select_account(false)')
-        rendered.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("shake"/)
-        rendered.should include_text('focus()')
+        rendered.should match('crm.create_or_select_account(false)')
+        rendered.should match(%Q/$("opportunity_#{@opportunity.id}").visualEffect("shake"/)
+        rendered.should match('focus()')
       end
     end
 
@@ -125,7 +125,7 @@ describe "/opportunities/update.js.rjs" do
 
       it "should show disabled accounts dropdown when called from accounts landing page" do
         render
-        rendered.should include_text("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
+        rendered.should match("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
       end
 
       it "should update related campaign sidebar from campaign landing page" do
@@ -144,8 +144,8 @@ describe "/opportunities/update.js.rjs" do
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
           with_tag("form[class=edit_opportunity]")
         end
-        rendered.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("shake"/)
-        rendered.should include_text('focus()')
+        rendered.should match(%Q/$("opportunity_#{@opportunity.id}").visualEffect("shake"/)
+        rendered.should match('focus()')
       end
     end
   end # errors

@@ -11,7 +11,7 @@ describe "/accounts/destroy.js.rjs" do
   end
 
   it "should blind up destroyed account partial" do
-    rendered.should include_text(%Q/$("account_#{@account.id}").visualEffect("blind_up"/)
+    rendered.should match(%Q/$("account_#{@account.id}").visualEffect("blind_up"/)
   end
 
   it "should update accounts pagination" do

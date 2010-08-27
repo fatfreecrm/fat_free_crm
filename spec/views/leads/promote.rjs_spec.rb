@@ -27,7 +27,7 @@ describe "/leads/promote.js.rjs" do
       it "should flip [Convert Lead] form" do
         render
         rendered.should_not have_rjs("lead_#{@lead.id}")
-        rendered.should include_text('crm.flip_form("convert_lead"')
+        rendered.should match('crm.flip_form("convert_lead"')
       end
 
       it "should update sidebar" do
@@ -36,7 +36,7 @@ describe "/leads/promote.js.rjs" do
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        rendered.should include_text('$("summary").visualEffect("shake"')
+        rendered.should match('$("summary").visualEffect("shake"')
       end
     end
 
@@ -50,7 +50,7 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
-        rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -59,7 +59,7 @@ describe "/leads/promote.js.rjs" do
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        rendered.should include_text('$("filters").visualEffect("shake"')
+        rendered.should match('$("filters").visualEffect("shake"')
       end
     end
 
@@ -76,7 +76,7 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
-        rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
       it "should update campaign sidebar" do
@@ -114,7 +114,7 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("convert_lead") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should include_text(%Q/$("convert_lead").visualEffect("shake"/)
+        rendered.should match(%Q/$("convert_lead").visualEffect("shake"/)
       end
     end
 
@@ -128,7 +128,7 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
       end
     end
 
@@ -142,15 +142,15 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
       end
     end
 
     it "should handle new or existing account and set up calendar field" do
       render
-      rendered.should include_text("crm.create_or_select_account")
-      rendered.should include_text('crm.date_select_popup("opportunity_closes_on")')
-      rendered.should include_text('$("account_name").focus()')
+      rendered.should match("crm.create_or_select_account")
+      rendered.should match('crm.date_select_popup("opportunity_closes_on")')
+      rendered.should match('$("account_name").focus()')
     end
   end # errors
 end

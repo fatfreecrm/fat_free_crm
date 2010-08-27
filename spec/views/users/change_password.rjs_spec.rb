@@ -13,15 +13,15 @@ describe "/users/change_password.js.rjs" do
       render
 
       rendered.should_not have_rjs("user_#{@user.id}")
-      rendered.should include_text('crm.flip_form("change_password"')
-      rendered.should include_text('crm.set_title("change_password", "My Profile")')
+      rendered.should match('crm.flip_form("change_password"')
+      rendered.should match('crm.set_title("change_password", "My Profile")')
     end
 
     it "should show flash message" do
       render
 
       rendered.should have_rjs("flash")
-      rendered.should include_text('crm.flash("notice")')
+      rendered.should match('crm.flash("notice")')
     end
   end # no errors
 
@@ -33,15 +33,15 @@ describe "/users/change_password.js.rjs" do
       rendered.should have_rjs("change_password") do |rjs|
         with_tag("form[class=edit_user]")
       end
-      rendered.should include_text('$("change_password").visualEffect("shake"')
-      rendered.should include_text('$("current_password").focus()')
+      rendered.should match('$("change_password").visualEffect("shake"')
+      rendered.should match('$("current_password").focus()')
     end
 
     it "should redraw the [Change Password] form and correctly set focus" do
       @user.errors.add(:user_password, "error")
       render
 
-      rendered.should include_text('$("user_password").focus()')
+      rendered.should match('$("user_password").focus()')
     end
 
   end # errors

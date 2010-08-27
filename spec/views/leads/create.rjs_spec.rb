@@ -21,7 +21,7 @@ describe "/leads/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=lead_#{@lead.id}]")
       end
-      rendered.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+      rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
     end
 
     it "should update sidebar when called from leads index" do
@@ -32,7 +32,7 @@ describe "/leads/create.js.rjs" do
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
-      rendered.should include_text('$("filters").visualEffect("shake"')
+      rendered.should match('$("filters").visualEffect("shake"')
     end
 
     it "should update pagination when called from leads index" do
@@ -56,15 +56,15 @@ describe "/leads/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_lead div" do
-      assign(:lead, Factory.build(:lead, :first_name => nil) # make it invalid)
+      assign(:lead, Factory.build(:lead, :first_name => nil)) # make it invalid
       assign(:users, [ Factory(:user) ])
-  
+
       render
-  
+
       rendered.should have_rjs("create_lead") do |rjs|
         with_tag("form[class=new_lead]")
       end
-      rendered.should include_text('$("create_lead").visualEffect("shake"')
+      rendered.should match('$("create_lead").visualEffect("shake"')
 
     end
   end

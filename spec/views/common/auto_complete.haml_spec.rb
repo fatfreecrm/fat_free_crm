@@ -21,9 +21,9 @@ describe "/common/auto_complete.html.haml" do
       render
       rendered.should have_tag("ul", :count => 1) do |list|
         unless model == :lead
-          list.should have_tag("li", :id => @auto_complete.id, :text => @auto_complete.name)
+          list.should have_tag("li", :id => @auto_complete.id.to_s, :text => @auto_complete.name)
         else
-          list.should have_tag("li", :id => @auto_complete.id, :text => "#{@auto_complete.name} (#{@auto_complete.company})")
+          list.should have_tag("li", :id => @auto_complete.id.to_s, :text => "#{@auto_complete.name} (#{@auto_complete.company})")
         end
       end
     end
@@ -39,5 +39,4 @@ describe "/common/auto_complete.html.haml" do
     end
 
   end
-
 end

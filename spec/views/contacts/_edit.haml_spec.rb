@@ -29,7 +29,7 @@ describe "/contacts/edit.html.erb" do
 
     render
     rendered.should have_tag("select[id=contact_assigned_to]") do |options|
-      options.to_s.should_not include_text(%Q/selected="selected"/)
+      options.to_s.should_not match(%Q/selected="selected"/)
     end
   end
 

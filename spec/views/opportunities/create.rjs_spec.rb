@@ -21,7 +21,7 @@ describe "/opportunities/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=opportunity_#{@opportunity.id}]")
       end
-      rendered.should include_text(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
+      rendered.should match(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
     end
 
     it "should update sidebar filters and recently viewed items when called from opportunities page" do
@@ -64,23 +64,21 @@ describe "/opportunities/create.js.rjs" do
 
   describe "create failure" do
     it "should re-render [create.html.haml] template in :create_opportunity div" do
-      assign(:opportunity, Factory.build(:opportunity, :name => nil) # make it invalid)
+      assign(:opportunity, Factory.build(:opportunity, :name => nil)) # make it invalid
       @account = Factory(:account)
       assign(:users, [ Factory(:user) ])
       assign(:account, @account)
       assign(:accounts, [ @account ])
-  
+
       render
-  
+
       rendered.should have_rjs("create_opportunity") do |rjs|
         with_tag("form[class=new_opportunity]")
       end
-      rendered.should include_text('$("create_opportunity").visualEffect("shake"')
-      rendered.should include_text("crm.create_or_select_account")
-      rendered.should include_text("crm.date_select_popup")
+      rendered.should match('$("create_opportunity").visualEffect("shake"')
+      rendered.should match("crm.create_or_select_account")
+      rendered.should match("crm.date_select_popup")
     end
   end
 
 end
-
-

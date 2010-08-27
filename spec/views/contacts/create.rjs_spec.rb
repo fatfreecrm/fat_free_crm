@@ -19,7 +19,7 @@ describe "/contacts/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=contact_#{@contact.id}]")
       end
-      rendered.should include_text(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+      rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
     end
 
     it "should refresh sidebar when called from contacts index" do
@@ -46,10 +46,10 @@ describe "/contacts/create.js.rjs" do
       end
     end
   end
-  
+
   describe "create failure" do
     it "create (failure): should re-render [create.html.haml] template in :create_contact div" do
-      assign(:contact, Factory.build(:contact, :first_name => nil) # make it invalid)
+      assign(:contact, Factory.build(:contact, :first_name => nil)) # make it invalid
       @current_user = Factory(:user)
       @account = Factory(:account)
       assign(:users, [ @current_user ])
@@ -61,10 +61,8 @@ describe "/contacts/create.js.rjs" do
       rendered.should have_rjs("create_contact") do |rjs|
         with_tag("form[class=new_contact]")
       end
-      rendered.should include_text('visualEffect("shake"')
+      rendered.should match('visualEffect("shake"')
     end
   end
 
 end
-
-

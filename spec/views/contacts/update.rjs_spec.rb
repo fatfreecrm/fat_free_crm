@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/contacts/update.js.rjs" do
   include ContactsHelper
-  
+
   before(:each) do
     login_and_assign
-    
+
     assign(:contact, @contact = Factory(:contact, :user => @current_user))
     assign(:users, [ @current_user ])
     assign(:account, @account = Factory(:account))
@@ -21,7 +21,7 @@ describe "/contacts/update.js.rjs" do
       it "should flip [edit_contact] form" do
         render
         rendered.should_not have_rjs("contact_#{@contact.id}")
-        rendered.should include_text('crm.flip_form("edit_contact"')
+        rendered.should match('crm.flip_form("edit_contact"')
       end
 
       it "should update sidebar" do
@@ -30,7 +30,7 @@ describe "/contacts/update.js.rjs" do
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        rendered.should include_text('$("summary").visualEffect("shake"')
+        rendered.should match('$("summary").visualEffect("shake"')
       end
     end
 
@@ -46,7 +46,7 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("li[id=contact_#{@contact.id}]")
         end
-        rendered.should include_text(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+        rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -69,7 +69,7 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("li[id=contact_#{@contact.id}]")
         end
-        rendered.should include_text(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+        rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
       end
 
       it "should update recently viewed items" do
@@ -83,7 +83,7 @@ describe "/contacts/update.js.rjs" do
 
   describe "validation errors:" do
     before(:each) do
-      @contact.errors.add(:error)
+      @contact.errors.add(:first_name)
     end
 
     describe "on contact landing page -" do
@@ -96,9 +96,9 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("edit_contact") do |rjs|
           with_tag("form[class=edit_contact]")
         end
-        rendered.should include_text('crm.create_or_select_account(false)')
-        rendered.should include_text('$("edit_contact").visualEffect("shake"')
-        rendered.should include_text('focus()')
+        rendered.should match('crm.create_or_select_account(false)')
+        rendered.should match('$("edit_contact").visualEffect("shake"')
+        rendered.should match('focus()')
       end
     end
 
@@ -112,9 +112,9 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("form[class=edit_contact]")
         end
-        rendered.should include_text('crm.create_or_select_account(false)')
-        rendered.should include_text(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
-        rendered.should include_text('focus()')
+        rendered.should match('crm.create_or_select_account(false)')
+        rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
+        rendered.should match('focus()')
       end
     end
 
@@ -125,7 +125,7 @@ describe "/contacts/update.js.rjs" do
 
       it "errors: should show disabled accounts dropdown" do
         render
-        rendered.should include_text("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
+        rendered.should match("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
       end
 
       it "should redraw the [edit_contact] form and shake it" do
@@ -133,8 +133,8 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("form[class=edit_contact]")
         end
-        rendered.should include_text(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
-        rendered.should include_text('focus()')
+        rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
+        rendered.should match('focus()')
       end
     end
   end # errors

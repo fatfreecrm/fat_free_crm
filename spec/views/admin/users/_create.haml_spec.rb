@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/_create.html.haml" do
   include Admin::UsersHelper
-  
+
   before(:each) do
     login_and_assign(:admin => true)
     assign(:user, User.new)
@@ -10,11 +10,9 @@ describe "admin/users/_create.html.haml" do
   end
 
   it "renders [Create User] form" do
+    render
     view.should render_template(:partial => "admin/_users/profile")
 
-    render
     rendered.should have_tag("form[class=new_user]")
   end
 end
-
-

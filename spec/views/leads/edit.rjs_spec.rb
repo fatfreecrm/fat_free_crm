@@ -24,7 +24,7 @@ describe "/leads/edit.js.rjs" do
     params[:cancel] = "true"
     
     render
-    rendered.should include_text('crm.flip_form("edit_lead"')
+    rendered.should match('crm.flip_form("edit_lead"')
   end
 
   it "edit: should hide previously open [Edit Lead] and replace it with lead partial" do
@@ -42,15 +42,15 @@ describe "/leads/edit.js.rjs" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include_text(%Q/crm.flick("lead_#{previous}", "remove");/)
+    rendered.should match(%Q/crm.flick("lead_#{previous}", "remove");/)
   end
   
   it "edit from leads index page: should turn off highlight, hide [Create Lead] form, and replace current lead with [Edit Lead] form" do
     params[:cancel] = nil
     
     render
-    rendered.should include_text(%Q/crm.highlight_off("lead_#{@lead.id}");/)
-    rendered.should include_text('crm.hide_form("create_lead")')
+    rendered.should match(%Q/crm.highlight_off("lead_#{@lead.id}");/)
+    rendered.should match('crm.hide_form("create_lead")')
     rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
       with_tag("form[class=edit_lead]")
     end
@@ -63,8 +63,8 @@ describe "/leads/edit.js.rjs" do
     rendered.should have_rjs("edit_lead") do |rjs|
       with_tag("form[class=edit_lead]")
     end
-    rendered.should include_text('crm.hide_form("convert_lead"')
-    rendered.should include_text('crm.flip_form("edit_lead"')
+    rendered.should match('crm.hide_form("convert_lead"')
+    rendered.should match('crm.flip_form("edit_lead"')
   end
 
   it "edit from lead landing page: should not attempt to hide [Convert Lead] if the lead is already converted" do
@@ -72,7 +72,7 @@ describe "/leads/edit.js.rjs" do
     assign(:lead, Factory(:lead, :status => "converted", :user => @current_user))
 
     render
-    rendered.should_not include_text('crm.hide_form("convert_lead"')
+    rendered.should_not match('crm.hide_form("convert_lead"')
   end
 
 end

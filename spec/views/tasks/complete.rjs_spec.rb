@@ -20,8 +20,8 @@ describe "/tasks/edit.js.rjs" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include_text(%Q/$("task_#{@task.id}").visualEffect("fade"/)
-      rendered.should include_text(%Q/$("list_due_asap").visualEffect("fade"/)
+      rendered.should match(%Q/$("task_#{@task.id}").visualEffect("fade"/)
+      rendered.should match(%Q/$("list_due_asap").visualEffect("fade"/)
     end
 
     it "should update tasks sidebar" do
@@ -35,7 +35,7 @@ describe "/tasks/edit.js.rjs" do
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
-      rendered.should include_text(%Q/$("filters").visualEffect("shake"/)
+      rendered.should match(%Q/$("filters").visualEffect("shake"/)
     end
   end
   
@@ -48,7 +48,7 @@ describe "/tasks/edit.js.rjs" do
       rendered.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
       end
-      rendered.should include_text('<strike>')
+      rendered.should match('<strike>')
     end
 
     it "should update recently viewed items" do

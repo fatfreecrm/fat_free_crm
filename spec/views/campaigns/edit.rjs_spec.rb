@@ -23,7 +23,7 @@ describe "/campaigns/edit.js.rjs" do
     params[:cancel] = "true"
     
     render
-    rendered.should include_text('crm.flip_form("edit_campaign"')
+    rendered.should match('crm.flip_form("edit_campaign"')
   end
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
@@ -41,15 +41,15 @@ describe "/campaigns/edit.js.rjs" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include_text(%Q/crm.flick("campaign_#{previous}", "remove");/)
+    rendered.should match(%Q/crm.flick("campaign_#{previous}", "remove");/)
   end
   
   it "edit from campaigns index page: should turn off highlight, hide [Create Campaign], and replace current campaign with [Edit Campaign] form" do
     params[:cancel] = nil
     
     render
-    rendered.should include_text(%Q/crm.highlight_off("campaign_#{@campaign.id}");/)
-    rendered.should include_text('crm.hide_form("create_campaign")')
+    rendered.should match(%Q/crm.highlight_off("campaign_#{@campaign.id}");/)
+    rendered.should match('crm.hide_form("create_campaign")')
     rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
       with_tag("form[class=edit_campaign]")
     end
@@ -62,16 +62,16 @@ describe "/campaigns/edit.js.rjs" do
     rendered.should have_rjs("edit_campaign") do |rjs|
       with_tag("form[class=edit_campaign]")
     end
-    rendered.should include_text('crm.flip_form("edit_campaign"')
+    rendered.should match('crm.flip_form("edit_campaign"')
   end
   
   it "should call JavaScript to set up popup Calendar" do
     params[:cancel] = nil
 
     render
-    rendered.should include_text('crm.date_select_popup("campaign_starts_on")')
-    rendered.should include_text('crm.date_select_popup("campaign_ends_on")')
-    rendered.should include_text('$("campaign_name").focus()')
+    rendered.should match('crm.date_select_popup("campaign_starts_on")')
+    rendered.should match('crm.date_select_popup("campaign_ends_on")')
+    rendered.should match('$("campaign_name").focus()')
   end
 
 end

@@ -27,7 +27,7 @@ describe "/opportunities/edit.js.rjs" do
     params[:cancel] = "true"
     
     render
-    rendered.should include_text('crm.flip_form("edit_opportunity"')
+    rendered.should match('crm.flip_form("edit_opportunity"')
   end
 
   it "edit: should hide previously open [Edit Opportunity] for and replace it with opportunity partial" do
@@ -45,15 +45,15 @@ describe "/opportunities/edit.js.rjs" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include_text(%Q/crm.flick("opportunity_#{previous}", "remove");/)
+    rendered.should match(%Q/crm.flick("opportunity_#{previous}", "remove");/)
   end
   
   it "edit from opportunities index page: should turn off highlight, hide [Create Opportunity] form, and replace current opportunity with [Edit Opportunity] form" do
     params[:cancel] = nil
     
     render
-    rendered.should include_text(%Q/crm.highlight_off("opportunity_#{@opportunity.id}");/)
-    rendered.should include_text('crm.hide_form("create_opportunity")')
+    rendered.should match(%Q/crm.highlight_off("opportunity_#{@opportunity.id}");/)
+    rendered.should match('crm.hide_form("create_opportunity")')
     rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
       with_tag("form[class=edit_opportunity]")
     end
@@ -66,13 +66,13 @@ describe "/opportunities/edit.js.rjs" do
     rendered.should have_rjs("edit_opportunity") do |rjs|
       with_tag("form[class=edit_opportunity]")
     end
-    rendered.should include_text('crm.flip_form("edit_opportunity"')
+    rendered.should match('crm.flip_form("edit_opportunity"')
   end
   
   it "edit: should handle new or existing account for the opportunity" do
 
     render
-    rendered.should include_text("crm.create_or_select_account")
+    rendered.should match("crm.create_or_select_account")
   end
 
 end

@@ -25,7 +25,7 @@ describe "/contacts/edit.js.rjs" do
     params[:cancel] = "true"
     
     render
-    rendered.should include_text('crm.flip_form("edit_contact"')
+    rendered.should match('crm.flip_form("edit_contact"')
   end
 
   it "edit: should hide previously open [Edit Contact] for and replace it with contact partial" do
@@ -43,15 +43,15 @@ describe "/contacts/edit.js.rjs" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include_text(%Q/crm.flick("contact_#{previous}", "remove");/)
+    rendered.should match(%Q/crm.flick("contact_#{previous}", "remove");/)
   end
   
   it "edit from contacts index page: should turn off highlight, hide [Create Contact] form, and replace current contact with [Edit Contact] form" do
     params[:cancel] = nil
     
     render
-    rendered.should include_text(%Q/crm.highlight_off("contact_#{@contact.id}");/)
-    rendered.should include_text('crm.hide_form("create_contact")')
+    rendered.should match(%Q/crm.highlight_off("contact_#{@contact.id}");/)
+    rendered.should match('crm.hide_form("create_contact")')
     rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
       with_tag("form[class=edit_contact]")
     end
@@ -64,13 +64,13 @@ describe "/contacts/edit.js.rjs" do
     rendered.should have_rjs("edit_contact") do |rjs|
       with_tag("form[class=edit_contact]")
     end
-    rendered.should include_text('crm.flip_form("edit_contact"')
+    rendered.should match('crm.flip_form("edit_contact"')
   end
   
   it "should show handle new or existing account for the contact" do
 
     render
-    rendered.should include_text("crm.create_or_select_account")
+    rendered.should match("crm.create_or_select_account")
   end
 
 end
