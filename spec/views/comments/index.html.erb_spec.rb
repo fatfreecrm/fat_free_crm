@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/comments/index.html.erb" do
+describe "/comments/index.html.haml" do
   include CommentsHelper
 
   before(:each) do

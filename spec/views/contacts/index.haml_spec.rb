@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/index.html.erb" do
+describe "/contacts/index.html.haml" do
   include ContactsHelper
   
   before(:each) do
