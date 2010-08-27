@@ -1,3 +1,5 @@
+WARNING: it's not the same syntax because I merge the old "responds_to_parent" method with the "render(:update)" rails method.
+
 RespondsToParent
 ================
 
@@ -17,8 +19,8 @@ Controller:
     def form_action
       # Do stuff with params[:uploaded_file]
         
-      responds_to_parent do
-        render :update do |page|
+	  # NEW SYNTAX !!!
+      responds_to_parent do |page|
           page << "alert($('stuff').innerHTML)"
         end
       end
@@ -39,4 +41,3 @@ main.rhtml:
       <iframe id='frame' name="frame"></iframe>
     </body>
   </html>
-  

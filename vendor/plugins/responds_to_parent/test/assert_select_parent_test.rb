@@ -1,8 +1,9 @@
+ENV["RAILS_ENV"] = "test"
 require File.dirname(__FILE__) + '/../../../../config/environment'
 require 'test/unit'
 require 'test_help'
 
-class AssertSelectParentTest < Test::Unit::TestCase
+class AssertSelectParentTest < ActionController::TestCase
   class AssertSelectParentController < ActionController::Base
     def response_with=(content)
       @content = content
@@ -108,7 +109,7 @@ require File.dirname(__FILE__) + '/../../../../config/environment'
 require 'test/unit'
 require 'test_help'
 
-class AssertSelectParentTest < Test::Unit::TestCase
+class AssertSelectParentTest <  ActionController::TestCase
   class AssertSelectParentController < ActionController::Base
     def response_with=(content)
       @content = content
@@ -214,7 +215,7 @@ require File.dirname(__FILE__) + '/../../../../config/environment'
 require 'test/unit'
 require 'test_help'
 
-class AssertSelectParentTest < Test::Unit::TestCase
+class AssertSelectParentTest <  ActionController::TestCase
   class AssertSelectParentController < ActionController::Base
     def response_with=(content)
       @content = content

@@ -1,3 +1,4 @@
+ENV["RAILS_ENV"] = "test"
 require File.dirname(__FILE__) + '/../../../../config/environment'
 require 'test/unit'
 require 'test_help'
@@ -58,7 +59,7 @@ class IFrameController < ActionController::Base
   end
 end
 
-class RespondsToParentTest < Test::Unit::TestCase
+class RespondsToParentTest < ActionController::TestCase
   def setup
     @controller = IFrameController.new
     @request    = ActionController::TestRequest.new
