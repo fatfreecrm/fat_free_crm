@@ -15,7 +15,7 @@ describe "/home/index.html.haml" do
 
   it "should render a message if there're no activities" do
     assign(:activities, [])
-    view.should_not_receive(:render).with(hash_including(:partial => "activity"))
+    view.should_not render_template(:partial => "_activity")
 
     render
     rendered.body.should include("No activity records found.")

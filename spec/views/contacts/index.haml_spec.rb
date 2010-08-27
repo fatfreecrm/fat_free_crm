@@ -10,15 +10,15 @@ describe "/contacts/index.html.erb" do
   it "should render a list of contacts if it's not empty" do
     assign(:contacts, [ Factory(:contact) ].paginate)
     view.should render_template(:partial => "_contact")
-    view.should_receive(:render).with(:partial => "common/paginate")
+    view.should render_template(:partial => "common/_paginate")
     render
   end
 
   it "should render a message if there're no contacts" do
     assign(:contacts, [].paginate)
-    view.should_not_receive(:render).with(hash_including(:partial => "contact"))
-    view.should_receive(:render).with(:partial => "common/empty")
-    view.should_receive(:render).with(:partial => "common/paginate")
+    view.should_not render_template(:partial => "_contact")
+    view.should render_template(:partial => "common/_empty")
+    view.should render_template(:partial => "common/_paginate")
     render
   end
 

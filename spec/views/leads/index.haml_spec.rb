@@ -10,15 +10,15 @@ describe "/leads/index.html.haml" do
   it "should render list of accounts if list of leads is not empty" do
     assign(:leads, [ Factory(:lead) ].paginate(:page => 1, :per_page => 20))
     view.should render_template(:partial => "_lead")
-    view.should_receive(:render).with(:partial => "common/paginate")
+    view.should render_template(:partial => "common/_paginate")
     render
   end
 
   it "should render a message if there're no leads" do
     assign(:leads, [].paginate(:page => 1, :per_page => 20))
-    view.should_not_receive(:render).with(hash_including(:partial => "leads"))
-    view.should_receive(:render).with(:partial => "common/empty")
-    view.should_receive(:render).with(:partial => "common/paginate")
+    view.should_not render_template(:partial => "_leads")
+    view.should render_template(:partial => "common/_empty")
+    view.should render_template(:partial => "common/_paginate")
     render
   end
 

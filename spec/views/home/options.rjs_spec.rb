@@ -29,7 +29,7 @@ describe "/home/options.rjs" do
 
   it "should load :options partial with JavaScript code for menus" do
     params[:cancel] = nil
-    view.should_receive(:render).with(:partial => "options")
+    view.should render_template(:partial => "_options")
   
     render
   end

@@ -37,10 +37,10 @@ describe "/contacts/options.js.rjs" do
 
     it "should call JavaScript functions to load preferences menus" do
       params[:cancel] = nil
-      view.should_receive(:render).with(:partial => "common/sort_by")
-      view.should_receive(:render).with(:partial => "common/per_page")
-      view.should_receive(:render).with(:partial => "common/outline")
-      view.should_receive(:render).with(:partial => "common/naming")
+      view.should render_template(:partial => "common/_sort_by")
+      view.should render_template(:partial => "common/_per_page")
+      view.should render_template(:partial => "common/_outline")
+      view.should render_template(:partial => "common/_naming")
 
       render
     end

@@ -17,11 +17,11 @@ describe "/tasks/index.html.haml" do
       assign(:view, status)
       assign(:tasks, { :due_asap => [ @asap ], :due_today => [ @today ] })
 
-      number_of_buckets = (status == "completed" ? Setting.task_completed : Setting.task_bucket).size
-      view.should_receive(:render).with(hash_including(:partial => status)).exactly(number_of_buckets).times
-      view.should_not_receive(:render).with(:partial => "empty")
-
       render
+
+      number_of_buckets = (status == "completed" ? Setting.task_completed : Setting.task_bucket).size
+      view.should render_template(:partial => "_" << status).exactly(number_of_buckets).times
+      view.should_not render_template(:partial => "_empty")
     end
   end
 
@@ -30,9 +30,9 @@ describe "/tasks/index.html.haml" do
       assign(:view, status)
       assign(:tasks, { :due_asap => [], :due_today => [] })
 
-      view.should_receive(:render).with(:partial => "empty")
-
       render
+
+      view.should render_template(:partial => "_empty")
     end
   end
 

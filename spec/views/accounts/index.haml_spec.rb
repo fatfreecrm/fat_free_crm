@@ -16,15 +16,15 @@ describe "/accounts/index.html.haml" do
   it "should render list of accounts if list of accounts is not empty" do
     assign(:accounts, [ Factory(:account), Factory(:account) ].paginate)
     view.should render_template(:partial => "_account")
-    view.should_receive(:render).with(:partial => "common/paginate")
+    view.should render_template(:partial => "common/_paginate")
     render
   end
 
   it "should render a message if there're no accounts" do
     assign(:accounts, [].paginate)
-    view.should_not_receive(:render).with(hash_including(:partial => "account"))
-    view.should_receive(:render).with(:partial => "common/empty")
-    view.should_receive(:render).with(:partial => "common/paginate")
+    view.should_not render_template(:partial => "_account")
+    view.should render_template(:partial => "common/_empty")
+    view.should render_template(:partial => "common/_paginate")
     render
   end
 end

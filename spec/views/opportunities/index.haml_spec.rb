@@ -11,15 +11,15 @@ describe "/opportunities/index.html.erb" do
   it "should render list of accounts if list of opportunities is not empty" do
     assign(:opportunities, [ Factory(:opportunity) ].paginate)
     view.should render_template(:partial => "_opportunity")
-    view.should_receive(:render).with(:partial => "common/paginate")
+    view.should render_template(:partial => "common/_paginate")
     render
   end
 
   it "should render a message if there're no opportunities" do
     assign(:opportunities, [].paginate)
-    view.should_not_receive(:render).with(hash_including(:partial => "opportunities"))
-    view.should_receive(:render).with(:partial => "common/empty")
-    view.should_receive(:render).with(:partial => "common/paginate")
+    view.should_not render_template(:partial => "_opportunities")
+    view.should render_template(:partial => "common/_empty")
+    view.should render_template(:partial => "common/_paginate")
     render
   end
 
