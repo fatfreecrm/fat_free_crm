@@ -23,6 +23,8 @@ sed -i s,git@github.com:,http://github.com/,g .gitmodules
 cat .gitmodules
 echo "submodule init"
 git submodule init
+echo "submodule sync"
+git submodule sync
 echo "submodule update"
 git submodule update
 
