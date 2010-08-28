@@ -16,24 +16,13 @@ test:
 EOF
 
 # Pull submodules from github read-only url. Prevents needing to authenticate this machine.
+sed -i s,git@github.com:,http://github.com/,g .git/config
+git submodule update
 
-ls -l vendor/plugins
-cat "ls crm_super_tags"
-ls -l vendor/plugins/crm_super_tags
-cat .gitmodules
-sed -i s,git@github.com:,http://github.com/,g .gitmodules
-cat .gitmodules
-echo "submodule sync"
-git submodule sync
-echo "submodule update"
-git submodule update --init
-cat "ls crm_super_tags"
-ls -l vendor/plugins/crm_super_tags
-
-#RAILS_ENV=test rake gems:install
-#RAILS_ENV=test rake db:create
-#RAILS_ENV=test rake db:migrate
-#RAILS_ENV=test rake db:migrate:plugins
-#./script/spec --require `ruby -r 'rubygems' -e 'puts Gem.path.last'`/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec spec/
-## run submodule tests
-#RAILS_ENV=test rake db:drop
+RAILS_ENV=test rake gems:install
+RAILS_ENV=test rake db:create
+RAILS_ENV=test rake db:migrate
+RAILS_ENV=test rake db:migrate:plugins
+./script/spec --require `ruby -r 'rubygems' -e 'puts Gem.path.last'`/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec spec/
+# run submodule tests
+RAILS_ENV=test rake db:drop
