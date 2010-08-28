@@ -86,7 +86,7 @@ class Task < ActiveRecord::Base
 
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   acts_as_commentable
-  acts_as_paranoid
+  is_paranoid
 
   validates_presence_of :user
   validates_presence_of :name, :message => :missing_task_name
@@ -197,7 +197,7 @@ class Task < ActiveRecord::Base
     when "due_later"
       Time.zone.now.midnight + 100.years
     when "specific_time"
-      self.calendar ? Time.parse(self.calendar).utc : nil
+      self.calendar ? parse_calendar_date : nil
     else # due_later or due_asap
       nil
     end
@@ -212,9 +212,13 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def specific_time
-    Time.parse(self.calendar).utc if self.bucket == "specific_time"
+    parse_calendar_date if self.bucket == "specific_time"
   rescue
     errors.add(:calendar, :invalid_date)
   end
 
+  #----------------------------------------------------------------------------
+  def parse_calendar_date
+    Time.strptime(self.calendar, I18n.t('date.formats.mmddyyyy')).utc
+  end
 end

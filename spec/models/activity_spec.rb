@@ -107,7 +107,7 @@ describe Activity do
       describe "on a record marked as deleted" do
         it "should still be able to update" do
           @subject.destroy
-          deleted = subject.classify.constantize.find_with_deleted(@subject)
+          deleted = subject.classify.constantize.find_with_destroyed(@subject)
 
           if deleted.respond_to?(:full_name)
             deleted.update_attributes(:first_name => "Billy", :last_name => "Bones DELETED")
@@ -126,7 +126,7 @@ describe Activity do
           @subject.destroy!
           @activities = Activity.all(:conditions => [ "user_id=? AND subject_id=? AND subject_type=?", @current_user.id, @subject.id, subject.capitalize ])
 
-          lambda { subject.classify.constantize.find_with_deleted(@subject) }.should raise_error(ActiveRecord::RecordNotFound)
+          lambda { subject.classify.constantize.find_with_destroyed(@subject) }.should raise_error(ActiveRecord::RecordNotFound)
           @activities.should == []
         end
       end

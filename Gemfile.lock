@@ -11,6 +11,32 @@ GIT
   specs:
     simple_column_search (1.0.1)
 
+GIT
+  remote: git://github.com/odorcicd/authlogic.git
+  revision: a087ad0
+  branch: rails3
+  specs:
+    authlogic (2.1.3)
+      activesupport
+
+GIT
+  remote: git://github.com/thhermansen/is_paranoid.git
+  revision: 99b2c64
+  branch: rails3
+  specs:
+    is_paranoid (0.0.2)
+      acts-as-taggable-on (>= 2.0.6)
+      acts_as_commentable (>= 3.0.0)
+      authlogic
+      gravatar-ultimate
+      haml (>= 3.0.17)
+      is_paranoid
+      mysql (>= 2.8.1)
+      paperclip (>= 2.3.3)
+      rails (>= 3.0.0.rc2)
+      simple_column_search
+      will_paginate (>= 3.0.pre2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -47,8 +73,6 @@ GEM
     archive-tar-minitar (0.5.2)
     arel (1.0.0.rc1)
       activesupport (>= 3.0.0.beta)
-    authlogic (2.1.6)
-      activesupport
     autotest-rails (4.1.0)
       ZenTest
     builder (2.1.2)
@@ -168,7 +192,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (>= 2.0.6)
   acts_as_commentable (>= 3.0.0)
-  authlogic (>= 2.1.6)
+  authlogic!
   autotest-rails
   capybara
   cucumber-rails
@@ -177,6 +201,7 @@ DEPENDENCIES
   ffaker
   gravatar-ultimate!
   haml (>= 3.0.17)
+  is_paranoid!
   mysql (>= 2.8.1)
   paperclip (>= 2.3.3)
   rails (>= 3.0.0.rc2)

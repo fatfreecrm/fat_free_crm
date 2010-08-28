@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
 
   simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
 
-  acts_as_paranoid
+  is_paranoid
   acts_as_authentic do |c|
     c.session_class = Authentication
     c.validates_uniqueness_of_login_field_options = { :message => :username_taken }
@@ -133,7 +133,7 @@ class User < ActiveRecord::Base
   # Prevent current user from deleting herself.
   #----------------------------------------------------------------------------
   def check_if_current_user
-    User.current_user && User.current_user != self
+    User.current_user.nil? || User.current_user != self
   end
 
   # Prevent deleting a user unless she has no artifacts left.

@@ -59,14 +59,14 @@ describe User do
         Factory(asset, :user => @user)
         @user.destroy
         lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
-        @user.deleted?.should == false
+        @user.destroyed?.should == false
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
         Factory(asset, :assignee => @user)
         @user.destroy
         lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
-        @user.deleted?.should == false
+        @user.destroyed?.should == false
       end
     end
 
@@ -76,20 +76,20 @@ describe User do
       Factory(:comment, :user => @user, :commentable => account)
       @user.destroy
       lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
-      @user.deleted?.should == false
+      @user.destroyed?.should == false
     end
 
     it "should not destroy the current user" do
       login
       @current_user.destroy
       lambda { @current_user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
-      @current_user.deleted?.should == false
+      @current_user.destroyed?.should == false
     end
 
     it "should destroy the user" do
       @user.destroy
       lambda { @user.reload }.should raise_error(ActiveRecord::RecordNotFound)
-      @user.deleted?.should == true
+      @user.destroyed?.should == true
     end
 
     it "once the user gets deleted all her activity records must be deleted too" do
