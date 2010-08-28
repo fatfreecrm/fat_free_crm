@@ -18,15 +18,14 @@ EOF
 # Pull submodules from github read-only url. Prevents needing to authenticate this machine.
 
 ls -l vendor/plugins
+ls -l vendor/plugins/crm_super_tags
 cat .gitmodules
 sed -i s,git@github.com:,http://github.com/,g .gitmodules
 cat .gitmodules
-echo "submodule init"
-git submodule init
 echo "submodule sync"
-git submodule sync
+git submodule sync 2&>1;
 echo "submodule update"
-git submodule update
+git submodule update --init 2&>1;
 
 RAILS_ENV=test rake gems:install
 RAILS_ENV=test rake db:create
