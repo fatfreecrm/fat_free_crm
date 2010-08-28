@@ -27,7 +27,7 @@ describe "/leads/convert.js.rjs" do
     params[:cancel] = "true"
 
     render
-    rendered.should match('crm.flip_form("convert_lead"')
+    rendered.should include('crm.flip_form("convert_lead"')
   end
   
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
@@ -45,15 +45,15 @@ describe "/leads/convert.js.rjs" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should match(%Q/crm.flick("lead_#{previous}", "remove");/)
+    rendered.should include(%Q/crm.flick("lead_#{previous}", "remove");/)
   end
   
   it "convert from leads index page: should turn off highlight, hide [Create Lead] form, and replace current lead with [Convert Lead] form" do
     params[:cancel] = nil
     
     render
-    rendered.should match(%Q/crm.highlight_off("lead_#{@lead.id}");/)
-    rendered.should match('crm.hide_form("create_lead")')
+    rendered.should include(%Q/crm.highlight_off("lead_#{@lead.id}");/)
+    rendered.should include('crm.hide_form("create_lead")')
     rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
       with_tag("form[class=edit_lead]")
     end
@@ -66,17 +66,17 @@ describe "/leads/convert.js.rjs" do
     rendered.should have_rjs("convert_lead") do |rjs|
       with_tag("form[class=edit_lead]")
     end
-    rendered.should match('crm.hide_form("edit_lead"')
-    rendered.should match('crm.flip_form("convert_lead"')
+    rendered.should include('crm.hide_form("edit_lead"')
+    rendered.should include('crm.flip_form("convert_lead"')
   end
 
   it "convert: should handle new or existing account and set up calendar field" do
     params[:cancel] = "false"
 
     render
-    rendered.should match("crm.create_or_select_account")
-    rendered.should match('crm.date_select_popup("opportunity_closes_on")')
-    rendered.should match('$("account_name").focus()')
+    rendered.should include("crm.create_or_select_account")
+    rendered.should include('crm.date_select_popup("opportunity_closes_on")')
+    rendered.should include('$("account_name").focus()')
   end
 
 end

@@ -12,14 +12,14 @@ describe "/campaigns/new.js.rjs" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should match('crm.flick("empty", "toggle")')
+    rendered.should include('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Campaigns index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns"
     render
 
-    rendered.should match('crm.hide_form("options")')
+    rendered.should include('crm.hide_form("options")')
   end
 
   describe "new campaign" do
@@ -36,9 +36,9 @@ describe "/campaigns/new.js.rjs" do
       params[:cancel] = nil
       render
 
-      rendered.should match('crm.flip_form("create_campaign")')
-      rendered.should match('crm.date_select_popup("campaign_starts_on")')
-      rendered.should match('crm.date_select_popup("campaign_ends_on")')
+      rendered.should include('crm.flip_form("create_campaign")')
+      rendered.should include('crm.date_select_popup("campaign_starts_on")')
+      rendered.should include('crm.date_select_popup("campaign_ends_on")')
     end
   end
   
@@ -48,7 +48,7 @@ describe "/campaigns/new.js.rjs" do
       render
 
       rendered.should_not have_rjs("create_campaign")
-      rendered.should match('crm.flip_form("create_campaign")')
+      rendered.should include('crm.flip_form("create_campaign")')
     end
   end
 

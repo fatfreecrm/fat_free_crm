@@ -16,14 +16,14 @@ describe "/opportunities/new.js.rjs" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should match('crm.flick("empty", "toggle")')
+    rendered.should include('crm.flick("empty", "toggle")')
   end
 
   it "should hide options form when called from Opportunities index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
-    rendered.should match('crm.hide_form("options")')
+    rendered.should include('crm.hide_form("options")')
   end
 
   describe "new opportunity" do
@@ -40,8 +40,8 @@ describe "/opportunities/new.js.rjs" do
       params[:cancel] = nil
       render
 
-      rendered.should match('crm.flip_form("create_opportunity")')
-      rendered.should match('crm.date_select_popup("opportunity_closes_on")')
+      rendered.should include('crm.flip_form("create_opportunity")')
+      rendered.should include('crm.date_select_popup("opportunity_closes_on")')
     end
   end
   
@@ -51,7 +51,7 @@ describe "/opportunities/new.js.rjs" do
       render
 
       rendered.should_not have_rjs("create_opportunity")
-      rendered.should match('crm.flip_form("create_opportunity")')
+      rendered.should include('crm.flip_form("create_opportunity")')
     end
   end
 

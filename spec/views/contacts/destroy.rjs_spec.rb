@@ -11,7 +11,7 @@ describe "/contacts/destroy.js.rjs" do
 
   it "should blind up destroyed contact partial" do
     render
-    rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("blind_up"/)
+    rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("blind_up"/)
   end
 
   it "should update contacts sidebar when called from contacts index" do

@@ -20,7 +20,7 @@ describe "/accounts/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=account_#{@account.id}]")
       end
-      rendered.should match(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
+      rendered.should include(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
     end
 
     it "should update pagination" do
@@ -44,7 +44,7 @@ describe "/accounts/create.js.rjs" do
       rendered.should have_rjs("create_account") do |rjs|
         with_tag("form[class=new_account]")
       end
-      rendered.should match('$("create_account").visualEffect("shake"')
+      rendered.should include('$("create_account").visualEffect("shake"')
     end
   end
 

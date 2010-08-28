@@ -21,7 +21,7 @@ describe "/opportunities/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=opportunity_#{@opportunity.id}]")
       end
-      rendered.should match(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
+      rendered.should include(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
     end
 
     it "should update sidebar filters and recently viewed items when called from opportunities page" do
@@ -75,9 +75,9 @@ describe "/opportunities/create.js.rjs" do
       rendered.should have_rjs("create_opportunity") do |rjs|
         with_tag("form[class=new_opportunity]")
       end
-      rendered.should match('$("create_opportunity").visualEffect("shake"')
-      rendered.should match("crm.create_or_select_account")
-      rendered.should match("crm.date_select_popup")
+      rendered.should include('$("create_opportunity").visualEffect("shake"')
+      rendered.should include("crm.create_or_select_account")
+      rendered.should include("crm.date_select_popup")
     end
   end
 

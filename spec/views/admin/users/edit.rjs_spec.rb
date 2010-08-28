@@ -30,14 +30,14 @@ describe "admin/users/edit.js.rjs" do
     assign(:previous, previous = 41)
     render
 
-    rendered.should match(%Q/crm.flick("user_#{previous}", "remove");/)
+    rendered.should include(%Q/crm.flick("user_#{previous}", "remove");/)
   end
 
   it "edit turns off highlight, hides [Create User] form, and replaces current user with [Edit User] form" do
     render
 
-    rendered.should match(%Q/crm.highlight_off("user_#{@user.id}");/)
-    rendered.should match('crm.hide_form("create_user")')
+    rendered.should include(%Q/crm.highlight_off("user_#{@user.id}");/)
+    rendered.should include('crm.hide_form("create_user")')
     rendered.should have_rjs("user_#{@user.id}") do |rjs|
       with_tag("form[class=edit_user]")
     end

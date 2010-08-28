@@ -25,7 +25,7 @@ describe "/contacts/_create.html.haml" do
   it "should pick default assignee (Myself)" do
     render
     rendered.should have_tag("select[id=contact_assigned_to]") do |options|
-      options.to_s.should_not match(%Q/selected="selected"/)
+      options.to_s.should_not include(%Q/selected="selected"/)
     end
   end
 

@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/leads/promote.js.rjs" do
   include LeadsHelper
 
@@ -27,7 +27,7 @@ describe "/leads/promote.js.rjs" do
       it "should flip [Convert Lead] form" do
         render
         rendered.should_not have_rjs("lead_#{@lead.id}")
-        rendered.should match('crm.flip_form("convert_lead"')
+        rendered.should include('crm.flip_form("convert_lead"')
       end
 
       it "should update sidebar" do
@@ -36,7 +36,7 @@ describe "/leads/promote.js.rjs" do
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        rendered.should match('$("summary").visualEffect("shake"')
+        rendered.should include('$("summary").visualEffect("shake"')
       end
     end
 
@@ -50,7 +50,7 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
-        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -59,7 +59,7 @@ describe "/leads/promote.js.rjs" do
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        rendered.should match('$("filters").visualEffect("shake"')
+        rendered.should include('$("filters").visualEffect("shake"')
       end
     end
 
@@ -76,13 +76,13 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
-        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
       it "should update campaign sidebar" do
         render
 
-        rendered.should have_rjs("sidebar") do |rjs|
+        assert_select_rjs("sidebar") do |rjs|
           with_tag("div[class=panel][id=summary]")
           with_tag("div[class=panel][id=recently]")
         end
@@ -98,7 +98,7 @@ describe "/leads/promote.js.rjs" do
 
     end
   end # no errors
-  
+
   describe "validation errors:" do
     before(:each) do
       assign(:lead, @lead = Factory(:lead, :status => "new", :user => @current_user, :assignee => @current_user))
@@ -114,7 +114,7 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("convert_lead") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should match(%Q/$("convert_lead").visualEffect("shake"/)
+        rendered.should include(%Q/$("convert_lead").visualEffect("shake"/)
       end
     end
 
@@ -128,7 +128,7 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
       end
     end
 
@@ -142,15 +142,15 @@ describe "/leads/promote.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
       end
     end
 
     it "should handle new or existing account and set up calendar field" do
       render
-      rendered.should match("crm.create_or_select_account")
-      rendered.should match('crm.date_select_popup("opportunity_closes_on")')
-      rendered.should match('$("account_name").focus()')
+      rendered.should include("crm.create_or_select_account")
+      rendered.should include('crm.date_select_popup("opportunity_closes_on")')
+      rendered.should include('$("account_name").focus()')
     end
   end # errors
 end

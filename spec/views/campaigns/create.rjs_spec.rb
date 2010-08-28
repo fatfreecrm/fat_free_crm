@@ -19,7 +19,7 @@ describe "/campaigns/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=campaign_#{@campaign.id}]")
       end
-      rendered.should match(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
+      rendered.should include(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
     end
 
     it "should update pagination" do
@@ -44,9 +44,9 @@ describe "/campaigns/create.js.rjs" do
       rendered.should have_rjs("create_campaign") do |rjs|
         with_tag("form[class=new_campaign]")
       end
-      rendered.should match('$("create_campaign").visualEffect("shake"')
-      rendered.should match('crm.date_select_popup("campaign_starts_on")')
-      rendered.should match('crm.date_select_popup("campaign_ends_on")')
+      rendered.should include('$("create_campaign").visualEffect("shake"')
+      rendered.should include('crm.date_select_popup("campaign_starts_on")')
+      rendered.should include('crm.date_select_popup("campaign_ends_on")')
     end
   end
 

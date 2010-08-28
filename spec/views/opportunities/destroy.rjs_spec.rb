@@ -12,7 +12,7 @@ describe "/opportunities/destroy.js.rjs" do
 
   it "should blind up destroyed opportunity partial" do
     render
-    rendered.should match(%Q/$("opportunity_#{@opportunity.id}").visualEffect("blind_up"/)
+    rendered.should include(%Q/$("opportunity_#{@opportunity.id}").visualEffect("blind_up"/)
   end
 
   it "should update opportunities sidebar when called from opportunities index" do
@@ -23,7 +23,7 @@ describe "/opportunities/destroy.js.rjs" do
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
     end
-    rendered.should match('$("filters").visualEffect("shake"')
+    rendered.should include('$("filters").visualEffect("shake"')
   end
 
   it "should update pagination when called from opportunities index" do

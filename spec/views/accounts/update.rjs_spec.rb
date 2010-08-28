@@ -19,7 +19,7 @@ describe "/accounts/update.js.rjs" do
       it "should flip [edit_account] form" do
         render
         rendered.should_not have_rjs("account_#{@account.id}")
-        rendered.should match('crm.flip_form("edit_account"')
+        rendered.should include('crm.flip_form("edit_account"')
       end
 
       it "should update sidebar" do
@@ -28,7 +28,7 @@ describe "/accounts/update.js.rjs" do
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        rendered.should match('$("summary").visualEffect("shake"')
+        rendered.should include('$("summary").visualEffect("shake"')
       end
     end
 
@@ -52,7 +52,7 @@ describe "/accounts/update.js.rjs" do
         rendered.should have_rjs("account_#{@account.id}") do |rjs|
           with_tag("li[id=account_#{@account.id}]")
         end
-        rendered.should match(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
       end
     end
   end # no errors
@@ -73,8 +73,8 @@ describe "/accounts/update.js.rjs" do
         rendered.should have_rjs("edit_account") do |rjs|
           with_tag("form[class=edit_account]")
         end
-        rendered.should match('$("edit_account").visualEffect("shake"')
-        rendered.should match('focus()')
+        rendered.should include('$("edit_account").visualEffect("shake"')
+        rendered.should include('focus()')
       end
     end
 
@@ -89,8 +89,8 @@ describe "/accounts/update.js.rjs" do
         rendered.should have_rjs("account_#{@account.id}") do |rjs|
           with_tag("form[class=edit_account]")
         end
-        rendered.should match(%Q/$("account_#{@account.id}").visualEffect("shake"/)
-        rendered.should match('focus()')
+        rendered.should include(%Q/$("account_#{@account.id}").visualEffect("shake"/)
+        rendered.should include('focus()')
       end
     end
   end # errors

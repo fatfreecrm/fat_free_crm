@@ -20,7 +20,7 @@ describe "/campaigns/update.js.rjs" do
       it "should flip [edit_campaign] form" do
         render
         rendered.should_not have_rjs("campaign_#{@campaign.id}")
-        rendered.should match('crm.flip_form("edit_campaign"')
+        rendered.should include('crm.flip_form("edit_campaign"')
       end
 
       it "should update sidebar" do
@@ -29,7 +29,7 @@ describe "/campaigns/update.js.rjs" do
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        rendered.should match('$("summary").visualEffect("shake"')
+        rendered.should include('$("summary").visualEffect("shake"')
       end
     end
 
@@ -43,7 +43,7 @@ describe "/campaigns/update.js.rjs" do
         rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("li[id=campaign_#{@campaign.id}]")
         end
-        rendered.should match(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
       end
     end
   end # no errors
@@ -60,10 +60,10 @@ describe "/campaigns/update.js.rjs" do
         rendered.should have_rjs("edit_campaign") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
-        rendered.should match('crm.date_select_popup("campaign_starts_on")')
-        rendered.should match('crm.date_select_popup("campaign_ends_on")')
-        rendered.should match('$("edit_campaign").visualEffect("shake"')
-        rendered.should match('focus()')
+        rendered.should include('crm.date_select_popup("campaign_starts_on")')
+        rendered.should include('crm.date_select_popup("campaign_ends_on")')
+        rendered.should include('$("edit_campaign").visualEffect("shake"')
+        rendered.should include('focus()')
       end
     end
 
@@ -78,10 +78,10 @@ describe "/campaigns/update.js.rjs" do
         rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
-        rendered.should match('crm.date_select_popup("campaign_starts_on")')
-        rendered.should match('crm.date_select_popup("campaign_ends_on")')
-        rendered.should match(%Q/$("campaign_#{@campaign.id}").visualEffect("shake"/)
-        rendered.should match('focus()')
+        rendered.should include('crm.date_select_popup("campaign_starts_on")')
+        rendered.should include('crm.date_select_popup("campaign_ends_on")')
+        rendered.should include(%Q/$("campaign_#{@campaign.id}").visualEffect("shake"/)
+        rendered.should include('focus()')
       end
     end
   end # errors

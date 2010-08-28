@@ -21,7 +21,7 @@ describe "/leads/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=lead_#{@lead.id}]")
       end
-      rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+      rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
     end
 
     it "should update sidebar when called from leads index" do
@@ -32,7 +32,7 @@ describe "/leads/create.js.rjs" do
         with_tag("div[id=filters]")
         with_tag("div[id=recently]")
       end
-      rendered.should match('$("filters").visualEffect("shake"')
+      rendered.should include('$("filters").visualEffect("shake"')
     end
 
     it "should update pagination when called from leads index" do
@@ -64,7 +64,7 @@ describe "/leads/create.js.rjs" do
       rendered.should have_rjs("create_lead") do |rjs|
         with_tag("form[class=new_lead]")
       end
-      rendered.should match('$("create_lead").visualEffect("shake"')
+      rendered.should include('$("create_lead").visualEffect("shake"')
 
     end
   end

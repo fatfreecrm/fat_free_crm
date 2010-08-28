@@ -21,7 +21,7 @@ describe "/contacts/update.js.rjs" do
       it "should flip [edit_contact] form" do
         render
         rendered.should_not have_rjs("contact_#{@contact.id}")
-        rendered.should match('crm.flip_form("edit_contact"')
+        rendered.should include('crm.flip_form("edit_contact"')
       end
 
       it "should update sidebar" do
@@ -30,7 +30,7 @@ describe "/contacts/update.js.rjs" do
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        rendered.should match('$("summary").visualEffect("shake"')
+        rendered.should include('$("summary").visualEffect("shake"')
       end
     end
 
@@ -46,7 +46,7 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("li[id=contact_#{@contact.id}]")
         end
-        rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -69,7 +69,7 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("li[id=contact_#{@contact.id}]")
         end
-        rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
       end
 
       it "should update recently viewed items" do
@@ -96,9 +96,9 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("edit_contact") do |rjs|
           with_tag("form[class=edit_contact]")
         end
-        rendered.should match('crm.create_or_select_account(false)')
-        rendered.should match('$("edit_contact").visualEffect("shake"')
-        rendered.should match('focus()')
+        rendered.should include('crm.create_or_select_account(false)')
+        rendered.should include('$("edit_contact").visualEffect("shake"')
+        rendered.should include('focus()')
       end
     end
 
@@ -112,9 +112,9 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("form[class=edit_contact]")
         end
-        rendered.should match('crm.create_or_select_account(false)')
-        rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
-        rendered.should match('focus()')
+        rendered.should include('crm.create_or_select_account(false)')
+        rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
+        rendered.should include('focus()')
       end
     end
 
@@ -125,7 +125,7 @@ describe "/contacts/update.js.rjs" do
 
       it "errors: should show disabled accounts dropdown" do
         render
-        rendered.should match("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
+        rendered.should include("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
       end
 
       it "should redraw the [edit_contact] form and shake it" do
@@ -133,8 +133,8 @@ describe "/contacts/update.js.rjs" do
         rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
           with_tag("form[class=edit_contact]")
         end
-        rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
-        rendered.should match('focus()')
+        rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
+        rendered.should include('focus()')
       end
     end
   end # errors

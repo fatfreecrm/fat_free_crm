@@ -15,7 +15,7 @@ describe "admin/users/update.js.rjs" do
       rendered.should have_rjs("user_#{@user.id}") do |rjs|
         with_tag("li[id=user_#{@user.id}]")
       end
-      rendered.should match(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
+      rendered.should include(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
     end
   end # no errors
 
@@ -30,8 +30,8 @@ describe "admin/users/update.js.rjs" do
       rendered.should have_rjs("user_#{@user.id}") do |rjs|
         with_tag("form[class=edit_user]")
       end
-      rendered.should match(%Q/$("user_#{@user.id}").visualEffect("shake"/)
-      rendered.should match('$("user_username").focus()')
+      rendered.should include(%Q/$("user_#{@user.id}").visualEffect("shake"/)
+      rendered.should include('$("user_username").focus()')
     end
   end # errors
 end

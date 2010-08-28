@@ -6,6 +6,8 @@ require 'rspec/rails'
 require 'factory_girl'
 require "#{::Rails.root}/spec/factories"
 
+require 'rspec/assert_select'
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
@@ -30,7 +32,7 @@ RSpec.configure do |config|
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  config.include Webrat::HaveTagMatcher
+  config.include RSpec::Rails::Matchers
 
   config.include(SharedControllerSpecs, :type => :controller)
 
@@ -130,5 +132,27 @@ end
 ActionView::TestCase::TestController.class_eval do
   def self.controller_name
     @controller_name ||= controller_path.split("/").last
+  end
+end
+
+RSpec::Rails::ViewExampleGroup::InstanceMethods.class_eval do
+  def render_with_mock_response
+    render_without_mock_response
+    @response = mock(:body => rendered)
+  end
+  alias_method_chain :render, :mock_response
+end
+
+ActionView::Base.class_eval do
+  def called_from_index_page?(controller = controller_name)
+    if controller != "tasks"
+      request.referer =~ %r(/#{controller}$)
+    else
+      request.referer =~ /tasks\?*/
+    end
+  end
+
+  def called_from_landing_page?(controller = controller_name)
+    request.referer =~ %r(/#{controller}/\w+)
   end
 end

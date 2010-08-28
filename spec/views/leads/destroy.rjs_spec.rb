@@ -11,7 +11,7 @@ describe "/leads/destroy.js.rjs" do
 
   it "should blind up destroyed lead partial" do
     render
-    rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("blind_up"/)
+    rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("blind_up"/)
   end
 
   it "should update leads sidebar when called from leads index" do
@@ -22,7 +22,7 @@ describe "/leads/destroy.js.rjs" do
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
     end
-    rendered.should match('$("filters").visualEffect("shake"')
+    rendered.should include('$("filters").visualEffect("shake"')
   end
 
   it "should update pagination when called from leads index" do

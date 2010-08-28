@@ -19,7 +19,7 @@ describe "/contacts/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=contact_#{@contact.id}]")
       end
-      rendered.should match(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+      rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
     end
 
     it "should refresh sidebar when called from contacts index" do
@@ -61,7 +61,7 @@ describe "/contacts/create.js.rjs" do
       rendered.should have_rjs("create_contact") do |rjs|
         with_tag("form[class=new_contact]")
       end
-      rendered.should match('visualEffect("shake"')
+      rendered.should include('visualEffect("shake"')
     end
   end
 

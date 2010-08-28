@@ -12,14 +12,14 @@ describe "/campaigns/destroy.js.rjs" do
   end
 
   it "should blind up destroyed campaign partial" do
-    rendered.should match(%Q/$("campaign_#{@campaign.id}").visualEffect("blind_up"/)
+    rendered.should include(%Q/$("campaign_#{@campaign.id}").visualEffect("blind_up"/)
   end
 
   it "should update Campaigns sidebar" do
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
     end
-    rendered.should match('$("filters").visualEffect("shake"')
+    rendered.should include('$("filters").visualEffect("shake"')
   end
 
   it "should update pagination" do

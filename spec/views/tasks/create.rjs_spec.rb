@@ -21,14 +21,14 @@ describe "/tasks/create.js.rjs" do
         rendered.should have_rjs(:insert, :top) do |rjs|
           with_tag("li[id=task_#{@task.id}]")
         end
-        rendered.should match(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
       end
 
       it "should update tasks title" do
         if status == "assigned"
-          rendered.should match('$("title").update("Assigned Tasks")')
+          rendered.should include('$("title").update("Assigned Tasks")')
         else
-          rendered.should match('$("title").update("Tasks")')
+          rendered.should include('$("title").update("Tasks")')
         end
       end
 
@@ -37,7 +37,7 @@ describe "/tasks/create.js.rjs" do
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        rendered.should match(%Q/$("filters").visualEffect("shake"/)
+        rendered.should include(%Q/$("filters").visualEffect("shake"/)
       end
     end
   end
@@ -48,8 +48,8 @@ describe "/tasks/create.js.rjs" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
-    rendered.should match('$("flash").update(')
-    rendered.should match('crm.flash("notice", true)')
+    rendered.should include('$("flash").update(')
+    rendered.should include('crm.flash("notice", true)')
   end
 
   it "should update recent items when assigning a task from pending tasks view" do
@@ -69,8 +69,8 @@ describe "/tasks/create.js.rjs" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
-    rendered.should match('$("flash").update(')
-    rendered.should match('crm.flash("notice", true)')
+    rendered.should include('$("flash").update(')
+    rendered.should include('crm.flash("notice", true)')
   end
 
   it "should update recent items when creating a pending task from assigned tasks view" do
@@ -94,14 +94,14 @@ describe "/tasks/create.js.rjs" do
       end
 
       it "should update tasks title" do
-        rendered.should match('$("create_task_title").update("Tasks")')
+        rendered.should include('$("create_task_title").update("Tasks")')
       end
 
       it "should insert #{status} partial and highlight it" do
         rendered.should have_rjs(:insert, :top) do |rjs|
           with_tag("li[id=task_#{@task.id}]")
         end
-        rendered.should match(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
       end
 
       it "should update recently viewed items" do
@@ -116,8 +116,8 @@ describe "/tasks/create.js.rjs" do
     assign(:task, Factory.build(:task, :name => nil)) # make it invalid
     render
 
-    rendered.should match('$("create_task").visualEffect("shake"')
-    rendered.should match(%/$("task_submit").enable()/)
+    rendered.should include('$("create_task").visualEffect("shake"')
+    rendered.should include(%/$("task_submit").enable()/)
   end
 
 end

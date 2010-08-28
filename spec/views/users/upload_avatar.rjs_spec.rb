@@ -17,8 +17,8 @@ describe "/users/upload_avatar.js.rjs" do
     it "should flip [Upload Avatar] form" do
       render
       rendered.should_not have_rjs("user_#{@user.id}")
-      rendered.should match('crm.flip_form("upload_avatar"')
-      rendered.should match('crm.set_title("upload_avatar", "My Profile")')
+      rendered.should include('crm.flip_form("upload_avatar"')
+      rendered.should include('crm.set_title("upload_avatar", "My Profile")')
     end
   end # no errors
 
@@ -35,7 +35,7 @@ describe "/users/upload_avatar.js.rjs" do
       rendered.should have_rjs("upload_avatar") do |rjs|
         with_tag("form[class=edit_user]")
       end
-      rendered.should match(%Q/$("upload_avatar").visualEffect("shake"/)
+      rendered.should include(%Q/$("upload_avatar").visualEffect("shake"/)
     end
   end # errors
 end

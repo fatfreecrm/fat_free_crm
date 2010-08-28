@@ -14,13 +14,13 @@ describe "/leads/options.rjs" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should match('crm.flick("empty", "toggle")')
+    rendered.should include('crm.flick("empty", "toggle")')
   end
 
   it "should hide [Create Lead] form if it's visible" do
     render
 
-    rendered.should match('crm.hide_form("create_lead")')
+    rendered.should include('crm.hide_form("create_lead")')
   end
 
   describe "lead options" do
@@ -31,8 +31,8 @@ describe "/leads/options.rjs" do
       rendered.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
       end
-      rendered.should match('crm.flip_form("options")')
-      rendered.should match('crm.set_title("create_lead", "Leads Options")')
+      rendered.should include('crm.flip_form("options")')
+      rendered.should include('crm.set_title("create_lead", "Leads Options")')
     end
 
     it "should call JavaScript functions to load preferences menus" do
@@ -52,8 +52,8 @@ describe "/leads/options.rjs" do
       render
 
       rendered.should_not have_rjs("options")
-      rendered.should match('crm.flip_form("options")')
-      rendered.should match('crm.set_title("create_lead", "Leads")')
+      rendered.should include('crm.flip_form("options")')
+      rendered.should include('crm.set_title("create_lead", "Leads")')
     end
   end
 

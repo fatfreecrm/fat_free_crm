@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/new.html.haml" do
+describe "/tasks/new.js.rjs" do
   include TasksHelper
 
   before(:each) do
@@ -14,18 +14,18 @@ describe "/tasks/new.html.haml" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should match('crm.flick("empty", "toggle")')
+    rendered.should include('crm.flick("empty", "toggle")')
   end
 
   describe "new task" do
     it "create: should render [new.html.haml] template into :create_task div" do
       params[:cancel] = nil
       render
-    
+
       rendered.should have_rjs("create_task") do |rjs|
         with_tag("form[class=new_task]")
       end
-      rendered.should match('crm.flip_form("create_task");')
+      rendered.should include('crm.flip_form("create_task");')
     end
 
     it "should call JavaScript functions to load Calendar popup without time selector" do
@@ -33,7 +33,7 @@ describe "/tasks/new.html.haml" do
       Setting.task_calendar_with_time = false
       render
 
-      rendered.should match('crm.date_select_popup("task_calendar", "task_bucket", false)')
+      rendered.should include('crm.date_select_popup("task_calendar", "task_bucket", false)')
     end
 
     it "should call JavaScript functions to load Calendar popup with time selector" do
@@ -41,7 +41,7 @@ describe "/tasks/new.html.haml" do
       Setting.task_calendar_with_time = true
       render
 
-      rendered.should match('crm.date_select_popup("task_calendar", "task_bucket", true)')
+      rendered.should include('crm.date_select_popup("task_calendar", "task_bucket", true)')
     end
   end
 
@@ -51,7 +51,7 @@ describe "/tasks/new.html.haml" do
       render
 
       rendered.should_not have_rjs("create_task")
-      rendered.should match('crm.flip_form("create_task");')
+      rendered.should include('crm.flip_form("create_task");')
     end
   end
 

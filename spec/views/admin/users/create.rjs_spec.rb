@@ -19,7 +19,7 @@ describe "admin/users/create.js.rjs" do
       rendered.should have_rjs(:insert, :top) do |rjs|
         with_tag("li[id=user_#{@user.id}]")
       end
-      rendered.should match(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
+      rendered.should include(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
     end
 
     # it "should update pagination" do
@@ -36,7 +36,7 @@ describe "admin/users/create.js.rjs" do
       rendered.should have_rjs("create_user") do |rjs|
         with_tag("form[class=new_user]")
       end
-      rendered.should match('$("create_user").visualEffect("shake"')
+      rendered.should include('$("create_user").visualEffect("shake"')
     end
   end
 

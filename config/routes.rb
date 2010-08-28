@@ -35,6 +35,7 @@ FatFreeCrm::Application.routes.draw do
       get :options
       post :redraw
       get :search
+      get :filter
     end
     member do
       put :attach

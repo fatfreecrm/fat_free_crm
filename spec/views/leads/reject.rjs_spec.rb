@@ -15,7 +15,7 @@ describe "/leads/reject.js.rjs" do
     rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
       with_tag("li[id=lead_#{@lead.id}]")
     end
-    rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+    rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
   end
 
   it "should update sidebar filters when called from index page" do
@@ -25,7 +25,7 @@ describe "/leads/reject.js.rjs" do
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=filters]")
     end
-    rendered.should match('$("filters").visualEffect("shake"')
+    rendered.should include('$("filters").visualEffect("shake"')
   end
 
   it "should update sidebar summary when called from landing page" do
@@ -34,7 +34,7 @@ describe "/leads/reject.js.rjs" do
     rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=summary]")
     end
-    rendered.should match('$("summary").visualEffect("shake"')
+    rendered.should include('$("summary").visualEffect("shake"')
   end
 
   it "should update campaign sidebar if called from campaign landing page" do

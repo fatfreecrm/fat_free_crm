@@ -11,7 +11,7 @@ describe "/users/update.js.rjs" do
   describe "no errors:" do
     it "should flip [Edit Profile] form" do
       render
-      rendered.should match('crm.flip_form("edit_profile")')
+      rendered.should include('crm.flip_form("edit_profile")')
     end
 
     it "should update Welcome, user!" do
@@ -35,8 +35,8 @@ describe "/users/update.js.rjs" do
       rendered.should have_rjs("edit_profile") do |rjs|
         with_tag("form[class=edit_user]")
       end
-      rendered.should match('$("edit_profile").visualEffect("shake"')
-      rendered.should match('$("user_email").focus()')
+      rendered.should include('$("edit_profile").visualEffect("shake"')
+      rendered.should include('$("user_email").focus()')
     end
 
     it "should keep welcome or profile information intact" do

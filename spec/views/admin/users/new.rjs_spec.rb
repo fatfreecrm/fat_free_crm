@@ -25,7 +25,7 @@ describe "admin/users/new.js.rjs" do
       render
     
       rendered.should_not have_rjs("create_user")
-      rendered.should match('crm.flip_form("create_user");')
+      rendered.should include('crm.flip_form("create_user");')
     end
   end
 

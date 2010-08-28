@@ -20,7 +20,7 @@ describe "/leads/update.js.rjs" do
       it "should flip [edit_lead] form" do
         render
         rendered.should_not have_rjs("lead_#{@lead.id}")
-        rendered.should match('crm.flip_form("edit_lead"')
+        rendered.should include('crm.flip_form("edit_lead"')
       end
 
       it "should update sidebar" do
@@ -28,7 +28,7 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
         end
-        rendered.should match('$("summary").visualEffect("shake"')
+        rendered.should include('$("summary").visualEffect("shake"')
       end
     end
 
@@ -42,7 +42,7 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
-        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -51,7 +51,7 @@ describe "/leads/update.js.rjs" do
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
-        rendered.should match('$("filters").visualEffect("shake"')
+        rendered.should include('$("filters").visualEffect("shake"')
       end
     end
 
@@ -66,7 +66,7 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
         end
-        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
       end
 
       it "should update campaign sidebar" do
@@ -97,8 +97,8 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("edit_lead") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should match('$("edit_lead").visualEffect("shake"')
-        rendered.should match('focus()')
+        rendered.should include('$("edit_lead").visualEffect("shake"')
+        rendered.should include('focus()')
       end
     end
 
@@ -112,8 +112,8 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
-        rendered.should match('focus()')
+        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should include('focus()')
       end
     end
 
@@ -127,8 +127,8 @@ describe "/leads/update.js.rjs" do
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("form[class=edit_lead]")
         end
-        rendered.should match(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
-        rendered.should match('focus()')
+        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should include('focus()')
       end
     end
   end # errors

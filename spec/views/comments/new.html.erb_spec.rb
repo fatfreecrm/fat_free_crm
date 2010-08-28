@@ -12,8 +12,8 @@ describe "/comments/new.html.haml" do
   it "should render new form" do
     render
 
-    rendered.should match("hide()")
-    rendered.should match("show()")
+    rendered.should include("hide()")
+    rendered.should include("show()")
   end
 end
 
