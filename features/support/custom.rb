@@ -17,3 +17,9 @@ class EventSimulateViewHooks < FatFreeCRM::Callback::Base
 
 end
 
+
+# Cancel any activity logging for Comment model
+Comment.class_eval do
+  def log_activity; end
+end
+
