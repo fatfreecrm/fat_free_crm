@@ -15,9 +15,8 @@ test:
   socket: /var/lib/mysql/mysql.sock
 EOF
 
-# Add github key to known_hosts so we can fetch submodules
-touch ~/.ssh/known_hosts
-if ! (grep "github.com" ~/.ssh/known_hosts); then echo "github.com,207.97.227.239 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" >> ~/.ssh/known_hosts; fi;
+# Pull submodules from github read-only url. Prevents needing to authenticate this machine.
+sed -i s,git@github.com:,http://github.com/,g .gitmodules
 git submodule init
 git submodule update
 
