@@ -16,6 +16,8 @@ test:
 EOF
 
 # Pull submodules from github read-only url. Prevents needing to authenticate this machine.
+
+ls -l vendor/plugins
 cat .gitmodules
 sed -i s,git@github.com:,http://github.com/,g .gitmodules
 cat .gitmodules
