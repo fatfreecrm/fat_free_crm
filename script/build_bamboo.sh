@@ -15,16 +15,14 @@ test:
   socket: /var/lib/mysql/mysql.sock
 EOF
 
-# Cleanup after the previous run.
-ls ./spec/reports/ # stub to tell us if old files are still there REMOVE
-rm -rf ./spec/reports/*
-
-git submodule init
+# Pull submodules from github read-only url. Prevents needing to authenticate this machine.
+sed -i s,git@github.com:,http://github.com/,g .git/config
 git submodule update
+
 RAILS_ENV=test rake gems:install
 RAILS_ENV=test rake db:create
 RAILS_ENV=test rake db:migrate
 RAILS_ENV=test rake db:migrate:plugins
-echo "Running tests..."
 ./script/spec --require `ruby -r 'rubygems' -e 'puts Gem.path.last'`/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec spec/
+# run submodule tests
 RAILS_ENV=test rake db:drop
