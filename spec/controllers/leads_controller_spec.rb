@@ -893,7 +893,45 @@ describe LeadsController do
         end
       end
     end
+  end
 
+  # PUT /leads/1/attach
+  # PUT /leads/1/attach.xml                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:lead)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
+  # PUT /leads/1/attach
+  # PUT /leads/1/attach.xml                                                AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:lead)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
+  # POST /leads/1/discard
+  # POST /leads/1/discard.xml                                              AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST discard" do
+    before(:each) do
+      @attachment = Factory(:task, :assigned_to => @current_user)
+      @model = Factory(:lead)
+      @model.tasks << @attachment
+    end
+
+    it_should_behave_like("discard")
   end
 
   # POST /leads/auto_complete/query                                        AJAX

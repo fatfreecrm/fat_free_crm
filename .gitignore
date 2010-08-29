@@ -12,3 +12,5 @@ nbproject
 .DS_Store
 *~
 *.swp
+vendor/plugins/crm_*
+

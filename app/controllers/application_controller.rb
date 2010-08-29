@@ -160,18 +160,52 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Autocomplete handler for all core controllers.
+  # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
     @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
     if @auto_complete.empty?
-      @auto_complete = self.controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
+      @auto_complete = controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
     else
       @auto_complete = @auto_complete.last
     end
-    session[:auto_complete] = self.controller_name.to_sym
+    session[:auto_complete] = controller_name.to_sym
     render :template => "common/auto_complete", :layout => nil
+  end
+
+  # Common attach handler for all core controllers.
+  #----------------------------------------------------------------------------
+  def attach
+    model = controller_name.classify.constantize.my(@current_user).find(params[:id])
+    @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+    @attached = model.attach!(@attachment)
+    @campaign = model.reload if model.is_a?(Campaign)
+
+    respond_to do |format|
+      format.js  { render :template => "common/attach" }
+      format.xml { render :xml => model.reload.to_xml }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
+  end
+
+  # Common discard handler for all core controllers.
+  #----------------------------------------------------------------------------
+  def discard
+    model = controller_name.classify.constantize.my(@current_user).find(params[:id])
+    @attachment = params[:attachment].constantize.find(params[:attachment_id])
+    model.discard!(@attachment)
+    @campaign = model.reload if model.is_a?(Campaign)
+
+    respond_to do |format|
+      format.js  { render :template => "common/discard" }
+      format.xml { render :xml => model.reload.to_xml }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
   end
 
   # Proxy current page for any of the controllers by storing it in a session.

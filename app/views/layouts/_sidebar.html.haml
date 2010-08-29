@@ -1,5 +1,6 @@
+- view   ||= controller.controller_name
 - action ||= controller.action_name
-- sidebar = "#{controller.controller_name}/sidebar_#{action}"
+- sidebar = "#{view}/sidebar_#{action}"
 - sidebar = "admin/#{sidebar}" if controller.class.to_s.starts_with?("Admin::")
 
 = yield(:sidebar)

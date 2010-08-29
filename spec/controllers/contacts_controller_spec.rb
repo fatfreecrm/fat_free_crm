@@ -553,6 +553,70 @@ describe ContactsController do
     end
   end
 
+  # PUT /contacts/1/attach
+  # PUT /contacts/1/attach.xml                                             AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:contact)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "opportunities" do
+      before do
+        @model = Factory(:contact)
+        @attachment = Factory(:opportunity)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
+  # PUT /contacts/1/attach
+  # PUT /contacts/1/attach.xml                                             AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:contact)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "opportunities" do
+      before do
+        @model = Factory(:contact)
+        @attachment = Factory(:opportunity)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
+  # POST /contacts/1/discard
+  # POST /contacts/1/discard.xml                                           AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST discard" do
+    describe "tasks" do
+      before do
+        @model = Factory(:contact)
+        @attachment = Factory(:task, :asset => @model)
+      end
+      it_should_behave_like("discard")
+    end
+
+    describe "opportunities" do
+      before do
+        @attachment = Factory(:opportunity)
+        @model = Factory(:contact)
+        @model.opportunities << @attachment
+      end
+      it_should_behave_like("discard")
+    end
+  end
+
   # POST /contacts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do

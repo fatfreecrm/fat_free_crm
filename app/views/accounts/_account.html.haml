@@ -7,10 +7,11 @@
 
   .tools{ invisible, :id => dom_id(account, :tools) }
     = link_to_edit(account) + " | "
-    = link_to_delete(account) + "&nbsp;"
+    = link_to_delete(account)
 
   .indent
-    = link_to(h(account.name), account) << " &ndash; "
+    = link_to(h(account.name), account)
+    &ndash;
     %tt
       = account.location << ", " unless account.location.blank?
       = t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => (account.user.id == @current_user.id ? t(:me) : h(account.user.full_name)))

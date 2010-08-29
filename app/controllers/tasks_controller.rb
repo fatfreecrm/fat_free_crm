@@ -17,6 +17,7 @@
 
 class TasksController < ApplicationController
   before_filter :require_user
+  before_filter :auto_complete, :only => :auto_complete
   before_filter :update_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
 
@@ -183,6 +184,10 @@ class TasksController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:js, :xml)
   end
+
+  # POST /tasks/auto_complete/query                                        AJAX
+  #----------------------------------------------------------------------------
+  # Handled by before_filter :auto_complete, :only => :auto_complete
 
   # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------

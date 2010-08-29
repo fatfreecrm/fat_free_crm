@@ -29,7 +29,7 @@ module FatFreeCRM
           #
           # NOTE: we're deliberately omitting :dependent => :destroy to preserve
           # permissions of deleted objects. This serves two purposes: 1) to be able
-          # to implement Recycly Bin/Restore and 2) to honor permissions when
+          # to implement Recycle Bin/Restore and 2) to honor permissions when
           # displaying "object deleted..." in the activity log.
           #
           has_many :permissions, :as => :asset, :include => :user

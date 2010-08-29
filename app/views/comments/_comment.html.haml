@@ -7,11 +7,11 @@
     = link_to avatar_for(comment.user, :size => "25x25"), user_path(comment.user)
     .tools{ invisible, :id => dom_id(comment, :tools) }
       = link_to_edit(comment) + " | "
-      = link_to_delete(comment) + "&nbsp;"
+      = link_to_delete(comment)
 
     = link_to(comment.user.full_name, user_path(comment.user)) + ","
     %tt
-      added note #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
+      added note #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))} (#{comment.created_at.strftime('%b %e, %Y')})
       - if collapsable
         = " | " + link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
 

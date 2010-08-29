@@ -46,13 +46,20 @@ class Task < ActiveRecord::Base
   belongs_to  :asset, :polymorphic => true
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
-  # Tasks created by the user for herself, or assigned to her by others. That's what we see on Tasks/Pending and Tasks/Completed.
-  named_scope :my, lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
+  # Tasks created by the user for herself, or assigned to her by others. That's
+  # what gets shown on Tasks/Pending and Tasks/Completed pages.
+  named_scope :my, lambda { |user| {
+    :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user[:user] || user, user[:user] || user ],
+    :order => user[:order] || "name ASC",
+    :limit => user[:limit], # nil selects all records
+    :include => :assignee
+  } }
 
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.
   named_scope :assigned_by, lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?", user.id, user.id ], :include => :assignee } }
 
-  # Tasks created by the user or assigned to the user, i.e. the union of the two scopes above. That's the tasks the user is allowed to see and track.
+  # Tasks created by the user or assigned to the user, i.e. the union of the two
+  # scopes above. That's the tasks the user is allowed to see and track.
   named_scope :tracked_by, lambda { |user| { :conditions => [ "user_id = ? OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
 
   # Status based scopes to be combined with the due date and completion time.
@@ -77,6 +84,7 @@ class Task < ActiveRecord::Base
   named_scope :completed_this_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days ] } }
   named_scope :completed_last_month, lambda { { :conditions => [ "completed_at >= ? AND completed_at < ?", (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc ] } }
 
+  simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   acts_as_commentable
   acts_as_paranoid
 
@@ -98,6 +106,11 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def assigned_by?(user)
     self.user == user && assignee && assignee != user
+  end
+
+  #----------------------------------------------------------------------------
+  def completed?
+    !!self.completed_at
   end
 
   # Matcher for the :tracked_by? named scope.
@@ -192,7 +205,6 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def notify_assignee
-    # logger.p self.new_record? ? "create" : "update"
     if self.assigned_to
       # Notify assignee.
     end

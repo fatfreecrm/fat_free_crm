@@ -91,13 +91,15 @@ tt {
     -moz-border-radius-bottomright: 6px;
     -webkit-border-bottom-left-radius: 6px;
     -webkit-border-bottom-right-radius: 6px; }
-    #header #jumpbox a {
+    #header #jumpbox #jumpbox_menu a {
       color: white;
       padding: 0px 0px 4px 0px; }
-      #header #jumpbox a.selected {
+      #header #jumpbox #jumpbox_menu a.selected {
         color: navy; }
-      #header #jumpbox a:hover {
+      #header #jumpbox #jumpbox_menu a:hover {
         background: steelblue; }
+    #header #jumpbox #jumpbox_label {
+      color: white; }
     #header #jumpbox input {
       margin: 2px 0px 0px 0px; }
 
@@ -179,6 +181,8 @@ tt {
   .check_box input {
     position: relative;
     top: -3px; }
+  .check_box label {
+    font-size: 11px; }
 
 .tabless {
   margin: auto;
@@ -227,7 +231,7 @@ tt {
 .tools {
   font-size: 10px;
   float: right;
-  padding: 0px 0px 0px 4px; }
+  padding: 0px 8px 0px 4px; }
   .tools#comment_new_tools {
     margin: 8px 0px 0px 0px; }
 
@@ -535,6 +539,12 @@ tt {
 .off {
   background: lightgrey;
   border: 1px silver outset; }
+
+.arrow {
+  font-size: 9px;
+  vertical-align: middle;
+  padding-bottom: 3px;
+  padding-right: 2px; }
 
 .left {
   -moz-border-radius-bottomleft: 9px;

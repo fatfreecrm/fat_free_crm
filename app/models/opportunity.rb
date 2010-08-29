@@ -39,7 +39,6 @@
 #
 class Opportunity < ActiveRecord::Base
   belongs_to  :user
-  belongs_to  :account
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_one     :account_opportunity, :dependent => :destroy
@@ -53,7 +52,7 @@ class Opportunity < ActiveRecord::Base
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ?", user.id ] } }
   named_scope :assigned_to, lambda { |user| { :conditions => [ "assigned_to = ?" ,user.id ] } }
-  named_scope :not_lost, { :conditions => 'stage != "lost"'}
+  named_scope :not_lost, { :conditions => "opportunities.stage <> 'lost'"}
 
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   uses_user_permissions
@@ -101,6 +100,23 @@ class Opportunity < ActiveRecord::Base
     self.update_with_permissions(params[:opportunity], params[:users])
   end
 
+  # Attach given attachment to the opportunity if it hasn't been attached already.
+  #----------------------------------------------------------------------------
+  def attach!(attachment)
+    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      self.send(attachment.class.name.tableize) << attachment
+    end
+  end
+
+  # Discard given attachment from the opportunity.
+  #----------------------------------------------------------------------------
+  def discard!(attachment)
+    if attachment.is_a?(Task)
+      attachment.update_attribute(:asset, nil)
+    else # Contacts
+      self.send(attachment.class.name.tableize).delete(attachment)
+    end
+  end
 
   # Class methods.
   #----------------------------------------------------------------------------

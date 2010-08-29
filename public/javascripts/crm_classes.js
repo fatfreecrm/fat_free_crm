@@ -38,18 +38,8 @@ crm.Popup = Class.create({
 
     this.popup = $(this.options.target);      // actual popup div.
 
-    this.setup_show_observer();
     this.setup_toggle_observer();
     this.setup_hide_observer();
-  },
-
-  //----------------------------------------------------------------------------
-  setup_show_observer: function() {
-    $(this.options.trigger).observe("click", function(e) {
-      if (this.popup && !this.popup.visible()) {
-        this.show_popup(e);
-      }
-    }.bind(this));
   },
 
   //----------------------------------------------------------------------------
@@ -78,11 +68,15 @@ crm.Popup = Class.create({
       var coordinates = $(this.options.under).viewportOffset();
       var under = $(this.options.under).getDimensions();
       var popup = $(this.popup).getDimensions();
+      var y_offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
       var x = (coordinates[0] + under.width - popup.width) + "px";
-      var y = (coordinates[1] + under.height) + "px";
+      var y = (coordinates[1] + under.height + y_offset) + "px";
       this.popup.setStyle({ left: x, top: y });
     }
     this.popup.setStyle({ zIndex: this.options.zindex });
+
+    // Add custom "trigger" attribute to the popup div so we could check who has triggered it.
+    this.popup.writeAttribute("trigger", this.options.trigger);
 
     this.options.before_show(e);
     if (!this.options.appear) {
@@ -95,8 +89,17 @@ crm.Popup = Class.create({
 
   //----------------------------------------------------------------------------
   toggle_popup: function(e) {
-    if (this.popup) {
-      this.popup.visible() ? this.hide_popup(e) : this.show_popup(e);
+    if (this.popup.visible()) {
+      if (this.options.trigger != this.popup.readAttribute("trigger")) {
+        // Currently shown popup was opened by some other trigger: hide it immediately
+        // without any fancy callbacks, then show this popup.
+        this.popup.hide();
+        this.show_popup(e);
+      } else {
+        this.hide_popup(e);
+      }
+    } else {
+      this.show_popup(e);
     }
   },
 

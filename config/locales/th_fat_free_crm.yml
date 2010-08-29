@@ -500,6 +500,7 @@ th:
   create_new: สร้าง
   select_existing: select existing # TODO
   delete: ลบ
+  discard: Discard # TODO
   edit: แก้ไข
   items_total: '{{count}} ทั้งหมด'
   less: Less... # TODO

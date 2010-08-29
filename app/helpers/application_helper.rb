@@ -54,14 +54,35 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def inline(id, url, options = {})
-    content_tag("div", link_to_inline(id, url, options), :class => options[:class] || "title_tools")
+  def section(related, assets)
+    asset = assets.to_s.singularize
+    create_id  = :"create_#{asset}"
+    select_id  = :"select_#{asset}"
+    create_url = controller.send(:"new_#{asset}_path")
+
+    html = "<br />"
+    html << content_tag(:div, link_to(t(select_id), "#", :id => select_id), :class => "subtitle_tools")
+    html << content_tag(:div, "&nbsp;|&nbsp;", :class => "subtitle_tools")
+    html << content_tag(:div, link_to_inline(create_id, create_url, :related => dom_id(related), :text=> t(create_id)), :class => "subtitle_tools")
+    html << content_tag(:div, t(assets), :class => :subtitle, :id => :"create_#{asset}_title")
+    html << content_tag(:div, "", :class => :remote, :id => create_id, :style => "display:none;")
+  end
+
+  #----------------------------------------------------------------------------
+  def load_select_popups_for(related, *assets)
+    js = assets.inject("") do |str, asset|
+      str << render(:partial => "common/select_popup", :locals => { :related => related, :popup => asset })
+    end
+
+    content_for(:javascript_epilogue) do
+      "document.observe('dom:loaded', function() { #{js} });"
+    end
   end
 
   #----------------------------------------------------------------------------
   def link_to_inline(id, url, options = {})
     text = options[:text] || id.to_s.titleize
-    text = (arrow_for(id) << "&nbsp;" << text) unless options[:plain]
+    text = (arrow_for(id) + text) unless options[:plain]
     related = (options[:related] ? ", related: '#{options[:related]}'" : "")
 
     link_to_remote(text,
@@ -73,7 +94,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def arrow_for(id)
-    content_tag(:abbr, "&#9658;", :id => "#{id}_arrow")
+    content_tag(:span, "&#9658;", :id => "#{id}_arrow", :class => :arrow)
   end
 
   #----------------------------------------------------------------------------
@@ -92,6 +113,20 @@ module ApplicationHelper
     link_to_remote(t(:delete) + "!",
       :method => :delete,
       :url    => send("#{name}_path", model),
+      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+    )
+  end
+
+  #----------------------------------------------------------------------------
+  def link_to_discard(model)
+    name = model.class.name.downcase
+    current_url = (request.xhr? ? request.referer : request.request_uri)
+    parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
+
+    link_to_remote(t(:discard),
+      :method => :post,
+      :url    => url_for(:controller => parent, :action => :discard, :id => parent_id),
+      :with   => "{ attachment: '#{model.class.name}', attachment_id: #{model.id} }",
       :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
@@ -125,8 +160,10 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def jumpbox(current)
-    [ :campaigns, :accounts, :leads, :contacts, :opportunities ].inject([]) do |html, controller|
-      html << link_to_function(t(("tab_" + controller.to_s).to_sym), "crm.jumper('#{controller}')", :class => (controller == current ? "selected" : ""))
+    tabs = [ :campaigns, :accounts, :leads, :contacts, :opportunities ]
+    current = tabs.first unless tabs.include?(current)
+    tabs.inject([]) do |html, tab|
+      html << link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", :class => (tab == current ? 'selected' : ''))
     end.join(" | ")
   end
 
@@ -325,6 +362,16 @@ module ApplicationHelper
         :onblur  => "crm.show_hint(this, '#{hint}')"
       )
     end
+  end
+
+  # Return true if:
+  #   - it's an Ajax request made from the asset landing page (i.e. create opportunity
+  #     from a contact landing page) OR
+  #   - we're actually showing asset landing page.
+  #----------------------------------------------------------------------------
+  def shown_on_landing_page?
+    !!((request.xhr? && request.referer =~ %r|/\w+/\d+|) ||
+       (!request.xhr? && request.request_uri =~ %r|/\w+/\d+|))
   end
 
 end

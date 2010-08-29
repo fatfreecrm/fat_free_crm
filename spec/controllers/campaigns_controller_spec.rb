@@ -482,6 +482,95 @@ describe CampaignsController do
     end
   end
 
+  # PUT /campaigns/1/attach
+  # PUT /campaigns/1/attach.xml                                            AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "leads" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:lead, :campaign => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "opportunities" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:opportunity, :campaign => nil)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
+  # PUT /campaigns/1/attach
+  # PUT /campaigns/1/attach.xml                                            AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT attach" do
+    describe "tasks" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:task, :asset => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "leads" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:lead, :campaign => nil)
+      end
+      it_should_behave_like("attach")
+    end
+
+    describe "opportunities" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:opportunity, :campaign => nil)
+      end
+      it_should_behave_like("attach")
+    end
+  end
+
+  # POST /campaigns/1/discard
+  # POST /campaigns/1/discard.xml                                          AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST discard" do
+    describe "tasks" do
+      before do
+        @model = Factory(:campaign)
+        @attachment = Factory(:task, :asset => @model)
+      end
+      it_should_behave_like("discard")
+    end
+
+    describe "leads" do
+      before do
+        @attachment = Factory(:lead)
+        @model = Factory(:campaign)
+        @model.leads << @attachment
+      end
+      it_should_behave_like("discard")
+    end
+
+    describe "opportunities" do
+      before do
+        @attachment = Factory(:opportunity)
+        @model = Factory(:campaign)
+        @model.opportunities << @attachment
+      end
+      it_should_behave_like("discard")
+    end
+  end
+
   # POST /campaigns/auto_complete/query                                    AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do

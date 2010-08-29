@@ -65,11 +65,13 @@ class Contact < ActiveRecord::Base
   named_scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
   named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
 
-  simple_column_search :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  simple_column_search :first_name, :last_name, :email,
+    :match => lambda { |column| column == :email ? :middle : :start },
+    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   uses_user_permissions
   acts_as_commentable
   acts_as_paranoid
-  sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "last_name ASC"
 
   validates_presence_of :first_name, :message => :missing_first_name
   validates_presence_of :last_name, :message => :missing_last_name
@@ -83,7 +85,9 @@ class Contact < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def full_name(format = nil)
-    if format.nil? || format == "before"
+    if self.first_name.empty? and self.last_name.empty? and self.account
+      self.account.name
+    elsif format.nil? || format == "before"
       "#{self.first_name} #{self.last_name}"
     else
       "#{self.last_name}, #{self.first_name}"
@@ -111,6 +115,24 @@ class Contact < ActiveRecord::Base
       self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
     end
     self.update_with_permissions(params[:contact], params[:users])
+  end
+
+  # Attach given attachment to the contact if it hasn't been attached already.
+  #----------------------------------------------------------------------------
+  def attach!(attachment)
+    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      self.send(attachment.class.name.tableize) << attachment
+    end
+  end
+
+  # Discard given attachment from the contact.
+  #----------------------------------------------------------------------------
+  def discard!(attachment)
+    if attachment.is_a?(Task)
+      attachment.update_attribute(:asset, nil)
+    else # Opportunities
+      self.send(attachment.class.name.tableize).delete(attachment)
+    end
   end
 
   # Class methods.

@@ -6,7 +6,8 @@
 
   .tools{ invisible, :id => dom_id(pending, :tools) }
     = link_to_task_edit(pending, bucket) + " | "
-    = link_to_task_delete(pending, bucket) + "&nbsp;"
+    = link_to_discard(pending) + " | " if shown_on_landing_page?
+    = link_to_task_delete(pending, bucket)
 
   = check_box_tag dom_id(pending, :complete), 1, false, :onclick => link_to_task_complete(pending, bucket)
 
@@ -28,20 +29,23 @@
       - else
         - if pending.at_specific_time?
           - if pending.due_at < Time.now
-            %span.warn= distance_of_time_in_words(pending.due_at, Time.now)
-            = t(:task_overdue) 
-            = l(pending.due_at.localtime, :format => :mmddhhss)
+            %span.warn
+              = distance_of_time_in_words(pending.due_at, Time.now)
+              = t(:task_overdue) 
+              = l(pending.due_at.localtime, :format => :mmddhhss)
           - else
             = t(:task_due_in, distance_of_time_in_words(Time.now, pending.due_at))
             = '(' << l(pending.due_at.localtime, :format => :mmddhhss) << ')'
 
         - else
           - if pending.due_at < Date.today
-            %span.warn= distance_of_time_in_words(pending.due_at, Time.now)
-            = t(:task_overdue) 
-            = pending.due_at.localtime.strftime('%b %e')
+            %span.warn
+              = distance_of_time_in_words(pending.due_at, Time.now)
+              = t(:task_overdue) 
+              = pending.due_at.localtime.strftime('%b %e')
           - elsif pending.due_at > Date.today
             = t(:task_due_in, distance_of_time_in_words(Time.now, pending.due_at.localtime.end_of_day))
+            = ' (' << pending.due_at.localtime.end_of_day.strftime('%b %e') << ')'
           - else
             %span.cool= t(:task_due_today)
 

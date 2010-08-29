@@ -75,13 +75,16 @@
     :-webkit-border
       :bottom-left-radius 6px
       :bottom-right-radius 6px
-    a
+    #jumpbox_menu
+      a
+        :color white
+        :padding 0px 0px 4px 0px
+        &.selected
+          :color navy
+        &:hover
+          :background steelblue
+    #jumpbox_label
       :color white
-      :padding 0px 0px 4px 0px
-      &.selected
-        :color navy
-      &:hover
-        :background steelblue
     input
       :margin 2px 0px 0px 0px
 #tabs

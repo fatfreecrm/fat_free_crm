@@ -1,0 +1,5 @@
+page[dom_id(@attachment)].visual_effect :blind_up, :duration => 0.25
+
+if called_from_landing_page?("campaigns")
+  page << refresh_sidebar_for(:campaigns, :show, :summary)
+end

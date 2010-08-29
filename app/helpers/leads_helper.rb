@@ -67,7 +67,7 @@ module LeadsHelper
   #----------------------------------------------------------------------------
   def lead_status_checbox(status, count)
     checked = (session[:filter_by_lead_status] ? session[:filter_by_lead_status].split(",").include?(status.to_s) : count.to_i > 0)
-    check_box_tag("status[]", status, checked, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+    check_box_tag("status[]", status, checked, :id => status, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
   end
   
   # Returns default permissions intro for leads
@@ -87,6 +87,17 @@ module LeadsHelper
       when "Private" then t(:lead_permissions_intro_private, t(:opportunity_small))
       when "Public"  then t(:lead_permissions_intro_public,  t(:opportunity_small))
       when "Shared"  then t(:lead_permissions_intro_shared,  t(:opportunity_small))
+    end
+  end
+
+  # Do not offer :converted status choice if we are creating a new lead or
+  # editing existing lead that hasn't been converted before.
+  #----------------------------------------------------------------------------
+  def lead_status_codes_for(lead)
+    if lead.status != "converted" && (lead.new_record? || lead.contact.nil?)
+      Setting.unroll(:lead_status).delete_if { |status| status.last == :converted }
+    else
+      Setting.unroll(:lead_status)
     end
   end
 
