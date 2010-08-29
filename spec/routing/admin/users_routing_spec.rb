@@ -1,63 +1,34 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::UsersController do
-  describe "route generation" do
-    it "maps #index" do
-      route_for(:controller => "admin/users", :action => "index").should == "/admin"
+  describe "routing" do
+
+    it "recognizes and generates #index" do
+      { :get => "/admin" }.should route_to( :controller => "admin/users", :action => "index" )
     end
 
-    it "maps #new" do
-      route_for(:controller => "admin/users", :action => "new").should == "/admin/users/new"
+    it "recognizes and generates #new" do
+      { :get => "/admin/users/new" }.should route_to( :controller => "admin/users", :action => "new" )
     end
 
-    it "maps #show" do
-      route_for(:controller => "admin/users", :action => "show", :id => "1").should == "/admin/users/1"
+    it "recognizes and generates #create" do
+      { :post => "/admin/users" }.should route_to( :controller => "admin/users", :action => "create" )
     end
 
-    it "maps #edit" do
-      route_for(:controller => "admin/users", :action => "edit", :id => "1").should == "/admin/users/1/edit"
+    it "recognizes and generates #show" do
+      { :get => "/admin/users/1" }.should route_to( :controller => "admin/users", :action => "show", :id => "1" )
     end
 
-    it "maps #create" do
-      route_for(:controller => "admin/users", :action => "create").should == {:path => "/admin/users", :method => :post}
+    it "recognizes and generates #edit" do
+      { :get => "/admin/users/1/edit" }.should route_to( :controller => "admin/users", :action => "edit", :id => "1" )
     end
 
-    it "maps #update" do
-      route_for(:controller => "admin/users", :action => "update", :id => "1").should == {:path =>"/admin/users/1", :method => :put}
+    it "recognizes and generates #update" do
+      { :put => "/admin/users/1" }.should route_to( :controller => "admin/users", :action => "update", :id => "1" )
     end
 
-    it "maps #destroy" do
-      route_for(:controller => "admin/users", :action => "destroy", :id => "1").should == {:path =>"/admin/users/1", :method => :delete}
-    end
-  end
-
-  describe "route recognition" do
-    it "generates params for #index" do
-      params_from(:get, "/admin/users").should == {:controller => "admin/users", :action => "index"}
-    end
-
-    it "generates params for #new" do
-      params_from(:get, "/admin/users/new").should == {:controller => "admin/users", :action => "new"}
-    end
-
-    it "generates params for #create" do
-      params_from(:post, "/admin/users").should == {:controller => "admin/users", :action => "create"}
-    end
-
-    it "generates params for #show" do
-      params_from(:get, "/admin/users/1").should == {:controller => "admin/users", :action => "show", :id => "1"}
-    end
-
-    it "generates params for #edit" do
-      params_from(:get, "/admin/users/1/edit").should == {:controller => "admin/users", :action => "edit", :id => "1"}
-    end
-
-    it "generates params for #update" do
-      params_from(:put, "/admin/users/1").should == {:controller => "admin/users", :action => "update", :id => "1"}
-    end
-
-    it "generates params for #destroy" do
-      params_from(:delete, "/admin/users/1").should == {:controller => "admin/users", :action => "destroy", :id => "1"}
+    it "recognizes and generates #destroy" do
+      { :delete => "/admin/users/1" }.should route_to( :controller => "admin/users", :action => "destroy", :id => "1" )
     end
   end
 end
