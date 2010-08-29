@@ -23,7 +23,7 @@ module TasksHelper
   def task_filter_checbox(view, filter, count)
     name = "filter_by_task_#{view}"
     checked = (session[name] ? session[name].split(",").include?(filter.to_s) : count > 0)
-    check_box_tag("filters[]", filter, checked, :onclick => remote_function(:url => { :action => :filter, :view => view }, :with => "{filter: this.value, checked:this.checked}" ))
+    check_box_tag("filters[]", filter, checked, :id => "filter_#{filter}", :onclick => remote_function(:url => { :action => :filter, :view => view }, :with => "{filter: this.value, checked:this.checked}" ))
   end
 
   #----------------------------------------------------------------------------
