@@ -31,7 +31,7 @@ p.flash_warning, p.flash_error {
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
   background: khaki;
-  color: #200;
+  color: #220000;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {
@@ -98,4 +98,3 @@ div.auto_complete {
       color: navy;
       background: lightyellow;
       border-color: navy; }
-
