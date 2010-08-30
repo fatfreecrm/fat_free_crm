@@ -6,12 +6,6 @@ GIT
       sc-core-ext (>= 1.2.0)
 
 GIT
-  remote: git://github.com/crossroads/simple_column_search.git
-  revision: 0c5c2de
-  specs:
-    simple_column_search (1.0.1)
-
-GIT
   remote: git://github.com/odorcicd/authlogic.git
   revision: a087ad0
   branch: rails3
@@ -171,6 +165,7 @@ GEM
       json_pure
       rubyzip
     shoulda (2.11.3)
+    simple_column_search (1.0.2)
     spork (0.8.4)
     term-ansicolor (1.0.5)
     test-unit (1.2.3)
@@ -208,7 +203,7 @@ DEPENDENCIES
   rspec-rails (>= 2.0.0.beta.20)
   ruby-debug19
   shoulda
-  simple_column_search!
+  simple_column_search (>= 1.0.2)
   spork
   test-unit (= 1.2.3)
   webrat
