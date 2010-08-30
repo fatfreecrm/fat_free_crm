@@ -1,6 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + "/dropbox/email_samples")
 
+require "fat_free_crm/dropbox"
+
 describe "IMAP Dropbox" do
   before(:each) do
     @crawler = FatFreeCRM::Dropbox.new
@@ -35,7 +37,7 @@ describe "IMAP Dropbox" do
     body
   end
 
-  #------------------------------------------------------------------------------ 
+  #------------------------------------------------------------------------------
   describe "Connecting to the IMAP server" do
     it "should connect to the IMAP server and login as user, and select folder" do
       mock_imap
@@ -57,7 +59,7 @@ describe "IMAP Dropbox" do
     end
   end
 
-  #------------------------------------------------------------------------------ 
+  #------------------------------------------------------------------------------
   describe "Disconnecting from the IMAP server" do
     it "should logout and diconnect" do
       mock_connect
@@ -70,7 +72,7 @@ describe "IMAP Dropbox" do
     end
   end
 
-  #------------------------------------------------------------------------------ 
+  #------------------------------------------------------------------------------
   describe "Discarding a message" do
     before(:each) do
       mock_connect
@@ -81,19 +83,19 @@ describe "IMAP Dropbox" do
     it "should copy message to invalid folder if it's set and flag the message as deleted" do
       @settings[:move_invalid_to_folder] = "invalid"
       @imap.should_receive(:uid_copy).once.with(@uid, @settings[:move_invalid_to_folder])
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])      
+      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])
       @crawler.send(:discard, @uid)
     end
 
     it "should not copy message to invalid folder if it's not set and flag the message as deleted" do
       @settings[:move_invalid_to_folder] = nil
       @imap.should_not_receive(:uid_copy)
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])      
+      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])
       @crawler.send(:discard, @uid)
     end
   end
 
-  #------------------------------------------------------------------------------     
+  #------------------------------------------------------------------------------
   describe "Archiving a message" do
     before(:each) do
       mock_connect
@@ -160,7 +162,7 @@ describe "IMAP Dropbox" do
     end
   end
 
-  #------------------------------------------------------------------------------ 
+  #------------------------------------------------------------------------------
   describe "Running the crawler" do
     before(:each) do
       mock_connect
@@ -191,7 +193,7 @@ describe "IMAP Dropbox" do
     end
   end
 
-  #------------------------------------------------------------------------------ 
+  #------------------------------------------------------------------------------
   describe "Pipieline: processing keywords on the first line" do
     before(:each) do
       mock_connect
@@ -277,7 +279,7 @@ describe "IMAP Dropbox" do
     end
   end
 
-  #------------------------------------------------------------------------------ 
+  #------------------------------------------------------------------------------
   describe "Pipieline: processing recipients (To: recipient, Bcc: dropbox)" do
     before(:each) do
       mock_connect
@@ -303,7 +305,7 @@ describe "IMAP Dropbox" do
     end
   end
 
-  #------------------------------------------------------------------------------ 
+  #------------------------------------------------------------------------------
   describe "Pipieline: processing forwarded recipient (To: dropbox)" do
     before(:each) do
       mock_connect
@@ -348,7 +350,7 @@ describe "IMAP Dropbox" do
     end
   end
 
-  #------------------------------------------------------------------------------ 
+  #------------------------------------------------------------------------------
   describe "Pipieline: creating recipient if s/he was not found" do
     before(:each) do
       mock_connect
@@ -378,30 +380,30 @@ describe "IMAP Dropbox" do
       @contact.emails.first.mediator.should == @contact
     end
   end
-  
-  #------------------------------------------------------------------------------ 
-  
+
+  #------------------------------------------------------------------------------
+
   describe "Default values" do
-    
+
     describe "'access'" do
-    
+
       it "should be 'Private' if default setting is 'Private'" do
         Setting.stub!(:default_access).and_return('Private')
         @crawler.send(:default_access).should == "Private"
       end
-      
+
       it "should be 'Public' if default setting is 'Public'" do
         Setting.stub!(:default_access).and_return('Public')
         @crawler.send(:default_access).should == "Public"
       end
-      
+
       it "should be 'Private' if default setting is 'Shared'" do
         Setting.stub!(:default_access).and_return('Shared')
         @crawler.send(:default_access).should == "Private"
       end
-      
+
     end
-      
+
   end
 
 end
