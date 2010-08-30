@@ -40,7 +40,7 @@ describe UsersController do
     end
 
     it "should generate params for #password" do
-      { :put => "/users/1/password" }.should route_to( :controller => "users", :action => "password", :id => "1" )
+      { :get => "/users/1/password" }.should route_to( :controller => "users", :action => "password", :id => "1" )
     end
 
     it "should generate params for #change_password" do
