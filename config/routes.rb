@@ -23,6 +23,7 @@ FatFreeCrm::Application.routes.draw do
   resources :tasks do
     collection do
       post :auto_complete
+      get :filter
     end
     member do
       put :complete

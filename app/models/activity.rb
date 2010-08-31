@@ -39,8 +39,8 @@ class Activity < ActiveRecord::Base
   scope :without_action, lambda { |*actions| where('action NOT IN (?)', actions) }
   scope :latest, lambda { |options|
     includes(:user)
-    .where(:subject_type => options[:asset]) if options[:asset]
-    .where(:user_id => options[:user]) if options[:user]
+    .where(options[:asset] ? {:subject_type => options[:asset]} : nil)
+    .where(options[:user] ? {:user_id => options[:user]} : nil)
     .where('activities.created_at >= ?', Time.zone.now - (options[:duration] || 2.days))
     .order('activities.created_at DESC')
   }

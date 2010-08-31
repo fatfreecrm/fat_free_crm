@@ -4,7 +4,7 @@ describe UsersController do
 
   before(:each) do
   end
-  
+
   # GET /users
   # GET /users.xml                              HTML (not directly exposed yet)
   #----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ describe UsersController do
       assigns[:user].should == @current_user
       response.should render_template("users/show")
     end
-    
+
     describe "with mime type of xml" do
       before(:each) do
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -63,14 +63,14 @@ describe UsersController do
       end
 
     end
-    
+
   end
 
   # GET /users/new
   # GET /users/new.xml                                                     HTML
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-  
+
     describe "if user is allowed to sign up" do
       it "should expose a new user as @user and render [new] template" do
         controller.should_receive(:can_signup?).and_return(true)
@@ -101,7 +101,7 @@ describe UsersController do
       require_user
       @user = @current_user
     end
-  
+
     it "should expose current user as @user and render [edit] template" do
       xhr :get, :edit, :id => @user.id
       assigns[:user].should == @current_user
@@ -139,9 +139,9 @@ describe UsersController do
         flash[:notice].should =~ /approval/
         response.should redirect_to(login_url)
       end
-      
+
     end
-    
+
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and renders [new] template" do
         @user = Factory.build(:user, :username => "", :email => "")
@@ -152,7 +152,7 @@ describe UsersController do
         response.should render_template("users/new")
       end
     end
-    
+
   end
 
   # PUT /users/1
@@ -175,7 +175,7 @@ describe UsersController do
       end
 
     end
-    
+
     describe "with invalid params" do
 
       it "should not update the user information and redraw [update] template" do
@@ -199,7 +199,7 @@ describe UsersController do
 
     it "should destroy the requested user" do
     end
-  
+
     it "should redirect to the users list" do
     end
 
@@ -247,7 +247,7 @@ describe UsersController do
     end
 
     it "should save the user avatar if it was successfully uploaded and resized" do
-      @image = fixture_file_upload("rails.png", "image/png")
+      @image = fixture_file_upload("spec/fixtures/rails.png", "image/png")
 
       xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
       @user.avatar.should_not == nil
@@ -258,9 +258,9 @@ describe UsersController do
     end
 
     it "should return errors if the avatar failed to get uploaded and resized" do
-      @image = fixture_file_upload("rails.png", "image/png")
+      @image = fixture_file_upload("spec/fixtures/rails.png", "image/png")
       @user.stub!(:save).and_return(false) # make it fail
-    
+
       xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
       @user.avatar.errors.should_not be_empty
       @user.avatar.should have(1).error # .error_on(:image)

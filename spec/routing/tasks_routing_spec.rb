@@ -31,6 +31,10 @@ describe TasksController do
       { :delete => "/tasks/1" }.should route_to(:controller => "tasks", :action => "destroy", :id => "1")
     end
 
+    it "recognizes and generates #filter" do
+      { :get => "/tasks/filter" }.should route_to( :controller => "tasks", :action => "filter" )
+    end
+
     it "should generate params for #complete" do
       { :put => "/tasks/1/complete" }.should route_to( :controller => "tasks", :action => "complete", :id => "1" )
     end
