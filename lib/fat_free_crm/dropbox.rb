@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 require "net/imap"
-include ActionController::UrlWriter
+include Rails.application.routes.url_helpers
 
 module FatFreeCRM
   class Dropbox
@@ -192,17 +192,9 @@ module FatFreeCRM
     #--------------------------------------------------------------------------------------
     def with_recipients(email, options = {})
       recipients = []
-      #~ unless options[:parse]
-        # Plain email addresses.
-        recipients += email.to_addrs unless email.to.blank?
-        recipients += email.cc_addrs unless email.cc.blank?
-        recipients -= [ @settings[:address] ]
-      #~ else
-        #~ # TMail::Address objects.
-        #~ recipients += email.to_addrs unless email.to.blank?
-        #~ recipients += email.cc_addrs unless email.cc.blank?
-        #~ recipients -= [ TMail::Address.parse(@settings[:address]) ]
-      #~ end
+      recipients += email.to_addrs unless email.to.blank?
+      recipients += email.cc_addrs unless email.cc.blank?
+      recipients -= [ @settings[:address] ]
       recipients.inject(false) { |attached, recipient| attached ||= yield recipient }
     end
 
