@@ -56,13 +56,13 @@ describe CommentsController do
   # GET /comments/1.xml                                         not implemented
   #----------------------------------------------------------------------------
   # describe "responding to GET show" do
-  # 
+  #
   #   it "should expose the requested comment as @comment" do
   #     Comment.should_receive(:find).with("37").and_return(mock_comment)
   #     get :show, :id => "37"
   #     assigns[:comment].should equal(mock_comment)
   #   end
-  #   
+  #
   #   describe "with mime type of xml" do
   #     it "should render the requested comment as xml" do
   #       request.env["HTTP_ACCEPT"] = "application/xml"
@@ -72,7 +72,7 @@ describe CommentsController do
   #       response.body.should == "generated XML"
   #     end
   #   end
-  #   
+  #
   # end
 
   # GET /comments/new
@@ -108,7 +108,8 @@ describe CommentsController do
       end
 
       it "should redirect to #{asset}'s index page with the message if the #{asset} got deleted" do
-        @asset = Factory(asset).destroy
+        @asset = Factory(asset)
+        @asset.destroy
         @comment = Comment.new
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id
@@ -186,47 +187,47 @@ describe CommentsController do
   # PUT /comments/1.xml                                          not implemened
   #----------------------------------------------------------------------------
   # describe "responding to PUT udpate" do
-  # 
+  #
   #   describe "with valid params" do
   #     it "should update the requested comment" do
   #       Comment.should_receive(:find).with("37").and_return(mock_comment)
   #       mock_comment.should_receive(:update_attributes).with({'these' => 'params'})
   #       put :update, :id => "37", :comment => {:these => 'params'}
   #     end
-  # 
+  #
   #     it "should expose the requested comment as @comment" do
   #       Comment.stub!(:find).and_return(mock_comment(:update_attributes => true))
   #       put :update, :id => "1"
   #       assigns(:comment).should equal(mock_comment)
   #     end
-  # 
+  #
   #     it "should redirect to the comment" do
   #       Comment.stub!(:find).and_return(mock_comment(:update_attributes => true))
   #       put :update, :id => "1"
   #       response.should redirect_to(comment_url(mock_comment))
   #     end
   #   end
-  #   
+  #
   #   describe "with invalid params" do
   #     it "should update the requested comment" do
   #       Comment.should_receive(:find).with("37").and_return(mock_comment)
   #       mock_comment.should_receive(:update_attributes).with({'these' => 'params'})
   #       put :update, :id => "37", :comment => {:these => 'params'}
   #     end
-  # 
+  #
   #     it "should expose the comment as @comment" do
   #       Comment.stub!(:find).and_return(mock_comment(:update_attributes => false))
   #       put :update, :id => "1"
   #       assigns(:comment).should equal(mock_comment)
   #     end
-  # 
+  #
   #     it "should re-render the 'edit' template" do
   #       Comment.stub!(:find).and_return(mock_comment(:update_attributes => false))
   #       put :update, :id => "1"
   #       response.should render_template('edit')
   #     end
   #   end
-  # 
+  #
   # end
 
   # DELETE /comments/1

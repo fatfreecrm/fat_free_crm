@@ -123,7 +123,8 @@ describe CampaignsController do
 
     describe "campaign got deleted or otherwise unavailable" do
       it "should redirect to campaign index if the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user).destroy
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy
 
         get :show, :id => @campaign.id
         flash[:warning].should_not == nil
@@ -139,7 +140,8 @@ describe CampaignsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @campaign = Factory(:campaign, :user => @current_user).destroy
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @campaign.id
@@ -198,7 +200,8 @@ describe CampaignsController do
 
     describe "(campaign got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user).destroy
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy
 
         xhr :get, :edit, :id => @campaign.id
         flash[:warning].should_not == nil
@@ -265,7 +268,7 @@ describe CampaignsController do
         @users = [ Factory(:user) ]
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
-        assigns[:campaign_status_total].should be_instance_of(Hash)
+        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload campaigns to update pagination" do
@@ -317,7 +320,7 @@ describe CampaignsController do
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
         assigns(:campaign).should == @campaign
-        assigns[:campaign_status_total].should be_instance_of(Hash)
+        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should update campaign permissions when sharing with specific users" do
@@ -333,7 +336,8 @@ describe CampaignsController do
 
       describe "campaign got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the campaign got deleted" do
-          @campaign = Factory(:campaign, :user => @current_user).destroy
+          @campaign = Factory(:campaign, :user => @current_user)
+          @campaign.destroy
 
           xhr :put, :update, :id => @campaign.id, :users => []
           flash[:warning].should_not == nil
@@ -389,7 +393,7 @@ describe CampaignsController do
       it "should get data for campaigns sidebar" do
         xhr :delete, :destroy, :id => @campaign.id
 
-        assigns[:campaign_status_total].should be_instance_of(Hash)
+        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should try previous page and render index action if current page has no campaigns" do
@@ -410,7 +414,8 @@ describe CampaignsController do
 
       describe "campaign got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the campaign got deleted" do
-          @campaign = Factory(:campaign, :user => @current_user).destroy
+          @campaign = Factory(:campaign, :user => @current_user)
+          @campaign.destroy
 
           xhr :delete, :destroy, :id => @campaign.id
           flash[:warning].should_not == nil
@@ -436,7 +441,8 @@ describe CampaignsController do
       end
 
       it "should redirect to campaign index with the flash message is the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user).destroy
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy
 
         delete :destroy, :id => @campaign.id
         flash[:warning].should_not == nil

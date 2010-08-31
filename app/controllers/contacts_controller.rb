@@ -17,9 +17,6 @@
 class ContactsController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
-  #~ before_filter :attach, :only => :attach
-  #~ before_filter :discard, :only => :discard
-  #~ before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /contacts
@@ -169,16 +166,16 @@ class ContactsController < ApplicationController
   # PUT /contacts/1/attach
   # PUT /contacts/1/attach.xml                                             AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :attach, :only => :attach
+  # Handled by ApplicationController :attach
 
   # POST /contacts/1/discard
   # POST /contacts/1/discard.xml                                           AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :discard, :only => :discard
+  # Handled by ApplicationController :discard
 
   # POST /contacts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
+  # Handled by ApplicationController :auto_complete
 
   # GET /contacts/search/query                                             AJAX
   #----------------------------------------------------------------------------

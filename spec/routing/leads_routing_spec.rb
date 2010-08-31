@@ -39,6 +39,10 @@ describe LeadsController do
       { :post => "/leads/auto_complete" }.should route_to( :controller => "leads", :action => "auto_complete" )
     end
 
+    it "recognizes and generates #filter" do
+      { :get => "/opportunities/filter" }.should route_to( :controller => "opportunities", :action => "filter" )
+    end
+
     it "should generate params for #convert" do
       { :get => "/leads/1/convert" }.should route_to( :controller => "leads", :action => "convert", :id => "1" )
     end

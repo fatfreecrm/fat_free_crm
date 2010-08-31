@@ -122,7 +122,8 @@ describe LeadsController do
 
     describe "lead got deleted or otherwise unavailable" do
       it "should redirect to lead index if the lead got deleted" do
-        @lead = Factory(:lead, :user => @current_user).destroy
+        @lead = Factory(:lead, :user => @current_user)
+        @lead.destroy
 
         get :show, :id => @lead.id
         flash[:warning].should_not == nil
@@ -138,7 +139,8 @@ describe LeadsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @lead = Factory(:lead, :user => @current_user).destroy
+        @lead = Factory(:lead, :user => @current_user)
+        @lead.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @lead.id
@@ -175,7 +177,8 @@ describe LeadsController do
 
     describe "(when creating related lead)" do
       it "should redirect to parent asset's index page with the message if parent asset got deleted" do
-        @campaign = Factory(:campaign).destroy
+        @campaign = Factory(:campaign)
+        @campaign.destroy
 
         xhr :get, :new, :related => "campaign_#{@campaign.id}"
         flash[:warning].should_not == nil
@@ -184,7 +187,7 @@ describe LeadsController do
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
         @campaign = Factory(:campaign, :access => "Private")
-        
+
         xhr :get, :new, :related => "campaign_#{@campaign.id}"
         flash[:warning].should_not == nil
         response.body.should == 'window.location.href = "/campaigns";'
@@ -219,7 +222,8 @@ describe LeadsController do
 
     describe "lead got deleted or is otherwise unavailable" do
       it "should reload current page with the flash message if the lead got deleted" do
-        @lead = Factory(:lead, :user => @current_user).destroy
+        @lead = Factory(:lead, :user => @current_user)
+        @lead.destroy
 
         xhr :get, :edit, :id => @lead.id
         flash[:warning].should_not == nil
@@ -307,7 +311,8 @@ describe LeadsController do
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
-        assigns[:lead_status_total].should be_an_instance_of(Hash)
+        require 'ruby-debug';debugger
+        assigns[:lead_status_total].should be_an_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload leads to update pagination if called from leads index" do
@@ -322,7 +327,7 @@ describe LeadsController do
       it "should reload lead campaign if called from campaign landing page" do
         @campaign = Factory(:campaign)
         @lead = Factory.build(:lead, :user => @current_user, :campaign => @campaign)
-      
+
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
         assigns[:campaign].should == @campaign
@@ -435,13 +440,13 @@ describe LeadsController do
         request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :put, :update, :id => @lead.id, :lead => { :first_name => "Billy" }
         assigns[:lead_status_total].should_not be_nil
-        assigns[:lead_status_total].should be_an_instance_of(Hash)
+        assigns[:lead_status_total].should be_an_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload lead campaign if called from campaign landing page" do
         @campaign = Factory(:campaign)
         @lead = Factory(:lead, :campaign => @campaign)
-      
+
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :put, :update, :id => @lead.id, :lead => { :first_name => "Hello" }
         assigns[:campaign].should == @campaign
@@ -449,7 +454,8 @@ describe LeadsController do
 
       describe "lead got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the lead got deleted" do
-          @lead = Factory(:lead, :user => @current_user).destroy
+          @lead = Factory(:lead, :user => @current_user)
+          @lead.destroy
 
           xhr :put, :update, :id => @lead.id
           flash[:warning].should_not == nil
@@ -513,7 +519,7 @@ describe LeadsController do
           xhr :delete, :destroy, :id => @lead.id
           assigns[:leads].should == [ @another_lead ] # @lead got deleted
           assigns[:lead_status_total].should_not be_nil
-          assigns[:lead_status_total].should be_an_instance_of(Hash)
+          assigns[:lead_status_total].should be_an_instance_of(HashWithIndifferentAccess)
           response.should render_template("leads/destroy")
         end
 
@@ -556,7 +562,8 @@ describe LeadsController do
 
       describe "lead got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the lead got deleted" do
-          @lead = Factory(:lead, :user => @current_user).destroy
+          @lead = Factory(:lead, :user => @current_user)
+          @lead.destroy
 
           xhr :delete, :destroy, :id => @lead.id
           flash[:warning].should_not == nil
@@ -582,7 +589,8 @@ describe LeadsController do
       end
 
       it "should redirect to lead index with the flash message is the lead got deleted" do
-        @lead = Factory(:lead, :user => @current_user).destroy
+        @lead = Factory(:lead, :user => @current_user)
+        @lead.destroy
 
         delete :destroy, :id => @lead.id
         flash[:warning].should_not == nil
@@ -624,7 +632,8 @@ describe LeadsController do
 
     describe "(lead got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the lead got deleted" do
-        @lead = Factory(:lead, :user => @current_user).destroy
+        @lead = Factory(:lead, :user => @current_user)
+        @lead.destroy
 
         xhr :get, :convert, :id => @lead.id
         flash[:warning].should_not == nil
@@ -740,7 +749,7 @@ describe LeadsController do
 
       xhr :put, :promote, :id => @lead.id, :account => { :name => "Hello" }, :opportunity => {}
       assigns[:lead_status_total].should_not be_nil
-      assigns[:lead_status_total].should be_an_instance_of(Hash)
+      assigns[:lead_status_total].should be_an_instance_of(HashWithIndifferentAccess)
     end
 
     it "should reload lead campaign if called from campaign landing page" do
@@ -766,7 +775,8 @@ describe LeadsController do
 
     describe "lead got deleted or otherwise unavailable" do
       it "should reload current page with the flash message if the lead got deleted" do
-        @lead = Factory(:lead, :user => @current_user).destroy
+        @lead = Factory(:lead, :user => @current_user)
+        @lead.destroy
 
         xhr :put, :promote, :id => @lead.id
         flash[:warning].should_not == nil
@@ -834,13 +844,13 @@ describe LeadsController do
         request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :put, :reject, :id => @lead.id
         assigns[:lead_status_total].should_not be_nil
-        assigns[:lead_status_total].should be_an_instance_of(Hash)
+        assigns[:lead_status_total].should be_an_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload lead campaign if called from campaign landing page" do
         @campaign = Factory(:campaign)
         @lead = Factory(:lead, :campaign => @campaign)
-      
+
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :put, :reject, :id => @lead.id
         assigns[:campaign].should == @campaign
@@ -848,7 +858,8 @@ describe LeadsController do
 
       describe "lead got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the lead got deleted" do
-          @lead = Factory(:lead, :user => @current_user).destroy
+          @lead = Factory(:lead, :user => @current_user)
+          @lead.destroy
 
           xhr :put, :reject, :id => @lead.id
           flash[:warning].should_not == nil
@@ -877,7 +888,8 @@ describe LeadsController do
 
       describe "lead got deleted or otherwise unavailable" do
         it "should redirect to lead index if the lead got deleted" do
-          @lead = Factory(:lead, :user => @current_user).destroy
+          @lead = Factory(:lead, :user => @current_user)
+          @lead.destroy
 
           put :reject, :id => @lead.id
           flash[:warning].should_not == nil

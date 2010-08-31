@@ -19,6 +19,14 @@ class Admin::ApplicationController < ApplicationController
   layout "admin/application"
   before_filter :require_admin_user
 
+  # Autocomplete handler for all admin controllers.
+  #----------------------------------------------------------------------------
+  def auto_complete
+    @query = params[:auto_complete_query]
+    @auto_complete = self.controller_name.classify.constantize.scoped(:limit => 10).search(@query)
+    render :template => "common/auto_complete", :layout => nil
+  end
+
   private
   #----------------------------------------------------------------------------
   def require_admin_user
@@ -28,13 +36,5 @@ class Admin::ApplicationController < ApplicationController
       redirect_to root_path
       false
     end
-  end
-
-  # Autocomplete handler for all admin controllers.
-  #----------------------------------------------------------------------------
-  def auto_complete
-    @query = params[:auto_complete_query]
-    @auto_complete = self.controller_name.classify.constantize.scoped(:limit => 10).search(@query)
-    render :template => "common/auto_complete", :layout => nil
   end
 end

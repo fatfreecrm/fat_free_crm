@@ -68,10 +68,10 @@ describe TasksController do
 
       # it "should render all tasks as xml for #{view} view" do
       #   @tasks = produce_tasks(@current_user, view)
-      # 
+      #
       #   # Convert symbol keys to strings, otherwise to_xml fails (Rails 2.2).
       #   @tasks = @tasks.inject({}) { |tasks, (k,v)| tasks[k.to_s] = v; tasks }
-      # 
+      #
       #   request.env["HTTP_ACCEPT"] = "application/xml"
       #   get :index, :view => view
       #   (assigns[:tasks].keys.map(&:to_s) - @tasks.keys).should == []
@@ -135,7 +135,8 @@ describe TasksController do
 
     describe "(when creating related task)" do
       it "should redirect to parent asset's index page with the message if parent asset got deleted" do
-        @account = Factory(:account).destroy
+        @account = Factory(:account)
+        @account.destroy
 
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
@@ -144,7 +145,7 @@ describe TasksController do
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
         @account = Factory(:account, :access => "Private")
-        
+
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
         response.body.should == 'window.location.href = "/accounts";'
@@ -185,7 +186,8 @@ describe TasksController do
 
     describe "(task got deleted or reassigned)" do
       it "should reload current page with the flash message if the task got deleted" do
-        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+        @task.destroy
 
         xhr :get, :edit, :id => @task.id
         flash[:warning].should_not == nil
@@ -253,7 +255,7 @@ describe TasksController do
 
           request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
           xhr :post, :create, :task => { :name => "Hello world" }
-          assigns[:task_total].should be_an_instance_of(Hash)
+          assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
         end
       end
 
@@ -299,7 +301,7 @@ describe TasksController do
 
           request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
           xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
-          assigns[:task_total].should be_an_instance_of(Hash)
+          assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
         end
       end
     end
@@ -319,7 +321,8 @@ describe TasksController do
 
     describe "task got deleted or reassigned" do
       it "should reload current page with the flash message if the task got deleted" do
-        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+        @task.destroy
 
         xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
         flash[:warning].should_not == nil
@@ -358,7 +361,7 @@ describe TasksController do
 
         request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
         xhr :delete, :destroy, :id => @task.id, :bucket => "due_asap"
-        assigns[:task_total].should be_an_instance_of(Hash)
+        assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
       end
     end
 
@@ -371,7 +374,8 @@ describe TasksController do
 
     describe "task got deleted or reassigned" do
       it "should reload current page with the flash message if the task got deleted" do
-        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+        @task.destroy
 
         xhr :delete, :destroy, :id => @task.id
         flash[:warning].should_not == nil
@@ -418,12 +422,13 @@ describe TasksController do
       @task = Factory(:task, :completed_at => nil, :user => @current_user)
 
       xhr :put, :complete, :id => @task.id, :bucket => "due_asap"
-      assigns[:task_total].should be_an_instance_of(Hash)
+      assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
     end
 
     describe "task got deleted or reassigned" do
       it "should reload current page with the flash message if the task got deleted" do
-        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+        @task.destroy
 
         xhr :put, :complete, :id => @task.id
         flash[:warning].should_not == nil

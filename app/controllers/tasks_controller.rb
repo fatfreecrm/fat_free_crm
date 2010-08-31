@@ -77,7 +77,7 @@ class TasksController < ApplicationController
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
-    if params[:previous] =~ /(\d+)\z/
+    if params[:previous].to_s =~ /(\d+)\z/
       @previous = Task.tracked_by(@current_user).find($1)
     end
 

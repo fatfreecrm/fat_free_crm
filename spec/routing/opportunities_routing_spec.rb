@@ -38,5 +38,9 @@ describe OpportunitiesController do
     it "recognizes and generates #auto_complete" do
       { :post => "/opportunities/auto_complete" }.should route_to( :controller => "opportunities", :action => "auto_complete" )
     end
+
+    it "recognizes and generates #filter" do
+      { :get => "/opportunities/filter" }.should route_to( :controller => "opportunities", :action => "filter" )
+    end
   end
 end

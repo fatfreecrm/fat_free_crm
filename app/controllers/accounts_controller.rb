@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -18,9 +18,6 @@
 class AccountsController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :attach, :only => :attach
-  before_filter :discard, :only => :discard
-  before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /accounts
@@ -43,7 +40,7 @@ class AccountsController < ApplicationController
     @account = Account.my(@current_user).find(params[:id])
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
-    
+
     @timeline = Timeline.find(@account)
 
     respond_to do |format|
@@ -77,7 +74,7 @@ class AccountsController < ApplicationController
   def edit
     @account = Account.my(@current_user).find(params[:id])
     @users = User.except(@current_user).all
-    if params[:previous] =~ /(\d+)\z/
+    if params[:previous].to_s =~ /(\d+)\z/
       @previous = Account.my(@current_user).find($1)
     end
 
@@ -95,7 +92,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
-        # None: account can only be created from the Accounts index page, so we 
+        # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
         @accounts = get_accounts
         format.js   # create.js.rjs
@@ -159,16 +156,16 @@ class AccountsController < ApplicationController
   # PUT /accounts/1/attach
   # PUT /accounts/1/attach.xml                                             AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :attach, :only => :attach
+  # Handled by ApplicationController :attach
 
   # PUT /accounts/1/discard
   # PUT /accounts/1/discard.xml                                            AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :discard, :only => :discard
+  # Handled by ApplicationController :discard
 
   # POST /accounts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
+  # Handled by ApplicationController :auto_complete
 
   # GET /accounts/options                                                 AJAX
   #----------------------------------------------------------------------------

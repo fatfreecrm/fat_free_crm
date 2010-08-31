@@ -1,23 +1,22 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
 class Admin::UsersController < Admin::ApplicationController
   before_filter "set_current_tab('admin/users')", :only => [ :index, :show ]
-  before_filter :auto_complete, :only => :auto_complete
 
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
@@ -61,7 +60,7 @@ class Admin::UsersController < Admin::ApplicationController
   def edit
     @user = User.find(params[:id])
 
-    if params[:previous] =~ /(\d+)\z/
+    if params[:previous].to_s =~ /(\d+)\z/
       @previous = User.find($1)
     end
 
@@ -152,7 +151,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   # POST /users/auto_complete/query                                        AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
+  # Handled by Admin::ApplicationController :auto_complete
 
   # PUT /admin/users/1/suspend
   # PUT /admin/users/1/suspend.xml                                         AJAX

@@ -122,7 +122,8 @@ describe OpportunitiesController do
 
     describe "opportunity got deleted or otherwise unavailable" do
       it "should redirect to opportunity index if the opportunity got deleted" do
-        @opportunity = Factory(:opportunity, :user => @current_user).destroy
+        @opportunity = Factory(:opportunity, :user => @current_user)
+        @opportunity.destroy
 
         get :show, :id => @opportunity.id
         flash[:warning].should_not == nil
@@ -138,7 +139,8 @@ describe OpportunitiesController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @opportunity = Factory(:opportunity, :user => @current_user).destroy
+        @opportunity = Factory(:opportunity, :user => @current_user)
+        @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @opportunity.id
@@ -176,7 +178,8 @@ describe OpportunitiesController do
 
     describe "(when creating related opportunity)" do
       it "should redirect to parent asset's index page with the message if parent asset got deleted" do
-        @account = Factory(:account).destroy
+        @account = Factory(:account)
+        @account.destroy
 
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
@@ -185,7 +188,7 @@ describe OpportunitiesController do
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
         @account = Factory(:account, :access => "Private")
-        
+
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
         response.body.should == 'window.location.href = "/accounts";'
@@ -227,7 +230,8 @@ describe OpportunitiesController do
 
     describe "opportunity got deleted or is otherwise unavailable" do
       it "should reload current page with the flash message if the opportunity got deleted" do
-        @opportunity = Factory(:opportunity, :user => @current_user).destroy
+        @opportunity = Factory(:opportunity, :user => @current_user)
+        @opportunity.destroy
 
         xhr :get, :edit, :id => @opportunity.id
         flash[:warning].should_not == nil
@@ -293,7 +297,7 @@ describe OpportunitiesController do
       it "should get sidebar data if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
-        assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
+        assigns(:opportunity_stage_total).should be_an_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload opportunities to update pagination if called from opportunities index" do
@@ -430,7 +434,7 @@ describe OpportunitiesController do
 
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}
-        assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
+        assigns(:opportunity_stage_total).should be_an_instance_of(HashWithIndifferentAccess)
       end
 
       it "should be able to create an account and associate it with updated opportunity" do
@@ -467,7 +471,7 @@ describe OpportunitiesController do
       it "should reload opportunity campaign if called from campaign landing page" do
         @campaign = Factory(:campaign)
         @opportunity = Factory(:opportunity, :campaign => @campaign)
-      
+
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :put, :update, :id => @opportunity.id, :opportunity => { :name => "Hello" }, :account => {}
         assigns[:campaign].should == @campaign
@@ -477,11 +481,11 @@ describe OpportunitiesController do
         it "should add to actual revenue when opportunity is closed/won" do
           @campaign = Factory(:campaign, :revenue => 1000)
           @opportunity = Factory(:opportunity, :campaign => @campaign, :stage => nil, :amount => 1100, :discount => 100)
-      
+
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "won" }, :account => {}
           @campaign.reload.revenue.to_i.should == 2000 # 1000 -> 2000
         end
-      
+
         it "should substract from actual revenue when opportunity is no longer closed/won" do
           @campaign = Factory(:campaign, :revenue => 1000)
           @opportunity = Factory(:opportunity, :campaign => @campaign, :stage => "won", :amount => 1100, :discount => 100)
@@ -490,11 +494,11 @@ describe OpportunitiesController do
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => nil }, :account => {}
           @campaign.reload.revenue.to_i.should == 1000 # Should be adjusted back to $1000.
         end
-      
+
         it "should not update actual revenue when opportunity is not closed/won" do
           @campaign = Factory(:campaign, :revenue => 1000)
           @opportunity = Factory(:opportunity, :campaign => @campaign, :stage => nil, :amount => 1100, :discount => 100)
-      
+
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "lost" }, :account => {}
           @campaign.reload.revenue.to_i.should == 1000 # Stays the same.
         end
@@ -504,26 +508,26 @@ describe OpportunitiesController do
         it "should update newly assigned campaign when opportunity is closed/won" do
           @campaigns = { :old => Factory(:campaign, :revenue => 1000), :new => Factory(:campaign, :revenue => 1000) }
           @opportunity = Factory(:opportunity, :campaign => @campaigns[:old], :stage => nil, :amount => 1100, :discount => 100)
-              
+
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "won", :campaign_id => @campaigns[:new].id }, :account => {}
           @campaigns[:old].reload.revenue.to_i.should == 1000 # Stays the same.
           @campaigns[:new].reload.revenue.to_i.should == 2000 # 1000 -> 2000
         end
-      
+
         it "should update old campaign when opportunity is no longer closed/won" do
           @campaigns = { :old => Factory(:campaign, :revenue => 1000), :new => Factory(:campaign, :revenue => 1000) }
           @opportunity = Factory(:opportunity, :campaign => @campaigns[:old], :stage => "won", :amount => 1100, :discount => 100)
           # @campaign.revenue is now $2000 since we created winning opportunity.
-              
+
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => nil, :campaign_id => @campaigns[:new].id }, :account => {}
           @campaigns[:old].reload.revenue.to_i.should == 1000 # Should be adjusted back to $1000.
           @campaigns[:new].reload.revenue.to_i.should == 1000 # Stays the same.
         end
-              
+
         it "should not update campaigns when opportunity is not closed/won" do
           @campaigns = { :old => Factory(:campaign, :revenue => 1000), :new => Factory(:campaign, :revenue => 1000) }
           @opportunity = Factory(:opportunity, :campaign => @campaigns[:old], :stage => nil, :amount => 1100, :discount => 100)
-              
+
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "lost", :campaign_id => @campaigns[:new].id }, :account => {}
           @campaigns[:old].reload.revenue.to_i.should == 1000 # Stays the same.
           @campaigns[:new].reload.revenue.to_i.should == 1000 # Stays the same.
@@ -532,7 +536,8 @@ describe OpportunitiesController do
 
       describe "opportunity got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the opportunity got deleted" do
-          @opportunity = Factory(:opportunity, :user => @current_user).destroy
+          @opportunity = Factory(:opportunity, :user => @current_user)
+          @opportunity.destroy
 
           xhr :put, :update, :id => @opportunity.id
           flash[:warning].should_not == nil
@@ -598,7 +603,7 @@ describe OpportunitiesController do
 
         it "should get sidebar data if called from opportunities index" do
           xhr :delete, :destroy, :id => @opportunity.id
-          assigns(:opportunity_stage_total).should be_an_instance_of(Hash)
+          assigns(:opportunity_stage_total).should be_an_instance_of(HashWithIndifferentAccess)
         end
 
         it "should try previous page and render index action if current page has no opportunities" do
@@ -640,7 +645,8 @@ describe OpportunitiesController do
 
       describe "opportunity got deleted or otherwise unavailable" do
         it "should reload current page is the opportunity got deleted" do
-          @opportunity = Factory(:opportunity, :user => @current_user).destroy
+          @opportunity = Factory(:opportunity, :user => @current_user)
+          @opportunity.destroy
 
           xhr :delete, :destroy, :id => @opportunity.id
           flash[:warning].should_not == nil
@@ -665,7 +671,8 @@ describe OpportunitiesController do
       end
 
       it "should redirect to opportunity index with the flash message is the opportunity got deleted" do
-        @opportunity = Factory(:opportunity, :user => @current_user).destroy
+        @opportunity = Factory(:opportunity, :user => @current_user)
+        @opportunity.destroy
 
         delete :destroy, :id => @opportunity.id
         flash[:warning].should_not == nil
