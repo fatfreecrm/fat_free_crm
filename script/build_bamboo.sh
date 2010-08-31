@@ -26,11 +26,10 @@ RAILS_ENV=test rake db:create
 RAILS_ENV=test rake gems:install
 RAILS_ENV=test rake db:migrate
 RAILS_ENV=test rake db:migrate:plugins
-#./script/spec --require `ruby -r 'rubygems' -e 'puts Gem.path.last'`/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec spec/
+RAILS_ENV=test rake bamboo
 
 # crm_super_tags tests
-cd vendor/plugins/crm_super_tags
-spec --require `ruby -r 'rubygems' -e 'puts Gem.path.last'`/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec spec/
+cd vendor/plugins/crm_super_tags && RAILS_ENV=test rake bamboo
 # cucumbers need cucumber env
 
 # crm_merge_contacts tests
@@ -39,4 +38,5 @@ spec --require `ruby -r 'rubygems' -e 'puts Gem.path.last'`/gems/ci_reporter-1.6
 # cucumbers need cucumber env
 
 # drop database
+cd ../../../
 RAILS_ENV=test rake db:drop
