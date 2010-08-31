@@ -81,7 +81,7 @@ describe ContactsController do
         get :show, :id => @contact.id
       end
     end
-  
+
     describe "with mime type of XML" do
       it "should render the requested contact as xml" do
         @contact = Factory(:contact, :id => 42)
@@ -94,7 +94,8 @@ describe ContactsController do
 
     describe "contact got deleted or otherwise unavailable" do
       it "should redirect to contact index if the contact got deleted" do
-        @contact = Factory(:contact, :user => @current_user).destroy
+        @contact = Factory(:contact, :user => @current_user)
+        @contact.destroy
 
         get :show, :id => @contact.id
         flash[:warning].should_not == nil
@@ -110,7 +111,8 @@ describe ContactsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @contact = Factory(:contact, :user => @current_user).destroy
+        @contact = Factory(:contact, :user => @current_user)
+        @contact.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @contact.id
@@ -149,7 +151,8 @@ describe ContactsController do
 
     describe "(when creating related contact)" do
       it "should redirect to parent asset's index page with the message if parent asset got deleted" do
-        @account = Factory(:account).destroy
+        @account = Factory(:account)
+        @account.destroy
 
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
@@ -158,7 +161,7 @@ describe ContactsController do
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
         @account = Factory(:account, :access => "Private")
-        
+
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
         response.body.should == 'window.location.href = "/accounts";'
@@ -203,7 +206,8 @@ describe ContactsController do
 
     describe "(contact got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the contact got deleted" do
-        @contact = Factory(:contact, :user => @current_user).destroy
+        @contact = Factory(:contact, :user => @current_user)
+        @contact.destroy
 
         xhr :get, :edit, :id => @contact.id
         flash[:warning].should_not == nil
@@ -387,7 +391,8 @@ describe ContactsController do
 
       describe "contact got deleted or otherwise unavailable" do
         it "should reload current page is the contact got deleted" do
-          @contact = Factory(:contact, :user => @current_user).destroy
+          @contact = Factory(:contact, :user => @current_user)
+          @contact.destroy
 
           xhr :put, :update, :id => @contact.id
           flash[:warning].should_not == nil
@@ -482,7 +487,8 @@ describe ContactsController do
 
       describe "contact got deleted or otherwise unavailable" do
         it "should reload current page is the contact got deleted" do
-          @contact = Factory(:contact, :user => @current_user).destroy
+          @contact = Factory(:contact, :user => @current_user)
+          @contact.destroy
 
           xhr :delete, :destroy, :id => @contact.id
           flash[:warning].should_not == nil
@@ -508,7 +514,8 @@ describe ContactsController do
       end
 
       it "should redirect to contact index with the flash message is the contact got deleted" do
-        @contact = Factory(:contact, :user => @current_user).destroy
+        @contact = Factory(:contact, :user => @current_user)
+        @contact.destroy
 
         delete :destroy, :id => @contact.id
         flash[:warning].should_not == nil
@@ -657,7 +664,7 @@ describe ContactsController do
   describe "responding to POST redraw" do
     it "should save user selected contact preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "long", :sort_by => "first_name", :naming => "after"
-      @current_user.preference[:contacts_per_page].should == "42"
+      @current_user.preference[:contacts_per_page].to_i.should == 42
       @current_user.preference[:contacts_outline].should  == "long"
       @current_user.preference[:contacts_sort_by].should  == "contacts.first_name ASC"
       @current_user.preference[:contacts_naming].should   == "after"
