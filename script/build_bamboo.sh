@@ -19,10 +19,22 @@ EOF
 sed -i s,git@github.com:,http://github.com/,g .git/config
 git submodule update
 
+# fat free crm tests
 RAILS_ENV=test rake gems:install
 RAILS_ENV=test rake db:create
 RAILS_ENV=test rake db:migrate
 RAILS_ENV=test rake db:migrate:plugins
 ./script/spec --require `ruby -r 'rubygems' -e 'puts Gem.path.last'`/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec spec/
-# run submodule tests
+
+# crm_super_tags tests
+cd vendor/plugins/crm_super_tags
+spec --require `ruby -r 'rubygems' -e 'puts Gem.path.last'`/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec spec/
+# cucumbers
+
+# crm_merge_contacts tests
+#specs
+#cd ../../crm_merge_contacts
+# cucumbers
+
+# drop database
 RAILS_ENV=test rake db:drop
