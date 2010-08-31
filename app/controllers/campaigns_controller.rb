@@ -218,7 +218,7 @@ class CampaignsController < ApplicationController
     # Default processing if no :get_campaigns hooks are present.
     if session[:filter_by_campaign_status]
       filtered = session[:filter_by_campaign_status].split(",")
-      current_query.blank? ? Campaign.my(records).only(filtered) : Campaign.my(records).only(filtered).search(current_query)
+      current_query.blank? ? Campaign.my(records).state(filtered) : Campaign.my(records).state(filtered).search(current_query)
     else
       current_query.blank? ? Campaign.my(records) : Campaign.my(records).search(current_query)
     end.paginate(pages)

@@ -59,15 +59,18 @@ class Lead < ActiveRecord::Base
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true
 
-  scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
-  scope :converted, :conditions => "status='converted'"
-  scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }
-  scope :created_by, lambda { |user| { :conditions => [ "user_id = ?" , user.id ] } }
-  scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ? " , user.id ] } }
+  scope :state, lambda { |filters|
+    where([ 'status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters ])
+  }
+  scope :converted, where(:status => 'converted')
+  scope :for_campaign, lambda { |id| where('campaign_id = ?', id) }
+  scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
+  scope :assigned_to, lambda { |user| where('assigned_to = ?' , user.id) }
 
   simple_column_search :first_name, :last_name, :company, :email,
     :match => lambda { |column| column == :email ? :middle : :start },
-    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, '').strip }
+
   uses_user_permissions
   acts_as_commentable
   is_paranoid

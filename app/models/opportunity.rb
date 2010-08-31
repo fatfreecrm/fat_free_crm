@@ -49,12 +49,17 @@ class Opportunity < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
   has_many    :emails, :as => :mediator
 
-  scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
-  scope :created_by, lambda { |user| { :conditions => ["user_id = ?", user.id ] } }
-  scope :assigned_to, lambda { |user| { :conditions => [ "assigned_to = ?" ,user.id ] } }
-  scope :not_lost, { :conditions => "opportunities.stage <> 'lost'"}
+  scope :state, lambda { |filters|
+    where('stage IN (?)' + (filters.delete('other') ? ' OR stage IS NULL' : ''), filters)
+  }
+  scope :created_by, lambda { |user| where('user_id = ?', user.id) }
+  scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
+  scope :not_lost, where("opportunities.stage <> 'lost'")
 
-  simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  simple_column_search :name,
+    :match => :middle,
+    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+
   uses_user_permissions
   acts_as_commentable
   is_paranoid

@@ -39,13 +39,12 @@ module FatFreeCRM
           #  - Account.my(@current_user)
           #  - Account.my(:user => @current_user, :order => "updated_at DESC", :limit => 20)
           #
-          scope :my, lambda { |options| {
-            :include => :permissions,
-            :conditions => ["#{self.table_name}.user_id=? OR #{self.table_name}.assigned_to=? OR permissions.user_id=? OR access='Public'",
-              options[:user] || options, options[:user] || options, options[:user] || options ], # to support Model.my(@current_user) syntax
-            :order => options[:order] || "#{self.table_name}.id DESC",
-            :limit => options[:limit] # nil selects all records
-          } }
+          scope :my, lambda { |options|
+            includes(:permissions)
+            .where("#{self.table_name}.user_id = :user OR #{self.table_name}.assigned_to = :user OR permissions.user_id = :user OR access = 'Public'", :user => (options[:user] || options))
+            .order(options[:order] || "#{self.table_name}.id DESC")
+            .limit(options[:limit]) # nil selects all records
+          }
           include FatFreeCRM::Permissions::InstanceMethods
           extend  FatFreeCRM::Permissions::SingletonMethods
         end

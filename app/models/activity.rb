@@ -33,16 +33,17 @@
 class Activity < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :subject, :polymorphic => true
-  scope :recent, { :conditions => "action='viewed'", :order => "updated_at DESC", :limit => 10 }
-  scope :for,    lambda { |user|     { :conditions => [ "user_id =?", user.id] } }
-  scope :only,   lambda { |*actions| { :conditions => "action     IN (#{actions.join("','").wrap("'")})" } }
-  scope :except, lambda { |*actions| { :conditions => "action NOT IN (#{actions.join("','").wrap("'")})" } }
-  scope :latest, lambda { |options|  {
-    :conditions => [ "#{options[:asset] ? "subject_type = ?" : "0=?"} AND #{options[:user] ? "user_id = ?" : "0=?"} AND activities.created_at >= ?",
-      options[:asset] || 0, options[:user] || 0, Time.zone.now - (options[:duration] || 2.days) ],
-    :include => :user,
-    :order => "activities.created_at DESC"
-  } }
+  scope :recent, where(:action => 'viewed').order('updated_at DESC').limit(10)
+  scope :for,    lambda { |user| where(:user_id => user.id) }
+  scope :with_action,    lambda { |*actions| where('action IN (?)', actions) }
+  scope :without_action, lambda { |*actions| where('action NOT IN (?)', actions) }
+  scope :latest, lambda { |options|
+    includes(:user)
+    .where(:subject_type => options[:asset]) if options[:asset]
+    .where(:user_id => options[:user]) if options[:user]
+    .where('activities.created_at >= ?', Time.zone.now - (options[:duration] || 2.days))
+    .order('activities.created_at DESC')
+  }
 
   validates_presence_of :user, :subject
 
@@ -81,7 +82,7 @@ class Activity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def self.update_activity(user, subject, action)
-    activity = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
+    activity = Activity.where('user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', user.id, subject.id, subject.class.name, action.to_s).first
     if activity
       activity.update_attribute(:updated_at, Time.now)
     else
@@ -92,9 +93,9 @@ class Activity < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.delete_activity(user, subject, action)
     unless user
-      delete_all([ "subject_id=? AND subject_type=? AND action=?", subject.id, subject.class.name, action.to_s ])
+      delete_all([ 'subject_id = ? AND subject_type = ? AND action = ?', subject.id, subject.class.name, action.to_s ])
     else
-      delete_all([ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
+      delete_all([ 'user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', user.id, subject.id, subject.class.name, action.to_s ])
     end
   end
 

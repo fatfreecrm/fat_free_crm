@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ class HomeController < ApplicationController
     @activities = get_activities
     render :action => "index"
   end
-  
+
   # GET /home/toggle                                                       AJAX
   #----------------------------------------------------------------------------
   def toggle
@@ -97,7 +97,7 @@ class HomeController < ApplicationController
     options[:user] ||= activity_user
     options[:duration] ||= activity_duration
 
-    Activity.latest(options).except(:viewed).visible_to(@current_user)
+    Activity.latest(options).without_action(:viewed).visible_to(@current_user)
   end
 
   #----------------------------------------------------------------------------

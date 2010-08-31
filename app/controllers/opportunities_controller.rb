@@ -248,7 +248,7 @@ class OpportunitiesController < ApplicationController
     # Default processing if no :get_opportunities hooks are present.
     if session[:filter_by_opportunity_stage]
       filtered = session[:filter_by_opportunity_stage].split(",")
-      current_query.blank? ? Opportunity.my(records).only(filtered) : Opportunity.my(records).only(filtered).search(current_query)
+      current_query.blank? ? Opportunity.my(records).state(filtered) : Opportunity.my(records).state(filtered).search(current_query)
     else
       current_query.blank? ? Opportunity.my(records) : Opportunity.my(records).search(current_query)
     end.paginate(pages)
