@@ -13,9 +13,10 @@ Then /^I fire the "([^"]*)" event on "([^"]*)"$/ do |event, id|
   end
 end
 
-Then /^I fire the "([^"]*)" event on css selector "([^"]*)"$/ do |event, selector|
+Then /^I fire the "([^"]*)" event on css selector "([^"]*)"(?:\[([\d]*)\])?$/ do |event, selector, index|
+  index ||= 0
   begin
-    Capybara.current_session.driver.browser.execute_script("$$('#{selector}').first().simulate('#{event}');")
+    Capybara.current_session.driver.browser.execute_script("$$('#{selector}')[#{index}].simulate('#{event}');")
     sleep 1
   rescue Capybara::NotSupportedByDriverError
   end
