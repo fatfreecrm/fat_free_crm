@@ -3,6 +3,7 @@
 
 require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 
+require 'rubygems'
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
@@ -14,3 +15,4 @@ Spec::Rake::SpecTask.new(:bamboo) do |t|
   t.spec_opts = ["--require #{Gem.path.last}/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec"]
   t.spec_files = FileList['spec/**/*_spec.rb']
 end
+
