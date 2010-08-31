@@ -4,7 +4,7 @@ gem 'rails', '>= 3.0.0.rc2'
 
 gem 'acts_as_commentable', '>= 3.0.0'
 gem 'acts-as-taggable-on', '>= 2.0.6'
-gem 'authlogic', :git => 'git://github.com/odorcicd/authlogic.git', :branch => 'rails3'
+gem 'authlogic', :git => 'git://github.com/crossroads/authlogic.git', :branch => 'rails3'
 gem 'gravatar-ultimate', :git => 'git://github.com/crossroads/gravatar.git'
 gem 'haml', '>= 3.0.17'
 gem 'is_paranoid', :git => 'git://github.com/thhermansen/is_paranoid.git', :branch => 'rails3'
