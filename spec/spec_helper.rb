@@ -50,6 +50,10 @@ end
 # See vendor/plugins/authlogic/lib/authlogic/test_case.rb
 #----------------------------------------------------------------------------
 def activate_authlogic
+  require 'authlogic/test_case/rails_request_adapter'
+  require 'authlogic/test_case/mock_cookie_jar'
+  require 'authlogic/test_case/mock_request'
+
   Authlogic::Session::Base.controller = (@request && Authlogic::TestCase::RailsRequestAdapter.new(@request)) || controller
 end
 
