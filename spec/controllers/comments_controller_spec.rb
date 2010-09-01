@@ -243,7 +243,7 @@ describe CommentsController do
             Comment.stub!(:new).and_return(@comment)
 
             xhr :delete, :destroy, :id => @comment.id
-            lambda { @comment.reload }.should raise_error(ActiveRecord::RecordNotFound)
+            lambda { Comment.find(@comment) }.should raise_error(ActiveRecord::RecordNotFound)
             response.should render_template("comments/destroy")
           end
         end

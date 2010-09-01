@@ -386,7 +386,7 @@ describe CampaignsController do
         xhr :delete, :destroy, :id => @campaign.id
 
         assigns[:campaigns].should == [ @another_campaign ]
-        lambda { @campaign.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { Campaign.find(@campaign) }.should raise_error(ActiveRecord::RecordNotFound)
         response.should render_template("campaigns/destroy")
       end
 

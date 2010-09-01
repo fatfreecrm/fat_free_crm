@@ -20,7 +20,7 @@ describe EmailsController, "handling GET /emails" do
             Email.stub!(:new).and_return(@email)
 
             xhr :delete, :destroy, :id => @email.id
-            lambda { @email.reload }.should raise_error(ActiveRecord::RecordNotFound)
+            lambda { Email.find(@email) }.should raise_error(ActiveRecord::RecordNotFound)
             response.should render_template("emails/destroy")
           end
         end

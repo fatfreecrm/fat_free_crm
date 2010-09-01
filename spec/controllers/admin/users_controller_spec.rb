@@ -218,7 +218,7 @@ describe Admin::UsersController do
       @user = Factory(:user)
 
       xhr :delete, :destroy, :id => @user.id
-      lambda { @user.reload }.should raise_error(ActiveRecord::RecordNotFound)
+      lambda { User.find(@user) }.should raise_error(ActiveRecord::RecordNotFound)
       response.should render_template("admin/users/destroy")
     end
 
@@ -228,7 +228,7 @@ describe Admin::UsersController do
 
       xhr :delete, :destroy, :id => @user.id
       flash[:warning].should_not == nil
-      lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+      lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
       response.should render_template("admin/users/destroy")
     end
   end

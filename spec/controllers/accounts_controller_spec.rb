@@ -330,7 +330,7 @@ describe AccountsController do
         @another_account = Factory(:account, :user => @current_user)
         xhr :delete, :destroy, :id => @account.id
 
-        lambda { @account.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { Account.find(@account) }.should raise_error(ActiveRecord::RecordNotFound)
         assigns[:accounts].should == [ @another_account ] # @account got deleted
         response.should render_template("accounts/destroy")
       end

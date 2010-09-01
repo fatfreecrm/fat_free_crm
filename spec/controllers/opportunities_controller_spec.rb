@@ -591,7 +591,7 @@ describe OpportunitiesController do
       it "should destroy the requested opportunity and render [destroy] template" do
         xhr :delete, :destroy, :id => @opportunity.id
 
-        lambda { @opportunity.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { Opportunity.find(@opportunity) }.should raise_error(ActiveRecord::RecordNotFound)
         assigns(:opportunity_stage_total).should == nil
         response.should render_template("opportunities/destroy")
       end

@@ -503,7 +503,7 @@ describe LeadsController do
         xhr :delete, :destroy, :id => @lead.id
 
         assigns[:leads].should == nil # @lead got deleted
-        lambda { @lead.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { Lead.find(@lead) }.should raise_error(ActiveRecord::RecordNotFound)
         response.should render_template("leads/destroy")
       end
 

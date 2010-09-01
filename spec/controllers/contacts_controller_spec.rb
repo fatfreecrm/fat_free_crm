@@ -449,7 +449,7 @@ describe ContactsController do
       it "should destroy the requested contact and render [destroy] template" do
         xhr :delete, :destroy, :id => @contact.id
 
-        lambda { @contact.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { Contact.find(@contact) }.should raise_error(ActiveRecord::RecordNotFound)
         response.should render_template("contacts/destroy")
       end
 
