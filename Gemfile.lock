@@ -14,8 +14,8 @@ GIT
       sc-core-ext (>= 1.2.0)
 
 GIT
-  remote: git://github.com/thhermansen/is_paranoid.git
-  revision: 99b2c64
+  remote: git://github.com/crossroads/is_paranoid.git
+  revision: 18b3daf
   branch: rails3
   specs:
     is_paranoid (0.0.2)
