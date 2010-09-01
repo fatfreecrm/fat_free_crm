@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '>= 3.0.0.rc2'
+gem 'rails', '3.0.0'
 
 gem 'acts_as_commentable', '>= 3.0.0'
 gem 'acts-as-taggable-on', '>= 2.0.6'
 gem 'authlogic', :git => 'git://github.com/crossroads/authlogic.git', :branch => 'rails3'
 gem 'gravatar-ultimate', :git => 'git://github.com/crossroads/gravatar.git'
-gem 'haml', '>= 3.0.17'
+gem 'haml', '>= 3.0.18'
 gem 'is_paranoid', :git => 'git://github.com/crossroads/is_paranoid.git', :branch => 'rails3'
 gem 'mysql', '>= 2.8.1'
 gem 'paperclip', '>= 2.3.3'

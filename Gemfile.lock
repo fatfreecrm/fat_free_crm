@@ -23,18 +23,18 @@ GIT
       acts_as_commentable (>= 3.0.0)
       authlogic
       gravatar-ultimate
-      haml (>= 3.0.17)
+      haml (>= 3.0.18)
       is_paranoid
       mysql (>= 2.8.1)
       paperclip (>= 2.3.3)
-      rails (>= 3.0.0.rc2)
+      rails (= 3.0.0)
       simple_column_search (>= 1.0.2)
       will_paginate (>= 3.0.pre2)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    ZenTest (4.3.3)
+    ZenTest (4.4.0)
     abstract (1.0.0)
     actionmailer (3.0.0)
       actionpack (= 3.0.0)
@@ -98,7 +98,7 @@ GEM
     gherkin (2.1.5)
       trollop (~> 1.16.2)
     haml (3.0.18)
-    hoe (2.6.1)
+    hoe (2.6.2)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
     i18n (0.4.1)
@@ -117,7 +117,7 @@ GEM
       activesupport
     polyglot (0.3.1)
     rack (1.2.1)
-    rack-mount (0.6.12)
+    rack-mount (0.6.13)
       rack (>= 1.0.0)
     rack-test (0.5.4)
       rack (>= 1.0)
@@ -195,11 +195,11 @@ DEPENDENCIES
   factory_girl
   ffaker
   gravatar-ultimate!
-  haml (>= 3.0.17)
+  haml (>= 3.0.18)
   is_paranoid!
   mysql (>= 2.8.1)
   paperclip (>= 2.3.3)
-  rails (>= 3.0.0.rc2)
+  rails (= 3.0.0)
   rspec-rails (>= 2.0.0.beta.20)
   ruby-debug19
   shoulda
