@@ -58,14 +58,14 @@ describe User do
       it "should not destroy the user if she owns #{asset}" do
         Factory(asset, :user => @user)
         @user.destroy
-        lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+        lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
         @user.destroyed?.should == false
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
         Factory(asset, :assignee => @user)
         @user.destroy
-        lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+        lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
         @user.destroyed?.should == false
       end
     end
@@ -75,7 +75,7 @@ describe User do
       account = Factory(:account, :user => @current_user)
       Factory(:comment, :user => @user, :commentable => account)
       @user.destroy
-      lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+      lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
       @user.destroyed?.should == false
     end
 
@@ -88,7 +88,7 @@ describe User do
 
     it "should destroy the user" do
       @user.destroy
-      lambda { @user.reload }.should raise_error(ActiveRecord::RecordNotFound)
+      lambda { User.find(@user) }.should raise_error(ActiveRecord::RecordNotFound)
       @user.destroyed?.should == true
     end
 

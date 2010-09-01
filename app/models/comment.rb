@@ -35,8 +35,8 @@ class Comment < ActiveRecord::Base
   belongs_to  :commentable, :polymorphic => true
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
 
-  default_scope :order => "created_at DESC"
-  scope :created_by, lambda { |user| { :conditions => ["user_id = ? ", user.id ] } }
+  default_scope order('created_at DESC')
+  scope :created_by, lambda { |user| where(:user_id => user.id) }
 
   validates_presence_of :user, :commentable, :comment
   after_create :log_activity

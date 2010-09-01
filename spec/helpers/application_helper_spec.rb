@@ -32,7 +32,7 @@ describe ApplicationHelper do
 
   it "link_to_discard" do
     lead = Factory(:lead)
-    request.stub!(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
+    controller.request.stub!(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
 
     link = helper.link_to_discard(lead)
     link.should =~ %r|leads/#{lead.id}/discard|
@@ -41,26 +41,26 @@ describe ApplicationHelper do
 
   describe "shown_on_landing_page?" do
     it "should return true for Ajax request made from the asset landing page" do
-      request.stub!(:xhr?).and_return(true)
-      request.stub!(:referer).and_return("http://www.example.com/leads/123")
+      controller.request.stub!(:xhr?).and_return(true)
+      controller.request.stub!(:referer).and_return("http://www.example.com/leads/123")
       helper.shown_on_landing_page?.should == true
     end
 
     it "should return true for regular request to display asset landing page" do
-      request.stub!(:xhr?).and_return(false)
-      request.stub!(:fullpath).and_return("http://www.example.com/leads/123")
+      controller.request.stub!(:xhr?).and_return(false)
+      controller.request.stub!(:fullpath).and_return("http://www.example.com/leads/123")
       helper.shown_on_landing_page?.should == true
     end
 
     it "should return false for Ajax request made from page other than the asset landing page" do
-      request.stub!(:xhr?).and_return(true)
-      request.stub!(:referer).and_return("http://www.example.com/leads")
+      controller.request.stub!(:xhr?).and_return(true)
+      controller.request.stub!(:referer).and_return("http://www.example.com/leads")
       helper.shown_on_landing_page?.should == false
     end
 
     it "should return false for regular request to display page other than asset landing page" do
-      request.stub!(:xhr?).and_return(false)
-      request.stub!(:fullpath).and_return("http://www.example.com/leads")
+      controller.request.stub!(:xhr?).and_return(false)
+      controller.request.stub!(:fullpath).and_return("http://www.example.com/leads")
       helper.shown_on_landing_page?.should == false
     end
   end

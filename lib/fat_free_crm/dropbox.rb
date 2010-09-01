@@ -175,7 +175,7 @@ module FatFreeCRM
 
     #------------------------------------------------------------------------------
     def find_sender(email_address)
-      @sender = User.first(:conditions => [ "lower(email) = ? AND suspended_at IS NULL", email_address.downcase ])
+      @sender = User.where('lower(email) = ? AND suspended_at IS NULL', email_address.downcase).first
     end
 
     # Checks the email to detect keyword on the first line.
@@ -214,15 +214,15 @@ module FatFreeCRM
       has_name = %w(Account Campaign Opportunity).include?(keyword)
 
       if has_name
-        asset = klass.first(:conditions => [ "name LIKE ?", "%#{name}%" ])
+        asset = klass.where('name LIKE ?', "%#{name}%").first
       else
         first_name, *last_name = name.split
         conditions = if last_name.empty? # Treat single name as last name.
-          [ "last_name LIKE ?", "%#{first_name}" ]
+          [ 'last_name LIKE ?', "%#{first_name}" ]
         else
-          [ "first_name LIKE ? AND last_name LIKE ?", "%#{first_name}", "%#{last_name.join(' ')}"]
+          [ 'first_name LIKE ? AND last_name LIKE ?', "%#{first_name}", "%#{last_name.join(' ')}" ]
         end
-        asset = klass.first(:conditions => conditions)
+        asset = klass.where(conditions).first
       end
 
       if asset
@@ -328,7 +328,7 @@ module FatFreeCRM
       }
 
       # Search for domain name in Accounts.
-      account = Account.first(:conditions => [ "email like ?", "%#{recipient_domain}" ])
+      account = Account.where('email like ?', "%#{recipient_domain}").first
       if account
         log "asociating new contact #{recipient} with the account #{account.name}"
         defaults[:account] = account
@@ -352,7 +352,7 @@ module FatFreeCRM
     def sender_has_permissions_for?(asset)
       return true if asset.access == "Public"
       return true if asset.user_id == @sender.id || asset.assigned_to == @sender.id
-      return true if asset.access == "Shared" && Permission.count(:conditions => [ "user_id = ? AND asset_id = ? AND asset_type = ?", @sender.id, asset.id, asset.class.to_s ]) > 0
+      return true if asset.access == "Shared" && Permission.where('user_id = ? AND asset_id = ? AND asset_type = ?', @sender.id, asset.id, asset.class.to_s).count > 0
 
       false
     end

@@ -6,8 +6,6 @@ require 'rspec/rails'
 require 'factory_girl'
 require "#{::Rails.root}/spec/factories"
 
-require 'rspec/assert_select'
-
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
@@ -39,7 +37,7 @@ RSpec.configure do |config|
   config.after(:each, :type => :view) do
     # detect html-quoted entities in all rendered responses
     if rendered
-      rendered.should_not match /&amp;\S{1,6};/
+      rendered.should_not match %r/&amp;\S{1,6};/
     end
   end
 

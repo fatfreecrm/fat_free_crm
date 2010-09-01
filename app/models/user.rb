@@ -67,13 +67,15 @@ class User < ActiveRecord::Base
   has_many    :activities,  :dependent => :destroy
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
-  scope :except, lambda { |user| { :conditions => [ "id != ? ", user.id ] } }
-  scope :by_name, :order => "first_name, last_name, email"
-  default_scope :order => "id DESC" # Show newest users first.
+
+  is_paranoid
+
+  default_scope order('id DESC') # Show newest users first.
+  scope :except, lambda { |user| where('id != ?', user.id) }
+  scope :by_name, order('first_name, last_name, email')
 
   simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
 
-  is_paranoid
   acts_as_authentic do |c|
     c.session_class = Authentication
     c.validates_uniqueness_of_login_field_options = { :message => :username_taken }

@@ -37,22 +37,22 @@ describe Activity do
     end
 
     it "should select all activities except one" do
-      @activities = Activity.for(@user).except(:viewed)
+      @activities = Activity.for(@user).without_actions(:viewed)
       @activities.map(&:action).sort.should == %w(created deleted updated)
     end
 
     it "should select all activities except many" do
-      @activities = Activity.for(@user).except(:created, :updated, :deleted)
+      @activities = Activity.for(@user).without_actions(:created, :updated, :deleted)
       @activities.map(&:action).should == %w(viewed)
     end
 
     it "should select one requested activity" do
-      @activities = Activity.for(@user).only(:deleted)
+      @activities = Activity.for(@user).with_actions(:deleted)
       @activities.map(&:action).should == %w(deleted)
     end
 
     it "should select many requested activities" do
-      @activities = Activity.for(@user).only(:created, :updated)
+      @activities = Activity.for(@user).with_actions(:created, :updated)
       @activities.map(&:action).sort.should == %w(created updated)
     end
 
@@ -67,11 +67,11 @@ describe Activity do
     describe "Create, update, and delete (#{subject})" do
       before(:each) do
         @subject = Factory(subject.to_sym, :user => @current_user)
-        @conditions = [ "user_id=? AND subject_id=? AND subject_type=? AND action=?", @current_user.id, @subject.id, subject.capitalize ]
+        @conditions = [ 'user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', @current_user.id, @subject.id, @subject.class.name ]
       end
 
       it "should add an activity when creating new #{subject}" do
-        @activity = Activity.first(:conditions => (@conditions << "created"))
+        @activity = Activity.where(@conditions << 'created').first
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
@@ -82,7 +82,7 @@ describe Activity do
         else
           @subject.update_attributes(:name => "Billy Bones")
         end
-        @activity = Activity.first(:conditions => (@conditions << "updated"))
+        @activity = Activity.where(@conditions << 'updated').first
 
         @activity.should_not == nil
         @activity.info.should == "Billy Bones"
@@ -90,7 +90,7 @@ describe Activity do
 
       it "should add an activity when deleting #{subject}" do
         @subject.destroy
-        @activity = Activity.first(:conditions => (@conditions << "deleted"))
+        @activity = Activity.where(@conditions << 'deleted').first
 
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
@@ -99,7 +99,7 @@ describe Activity do
       it "should add an activity when commenting on a #{subject}" do
         @comment = Factory(:comment, :commentable => @subject)
 
-        @activity = Activity.first(:conditions => (@conditions << "commented"))
+        @activity = Activity.where(@conditions << 'commented').first
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
@@ -107,14 +107,14 @@ describe Activity do
       describe "on a record marked as deleted" do
         it "should still be able to update" do
           @subject.destroy
-          deleted = subject.classify.constantize.find_with_destroyed(@subject)
+          deleted = @subject.class.find_with_destroyed(@subject)
 
           if deleted.respond_to?(:full_name)
             deleted.update_attributes(:first_name => "Billy", :last_name => "Bones DELETED")
           else
             deleted.update_attributes(:name => "Billy Bones DELETED")
           end
-          @activity = Activity.first(:conditions => (@conditions << "updated"))
+          @activity = Activity.where(@conditions << 'updated').first
 
           @activity.should_not == nil
           @activity.info.should == "Billy Bones DELETED"
@@ -124,9 +124,9 @@ describe Activity do
       describe "on an actually deleted record" do
         it "should wipe out all associated activity records" do
           @subject.destroy!
-          @activities = Activity.all(:conditions => [ "user_id=? AND subject_id=? AND subject_type=?", @current_user.id, @subject.id, subject.capitalize ])
+          @activities = Activity.where('user_id = ? AND subject_id = ? AND subject_type = ?', @current_user.id, @subject.id, @subject.class.name)
 
-          lambda { subject.classify.constantize.find_with_destroyed(@subject) }.should raise_error(ActiveRecord::RecordNotFound)
+          lambda { @subject.class.find_with_destroyed(@subject) }.should raise_error(ActiveRecord::RecordNotFound)
           @activities.should == []
         end
       end
@@ -138,23 +138,23 @@ describe Activity do
     describe "Recently viewed items (#{subject})" do
       before(:each) do
         @subject = Factory(subject.to_sym, :user => @current_user)
-        @conditions = [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @current_user.id, @subject.id, subject.capitalize ]
+        @conditions = [ "user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @current_user.id, @subject.id, @subject.class.name ]
       end
 
       it "creating a new #{subject} should also make it a recently viewed item" do
-        @activity = Activity.first(:conditions => @conditions)
+        @activity = Activity.where(@conditions).first
 
         @activity.should_not == nil
       end
 
       it "updating #{subject} should also mark it as recently viewed" do
-        @before = Activity.first(:conditions => @conditions)
+        @before = Activity.where(@conditions).first
         if @subject.respond_to?(:full_name)
           @subject.update_attributes(:first_name => "Billy", :last_name => "Bones")
         else
           @subject.update_attributes(:name => "Billy Bones")
         end
-        @after = Activity.first(:conditions => @conditions)
+        @after = Activity.where(@conditions).first
 
         @before.should_not == nil
         @after.should_not == nil
@@ -163,7 +163,7 @@ describe Activity do
 
       it "deleting #{subject} should remove it from recently viewed items" do
         @subject.destroy
-        @activity = Activity.first(:conditions => @conditions)
+        @activity = Activity.where(@conditions).first
 
         @activity.should be_nil
       end
@@ -173,12 +173,12 @@ describe Activity do
         @subject = Factory(subject.to_sym, :user => @somebody,  :access => "Public")
         Factory(:activity, :user => @somebody, :subject => @subject, :action => "viewed")
 
-        @activity = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @somebody.id, @subject.id, subject.capitalize ])
+        @activity = Activity.where("user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @somebody.id, @subject.id, @subject.class.name).first
         @activity.should_not == nil
 
         # Now @current_user destroys somebody's object: somebody should no longer have it :viewed.
         @subject.destroy
-        @activity = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action='viewed'", @somebody.id, @subject.id, subject.capitalize ])
+        @activity = Activity.where("user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @somebody.id, @subject.id, @subject.class.name).first
         @activity.should be_nil
       end
     end
@@ -187,18 +187,18 @@ describe Activity do
   describe "Recently viewed items (task)" do
     before(:each) do
       @task = Factory(:task)
-      @conditions = [ "subject_id=? AND subject_type='Task'", @task.id ]
+      @conditions = [ "subject_id = ? AND subject_type = 'Task'", @task.id ]
     end
 
     it "creating a new task should not add it to recently viewed items list" do
-      @activities = Activity.all(:conditions => @conditions)
+      @activities = Activity.where(@conditions)
 
       @activities.map(&:action).should == %w(created) # but not viewed
     end
 
     it "updating a new task should not add it to recently viewed items list" do
       @task.update_attribute(:updated_at, 1.second.ago)
-      @activities = Activity.all(:conditions => @conditions)
+      @activities = Activity.where(@conditions)
 
       @activities.map(&:action).sort.should == %w(created updated) # but not viewed
     end
@@ -212,21 +212,21 @@ describe Activity do
 
     it "should create 'completed' task action" do
       @task.update_attribute(:completed_at, 1.second.ago)
-      @activities = Activity.all(:conditions => @conditions)
+      @activities = Activity.where(@conditions)
 
       @activities.map(&:action).sort.should == %w(completed created)
     end
 
     it "should create 'reassigned' task action" do
       @task.update_attribute(:assigned_to, @current_user.id + 1)
-      @activities = Activity.all(:conditions => @conditions)
+      @activities = Activity.where(@conditions)
 
       @activities.map(&:action).sort.should == %w(created reassigned)
     end
 
     it "should create 'rescheduled' task action" do
       @task.update_attribute(:bucket, "due_tomorrow") # Factory creates :due_asap task
-      @activities = Activity.all(:conditions => @conditions)
+      @activities = Activity.where(@conditions)
 
       @activities.map(&:action).sort.should == %w(created rescheduled)
     end
@@ -235,12 +235,12 @@ describe Activity do
   describe "Rejecting a lead" do
     before(:each) do
       @lead = Factory(:lead, :user => @current_user, :status => "new")
-      @conditions = [ "subject_id=? AND subject_type='Lead' AND user_id=?", @lead.id, @current_user ]
+      @conditions = [ "subject_id = ? AND subject_type = 'Lead' AND user_id = ?", @lead.id, @current_user ]
     end
 
     it "should create 'rejected' lead action" do
       @lead.update_attribute(:status, "rejected")
-      @activities = Activity.all(:conditions => @conditions)
+      @activities = Activity.where(@conditions)
 
       @activities.map(&:action).sort.should == %w(created rejected viewed)
     end
@@ -248,7 +248,7 @@ describe Activity do
     it "should not mark it as recently viewed" do
       Activity.delete_all                                   # delete :created and :viewed
       @lead.update_attribute(:status, "rejected")
-      @activities = Activity.all(:conditions => @conditions)
+      @activities = Activity.where(@conditions)
 
       @activities.map(&:action).sort.should == %w(rejected) # no :viewed, only :rejected
     end
@@ -260,7 +260,7 @@ describe Activity do
       @subject = Factory(:account, :user => Factory(:user), :access => "Private")
       @subject.update_attribute(:updated_at,  1.second.ago)
 
-      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
       @activities.map(&:action).sort.should == %w(created updated viewed)
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
@@ -270,7 +270,7 @@ describe Activity do
       @subject = Factory(:account, :user => Factory(:user), :access => "Private")
       @subject.destroy
 
-      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
       @activities.map(&:action).sort.should == %w(created deleted)
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
@@ -285,7 +285,7 @@ describe Activity do
       )
       @subject.update_attribute(:updated_at, 1.second.ago)
 
-      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
       @activities.map(&:action).sort.should == %w(created updated viewed)
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
@@ -300,7 +300,7 @@ describe Activity do
       )
       @subject.destroy
 
-      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
       @activities.map(&:action).sort.should == %w(created deleted)
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.should == []
@@ -314,7 +314,7 @@ describe Activity do
       )
       @subject.update_attribute(:updated_at, 1.second.ago)
 
-      @activities = Activity.all(:conditions => [ "subject_id=? AND subject_type=?", @subject.id, subject.class.name.capitalize ]);
+      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
       @activities.map(&:action).sort.should == %w(created updated viewed)
 
       @activities = Activity.latest({}).visible_to(@current_user)

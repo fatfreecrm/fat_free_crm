@@ -35,8 +35,8 @@ class Activity < ActiveRecord::Base
   belongs_to  :subject, :polymorphic => true
   scope :recent, where(:action => 'viewed').order('updated_at DESC').limit(10)
   scope :for,    lambda { |user| where(:user_id => user.id) }
-  scope :with_action,    lambda { |*actions| where('action IN (?)', actions) }
-  scope :without_action, lambda { |*actions| where('action NOT IN (?)', actions) }
+  scope :with_actions,    lambda { |*actions| where('action IN (?)', actions) }
+  scope :without_actions, lambda { |*actions| where('action NOT IN (?)', actions) }
   scope :latest, lambda { |options|
     includes(:user)
     .where(options[:asset] ? {:subject_type => options[:asset]} : nil)

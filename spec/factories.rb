@@ -286,8 +286,7 @@ end
 #----------------------------------------------------------------------------
 Factory.define :task do |t|
   t.user                { |a| a.association(:user) }
-  t.asset_id            nil
-  t.asset_type          nil
+  t.asset               nil
   t.assigned_to         nil
   t.completed_by        nil
   t.name                { Faker::Lorem.sentence[0,64] }
@@ -361,4 +360,3 @@ Factory.define :default_settings, :parent => :setting do |s|
     Factory(key.to_sym) # <--- That's where the data gets loaded.
   end
 end
-
