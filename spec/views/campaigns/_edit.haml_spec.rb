@@ -34,5 +34,3 @@ describe "/campaigns/_edit.html.haml" do
     rendered.should_not have_tag("textarea[id=campaign_background_info]")
   end
 end
-
-

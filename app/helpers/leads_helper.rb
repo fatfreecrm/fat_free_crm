@@ -60,7 +60,7 @@ module LeadsHelper
     stars = (1..5).inject({}) { |hash, star| hash[star] = "&#9733;" * star; hash }.sort
     options_for_select = %Q(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
     options_for_select << stars.inject([]) {|array, star| array << %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>); array }.join
-    select_tag name, options_for_select, options
+    select_tag name, options_for_select.html_safe, options
   end
 
   # Sidebar checkbox control for filtering leads by status.

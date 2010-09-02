@@ -2,14 +2,16 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/destroy.js.rjs" do
   include Admin::UsersHelper
-  
+
   before(:each) do
     login_and_assign(:admin => true)
   end
 
   describe "user got deleted" do
     before(:each) do
-      assign(:user, @user = Factory(:user).destroy)
+      @user = Factory(:user)
+      @user.destroy
+      assign(:user, @user)
     end
 
     it "blinds up destroyed user partial" do

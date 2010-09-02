@@ -12,7 +12,7 @@ describe HomeController do
     it "should get a list of activities" do
       @activity = Factory(:activity, :subject => Factory(:account, :user => @current_user))
       controller.should_receive(:get_activities).once.and_return([ @activity ])
-  
+
       get :index
       assigns[:activities].should == [ @activity ]
     end
@@ -82,7 +82,7 @@ describe HomeController do
       session[:hello] = "world"
 
       xhr :get, :toggle, :id => "hello"
-      session.data.keys.should_not include(:hello)
+      session.keys.should_not include(:hello)
     end
 
     it "should toggle expand/collapse state of form section in the session (save new session key)" do

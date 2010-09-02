@@ -10,4 +10,3 @@ describe "/comments/show.html.haml" do
     render
   end
 end
-

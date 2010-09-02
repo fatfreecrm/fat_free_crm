@@ -798,7 +798,7 @@ describe OpportunitiesController do
   describe "responding to POST redraw" do
     it "should save user selected opportunity preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
-      @current_user.preference[:opportunities_per_page].should == "42"
+      @current_user.preference[:opportunities_per_page].should == 42
       @current_user.preference[:opportunities_outline].should  == "brief"
       @current_user.preference[:opportunities_sort_by].should  == "opportunities.name ASC"
     end

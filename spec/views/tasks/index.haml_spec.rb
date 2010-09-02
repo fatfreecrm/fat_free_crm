@@ -20,7 +20,7 @@ describe "/tasks/index.html.haml" do
       render
 
       number_of_buckets = (status == "completed" ? Setting.task_completed : Setting.task_bucket).size
-      view.should render_template(:partial => "_" << status).exactly(number_of_buckets).times
+      view.should render_template(:partial => "_" << status, :count => number_of_buckets)
       view.should_not render_template(:partial => "_empty")
     end
   end

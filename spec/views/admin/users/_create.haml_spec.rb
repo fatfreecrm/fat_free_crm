@@ -11,7 +11,7 @@ describe "admin/users/_create.html.haml" do
 
   it "renders [Create User] form" do
     render
-    view.should render_template(:partial => "admin/_users/profile")
+    view.should render_template(:partial => "admin/users/_profile")
 
     rendered.should have_tag("form[class=new_user]")
   end

@@ -14,4 +14,3 @@ describe "/comments/index.html.haml" do
     render
   end
 end
-

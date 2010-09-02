@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/comments/new.html.haml" do
+describe "/comments/_new.html.haml" do
   include CommentsHelper
 
   before(:each) do
@@ -16,5 +16,3 @@ describe "/comments/new.html.haml" do
     rendered.should include("show()")
   end
 end
-
-

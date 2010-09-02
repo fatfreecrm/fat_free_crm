@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/tasks/edit.js.rjs" do
   include TasksHelper
 
@@ -12,6 +12,7 @@ describe "/tasks/edit.js.rjs" do
       @task = Factory(:task)
       assign(:task, @task)
       assign(:view, "pending")
+      assign(:bucket, [])
       assign(:empty_bucket, :due_asap)
       assign(:task_total, stub_task_total("pending"))
     end
@@ -38,7 +39,7 @@ describe "/tasks/edit.js.rjs" do
       rendered.should include(%Q/$("filters").visualEffect("shake"/)
     end
   end
-  
+
   describe "complete from related asset" do
     it "should replace pending partial with the completed one" do
       @task = Factory(:task, :completed_at => Time.now, :completor => @current_user)
@@ -55,7 +56,7 @@ describe "/tasks/edit.js.rjs" do
       @task = Factory(:task, :completed_at => Time.now, :completor => @current_user)
       assign(:task, @task)
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
-  
+
       render
       rendered.should have_rjs("recently") do |rjs|
         with_tag("div[class=caption]")

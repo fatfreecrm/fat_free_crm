@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/edit.html.haml" do
+describe "/leads/_edit.html.haml" do
   include LeadsHelper
-  
+
   before(:each) do
     login_and_assign
     assign(:lead, @lead = Factory(:lead))
@@ -38,5 +38,3 @@ describe "/leads/edit.html.haml" do
     rendered.should_not have_tag("textarea[id=lead_background_info]")
   end
 end
-
-

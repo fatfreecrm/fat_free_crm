@@ -136,6 +136,12 @@
     event.stop();
   });
 
+  document.on("click", "a[data-popup]", function(event, element) {
+    if (event.stopped) return;
+    window.open($(element).href);
+    event.stop();
+  });
+
   document.on("click", "a[data-method]", function(event, element) {
     if (event.stopped) return;
     handleMethod(element);

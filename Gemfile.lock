@@ -31,6 +31,41 @@ GIT
       simple_column_search (>= 1.0.2)
       will_paginate (>= 3.0.pre2)
 
+GIT
+  remote: git://github.com/rspec/rspec-core.git
+  revision: 001e600
+  specs:
+    rspec-core (2.0.0.beta.20)
+
+GIT
+  remote: git://github.com/rspec/rspec-expectations.git
+  revision: 7cdb347
+  specs:
+    rspec-expectations (2.0.0.beta.20)
+      diff-lcs (>= 1.1.2)
+
+GIT
+  remote: git://github.com/rspec/rspec-mocks.git
+  revision: 3b2b138
+  specs:
+    rspec-mocks (2.0.0.beta.20)
+
+GIT
+  remote: git://github.com/rspec/rspec-rails.git
+  revision: a79dc73
+  specs:
+    rspec-rails (2.0.0.beta.20)
+      rspec (= 2.0.0.beta.20)
+
+GIT
+  remote: git://github.com/rspec/rspec.git
+  revision: 8f9dfb1
+  specs:
+    rspec (2.0.0.beta.20)
+      rspec-core (= 2.0.0.beta.20)
+      rspec-expectations (= 2.0.0.beta.20)
+      rspec-mocks (= 2.0.0.beta.20)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -135,16 +170,6 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
-    rspec (2.0.0.beta.20)
-      rspec-core (= 2.0.0.beta.20)
-      rspec-expectations (= 2.0.0.beta.20)
-      rspec-mocks (= 2.0.0.beta.20)
-    rspec-core (2.0.0.beta.20)
-    rspec-expectations (2.0.0.beta.20)
-      diff-lcs (>= 1.1.2)
-    rspec-mocks (2.0.0.beta.20)
-    rspec-rails (2.0.0.beta.20)
-      rspec (= 2.0.0.beta.20)
     ruby-debug-base19 (0.11.24)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -200,7 +225,11 @@ DEPENDENCIES
   mysql (>= 2.8.1)
   paperclip (>= 2.3.3)
   rails (= 3.0.0)
-  rspec-rails (>= 2.0.0.beta.20)
+  rspec!
+  rspec-core!
+  rspec-expectations!
+  rspec-mocks!
+  rspec-rails!
   ruby-debug19
   shoulda
   simple_column_search (>= 1.0.2)

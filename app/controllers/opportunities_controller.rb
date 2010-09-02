@@ -283,7 +283,7 @@ class OpportunitiesController < ApplicationController
     else
       @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
       @stage.each do |value, key|
-        @opportunity_stage_total[key] = Opportunity.my(@current_user).count(:conditions => [ "stage=?", key.to_s ])
+        @opportunity_stage_total[key] = Opportunity.my(@current_user).where(:stage => key.to_s).count
         @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
       end
       @opportunity_stage_total[:other] += @opportunity_stage_total[:all]

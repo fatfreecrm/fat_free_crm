@@ -1,4 +1,4 @@
-- assets = controller.class.name.gsub('Controller', '').underscore.gsub('/','_')
+- assets = controller_path.split('/')[1..-1].join('_')
 - asset = assets.singularize
 #empty
   - if @current_query.blank?

@@ -34,10 +34,14 @@ RSpec.configure do |config|
 
   config.include(SharedControllerSpecs, :type => :controller)
 
+  config.before(:each, :type => :view) do
+    I18n.locale = 'en-US'
+  end
+
   config.after(:each, :type => :view) do
     # detect html-quoted entities in all rendered responses
     if rendered
-      rendered.should_not match %r/&amp;\S{1,6};/
+      rendered.should_not match(/&amp;\S{1,6};/)
     end
   end
 
@@ -133,7 +137,7 @@ end
 
 ActionView::TestCase::TestController.class_eval do
   def self.controller_name
-    @controller_name ||= controller_path.split("/").last
+    controller_path.split("/").last
   end
 end
 

@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/home/index.html.haml" do
   include HomeHelper
-  
+
   before(:each) do
     login_and_assign
   end
@@ -18,7 +18,7 @@ describe "/home/index.html.haml" do
     view.should_not render_template(:partial => "_activity")
 
     render
-    rendered.body.should include("No activity records found.")
+    rendered.should include("No activity records found.")
   end
 end
 

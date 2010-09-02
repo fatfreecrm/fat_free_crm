@@ -70,8 +70,8 @@ module SharedControllerSpecs
   shared_examples_for "discard" do
     it "should discard the attachment without deleting it" do
       xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
-      assigns[:attachment].should == @attachment.reload               # The attachment should still exist.
-      @model.send("#{@attachment.class.name.tableize}").should == []  # But no longer associated with the model.
+      assigns[:attachment].should == @attachment.reload                     # The attachment should still exist.
+      @model.reload.send("#{@attachment.class.name.tableize}").should == [] # But no longer associated with the model.
       response.should render_template("common/discard")
     end
 

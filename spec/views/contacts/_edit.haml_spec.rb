@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/edit.html.haml" do
+describe "/contacts/_edit.html.haml" do
   include ContactsHelper
-  
+
   before(:each) do
     login_and_assign
     assign(:account, @account = Factory(:account))
@@ -63,5 +63,3 @@ describe "/contacts/edit.html.haml" do
     rendered.should_not have_tag("textarea[id=contact_background_info]")
   end
 end
-
-

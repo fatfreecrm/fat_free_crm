@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/home/index.js.rjs" do
   include HomeHelper
-  
+
   before(:each) do
     login_and_assign
   end
@@ -18,10 +18,10 @@ describe "/home/index.js.rjs" do
 
   it "should render a message if there're no activities" do
     assign(:activities, [])
-  
+
     render
     rendered.should have_rjs("activities")
-    rendered.body.should include("No activity records found.")
+    rendered.should include("No activity records found.")
   end
 
 end
