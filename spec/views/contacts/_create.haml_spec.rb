@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/contacts/_create.html.haml" do
   include ContactsHelper
-  
+
   before(:each) do
     login_and_assign
     @account = Factory(:account)
@@ -13,12 +13,12 @@ describe "/contacts/_create.html.haml" do
   end
 
   it "should render [create contact] form" do
+    render
     view.should render_template(:partial => "contacts/_top_section")
     view.should render_template(:partial => "contacts/_extra")
     view.should render_template(:partial => "contacts/_web")
     view.should render_template(:partial => "contacts/_permissions")
 
-    render
     rendered.should have_tag("form[class=new_contact]")
   end
 
@@ -42,6 +42,5 @@ describe "/contacts/_create.html.haml" do
     render
     rendered.should_not have_tag("textarea[id=contact_background_info]")
   end
+
 end
-
-

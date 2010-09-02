@@ -12,12 +12,13 @@ describe "/contacts/_edit.html.haml" do
   it "should render [edit contact] form" do
     assign(:contact, @contact = Factory(:contact))
     assign(:users, [ @current_user ])
+
+    render
     view.should render_template(:partial => "contacts/_top_section")
     view.should render_template(:partial => "contacts/_extra")
     view.should render_template(:partial => "contacts/_web")
     view.should render_template(:partial => "contacts/_permissions")
 
-    render
     rendered.should have_tag("form[class=edit_contact]") do
       with_tag "input[type=hidden][id=contact_user_id][value=#{@contact.user_id}]"
     end

@@ -37,11 +37,11 @@ describe "/opportunities/options.rjs" do
 
     it "should call JavaScript functions to load preferences menus" do
       params[:cancel] = nil
+
+      render
       view.should render_template(:partial => "common/_sort_by")
       view.should render_template(:partial => "common/_per_page")
       view.should render_template(:partial => "common/_outline")
-
-      render
     end
   end
 

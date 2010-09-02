@@ -5,9 +5,13 @@ describe "/accounts/show.html.haml" do
 
   before(:each) do
     login_and_assign
-    assign(:account, Factory(:account, :id => 42))
+    @account = Factory(:account, :id => 42,
+      :contacts => [ Factory(:contact) ],
+      :opportunities => [ Factory(:opportunity) ])
+    assign(:account, @account)
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
+    assign(:timeline, [ Factory(:comment, :commentable => @account) ])
   end
 
   it "should render account landing page" do

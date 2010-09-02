@@ -14,10 +14,10 @@ describe "/opportunities/_create.html.haml" do
   end
 
   it "should render [create opportunity] form" do
+    render
     view.should render_template(:partial => "opportunities/_top_section")
     view.should render_template(:partial => "opportunities/_permissions")
 
-    render
     rendered.should have_tag("form[class=new_opportunity]")
   end
 

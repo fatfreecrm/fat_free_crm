@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/convert.html.haml" do
+describe "/leads/_convert.html.haml" do
   include LeadsHelper
-  
+
   before(:each) do
     login_and_assign
     @account = Factory(:account)
@@ -14,13 +14,11 @@ describe "/leads/convert.html.haml" do
   end
 
   it "should render [convert lead] form" do
+    render
     view.should render_template(:partial => "leads/_opportunity")
     view.should render_template(:partial => "leads/_convert_permissions")
 
-    render
     rendered.should have_tag("form[class=edit_lead]")
   end
 
 end
-
-

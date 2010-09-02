@@ -1,10 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/edit.js.rjs" do
+describe "/tasks/complete.js.rjs" do
   include TasksHelper
 
   before(:each) do
     login_and_assign
+    assign(:bucket, [])
   end
 
   describe "complete from Tasks tab (pending view)" do
@@ -12,7 +13,6 @@ describe "/tasks/edit.js.rjs" do
       @task = Factory(:task)
       assign(:task, @task)
       assign(:view, "pending")
-      assign(:bucket, [])
       assign(:empty_bucket, :due_asap)
       assign(:task_total, stub_task_total("pending"))
     end

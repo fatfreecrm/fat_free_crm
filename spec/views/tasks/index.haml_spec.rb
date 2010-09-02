@@ -7,25 +7,24 @@ describe "/tasks/index.html.haml" do
     login_and_assign
   end
 
-  VIEWS.each do |status|
+  TASK_STATUSES.each do |status|
     before(:each) do
-      @asap  = Factory(:task, :asset => Factory(:account), :bucket => "due_asap")
-      @today = Factory(:task, :asset => Factory(:account), :bucket => "due_today")
+      @due  = Factory(:task, :asset => Factory(:account), :bucket => "due_asap", :assignee => Factory(:user))
+      @completed = Factory(:task, :asset => Factory(:account), :bucket => "completed_today", :assignee => Factory(:user), :completed_at => 1.hour.ago)
     end
 
     it "should render list of #{status} tasks if list of tasks is not empty" do
       assign(:view, status)
-      assign(:tasks, { :due_asap => [ @asap ], :due_today => [ @today ] })
+      assign(:tasks, { :due_asap => [ @due ], :completed_today => [ @completed ] })
 
       render
 
-      number_of_buckets = (status == "completed" ? Setting.task_completed : Setting.task_bucket).size
-      view.should render_template(:partial => "_" << status, :count => number_of_buckets)
+      view.should render_template(:partial => "_" << status, :count => 1)
       view.should_not render_template(:partial => "_empty")
     end
   end
 
-  VIEWS.each do |status|
+  TASK_STATUSES.each do |status|
     it "should render a message if there're no #{status} tasks" do
       assign(:view, status)
       assign(:tasks, { :due_asap => [], :due_today => [] })
@@ -35,6 +34,4 @@ describe "/tasks/index.html.haml" do
       view.should render_template(:partial => "_empty")
     end
   end
-
 end
-

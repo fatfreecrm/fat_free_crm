@@ -247,7 +247,7 @@ module ApplicationHelper
         links << link_to(image_tag("#{site}.gif", :size => "15x15"), url, :"data-popup" => true, :title => t(:open_in_window, url))
       end
       links
-    end.join("\n")
+    end.join("\n").html_safe
   end
 
   # Ajax helper to refresh current index page once the user selects an option.

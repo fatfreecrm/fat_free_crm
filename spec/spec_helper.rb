@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
+require 'ruby-debug'
+
 require 'factory_girl'
 require "#{::Rails.root}/spec/factories"
 
@@ -13,7 +15,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 # Load shared behavior modules to be included by Runner config.
 Dir[File.dirname(__FILE__) + "/shared/*.rb"].map {|f| require f}
 
-VIEWS = %w(pending assigned completed).freeze
+TASK_STATUSES = %w(pending assigned completed).freeze
 
 # Load default settings from config/settings.yml
 Factory(:default_settings)

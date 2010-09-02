@@ -17,9 +17,9 @@ module RSpec # :nodoc:
         def matches?(response_or_text, &block)
           @block = block if block
 
-          if doc = doc_from(response_or_text)
-            @args.unshift(doc)
-          end
+          #~ if doc = doc_from(response_or_text)
+            #~ @args.unshift(doc)
+          #~ end
 
           begin
             @spec_scope.__send__(@selector_assertion, *@args, &@block)
@@ -41,26 +41,26 @@ module RSpec # :nodoc:
 
       private
 
-        module TestResponseOrString
-          def test_response?
-            ActionController::TestResponse === self and
-                                               !self.headers['Content-Type'].blank? and
-                                               self.headers['Content-Type'].to_sym == :xml
-          end
+        #~ module TestResponseOrString
+          #~ def test_response?
+            #~ ActionController::TestResponse === self and
+                                               #~ !self.headers['Content-Type'].blank? and
+                                               #~ self.headers['Content-Type'].to_sym == :xml
+          #~ end
 
-          def string?
-            String === self
-          end
-        end
+          #~ def string?
+            #~ String === self
+          #~ end
+        #~ end
 
-        def doc_from(response_or_text)
-          response_or_text.extend TestResponseOrString
-          if response_or_text.test_response?
-            HTML::Document.new(response_or_text.body, @options[:strict], @options[:xml]).root
-          elsif response_or_text.string?
-            HTML::Document.new(response_or_text, @options[:strict], @options[:xml]).root
-          end
-        end
+        #~ def doc_from(response_or_text)
+          #~ response_or_text.extend TestResponseOrString
+          #~ if response_or_text.test_response?
+            #~ HTML::Document.new(response_or_text.body, @options[:strict], @options[:xml]).root
+          #~ elsif response_or_text.string?
+            #~ HTML::Document.new(response_or_text, @options[:strict], @options[:xml]).root
+          #~ end
+        #~ end
 
         def format_args(*args)
           args.empty? ? "" : "(#{arg_list(*args)})"

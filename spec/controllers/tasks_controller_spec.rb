@@ -54,7 +54,7 @@ describe TasksController do
       update_sidebar
     end
 
-    VIEWS.each do |view|
+    TASK_STATUSES.each do |view|
       it "should expose all tasks as @tasks and render [index] template for #{view} view" do
         @tasks = produce_tasks(@current_user, view)
 
@@ -79,7 +79,6 @@ describe TasksController do
       #   response.body.should == @tasks.to_xml unless Date.tomorrow == Date.today.end_of_week # Cheating...
       # end
     end
-
   end
 
   # GET /tasks/1
@@ -87,7 +86,7 @@ describe TasksController do
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
-    VIEWS.each do |view|
+    TASK_STATUSES.each do |view|
       it "should render tasks index for #{view} view (since a task doesn't have landing page)" do
         get :show, :id => 42, :view => view
         response.should render_template("tasks/index")
@@ -101,7 +100,6 @@ describe TasksController do
         response.body.should == @task.to_xml
       end
     end
-
   end
 
   # GET /tasks/new
@@ -151,7 +149,6 @@ describe TasksController do
         response.body.should == 'window.location.href = "/accounts";'
       end
     end
-
   end
 
   # GET /tasks/1/edit                                                      AJAX
@@ -227,7 +224,6 @@ describe TasksController do
         response.should render_template("tasks/edit")
       end
     end
-
   end
 
   # POST /tasks
@@ -258,7 +254,6 @@ describe TasksController do
           assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
         end
       end
-
     end
 
     describe "with invalid params" do
@@ -273,9 +268,7 @@ describe TasksController do
         assigns[:task_total].should == nil
         response.should render_template("tasks/create")
       end
-
     end
-
   end
 
   # PUT /tasks/1
@@ -337,7 +330,6 @@ describe TasksController do
         response.body.should == "window.location.reload();"
       end
     end
-
   end
 
   # DELETE /tasks/1
@@ -390,7 +382,6 @@ describe TasksController do
         response.body.should == "window.location.reload();"
       end
     end
-
   end
 
   # PUT /tasks/1/complete
@@ -443,14 +434,13 @@ describe TasksController do
         response.body.should == "window.location.reload();"
       end
     end
-
   end
 
   # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do
 
-    VIEWS.each do |view|
+    TASK_STATUSES.each do |view|
       it "should remove a filter from session and render [filter] template for #{view} view" do
         name = "filter_by_task_#{view}"
         session[name] = "due_asap,due_today,due_tomorrow"
@@ -473,7 +463,5 @@ describe TasksController do
         response.should render_template("tasks/filter")
       end
     end
-
   end
-
 end

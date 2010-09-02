@@ -12,13 +12,13 @@ describe "/leads/_create.html.haml" do
   end
 
   it "should render [create lead] form" do
+    render
     view.should render_template(:partial => "leads/_top_section")
     view.should render_template(:partial => "leads/_status")
     view.should render_template(:partial => "leads/_contact")
     view.should render_template(:partial => "leads/_web")
     view.should render_template(:partial => "leads/_permissions")
 
-    render
     rendered.should have_tag("form[class=new_lead]")
   end
 
@@ -36,5 +36,3 @@ describe "/leads/_create.html.haml" do
     rendered.should_not have_tag("textarea[id=lead_background_info]")
   end
 end
-
-

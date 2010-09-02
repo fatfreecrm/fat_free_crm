@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/home/options.rjs" do
   include HomeHelper
-  
+
   before(:each) do
     login_and_assign
   end
@@ -15,7 +15,7 @@ describe "/home/options.rjs" do
     assign(:duration, "two_days")
 
     render
-  
+
     rendered.should have_rjs("options") do |rjs|
       with_tag("input[type=hidden]") # @current_user
 
@@ -29,11 +29,11 @@ describe "/home/options.rjs" do
 
   it "should load :options partial with JavaScript code for menus" do
     params[:cancel] = nil
-    view.should render_template(:partial => "_options")
-  
     render
+
+    view.should render_template(:partial => "_options")
   end
-  
+
   it "should hide options form on Cancel" do
     params[:cancel] = "true"
     render
@@ -44,5 +44,3 @@ describe "/home/options.rjs" do
   end
 
 end
-
-

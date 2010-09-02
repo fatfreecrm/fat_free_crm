@@ -12,13 +12,13 @@ describe "/leads/_edit.html.haml" do
   end
 
   it "should render [edit lead] form" do
+    render
     view.should render_template(:partial => "leads/_top_section")
     view.should render_template(:partial => "leads/_status")
     view.should render_template(:partial => "leads/_contact")
     view.should render_template(:partial => "leads/_web")
     view.should render_template(:partial => "leads/_permissions")
 
-    render
     rendered.should have_tag("form[class=edit_lead]") do
       with_tag "input[type=hidden][id=lead_user_id][value=#{@lead.user_id}]"
     end

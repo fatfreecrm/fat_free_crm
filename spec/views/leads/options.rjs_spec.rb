@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/leads/options.rjs" do
   include LeadsHelper
-  
+
   before(:each) do
     login_and_assign
     assign(:sort_by, "leads.first_name ASC")
@@ -27,7 +27,7 @@ describe "/leads/options.rjs" do
     it "should render [options.html.haml] template into :options div and show it" do
       params[:cancel] = nil
       render
-    
+
       rendered.should have_rjs("options") do |rjs|
         with_tag("input[type=hidden]") # @current_user
       end
@@ -37,15 +37,15 @@ describe "/leads/options.rjs" do
 
     it "should call JavaScript functions to load preferences menus" do
       params[:cancel] = nil
+
+      render
       view.should render_template(:partial => "common/_sort_by")
       view.should render_template(:partial => "common/_per_page")
       view.should render_template(:partial => "common/_outline")
       view.should render_template(:partial => "common/_naming")
-
-      render
     end
   end
-  
+
   describe "cancel lead options" do
     it "should hide lead options form" do
       params[:cancel] = "true"

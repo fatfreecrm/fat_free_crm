@@ -128,17 +128,6 @@ describe "/opportunities/update.js.rjs" do
         rendered.should include("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
       end
 
-      it "should update related campaign sidebar from campaign landing page" do
-        assign(:campaign, campaign = Factory(:campaign))
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-        render
-
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[class=panel][id=summary]")
-          with_tag("div[class=panel][id=recently]")
-        end
-      end
-
       it "should redraw the [edit_opportunity] form and shake it" do
         render
         rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|

@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/campaigns/_create.html.haml" do
   include CampaignsHelper
-  
+
   before(:each) do
     login_and_assign
     assign(:campaign, Campaign.new)
@@ -10,11 +10,11 @@ describe "/campaigns/_create.html.haml" do
   end
 
   it "should render [create campaign] form" do
+    render
     view.should render_template(:partial => "campaigns/_top_section")
     view.should render_template(:partial => "campaigns/_objectives")
     view.should render_template(:partial => "campaigns/_permissions")
 
-    render
     rendered.should have_tag("form[class=new_campaign]")
   end
 
@@ -32,5 +32,3 @@ describe "/campaigns/_create.html.haml" do
     rendered.should_not have_tag("textarea[id=campaign_background_info]")
   end
 end
-
-

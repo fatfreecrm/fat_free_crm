@@ -7,7 +7,7 @@ describe "/tasks/destroy.js.rjs" do
     login_and_assign
   end
 
-  VIEWS.each do |status|
+  TASK_STATUSES.each do |status|
     describe "destroy from Tasks tab (#{status} view)" do
       before(:each) do
         @task = Factory(:task)
@@ -49,5 +49,4 @@ describe "/tasks/destroy.js.rjs" do
       rendered.should_not include(%Q/$("list_due_asap").visualEffect("fade"/) # bucket is not empty
     end
   end
-
 end

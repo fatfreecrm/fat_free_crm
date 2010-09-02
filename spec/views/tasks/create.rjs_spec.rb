@@ -7,7 +7,7 @@ describe "/tasks/create.js.rjs" do
     login_and_assign
   end
 
-  (VIEWS - %w(completed)).each do |status|
+  (TASK_STATUSES - %w(completed)).each do |status|
     describe "create from #{status} tasks page" do
       before(:each) do
         assign(:view, status)
@@ -84,7 +84,7 @@ describe "/tasks/create.js.rjs" do
     end
   end
 
-  (VIEWS - %w(assigned)).each do |status|
+  (TASK_STATUSES - %w(assigned)).each do |status|
     describe "create from outside the Tasks tab" do
       before(:each) do
         @task = Factory(:task, :id => 42)
