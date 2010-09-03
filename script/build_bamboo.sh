@@ -35,14 +35,14 @@ RAILS_ENV=test rake bamboo:spec
 RAILS_ENV=cucumber HEADLESS=true rake bamboo:cucumber
 
 # crm_super_tags tests
-cd vendor/plugins/crm_super_tags && RAILS_ENV=test rake bamboo
-# cucumbers need cucumber env
-#GEM_PATH=`ruby -r 'rubygems' -e 'puts Gem.path.last'`
-#ruby -r $GEM_PATH/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/cucumber_loader -S cucumber --format CI::Reporter::Cucumber
+cd vendor/plugins/crm_super_tags
+RAILS_ENV=test rake -f ../../../Rakefile bamboo:spec
+HEADLESS=true RAILS_ENV=cucumber rake -f ../../../Rakefile bamboo:cucumber
 
 # crm_merge_contacts tests
-cd vendor/plugins/crm_merge_contacts && RAILS_ENV=test rake bamboo
-# cucumbers need cucumber env
+cd ../crm_merge_contacts
+RAILS_ENV=test rake -f ../../../Rakefile bamboo:spec
+HEADLESS=true RAILS_ENV=cucumber rake -f ../../../Rakefile bamboo:cucumber
 
 # drop database
 cd ../../../
