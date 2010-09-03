@@ -7,4 +7,6 @@
 [submodule "vendor/plugins/crm_tags"]
 	path = vendor/plugins/crm_tags
 	url = git@github.com:crossroads/crm_tags.git
-
+[submodule "vendor/plugins/crm_crossroads"]
+	path = vendor/plugins/crm_crossroads
+	url = git@github.com:crossroads/crm_crossroads.git
