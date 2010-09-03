@@ -8,10 +8,11 @@ if ENV['HEADLESS'] == 'true'
   require 'headless'
   headless = Headless.new
   headless.start
+  HEADLESS_DISPLAY = headless.display
   at_exit do
     headless.destroy
   end
-  puts "Running in Headless mode"
+  puts "Running in Headless mode. Display #{HEADLESS_DISPLAY}"
 end
   
 Spork.prefork do
