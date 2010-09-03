@@ -9,8 +9,10 @@ describe "/tasks/index.html.haml" do
 
   TASK_STATUSES.each do |status|
     before(:each) do
-      @due  = Factory(:task, :asset => Factory(:account), :bucket => "due_asap", :assignee => Factory(:user))
-      @completed = Factory(:task, :asset => Factory(:account), :bucket => "completed_today", :assignee => Factory(:user), :completed_at => 1.hour.ago)
+      user = Factory(:user)
+      account = Factory(:account)
+      @due  = Factory(:task, :asset => account, :bucket => "due_asap", :assignee => user)
+      @completed = Factory(:task, :asset => account, :bucket => "completed_today", :assignee => user, :completed_at => 1.hour.ago, :completor => user)
     end
 
     it "should render list of #{status} tasks if list of tasks is not empty" do

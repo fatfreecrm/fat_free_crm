@@ -32,7 +32,7 @@ describe CampaignsController do
       @campaigns = [ Factory(:campaign, :user => @current_user) ]
 
       get :index
-      (assigns[:campaign_status_total].keys - (@status << :all << :other)).should == []
+      (assigns[:campaign_status_total].keys.map(&:to_sym) - (@status << :all << :other)).should == []
     end
 
     it "should filter out campaigns by status" do

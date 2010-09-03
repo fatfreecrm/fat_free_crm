@@ -26,7 +26,7 @@ describe CommentsController do
         it "should redirect to root url with warning if the asset is not found" do
           get :index, :"#{asset}_id" => @asset.id + 42
           flash[:warning].should_not == nil
-          response.should redirect_to(root_url)
+          response.should redirect_to(root_path)
         end
       end # HTML
 
@@ -204,7 +204,7 @@ describe CommentsController do
   #     it "should redirect to the comment" do
   #       Comment.stub!(:find).and_return(mock_comment(:update_attributes => true))
   #       put :update, :id => "1"
-  #       response.should redirect_to(comment_url(mock_comment))
+  #       response.should redirect_to(comment_path(mock_comment))
   #     end
   #   end
   #

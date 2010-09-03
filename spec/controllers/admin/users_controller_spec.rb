@@ -144,7 +144,7 @@ describe Admin::UsersController do
       it "updates the requested user, assigns it to @user, and renders [update] template" do
         @user = Factory(:user, :username => "flip", :email => "flip@example.com")
 
-        put :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
+        xhr :put, :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
         assigns[:user].should == @user.reload
         assigns[:user].username.should == "flop"
         response.should render_template("admin/users/update")
@@ -180,7 +180,7 @@ describe Admin::UsersController do
       it "doesn't update the requested user, but assigns it to @user and renders [update] template" do
         @user = Factory(:user, :username => "flip", :email => "flip@example.com")
 
-        put :update, :id => @user.id, :user => {}
+        xhr :put, :update, :id => @user.id, :user => {}
         assigns[:user].should == @user.reload
         assigns[:user].username.should == "flip"
         response.should render_template("admin/users/update")
@@ -254,7 +254,7 @@ describe Admin::UsersController do
     describe "with mime type of XML" do
       it "performs lookup using query string and render XML" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :search, :query => "amy?!"
+        get :search, :query => "amy"
 
         response.body.should == [ @amy ].to_xml
       end

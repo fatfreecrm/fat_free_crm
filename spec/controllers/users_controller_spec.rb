@@ -128,7 +128,7 @@ describe UsersController do
         post :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
         assigns[:user].should == @user
         flash[:notice].should =~ /welcome/
-        response.should redirect_to(profile_url)
+        response.should redirect_to(profile_path)
       end
 
       it "should redirect to login page if user signup needs approval" do
@@ -137,7 +137,7 @@ describe UsersController do
         post :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
         assigns[:user].should == @user
         flash[:notice].should =~ /approval/
-        response.should redirect_to(login_url)
+        response.should redirect_to(login_path)
       end
 
     end

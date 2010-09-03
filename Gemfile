@@ -9,7 +9,7 @@ gem 'gravatar-ultimate', :git => 'git://github.com/crossroads/gravatar.git'
 gem 'haml', '>= 3.0.18'
 gem 'is_paranoid', :git => 'git://github.com/crossroads/is_paranoid.git', :branch => 'rails3'
 gem 'mysql', '>= 2.8.1'
-gem 'paperclip', '>= 2.3.3'
+gem 'paperclip', :git => 'http://github.com/thoughtbot/paperclip.git'
 gem 'simple_column_search', '>= 1.0.2'
 gem 'will_paginate', '>= 3.0.pre2'
 

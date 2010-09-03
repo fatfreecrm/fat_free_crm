@@ -2,10 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe LeadsController do
 
-  def get_data_for_sidebar
-    @lead_status_total = Setting.lead_status
-  end
-
   before(:each) do
     require_user
     set_current_tab(:leads)
@@ -15,10 +11,6 @@ describe LeadsController do
   # GET /leads.xml                                                AJAX and HTML
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
-
-    before(:each) do
-      get_data_for_sidebar
-    end
 
     it "should expose all leads as @leads and render [index] template" do
       @leads = [ Factory(:lead, :user => @current_user) ]
@@ -33,7 +25,7 @@ describe LeadsController do
       @status = Setting.lead_status
 
       get :index
-      (assigns[:lead_status_total].keys - (@status << :all << :other)).should == []
+      (assigns[:lead_status_total].keys.map(&:to_sym) - (@status << :all << :other)).should == []
     end
 
     it "should filter out leads by status" do

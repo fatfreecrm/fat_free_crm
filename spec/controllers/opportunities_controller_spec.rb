@@ -31,7 +31,7 @@ describe OpportunitiesController do
     it "should expose the data for the opportunities sidebar" do
       get :index
       assigns[:stage].should == @stage
-      (assigns[:opportunity_stage_total].keys - (@stage.map(&:last) << :all << :other)).should == []
+      (assigns[:opportunity_stage_total].keys.map(&:to_sym) - (@stage.map(&:last) << :all << :other)).should == []
     end
 
     it "should filter out opportunities by stage" do

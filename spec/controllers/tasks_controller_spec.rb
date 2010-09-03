@@ -60,9 +60,9 @@ describe TasksController do
 
         get :index, :view => view
 
-        (assigns[:tasks].keys - @tasks.keys).should == []
+        (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
         (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
-        assigns[:task_total].should == @task_total
+        assigns[:task_total].symbolize_keys.should == @task_total
         response.should render_template("tasks/index")
       end
 

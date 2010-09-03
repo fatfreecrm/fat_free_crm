@@ -70,11 +70,13 @@ class User < ActiveRecord::Base
 
   is_paranoid
 
-  default_scope order('id DESC') # Show newest users first.
+  # For some reason this does not play nice with is_paranoid when set as default scope
+  scope :by_id, order('id DESC')
   scope :except, lambda { |user| where('id != ?', user.id) }
   scope :by_name, order('first_name, last_name, email')
 
-  simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  simple_column_search :username, :first_name, :last_name,
+    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, '').strip }
 
   acts_as_authentic do |c|
     c.session_class = Authentication

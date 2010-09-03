@@ -193,9 +193,9 @@ class Admin::UsersController < Admin::ApplicationController
     self.current_query = options[:query] if options[:query]
 
     if current_query.blank?
-      User.paginate(:page => current_page)
+      User.by_id.paginate(:page => current_page)
     else
-      User.search(current_query).paginate(:page => current_page)
+      User.by_id.search(current_query).paginate(:page => current_page)
     end
   end
 
