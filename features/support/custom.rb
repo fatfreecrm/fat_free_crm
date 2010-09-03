@@ -1,3 +1,19 @@
+#
+# headless
+# sudo apt-get install xvfb
+# OR yum install xorg-x11-server-Xvfb.x86_64
+# gem install headless
+#
+if ENV['HEADLESS'] == 'true'
+  require 'headless'
+  headless = Headless.new
+  headless.start
+  at_exit do
+    headless.destroy
+  end
+  puts "Running in Headless mode"
+end
+  
 Spork.prefork do
   require "factory_girl"
   require RAILS_ROOT + "/spec/factories"

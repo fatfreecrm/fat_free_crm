@@ -12,8 +12,13 @@ require 'spec/rake/spectask'
 require 'tasks/rails'
 
 desc 'Run the specs for bamboo (requires ci_reporter)'
-Spec::Rake::SpecTask.new(:bamboo) do |t|
+Spec::Rake::SpecTask.new('bamboo:spec') do |t|
   t.spec_opts = ["--require #{Gem.path.last}/gems/ci_reporter-1.6.2/lib/ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec"]
   t.spec_files = FileList['spec/**/*_spec.rb']
 end
 
+desc 'Run the cucumbers for bamboo. Use HEADLESS=true if you want to run in xvfb'
+Cucumber::Rake::Task.new('bamboo:cucumber') do |t|
+  t.rcov = true
+  t.cucumber_opts = ["--format junit --out 'features/reports'"]
+end
