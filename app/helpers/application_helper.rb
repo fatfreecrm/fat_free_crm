@@ -17,7 +17,8 @@
 
 module ApplicationHelper
 
-  def tabs(tabs = FatFreeCRM::Tabs.main)
+  def tabs(tabs = nil)
+    tabs ||= controller_path =~ /admin/ ? FatFreeCRM::Tabs.admin : FatFreeCRM::Tabs.main
     if tabs
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
@@ -167,7 +168,7 @@ module ApplicationHelper
     current = tabs.first unless tabs.include?(current)
     tabs.inject([]) do |html, tab|
       html << link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", :class => (tab == current ? 'selected' : ''))
-    end.join(" | ")
+    end.join(" | ").html_safe
   end
 
   #----------------------------------------------------------------------------
@@ -283,7 +284,7 @@ module ApplicationHelper
   def get_browser_timezone_offset
     unless session[:timezone_offset]
       remote_function(
-        :url  => url_for(:controller => :home, :action => :timezone),
+        :url  => timezone_path,
         :with => "{ offset: (new Date()).getTimezoneOffset() }"
       )
     end

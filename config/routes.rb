@@ -1,7 +1,11 @@
 FatFreeCrm::Application.routes.draw do
 
   root :to => 'home#index'
-  match '/' => 'home#index'
+
+  match 'options' => 'home#options'
+  match 'toggle' => 'home#toggle'
+  match 'timeline' => 'home#timeline', :as => :timeline
+  match 'timezone' => 'home#timezone', :as => :timezone
 
   resource :authentication
 
@@ -122,6 +126,4 @@ FatFreeCrm::Application.routes.draw do
     resources :settings
     resources :plugins
   end
-
-  match '/home(/:action(/:id))', :controller => :home
 end

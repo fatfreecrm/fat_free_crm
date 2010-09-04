@@ -1,4 +1,4 @@
-- assets = controller_path.split('/')[1..-1].join('_')
+- assets = controller_path.split('/').reject(&:blank?).join('_')
 - asset = assets.singularize
 #empty
   - if @current_query.blank?

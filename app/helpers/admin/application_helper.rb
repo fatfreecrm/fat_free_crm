@@ -16,9 +16,4 @@
 #------------------------------------------------------------------------------
 
 module Admin::ApplicationHelper
-
-  def tabs
-    super(FatFreeCRM::Tabs.admin)
-  end
-
 end
