@@ -13,7 +13,7 @@ class FfcrmPluginGenerator < Rails::Generator::NamedBase
       m.class_collisions class_path, class_name
 
       m.directory "#{plugin_path}/lib"
-      m.directory "#{plugin_path}/tasks"
+      m.directory "#{plugin_path}/lib/tasks"
       m.directory "#{plugin_path}/spec"
       m.directory "#{plugin_path}/features"
       m.directory "#{plugin_path}/features/step_definitions"
@@ -26,7 +26,7 @@ class FfcrmPluginGenerator < Rails::Generator::NamedBase
       m.template "plugin:uninstall.rb", "#{plugin_path}/uninstall.rb"
       m.template "Rakefile",            "#{plugin_path}/Rakefile"
       m.template "plugin:plugin.rb",    "#{plugin_path}/lib/#{file_name}.rb"
-      m.template "plugin:tasks.rake",   "#{plugin_path}/tasks/#{file_name}_tasks.rake"
+      m.template "plugin:tasks.rake",   "#{plugin_path}/lib/tasks/#{file_name}_tasks.rake"
       m.template "spec/spec_helper.rb", "#{plugin_path}/spec/spec_helper.rb"
       m.template "spec/spec.rb",        "#{plugin_path}/spec/#{file_name}_spec.rb"
       m.template "spec/factories.rb",   "#{plugin_path}/spec/factories.rb"
