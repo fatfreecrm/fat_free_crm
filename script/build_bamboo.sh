@@ -32,19 +32,19 @@ RAILS_ENV=cucumber rake gems:install
 RAILS_ENV=test rake db:migrate
 RAILS_ENV=test rake db:migrate:plugins
 RAILS_ENV=test rake bamboo:spec
-RAILS_ENV=cucumber rake db:test:purge db:migrate db:migrate:plugins
+RAILS_ENV=test rake db:test:purge db:migrate db:migrate:plugins
 RAILS_ENV=cucumber HEADLESS=true rake bamboo:cucumber
 
 # crm_super_tags tests
 cd vendor/plugins/crm_super_tags
 RAILS_ENV=test rake -f ../../../Rakefile bamboo:spec
-RAILS_ENV=cucumber rake db:test:purge db:migrate db:migrate:plugins
+RAILS_ENV=test rake -f ../../../Rakefile db:test:purge db:migrate db:migrate:plugins
 HEADLESS=true RAILS_ENV=cucumber rake -f ../../../Rakefile bamboo:cucumber
 
 # crm_merge_contacts tests
 cd ../crm_merge_contacts
 RAILS_ENV=test rake -f ../../../Rakefile bamboo:spec
-RAILS_ENV=cucumber rake db:test:purge db:migrate db:migrate:plugins
+RAILS_ENV=test rake -f ../../../Rakefile db:test:purge db:migrate db:migrate:plugins
 HEADLESS=true RAILS_ENV=cucumber rake -f ../../../Rakefile bamboo:cucumber
 
 # drop database
