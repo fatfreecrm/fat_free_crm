@@ -5,7 +5,7 @@ if ! (gem list | grep "rails" | grep "2.3.8"); then gem install rails -v=2.3.8 -
 if ! (gem list | grep "ci_reporter" | grep "1.6.2"); then gem install ci_reporter -v=1.6.2 --no-rdoc --no-ri; fi;
 
 # cucumber extras
-yum --quiet -y install libxml2 libxml2-devel.x86_64 libxslt libxslt-devel xorg-x11-server-Xvfb.x86_64 firefox
+yum --quiet -y install libxml2 libxml2-devel libxslt libxslt-devel xorg-x11-server-Xvfb firefox ImageMagick
 
 # Create Database Configuration File
 cat << EOF > config/database.yml
@@ -28,20 +28,23 @@ git submodule update
 # fat free crm tests
 RAILS_ENV=test rake db:create
 RAILS_ENV=test rake gems:install
-RAILS_ENV=cucumber rake gems:install # cucumbers use same env as tests but have different gems
+RAILS_ENV=cucumber rake gems:install
 RAILS_ENV=test rake db:migrate
 RAILS_ENV=test rake db:migrate:plugins
 RAILS_ENV=test rake bamboo:spec
+RAILS_ENV=cucumber rake db:test:purge db:migrate db:migrate:plugins
 RAILS_ENV=cucumber HEADLESS=true rake bamboo:cucumber
 
 # crm_super_tags tests
 cd vendor/plugins/crm_super_tags
 RAILS_ENV=test rake -f ../../../Rakefile bamboo:spec
+RAILS_ENV=cucumber rake db:test:purge db:migrate db:migrate:plugins
 HEADLESS=true RAILS_ENV=cucumber rake -f ../../../Rakefile bamboo:cucumber
 
 # crm_merge_contacts tests
 cd ../crm_merge_contacts
 RAILS_ENV=test rake -f ../../../Rakefile bamboo:spec
+RAILS_ENV=cucumber rake db:test:purge db:migrate db:migrate:plugins
 HEADLESS=true RAILS_ENV=cucumber rake -f ../../../Rakefile bamboo:cucumber
 
 # drop database
