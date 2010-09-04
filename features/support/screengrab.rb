@@ -66,5 +66,5 @@ After('@javascript') do |scenario|
 end
 
 # Clean out the screengrab folder on each run
-FileUtils.rm_rf(ScreenGrabHelper::DEFAULT_SCREENGRAB_PATH)
+#FileUtils.rm_rf(ScreenGrabHelper::DEFAULT_SCREENGRAB_PATH)
 FileUtils.mkdir_p(ScreenGrabHelper::DEFAULT_SCREENGRAB_PATH)
