@@ -10,6 +10,7 @@ set :application, "fat-free-crm"
 set :default_stage, "preview"
 set :passenger_version, "2.2.15"
 set :bundle_without, [:cucumber, :development, :test]
+set :bundle_flags, "--quiet"
 
 #
 # To get going from scratch:
