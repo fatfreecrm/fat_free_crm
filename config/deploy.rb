@@ -1,5 +1,5 @@
 require 'capistrano/ext/multistage'
-require 'capistrano_colors'
+#~ require 'capistrano_colors'
 require 'bundler/capistrano'
 load 'recipes/prompt'
 load 'recipes/stack'
