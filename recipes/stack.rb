@@ -33,7 +33,6 @@ rubygems ruby-devel mod_ssl git" # others include "memcached sphinx"
 set :gems_to_install, {
   'bundler' => '1.0.0'
 }
-set :mysql_gem_version, '2.8.1'
 
 namespace :stack do
 
@@ -67,8 +66,7 @@ namespace :install do
 
   desc "Install rvm"
   task :rvm do
-    run "gem install rvm"
-    run "rvm-install"
+    run "bash < <( curl -L http://bit.ly/rvm-install-system-wide )"
     run "rvm install 1.9.2"
     run "rvm 1.9.2 --passenger"
     run "rvm use 1.9.2 --default"
@@ -143,19 +141,9 @@ production:
 
 end
 
-namespace :deploy do
-
-  desc "Update gems using rake gems:install"
-  task :install_gems do
-    run "cd #{release_path} && RAILS_ENV=production rake gems:install"
-  end
-
-end
-
 #
 # Hooks
 #
 before "deploy:cold", "stack"
 after "deploy:update_code", "files:symlink_database_yml"
-after "deploy:update_code", "deploy:install_gems"
 before "deploy:symlink", "files:set_permissions"

@@ -113,6 +113,14 @@ GEM
     autotest-rails (4.1.0)
       ZenTest
     builder (2.1.2)
+    capistrano (2.5.19)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.0.0)
+    capistrano-ext (1.2.1)
+      capistrano (>= 1.0.0)
     capybara (0.3.9)
       culerity (>= 0.2.4)
       mime-types (>= 1.16)
@@ -141,6 +149,7 @@ GEM
     gherkin (2.1.5)
       trollop (~> 1.16.2)
     haml (3.0.18)
+    highline (1.6.1)
     hoe (2.6.2)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
@@ -154,6 +163,13 @@ GEM
       treetop (>= 1.4.5)
     mime-types (1.16)
     mysql (2.8.1)
+    net-scp (1.0.3)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.0.23)
+    net-ssh-gateway (1.0.1)
+      net-ssh (>= 1.99.1)
     nokogiri (1.4.3.1)
     polyglot (0.3.1)
     rack (1.2.1)
@@ -219,6 +235,7 @@ DEPENDENCIES
   acts_as_commentable (>= 3.0.0)
   authlogic!
   autotest-rails
+  capistrano-ext
   capybara
   cucumber-rails
   database_cleaner
