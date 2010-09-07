@@ -1,7 +1,0 @@
-.title_tools
-  = link_to_inline(:create_task, url_for(:action => :new, :view => @view))
-.title#title
-  = (@view == "assigned" ? t(:assigned_tasks) : t(:tasks))
-
-.remote#options{ hidden }
-.remote#create_task{ hidden }

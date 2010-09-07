@@ -1,2 +1,0 @@
-page[:users].replace_html render(:partial => "user", :collection => @users)
-page[:paginate].replace_html render(:partial => "common/paginate")

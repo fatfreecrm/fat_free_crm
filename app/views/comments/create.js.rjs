@@ -1,7 +1,0 @@
-if @comment.valid?
-  page.insert_html :after, :comment_new, :partial => "comment", :locals => { :comment => @comment }
-  page[dom_id(@comment)].visual_effect :highlight, :duration => 1.5
-end
-page[:shown_notes].value = @comment.commentable.comment_ids.join(',')
-page[:comment_comment].clear
-page[:comment_comment].focus

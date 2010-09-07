@@ -1,1 +1,0 @@
-page[dom_id(@task)].visual_effect :blind_up, :duration => 0.25
