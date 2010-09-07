@@ -13,8 +13,9 @@ set :passenger_version, "2.2.15"
 # To get going from scratch:
 #
 # cap deploy:cold
-# cap crm:settings ( or cap crm:demo )
-# cap crm:setup:admin
+# cap crm:setup
+# cap crm:demo
+#
 # 
 
 namespace :crm do
@@ -26,13 +27,22 @@ namespace :crm do
   
   namespace :setup do
 
-    desc "Load crm settings"
+    desc "Prepare the database and load default application settings (destroys all data)"
+    task :default do
+      prompt_with_default("Username", :admin_username, "admin")
+      prompt_with_default("Password", :admin_password, "admin")
+      prompt_with_default("Email", :admin_email, "admin@crossroadsint.org")
+      run "cd #{current_path} && RAILS_ENV=production rake crm:setup USERNAME=#{admin_username} PASSWORD=#{admin_password} EMAIL=#{admin_email} PROCEED=true"
+    end
+    
+   desc "Creates an admin user"
     task :admin do
       prompt_with_default("Username", :admin_username, "admin")
       prompt_with_default("Password", :admin_password, "admin")
       prompt_with_default("Email", :admin_email, "admin@crossroadsint.org")
       run "cd #{current_path} && RAILS_ENV=production rake crm:setup:admin USERNAME=#{admin_username} PASSWORD=#{admin_password} EMAIL=#{admin_email}"
     end
+    
   end
 
   desc "Load demo data (wipes database)"
@@ -52,10 +62,21 @@ namespace :git do
   end
 end
 
-after 'deploy:update_code', 'deploy:update_settings'
+before 'deploy:symlink', 'deploy:update_settings'
+after 'deploy:migrate', 'deploy:migrate_plugins'
 namespace :deploy do
+
   desc "Update settings file with server specific attributes (runs a server-side sed script)"
   task :update_settings do
     run "if [ -f #{shared_path}/settings.sed ]; then sed -i -f #{shared_path}/settings.sed #{release_path}/config/settings.yml; fi"
+    crm.settings
+    run "if [ ! -f #{shared_path}/log/dropbox.log ]; then touch #{shared_path}/log/dropbox.log; fi"
+    #run "ln -sf #{shared_path}/log/dropbox.log  #{release_path}/log/dropbox.log"
   end
+  
+  desc "Migrate plugins"
+  task :migrate_plugins do
+    run "cd #{current_path} && RAILS_ENV=production rake db:migrate:plugins"
+  end
+  
 end

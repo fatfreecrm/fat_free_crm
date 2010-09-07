@@ -34,3 +34,12 @@ begin
 rescue LoadError
 end
 
+
+# Add event.simulate.js to development environment,
+# so that we can simulate events such as mouseclicks.
+class DevelopmentViewHooks < FatFreeCRM::Callback::Base
+  def javascript_includes(view, context = {})
+    view.javascript_include_tag "event.simulate.js"
+  end
+end
+

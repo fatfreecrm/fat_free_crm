@@ -6,6 +6,8 @@ log/*.log
 public/avatars/**/*
 public/javascripts/cache/*.js
 public/stylesheets/cache/*.css
+public/plugin_assets
+spec/reports
 nbproject
 tmp/**/*
 .bundle
@@ -13,4 +15,5 @@ tmp/**/*
 .DS_Store
 *~
 *.swp
-*.rails2
+features/screengrabs
+features/reports
