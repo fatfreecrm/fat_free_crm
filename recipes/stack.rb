@@ -14,7 +14,7 @@
 # Depends on prompt.rb
 #
 
-# 
+#
 # Useful commands
 #
 # cap stack - install operating system packages and setup rails folders
@@ -31,8 +31,7 @@ set :yum_packages_to_install, "aspell gcc gcc-c++ bzip2-devel zlib-devel make op
 libstdc++-devel freeimage-devel clamav-devel mysql-devel readline-devel ruby ruby-rdoc ruby-ri ruby-irb \
 rubygems ruby-devel mod_ssl git" # others include "memcached sphinx"
 set :gems_to_install, {
-  'rails' => '2.3.8',
-  'rake' => '0.8.7',
+  'bundler' => '1.0.0'
 }
 set :mysql_gem_version, '2.8.1'
 
@@ -55,7 +54,7 @@ namespace :install do
   desc "Setup operating system and rails environment"
   task :default do
     base
-    mysql_gem
+    rvm
     gems
     httpd
   end
@@ -66,16 +65,20 @@ namespace :install do
     run "yum -y install #{yum_packages_to_install}"
   end
 
+  desc "Install rvm"
+  task :rvm do
+    run "gem install rvm"
+    run "rvm-install"
+    run "rvm install 1.9.2"
+    run "rvm 1.9.2 --passenger"
+    run "rvm use 1.9.2 --default"
+  end
+
   desc "Install required gems"
   task :gems do
     gems_to_install.each do |name, version|
       run "gem install #{name} --no-rdoc --no-ri#{' --version '+ version unless (version.nil? or version == '') }"
     end
-  end
-  
-  desc "Install required Gems"
-  task :mysql_gem do
-    run "gem install mysql #{'--version ' + mysql_gem_version if !mysql_gem_version.nil?}" + ' -- --with-mysql-config'
   end
 
   desc "Install Apache"
@@ -89,16 +92,16 @@ namespace :install do
 end
 
 namespace :update do
-  
+
   desc "Update Operating System"
   task :os do
     run "yum -y update"
   end
- 
+
 end
 
 namespace 'files' do
-  
+
   desc "Setting proper permissions on shared directory"
   task :set_permissions do
     run "chown -R apache:apache #{deploy_to}/shared/"
@@ -132,12 +135,12 @@ production:
     run "mysql -u root --password=#{pass.chomp} -e 'CREATE database #{db_name};'"
     run "mysql -u root --password=#{pass.chomp} -e \"GRANT ALL ON #{db_name}.* TO '#{db_username}'@'#{db_host}' IDENTIFIED BY '#{db_password}';\""
   end
-  
+
   desc "Ensure the database.yml file is linked to current/config"
   task :symlink_database_yml do
     run "ln -sf #{deploy_to}/shared/database.yml  #{release_path}/config/database.yml"
   end
-  
+
 end
 
 namespace :deploy do
