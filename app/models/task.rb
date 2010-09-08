@@ -49,23 +49,23 @@ class Task < ActiveRecord::Base
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
   scope :my, lambda { |user|
-    includes(:assignee)
-    .where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user[:user] || user, user[:user] || user)
-    .order(user[:order] || 'name ASC')
-    .limit(user[:limit]) # nil selects all records
+    includes(:assignee).
+    where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user[:user] || user, user[:user] || user).
+    order(user[:order] || 'name ASC').
+    limit(user[:limit]) # nil selects all records
   }
 
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.
   scope :assigned_by, lambda { |user|
-    includes(:assignee)
-    .where('user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?', user.id, user.id)
+    includes(:assignee).
+    where('user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?', user.id, user.id)
   }
 
   # Tasks created by the user or assigned to the user, i.e. the union of the two
   # scopes above. That's the tasks the user is allowed to see and track.
   scope :tracked_by, lambda { |user|
-    includes(:assignee)
-    .where('user_id = ? OR assigned_to = ?', user.id, user.id)
+    includes(:assignee).
+    where('user_id = ? OR assigned_to = ?', user.id, user.id)
   }
 
   # Status based scopes to be combined with the due date and completion time.
@@ -228,3 +228,4 @@ class Task < ActiveRecord::Base
     Time.strptime(self.calendar, I18n.t('date.formats.mmddyyyy')).utc
   end
 end
+
