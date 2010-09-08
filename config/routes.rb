@@ -34,7 +34,7 @@ FatFreeCrm::Application.routes.draw do
     end
   end
 
-  resources :leads do
+  resources :leads, :constraints => {:id => /\d+/} do
     collection do
       post :auto_complete
       get :options
@@ -51,7 +51,7 @@ FatFreeCrm::Application.routes.draw do
     end
   end
 
-  resources :accounts do
+  resources :accounts, :constraints => {:id => /\d+/} do
     collection do
       post :auto_complete
       get :options
@@ -64,7 +64,7 @@ FatFreeCrm::Application.routes.draw do
     end
   end
 
-  resources :campaigns do
+  resources :campaigns, :constraints => {:id => /\d+/} do
     collection do
       post :auto_complete
       get :options
@@ -78,7 +78,7 @@ FatFreeCrm::Application.routes.draw do
     end
   end
 
-  resources :contacts do
+  resources :contacts, :constraints => {:id => /\d+/} do
     collection do
       post :auto_complete
       get :options
@@ -91,7 +91,7 @@ FatFreeCrm::Application.routes.draw do
     end
   end
 
-  resources :opportunities do
+  resources :opportunities, :constraints => {:id => /\d+/} do
     collection do
       post :auto_complete
       get :options
