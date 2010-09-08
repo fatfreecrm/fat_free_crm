@@ -1,3 +1,40 @@
+GIT
+  remote: git://github.com/rspec/rspec-core.git
+  revision: b60bfbe
+  specs:
+    rspec-core (2.0.0.beta.20)
+
+GIT
+  remote: git://github.com/rspec/rspec-expectations.git
+  revision: 76434fa
+  specs:
+    rspec-expectations (2.0.0.beta.20)
+      diff-lcs (>= 1.1.2)
+
+GIT
+  remote: git://github.com/rspec/rspec-mocks.git
+  revision: 9e03463
+  specs:
+    rspec-mocks (2.0.0.beta.20)
+      rspec-core (= 2.0.0.beta.20)
+      rspec-expectations (= 2.0.0.beta.20)
+
+GIT
+  remote: git://github.com/rspec/rspec-rails.git
+  revision: 0330f3a
+  specs:
+    rspec-rails (2.0.0.beta.20)
+      rspec (= 2.0.0.beta.20)
+
+GIT
+  remote: git://github.com/rspec/rspec.git
+  revision: d90fe02
+  specs:
+    rspec (2.0.0.beta.20)
+      rspec-core (= 2.0.0.beta.20)
+      rspec-expectations (= 2.0.0.beta.20)
+      rspec-mocks (= 2.0.0.beta.20)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -28,18 +65,31 @@ GEM
       activemodel (= 3.0.0)
       activesupport (= 3.0.0)
     activesupport (3.0.0)
+    acts_as_commentable (3.0.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
+    authlogic (2.1.6)
+      activesupport
+    awesome_print (0.2.1)
     builder (2.1.2)
+    diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    haml (3.0.18)
+    hoe (2.6.2)
+      rake (>= 0.8.7)
+      rubyforge (>= 2.0.4)
     i18n (0.4.1)
+    json_pure (1.4.6)
     mail (2.2.5)
       activesupport (>= 2.3.6)
       mime-types
       treetop (>= 1.4.5)
     mime-types (1.16)
     mysql2 (0.2.3)
+    paperclip (2.3.3)
+      activerecord
+      activesupport
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -60,14 +110,33 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    simple_column_search (1.0.2)
+    test-unit (1.2.3)
+      hoe (>= 1.5.1)
     thor (0.14.0)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
+    will_paginate (3.0.pre2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  mysql2
+  acts_as_commentable (>= 3.0.0)
+  authlogic (>= 2.1.6)
+  awesome_print (>= 0.2.1)
+  haml (>= 3.0.18)
+  mysql2 (>= 0.2.3)
+  paperclip (>= 2.3.3)
   rails (= 3.0.0)
+  rspec!
+  rspec-core!
+  rspec-expectations!
+  rspec-mocks!
+  rspec-rails!
+  simple_column_search (>= 1.0.2)
+  test-unit (= 1.2.3)
+  will_paginate (>= 3.0.pre2)
