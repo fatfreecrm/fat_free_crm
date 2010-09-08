@@ -32,3 +32,4 @@ end
 Comment.class_eval do
   def log_activity; end
 end
+
