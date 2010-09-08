@@ -1,0 +1,14 @@
+= Prototype Legacy Helper
+
+Plugin that adds support for certain Prototype-specific helper methods that were present in Rails versions before 3.0.
+
+== Installation
+
+You can install this as a plugin into your Rails 3.0 app. (This functionality is built in to prior versions of Rails.)
+
+  git://github.com/supapuerco/prototype_legacy_helper.git
+
+
+== Usage
+
+This plugin adds supports for the following methods, among others: button_to_remote, submit_to_remote, link_to_remote, form_remote_tag, remote_form_for, periodically_call_remote.
