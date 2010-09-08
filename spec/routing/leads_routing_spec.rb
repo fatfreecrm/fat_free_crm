@@ -40,7 +40,7 @@ describe LeadsController do
     end
 
     it "recognizes and generates #filter" do
-      { :get => "/leads/filter" }.should route_to( :controller => "leads", :action => "filter" )
+      { :post => "/leads/filter" }.should route_to( :controller => "leads", :action => "filter" )
     end
 
     it "should generate params for #convert" do

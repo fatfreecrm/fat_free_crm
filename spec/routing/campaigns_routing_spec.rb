@@ -40,7 +40,7 @@ describe CampaignsController do
     end
 
     it "recognizes and generates #filter" do
-      { :get => "/campaigns/filter" }.should route_to( :controller => "campaigns", :action => "filter" )
+      { :post => "/campaigns/filter" }.should route_to( :controller => "campaigns", :action => "filter" )
     end
   end
 end

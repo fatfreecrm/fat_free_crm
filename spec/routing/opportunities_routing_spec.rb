@@ -40,7 +40,7 @@ describe OpportunitiesController do
     end
 
     it "recognizes and generates #filter" do
-      { :get => "/opportunities/filter" }.should route_to( :controller => "opportunities", :action => "filter" )
+      { :post => "/opportunities/filter" }.should route_to( :controller => "opportunities", :action => "filter" )
     end
   end
 end

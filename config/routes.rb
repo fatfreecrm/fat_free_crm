@@ -27,7 +27,7 @@ FatFreeCrm::Application.routes.draw do
   resources :tasks do
     collection do
       post :auto_complete
-      get :filter
+      post :filter
     end
     member do
       put :complete
@@ -40,7 +40,7 @@ FatFreeCrm::Application.routes.draw do
       get :options
       post :redraw
       get :search
-      get :filter
+      post :filter
     end
     member do
       put :attach
@@ -70,7 +70,7 @@ FatFreeCrm::Application.routes.draw do
       get :options
       post :redraw
       get :search
-      get :filter
+      post :filter
     end
     member do
       put :attach
@@ -97,7 +97,7 @@ FatFreeCrm::Application.routes.draw do
       get :options
       post :redraw
       get :search
-      get :filter
+      post :filter
     end
     member do
       put :attach
