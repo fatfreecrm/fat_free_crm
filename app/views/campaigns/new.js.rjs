@@ -1,0 +1,12 @@
+page.call "crm.flick", :empty, :toggle
+page.call "crm.hide_form", :options if called_from_index_page?
+page.call "crm.flip_form", :create_campaign
+
+if params[:cancel] != "true"
+  page[:create_campaign].replace_html :partial => "create"
+  page.call "crm.set_title", :create_campaign, t(:create_campaign)
+  page.call "crm.date_select_popup", :campaign_starts_on
+  page.call "crm.date_select_popup", :campaign_ends_on
+else
+  page.call "crm.set_title", :create_campaign, t(:campaigns)
+end

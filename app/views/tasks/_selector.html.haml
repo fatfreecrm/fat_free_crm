@@ -1,0 +1,8 @@
+%table{ :cellpadding => 3, :cellspacing => 0, :style => "width: 100%; margin: 2px 0px 10px 0px" }
+  %tr
+    %td{ :class => "selector left " + (@view == "pending" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{tasks_path}') }
+      #{t :pending_tab}
+    %td{ :class => "selector " + (@view == "assigned" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{url_for(:action => :index, :view => "assigned")}') }
+      #{t :assigned_tab}
+    %td{ :class => "selector right " + (@view == "completed" ? "on" : "off"), :width => "33%", :onclick => %Q(document.location.href='#{url_for(:action => :index, :view => "completed")}') }
+      #{t :completed_tab}

@@ -1,0 +1,36 @@
+id = dom_id(@campaign)
+
+if params[:cancel].true?     # <----------------- Hide [Edit Campaign]
+
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_campaign
+    page.call "crm.set_title", :edit_campaign, @campaign.name
+  else                                            # Called from campaigns list item...
+    page[id].replace :partial => "campaign", :collection => [ @campaign ]
+  end
+
+else # <----------------------------------------  Show [Edit Campaign] form.
+
+  if params[:cancel].blank?                       # Called from campaigns list item...
+    if @previous                                  # Hide open [Edit Campaign] form if any.
+      if @previous.is_a?(Campaign)
+        page[dom_id(@previous)].replace :partial => "campaign", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "campaign_#{@previous}", :remove
+      end
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_campaign   # Hide [Create Campaign] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit Campaign] form.
+
+  elsif params[:cancel].false?                    # Called from title of the campaign landing page...
+    page[:edit_campaign].replace_html :partial => "edit"
+    page.call "crm.flip_form", :edit_campaign
+    page.call "crm.set_title", :edit_campaign, "#{t :edit} #{@campaign.name}"
+  end
+
+  page.call "crm.date_select_popup", :campaign_starts_on
+  page.call "crm.date_select_popup", :campaign_ends_on
+  page[:campaign_name].focus
+
+end

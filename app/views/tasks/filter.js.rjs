@@ -1,0 +1,1 @@
+page["list_#{params[:filter]}"].toggle

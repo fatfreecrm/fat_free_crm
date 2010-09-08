@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Sep 7, 2010
+---------------------------------------------------------------------
+- Added Gemfile and Gemfile.lock.
+- Installed plugins.
+- Merged with crossroads/rails3 fork; (runs 'rake crm:setup').
+
 Mon, Sep 6, 2010
 ---------------------------------------------------------------------
 - Generated empty Rails3 project.

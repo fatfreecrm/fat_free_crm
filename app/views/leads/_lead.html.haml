@@ -1,0 +1,40 @@
+%li[lead]{ highlightable(dom_id(lead, :tools)) }
+  - if lead.status
+    .strip{:class => lead.status} #{t(lead.status)}
+  - else
+    .strip{:style => "color: gray;"} #{t :other}
+
+  .tools{ invisible, :id => dom_id(lead, :tools) }
+    = link_to_edit(lead) + " | "
+    - unless %w(converted rejected).include?(lead.status)
+      = link_to_convert(lead) + " | "
+    - else
+      = "<font color='silver'>#{t :convert}</font> | ".html_safe
+    - if lead.status != "rejected"
+      = link_to_reject(lead) + " | "
+    - else
+      = "<font color='silver'>#{t :reject}</font> | ".html_safe
+    = link_to_discard(lead) + " | " if shown_on_landing_page?
+    = link_to_delete(lead)
+
+  .indent
+    = link_to(h(lead.full_name(@current_user.preference[:leads_naming])), lead)
+    %tt
+      - if lead.company? && lead.title?
+        = t(:works_at, :job_title => lead.title, :company => lead.company)
+      - else
+        = lead.company if lead.company?
+        = lead.title if lead.title?
+      -#= link_to(h(lead.campaign.name), lead.campaign) if lead.campaign_id
+      - if lead.referred_by?
+        &ndash;
+        = "#{t :referred_by_small} #{lead.referred_by}"
+    - unless @current_user.preference[:leads_outline] == "brief"
+      %dt
+        = stars_for(lead) + " | "
+        = link_to_email(lead.email) << " | " if lead.email.present?
+        = "#{t :phone_small}: " + lead.phone  << " | " if lead.phone.present?
+        = "#{t :mobile_small}: " + lead.mobile << " | " if lead.mobile.present?
+        = t(:added_ago, time_ago_in_words(lead.created_at))
+      = hook(:lead_bottom, self, :lead => lead)
+

@@ -1,0 +1,12 @@
+#tabs
+  %ul
+    - tabs.each do |tab|
+      %li= link_to(t(tab[:text]), tab[:url], :class => tab[:active] ? "active" : "")
+
+= show_flash
+%table{ :width => "100%", :height => "100%", :cellpadding => 0, :cellspacing => 0, :class => :tabbed }
+  %tr
+    %td{ :class => :sidebar, :id => :sidebar, :valign => :top }
+      = render :partial => "layouts/sidebar"
+    %td{ :class => :main, :id => :main, :valign => :top }
+      = yield

@@ -1,0 +1,12 @@
+- sort_by_menu_items = self.languages.sort.inject([]) do |items, (locale, language)|
+  - items << %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw))} } }]
+
+:plain
+  new crm.Menu({
+    trigger   : "locale",
+    align     : "right",
+    appear    : 0.5,
+    fade      : 0.5,
+    width     : 160,
+    menu_items: [ #{sort_by_menu_items.join(",")} ]
+  });

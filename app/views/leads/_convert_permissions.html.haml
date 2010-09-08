@@ -1,0 +1,26 @@
+- collapsed = session[:lead_convert_permissions].nil? # && @lead.errors.empty?
+= subtitle :lead_convert_permissions, collapsed, t(:permissions)
+.section
+  %small#lead_convert_permissions_intro{ hidden_if(!collapsed) }
+    = t(:convert_lead_permissions_intro)
+  #lead_convert_permissions{ hidden_if(collapsed) }
+    .radio_box
+      = radio_button_tag "access", "Lead", true, :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Lead'"
+      = label :access, :lead, t(:copy_permissions, t(:lead_small)), :style => "cursor:pointer"
+    .radio_box
+      = radio_button_tag "access", "Private", false, :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Private'"
+      = label :access, :private, t(:keep_private), :style => "cursor:pointer"
+    .radio_box
+      = radio_button_tag "access", "Public", false, :onclick => "$('people').hide(); $('account_access').value = $('opportunity_access').value = 'Public'"
+      = label :access, :public, t(:make_public), :style => "cursor:pointer"
+    .radio_box
+      = radio_button_tag "access", "Shared", false, :onclick => "$('people').show(); $('account_access').value = $('opportunity_access').value = 'Shared'"
+      = label :access, :shared, t(:share_with), :style => "cursor:pointer"
+
+    #people{ hidden }
+      %div{ :style => "padding: 6px 0px 0px 20px" }
+        - for user in @users
+          .check_box
+            -# Preserve state of the checkboxes if the form gets redrawn on errors.
+            = check_box_tag "users[]", user.id, params[:users] && params[:users].include?(user.id.to_s), :id => "user_#{user.id}", :id => "user_#{user.id}"
+            = label_tag "user_#{user.id}", h(user.full_name), :style => "cursor:pointer"

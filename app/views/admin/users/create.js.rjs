@@ -1,0 +1,11 @@
+if @user.valid?
+  page[:create_user_arrow].replace_html "&#9658;"
+  page[:create_user_title].replace_html t(:users)
+  page.visual_effect :toggle_blind, :create_user, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, :users, :partial => "user", :collection => [ @user ]
+  page[dom_id(@user)].visual_effect :highlight, :duration => 1.5
+else
+  page[:create_user].replace_html :partial => "create"
+  page[:create_user].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:user_username].focus
+end

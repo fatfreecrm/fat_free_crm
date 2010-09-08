@@ -1,0 +1,7 @@
+page[dom_id(@task)].visual_effect :blind_up, :duration => 0.25
+if @empty_bucket
+  page["list_#{@empty_bucket}"].visual_effect :fade, :duration => 0.5
+end
+if called_from_index_page?
+  page << refresh_sidebar(:index, :filters)
+end  

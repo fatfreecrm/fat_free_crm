@@ -1,0 +1,23 @@
+id = called_from_landing_page? ? "edit_campaign" : dom_id(@campaign)
+
+if @campaign.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_campaign
+    page.call "crm.set_title", :edit_campaign, @campaign.name
+    page << refresh_sidebar(:show, :summary)
+  else
+    page[id].replace :partial => "campaign", :collection => [ @campaign ]
+    page[id].visual_effect :highlight, :duration => 1.0
+    page << refresh_sidebar(:index, :filters)
+  end
+else
+  page[id].replace_html :partial => "edit"
+  page.call "crm.date_select_popup", :campaign_starts_on
+  page.call "crm.date_select_popup", :campaign_ends_on
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  if error_message_on(@campaign, :name).blank? and !error_message_on(@campaign, :ends_on).blank?
+    page[:campaign_ends_on].focus
+  else
+    page[:campaign_name].focus
+  end
+end

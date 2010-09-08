@@ -1,0 +1,91 @@
+// Fat Free CRM
+// Copyright (C) 2008-2010 by Michael Dvorkin
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//------------------------------------------------------------------------------
+
+!color_body                  = #e5e5e5
+!color_link                  = #0033cc
+!color_link_hover            = "white"
+!color_link_hover_background = #0033cc
+!color_link_image            = "white"
+!color_link_image_background = "white"
+
+// Standard HTML tags.
+//------------------------------------------------------------------------------
+html, body
+  :background = !color_body
+  :font
+    :size-adjust none
+    :stretch normal
+    :style normal
+    :variant normal
+    :weight normal
+  :height 100%
+  :line-height normal
+
+body, ol, ul, li, dt, tt, label, input, select, textarea
+  :font
+    :size 12px
+    :family "Lucida Grande", Geneva, Arial, Helvetica, sans-serif
+
+body, h1, h2, h3, h4, h5, h6, ol, ul, li
+  :margin 0px
+  :padding 0px
+
+form
+  :margin 0px
+
+ul li
+  :list-style-type none
+
+// Links.
+//------------------------------------------------------------------------------
+a
+  :text-decoration none
+  &:link, &:visited
+    :color = !color_link
+  &:hover 
+    :background = !color_link_hover_background
+    :color = !color_link_hover
+
+  img
+    :background-color = !color_link_image_background
+    :border none
+    :color = !color_link_image
+    :text-decoration none
+
+#options
+  a
+    :border-bottom 1px dotted darkcyan
+    :color darkcyan
+    :text-decoration none
+    &:hover
+      :background = !color_body
+      :border-bottom 1px dotted darkblue
+      :color darkblue
+
+// Smaller fonts.
+//------------------------------------------------------------------------------
+abbr
+  :font-size 9px
+
+small
+  :font-size 10px 
+
+dt
+  :font-size 11px 
+
+tt
+  :font-size 12px 

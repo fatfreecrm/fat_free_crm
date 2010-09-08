@@ -1,0 +1,28 @@
+- edit ||= false
+- collapsed = session[:lead_permissions].nil? # && @lead.errors.empty?
+= subtitle :lead_permissions, collapsed, t(:permissions)
+.section
+  %small#lead_permissions_intro{ hidden_if(!collapsed) }
+    = get_lead_default_permissions_intro(@lead.access) unless edit
+  #lead_permissions{ hidden_if(collapsed) }
+    .radio_box
+      = f.radio_button :access, "Private", :onclick => "$('people').hide();"
+      = label "lead[access]", :private, t(:keep_private), :style => "cursor:pointer"
+    .radio_box
+      = f.radio_button :access, "Public", :onclick => "$('people').hide();"
+      = label "lead[access]", :public, t(:make_public), :style => "cursor:pointer"
+    .radio_box
+      = f.radio_button :access, "Shared", :onclick => "$('people').show();"
+      = label "lead[access]", :shared, t(:share_with), :style => "cursor:pointer"
+
+    #people{ hidden_if(@lead.access != "Shared") }
+      %div{ :style => "padding: 6px 0px 0px 20px" }
+        - for user in @users
+          .check_box
+            -# Preserve state of the checkboxes if the form gets redrawn on errors.
+            = check_box_tag "users[]", user.id, @lead.permissions.map(&:user_id).include?(user.id) || (params[:users] && params[:users].include?(user.id.to_s)), :id => "user_#{user.id}"
+            = label_tag "user_#{user.id}", h(user.full_name), :style => "cursor:pointer"
+    - unless edit
+      .radio_box
+        = f.radio_button :access, t(:campaign), :onclick => "$('people').hide(); $('lead_access_campaign').value = 'Campaign'", :disabled => true
+        %font{ :id => :copy_permissions, :color => :grey }= t(:copy_permissions, t(:campaign_small))

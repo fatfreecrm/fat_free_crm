@@ -1,0 +1,28 @@
+id = called_from_landing_page? ? "convert_lead" : dom_id(@lead)
+
+if @lead.status == "converted"
+  if called_from_landing_page?
+    page.call "crm.flip_form", :convert_lead
+    page.call "crm.set_title", :convert_lead, @lead.full_name
+    page << refresh_sidebar(:show, :summary)
+  else
+    page[id].replace :partial => "lead", :collection => [ @lead ]
+    page[id].visual_effect :highlight, :duration => 1.0
+    if called_from_index_page?
+      page << refresh_sidebar(:index, :filters)
+    elsif called_from_landing_page?("campaigns")
+      page << refresh_sidebar_for(:campaigns, :show, :summary)
+      if @opportunity.id # Make sure the opportunity has been saved.
+        page.insert_html :top, :opportunities, :partial => "opportunities/opportunity", :collection => [ @opportunity ]
+      end
+    else
+      page[:recently].replace :partial => "common/recently"
+    end
+  end
+else  
+  page[id].replace_html :partial => "convert"
+  page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
+  page.call "crm.date_select_popup", "opportunity_closes_on"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:account_name].focus
+end

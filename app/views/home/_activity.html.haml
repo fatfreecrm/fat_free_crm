@@ -1,0 +1,22 @@
+%li[activity]
+  .tools
+    %small= l(activity.created_at + Time.now.utc_offset, :format => :short)
+  %tt
+    = link_to avatar_for(activity.user, :size => "16x16"), user_path(activity.user)
+
+    - user = link_to(h(activity.user.full_name), user_path(activity.user))
+    - action = t('action_' + activity.action)
+    - type = t('subject_' + activity.subject_type.downcase)
+    - subject = if activity.subject
+      - if activity.subject.respond_to?(:full_name)
+        - link_to(h(activity.subject.full_name), polymorphic_url(activity.subject))
+      - elsif activity.subject_type != "Task"
+        - link_to(h(activity.subject.name), polymorphic_url(activity.subject))
+      - else
+        - %Q{<span style="color:black;">#{h(activity.subject.name)}</span>} # Individual tasks have no landing pages where we could link to.
+    - else
+      - activity.info # Use info if the subject has been deleted.
+
+    = t("activity_text", :user => user, :action => action, :type => type, :subject => subject, :default => "#{user} #{action} #{type} #{subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
+
+

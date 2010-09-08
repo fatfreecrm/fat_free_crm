@@ -1,0 +1,17 @@
+#about{ hidden }
+  %h3
+    #{t :about_ffc_version}
+    %span.cool== v#{FatFreeCRM::Version}
+    == (#{ActiveRecord::Base.connection.adapter_name.downcase})
+  %p
+    #{t :about_thank_you}
+
+  #{t :about_ffc_resources}:
+  %ul{:style => "margin: 0px 0px 0px 15px"}
+    %li== &raquo; #{link_to t(:about_home_page), "http://www.fatfreecrm.com", :"data-popup" => true}
+    %li== &raquo; #{link_to t(:about_project_page), "http://github.com/michaeldv/fat_free_crm/tree/master", :"data-popup" => true}
+    %li== &raquo; #{link_to t(:about_features), "http://fatfreecrm.lighthouseapp.com", :"data-popup" => true}
+    %li== &raquo; #{link_to t(:about_twitter), "http://twitter.com/fatfreecrm", :"data-popup" => true}
+    %li== &raquo; #{link_to t(:about_user_group), "http://groups.google.com/group/fat-free-crm-users", :"data-popup" => true}
+    %li== &raquo; #{link_to t(:about_dev_group), "http://groups.google.com/group/fat-free-crm-dev", :"data-popup" => true}
+  %br

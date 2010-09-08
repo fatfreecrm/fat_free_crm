@@ -1,0 +1,2 @@
+page[:shown_emails].value = @email.mediator.email_ids.join(',')
+page[dom_id(@email)].visual_effect "blind_up", :duration => 0.25

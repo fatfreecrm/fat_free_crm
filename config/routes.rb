@@ -1,58 +1,126 @@
 FatFreeCRM::Application.routes.draw do
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
+  root :to => 'home#index'
 
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+  match 'admin'    => 'admin/users#index', :as => :admin
+  match 'login'    => 'authentications#new', :as => :login
+  match 'logout'   => 'authentications#destroy', :as => :logout
+  match 'options'  => 'home#options'
+  match 'profile'  => 'users#show', :as => :profile
+  match 'signup'   => 'users#new', :as => :signup
+  match 'timeline' => 'home#timeline', :as => :timeline
+  match 'timezone' => 'home#timezone', :as => :timezone
+  match 'toggle'   => 'home#toggle'
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  resource  :authentication
+  resources :comments
+  resources :emails
+  resources :passwords
 
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
+  resources :accounts do
+    collection do
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      put :attach
+      post :discard
+    end
+  end
 
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
+  resources :campaigns do
+    collection do
+      get  :filter
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      put  :attach
+      post :discard
+    end
+  end
 
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
+  resources :contacts do
+    collection do
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      put  :attach
+      post :discard
+    end
+  end
 
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+  resources :leads do
+    collection do
+      get  :filter
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      get  :convert
+      post :discard
+      put  :attach
+      put  :promote
+      put  :reject
+    end
+  end
 
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  resources :opportunities do
+    collection do
+      get  :filter
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      put  :attach
+      post :discard
+    end
+  end
 
-  # See how all your routes lay out with "rake routes"
+  resources :tasks do
+    collection do
+      get  :filter
+      post :auto_complete
+    end
+    member do
+      put :complete
+    end
+  end
 
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  resources :users do
+    member do
+      get :avatar
+      get :password
+      put :upload_avatar
+      put :change_password
+    end
+  end
+
+  namespace :admin do
+    resources :users do
+      collection do
+        get  :search
+        post :auto_complete
+      end
+      member do
+        get :confirm
+        put :suspend
+        put :reactivate
+      end
+    end
+
+    resources :settings
+    resources :plugins
+  end
 end

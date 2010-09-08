@@ -1,0 +1,10 @@
+.standalone
+  - form_tag(passwords_path, one_submit_only(:passwords)) do
+    .title #{t :forgot_password}
+    .intro #{t :password_intro}
+    .section
+      .label #{t :email}:
+      = text_field_tag :email
+    %br
+    .buttonbar
+      = submit_tag t(:reset_password), :id => "passwords_submit"

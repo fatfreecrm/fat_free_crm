@@ -1,0 +1,18 @@
+.title_tools
+  = link_to_inline(:options, url_for(:action => :options), :text => t(:options))
+
+.title
+  %span#title #{t :recent_activity}
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#options{ hidden }
+
+.list#activities
+  - unless @activities.empty?
+    = render :partial => "activity", :collection => @activities
+  - else
+    #{t :no_activity_records}
+
+/
+  Check out HTML source to view the output of the hook if you have sample plugin installed
+  http://github.com/michaeldv/crm_sample_plugin/tree/master
+  = hook(:home_view, self, :hello => "world!", :welcome => "home")

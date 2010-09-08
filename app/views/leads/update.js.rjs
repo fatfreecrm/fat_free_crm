@@ -1,0 +1,27 @@
+id = called_from_landing_page? ? "edit_lead" : dom_id(@lead)
+
+if @lead.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_lead
+    page.call "crm.set_title", :edit_lead, @lead.full_name
+    page << refresh_sidebar(:show, :summary)
+  else
+    page[id].replace :partial => "lead", :collection => [ @lead ]
+    page[id].visual_effect :highlight, :duration => 1.0
+    if called_from_index_page?
+      page << refresh_sidebar(:index, :filters)
+    elsif called_from_landing_page?("campaigns")
+      page << refresh_sidebar_for(:campaigns, :show, :summary)
+    else
+      page[:recently].replace :partial => "common/recently"
+    end
+  end
+else
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  if error_message_on(@lead, :first_name).blank? and !error_message_on(@lead, :last_name).blank?
+    page[:lead_last_name].focus
+  else
+    page[:lead_first_name].focus
+  end
+end

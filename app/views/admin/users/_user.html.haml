@@ -1,0 +1,56 @@
+%li[user]{ highlightable(dom_id(user, :tools)) }
+
+  - if user.awaits_approval?
+    .strip.signed_up #{t :user_signed_up}
+  - elsif user.suspended?
+    .strip.suspended #{t :user_suspended}
+  - elsif user.admin?
+    .strip.admin #{t :user_admin}
+  - else
+    .strip.active #{t :user_active}
+
+  = gravatar_for(user, :size => "30x30")
+
+  .indentfull
+    .tools{ invisible, :id => dom_id(user, :tools) }
+      = link_to_edit(user, :url => edit_admin_user_path(user)) << " | "
+
+      - if user.suspended?
+        = link_to_reactivate(user) << " | "
+      - elsif user != @current_user
+        = link_to_suspend(user) << " | "
+      - else
+        = "<font color='silver'>#{t :suspend}!</font> | ".html_safe
+
+      - if user != @current_user
+        = link_to_confirm(user)
+      - else
+        %span.grayed #{t :delete}?
+
+    %span.black #{link_to(h(user.full_name), user)} (#{user.username})
+    %tt
+      = "- #{h(user.title)}" unless user.title.blank?
+      = " " + t(:at) + " " + h(user.company) unless user.company.blank?
+
+      %span.black= "|"
+      - if user.last_request_at && user.login_count > 0
+        = t('pluralize.login', user.login_count)
+        %span.black= "|"
+
+      - if user.awaits_approval?
+        %b.cool #{t :user_awaits_approval}
+      - elsif user.last_request_at
+        %span.cool #{t(:last_seen, time_ago_in_words(user.last_request_at))}
+      - else
+        %span.warn #{t :user_never_logged_in}
+    %dt{ :style => "padding: 2px 0px 0px 0px" }
+      = link_to_email(user.email.to_s) << " | "
+      = "#{t :phone_small}: <b>".html_safe + user.phone << "</b> | ".html_safe if user.phone?
+      = "#{t :mobile_small}: <b>".html_safe + user.mobile << "</b> | ".html_safe if user.mobile?
+
+      - if !user.suspended?
+        %span #{t(:user_since, l(user.created_at.to_date, :format => :mmddyy))}
+      - elsif user.awaits_approval?
+        %b.cool #{t(:user_signed_up_on, l(user.created_at, :format => :mmddhhss))}
+      - else
+        %span.warn #{t(:user_suspended_on, l(user.created_at.to_date, :format => :mmddyy))}

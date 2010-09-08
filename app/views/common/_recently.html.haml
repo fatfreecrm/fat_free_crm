@@ -1,0 +1,7 @@
+- @recent = Activity.for(@current_user).recent
+.panel#recently
+  .caption #{t :recent_items}
+  - unless @recent.empty?
+    = render :partial => "common/recent", :collection => @recent
+  - else
+    %div #{t :no_recent_items}

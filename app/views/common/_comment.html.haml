@@ -1,0 +1,11 @@
+%li[comment]{ highlightable(dom_id(comment, :tools)) }
+  = link_to avatar_for(comment.user, :size => "25x25"), user_path(comment.user)
+
+  .tools{ invisible, :id => dom_id(comment, :tools) }
+    = link_to_edit(comment) + " | "
+    = link_to_delete(comment)
+
+  .indentslim
+    = link_to comment.user.full_name, user_path(comment.user)
+    %tt= t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))
+    %dt= auto_link(simple_format h(comment.comment))

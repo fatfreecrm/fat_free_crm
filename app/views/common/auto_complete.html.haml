@@ -1,0 +1,10 @@
+%ul
+  - unless @auto_complete.blank?
+    - @auto_complete.each do |item|
+      - name = item.name
+      - name << " (#{item.company})" if item.is_a?(Lead)
+      - name = highlight(truncate(name, :length => 45), @query)
+      - name = content_tag(:strike, name) if item.is_a?(Task) && item.completed?
+      %li{ :id => item.to_param }= name
+  - else
+    %li== #{t(:no_match, t(controller.controller_name + '_small'))} <font color="yellow">#{@query}</font>

@@ -1,0 +1,41 @@
+%li[opportunity]{ highlightable(dom_id(opportunity, :tools)) }
+  - if opportunity.stage
+    .strip{:class => opportunity.stage}= t(opportunity.stage)
+  - else
+    .strip.white #{t :other}
+
+  .tools{ invisible, :id => dom_id(opportunity, :tools) }
+    = link_to_edit(opportunity) + " | "
+    = link_to_discard(opportunity) + " | " if shown_on_landing_page?
+    = link_to_delete(opportunity)
+
+  .indent
+    = link_to(h(opportunity.name), opportunity)
+    - if opportunity.account
+      == #{t :from} #{link_to(h(opportunity.account.name), account_path(opportunity.account))}
+    %tt
+      &ndash;
+      = t(:added_by, :time_ago => time_ago_in_words(opportunity.created_at), :user => (opportunity.user.id == @current_user.id ? t(:me) : h(opportunity.user.full_name)))
+    - unless @current_user.preference[:opportunities_outline] == "brief"
+      %dt
+        %b= number_to_currency(opportunity.weighted_amount, :precision => 0) + " | "
+        - won_or_lost = %w(won lost).include?(opportunity.stage)
+        - unless won_or_lost
+          == #{number_to_currency(opportunity.amount || 0, :precision => 0)}
+          == #{opportunity.discount ? t(:discount_number, number_to_currency(opportunity.discount, :precision => 0)) : t(:no_discount)}
+          = t(:probability_number, (opportunity.probability || 0).to_s + '%') + " | " 
+        - if opportunity.closes_on
+          - if won_or_lost
+            - if opportunity.closes_on >= Date.today
+              = t(:closing_date, l(opportunity.closes_on, :format => :mmddyy))
+            - else
+              = t(:closed_ago_on, :time_ago => distance_of_time_in_words(opportunity.closes_on, Date.today), :date => l(opportunity.closes_on, :format => :mmddyy))
+          - elsif opportunity.closes_on > Date.today
+            = t(:expected_to_close,  :time => distance_of_time_in_words(Date.today, opportunity.closes_on), :date => l(opportunity.closes_on, :format => :mmddyy))
+          - elsif opportunity.closes_on == Date.today
+            %span.warn= t(:closes_today)
+          - else
+            %span.warn= t(:past_due, distance_of_time_in_words(opportunity.closes_on, Date.today))
+        - else
+          = t(:no_closing_date)
+      = hook(:opportunity_bottom, self, :opportunity => opportunity)

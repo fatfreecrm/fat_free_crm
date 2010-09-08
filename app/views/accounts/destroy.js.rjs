@@ -1,0 +1,3 @@
+page[dom_id(@account)].visual_effect :blind_up, :duration => 0.25
+page << refresh_sidebar(:index)
+page[:paginate].replace_html render(:partial => "common/paginate")

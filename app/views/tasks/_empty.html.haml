@@ -1,0 +1,4 @@
+#empty
+  == #{t(:no_tasks, t('no_tasks_' + @view))}.
+  - if @view != "completed"
+    == #{t :feel_free} #{link_to(t(:create_task_small), new_task_path + "?view=#{@view}", :remote => true)}.

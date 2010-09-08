@@ -1,0 +1,43 @@
+- edit ||= false
+.section
+  %table(width=500 cellpadding=0 cellspacing=0)
+    %tr
+      %td(valign="top")
+        .label.top.req #{t :username}:
+        = f.text_field :username, :style => "width:240px"
+      %td= spacer
+      %td(valign="top")
+        .label.top.req #{t :email}:
+        = f.text_field :email, :style => "width:240px"
+    %tr
+      %td(valign="top")
+        .label #{t :password}:
+        = f.password_field :password, :style => "width:240px"
+      %td= spacer
+      %td(valign="top")
+        .label #{t :password_confirmation}:
+        = f.password_field :password_confirmation, :style => "width:240px"
+    %tr
+      %td(valign="top" colspan=3)
+        .check_box(style="margin-top:6px")
+          -# Sorry, you can't revoke Admin rights from yourself.
+          = f.check_box(:admin, { :disabled => edit && @user == @current_user }) << " " << t(:user_is_admin)
+.subtitle #{t :personal_information}
+.section
+  %table(width=500 cellpadding=0 cellspacing=0)
+    %tr
+      %td(valign="top")
+        .label #{t :first_name}:
+        = f.text_field :first_name, :style => "width:240px"
+      %td= spacer
+      %td(valign="top")
+        .label #{t :last_name}:
+        = f.text_field :last_name, :style => "width:240px"
+    %tr
+      %td(valign="top")
+        .label #{t :job_title}:
+        = f.text_field :title, :style => "width:240px"
+      %td= spacer
+      %td(valign="top")
+        .label #{t :company}:
+        = f.text_field :company, :style => "width:240px"

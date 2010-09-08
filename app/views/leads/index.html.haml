@@ -1,0 +1,18 @@
+= styles_for :lead
+
+.title_tools
+  = link_to_inline(:create_lead, new_lead_path, :text => t(:create_lead)) << " | "
+  = link_to_inline(:options, options_leads_path, :text => t(:options))
+
+.title
+  %span#create_lead_title #{t :leads}
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#options{ hidden }
+.remote#create_lead{ hidden }
+
+.list#leads
+  - unless @leads.empty?
+    = render :partial => "lead", :collection => @leads
+  - else
+    = render :partial => "common/empty"
+#paginate= render :partial => "common/paginate"

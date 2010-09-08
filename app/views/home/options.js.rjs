@@ -1,0 +1,8 @@
+page.call "crm.flip_form", :options
+
+if params[:cancel] != "true"
+  page[:options].replace_html :partial => "options"
+  page.call "crm.set_title", :title, t(:recent_activity_options)
+else
+  page.call "crm.set_title", :title, t(:recent_activity)
+end

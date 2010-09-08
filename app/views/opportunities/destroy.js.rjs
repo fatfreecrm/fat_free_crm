@@ -1,0 +1,9 @@
+page[dom_id(@opportunity)].visual_effect :blind_up, :duration => 0.25
+if called_from_index_page?
+  page << refresh_sidebar(:index, :filters)
+  page[:paginate].replace_html render(:partial => "common/paginate")
+elsif called_from_landing_page?("campaigns")
+  page << refresh_sidebar_for(:campaigns, :show, :summary)
+else
+  page[:recently].replace :partial => "common/recently"
+end

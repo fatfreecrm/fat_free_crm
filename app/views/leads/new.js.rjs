@@ -1,0 +1,10 @@
+page.call "crm.flick", :empty, :toggle
+page.call "crm.hide_form", :options if called_from_index_page?
+page.call "crm.flip_form", :create_lead
+
+if params[:cancel] != "true"
+  page[:create_lead].replace_html :partial => "create"
+  page.call "crm.set_title", :create_lead, t(:create_lead)
+else
+  page.call "crm.set_title", :create_lead, t(:leads)
+end

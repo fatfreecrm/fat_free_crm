@@ -1,0 +1,13 @@
+%li[campaign]{ highlightable(dom_id(campaign, :tools)) }
+  .strip{:class => campaign.status}= t(campaign.status)
+
+  .tools{ invisible, :id => dom_id(campaign, :tools) }
+    = link_to_edit(campaign) + " | "
+    = link_to_delete(campaign)
+
+  .indent
+    = link_to(h(campaign.name), campaign)
+    = render :partial => "campaigns/status", :locals => { :campaign => campaign }
+    - unless @current_user.preference[:campaigns_outline] == "brief"
+      = render :partial => "campaigns/metrics", :locals => { :campaign => campaign }
+      = hook(:campaign_bottom, self, :campaign => campaign)

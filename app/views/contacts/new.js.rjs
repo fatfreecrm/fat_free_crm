@@ -1,0 +1,11 @@
+page.call "crm.flick", :empty, :toggle
+page.call "crm.hide_form", :options if called_from_index_page?
+page.call "crm.flip_form", :create_contact
+
+if params[:cancel] != "true"
+  page[:create_contact].replace_html :partial => "create"
+  page.call "crm.set_title", :create_contact, t(:create_contact)
+  page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
+else
+  page.call "crm.set_title", :create_contact, t(:contacts)
+end

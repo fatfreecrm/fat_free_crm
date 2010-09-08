@@ -1,0 +1,6 @@
+unless @activities.blank?
+  page[:activities].replace_html render(:partial => "activity", :collection => @activities)
+else
+  page[:activities].replace_html t(:no_activity_records)
+end
+# page[:paginate].replace_html render(:partial => "common/paginate")

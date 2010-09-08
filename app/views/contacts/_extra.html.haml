@@ -1,0 +1,35 @@
+- edit ||= false
+- collapsed = session[:contact_extra].nil? # && @contact.errors.empty?
+= subtitle :contact_extra, collapsed, t(:extra_info)
+.section
+  %small#contact_extra_intro{ hidden_if(!collapsed) }
+    = t(:intro, t(:extra_info_small)) unless edit
+  #contact_extra{ hidden_if(collapsed) }
+    %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td{ :valign => :top }
+          .label #{t :job_title}:
+          = f.text_field :title, :style => "width:240px"
+        %td= spacer
+        %td{ :valign => :top }
+          .label #{t :department}:
+          = f.text_field :department, :style => "width:240px"
+      %tr
+        %td{ :valign => :top }
+          .label #{t :alt_email}:
+          = f.text_field :alt_email, :style => "width:240px"
+        %td= spacer
+        %td{ :valign => :top }
+          .label #{t :mobile}:
+          = f.text_field :mobile, :style => "width:240px"
+      %tr
+        %td{ :valign => :top }
+          = render :partial => "common/address", :locals => { :f => f, :asset => @contact, :type => 'business', :title => :address }
+        %td= spacer
+        %td{ :valign => :top }
+          .label #{t :fax}:
+          = f.text_field :fax, :style => "width:240px"
+          %div{:style => "margin-top:6px"}
+            .check_box
+              = f.check_box :do_not_call, {}, true
+              #{t :do_not_call}

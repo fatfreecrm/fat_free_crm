@@ -1,0 +1,19 @@
+if @contact.valid?
+  page[:create_contact_arrow].replace_html "&#9658;"
+  page[:create_contact_title].replace_html t(:contacts)
+  page.visual_effect :toggle_blind, :create_contact, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
+  page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
+  if called_from_index_page?
+    page << refresh_sidebar(:index)
+    page[:paginate].replace_html render(:partial => "common/paginate")
+  else
+    page[:recently].replace :partial => "common/recently"
+  end
+  page.call "crm.flick", :empty, :remove
+else
+  page[:create_contact].replace_html :partial => "create"
+  page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
+  page[:create_contact].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:contact_first_name].focus
+end

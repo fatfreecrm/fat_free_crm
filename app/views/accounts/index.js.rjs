@@ -1,0 +1,6 @@
+unless @accounts.blank?
+  page[:accounts].replace_html render(:partial => "account", :collection => @accounts)
+else
+  page[:accounts].replace_html render(:partial => "common/empty")
+end
+page[:paginate].replace_html render(:partial => "common/paginate")

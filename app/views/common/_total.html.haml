@@ -1,0 +1,4 @@
+- items ||= controller.controller_name
+- total ||= instance_variable_get("@#{items}_total")
+%span#total= total
+#{t(:items_total, items)}

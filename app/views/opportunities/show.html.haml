@@ -1,0 +1,24 @@
+= styles_for :task, :contact
+
+#confirm{ hidden }
+.title_tools#menu
+  = link_to_inline(:edit_opportunity, edit_opportunity_path(@opportunity), :text => t(:edit)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@opportunity))
+.title#edit_opportunity_title= h(@opportunity.name)
+
+%div#edit_opportunity{ hidden }
+
+= render :partial => "comments/new", :locals => { :commentable => @opportunity }
+= render :partial => "common/timeline", :collection => @timeline
+
+= section(@opportunity, :tasks)
+.log#tasks
+  = render :partial => "common/tasks"
+
+= section(@opportunity, :contacts)
+.list#contacts
+  = render :partial => "contacts/contact", :collection => @opportunity.contacts
+
+= load_select_popups_for(@opportunity, :tasks, :contacts)
+
+= hook(:show_opportunity_bottom, self)

@@ -1,0 +1,21 @@
+- singular = popup.to_s.singularize
+
+:plain
+  new crm.Popup({
+    trigger     : "select_#{singular}",
+    target      : "jumpbox",
+    under       : "select_#{singular}",
+    appear      : 0.3,
+    fade        : 0.3,
+    before_show : function() {
+      $("jumpbox_menu").hide();
+      $("jumpbox_label").innerHTML = "#{t(popup)}:"
+      $("jumpbox_label").show();
+      crm.auto_complete("#{popup}", "#{related.class.to_s.downcase.pluralize}/#{related.id}");
+    },
+    after_show  : function() {
+      $("auto_complete_query").focus();
+    },
+    after_hide  : function() {
+    }
+  });

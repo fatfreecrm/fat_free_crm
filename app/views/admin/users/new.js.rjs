@@ -1,0 +1,8 @@
+page.call "crm.flip_form", :create_user
+
+if params[:cancel] != "true"
+  page[:create_user].replace_html :partial => "create"
+  page.call "crm.set_title", :create_user, t(:create_user)
+else
+  page.call "crm.set_title", :create_user, t(:users)
+end

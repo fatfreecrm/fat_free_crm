@@ -1,0 +1,47 @@
+%li[assigned]{ highlightable(dom_id(assigned, :tools)) }
+  - unless assigned.category.blank?
+    .strip{:class => assigned.category}= t(assigned.category)
+  - else
+    .strip.white #{t :other}
+
+  .tools{ invisible, :id => dom_id(assigned, :tools) }
+    = link_to_task_edit(assigned, bucket) + " | "
+    = link_to_discard(assigned) + " | " if shown_on_landing_page?
+    = link_to_task_delete(assigned, bucket)
+
+  .indent
+    = link_to(assigned.assignee.full_name, user_path(assigned.assignee)) + ": "
+    = auto_link h(assigned.name)
+    - if assigned.asset_id?
+      == #{t :related} #{link_to(h(assigned.asset.name), polymorphic_url(assigned.asset))}
+    &ndash;
+    %tt
+      - if assigned.bucket == "due_asap"
+        %span.urgent= t(:task_due_now)
+
+      - elsif assigned.bucket == "due_later"
+        = t(:task_due_later)
+
+      - else
+        - if assigned.at_specific_time?
+          - if assigned.due_at < Time.now
+            %span.warn= distance_of_time_in_words(assigned.due_at, Time.now)
+            = t(:task_overdue) 
+            = l(assigned.due_at.localtime, :format => :mmddhhss)
+          - else
+            = t(:task_due_in, distance_of_time_in_words(Time.now, assigned.due_at))
+            = '(' << l(assigned.due_at.localtime, :format => :mmddhhss) << ')'
+
+        - else
+          - if assigned.due_at < Date.today
+            %span.warn= distance_of_time_in_words(assigned.due_at, Time.now) 
+            = t(:task_overdue) 
+            = assigned.due_at.localtime.strftime('%b %e')
+          - elsif assigned.due_at > Date.today
+            = t(:task_due_in, distance_of_time_in_words(Time.now, assigned.due_at.localtime.end_of_day))
+          - else
+            %span.cool= t(:task_due_today)
+
+    - unless assigned.background_info.blank?
+      %div
+        %dt= h(assigned.background_info)

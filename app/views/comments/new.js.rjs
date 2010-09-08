@@ -1,0 +1,8 @@
+if session["#{@commentable}_new_comment"]
+  page[:ask].hide
+  page[:post].show
+  page[:comment_comment].focus
+else
+  page[:post].hide
+  page[:ask].show
+end

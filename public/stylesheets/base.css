@@ -1,0 +1,57 @@
+html, body {
+  background: #e5e5e5;
+  font-size-adjust: none;
+  font-stretch: normal;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  height: 100%;
+  line-height: normal; }
+
+body, ol, ul, li, dt, tt, label, input, select, textarea {
+  font-size: 12px;
+  font-family: "Lucida Grande", Geneva, Arial, Helvetica, sans-serif; }
+
+body, h1, h2, h3, h4, h5, h6, ol, ul, li {
+  margin: 0px;
+  padding: 0px; }
+
+form {
+  margin: 0px; }
+
+ul li {
+  list-style-type: none; }
+
+a {
+  text-decoration: none; }
+  a:link, a:visited {
+    color: #0033cc; }
+  a:hover {
+    background: #0033cc;
+    color: white; }
+  a img {
+    background-color: white;
+    border: none;
+    color: white;
+    text-decoration: none; }
+
+#options a {
+  border-bottom: 1px dotted darkcyan;
+  color: darkcyan;
+  text-decoration: none; }
+  #options a:hover {
+    background: #e5e5e5;
+    border-bottom: 1px dotted darkblue;
+    color: darkblue; }
+
+abbr {
+  font-size: 9px; }
+
+small {
+  font-size: 10px; }
+
+dt {
+  font-size: 11px; }
+
+tt {
+  font-size: 12px; }

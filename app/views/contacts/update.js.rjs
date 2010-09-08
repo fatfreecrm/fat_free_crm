@@ -1,0 +1,22 @@
+id = called_from_landing_page? ? "edit_contact" : dom_id(@contact)
+
+if @contact.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_contact
+    page.call "crm.set_title", :edit_contact, @contact.full_name
+    page << refresh_sidebar(:show, :summary)
+  else
+    page[id].replace :partial => "contact", :collection => [ @contact ]
+    page[id].visual_effect :highlight, :duration => 1.0
+    if called_from_index_page?
+      page << refresh_sidebar(:index)
+    else
+      page[:recently].replace :partial => "common/recently"
+    end
+  end
+else  
+  page[id].replace_html :partial => "edit"
+  page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:contact_first_name].focus
+end

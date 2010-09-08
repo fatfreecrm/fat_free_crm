@@ -1,0 +1,13 @@
+- class_name = commentable.class.name.downcase
+.comment#comment_edit{:style => "margin: 5px 0px 0px 0px"}
+  = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
+  #post
+    = form_for(@comment, :remote => true) do |f|
+      = hidden_field_tag "comment[user_id]", @current_user.id
+      = hidden_field_tag "comment[commentable_id]", commentable.id
+      = hidden_field_tag "comment[commentable_type]", class_name.capitalize
+      = f.text_area :comment
+      %div{:style => "padding:6px 0px 0px 40px;"}
+        = f.submit t :edit_note
+        #{t :or}
+        = link_to(t(:cancel), send("edit_#{class_name}_comment_url", commentable), :method => :get, :with => "'cancel=true'", :remote => true)

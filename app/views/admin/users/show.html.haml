@@ -1,0 +1,5 @@
+.title= h(@user.full_name)
+%p
+:erb
+  <%= link_to t(:edit), edit_admin_user_path(@user) %> |
+  <%= link_to t(:back), admin_users_path %>

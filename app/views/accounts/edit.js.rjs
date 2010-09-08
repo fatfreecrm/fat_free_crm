@@ -1,0 +1,33 @@
+id = dom_id(@account)
+
+if params[:cancel].true? # <--------------------- Hide [Edit Account]
+
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_account
+    page.call "crm.set_title", :edit_account, @account.name
+  else                                            # Called from accounts list item...
+    page[id].replace :partial => "account", :collection => [ @account ]
+  end
+
+else # <----------------------------------------  Show [Edit Account] form.
+
+  if params[:cancel].blank?                       # Called from accounts list item...
+    if @previous                                  # Hide open [Edit Account] form if any.
+      if @previous.is_a?(Account)
+        page[dom_id(@previous)].replace :partial => "account", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "account_#{@previous}", :remove
+      end
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_account    # Hide [Create Account] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit Account] form.
+
+  elsif params[:cancel].false?                    # Called from title of the account landing page...
+    page[:edit_account].replace_html :partial => "edit"
+    page.call "crm.flip_form", :edit_account
+    page.call "crm.set_title", :edit_account, "#{t :edit} #{@account.name}"
+  end
+  page[:account_name].focus
+
+end

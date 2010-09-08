@@ -1,0 +1,18 @@
+<h1>Listing comments</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for comment in @comments %>
+  <tr>
+    <td><%= link_to 'Show', comment %></td>
+    <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
+    <td><%= link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New comment', new_comment_path %>

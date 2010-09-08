@@ -1,0 +1,7 @@
+page[dom_id(@contact)].visual_effect "blind_up", :duration => 0.25
+if called_from_index_page?
+  page << refresh_sidebar(:index)
+  page[:paginate].replace_html render(:partial => "common/paginate")
+else
+  page[:recently].replace :partial => "common/recently"
+end
