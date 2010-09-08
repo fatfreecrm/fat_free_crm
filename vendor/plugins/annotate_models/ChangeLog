@@ -1,0 +1,59 @@
+2008-08-24  Dave Thomas  <dave@pragprog.com>
+   * annotate_models.rb (AnnotateModels::self.annotate): Patch from
+	Robert Evans (and almost identical patch from Akhil
+	Bansai) to add support for annotating rspec files and
+	fixtures
+
+   * annotate_models.rb (AnnotateModels::self.get_schema_info): Patch
+	from Denis Barushev to removing trailing whitespace from
+	the output.
+
+   * annotate_models.rb (AnnotateModels::self.annotate): Patch from
+        Zach Moazeni to support fixtures in subdirectories
+
+2007-03-05: Dave Thomas <dave@pragprog.com>
+   * Forgot to call the quote method
+   
+2007-03-02: Dave Thomas <dave@pragprog.com>
+   * Allow non-printing characters in column defaults (suggested by Ben Booth)
+
+2007-02-28: Dave Thomas <dave@pragprog.com>
+   * Report errors loading model classes better. Change suggested by Niels Knacke
+   
+2007-02-22: Dave Thomas <dave@pragprog.com>
+* Ignore models with no underlying database table (based on patch from Jamie van Dyke)
+* Handle case where database has no session_info table (patch by David Vrensk)
+   
+   
+2006-07-13: Dave Thomas <dave@pragprog.com>
+   * Support :scale for decimal columns
+   
+2006-07-13: Wes Gamble
+  * Don't annotate abstract models
+  
+2006-06-13: Dave Thomas <dave@pragprog.com>
+  * Fix bug where we corrupted the PREFIX string and therefore duplicated
+    the header
+  * No longer include the datetime, so we don't trigger a commit
+    back into repos
+    
+    -- NOTE -- just this once, you'll get a duplicate header after you run
+    a_m on an already-annotated model. Sorry.... Dave
+    
+    
+    
+2006-06-11  Dave Thomas  <dave@pragprog.com>
+  * lib/annotate_models.rb: At Kian Wright's suggestion, document the table
+    name and primary key. Also make the timestamp prettier
+    
+2006-04-17  Dave Thomas  <dave@pragprog.com>
+
+	* lib/annnotate_models.rb: Include Bruce William's patch to allow
+		  models in subdirectories
+
+2006-03-11  Dave Thomas  <dave@pragprog.com>
+
+	* lib/annotate_models.rb: Use camelize, not classify, to construct
+	  class names (Grant Hollingworth)
+
+3/3/06   Now annotates fixture files too (thanks to Josha Susser)
