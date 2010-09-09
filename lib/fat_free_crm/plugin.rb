@@ -92,10 +92,9 @@ module FatFreeCRM
           plugin.instance_eval(&block)            # Grab plugin properties.
           plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
 
-          Rails.configuration.middleware.insert_before ::Rack::Lock, ::ActionDispatch::Static, "#{initializer.root}/public"
-
           if ENV['RAILS_ENV'] == "development"
-            config.cache_classes = true # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
+            # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
+            Rails.configuration.cache_classes = true
           end
 
           @@list[id] = plugin
