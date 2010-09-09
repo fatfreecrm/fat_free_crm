@@ -15,9 +15,13 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
+AbstractController::ViewPaths::ClassMethods.class_eval do
+  alias_method :prepend_view_path, :append_view_path
+end
+
 Rails::Plugin.class_eval do
   def initializer
-    #~ ActiveSupport::Deprecation.warn "Rails::Plugin initializer is depricated use Railties instead"
+    ActiveSupport::Deprecation.warn "Rails::Plugin initializer is depricated use Railties instead"
     if ENV['RAILS_ENV'] == "development"
       config.cache_classes = true # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
     end
