@@ -32,7 +32,7 @@ describe TasksController do
     end
 
     it "recognizes and generates #filter" do
-      { :get => "/tasks/filter" }.should route_to( :controller => "tasks", :action => "filter" )
+      { :post => "/tasks/filter" }.should route_to( :controller => "tasks", :action => "filter" )
     end
 
     it "should generate params for #complete" do
