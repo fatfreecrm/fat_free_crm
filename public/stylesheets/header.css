@@ -26,7 +26,6 @@
       -webkit-border-top-right-radius: 2px; }
   #header #jumpbox {
     background: steelblue;
-    margin: 2px 0px 0px 0px;
     padding: 12px;
     position: absolute;
     -moz-border-radius-bottomleft: 6px;
@@ -44,6 +43,8 @@
       color: white; }
     #header #jumpbox input {
       margin: 2px 0px 0px 0px; }
+    #header #jumpbox input#auto_complete_query {
+      width: 310px; }
 
 #tabs {
   background: #330000;
