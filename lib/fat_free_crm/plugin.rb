@@ -94,7 +94,7 @@ module FatFreeCRM
 
           if ENV['RAILS_ENV'] == "development"
             # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
-            Rails.configuration.cache_classes = true
+            Rails.configuration.cache_classes = false
           end
 
           @@list[id] = plugin
@@ -111,3 +111,4 @@ module FatFreeCRM
 
   end # class Plugin
 end # module FatFreeCRM
+
