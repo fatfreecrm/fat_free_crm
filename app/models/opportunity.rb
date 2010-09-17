@@ -58,7 +58,7 @@ class Opportunity < ActiveRecord::Base
 
   scope :search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.']/, '').strip
-    where('name LIKE ?', "#{query)%")
+    where('name LIKE ?', "#{query}%")
   }
 
   uses_user_permissions
