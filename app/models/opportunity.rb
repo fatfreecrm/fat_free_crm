@@ -56,9 +56,10 @@ class Opportunity < ActiveRecord::Base
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
   scope :not_lost, where("opportunities.stage <> 'lost'")
 
-  simple_column_search :name,
-    :match => :middle,
-    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('name LIKE ?', "#{query)%")
+  }
 
   uses_user_permissions
   acts_as_commentable

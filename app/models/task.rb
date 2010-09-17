@@ -90,7 +90,11 @@ class Task < ActiveRecord::Base
   scope :completed_this_month, where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days)
   scope :completed_last_month, where('completed_at >= ? AND completed_at < ?', (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc)
 
-  simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('name LIKE ?', "%#{query}%")
+  }
+
   acts_as_commentable
   is_paranoid
 
