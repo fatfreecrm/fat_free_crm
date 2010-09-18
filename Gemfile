@@ -39,6 +39,7 @@ end
 
 # Rails3 plugins that we use and their source repositories:
 #---------------------------------------------------------------------
+# gravatar_image_tag,      git://github.com/mdeering/gravatar_image_tag.git
 # calendar_date_select,    git://github.com/timcharper/calendar_date_select.git
 # country_select,          git://github.com/rails/country_select.git
 # dynamic_form,            git://github.com/rails/dynamic_form.git

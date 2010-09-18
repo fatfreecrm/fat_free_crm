@@ -111,7 +111,7 @@ task_calendar_with_time: false
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------
 :tabs: [
-  { :active : true,  :text : :tab_dashboard,     :url : { :controller : "/"              } },
+  { :active : true,  :text : :tab_dashboard,     :url : { :controller : "home"           } },
   { :active : false, :text : :tab_tasks,         :url : { :controller : "tasks"          } },
   { :active : false, :text : :tab_campaigns,     :url : { :controller : "campaigns"      } },
   { :active : false, :text : :tab_leads,         :url : { :controller : "leads"          } },

@@ -1,6 +1,7 @@
 #tabs
   %ul
     - tabs.each do |tab|
+      - logger.ap tab
       %li= link_to(t(tab[:text]), tab[:url], :class => tab[:active] ? "active" : "")
 
 = show_flash

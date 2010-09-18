@@ -1,0 +1,33 @@
+h1. 1.1.0
+
+* Add model helpers for ActiveRecord/ActiveModel
+
+<pre>class Comment < ActiveRecord::Base
+  has_gravatar :author, :size => 120
+end</pre>
+
+<pre>Comment.first.gravatar_url</pre>
+
+h1. 1.0.0
+
+* -Block Configuration DSL support-
+
+<pre># config/initializers/gravatar_image_tag.rb
+GravatarImageTag.configure do |config|
+  config.default_image = nil   # Set this to use your own default gravatar image rather then serving up Gravatar's default image [ 'http://example.com/images/default_gravitar.jpg', :identicon, :monsterid, :wavatar, 404 ].
+  config.filetype      = nil   # Set this if you require a specific image file format ['gif', 'jpg' or 'png'].  Gravatar's default is png
+  config.rating        = nil   # Set this if you change the rating of the images that will be returned ['G', 'PG', 'R', 'X']. Gravatar's default is G
+  config.size          = nil   # Set this to globally set the size of the gravatar image returned (1..512). Gravatar's default is 80
+  config.secure        = false # Set this to true if you require secure images on your pages.
+end
+</pre>
+
+h1. 0.1.0
+
+* -Add support for https calls to Gravatar-
+* -Add support the different ratings call to Gravatar-
+* -Add support for the filetype call to Gravatar-
+
+h1. 0.0.1
+
+* -package things up into a gem.- "Hosted on Gemcutter now(Gravatar Image Tag Ruby Gem)":http://rubygems.org/gems/gravatar_image_tag
