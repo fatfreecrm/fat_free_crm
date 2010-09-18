@@ -16,10 +16,13 @@ gem 'will_paginate',        '>= 3.0.pre2'
 group :development do
   gem 'annotate',           '>= 2.4.0'
   gem 'awesome_print',      '>= 0.2.1'
+  gem 'ffaker',             '>= 0.4.0' # Fast Faker for `rake crm:demo:load`
 end
 
 group :test do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
+  gem 'factory_girl',       '>= 1.3.2'
+  gem 'ffaker',             '>= 0.4.0'
   gem "rspec-rails",        '>=2.0.0.beta.22', :git => "git://github.com/rspec/rspec-rails.git"
   gem "rspec",              '>=2.0.0.beta.22', :git => "git://github.com/rspec/rspec.git"
   gem "rspec-core",         '>=2.0.0.beta.22', :git => "git://github.com/rspec/rspec-core.git"
