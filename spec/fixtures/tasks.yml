@@ -21,7 +21,7 @@
 #  background_info :string(255)
 #
 <%
-  require "faker"
+  require "ffaker"
   puts "Loading tasks..."
 
   category = %w(call email follow_up lunch meeting money presentation trip) << ""
@@ -52,8 +52,8 @@ task<%= i %>:
   completed_by : <%= completed_by %>
   name         : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "") %>
   asset_id     : <%= asset %>
-  asset_type   : <%= %w(Account Campaign Contact Lead Opportunity).rand if asset %>
-  category     : <%= category.rand %>
+  asset_type   : <%= %w(Account Campaign Contact Lead Opportunity).sample if asset %>
+  category     : <%= category.sample %>
   bucket       : <%= bucket %>
   background_info :
 # background_info : <%= Faker::Lorem.paragraph[0,255] %>

@@ -31,7 +31,7 @@
 #  background_info :string(255)
 #
 <%
-  require "faker"
+  require "ffaker"
   puts "Loading leads..."
 
   Faker::PhoneNumber::Formats = ["(###)###-####"]
@@ -50,9 +50,9 @@ lead<%= i %>:
   last_name   : <%= last_name = Faker::Name.last_name %>
   access      : Public
   company     : <%= Faker::Company.name %>
-  title       : <%= title.rand %>
-  source      : <%= source.rand %>
-  status      : <%= status.rand %>
+  title       : <%= title.sample %>
+  source      : <%= source.sample %>
+  status      : <%= status.sample %>
   rating      : <%= rand(5) %>
   referred_by : <%= Faker::Name.first_name + " " + Faker::Name.last_name if rand(10) < 5 %>
   blog        : <%= %[http://#{(first_name + last_name.first).downcase}.blogger.com] if rand(10) < 8 %>

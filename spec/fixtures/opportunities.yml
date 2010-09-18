@@ -21,7 +21,7 @@
 #  background_info :string(255)
 #
 <%
-  require "faker"
+  require "ffaker"
   puts "Loading opportunities..."
 
   source = %w(campaign cold_call conference online referral self web word_of_mouth other) << ""
@@ -36,8 +36,8 @@ opportunity_<%= i %>:
   assigned_to : <%= rand(8) + 1 %>
   name        : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "")[0, 64] %> # name has a limit of 64 characters.
   access      : Public
-  source      : <%= source.rand %>
-  stage       : <%= the_stage = stage.rand %>
+  source      : <%= source.sample %>
+  stage       : <%= the_stage = stage.sample %>
   probability : <%= %w(won lost).include?(the_stage) ? 100 : (rand(8) + 1) * 10 %>
   amount      : <%= (rand(8) + 1) * 100_000 %>
   closes_on   : <%= Date.today + (rand(100) + 10).days %>

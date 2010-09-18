@@ -19,7 +19,7 @@
 #  deleted_at       :datetime
 #
 <% 
-  require "faker"
+  require "ffaker"
   puts "Loading addresses..."
 
   type = %w(Billing Shipping)
@@ -30,8 +30,8 @@
 address_<%= i %>:
   id               : <%= i %>
   addressable_id   : <%= i %>
-  addressable_type : <%= asset = addressable.rand %>
-  address_type     : <%= asset == 'Account' ? type.rand : 'Business' %>
+  addressable_type : <%= asset = addressable.sample %>
+  address_type     : <%= asset == 'Account' ? type.sample : 'Business' %>
   street1          : <%= street1 = Faker::Address.street_address %>
   street2          : <%= street2 = Faker::Address.street_address %>
   city             : <%= city    = Faker::Address.city %>

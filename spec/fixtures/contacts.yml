@@ -31,7 +31,7 @@
 #  background_info :string(255)
 #
 <% 
-  require "faker"
+  require "ffaker"
   puts "Loading contacts..."
 
   title = [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ]
@@ -47,9 +47,9 @@ contact_<%= i %>:
   first_name  : <%= first_name = Faker::Name.first_name %>
   last_name   : <%= last_name = Faker::Name.last_name %>
   access      : Public
-  title       : <%= title.rand %>
+  title       : <%= title.sample %>
   department  :
-  source      : <%= source.rand %>
+  source      : <%= source.sample %>
   email       : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
   alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) %>
   phone       : <%= Faker::PhoneNumber.phone_number if rand(10) < 8 %>

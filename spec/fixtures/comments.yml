@@ -14,7 +14,7 @@
 #  updated_at       :datetime
 #
 <% 
-  require "faker"
+  require "ffaker"
   puts "Loading comments..."
 
   commentable = %w(Account Campaign Contact Lead Opportunity) # Task
@@ -24,6 +24,6 @@ comment_<%= i %>:
   id               : <%= i %>
   user_id          : <%= rand(8) + 1 %>
   commentable_id   : <%= rand(100) + 1 %>
-  commentable_type : <%= commentable.rand %>
+  commentable_type : <%= commentable.sample %>
   comment          : <%= Faker::Lorem::paragraph(rand(10) + 1) %>
 <% end %>

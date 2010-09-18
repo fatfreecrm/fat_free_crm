@@ -126,7 +126,7 @@ campaign<%= i %>:
   user_id             : <%= rand(8) + 1 %>
   name                : <%= names[i-1] %>
   access              : Public
-  status              : <%= status.rand %>
+  status              : <%= status.sample %>
   budget              : <%= rand(500) * 1000 %>
   target_leads        : <%= rand(200) + 100 %>
   target_conversion   : <%= rand(20) + 5 %>
