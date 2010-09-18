@@ -44,6 +44,10 @@ RSpec.configure do |config|
     I18n.locale = 'en-US'
   end
 
+  config.before(:each, :type => :model) do
+    I18n.locale = 'en-US'
+  end
+
   # Detect html-quoted entities in all rendered responses.
   config.after(:each, :type => :view) do
     rendered.should_not match(/&amp;\S{1,6};/) if rendered

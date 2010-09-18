@@ -30,11 +30,11 @@ class ActivityObserver < ActiveRecord::Observer
 
   def before_update(subject)
     if subject.is_a?(Task)
-      @@tasks[subject.id] = Task.find_with_destroyed(subject.id).freeze
+      @@tasks[subject.id] = Task.with_deleted.find(subject.id).freeze
     elsif subject.is_a?(Lead)
-      @@leads[subject.id] = Lead.find_with_destroyed(subject.id).freeze
+      @@leads[subject.id] = Lead.with_deleted.find(subject.id).freeze
     elsif subject.is_a?(Opportunity)
-      @@opportunities[subject.id] = Opportunity.find_with_destroyed(subject.id).freeze
+      @@opportunities[subject.id] = Opportunity.with_deleted.find(subject.id).freeze
     end
   end
 
