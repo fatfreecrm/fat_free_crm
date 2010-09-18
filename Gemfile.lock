@@ -1,39 +1,39 @@
 GIT
   remote: git://github.com/rspec/rspec-core.git
-  revision: b60bfbe
+  revision: e063045
   specs:
-    rspec-core (2.0.0.beta.20)
+    rspec-core (2.0.0.beta.22)
 
 GIT
   remote: git://github.com/rspec/rspec-expectations.git
-  revision: 76434fa
+  revision: 311ba91
   specs:
-    rspec-expectations (2.0.0.beta.20)
+    rspec-expectations (2.0.0.beta.22)
       diff-lcs (>= 1.1.2)
 
 GIT
   remote: git://github.com/rspec/rspec-mocks.git
-  revision: 9e03463
+  revision: 07bc53f
   specs:
-    rspec-mocks (2.0.0.beta.20)
-      rspec-core (= 2.0.0.beta.20)
-      rspec-expectations (= 2.0.0.beta.20)
+    rspec-mocks (2.0.0.beta.22)
+      rspec-core (= 2.0.0.beta.22)
+      rspec-expectations (= 2.0.0.beta.22)
 
 GIT
   remote: git://github.com/rspec/rspec-rails.git
-  revision: 0330f3a
+  revision: 4321f81
   specs:
-    rspec-rails (2.0.0.beta.20)
-      rspec (= 2.0.0.beta.20)
+    rspec-rails (2.0.0.beta.22)
+      rspec (= 2.0.0.beta.22)
 
 GIT
   remote: git://github.com/rspec/rspec.git
-  revision: d90fe02
+  revision: 3df49f5
   specs:
-    rspec (2.0.0.beta.20)
-      rspec-core (= 2.0.0.beta.20)
-      rspec-expectations (= 2.0.0.beta.20)
-      rspec-mocks (= 2.0.0.beta.20)
+    rspec (2.0.0.beta.22)
+      rspec-core (= 2.0.0.beta.22)
+      rspec-expectations (= 2.0.0.beta.22)
+      rspec-mocks (= 2.0.0.beta.22)
 
 GEM
   remote: http://rubygems.org/
@@ -66,6 +66,7 @@ GEM
       activesupport (= 3.0.0)
     activesupport (3.0.0)
     acts_as_commentable (3.0.0)
+    annotate (2.4.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
     authlogic (2.1.6)
@@ -112,7 +113,7 @@ GEM
     rake (0.8.7)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
-    simple_column_search (1.0.2)
+    simple_column_search (1.0.3)
     test-unit (1.2.3)
       hoe (>= 1.5.1)
     thor (0.14.0)
@@ -126,17 +127,18 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_commentable (>= 3.0.0)
+  annotate (>= 2.4.0)
   authlogic (>= 2.1.6)
   awesome_print (>= 0.2.1)
   haml (>= 3.0.18)
   mysql2 (>= 0.2.3)
   paperclip (>= 2.3.3)
   rails (= 3.0.0)
-  rspec!
-  rspec-core!
-  rspec-expectations!
-  rspec-mocks!
-  rspec-rails!
-  simple_column_search (>= 1.0.2)
+  rspec (>= 2.0.0.beta.22)!
+  rspec-core (>= 2.0.0.beta.22)!
+  rspec-expectations (>= 2.0.0.beta.22)!
+  rspec-mocks (>= 2.0.0.beta.22)!
+  rspec-rails (>= 2.0.0.beta.22)!
+  simple_column_search (>= 1.0.3)
   test-unit (= 1.2.3)
   will_paginate (>= 3.0.pre2)
