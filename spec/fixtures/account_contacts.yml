@@ -1,0 +1,24 @@
+# == Schema Information
+# Schema version: 27
+#
+# Table name: account_contacts
+#
+#  id         :integer(4)      not null, primary key
+#  account_id :integer(4)
+#  contact_id :integer(4)
+#  deleted_at :datetime
+#  created_at :datetime
+#  updated_at :datetime
+#
+<%
+  for i in (1 .. 20) do
+    random = rand(20)
+%>
+account_contacts<%= i %>:
+  id: <%= i %>
+  account_id: <%= i if random < 15 %>
+  contact_id: <%= (i + random) if random < 15 %>
+  deleted_at:
+  created_at: <%= starts = Date.today - rand(15).days %>
+  updated_at: <%= starts + rand(5).days %>
+<% end %>

@@ -1,0 +1,144 @@
+# == Schema Information
+# Schema version: 27
+#
+# Table name: campaigns
+#
+#  id                  :integer(4)      not null, primary key
+#  user_id             :integer(4)
+#  assigned_to         :integer(4)
+#  name                :string(64)      default(""), not null
+#  access              :string(8)       default("Private")
+#  status              :string(64)
+#  budget              :decimal(12, 2)
+#  target_leads        :integer(4)
+#  target_conversion   :float
+#  target_revenue      :decimal(12, 2)
+#  leads_count         :integer(4)
+#  opportunities_count :integer(4)
+#  revenue             :decimal(12, 2)
+#  starts_on           :date
+#  ends_on             :date
+#  objectives          :text
+#  deleted_at          :datetime
+#  created_at          :datetime
+#  updated_at          :datetime
+#  background_info     :string(255)
+#
+<%
+  puts "Loading campaigns..."
+  status = %w(planned started completed planned started completed on_hold called_off)
+
+  names = [
+    "Change we need",
+    "Can you hear me now? ...Good",
+    "Wii would like to play",
+    "Five dollar foot long",
+    "What’s in your wallet?",
+    "What happens here, stays here",
+    "Are you in good hands?",
+    "Easy, breezy, beautiful Covergirl",
+    "Delightfully tacky, yet unrefined",
+    "Foster’s. Australian for beer",
+    "It gives you wings",
+    "It takes a tough man to make a tender chicken",
+    "With a name like Smuckers.... it has to be good",
+    "Between love and madness lies Obsession",
+    "The lion leaps from strength to strength",
+    "Obey your thirst",
+    "A mind is a terrible thing to waste",
+    "It takes a licking and keeps on ticking",
+    "Be all that you can be",
+    "Is it live, or is it Memorex?",
+    "Melts in your mouth, not in your hands",
+    "Sometimes you feel like a nut, sometimes you don't",
+    "There is no spit in Cremo!",
+    "So easy a caveman can do it",
+    "Put a tiger in your tank",
+    "Breakfast of Champions",
+    "We drink all we can. The rest we sell.",
+    "I want my MTV",
+    "Nothing outlasts the Energizer. It keeps going and going.",
+    "Good to the last drop",
+    "I'd walk a mile for a Camel",
+    "You got peanut butter in my chocolate!",
+    "Plop, plop, fizz, fizz, oh what a relief it is!",
+    "Membership has its privileges",
+    "Don't leave home without it",
+    "Reach out and touch someone",
+    "We try harder",
+    "The Greatest Show on Earth",
+    "The quicker picker-upper",
+    "The ultimate driving machine",
+    "Have it your way",
+    "M'm! M'm! Good!",
+    "Does she... or doesn't she?",
+    "Tomorrow's climate Today's challenge",
+    "The antidote for civilization",
+    "Look, Ma, no cavities!",
+    "Diamonds are forever",
+    "Put a tiger in your tank",
+    "Just what the doctor ordered",
+    "Trusted Everywhere",
+    "When it absolutely, positively has to be there overnight",
+    "Say it with flowers",
+    "Look sharp, feel sharp",
+    "We bring good things to life",
+    "Take action for the climate",
+    "When you care enough to send the very best",
+    "Finger lickin' good",
+    "Betcha can't eat just one",
+    "Because I'm worth it",
+    "All the news that's fit to print",
+    "Good to the last drop",
+    "Tastes so good cats ask for it by name",
+    "Got milk?",
+    "When It Rains It Pours",
+    "I love New York",
+    "Just do it",
+    "Now you're playing with power!",
+    "Tough on grease. Soft on hands.",
+    "It takes a tough man to make a tender chicken",
+    "Kills Bugs Dead",
+    "Nothin' says lovin' like somethin' from the oven",
+    "Strong enough for a man, but made for a woman",
+    "Obey Your Thirst",
+    "Think Outside the Bun",
+    "Pleasure you want. Protection you trust.",
+    "A mind is a terrible thing to waste",
+    "Fly the friendly skies",
+    "Be all you can be",
+    "Can you hear me now?",
+    "It's everywhere you want to be",
+    "Drivers wanted",
+    "Where's the beef?",
+    "Breakfast of Champions",
+    "Give us 20 minutes and we'll give you the world",
+    "Let your fingers do the walking",
+    "You're not fully clean until you're Zestfully clean"
+  ].shuffle
+
+  for i in (1 .. names.size) do
+    starts = starts = Date.today + (rand(15) * (rand(2) * 2 - 1)).days
+    future = (starts > Date.today)
+%>
+campaign<%= i %>:
+  id                  : <%= i %>
+  user_id             : <%= rand(8) + 1 %>
+  name                : <%= names[i-1] %>
+  access              : Public
+  status              : <%= status.rand %>
+  budget              : <%= rand(500) * 1000 %>
+  target_leads        : <%= rand(200) + 100 %>
+  target_conversion   : <%= rand(20) + 5 %>
+  target_revenue      : <%= rand(1000) * 1000 %>
+  leads_count         : <%= future ? "" : rand(200) + 100 %>
+  opportunities_count : <%= future ? "" : rand(20) + 5 * rand %>
+  revenue             : <%= future ? "" : rand(1000) * 1000 %>
+  starts_on           : <%= starts %>
+  ends_on             : <%= starts + rand(50).days %>
+  objectives          : <%= Faker::Lorem.sentence %>
+  background_info     :
+# background_info     : <%= Faker::Lorem.paragraph[0,255] %>
+  created_at          : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
+  updated_at          : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
+<% end %>

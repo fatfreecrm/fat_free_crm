@@ -1,0 +1,12 @@
+# == Schema Information
+# Schema version: 27
+#
+# Table name: permissions
+#
+#  id         :integer(4)      not null, primary key
+#  user_id    :integer(4)
+#  asset_id   :integer(4)
+#  asset_type :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
