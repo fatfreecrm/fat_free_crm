@@ -1,6 +1,6 @@
 .title {
   border-bottom: 1px gray solid;
-  color: black;
+  color: #342d7e;
   font-size: 17px;
   font-weight: bold;
   padding-bottom: 2px; }
@@ -48,14 +48,14 @@
 
 .standalone {
   background: whitesmoke;
-  border: 20px #860000 solid;
+  border: 20px lightsteelblue solid;
   margin: 75px auto 6px auto;
   padding: 20px;
   width: 400px;
   -moz-border-radius: 6px;
-  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
+  -moz-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb;
   -webkit-border-radius: 6px;
-  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb; }
+  -webkit-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb; }
   .standalone input[type="text"], .standalone input[type="password"] {
     font-size: 16px;
     padding: 2px;
@@ -70,9 +70,9 @@
   background: white;
   padding: 8px 15px 15px 15px;
   -moz-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
   -webkit-border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
+  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
 
 .sidebar {
   color: #3f3f3f;
@@ -102,7 +102,7 @@
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: #330000; }
+  color: navy; }
 
 .intro {
   color: dimgray;
@@ -116,7 +116,7 @@
   padding: 4px 15px 8px 15px; }
 
 .remote {
-  border: 5px lightgrey solid;
+  border: 5px lightblue solid;
   background: whitesmoke;
   margin: 0px;
   padding: 0px 10px 0px 10px;
@@ -127,7 +127,7 @@
     border-left: 1px gainsboro solid;
     border-bottom: 1px grey solid;
     border-right: 1px grey solid;
-    color: #330000;
+    color: navy;
     cursor: pointer;
     height: 16px;
     margin: 3px;
@@ -342,11 +342,11 @@
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
+  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
+  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
 
 .filters h4 {
-  color: #330000;
+  color: navy;
   font-size: 12px;
   font-weight: bold; }
 .filters input[type=text] {
@@ -372,7 +372,7 @@
     border-bottom: none; }
 .panel .caption {
   border-bottom: 1px grey solid;
-  color: #330000;
+  color: navy;
   font-size: 12px;
   font-weight: bold;
   margin: 4px 0px 2px 0px;
@@ -412,10 +412,10 @@
 
 .menu {
   background: #f4f5eb;
-  border-top: 1px solid #dddddd;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #666666;
-  border-bottom: 1px solid #666666;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #666;
+  border-bottom: 1px solid #666;
   left: 0px;
   padding: 2px 0px;
   position: absolute;
@@ -429,7 +429,7 @@
   .menu li {
     list-style-position: outside; }
   .menu a {
-    color: #555555;
+    color: #555;
     cursor: default;
     display: block;
     margin: 0px 2px;
@@ -437,5 +437,5 @@
     padding: 4px 15px;
     text-decoration: none; }
   .menu a:hover {
-    background: mediumblue;
-    color: white; }
+    background: mediumblue //#006;
+    color: #fff; }
