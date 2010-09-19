@@ -123,4 +123,6 @@ FatFreeCRM::Application.routes.draw do
     resources :settings
     resources :plugins
   end
+
+  match '/:controller(/:action(/:id))'
 end
