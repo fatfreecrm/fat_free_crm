@@ -38,11 +38,11 @@ class Activity < ActiveRecord::Base
   scope :with_actions,    lambda { |*actions| where('action IN (?)', actions) }
   scope :without_actions, lambda { |*actions| where('action NOT IN (?)', actions) }
   scope :latest, lambda { |options|
-    includes(:user)
-    .where(options[:asset] ? {:subject_type => options[:asset]} : nil)
-    .where(options[:user] ? {:user_id => options[:user]} : nil)
-    .where('activities.created_at >= ?', Time.zone.now - (options[:duration] || 2.days))
-    .order('activities.created_at DESC')
+    includes(:user).
+    where(options[:asset] ? {:subject_type => options[:asset]} : nil).
+    where(options[:user] ? {:user_id => options[:user]} : nil).
+    where('activities.created_at >= ?', Time.zone.now - (options[:duration] || 2.days)).
+    order('activities.created_at DESC')
   }
 
   validates_presence_of :user, :subject
