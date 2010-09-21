@@ -84,12 +84,12 @@ module ApplicationHelper
   def link_to_inline(id, url, options = {})
     text = options[:text] || id.to_s.titleize
     text = (arrow_for(id) + text) unless options[:plain]
-    related = (options[:related] ? ", related: '#{options[:related]}'" : "")
+    related = (options[:related] ? "+'&related=#{options[:related]}'" : '')
 
     link_to_remote(text,
       :url    => url,
       :method => :get,
-      :with   => "{ cancel: Element.visible('#{id}')#{related} }"
+      :with   => "'cancel='+Element.visible('#{id}')#{related}"
     )
   end
 
@@ -104,7 +104,7 @@ module ApplicationHelper
     link_to_remote(t(:edit),
       :url    => params[:url] || url_for(:id => model, :action => :edit),
       :method => :get,
-      :with   => "{ previous: crm.find_form('edit_#{name}') }"
+      :with   => "'previous='+crm.find_form('edit_#{name}')"
     )
   end
 
@@ -127,7 +127,7 @@ module ApplicationHelper
     link_to_remote(t(:discard),
       :url    => url_for(:controller => parent, :action => :discard, :id => parent_id),
       :method => :post,
-      :with   => "{ attachment: '#{model.class.name}', attachment_id: #{model.id} }",
+      :with   => "'attachment=#{model.class.name}&attachment_id=#{model.id}'",
       :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
@@ -137,7 +137,8 @@ module ApplicationHelper
     link_to_remote(t(:cancel),
       :url    => params[:url] || url,
       :method => :get,
-      :with   => "{ cancel: true }")
+      :with   => "'cancel=true'"
+    )
   end
 
   #----------------------------------------------------------------------------
@@ -146,7 +147,7 @@ module ApplicationHelper
       :class => "close", :title => t(:close_form),
       :onmouseover => "this.style.background='lightsalmon'",
       :onmouseout => "this.style.background='lightblue'",
-      :onclick => remote_function(:url => url, :method => :get, :with => "{ cancel: true }")
+      :onclick => remote_function(:url => url, :method => :get, :with => "'cancel=true'")
     )
   end
 
@@ -259,7 +260,7 @@ module ApplicationHelper
     end
     remote_function(
       :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "{ #{option}: '#{param || value}' }",
+      :with      => "'#{option}=#{param || value}'",
       :condition => "$('#{option}').innerHTML != '#{value}'",
       :loading   => "$('#{option}').update('#{value}'); $('loading').show()",
       :complete  => "$('loading').hide()"
@@ -272,7 +273,7 @@ module ApplicationHelper
     "{ name: \"#{name.titleize}\", on_select: function() {" +
     remote_function(
       :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "{ #{option}: '#{key}' }",
+      :with      => "'#{option}=#{key}'",
       :condition => "$('#{option}').innerHTML != '#{name}'",
       :loading   => "$('#{option}').update('#{name}'); $('loading').show()",
       :complete  => "$('loading').hide()"
@@ -285,7 +286,7 @@ module ApplicationHelper
     unless session[:timezone_offset]
       remote_function(
         :url  => timezone_path,
-        :with => "{ offset: (new Date()).getTimezoneOffset() }"
+        :with => "'offset='+(new Date()).getTimezoneOffset()"
       )
     end
   end

@@ -4,7 +4,7 @@
 
 - same_as_billing ||= false
 
-- f.fields_for(address_attr.to_sym) do |a|
+= f.fields_for(address_attr.to_sym) do |a|
   = a.hidden_field :address_type, :value => address_type
   - unless Setting.compound_address
     - if same_as_billing
