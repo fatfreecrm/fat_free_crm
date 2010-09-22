@@ -5,7 +5,7 @@
 # Usage "HEADLESS=true cucumber features/"
 #
 # HEADLESS=true will run the cucumbers in xvfb rather than your browser window
-# Files are saved in RAILS_ROOT/features/screengrabs/
+# Files are saved in Rails.root.to_s/features/screengrabs/
 #
 # Add this step to take manual screengrabs:
 #
@@ -16,7 +16,7 @@
 
 module ScreenGrabHelper
 
-  DEFAULT_SCREENGRAB_PATH = File.join(RAILS_ROOT, 'features', 'screengrabs')
+  DEFAULT_SCREENGRAB_PATH = File.join(Rails.root.to_s, 'features', 'screengrabs')
 
   # credit http://monket.net/blog/2009/09/screenshots-of-failing-cucumber-scenarios/
   def take_screengrab_if_failed(scenario)
