@@ -98,7 +98,6 @@ GEM
     activesupport (3.0.0)
     acts-as-taggable-on (2.0.6)
     acts_as_commentable (3.0.0)
-    archive-tar-minitar (0.5.2)
     arel (1.0.1)
       activesupport (~> 3.0.0)
     autotest-rails (4.1.0)
@@ -121,7 +120,6 @@ GEM
       selenium-webdriver (>= 0.0.3)
     chronic (0.2.3)
       hoe (>= 1.2.1)
-    columnize (0.3.1)
     cucumber (0.8.5)
       builder (~> 2.1.2)
       diff-lcs (~> 1.1.2)
@@ -148,8 +146,6 @@ GEM
       rubyforge (>= 2.0.4)
     i18n (0.4.1)
     json_pure (1.4.6)
-    linecache19 (0.5.11)
-      ruby_core_source (>= 0.1.4)
     mail (2.2.5)
       activesupport (>= 2.3.6)
       mime-types
@@ -184,16 +180,6 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
-    ruby-debug-base19 (0.11.24)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug19 (0.11.6)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby-debug-base19 (>= 0.11.19)
-    ruby_core_source (0.1.4)
-      archive-tar-minitar (>= 0.5.2)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     rubyzip (0.9.4)
@@ -246,7 +232,6 @@ DEPENDENCIES
   rspec-expectations!
   rspec-mocks!
   rspec-rails!
-  ruby-debug19
   shoulda
   spork
   test-unit (= 1.2.3)
