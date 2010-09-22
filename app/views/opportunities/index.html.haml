@@ -16,3 +16,5 @@
   - else
     = render :partial => "common/empty"
 #paginate= render :partial => "common/paginate"
+
+= hook(:opportunity_index_after, self)
