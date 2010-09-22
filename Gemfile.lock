@@ -120,7 +120,6 @@ GEM
       selenium-webdriver (>= 0.0.3)
     chronic (0.2.3)
       hoe (>= 1.2.1)
-    columnize (0.3.1)
     cucumber (0.8.5)
       builder (~> 2.1.2)
       diff-lcs (~> 1.1.2)
@@ -147,7 +146,6 @@ GEM
       rubyforge (>= 2.0.4)
     i18n (0.4.1)
     json_pure (1.4.6)
-    linecache (0.43)
     mail (2.2.5)
       activesupport (>= 2.3.6)
       mime-types
@@ -182,11 +180,6 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
-    ruby-debug (0.10.3)
-      columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.3.0)
-    ruby-debug-base (0.10.3)
-      linecache (>= 0.3)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     rubyzip (0.9.4)
@@ -199,6 +192,8 @@ GEM
     shoulda (2.11.3)
     spork (0.8.4)
     term-ansicolor (1.0.5)
+    test-unit (1.2.3)
+      hoe (>= 1.5.1)
     thor (0.14.0)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
@@ -237,9 +232,9 @@ DEPENDENCIES
   rspec-expectations!
   rspec-mocks!
   rspec-rails!
-  ruby-debug
   shoulda
   spork
+  test-unit (= 1.2.3)
   webrat
   whenever
   will_paginate (>= 3.0.pre2)

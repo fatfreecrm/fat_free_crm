@@ -3,8 +3,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
-require 'ruby-debug'
-
 require 'factory_girl'
 require "#{::Rails.root}/spec/factories"
 
@@ -144,8 +142,8 @@ ActionView::TestCase::TestController.class_eval do
 end
 
 RSpec::Rails::ViewExampleGroup::InstanceMethods.class_eval do
-  def render_with_mock_response
-    render_without_mock_response
+  def render_with_mock_response(*args)
+    render_without_mock_response *args
     @response = mock(:body => rendered)
   end
   alias_method_chain :render, :mock_response

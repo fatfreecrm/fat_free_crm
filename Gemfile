@@ -25,12 +25,12 @@ group :cucumber, :development, :test do
   gem "rspec-expectations", :git => "git://github.com/rspec/rspec-expectations.git"
   gem "rspec-mocks",        :git => "git://github.com/rspec/rspec-mocks.git"
 
-  if RUBY_VERSION.to_f >= 1.9
-    # gem install ruby-debug19 -- --with-ruby-include=/home/user/.rvm/src/ruby-1.9.2-head/
-    gem 'ruby-debug19'
-  else
-    gem 'ruby-debug'
-  end
+  #~ if RUBY_VERSION.to_f >= 1.9
+    #~ # gem install ruby-debug19 -- --with-ruby-include=/home/user/.rvm/src/ruby-1.9.2-head/
+    #~ gem 'ruby-debug19'
+  #~ else
+    #~ gem 'ruby-debug'
+  #~ end
 end
 
 group :cucumber, :test do
