@@ -29,20 +29,23 @@
       - else
         - if pending.at_specific_time?
           - if pending.due_at < Time.now
-            %span.warn= distance_of_time_in_words(pending.due_at, Time.now)
-            = t(:task_overdue) 
-            = l(pending.due_at.localtime, :format => :mmddhhss)
+            %span.warn
+              = distance_of_time_in_words(pending.due_at, Time.now)
+              = t(:task_overdue) 
+              = l(pending.due_at.localtime, :format => :mmddhhss)
           - else
             = t(:task_due_in, distance_of_time_in_words(Time.now, pending.due_at))
             = '(' << l(pending.due_at.localtime, :format => :mmddhhss) << ')'
 
         - else
           - if pending.due_at < Date.today
-            %span.warn= distance_of_time_in_words(pending.due_at, Time.now)
-            = t(:task_overdue) 
-            = pending.due_at.localtime.strftime('%b %e')
+            %span.warn
+              = distance_of_time_in_words(pending.due_at, Time.now)
+              = t(:task_overdue) 
+              = pending.due_at.localtime.strftime('%b %e')
           - elsif pending.due_at > Date.today
             = t(:task_due_in, distance_of_time_in_words(Time.now, pending.due_at.localtime.end_of_day))
+            = ' (' << pending.due_at.localtime.end_of_day.strftime('%b %e') << ')'
           - else
             %span.cool= t(:task_due_today)
 

@@ -15,7 +15,7 @@
         = h(contact.title) << ", " << h(contact.department)
       - else
         = h(contact.title) if contact.title?
-      - if contact.account && contact.account.name?
+      - if contact.account && contact.account.name? && contact.account.name != contact.full_name
         == #{t :at} #{link_to h(contact.account.name), account_path(contact.account)}
       - if contact.lead and contact.lead.referred_by?
         &ndash;

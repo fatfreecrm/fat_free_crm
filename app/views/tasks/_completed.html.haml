@@ -16,8 +16,8 @@
     &ndash;
     %tt
       %span.cool
-        -# :task_completed_by: "completed {{time_ago}} ago by {{user}}"
-        = t(:task_completed_by, :time_ago => distance_of_time_in_words(completed.completed_at, Time.now), :user => ((completed.completor.id != @current_user.id) ? link_to(completed.completor.full_name, user_path(completed.completor)) : t(:me)))
+        -# :task_completed_by: "completed {{time_ago}} ago ({{date}}) by {{user}}"
+        = t(:task_completed_by, :time_ago => distance_of_time_in_words(completed.completed_at, Time.now), :date => completed.completed_at.strftime('%b %e, %Y'), :user => ((completed.completor.id != @current_user.id) ?  link_to(completed.completor.full_name, user_path(completed.completor)) : t(:me)))
     - unless completed.background_info.blank?
       %div
         %dt= h(completed.background_info)

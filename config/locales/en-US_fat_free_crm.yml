@@ -179,7 +179,7 @@ en-US:
   msg_password_updated: Password was successfully updated.
   msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
   msg_require_admin: You must be Administrator to access this page.
-  msg_successful_signup: Successfull signup, welcome to Fat Free CRM!
+  msg_successful_signup: Successful signup, welcome to Fat Free CRM!
   msg_welcome: Welcome to Fat Free CRM!
 
   # Options.
@@ -323,6 +323,7 @@ en-US:
   total_campaigns: Total Campaigns
   was_supposed_to_finish: was supposed to finish on %{value}
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
+  was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
 
   # Views -> Contacts.
   #----------------------------------------------------------------------------
@@ -438,7 +439,7 @@ en-US:
   task_assigned_to: and assigned to %{value}
   task_completed: completed
   task_completed_ago: completed %{value} ago
-  task_completed_by: completed %{time_ago} ago by %{user}
+  task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
   task_created: The task has been created
   task_due_in: due in %{value}
   task_due_later: due sometime soon

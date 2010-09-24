@@ -37,4 +37,3 @@ class DevelopmentViewHooks < FatFreeCRM::Callback::Base
     view.javascript_include_tag "event.simulate.js"
   end
 end
-
