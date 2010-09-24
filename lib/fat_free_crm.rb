@@ -28,7 +28,6 @@ require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/plugin"
-require "fat_free_crm/plugin_views"
 
       ActionView::Base.send(:include, FatFreeCRM::I18n)
 ActionController::Base.send(:include, FatFreeCRM::I18n)
@@ -39,4 +38,3 @@ ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
     ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
     ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
 
- Rails::Plugin::Loader.send(:include, FatFreeCRM::PrependEngineViews)
