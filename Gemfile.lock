@@ -192,8 +192,6 @@ GEM
     shoulda (2.11.3)
     spork (0.8.4)
     term-ansicolor (1.0.5)
-    test-unit (1.2.3)
-      hoe (>= 1.5.1)
     thor (0.14.0)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
@@ -234,7 +232,6 @@ DEPENDENCIES
   rspec-rails!
   shoulda
   spork
-  test-unit (= 1.2.3)
   webrat
   whenever
   will_paginate (>= 3.0.pre2)
