@@ -28,12 +28,11 @@
 #  updated_at    :datetime
 #
 class Setting < ActiveRecord::Base
-  
-  #-------------------------------------------------------------------
+
   def self.method_missing(method, *args)
     begin
       super(method, *args)
-    rescue NoMethodError
+    rescue NoMethodError, NameError # Seems that NameError exception was introduced in Rails 2.3.8
       method_name = method.to_s
       if method_name.last == "="
         self[method_name.sub("=", "")] = args.first

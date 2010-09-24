@@ -180,7 +180,7 @@ pl:
   msg_password_not_changed: Twoje hasło pozostało niezmienione.
   msg_password_updated: Hasło zostało zaktualizowane.
   msg_pwd_instructions_sent: Instrukcja, jak odzyskać hasło zostały wysłane. Sprawdź Twoją skrzynkę emailową.
-  msg_require_admin: You must be Administrator to access this page.
+  msg_require_admin: Musisz być Administratorem, by otworzyć tę stronę.
   msg_successful_signup: Rejestracja udana, witaj w Fat Free CRM!
   msg_welcome: Witaj w Fat Free CRM!
 
@@ -465,7 +465,7 @@ pl:
   action_completed: ukończył/a
   action_created: utworzył/a
   action_deleted: usunięto
-  action_email: exchanged emails with # TODO
+  action_email: wymienił/a emaile
   action_reassigned: zmienił/a przypisanie
   action_rejected: oznaczył/a jako Stracony
   action_rescheduled: zmienił/a termin
@@ -499,12 +499,12 @@ pl:
   create_new: dodaj nowego
   select_existing: wybierz istniejącego
   delete: Usuń
-  discard: Discard # TODO
+  discard: Anuluj
   edit: Zmień
   items_total: '{{count}} razem.'
-  less: Less... # TODO
+  less: Mniej...
   me: mnie
-  more: More... # TODO
+  more: Więcej...
   n_a: N/A
   name: Nazwa
   no_match: Nie znaleziono {{value}}
@@ -549,7 +549,7 @@ pl:
   # Views -> Passwords.
   #----------------------------------------------------------------------------
   confirm_password_intro: Wpisz swoje hasło i potwierdź je w drugim polu.
-  password_intro: Proszę podaj swój ade=res email, a instrukje dotyczące odzyskania konta zostaną tam wysłane.
+  password_intro: Proszę podaj swój adres email, a instrukje dotyczące odzyskania konta zostaną tam wysłane.
   reset_password: Odzyskaj hasło
   update_password_and_login: Zmień hasło i/lub nazwę użytkownika
 
@@ -629,4 +629,4 @@ pl:
     ok: OK
     now: Teraz
     today: Dziś
-    clear: Clear
+    clear: Wyczyść
