@@ -38,18 +38,43 @@ module FatFreeCRM
     # - array with multiple items returned by the hook chain.
     #--------------------------------------------------------------------------
     def self.hook(method, caller, context = {})
-      responder(method).inject([]) do |response, m|
-        response << m.send(method, caller, context)
+      responder(method).inject(Hash.new([])) do |response, m|
+        response[m.class.positions[method]] += [m.send(method, caller, context)]
+        response
       end
     end
 
     #--------------------------------------------------------------------------
     class Base
       include Singleton
-
       def self.inherited(child)
         FatFreeCRM::Callback.add(child)
+        # Positioning hash to determine where content is placed.
+        child.class_eval do
+          @positions = Hash.new(:after)
+        end
         super
+      end
+
+      class << self
+        attr_accessor :positions
+
+        def insert_before(hook, &block)
+          define_method hook, &block
+          @positions[hook] = :before
+        end
+        def insert_after(hook, &block)
+          define_method hook, &block
+          @positions[hook] = :after
+        end
+        def replace(hook, &block)
+          define_method hook, &block
+          @positions[hook] = :replace
+        end
+        def remove(hook)
+          define_method hook, Proc.new{""}
+          @positions[hook] = :replace
+        end
       end
       
     end # class Base
@@ -59,9 +84,33 @@ module FatFreeCRM
     # data otherwise.
     #--------------------------------------------------------------------------
     module Helper
-      def hook(method, caller, context = {})
-        data = FatFreeCRM::Callback.hook(method, caller, context)
-        caller.class.to_s.start_with?("ActionView") ? data.join : data
+      def hook(method, caller, context = {}, &block)
+        is_view_hook = caller.class.to_s.start_with?("ActionView")
+
+        # If a block was given, hooks can choose to replace, append or prepend view content.
+        if block and is_view_hook
+          hook_hash = FatFreeCRM::Callback.hook(method, caller, context)
+          # Add content to the view with the following logic:
+          # -- before
+          # -- replace || original block
+          # -- after
+          view_data = ""
+          hook_hash[:before].each{|data| view_data << data }
+          # Only render the original view block if there are no :replace operations
+          if hook_hash[:replace].empty?
+            view_data << capture(&block)
+          else
+            hook_hash[:replace].each{|data| view_data << data }
+          end
+          hook_hash[:after].each{|data| view_data << data }
+          view_data
+
+        # Else, if no was block given.. (for backwards compatibility with existing hooks)
+        else
+          # All legacy hooks will have data stored in the :after key.
+          data = FatFreeCRM::Callback.hook(method, caller, context)[:after]
+          is_view_hook ? data.join : data
+        end
       end
     end # module Helper
 
