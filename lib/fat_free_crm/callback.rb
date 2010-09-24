@@ -102,13 +102,13 @@ module FatFreeCRM
             hook_hash[:replace].each{|data| view_data << data }
           end
           hook_hash[:after].each{|data| view_data << data }
-          view_data
+          view_data.html_safe
 
         # Else, if no was block given.. (for backwards compatibility with existing hooks)
         else
           # All legacy hooks will have data stored in the :after key.
           data = FatFreeCRM::Callback.hook(method, caller, context)[:after]
-          is_view_hook ? data.join : data
+          is_view_hook ? data.join.html_safe : data
         end
       end
     end # module Helper
