@@ -111,13 +111,13 @@ module FatFreeCRM
         is_view_hook = caller.class.to_s.start_with?("ActionView")
 
         # If a block was given, hooks are able to replace, append or prepend view content.
-        if block and is_view_hook
+        if block_given? and is_view_hook
           hooks = FatFreeCRM::Callback.view_hook(method, caller, context)
           # Add content to the view in the following order:
           # -- before
           # -- replace || original block
           # -- after
-          view_data = ""
+          view_data = []
           hooks[:before].each{|data| view_data << data }
           # Only render the original view block if there are no pending :replace operations
           if hooks[:replace].empty?
@@ -126,7 +126,7 @@ module FatFreeCRM
             hooks[:replace].each{|data| view_data << data }
           end
           hooks[:after].each{|data| view_data << data }
-          view_data
+          view_data.join
 
         else
           # Hooks called without blocks are either controller or legacy view hooks
