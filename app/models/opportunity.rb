@@ -62,7 +62,7 @@ class Opportunity < ActiveRecord::Base
 
   uses_user_permissions
   acts_as_commentable
-  acts_as_paranoid
+  is_paranoid
   sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_opportunity_name

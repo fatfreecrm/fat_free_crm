@@ -92,7 +92,7 @@ class Task < ActiveRecord::Base
 
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   acts_as_commentable
-  acts_as_paranoid
+  is_paranoid
 
   validates_presence_of :user
   validates_presence_of :name, :message => :missing_task_name

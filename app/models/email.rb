@@ -42,7 +42,7 @@ class Email < ActiveRecord::Base
   belongs_to :mediator, :polymorphic => true
   belongs_to :user
   
-  acts_as_paranoid
+  is_paranoid
   after_create :log_activity
 
   def expanded?;  self.state == "Expanded";  end

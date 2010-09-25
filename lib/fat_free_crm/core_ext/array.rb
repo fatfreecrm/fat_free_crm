@@ -16,7 +16,9 @@
 #------------------------------------------------------------------------------
 
 class Array
-
+  # NOTE: in ActiveRecord 2.x #visible_to was mixed into class
+  # ActiveRecord::NamedScope::Scope but with AREL scope it must be Array.
+  #
   # The following is used to filter out user activities based on activity
   # subject's permissions. For example:
   #
@@ -30,7 +32,7 @@ class Array
     delete_if do |item|
       is_private = false
       if item.is_a?(Activity)
-        subject = item.subject || item.subject_type.constantize.with_deleted.find(item.subject_id)
+        subject = item.subject || item.subject_type.constantize.find_with_destroyed(item.subject_id)
         if subject.respond_to?(:access) # NOTE: Tasks don't have :access as of yet.
           is_private = subject.user_id != user.id && subject.assigned_to != user.id &&
             (subject.access == "Private" || (subject.access == "Shared" && !subject.permissions.map(&:user_id).include?(user.id)))

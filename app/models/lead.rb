@@ -73,7 +73,7 @@ class Lead < ActiveRecord::Base
 
   uses_user_permissions
   acts_as_commentable
-  acts_as_paranoid
+  is_paranoid
   sortable :by => [ "first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :first_name, :message => :missing_first_name

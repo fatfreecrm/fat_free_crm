@@ -38,7 +38,7 @@
 class Address < ActiveRecord::Base
   belongs_to :addressable, :polymorphic => true
 
-  acts_as_paranoid
+  is_paranoid
 
   scope :business, :conditions => "address_type='Business'"
   scope :billing,  :conditions => "address_type='Billing'"

@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
 
-  acts_as_paranoid
+  is_paranoid
 
   # For some reason this does not play nice with is_paranoid when set as default scope
   scope :by_id, order('id DESC')
