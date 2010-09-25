@@ -20,7 +20,7 @@ describe "/home/options.rjs" do
       with_tag("input[type=hidden]") # @current_user
 
       user_menu = "onLoading:function(request){$('user').update('all users'); " +
-                  "$('loading').show()}, parameters:{ user: 'all_users' }}); } } }"
+                  "$('loading').show()}, parameters:'user=all_users'}); } } }"
       with_tag("script", /#{Regexp.escape(user_menu)}/)
     end
     rendered.should include('crm.flip_form("options")')
