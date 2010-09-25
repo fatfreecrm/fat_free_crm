@@ -21,41 +21,11 @@ GIT
     is_paranoid (0.0.2)
 
 GIT
-  remote: git://github.com/rspec/rspec-core.git
-  revision: cf6145e94a5417fbf6f11cc3692c84b97986f499
+  remote: http://github.com/crossroads/ci_reporter.git
+  revision: 4171f68dfbce27380e5deff8d6f8a865d0e01a4d
   specs:
-    rspec-core (2.0.0.beta.20)
-
-GIT
-  remote: git://github.com/rspec/rspec-expectations.git
-  revision: ed7e32a491adb626348e27a73ddb502969672c07
-  specs:
-    rspec-expectations (2.0.0.beta.20)
-      diff-lcs (>= 1.1.2)
-
-GIT
-  remote: git://github.com/rspec/rspec-mocks.git
-  revision: 537838f57d9b37c62482064bc3a4d0fd58703512
-  specs:
-    rspec-mocks (2.0.0.beta.20)
-      rspec-core (= 2.0.0.beta.20)
-      rspec-expectations (= 2.0.0.beta.20)
-
-GIT
-  remote: git://github.com/rspec/rspec-rails.git
-  revision: 0330f3a6433eeb22f3d48de5adf8ee6a9d35ed38
-  specs:
-    rspec-rails (2.0.0.beta.20)
-      rspec (= 2.0.0.beta.20)
-
-GIT
-  remote: git://github.com/rspec/rspec.git
-  revision: d90fe02234eaa5bef3fa4c93f1a6588317cb81da
-  specs:
-    rspec (2.0.0.beta.20)
-      rspec-core (= 2.0.0.beta.20)
-      rspec-expectations (= 2.0.0.beta.20)
-      rspec-mocks (= 2.0.0.beta.20)
+    ci_reporter (1.6.4)
+      builder (>= 2.1.2)
 
 GIT
   remote: http://github.com/thoughtbot/paperclip.git
@@ -180,6 +150,19 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
+    rcov (0.9.9)
+    rspec (2.0.0.beta.22)
+      rspec-core (= 2.0.0.beta.22)
+      rspec-expectations (= 2.0.0.beta.22)
+      rspec-mocks (= 2.0.0.beta.22)
+    rspec-core (2.0.0.beta.22)
+    rspec-expectations (2.0.0.beta.22)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.0.beta.22)
+      rspec-core (= 2.0.0.beta.22)
+      rspec-expectations (= 2.0.0.beta.22)
+    rspec-rails (2.0.0.beta.22)
+      rspec (= 2.0.0.beta.22)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     rubyzip (0.9.4)
@@ -215,6 +198,7 @@ DEPENDENCIES
   autotest-rails
   capistrano-ext
   capybara
+  ci_reporter!
   cucumber-rails
   database_cleaner
   factory_girl
@@ -225,11 +209,8 @@ DEPENDENCIES
   mysql (>= 2.8.1)
   paperclip!
   rails (= 3.0.0)
-  rspec!
-  rspec-core!
-  rspec-expectations!
-  rspec-mocks!
-  rspec-rails!
+  rcov
+  rspec-rails (>= 2.0.0.beta.22)
   shoulda
   spork
   webrat

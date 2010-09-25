@@ -141,7 +141,7 @@ ActionView::TestCase::TestController.class_eval do
   end
 end
 
-RSpec::Rails::ViewExampleGroup::InstanceMethods.class_eval do
+RSpec::Rails::ViewExampleGroup::InstanceMethods.class_eval do 
   def render_with_mock_response(*args)
     render_without_mock_response *args
     @response = mock(:body => rendered)
