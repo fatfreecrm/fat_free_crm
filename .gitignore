@@ -8,9 +8,10 @@ public/avatars/**/*
 public/javascripts/cache/*.js
 public/stylesheets/cache/*.css
 nbproject
+.bundle
+.rspec
 .idea/
 .DS_Store
 *~
 *.swp
 vendor/plugins/crm_*
-
