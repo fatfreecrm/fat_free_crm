@@ -41,7 +41,7 @@ module CallbackSpecHelper
 
   def test_hook(position)
     Haml::Engine.new(%Q^
-= hook("test_#{position}".to_sym, ActionView::Base.new) do
+= hook("test_#{position}".to_sym, self) do
   BLOCK^).render.gsub("\n",'')
   end
   
@@ -77,7 +77,7 @@ describe FatFreeCRM::Callback do
   end
   
   it "should still work for legacy hooks" do
-    Haml::Engine.new("= hook(:test_legacy, ActionView::Base.new)").render.
+    Haml::Engine.new("= hook(:test_legacy, self)").render.
       gsub("\n",'').should == "LEGACY"
   end
 end
