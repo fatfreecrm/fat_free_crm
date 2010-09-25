@@ -9,7 +9,7 @@ gem 'acts_as_commentable',  '>= 3.0.0'
 gem 'authlogic',            '>= 2.1.6'
 gem 'haml',                 '>= 3.0.18'
 gem 'mysql2',               '>= 0.2.3'
-gem 'paperclip',            '>= 2.3.3'
+gem 'paperclip',            '>= 2.3.3', :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'simple_column_search', '>= 1.0.3'
 gem 'will_paginate',        '>= 3.0.pre2'
 

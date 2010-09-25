@@ -259,6 +259,8 @@ describe UsersController do
 
     it "should return errors if the avatar failed to get uploaded and resized" do
       @image = fixture_file_upload("spec/fixtures/rails.png", "image/png")
+      @avatar = Factory.build(:avatar, :user => @user, :entity => @user)
+      Avatar.stub!(:new).and_return(@avatar)
       @user.stub!(:save).and_return(false) # make it fail
 
       xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
