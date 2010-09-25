@@ -23,11 +23,14 @@ unless ARGV.any? {|a| a =~ /^gems/} # Don't load anything when running the gems:
   end
 end
 
-namespace :bamboo do
-  desc 'Run the specs for bamboo (requires ci_reporter)'   
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.spec_opts = ["--require ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec"]
-    t.pattern   = 'spec/**/*_spec.rb'
+begin
+  namespace :bamboo do
+    desc 'Run the specs for bamboo (requires ci_reporter)'   
+    RSpec::Core::RakeTask.new(:spec) do |t|
+      t.spec_opts = ["--require ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec"]
+      t.pattern   = 'spec/**/*_spec.rb'
+    end
   end
+rescue
+  puts "RSpec not installed."  
 end
-
