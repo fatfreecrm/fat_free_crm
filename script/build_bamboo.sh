@@ -42,8 +42,8 @@ RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
 
 # Run RSpec tests and cucumbers for each crm_* plugin.
 # -----------------------------------------------------
-PLUGINS=vendor/plugins/crm_*
-for f in $PLUGINS
+CRMPLUGINS=vendor/plugins/crm_*
+for f in $CRMPLUGINS
 do
     echo "== Running RSpec tests and cucumbers for '$f'..."
     cd $f
