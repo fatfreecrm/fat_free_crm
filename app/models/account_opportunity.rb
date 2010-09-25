@@ -31,6 +31,4 @@ class AccountOpportunity < ActiveRecord::Base
   belongs_to :account
   belongs_to :opportunity
   validates_presence_of :account_id, :opportunity_id
-
-  acts_as_paranoid
 end

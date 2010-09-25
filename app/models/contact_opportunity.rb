@@ -32,6 +32,4 @@ class ContactOpportunity < ActiveRecord::Base
   belongs_to :contact
   belongs_to :opportunity
   validates_presence_of :contact_id, :opportunity_id
-
-  acts_as_paranoid
 end
