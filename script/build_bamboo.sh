@@ -40,11 +40,6 @@ RAILS_ENV=cucumber rake db:create
 RAILS_ENV=test rake db:migrate db:migrate:plugins
 RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
 
-# Core FFCRM Specs and Cucumbers
-# -----------------------------------------------------
-rake bamboo:spec
-rake bamboo:cucumber
-
 # Run RSpec tests and cucumbers for each crm_* plugin.
 # -----------------------------------------------------
 PLUGINS=vendor/plugins/crm_*
@@ -56,6 +51,11 @@ do
     rake bamboo:cucumber
     cd ../../..
 done
+
+# Core FFCRM Specs and Cucumbers
+# -----------------------------------------------------
+rake bamboo:spec
+rake bamboo:cucumber
 
 # Drop Databases
 # -----------------------------------------------------
