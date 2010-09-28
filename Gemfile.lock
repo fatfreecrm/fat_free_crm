@@ -110,6 +110,7 @@ GEM
     gherkin (2.1.5)
       trollop (~> 1.16.2)
     haml (3.0.18)
+    headless (0.1.0)
     highline (1.6.1)
     hoe (2.6.2)
       rake (>= 0.8.7)
@@ -205,6 +206,7 @@ DEPENDENCIES
   ffaker
   gravatar-ultimate!
   haml (>= 3.0.18)
+  headless
   is_paranoid!
   mysql (>= 2.8.1)
   paperclip!
