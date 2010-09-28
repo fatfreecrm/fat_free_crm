@@ -20,7 +20,8 @@ module ScreenGrabHelper
 
   # credit http://monket.net/blog/2009/09/screenshots-of-failing-cucumber-scenarios/
   def take_screengrab_if_failed(scenario)
-    if (scenario.status != :passed)
+    # Don't take a screengrab if the step has been skipped.
+    if scenario.status == :failed
       scenario_name = scenario.to_sexp[3].gsub /[^\w\-]/, ' '
       time = Time.now.strftime("%Y-%m-%d %H%M")
       name = time + '-' + scenario_name + '-failed.png'

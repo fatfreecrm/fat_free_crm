@@ -28,6 +28,7 @@ require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/plugin"
+require "fat_free_crm/cucumber"
 
       ActionView::Base.send(:include, FatFreeCRM::I18n)
 ActionController::Base.send(:include, FatFreeCRM::I18n)
