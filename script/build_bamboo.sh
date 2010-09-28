@@ -1,9 +1,15 @@
+# Project variables
+# -----------------------------------------------------
 ruby_version=1.9.2
 bundler_version=1.0.0
 
-# Install required pancakes, syrups and bacon
+ruby_packages="ruby ruby-devel gcc rubygems"
+cucumber_packages="libxml2 libxml2-devel libxslt libxslt-devel xorg-x11-server-Xvfb firefox ImageMagick"
+required_packages="$ruby_packages $cucumber_packages"
+
+# Install required pancakes, syrups, bacon, and cucumber extras.
 # -----------------------------------------------------
-yum --quiet -y install ruby ruby-devel gcc rubygems
+yum --quiet -y install $required_packages
 
 # Install RVM if not installed
 # -----------------------------------------------------
@@ -21,10 +27,6 @@ if ! (rvm list | grep $ruby_version); then rvm install $ruby_version; fi;
 rvm use $ruby_version
 
 if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version --no-rdoc --no-ri; fi;
-
-# cucumber extras
-# -----------------------------------------------------
-yum --quiet -y install libxml2 libxml2-devel libxslt libxslt-devel xorg-x11-server-Xvfb firefox ImageMagick
 
 # Create Database Configuration File
 # -----------------------------------------------------
@@ -55,17 +57,17 @@ bundle install
 # Create test and cucumber databases
 # -----------------------------------------------------
 RAILS_ENV=test rake db:create
+RAILS_ENV=test rake db:migrate
 RAILS_ENV=cucumber rake db:create
-RAILS_ENV=test rake db:migrate db:migrate:plugins
-RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
+RAILS_ENV=cucumber rake db:migrate
 
 # Run RSpec tests and cucumbers for each crm_* plugin.
 # -----------------------------------------------------
-CRMPLUGINS=vendor/plugins/crm_*
-for f in $CRMPLUGINS
+crm_plugins=vendor/plugins/crm_*
+for plugin_dir in $crm_plugins
 do
-    echo "== Running RSpec tests and cucumbers for '$f'..."
-    cd $f
+    echo "== Running RSpec tests and cucumbers for '$plugin_dir'..."
+    cd $plugin_dir
     rake bamboo:spec
     rake bamboo:cucumber
     cd ../../..
