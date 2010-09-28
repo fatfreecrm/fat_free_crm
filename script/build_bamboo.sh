@@ -5,16 +5,19 @@ bundler_version=1.0.0
 # -----------------------------------------------------
 yum --quiet -y install ruby ruby-devel gcc rubygems
 
-# Install RVM and 1.9.2 if not already installed.
+# Install RVM if not installed
 # -----------------------------------------------------
 if ! (which rvm); then 
  bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
 fi
- 
-if ! (rvm list | grep $ruby_version); then rvm install $ruby_version; fi;
 
-# Use the installed ruby version.
+# Set up RVM as a function. This loads RVM into a shell session.
 # -----------------------------------------------------
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+# Install and use the configured ruby version
+# -----------------------------------------------------
+if ! (rvm list | grep $ruby_version); then rvm install $ruby_version; fi;
 rvm use $ruby_version
 
 if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version --no-rdoc --no-ri; fi;
