@@ -28,6 +28,6 @@ class ActionController::Base
 
   def render_fat_free_crm_exception(exception)
     logger.error(exception)
-    render :layout => false, :template => "/layouts/500.html.haml", :status => 500, :locals => { :exception => exception.html_safe }
+    render :layout => false, :template => "/layouts/500.html.haml", :status => 500, :locals => { :exception => exception }
   end
 end
