@@ -37,3 +37,4 @@ ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
 
     ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
     ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
+

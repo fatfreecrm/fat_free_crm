@@ -82,7 +82,7 @@ module FatFreeCRM
             discard(uid)
           end
         rescue Exception => e
-          if ["test", "development"].include?(Rails.env)
+          if Rails.env != 'production'
             $stderr.puts e
             $stderr.puts e.backtrace
           end
@@ -343,9 +343,11 @@ module FatFreeCRM
       defaults
     end
 
+    # If default access is 'Shared' then change it to 'Private' because we don't know how
+    # to choose anyone to share it with here.
+    #--------------------------------------------------------------------------------------
     def default_access
-      # If Shared then default to Private because we don't know how to choose anyone to share it with here
-      Setting.default_access == "Shared" ? 'Private' : Setting.default_access
+      Setting.default_access == 'Shared' ? 'Private' : Setting.default_access
     end
 
     #--------------------------------------------------------------------------------------

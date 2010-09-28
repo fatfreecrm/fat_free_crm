@@ -56,6 +56,18 @@ describe Account do
       @account.attach!(@contact).should == [ @contact ]
       @account.attach!(@opportunity).should == [ @opportunity ]
     end
+
+    it "should not attach a contact to more than one account" do
+      @another_account = Factory(:account)
+      @contact = Factory(:contact)
+      @account.attach!(@contact).should == [ @contact ]
+      @contact.account.should == @account
+
+      @another_account.attach!(@contact).should == [ @contact ]
+      @contact.account.should == @another_account
+      @another_account.contacts.should include(@contact)
+      @account.contacts.should_not include(@contact)
+    end
   end
 
   describe "Discard" do

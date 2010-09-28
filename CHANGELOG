@@ -4,6 +4,190 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Aug 31, 2010
+---------------------------------------------------------------------
+- Release 0.10.1.
+- Updated CHANGELOG and CONTRIBUTORS files.
+
+Sun, Aug 29, 2010
+---------------------------------------------------------------------
+- Added clickable labels to tasks sidebar checkboxes.
+
+Thu, Aug 26, 2010
+---------------------------------------------------------------------
+- Added missing Polish translations (thanks, Kamil!)
+
+Fri, Aug 20, 2010
+---------------------------------------------------------------------
+- Fixed deprecation warnings about plugins/**/tasks (thanks, Nathan!)
+- Fixed Rails Engines deprecation warnings (thanks, Nathan!)
+- [rake crm:setup] command now also runs plugin migrations (thanks, Nathan!)
+
+Thu, Aug 19, 2010
+---------------------------------------------------------------------
+- Checkboxes now have clickable labels (thanks, Steve!)
+- Load 'awesome_print' gem (if available) in development mode (thanks, Nathan!)
+
+Wed, Aug 18, 2010
+---------------------------------------------------------------------
+- Added 'javascript_includes' hook (thanks, Nathan!)
+
+Tue, Aug 17, 2010
+---------------------------------------------------------------------
+- Properly set the account value when attaching a contact to the account (closed LH #165)
+- Fixed failing dropbox specs by rescuing proper exception (Rails 2.3.8).
+- Added PrependEngineViews library module to let Fat Free CRM plugins override default views.
+
+Mon, Aug 16, 2010
+---------------------------------------------------------------------
+- Minor UI tweaks.
+
+Sat, Aug 14, 2010
+---------------------------------------------------------------------
+- Added view hooks after top section (thanks, Ben!)
+- Fixed default access for objects created by dropbox (thanks, Steve!)
+
+Fri, Aug 13, 2010
+---------------------------------------------------------------------
+- Stopped emails being associated with Campaigns that don't exist (thanks, Steve!)
+- Fixed plugins tab initialization when the 'settings' table had not been created yet (thanks, Nathan!)
+
+Thu, Aug 12, 2010
+---------------------------------------------------------------------
+- Fixed activerecord deprecation warnings (thanks, Nathan!)
+- Fixed factory generator for email (thanks, Nathan!)
+
+Tue, Aug 10, 2010
+---------------------------------------------------------------------
+- Added rules to .gitignore to ignore any plugins starting with crm_* (thanks, Nathan!)
+
+Mon, Aug 9, 2010
+---------------------------------------------------------------------
+- Display absolute dates in addition to relative ones (thanks, Peter!)
+- Add absolute dates and fix relative dates for campaigns (thanks, Peter!)
+
+Sat, Aug 7, 2010
+---------------------------------------------------------------------
+- Make sure Task selection popup doesn't affect Quick Find.
+- Close asset selection popup on <Enter>.
+- Finished refactoring to move #attach logic from application controller to models.
+
+Fri, Aug 6, 2010
+---------------------------------------------------------------------
+- Germal translation fixes (thanks, Ralf!)
+- Removed Rails deprecation warnings (thanks, Ralf!)
+
+Thu, Aug 5, 2010
+---------------------------------------------------------------------
+- Fat Free CRM by default requires Rails 2.3.8.
+- Bundled will_paginate and faker as vendor/gems.
+
+Wed, Aug 4, 2010
+---------------------------------------------------------------------
+- Made dropbox email address comparision was case-insensitve (thanks, Ralf!)
+- Removed duplicate association Opportunity#account (was: has_one + belongs_to) (thanks, Ralf!)
+- Multiple fixes for Rails 2.3.8 upgrade (thanks, Ralf!)
+
+Tue, Aug 3, 2010
+---------------------------------------------------------------------
+- Don't auto-complete user create/edit forms (thanks, Alexander!)
+- Multiple fixes in Germal translation (thanks, Ralf!)
+
+Fri, Jul 30, 2010
+---------------------------------------------------------------------
+- If a contact has no name, fill in the account name instead (thanks, Peter!)
+
+Wed, Jul 28, 2010
+---------------------------------------------------------------------
+- Sort contacts by last name by default (thanks, Peter!)
+
+Tue, Jul 27, 2010
+---------------------------------------------------------------------
+- Fixed named scope condition syntax in the Opportunity model (thanks, Elad!)
+- Refactored to move #attach logic from application controller to models.
+
+Mon, Jul 12, 2010
+---------------------------------------------------------------------
+- Refactored to move #discard logic from application controller to models.
+
+Thu, Jul 7, 2010
+---------------------------------------------------------------------
+- Added controller#attach specs.
+- Added more comprehensive controller#discard specs.
+
+Wed, Jul 7, 2010
+---------------------------------------------------------------------
+- Allow searching by email for Accounts, Contacts, and Leads.
+- Added #discard controller specs.
+
+Sun, Jul 4, 2010
+---------------------------------------------------------------------
+- Allow explicit controller name when refreshing sidebar.
+- Handle #discard requests the same way #attach are handled (i.e. in parent object controller).
+
+Fri, Jul 2, 2010
+---------------------------------------------------------------------
+- Moved common #attach handler to application controller.
+- Strike through completed tasks in the auto_complete list.
+- Implemented #discard for tasks.
+- Implemented selecting and attaching tasks.
+- Allow auto_complete for tasks.
+- Implemented #attach for Opportunities and #attach/#discard for Contacts.
+- Added #attach routes to handle requests to attach existing assets to related item.
+
+Mon, Jun 12, 2010
+---------------------------------------------------------------------
+- Use default permissions when creating an account from within a contact (thanks, Matthiew!)
+- Removed 'Custom' opportunity stage and replaced it with comment in config/settings.yml.
+- Named scope fix for Postgres/Heroku (closes LH #213).
+
+Wed, Jun 7, 2010
+---------------------------------------------------------------------
+- pt-BR updates (thanks, Enderson!)
+
+Thu, Jun 17, 2010
+---------------------------------------------------------------------
+- Don't count lost opportunities towards Account total (closes LH #205).
+- Fixed vertical offset of asset selection popup.
+- Made multiple selection popups coexist on a single page.
+
+Fri, Jun 11, 2010
+---------------------------------------------------------------------
+- Fixed issue with linking to edit/delete for models with multipart names (thanks, Nicholas!)
+
+Tue, Jun 8, 2010
+---------------------------------------------------------------------
+- Added load_select_popups_for() helper on asset landing pages.
+- Refactored to add sections with [Create/Select...] on landing pages.
+
+Fri, Jun 4, 2010
+---------------------------------------------------------------------
+- Initial prototype of seleting related asset from the asset's landing page.
+- Added discard action related specs.
+
+Fri, May 28, 2010
+---------------------------------------------------------------------
+- Do not offer :converted status choice when creating new lead (closes LH #199).
+
+Thu, May 27, 2010
+---------------------------------------------------------------------
+- Added simplified Chinese translation (thanks, James Zhang!)
+- Initial implementation of discarding attached opportunity.
+
+Tue, May 25, 2010
+---------------------------------------------------------------------
+- Final dropbox touches before merging it all to the master branch.
+- Avoid collision with .email CSS class which is used to display Task category strip.
+- Dropbox related localizations.
+
+Mon, May 24, 2010
+---------------------------------------------------------------------
+- More work on the dropbox library.
+
+Mon, May 10, 2010
+---------------------------------------------------------------------
+- Allow to detach an account when editing a contact or an opportunity (closes LH #184).
+
 Wed, May 5, 2010
 ---------------------------------------------------------------------
 - Added migration to have index on permissions (thanks, Yura!)
