@@ -13,7 +13,7 @@ yum --quiet -y install $required_packages
 
 # Install RVM if not installed
 # -----------------------------------------------------
-if ! (which rvm); then 
+if ! (which rvm) then 
  bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
 fi
 
@@ -61,15 +61,21 @@ RAILS_ENV=test rake db:migrate db:migrate:plugins
 RAILS_ENV=cucumber rake db:create
 RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
 
-# Run RSpec tests and cucumbers for each crm_* plugin.
+# Run RSpec tests and cucumbers for each crm_* plugin. (if they exist)
 # -----------------------------------------------------
 crm_plugins=vendor/plugins/crm_*
 for plugin_dir in $crm_plugins
 do
     echo "== Running RSpec tests and cucumbers for '$plugin_dir'..."
     cd $plugin_dir
-    rake bamboo:spec
-    rake bamboo:cucumber
+    
+    if ( find -maxdepth 1 | grep spec ) then 
+        rake bamboo:spec
+    fi
+    if ( find -maxdepth 1 | grep features ) then 
+        rake bamboo:cucumber
+    fi   
+    
     cd ../../..
 done
 
