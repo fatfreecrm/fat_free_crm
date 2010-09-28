@@ -45,6 +45,7 @@ group :cucumber do
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'spork'
+  gem 'headless'
 end
 
 group :test do
