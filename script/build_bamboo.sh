@@ -57,9 +57,9 @@ bundle install
 # Create test and cucumber databases
 # -----------------------------------------------------
 RAILS_ENV=test rake db:create
-RAILS_ENV=test rake db:migrate
+RAILS_ENV=test rake db:migrate db:migrate:plugins
 RAILS_ENV=cucumber rake db:create
-RAILS_ENV=cucumber rake db:migrate
+RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
 
 # Run RSpec tests and cucumbers for each crm_* plugin.
 # -----------------------------------------------------
