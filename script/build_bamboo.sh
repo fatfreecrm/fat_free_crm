@@ -7,7 +7,10 @@ yum --quiet -y install ruby ruby-devel gcc rubygems
 
 # Install RVM and 1.9.2 if not already installed.
 # -----------------------------------------------------
-if ! (which rvm); then bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head ); fi;
+if ! (which rvm); then 
+ bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
+fi
+ 
 if ! (rvm list | grep $ruby_version); then rvm install $ruby_version; fi;
 
 # Use the installed ruby version.
