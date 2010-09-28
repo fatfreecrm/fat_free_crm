@@ -19,7 +19,7 @@ fi
 
 # Set up RVM as a function. This loads RVM into a shell session.
 # -----------------------------------------------------
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+[[ -s "$HOME/.rvm/src/rvm/scripts/rvm" ]] && . "$HOME/.rvm/src/rvm/scripts/rvm"
 
 # Install and use the configured ruby version
 # -----------------------------------------------------
