@@ -71,8 +71,8 @@ namespace :crm do
 
   desc "Prepare the database and load default application settings"
   task :setup => :environment do
-    proceed = ENV["PROCEED"] == 'true'
-    if !proceed and ActiveRecord::Migrator.current_version > 0
+    proceed = true    
+    if ENV["PROCEED"] != 'true' and ActiveRecord::Migrator.current_version > 0
       puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
       loop do
         print "Continue [yes/no]: "
@@ -80,7 +80,7 @@ namespace :crm do
         break unless proceed.blank?
       end
       proceed = (proceed =~ /y(?:es)*/i)
-    end
+    end     
     if proceed
       Rake::Task["db:migrate:reset"].invoke
       Rake::Task["db:migrate:plugins"].invoke
