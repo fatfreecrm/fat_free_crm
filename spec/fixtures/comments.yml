@@ -14,7 +14,7 @@
 #  updated_at       :datetime
 #
 <% 
-  require "faker"
+  require "ffaker"
   puts "Loading comments..."
 
   commentable = %w(Account Campaign Contact Lead Opportunity) # Task
