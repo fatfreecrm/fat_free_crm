@@ -1,7 +1,20 @@
+ruby_version=1.9.2
+bundler_version=1.0.0
+
 # Install required pancakes, syrups and bacon
 # -----------------------------------------------------
 yum --quiet -y install ruby ruby-devel gcc rubygems
-if ! (gem list | grep "bundler"); then gem install bundler -v=1.0.0 --no-rdoc --no-ri; fi;
+
+# Install RVM and 1.9.2 if not already installed.
+# -----------------------------------------------------
+if ! (which rvm); then bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head ); fi;
+if ! (rvm list | grep $ruby_version); then rvm install $ruby_version; fi;
+
+# Use the installed ruby version.
+# -----------------------------------------------------
+rvm $ruby_version
+
+if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version --no-rdoc --no-ri; fi;
 
 # cucumber extras
 # -----------------------------------------------------
