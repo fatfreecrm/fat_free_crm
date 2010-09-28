@@ -73,7 +73,7 @@ do
         rake bamboo:spec
     fi
     if ( find -maxdepth 1 | grep features ) then 
-        rake bamboo:cucumber
+        HEADLESS=true rake bamboo:cucumber
     fi   
     
     cd ../../..
@@ -82,7 +82,7 @@ done
 # Core FFCRM Specs and Cucumbers
 # -----------------------------------------------------
 rake bamboo:spec
-rake bamboo:cucumber
+HEADLESS=true rake bamboo:cucumber
 
 # Drop Databases
 # -----------------------------------------------------

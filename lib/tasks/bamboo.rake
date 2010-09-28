@@ -3,10 +3,7 @@ unless ARGV.any? {|a| a =~ /^gems/} # Don't load anything when running the gems:
   begin # only install task if Cucumber is available
 
     require 'cucumber/rake/task'
-
-    # rake bamboo:cucumber should default to HEADLESS mode
-    ENV['HEADLESS'] ||= "true"
-  
+ 
     namespace :bamboo do
       desc 'Run the cucumbers for bamboo. Use HEADLESS=true if you want to run in xvfb'
       Cucumber::Rake::Task.new(:cucumber) do |t|
