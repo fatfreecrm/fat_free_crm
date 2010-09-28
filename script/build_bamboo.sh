@@ -15,7 +15,7 @@ if ! (rvm list | grep $ruby_version); then rvm install $ruby_version; fi;
 
 # Use the installed ruby version.
 # -----------------------------------------------------
-rvm $ruby_version
+rvm use $ruby_version
 
 if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version --no-rdoc --no-ri; fi;
 
