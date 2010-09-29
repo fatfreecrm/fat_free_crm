@@ -6,6 +6,19 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
+
+# Override engine views so that plugin views take precedence over application views.
+Rails::Engine.initializers.detect{|i| i.name == :add_view_paths }.
+  instance_variable_set("@block", Proc.new {
+    views = paths.app.views.to_a
+    unless views.empty?
+      ActiveSupport.on_load(:action_controller){ append_view_path(views) }
+      ActiveSupport.on_load(:action_mailer){ append_view_path(views) }
+    end
+  }
+)
+
+
 module FatFreeCrm
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

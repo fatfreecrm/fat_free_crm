@@ -15,10 +15,6 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-AbstractController::ViewPaths::ClassMethods.class_eval do
-  alias_method :prepend_view_path, :append_view_path
-end
-
 Rails::Plugin.class_eval do
   def initializer
     ActiveSupport::Deprecation.warn "Rails::Plugin initializer is depricated use self instead"
