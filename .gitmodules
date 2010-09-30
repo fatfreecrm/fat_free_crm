@@ -10,6 +10,6 @@
 [submodule "vendor/plugins/crm_crossroads"]
 	path = vendor/plugins/crm_crossroads
 	url = git@github.com:crossroads/crm_crossroads.git
-[submodule "crm_plugin_test_overrides"]
-	path = crm_plugin_test_overrides
+[submodule "vendor/plugins/crm_plugin_test_overrides"]
+	path = vendor/plugins/crm_plugin_test_overrides
 	url = git@github.com:crossroads/crm_plugin_test_overrides.git
