@@ -48,6 +48,7 @@ EOF
 # (Prevents needing to authenticate this machine)
 # -----------------------------------------------------
 sed -i s,git@github.com:,http://github.com/,g .git/config
+git submodule init
 git submodule update
 
 # Install Bundle!
