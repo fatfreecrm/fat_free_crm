@@ -56,7 +56,10 @@ class Campaign < ActiveRecord::Base
   scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
 
-  scope :search, lambda { |query| where('name LIKE ?', "%#{query}%") }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('name LIKE ?', "%#{query}%")
+  }
 
   uses_user_permissions
   acts_as_commentable
