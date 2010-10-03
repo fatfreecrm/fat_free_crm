@@ -111,7 +111,7 @@ describe SimpleColumnSearch do
       Person.search_first_name_end('jah').should == [@jqr]
     end
   end
-  
+
   describe "multi column search" do
     it "should find someone by first name" do
       Person.search('Eli').should == [@jqr]
@@ -143,5 +143,27 @@ describe SimpleColumnSearch do
       Person.search('shake Miller').should == [@shakewell]
     end
   end
+
+  describe "query escaping" do
+    it "should escape the query string when asked so" do
+      Person.search_escape_query("\tmiler\n").should == [@jqr, @shakewell]
+    end
+    it "should fail without escaping" do
+      Person.search("\tmiler\n").should == []
+    end
+  end
+
+  describe "multi column search with lambda match" do
+    it "should find someone by first name (start match)" do
+      Person.search_match_lambda('Eli').should == [@jqr]
+    end
   
+    it "should find someone by last name if it's exact match" do
+      Person.search_match_lambda('Miller').should == [@jqr, @shakewell]
+    end
+
+    it "should not find someone by last name unless it's exact match" do
+      Person.search_match_lambda('Mill').should == []
+    end
+  end
 end

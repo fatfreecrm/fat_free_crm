@@ -11,7 +11,7 @@ Add a search method to your model by calling simple_column_search with the field
   class User
     simple_column_search :first_name, :last_name
   end
- 
+
 Search for a single value across all searched columns.
 
   User.search('eli')             # => anyone with first or last name starting with eli
@@ -22,6 +22,24 @@ Refine the search by adding another search term.
   User.search('eli miller')
     # => anyone with first or last name starting with eli AND
     #    anyone with first or last name starting with miller
+
+Specify query match mode. Use :exact, :start, :middle, or :end (default is :start).
+
+  class User
+    simple_column_search :name, :match => :exact
+  end
+
+Specify query match based on column name.
+
+  class User
+    simple_column_search :name, :email, :match => lambda { |column| column == :email ? :middle : :start },
+  end
+
+Escape query string before issuing the search request.
+
+  class User
+    simple_column_search :name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, '').strip }
+  end
 
 == Install
 

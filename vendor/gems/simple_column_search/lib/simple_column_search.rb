@@ -2,6 +2,8 @@ require 'rubygems'
 require 'active_record'
 
 module SimpleColumnSearch
+  class InvalidMatcher < StandardError; end
+
   # Adds a Model.search('term1 term2') method that searches across SEARCH_COLUMNS
   # for ANDed TERMS ORed across columns.
   #
@@ -21,29 +23,38 @@ module SimpleColumnSearch
     options[:match] ||= :start
     options[:name] ||= 'search'
 
-    # Test options at create time
-    get_simple_column_pattern(options[:match], 'test')
+    unless options[:match].is_a?(Proc) || [ :start, :middle, :end, :exact ].include?(options[:match])
+      raise InvalidMatcher, "Unexpected match type: #{options[:match].inspect}"
+    end
 
     # PostgreSQL LIKE is case-sensitive, use ILIKE for case-insensitive
     like = connection.adapter_name == "PostgreSQL" ? "ILIKE" : "LIKE"
     # Determine if ActiveRecord 3 or ActiveRecord 2.3 - probaly beter way to do it!
     if self.respond_to?(:where)
       scope options[:name], lambda { |terms|
+        terms = options[:escape].call(terms) if options[:escape]
         conditions = terms.split.inject(where(nil)) do |acc, term|
-          pattern = get_simple_column_pattern options[:match], term
-          acc.where(columns.collect { |column| "#{table_name}.#{column} #{like} :pattern" }.join(' OR '), { :pattern => pattern })
+          patterns = build_simple_column_patterns(columns, options[:match], term)
+          acc.where(columns.map { |column| "#{table_name}.#{column} #{like} ?" }.join(' OR '), *patterns)
         end
       }
     else
       named_scope options[:name], lambda { |terms|
+        terms = options[:escape].call(terms) if options[:escape]
         conditions = terms.split.inject(nil) do |acc, term|
-          pattern = get_simple_column_pattern options[:match], term
-          merge_conditions acc, [columns.collect { |column| "#{table_name}.#{column} #{like} :pattern" }.join(' OR '), { :pattern => pattern }]
+          patterns = build_simple_column_patterns(columns, options[:match], term)
+          merge_conditions acc, [ columns.map { |column| "#{table_name}.#{column} #{like} ?" }.join(' OR '), *patterns ]
         end
         { :conditions => conditions }
       }
     end
+  end
 
+  private
+  def build_simple_column_patterns(columns, match, term)
+    columns.map do |column|
+      get_simple_column_pattern(match.is_a?(Proc) ? match.call(column) : match, term)
+    end
   end
 
   def get_simple_column_pattern(match, term)
@@ -57,12 +68,9 @@ module SimpleColumnSearch
     when :end
       '%' + term
     else
-      raise InvalidMatcher, "Unexpected match type: #{match}"
+      raise InvalidMatcher, "Unexpected match type: #{match.inspect}"
     end
   end
-
-  class InvalidMatcher < StandardError; end
-
 end
 
 ActiveRecord::Base.extend(SimpleColumnSearch)
