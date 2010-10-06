@@ -19,10 +19,6 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
   authenticate_with User
   after_save :check_if_suspended
 
-  def to_key
-    id ? id : nil
-  end
-
   private
 
   # Override Authlogic's validate_by_password() to allow blank passwords. See
