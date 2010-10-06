@@ -57,12 +57,12 @@ tt {
   font-size: 12px; }
 
 #header {
-  background: #1e4262;
-  color: skyblue;
+  background: #330000;
+  color: #cd7570;
   padding: 8px 16px 8px 16px; }
   #header h3 a {
-    background: #1e4262;
-    color: greenyellow;
+    background: #330000;
+    color: white;
     font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
   #header #welcome {
@@ -73,7 +73,7 @@ tt {
       padding: 1px 4px 2px 4px;
       text-decoration: none; }
       #header #welcome a:hover {
-        background: #1e4262;
+        background: #330000;
         color: yellow; }
     #header #welcome a.selected {
       background: steelblue;
@@ -95,7 +95,7 @@ tt {
       color: white;
       padding: 0px 0px 4px 0px; }
       #header #jumpbox #jumpbox_menu a.selected {
-        color: navy; }
+        color: #330000; }
       #header #jumpbox #jumpbox_menu a:hover {
         background: steelblue; }
     #header #jumpbox #jumpbox_label {
@@ -104,7 +104,7 @@ tt {
       margin: 2px 0px 0px 0px; }
 
 #tabs {
-  background: #1e4262;
+  background: #330000;
   height: 24px;
   padding: 0px;
   text-align: center;
@@ -116,7 +116,7 @@ tt {
     margin: 0px 4px 0px 16px;
     width: 80px; }
   #tabs a:link, #tabs a:visited {
-    background: #466bb1;
+    background: #860000;
     color: white;
     float: left;
     padding: 4px 8px 5px 8px;
@@ -128,11 +128,11 @@ tt {
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px; }
   #tabs a:hover {
-    background: #97baff;
-    color: navy; }
+    background: #cd7570;
+    color: #330000; }
   #tabs a:link.active, #tabs a:visited.active {
-    background: azure;
-    color: navy;
+    background: white;
+    color: #330000;
     text-decoration: none; }
 
 #footer {
@@ -142,7 +142,7 @@ tt {
 
 .title {
   border-bottom: 1px gray solid;
-  color: #342d7e;
+  color: black;
   font-size: 17px;
   font-weight: bold;
   padding-bottom: 2px; }
@@ -190,14 +190,14 @@ tt {
 
 .standalone {
   background: whitesmoke;
-  border: 20px lightsteelblue solid;
+  border: 20px #860000 solid;
   margin: 75px auto 6px auto;
   padding: 20px;
   width: 400px;
   -moz-border-radius: 6px;
-  -moz-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb;
+  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
   -webkit-border-radius: 6px;
-  -webkit-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb; }
+  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb; }
   .standalone input[type="text"], .standalone input[type="password"] {
     font-size: 16px;
     padding: 2px;
@@ -212,9 +212,9 @@ tt {
   background: white;
   padding: 8px 15px 15px 15px;
   -moz-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
   -webkit-border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .sidebar {
   color: #3f3f3f;
@@ -231,7 +231,7 @@ tt {
 .tools {
   font-size: 10px;
   float: right;
-  padding: 0px 8px 0px 4px; }
+  padding: 0px 0px 0px 4px; }
   .tools#comment_new_tools {
     margin: 8px 0px 0px 0px; }
 
@@ -244,7 +244,7 @@ tt {
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: navy; }
+  color: #330000; }
 
 .intro {
   color: dimgray;
@@ -258,7 +258,7 @@ tt {
   padding: 4px 15px 8px 15px; }
 
 .remote {
-  border: 5px lightblue solid;
+  border: 5px lightgrey solid;
   background: whitesmoke;
   margin: 0px;
   padding: 0px 10px 0px 10px;
@@ -269,7 +269,7 @@ tt {
     border-left: 1px gainsboro solid;
     border-bottom: 1px grey solid;
     border-right: 1px grey solid;
-    color: navy;
+    color: #330000;
     cursor: pointer;
     height: 16px;
     margin: 3px;
@@ -484,11 +484,11 @@ tt {
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
-  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .filters h4 {
-  color: navy;
+  color: #330000;
   font-size: 12px;
   font-weight: bold; }
 .filters input[type=text] {
@@ -514,7 +514,7 @@ tt {
     border-bottom: none; }
 .panel .caption {
   border-bottom: 1px grey solid;
-  color: navy;
+  color: #330000;
   font-size: 12px;
   font-weight: bold;
   margin: 4px 0px 2px 0px;
@@ -540,12 +540,6 @@ tt {
   background: lightgrey;
   border: 1px silver outset; }
 
-.arrow {
-  font-size: 9px;
-  vertical-align: middle;
-  padding-bottom: 3px;
-  padding-right: 2px; }
-
 .left {
   -moz-border-radius-bottomleft: 9px;
   -moz-border-radius-topleft: 9px;
@@ -560,10 +554,10 @@ tt {
 
 .menu {
   background: #f4f5eb;
-  border-top: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #666;
-  border-bottom: 1px solid #666;
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #666666;
+  border-bottom: 1px solid #666666;
   left: 0px;
   padding: 2px 0px;
   position: absolute;
@@ -577,7 +571,7 @@ tt {
   .menu li {
     list-style-position: outside; }
   .menu a {
-    color: #555;
+    color: #555555;
     cursor: default;
     display: block;
     margin: 0px 2px;
@@ -585,8 +579,8 @@ tt {
     padding: 4px 15px;
     text-decoration: none; }
   .menu a:hover {
-    background: mediumblue //#006;
-    color: #fff; }
+    background: mediumblue;
+    color: white; }
 
 .errorExplanation {
   background-color: seashell;
@@ -620,19 +614,19 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: #df9;
-  color: darkgreen;
+  background: khaki;
+  color: #220000;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {
-  background: #df9;
+  background: #ddff99;
   border: 5px limegreen solid;
   font-size: 14px;
   margin: 50px auto;
   padding: 50px;
   width: 450px;
-  -moz-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999;
-  -webkit-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999; }
+  -moz-box-shadow: 5px 5px 15px #999999, -5px 0px 15px #999999;
+  -webkit-box-shadow: 5px 5px 15px #999999, -5px 0px 15px #999999; }
 
 div.auto_complete {
   background: white;
@@ -668,22 +662,22 @@ div.auto_complete {
   font-size: 11px;
   margin: 6px 0px 0px 0px; }
   .pagination a, .pagination span {
-    padding: .2em .5em;
+    padding: 0.2em 0.5em;
     display: block;
     float: left;
     margin: 0px 2px 0px 0px; }
   .pagination span.disabled {
-    color: #999;
-    border: 1px solid #DDD; }
+    color: #999999;
+    border: 1px solid #dddddd; }
   .pagination span.current {
     font-weight: bold;
-    background: #2E6AB1;
+    background: #2e6ab1;
     color: white;
-    border: 1px solid #2E6AB1; }
+    border: 1px solid #2e6ab1; }
   .pagination a {
     text-decoration: none;
-    color: #105CB6;
-    border: 1px solid #9AAFE5; }
+    color: #105cb6;
+    border: 1px solid #9aafe5; }
     .pagination a:hover, .pagination a:focus {
       color: navy;
       background: lightyellow;
