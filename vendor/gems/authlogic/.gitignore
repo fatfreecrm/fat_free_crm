@@ -1,0 +1,9 @@
+.DS_Store
+.swp
+*.log
+*.sqlite3
+pkg/*
+coverage/*
+doc/*
+benchmarks/*
+.specification
