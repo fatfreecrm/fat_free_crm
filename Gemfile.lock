@@ -43,11 +43,6 @@ GIT
       activerecord
       activesupport
 
-PATH
-  remote: vendor/gems/simple_column_search
-  specs:
-    simple_column_search (1.0.4)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -125,6 +120,7 @@ GEM
     rake (0.8.7)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
+    simple_column_search (1.1.0)
     test-unit (1.2.3)
       hoe (>= 1.5.1)
     thor (0.14.0)
@@ -152,6 +148,6 @@ DEPENDENCIES
   rspec-expectations (>= 2.0.0.beta.22)!
   rspec-mocks (>= 2.0.0.beta.22)!
   rspec-rails (>= 2.0.0.beta.22)!
-  simple_column_search (>= 1.0.4)!
+  simple_column_search (>= 1.1.0)
   test-unit (= 1.2.3)
   will_paginate (>= 3.0.pre2)
