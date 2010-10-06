@@ -28,8 +28,8 @@ GIT
       builder (>= 2.1.2)
 
 GIT
-  remote: http://github.com/thoughtbot/paperclip.git
-  revision: 9e6afe4ff5b6b07bb1d50a4cb4bdd85feb1c9bbf
+  remote: http://github.com/crossroads/paperclip.git
+  revision: 9339d78dbf7e68b83d252c1e1baef7c7e24c5cfb
   specs:
     paperclip (2.3.3)
       activerecord
