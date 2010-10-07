@@ -38,6 +38,7 @@ end
 group :cucumber, :test do
   gem 'ffaker'
   gem 'factory_girl'
+  gem 'thin'
 end
 
 group :cucumber do

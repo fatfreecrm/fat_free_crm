@@ -13,5 +13,5 @@ Comment.class_eval do
 end
 
 # Make sure the database is clean and shiny before we start testing
-DatabaseCleaner.clean
+# DatabaseCleaner.clean
 

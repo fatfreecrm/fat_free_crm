@@ -29,7 +29,8 @@ describe Opportunity do
   end
 
   it "should create a new instance given valid attributes" do
-    Opportunity.create!(:name => "Opportunity")
+    @account = Factory(:account)
+    Opportunity.create!(:name => "Opportunity", :account => @account)
   end
 
   it "should be possible to create opportunity with the same name" do
@@ -49,7 +50,7 @@ describe Opportunity do
         :opportunity => { :name => "Hello" }
       })}.should change(Account, :count).by(1)
       Account.last.name.should == "New account"
-      @opportunity.name.should == "Hello"
+      @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
     it "should update the account another account was selected" do
@@ -59,7 +60,7 @@ describe Opportunity do
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
       @opportunity.account.should == @another_account
-      @opportunity.name.should == "Hello"
+      @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
     it "should drop existing Account if [create new account] is blank" do
@@ -68,7 +69,7 @@ describe Opportunity do
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
       @opportunity.account.should == nil
-      @opportunity.name.should == "Hello"
+      @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
@@ -77,7 +78,7 @@ describe Opportunity do
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
       @opportunity.account.should == nil
-      @opportunity.name.should == "Hello"
+      @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
   end
 
