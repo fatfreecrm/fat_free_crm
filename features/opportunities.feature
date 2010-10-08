@@ -8,6 +8,7 @@ Feature: Users can manage opportunities
     Given a logged in user
     When I go to the opportunities page
     And I follow "Create Opportunity"
+    And I follow "create new"
     And I fill in the following:
       |opportunity[name]|Sell boat|
       |account[name]    |Bob      |
