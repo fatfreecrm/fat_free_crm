@@ -675,7 +675,8 @@ describe LeadsController do
       @lead = Factory(:lead, :id => 42, :user => @current_user, :campaign => nil)
       @users = [ Factory(:user) ]
       @account = Factory(:account, :id => 123, :user => @current_user)
-      @opportunity = Factory.build(:opportunity, :user => @current_user, :campaign => @lead.campaign)
+      @opportunity = Factory.build(:opportunity, :user => @current_user, :campaign => @lead.campaign,
+                                   :account => @account)
       Opportunity.stub!(:new).and_return(@opportunity)
       @contact = Factory.build(:contact, :user => @current_user, :lead => @lead)
       Contact.stub!(:new).and_return(@contact)

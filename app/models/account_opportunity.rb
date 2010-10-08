@@ -32,5 +32,5 @@ class AccountOpportunity < ActiveRecord::Base
   belongs_to :opportunity
   validates_presence_of :account_id, :opportunity_id
 
-  # is_paranoid
+  is_paranoid
 end

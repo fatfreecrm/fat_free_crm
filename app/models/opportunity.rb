@@ -71,7 +71,9 @@ class Opportunity < ActiveRecord::Base
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
 
-  validates :account_opportunity, :presence => true
+  # Validate presence of account_opportunity unless the opportunity is deleted [with is_paranoid],
+  # in which case the account_opportunity will still exist but will be in a deleted state.
+  validates :account_opportunity, :presence => true, :unless => Proc.new { |o| o.destroyed? }
 
   # Opportunity names are displayed as '#1234 Opportunity Name'
   def name; super; end
