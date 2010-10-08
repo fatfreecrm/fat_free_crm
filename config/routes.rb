@@ -6,6 +6,7 @@ FatFreeCrm::Application.routes.draw do
   match 'toggle' => 'home#toggle'
   match 'timeline' => 'home#timeline', :as => :timeline
   match 'timezone' => 'home#timezone', :as => :timezone
+  match 'redraw' => 'home#redraw'
 
   resource :authentication
 

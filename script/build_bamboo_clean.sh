@@ -44,12 +44,9 @@ cucumber:
   database: crm_cucumber
 EOF
 
-# Pull submodules from github read-only url.
-# (Prevents needing to authenticate this machine)
-# -----------------------------------------------------
-sed -i s,git@github.com:,http://github.com/,g .git/config
-git submodule init
-git submodule update
+# Remove all crm_* plugins to run the test suite on a clean build.
+rm -rf vendor/plugins/crm_*
+
 
 # Install Bundle!
 # -----------------------------------------------------
@@ -61,24 +58,6 @@ RAILS_ENV=test rake db:create
 RAILS_ENV=test rake db:migrate db:migrate:plugins
 RAILS_ENV=cucumber rake db:create
 RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
-
-# Run RSpec tests and cucumbers for each crm_* plugin. (if they exist)
-# -----------------------------------------------------
-crm_plugins=vendor/plugins/crm_*
-for plugin_dir in $crm_plugins
-do
-    echo "== Running RSpec tests and cucumbers for '$plugin_dir'..."
-    cd $plugin_dir
-    
-    if ( find -maxdepth 1 | grep spec ) then 
-        rake bamboo:spec
-    fi
-    if ( find -maxdepth 1 | grep features ) then 
-        HEADLESS=true rake bamboo:cucumber
-    fi   
-    
-    cd ../../..
-done
 
 # Core FFCRM Specs and Cucumbers
 # -----------------------------------------------------

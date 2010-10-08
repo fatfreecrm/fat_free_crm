@@ -70,6 +70,8 @@ class Opportunity < ActiveRecord::Base
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
 
+  validates :account_opportunity, :presence => true
+
   after_create  :increment_opportunities_count
   after_destroy :decrement_opportunities_count
 

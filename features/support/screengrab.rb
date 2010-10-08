@@ -1,6 +1,7 @@
 ############################## Screengrabs #############################
 #
 # sudo apt-get install xvfb ImageMagick OR yum install xorg-x11-server-Xvfb ImageMagick
+# (OR yum install xorg-x11-server-Xvfb.x86_64 for 64bit servers)
 # gem install headless
 # Usage "HEADLESS=true cucumber features/"
 #

@@ -1,15 +1,18 @@
 [submodule "vendor/plugins/crm_merge_contacts"]
-	path = vendor/plugins/crm_merge_contacts
-	url = git@github.com:crossroads/crm_merge_contacts.git
+  path = vendor/plugins/crm_merge_contacts
+  url = git@github.com:crossroads/crm_merge_contacts.git
 [submodule "vendor/plugins/crm_super_tags"]
-	path = vendor/plugins/crm_super_tags
-	url = git@github.com:crossroads/crm_super_tags.git
+  path = vendor/plugins/crm_super_tags
+  url = git@github.com:crossroads/crm_super_tags.git
 [submodule "vendor/plugins/crm_tags"]
-	path = vendor/plugins/crm_tags
-	url = git@github.com:crossroads/crm_tags.git
+  path = vendor/plugins/crm_tags
+  url = git@github.com:crossroads/crm_tags.git
 [submodule "vendor/plugins/crm_crossroads"]
-	path = vendor/plugins/crm_crossroads
-	url = git@github.com:crossroads/crm_crossroads.git
+  path = vendor/plugins/crm_crossroads
+  url = git@github.com:crossroads/crm_crossroads.git
 [submodule "vendor/plugins/crm_meta_search"]
-	path = vendor/plugins/crm_meta_search
-	url = git@github.com:crossroads/crm_meta_search.git
+  path = vendor/plugins/crm_meta_search
+  url = git@github.com:crossroads/crm_meta_search.git
+[submodule "vendor/plugins/crm_plugin_test_overrides"]
+  path = vendor/plugins/crm_plugin_test_overrides
+  url = git@github.com:crossroads/crm_plugin_test_overrides.git
