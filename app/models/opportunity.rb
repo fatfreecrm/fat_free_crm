@@ -56,9 +56,10 @@ class Opportunity < ActiveRecord::Base
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
   scope :not_lost, where("opportunities.stage <> 'lost'")
 
+  # Search by name OR id
   scope :search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.']/, '').strip
-    where('name LIKE ?', "%#{query}%")
+    where('name LIKE :name OR opportunities.id = :id', :name => "%#{query}%", :id => query )
   }
 
   uses_user_permissions
@@ -71,6 +72,18 @@ class Opportunity < ActiveRecord::Base
   validate :users_for_shared_access
 
   validates :account_opportunity, :presence => true
+
+  # Opportunity names are displayed as '#1234 Opportunity Name'
+  def name; super; end
+  def name_with_id
+    if self.new_record?
+      name_without_id
+    else
+      "##{id} #{name_without_id}" unless name_without_id.blank?
+    end
+  end
+  alias_method_chain :name, :id
+
 
   after_create  :increment_opportunities_count
   after_destroy :decrement_opportunities_count
@@ -90,6 +103,7 @@ class Opportunity < ActiveRecord::Base
   def save_with_account_and_permissions(params)
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
+    self.account = account
     self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
     self.save_with_permissions(params[:users])
@@ -103,7 +117,9 @@ class Opportunity < ActiveRecord::Base
       self.reload
     else
       account = Account.create_or_select_for(self, params[:account], params[:users])
+      self.account_opportunity.destroy if self.account_opportunity
       self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
+      self.account = account
     end
     self.update_with_permissions(params[:opportunity], params[:users])
   end
