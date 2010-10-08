@@ -242,6 +242,7 @@ end
 Factory.define :opportunity do |o|
   o.user                { |a| a.association(:user) }
   o.campaign            { |a| a.association(:campaign) }
+  o.account             { Factory.create(:account) }
   o.assigned_to         nil
   o.name                { Faker::Lorem.sentence[0,64] }
   o.access              "Public"

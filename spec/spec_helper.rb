@@ -23,6 +23,8 @@ TASK_STATUSES = %w(pending assigned completed).freeze
 # Load default settings from config/settings.yml
 Factory(:default_settings)
 
+I18n.locale = 'en-US'
+
 RSpec.configure do |config|
   # == Mock Framework
   #
