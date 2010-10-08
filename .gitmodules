@@ -14,5 +14,5 @@
   path = vendor/plugins/crm_meta_search
   url = git@github.com:crossroads/crm_meta_search.git
 [submodule "vendor/plugins/crm_plugin_test_overrides"]
-  path = vendor/plugins/crm_plugin_test_overrides
-  url = git@github.com:crossroads/crm_plugin_test_overrides.git
+	path = vendor/plugins/crm_plugin_test_overrides
+	url = git@github.com:crossroads/crm_plugin_test_overrides.git
