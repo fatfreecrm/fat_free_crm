@@ -1,10 +1,10 @@
 #header {
-  background: #1e4262;
-  color: skyblue;
+  background: #330000;
+  color: #cd7570;
   padding: 8px 16px 8px 16px; }
   #header h3 a {
-    background: #1e4262;
-    color: greenyellow;
+    background: #330000;
+    color: white;
     font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
   #header #welcome {
@@ -15,7 +15,7 @@
       padding: 1px 4px 2px 4px;
       text-decoration: none; }
       #header #welcome a:hover {
-        background: #1e4262;
+        background: #330000;
         color: yellow; }
     #header #welcome a.selected {
       background: steelblue;
@@ -37,7 +37,7 @@
       color: white;
       padding: 0px 0px 4px 0px; }
       #header #jumpbox #jumpbox_menu a.selected {
-        color: navy; }
+        color: #330000; }
       #header #jumpbox #jumpbox_menu a:hover {
         background: steelblue; }
     #header #jumpbox #jumpbox_label {
@@ -46,7 +46,7 @@
       margin: 2px 0px 0px 0px; }
 
 #tabs {
-  background: #1e4262;
+  background: #330000;
   height: 24px;
   padding: 0px;
   text-align: center;
@@ -58,7 +58,7 @@
     margin: 0px 4px 0px 16px;
     width: 80px; }
   #tabs a:link, #tabs a:visited {
-    background: #466bb1;
+    background: #860000;
     color: white;
     float: left;
     padding: 4px 8px 5px 8px;
@@ -70,11 +70,11 @@
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px; }
   #tabs a:hover {
-    background: #97baff;
-    color: navy; }
+    background: #cd7570;
+    color: #330000; }
   #tabs a:link.active, #tabs a:visited.active {
-    background: azure;
-    color: navy;
+    background: white;
+    color: #330000;
     text-decoration: none; }
 
 #footer {
