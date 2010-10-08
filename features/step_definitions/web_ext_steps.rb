@@ -20,3 +20,6 @@ Then /^I fire the "([^"]*)" event on css selector "([^"]*)"(?:\[([\d]*)\])?$/ do
   end
 end
 
+When /^(?:|I )go with search params to (.+):$/ do |page_name, params|
+  visit path_to(page_name, {:search => params.rows_hash})
+end

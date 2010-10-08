@@ -25,7 +25,7 @@ FatFreeCrm::Application.routes.draw do
 
   resources :emails
 
-  resources :tasks do
+  resources :tasks, :constraints => {:id => /\d+/} do
     collection do
       post :auto_complete
       post :filter
