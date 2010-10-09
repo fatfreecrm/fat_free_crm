@@ -21,5 +21,9 @@ Then /^I fire the "([^"]*)" event on css selector "([^"]*)"(?:\[([\d]*)\])?$/ do
 end
 
 When /^(?:|I )go with search params to (.+):$/ do |page_name, params|
-  visit path_to(page_name, {:search => params.rows_hash})
+  params = params.rows_hash.inject({}) do |h,(k,v)|
+    h[k] = v.include?(',') ? v.split(/[,\s]+/) : v
+    h
+  end
+  visit path_to(page_name, params.merge(:format => :json))
 end

@@ -4,3 +4,6 @@ Given /^a contact with full name "([^"]+)"$/ do |name|
                                :last_name  => last_name)
 end
 
+Given /^an contact with params:$/ do |params|
+  @contact = Factory(:contact, params.rows_hash)
+end

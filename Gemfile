@@ -10,10 +10,10 @@ gem 'gravatar-ultimate', :git => 'git://github.com/crossroads/gravatar.git'
 gem 'haml', '>= 3.0.18'
 gem 'is_paranoid', :git => 'git://github.com/crossroads/is_paranoid.git', :branch => 'rails3'
 gem 'mysql', '>= 2.8.1'
-gem 'paperclip', :git => 'http://github.com/crossroads/paperclip.git'
+gem 'paperclip', :git => 'git://github.com/crossroads/paperclip.git'
 gem 'will_paginate', '>= 3.0.pre2'
 gem 'whenever'
-gem 'meta_search', '>= 0.9.3'
+gem 'meta_search', :git => 'git://github.com/ernie/meta_search.git'
 
 group :cucumber, :development, :test do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9

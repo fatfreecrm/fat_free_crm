@@ -21,19 +21,29 @@ GIT
     is_paranoid (0.0.2)
 
 GIT
-  remote: http://github.com/crossroads/ci_reporter.git
-  revision: 4171f68dfbce27380e5deff8d6f8a865d0e01a4d
-  specs:
-    ci_reporter (1.6.4)
-      builder (>= 2.1.2)
-
-GIT
-  remote: http://github.com/crossroads/paperclip.git
+  remote: git://github.com/crossroads/paperclip.git
   revision: 9339d78dbf7e68b83d252c1e1baef7c7e24c5cfb
   specs:
     paperclip (2.3.3)
       activerecord
       activesupport
+
+GIT
+  remote: git://github.com/ernie/meta_search.git
+  revision: c4c9b9d18ca3d9d7fce0bae5b967be43f8594cc8
+  specs:
+    meta_search (0.9.6)
+      actionpack (~> 3.0.0)
+      activerecord (~> 3.0.0)
+      activesupport (~> 3.0.0)
+      arel (~> 1.0.1)
+
+GIT
+  remote: http://github.com/crossroads/ci_reporter.git
+  revision: 4171f68dfbce27380e5deff8d6f8a865d0e01a4d
+  specs:
+    ci_reporter (1.6.4)
+      builder (>= 2.1.2)
 
 GEM
   remote: http://rubygems.org/
@@ -127,11 +137,6 @@ GEM
       activesupport (>= 2.3.6)
       mime-types
       treetop (>= 1.4.5)
-    meta_search (0.9.3)
-      actionpack (~> 3.0.0)
-      activerecord (~> 3.0.0)
-      activesupport (~> 3.0.0)
-      arel (~> 1.0.1)
     mime-types (1.16)
     mysql (2.8.1)
     net-scp (1.0.3)
@@ -235,7 +240,7 @@ DEPENDENCIES
   haml (>= 3.0.18)
   headless
   is_paranoid!
-  meta_search (>= 0.9.3)
+  meta_search!
   mysql (>= 2.8.1)
   paperclip!
   rails (= 3.0.0)
