@@ -10,5 +10,5 @@ set :deploy_to, "/opt/rails/#{application}-preview"
 
 set :scm, :git
 set :repository, "git://github.com/crossroads/fat_free_crm.git"
-set :branch, "rails3"
+set :branch, "master"
 set :deploy_via, :remote_cache
