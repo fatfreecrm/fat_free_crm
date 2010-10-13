@@ -21,6 +21,8 @@ group :cucumber, :development, :test do
   gem 'rspec-rails', '>= 2.0.0.beta.22'
   gem "rcov"
 
+  gem 'ffaker'
+
   # gem "rspec-rails",        :git => "git://github.com/rspec/rspec-rails.git"
   # gem "rspec",              :git => "git://github.com/rspec/rspec.git"
   # gem "rspec-core",         :git => "git://github.com/rspec/rspec-core.git"
@@ -36,7 +38,6 @@ group :cucumber, :development, :test do
 end
 
 group :cucumber, :test do
-  gem 'ffaker'
   gem 'factory_girl'
   gem 'thin'
 end

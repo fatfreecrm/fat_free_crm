@@ -53,6 +53,14 @@ namespace :crm do
     run "cd #{current_path} && RAILS_ENV=production rake crm:demo:load"
   end
 
+  namespace :crossroads do
+    desc "Seed crossroads data (tags and customfields, etc.)"
+    task :seed do
+      run "cd #{current_path} && RAILS_ENV=production rake crm:crossroads:seed"
+    end
+
+  end
+
 end
 
 before 'deploy:finalize_update', 'git:submodules:update'
