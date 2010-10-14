@@ -53,9 +53,9 @@
   padding: 20px;
   width: 400px;
   -moz-border-radius: 6px;
-  -moz-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb;
+  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
   -webkit-border-radius: 6px;
-  -webkit-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb; }
+  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb; }
   .standalone input[type="text"], .standalone input[type="password"] {
     font-size: 16px;
     padding: 2px;
@@ -70,9 +70,9 @@
   background: white;
   padding: 8px 15px 15px 15px;
   -moz-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
   -webkit-border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .sidebar {
   color: #3f3f3f;
@@ -342,8 +342,8 @@
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
-  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .filters h4 {
   color: navy;
@@ -398,6 +398,10 @@
   background: lightgrey;
   border: 1px silver outset; }
 
+.arrow {
+  font-size: 9px;
+  padding: 0px 2px 3px 0px; }
+
 .left {
   -moz-border-radius-bottomleft: 9px;
   -moz-border-radius-topleft: 9px;
@@ -412,10 +416,10 @@
 
 .menu {
   background: #f4f5eb;
-  border-top: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #666;
-  border-bottom: 1px solid #666;
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #666666;
+  border-bottom: 1px solid #666666;
   left: 0px;
   padding: 2px 0px;
   position: absolute;
@@ -429,7 +433,7 @@
   .menu li {
     list-style-position: outside; }
   .menu a {
-    color: #555;
+    color: #555555;
     cursor: default;
     display: block;
     margin: 0px 2px;
@@ -437,5 +441,5 @@
     padding: 4px 15px;
     text-decoration: none; }
   .menu a:hover {
-    background: mediumblue //#006;
-    color: #fff; }
+    background: mediumblue;
+    color: white; }

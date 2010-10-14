@@ -195,9 +195,9 @@ tt {
   padding: 20px;
   width: 400px;
   -moz-border-radius: 6px;
-  -moz-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb;
+  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
   -webkit-border-radius: 6px;
-  -webkit-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb; }
+  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb; }
   .standalone input[type="text"], .standalone input[type="password"] {
     font-size: 16px;
     padding: 2px;
@@ -212,9 +212,9 @@ tt {
   background: white;
   padding: 8px 15px 15px 15px;
   -moz-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
   -webkit-border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .sidebar {
   color: #3f3f3f;
@@ -231,7 +231,7 @@ tt {
 .tools {
   font-size: 10px;
   float: right;
-  padding: 0px 8px 0px 4px; }
+  padding: 0px 0px 0px 4px; }
   .tools#comment_new_tools {
     margin: 8px 0px 0px 0px; }
 
@@ -484,8 +484,8 @@ tt {
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
-  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .filters h4 {
   color: navy;
@@ -542,9 +542,7 @@ tt {
 
 .arrow {
   font-size: 9px;
-  vertical-align: middle;
-  padding-bottom: 3px;
-  padding-right: 2px; }
+  padding: 0px 2px 3px 0px; }
 
 .left {
   -moz-border-radius-bottomleft: 9px;
@@ -560,10 +558,10 @@ tt {
 
 .menu {
   background: #f4f5eb;
-  border-top: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #666;
-  border-bottom: 1px solid #666;
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #666666;
+  border-bottom: 1px solid #666666;
   left: 0px;
   padding: 2px 0px;
   position: absolute;
@@ -577,7 +575,7 @@ tt {
   .menu li {
     list-style-position: outside; }
   .menu a {
-    color: #555;
+    color: #555555;
     cursor: default;
     display: block;
     margin: 0px 2px;
@@ -585,8 +583,8 @@ tt {
     padding: 4px 15px;
     text-decoration: none; }
   .menu a:hover {
-    background: mediumblue //#006;
-    color: #fff; }
+    background: mediumblue;
+    color: white; }
 
 .errorExplanation {
   background-color: seashell;
@@ -620,19 +618,19 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: #df9;
+  background: #ddff99;
   color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {
-  background: #df9;
+  background: #ddff99;
   border: 5px limegreen solid;
   font-size: 14px;
   margin: 50px auto;
   padding: 50px;
   width: 450px;
-  -moz-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999;
-  -webkit-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999; }
+  -moz-box-shadow: 5px 5px 15px #999999, -5px 0px 15px #999999;
+  -webkit-box-shadow: 5px 5px 15px #999999, -5px 0px 15px #999999; }
 
 div.auto_complete {
   background: white;
@@ -668,22 +666,22 @@ div.auto_complete {
   font-size: 11px;
   margin: 6px 0px 0px 0px; }
   .pagination a, .pagination span {
-    padding: .2em .5em;
+    padding: 0.2em 0.5em;
     display: block;
     float: left;
     margin: 0px 2px 0px 0px; }
   .pagination span.disabled {
-    color: #999;
-    border: 1px solid #DDD; }
+    color: #999999;
+    border: 1px solid #dddddd; }
   .pagination span.current {
     font-weight: bold;
-    background: #2E6AB1;
+    background: #2e6ab1;
     color: white;
-    border: 1px solid #2E6AB1; }
+    border: 1px solid #2e6ab1; }
   .pagination a {
     text-decoration: none;
-    color: #105CB6;
-    border: 1px solid #9AAFE5; }
+    color: #105cb6;
+    border: 1px solid #9aafe5; }
     .pagination a:hover, .pagination a:focus {
       color: navy;
       background: lightyellow;
