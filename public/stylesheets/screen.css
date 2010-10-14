@@ -231,7 +231,7 @@ tt {
 .tools {
   font-size: 10px;
   float: right;
-  padding: 0px 8px 0px 4px; }
+  padding: 0px 0px 0px 4px; }
   .tools#comment_new_tools {
     margin: 8px 0px 0px 0px; }
 
@@ -542,9 +542,7 @@ tt {
 
 .arrow {
   font-size: 9px;
-  vertical-align: middle;
-  padding-bottom: 3px;
-  padding-right: 2px; }
+  padding: 0px 2px 3px 0px; }
 
 .left {
   -moz-border-radius-bottomleft: 9px;
