@@ -63,21 +63,21 @@ describe Opportunity do
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
-    it "should drop existing Account if [create new account] is blank" do
+    it "should not drop existing Account if [create new account] is blank" do
       lambda { @opportunity.update_with_account_and_permissions({
         :account => { :name => "" },
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
-      @opportunity.account.should == nil
+      @opportunity.account.should_not == nil
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
-    it "should drop existing Account if [-- None --] is selected from list of accounts" do
+    it "should not drop existing Account if [-- None --] is selected from list of accounts" do
       lambda { @opportunity.update_with_account_and_permissions({
         :account => { :id => "" },
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
-      @opportunity.account.should == nil
+      @opportunity.account.should_not == nil
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
   end
