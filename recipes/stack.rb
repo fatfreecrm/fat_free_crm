@@ -66,10 +66,10 @@ namespace :install do
 
   desc "Install rvm"
   task :rvm do
-    run "bash < <( curl -L http://bit.ly/rvm-install-system-wide )"
-    run "rvm install 1.9.2"
-    run "rvm 1.9.2 --passenger"
-    run "rvm use 1.9.2 --default"
+    run "if ! (which rvm); then curl -L http://bit.ly/rvm-install-system-wide | bash; fi"
+    run "if ! (rvm list | grep #{ruby_version}); then rvm install #{ruby_version}; fi"
+    run "rvm #{ruby_version} --passenger"
+    run "rvm use #{ruby_version} --default"
   end
 
   desc "Install required gems"
