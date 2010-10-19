@@ -114,6 +114,7 @@ module ApplicationHelper
     link_to_remote(t(:delete) + "!",
       :url    => params[:url] || url_for(model),
       :method => :delete,
+      :confirm => t(:confirm_delete, model.class.to_s.downcase),
       :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
