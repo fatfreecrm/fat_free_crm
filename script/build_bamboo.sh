@@ -74,7 +74,7 @@ do
         RAILS_ENV=test rake bamboo:spec
     fi
     if ( find -maxdepth 1 | grep features ) then
-        RAILS_ENV=cucumber HEADLESS=true rake bamboo:cucumber
+        RAILS_ENV=test HEADLESS=true rake bamboo:cucumber
     fi
 
     cd ../../..
@@ -83,7 +83,7 @@ done
 # Core FFCRM Specs and Cucumbers
 # -----------------------------------------------------
 RAILS_ENV=test rake bamboo:spec
-RAILS_ENV=cucumber HEADLESS=true rake bamboo:cucumber
+RAILS_ENV=test HEADLESS=true rake bamboo:cucumber
 
 # Drop Databases
 # -----------------------------------------------------
