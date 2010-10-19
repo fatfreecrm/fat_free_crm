@@ -21,7 +21,7 @@ group :cucumber, :test do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
 
   gem 'rspec-rails', '>= 2.0.0.beta.22'
-  gem "rcov"
+  gem 'rcov'
 
   # gem "rspec-rails",        :git => "git://github.com/rspec/rspec-rails.git"
   # gem "rspec",              :git => "git://github.com/rspec/rspec.git"
