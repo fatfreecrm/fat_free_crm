@@ -71,10 +71,10 @@ do
     cd $plugin_dir
 
     if ( find -maxdepth 1 | grep spec ) then
-        rake bamboo:spec
+        RAILS_ENV=test rake bamboo:spec
     fi
     if ( find -maxdepth 1 | grep features ) then
-        HEADLESS=true rake bamboo:cucumber
+        RAILS_ENV=cucumber HEADLESS=true rake bamboo:cucumber
     fi
 
     cd ../../..
