@@ -13,7 +13,7 @@ yum --quiet -y install $required_packages
 
 # Install RVM if not installed
 # -----------------------------------------------------
-if ! (which rvm) then 
+if ! (which rvm) then
  bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
 fi
 
@@ -38,7 +38,7 @@ test: &test
   username: root
   password: root
   socket: /var/lib/mysql/mysql.sock
-  
+
 cucumber:
   <<: *test
   database: crm_cucumber
@@ -69,21 +69,21 @@ for plugin_dir in $crm_plugins
 do
     echo "== Running RSpec tests and cucumbers for '$plugin_dir'..."
     cd $plugin_dir
-    
-    if ( find -maxdepth 1 | grep spec ) then 
+
+    if ( find -maxdepth 1 | grep spec ) then
         rake bamboo:spec
     fi
-    if ( find -maxdepth 1 | grep features ) then 
+    if ( find -maxdepth 1 | grep features ) then
         HEADLESS=true rake bamboo:cucumber
-    fi   
-    
+    fi
+
     cd ../../..
 done
 
 # Core FFCRM Specs and Cucumbers
 # -----------------------------------------------------
-rake bamboo:spec
-HEADLESS=true rake bamboo:cucumber
+RAILS_ENV=test rake bamboo:spec
+RAILS_ENV=cucumber HEADLESS=true rake bamboo:cucumber
 
 # Drop Databases
 # -----------------------------------------------------
