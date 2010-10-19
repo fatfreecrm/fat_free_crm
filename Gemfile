@@ -7,8 +7,8 @@ gem 'rails', '3.0.0'
 
 gem 'acts_as_commentable',  '>= 3.0.0'
 gem 'authlogic',            '>= 2.1.6', :path => File.join(File.dirname(__FILE__), 'vendor', 'gems', 'authlogic')
-gem 'haml',                 '>= 3.0.18'
-gem 'mysql2',               '>= 0.2.3'
+gem 'haml',                 '>= 3.0.21'
+gem 'mysql2',               '>= 0.2.4'
 gem 'sqlite3-ruby'
 gem 'paperclip',            '>= 2.3.3', :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'simple_column_search', '>= 1.1.0'
