@@ -24,11 +24,11 @@ group :test do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
   gem 'factory_girl',       '>= 1.3.2'
   gem 'ffaker',             '>= 0.4.0'
-  gem "rspec-rails",        '>=2.0.0.beta.22', :git => "git://github.com/rspec/rspec-rails.git"
-  gem "rspec",              '>=2.0.0.beta.22', :git => "git://github.com/rspec/rspec.git"
-  gem "rspec-core",         '>=2.0.0.beta.22', :git => "git://github.com/rspec/rspec-core.git"
-  gem "rspec-expectations", '>=2.0.0.beta.22', :git => "git://github.com/rspec/rspec-expectations.git"
-  gem "rspec-mocks",        '>=2.0.0.beta.22', :git => "git://github.com/rspec/rspec-mocks.git"
+  gem "rspec-rails",        '>= 2.0.0'
+  gem "rspec",              '>= 2.0.0'
+  gem "rspec-core",         '>= 2.0.0'
+  gem "rspec-expectations", '>= 2.0.0'
+  gem "rspec-mocks",        '>= 2.0.0'
 end
 
 # Gem watch list:

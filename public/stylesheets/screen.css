@@ -57,12 +57,12 @@ tt {
   font-size: 12px; }
 
 #header {
-  background: #330000;
-  color: #cd7570;
+  background: #1e4262;
+  color: skyblue;
   padding: 8px 16px 8px 16px; }
   #header h3 a {
-    background: #330000;
-    color: white;
+    background: #1e4262;
+    color: greenyellow;
     font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
   #header #welcome {
@@ -73,7 +73,7 @@ tt {
       padding: 1px 4px 2px 4px;
       text-decoration: none; }
       #header #welcome a:hover {
-        background: #330000;
+        background: #1e4262;
         color: yellow; }
     #header #welcome a.selected {
       background: steelblue;
@@ -95,7 +95,7 @@ tt {
       color: white;
       padding: 0px 0px 4px 0px; }
       #header #jumpbox #jumpbox_menu a.selected {
-        color: #330000; }
+        color: navy; }
       #header #jumpbox #jumpbox_menu a:hover {
         background: steelblue; }
     #header #jumpbox #jumpbox_label {
@@ -104,7 +104,7 @@ tt {
       margin: 2px 0px 0px 0px; }
 
 #tabs {
-  background: #330000;
+  background: #1e4262;
   height: 24px;
   padding: 0px;
   text-align: center;
@@ -116,7 +116,7 @@ tt {
     margin: 0px 4px 0px 16px;
     width: 80px; }
   #tabs a:link, #tabs a:visited {
-    background: #860000;
+    background: #466bb1;
     color: white;
     float: left;
     padding: 4px 8px 5px 8px;
@@ -128,11 +128,11 @@ tt {
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px; }
   #tabs a:hover {
-    background: #cd7570;
-    color: #330000; }
+    background: #97baff;
+    color: navy; }
   #tabs a:link.active, #tabs a:visited.active {
-    background: white;
-    color: #330000;
+    background: azure;
+    color: navy;
     text-decoration: none; }
 
 #footer {
@@ -142,7 +142,7 @@ tt {
 
 .title {
   border-bottom: 1px gray solid;
-  color: black;
+  color: #342d7e;
   font-size: 17px;
   font-weight: bold;
   padding-bottom: 2px; }
@@ -190,7 +190,7 @@ tt {
 
 .standalone {
   background: whitesmoke;
-  border: 20px #860000 solid;
+  border: 20px lightsteelblue solid;
   margin: 75px auto 6px auto;
   padding: 20px;
   width: 400px;
@@ -244,7 +244,7 @@ tt {
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: #330000; }
+  color: navy; }
 
 .intro {
   color: dimgray;
@@ -258,7 +258,7 @@ tt {
   padding: 4px 15px 8px 15px; }
 
 .remote {
-  border: 5px lightgrey solid;
+  border: 5px lightblue solid;
   background: whitesmoke;
   margin: 0px;
   padding: 0px 10px 0px 10px;
@@ -269,7 +269,7 @@ tt {
     border-left: 1px gainsboro solid;
     border-bottom: 1px grey solid;
     border-right: 1px grey solid;
-    color: #330000;
+    color: navy;
     cursor: pointer;
     height: 16px;
     margin: 3px;
@@ -488,7 +488,7 @@ tt {
   -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .filters h4 {
-  color: #330000;
+  color: navy;
   font-size: 12px;
   font-weight: bold; }
 .filters input[type=text] {
@@ -514,7 +514,7 @@ tt {
     border-bottom: none; }
 .panel .caption {
   border-bottom: 1px grey solid;
-  color: #330000;
+  color: navy;
   font-size: 12px;
   font-weight: bold;
   margin: 4px 0px 2px 0px;
@@ -539,6 +539,10 @@ tt {
 .off {
   background: lightgrey;
   border: 1px silver outset; }
+
+.arrow {
+  font-size: 9px;
+  padding: 0px 2px 3px 0px; }
 
 .left {
   -moz-border-radius-bottomleft: 9px;
@@ -614,8 +618,8 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: khaki;
-  color: #220000;
+  background: #ddff99;
+  color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {

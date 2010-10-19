@@ -32,6 +32,20 @@ module Authlogic
       include Id
       include Validation
       include PriorityRecord
+
+      ### Rails3 I18n trickery.
+      def read_attribute_for_validation(attr)
+        send(attr)
+      end
+
+      def self.i18n_scope
+        :activerecord
+      end
+
+      def self.lookup_ancestors
+        [self]
+      end
+      ### End of Rails3 I18n trickery.
     end
   end
 end
