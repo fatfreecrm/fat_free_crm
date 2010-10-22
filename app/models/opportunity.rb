@@ -118,7 +118,6 @@ class Opportunity < ActiveRecord::Base
       self.account = nil # Opportunity is not associated with the account anymore.
       self.reload
     else
-      #debugger
       account = Account.create_or_select_for(self, params[:account], params[:users])
       self.account_opportunity.delete if self.account_opportunity
       self.reload
