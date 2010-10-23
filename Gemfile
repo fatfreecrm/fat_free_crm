@@ -17,11 +17,14 @@ gem 'meta_search', :git => 'git://github.com/ernie/meta_search.git'
 
 gem 'ffaker'
 
-group :cucumber, :test do
+group :cucumber, :test, :development do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
 
   gem 'rspec-rails', '>= 2.0.1'
   gem 'rcov'
+
+  gem 'factory_girl'
+  gem 'thin'
 
   # gem "rspec-rails",        :git => "git://github.com/rspec/rspec-rails.git"
   # gem "rspec",              :git => "git://github.com/rspec/rspec.git"
@@ -35,11 +38,6 @@ group :cucumber, :test do
   else
     gem 'ruby-debug'
   end
-end
-
-group :cucumber, :test do
-  gem 'factory_girl'
-  gem 'thin'
 end
 
 group :cucumber do
