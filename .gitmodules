@@ -13,3 +13,6 @@
 [submodule "vendor/plugins/crm_meta_search"]
 	path = vendor/plugins/crm_meta_search
 	url = git@github.com:crossroads/crm_meta_search.git
+[submodule "vendor/plugins/crm_merge"]
+	path = vendor/plugins/crm_merge
+	url = git@github.com:crossroads/crm_merge.git
