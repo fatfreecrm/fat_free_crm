@@ -30,8 +30,8 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: khaki;
-  color: #220000;
+  background: #ddff99;
+  color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {

@@ -102,7 +102,7 @@ module ApplicationHelper
   def link_to_edit(model, params = {})
     name = model.class.name.underscore.downcase
     link_to_remote(t(:edit),
-      :url    => params[:url] || url_for(:id => model, :action => :edit),
+      :url    => params[:url] || send(:"edit_#{name}_path", model),
       :method => :get,
       :with   => "'previous='+crm.find_form('edit_#{name}')"
     )
