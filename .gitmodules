@@ -1,6 +1,3 @@
-[submodule "vendor/plugins/crm_merge_contacts"]
-  path = vendor/plugins/crm_merge_contacts
-  url = git@github.com:crossroads/crm_merge_contacts.git
 [submodule "vendor/plugins/crm_super_tags"]
   path = vendor/plugins/crm_super_tags
   url = git@github.com:crossroads/crm_super_tags.git
