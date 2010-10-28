@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/crm_merge"]
 	path = vendor/plugins/crm_merge
 	url = git@github.com:crossroads/crm_merge.git
+[submodule "vendor/plugins/crm_modal_auto_complete"]
+	path = vendor/plugins/crm_modal_auto_complete
+	url = git@github.com:crossroads/crm_modal_auto_complete.git
