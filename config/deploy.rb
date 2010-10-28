@@ -1,5 +1,4 @@
 require 'capistrano/ext/multistage'
-#~ require 'capistrano_colors'
 require 'bundler/capistrano'
 load 'recipes/prompt'
 load 'recipes/stack'
@@ -9,8 +8,14 @@ load 'recipes/whenever'
 set :application, "fat-free-crm"
 set :default_stage, "preview"
 set :passenger_version, "2.2.15"
+
 set :bundle_without, [:cucumber, :development, :test]
 set :bundle_flags, "--quiet"
+
+set :scm, :git
+set :repository, "git://github.com/crossroads/fat_free_crm.git"
+set :git_enable_submodules, 1
+set :deploy_via, :remote_cache
 
 #
 # To get going from scratch:
@@ -58,19 +63,8 @@ namespace :crm do
     task :seed do
       run "cd #{current_path} && RAILS_ENV=production rake crm:crossroads:seed"
     end
-
   end
 
-end
-
-before 'deploy:finalize_update', 'git:submodules:update'
-namespace :git do
-  namespace :submodules do
-    task :update do
-      run "cd #{release_path} && git submodule init"
-      run "cd #{release_path} && git submodule update"
-    end
-  end
 end
 
 after 'deploy:symlink', 'deploy:update_settings'

@@ -30,7 +30,7 @@ group :cucumber, :test do
   # gem "rspec-mocks",        :git => "git://github.com/rspec/rspec-mocks.git"
 
   if RUBY_VERSION.to_f >= 1.9
-    # gem install ruby-debug19 -- --with-ruby-include=/home/user/.rvm/src/ruby-1.9.2-head/
+    # -- --with-ruby-include=$HOME/.rvm/src/ruby-1.9.2p0/
     gem 'ruby-debug19'
   else
     gem 'ruby-debug'
