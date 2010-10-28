@@ -241,13 +241,16 @@ tt {
 .label {
   color: #3f3f3f;
   font-size: 12px;
-  margin: 8px 0px 0px 0px; }
+  margin: 8px 0px 0px 0px;
+  display: inline;
+  padding-right: 13px; }
 
 .top {
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: #330000; }
+  color: #330000;
+  background: url("/images/asterisk_red.png") no-repeat scroll right top transparent; }
 
 .intro {
   color: dimgray;

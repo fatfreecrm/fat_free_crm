@@ -48,10 +48,10 @@ describe Task do
       end
 
       it "should create a task with due date selected from the calendar within #{offset ? 'different' : 'current'} timezone" do
-        task = Factory(:task, :bucket => "specific_time", :calendar => "01/31/2020")
+        task = Factory(:task, :bucket => "specific_time", :calendar => "5/5/2020")
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == Time.parse("2020-01-31")
+        task.due_at.should == Time.parse("2020-05-05")
       end
     end
   end
@@ -105,10 +105,10 @@ describe Task do
 
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
         task = Factory(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
-        task.update_attributes( { :bucket => "specific_time", :calendar => "01/31/2020" } )
+        task.update_attributes( { :bucket => "specific_time", :calendar => "05/05/2020" } )
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == Time.parse("2020-01-31")
+        task.due_at.should == Time.parse("2020-05-05")
       end
     end
 

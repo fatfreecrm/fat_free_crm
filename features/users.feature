@@ -1,3 +1,4 @@
+@javascript
 Feature: Users can login and use the CRM
   In order to ensure only authorised users can access the CRM
   Users
@@ -14,8 +15,6 @@ Feature: Users can login and use the CRM
     And I press "Login"
     Then I should see "Welcome to Fat Free CRM!"
     
-
-  @javascript
   Scenario: User can edit their profile
     Given a logged in user
     When I go to the home page
