@@ -1,4 +1,4 @@
-require 'recipes/yum'
+require File.expand_path('../yum', __FILE__)
 
 namespace :postgresql do
 
@@ -10,6 +10,8 @@ namespace :postgresql do
   task :install, :roles => :db do
     install_deps
     init_db
+    setup_db
+    config
   end
 
   task :install_deps, :roles => :db do

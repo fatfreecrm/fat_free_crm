@@ -1,4 +1,4 @@
-require 'recipes/yum'
+require File.expand_path('../yum', __FILE__)
 
 #
 # Capistrano recipes for cold deployments
@@ -22,8 +22,7 @@ namespace :stack do
     gems
 
     deploy.setup
-
-    #~ shared.permissions
+    shared.setup
   end
 
   desc "Install required gems"
@@ -34,6 +33,11 @@ namespace :stack do
 end
 
 namespace 'shared' do
+
+  desc "Setup shared directory"
+  task :setup do
+    sudo "mkdir -p #{deploy_to}/shared/config"
+  end
 
   desc "Setting proper permissions on shared directory"
   task :permissions do

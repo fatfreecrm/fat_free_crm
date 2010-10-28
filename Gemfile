@@ -20,6 +20,7 @@ gem 'ffaker'
 group :cucumber, :test, :development do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
 
+  gem 'rvm', '>= 1.0.15'
   gem 'rspec-rails', '>= 2.0.1'
   gem 'rcov'
 

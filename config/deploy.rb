@@ -2,11 +2,11 @@ require 'capistrano/ext/multistage'
 require 'rvm/capistrano'
 require 'bundler/capistrano'
 
-load 'recipes/stack'
-load 'recipes/rvm'
-load 'recipes/passenger'
-load 'recipes/postgresql'
-load 'recipes/whenever'
+load 'recipes/stack.rb'
+load 'recipes/rvm.rb'
+load 'recipes/passenger.rb'
+load 'recipes/postgresql.rb'
+load 'recipes/whenever.rb'
 
 default_run_options[:pty] = true
 
@@ -79,7 +79,7 @@ namespace :crm do
 
 end
 
-after 'deploy:symlink', 'deploy:update_settings'
+after 'deploy:migrate', 'deploy:update_settings'
 after 'deploy:migrate', 'deploy:migrate_plugins'
 namespace :deploy do
 
