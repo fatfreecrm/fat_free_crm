@@ -1,13 +1,19 @@
 require 'capistrano/ext/multistage'
+require 'rvm/capistrano'
 require 'bundler/capistrano'
-load 'recipes/prompt'
+
 load 'recipes/stack'
+load 'recipes/rvm'
 load 'recipes/passenger'
+load 'recipes/postgresql'
 load 'recipes/whenever'
 
+default_run_options[:pty] = true
+
 set :application, "fat-free-crm"
+set :domain, "crossroadsint.org"
 set :default_stage, "preview"
-set :passenger_version, "2.2.15"
+set :keep_releases, 3
 
 set :bundle_without, [:cucumber, :development, :test]
 set :bundle_flags, "--quiet"
@@ -16,6 +22,12 @@ set :scm, :git
 set :repository, "git://github.com/crossroads/fat_free_crm.git"
 set :git_enable_submodules, 1
 set :deploy_via, :remote_cache
+
+set :packages_for_project, %w(ImageMagick-devel)
+set :gems_for_project, %w(bundler)
+
+set :rvm_ruby_string, "1.9.2"
+set :passenger_version, "3.0.0"
 
 #
 # To get going from scratch:
