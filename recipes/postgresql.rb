@@ -24,4 +24,6 @@ namespace :postgresql do
     send(run_method, "/etc/init.d/postgresql reload")
   end
 
+end
+
 after "deploy:update_code", "postgresql:symlink"
