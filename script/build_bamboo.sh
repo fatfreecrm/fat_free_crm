@@ -32,12 +32,13 @@ if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version -
 # -----------------------------------------------------
 cat << EOF > config/database.yml
 test: &test
-  adapter: mysql
-  encoding: utf8
+  adapter: postgresql
   database: crm_test
-  username: root
-  password: root
-  socket: /var/lib/mysql/mysql.sock
+  username: postgres
+  password: postgres
+  host:     localhost
+  port:     5432
+  schema_search_path: public
 
 cucumber:
   <<: *test

@@ -9,7 +9,7 @@ gem 'capistrano-ext'
 gem 'gravatar-ultimate', :git => 'git://github.com/crossroads/gravatar.git'
 gem 'haml', '>= 3.0.18'
 gem 'is_paranoid', :git => 'git://github.com/crossroads/is_paranoid.git', :branch => 'rails3'
-gem 'mysql', '>= 2.8.1'
+gem 'pg', '>= 0.9.0'
 gem 'paperclip', :git => 'git://github.com/crossroads/paperclip.git'
 gem 'will_paginate', '>= 3.0.pre2'
 gem 'whenever'
@@ -20,6 +20,7 @@ gem 'ffaker'
 group :cucumber, :test, :development do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
 
+  gem 'rvm', '>= 1.0.15'
   gem 'rspec-rails', '>= 2.0.1'
   gem 'rcov'
 
@@ -33,7 +34,7 @@ group :cucumber, :test, :development do
   # gem "rspec-mocks",        :git => "git://github.com/rspec/rspec-mocks.git"
 
   if RUBY_VERSION.to_f >= 1.9
-    # gem install ruby-debug19 -- --with-ruby-include=/home/user/.rvm/src/ruby-1.9.2-head/
+    # -- --with-ruby-include=$HOME/.rvm/src/ruby-1.9.2p0/
     gem 'ruby-debug19'
   else
     gem 'ruby-debug'

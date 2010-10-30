@@ -1,16 +1,33 @@
 require 'capistrano/ext/multistage'
-#~ require 'capistrano_colors'
+require 'rvm/capistrano'
 require 'bundler/capistrano'
-load 'recipes/prompt'
-load 'recipes/stack'
-load 'recipes/passenger'
-load 'recipes/whenever'
+
+load 'recipes/stack.rb'
+load 'recipes/rvm.rb'
+load 'recipes/passenger.rb'
+load 'recipes/postgresql.rb'
+load 'recipes/whenever.rb'
+
+default_run_options[:pty] = true
 
 set :application, "fat-free-crm"
+set :domain, "crossroadsint.org"
 set :default_stage, "preview"
-set :passenger_version, "2.2.15"
+set :keep_releases, 3
+
 set :bundle_without, [:cucumber, :development, :test]
 set :bundle_flags, "--quiet"
+
+set :scm, :git
+set :repository, "git://github.com/crossroads/fat_free_crm.git"
+set :git_enable_submodules, 1
+set :deploy_via, :remote_cache
+
+set :packages_for_project, %w(ImageMagick-devel)
+set :gems_for_project, %w(bundler)
+
+set :rvm_ruby_string, "1.9.2"
+set :passenger_version, "3.0.0"
 
 #
 # To get going from scratch:
@@ -58,22 +75,11 @@ namespace :crm do
     task :seed do
       run "cd #{current_path} && RAILS_ENV=production rake crm:crossroads:seed"
     end
-
   end
 
 end
 
-before 'deploy:finalize_update', 'git:submodules:update'
-namespace :git do
-  namespace :submodules do
-    task :update do
-      run "cd #{release_path} && git submodule init"
-      run "cd #{release_path} && git submodule update"
-    end
-  end
-end
-
-after 'deploy:symlink', 'deploy:update_settings'
+after 'deploy:migrate', 'deploy:update_settings'
 after 'deploy:migrate', 'deploy:migrate_plugins'
 namespace :deploy do
 
