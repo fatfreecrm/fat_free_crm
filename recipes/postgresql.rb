@@ -101,7 +101,7 @@ production:
 
 end
 
-before "deploy:cold",        "postgresql:install"
+#before "deploy:cold",        "postgresql:install"
 after  "deploy:update_code", "postgresql:symlink"
 
 # Imported from Rails Machine gem (Copyright (c) 2006 Bradley Taylor, bradley@railsmachine.com)
