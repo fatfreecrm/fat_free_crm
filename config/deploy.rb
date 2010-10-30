@@ -1,7 +1,9 @@
+require 'capistrano_colors'
 require 'capistrano/ext/multistage'
 require 'rvm/capistrano'
 require 'bundler/capistrano'
 
+load 'recipes/prompt.rb'
 load 'recipes/stack.rb'
 load 'recipes/rvm.rb'
 load 'recipes/passenger.rb'
@@ -10,7 +12,7 @@ load 'recipes/whenever.rb'
 
 default_run_options[:pty] = true
 
-set :application, "fat-free-crm"
+set :application, "ffcrm"
 set :domain, "crossroadsint.org"
 set :default_stage, "preview"
 set :keep_releases, 3
@@ -24,7 +26,7 @@ set :git_enable_submodules, 1
 set :deploy_via, :remote_cache
 
 set :packages_for_project, %w(ImageMagick-devel)
-set :gems_for_project, %w(bundler)
+set :gems_for_project, "bundler"
 
 set :rvm_ruby_string, "1.9.2"
 set :passenger_version, "3.0.0"
@@ -35,7 +37,6 @@ set :passenger_version, "3.0.0"
 # cap deploy:cold
 # cap crm:setup
 # cap crm:demo
-#
 #
 
 namespace :crm do
@@ -96,4 +97,18 @@ namespace :deploy do
     run "cd #{current_path} && RAILS_ENV=production rake db:migrate:plugins"
   end
 
+end
+
+before 'deploy:cold', 'stack:ssh-keygen'
+namespace :stack do
+  desc "Generate ssh key for adding to github public keys"
+  task 'ssh-keygen' do
+    puts; puts
+    puts "====================================================================="
+    puts "If capistrano stops here then paste the following key into github and"
+    puts "run \"cap deploy:cold\" again"
+    puts "====================================================================="
+    puts; puts
+    run "if ! (ls /root/.ssh/id_rsa); then (ssh-keygen -N '' -t rsa -q -f /root/.ssh/id_rsa && cat /root/.ssh/id_rsa.pub) && exit 1; fi"
+  end
 end
