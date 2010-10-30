@@ -10,7 +10,7 @@ load 'recipes/whenever.rb'
 
 default_run_options[:pty] = true
 
-set :application, "fat-free-crm"
+set :application, "ffcrm"
 set :domain, "crossroadsint.org"
 set :default_stage, "preview"
 set :keep_releases, 3
@@ -24,7 +24,7 @@ set :git_enable_submodules, 1
 set :deploy_via, :remote_cache
 
 set :packages_for_project, %w(ImageMagick-devel)
-set :gems_for_project, %w(bundler)
+set :gems_for_project, "bundler"
 
 set :rvm_ruby_string, "1.9.2"
 set :passenger_version, "3.0.0"
