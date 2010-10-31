@@ -1,6 +1,13 @@
 require "factory_girl"
 require "#{::Rails.root}/spec/factories"
 
+# Restart identity fix for postgresql
+ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
+  def truncate_table(table_name)
+    execute("TRUNCATE TABLE #{quote_table_name(table_name)} #{cascade} RESTART IDENTITY;")
+  end
+end
+
 # Require plugin.rb support files from each plugin.
 Dir.glob("#{Rails.root}/vendor/plugins/**/support/plugin.rb").each {|f| require f }
 
