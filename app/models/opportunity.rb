@@ -59,7 +59,7 @@ class Opportunity < ActiveRecord::Base
   # Search by name OR id
   scope :search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.']/, '').strip
-    where('name LIKE :name OR opportunities.id = :id', :name => "%#{query}%", :id => query )
+    where('name ILIKE :name OR opportunities.id = :id', :name => "%#{query}%", :id => query )
   }
 
   uses_user_permissions

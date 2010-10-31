@@ -92,7 +92,7 @@ class Task < ActiveRecord::Base
 
   scope :search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.']/, '').strip
-    where('name LIKE ?', "%#{query}%")
+    where('name ILIKE ?', "%#{query}%")
   }
 
   acts_as_commentable

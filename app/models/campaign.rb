@@ -58,7 +58,7 @@ class Campaign < ActiveRecord::Base
 
   scope :search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.']/, '').strip
-    where('name LIKE ?', "%#{query}%")
+    where('name ILIKE ?', "%#{query}%")
   }
 
   uses_user_permissions
