@@ -37,10 +37,10 @@ namespace :passenger do
     yum.install( {:base => %w(curl-devel httpd-devel apr-devel)}, :stable )
   end
 
-  desc "Symlinks files required for passenger"
-  task :symlink, :roles => :web do
-    run "sed -e 's,@DEPLOY_TO@,#{deploy_to},g' -e 's,@IP_ADDR@,#{ip_address},g' -e 's,@SERVER_NAME@,#{site_domain_name},g' #{release_path}/config/httpd-rails.conf > /etc/httpd/conf.d/010-#{application}-#{stage}.conf"
-    run "sed -e 's,@PASSENGER_VERSION@,#{passenger_version},g' #{release_path}/config/passenger.conf > /etc/httpd/conf.d/passenger.conf"
+  desc "Apache config files"
+  task :config, :roles => :web do
+    run "sed -e 's,@DEPLOY_TO@,#{deploy_to},g' -e 's,@IP_ADDR@,#{ip_address},g' -e 's,@SERVER_NAME@,#{site_domain_name},g' #{release_path}/config/httpd-rails.conf > /etc/httpd/sites-enabled/010-#{application}-#{stage}.conf"
+    run "sed -e 's,@PASSENGER_VERSION@,#{passenger_version},g' #{release_path}/config/passenger.conf > /etc/httpd/mods-enabled/passenger.conf"
   end
 
 end
