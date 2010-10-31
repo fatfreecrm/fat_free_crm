@@ -46,4 +46,4 @@ namespace :passenger do
 end
 
 before "deploy:cold",        "passenger:install"
-after  "deploy:update_code", "passenger:symlink"
+after  "deploy:update_code", "passenger:config"
