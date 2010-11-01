@@ -41,6 +41,11 @@ describe Contact do
     Contact.create!(:first_name => "Billy", :last_name => "Bones")
   end
 
+  it "shoud have a skype attribute" do
+    @contact = Contact.new
+    @contact.should have_attribute(:skype)
+  end
+
   describe "Update existing contact" do
     before(:each) do
       @account = Factory(:account)

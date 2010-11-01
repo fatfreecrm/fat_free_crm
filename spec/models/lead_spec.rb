@@ -42,6 +42,11 @@ describe Lead do
     Lead.create!(:first_name => "Billy", :last_name => "Bones")
   end
 
+  it "should have a skype attribute" do
+    @lead = Lead.new
+    @lead.should have_attribute(:skype)
+  end
+
   describe "Attach" do
     before do
       @lead = Factory(:lead)
