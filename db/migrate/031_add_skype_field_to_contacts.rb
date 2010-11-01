@@ -4,6 +4,6 @@ class AddSkypeFieldToContacts < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :leads, :skype
+    remove_column :contacts, :skype
   end
 end
