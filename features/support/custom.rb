@@ -2,6 +2,7 @@ require "factory_girl"
 require "#{::Rails.root}/spec/factories"
 
 # Restart identity fix for postgresql
+require 'database_cleaner'
 ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
   def truncate_table(table_name)
     execute("TRUNCATE TABLE #{quote_table_name(table_name)} #{cascade} RESTART IDENTITY;")
