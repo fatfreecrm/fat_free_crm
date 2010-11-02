@@ -5,7 +5,7 @@ require "#{::Rails.root}/spec/factories"
 require 'database_cleaner'
 ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
   def truncate_table(table_name)
-    execute("TRUNCATE TABLE #{quote_table_name(table_name)} #{cascade} RESTART IDENTITY;")
+    execute("TRUNCATE TABLE #{quote_table_name(table_name)} RESTART IDENTITY #{cascade};")
   end
 end
 
@@ -21,5 +21,4 @@ Comment.class_eval do
 end
 
 # Make sure the database is clean and shiny before we start testing
-# DatabaseCleaner.clean
-
+DatabaseCleaner.clean
