@@ -14,7 +14,7 @@ yum --quiet -y install $required_packages
 # Install RVM if not installed
 # -----------------------------------------------------
 if ! (which rvm) then
- bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
+  bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
 fi
 
 # Set up RVM as a function. This loads RVM into a shell session.
@@ -68,17 +68,17 @@ RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
 crm_plugins=vendor/plugins/crm_*
 for plugin_dir in $crm_plugins
 do
-    echo "== Running RSpec tests and cucumbers for '$plugin_dir'..."
-    cd $plugin_dir
+  echo "== Running RSpec tests and cucumbers for '$plugin_dir'..."
+  cd $plugin_dir
 
-    if ( find -maxdepth 1 | grep spec ) then
-        RAILS_ENV=test rake bamboo:spec
-    fi
-    if ( find -maxdepth 1 | grep features ) then
-        RAILS_ENV=test HEADLESS=true rake bamboo:cucumber
-    fi
+  if ( find -maxdepth 1 | grep spec ) then
+    RAILS_ENV=test rake bamboo:spec
+  fi
+  if ( find -maxdepth 1 | grep features ) then
+    RAILS_ENV=test HEADLESS=true rake bamboo:cucumber
+  fi
 
-    cd ../../..
+  cd ../../..
 done
 
 # Core FFCRM Specs and Cucumbers

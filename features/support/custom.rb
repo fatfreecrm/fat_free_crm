@@ -1,11 +1,22 @@
 require "factory_girl"
 require "#{::Rails.root}/spec/factories"
 
-# Restart identity fix for postgresql
-require 'database_cleaner'
-ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
-  def truncate_table(table_name)
-    execute("TRUNCATE TABLE #{quote_table_name(table_name)} RESTART IDENTITY #{cascade};")
+if defined?(ActiveRecord::Base)
+  begin
+    require 'database_cleaner'
+
+    # Restart identity fix for postgresql
+    ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
+      def truncate_table(table_name)
+        execute("TRUNCATE TABLE #{quote_table_name(table_name)} RESTART IDENTITY #{cascade};")
+      end
+    end
+    DatabaseCleaner.app_root = ::Rails.root
+    DatabaseCleaner.strategy = :truncation, {:except => ['settings']}
+
+    # Make sure the database is clean and shiny before we start testing
+    DatabaseCleaner.clean
+  rescue LoadError => ignore_if_database_cleaner_not_present
   end
 end
 
@@ -19,6 +30,3 @@ Capybara.default_wait_time = 7
 Comment.class_eval do
   def log_activity; end
 end
-
-# Make sure the database is clean and shiny before we start testing
-DatabaseCleaner.clean
