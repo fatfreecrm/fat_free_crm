@@ -212,7 +212,7 @@ module ActionView
           end
           options[:object_name] ||= params.first
 
-          I18n.with_options :locale => options[:locale], :scope => [:errors, :template] do |locale|
+          I18n.with_options :locale => options[:locale], :scope => [:activerecord, :errors, :template] do |locale|
             header_message = if options.include?(:header_message)
               options[:header_message]
             else
