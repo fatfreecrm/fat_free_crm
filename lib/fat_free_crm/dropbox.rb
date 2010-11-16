@@ -248,6 +248,10 @@ module FatFreeCRM
       attached = false
       ASSETS.each do |klass|
         asset = klass.find_by_email(recipient)
+        # Leads and Contacts have an alt_email
+        unless asset or klass == Account 
+          asset = klass.find_by_alt_email(recipient) 
+        end
         if asset && sender_has_permissions_for?(asset)
           attach(email, asset)
           attached = true
