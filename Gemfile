@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.1'
+gem 'rails', '3.0.3'
 
-gem 'acts_as_commentable', '>= 3.0.0'
+gem 'acts_as_commentable', '>= 3.0.1'
 gem 'acts-as-taggable-on', '>= 2.0.6'
 gem 'authlogic', :git => 'git://github.com/crossroads/authlogic.git', :branch => 'rails3'
 gem 'capistrano-ext'
