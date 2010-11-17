@@ -4,11 +4,11 @@ require 'rvm/capistrano'
 require 'bundler/capistrano'
 
 load 'recipes/prompt.rb'
-load 'recipes/stack.rb'
 load 'recipes/rvm.rb'
 load 'recipes/passenger.rb'
 load 'recipes/postgresql.rb'
 load 'recipes/whenever.rb'
+load 'recipes/stack.rb'
 
 default_run_options[:pty] = true
 
@@ -18,7 +18,6 @@ set :default_stage, "preview"
 set :keep_releases, 3
 
 set :bundle_without, [:cucumber, :development, :test]
-set :bundle_flags, "--quiet"
 
 set :scm, :git
 set :repository, "git://github.com/crossroads/fat_free_crm.git"
@@ -30,6 +29,9 @@ set :gems_for_project, "bundler"
 
 set :rvm_ruby_string, "1.9.2"
 set :passenger_version, "3.0.0"
+
+set :httpd_user, "apache"
+set :httpd_grp,  "apache"
 
 #
 # To get going from scratch:
@@ -80,15 +82,23 @@ namespace :crm do
 
 end
 
-after 'deploy:migrate', 'deploy:update_settings'
-after 'deploy:migrate', 'deploy:migrate_plugins'
 namespace :deploy do
+
+  desc "Deploy permissions hacks"
+  task :user_permissions do
+    sudo "chown -R #{user} #{deploy_to}"
+  end
+
+  task :mods_enabled do
+    sudo "ln -sf /etc/httpd/mods-available/expires.load /etc/httpd/mods-enabled"
+    sudo "ln -sf /etc/httpd/mods-available/rewrite.load /etc/httpd/mods-enabled"
+  end
 
   desc "Update settings file with server specific attributes (runs a server-side sed script)"
   task :update_settings do
     run "if [ -f #{shared_path}/settings.sed ]; then sed -i -f #{shared_path}/settings.sed #{release_path}/config/settings.yml; fi"
     crm.settings
-    run "if [ ! -f #{shared_path}/log/dropbox.log ]; then touch #{shared_path}/log/dropbox.log; fi"
+    run "if [ ! -f #{shared_path}/log/dropbox.log ]; then sudo -p 'sudo password: ' touch #{shared_path}/log/dropbox.log; fi"
     #run "ln -sf #{shared_path}/log/dropbox.log  #{release_path}/log/dropbox.log"
   end
 
@@ -99,7 +109,6 @@ namespace :deploy do
 
 end
 
-before 'deploy:cold', 'stack:ssh-keygen'
 namespace :stack do
   desc "Generate ssh key for adding to github public keys"
   task 'ssh-keygen' do
@@ -109,6 +118,12 @@ namespace :stack do
     puts "run \"cap deploy:cold\" again"
     puts "====================================================================="
     puts; puts
-    run "if ! (ls /root/.ssh/id_rsa); then (ssh-keygen -N '' -t rsa -q -f /root/.ssh/id_rsa && cat /root/.ssh/id_rsa.pub) && exit 1; fi"
+    run "if ! (ls $HOME/.ssh/id_rsa); then (ssh-keygen -N '' -t rsa -q -f $HOME/.ssh/id_rsa && cat $HOME/.ssh/id_rsa.pub) && exit 1; fi"
   end
 end
+
+before "deploy:cold",        "stack:ssh-keygen"
+before "deploy:cold",        "deploy:mods_enabled"
+before "deploy",             "deploy:user_permissions"
+after  "deploy:migrate",     "deploy:update_settings"
+after  "deploy:migrate",     "deploy:migrate_plugins"

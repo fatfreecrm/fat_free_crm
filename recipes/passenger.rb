@@ -17,7 +17,7 @@ namespace :deploy do
   %w(start stop restart reload).each do |t|
     desc "#{t.capitalize} passenger using httpd"
     task "#{t.to_sym}", :roles => :app, :except => { :no_release => true } do
-      run "/etc/init.d/httpd #{t}"
+      sudo "/etc/init.d/httpd #{t}"
     end
   end
 
@@ -29,8 +29,8 @@ namespace :passenger do
   task :install, :roles => :web do
     install_deps
 
-    run "gem install passenger --no-rdoc --no-ri --version #{passenger_version}"
-    run "passenger-install-apache2-module --auto"
+    run "if ! (gem list | grep passenger-#{passenger_version}); then rvmsudo gem install passenger -v #{passenger_version} --no-rdoc --no-ri; fi"
+    run "rvmsudo passenger-install-apache2-module --auto"
   end
 
   task :install_deps, :roles => :web do
@@ -39,8 +39,10 @@ namespace :passenger do
 
   desc "Apache config files"
   task :config, :roles => :web do
-    run "sed -e 's,@DEPLOY_TO@,#{deploy_to},g' -e 's,@IP_ADDR@,#{ip_address},g' -e 's,@SERVER_NAME@,#{site_domain_name},g' #{release_path}/config/httpd-rails.conf > /etc/httpd/sites-enabled/010-#{application}-#{stage}.conf"
-    run "sed -e 's,@PASSENGER_VERSION@,#{passenger_version},g' #{release_path}/config/passenger.conf > /etc/httpd/mods-enabled/passenger.conf"
+    sudo "cp -f #{release_path}/config/httpd-rails.conf /etc/httpd/sites-enabled/010-#{application}-#{stage}.conf"
+    sudo "sed -i -e 's,@DEPLOY_TO@,#{deploy_to},g' -e 's,@IP_ADDR@,#{ip_address},g' -e 's,@SERVER_NAME@,#{site_domain_name},g' /etc/httpd/sites-enabled/010-#{application}-#{stage}.conf"
+    sudo "cp -f #{release_path}/config/passenger.conf /etc/httpd/mods-enabled/passenger.conf"
+    sudo "sed -i -e 's,@PASSENGER_VERSION@,#{passenger_version},g' /etc/httpd/mods-enabled/passenger.conf"
   end
 
 end

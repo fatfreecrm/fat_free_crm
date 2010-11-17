@@ -27,7 +27,7 @@ namespace :stack do
 
   desc "Install required gems"
   task :gems do
-    run "gem install #{gems_for_project} --no-rdoc --no-ri"
+    run "rvmsudo gem install #{gems_for_project} --no-rdoc --no-ri"
   end
 
 end
@@ -41,11 +41,11 @@ namespace 'shared' do
 
   desc "Setting proper permissions on shared directory"
   task :permissions do
-    run "chown -R apache:apache #{deploy_to}/shared/"
+    sudo "chown -R apache:apache #{deploy_to}/shared/"
     #~ run "chmod -R 755 #{deploy_to}/shared/"
     # during deployments
-    run "if [ -d #{release_path}/ ]; then chown -R apache:apache #{release_path}/; fi"
-    run "if [ -d #{release_path}/ ]; then chmod -R 755 #{release_path}/; fi"
+    run "if [ -d #{release_path}/ ]; then sudo chown -R apache:apache #{release_path}/; fi"
+    run "if [ -d #{release_path}/ ]; then sudo chmod -R 755 #{release_path}/; fi"
   end
 
 end
