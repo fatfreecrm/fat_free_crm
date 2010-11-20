@@ -1,3 +1,7 @@
+# Make a directory for webcam videos
+mkdir -p ./log/punishments
+touch ./log/punishments/missile_log.mpg
+
 # Project variables
 # -----------------------------------------------------
 ruby_version=1.9.2
