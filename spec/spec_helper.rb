@@ -44,7 +44,7 @@ RSpec.configure do |config|
   config.before(:each, :type => :view) do
     I18n.locale = 'en-US'
   end
-
+  
   config.after(:each, :type => :view) do
     # detect html-quoted entities in all rendered responses
     if rendered
@@ -74,7 +74,7 @@ def login(user_stubs = {}, session_stubs = {})
   User.current_user = @current_user = Factory(:user, user_stubs)
   @current_user_session = mock(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
-  set_timezone
+  #set_timezone
 end
 alias :require_user :login
 
