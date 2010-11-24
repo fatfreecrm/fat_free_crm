@@ -1,6 +1,6 @@
 # Make a directory for webcam videos
 mkdir -p ./log/punishments
-touch ./log/punishments/missile_log.mpg
+touch ./log/punishments/missile_log.avi
 
 # Project variables
 # -----------------------------------------------------
