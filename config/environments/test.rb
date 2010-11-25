@@ -1,5 +1,3 @@
-require 'ap'
-
 FatFreeCRM::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
 
@@ -36,4 +34,10 @@ FatFreeCRM::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.action_mailer.default_url_options = { :host => 'localhost' }
+end
+
+# Optionally load 'awesome_print' for debugging in development mode.
+begin
+  require 'ap'
+rescue LoadError
 end
