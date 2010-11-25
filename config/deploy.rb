@@ -14,6 +14,7 @@ default_run_options[:pty] = true
 
 set :application, "ffcrm"
 set :domain, "crossroadsint.org"
+set :stages, %w(preview beta live)
 set :default_stage, "preview"
 set :keep_releases, 3
 
@@ -89,6 +90,14 @@ namespace :deploy do
     sudo "chown -R #{user} #{deploy_to}"
   end
 
+  desc "Setting proper permissions for apache user"
+  task :set_permissions do
+    sudo "chown -R #{httpd_user}:#{httpd_grp} #{release_path}/"
+    sudo "chmod -R 750 #{release_path}/"
+    sudo "chown -R #{httpd_user}:#{httpd_grp} #{deploy_to}/shared/"
+    sudo "chmod -R 750 #{deploy_to}/shared/"
+  end
+
   task :mods_enabled do
     sudo "ln -sf /etc/httpd/mods-available/expires.load /etc/httpd/mods-enabled"
     sudo "ln -sf /etc/httpd/mods-available/rewrite.load /etc/httpd/mods-enabled"
@@ -122,8 +131,13 @@ namespace :stack do
   end
 end
 
-before "deploy:cold",        "stack:ssh-keygen"
-before "deploy:cold",        "deploy:mods_enabled"
-before "deploy",             "deploy:user_permissions"
-after  "deploy:migrate",     "deploy:update_settings"
-after  "deploy:migrate",     "deploy:migrate_plugins"
+before "deploy:cold",           "stack:ssh-keygen"
+before "deploy:cold",           "deploy:mods_enabled"
+before "deploy",                "deploy:user_permissions"
+after  "deploy",                "deploy:set_permissions"
+after  "deploy:migrate",        "deploy:update_settings"
+after  "deploy:migrate",        "deploy:migrate_plugins"
+
+before "deploy:update_crontab", "deploy:user_permissions"
+after  "deploy:update_crontab", "deploy:set_permissions"
+
