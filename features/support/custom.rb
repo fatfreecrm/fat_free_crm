@@ -5,6 +5,7 @@ begin
   require 'database_cleaner'
 
   # Restart identity fix for postgresql
+  require 'database_cleaner/active_record/truncation'
   ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
     def truncate_table(table_name)
       execute("TRUNCATE TABLE #{quote_table_name(table_name)} RESTART IDENTITY #{cascade};")
@@ -16,6 +17,7 @@ begin
   # Make sure the database is clean and shiny before we start testing
   DatabaseCleaner.clean
 rescue LoadError => ignore_if_database_cleaner_not_present
+  puts "DatabaseCleaner not present."
 end
 
 # Require plugin.rb support files from each plugin.

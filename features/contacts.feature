@@ -18,6 +18,7 @@ Feature: Users can manage contacts
     Given a logged in user
     And a contact with full name "Terrence van York"
     When I go to the contacts page
+    Then I should see "Terrence van York"
     When I move the mouse over "contact_1"
     And I follow "Edit" within "#contact_1"
     And I fill in "contact[first_name]" with "Schwing a Lot"

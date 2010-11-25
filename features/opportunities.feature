@@ -19,6 +19,7 @@ Feature: Users can manage opportunities
     Given a logged in user
     And an opportunity named "Sell Boat" from "Bob"
     When I go to the opportunities page
+    Then I should see "Sell Boat"
     When I move the mouse over "opportunity_1"
     And I follow "Edit" within "#opportunity_1"
     And I fill in "opportunity[name]" with "Sell big boat"
