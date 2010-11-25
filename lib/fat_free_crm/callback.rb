@@ -19,6 +19,8 @@ module FatFreeCRM
   module Callback
     @@classes   = []  # Classes that inherit from FatFreeCRM::Callback::Base.
     @@responder = {}  # Class instances that respond to (i.e. implement) hook methods.
+                      # Also includes class instances that implement a
+                      # set of view hook operations (insert_after, replace, etc).
 
     # Adds a class inherited from from FatFreeCRM::Callback::Base.
     #--------------------------------------------------------------------------
@@ -26,12 +28,14 @@ module FatFreeCRM
       @@classes << klass
     end
 
+    #                     [Controller] and [Legacy View] Hooks
+    # -----------------------------------------------------------------------------
+
     # Finds class instance that responds to given method.
     #------------------------------------------------------------------------------
     def self.responder(method)
       @@responder[method] ||= @@classes.map { |klass| klass.instance }.select { |instance| instance.respond_to?(method) }
     end
-
     # Invokes the hook named :method and captures its output. The hook returns:
     # - empty array if no hook with this name was detected.
     # - array with single item returned by the hook.
@@ -43,12 +47,42 @@ module FatFreeCRM
       end
     end
 
+
+    #                             [View] Hooks
+    # -----------------------------------------------------------------------------
+
+    # Find class instances that contain operations for the given view hook.
+    #------------------------------------------------------------------------------
+    def self.view_responder(method)
+      @@responder[method] ||= @@classes.map { |klass| klass.instance }.select { |instance| instance.class.view_hooks[method] }
+    end
+    # Invokes the view hook Proc stored under :hook and captures its output.
+    # => Instead of defining methods on the class, view hooks are
+    #    stored as Procs in a hash. This allows the same hook to be manipulated in
+    #    multiple ways from within a single Callback subclass.
+    # The hook returns:
+    # - empty hash if no hook with this name was detected.
+    # - a hash of arrays containing Procs and positions to insert content.
+    #--------------------------------------------------------------------------
+    def self.view_hook(hook, caller, context = {})
+      view_responder(hook).inject(Hash.new([])) do |response, instance|
+        # Process each operation within each view hook, storing the data in a hash.
+        instance.class.view_hooks[hook].each do |op|
+          response[op[:position]] += [op[:proc].call(caller, context)]
+        end
+        response
+      end
+    end
+
     #--------------------------------------------------------------------------
     class Base
       include Singleton
-
       def self.inherited(child)
         FatFreeCRM::Callback.add(child)
+        # Positioning hash to determine where content is placed.
+        child.class_eval do
+          @view_hooks = Hash.new([])
+        end
         super
       end
 
