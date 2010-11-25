@@ -5,7 +5,7 @@ namespace :rvm do
     install_deps
 
     run "if ! (which rvm); then sudo curl -L http://bit.ly/rvm-install-system-wide | sudo bash; fi"
-    run "if ! (rvm list | grep #{rvm_ruby_string}); then sudo rvm install #{rvm_ruby_string}; fi"
+    run "if ! (rvm list | grep #{rvm_ruby_string}); then rvmsudo rvm install #{rvm_ruby_string}; fi"
   end
 
   task :install_deps, :roles => :web do
