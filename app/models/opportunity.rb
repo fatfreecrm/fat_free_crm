@@ -56,9 +56,16 @@ class Opportunity < ActiveRecord::Base
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
   scope :not_lost, where("opportunities.stage <> 'lost'")
 
-  simple_column_search :name,
-    :match => :middle,
-    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  # Search by name OR id
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    # postgresql does not like to compare string to integer field
+    if query =~ /^\d+$/
+      where('name ILIKE :name OR opportunities.id = :id', :name => "%#{query}%", :id => query)
+    else
+      where('name ILIKE :name', :name => "%#{query}%")
+    end
+  }
 
   uses_user_permissions
   acts_as_commentable
@@ -68,6 +75,22 @@ class Opportunity < ActiveRecord::Base
   validates_presence_of :name, :message => :missing_opportunity_name
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
+
+  # Validate presence of account_opportunity unless the opportunity is deleted [with is_paranoid],
+  # in which case the account_opportunity will still exist but will be in a deleted state.
+  validates :account_opportunity, :presence => true, :unless => Proc.new { |o| o.destroyed? }
+
+  # Opportunity names are displayed as '#1234 Opportunity Name'
+  def name; super; end
+  def name_with_id
+    if self.new_record?
+      name_without_id
+    else
+      "##{id} #{name_without_id}" unless name_without_id.blank?
+    end
+  end
+  alias_method_chain :name, :id
+
 
   after_create  :increment_opportunities_count
   after_destroy :decrement_opportunities_count
@@ -87,6 +110,7 @@ class Opportunity < ActiveRecord::Base
   def save_with_account_and_permissions(params)
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
+    self.account = account
     self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
     self.save_with_permissions(params[:users])
@@ -100,7 +124,10 @@ class Opportunity < ActiveRecord::Base
       self.reload
     else
       account = Account.create_or_select_for(self, params[:account], params[:users])
+      self.account_opportunity.delete if self.account_opportunity
+      self.reload
       self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
+      self.account = account
     end
     self.update_with_permissions(params[:opportunity], params[:users])
   end

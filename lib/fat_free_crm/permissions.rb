@@ -99,3 +99,4 @@ module FatFreeCRM
 
   end # Permissions
 end # FatFreeCRM
+

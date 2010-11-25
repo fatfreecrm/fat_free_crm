@@ -67,9 +67,10 @@ class Lead < ActiveRecord::Base
   scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
   scope :assigned_to, lambda { |user| where('assigned_to = ?' , user.id) }
 
-  simple_column_search :first_name, :last_name, :company, :email,
-    :match => lambda { |column| column == :email ? :middle : :start },
-    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, '').strip }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('first_name ILIKE :s OR last_name ILIKE :s OR company ILIKE :m OR email ILIKE :m', :s => "#{query}%", :m => "%#{query}%")
+  }
 
   uses_user_permissions
   acts_as_commentable

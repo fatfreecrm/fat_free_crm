@@ -54,7 +54,11 @@ class Account < ActiveRecord::Base
   scope :created_by, lambda { |user| where(:user_id => user.id) }
   scope :assigned_to, lambda { |user| where(:assigned_to => user.id) }
 
-  simple_column_search :name, :email, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('name ILIKE :m OR email ILIKE :m', :m => "%#{query}%")
+  }
+
   uses_user_permissions
   acts_as_commentable
   is_paranoid

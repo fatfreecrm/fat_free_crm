@@ -343,8 +343,10 @@ module FatFreeCRM
       defaults
     end
 
+    # If default access is 'Shared' then change it to 'Private' because we don't know how
+    # to choose anyone to share it with here.
+    #--------------------------------------------------------------------------------------
     def default_access
-      # If Shared then default to Private because we don't know how to choose anyone to share it with here
       Setting.default_access == "Shared" ? 'Private' : Setting.default_access
     end
 

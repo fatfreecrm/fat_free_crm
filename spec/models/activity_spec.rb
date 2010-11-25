@@ -85,7 +85,7 @@ describe Activity do
         @activity = Activity.where(@conditions << 'updated').first
 
         @activity.should_not == nil
-        @activity.info.should == "Billy Bones"
+        @activity.info.ends_with?("Billy Bones").should == true
       end
 
       it "should add an activity when deleting #{subject}" do
@@ -106,6 +106,7 @@ describe Activity do
 
       describe "on a record marked as deleted" do
         it "should still be able to update" do
+                   
           @subject.destroy
           deleted = @subject.class.find_with_destroyed(@subject)
 
@@ -117,7 +118,7 @@ describe Activity do
           @activity = Activity.where(@conditions << 'updated').first
 
           @activity.should_not == nil
-          @activity.info.should == "Billy Bones DELETED"
+          @activity.info.ends_with?("Billy Bones DELETED").should == true
         end
       end
 

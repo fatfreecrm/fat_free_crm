@@ -19,7 +19,7 @@ Rails::Plugin.class_eval do
   def initializer
     #~ ActiveSupport::Deprecation.warn "Rails::Plugin initializer is depricated use Railties instead"
     if ENV['RAILS_ENV'] == "development"
-      config.cache_classes = true # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
+      config.cache_classes = false # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
     end
     self
   end
@@ -90,6 +90,7 @@ module FatFreeCRM
           plugin = new(id, initializer)
           plugin.instance_eval(&block)            # Grab plugin properties.
           plugin.name(id.to_s) unless plugin.name # Set default name if the name property was missing.
+
           @@list[id] = plugin
         end
       end

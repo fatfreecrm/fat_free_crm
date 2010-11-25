@@ -80,7 +80,7 @@ namespace :crm do
         break unless proceed.blank?
       end
       proceed = (proceed =~ /y(?:es)*/i)
-    end
+    end     
     if proceed
       Rake::Task["db:migrate:reset"].invoke
 

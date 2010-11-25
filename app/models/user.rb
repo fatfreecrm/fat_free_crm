@@ -75,8 +75,10 @@ class User < ActiveRecord::Base
   scope :except, lambda { |user| where('id != ?', user.id) }
   scope :by_name, order('first_name, last_name, email')
 
-  simple_column_search :username, :first_name, :last_name,
-    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, '').strip }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('username ILIKE :s OR first_name ILIKE :s OR last_name ILIKE :s', :s => "#{query}%")
+  }
 
   acts_as_authentic do |c|
     c.session_class = Authentication

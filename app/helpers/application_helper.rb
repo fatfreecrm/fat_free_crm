@@ -308,7 +308,7 @@ module ApplicationHelper
     if model.avatar
       image_tag(model.avatar.image.url(Avatar.styles[args[:size]]), args)
     elsif model.email
-      gravatar_image_tag(model.email, { :gravatar => { :default => default_avatar_url } }.merge(args))
+      image_tag(Gravatar.new(model.email, :default => default_avatar_url).image_url, args)
     else
       image_tag("avatar.jpg", args)
     end

@@ -2,27 +2,62 @@ FatFreeCRM::Application.routes.draw do
 
   root :to => 'home#index'
 
-  match 'admin'    => 'admin/users#index', :as => :admin
-  match 'login'    => 'authentications#new', :as => :login
-  match 'logout'   => 'authentications#destroy', :as => :logout
-  match 'options'  => 'home#options'
-  match 'profile'  => 'users#show', :as => :profile
-  match 'signup'   => 'users#new', :as => :signup
+  match 'options' => 'home#options'
+  match 'toggle' => 'home#toggle'
   match 'timeline' => 'home#timeline', :as => :timeline
   match 'timezone' => 'home#timezone', :as => :timezone
-  match 'toggle'   => 'home#toggle'
+  match 'redraw' => 'home#redraw'
 
-  resource  :authentication
-  resources :comments
-  resources :emails
+  resource :authentication
+
+  resources :users do
+    member do
+      get :avatar
+      put :upload_avatar
+      get :password
+      put :change_password
+    end
+  end
+
   resources :passwords
 
-  resources :accounts do
+  resources :comments
+
+  resources :emails
+
+  resources :tasks, :constraints => {:id => /\d+/} do
     collection do
-      get  :options
-      get  :search
       post :auto_complete
+      post :filter
+    end
+    member do
+      put :complete
+    end
+  end
+
+  resources :leads, :constraints => {:id => /\d+/} do
+    collection do
+      post :auto_complete
+      get :options
       post :redraw
+      get :search
+      post :filter
+    end
+    member do
+      put :attach
+      get :convert
+      post :discard
+      put :promote
+      put :reject
+    end
+  end
+
+  resources :accounts, :constraints => {:id => /\d+/} do
+    collection do
+      post :auto_complete
+      get :options
+      post :redraw
+      get :search
     end
     member do
       put :attach
@@ -30,99 +65,66 @@ FatFreeCRM::Application.routes.draw do
     end
   end
 
-  resources :campaigns do
+  resources :campaigns, :constraints => {:id => /\d+/} do
     collection do
-      get  :filter
-      get  :options
-      get  :search
       post :auto_complete
+      get :options
       post :redraw
+      get :search
+      post :filter
     end
     member do
-      put  :attach
+      put :attach
       post :discard
     end
   end
 
-  resources :contacts do
+  resources :contacts, :constraints => {:id => /\d+/} do
     collection do
-      get  :options
-      get  :search
       post :auto_complete
+      get :options
       post :redraw
+      get :search
     end
     member do
-      put  :attach
+      put :attach
       post :discard
     end
   end
 
-  resources :leads do
+  resources :opportunities, :constraints => {:id => /\d+/} do
     collection do
-      get  :filter
-      get  :options
-      get  :search
       post :auto_complete
+      get :options
       post :redraw
+      get :search
+      post :filter
     end
     member do
-      get  :convert
-      post :discard
-      put  :attach
-      put  :promote
-      put  :reject
-    end
-  end
-
-  resources :opportunities do
-    collection do
-      get  :filter
-      get  :options
-      get  :search
-      post :auto_complete
-      post :redraw
-    end
-    member do
-      put  :attach
+      put :attach
       post :discard
     end
   end
 
-  resources :tasks do
-    collection do
-      get  :filter
-      post :auto_complete
-    end
-    member do
-      put :complete
-    end
-  end
-
-  resources :users do
-    member do
-      get :avatar
-      get :password
-      put :upload_avatar
-      put :change_password
-    end
-  end
+  match 'signup' => 'users#new', :as => :signup
+  match 'profile' => 'users#show', :as => :profile
+  match 'login' => 'authentications#new', :as => :login
+  match 'logout' => 'authentications#destroy', :as => :logout
+  match 'admin' => 'admin/users#index', :as => :admin
 
   namespace :admin do
     resources :users do
       collection do
-        get  :search
+        get :search
         post :auto_complete
       end
       member do
-        get :confirm
         put :suspend
         put :reactivate
+        get :confirm
       end
     end
-
     resources :settings
     resources :plugins
   end
-
-  match '/:controller(/:action(/:id))'
 end

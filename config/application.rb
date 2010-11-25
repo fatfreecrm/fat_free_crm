@@ -6,6 +6,25 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
+# Override engine views so that plugin views have higher priority.
+Rails::Engine.initializers.detect{|i| i.name == :add_view_paths }.
+  instance_variable_set("@block", Proc.new {
+    views = paths.app.views.to_a
+    unless views.empty?
+      ActiveSupport.on_load(:action_controller){ append_view_path(views) }
+      ActiveSupport.on_load(:action_mailer){ append_view_path(views) }
+    end
+  }
+)
+
+# Override I18n load paths so that plugin locales have higher priority.
+Rails::Engine.initializers.detect{|i| i.name == :add_locales }.
+  instance_variable_set("@block", Proc.new {
+    config.i18n.railties_load_path.concat( paths.config.locales.to_a ).reverse!
+  }
+)
+
+
 module FatFreeCRM
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -20,10 +39,8 @@ module FatFreeCRM
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
+    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers = :activity_observer
-
-    # Have migrations with numeric prefix instead of UTC timestamp.
-    config.active_record.timestamped_migrations = false
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -40,6 +57,18 @@ module FatFreeCRM
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [ :password, :password_confirmation ]
+    config.filter_parameters += [:password, :password_confirmation]
+
+    # Use SQL instead of Active Record's schema dumper when creating the test database.
+    # This is necessary if your schema can't be completely dumped by the schema dumper,
+    # like if you have constraints or database-specific column types
+    config.active_record.schema_format = :sql
+
+    # ActionMailer configuration.
+    config.action_mailer.default :content_type => "text/plain"
+    config.action_mailer.delivery_method = :sendmail
+    config.action_mailer.sendmail_settings = { :location  => "/usr/sbin/sendmail", :arguments => "-i -t" }
+
+    config.action_controller.allow_forgery_protection = false
   end
 end

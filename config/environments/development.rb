@@ -1,12 +1,10 @@
-require 'ap'
-
 FatFreeCRM::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the webserver when you make code changes.
-  config.cache_classes = false
+  config.cache_classes = true
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
@@ -22,6 +20,16 @@ FatFreeCRM::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
-  # Only use best-standards-support built into browsers
-  config.action_dispatch.best_standards_support = :builtin
+  if File.exists?(File.join(Rails.root, 'tmp', 'debug.txt'))
+    require 'ruby-debug'
+    Debugger.wait_connection = true
+    Debugger.start_remote
+    File.delete(File.join(Rails.root, 'tmp', 'debug.txt'))
+  end
+end
+
+# Optionally load 'awesome_print' for debugging in development mode.
+begin
+  require 'ap'
+rescue LoadError
 end

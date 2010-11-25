@@ -52,6 +52,19 @@ module FatFreeCRM
         super
       end
 
+      class << self
+        attr_accessor :view_hooks
+
+        def add_view_hook(hook, proc, position)
+          @view_hooks[hook] += [{:proc => proc,
+                                 :position => position}]
+        end
+
+        def insert_before(hook, &block); add_view_hook(hook, block,        :before);  end
+        def insert_after(hook, &block);  add_view_hook(hook, block,        :after);   end
+        def replace(hook, &block);       add_view_hook(hook, block,        :replace); end
+        def remove(hook);                add_view_hook(hook, Proc.new{""}, :replace); end
+      end
     end # class Base
 
     # This makes it possible to call hook() without FatFreeCRM::Callback prefix.
@@ -59,9 +72,33 @@ module FatFreeCRM
     # data otherwise.
     #--------------------------------------------------------------------------
     module Helper
-      def hook(method, caller, context = {})
-        data = FatFreeCRM::Callback.hook(method, caller, context)
-        caller.is_haml? ? data.join.html_safe : data
+      def hook(method, caller, context = {}, &block)
+        is_view_hook = caller.is_haml?
+
+        # If a block was given, hooks are able to replace, append or prepend view content.
+        if block_given? and is_view_hook
+          hooks = FatFreeCRM::Callback.view_hook(method, caller, context)
+          # Add content to the view in the following order:
+          # -- before
+          # -- replace || original block
+          # -- after
+          view_data = []
+          hooks[:before].each{|data| view_data << data }
+          # Only render the original view block if there are no pending :replace operations
+          if hooks[:replace].empty?
+            view_data << capture(&block)
+          else
+            hooks[:replace].each{|data| view_data << data }
+          end
+          hooks[:after].each{|data| view_data << data }
+          
+          view_data.join.html_safe
+
+        else
+          # Hooks called without blocks are either controller or legacy view hooks
+          data = FatFreeCRM::Callback.hook(method, caller, context)
+          is_view_hook ? data.join.html_safe : data
+        end
       end
     end # module Helper
 

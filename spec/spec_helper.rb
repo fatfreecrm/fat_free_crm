@@ -6,6 +6,10 @@ require 'rspec/rails'
 require 'factory_girl'
 require "#{::Rails.root}/spec/factories"
 
+# Load factories from plugins (to allow extra validations / etc.)
+Dir.glob("vendor/plugins/**/spec/factories.rb").each{ |f| require File.expand_path(f) }
+
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
@@ -18,6 +22,8 @@ TASK_STATUSES = %w(pending assigned completed).freeze
 # Load default settings from config/settings.yml
 Factory(:default_settings)
 
+I18n.locale = 'en-US'
+
 RSpec.configure do |config|
   # == Mock Framework
   #
@@ -28,13 +34,9 @@ RSpec.configure do |config|
   # config.mock_with :rr
   config.mock_with :rspec
 
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, comment the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
+  config.include RSpec::Rails::Matchers
 
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
@@ -43,15 +45,18 @@ RSpec.configure do |config|
   config.before(:each, :type => :view) do
     I18n.locale = 'en-US'
   end
-
-  config.before(:each, :type => :model) do
-    I18n.locale = 'en-US'
-  end
-
-  # Detect html-quoted entities in all rendered responses.
+  
   config.after(:each, :type => :view) do
-    rendered.should_not match(/&amp;\S{1,6};/) if rendered
+    # detect html-quoted entities in all rendered responses
+    if rendered
+      rendered.should_not match(/&amp;\S{1,6};/)
+    end
   end
+
+  # If you're not using ActiveRecord, or you'd prefer not to run each of your
+  # examples within a transaction, comment the following line or assign false
+  # instead of true.
+  config.use_transactional_fixtures = true
 end
 
 # See vendor/plugins/authlogic/lib/authlogic/test_case.rb
@@ -70,11 +75,11 @@ def login(user_stubs = {}, session_stubs = {})
   User.current_user = @current_user = Factory(:user, user_stubs)
   @current_user_session = mock(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
-  set_timezone
+  #set_timezone
 end
 alias :require_user :login
 
-#----------------------------------------------------------------------------
+#- ---------------------------------------------------------------------------
 def login_and_assign(user_stubs = {}, session_stubs = {})
   login(user_stubs, session_stubs)
   assigns[:current_user] = @current_user
@@ -144,12 +149,24 @@ ActionView::TestCase::TestController.class_eval do
   end
 end
 
-RSpec::Rails::ViewExampleGroup::InstanceMethods.class_eval do
-  def render_with_mock_response
-    render_without_mock_response
-    @response = mock(:body => rendered)
+if RUBY_VERSION.to_f >= 1.9
+  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do 
+    def render_with_mock_response(*args)
+      render_without_mock_response *args
+      @response = mock(:body => rendered)
+    end
+    alias_method_chain :render, :mock_response
   end
-  alias_method_chain :render, :mock_response
+else
+  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do 
+    # Ruby 1.8.x doesnt support alias_method_chain with blocks,
+    # so we are just overwriting the whole method verbatim.
+    def render(options={}, local_assigns={}, &block)
+      options = {:template => _default_file_to_render} if Hash === options and options.empty?
+      super(options, local_assigns, &block)
+      @response = mock(:body => rendered)
+    end
+  end  
 end
 
 ActionView::Base.class_eval do
