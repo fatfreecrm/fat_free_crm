@@ -20,7 +20,7 @@ gem 'rails', '3.0.3'
 
 gem 'acts_as_commentable', '>= 3.0.1'
 gem 'acts-as-taggable-on', '>= 2.0.6'
-#gem 'authlogic', :git => 'git://github.com/crossroads/authlogic.git', :branch => 'rails3'
+gem 'authlogic', :git => 'git://github.com/crossroads/authlogic.git', :branch => 'rails3'
 gem 'capistrano-ext'
 gem 'gravatar-ultimate', :git => 'git://github.com/crossroads/gravatar.git'
 gem 'haml', '>= 3.0.18'
@@ -69,5 +69,6 @@ group :test do
   gem 'shoulda'
   gem 'autotest-rails'
   gem 'webrat'
+  gem 'database_cleaner'
   gem 'ci_reporter', :git => 'http://github.com/crossroads/ci_reporter.git'
 end
