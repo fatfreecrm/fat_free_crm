@@ -7,13 +7,6 @@ GIT
       activesupport
 
 GIT
-  remote: git://github.com/crossroads/gravatar.git
-  revision: 78267eec37222cdb1cc22736531f204a11b85e82
-  specs:
-    gravatar-ultimate (1.0.0)
-      sc-core-ext (>= 1.2.0)
-
-GIT
   remote: git://github.com/crossroads/is_paranoid.git
   revision: 30512a80fb5a10edc8b86e1c38022c6787b04a1b
   branch: rails3
@@ -198,8 +191,6 @@ GEM
       json_pure (>= 1.1.7)
     rubyzip (0.9.4)
     rvm (1.1.1)
-    sc-core-ext (1.2.1)
-      activesupport (>= 2.3.5)
     selenium-webdriver (0.1.0)
       childprocess (= 0.1.4)
       ffi (~> 0.6.3)
@@ -244,7 +235,6 @@ DEPENDENCIES
   database_cleaner
   factory_girl
   ffaker
-  gravatar-ultimate!
   haml (>= 3.0.18)
   headless
   is_paranoid!
