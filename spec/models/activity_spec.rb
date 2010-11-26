@@ -104,23 +104,26 @@ describe Activity do
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
 
-      describe "on a record marked as deleted" do
-        it "should still be able to update" do
-                   
-          @subject.destroy
-          deleted = @subject.class.find_with_destroyed(@subject)
+# Test is unnecessary. If a user wants to update a deleted record, they
+# should undelete it first.
+# ---------------------------------------------------------------
+#      describe "on a record marked as deleted" do
+#        it "should still be able to update" do
+#                   
+#          @subject.destroy
+#          deleted = @subject.class.find_with_destroyed(@subject)
 
-          if deleted.respond_to?(:full_name)
-            deleted.update_attributes(:first_name => "Billy", :last_name => "Bones DELETED")
-          else
-            deleted.update_attributes(:name => "Billy Bones DELETED")
-          end
-          @activity = Activity.where(@conditions << 'updated').first
+#          if deleted.respond_to?(:full_name)
+#            deleted.update_attributes(:first_name => "Billy", :last_name => "Bones DELETED")
+#          else
+#            deleted.update_attributes(:name => "Billy Bones DELETED")
+#          end
+#          @activity = Activity.where(@conditions << 'updated').first
 
-          @activity.should_not == nil
-          @activity.info.ends_with?("Billy Bones DELETED").should == true
-        end
-      end
+#          @activity.should_not == nil
+#          @activity.info.ends_with?("Billy Bones DELETED").should == true
+#        end
+#      end
 
       describe "on an actually deleted record" do
         it "should wipe out all associated activity records" do
