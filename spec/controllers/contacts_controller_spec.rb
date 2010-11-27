@@ -45,7 +45,7 @@ describe ContactsController do
     describe "with mime type of XML" do
 
       it "should render all contacts as xml" do
-        @contacts = [ Factory(:contact, :user => @current_user) ]
+        @contacts = [ Factory(:contact, :user => @current_user).reload ]
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
@@ -88,7 +88,7 @@ describe ContactsController do
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
-        response.body.should == @contact.to_xml
+        response.body.should == @contact.reload.to_xml
       end
     end
 
@@ -555,7 +555,7 @@ describe ContactsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "bill?!"
 
-        response.body.should == [ @billy_bones ].to_xml
+        response.body.should == [ @billy_bones.reload ].to_xml
       end
     end
   end

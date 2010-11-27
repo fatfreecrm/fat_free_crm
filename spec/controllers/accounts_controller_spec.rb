@@ -44,7 +44,7 @@ describe AccountsController do
 
       it "should render all accounts as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        @accounts = [ Factory(:account, :user => @current_user) ]
+        @accounts = [ Factory(:account, :user => @current_user).reload ]
         get :index
         response.body.should == @accounts.to_xml
       end
@@ -86,7 +86,7 @@ describe AccountsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @account.id
-        response.body.should == @account.to_xml
+        response.body.should == @account.reload.to_xml
       end
     end
 
@@ -422,7 +422,7 @@ describe AccountsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "second?!"
 
-        response.body.should == [ @second ].to_xml
+        response.body.should == [ @second.reload ].to_xml
       end
     end
   end
