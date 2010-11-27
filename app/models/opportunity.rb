@@ -80,18 +80,6 @@ class Opportunity < ActiveRecord::Base
   # in which case the account_opportunity will still exist but will be in a deleted state.
   validates :account_opportunity, :presence => true, :unless => Proc.new { |o| o.destroyed? }
 
-  # Opportunity names are displayed as '#1234 Opportunity Name'
-  def name; super; end
-  def name_with_id
-    if self.new_record?
-      name_without_id
-    else
-      "##{id} #{name_without_id}" unless name_without_id.blank?
-    end
-  end
-  alias_method_chain :name, :id
-
-
   after_create  :increment_opportunities_count
   after_destroy :decrement_opportunities_count
 
