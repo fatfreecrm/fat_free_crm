@@ -24,7 +24,7 @@ end
 Dir.glob("#{Rails.root}/vendor/plugins/**/support/plugin.rb").each {|f| require f }
 
 # Default timeout should be longer since this is an AJAX based application.
-Capybara.default_wait_time = 7
+Capybara.default_wait_time = 9
 
 # Cancel any activity logging for Comment model (breaks cucumber tests)
 Comment.class_eval do
