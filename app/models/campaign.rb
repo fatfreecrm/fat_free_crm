@@ -66,7 +66,7 @@ class Campaign < ActiveRecord::Base
   sortable :by => [ "name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_campaign_name
-  validates_uniqueness_of :name, :scope => :user_id
+  validates_uniqueness_of :name, :scope => [ :user_id, :deleted_at ]
   validate :start_and_end_dates
   validate :users_for_shared_access
 
