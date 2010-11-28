@@ -35,3 +35,5 @@ ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
 
     ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
     ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
+
+require "fat_free_crm/dropbox" if defined?(::Rake)

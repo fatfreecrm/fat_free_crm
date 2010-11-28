@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 require "net/imap"
+require "mail"
 include Rails.application.routes.url_helpers
 
 module FatFreeCRM
