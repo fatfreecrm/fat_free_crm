@@ -82,14 +82,16 @@ module IsParanoid
 
         # Has this model been soft-deleted?
         def destroyed?
-          !deleted_at.nil?
+          # Rails 3.0.3 hack: destroyed? returns false if the record hasn't been persisted.
+          @destroyed || (!!deleted_at && !@persisted)
         end
 
         protected
 
           def set_deleted_at(value)
-            self.class.update_all({:deleted_at => value}, {:id => self.id})
+            self.class.unscoped.update_all({:deleted_at => value}, {:id => self.id})
             self.deleted_at = value
+            @destroyed = !!value
           end
       end
     end
