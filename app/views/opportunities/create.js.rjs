@@ -20,6 +20,7 @@ else
   page[:create_opportunity].replace_html :partial => "create"
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
   page.call "crm.date_select_popup", "opportunity_closes_on"
+  hook(:new_opportunity_rjs, self, :page => page)
   page[:create_opportunity].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:opportunity_name].focus
 end

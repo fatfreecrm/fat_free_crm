@@ -96,6 +96,8 @@ class Opportunity < ActiveRecord::Base
   # Backend handler for [Create New Opportunity] form (see opportunity/create).
   #----------------------------------------------------------------------------
   def save_with_account_and_permissions(params)
+    # Quick sanitization, makes sure Account will not search for blank id.
+    params[:account].delete(:id) if params[:account][:id].blank?
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
     self.account = account
