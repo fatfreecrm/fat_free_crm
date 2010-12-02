@@ -621,6 +621,7 @@ en-US:
   time:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
+      mmddyyyy_hhmm: "%m/%d/%Y %H:%M"
 
   calendar_date_select:
     ok: OK
