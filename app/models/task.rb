@@ -229,7 +229,7 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def parse_calendar_date
-    Time.strptime(self.calendar, I18n.t('date.formats.mmddyyyy')).utc
+    Time.strptime(self.calendar, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
   end
 end
 
