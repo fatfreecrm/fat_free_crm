@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/crm_modal_search"]
 	path = vendor/plugins/crm_modal_search
 	url = git@github.com:crossroads/crm_modal_search.git
+[submodule "vendor/plugins/crm_authlogic_api"]
+	path = vendor/plugins/crm_authlogic_api
+	url = git@github.com:crossroads/crm_authlogic_api.git
