@@ -45,7 +45,7 @@
 
             -# Add [-- None --] account choice when editing existing opportunity that has an account.
             - options = { :selected => @account.id || 0 }
-            - options[:include_blank] = t(:select_none) unless @opportunity.new_record? || @opportunity.account.blank?
+            - options[:include_blank] = true
 
             = collection_select :account, :id, @accounts, :id, :name, options, { :style => "width:330px; display:none;" }
             = a.text_field :name, :style => "width:324px; display:none;"
