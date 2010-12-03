@@ -126,6 +126,9 @@ GEM
     hoe (2.7.0)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
+    hoptoad_notifier (2.3.12)
+      activesupport
+      builder
     i18n (0.4.2)
     json (1.4.6)
     json_pure (1.4.6)
@@ -237,6 +240,7 @@ DEPENDENCIES
   ffaker
   haml (>= 3.0.18)
   headless
+  hoptoad_notifier
   is_paranoid!
   meta_search!
   paperclip!

@@ -29,7 +29,7 @@ gem 'paperclip', :git => 'git://github.com/crossroads/paperclip.git'
 gem 'will_paginate', '>= 3.0.pre2'
 gem 'whenever'
 gem 'meta_search', :git => 'git://github.com/ernie/meta_search.git'
-
+gem 'hoptoad_notifier'
 gem 'ffaker'
 
 group :cucumber, :test, :development do

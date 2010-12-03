@@ -136,8 +136,10 @@ before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
 after  "deploy",                "deploy:set_permissions"
 after  "deploy:migrate",        "deploy:update_settings"
-after  "deploy:migrate",        "deploy:migrate_plugins"
+after  "deploy:migrate",        "deploy:migrate_plugins"q
 
 before "deploy:update_crontab", "deploy:user_permissions"
 after  "deploy:update_crontab", "deploy:set_permissions"
 
+require 'config/boot'
+require 'hoptoad_notifier/capistrano'
