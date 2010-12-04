@@ -1,4 +1,5 @@
 config/database.yml
+config/deploy/live.rb
 coverage/*
 db/schema.rb
 db/*.sql*
