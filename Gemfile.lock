@@ -22,16 +22,6 @@ GIT
       activesupport
 
 GIT
-  remote: git://github.com/ernie/meta_search.git
-  revision: cebdfb546f87017a01e574a66728ea9998c83e1c
-  specs:
-    meta_search (0.9.10)
-      actionpack (~> 3.0.2)
-      activerecord (~> 3.0.2)
-      activesupport (~> 3.0.2)
-      arel (~> 2.0.2)
-
-GIT
   remote: http://github.com/crossroads/ci_reporter.git
   revision: 47fcfbbb928260c4f772130467ba4fa75025c85a
   specs:
@@ -139,6 +129,11 @@ GEM
       i18n (~> 0.5.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta_search (0.9.10)
+      actionpack (~> 3.0.2)
+      activerecord (~> 3.0.2)
+      activesupport (~> 3.0.2)
+      arel (~> 2.0.2)
     mime-types (1.16)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -246,7 +241,7 @@ DEPENDENCIES
   headless
   hoptoad_notifier
   is_paranoid!
-  meta_search!
+  meta_search (>= 0.9.9.1)
   newrelic_rpm
   paperclip!
   pg (>= 0.9.0)
