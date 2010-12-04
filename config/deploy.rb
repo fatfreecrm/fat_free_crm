@@ -97,6 +97,10 @@ namespace :deploy do
     sudo "chmod -R 750 #{release_path}/"
     sudo "chown -R #{httpd_user}:#{httpd_grp} #{deploy_to}/shared/"
     sudo "chmod -R 750 #{deploy_to}/shared/"
+
+    # deploying user needs ownership of REVISION file for hoptoad deployment notify
+    sudo "chmod 755 #{release_path}/"
+    sudo "chmod 754 #{release_path}/REVISION"
   end
 
   task :mods_enabled do
@@ -135,7 +139,6 @@ end
 before "deploy:cold",           "stack:ssh-keygen"
 before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
-after  "deploy",                "deploy:set_permissions"
 after  "deploy:migrate",        "deploy:update_settings"
 after  "deploy:migrate",        "deploy:migrate_plugins"
 
