@@ -76,7 +76,7 @@ describe CampaignsController do
     describe "with mime type of XML" do
       it "should render all campaigns as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        @campaigns = [ Factory(:campaign, :user => @current_user) ]
+        @campaigns = [ Factory(:campaign, :user => @current_user).reload ]
 
         get :index
         response.body.should == @campaigns.to_xml
@@ -117,7 +117,7 @@ describe CampaignsController do
         @campaign = Factory(:campaign, :id => 42, :user => @current_user)
 
         get :show, :id => 42
-        response.body.should == @campaign.to_xml
+        response.body.should == @campaign.reload.to_xml
       end
     end
 
@@ -483,7 +483,7 @@ describe CampaignsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "again?!"
 
-        response.body.should == [ @second ].to_xml
+        response.body.should == [ @second.reload ].to_xml
       end
     end
   end

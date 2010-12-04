@@ -256,7 +256,7 @@ describe Admin::UsersController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "amy"
 
-        response.body.should == [ @amy ].to_xml
+        response.body.should == [ @amy.reload ].to_xml
       end
     end
   end
