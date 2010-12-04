@@ -11,6 +11,8 @@ ruby_packages="ruby ruby-devel gcc rubygems"
 cucumber_packages="libxml2 libxml2-devel libxslt libxslt-devel xorg-x11-server-Xvfb firefox ImageMagick"
 required_packages="$ruby_packages $cucumber_packages"
 
+crm_plugins=vendor/plugins/crm_*
+
 # Install required pancakes, syrups, bacon, and cucumber extras.
 # -----------------------------------------------------
 yum --quiet -y install $required_packages
@@ -56,6 +58,20 @@ sed -i s,git@github.com:,http://github.com/,g .git/config
 git submodule init
 git submodule update
 
+# Run install scripts for each plugin in vendor/plugins.
+# -----------------------------------------------------
+for plugin_dir in $crm_plugins
+do
+  cd $plugin_dir
+
+  if ( find -maxdepth 1 | grep "/install.rb" ) then
+    echo "== Running install script for plugin: '$plugin_dir'..."
+    ruby install.rb
+  fi
+
+  cd ../../..
+done
+
 # Install Bundle!
 # -----------------------------------------------------
 bundle install
@@ -69,7 +85,6 @@ RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
 
 # Run RSpec tests and cucumbers for each crm_* plugin. (if they exist)
 # -----------------------------------------------------
-crm_plugins=vendor/plugins/crm_*
 for plugin_dir in $crm_plugins
 do
   echo "== Running RSpec tests and cucumbers for '$plugin_dir'..."
