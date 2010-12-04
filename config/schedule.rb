@@ -20,5 +20,6 @@
 # Learn more: http://github.com/javan/whenever
 
 every 5.minutes do
+  command "source /usr/local/lib/rvm"
   rake "crm:dropbox:run", :output => "log/dropbox_cron.log"
 end
