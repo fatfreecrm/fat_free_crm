@@ -74,7 +74,7 @@ describe OpportunitiesController do
     describe "with mime type of XML" do
       it "should render all opportunities as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        @opportunities = [ Factory(:opportunity, :user => @current_user) ]
+        @opportunities = [ Factory(:opportunity, :user => @current_user).reload ]
 
         get :index
         response.body.should == @opportunities.to_xml
@@ -116,7 +116,7 @@ describe OpportunitiesController do
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
-        response.body.should == @opportunity.to_xml
+        response.body.should == @opportunity.reload.to_xml
       end
     end
 
@@ -719,7 +719,7 @@ describe OpportunitiesController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "second?!"
 
-        response.body.should == [ @second ].to_xml
+        response.body.should == [ @second.reload ].to_xml
       end
     end
   end

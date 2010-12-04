@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 require "net/imap"
+require "mail"
 include Rails.application.routes.url_helpers
 
 module FatFreeCRM
@@ -240,6 +241,12 @@ module FatFreeCRM
       attached = false
       ASSETS.each do |klass|
         asset = klass.find_by_email(recipient)
+
+        # Leads and Contacts have an alt_email: try it if lookup by primary email has failed.
+        if asset.empty? && klass.column_names.include?("alt_email")
+          asset = klass.find_by_alt_email(recipient) 
+        end
+
         if asset && sender_has_permissions_for?(asset)
           attach(email, asset)
           attached = true
