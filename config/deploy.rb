@@ -10,6 +10,8 @@ load 'recipes/passenger.rb'
 load 'recipes/postgresql.rb'
 load 'recipes/whenever.rb'
 load 'recipes/stack.rb'
+load 'recipes/newrelic.rb'
+load 'recipes/log.rb'
 
 default_run_options[:pty] = true
 

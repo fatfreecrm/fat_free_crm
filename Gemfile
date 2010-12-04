@@ -71,3 +71,7 @@ group :test do
   gem 'database_cleaner'
   gem 'ci_reporter', :git => 'http://github.com/crossroads/ci_reporter.git'
 end
+
+group :production do
+  gem "newrelic_rpm"
+end
