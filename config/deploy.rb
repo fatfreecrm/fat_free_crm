@@ -141,6 +141,3 @@ before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
 before "deploy:symlink",        "deploy:dropbox_log"
 after  "deploy:migrate",        "deploy:migrate_plugins"
-
-before "deploy:update_crontab", "deploy:user_permissions"
-after  "deploy:update_crontab", "deploy:set_permissions"
