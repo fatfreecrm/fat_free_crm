@@ -1,14 +1,26 @@
 GIT
   remote: git://github.com/crossroads/authlogic.git
-  revision: 651dcca8be365a5a11b5326f12319babdd515763
+  revision: a5eb007a3e5b9b9f86b39a2b051d7a61a6855995
   branch: rails3
   specs:
     authlogic (2.1.3)
       activesupport
 
 GIT
+  remote: git://github.com/crossroads/crowd.git
+  revision: 3b0da25cf2d57ac6e5633b5e601538eb1291c98c
+  specs:
+    crowd-crossroads (0.5.12)
+
+GIT
+  remote: git://github.com/crossroads/crowd_rails.git
+  revision: e58459e1c1aab2611007c105c513b9bf46964941
+  specs:
+    crowd_rails (0.5.11)
+
+GIT
   remote: git://github.com/crossroads/is_paranoid.git
-  revision: 30512a80fb5a10edc8b86e1c38022c6787b04a1b
+  revision: 7ff8ca2e2c5abb2c0d718194baeb61736f84b644
   branch: rails3
   specs:
     is_paranoid (0.0.2)
@@ -23,13 +35,20 @@ GIT
 
 GIT
   remote: git://github.com/ernie/meta_search.git
-  revision: db031035b23d15ec322a6421bdbb125117d2c8a4
+  revision: cebdfb546f87017a01e574a66728ea9998c83e1c
   specs:
     meta_search (0.9.10)
       actionpack (~> 3.0.2)
       activerecord (~> 3.0.2)
       activesupport (~> 3.0.2)
       arel (~> 2.0.2)
+
+GIT
+  remote: git://github.com/tribalvibes/soap4r-spox.git
+  revision: 7e3cb897d7c0f5a0bc47fe6976610348cbd1f80a
+  specs:
+    soap4r (1.5.8.5)
+      httpclient (>= 2.1.1)
 
 GIT
   remote: http://github.com/crossroads/ci_reporter.git
@@ -41,7 +60,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    ZenTest (4.4.0)
+    ZenTest (4.4.1)
     aaronh-chronic (0.3.9)
     abstract (1.0.0)
     actionmailer (3.0.3)
@@ -73,7 +92,7 @@ GEM
     acts-as-taggable-on (2.0.6)
     acts_as_commentable (3.0.1)
     archive-tar-minitar (0.5.2)
-    arel (2.0.4)
+    arel (2.0.6)
     autotest-rails (4.1.0)
       ZenTest
     builder (2.1.2)
@@ -126,14 +145,15 @@ GEM
     hoe (2.7.0)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
-    i18n (0.4.2)
+    httpclient (2.1.5.2)
+    i18n (0.5.0)
     json (1.4.6)
     json_pure (1.4.6)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
-    mail (2.2.10)
+    mail (2.2.11)
       activesupport (>= 2.3.6)
-      i18n (~> 0.4.1)
+      i18n (~> 0.5.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
@@ -146,7 +166,7 @@ GEM
       net-ssh (>= 1.99.1)
     newrelic_rpm (2.13.3)
     nokogiri (1.4.4)
-    pg (0.9.0)
+    pg (0.10.0)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -168,16 +188,19 @@ GEM
       thor (~> 0.14.4)
     rake (0.8.7)
     rcov (0.9.9)
-    rspec (2.1.0)
-      rspec-core (~> 2.1.0)
-      rspec-expectations (~> 2.1.0)
-      rspec-mocks (~> 2.1.0)
-    rspec-core (2.1.0)
-    rspec-expectations (2.1.0)
+    rspec (2.2.0)
+      rspec-core (~> 2.2)
+      rspec-expectations (~> 2.2)
+      rspec-mocks (~> 2.2)
+    rspec-core (2.2.1)
+    rspec-expectations (2.2.0)
       diff-lcs (~> 1.1.2)
-    rspec-mocks (2.1.0)
-    rspec-rails (2.1.0)
-      rspec (~> 2.1.0)
+    rspec-mocks (2.2.0)
+    rspec-rails (2.2.1)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      railties (~> 3.0)
+      rspec (~> 2.2.0)
     ruby-debug-base19 (0.11.24)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -191,8 +214,8 @@ GEM
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     rubyzip (0.9.4)
-    rvm (1.1.1)
-    selenium-webdriver (0.1.0)
+    rvm (1.1.2)
+    selenium-webdriver (0.1.1)
       childprocess (= 0.1.4)
       ffi (~> 0.6.3)
       json_pure
@@ -232,6 +255,8 @@ DEPENDENCIES
   capistrano-ext
   capybara
   ci_reporter!
+  crowd-crossroads!
+  crowd_rails!
   cucumber-rails
   database_cleaner
   factory_girl
@@ -249,6 +274,7 @@ DEPENDENCIES
   ruby-debug19
   rvm (>= 1.0.15)
   shoulda
+  soap4r!
   spork
   test-unit (= 1.2.3)
   thin

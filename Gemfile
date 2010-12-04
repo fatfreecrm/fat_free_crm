@@ -75,3 +75,8 @@ end
 group :production do
   gem "newrelic_rpm"
 end
+
+
+gem 'soap4r', :git => 'git://github.com/tribalvibes/soap4r-spox.git'
+gem 'crowd-crossroads', :git => 'git://github.com/crossroads/crowd.git'
+gem 'crowd_rails', :git => 'git://github.com/crossroads/crowd_rails.git'
