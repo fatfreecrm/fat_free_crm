@@ -2,6 +2,7 @@ require 'capistrano_colors'
 require 'capistrano/ext/multistage'
 require 'rvm/capistrano'
 require 'bundler/capistrano'
+require 'hoptoad_notifier/capistrano'
 
 load 'recipes/prompt.rb'
 load 'recipes/rvm.rb'
@@ -48,7 +49,8 @@ namespace :crm do
 
   desc "Load crm settings"
   task :settings do
-    run "cd #{current_path} && RAILS_ENV=production rake crm:settings:load"
+    run "if [ -f #{shared_path}/settings.sed ]; then sed -i -f #{shared_path}/settings.sed #{current_path}/vendor/plugins/crm_crossroads/config/settings.yml; fi"
+    run "cd #{current_path} && bundle exec rake crm:settings:load PLUGIN=crm_crossroads RAILS_ENV=production"
   end
 
   namespace :setup do
@@ -98,6 +100,10 @@ namespace :deploy do
     sudo "chmod -R 750 #{release_path}/"
     sudo "chown -R #{httpd_user}:#{httpd_grp} #{deploy_to}/shared/"
     sudo "chmod -R 750 #{deploy_to}/shared/"
+
+    # deploying user needs ownership of REVISION file for hoptoad deployment notify
+    sudo "chmod 755 #{release_path}/"
+    sudo "chmod 754 #{release_path}/REVISION"
   end
 
   task :mods_enabled do
@@ -105,12 +111,9 @@ namespace :deploy do
     sudo "ln -sf /etc/httpd/mods-available/rewrite.load /etc/httpd/mods-enabled"
   end
 
-  desc "Update settings file with server specific attributes (runs a server-side sed script)"
-  task :update_settings do
-    run "if [ -f #{shared_path}/settings.sed ]; then sed -i -f #{shared_path}/settings.sed #{release_path}/config/settings.yml; fi"
-    crm.settings
+  desc "Create dropbox log"
+  task :dropbox_log do
     run "if [ ! -f #{shared_path}/log/dropbox.log ]; then sudo -p 'sudo password: ' touch #{shared_path}/log/dropbox.log; fi"
-    #run "ln -sf #{shared_path}/log/dropbox.log  #{release_path}/log/dropbox.log"
   end
 
   desc "Migrate plugins"
@@ -136,10 +139,5 @@ end
 before "deploy:cold",           "stack:ssh-keygen"
 before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
-after  "deploy",                "deploy:set_permissions"
-after  "deploy:migrate",        "deploy:update_settings"
+before "deploy:symlink",        "deploy:dropbox_log"
 after  "deploy:migrate",        "deploy:migrate_plugins"
-
-before "deploy:update_crontab", "deploy:user_permissions"
-after  "deploy:update_crontab", "deploy:set_permissions"
-

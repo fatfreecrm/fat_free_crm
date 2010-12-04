@@ -68,7 +68,7 @@ describe LeadsController do
 
     describe "with mime type of XML" do
       it "should render all leads as xml" do
-        @leads = [ Factory(:lead, :user => @current_user) ]
+        @leads = [ Factory(:lead, :user => @current_user).reload ]
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
@@ -108,7 +108,7 @@ describe LeadsController do
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
-        response.body.should == @lead.to_xml
+        response.body.should == @lead.reload.to_xml
       end
     end
 
@@ -809,7 +809,7 @@ describe LeadsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "bill?!"
 
-        response.body.should == [ @billy_bones ].to_xml
+        response.body.should == [ @billy_bones.reload ].to_xml
       end
     end
   end

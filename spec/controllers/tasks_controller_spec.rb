@@ -97,7 +97,7 @@ describe TasksController do
         @task = Factory(:task, :user => @current_user)
 
         get :show, :id => @task.id, :view => "pending"
-        response.body.should == @task.to_xml
+        response.body.should == @task.reload.to_xml
       end
     end
   end
