@@ -2,6 +2,7 @@ require 'capistrano_colors'
 require 'capistrano/ext/multistage'
 require 'rvm/capistrano'
 require 'bundler/capistrano'
+require 'hoptoad_notifier/capistrano'
 
 load 'recipes/prompt.rb'
 load 'recipes/rvm.rb'
@@ -136,10 +137,7 @@ before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
 after  "deploy",                "deploy:set_permissions"
 after  "deploy:migrate",        "deploy:update_settings"
-after  "deploy:migrate",        "deploy:migrate_plugins"q
+after  "deploy:migrate",        "deploy:migrate_plugins"
 
 before "deploy:update_crontab", "deploy:user_permissions"
 after  "deploy:update_crontab", "deploy:set_permissions"
-
-require 'config/boot'
-require 'hoptoad_notifier/capistrano'
