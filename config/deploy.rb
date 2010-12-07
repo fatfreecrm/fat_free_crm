@@ -111,11 +111,6 @@ namespace :deploy do
     sudo "ln -sf /etc/httpd/mods-available/rewrite.load /etc/httpd/mods-enabled"
   end
 
-  desc "Create dropbox log"
-  task :dropbox_log do
-    run "if [ ! -f #{shared_path}/log/dropbox.log ]; then sudo -p 'sudo password: ' touch #{shared_path}/log/dropbox.log; fi"
-  end
-
   desc "Migrate plugins"
   task :migrate_plugins do
     run "cd #{current_path} && RAILS_ENV=production rake db:migrate:plugins"
@@ -125,6 +120,20 @@ namespace :deploy do
   task :symlink_crowd do
     run "ln -sf #{shared_path}/config/crowd_settings.yml #{release_path}/config/crowd_settings.yml"
   end
+end
+
+namespace :dropbox do
+
+  desc "Create dropbox log"
+  task :create_log do
+    run "if [ ! -f #{shared_path}/log/dropbox.log ]; then sudo -p 'sudo password: ' touch #{shared_path}/log/dropbox.log; fi"
+  end
+
+  desc "Run the dropbox task"
+  task :default do
+    run "cd #{current_path} && RAILS_ENV=development rake crm:dropbox:run"
+  end
+  
 end
 
 namespace :stack do
@@ -140,9 +149,19 @@ namespace :stack do
   end
 end
 
+namespace :git do
+
+  desc "Reset the submodules"
+  task :reset do
+    run "cd #{shared_path}/cached-copy && git submodule foreach git reset --hard"
+  end
+  
+end
+
 before "deploy:cold",           "stack:ssh-keygen"
 before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
-before "deploy:symlink",        "deploy:dropbox_log"
+before "deploy:symlink",        "dropbox:create_log"
 before "deploy:symlink",        "deploy:symlink_crowd"
+before "deploy:symlink",        "deploy:set_permissions"
 after  "deploy:migrate",        "deploy:migrate_plugins"
