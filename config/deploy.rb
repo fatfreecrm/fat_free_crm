@@ -116,6 +116,10 @@ namespace :deploy do
     run "cd #{current_path} && RAILS_ENV=production rake db:migrate:plugins"
   end
 
+  desc "Symlink Crowd Settings"
+  task :symlink_crowd do
+    run "ln -sf #{shared_path}/config/crowd_settings.yml #{release_path}/config/crowd_settings.yml"
+  end
 end
 
 namespace :dropbox do
@@ -148,5 +152,6 @@ end
 before "deploy:cold",           "stack:ssh-keygen"
 before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
-before "deploy:symlink",        "dropbox:create_log"
+before "deploy:symlink",        "deploy:dropbox_log"
+before "deploy:symlink",        "deploy:symlink_crowd"
 after  "deploy:migrate",        "deploy:migrate_plugins"
