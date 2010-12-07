@@ -51,6 +51,18 @@ cucumber:
   database: crm_cucumber
 EOF
 
+# Create Crowd Settings File
+# -----------------------------------------------------
+cat << EOF > config/crowd_settings.yml
+--- !map:HashWithIndifferentAccess
+crowd:
+  crowd_url: https://auth.crossroads.org.hk/crowd/services/SecurityServer
+  crowd_app_name: rails-test
+  crowd_app_pword: testing
+  crowd_validation_factors_need_user_agent: false
+  crowd_session_validationinterval: 0  # Set > 0 for authentication caching.
+EOF
+
 # Pull submodules from github read-only url.
 # (Prevents needing to authenticate this machine)
 # -----------------------------------------------------
