@@ -7,6 +7,18 @@ GIT
       activesupport
 
 GIT
+  remote: git://github.com/crossroads/crowd.git
+  revision: 3b0da25cf2d57ac6e5633b5e601538eb1291c98c
+  specs:
+    crowd-crossroads (0.5.12)
+
+GIT
+  remote: git://github.com/crossroads/crowd_rails.git
+  revision: e58459e1c1aab2611007c105c513b9bf46964941
+  specs:
+    crowd_rails (0.5.11)
+
+GIT
   remote: git://github.com/crossroads/is_paranoid.git
   revision: 7ff8ca2e2c5abb2c0d718194baeb61736f84b644
   branch: rails3
@@ -20,6 +32,13 @@ GIT
     paperclip (2.3.3)
       activerecord
       activesupport
+
+GIT
+  remote: git://github.com/tribalvibes/soap4r-spox.git
+  revision: 7e3cb897d7c0f5a0bc47fe6976610348cbd1f80a
+  specs:
+    soap4r (1.5.8.5)
+      httpclient (>= 2.1.1)
 
 GIT
   remote: http://github.com/crossroads/ci_reporter.git
@@ -119,6 +138,7 @@ GEM
     hoptoad_notifier (2.3.12)
       activesupport
       builder
+    httpclient (2.1.5.2)
     i18n (0.5.0)
     json (1.4.6)
     json_pure (1.4.6)
@@ -233,6 +253,8 @@ DEPENDENCIES
   capistrano-ext
   capybara
   ci_reporter!
+  crowd-crossroads!
+  crowd_rails!
   cucumber-rails
   database_cleaner
   factory_girl
@@ -251,6 +273,7 @@ DEPENDENCIES
   ruby-debug19
   rvm (>= 1.0.15)
   shoulda
+  soap4r!
   spork
   test-unit (= 1.2.3)
   thin

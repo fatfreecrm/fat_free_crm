@@ -26,16 +26,18 @@ require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/plugin"
 
-      ActionView::Base.send(:include, FatFreeCRM::I18n)
+ActionView::Base.send(:include, FatFreeCRM::I18n)
 ActionController::Base.send(:include, FatFreeCRM::I18n)
-   ActiveModel::Errors.send(:include, FatFreeCRM::ActiveModel::Errors)
+ActiveModel::Errors.send(:include, FatFreeCRM::ActiveModel::Errors)
 
-      ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
+ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
 ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
 
-    ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
-    ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
+ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
+ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
 
 # ------ Require Crossroads Core Extensions
-
 require "crossroads/opportunity"
+
+require "fat_free_crm/dropbox" if defined?(::Rake)
+

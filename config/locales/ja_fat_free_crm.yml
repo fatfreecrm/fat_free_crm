@@ -164,7 +164,7 @@ ja:
   msg_asset_rejected: "{{value}} has been rejected."
   msg_bad_image_file: "^Could't upload or resize the image file you specified."
   msg_cant_create_related: "Can't create the {{asset}} since the {{related}} is no longer available."
-  msg_cant_delete_user: "^Couldn't delete the user since {{value}} has related assets present."
+  msg_cant_delete_user: "Couldn't delete the user since {{value}} has related assets present."
   msg_cant_do: "Can't {{action}} the {{asset}} since it's no longer available."
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.

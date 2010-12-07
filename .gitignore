@@ -19,3 +19,4 @@ tmp/**/*
 *.swp
 features/screengrabs
 features/reports
+config/crowd_settings.yml

@@ -19,3 +19,6 @@
 [submodule "vendor/plugins/crm_authlogic_api"]
 	path = vendor/plugins/crm_authlogic_api
 	url = git@github.com:crossroads/crm_authlogic_api.git
+[submodule "vendor/plugins/crm_crowd"]
+	path = vendor/plugins/crm_crowd
+	url = git@github.com:crossroads/crm_crowd.git
