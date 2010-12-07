@@ -7,6 +7,6 @@ after "deploy:symlink", "deploy:update_crontab"
 namespace :deploy do
   desc "Update the crontab file"
   task :update_crontab, :roles => :db do
-    sudo "source /usr/local/lib/rvm && cd #{current_path} && bundle exec whenever --update-crontab #{application}"
+    run "source /usr/local/lib/rvm && cd #{current_path} && bundle exec whenever --update-crontab #{application}"
   end
 end
