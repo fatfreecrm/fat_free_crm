@@ -14,6 +14,9 @@
       = javascript_include_tag "crm_classes.js", "calendar_date_select/calendar_date_select.js", "calendar_date_select/format_#{t(:calendar_date_select_format, :default => 'american')}.js", :cache => "cache/classes"
     = hook(:javascript_includes, self)
 
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
     %script{:type => "text/javascript"}= yield :javascript
     = csrf_meta_tag
 
