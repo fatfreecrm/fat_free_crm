@@ -138,7 +138,7 @@ GEM
       activesupport
       builder
     httpclient (2.1.5.2)
-    i18n (0.5.0)
+    i18n (0.4.0)
     json (1.4.6)
     json_pure (1.4.6)
     linecache19 (0.5.11)
@@ -258,6 +258,7 @@ DEPENDENCIES
   haml (>= 3.0.18)
   headless
   hoptoad_notifier
+  i18n (= 0.4)
   is_paranoid!
   meta_search (>= 0.9.9.1)
   newrelic_rpm
