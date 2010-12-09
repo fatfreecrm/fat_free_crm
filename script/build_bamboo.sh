@@ -36,7 +36,7 @@ if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version -
 
 # Install Bundle!
 # -----------------------------------------------------
-bundle install
+bundle install --deployment
 
 # Create Database Configuration File
 # -----------------------------------------------------
