@@ -42,10 +42,9 @@ GIT
 
 GIT
   remote: http://github.com/crossroads/ci_reporter.git
-  revision: f700e0522c8f18182737a798aa4b357e4453a405
-  branch: rspec2.2.1
+  revision: 47fcfbbb928260c4f772130467ba4fa75025c85a
   specs:
-    ci_reporter (1.6.4)
+    ci_reporter (1.6.5)
       builder (>= 2.1.2)
 
 GEM
@@ -186,19 +185,18 @@ GEM
       thor (~> 0.14.4)
     rake (0.8.7)
     rcov (0.9.9)
-    rspec (2.2.0)
-      rspec-core (~> 2.2)
-      rspec-expectations (~> 2.2)
-      rspec-mocks (~> 2.2)
-    rspec-core (2.2.1)
-    rspec-expectations (2.2.0)
-      diff-lcs (~> 1.1.2)
-    rspec-mocks (2.2.0)
-    rspec-rails (2.2.1)
-      actionpack (~> 3.0)
-      activesupport (~> 3.0)
-      railties (~> 3.0)
-      rspec (~> 2.2.0)
+    rspec (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
+      rspec-mocks (~> 2.0.1)
+    rspec-core (2.0.1)
+    rspec-expectations (2.0.1)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
+    rspec-rails (2.0.1)
+      rspec (~> 2.0.0)
     ruby-debug-base19 (0.11.24)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -267,7 +265,7 @@ DEPENDENCIES
   pg (>= 0.9.0)
   rails (= 3.0.3)
   rcov
-  rspec-rails (= 2.2.1)
+  rspec-rails (= 2.0.1)
   ruby-debug19
   rvm (>= 1.0.15)
   shoulda

@@ -37,7 +37,7 @@ group :cucumber, :test, :development do
   gem 'rvm', '>= 1.0.15'
   gem 'capistrano-ext'
 
-  gem 'rspec-rails', '2.2.1'
+  gem 'rspec-rails', '2.0.1'
   gem 'rcov'
   gem 'factory_girl'
   gem 'thin'
@@ -63,7 +63,7 @@ group :test do
   gem 'autotest-rails'
   gem 'webrat'
   gem 'database_cleaner'
-  gem 'ci_reporter', :git => 'http://github.com/crossroads/ci_reporter.git', :branch => 'rspec2.2.1'
+  gem 'ci_reporter', :git => 'http://github.com/crossroads/ci_reporter.git'
 end
 
 group :production do
