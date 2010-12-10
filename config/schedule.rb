@@ -21,6 +21,6 @@
 
 job_type :rvm_rake, "source /usr/local/lib/rvm && cd :path && RAILS_ENV=:environment rake :task :output"
 
-every 15.minutes do
+every 3.minutes do
   rvm_rake "crm:dropbox:run", :output => "log/dropbox_cron.log"
 end
