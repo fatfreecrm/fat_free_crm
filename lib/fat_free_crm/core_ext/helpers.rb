@@ -17,12 +17,12 @@
 
 class ActionController::Base
 
-  # Extract helper names from files in app/helpers/*.rb -- no app/admin/helpers
-  # or any other subdirectories are included.
+  # Remove helpers residing in subdirectories from the list of application
+  # helpers.  Basically we don't want helpers in app/helpers/admin/* to
+  # override the ones in app/helpers/*.
   #----------------------------------------------------------------------------
-  def self.application_helpers
-    extract = /^#{Regexp.quote(helpers_path.first)}\/?(.*)_helper.rb$/
-    Dir["#{helpers_path.first}/*_helper.rb"].map { |file| file.sub extract, '\1' }
+  def self.all_application_helpers
+    super.delete_if { |helper| helper.include?(File::SEPARATOR) }
   end
 
 end
