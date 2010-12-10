@@ -133,7 +133,7 @@ namespace :dropbox do
 
   desc "Run the dropbox task"
   task :default do
-    run "cd #{current_path} && RAILS_ENV=development rake crm:dropbox:run"
+    run "cd #{current_path} && RAILS_ENV=production rake crm:dropbox:run"
   end
 
 end
