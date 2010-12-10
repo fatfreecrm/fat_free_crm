@@ -17,7 +17,6 @@ source 'http://rubygems.org'
 # responds_to_parent,      git://github.com/markcatley/responds_to_parent.git
 
 gem 'rails', '3.0.3'
-gem 'i18n', '0.4'
 
 gem 'acts_as_commentable', '>= 3.0.1'
 gem 'acts-as-taggable-on', '>= 2.0.6'
