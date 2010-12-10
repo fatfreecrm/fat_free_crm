@@ -97,11 +97,13 @@ namespace :deploy do
   desc "Setting proper permissions for apache user"
   task :set_permissions do
     sudo "chown -R #{httpd_user}:#{httpd_grp} #{release_path}/"
-    sudo "chmod -R 750 #{release_path}/"
     sudo "chown -R #{httpd_user}:#{httpd_grp} #{deploy_to}/shared/"
-    sudo "chmod -R 750 #{deploy_to}/shared/"
 
-    # deploying user needs ownership of REVISION file for hoptoad deployment notify
+    sudo "chmod -R 750 #{deploy_to}/shared/config"
+    sudo "chmod -R 750 #{deploy_to}/shared/log"
+    sudo "chmod -R 750 #{release_path}/"
+
+    # for hoptoad deployment notify
     sudo "chmod 755 #{release_path}/"
     sudo "chmod 754 #{release_path}/REVISION"
   end
@@ -133,7 +135,7 @@ namespace :dropbox do
   task :default do
     run "cd #{current_path} && RAILS_ENV=development rake crm:dropbox:run"
   end
-  
+
 end
 
 namespace :stack do
@@ -155,7 +157,7 @@ namespace :git do
   task :reset do
     run "cd #{shared_path}/cached-copy && git submodule foreach git reset --hard"
   end
-  
+
 end
 
 before "deploy:cold",           "stack:ssh-keygen"
@@ -163,5 +165,5 @@ before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
 before "deploy:symlink",        "dropbox:create_log"
 before "deploy:symlink",        "deploy:symlink_crowd"
-before "deploy:symlink",        "deploy:set_permissions"
+after  "deploy:symlink",        "deploy:set_permissions"
 after  "deploy:migrate",        "deploy:migrate_plugins"
