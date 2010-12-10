@@ -21,6 +21,7 @@ TASK_STATUSES = %w(pending assigned completed).freeze
 
 # Load default settings from config/settings.yml
 Factory(:default_settings)
+Setting.task_calendar_with_time = false
 
 I18n.locale = 'en-US'
 
