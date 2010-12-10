@@ -34,6 +34,10 @@ rvm use $ruby_version
 
 if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version --no-rdoc --no-ri; fi;
 
+# Install Bundle!
+# -----------------------------------------------------
+bundle install --deployment
+
 # Create Database Configuration File
 # -----------------------------------------------------
 cat << EOF > config/database.yml
@@ -83,10 +87,6 @@ do
 
   cd ../../..
 done
-
-# Install Bundle!
-# -----------------------------------------------------
-bundle install
 
 # Create test and cucumber databases
 # -----------------------------------------------------
