@@ -3,6 +3,14 @@
     %table(width="500" cellpadding="0" cellspacing="0")
       %tr
         %td(valign="top")
+          .label.top #{t :salutation}:
+          = f.text_field :salutation, :style => "width:240px"
+        %td= spacer
+        %td(valign="top")
+          .label.top #{t :chinese_name}:
+          = f.text_field :chinese_name, :style => "width:240px"
+      %tr
+        %td(valign="top")
           .label.top.req #{t :first_name}:
           = f.text_field :first_name, :style => "width:240px"
         %td= spacer

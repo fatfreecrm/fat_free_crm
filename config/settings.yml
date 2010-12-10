@@ -82,7 +82,7 @@
 #   true  -- use separate street1, street2, city, state, zipcode, and country field.
 #   false -- use single text area field to enter the entire address. This is the default.
 #
-:compound_address: false
+:compound_address: true
 
 # Dropdown calendar format.
 #------------------------------------------------------------------------------
