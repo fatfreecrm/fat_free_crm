@@ -24,6 +24,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Task do
 
+  before(:all) do
+    Setting.task_calendar_with_time = false
+  end
+
   before(:each) do
     login
   end
