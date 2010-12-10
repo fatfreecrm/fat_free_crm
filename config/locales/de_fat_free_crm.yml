@@ -495,7 +495,7 @@ de:
   shared_txt: "Zeige es folgenden Leuten"
   shipping_address: "Lieferadresse"
   show: "Zeige"
-  show_per_page: "Zeige %{number} %{models} pro Seite in %{format}-Format."
+  show_per_page: "Zeige %{number} %{models} pro Seite in %{item_format}-Format."
   sign_up: "Registrieren"
   sign_up_button: "Registrieren"
   sign_up_now: "Registrieren Sie sich jetzt!"

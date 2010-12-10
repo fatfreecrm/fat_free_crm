@@ -214,7 +214,7 @@ es-ES:
   option_target_leads: iniciativas planeadas 
   option_target_revenue: ingresos planeados 
   option_updated_at: fecha de modificación
-  show_per_page: Mostrar {{number}} {{models}} por página utilizando el formato {{format}}.
+  show_per_page: Mostrar {{number}} {{models}} por página utilizando el formato {{item_format}}.
   sort_by: Ordenar {{models}} por {{field}}.
   sort_by_displaying: Ordenar {{models}} por {{field}} mostrando el nombre {{position}} los apellidos. 
 
