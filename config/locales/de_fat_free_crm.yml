@@ -134,7 +134,7 @@ de:
     now: "Jetzt"
     ok: "OK"
     today: "Heute"
-  calendar_date_select_format: "deutsch"
+  calendar_date_select_format: "euro_24hr"
   call: "Anruf"
   called_off: "Abgesagt"
   campaign: "Kampagne"

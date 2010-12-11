@@ -158,20 +158,20 @@ ru:
   #----------------------------------------------------------------------------
   msg_account_created: Ваш аккаунт создан и ожидает активации системным администратором.
   msg_account_not_approved: Ваш аккаунт еще не активирован.
-  msg_asset_deleted: Этот {{value}} был удален.
-  msg_asset_not_available: Этот {{value}} более недоступен.
-  msg_assets_not_available: Эти {{value}} более недоступны. 
-  msg_asset_rejected: Этот {{value}} отклонен.
+  msg_asset_deleted: Этот %{value} был удален.
+  msg_asset_not_available: Этот %{value} более недоступен.
+  msg_assets_not_available: Эти %{value} более недоступны. 
+  msg_asset_rejected: Этот %{value} отклонен.
   msg_bad_image_file: Ошибка при загрузке или изменении размера указанного изображения.
-  msg_cant_create_related: Невозвожно создать {{asset}} так как {{related}} более недоступен.
-  msg_cant_delete_user: "Невозможно удалить пользователя так как к {{value}} привязаны объекты."
-  msg_cant_do: Нельзя {{action}} {{asset}}, его больше не существует.
+  msg_cant_create_related: Невозвожно создать %{asset} так как %{related} более недоступен.
+  msg_cant_delete_user: "Невозможно удалить пользователя так как к %{value} привязаны объекты."
+  msg_cant_do: Нельзя %{action} %{asset}, его больше не существует.
   msg_email_not_found: Пользователя с таким адресом не найдено.
   msg_enter_new_password: Пожалуйста введите новый пароль.
   msg_goodbye: Вы вышли. Спасибо за использование Fat Free CRM!
   msg_invalid_password: Введите правильный пароль.
   msg_invalig_login: Неправильный логин или пароль.
-  msg_last_login: Последний раз Вы заходили {{value}}.
+  msg_last_login: Последний раз Вы заходили %{value}.
   msg_login_needed: Для доступа к этой странице нужно войти в систему.
   msg_logout_needed: Для доступа к этой странице необходимо выйти из системы.
   msg_password_changed: Пароль изменен.
@@ -185,7 +185,7 @@ ru:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": взвешенной сумме
-  activity_options: "Показывать действия изменившие {{models}} и произведенные {{user}} за последние {{period}}."
+  activity_options: "Показывать действия изменившие %{models} и произведенные %{user} за последние %{period}."
   all_users: Всеми Пользователями
   option_after: после
   option_all: все
@@ -209,9 +209,9 @@ ru:
   option_target_leads: планируемому количеству потенциальных клиентов
   option_target_revenue: планируемым доходам
   option_updated_at: дате обновления
-  show_per_page: Показывать {{models}} в {{format}} формате по {{number}} записей на странице.
-  sort_by: Сортировать {{models}} по {{field}}.
-  sort_by_displaying: Сортировать {{models}} по {{field}} показывая имя {{position}} фамилии.
+  show_per_page: Показывать %{models} в %{format} формате по %{number} записей на странице.
+  sort_by: Сортировать %{models} по %{field}.
+  sort_by_displaying: Сортировать %{models} по %{field} показывая имя %{position} фамилии.
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
@@ -272,9 +272,9 @@ ru:
   date_created: Дате создания
   date_updated: Дате обновления
   fax: Факс
-  intro: Информацию о {{value}} можно добавить позже.
+  intro: Информацию о %{value} можно добавить позже.
   mobile_small: мобильный
-  open_in_window: Открыть {{value}} в новом окне
+  open_in_window: Открыть %{value} в новом окне
   phone_small: телефон
   phone_toll_free: Номер 8-800
   keep_private: Не показывать никому
@@ -301,11 +301,11 @@ ru:
   campaigns_small: кампании
   conversion: Конверсия
   conversion_label: Конверсия (%)
-  conversion_number: конверсия {{value}}
+  conversion_number: конверсия %{value}
   create_campaign: Создать Кампанию
   end_date: Дата окончания
-  finished_on: закончилась {{value}}
-  finishes_in: заканчивается через {{value}}
+  finished_on: закончилась %{value}
+  finishes_in: заканчивается через %{value}
   no_start_date: дата начала не указана
   number_of_leads: Количество потенциальных клиентов
   objectives: Цели
@@ -313,16 +313,16 @@ ru:
   objectives_small: целях кампании
   revenue: Доход
   revenue_label: Доход (руб.)
-  revenue_number: "{{value}} дохода"
+  revenue_number: "%{value} дохода"
   save_campaign: Сохранить Изменения
   start_date: Дата начала
-  started_ago: начата {{value}} назад
-  starts_in: начинается через {{value}}
+  started_ago: начата %{value} назад
+  starts_in: начинается через %{value}
   starts_today: начинается сегодня!
   target: Цель
   total_campaigns: Всего кампаний
-  was_supposed_to_finish: должна была закончиться {{value}}
-  was_supposed_to_start: должна была начаться {{time_ago}} назад {{start_date}}
+  was_supposed_to_finish: должна была закончиться %{value}
+  was_supposed_to_start: должна была начаться %{time_ago} назад %{start_date}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
@@ -335,7 +335,7 @@ ru:
   contacts_small: контакты
   create_contact: Создать Контакт
   department: Отдел
-  department_small: Отдел {{value}}
+  department_small: Отдел %{value}
   do_not_call: Не звонить
   extra_info: Дополнительные данные
   extra_info_small: дополнительные данные
@@ -344,27 +344,27 @@ ru:
   myself: Мне
 
   # TODO
-  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.  
-  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
+  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.  
+  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
 
-  permissions_intro: При создании только Вы получаете доступ к {{value}}ам. Права доступа можно изменить в любое время.
+  permissions_intro: При создании только Вы получаете доступ к %{value}ам. Права доступа можно изменить в любое время.
   referred_by: По рекомендации
   referred_by_small: по рекомендации
   save_contact: Сохранить Контакт
   twitter: Twitter
   web_presence: Профили в Сети
   web_presence_small: профилях
-  works_at: "{{job_title}} в {{company}}"
+  works_at: "%{job_title} в %{company}"
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
   convert: Конверсия
   convert_lead: Конвертировать потенциального клиента
   convert_lead_permissions_intro: Права доступа к контакту будут скопированы от карточки конвертируемого потенциального клиента. Позже вы сможете изменить права доступа.
-  convert_lead_text: В результате конверсии потенциального клиента &laquo;{{value}}&raquo;, будет создан новый контакт привязанный к существующему или вновь созданному клиенту. Статус потенциального клиента автоматически изменится на конвертирован.
+  convert_lead_text: В результате конверсии потенциального клиента &laquo;%{value}&raquo;, будет создан новый контакт привязанный к существующему или вновь созданному клиенту. Статус потенциального клиента автоматически изменится на конвертирован.
   create_lead: Создать потенциального клиента
-  create_opp_for_contact: Вы можете создать возможность, привязанную к контакту &laquo;{{value}}&raquo;, введя в следующих полях название возможности, стадию, предполагаему дату завершения, вероятность продажи, сумма сделки и предлагаемую скидку.
+  create_opp_for_contact: Вы можете создать возможность, привязанную к контакту &laquo;%{value}&raquo;, введя в следующих полях название возможности, стадию, предполагаему дату завершения, вероятность продажи, сумма сделки и предлагаемую скидку.
   lead: Потенциальный клиент
   lead_info_small: Контактная информация потенциального клиента
 
@@ -392,16 +392,16 @@ ru:
   #----------------------------------------------------------------------------
   amount: Сумма
   close_date: Дата завершения
-  closed_ago_on: завершена {{time_ago}} назад {{date}}
+  closed_ago_on: завершена %{time_ago} назад %{date}
   closes_today: завершение ожидается сегодня!
-  closing_date: дата завершения {{value}}
+  closing_date: дата завершения %{value}
   create_opportunity: Создать возможность
   currency: (руб.)
   days_late: Задержка
   days_left: Осталось дней
   discount: Скидка
-  discount_number: со скидкой {{value}}
-  expected_to_close: завершение ожидается через {{time}} - {{date}}
+  discount_number: со скидкой %{value}
+  expected_to_close: завершение ожидается через %{time} - %{date}
   from: из
   no_closing_date: дата завершения не указана
   no_discount: без скидки
@@ -411,10 +411,10 @@ ru:
   opportunity: Возможность
   opportunity_small: возможность
   opportunity_summary: Краткая информация
-  opportunity_summary_text: "{{amount}} со скидкой {{discount}} и вероятностью {{probability}} процентов"
-  past_due: просрочено, должно было завершено {{value}} назад
+  opportunity_summary_text: "%{amount} со скидкой %{discount} и вероятностью %{probability} процентов"
+  past_due: просрочено, должно было завершено %{value} назад
   probability: Вероятность
-  probability_number: и вероятностью {{value}}
+  probability_number: и вероятностью %{value}
   save_opportunity: Сохранить возможность
   stage: Стадия
   total_opportunities: Всего возможностей
@@ -433,7 +433,7 @@ ru:
   due: Срок выполнения
   feel_free: Можете
   move_to: перенести на
-  no_tasks: У вас нет {{value}} заданий
+  no_tasks: У вас нет %{value} заданий
   no_tasks_pending: незавершенных
   no_tasks_assigned: порученных
   no_tasks_completed: завершенных
@@ -441,22 +441,22 @@ ru:
   pending_tasks: Задания На Очереди
   related: см.
   save_task: Сохранить Задание
-  task_assigned: Это задание поручено {{value}}
-  task_assigned_to: и поручено {{value}}
+  task_assigned: Это задание поручено %{value}
+  task_assigned_to: и поручено %{value}
   task_completed: завершено
-  task_completed_ago: завершено {{value}} назад
-  task_completed_by: завершил(а) {{user}} {{time_ago}} назад
+  task_completed_ago: завершено %{value} назад
+  task_completed_by: завершил(а) %{user} %{time_ago} назад
   task_created: Задание добавлено
-  task_due_in: "срок: через {{value}}"
+  task_due_in: "срок: через %{value}"
   task_due_later: "срок: скоро"
   task_due_now: "срок: сейчас"
   task_due_today: "срок: сегодня"
-  task_from: "{{value}} поручил(a)"
+  task_from: "%{value} поручил(a)"
   task_overdue: "задержка, срок:" 
   task_pending: Это задание поставлено в очередь на выполнение
   task_small: задание
   tasks: Задания
-  total_tasks: "{{value}}, всего:"
+  total_tasks: "%{value}, всего:"
   view_assigned_tasks: показать порученные задания
   view_pending_tasks: показать задания на очереди
  
@@ -488,34 +488,34 @@ ru:
   add_note: Добавить Комментарий
   save_note: Сохранить Комментарий
   add_note_help: Добавить комментарий...
-  added_ago: добавлен {{value}} назад
-  added_by: "{{user}} добавил(а) {{time_ago}} назад"
+  added_ago: добавлен %{value} назад
+  added_by: "%{user} добавил(а) %{time_ago} назад"
   back: Назад
   cancel: Отменить
   close_form: Закрыть
-  confirm_delete: Вы действительно xотите удалить этот {{value}}?
-  copy_permissions: Скопировать права доступа к {{value}}
+  confirm_delete: Вы действительно xотите удалить этот %{value}?
+  copy_permissions: Скопировать права доступа к %{value}
   could_not_find: Ничего не найдено. Можете
-  could_not_find_matching: Не найдены {{value}}, в которыx встречается
+  could_not_find_matching: Не найдены %{value}, в которыx встречается
   create_new: добавить новый
   select_existing: выбрать существующий
   delete: Удалить
   discard: Сбросить
   edit: Изменить
-  items_total: Всего {{count}}.
+  items_total: Всего %{count}.
   less: Less... # TODO
   me: я
   more: More... # TODO
   n_a: -
   name: Название
-  no_match: "{{value}} не найдены"
+  no_match: "%{value} не найдены"
   no_recent_items: Недавно просмотренных объектов не найдено.
   options: Опции
   permissions: Права Доступа
   please_retry: попробуйте поискать что-нибудь другое.
   recent_items: Недавние Объекты
-  search_assets: Поиск - {{value}}
-  ago: "{{value}} назад"
+  search_assets: Поиск - %{value}
+  ago: "%{value} назад"
   background_info: Дополнительная информация
   address: Адрес
   city: деловой центр Лондона
@@ -563,7 +563,7 @@ ru:
   #----------------------------------------------------------------------------
   approve: Подтвердить
   create_user: Создать Пользователя
-  last_seen: последний визит {{value}} назад
+  last_seen: последний визит %{value} назад
   personal_information: Личные Данные
   reactivate: Разблокиривать
   save_user: Сохранить Изменения
@@ -575,16 +575,16 @@ ru:
   user_is_admin: Дать права Администратора
   user_never_logged_in: еще не заходил(а)
   user_signed_up: Зарегистрирован
-  user_signed_up_on: зарегистрирован(а) {{value}}
-  user_since: является пользователем с {{value}}
+  user_signed_up_on: зарегистрирован(а) %{value}
+  user_since: является пользователем с %{value}
   user_suspended: Заблокирован
-  user_suspended_on: заблокирован(а) {{value}}
+  user_suspended_on: заблокирован(а) %{value}
   users: Пользователи
   users_small: пользователи
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Добавлено электронной почты - {{subject}}
+  dropbox_ack_subject: dropbox - Добавлено электронной почты - %{subject}
   dropbox_ack_intro: Успешно добавлена электронной почты, который направлен Dropbox
   dropbox_ack_to: В дополнение к
   subject: Тема
@@ -596,32 +596,32 @@ ru:
     contact:
       zero: '0 контактов'
       one: '1 контакт'
-      few: '{{count}} контакта'
-      many: '{{count}} контактов'
-      other: '{{count}} контакта'
+      few: '%{count} контакта'
+      many: '%{count} контактов'
+      other: '%{count} контакта'
     opportunity:
       zero: '0 перспектив'
       one: '1 перспектива'
-      few: '{{count}} перспективы'
-      many: '{{count}} перспектив'
-      other: '{{count}} перспектив'
+      few: '%{count} перспективы'
+      many: '%{count} перспектив'
+      other: '%{count} перспектив'
     lead:
       zero: '0 потенциальных клиентов'
       one: '1 потенциальный клиент'
-      few: '{{count}} потенциальных клиентов'
-      many: '{{count}} потенциальных клиентов'
-      other: '{{count}} потенциальных клиентов'
+      few: '%{count} потенциальных клиентов'
+      many: '%{count} потенциальных клиентов'
+      other: '%{count} потенциальных клиентов'
     day:
       zero: '0 дней'
-      one: '{{count}} день'
-      few: '{{count}} дня'
-      many: '{{count}} дней'
-      other: '{{count}} дней'
+      one: '%{count} день'
+      few: '%{count} дня'
+      many: '%{count} дней'
+      other: '%{count} дней'
     login:
-      one: 'заходил(а) {{count}} раз'
-      few: 'заходил(а) {{count}} раза'
-      many: 'заходил(а) {{count}} раз'
-      other: 'заходил(а) {{count}} раз'
+      one: 'заходил(а) %{count} раз'
+      few: 'заходил(а) %{count} раза'
+      many: 'заходил(а) %{count} раз'
+      other: 'заходил(а) %{count} раз'
 
   # Custom date/time formats.
   #----------------------------------------------------------------------------
