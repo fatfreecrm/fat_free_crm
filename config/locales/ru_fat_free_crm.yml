@@ -220,7 +220,7 @@ ru:
   option_target_leads: планируемому количеству потенциальных клиентов
   option_target_revenue: планируемым доходам
   option_updated_at: дате обновления
-  show_per_page: Показывать %{models} в %{format} формате по %{number} записей на странице.
+  show_per_page: Показывать %{models} в %{fmt} формате по %{number} записей на странице.
   sort_by: Сортировать %{models} по %{field}.
   sort_by_displaying: Сортировать %{models} по %{field} показывая имя %{position} фамилии.
 

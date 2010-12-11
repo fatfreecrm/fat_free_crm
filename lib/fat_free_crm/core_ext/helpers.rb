@@ -22,7 +22,7 @@ class ActionController::Base
   # override the ones in app/helpers/*.
   #----------------------------------------------------------------------------
   def self.all_application_helpers
-    super.delete_if { |helper| helper.include?(File::SEPARATOR) }
+    super.delete_if { |helper| helper.include?(File::SEPARATOR) && !Rails.env.test? }
   end
 
 end
