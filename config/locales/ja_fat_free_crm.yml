@@ -151,6 +151,15 @@ ja:
               missing_email: "^Please specify email address."
               email_in_use: "^There is another user with the same email."
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one:   "%{model}にエラーが発生しました。"
+        other: "%{model}に%{count}つのエラーが発生しました。"
+      body: "次の項目を確認してください。"
+
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions
 

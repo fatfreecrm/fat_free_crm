@@ -1,10 +1,11 @@
-
 = form_for(@opportunity, :html => one_submit_only(:opportunity), :remote => true) do |f|
   = link_to_close new_opportunity_path
+  = f.hidden_field :user_id
   = hidden_field_tag "contact",  "#{@contact.id  if @contact}"
   = hidden_field_tag "campaign", "#{@campaign.id if @campaign}"
-  = f.hidden_field :user_id
-  = f.error_messages
+
+  = f.error_messages :object_name => t('opportunity')
+
   = render :partial => "opportunities/top_section", :locals => { :f => f }
   = render :partial => "opportunities/permissions", :locals => { :f => f }
   .buttonbar

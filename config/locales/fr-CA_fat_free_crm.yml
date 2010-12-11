@@ -157,6 +157,15 @@ fr-CA:
               missing_email: "^Précisez une adresse e-mail"
               email_in_use: "^Un utilisateur existe déjà avec cette adresse."
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one:   "Impossible d'enregistrer ce %{model} : 1 erreur"
+        other: "Impossible d'enregistrer ce %{model} : %{count} erreurs"
+      body: "Veuillez vérifier les champs suivants : "
+
   msg_account_suspended: Ce compte utilisateur a été suspendu.
   password_reset_instruction: instruction de reinitialisation du mot de passe
 

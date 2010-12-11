@@ -248,6 +248,12 @@ de:
   edit_profile_link: "Profil bearbeiten"
   email: Email
   end_date: "Enddatum"
+  errors:
+    template:
+      header:
+        one:    "Konnte %{model} nicht speichern: ein Fehler."
+        other:  "Konnte %{model} nicht speichern: %{count} Fehler."
+      body: "Bitte überprüfen Sie die folgenden Felder:"
   expected_to_close: "Abschluss erwartet in %{time} am %{date}"
   extra_info: "Zusatzinformation"
   extra_info_small: "zusätzliche Kontaktdaten"

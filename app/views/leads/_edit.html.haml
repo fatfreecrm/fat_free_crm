@@ -2,7 +2,9 @@
   = form_for(@lead, :html => one_submit_only(:lead), :remote => true) do |f|
     = link_to_close edit_lead_path(@lead)
     = f.hidden_field :user_id
-    = f.error_messages
+
+    = f.error_messages :object_name => t('lead')
+
     = render :partial => "leads/top_section", :locals => { :f => f, :edit => true }
     = render :partial => "leads/status",      :locals => { :f => f, :edit => true }
     = render :partial => "leads/contact",     :locals => { :f => f, :edit => true }

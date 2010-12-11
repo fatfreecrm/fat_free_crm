@@ -151,6 +151,15 @@ pt-BR:
               missing_email: "^Por favor, informe o e-mail."
               email_in_use: "^Já existe um usuário com este e-mail."
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one: "Não foi possível gravar %{model}: 1 erro"
+        other: "Não foi possível gravar %{model}: %{count} erros."
+      body: "Por favor, verifique o(s) seguinte(s) campo(s):"
+
   msg_account_suspended: A conta do usuário foi suspensa.
   password_reset_instruction: Instruções de redefinição da senha
 

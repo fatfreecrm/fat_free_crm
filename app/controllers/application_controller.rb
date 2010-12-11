@@ -17,7 +17,7 @@
 
 class ApplicationController < ActionController::Base
 
-  # help :all gets called authomagically in Rails3.
+  # helper :all gets called authomagically in Rails3.
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
 

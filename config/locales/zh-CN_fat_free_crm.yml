@@ -151,6 +151,15 @@ zh-CN:
               missing_email: "^请指定邮件地址"
               email_in_use: "^此邮件地址已经有人使用"
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one: "有 1 个错误发生导致「%{model}」无法被保存。"
+        other: "有 %{count} 个错误发生导致「%{model}」无法被保存。"
+      body: "如下字段出现错误："
+
   msg_account_suspended: 用户账号已暂停
   password_reset_instruction: 密码重置方法
 

@@ -156,6 +156,15 @@
               missing_email: "^Introduzca su dirección de correo electrónico, por favor."
               email_in_use: "^Hay otro usuario con ésta misma dirección de correo electrónico."
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one:   "No se pudo guardar este/a %{model} porque se encontró 1 error"
+        other:  "No se pudo guardar este/a %{model} porque se encontraron %{count} errores"
+      body: "Se encontraron problemas con los siguientes campos:"
+
   msg_account_suspended: Esta cuenta de usuario ha sido suspendida.
   password_reset_instruction: Instrucciones para restaurar la contraseña
 
