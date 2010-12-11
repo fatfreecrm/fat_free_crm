@@ -96,34 +96,34 @@ pt-BR:
       half_a_minute: "meio minuto"
       less_than_x_seconds:
         one:   "menos de 1 segundo"
-        other: "menos de {{count}} segundos"
+        other: "menos de %{count} segundos"
       x_seconds:
         one:   "1 segundo"
-        other: "{{count}} segundos"
+        other: "%{count} segundos"
       less_than_x_minutes:
         one:   "menos de um minuto"
-        other: "menos de {{count}} minutos"
+        other: "menos de %{count} minutos"
       x_minutes:
         one:   "1 minuto"
-        other: "{{count}} minutos"
+        other: "%{count} minutos"
       about_x_hours:
         one:   "aproximadamente 1 hora"
-        other: "aproximadamente {{count}} horas"
+        other: "aproximadamente %{count} horas"
       x_days:
         one:   "1 dia"
-        other: "{{count}} dias"
+        other: "%{count} dias"
       about_x_months:
         one:   "aproximadamente 1 mês"
-        other: "aproximadamente {{count}} meses"
+        other: "aproximadamente %{count} meses"
       x_months:
         one:   "1 mês"
-        other: "{{count}} meses"
+        other: "%{count} meses"
       about_x_years:
         one:   "aproximadamente 1 ano"
-        other: "aproximadamente {{count}} anos"
+        other: "aproximadamente %{count} anos"
       over_x_years:
         one:   "mais de 1 ano"
-        other: "mais de {{count}} anos"
+        other: "mais de %{count} anos"
     prompts:
       year:   "Ano"
       month:  "Mês"
@@ -137,7 +137,7 @@ pt-BR:
       template:
         header:
           one: "model não pode ser salvo: 1 erro"
-          other: "model não pode ser salvo: {{count}} erros."
+          other: "model não pode ser salvo: %{count} erros."
         # The variable :count is also available
         body: "Por favor, verifique os seguintes campos:"
       # The values :model, :attribute and :value are always available for interpolation
@@ -150,16 +150,16 @@ pt-BR:
         accepted: "precisa ser aceito"
         empty: "não pode ficar vazio"
         blank: "não pode ficar vazio"
-        too_long: "é muito longo (máximo: {{count}} caracteres)"
-        too_short: "é muito curto (mínimon: {{count}} caracteres)"
-        wrong_length: "deve ter {{count}} caracteres"
+        too_long: "é muito longo (máximo: %{count} caracteres)"
+        too_short: "é muito curto (mínimon: %{count} caracteres)"
+        wrong_length: "deve ter %{count} caracteres"
         taken: "não está disponível"
         not_a_number: "não é um número"
-        greater_than: "precisa ser maior do que {{count}}"
-        greater_than_or_equal_to: "precisa ser maior ou igual a {{count}}"
-        equal_to: "precisa ser igual a {{count}}"
-        less_than: "precisa ser menor do que {{count}}"
-        less_than_or_equal_to: "precisa ser menor ou igual a {{count}}"
+        greater_than: "precisa ser maior do que %{count}"
+        greater_than_or_equal_to: "precisa ser maior ou igual a %{count}"
+        equal_to: "precisa ser igual a %{count}"
+        less_than: "precisa ser menor do que %{count}"
+        less_than_or_equal_to: "precisa ser menor ou igual a %{count}"
         odd: "precisa ser ímpar"
         even: "precisa ser par"
         greater_than_start_date: "deve ser maior que a data inicial"
@@ -173,7 +173,7 @@ pt-BR:
       # For example,
       #   models:
       #     user:
-      #       blank: "This is a custom blank message for {{model}}: {{attribute}}"
+      #       blank: "This is a custom blank message for %{model}: %{attribute}"
       #       attributes:
       #         login:
       #           blank: "This is a custom blank message for User login"

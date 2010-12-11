@@ -10,7 +10,7 @@
   = t(:sort_by, :models => t(:campaigns_small), :field => link_to(current_sort_by, "#", :id => :sort_by))
 
   -# show_per_page: Show {{number}} {{models}} per page using {{format}} format. 
-  = t(:show_per_page, :number => link_to(@per_page, "#", :id => :per_page), :models => t(:campaigns_small), :format => link_to(current_outline, "#", :id => :outline))
+  = t(:show_per_page, :number => link_to(@per_page, "#", :id => :per_page), :models => t(:campaigns_small), :fmt => link_to(current_outline, "#", :id => :outline))
 %p
 
 %script

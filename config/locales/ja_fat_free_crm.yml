@@ -158,20 +158,20 @@ ja:
   #----------------------------------------------------------------------------
   msg_account_created: Your account has been created and is awating approval by the system administrator.
   msg_account_not_approved: Your account has not been approved yet.
-  msg_asset_deleted: "{{value}} has been deleted."
-  msg_asset_not_available: This {{value}} is no longer available.
-  msg_assets_not_available: The {{value}} are not available.
-  msg_asset_rejected: "{{value}} has been rejected."
+  msg_asset_deleted: "%{value} has been deleted."
+  msg_asset_not_available: This %{value} is no longer available.
+  msg_assets_not_available: The %{value} are not available.
+  msg_asset_rejected: "%{value} has been rejected."
   msg_bad_image_file: "^Could't upload or resize the image file you specified."
-  msg_cant_create_related: "Can't create the {{asset}} since the {{related}} is no longer available."
-  msg_cant_delete_user: "^Couldn't delete the user since {{value}} has related assets present."
-  msg_cant_do: "Can't {{action}} the {{asset}} since it's no longer available."
+  msg_cant_create_related: "Can't create the %{asset} since the %{related} is no longer available."
+  msg_cant_delete_user: "^Couldn't delete the user since %{value} has related assets present."
+  msg_cant_do: "Can't %{action} the %{asset} since it's no longer available."
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.
   msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
   msg_invalid_password: "^Please specify valid current password"
   msg_invalig_login: Invalid username or password.
-  msg_last_login: Your last login was on {{value}}.
+  msg_last_login: Your last login was on %{value}.
   msg_login_needed: You must be logged in to access this page.
   msg_logout_needed: You must be logged out to access this page.
   msg_password_changed: Your password has been changed.
@@ -185,7 +185,7 @@ ja:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}.
+  activity_options: Show %{models} activities performed by %{user} in the past %{period}.
   all_users: 全ユーザ
   option_after: 前
   option_all: 全て
@@ -209,9 +209,9 @@ ja:
   option_target_leads: target leads
   option_target_revenue: target revenue
   option_updated_at: 更新日
-  show_per_page: "{{format}}書式で1ページ{{number}}件ずつ{{models}}を表示。"
-  sort_by: "{{field}}で{{models}}を並べ替える。"
-  sort_by_displaying: "last nameをfirst nameの{{position}}に表示にして、{{field}}で{{models}}を並べ替える。"
+  show_per_page: "%{fmt}書式で1ページ%{number}件ずつ%{models}を表示。"
+  sort_by: "%{field}で%{models}を並べ替える。"
+  sort_by_displaying: "last nameをfirst nameの%{position}に表示にして、%{field}で%{models}を並べ替える。"
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
@@ -271,10 +271,10 @@ ja:
   date_created: 作成日
   date_updated: 更新日
   fax: FAX
-  intro: "後で{{value}}の情報を追加することができます。"
+  intro: "後で%{value}の情報を追加することができます。"
   mobile_small: 携帯電話
-  open_in_window: "新しいウィンドウで{{value}}を開く"
-  mail_to: "{{value}}へのメール"
+  open_in_window: "新しいウィンドウで%{value}を開く"
+  mail_to: "%{value}へのメール"
   phone_small: 電話
   phone_toll_free: 通話無料
   keep_private: 秘密扱いにして、他人と共有しない
@@ -301,11 +301,11 @@ ja:
   campaigns_small: キャンペーン
   conversion: Conversion
   conversion_label: Conversion (%)
-  conversion_number: "{{value}} conversion" 
+  conversion_number: "%{value} conversion" 
   create_campaign: キャンペーンを作成
   end_date: End date
-  finished_on: completed on {{value}}
-  finishes_in: finishes in {{value}}
+  finished_on: completed on %{value}
+  finishes_in: finishes in %{value}
   no_start_date: no start date specified
   number_of_leads: Number of leads
   objectives: Objectives
@@ -313,16 +313,16 @@ ja:
   objectives_small: campaign objectives
   revenue: Revenue
   revenue_label: Revenue ($)
-  revenue_number: "{{value}} in revenue"
+  revenue_number: "%{value} in revenue"
   save_campaign: キャンペーンを保存
   start_date: Start date
-  started_ago: started {{value}} ago
-  starts_in: starts in {{value}}
+  started_ago: started %{value} ago
+  starts_in: starts in %{value}
   starts_today: starts today!
   target: Target
   total_campaigns: キャンペーンの合計
-  was_supposed_to_finish: was supposed to finish on {{value}}
-  was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
+  was_supposed_to_finish: was supposed to finish on %{value}
+  was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
@@ -335,32 +335,32 @@ ja:
   contacts_small: 取引先責任者
   create_contact: 取引先責任者を作成
   department: 部署
-  department_small: '{{value}}部署'
+  department_small: '%{value}部署'
   do_not_call: 電話しない
   extra_info: 追加情報
   extra_info_small: 追加取引先責任者
   facebook: Facebook
   linked_in: LinkedIn
   myself: 自分自身
-  permissions_intro_private: "デフォルトでは、あなただけが{{value}}にアクセスできます。パーミッションは後で変更することができます。"
-  permissions_intro_public: "デフォルトでは、全ユーザが{{value}}にアクセスできます。パーミッションは後で変更することができます。"
-  permissions_intro_shared: "デフォルトでは、指定ユーザが{{value}}にアクセスできます。パーミッションは後で変更することができます。"
+  permissions_intro_private: "デフォルトでは、あなただけが%{value}にアクセスできます。パーミッションは後で変更することができます。"
+  permissions_intro_public: "デフォルトでは、全ユーザが%{value}にアクセスできます。パーミッションは後で変更することができます。"
+  permissions_intro_shared: "デフォルトでは、指定ユーザが%{value}にアクセスできます。パーミッションは後で変更することができます。"
   referred_by: Referred by
   referred_by_small: referred by
   save_contact: 取引先責任者を保存
   twitter: Twitter
   web_presence: Webサイト情報
   web_presence_small: Webサイト
-  works_at: "{{job_title}} at {{company}}"
+  works_at: "%{job_title} at %{company}"
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
   convert: Convert
   convert_lead: Convert Lead
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   create_lead: リードを作成
-  create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+  create_opp_for_contact: You can optionally create an opportunity for the %{value} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
   lead: リード
   lead_info_small: リード連絡先
   lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
@@ -385,16 +385,16 @@ ja:
   #----------------------------------------------------------------------------
   amount: 金額
   close_date: 終了日
-  closed_ago_on: "{{date}}の{{time_ago}}前に終了"
+  closed_ago_on: "%{date}の%{time_ago}前に終了"
   closes_today: 本日終了の見込み
-  closing_date: 終了日は{{value}}
+  closing_date: 終了日は%{value}
   create_opportunity: 商談を作成
   currency: (円)
   days_late: Late by
   days_left: Days left
   discount: 値引き
-  discount_number: "値引き{{value}}"
-  expected_to_close: "{{date}}の{{time}}に終了の見込み"
+  discount_number: "値引き%{value}"
+  expected_to_close: "%{date}の%{time}に終了の見込み"
   from: from
   no_closing_date: 予測終了日なし
   no_discount: 値引きなし
@@ -404,10 +404,10 @@ ja:
   opportunity: 商談
   opportunity_small: 商談
   opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: "{{amount}} {{discount}}値引きかつ確度{{probability}}"
-  past_due: "期限切れ、{{value}}前に終了見込み"
+  opportunity_summary_text: "%{amount} %{discount}値引きかつ確度%{probability}"
+  past_due: "期限切れ、%{value}前に終了見込み"
   probability: 確度
-  probability_number: "かつ確度{{value}}"
+  probability_number: "かつ確度%{value}"
   save_opportunity: 商談を保存
   stage: Stage
   total_opportunities: 商談の合計
@@ -426,7 +426,7 @@ ja:
   due: 期日
   feel_free: どうぞお気軽に
   move_to: move to
-  no_tasks: "You don't have any {{value}} tasks"
+  no_tasks: "You don't have any %{value} tasks"
   no_tasks_pending: 未完了
   no_tasks_assigned: 担当
   no_tasks_completed: 完了
@@ -434,22 +434,22 @@ ja:
   pending_tasks: 未完了タスク
   related: 're:'
   save_task: タスクを保存
-  task_assigned: The task has been assigned to {{value}}
-  task_assigned_to: and assigned to {{value}}
+  task_assigned: The task has been assigned to %{value}
+  task_assigned_to: and assigned to %{value}
   task_completed: completed
-  task_completed_ago: completed {{value}} ago
-  task_completed_by: completed {{time_ago}} ago by {{user}}
+  task_completed_ago: completed %{value} ago
+  task_completed_by: completed %{time_ago} ago by %{user}
   task_created: タスクが作成されました
-  task_due_in: due in {{value}}
+  task_due_in: due in %{value}
   task_due_later: due sometime soon
   task_due_now: 今すぐ
   task_due_today: 今日中
-  task_from: From {{value}}
+  task_from: From %{value}
   task_overdue: late, was due on
   task_pending: The task has been moved to pending tasks
   task_small: タスク
   tasks: タスク
-  total_tasks: "{{value}}の合計"
+  total_tasks: "%{value}の合計"
   view_assigned_tasks: 担当タスクを表示
   view_pending_tasks: view pending tasks
 
@@ -482,34 +482,34 @@ ja:
   save_note: ノートを保存
   add_note_help: 新しいノートを追加...
   edit_note: ノートを編集
-  added_ago: "{{value}} 前に追加"
-  added_by: "{{user}} により {{time_ago}} 前に追加"
+  added_ago: "%{value} 前に追加"
+  added_by: "%{user} により %{time_ago} 前に追加"
   back: 戻る
   cancel: キャンセル
   close_form: フォームを閉じる
-  confirm_delete: Are you sure you want to delete this {{value}}?
-  copy_permissions: Copy {{value}} permissions
-  could_not_find: "{{value}}がありません。どうぞお気軽に"
-  could_not_find_matching: "マッチする{{value}}がありません。"
+  confirm_delete: Are you sure you want to delete this %{value}?
+  copy_permissions: Copy %{value} permissions
+  could_not_find: "%{value}がありません。どうぞお気軽に"
+  could_not_find_matching: "マッチする%{value}がありません。"
   create_new: 新規作成してください -
   select_existing: 既存から選択
   delete: 削除
   discard: Discard # TODO
   edit: 編集
-  items_total: '合計 {{count}}'
+  items_total: '合計 %{count}'
   less: Less... # TODO
   me: 自分
   more: More... # TODO
   n_a: N/A
   name: 名前
-  no_match: No {{value}} match
+  no_match: No %{value} match
   no_recent_items: There are no recent items to display yet.
   options: オプション
   permissions: パーミッション
   please_retry: please try another query.
   recent_items: 最近のアイテム
-  search_assets: "{{value}}を検索"
-  time_ago: "{{value}}前"
+  search_assets: "%{value}を検索"
+  time_ago: "%{value}前"
   background_info: 背景
   address: 住所
   street1: 番地1
@@ -560,7 +560,7 @@ ja:
   #----------------------------------------------------------------------------
   approve: Approve
   create_user: ユーザを作成
-  last_seen: "最後に見たのは{{value}}前"
+  last_seen: "最後に見たのは%{value}前"
   personal_information: 個人情報
   reactivate: Reactivate
   save_user: ユーザを保存
@@ -572,10 +572,10 @@ ja:
   user_is_admin: このユーザは管理者
   user_never_logged_in: "hasn't logged in yet"
   user_signed_up: Signed Up
-  user_signed_up_on: signed up on {{value}}
-  user_since: "{{value}}からのユーザ"
+  user_signed_up_on: signed up on %{value}
+  user_since: "%{value}からのユーザ"
   user_suspended: Suspended
-  user_suspended_on: suspended on {{value}}
+  user_suspended_on: suspended on %{value}
   users: ユーザ
   users_small: ユーザ
 
@@ -584,19 +584,19 @@ ja:
   pluralize:
     contact: 
       one: '1 contact'
-      other: '{{count}} contacts'
+      other: '%{count} contacts'
     opportunity:
       one: '1 opportunity'
-      other: '{{count}} opportunities'
+      other: '%{count} opportunities'
     lead:
       one: '1 lead'
-      other: '{{count}} leads'
+      other: '%{count} leads'
     day:
       one: '1 day'
-      other: '{{count}} days'
+      other: '%{count} days'
     login:
       one: '1 login'
-      other: '{{count}} logins'
+      other: '%{count} logins'
 
   # Custom date/time formats.
   #----------------------------------------------------------------------------
