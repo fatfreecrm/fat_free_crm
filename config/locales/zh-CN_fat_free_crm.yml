@@ -209,7 +209,7 @@ zh-CN:
   option_target_leads: 目标线索
   option_target_revenue: 目标收入
   option_updated_at: 更新日期
-  show_per_page: 显示 {{number}} {{models}} 每页使用 {{format}} 格式 
+  show_per_page: 显示 {{number}} {{models}} 每页使用 {{item_format}} 格式 
   sort_by: 用 {{field}} 排序 {{models}}
   sort_by_displaying: 用 {{field}} 排序 {{models}}，显示名 {{position}} 姓 
 
