@@ -126,7 +126,11 @@ class UsersController < ApplicationController
           @user.avatar.errors.add(:image, t(:msg_bad_image_file))
         end
       end
-      responds_to_parent { }
+      responds_to_parent do
+        # Without return RSpec2 screams bloody murder about rendering twice:
+        # within the block and after yield in responds_to_parent.
+        render and (return if Rails.env.test?)
+      end
     end
   end
 

@@ -173,14 +173,14 @@ ru:
   msg_asset_not_available: Этот %{value} более недоступен.
   msg_assets_not_available: Эти %{value} более недоступны. 
   msg_asset_rejected: Этот %{value} отклонен.
-  msg_bad_image_file: Ошибка при загрузке или изменении размера указанного изображения.
+  msg_bad_image_file: ^Ошибка при загрузке или изменении размера указанного изображения.
   msg_cant_create_related: Невозвожно создать %{asset} так как %{related} более недоступен.
   msg_cant_delete_user: "Невозможно удалить пользователя так как к %{value} привязаны объекты."
   msg_cant_do: Нельзя %{action} %{asset}, его больше не существует.
   msg_email_not_found: Пользователя с таким адресом не найдено.
   msg_enter_new_password: Пожалуйста введите новый пароль.
   msg_goodbye: Вы вышли. Спасибо за использование Fat Free CRM!
-  msg_invalid_password: Введите правильный пароль.
+  msg_invalid_password: "^Введите правильный пароль."
   msg_invalig_login: Неправильный логин или пароль.
   msg_last_login: Последний раз Вы заходили %{value}.
   msg_login_needed: Для доступа к этой странице нужно войти в систему.
@@ -229,6 +229,7 @@ ru:
   aim: AOL IM
   already_signed_up: Уже регистрировались?
   alt_email: Альтернативный E-mail
+  avatar: Изображение
   change_password: Изменить Пароль
   company: Организация
   contact_info: Контактная Информация

@@ -171,14 +171,14 @@ zh-CN:
   msg_asset_not_available: 这个 %{value} 已不存在
   msg_assets_not_available: 这个 %{value} 不存在
   msg_asset_rejected: "%{value} 已被拒绝"
-  msg_bad_image_file: "^不能将此图片上传或改变大小"
+  msg_bad_image_file: "^^不能将此图片上传或改变大小"
   msg_cant_create_related: "不能创建 %{asset} 因为 %{related} 已不存在"
   msg_cant_delete_user: "^不能删除用户，因为 %{value} 有相关 assets 存在"
   msg_cant_do: "不能 %{action} %{asset} 因为它已经不存在"
   msg_email_not_found: 未找到用户使用此邮件地址
   msg_enter_new_password: 请输入新密码
   msg_goodbye: 您已退出，感谢您使用 Fat Free CRM!
-  msg_invalid_password: "^请输入正确密码"
+  msg_invalid_password: "^^请输入正确密码"
   msg_invalig_login: 用户名或密码错
   msg_last_login: 您上次登录是在 %{value}.
   msg_login_needed: 必须登录后才可使用本页
@@ -227,6 +227,7 @@ zh-CN:
   aim: AOL IM
   already_signed_up: 已申请？
   alt_email: 另一个 email
+  avatar: Avatar
   change_password: 修改密码
   company: 公司
   contact_info: 联系人信息
