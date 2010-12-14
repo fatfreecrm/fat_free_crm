@@ -76,7 +76,7 @@ module ApplicationHelper
     end
 
     content_for(:javascript_epilogue) do
-      "document.observe('dom:loaded', function() { #{js} });"
+      raw "document.observe('dom:loaded', function() { #{js} });"
     end
   end
 
