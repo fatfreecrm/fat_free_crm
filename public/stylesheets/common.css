@@ -96,13 +96,16 @@
 .label {
   color: #3f3f3f;
   font-size: 12px;
-  margin: 8px 0px 0px 0px; }
+  margin: 8px 0px 0px 0px;
+  padding: 0px 8px 0px 0px; }
 
 .top {
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: navy; }
+  background: url("/images/asterisk.gif") no-repeat scroll center right transparent;
+  color: navy;
+  float: left; }
 
 .intro {
   color: dimgray;
