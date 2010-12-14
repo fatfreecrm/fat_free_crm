@@ -49,7 +49,7 @@ namespace :crm do
 
   desc "Load crm settings"
   task :settings do
-    run "if [ -f #{shared_path}/settings.sed ]; then sed -i -f #{shared_path}/settings.sed #{current_path}/vendor/plugins/crm_crossroads/config/settings.yml; fi"
+    run "if [ -f #{shared_path}/settings.sed ]; then cp -f #{current_path}/vendor/plugins/crm_crossroads/config/settings.yml.example #{current_path}/vendor/plugins/crm_crossroads/config/settings.yml; sed -i -f #{shared_path}/settings.sed #{current_path}/vendor/plugins/crm_crossroads/config/settings.yml; fi"
     run "cd #{current_path} && bundle exec rake crm:settings:load PLUGIN=crm_crossroads RAILS_ENV=production"
   end
 
