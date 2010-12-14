@@ -50,7 +50,7 @@ RSpec.configure do |config|
 
   # Detect html-quoted entities in all rendered responses.
   config.after(:each, :type => :view) do
-    rendered.should_not match(/&amp;\S{1,6};/) if rendered
+    rendered.should_not match(/&amp;[A-Za-z]{1,6};/) if rendered
   end
 end
 
