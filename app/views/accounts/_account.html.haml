@@ -6,6 +6,7 @@
     .strip.none None
 
   .tools{ invisible, :id => dom_id(account, :tools) }
+    = hook(:account_tools_before, self, :account => account)
     = link_to_edit(account) + " | "
     = link_to_delete(account)
 
