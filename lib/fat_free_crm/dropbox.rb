@@ -273,7 +273,7 @@ module FatFreeCRM
         :sent_to         => to,
         :cc              => cc,
         :subject         => email.subject,
-        :body            => email.body.decoded,
+        :body            => plain_text_body(email),
         :received_at     => email.date,
         :sent_at         => email.date
       )
@@ -292,7 +292,7 @@ module FatFreeCRM
           :sent_to         => to,
           :cc              => cc,
           :subject         => email.subject,
-          :body            => email.body.decoded,
+          :body            => plain_text_body(email),
           :received_at     => email.date,
           :sent_at         => email.date
         )
@@ -379,6 +379,26 @@ module FatFreeCRM
       return if Rails.env == "test"
       puts "Dropbox: #{message}"
       puts "  From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
+    end
+
+    # Returns the plain-text version of an email, or strips html tags
+    # if only html is present.
+    #--------------------------------------------------------------------------------------    
+    def plain_text_body(email)
+      parts = email.parts.collect {|c| (c.respond_to?(:parts) && !c.parts.empty?) ? c.parts : c}.flatten
+      if parts.empty?
+        parts << email
+      end
+      plain_text_part = parts.detect {|p| p.content_type == 'text/plain'}
+      if plain_text_part.nil?
+        # no text/plain part found, assuming html-only email
+        # strip html tags and remove doctype directive
+        plain_text_body = email.body.to_s.gsub(/<\/?[^>]*>/, "")
+        plain_text_body.gsub! %r{^<!DOCTYPE .*$}, ''
+      else
+        plain_text_body = plain_text_part.body.to_s
+      end
+      plain_text_body.strip
     end
 
   end # class Dropbox
