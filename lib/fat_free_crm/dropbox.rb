@@ -212,11 +212,8 @@ module FatFreeCRM
     #--------------------------------------------------------------------------------------
     def find_or_create_and_attach(email, keyword, name)
       klass = keyword.constantize
-      has_name = %w(Account Campaign Opportunity).include?(keyword)
 
-      if has_name
-        asset = klass.where('name LIKE ?', "%#{name}%").first
-      else
+      if klass.new.respond_to?(:first_name)
         first_name, *last_name = name.split
         conditions = if last_name.empty? # Treat single name as last name.
           [ 'last_name LIKE ?', "%#{first_name}" ]
@@ -224,6 +221,8 @@ module FatFreeCRM
           [ 'first_name LIKE ? AND last_name LIKE ?', "%#{first_name}", "%#{last_name.join(' ')}" ]
         end
         asset = klass.where(conditions).first
+      else       
+        asset = klass.where('name LIKE ?', "%#{name}%").first
       end
 
       if asset
