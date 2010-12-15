@@ -341,8 +341,9 @@ module FatFreeCRM
         defaults[:account] = account
       else
         log "creating new account #{recipient_domain.capitalize} for the contact #{recipient}"
-        defaults[:account] = Account.create(
+        defaults[:account] = Account.create!(
           :user   => @sender,
+          :email  => recipient,
           :name   => recipient_domain.capitalize,
           :access => default_access
         )
