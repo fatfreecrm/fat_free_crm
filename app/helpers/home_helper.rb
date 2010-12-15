@@ -16,4 +16,26 @@
 #------------------------------------------------------------------------------
 
 module HomeHelper
+  def sort_by_assets
+    Activity::ASSETS.map do |key, value|
+      %Q[{ name: "#{value}", on_select: function() { #{redraw(:asset, [ key, value.downcase ], url_for(:action => :redraw))} } }]
+    end
+  end
+
+  def sort_by_duration
+    Activity::DURATION.map do |key, value|
+      %Q[{ name: "#{value}", on_select: function() { #{redraw(:duration, [ key, value.downcase ], url_for(:action => :redraw))} } }]
+    end
+  end
+
+  def sort_by_users
+    users = [[ "all_users", t(:option_all_users) ]] + @all_users.map do |user|
+      escaped = escape_javascript(user.full_name)
+      [ escaped, escaped ]
+    end
+
+    users.map do |key, value|
+      %Q[{ name: "#{value}", on_select: function() { #{redraw(:user, [ key, (value == t(:option_all_users) ? value.downcase : value) ], url_for(:action => :redraw))} } }]
+    end
+  end
 end

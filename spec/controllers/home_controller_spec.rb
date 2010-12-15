@@ -28,7 +28,7 @@ describe HomeController do
 
   # GET /home/options                                                      AJAX
   #----------------------------------------------------------------------------
-  describe "responding to GET toggle" do
+  describe "responding to GET options" do
     before(:each) do
       require_user
     end
@@ -42,6 +42,7 @@ describe HomeController do
       assigns[:asset].should == "tasks"
       assigns[:user].should == "Billy Bones"
       assigns[:duration].should == "two days"
+      assigns[:all_users].should == User.order("first_name, last_name").all
     end
 
     it "should not assign instance variables when hiding options" do
@@ -49,6 +50,7 @@ describe HomeController do
       assigns[:asset].should == nil
       assigns[:user].should == nil
       assigns[:duration].should == nil
+      assigns[:all_users].should == nil
     end
   end
 
