@@ -389,7 +389,7 @@ module FatFreeCRM
       if parts.empty?
         parts << email
       end
-      plain_text_part = parts.detect {|p| p.content_type == 'text/plain'}
+      plain_text_part = parts.detect {|p| p.content_type.include?('text/plain')}
       if plain_text_part.nil?
         # no text/plain part found, assuming html-only email
         # strip html tags and remove doctype directive
@@ -398,7 +398,7 @@ module FatFreeCRM
       else
         plain_text_body = plain_text_part.body.to_s
       end
-      plain_text_body.strip
+      plain_text_body.strip     
     end
 
   end # class Dropbox
