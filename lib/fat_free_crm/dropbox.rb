@@ -182,7 +182,7 @@ module FatFreeCRM
     # Checks the email to detect keyword on the first line.
     #--------------------------------------------------------------------------------------
     def with_explicit_keyword(email)
-      first_line = email.body.decoded.split("\n").first
+      first_line = plain_text_body(email).split("\n").first
 
       if first_line =~ %r|^[\./]?(#{KEYWORDS.join('|')})\s(.+)$|i
         yield $1.capitalize, $2.strip
@@ -202,7 +202,7 @@ module FatFreeCRM
     # Checks the email to detect valid email address in body (first email), detect forwarded emails
     #----------------------------------------------------------------------------------------
     def with_forwarded_recipient(email, options = {})
-      if email.body.decoded =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
+      if plain_text_body(email) =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
         yield $1
       end
     end
