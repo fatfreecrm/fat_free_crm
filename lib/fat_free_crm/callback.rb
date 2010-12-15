@@ -38,8 +38,8 @@ module FatFreeCRM
     # - array with multiple items returned by the hook chain.
     #--------------------------------------------------------------------------
     def self.hook(method, caller, context = {})
-      responder(method).inject([]) do |response, m|
-        response << m.send(method, caller, context)
+      responder(method).map do |m|
+        m.send(method, caller, context)
       end
     end
 

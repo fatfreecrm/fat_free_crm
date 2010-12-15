@@ -16,11 +16,7 @@
 #------------------------------------------------------------------------------
 class Rake::Task
   def self.sanitize_and_execute(sql)
-    sanitized = if Rails::VERSION::STRING < "2.3.3"
-      ActiveRecord::Base.send(:sanitize_sql, sql)
-    else # Rails 2.3.3 introduced extra "table_name" parameter.
-      ActiveRecord::Base.send(:sanitize_sql, sql, nil)
-    end
+    sanitized = ActiveRecord::Base.send(:sanitize_sql, sql, nil)
     ActiveRecord::Base.connection.execute(sanitized)
   end
 end
@@ -155,8 +151,8 @@ namespace :crm do
       # Simulate random user activities.
       $stdout.sync = true
       puts "Generating user activities..."
-      %w(Account Campaign Contact Lead Opportunity Task).inject([]) do |assets, model|
-        assets << model.constantize.send(:find, :all)
+      %w(Account Campaign Contact Lead Opportunity Task).map do |model|
+        model.constantize.send(:find, :all)
       end.flatten.shuffle.each do |subject|
         info = subject.respond_to?(:full_name) ? subject.full_name : subject.name
         Activity.create(:action => "created", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
