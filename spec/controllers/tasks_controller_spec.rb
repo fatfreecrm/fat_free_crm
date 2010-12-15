@@ -24,7 +24,7 @@ describe TasksController do
       when "completed"
         completed_at = case due
           when :completed_today
-            Date.today
+            Date.yesterday + 1.day
           when :completed_yesterday
             Date.yesterday
           when :completed_last_week
@@ -50,8 +50,13 @@ describe TasksController do
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
 
-    before(:each) do
+    before do
       update_sidebar
+      @timezone, Time.zone = Time.zone, :utc
+    end
+
+    after do
+      Time.zone = @timezone
     end
 
     TASK_STATUSES.each do |view|
@@ -66,18 +71,16 @@ describe TasksController do
         response.should render_template("tasks/index")
       end
 
-      # it "should render all tasks as xml for #{view} view" do
-      #   @tasks = produce_tasks(@current_user, view)
-      #
-      #   # Convert symbol keys to strings, otherwise to_xml fails (Rails 2.2).
-      #   @tasks = @tasks.inject({}) { |tasks, (k,v)| tasks[k.to_s] = v; tasks }
-      #
-      #   request.env["HTTP_ACCEPT"] = "application/xml"
-      #   get :index, :view => view
-      #   (assigns[:tasks].keys.map(&:to_s) - @tasks.keys).should == []
-      #   (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
-      #   response.body.should == @tasks.to_xml unless Date.tomorrow == Date.today.end_of_week # Cheating...
-      # end
+      it "should render all tasks as xml for #{view} view" do
+        @tasks = produce_tasks(@current_user, view)
+
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :index, :view => view
+
+        (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
+        (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
+        response.body.should == @tasks.to_xml
+      end
     end
   end
 
