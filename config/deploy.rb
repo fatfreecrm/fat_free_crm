@@ -32,7 +32,7 @@ set :packages_for_project, %w(ImageMagick-devel)
 set :gems_for_project, "bundler"
 
 set :rvm_ruby_string, "1.9.2"
-set :passenger_version, "3.0.0"
+set :passenger_version, "3.0.1"
 
 set :httpd_user, "apache"
 set :httpd_grp,  "apache"
