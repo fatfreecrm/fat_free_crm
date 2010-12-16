@@ -157,6 +157,7 @@ end
 
 before "deploy:cold",           "stack:ssh-keygen"
 before "deploy",                "deploy:user_permissions"
+before "deploy:update",         "deploy:user_permissions"
 before "deploy:symlink",        "dropbox:create_log"
 before "deploy:symlink",        "deploy:symlink_crowd"
 after  "deploy:symlink",        "deploy:set_permissions"
