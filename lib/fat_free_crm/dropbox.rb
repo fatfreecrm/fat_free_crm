@@ -96,8 +96,13 @@ module FatFreeCRM
     # Email processing pipeline: each steps gets executed if previous one returns false.
     #--------------------------------------------------------------------------------------
     def process(uid, email)
+      with_pipe_separated_data(email) do |data|
+        find_or_create_and_attach(email, data)
+      end and return
+      
       with_explicit_keyword(email) do |keyword, name|
-        find_or_create_and_attach(email, keyword, name)
+        data = {"Type" => keyword, "Name" => name}
+        find_or_create_and_attach(email, data)
       end and return
 
       with_recipients(email) do |recipient|
@@ -179,10 +184,19 @@ module FatFreeCRM
       @sender = User.where('lower(email) = ? AND suspended_at IS NULL', email_address.downcase).first
     end
 
+    # Checks the email to detect pipe separated YAML data on the first line following ##.
+    #--------------------------------------------------------------------------------------
+    def with_pipe_separated_data(email)
+      first_line = plain_text_body(email).split("\n").first
+      if first_line.start_with?("##")
+        yield YAML.load(first_line.gsub(/^## ?/,"").gsub(/ ?\| ?/, "\n"))
+      end
+    end
+
     # Checks the email to detect keyword on the first line.
     #--------------------------------------------------------------------------------------
-    def with_explicit_keyword(email)
-      first_line = email.body.decoded.split("\n").first
+    def with_explicit_keyword(email)     
+      first_line = plain_text_body(email).split("\n").first
 
       if first_line =~ %r|^[\./]?(#{KEYWORDS.join('|')})\s(.+)$|i
         yield $1.capitalize, $2.strip
@@ -202,39 +216,40 @@ module FatFreeCRM
     # Checks the email to detect valid email address in body (first email), detect forwarded emails
     #----------------------------------------------------------------------------------------
     def with_forwarded_recipient(email, options = {})
-      if email.body.decoded =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
+      if plain_text_body(email) =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
         yield $1
       end
     end
 
-
-    # Process explicit keyword.
+    # Process pipe_separated_data or explicit keyword.
     #--------------------------------------------------------------------------------------
-    def find_or_create_and_attach(email, keyword, name)
-      klass = keyword.constantize
-      has_name = %w(Account Campaign Opportunity).include?(keyword)
+    def find_or_create_and_attach(email, data)
+      klass = data["Type"].constantize
 
-      if has_name
-        asset = klass.where('name LIKE ?', "%#{name}%").first
-      else
-        first_name, *last_name = name.split
+      if data["Email"] && klass.new.respond_to?(:email)
+        conditions = ['email = ?', data["Email"]]
+      elsif klass.new.respond_to?(:first_name)
+        first_name, *last_name = data["Name"].split
         conditions = if last_name.empty? # Treat single name as last name.
           [ 'last_name LIKE ?', "%#{first_name}" ]
         else
           [ 'first_name LIKE ? AND last_name LIKE ?', "%#{first_name}", "%#{last_name.join(' ')}" ]
         end
-        asset = klass.where(conditions).first
+      else       
+        conditions = ['name LIKE ?', "%#{data["Name"]}%"]
       end
-
-      if asset
-        attach(email, asset) if sender_has_permissions_for?(asset)
+      
+      # Find the asset from deduced conditions
+      if asset = klass.where(conditions).first
+        attach(email, asset, :strip_first_line) if sender_has_permissions_for?(asset)
       else
-        log "#{keyword} #{name} not found, creating new one..."
-        asset = klass.create(default_values(email, keyword, name))
-        attach(email, asset)
+        log "#{data["Type"]} #{data["Email"]} <#{data["Name"]}> not found, creating new one..."
+        asset = klass.create!(default_values(email, data["Type"].capitalize, data["Name"], data["Email"], data["Phone"]))
+        attach(email, asset, :strip_first_line)
       end
       true
     end
+
 
     #----------------------------------------------------------------------------------------
     def find_and_attach(email, recipient)
@@ -262,9 +277,15 @@ module FatFreeCRM
     end
 
     #----------------------------------------------------------------------------------------
-    def attach(email, asset)
+    def attach(email, asset, strip_first_line=false)
       to = email.to.blank? ? nil : email.to.join(", ")
       cc = email.cc.blank? ? nil : email.cc.join(", ")
+
+      email_body = if strip_first_line
+        plain_text_body(email).split("\n")[1..-1].join("\n").strip 
+      else
+        plain_text_body(email)
+      end
 
       Email.create(
         :imap_message_id => email.message_id,
@@ -274,7 +295,7 @@ module FatFreeCRM
         :sent_to         => to,
         :cc              => cc,
         :subject         => email.subject,
-        :body            => email.body.decoded,
+        :body            => email_body,
         :received_at     => email.date,
         :sent_at         => email.date
       )
@@ -293,7 +314,7 @@ module FatFreeCRM
           :sent_to         => to,
           :cc              => cc,
           :subject         => email.subject,
-          :body            => email.body.decoded,
+          :body            => email_body,
           :received_at     => email.date,
           :sent_at         => email.date
         )
@@ -302,7 +323,7 @@ module FatFreeCRM
     end
 
     #----------------------------------------------------------------------------------------
-    def default_values(email, keyword, name)
+    def default_values(email, keyword, name, email_address=nil, phone=nil)
       defaults = {
         :user   => @sender,
         :access => default_access
@@ -318,7 +339,12 @@ module FatFreeCRM
         defaults[:last_name] = (last_name.any? ? last_name.join(" ") : "(unknown)")
         defaults[:status] = "contacted" if keyword == "Lead"        # TODO: I18n
       end
-
+      # Set email address & phone if given
+      if %w(Account Contact Lead).include?(keyword)
+        defaults[:email] = email_address if email_address
+        defaults[:phone] = phone if phone
+      end
+      
       defaults
     end
 
@@ -380,6 +406,26 @@ module FatFreeCRM
       return if Rails.env == "test"
       puts "Dropbox: #{message}"
       puts "  From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
+    end
+
+    # Returns the plain-text version of an email, or strips html tags
+    # if only html is present.
+    #--------------------------------------------------------------------------------------    
+    def plain_text_body(email)
+      parts = email.parts.collect {|c| (c.respond_to?(:parts) && !c.parts.empty?) ? c.parts : c}.flatten
+      if parts.empty?
+        parts << email
+      end
+      plain_text_part = parts.detect {|p| p.content_type.include?('text/plain')}
+      if plain_text_part.nil?
+        # no text/plain part found, assuming html-only email
+        # strip html tags and remove doctype directive
+        plain_text_body = email.body.to_s.gsub(/<\/?[^>]*>/, "")
+        plain_text_body.gsub! %r{^<!DOCTYPE .*$}, ''
+      else
+        plain_text_body = plain_text_part.body.to_s
+      end
+      plain_text_body.strip.gsub("\r\n", "\n")
     end
 
   end # class Dropbox
