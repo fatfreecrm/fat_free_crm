@@ -209,7 +209,7 @@ th:
   option_target_leads: เป้าหมายของจำนวนผู้สนใจ
   option_target_revenue: เป้าหมายของผลตอนแทน
   option_updated_at: วันที่แก้ไข
-  show_per_page: แสดง {{number}} {{models}} ต่อหนึ่งหน้า ในแบบ {{format}}
+  show_per_page: แสดง {{number}} {{models}} ต่อหนึ่งหน้า ในแบบ {{item_format}}
   sort_by: เรียงลำดับ{{models}} โดย {{field}}.
   sort_by_displaying: เรียงลำดับ{{models}} โดย {{field}} แสดงชื่อจริง {{position}} นามสกุล.
 

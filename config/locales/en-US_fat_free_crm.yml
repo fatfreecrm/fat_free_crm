@@ -158,20 +158,20 @@ en-US:
   #----------------------------------------------------------------------------
   msg_account_created: Your account has been created and is awating approval by the system administrator.
   msg_account_not_approved: Your account has not been approved yet.
-  msg_asset_deleted: "{{value}} has been deleted."
-  msg_asset_not_available: This {{value}} is no longer available.
-  msg_assets_not_available: The {{value}} are not available.
-  msg_asset_rejected: "{{value}} has been rejected."
+  msg_asset_deleted: "%{value} has been deleted."
+  msg_asset_not_available: This %{value} is no longer available.
+  msg_assets_not_available: The %{value} are not available.
+  msg_asset_rejected: "%{value} has been rejected."
   msg_bad_image_file: "^Could't upload or resize the image file you specified."
-  msg_cant_create_related: "Can't create the {{asset}} since the {{related}} is no longer available."
-  msg_cant_delete_user: "Couldn't delete the user since {{value}} has related assets present."
-  msg_cant_do: "Can't {{action}} the {{asset}} since it's no longer available."
+  msg_cant_create_related: "Can't create the %{asset} since the %{related} is no longer available."
+  msg_cant_delete_user: "Couldn't delete the user since %{value} has related assets present."
+  msg_cant_do: "Can't %{action} the %{asset} since it's no longer available."
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.
   msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
   msg_invalid_password: "^Please specify valid current password"
   msg_invalig_login: Invalid username or password.
-  msg_last_login: Your last login was on {{value}}.
+  msg_last_login: Your last login was on %{value}.
   msg_login_needed: You must be logged in to access this page.
   msg_logout_needed: You must be logged out to access this page.
   msg_password_changed: Your password has been changed.
@@ -185,7 +185,7 @@ en-US:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: Show {{models}} activities performed by {{user}} in the past {{period}}.
+  activity_options: Show %{models} activities performed by %{user} in the past %{period}.
   all_users: all users
   option_after: after
   option_all: all
@@ -209,9 +209,9 @@ en-US:
   option_target_leads: target leads
   option_target_revenue: target revenue
   option_updated_at: date updated
-  show_per_page: Show {{number}} {{models}} per page using {{format}} format.
-  sort_by: Sort {{models}} by {{field}}.
-  sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name.
+  show_per_page: Show %{number} %{models} per page using %{item_format} format.
+  sort_by: Sort %{models} by %{field}.
+  sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
@@ -271,10 +271,10 @@ en-US:
   date_created: Date Created
   date_updated: Date Updated
   fax: Fax
-  intro: You can add {{value}} information later.
+  intro: You can add %{value} information later.
   mobile_small: mobile
-  open_in_window: Open {{value}} in a new window
-  mail_to: Mail to {{value}}
+  open_in_window: Open %{value} in a new window
+  mail_to: Mail to %{value}
   phone_small: phone
   phone_toll_free: Toll-free
   keep_private: Keep it private, do not share with others
@@ -301,11 +301,11 @@ en-US:
   campaigns_small: campaigns
   conversion: Conversion
   conversion_label: Conversion (%)
-  conversion_number: "{{value}} conversion"
+  conversion_number: "%{value} conversion"
   create_campaign: Create Campaign
   end_date: End date
-  finished_on: completed on {{value}}
-  finishes_in: finishes in {{value}}
+  finished_on: completed on %{value}
+  finishes_in: finishes in %{value}
   no_start_date: no start date specified
   number_of_leads: Number of leads
   objectives: Objectives
@@ -313,17 +313,17 @@ en-US:
   objectives_small: campaign objectives
   revenue: Revenue
   revenue_label: Revenue ($)
-  revenue_number: "{{value}} in revenue"
+  revenue_number: "%{value} in revenue"
   save_campaign: Save Campaign
   start_date: Start date
-  started_ago: started {{value}} ago
-  starts_in: starts in {{value}}
+  started_ago: started %{value} ago
+  starts_in: starts in %{value}
   starts_today: starts today!
   target: Target
   total_campaigns: Total Campaigns
-  was_supposed_to_finish: was supposed to finish on {{value}}
-  was_supposed_to_start: was supposed to start {{time_ago}} ago on {{start_date}}
-  was_supposed_to_start_in: was supposed to start in {{starts_in}} on {{start_date}}
+  was_supposed_to_finish: was supposed to finish on %{value}
+  was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
+  was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
 
   # Views -> Contacts.
   #----------------------------------------------------------------------------
@@ -336,32 +336,32 @@ en-US:
   contacts_small: contacts
   create_contact: Create Contact
   department: Department
-  department_small: '{{value}} department'
+  department_small: '%{value} department'
   do_not_call: Do not call
   extra_info: Extra Information
   extra_info_small: extra contact
   facebook: Facebook
   linked_in: LinkedIn
   myself: Myself
-  permissions_intro_private: By default only you will have access to the {{value}}. You can change permissions later.
-  permissions_intro_public: By default all users will have access to the {{value}}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the {{value}}. You can change permissions later.
+  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.
+  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
   referred_by: Referred by
   referred_by_small: referred by
   save_contact: Save Contact
   twitter: Twitter
   web_presence: Web Presence
   web_presence_small: web presence
-  works_at: "{{job_title}} at {{company}}"
+  works_at: "%{job_title} at %{company}"
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
   convert: Convert
   convert_lead: Convert Lead
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  convert_lead_text: By converting the lead {{value}} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   create_lead: Create Lead
-  create_opp_for_contact: You can optionally create an opportunity for the {{value}} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
+  create_opp_for_contact: You can optionally create an opportunity for the %{value} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
   lead: Lead
   lead_info_small: lead contact
   lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
@@ -386,16 +386,16 @@ en-US:
   #----------------------------------------------------------------------------
   amount: Amount
   close_date: Close date
-  closed_ago_on: closed {{time_ago}} ago on {{date}}
+  closed_ago_on: closed %{time_ago} ago on %{date}
   closes_today: expected to close today!
-  closing_date: closing date is {{value}}
+  closing_date: closing date is %{value}
   create_opportunity: Create Opportunity
   currency: ($)
   days_late: Late by
   days_left: Days left
   discount: Discount
-  discount_number: with {{value}} discount
-  expected_to_close: expected to close in {{time}} on {{date}}
+  discount_number: with %{value} discount
+  expected_to_close: expected to close in %{time} on %{date}
   from: from
   no_closing_date: no expected closing date
   no_discount: with no discount
@@ -405,10 +405,10 @@ en-US:
   opportunity: Opportunity
   opportunity_small: opportunity
   opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: "{{amount}} with {{discount}} discount and {{probability}} probability"
-  past_due: past due, was expected to close {{value}} ago
+  opportunity_summary_text: "%{amount} with %{discount} discount and %{probability} probability"
+  past_due: past due, was expected to close %{value} ago
   probability: Probability
-  probability_number: and {{value}} probability
+  probability_number: and %{value} probability
   save_opportunity: Save Opportunity
   stage: Stage
   total_opportunities: Total Opportunities
@@ -427,7 +427,7 @@ en-US:
   due: Due
   feel_free: Feel free to
   move_to: move to
-  no_tasks: "You don't have any {{value}} tasks"
+  no_tasks: "You don't have any %{value} tasks"
   no_tasks_pending: pending
   no_tasks_assigned: assigned
   no_tasks_completed: completed
@@ -435,22 +435,22 @@ en-US:
   pending_tasks: Pending Tasks
   related: 're:'
   save_task: Save Task
-  task_assigned: The task has been assigned to {{value}}
-  task_assigned_to: and assigned to {{value}}
+  task_assigned: The task has been assigned to %{value}
+  task_assigned_to: and assigned to %{value}
   task_completed: completed
-  task_completed_ago: completed {{value}} ago
-  task_completed_by: completed {{time_ago}} ago ({{date}}) by {{user}}
+  task_completed_ago: completed %{value} ago
+  task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
   task_created: The task has been created
-  task_due_in: due in {{value}}
+  task_due_in: due in %{value}
   task_due_later: due sometime soon
   task_due_now: due now
   task_due_today: due today
-  task_from: From {{value}}
+  task_from: From %{value}
   task_overdue: late, was due on
   task_pending: The task has been moved to pending tasks
   task_small: task
   tasks: Tasks
-  total_tasks: Total {{value}}
+  total_tasks: Total %{value}
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
 
@@ -483,27 +483,27 @@ en-US:
   save_note: Save Note
   add_note_help: Add a new note...
   edit_note: Edit Note
-  added_ago: added {{value}} ago
-  added_by: added {{time_ago}} ago by {{user}}
+  added_ago: added %{value} ago
+  added_by: added %{time_ago} ago by %{user}
   back: Back
   cancel: Cancel
   close_form: Close form
-  confirm_delete: Are you sure you want to delete this {{value}}?
-  copy_permissions: Copy {{value}} permissions
-  could_not_find: "Couldn't find {{value}}. Feel free to"
-  could_not_find_matching: "Couldn't find {{value}} matching"
+  confirm_delete: Are you sure you want to delete this %{value}?
+  copy_permissions: Copy %{value} permissions
+  could_not_find: "Couldn't find %{value}. Feel free to"
+  could_not_find_matching: "Couldn't find %{value} matching"
   create_new: create new
   select_existing: select existing
   delete: Delete
   discard: Discard
   edit: Edit
-  items_total: '{{count}} total.'
+  items_total: '%{count} total.'
   less: Less...
   me: me
   more: More...
   n_a: N/A
   name: Name
-  no_match: No {{value}} match
+  no_match: No %{value} match
   no_recent_items: There are no recent items to display yet.
   options: Options
   permissions: Permissions
@@ -513,8 +513,8 @@ en-US:
   select_lead: Select Lead
   select_task: Select Task
   select_opportunity: Select Opportunity
-  search_assets: Search {{value}}
-  time_ago: "{{value}} ago"
+  search_assets: Search %{value}
+  time_ago: "%{value} ago"
   background_info: Background
   address: Address
   street1: Street 1 # NEW
@@ -564,7 +564,7 @@ en-US:
   #----------------------------------------------------------------------------
   approve: Approve
   create_user: Create User
-  last_seen: last seen {{value}} ago
+  last_seen: last seen %{value} ago
   personal_information: Personal Information
   reactivate: Reactivate
   save_user: Save User
@@ -576,16 +576,16 @@ en-US:
   user_is_admin: The user is Administrator
   user_never_logged_in: "hasn't logged in yet"
   user_signed_up: Signed Up
-  user_signed_up_on: signed up on {{value}}
-  user_since: user since {{value}}
+  user_signed_up_on: signed up on %{value}
+  user_since: user since %{value}
   user_suspended: Suspended
-  user_suspended_on: suspended on {{value}}
+  user_suspended_on: suspended on %{value}
   users: Users
   users_small: users
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Added email - {{subject}}
+  dropbox_ack_subject: dropbox - Added email - %{subject}
   dropbox_ack_intro: Succesfully added the email you sent to dropbox
   dropbox_ack_to: Added to
   subject: Subject
@@ -596,19 +596,19 @@ en-US:
   pluralize:
     contact:
       one: '1 contact'
-      other: '{{count}} contacts'
+      other: '%{count} contacts'
     opportunity:
       one: '1 opportunity'
-      other: '{{count}} opportunities'
+      other: '%{count} opportunities'
     lead:
       one: '1 lead'
-      other: '{{count}} leads'
+      other: '%{count} leads'
     day:
       one: '1 day'
-      other: '{{count}} days'
+      other: '%{count} days'
     login:
       one: '1 login'
-      other: '{{count}} logins'
+      other: '%{count} logins'
 
   # Custom date/time formats.
   #----------------------------------------------------------------------------
