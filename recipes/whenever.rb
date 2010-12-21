@@ -7,11 +7,11 @@ after "deploy:symlink", "deploy:update_crontab"
 namespace :deploy do
   desc "Update the crontab file"
   task :update_crontab, :roles => :db do
-    run "source /usr/local/lib/rvm && cd #{current_path} && bundle exec whenever --update-crontab #{application}"
+    run "cd #{current_path} && bundle exec whenever --update-crontab #{application}"
   end
   
   desc "Remove the application entries from crontab"
   task :disable_crontab, :roles => :db do
-    run "source /usr/local/lib/rvm && cd #{current_path} && bundle exec whenever --clear-crontab #{application}"
+    run "cd #{current_path} && bundle exec whenever --clear-crontab #{application}"
   end
 end

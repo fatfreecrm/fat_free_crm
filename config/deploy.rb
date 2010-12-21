@@ -32,7 +32,7 @@ set :packages_for_project, %w(ImageMagick-devel)
 set :gems_for_project, "bundler"
 
 set :rvm_ruby_string, "1.9.2"
-set :passenger_version, "3.0.0"
+set :passenger_version, "3.0.1"
 
 set :httpd_user, "apache"
 set :httpd_grp,  "apache"
@@ -108,11 +108,6 @@ namespace :deploy do
     sudo "chmod 754 #{release_path}/REVISION"
   end
 
-  task :mods_enabled do
-    sudo "ln -sf /etc/httpd/mods-available/expires.load /etc/httpd/mods-enabled"
-    sudo "ln -sf /etc/httpd/mods-available/rewrite.load /etc/httpd/mods-enabled"
-  end
-
   desc "Migrate plugins"
   task :migrate_plugins do
     run "cd #{current_path} && RAILS_ENV=production rake db:migrate:plugins"
@@ -161,8 +156,8 @@ namespace :git do
 end
 
 before "deploy:cold",           "stack:ssh-keygen"
-before "deploy:cold",           "deploy:mods_enabled"
 before "deploy",                "deploy:user_permissions"
+before "deploy:update",         "deploy:user_permissions"
 before "deploy:symlink",        "dropbox:create_log"
 before "deploy:symlink",        "deploy:symlink_crowd"
 after  "deploy:symlink",        "deploy:set_permissions"
