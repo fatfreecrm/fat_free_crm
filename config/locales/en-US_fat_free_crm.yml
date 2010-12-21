@@ -584,6 +584,13 @@ en-US:
   users: Users
   users_small: users
 
+  # Export.
+  #----------------------------------------------------------------------------
+  to_xls: Export to Excel
+  to_csv: Export to comma-delimited file format (including deleted records)
+  to_rss: RSS feed
+  to_atom: Atom feed
+
   # Dropbox.
   #----------------------------------------------------------------------------
   dropbox_ack_subject: dropbox - Added email - %{subject}

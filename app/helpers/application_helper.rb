@@ -377,4 +377,13 @@ module ApplicationHelper
        (!request.xhr? && request.fullpath =~ %r|/\w+/\d+|))
   end
 
+  # Helper to display links to supported data export formats.
+  #----------------------------------------------------------------------------
+  def links_to_export
+    path = send("#{controller.controller_name}_path")
+
+    %w(xls csv).map do |format|
+      link_to(format.upcase, "#{path}.#{format}", :title => I18n.t(:"to_#{format}"))
+    end.join(' | ')
+  end
 end

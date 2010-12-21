@@ -30,6 +30,8 @@ class AccountsController < ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @accounts }
+      format.xls  { send_data @accounts.to_xls, :type => :xls }
+      format.csv  { send_data @accounts.to_csv, :type => :csv }
     end
   end
 
@@ -189,16 +191,16 @@ class AccountsController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_accounts(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
+  def get_accounts(options = {})
+    self.current_page  = options[:page]  if options[:page]
     self.current_query = options[:query] if options[:query]
 
     records = {
-      :user => @current_user,
+      :user  => @current_user,
       :order => @current_user.pref[:accounts_sort_by] || Account.sort_by
     }
     pages = {
-      :page => current_page,
+      :page     => current_page,
       :per_page => @current_user.pref[:accounts_per_page]
     }
 
@@ -206,12 +208,15 @@ class AccountsController < ApplicationController
     accounts = hook(:get_accounts, self, :records => records, :pages => pages)
     return accounts.last unless accounts.empty?
 
-    # Default processing if no :get_accounts hooks are present.
-    if current_query.blank?
-      Account.my(records)
-    else
-      Account.my(records).search(current_query)
-    end.paginate(pages)
+    # Use default processing if no :get_accounts hooks are present. Note that
+    # comma-delimited export includes deleted records, and the pagination is
+    # enabled only for plain HTTP, Ajax and XML API requests.
+    requested = request.format
+    scope = Account.my(records)
+    scope = scope.search(current_query) unless current_query.blank?
+    scope = scope.unscoped              if requested.csv?
+    scope = scope.paginate(pages)       if requested.html? || requested.js? || requested.xml?
+    scope
   end
 
   #----------------------------------------------------------------------------
