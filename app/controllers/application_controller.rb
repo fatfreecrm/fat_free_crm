@@ -111,8 +111,9 @@ private
   #----------------------------------------------------------------------------
   def current_user
     @current_user ||= (current_user_session && current_user_session.record)
-    if @current_user && @current_user.preference[:locale]
-      I18n.locale = @current_user.preference[:locale]
+    if @current_user
+      @current_user.set_individual_locale
+      @current_user.set_single_access_token
     end
     User.current_user = @current_user
   end
@@ -123,7 +124,6 @@ private
       store_location
       flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
       redirect_to login_url
-      false
     end
   end
 
@@ -133,7 +133,6 @@ private
       store_location
       flash[:notice] = t(:msg_logout_needed)
       redirect_to profile_url
-      false
     end
   end
 

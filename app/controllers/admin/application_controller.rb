@@ -34,7 +34,6 @@ class Admin::ApplicationController < ApplicationController
     if @current_user && !@current_user.admin?
       flash[:notice] = t(:msg_require_admin)
       redirect_to root_path
-      false
     end
   end
 end
