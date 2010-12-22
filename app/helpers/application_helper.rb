@@ -381,9 +381,16 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def links_to_export
     path = send("#{controller.controller_name}_path")
+    token = @current_user.single_access_token
 
-    %w(xls csv).map do |format|
+    exports = %w(xls csv).map do |format|
       link_to(format.upcase, "#{path}.#{format}", :title => I18n.t(:"to_#{format}"))
-    end.join(' | ')
+    end
+
+    feeds = %w(rss atom).map do |format|
+      link_to(format.upcase, "#{path}.#{format}?authentication_credentials=#{token}", :title => I18n.t(:"to_#{format}"))
+    end
+
+    (exports + feeds).join(' | ')
   end
 end
