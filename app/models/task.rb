@@ -44,7 +44,7 @@ class Task < ActiveRecord::Base
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   belongs_to  :completor, :class_name => "User", :foreign_key => :completed_by
   belongs_to  :asset, :polymorphic => true
-  has_many    :activities, :as => :subject, :order => 'created_at DESC'
+  has_many    :activities, :as => :subject, :order => 'tasks.created_at DESC'
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
@@ -69,18 +69,18 @@ class Task < ActiveRecord::Base
   }
 
   # Status based scopes to be combined with the due date and completion time.
-  scope :pending,       where('completed_at IS NULL').order('due_at, id')
-  scope :assigned,      where('completed_at IS NULL AND assigned_to IS NOT NULL').order('due_at, id')
-  scope :completed,     where('completed_at IS NOT NULL').order('completed_at DESC')
+  scope :pending,       where('completed_at IS NULL').order('tasks.due_at, tasks.id')
+  scope :assigned,      where('completed_at IS NULL AND assigned_to IS NOT NULL').order('tasks.due_at, tasks.id')
+  scope :completed,     where('completed_at IS NOT NULL').order('tasks.completed_at DESC')
 
   # Due date scopes.
-  scope :due_asap,      where("due_at IS NULL AND bucket = 'due_asap'").order('id DESC')
-  scope :overdue,       where('due_at IS NOT NULL AND due_at < ?', Time.zone.now.midnight.utc).order('id DESC')
-  scope :due_today,     where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc).order('id DESC')
-  scope :due_tomorrow,  where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc, Time.zone.now.midnight.tomorrow.utc + 1.day).order('id DESC')
-  scope :due_this_week, where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc + 1.day, Time.zone.now.next_week.utc).order('id DESC')
-  scope :due_next_week, where('due_at >= ? AND due_at < ?', Time.zone.now.next_week.utc, Time.zone.now.next_week.end_of_week.utc + 1.day).order('id DESC')
-  scope :due_later,     where("(due_at IS NULL AND bucket = 'due_later') OR due_at >= ?", Time.zone.now.next_week.end_of_week.utc + 1.day).order('id DESC')
+  scope :due_asap,      where("due_at IS NULL AND bucket = 'due_asap'").order('tasks.id DESC')
+  scope :overdue,       where('due_at IS NOT NULL AND due_at < ?', Time.zone.now.midnight.utc).order('tasks.id DESC')
+  scope :due_today,     where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc).order('tasks.id DESC')
+  scope :due_tomorrow,  where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc, Time.zone.now.midnight.tomorrow.utc + 1.day).order('tasks.id DESC')
+  scope :due_this_week, where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc + 1.day, Time.zone.now.next_week.utc).order('tasks.id DESC')
+  scope :due_next_week, where('due_at >= ? AND due_at < ?', Time.zone.now.next_week.utc, Time.zone.now.next_week.end_of_week.utc + 1.day).order('tasks.id DESC')
+  scope :due_later,     where("(due_at IS NULL AND bucket = 'due_later') OR due_at >= ?", Time.zone.now.next_week.end_of_week.utc + 1.day).order('tasks.id DESC')
 
   # Completion time scopes.
   scope :completed_today,      where('completed_at >= ? AND completed_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc)
@@ -93,6 +93,7 @@ class Task < ActiveRecord::Base
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   acts_as_commentable
   is_paranoid
+  exportable
 
   validates_presence_of :user
   validates_presence_of :name, :message => :missing_task_name

@@ -63,6 +63,7 @@ class Campaign < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   is_paranoid
+  exportable
   sortable :by => [ "name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_campaign_name

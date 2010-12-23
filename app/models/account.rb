@@ -58,6 +58,7 @@ class Account < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   is_paranoid
+  exportable
   sortable :by => [ "name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_account_name
