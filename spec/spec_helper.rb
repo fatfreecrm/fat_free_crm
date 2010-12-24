@@ -39,6 +39,7 @@ RSpec.configure do |config|
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
   config.include(SharedControllerSpecs, :type => :controller)
+  config.include(SharedModelSpecs,      :type => :model)
 
   config.before(:each, :type => :view) do
     I18n.locale = 'en-US'

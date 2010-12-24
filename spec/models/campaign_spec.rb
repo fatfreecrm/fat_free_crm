@@ -28,9 +28,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Campaign do
 
-  before(:each) do
-    login
-  end
+  before { login }
 
   it "should create a new instance given valid attributes" do
     Campaign.create!(:name => "Campaign", :user => Factory(:user))
@@ -107,6 +105,30 @@ describe Campaign do
       @campaign.discard!(@opportunity)
       @campaign.opportunities.should == []
       @campaign.reload.opportunities_count.should == 42
+    end
+  end
+
+  describe "Exportable" do
+    describe "assigned campaign" do
+      before do
+        Campaign.delete_all
+        Factory(:campaign, :user => Factory(:user), :assignee => Factory(:user))
+        Factory(:campaign, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Campaign.export }
+      end
+    end
+
+    describe "unassigned campaign" do
+      before do
+        Account.delete_all
+        Factory(:campaign, :user => Factory(:user), :assignee => nil)
+        Factory(:campaign, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Campaign.export }
+      end
     end
   end
 end

@@ -24,9 +24,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Opportunity do
 
-  before(:each) do
-    login
-  end
+  before { login }
 
   it "should create a new instance given valid attributes" do
     Opportunity.create!(:name => "Opportunity")
@@ -141,4 +139,27 @@ describe Opportunity do
     end
   end
 
+  describe "Exportable" do
+    describe "assigned opportunity" do
+      before do
+        Opportunity.delete_all
+        Factory(:opportunity, :user => Factory(:user), :assignee => Factory(:user))
+        Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Opportunity.export }
+      end
+    end
+
+    describe "unassigned opportunity" do
+      before do
+        Account.delete_all
+        Factory(:opportunity, :user => Factory(:user), :assignee => nil)
+        Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Opportunity.export }
+      end
+    end
+  end
 end
