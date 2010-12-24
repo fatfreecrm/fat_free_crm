@@ -183,7 +183,12 @@ private
       else self.action_name
     end
     if self.action_name == "show"
-      flash[:warning] = t(:msg_asset_not_available, asset)
+      # If asset does exist, but is not viewable to the current user..
+      if asset.capitalize.constantize.exists?(params[:id])
+        flash[:warning] = t(:msg_asset_not_authorized, asset)
+      else
+        flash[:warning] = t(:msg_asset_not_available, asset)
+      end
     else
       flash[:warning] = t(:msg_cant_do, :action => flick, :asset => asset)
     end
