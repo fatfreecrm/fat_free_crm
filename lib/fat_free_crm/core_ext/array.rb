@@ -62,10 +62,8 @@ class Array
 
       each do |item|
         output << columns.map do |column|
-          value = if column == "user_id" && item.respond_to?(:user_full_name)
-            item.user_full_name
-          elsif column == "assigned_to" && item.respond_to?(:assignee_full_name)
-            item.assignee_full_name
+          value = if column =~ /^(user_id|assigned_to|completed_by)$/ && item.respond_to?(:"#{$1}_full_name")
+            item.send(:"#{$1}_full_name")
           else
             item.send(column)
           end
