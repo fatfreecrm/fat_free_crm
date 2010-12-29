@@ -116,9 +116,9 @@ class HomeController < ApplicationController
     user = @current_user.pref[:activity_user]
     if user && user != "all users"
       user = if user =~ /\s/  # first_name last_name
-        User.first(:conditions => [ "first_name = ? AND last_name = ?" ] + user.split)
+        User.where([ "first_name = ? AND last_name = ?" ] + user.split).first
       elsif user =~ /@/ # email
-        User.first(:conditions => [ "email = ?", user ])
+        User.where(:email => user).first
       end
     end
     user.is_a?(User) ? user.id : nil

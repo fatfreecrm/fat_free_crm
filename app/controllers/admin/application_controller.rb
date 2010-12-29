@@ -23,7 +23,7 @@ class Admin::ApplicationController < ApplicationController
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
-    @auto_complete = self.controller_name.classify.constantize.scoped(:limit => 10).search(@query)
+    @auto_complete = self.controller_name.classify.constantize.search(@query).limit(10)
     render :template => "common/auto_complete", :layout => nil
   end
 

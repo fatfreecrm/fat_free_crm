@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
     @commentable = extract_commentable_name(params)
     if @commentable
       @asset = @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
-      @comments = @asset.comments(:order => "created_at DESC")
+      @comments = @asset.comments.order("created_at DESC")
     end
     respond_to do |format|
       format.html { redirect_to(@asset) }

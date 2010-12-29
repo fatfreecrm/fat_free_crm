@@ -160,7 +160,7 @@ namespace :crm do
         unless subject.is_a?(Task)
           time = subject.updated_at + rand(12 * 60).minutes
           Activity.create(:action => "viewed", :created_at => time, :user => subject.user, :subject => subject, :info => info)
-          comments = Comment.find(:all, :conditions => [ "commentable_id=? AND commentable_type=?", subject.id, subject.class.name ])
+          comments = Comment.where(:commentable_id => subject.id, :commentable_type => subject.class.name)
           comments.each_with_index do |comment, i|
             time = subject.created_at + rand(12 * 60 * i).minutes
             if time > Time.now
@@ -169,7 +169,7 @@ namespace :crm do
             comment.update_attribute(:created_at, time)
             Activity.create(:action => "commented", :created_at => time, :user => comment.user, :subject => subject, :info => info)
           end
-          emails = Email.find(:all, :conditions => [ "mediator_id=? AND mediator_type=?", subject.id, subject.class.name ])
+          emails = Email.where(:mediator_id => subject.id, :mediator_type => subject.class.name)
           emails.each do |email|
             time = subject.created_at + rand(24 * 60).minutes
             if time > Time.now
