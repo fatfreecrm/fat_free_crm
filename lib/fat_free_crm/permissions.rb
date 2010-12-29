@@ -34,15 +34,21 @@ module FatFreeCRM
           #
           has_many :permissions, :as => :asset, :include => :user
           #
-          # The :my named scope accepts either single User parameter, or a Hash. For example:
+          # The :my named scope accepts an optional Hash. For example:
+          #   Account.my(:user => User.first, :order => "updated_at DESC", :limit => 20)
           #
-          #  - Account.my(@current_user)
-          #  - Account.my(:user => @current_user, :order => "updated_at DESC", :limit => 20)
+          # The defaults are:
+          #   :user  => currenly logged in user
+          #   :order => primary key descending
+          #   :limit => none
           #
-          scope :my, lambda { |options|
+          scope :my, lambda { |options = {}|
             includes(:permissions).
-            where("#{self.table_name}.user_id = :user OR #{self.table_name}.assigned_to = :user OR permissions.user_id = :user OR access = 'Public'", :user => (options[:user] || options)).
-            order(options[:order] || "#{self.table_name}.id DESC").
+            where("#{quoted_table_name}.user_id     = :user OR " <<
+                  "#{quoted_table_name}.assigned_to = :user OR " <<
+                  "permissions.user_id              = :user OR " <<
+                  "#{quoted_table_name}.access = 'Public'", :user => options[:user] || User.current_user).
+            order(options[:order] || "#{quoted_table_name}.id DESC").
             limit(options[:limit]) # nil selects all records
           }
           include FatFreeCRM::Permissions::InstanceMethods

@@ -36,7 +36,7 @@ class ContactsController < ApplicationController
   # GET /contacts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
-    @contact = Contact.my(@current_user).find(params[:id])
+    @contact = Contact.my.find(params[:id])
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
 
@@ -57,11 +57,11 @@ class ContactsController < ApplicationController
   def new
     @contact  = Contact.new(:user => @current_user, :access => Setting.default_access)
     @account  = Account.new(:user => @current_user)
-    @users    = User.except(@current_user).all
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @users    = User.except(@current_user)
+    @accounts = Account.my.order("name")
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.my(@current_user).find(id))
+      instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
     end
 
     respond_to do |format|
@@ -76,12 +76,12 @@ class ContactsController < ApplicationController
   # GET /contacts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @contact  = Contact.my(@current_user).find(params[:id])
-    @users    = User.except(@current_user).all
+    @contact  = Contact.my.find(params[:id])
+    @users    = User.except(@current_user)
     @account  = @contact.account || Account.new(:user => @current_user)
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @accounts = Account.my.order("name")
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Contact.my(@current_user).find($1)
+      @previous = Contact.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -101,8 +101,8 @@ class ContactsController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
-        @users = User.except(@current_user).all
-        @accounts = Account.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @accounts = Account.my.order("name")
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
         else
@@ -123,15 +123,15 @@ class ContactsController < ApplicationController
   # PUT /contacts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    @contact = Contact.my(@current_user).find(params[:id])
+    @contact = Contact.my.find(params[:id])
 
     respond_to do |format|
       if @contact.update_with_account_and_permissions(params)
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all
-        @accounts = Account.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @accounts = Account.my.order("name")
         if @contact.account
           @account = Account.find(@contact.account.id)
         else
@@ -150,7 +150,7 @@ class ContactsController < ApplicationController
   # DELETE /contacts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @contact = Contact.my(@current_user).find(params[:id])
+    @contact = Contact.my.find(params[:id])
     @contact.destroy if @contact
 
     respond_to do |format|

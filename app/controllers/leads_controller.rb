@@ -38,7 +38,7 @@ class LeadsController < ApplicationController
   # GET /leads/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
-    @lead = Lead.my(@current_user).find(params[:id])
+    @lead = Lead.my.find(params[:id])
     @comment = Comment.new
 
     @timeline = Timeline.find(@lead)
@@ -57,11 +57,11 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @lead = Lead.new(:user => @current_user, :access => Setting.default_access)
-    @users = User.except(@current_user).all
-    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    @users = User.except(@current_user)
+    @campaigns = Campaign.my.order("name")
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.my(@current_user).find(id))
+      instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
     end
 
     respond_to do |format|
@@ -76,11 +76,11 @@ class LeadsController < ApplicationController
   # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
-    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    @lead = Lead.my.find(params[:id])
+    @users = User.except(@current_user)
+    @campaigns = Campaign.my.order("name")
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my(@current_user).find($1)
+      @previous = Lead.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -93,8 +93,8 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @lead = Lead.new(params[:lead])
-    @users = User.except(@current_user).all
-    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    @users = User.except(@current_user)
+    @campaigns = Campaign.my.order("name")
 
     respond_to do |format|
       if @lead.save_with_permissions(params)
@@ -117,7 +117,7 @@ class LeadsController < ApplicationController
   # PUT /leads/1.xml
   #----------------------------------------------------------------------------
   def update
-    @lead = Lead.my(@current_user).find(params[:id])
+    @lead = Lead.my.find(params[:id])
 
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
@@ -125,8 +125,8 @@ class LeadsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all
-        @campaigns = Campaign.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @campaigns = Campaign.my.order("name")
         format.js
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
@@ -140,7 +140,7 @@ class LeadsController < ApplicationController
   # DELETE /leads/1.xml                                           HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @lead = Lead.my(@current_user).find(params[:id])
+    @lead = Lead.my.find(params[:id])
     @lead.destroy if @lead
 
     respond_to do |format|
@@ -157,13 +157,13 @@ class LeadsController < ApplicationController
   # GET /leads/1/convert.xml                                               AJAX
   #----------------------------------------------------------------------------
   def convert
-    @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @lead = Lead.my.find(params[:id])
+    @users = User.except(@current_user)
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @accounts = Account.my.order("name")
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my(@current_user).find($1)
+      @previous = Lead.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -175,10 +175,10 @@ class LeadsController < ApplicationController
   # PUT /leads/1/promote.xml                                               AJAX
   #----------------------------------------------------------------------------
   def promote
-    @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @lead = Lead.my.find(params[:id])
+    @users = User.except(@current_user)
     @account, @opportunity, @contact = @lead.promote(params)
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @accounts = Account.my.order("name")
     @stage = Setting.unroll(:opportunity_stage)
 
     respond_to do |format|
@@ -201,7 +201,7 @@ class LeadsController < ApplicationController
   # PUT /leads/1/reject.xml                                       AJAX and HTML
   #----------------------------------------------------------------------------
   def reject
-    @lead = Lead.my(@current_user).find(params[:id])
+    @lead = Lead.my.find(params[:id])
     @lead.reject if @lead
     update_sidebar
 
@@ -313,9 +313,9 @@ class LeadsController < ApplicationController
     if related
       instance_variable_set("@#{related}", @lead.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }
+      @lead_status_total = { :all => Lead.my.count, :other => 0 }
       Setting.lead_status.each do |key|
-        @lead_status_total[key] = Lead.my(@current_user).where('status = ?', key.to_s).count
+        @lead_status_total[key] = Lead.my.where(:status => key.to_s).count
         @lead_status_total[:other] -= @lead_status_total[key]
       end
       @lead_status_total[:other] += @lead_status_total[:all]

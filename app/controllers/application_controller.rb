@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     @query = params[:auto_complete_query]
     @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
     if @auto_complete.empty?
-      @auto_complete = controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
+      @auto_complete = controller_name.classify.constantize.my.search(@query).limit(10)
     else
       @auto_complete = @auto_complete.last
     end
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
   def attach
-    model = controller_name.classify.constantize.my(@current_user).find(params[:id])
+    model = controller_name.classify.constantize.my.find(params[:id])
     @attachment = params[:assets].classify.constantize.find(params[:asset_id])
     @attached = model.attach!(@attachment)
     @campaign = model.reload if model.is_a?(Campaign)
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
   # Common discard handler for all core controllers.
   #----------------------------------------------------------------------------
   def discard
-    model = controller_name.classify.constantize.my(@current_user).find(params[:id])
+    model = controller_name.classify.constantize.my.find(params[:id])
     @attachment = params[:attachment].constantize.find(params[:attachment_id])
     model.discard!(@attachment)
     @campaign = model.reload if model.is_a?(Campaign)

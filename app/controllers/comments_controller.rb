@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
   def index
     @commentable = extract_commentable_name(params)
     if @commentable
-      @asset = @commentable.classify.constantize.my(@current_user).find(params[:"#{@commentable}_id"])
+      @asset = @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
       @comments = @asset.comments(:order => "created_at DESC")
     end
     respond_to do |format|
@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
 
     if @commentable
       update_commentable_session
-      @commentable.classify.constantize.my(@current_user).find(params[:"#{@commentable}_id"])
+      @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
     end
 
     respond_to do |format|
@@ -80,7 +80,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
 
     if @comment.commentable
-      @comment.commentable_type.constantize.my(@current_user).find(@comment.commentable.id)
+      @comment.commentable_type.constantize.my.find(@comment.commentable.id)
     else
       raise ActiveRecord::RecordNotFound
     end
@@ -97,7 +97,7 @@ class CommentsController < ApplicationController
 
     # Make sure commentable object exists and is accessible to the current user.
     if @comment.commentable
-      @comment.commentable_type.constantize.my(@current_user).find(@comment.commentable.id)
+      @comment.commentable_type.constantize.my.find(@comment.commentable.id)
     else
       raise ActiveRecord::RecordNotFound
     end

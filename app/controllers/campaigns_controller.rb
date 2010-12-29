@@ -42,7 +42,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns/1.xml                                                   HTML
   #----------------------------------------------------------------------------
   def show
-    @campaign = Campaign.my(@current_user).find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
 
@@ -62,7 +62,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @campaign = Campaign.new(:user => @current_user, :access => Setting.default_access)
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user)
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
@@ -77,10 +77,10 @@ class CampaignsController < ApplicationController
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
-    @campaign = Campaign.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @campaign = Campaign.my.find(params[:id])
+    @users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Campaign.my(@current_user).find($1)
+      @previous = Campaign.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -93,7 +93,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @campaign = Campaign.new(params[:campaign])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user)
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
@@ -112,7 +112,7 @@ class CampaignsController < ApplicationController
   # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def update
-    @campaign = Campaign.my(@current_user).find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
 
     respond_to do |format|
       if @campaign.update_with_permissions(params[:campaign], params[:users])
@@ -120,7 +120,7 @@ class CampaignsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all # Need it to redraw [Edit Campaign] form.
+        @users = User.except(@current_user) # Need it to redraw [Edit Campaign] form.
         format.js
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
@@ -134,7 +134,7 @@ class CampaignsController < ApplicationController
   # DELETE /campaigns/1.xml                                       HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @campaign = Campaign.my(@current_user).find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
     @campaign.destroy if @campaign
 
     respond_to do |format|
@@ -225,9 +225,9 @@ class CampaignsController < ApplicationController
 
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
-    @campaign_status_total = { :all => Campaign.my(@current_user).count, :other => 0 }
+    @campaign_status_total = { :all => Campaign.my.count, :other => 0 }
     Setting.campaign_status.each do |key|
-      @campaign_status_total[key] = Campaign.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
+      @campaign_status_total[key] = Campaign.my.where(:status => key.to_s).count
       @campaign_status_total[:other] -= @campaign_status_total[key]
     end
     @campaign_status_total[:other] += @campaign_status_total[:all]

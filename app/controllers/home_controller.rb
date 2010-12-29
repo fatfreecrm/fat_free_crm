@@ -35,7 +35,7 @@ class HomeController < ApplicationController
       @asset = @current_user.pref[:activity_asset] || "all"
       @user = @current_user.pref[:activity_user] || "all_users"
       @duration = @current_user.pref[:activity_duration] || "two_days"
-      @all_users = User.order("first_name, last_name").all
+      @all_users = User.order("first_name, last_name")
     end
   end
 

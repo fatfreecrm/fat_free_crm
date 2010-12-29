@@ -40,7 +40,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1.xml                                               HTML
   #----------------------------------------------------------------------------
   def show
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity = Opportunity.my.find(params[:id])
     @comment = Comment.new
 
     @timeline = Timeline.find(@opportunity)
@@ -59,12 +59,12 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @opportunity = Opportunity.new(:user => @current_user, :stage => "prospecting", :access => Setting.default_access)
-    @users       = User.except(@current_user).all
+    @users       = User.except(@current_user)
     @account     = Account.new(:user => @current_user)
-    @accounts    = Account.my(@current_user).all(:order => "name")
+    @accounts    = Account.my.order("name")
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.my(@current_user).find(id))
+      instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
     end
 
     respond_to do |format|
@@ -79,12 +79,12 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @opportunity = Opportunity.my.find(params[:id])
+    @users = User.except(@current_user)
     @account  = @opportunity.account || Account.new(:user => @current_user)
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @accounts = Account.my.order("name")
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Opportunity.my(@current_user).find($1)
+      @previous = Opportunity.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -109,8 +109,8 @@ class OpportunitiesController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
-        @users = User.except(@current_user).all
-        @accounts = Account.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @accounts = Account.my.order("name")
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
         else
@@ -132,7 +132,7 @@ class OpportunitiesController < ApplicationController
   # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
   def update
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity = Opportunity.my.find(params[:id])
 
     respond_to do |format|
       if @opportunity.update_with_account_and_permissions(params)
@@ -144,8 +144,8 @@ class OpportunitiesController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all
-        @accounts = Account.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @accounts = Account.my.order("name")
         if @opportunity.account
           @account = Account.find(@opportunity.account.id)
         else
@@ -164,7 +164,7 @@ class OpportunitiesController < ApplicationController
   # DELETE /opportunities/1.xml                                   HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity = Opportunity.my.find(params[:id])
     @opportunity.destroy if @opportunity
 
     respond_to do |format|
@@ -259,9 +259,9 @@ class OpportunitiesController < ApplicationController
     if related
       instance_variable_set("@#{related}", @opportunity.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
+      @opportunity_stage_total = { :all => Opportunity.my.count, :other => 0 }
       @stage.each do |value, key|
-        @opportunity_stage_total[key] = Opportunity.my(@current_user).where(:stage => key.to_s).count
+        @opportunity_stage_total[key] = Opportunity.my.where(:stage => key.to_s).count
         @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
       end
       @opportunity_stage_total[:other] += @opportunity_stage_total[:all]
