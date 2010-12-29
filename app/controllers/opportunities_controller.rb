@@ -228,30 +228,8 @@ class OpportunitiesController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_opportunities(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.pref[:opportunities_sort_by] || Opportunity.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.pref[:opportunities_per_page]
-    }
-
-    # Call :get_opportunities hook and return its output if any.
-    opportunities = hook(:get_opportunities, self, :records => records, :pages => pages)
-    return opportunities.last unless opportunities.empty?
-
-    # Default processing if no :get_opportunities hooks are present.
-    if session[:filter_by_opportunity_stage]
-      filtered = session[:filter_by_opportunity_stage].split(",")
-      current_query.blank? ? Opportunity.my(records).state(filtered) : Opportunity.my(records).state(filtered).search(current_query)
-    else
-      current_query.blank? ? Opportunity.my(records) : Opportunity.my(records).search(current_query)
-    end.paginate(pages)
+  def get_opportunities(options = {})
+    get_list_of_records(Opportunity, options.merge!(:filter => :filter_by_opportunity_stage))
   end
 
   #----------------------------------------------------------------------------

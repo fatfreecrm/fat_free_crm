@@ -212,6 +212,40 @@ private
     end
   end
 
+  # Get list of records for a given model class.
+  #----------------------------------------------------------------------------
+  def get_list_of_records(klass, options = {})
+    items = klass.name.tableize
+    self.current_page  = options[:page]  if options[:page]
+    self.current_query = options[:query] if options[:query]
+
+    records = {
+      :user  => @current_user,
+      :order => @current_user.pref[:"#{items}_sort_by"] || klass.sort_by
+    }
+    pages = {
+      :page     => current_page,
+      :per_page => @current_user.pref[:"#{items}_per_page"]
+    }
+
+    # Call the hook and return its output if any.
+    assets = hook(:"get_#{items}", self, :records => records, :pages => pages)
+    return assets.last unless assets.empty?
+
+    # Use default processing if no hooks are present. Note that comma-delimited
+    # export includes deleted records, and the pagination is enabled only for
+    # plain HTTP, Ajax and XML API requests.
+    wants = request.format
+    filter = session[options[:filter]].to_s.split(',') if options[:filter]
+
+    scope = klass.my(records)
+    scope = scope.state(filter)         unless filter.blank?
+    scope = scope.search(current_query) unless current_query.blank?
+    scope = scope.unscoped              if wants.csv?
+    scope = scope.paginate(pages)       if wants.html? || wants.js? || wants.xml?
+    scope
+  end
+
   # Proxy current page for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_page=(page)

@@ -223,29 +223,8 @@ class ContactsController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_contacts(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.pref[:contacts_sort_by] || Contact.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.pref[:contacts_per_page]
-    }
-
-    # Call :get_contacts hook and return its output if any.
-    contacts = hook(:get_contacts, self, :records => records, :pages => pages)
-    return contacts.last unless contacts.empty?
-
-    # Default processing if no :get_contacts hooks are present.
-    if current_query.blank?
-      Contact.my(records)
-    else
-      Contact.my(records).search(current_query)
-    end.paginate(pages)
+  def get_contacts(options = {})
+    get_list_of_records(Contact, options)
   end
 
   #----------------------------------------------------------------------------

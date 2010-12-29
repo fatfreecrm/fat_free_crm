@@ -203,32 +203,7 @@ class CampaignsController < ApplicationController
   private
   #----------------------------------------------------------------------------
   def get_campaigns(options = {})
-    self.current_page  = options[:page]  if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.pref[:campaigns_sort_by] || Campaign.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.pref[:campaigns_per_page]
-    }
-
-    # Call :get_campaigns hook and return its output if any.
-    campaigns = hook(:get_campaigns, self, :records => records, :pages => pages)
-    return campaigns.last unless campaigns.empty?
-
-    # Default processing if no :get_campaigns hooks are present.
-    requested = request.format
-    filters = session[:filter_by_campaign_status].to_s.split(',')
-
-    scope = Campaign.my(records)
-    scope = scope.state(filters)        unless filters.blank?
-    scope = scope.search(current_query) unless current_query.blank?
-    scope = scope.unscoped              if requested.csv?
-    scope = scope.paginate(pages)       if requested.html? || requested.js? || requested.xml?
-    scope
+    get_list_of_records(Campaign, options.merge!(:filter => :filter_by_campaign_status))
   end
 
   #----------------------------------------------------------------------------
