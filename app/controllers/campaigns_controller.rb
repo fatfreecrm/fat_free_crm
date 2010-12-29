@@ -31,6 +31,10 @@ class CampaignsController < ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @campaigns }
+      format.xls  { send_data @campaigns.to_xls, :type => :xls }
+      format.csv  { send_data @campaigns.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -198,8 +202,8 @@ class CampaignsController < ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_campaigns(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
+  def get_campaigns(options = {})
+    self.current_page  = options[:page]  if options[:page]
     self.current_query = options[:query] if options[:query]
 
     records = {
@@ -216,12 +220,15 @@ class CampaignsController < ApplicationController
     return campaigns.last unless campaigns.empty?
 
     # Default processing if no :get_campaigns hooks are present.
-    if session[:filter_by_campaign_status]
-      filtered = session[:filter_by_campaign_status].split(",")
-      current_query.blank? ? Campaign.my(records).state(filtered) : Campaign.my(records).state(filtered).search(current_query)
-    else
-      current_query.blank? ? Campaign.my(records) : Campaign.my(records).search(current_query)
-    end.paginate(pages)
+    requested = request.format
+    filters = session[:filter_by_campaign_status].to_s.split(',')
+
+    scope = Campaign.my(records)
+    scope = scope.state(filters)        unless filters.blank?
+    scope = scope.search(current_query) unless current_query.blank?
+    scope = scope.unscoped              if requested.csv?
+    scope = scope.paginate(pages)       if requested.html? || requested.js? || requested.xml?
+    scope
   end
 
   #----------------------------------------------------------------------------

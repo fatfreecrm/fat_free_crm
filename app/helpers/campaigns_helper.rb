@@ -39,5 +39,12 @@ module CampaignsHelper
     html || ""
   end
 
+  # Quick campaign summary for RSS/ATOM feeds.
+  #----------------------------------------------------------------------------
+  def summary(campaign)
+    status  = render :file => "campaigns/_status.html.haml",  :locals => { :campaign => campaign }
+    metrics = render :file => "campaigns/_metrics.html.haml", :locals => { :campaign => campaign }
+    [ status, metrics ].map { |str| strip_tags(str) }.join(' ').gsub("\n", '').strip!
+  end
 end
 
