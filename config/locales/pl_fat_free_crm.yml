@@ -171,6 +171,7 @@ pl:
   msg_account_not_approved: Twoje konto nie zostało jeszcze zaakceptowane.
   msg_asset_deleted: "Usunięto %{value}."
   msg_asset_not_available: "%{value} nie jest dostępne."
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: "%{value} nie są dostępne."
   msg_asset_rejected: "%{value} został oznaczony jako Stracony."
   msg_bad_image_file: "^Nie można załadować ani zmienić rozmiaru obrazka."
@@ -603,6 +604,9 @@ pl:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: '1 kontakt'
       few: '%{count} kontakty'

@@ -171,6 +171,7 @@ ru:
   msg_account_not_approved: Ваш аккаунт еще не активирован.
   msg_asset_deleted: Этот %{value} был удален.
   msg_asset_not_available: Этот %{value} более недоступен.
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: Эти %{value} более недоступны. 
   msg_asset_rejected: Этот %{value} отклонен.
   msg_bad_image_file: ^Ошибка при загрузке или изменении размера указанного изображения.
@@ -605,6 +606,9 @@ ru:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact:
       zero: '0 контактов'
       one: '1 контакт'

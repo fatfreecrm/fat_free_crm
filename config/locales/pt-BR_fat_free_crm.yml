@@ -169,6 +169,7 @@ pt-BR:
   msg_account_not_approved: Sua conta ainda não foi aprovada.
   msg_asset_deleted: "%{value} foi removido."
   msg_asset_not_available: Este(a) %{value} não está mais disponível.
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: Estes(as) %{value} não estão mais disponíveis.
   msg_asset_rejected: "%{value} foi rejeitado."
   msg_bad_image_file: "^Não foi possível enviar ou redimensionar a imagem que você escolheu."
@@ -600,6 +601,9 @@ pt-BR:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: '1 contato'
       other: '%{count} contatos'

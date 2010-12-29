@@ -169,6 +169,7 @@ th:
   msg_account_not_approved: บัญชีของคุณยังไม่ได้รับการอนุมัติ
   msg_asset_deleted: "%{value} ได้ถูกลบไปแล้ว"
   msg_asset_not_available: เอกสาร %{value} ไม่มีในระบบ
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: เอกสาร %{value} ไม่มีในระบบ.
   msg_asset_rejected: "%{value} ได้ถูกปฏิเสธแล้ว"
   msg_bad_image_file: "^ไม่สามารถอัปโหลดหรือเปลี่ยนขนาดของรูปภาพที่คุณระบุได้"
@@ -604,6 +605,9 @@ th:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact:
       one: 'ผู้ติดต่อหนึ่งคน'
       other: '%{count} ผู้ติดต่อ'

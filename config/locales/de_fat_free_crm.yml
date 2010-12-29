@@ -326,6 +326,7 @@ de:
   msg_account_suspended: "Das Benutzerkonto wurde abgelehnt."
   msg_asset_deleted: "%{value} wurde gelöscht."
   msg_asset_not_available: "%{value} ist nicht länger verfügbar."
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_asset_rejected: "%{value} wurde abgelehnt."
   msg_assets_not_available: "%{value} sind nicht verfügbar."
   msg_bad_image_file: "^Konnte das angegebene Bild nicht hochladen oder zu zuschneiden."
@@ -435,6 +436,9 @@ de:
   planned: "Geplant"
   please_retry: "Versuchen Sie eine andere Abfrage."
   pluralize: 
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: "1 Kontakt"
       other: "%{count} Kontakte"

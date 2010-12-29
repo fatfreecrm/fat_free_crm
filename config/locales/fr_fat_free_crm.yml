@@ -172,6 +172,7 @@ fr:
   msg_account_not_approved: "Votre compte n'à pas encore été approuvé"
   msg_asset_deleted: "%{value} à été supprimé"
   msg_asset_not_available: "Ce %{value} n'est plus disponible."
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: "Les %{value} ne sont pas disponibles."
   msg_asset_rejected: "%{value} à été rejetée."
   msg_bad_image_file: "^Nous n'avons pu télécharger ou redimensionner votre image."
@@ -594,6 +595,9 @@ fr:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: '1 contact'
       other: '%{count} contacts'

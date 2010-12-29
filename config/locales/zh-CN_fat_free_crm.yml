@@ -169,6 +169,7 @@ zh-CN:
   msg_account_not_approved: 你的账号还未被批准
   msg_asset_deleted: "%{value} 已经被删除"
   msg_asset_not_available: 这个 %{value} 已不存在
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: 这个 %{value} 不存在
   msg_asset_rejected: "%{value} 已被拒绝"
   msg_bad_image_file: "^^不能将此图片上传或改变大小"
@@ -588,6 +589,9 @@ zh-CN:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: '1 个联系人'
       other: '%{count} 个联系人'
