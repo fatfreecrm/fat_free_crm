@@ -147,7 +147,7 @@ describe Opportunity do
         Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Opportunity.export }
+        let(:exported) { Opportunity.all }
       end
     end
 
@@ -158,7 +158,7 @@ describe Opportunity do
         Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Opportunity.export }
+        let(:exported) { Opportunity.all }
       end
     end
   end

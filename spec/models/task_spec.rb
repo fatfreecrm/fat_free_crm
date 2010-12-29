@@ -220,7 +220,7 @@ describe Task do
         Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Task.export }
+        let(:exported) { Task.all }
       end
     end
 
@@ -231,7 +231,7 @@ describe Task do
         Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Task.export }
+        let(:exported) { Task.all }
       end
     end
 
@@ -242,7 +242,7 @@ describe Task do
         Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :completor => Factory(:user, :first_name => nil, :last_name => nil), :completed_at => 1.day.ago)
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Task.export }
+        let(:exported) { Task.all }
       end
     end
   end

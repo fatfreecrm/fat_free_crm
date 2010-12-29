@@ -140,7 +140,7 @@ describe Contact do
         Factory(:contact, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Contact.export }
+        let(:exported) { Contact.all }
       end
     end
 
@@ -151,7 +151,7 @@ describe Contact do
         Factory(:contact, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Contact.export }
+        let(:exported) { Contact.all }
       end
     end
   end

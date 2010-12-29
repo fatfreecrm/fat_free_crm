@@ -81,7 +81,7 @@ describe Lead do
         Factory(:lead, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Lead.export }
+        let(:exported) { Lead.all }
       end
     end
 
@@ -92,7 +92,7 @@ describe Lead do
         Factory(:lead, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Lead.export }
+        let(:exported) { Lead.all }
       end
     end
   end

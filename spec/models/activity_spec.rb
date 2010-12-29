@@ -339,7 +339,7 @@ describe Activity do
       Activity.delete_all("action IS NOT NULL") # Delete created and views actions that are created implicitly.
     end
     it_should_behave_like("exportable") do
-      let(:exported) { Activity.export }
+      let(:exported) { Activity.all }
     end
   end
 end

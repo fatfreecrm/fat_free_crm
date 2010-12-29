@@ -99,7 +99,7 @@ describe Account do
         Factory(:account, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Account.export }
+        let(:exported) { Account.all }
       end
     end
 
@@ -110,7 +110,7 @@ describe Account do
         Factory(:account, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Account.export }
+        let(:exported) { Account.all }
       end
     end
   end

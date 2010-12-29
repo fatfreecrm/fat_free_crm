@@ -116,7 +116,7 @@ describe Campaign do
         Factory(:campaign, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Campaign.export }
+        let(:exported) { Campaign.all }
       end
     end
 
@@ -127,7 +127,7 @@ describe Campaign do
         Factory(:campaign, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
-        let(:exported) { Campaign.export }
+        let(:exported) { Campaign.all }
       end
     end
   end
