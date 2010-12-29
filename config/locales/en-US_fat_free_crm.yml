@@ -603,6 +603,9 @@ en-US:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment'
+      other: '%{count} comments'
     contact: 
       one: '1 contact'
       other: '%{count} contacts'

@@ -32,8 +32,8 @@ class AccountsController < ApplicationController
       format.xml  { render :xml => @accounts }
       format.xls  { send_data @accounts.to_xls, :type => :xls }
       format.csv  { send_data @accounts.to_csv, :type => :csv }
-      format.rss  # index.rss.builder
-      format.atom # index.atom.builder
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
