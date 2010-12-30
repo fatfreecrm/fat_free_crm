@@ -144,7 +144,7 @@ class Admin::UsersController < Admin::ApplicationController
     @users = get_users(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @users.to_xml }
     end
   end

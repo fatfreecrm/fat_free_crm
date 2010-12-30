@@ -153,7 +153,7 @@ class CampaignsController < ApplicationController
     @campaigns = get_campaigns(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @campaigns.to_xml }
     end
   end
@@ -189,7 +189,7 @@ class CampaignsController < ApplicationController
     @current_user.pref[:campaigns_outline]  = params[:outline]  if params[:outline]
     @current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(:page => 1)
-    render :action => :index
+    render :index
   end
 
   # POST /campaigns/filter                                                 AJAX
@@ -197,7 +197,7 @@ class CampaignsController < ApplicationController
   def filter
     session[:filter_by_campaign_status] = params[:status]
     @campaigns = get_campaigns(:page => 1)
-    render :action => :index
+    render :index
   end
 
   private
@@ -213,13 +213,13 @@ class CampaignsController < ApplicationController
       @campaigns = get_campaigns
       if @campaigns.blank?
         @campaigns = get_campaigns(:page => current_page - 1) if current_page > 1
-        render :action => :index and return
+        render :index and return
       end
       # At this point render destroy.js.rjs
     else # :html request
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @campaign.name)
-      redirect_to(campaigns_path)
+      redirect_to campaigns_path
     end
   end
 

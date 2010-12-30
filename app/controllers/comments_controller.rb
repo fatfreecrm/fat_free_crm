@@ -29,14 +29,14 @@ class CommentsController < ApplicationController
       @comments = @asset.comments.order("created_at DESC")
     end
     respond_to do |format|
-      format.html { redirect_to(@asset) }
+      format.html { redirect_to @asset }
       format.xml  { render :xml => @comments }
     end
 
   rescue ActiveRecord::RecordNotFound # Kicks in if @asset was not found.
     flash[:warning] = t(:msg_assets_not_available, "notes")
     respond_to do |format|
-      format.html { redirect_to(root_url) }
+      format.html { redirect_to root_url }
       format.xml  { render :text => flash[:warning], :status => :not_found }
     end
   end

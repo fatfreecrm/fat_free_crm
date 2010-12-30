@@ -193,7 +193,7 @@ private
       flash[:warning] = t(:msg_cant_do, :action => flick, :asset => asset)
     end
     respond_to do |format|
-      format.html { redirect_to(:action => :index) }                         if types.include?(:html)
+      format.html { redirect_to :action => :index }                          if types.include?(:html)
       format.js   { render(:update) { |page| page.reload } }                 if types.include?(:js)
       format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
@@ -206,8 +206,8 @@ private
     flash[:warning] = t(:msg_cant_create_related, :asset => asset, :related => related)
     url = send("#{related.pluralize}_path")
     respond_to do |format|
-      format.html { redirect_to(url) }                                       if types.include?(:html)
-      format.js   { render(:update) { |page| page.redirect_to(url) } }       if types.include?(:js)
+      format.html { redirect_to url }                                        if types.include?(:html)
+      format.js   { render(:update) { |page| page.redirect_to url } }        if types.include?(:js)
       format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
   end

@@ -77,7 +77,7 @@ class UsersController < ApplicationController
         redirect_back_or_default profile_url
       end
     else
-      render :action => :new
+      render :new
     end
   end
 

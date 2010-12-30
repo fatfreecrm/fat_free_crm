@@ -56,7 +56,7 @@ class HomeController < ApplicationController
     @current_user.pref[:activity_duration] = params[:duration] if params[:duration]
 
     @activities = get_activities
-    render :action => "index"
+    render :index
   end
 
   # GET /home/toggle                                                       AJAX

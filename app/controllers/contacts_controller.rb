@@ -187,7 +187,7 @@ class ContactsController < ApplicationController
     @contacts = get_contacts(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @contacts.to_xml }
     end
   end
@@ -222,7 +222,7 @@ class ContactsController < ApplicationController
     end
 
     @contacts = get_contacts(:page => 1) # Start one the first page.
-    render :action => :index
+    render :index
   end
 
   private
@@ -238,7 +238,7 @@ class ContactsController < ApplicationController
         @contacts = get_contacts
         if @contacts.blank?
           @contacts = get_contacts(:page => current_page - 1) if current_page > 1
-          render :action => :index and return
+          render :index and return
         end
       else
         self.current_page = 1
@@ -247,7 +247,7 @@ class ContactsController < ApplicationController
     else
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @contact.full_name)
-      redirect_to(contacts_path)
+      redirect_to contacts_path
     end
   end
 

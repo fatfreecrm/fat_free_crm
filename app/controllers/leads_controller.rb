@@ -210,7 +210,7 @@ class LeadsController < ApplicationController
     update_sidebar
 
     respond_to do |format|
-      format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to(leads_path) }
+      format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to leads_path }
       format.js   # reject.js.rjs
       format.xml  { head :ok }
     end
@@ -225,7 +225,7 @@ class LeadsController < ApplicationController
     @leads = get_leads(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @leads.to_xml }
     end
   end
@@ -274,7 +274,7 @@ class LeadsController < ApplicationController
     end
 
     @leads = get_leads(:page => 1) # Start one the first page.
-    render :action => :index
+    render :index
   end
 
   # POST /leads/filter                                                     AJAX
@@ -282,7 +282,7 @@ class LeadsController < ApplicationController
   def filter
     session[:filter_by_lead_status] = params[:status]
     @leads = get_leads(:page => 1) # Start one the first page.
-    render :action => :index
+    render :index
   end
 
   private
@@ -299,7 +299,7 @@ class LeadsController < ApplicationController
         @leads = get_leads                        # Get leads for current page.
         if @leads.blank?                          # If no lead on this page then try the previous one.
           @leads = get_leads(:page => current_page - 1) if current_page > 1
-          render :action => :index and return     # And reload the whole list even if it's empty.
+          render :index and return                # And reload the whole list even if it's empty.
         end
       else                                        # Called from related asset.
         self.current_page = 1                     # Reset current page to 1 to make sure it stays valid.
@@ -308,7 +308,7 @@ class LeadsController < ApplicationController
     else # :html destroy
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @lead.full_name)
-      redirect_to(leads_path)
+      redirect_to leads_path
     end
   end
 

@@ -39,7 +39,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     respond_to do |format|
-      format.html { render :action => :index }
+      format.html { render :index }
       format.xml  { @task = Task.tracked_by(@current_user).find(params[:id]);  render :xml => @task }
     end
   end

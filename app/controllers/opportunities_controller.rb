@@ -201,7 +201,7 @@ class OpportunitiesController < ApplicationController
     @opportunities = get_opportunities(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @opportunities.to_xml }
     end
   end
@@ -220,14 +220,14 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     @opportunities = get_opportunities(:page => 1)
-    render :action => :index
+    render :index
   end
 
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
     @opportunities = get_opportunities(:page => 1)
-    render :action => :index
+    render :index
   end
 
   private
@@ -244,7 +244,7 @@ class OpportunitiesController < ApplicationController
         @opportunities = get_opportunities
         if @opportunities.blank?
           @opportunities = get_opportunities(:page => current_page - 1) if current_page > 1
-          render :action => :index and return
+          render :index and return
         end
       else # Called from related asset.
         self.current_page = 1
@@ -254,7 +254,7 @@ class OpportunitiesController < ApplicationController
     else
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @opportunity.name)
-      redirect_to(opportunities_path)
+      redirect_to opportunities_path
     end
   end
 

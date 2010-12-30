@@ -152,7 +152,7 @@ class AccountsController < ApplicationController
     @accounts = get_accounts(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @accounts.to_xml }
     end
   end
@@ -188,7 +188,7 @@ class AccountsController < ApplicationController
     @current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
     @current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(:page => 1)
-    render :action => :index
+    render :index
   end
 
   private
@@ -203,13 +203,13 @@ class AccountsController < ApplicationController
       @accounts = get_accounts
       if @accounts.blank?
         @accounts = get_accounts(:page => current_page - 1) if current_page > 1
-        render :action => :index and return
+        render :index and return
       end
       # At this point render default destroy.js.rjs template.
     else # :html request
       self.current_page = 1 # Reset current page to 1 to make sure it stays valid.
       flash[:notice] = "#{t(:asset_deleted, @account.name)}"
-      redirect_to(accounts_path)
+      redirect_to accounts_path
     end
   end
 
