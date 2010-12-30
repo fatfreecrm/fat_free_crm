@@ -11,8 +11,10 @@
 .remote#create_opportunity{ hidden }
 
 .list#opportunities
-  - unless @opportunities.empty?
-    = render :partial => "opportunity", :collection => @opportunities
+  - if @opportunities.any?
+    = render @opportunities
   - else
-    = render :partial => "common/empty"
+    = render "common/empty"
+
 #paginate= render :partial => "common/paginate"
+#export= render "common/export"

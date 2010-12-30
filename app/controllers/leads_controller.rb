@@ -31,6 +31,10 @@ class LeadsController < ApplicationController
       format.html # index.html.erb
       format.js   # index.js.rjs
       format.xml  { render :xml => @leads }
+      format.xls  { send_data @leads.to_xls, :type => :xls }
+      format.csv  { send_data @leads.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 

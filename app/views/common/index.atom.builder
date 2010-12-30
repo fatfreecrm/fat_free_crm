@@ -1,5 +1,6 @@
 # http://www.atomenabled.org/developers/syndication/
-items = controller.controller_name
+items  = controller.controller_name
+item   = items.singularize
 assets = controller.instance_variable_get("@#{items}")
 
 atom_feed do |feed|
@@ -14,10 +15,10 @@ atom_feed do |feed|
   assets.each do |asset|
     feed.entry(asset) do |entry|
       entry.title   asset.name
-      entry.summary summary(asset)
+      entry.summary send(:"#{item}_summary", asset) if respond_to?(:"#{item}_summary")
 
       entry.author do |author|
-        author.name asset.user_id_full_name
+        author.name asset.user.full_name
       end
 
       entry.contributor do |contributor|

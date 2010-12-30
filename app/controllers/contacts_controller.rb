@@ -29,6 +29,10 @@ class ContactsController < ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @contacts }
+      format.xls  { send_data @contacts.to_xls, :type => :xls }
+      format.csv  { send_data @contacts.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 

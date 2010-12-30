@@ -102,4 +102,22 @@ module LeadsHelper
     end
   end
 
+  # Lead summary for RSS/ATOM feed.
+  #----------------------------------------------------------------------------
+  def lead_summary(lead)
+    summary = []
+    summary << (lead.status ? t(lead.status) : t(:other))
+
+    if lead.company? && lead.title?
+      summary << t(:works_at, :job_title => lead.title, :company => lead.company)
+    else
+      summary << lead.company if lead.company?
+      summary << lead.title if lead.title?
+    end
+    summary << "#{t(:referred_by_small)} #{lead.referred_by}" if lead.referred_by?
+    summary << lead.email if lead.email.present?
+    summary << "#{t(:phone_small)}: #{lead.phone}" if lead.phone.present?
+    summary << "#{t(:mobile_small)}: #{lead.mobile}" if lead.mobile.present?
+    summary.join(', ')
+  end
 end

@@ -18,7 +18,7 @@
 module AccountsHelper
   # Quick account summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
-  def summary(account)
+  def account_summary(account)
     [ number_to_currency(account.opportunities.not_lost.map(&:weighted_amount).sum, :precision => 0),
       t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => account.user_id_full_name),
       t('pluralize.contact', account.contacts.count),
