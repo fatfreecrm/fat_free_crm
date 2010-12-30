@@ -17,9 +17,8 @@
     - if @account.fax
       #{t :fax}: <b>#{@account.fax}</b><br />
 
-  %div= render :partial => "common/address_show", :locals => { :asset => @account, :type => 'billing', :title => :billing_address }
-
-  %div= render :partial => "common/address_show", :locals => { :asset => @account, :type => 'shipping', :title => :shipping_address }
+  %div= render "common/address_show", :asset => @account, :type => 'billing', :title => :billing_address
+  %div= render "common/address_show", :asset => @account, :type => 'shipping', :title => :shipping_address
 
   - unless @account.background_info.blank?
     .caption #{t :background_info}

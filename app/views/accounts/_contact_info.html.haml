@@ -31,10 +31,10 @@
           = f.text_field :email, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          = render :partial => "common/address", :locals => { :f => f, :asset => @account, :type => :billing, :title => :billing_address }
+          = render "common/address", :f => f, :asset => @account, :type => :billing, :title => :billing_address
         %td= spacer
         %td{ :valign => :top }
-          = render :partial => "common/address", :locals => { :f => f, :asset => @account, :type => :shipping, :title => :shipping_address, :same_as_billing => true }
+          = render "common/address", :f => f, :asset => @account, :type => :shipping, :title => :shipping_address, :same_as_billing => true
 
 
 
