@@ -469,6 +469,7 @@ en-US:
   action_updated: updated
   action_viewed: viewed
   action_won: won
+  activities: Activities
   no_activity_records: No activity records found.
   recent_activity: Recent Activity
   recent_activity_options: Recent Activity Options

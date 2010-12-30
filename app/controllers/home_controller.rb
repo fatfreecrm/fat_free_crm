@@ -26,6 +26,15 @@ class HomeController < ApplicationController
     hook(:home_controller, self, :params => "it works!")
 
     @activities = get_activities
+    respond_to do |format|
+      format.html # index.html.haml
+      format.js   # index.js.rjs
+      format.xml  { render :xml => @activities }
+      format.xls  { send_data @activities.to_xls, :type => :xls }
+      format.csv  { send_data @activities.to_csv, :type => :csv }
+      format.rss  { render "index.rss.builder" }
+      format.atom { render "index.atom.builder" }
+    end
   end
 
   # GET /home/options                                                      AJAX
