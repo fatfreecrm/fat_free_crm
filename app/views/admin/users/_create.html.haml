@@ -4,7 +4,7 @@
 
   = f.error_messages :object_name => t('user')
 
-  = render :partial => "admin/users/profile", :locals => { :f => f }
+  = render "admin/users/profile", :f => f
   .buttonbar
     = f.submit t(:create_user)
     #{t :or}

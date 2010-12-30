@@ -4,7 +4,7 @@
 
     = f.error_messages :object_name => t('user')
 
-    = render :partial => "admin/users/profile", :locals => { :f => f, :edit => true }
+    = render "admin/users/profile", :f => f, :edit => true
     .buttonbar
       = f.submit t(:save_user)
       #{t :or}
