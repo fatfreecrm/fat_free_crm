@@ -150,6 +150,7 @@ namespace :git do
 
   desc "Reset the submodules"
   task :reset do
+    run "cd #{shared_path}/cached-copy && git submodule foreach git checkout master"
     run "cd #{shared_path}/cached-copy && git submodule foreach git reset --hard"
   end
 
@@ -162,3 +163,4 @@ before "deploy:symlink",        "dropbox:create_log"
 before "deploy:symlink",        "deploy:symlink_crowd"
 after  "deploy:symlink",        "deploy:set_permissions"
 after  "deploy:migrate",        "deploy:migrate_plugins"
+after "deploy", "deploy:cleanup"
