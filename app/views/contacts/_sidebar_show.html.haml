@@ -3,7 +3,7 @@
   %h4= h(@contact.full_name)
   - if !@contact.title.blank? && @contact.account
     -# works_at: "{{h(job_title)}} at {{h(company)}}"
-    %div= t(:works_at, :job_title => h(@contact.title), :company => link_to(h(@contact.account.name), account_path(@contact.account)))
+    %div= t(:works_at, :job_title => h(@contact.title).html_safe, :company => link_to(h(@contact.account.name), account_path(@contact.account).html_safe))
   - elsif !@contact.title.blank?
     %div= h(@contact.title)
   - elsif @contact.account
