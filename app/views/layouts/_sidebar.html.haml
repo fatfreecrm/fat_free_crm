@@ -5,6 +5,6 @@
 
 = content_for :sidebar
 - begin
-  = render :partial => sidebar
+  = render sidebar
   - rescue MissingTemplate
-= render :partial => "common/recently"
+= render "common/recently"

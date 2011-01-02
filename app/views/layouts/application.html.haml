@@ -18,12 +18,12 @@
     = csrf_meta_tag
 
   %body
-    = render :partial => "layouts/header"
+    = render "layouts/header"
     - if tabless_layout?
-      = render :partial => "layouts/tabless"
+      = render "layouts/tabless"
     - else
-      = render :partial => "layouts/tabbed"
-      = render :partial => "layouts/footer"
+      = render "layouts/tabbed"
+      = render "layouts/footer"
 
     - unless tabless_layout? || I18n.locale == "en-US"
       = localize_calendar_date_select
