@@ -4,7 +4,7 @@
     = hidden_field_tag :view, @view
     = hidden_field_tag "task[asset_id]", "#{@asset.id if @asset}"
     = hidden_field_tag "task[asset_type]", "#{@asset.class if @asset}"
-    = render :partial => "tasks/top_section", :locals => { :f => f }
+    = render "tasks/top_section", :f => f
     .buttonbar
       = f.submit t :save_task
       == #{t :or}

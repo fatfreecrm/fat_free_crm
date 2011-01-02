@@ -6,7 +6,7 @@
   .title #{t :completed_tasks}
 - else
   - buckets = Setting.unroll(:task_bucket)
-  = render :partial => "title"
+  = render "title"
 
 .log#tasks
   - buckets.each do |value, key|
@@ -14,4 +14,4 @@
       %h3{:class => key}= t(value)
       .bucket{:id => key}= render :partial => @view, :collection => @tasks[key] || [], :locals => { :bucket => key }
   - if @tasks.values.flatten.blank?
-    = render :partial => "empty"
+    = render "empty"
