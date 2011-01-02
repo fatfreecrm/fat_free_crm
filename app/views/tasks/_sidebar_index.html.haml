@@ -1,5 +1,5 @@
 .filters#filters
-  = render :partial => "selector"
+  = render "selector"
   - if @view == "pending" || @view == "assigned"
     - Setting.unroll(:task_bucket).each do |value, key|
       .check_box{:style => "border-bottom: 1px silver dotted;"}

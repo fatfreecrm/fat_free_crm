@@ -117,6 +117,15 @@
   color: #3f3f3f;
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px; }
+  .section table {
+    width: 500px;
+    border-spacing: 0px;
+    border-collapse: collapse; }
+    .section table td {
+      vertical-align: top;
+      padding: 0px; }
+      .section table td input[type="text"], .section table td input[type="password"] {
+        width: 240px; }
 
 .remote {
   border: 5px lightblue solid;

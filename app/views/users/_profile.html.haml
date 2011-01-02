@@ -5,56 +5,56 @@
     = f.error_messages :object_name => t('user')
 
     .section
-      %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %table
         %tr
-          %td{ :valign => :top }
+          %td
             .label.top #{t :first_name}:
-            = f.text_field :first_name, :style => "width:240px"
+            = f.text_field :first_name
           %td= spacer
-          %td{ :valign => :top }
+          %td
             .label.top #{t :last_name}:
-            = f.text_field :last_name, :style => "width:240px"
+            = f.text_field :last_name
         %tr
-          %td{ :valign => :top }
+          %td
             .label.top #{t :job_title}:
-            = f.text_field :title, :style => "width:240px"
+            = f.text_field :title
           %td= spacer
-          %td{ :valign => :top }
+          %td
             .label.top #{t :company}:
-            = f.text_field :company, :style => "width:240px"
+            = f.text_field :company
     .subtitle #{t :contact_info}
     .section
-      %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %table
         %tr
-          %td{ :valign => :top, :colspan => 3 }
+          %td{ :colspan => 3 }
             .label.top.req #{t :email}:
-            = f.text_field :email, :style => "width:240px"
+            = f.text_field :email
           %td= spacer
-          %td{ :valign => :top, :colspan => 3 }
+          %td{ :colspan => 3 }
             .label.top #{t :alt_email}:
-            = f.text_field :alt_email, :style => "width:240px"
+            = f.text_field :alt_email
         %tr
-          %td{ :valign => :top, :colspan => 3 }
+          %td{ :colspan => 3 }
             .label #{t :phone}:
-            = f.text_field :phone, :style => "width:240px"
+            = f.text_field :phone
           %td= spacer
-          %td{ :valign => :top, :colspan => 3 }
+          %td{ :colspan => 3 }
             .label #{t :mobile}:
-            = f.text_field :mobile, :style => "width:240px"
+            = f.text_field :mobile
         %tr
-          %td{ :valign => :top }
+          %td
             .label #{t :aim}:
             = f.text_field :aim, :style => "width:112px"
           %td= spacer
-          %td{ :valign => :top }
+          %td
             .label #{t :yahoo}:
             = f.text_field :yahoo, :style => "width:112px"
           %td= spacer
-          %td{ :valign => :top }
+          %td
             .label #{t :google}:
             = f.text_field :google, :style => "width:112px"
           %td= spacer
-          %td{ :valign => :top }
+          %td
             .label #{t :skype}:
             = f.text_field :skype, :style => "width:112px"
 
