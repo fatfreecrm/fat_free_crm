@@ -6,8 +6,8 @@
 
   = f.error_messages :object_name => t('opportunity')
 
-  = render :partial => "opportunities/top_section", :locals => { :f => f }
-  = render :partial => "opportunities/permissions", :locals => { :f => f }
+  = render "opportunities/top_section", :f => f
+  = render "opportunities/permissions", :f => f
   .buttonbar
     = f.submit t(:create_opportunity), :onclick => %/$("account_assigned_to").value = $F("opportunity_assigned_to"); if ($("account_id").visible()) { $("account_id").enable(); }/
     #{t :or}

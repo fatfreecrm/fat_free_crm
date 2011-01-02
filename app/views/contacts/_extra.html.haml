@@ -24,7 +24,7 @@
           = f.text_field :mobile, :style => "width:240px"
       %tr
         %td{ :valign => :top }
-          = render :partial => "common/address", :locals => { :f => f, :asset => @contact, :type => 'business', :title => :address }
+          = render "common/address", :f => f, :asset => @contact, :type => 'business', :title => :address
         %td= spacer
         %td{ :valign => :top }
           .label #{t :fax}:

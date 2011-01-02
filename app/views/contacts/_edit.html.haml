@@ -5,10 +5,10 @@
 
     = f.error_messages :object_name => t('contact')
 
-    = render :partial => "contacts/top_section", :locals => { :f => f, :edit => true }
-    = render :partial => "contacts/extra",       :locals => { :f => f, :edit => true }
-    = render :partial => "contacts/web",         :locals => { :f => f, :edit => true }
-    = render :partial => "contacts/permissions", :locals => { :f => f, :edit => true }
+    = render "contacts/top_section", :f => f, :edit => true
+    = render "contacts/extra",       :f => f, :edit => true
+    = render "contacts/web",         :f => f, :edit => true
+    = render "contacts/permissions", :f => f, :edit => true
     .buttonbar
       = f.submit t(:save_contact), :onclick => "crm.save_contact()"
       #{t :or}

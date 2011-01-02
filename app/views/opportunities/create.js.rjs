@@ -6,7 +6,7 @@ if @opportunity.valid?
   page[dom_id(@opportunity)].visual_effect :highlight, :duration => 1.5
   if called_from_index_page?
     page << refresh_sidebar(:index, :filters)
-    page[:paginate].replace_html render(:partial => "common/paginate")
+    page[:paginate].replace_html :partial => "common/paginate"
   
   elsif called_from_landing_page?("campaigns") # Opportunity created on Campaign landing page: refresh Campaign summary.
     @campaign.reload
