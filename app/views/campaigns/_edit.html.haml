@@ -5,9 +5,10 @@
 
     = f.error_messages :object_name => t('campaign')
 
-    = render :partial => "campaigns/top_section", :locals => { :f => f, :edit => true }
-    = render :partial => "campaigns/objectives",  :locals => { :f => f, :edit => true }
-    = render :partial => "campaigns/permissions", :locals => { :f => f, :edit => true }
+    = render "campaigns/top_section", :f => f, :edit => true
+    = render "campaigns/objectives",  :f => f, :edit => true
+    = render "campaigns/permissions", :f => f, :edit => true
+
     .buttonbar
       = f.submit t(:save_campaign)
       #{t :or}
