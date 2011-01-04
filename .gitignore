@@ -15,6 +15,7 @@ tmp/**/*
 .bundle
 .idea/
 .DS_Store
+.rvmrc
 *~
 *.swp
 features/screengrabs
