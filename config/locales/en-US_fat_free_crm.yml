@@ -210,7 +210,7 @@ en-US:
   option_target_leads: target leads
   option_target_revenue: target revenue
   option_updated_at: date updated
-  show_per_page: Show %{number} %{models} per page using %{item_format} format.
+  show_per_page: Show %{number} %{models} per page using %{fmt} format. 
   sort_by: Sort %{models} by %{field}.
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
 
@@ -219,6 +219,7 @@ en-US:
   aim: AOL IM
   already_signed_up: Already signed up?
   alt_email: Alternative email
+  avatar: Avatar
   change_password: Change Password
   company: Company
   contact_info: Contact Information
@@ -468,6 +469,7 @@ en-US:
   action_updated: updated
   action_viewed: viewed
   action_won: won
+  activities: Activities
   no_activity_records: No activity records found.
   recent_activity: Recent Activity
   recent_activity_options: Recent Activity Options
@@ -585,6 +587,13 @@ en-US:
   users: Users
   users_small: users
 
+  # Export.
+  #----------------------------------------------------------------------------
+  to_xls: Export to Excel
+  to_csv: Export to comma-delimited file format (including deleted records)
+  to_rss: RSS feed
+  to_atom: Atom feed
+
   # Dropbox.
   #----------------------------------------------------------------------------
   dropbox_ack_subject: dropbox - Added email - %{subject}
@@ -596,7 +605,10 @@ en-US:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
-    contact:
+    comment:
+      one: '1 comment'
+      other: '%{count} comments'
+    contact: 
       one: '1 contact'
       other: '%{count} contacts'
     opportunity:

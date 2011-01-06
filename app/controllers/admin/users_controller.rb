@@ -144,7 +144,7 @@ class Admin::UsersController < Admin::ApplicationController
     @users = get_users(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @users.to_xml }
     end
   end
@@ -188,8 +188,8 @@ class Admin::UsersController < Admin::ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_users(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
+  def get_users(options = {})
+    self.current_page  = options[:page]  if options[:page]
     self.current_query = options[:query] if options[:query]
 
     if current_query.blank?

@@ -30,6 +30,10 @@ class AccountsController < ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @accounts }
+      format.xls  { send_data @accounts.to_xls, :type => :xls }
+      format.csv  { send_data @accounts.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -37,7 +41,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
-    @account = Account.my(@current_user).find(params[:id])
+    @account = Account.my.find(params[:id])
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
 
@@ -57,7 +61,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @account = Account.new(:user => @current_user, :access => Setting.default_access)
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user)
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
@@ -72,10 +76,10 @@ class AccountsController < ApplicationController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @account = Account.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @account = Account.my.find(params[:id])
+    @users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Account.my(@current_user).find($1)
+      @previous = Account.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -88,7 +92,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @account = Account.new(params[:account])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user)
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
@@ -108,14 +112,14 @@ class AccountsController < ApplicationController
   # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    @account = Account.my(@current_user).find(params[:id])
+    @account = Account.my.find(params[:id])
 
     respond_to do |format|
       if @account.update_with_permissions(params[:account], params[:users])
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all # Need it to redraw [Edit Account] form.
+        @users = User.except(@current_user) # Need it to redraw [Edit Account] form.
         format.js
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
@@ -129,7 +133,7 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @account = Account.my(@current_user).find(params[:id])
+    @account = Account.my.find(params[:id])
     @account.destroy if @account
 
     respond_to do |format|
@@ -148,7 +152,7 @@ class AccountsController < ApplicationController
     @accounts = get_accounts(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @accounts.to_xml }
     end
   end
@@ -167,7 +171,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /accounts/options                                                 AJAX
+  # GET /accounts/options                                                  AJAX
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel].true?
@@ -177,41 +181,20 @@ class AccountsController < ApplicationController
     end
   end
 
-  # POST /accounts/redraw                                                 AJAX
+  # POST /accounts/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
     @current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
     @current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
     @current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(:page => 1)
-    render :action => :index
+    render :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_accounts(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.pref[:accounts_sort_by] || Account.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.pref[:accounts_per_page]
-    }
-
-    # Call :get_accounts hook and return its output if any.
-    accounts = hook(:get_accounts, self, :records => records, :pages => pages)
-    return accounts.last unless accounts.empty?
-
-    # Default processing if no :get_accounts hooks are present.
-    if current_query.blank?
-      Account.my(records)
-    else
-      Account.my(records).search(current_query)
-    end.paginate(pages)
+  def get_accounts(options = {})
+    get_list_of_records(Account, options)
   end
 
   #----------------------------------------------------------------------------
@@ -220,13 +203,13 @@ class AccountsController < ApplicationController
       @accounts = get_accounts
       if @accounts.blank?
         @accounts = get_accounts(:page => current_page - 1) if current_page > 1
-        render :action => :index and return
+        render :index and return
       end
       # At this point render default destroy.js.rjs template.
     else # :html request
       self.current_page = 1 # Reset current page to 1 to make sure it stays valid.
       flash[:notice] = "#{t(:asset_deleted, @account.name)}"
-      redirect_to(accounts_path)
+      redirect_to accounts_path
     end
   end
 

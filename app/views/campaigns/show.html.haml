@@ -1,4 +1,3 @@
-
 = styles_for :task, :lead, :opportunity
 
 #confirm{ hidden }
@@ -9,12 +8,12 @@
 
 %div#edit_campaign{ hidden }
 
-= render :partial => "comments/new", :locals => { :commentable => @campaign }
+= render "comments/new", :commentable => @campaign
 = render :partial => "common/timeline", :collection => @timeline
 
 = section(@campaign, :tasks)
 .log#tasks
-  = render :partial => "common/tasks"
+  = render "common/tasks"
 
 = section(@campaign, :leads)
 .list#leads

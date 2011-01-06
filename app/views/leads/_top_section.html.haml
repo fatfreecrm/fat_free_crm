@@ -1,26 +1,26 @@
 = hook(:lead_top_section, self, :f => f) do
   .section
-    %table(width="500" cellpadding="0" cellspacing="0")
+    %table
       %tr
-        %td(valign="top")
+        %td
           .label.top.req #{t :first_name}:
-          = f.text_field :first_name, :style => "width:240px"
+          = f.text_field :first_name
         %td= spacer
-        %td(valign="top")
+        %td
           .label.top.req #{t :last_name}:
-          = f.text_field :last_name, :style => "width:240px"
+          = f.text_field :last_name
       %tr
-        %td(valign="top")
+        %td
           .label #{t :email}:
-          = f.text_field :email, :style => "width:240px"
+          = f.text_field :email
         %td= spacer
-        %td(valign="top")
+        %td
           .label #{t :phone}:
-          = f.text_field :phone, :style => "width:240px"
+          = f.text_field :phone
 
       - if Setting.background_info && Setting.background_info.include?(:lead)
         %tr
-          %td(valign="top" colspan="3")
+          %td(colspan="3")
             .label= t(:background_info) << ':'
             = f.text_area :background_info, :style =>"width:500px", :rows => 3
 

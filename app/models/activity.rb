@@ -33,7 +33,7 @@
 class Activity < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :subject, :polymorphic => true
-  scope :recent, where(:action => 'viewed').order('updated_at DESC').limit(10)
+  scope :recent, where(:action => 'viewed').order('activities.updated_at DESC').limit(10)
   scope :for,    lambda { |user| where(:user_id => user.id) }
   scope :with_actions,    lambda { |*actions| where('action IN (?)', actions) }
   scope :without_actions, lambda { |*actions| where('action NOT IN (?)', actions) }
@@ -46,9 +46,10 @@ class Activity < ActiveRecord::Base
   }
 
   validates_presence_of :user, :subject
+  exportable
 
-  ASSETS = %w(all tasks campaigns leads accounts contacts opportunities).inject([]) { |arr, asset| arr << [ asset, I18n.t(asset) ] }
-  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month).inject([]) { |arr, duration| arr << [ duration, I18n.t(duration) ] }
+  ASSETS = %w(all tasks campaigns leads accounts contacts opportunities).map { |asset| [ asset, I18n.t(asset) ] }
+  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month).map { |duration| [ duration, I18n.t(duration) ] }
 
   #----------------------------------------------------------------------------
   def self.log(user, subject, action)

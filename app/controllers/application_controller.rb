@@ -16,13 +16,14 @@
 #------------------------------------------------------------------------------
 
 class ApplicationController < ActionController::Base
-  helper(application_helpers)
+
+  # helper :all gets called authomagically in Rails3.
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
 
   before_filter :set_context
   before_filter "hook(:app_before_filter, self)"
-  after_filter "hook(:app_after_filter, self)"
+  after_filter  "hook(:app_after_filter,  self)"
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -34,24 +35,24 @@ class ApplicationController < ActionController::Base
     @query = params[:auto_complete_query]
     @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
     if @auto_complete.empty?
-      @auto_complete = controller_name.classify.constantize.my(:user => @current_user, :limit => 10).search(@query)
+      @auto_complete = controller_name.classify.constantize.my.search(@query).limit(10)
     else
       @auto_complete = @auto_complete.last
     end
     session[:auto_complete] = controller_name.to_sym
-    render :template => "common/auto_complete", :layout => nil
+    render "common/auto_complete", :layout => nil
   end
 
   # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
   def attach
-    model = controller_name.classify.constantize.my(@current_user).find(params[:id])
+    model = controller_name.classify.constantize.my.find(params[:id])
     @attachment = params[:assets].classify.constantize.find(params[:asset_id])
     @attached = model.attach!(@attachment)
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
-      format.js  { render :template => "common/attach" }
+      format.js  { render "common/attach" }
       format.xml { render :xml => model.reload.to_xml }
     end
 
@@ -62,13 +63,13 @@ class ApplicationController < ActionController::Base
   # Common discard handler for all core controllers.
   #----------------------------------------------------------------------------
   def discard
-    model = controller_name.classify.constantize.my(@current_user).find(params[:id])
+    model = controller_name.classify.constantize.my.find(params[:id])
     @attachment = params[:attachment].constantize.find(params[:attachment_id])
     model.discard!(@attachment)
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
-      format.js  { render :template => "common/discard" }
+      format.js  { render "common/discard" }
       format.xml { render :xml => model.reload.to_xml }
     end
 
@@ -110,8 +111,9 @@ private
   #----------------------------------------------------------------------------
   def current_user
     @current_user ||= (current_user_session && current_user_session.record)
-    if @current_user && @current_user.preference[:locale]
-      I18n.locale = @current_user.preference[:locale]
+    if @current_user
+      @current_user.set_individual_locale
+      @current_user.set_single_access_token
     end
     User.current_user = @current_user
   end
@@ -122,7 +124,6 @@ private
       store_location
       flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
       redirect_to login_url
-      false
     end
   end
 
@@ -132,7 +133,6 @@ private
       store_location
       flash[:notice] = t(:msg_logout_needed)
       redirect_to profile_url
-      false
     end
   end
 
@@ -193,7 +193,7 @@ private
       flash[:warning] = t(:msg_cant_do, :action => flick, :asset => asset)
     end
     respond_to do |format|
-      format.html { redirect_to(:action => :index) }                         if types.include?(:html)
+      format.html { redirect_to :action => :index }                          if types.include?(:html)
       format.js   { render(:update) { |page| page.reload } }                 if types.include?(:js)
       format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
@@ -206,10 +206,44 @@ private
     flash[:warning] = t(:msg_cant_create_related, :asset => asset, :related => related)
     url = send("#{related.pluralize}_path")
     respond_to do |format|
-      format.html { redirect_to(url) }                                       if types.include?(:html)
-      format.js   { render(:update) { |page| page.redirect_to(url) } }       if types.include?(:js)
+      format.html { redirect_to url }                                        if types.include?(:html)
+      format.js   { render(:update) { |page| page.redirect_to url } }        if types.include?(:js)
       format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
+  end
+
+  # Get list of records for a given model class.
+  #----------------------------------------------------------------------------
+  def get_list_of_records(klass, options = {})
+    items = klass.name.tableize
+    self.current_page  = options[:page]  if options[:page]
+    self.current_query = options[:query] if options[:query]
+
+    records = {
+      :user  => @current_user,
+      :order => @current_user.pref[:"#{items}_sort_by"] || klass.sort_by
+    }
+    pages = {
+      :page     => current_page,
+      :per_page => @current_user.pref[:"#{items}_per_page"]
+    }
+
+    # Call the hook and return its output if any.
+    assets = hook(:"get_#{items}", self, :records => records, :pages => pages)
+    return assets.last unless assets.empty?
+
+    # Use default processing if no hooks are present. Note that comma-delimited
+    # export includes deleted records, and the pagination is enabled only for
+    # plain HTTP, Ajax and XML API requests.
+    wants = request.format
+    filter = session[options[:filter]].to_s.split(',') if options[:filter]
+
+    scope = klass.my(records)
+    scope = scope.state(filter)         unless filter.blank?
+    scope = scope.search(current_query) unless current_query.blank?
+    scope = scope.unscoped              if wants.csv?
+    scope = scope.paginate(pages)       if wants.html? || wants.js? || wants.xml?
+    scope
   end
 
   # Proxy current page for any of the controllers by storing it in a session.

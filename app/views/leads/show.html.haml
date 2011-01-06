@@ -13,12 +13,12 @@
 %div#convert_lead{ hidden }
 %div#edit_lead{ hidden }
 
-= render :partial => "comments/new", :locals => { :commentable => @lead }
+= render "comments/new", :commentable => @lead
 = render :partial => "common/timeline", :collection => @timeline
 
 = section(@lead, :tasks)
 .log#tasks
-  = render :partial => "common/tasks"
+  = render "common/tasks"
 
 = load_select_popups_for(@lead, :tasks)
 

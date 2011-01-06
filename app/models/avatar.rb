@@ -37,17 +37,20 @@ class Avatar < ActiveRecord::Base
   belongs_to :entity, :polymorphic => true
 
   # We want to store avatars in separate directories based on entity type
-  # (/avatar/User/, /avatars/Lead/, etc.), so we're using lambda to build
-  # target url on the fly. Also, Paperclip doesn't seem to care too much
-  # about preserving styles hash, so we must use dup.
-
-  has_attached_file :image, :styles => STYLES.dup, :url => lambda { |attachment| "/avatars/#{attachment.instance.entity_type}/:id/:style_:filename" }, :default_url => "/images/avatar.jpg"
-
+  # (i.e. /avatar/User/, /avatars/Lead/, etc.), so we are adding :entity_type
+  # interpolation to the Paperclip::Interpolations module.  Also, Paperclip
+  # doesn't seem to care preserving styles hash so we must use STYLES.dup.
+  #----------------------------------------------------------------------------
+  Paperclip::Interpolations.module_eval do
+    def entity_type(attachment, style_name = nil)
+      attachment.instance.entity_type
+    end
+  end
+  has_attached_file :image, :styles => STYLES.dup, :url => "/avatars/:entity_type/:id/:style_:filename", :default_url => "/images/avatar.jpg"
 
   # Invert STYLES hash removing trailing #.
   #----------------------------------------------------------------------------
   def self.styles
-    STYLES.inject({}) { |hash, (key, value)| hash[value[0..-2]] = key; hash }
+    Hash[STYLES.map{ |key, value| [ value[0..-2], key ] }]
   end
-
 end

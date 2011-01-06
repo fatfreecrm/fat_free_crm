@@ -8,7 +8,7 @@
 %div#upload_avatar{ hidden }
 %div#change_password{ hidden }
 
-.list#profile= render :partial => "user"
+.list#profile= render "user"
 
 = hook(:show_user_bottom, self)
 

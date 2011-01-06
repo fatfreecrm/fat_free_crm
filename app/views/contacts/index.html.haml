@@ -11,8 +11,10 @@
 .remote#create_contact{ hidden }
 
 .list#contacts
-  - unless @contacts.empty?
-    = render :partial => "contact", :collection => @contacts
+  - if @contacts.any?
+    = render @contacts
   - else
-    = render :partial => "common/empty"
-#paginate= render :partial => "common/paginate"
+    = render "common/empty"
+
+#paginate= render "common/paginate"
+#export= render "common/export"

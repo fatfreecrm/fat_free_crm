@@ -142,7 +142,8 @@
 
 .req
   :color #330000
-  :background url("/images/asterisk_red.gif") no-repeat scroll right top transparent
+  :background url("/images/asterisk.gif") no-repeat scroll right top transparent
+  :float left
 
 .intro
   :color dimgray
@@ -154,6 +155,15 @@
   :color #3f3f3f
   :margin 0px 0px 2px 0px
   :padding 4px 15px 8px 15px
+  table
+    :width 500px
+    :border-spacing 0px
+    :border-collapse collapse /* IE */
+    td
+      :vertical-align top
+      :padding 0px
+      input[type="text"], input[type="password"]
+        :width 240px
 
 .remote
   :border 5px lightgrey solid
@@ -328,6 +338,10 @@
 
 .toggle
   :font-weight normal
+
+#export
+  :font-size 9px
+  :margin 12px 0px 0px 0px
 
 #paginate
   :float right

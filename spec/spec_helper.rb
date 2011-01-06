@@ -42,6 +42,7 @@ RSpec.configure do |config|
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
   config.include(SharedControllerSpecs, :type => :controller)
+  config.include(SharedModelSpecs,      :type => :model)
 
   config.before(:each, :type => :view) do
     I18n.locale = 'en-US'
@@ -49,9 +50,7 @@ RSpec.configure do |config|
   
   config.after(:each, :type => :view) do
     # detect html-quoted entities in all rendered responses
-    if rendered
-      rendered.should_not match(/&amp;[A-Za-z]{1,6};/)
-    end
+    rendered.should_not match(/&amp;[A-Za-z]{1,6};/) if rendered
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

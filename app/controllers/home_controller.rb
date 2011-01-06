@@ -26,6 +26,15 @@ class HomeController < ApplicationController
     hook(:home_controller, self, :params => "it works!")
 
     @activities = get_activities
+    respond_to do |format|
+      format.html # index.html.haml
+      format.js   # index.js.rjs
+      format.xml  { render :xml => @activities }
+      format.xls  { send_data @activities.to_xls, :type => :xls }
+      format.csv  { send_data @activities.to_csv, :type => :csv }
+      format.rss  { render "index.rss.builder" }
+      format.atom { render "index.atom.builder" }
+    end
   end
 
   # GET /home/options                                                      AJAX
@@ -35,6 +44,7 @@ class HomeController < ApplicationController
       @asset = @current_user.pref[:activity_asset] || "all"
       @user = @current_user.pref[:activity_user] || "all_users"
       @duration = @current_user.pref[:activity_duration] || "two_days"
+      @all_users = User.order("first_name, last_name")
     end
   end
 
@@ -46,7 +56,7 @@ class HomeController < ApplicationController
     @current_user.pref[:activity_duration] = params[:duration] if params[:duration]
 
     @activities = get_activities
-    render :action => "index"
+    render :index
   end
 
   # GET /home/toggle                                                       AJAX
@@ -115,9 +125,9 @@ class HomeController < ApplicationController
     user = @current_user.pref[:activity_user]
     if user && user != "all users"
       user = if user =~ /\s/  # first_name last_name
-        User.first(:conditions => [ "first_name = ? AND last_name = ?" ] + user.split)
+        User.where([ "first_name = ? AND last_name = ?" ] + user.split).first
       elsif user =~ /@/ # email
-        User.first(:conditions => [ "email = ?", user ])
+        User.where(:email => user).first
       end
     end
     user.is_a?(User) ? user.id : nil

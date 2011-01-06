@@ -127,6 +127,17 @@ class User < ActiveRecord::Base
     Notifier.password_reset_instructions(self).deliver
   end
 
+  # Override global I18n.locale if the user has individual local preference.
+  #----------------------------------------------------------------------------
+  def set_individual_locale
+    I18n.locale = self.preference[:locale] if self.preference[:locale]
+  end
+
+  # Generate the value of single access token if it hasn't been set already.
+  #----------------------------------------------------------------------------
+  def set_single_access_token
+    self.single_access_token ||= update_attribute(:single_access_token, Authlogic::Random.friendly_token)
+  end
 
   private
 

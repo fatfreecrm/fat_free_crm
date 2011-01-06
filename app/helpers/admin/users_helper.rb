@@ -17,10 +17,6 @@
 
 module Admin::UsersHelper
 
-  # NOTE: In Rails3 Admin helpers seem to share the namespace with Application
-  # helpers.  Therefore make sure method names stay unique -- otherwise you
-  # will effectively override application helper.
-  #----------------------------------------------------------------------------
   def link_to_suspend(user)
     link_to(t(:suspend) + "!", suspend_admin_user_path(user), :method => :put, :remote => true)
   end
@@ -37,7 +33,7 @@ module Admin::UsersHelper
   end
 
   #----------------------------------------------------------------------------
-  def link_to_confirmed_delete(user)
+  def link_to_delete(user)
     link_to_remote(t(:yes_button),
       :method => :delete,
       :url => admin_user_path(user),

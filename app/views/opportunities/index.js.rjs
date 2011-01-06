@@ -1,6 +1,6 @@
 unless @opportunities.blank?
-  page[:opportunities].replace_html render(:partial => "opportunity", :collection => @opportunities)
+  page[:opportunities].replace_html render @opportunities
 else
-  page[:opportunities].replace_html render(:partial => "common/empty")
+  page[:opportunities].replace_html :partial => "common/empty"
 end
-page[:paginate].replace_html render(:partial => "common/paginate")
+page[:paginate].replace_html :partial => "common/paginate"

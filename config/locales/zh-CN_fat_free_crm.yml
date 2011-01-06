@@ -151,6 +151,15 @@ zh-CN:
               missing_email: "^请指定邮件地址"
               email_in_use: "^此邮件地址已经有人使用"
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one: "有 1 个错误发生导致「%{model}」无法被保存。"
+        other: "有 %{count} 个错误发生导致「%{model}」无法被保存。"
+      body: "如下字段出现错误："
+
   msg_account_suspended: 用户账号已暂停
   password_reset_instruction: 密码重置方法
 
@@ -158,20 +167,21 @@ zh-CN:
   #----------------------------------------------------------------------------
   msg_account_created: 你的账号已经创建，正在等待管理员审核
   msg_account_not_approved: 你的账号还未被批准
-  msg_asset_deleted: "{{value}} 已经被删除"
-  msg_asset_not_available: 这个 {{value}} 已不存在
-  msg_assets_not_available: 这个 {{value}} 不存在
-  msg_asset_rejected: "{{value}} 已被拒绝"
-  msg_bad_image_file: "^不能将此图片上传或改变大小"
-  msg_cant_create_related: "不能创建 {{asset}} 因为 {{related}} 已不存在"
-  msg_cant_delete_user: "^不能删除用户，因为 {{value}} 有相关 assets 存在"
-  msg_cant_do: "不能 {{action}} {{asset}} 因为它已经不存在"
+  msg_asset_deleted: "%{value} 已经被删除"
+  msg_asset_not_available: 这个 %{value} 已不存在
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
+  msg_assets_not_available: 这个 %{value} 不存在
+  msg_asset_rejected: "%{value} 已被拒绝"
+  msg_bad_image_file: "^^不能将此图片上传或改变大小"
+  msg_cant_create_related: "不能创建 %{asset} 因为 %{related} 已不存在"
+  msg_cant_delete_user: "^不能删除用户，因为 %{value} 有相关 assets 存在"
+  msg_cant_do: "不能 %{action} %{asset} 因为它已经不存在"
   msg_email_not_found: 未找到用户使用此邮件地址
   msg_enter_new_password: 请输入新密码
   msg_goodbye: 您已退出，感谢您使用 Fat Free CRM!
-  msg_invalid_password: "^请输入正确密码"
+  msg_invalid_password: "^^请输入正确密码"
   msg_invalig_login: 用户名或密码错
-  msg_last_login: 您上次登录是在 {{value}}.
+  msg_last_login: 您上次登录是在 %{value}.
   msg_login_needed: 必须登录后才可使用本页
   msg_logout_needed: 必须退出后才可使用本页
   msg_password_changed: 密码已更改
@@ -185,7 +195,7 @@ zh-CN:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: 显示 {{models}} 行业由 {{user}} 在过去 {{period}}.
+  activity_options: 显示 %{models} 行业由 %{user} 在过去 %{period}.
   all_users: 所有用户
   option_after: 之后
   option_all: 全部
@@ -209,15 +219,16 @@ zh-CN:
   option_target_leads: 目标线索
   option_target_revenue: 目标收入
   option_updated_at: 更新日期
-  show_per_page: 显示 {{number}} {{models}} 每页使用 {{item_format}} 格式 
-  sort_by: 用 {{field}} 排序 {{models}}
-  sort_by_displaying: 用 {{field}} 排序 {{models}}，显示名 {{position}} 姓 
+  show_per_page: 显示 %{number} %{models} 每页使用 %{fmt} 格式 
+  sort_by: 用 %{field} 排序 %{models}
+  sort_by_displaying: 用 %{field} 排序 %{models}，显示名 %{position} 姓 
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
   aim: AOL IM
   already_signed_up: 已申请？
   alt_email: 另一个 email
+  avatar: Avatar
   change_password: 修改密码
   company: 公司
   contact_info: 联系人信息
@@ -271,10 +282,10 @@ zh-CN:
   date_created: 创建日期
   date_updated: 更新日期
   fax: 传真
-  intro: 可稍后添加{{value}} 
+  intro: 可稍后添加%{value} 
   mobile_small: 手机
-  open_in_window: 在一个新窗口打开{{value}} 
-  mail_to: 发邮件给{{value}}
+  open_in_window: 在一个新窗口打开%{value} 
+  mail_to: 发邮件给%{value}
   phone_small: 电话
   phone_toll_free: 免费电话
   keep_private: 保持私有，不与他人分享
@@ -301,11 +312,11 @@ zh-CN:
   campaigns_small: 战役
   conversion: 转换
   conversion_label: 转换比率(%)
-  conversion_number: "{{value}} 转换" 
+  conversion_number: "%{value} 转换" 
   create_campaign: 创建战役
   end_date: 结束日期
-  finished_on: 完成于 {{value}}
-  finishes_in: 用 {{value}} 完成
+  finished_on: 完成于 %{value}
+  finishes_in: 用 %{value} 完成
   no_start_date: 未指定开始日期
   number_of_leads: 线索数
   objectives: 目标
@@ -313,16 +324,16 @@ zh-CN:
   objectives_small: 战役目标
   revenue: 收入
   revenue_label: 收入(¥)
-  revenue_number: "收入{{value}}"
+  revenue_number: "收入%{value}"
   save_campaign: 保存战役
   start_date: 开始日期
-  started_ago: 开始于 {{value}} 之前
-  starts_in: 开始了 {{value}}
+  started_ago: 开始于 %{value} 之前
+  starts_in: 开始了 %{value}
   starts_today: 今天开始!
   target: 目标
   total_campaigns: 战役总数
-  was_supposed_to_finish: 预计完成于 {{value}}
-  was_supposed_to_start: 预计开始于 {{time_ago}} 之前，在 {{start_date}}
+  was_supposed_to_finish: 预计完成于 %{value}
+  was_supposed_to_start: 预计开始于 %{time_ago} 之前，在 %{start_date}
     
   # Views -> Contacts.
   #----------------------------------------------------------------------------
@@ -335,32 +346,32 @@ zh-CN:
   contacts_small: 联系人
   create_contact: 创建联系人
   department: 部门
-  department_small: '{{value}} 部门'
+  department_small: '%{value} 部门'
   do_not_call: 不要打电话
   extra_info: 更多信息
   extra_info_small: 更多信息
   facebook: Facebook
   linked_in: LinkedIn
   myself: 自己
-  permissions_intro_private: 默认只有你对 {{value}} 有权限。以后可修改。  
-  permissions_intro_public: 默认所有用户都对 {{value}} 有权限。以后可修改。
-  permissions_intro_shared: 默认只有选定用户对 {{value}} 有权限。以后可修改。
+  permissions_intro_private: 默认只有你对 %{value} 有权限。以后可修改。  
+  permissions_intro_public: 默认所有用户都对 %{value} 有权限。以后可修改。
+  permissions_intro_shared: 默认只有选定用户对 %{value} 有权限。以后可修改。
   referred_by: 引用
   referred_by_small: 引用
   save_contact: 保存联系人
   twitter: Twitter
   web_presence: web
   web_presence_small: web
-  works_at: "{{job_title}} 在 {{company}}"
+  works_at: "%{job_title} 在 %{company}"
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
   convert: 转换
   convert_lead: 转换线索
   convert_lead_permissions_intro: 联系人权限将会从被转换的线索中复制。以后可修改。
-  convert_lead_text: 转换线索 {{value}} 将会使其变成一个与现有或新建账号关联的联系人，线索状态自动设为已转换。
+  convert_lead_text: 转换线索 %{value} 将会使其变成一个与现有或新建账号关联的联系人，线索状态自动设为已转换。
   create_lead: 创建线索
-  create_opp_for_contact: 可以为 {{value}} 联系人创建一个机会，需指定名称、当前阶段、预计结束日期、销售可能性、线索数量、折扣。
+  create_opp_for_contact: 可以为 %{value} 联系人创建一个机会，需指定名称、当前阶段、预计结束日期、销售可能性、线索数量、折扣。
   lead: 线索
   lead_info_small: 线索联系人
   lead_permissions_intro_private: 默认从战役复制权限或设为私有。以后可修改。
@@ -385,16 +396,16 @@ zh-CN:
   #----------------------------------------------------------------------------
   amount: 金额
   close_date: 结束日期
-  closed_ago_on: 结束于 {{time_ago}} 之前，在 {{date}}
+  closed_ago_on: 结束于 %{time_ago} 之前，在 %{date}
   closes_today: 预计今天结束!
-  closing_date: 结束日期是 {{value}}
+  closing_date: 结束日期是 %{value}
   create_opportunity: 创建机会
   currency: (¥)
   days_late: 晚了
   days_left: 天剩余
   discount: 折扣
-  discount_number: 有 {{value}} 折扣
-  expected_to_close: 预计结束于 {{time}} ，在 {{date}}
+  discount_number: 有 %{value} 折扣
+  expected_to_close: 预计结束于 %{time} ，在 %{date}
   from: 从
   no_closing_date: 没有预计结束日期
   no_discount: 没有折扣
@@ -404,10 +415,10 @@ zh-CN:
   opportunity: 机会
   opportunity_small: 机会
   opportunity_summary: 机会摘要
-  opportunity_summary_text: "{{amount}} 有 {{discount}} 折扣和 {{probability}} 可能性" 
-  past_due: 超过预计, 预计结束于 {{value}} 之前
+  opportunity_summary_text: "%{amount} 有 %{discount} 折扣和 %{probability} 可能性" 
+  past_due: 超过预计, 预计结束于 %{value} 之前
   probability: 可能性
-  probability_number: 有 {{value}} 可能性
+  probability_number: 有 %{value} 可能性
   save_opportunity: 保存机会
   stage: 阶段
   total_opportunities: 机会总计
@@ -426,7 +437,7 @@ zh-CN:
   due: 期限
   feel_free: 可任意
   move_to: 移动到
-  no_tasks: "你没有任何 {{value}} 任务"
+  no_tasks: "你没有任何 %{value} 任务"
   no_tasks_pending: 进行中
   no_tasks_assigned: 已分配
   no_tasks_completed: 完成
@@ -434,22 +445,22 @@ zh-CN:
   pending_tasks: 进行中任务
   related: '相关:'
   save_task: 保存任务
-  task_assigned: 任务已经分配给 {{value}}
-  task_assigned_to: 并分配给 {{value}}
+  task_assigned: 任务已经分配给 %{value}
+  task_assigned_to: 并分配给 %{value}
   task_completed: 已完成
-  task_completed_ago: 完成于 {{value}} 以前
-  task_completed_by: 由 {{user}} 完成于 {{time_ago}} 以前
+  task_completed_ago: 完成于 %{value} 以前
+  task_completed_by: 由 %{user} 完成于 %{time_ago} 以前
   task_created: 任务已被创建
-  task_due_in: 期限是 {{value}}
+  task_due_in: 期限是 %{value}
   task_due_later: 很快到期
   task_due_now: 现在到期
   task_due_today: 今天到期
-  task_from: 从 {{value}}
+  task_from: 从 %{value}
   task_overdue: 晚了，应到期于
   task_pending: 已被移动到进行中任务
   task_small: 任务
   tasks: 任务
-  total_tasks: 总计 {{value}}
+  total_tasks: 总计 %{value}
   view_assigned_tasks: 查看已分配任务
   view_pending_tasks: 查看进行中任务
 
@@ -481,32 +492,32 @@ zh-CN:
   save_note: 保存注释
   add_note_help: 添加一个新注释...
   edit_note: 编辑注释
-  added_ago: 添加于 {{value}} 之前
-  added_by: 添加于 {{time_ago}} 之前，由 {{user}} 
+  added_ago: 添加于 %{value} 之前
+  added_by: 添加于 %{time_ago} 之前，由 %{user} 
   back: 返回
   cancel: 取消
   close_form: 关闭，由
-  confirm_delete: 确认删除 {{value}}?
-  copy_permissions: 复制 {{value}} 权限
-  could_not_find: "未找到 {{value}}. 请"
-  could_not_find_matching: "未找到 {{value}} 匹配"
+  confirm_delete: 确认删除 %{value}?
+  copy_permissions: 复制 %{value} 权限
+  could_not_find: "未找到 %{value}. 请"
+  could_not_find_matching: "未找到 %{value} 匹配"
   create_new: 创建新
   select_existing: 选择已有
   delete: 删除
   discard: Discard # TODO
   edit: 编辑
-  items_total: '{{count}} 总计'
+  items_total: '%{count} 总计'
   me: 自己
   n_a: 无
   name: 名字
-  no_match: 无 {{value}} 匹配
+  no_match: 无 %{value} 匹配
   no_recent_items: 没有最近条目
   options: 选项
   permissions: 权限
   please_retry: 请再试一次
   recent_items: 最近项目
-  search_assets: 查找 {{value}}
-  time_ago: "{{value}} 以前"
+  search_assets: 查找 %{value}
+  time_ago: "%{value} 以前"
   background_info: 背景
   address: 地址
   street1: 街道 1 # NEW
@@ -556,7 +567,7 @@ zh-CN:
   #----------------------------------------------------------------------------
   approve: 批准
   create_user: 创建用户
-  last_seen: 上次 {{value}} 之前见到
+  last_seen: 上次 %{value} 之前见到
   personal_information: 个人信息
   reactivate: 重新激活
   save_user: 保存用户
@@ -568,31 +579,34 @@ zh-CN:
   user_is_admin: 此用户是管理员
   user_never_logged_in: "尚未登录"
   user_signed_up: 已申请
-  user_signed_up_on: 申请于 {{value}}
-  user_since: 用户自 {{value}}
+  user_signed_up_on: 申请于 %{value}
+  user_since: 用户自 %{value}
   user_suspended: 暂停
-  user_suspended_on: 暂停于 {{value}}
+  user_suspended_on: 暂停于 %{value}
   users: 用户
   users_small: 用户
 
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: '1 个联系人'
-      other: '{{count}} 个联系人'
+      other: '%{count} 个联系人'
     opportunity:
       one: '1 个机会'
-      other: '{{count}} 个机会'
+      other: '%{count} 个机会'
     lead:
       one: '1 个线索'
-      other: '{{count}} 个线索'
+      other: '%{count} 个线索'
     day:
       one: '1 天'
-      other: '{{count}} 天'
+      other: '%{count} 天'
     login:
       one: '1 个登录'
-      other: '{{count}} 个登录'
+      other: '%{count} 个登录'
 
   # Custom date/time formats.
   #----------------------------------------------------------------------------

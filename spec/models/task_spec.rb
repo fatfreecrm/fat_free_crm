@@ -24,9 +24,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Task do
 
-  before(:each) do
-    login
-  end
+  before { login }
 
   describe "Task/Create" do
     it "should create a new task instance given valid attributes" do
@@ -36,7 +34,7 @@ describe Task do
     end
 
     [ nil, Time.now.utc_offset + 3600 ].each do |offset|
-      before(:each) do
+      before do
         adjust_timezone(offset)
       end
 
@@ -91,7 +89,7 @@ describe Task do
     end
 
     [ nil, Time.now.utc_offset + 3600 ].each do |offset|
-      before(:each) do
+      before do
         adjust_timezone(offset)
       end
 
@@ -214,4 +212,38 @@ describe Task do
     end
   end
 
+  describe "Exportable" do
+    describe "unassigned tasks" do
+      before do
+        Task.delete_all
+        Factory(:task, :user => Factory(:user), :assignee => nil)
+        Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Task.all }
+      end
+    end
+
+    describe "assigned tasks" do
+      before do
+        Task.delete_all
+        Factory(:task, :user => Factory(:user), :assignee => Factory(:user))
+        Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Task.all }
+      end
+    end
+
+    describe "completed tasks" do
+      before do
+        Task.delete_all
+        Factory(:task, :user => Factory(:user), :completor => Factory(:user), :completed_at => 1.day.ago)
+        Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :completor => Factory(:user, :first_name => nil, :last_name => nil), :completed_at => 1.day.ago)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Task.all }
+      end
+    end
+  end
 end

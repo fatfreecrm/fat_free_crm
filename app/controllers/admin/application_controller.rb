@@ -23,8 +23,8 @@ class Admin::ApplicationController < ApplicationController
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
-    @auto_complete = self.controller_name.classify.constantize.scoped(:limit => 10).search(@query)
-    render :template => "common/auto_complete", :layout => nil
+    @auto_complete = self.controller_name.classify.constantize.search(@query).limit(10)
+    render "common/auto_complete", :layout => nil
   end
 
   private
@@ -34,7 +34,6 @@ class Admin::ApplicationController < ApplicationController
     if @current_user && !@current_user.admin?
       flash[:notice] = t(:msg_require_admin)
       redirect_to root_path
-      false
     end
   end
 end

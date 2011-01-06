@@ -2,11 +2,17 @@ FatFreeCRM::Application.routes.draw do
 
   root :to => 'home#index'
 
-  match 'options' => 'home#options'
-  match 'toggle' => 'home#toggle'
-  match 'timeline' => 'home#timeline', :as => :timeline
-  match 'timezone' => 'home#timezone', :as => :timezone
-  match 'redraw' => 'home#redraw'
+  match 'activities' => 'home#index'
+  match 'admin'      => 'admin/users#index',       :as => :admin
+  match 'login'      => 'authentications#new',     :as => :login
+  match 'logout'     => 'authentications#destroy', :as => :logout
+  match 'options'    => 'home#options'
+  match 'profile'    => 'users#show',              :as => :profile
+  match 'signup'     => 'users#new',               :as => :signup
+  match 'timeline'   => 'home#timeline',           :as => :timeline
+  match 'timezone'   => 'home#timezone',           :as => :timezone
+  match 'toggle'     => 'home#toggle'
+  match 'redraw'     => 'home#redraw'
 
   resource :authentication
 
@@ -105,12 +111,6 @@ FatFreeCRM::Application.routes.draw do
       post :discard
     end
   end
-
-  match 'signup' => 'users#new', :as => :signup
-  match 'profile' => 'users#show', :as => :profile
-  match 'login' => 'authentications#new', :as => :login
-  match 'logout' => 'authentications#destroy', :as => :logout
-  match 'admin' => 'admin/users#index', :as => :admin
 
   namespace :admin do
     resources :users do

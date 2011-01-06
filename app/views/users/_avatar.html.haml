@@ -1,7 +1,7 @@
 .remote
-  = form_for(@user, :url => upload_avatar_user_path(@user, :format => "js"), :html => { :multipart => true, :target => "uploading", :onsubmit => "$('user_submit).disabled = true" }) do |f|
+  = form_for(@user, :url => upload_avatar_user_path(@user, :format => "js"), :html => { :multipart => true, :target => "uploading", :onsubmit => "$('user_submit').disabled = true" }) do |f|
     = link_to_close avatar_user_path(@user)
-    = error_messages_for :avatar, :object => @user.avatar
+    = error_messages_for :avatar, :object => @user.avatar, :object_name => t('avatar')
 
     %p
       %small #{t :image_help}

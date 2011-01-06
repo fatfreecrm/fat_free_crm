@@ -33,6 +33,10 @@ class OpportunitiesController < ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @opportunities }
+      format.xls  { send_data @opportunities.to_xls, :type => :xls }
+      format.csv  { send_data @opportunities.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -40,7 +44,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1.xml                                               HTML
   #----------------------------------------------------------------------------
   def show
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity = Opportunity.my.find(params[:id])
     @comment = Comment.new
 
     @timeline = Timeline.find(@opportunity)
@@ -59,12 +63,12 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @opportunity = Opportunity.new(:user => @current_user, :stage => "prospecting", :access => Setting.default_access)
-    @users       = User.except(@current_user).all
+    @users       = User.except(@current_user)
     @account     = Account.new(:user => @current_user)
-    @accounts    = Account.my(@current_user).all(:order => "name")
+    @accounts    = Account.my.order("name")
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.my(@current_user).find(id))
+      instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
     end
 
     respond_to do |format|
@@ -79,12 +83,12 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @opportunity = Opportunity.my.find(params[:id])
+    @users = User.except(@current_user)
     @account  = @opportunity.account || Account.new(:user => @current_user)
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @accounts = Account.my.order("name")
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Opportunity.my(@current_user).find($1)
+      @previous = Opportunity.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -109,8 +113,8 @@ class OpportunitiesController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
-        @users = User.except(@current_user).all
-        @accounts = Account.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @accounts = Account.my.order("name")
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
         else
@@ -132,7 +136,7 @@ class OpportunitiesController < ApplicationController
   # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
   def update
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity = Opportunity.my.find(params[:id])
 
     respond_to do |format|
       if @opportunity.update_with_account_and_permissions(params)
@@ -144,8 +148,8 @@ class OpportunitiesController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all
-        @accounts = Account.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @accounts = Account.my.order("name")
         if @opportunity.account
           @account = Account.find(@opportunity.account.id)
         else
@@ -164,7 +168,7 @@ class OpportunitiesController < ApplicationController
   # DELETE /opportunities/1.xml                                   HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity = Opportunity.my.find(params[:id])
     @opportunity.destroy if @opportunity
 
     respond_to do |format|
@@ -197,7 +201,7 @@ class OpportunitiesController < ApplicationController
     @opportunities = get_opportunities(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @opportunities.to_xml }
     end
   end
@@ -216,42 +220,20 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     @opportunities = get_opportunities(:page => 1)
-    render :action => :index
+    render :index
   end
 
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
     @opportunities = get_opportunities(:page => 1)
-    render :action => :index
+    render :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_opportunities(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.pref[:opportunities_sort_by] || Opportunity.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.pref[:opportunities_per_page]
-    }
-
-    # Call :get_opportunities hook and return its output if any.
-    opportunities = hook(:get_opportunities, self, :records => records, :pages => pages)
-    return opportunities.last unless opportunities.empty?
-
-    # Default processing if no :get_opportunities hooks are present.
-    if session[:filter_by_opportunity_stage]
-      filtered = session[:filter_by_opportunity_stage].split(",")
-      current_query.blank? ? Opportunity.my(records).state(filtered) : Opportunity.my(records).state(filtered).search(current_query)
-    else
-      current_query.blank? ? Opportunity.my(records) : Opportunity.my(records).search(current_query)
-    end.paginate(pages)
+  def get_opportunities(options = {})
+    get_list_of_records(Opportunity, options.merge!(:filter => :filter_by_opportunity_stage))
   end
 
   #----------------------------------------------------------------------------
@@ -262,7 +244,7 @@ class OpportunitiesController < ApplicationController
         @opportunities = get_opportunities
         if @opportunities.blank?
           @opportunities = get_opportunities(:page => current_page - 1) if current_page > 1
-          render :action => :index and return
+          render :index and return
         end
       else # Called from related asset.
         self.current_page = 1
@@ -272,7 +254,7 @@ class OpportunitiesController < ApplicationController
     else
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @opportunity.name)
-      redirect_to(opportunities_path)
+      redirect_to opportunities_path
     end
   end
 
@@ -281,9 +263,9 @@ class OpportunitiesController < ApplicationController
     if related
       instance_variable_set("@#{related}", @opportunity.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      @opportunity_stage_total = { :all => Opportunity.my(@current_user).count, :other => 0 }
+      @opportunity_stage_total = { :all => Opportunity.my.count, :other => 0 }
       @stage.each do |value, key|
-        @opportunity_stage_total[key] = Opportunity.my(@current_user).where(:stage => key.to_s).count
+        @opportunity_stage_total[key] = Opportunity.my.where(:stage => key.to_s).count
         @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
       end
       @opportunity_stage_total[:other] += @opportunity_stage_total[:all]

@@ -33,9 +33,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Contact do
-  before(:each) do
-    login
-  end
+
+  before { login }
 
   it "should create a new instance given valid attributes" do
     Contact.create!(:first_name => "Billy", :last_name => "Bones")
@@ -130,6 +129,30 @@ describe Contact do
       @contact.discard!(@opportunity)
       @contact.opportunities.should == []
       @contact.opportunities.count.should == 0
+    end
+  end
+
+  describe "Exportable" do
+    describe "assigned contact" do
+      before do
+        Contact.delete_all
+        Factory(:contact, :user => Factory(:user), :assignee => Factory(:user))
+        Factory(:contact, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Contact.all }
+      end
+    end
+
+    describe "unassigned contact" do
+      before do
+        Account.delete_all
+        Factory(:contact, :user => Factory(:user), :assignee => nil)
+        Factory(:contact, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Contact.all }
+      end
     end
   end
 end

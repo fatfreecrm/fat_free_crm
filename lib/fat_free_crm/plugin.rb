@@ -18,7 +18,7 @@
 Rails::Plugin.class_eval do
   def initializer
     #~ ActiveSupport::Deprecation.warn "Rails::Plugin initializer is depricated use Railties instead"
-    if ENV['RAILS_ENV'] == "development"
+    if Rails.env.development?
       config.cache_classes = false # Tell Rails not to reload core classes when developing Fat Free CRM plugin.
     end
     self

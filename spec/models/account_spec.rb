@@ -22,9 +22,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Account do
 
-  before(:each) do
-    login
-  end
+  before { login }
 
   it "should create a new instance given valid attributes" do
     Account.create!(:name => "Test Account", :user => Factory(:user))
@@ -93,5 +91,29 @@ describe Account do
 #      @account.opportunities.should == []
 #      @account.opportunities.count.should == 0
 #    end
+  end
+
+  describe "Exportable" do
+    describe "assigned account" do
+      before do
+        Account.delete_all
+        Factory(:account, :user => Factory(:user), :assignee => Factory(:user))
+        Factory(:account, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Account.all }
+      end
+    end
+
+    describe "unassigned account" do
+      before do
+        Account.delete_all
+        Factory(:account, :user => Factory(:user), :assignee => nil)
+        Factory(:account, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Account.all }
+      end
+    end
   end
 end

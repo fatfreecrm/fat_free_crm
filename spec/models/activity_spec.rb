@@ -17,17 +17,14 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Activity do
 
-  before(:each) do
-    login
-  end
+  before { login }
 
   it "should create a new instance given valid attributes" do
     Activity.create!(:user => Factory(:user), :subject => Factory(:lead))
   end
 
   describe "with multiple activity records" do
-
-    before(:each) do
+    before do
       @user = Factory(:user)
       @actions = %w(created deleted updated viewed).freeze
       @actions.each_with_index do |action, index|
@@ -65,7 +62,7 @@ describe Activity do
 
   %w(account campaign contact lead opportunity task).each do |subject|
     describe "Create, update, and delete (#{subject})" do
-      before(:each) do
+      before do
         @subject = Factory(subject.to_sym, :user => @current_user)
         @conditions = [ 'user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', @current_user.id, @subject.id, @subject.class.name ]
       end
@@ -140,7 +137,7 @@ describe Activity do
 
   %w(account campaign contact lead opportunity).each do |subject|
     describe "Recently viewed items (#{subject})" do
-      before(:each) do
+      before do
         @subject = Factory(subject.to_sym, :user => @current_user)
         @conditions = [ "user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @current_user.id, @subject.id, @subject.class.name ]
       end
@@ -189,7 +186,7 @@ describe Activity do
   end
 
   describe "Recently viewed items (task)" do
-    before(:each) do
+    before do
       @task = Factory(:task)
       @conditions = [ "subject_id = ? AND subject_type = 'Task'", @task.id ]
     end
@@ -209,7 +206,7 @@ describe Activity do
   end
 
   describe "Action refinements for task updates" do
-    before(:each) do
+    before do
       @task = Factory(:task, :user => @current_user)
       @conditions = [ "subject_id=? AND subject_type='Task' AND user_id=?", @task.id, @current_user ]
     end
@@ -237,7 +234,7 @@ describe Activity do
   end
 
   describe "Rejecting a lead" do
-    before(:each) do
+    before do
       @lead = Factory(:lead, :user => @current_user, :status => "new")
       @conditions = [ "subject_id = ? AND subject_type = 'Lead' AND user_id = ?", @lead.id, @current_user ]
     end
@@ -340,4 +337,15 @@ describe Activity do
 #    end
   end
 
+  describe "Exportable" do
+    before do
+      Activity.delete_all
+      Factory(:activity, :user => Factory(:user), :subject => Factory(:account))
+      Factory(:activity, :user => Factory(:user, :first_name => nil, :last_name => nil), :subject => Factory(:account))
+      Activity.delete_all("action IS NOT NULL") # Delete created and views actions that are created implicitly.
+    end
+    it_should_behave_like("exportable") do
+      let(:exported) { Activity.all }
+    end
+  end
 end
