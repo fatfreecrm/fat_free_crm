@@ -496,6 +496,7 @@ en-US:
   could_not_find: "Couldn't find %{value}. Feel free to"
   could_not_find_matching: "Couldn't find %{value} matching"
   create_new: create new
+  create_a_new: create a new
   select_existing: select existing
   delete: Delete
   discard: Discard
