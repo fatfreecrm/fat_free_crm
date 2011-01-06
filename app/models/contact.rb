@@ -65,9 +65,11 @@ class Contact < ActiveRecord::Base
   scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
   scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
 
-  simple_column_search :first_name, :last_name, :email,
-    :match => lambda { |column| column == :email ? :middle : :start },
-    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('first_name ILIKE :s OR last_name ILIKE :s OR email ILIKE :m', :s => "#{query}%", :m => "%#{query}%")
+  }
+    
   uses_user_permissions
   acts_as_commentable
   is_paranoid
