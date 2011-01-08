@@ -493,8 +493,8 @@ en-US:
   close_form: Close form
   confirm_delete: Are you sure you want to delete this %{value}?
   copy_permissions: Copy %{value} permissions
-  could_not_find: "Couldn't find %{value}. Feel free to"
-  could_not_find_matching: "Couldn't find %{value} matching"
+  could_not_find: "Couldn't find any %{value}. Feel free to"
+  could_not_find_matching: "Couldn't find any %{value} matching"
   create_new: create new
   create_a_new: create a new
   select_existing: select existing
