@@ -3,8 +3,13 @@ items  = controller.controller_name
 item   = items.singularize
 assets = controller.instance_variable_get("@#{items}")
 
+if item == 'task'
+  assets = assets.values.flatten
+  title  = t(:"#{@view}_tab") << ' ' << t(items.to_sym)
+end
+
 atom_feed do |feed|
-  feed.title t(items.to_sym)
+  feed.title title || t(items.to_sym)
   feed.updated assets.max { |a, b| a.updated_at <=> b.updated_at }.updated_at
   feed.generator  "Fat Free CRM v#{FatFreeCRM::Version}"
   feed.author do |author|

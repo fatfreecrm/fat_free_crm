@@ -241,7 +241,11 @@ module FatFreeCRM
       
       # Find the asset from deduced conditions
       if asset = klass.where(conditions).first
-        attach(email, asset, :strip_first_line) if sender_has_permissions_for?(asset)
+        if sender_has_permissions_for?(asset)
+          attach(email, asset, :strip_first_line) 
+        else
+          log "Sender does not have permissions to attach email to #{data["Type"]} #{data["Email"]} <#{data["Name"]}>"
+        end
       else
         log "#{data["Type"]} #{data["Email"]} <#{data["Name"]}> not found, creating new one..."
         asset = klass.create!(default_values(email, data["Type"].capitalize, data["Name"], data["Email"], data["Phone"]))
