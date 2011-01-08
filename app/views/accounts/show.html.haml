@@ -17,11 +17,11 @@
 
 = section(@account, :contacts)
 .list#contacts
-  = render :partial => "contacts/contact", :collection => @account.contacts
+  = render :partial => "contacts/contact", :collection => @account.contacts.paginate(:page => 1)
 
 = section(@account, :opportunities)
 .list#opportunities
-  = render :partial => "opportunities/opportunity", :collection => @account.opportunities
+  = render :partial => "opportunities/opportunity", :collection => @account.opportunities.paginate(:page => 1)
 
 = load_select_popups_for(@account, :tasks, :contacts, :opportunities)
 
