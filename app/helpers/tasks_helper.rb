@@ -63,6 +63,49 @@ module TasksHelper
     onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "'bucket=#{bucket}'")
   end
 
+  # Helper to display XLS, CSV, RSS, and ATOM links for tasks.
+  #----------------------------------------------------------------------------
+  def links_to_task_export(view)
+    token = @current_user.single_access_token
+
+    exports = %w(xls csv).map do |format|
+      link_to(format.upcase, "#{tasks_path}.#{format}?view=#{view}", :title => I18n.t(:"to_#{format}"))
+    end
+    feeds = %w(rss atom).map do |format|
+      link_to(format.upcase, "#{tasks_path}.#{format}?view=#{view}&authentication_credentials=#{token}", :title => I18n.t(:"to_#{format}"))
+    end
+
+    (exports + feeds).join(' | ')
+  end
+
+  # Task summary for RSS/ATOM feed.
+  #----------------------------------------------------------------------------
+  def task_summary(task)
+    summary = [ task.category.blank? ? t(:other) : t(task.category) ]
+    if @view != "completed"
+      if @view == "pending" && task.user != @current_user
+        summary << t(:task_from, task.user.full_name)
+      elsif @view == "assigned"
+        summary << t(:task_from, task.assignee.full_name)
+      end
+      summary << "#{t(:related)} #{task.asset.name} (#{task.asset_type.downcase})" if task.asset_id?
+      summary << if task.bucket == "due_asap"
+        t(:task_due_now)
+      elsif task.bucket == "due_later"
+        t(:task_due_later)
+      else
+        l(task.due_at.localtime, :format => :mmddhhss)
+      end
+    else # completed
+      summary << "#{t(:related)} #{task.asset.name} (#{task.asset_type.downcase})" if task.asset_id?
+      summary << t(:task_completed_by,
+                   :time_ago => distance_of_time_in_words(task.completed_at, Time.now),
+                   :date     => l(task.completed_at.localtime, :format => :mmddhhss),
+                   :user     => task.completor.full_name)
+    end
+    summary.join(', ')
+  end
+
   #----------------------------------------------------------------------------
   def hide_task_and_possibly_bucket(id, bucket)
     update_page do |page|

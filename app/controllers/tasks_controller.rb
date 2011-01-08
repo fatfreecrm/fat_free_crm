@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-
+require 'ap'
 class TasksController < ApplicationController
   before_filter :require_user
   before_filter :auto_complete, :only => :auto_complete
@@ -31,6 +31,10 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.xml  { render :xml => @tasks }
+      format.xls  { send_data @tasks.values.flatten.to_xls, :type => :xls }
+      format.csv  { send_data @tasks.values.flatten.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
