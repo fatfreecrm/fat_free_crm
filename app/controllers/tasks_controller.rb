@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-require 'ap'
 class TasksController < ApplicationController
   before_filter :require_user
   before_filter :auto_complete, :only => :auto_complete
