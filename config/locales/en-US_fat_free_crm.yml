@@ -27,6 +27,13 @@ en-US:
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
 
+  affiliate: Affiliate
+  competitor: Competitor
+  customer: Customer
+  partner: Partner
+  reseller: Reseller
+  vendor: Vendor
+
   planned: Planned
   started: Started
   on_hold: On Hold
@@ -285,6 +292,7 @@ en-US:
   save_account: Save Account
   share_with: Share it with the following people
   shipping_address: Shipping address
+  total_accounts: Total Accounts
   website: Website
 
   # Views -> Campaigns.

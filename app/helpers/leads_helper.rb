@@ -54,15 +54,6 @@ module LeadsHelper
     end
   end
 
-  # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
-  #----------------------------------------------------------------------------
-  def rating_select(name, options = {})
-    stars = Hash[ (1..5).map { |star| [ star, "&#9733;" * star ] } ].sort
-    options_for_select = %Q(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
-    options_for_select << stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
-    select_tag name, options_for_select.html_safe, options
-  end
-
   # Sidebar checkbox control for filtering leads by status.
   #----------------------------------------------------------------------------
   def lead_status_checbox(status, count)
