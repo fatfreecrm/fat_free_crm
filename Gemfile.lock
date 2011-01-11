@@ -134,7 +134,7 @@ GEM
     highline (1.6.1)
     hoe (2.8.0)
       rake (>= 0.8.7)
-    hoptoad_notifier (2.3.12)
+    hoptoad_notifier (2.4.2)
       activesupport
       builder
     httpclient (2.1.5.2)
@@ -257,7 +257,7 @@ DEPENDENCIES
   ffaker
   haml (>= 3.0.18)
   headless
-  hoptoad_notifier
+  hoptoad_notifier (>= 2.4.2)
   is_paranoid!
   meta_search (>= 0.9.9.1)
   newrelic_rpm
