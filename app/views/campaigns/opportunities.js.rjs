@@ -1,0 +1,3 @@
+@opportunities = @campaign.opportunities.paginate(:page => params[:page], :per_page => 20)
+page['opportunities'].replace_html :partial => 'opportunities/opportunity', :collection => @opportunities
+page['opportunities_pagination'].replace will_paginate(@opportunities, :id => true, :params => {:action => :opportunities})

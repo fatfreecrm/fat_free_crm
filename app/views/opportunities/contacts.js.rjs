@@ -1,0 +1,3 @@
+@contacts = @opportunity.contacts.paginate(:page => params[:page], :per_page => 20)
+page['contacts'].replace_html :partial => 'contacts/contact', :collection => @contacts
+page['contacts_pagination'].replace will_paginate(@contacts, :id => true, :params => {:action => :contacts})
