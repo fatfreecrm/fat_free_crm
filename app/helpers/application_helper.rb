@@ -380,9 +380,14 @@ module ApplicationHelper
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
   def links_to_export
-    path = controller.controller_name == 'home' ?
-      '/activities' : send("#{controller.controller_name}_path")
     token = @current_user.single_access_token
+    path = if controller.controller_name == 'home'
+      activities_path
+    elsif controller.class.to_s.starts_with?("Admin::")
+      send("admin_#{controller.controller_name}_path")
+    else
+      send("#{controller.controller_name}_path")
+    end
 
     exports = %w(xls csv).map do |format|
       link_to(format.upcase, "#{path}.#{format}", :title => I18n.t(:"to_#{format}"))

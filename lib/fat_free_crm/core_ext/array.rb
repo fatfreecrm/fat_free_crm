@@ -54,7 +54,7 @@ class Array
 
     if any?
       klass = first.class
-      columns = klass.columns.map(&:name) - [ 'deleted_at' ]
+      columns = klass.columns.map(&:name).reject! { |column| column =~ /deleted_at|password|token/ }
 
       output << columns.map do |column|
         klass.human_attribute_name(column).wrap('<Cell><Data ss:Type="String">', '</Data></Cell>')
@@ -82,7 +82,7 @@ class Array
     return '' if empty?
 
     klass = first.class
-    columns = klass.columns.map(&:name)
+    columns = klass.columns.map(&:name).reject! { |column| column =~ /password|token/ }
 
     CSV.generate do |csv|
       csv << columns.map { |column| klass.human_attribute_name(column) }
