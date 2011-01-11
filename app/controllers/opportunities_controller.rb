@@ -216,6 +216,12 @@ class OpportunitiesController < ApplicationController
     end
   end
 
+  # GET /opportunities/contacts                                            AJAX
+  #----------------------------------------------------------------------------
+  def contacts
+    @opportunity = Opportunity.my.find(params[:id])
+  end
+
   # POST /opportunities/redraw                                             AJAX
   #----------------------------------------------------------------------------
   def redraw

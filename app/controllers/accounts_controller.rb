@@ -191,6 +191,18 @@ class AccountsController < ApplicationController
     render :index
   end
 
+  # GET /accounts/contacts                                                 AJAX
+  #----------------------------------------------------------------------------
+  def contacts
+    @account = Account.my.find(params[:id])
+  end
+
+  # GET /accounts/opportunities                                            AJAX
+  #----------------------------------------------------------------------------
+  def opportunities
+    @account = Account.my.find(params[:id])
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_accounts(options = {})
