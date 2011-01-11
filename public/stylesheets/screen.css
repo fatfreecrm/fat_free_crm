@@ -250,8 +250,7 @@ tt {
 
 .req {
   color: #330000;
-  background: url("/images/asterisk.gif") no-repeat scroll right top transparent;
-  float: left; }
+  background: url("/images/asterisk.gif") no-repeat scroll right top transparent; }
 
 .intro {
   color: dimgray;
@@ -425,14 +424,39 @@ tt {
   font-size: 9px;
   margin: 12px 0px 0px 0px; }
 
-#paginate {
-  float: right;
-  font-size: 10px;
-  margin: 4px 0px 0px 0px; }
-
-#paging {
-  float: right;
-  margin: 7px 5px 0px 0px; }
+.pagination {
+  background: white;
+  /* self-clearing method: */ }
+  .pagination a, .pagination span, .pagination em {
+    padding: 0.2em 0.5em;
+    display: block;
+    float: left;
+    margin-right: 1px; }
+  .pagination span.disabled {
+    color: #999999;
+    border: 1px solid #dddddd; }
+  .pagination em {
+    font-weight: bold;
+    background: #2e6ab1;
+    color: white;
+    border: 1px solid #2e6ab1; }
+  .pagination a {
+    text-decoration: none;
+    color: #105cb6;
+    border: 1px solid #9aafe5; }
+    .pagination a:hover, .pagination a:focus {
+      color: #000033;
+      border-color: #000033; }
+  .pagination:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html .pagination {
+    height: 1%; }
+  *:first-child + html .pagination {
+    overflow: hidden; }
 
 .confirm {
   background: #cdfecd;

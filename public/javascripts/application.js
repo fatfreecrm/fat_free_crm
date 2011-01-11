@@ -1,16 +1,16 @@
 // Fat Free CRM
 // Copyright (C) 2008-2010 by Michael Dvorkin
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
@@ -250,7 +250,7 @@ var crm = {
     new Ajax.Request(this.base_url + "/home/timeline", {
       method     : "get",
       parameters : { type : arr[1], id : arr[2], state : state }
-    });    
+    });
   },
 
   //----------------------------------------------------------------------------
@@ -406,7 +406,7 @@ var crm = {
       Event.stopObserving(this.autocompleter.element);
       delete this.autocompleter;
     }
-    this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", { 
+    this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", {
       frequency: 0.25,
       afterUpdateElement: function(text, el) {
         if (el.id) {      // Autocomplete entry found.
@@ -432,6 +432,30 @@ var crm = {
     }
   }
 }
+
+document.observe("dom:loaded", function() {
+  // the element in which we will observe all clicks and capture
+  // ones originating from pagination links
+  var container = $(document.body)
+
+  if (container) {
+    var img = new Image;
+    img.src = '/images/loading.gif';
+
+    function createSpinner() {
+      return new Element('img', { src: img.src, 'class': 'spinner' })
+    }
+
+    container.observe('click', function(e) {
+      var el = e.element();
+      if (el.match('.pagination a')) {
+        el.up('.pagination').update(createSpinner());
+        new Ajax.Request(el.href, { method: 'get' });
+        e.stop();
+      }
+    });
+  }
+});
 
 // Note: observing "dom:loaded" is supposedly faster that "window.onload" since
 // it will fire immediately after the HTML document is fully loaded, but before

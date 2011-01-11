@@ -11,7 +11,7 @@ public/plugin_assets
 spec/reports
 nbproject
 .rspec
-tmp/**/*
+tmp
 .bundle
 .idea/
 .DS_Store

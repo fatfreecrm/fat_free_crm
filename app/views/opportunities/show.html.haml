@@ -17,7 +17,9 @@
 
 = section(@opportunity, :contacts)
 .list#contacts
-  = render :partial => "contacts/contact", :collection => @opportunity.contacts
+  - @contacts = @opportunity.contacts.paginate(:page => 1, :per_page => 20)
+  = render :partial => "contacts/contact", :collection => @opportunity.contacts.paginate(:page => 1, :per_page => 20)
+= will_paginate @contacts, :id => true, :params => {:action => :contacts}
 
 = load_select_popups_for(@opportunity, :tasks, :contacts)
 
