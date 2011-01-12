@@ -67,26 +67,22 @@ namespace :crm do
 
   desc "Prepare the database and load default application settings"
   task :setup => :environment do
-    proceed = ENV["PROCEED"] == 'true'
-    if !proceed and ActiveRecord::Migrator.current_version > 0
+    if ENV["PROCEED"] != 'true' and ActiveRecord::Migrator.current_version > 0
       puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
+      proceed = false
       loop do
         print "Continue [yes/no]: "
         proceed = STDIN.gets.strip
         break unless proceed.blank?
       end
-      proceed = (proceed =~ /y(?:es)*/i)
+      return unless proceed =~ /y(?:es)*/i # Don't continue unless user typed y(es)
     end
-    if proceed
-      Rake::Task["db:migrate:reset"].invoke
-
-      # Migrating plugins is not part of Rails 3 yet, but it is coming. See
-      # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
-
-      # Rake::Task["db:migrate:plugins"].invoke
-      Rake::Task["crm:settings:load"].invoke
-      Rake::Task["crm:setup:admin"].invoke
-    end
+    Rake::Task["db:migrate:reset"].invoke
+    # Migrating plugins is not part of Rails 3 yet, but it is coming. See
+    # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
+    Rake::Task["db:migrate:plugins"].invoke rescue nil
+    Rake::Task["crm:settings:load"].invoke
+    Rake::Task["crm:setup:admin"].invoke
   end
 
   namespace :setup do
