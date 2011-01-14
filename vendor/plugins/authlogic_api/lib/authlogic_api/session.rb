@@ -141,7 +141,7 @@ module AuthlogicApi
         # WARNING: Rails specfic way of building payload
         def build_api_payload
           request = controller.request
-          if request.post? || request.put?
+          if (request.post? || request.put?) && request.raw_post.present?
             request.raw_post
           else
             params = request.query_parameters.reject {|key, value| key.to_s == api_signature_param}
