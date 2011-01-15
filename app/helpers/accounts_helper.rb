@@ -21,14 +21,19 @@ module AccountsHelper
   #----------------------------------------------------------------------------
   def account_category_checbox(category, count)
     checked = (session[:filter_by_account_category] ? session[:filter_by_account_category].split(",").include?(category.to_s) : count.to_i > 0)
-    onclick = remote_function(:url => { :action => :filter }, :with => h(%Q/"category=" + $$("input[name='category[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+    onclick = remote_function(
+      :url      => { :action => :filter },
+      :with     => h(%Q/"category=" + $$("input[name='category[]']").findAll(function (el) { return el.checked }).pluck("value")/),
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
     check_box_tag("category[]", category, checked, :id => category, :onclick => onclick)
   end
 
   # Quick account summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def account_summary(account)
-    [ number_to_currency(account.opportunities.not_lost.map(&:weighted_amount).sum, :precision => 0),
+    [ number_to_currency(account.opportunities.pending.map(&:weighted_amount).sum, :precision => 0),
       t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => account.user_id_full_name),
       t('pluralize.contact', account.contacts.count),
       t('pluralize.opportunity', account.opportunities.count),

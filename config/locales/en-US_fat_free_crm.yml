@@ -271,6 +271,7 @@ en-US:
   #----------------------------------------------------------------------------
   account: Account
   account_small: account
+  account_summary: Account Summary
   accounts: Accounts
   accounts_options: Accounts Options
   accounts_small: accounts
@@ -280,6 +281,7 @@ en-US:
   date_created: Date Created
   date_updated: Date Updated
   fax: Fax
+  pipeline: Pipeline
   intro: You can add %{value} information later.
   mobile_small: mobile
   open_in_window: Open %{value} in a new window

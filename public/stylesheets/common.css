@@ -178,6 +178,21 @@
 .grayed {
   color: silver !important; }
 
+.amount {
+  background: palegreen;
+  color: black;
+  font-size: 11px;
+  text-align: center;
+  padding: 0px 3px 0px 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px; }
+
 .strip {
   background: gainsboro;
   color: black;

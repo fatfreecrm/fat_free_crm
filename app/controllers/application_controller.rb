@@ -49,6 +49,7 @@ class ApplicationController < ActionController::Base
     model = controller_name.classify.constantize.my.find(params[:id])
     @attachment = params[:assets].classify.constantize.find(params[:asset_id])
     @attached = model.attach!(@attachment)
+    @account  = model.reload if model.is_a?(Account)
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
@@ -66,6 +67,7 @@ class ApplicationController < ActionController::Base
     model = controller_name.classify.constantize.my.find(params[:id])
     @attachment = params[:attachment].constantize.find(params[:attachment_id])
     model.discard!(@attachment)
+    @account  = model.reload if model.is_a?(Account)
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|

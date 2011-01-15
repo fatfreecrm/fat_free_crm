@@ -244,7 +244,7 @@ module ApplicationHelper
   def refresh_sidebar_for(view, action = nil, shake = nil)
     update_page do |page|
       page[:sidebar].replace_html :partial => "layouts/sidebar", :locals => { :view => view, :action => action }
-      page[shake].visual_effect(:shake, :duration => 0.4, :distance => 3) if shake
+      page[shake].visual_effect(:shake, :duration => 0.2, :distance => 3) if shake
     end
   end
 

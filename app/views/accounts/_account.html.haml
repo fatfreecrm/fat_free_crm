@@ -1,9 +1,9 @@
-- amount = account.opportunities.not_lost.map(&:weighted_amount).sum
+- amount = account.opportunities.pending.map(&:weighted_amount).sum
 %li[account]{ highlightable(dom_id(account, :tools)) }
-  - if amount != 0.0
-    .strip.some= number_to_currency(amount, :precision => 0)
+  - if account.category
+    .strip{:class => account.category} #{t(account.category)}
   - else
-    .strip.none None
+    .strip{:style => "color: gray;"} #{t :other}
 
   .tools{ invisible, :id => dom_id(account, :tools) }
     = hook(:account_tools_before, self, :account => account)
@@ -12,15 +12,20 @@
 
   .indent
     = link_to(h(account.name), account)
+    - if amount != 0.0
+      %span.amount= number_to_currency(amount, :precision => 0)
     &ndash;
     %tt
       = account.location << ", " unless account.location.blank?
-      = t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => (account.user.id == @current_user.id ? t(:me) : h(account.user.full_name)))
+      = t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => (account.user.id == @current_user.id ? t(:me) : h(account.user.full_name))) << " | "
+      = t('pluralize.contact', account.contacts.count) << " | "
+      = t('pluralize.opportunity', account.opportunities.count)
+
+
     - unless @current_user.preference[:accounts_outline] == "brief"
       %dt
+        = stars_for(account) + " | "
         = link_to(account.website, account.website.to_url) << " | " if account.website.present?
         = link_to_email(account.email) << " | " if account.email.present?
-        = t(:phone_small) << ": " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
-        = t('pluralize.contact', account.contacts.count) << " | "
-        = t('pluralize.opportunity', account.opportunities.count)
+        = t(:phone_small) << ": " << (account.toll_free_phone || account.phone) if account.toll_free_phone? || account.phone?
       = hook(:account_bottom, self, :account => account)

@@ -1,3 +1,7 @@
+- won = @account.opportunities.won.map(&:amount).sum
+- lost = @account.opportunities.lost.map(&:amount).sum
+- pipeline = @account.opportunities.pipeline.map(&:weighted_amount).sum
+
 .panel#summary
   %h4= h(@account.name)
   - if @account.website
@@ -19,6 +23,26 @@
 
   %div= render "common/address_show", :asset => @account, :type => 'billing', :title => :billing_address
   %div= render "common/address_show", :asset => @account, :type => 'shipping', :title => :shipping_address
+
+  .caption #{t :account_summary}
+  %li
+    %dt= pipeline != 0.0 ? number_to_currency(pipeline, :precision => 0) : t(:n_a)
+    %tt #{t :pipeline}:
+  %li
+    %dt= won != 0.0 ? number_to_currency(won, :precision => 0) : t(:n_a)
+    %tt #{t :won}:
+  %li
+    %dt= lost != 0.0 ? number_to_currency(lost, :precision => 0) : t(:n_a)
+    %tt #{t :lost}:
+  %li
+    %dt= t(@account.category, :default => :other)
+    %tt #{t :category}:
+  %li
+    %span{:style => "float:right;"}= stars_for(@account)
+    %tt #{t :rating}:
+  %li.last
+    %dt= truncate((@account.assigned_to ? @account.assignee.full_name : @account.user.full_name), :length => 16)
+    %tt #{t :assigned_to}:
 
   - unless @account.background_info.blank?
     .caption #{t :background_info}

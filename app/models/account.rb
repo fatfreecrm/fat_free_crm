@@ -62,7 +62,7 @@ class Account < ActiveRecord::Base
   acts_as_commentable
   is_paranoid
   exportable
-  sortable :by => [ "name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable :by => [ "name ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_account_name
   validates_uniqueness_of :name, :scope => :deleted_at

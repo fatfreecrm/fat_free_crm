@@ -147,12 +147,12 @@ account_category:
   - :vendor
 
 account_category_color:
-  :affiliate   : palegreen
+  :affiliate   : lavender
   :competitor  : paleturquoise
-  :customer    : bisque
-  :partner     : pink
+  :customer    : pink
+  :partner     : bisque
   :reseller    : thistle
-  :vendor      : aquamarine
+  :vendor      : skyblue
 
 # Campaign Status. To add custom status use string value, for example:
 #
