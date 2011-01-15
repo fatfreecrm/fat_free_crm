@@ -9,7 +9,7 @@ gem 'acts_as_commentable',  '>= 3.0.1'
 gem 'authlogic',            '>= 2.1.6', :path => File.join(File.dirname(__FILE__), 'vendor', 'gems', 'authlogic')
 gem 'haml',                 '>= 3.0.24'
 gem 'mysql2',               '>= 0.2.6'
-gem 'paperclip',            '>= 2.3.6', :git => "git://github.com/thoughtbot/paperclip.git"
+gem 'paperclip',            '>= 2.3.6'
 gem 'simple_column_search', '>= 1.1.0'
 gem 'will_paginate',        '>= 3.0.pre2'
 
@@ -23,11 +23,11 @@ group :test do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
   gem 'factory_girl',       '>= 1.3.2'
   gem 'ffaker',             '>= 1.0.0'
-  gem "rspec-rails",        '>= 2.2.1'
-  gem "rspec",              '>= 2.2.0'
-  gem "rspec-core",         '>= 2.2.0'
-  gem "rspec-expectations", '>= 2.2.0'
-  gem "rspec-mocks",        '>= 2.2.0'
+  gem "rspec-rails",        '>= 2.4.1'
+  gem "rspec",              '>= 2.4.0'
+  gem "rspec-core",         '>= 2.4.0'
+  gem "rspec-expectations", '>= 2.4.0'
+  gem "rspec-mocks",        '>= 2.4.0'
 end
 
 # Gem watch list:
