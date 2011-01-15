@@ -1,4 +1,4 @@
-- amount = account.opportunities.pending.map(&:weighted_amount).sum
+- amount = account.opportunities.pipeline.map(&:weighted_amount).sum
 %li[account]{ highlightable(dom_id(account, :tools)) }
   - if account.category
     .strip{:class => account.category} #{t(account.category)}

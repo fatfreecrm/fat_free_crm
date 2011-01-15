@@ -1,13 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/campaigns/destroy.js.rjs" do
-  include CampaignsHelper
-
-  before(:each) do
+  before do
     login_and_assign
     assign(:campaign, @campaign = Factory(:campaign, :user => @current_user))
     assign(:campaigns, [ @campaign ].paginate)
-    assign(:campaign_status_total, { :called_off => 1, :completed => 1, :on_hold => 1, :planned => 1, :started => 1, :other => 1, :all => 6 })
+    assign(:campaign_status_total, Hash.new(1))
     render
   end
 

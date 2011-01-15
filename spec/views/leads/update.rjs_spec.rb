@@ -1,19 +1,17 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/leads/update.js.rjs" do
-  include LeadsHelper
-
-  before(:each) do
+  before do
     login_and_assign
     assign(:lead, @lead = Factory(:lead, :user => @current_user, :assignee => Factory(:user)))
     assign(:users, [ @current_user ])
     assign(:campaigns, [ Factory(:campaign) ])
-    assign(:lead_status_total, { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 })
+    assign(:lead_status_total, Hash.new(1))
   end
 
   describe "no errors:" do
     describe "on landing page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
       end
 
@@ -33,7 +31,7 @@ describe "/leads/update.js.rjs" do
     end
 
     describe "on index page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       end
 
@@ -56,7 +54,7 @@ describe "/leads/update.js.rjs" do
     end
 
     describe "on related asset page -" do
-      before(:each) do
+      before do
         assign(:campaign, Factory(:campaign))
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
@@ -83,12 +81,12 @@ describe "/leads/update.js.rjs" do
   end # no errors
 
   describe "validation errors :" do
-    before(:each) do
+    before do
       @lead.errors.add(:first_name)
     end
 
     describe "on landing page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
       end
 
@@ -103,7 +101,7 @@ describe "/leads/update.js.rjs" do
     end
 
     describe "on index page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       end
 
@@ -118,7 +116,7 @@ describe "/leads/update.js.rjs" do
     end
 
     describe "on related asset page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 

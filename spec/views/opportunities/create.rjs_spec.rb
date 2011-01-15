@@ -1,9 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/opportunities/create.js.rjs" do
-  include OpportunitiesHelper
-
-  before(:each) do
+  before do
     login_and_assign
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
@@ -12,7 +10,7 @@ describe "/opportunities/create.js.rjs" do
     before(:each) do
       assign(:opportunity, @opportunity = Factory(:opportunity))
       assign(:opportunities, [ @opportunities ].paginate)
-      assign(:opportunity_stage_total, { :prospecting => 10, :final_review => 1, :won => 2, :all => 20, :analysis => 1, :lost => 0, :presentation => 2, :other => 0, :proposal => 1, :negotiation => 2 })
+      assign(:opportunity_stage_total, Hash.new(1))
     end
 
     it "should hide [Create Opportunity] form and insert opportunity partial" do
@@ -41,6 +39,17 @@ describe "/opportunities/create.js.rjs" do
       rendered.should have_rjs("paginate")
     end
 
+    it "should update related account sidebar when called from related account" do
+      assign(:account, account = Factory(:account))
+      controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
+      render
+
+      rendered.should have_rjs("sidebar") do |rjs|
+        with_tag("div[class=panel][id=summary]")
+        with_tag("div[class=panel][id=recently]")
+      end
+    end
+
     it "should update related campaign sidebar when called from related campaign" do
       assign(:campaign, campaign = Factory(:campaign))
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
@@ -52,8 +61,8 @@ describe "/opportunities/create.js.rjs" do
       end
     end
 
-    it "should update recently viewed items when called from related asset" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+    it "should update sidebar when called from related contact" do
+      controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
       render
 
       rendered.should have_rjs("recently") do |rjs|

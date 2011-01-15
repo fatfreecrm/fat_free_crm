@@ -1,26 +1,23 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/leads/promote.js.rjs" do
-  include LeadsHelper
-
-  before(:each) do
+  before do
     login_and_assign
-
     assign(:users, [ @current_user ])
     assign(:account, @account = Factory(:account))
     assign(:accounts, [ @account ])
     assign(:contact, Factory(:contact))
     assign(:opportunity, Factory(:opportunity))
-    assign(:lead_status_total, { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 })
+    assign(:lead_status_total, Hash.new(1))
   end
 
   describe "no errors :" do
-    before(:each) do
+    before do
       assign(:lead, @lead = Factory(:lead, :status => "converted", :user => @current_user, :assignee => @current_user))
     end
 
     describe "from lead landing page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
       end
 
@@ -41,7 +38,7 @@ describe "/leads/promote.js.rjs" do
     end
 
     describe "from lead index page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       end
 
@@ -64,7 +61,7 @@ describe "/leads/promote.js.rjs" do
     end
 
     describe "from related campaign page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
         assign(:campaign, Factory(:campaign))
         assign(:stage, Setting.unroll(:opportunity_stage))
@@ -100,12 +97,12 @@ describe "/leads/promote.js.rjs" do
   end # no errors
 
   describe "validation errors:" do
-    before(:each) do
+    before do
       assign(:lead, @lead = Factory(:lead, :status => "new", :user => @current_user, :assignee => @current_user))
     end
 
     describe "from lead landing page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
       end
 
@@ -119,7 +116,7 @@ describe "/leads/promote.js.rjs" do
     end
 
     describe "from lead index page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       end
 
@@ -133,7 +130,7 @@ describe "/leads/promote.js.rjs" do
     end
 
     describe "from related asset page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
