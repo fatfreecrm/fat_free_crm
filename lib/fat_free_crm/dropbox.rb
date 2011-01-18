@@ -342,15 +342,15 @@ module FatFreeCRM
         defaults[:stage] = "prospecting" if keyword == "Opportunity" # TODO: I18n
 
       when "Contact", "Lead"
-        first_name, *last_name = data.delete("Name")
+        first_name, *last_name = data.delete("Name").split(' ')
         defaults[:first_name] = first_name
         defaults[:last_name] = (last_name.any? ? last_name.join(" ") : "(unknown)")
         defaults[:status] = "contacted" if keyword == "Lead"        # TODO: I18n
       end
 
       data.each do |key, value|
-        key = key.downcase.to_sym
-        defaults[key] = value if klass.respond_to?(key)
+        key = key.downcase
+        defaults[key.to_sym] = value if klass.column_names.include?(key)
       end
 
       defaults
