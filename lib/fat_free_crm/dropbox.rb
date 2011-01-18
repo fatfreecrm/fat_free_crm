@@ -248,7 +248,7 @@ module FatFreeCRM
         end
       else
         log "#{data["Type"]} #{data["Email"]} <#{data["Name"]}> not found, creating new one..."
-        asset = klass.create!(default_values(data))
+        asset = klass.create!(default_values(klass, data))
         attach(email, asset, :strip_first_line)
       end
       true
@@ -327,7 +327,7 @@ module FatFreeCRM
     end
 
     #----------------------------------------------------------------------------------------
-    def default_values(data)
+    def default_values(klass, data)
       data = data.dup
       keyword = data.delete("Type").capitalize
 
@@ -349,7 +349,8 @@ module FatFreeCRM
       end
 
       data.each do |key, value|
-        defaults[key.downcase.to_sym] = value
+        key = key.downcase.to_sym
+        defaults[key] = value if klass.respond_to?(key)
       end
 
       defaults
