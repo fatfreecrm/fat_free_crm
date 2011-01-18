@@ -99,7 +99,7 @@ module FatFreeCRM
       with_pipe_separated_data(email) do |data|
         find_or_create_and_attach(email, data)
       end and return
-      
+
       with_explicit_keyword(email) do |keyword, name|
         data = {"Type" => keyword, "Name" => name}
         find_or_create_and_attach(email, data)
@@ -195,7 +195,7 @@ module FatFreeCRM
 
     # Checks the email to detect keyword on the first line.
     #--------------------------------------------------------------------------------------
-    def with_explicit_keyword(email)     
+    def with_explicit_keyword(email)
       first_line = plain_text_body(email).split("\n").first
 
       if first_line =~ %r|^[\./]?(#{KEYWORDS.join('|')})\s(.+)$|i
@@ -235,20 +235,20 @@ module FatFreeCRM
         else
           [ 'first_name LIKE ? AND last_name LIKE ?', "%#{first_name}", "%#{last_name.join(' ')}" ]
         end
-      else       
+      else
         conditions = ['name LIKE ?', "%#{data["Name"]}%"]
       end
-      
+
       # Find the asset from deduced conditions
       if asset = klass.where(conditions).first
         if sender_has_permissions_for?(asset)
-          attach(email, asset, :strip_first_line) 
+          attach(email, asset, :strip_first_line)
         else
           log "Sender does not have permissions to attach email to #{data["Type"]} #{data["Email"]} <#{data["Name"]}>"
         end
       else
         log "#{data["Type"]} #{data["Email"]} <#{data["Name"]}> not found, creating new one..."
-        asset = klass.create!(default_values(email, data["Type"].capitalize, data["Name"], data["Email"], data["Phone"]))
+        asset = klass.create!(default_values(data))
         attach(email, asset, :strip_first_line)
       end
       true
@@ -263,7 +263,7 @@ module FatFreeCRM
 
         # Leads and Contacts have an alt_email: try it if lookup by primary email has failed.
         if !asset && klass.column_names.include?("alt_email")
-          asset = klass.find_by_alt_email(recipient) 
+          asset = klass.find_by_alt_email(recipient)
         end
 
         if asset && sender_has_permissions_for?(asset)
@@ -286,7 +286,7 @@ module FatFreeCRM
       cc = email.cc.blank? ? nil : email.cc.join(", ")
 
       email_body = if strip_first_line
-        plain_text_body(email).split("\n")[1..-1].join("\n").strip 
+        plain_text_body(email).split("\n")[1..-1].join("\n").strip
       else
         plain_text_body(email)
       end
@@ -327,28 +327,31 @@ module FatFreeCRM
     end
 
     #----------------------------------------------------------------------------------------
-    def default_values(email, keyword, name, email_address=nil, phone=nil)
+    def default_values(data)
+      data = data.dup
+      keyword = data.delete("Type").capitalize
+
       defaults = {
         :user   => @sender,
         :access => default_access
       }
+
       case keyword
       when "Account", "Campaign", "Opportunity"
-        defaults[:name] = name
         defaults[:status] = "planned" if keyword == "Campaign"      # TODO: I18n
-        defaults[:stage] = "prospecting" if keyword == "Oportunity" # TODO: I18n
+        defaults[:stage] = "prospecting" if keyword == "Opportunity" # TODO: I18n
+
       when "Contact", "Lead"
-        first_name, *last_name = name.split
+        first_name, *last_name = data.delete("Name")
         defaults[:first_name] = first_name
         defaults[:last_name] = (last_name.any? ? last_name.join(" ") : "(unknown)")
         defaults[:status] = "contacted" if keyword == "Lead"        # TODO: I18n
       end
-      # Set email address & phone if given
-      if %w(Account Contact Lead).include?(keyword)
-        defaults[:email] = email_address if email_address
-        defaults[:phone] = phone if phone
+
+      data.each do |key, value|
+        defaults[key.downcase.to_sym] = value
       end
-      
+
       defaults
     end
 
@@ -414,7 +417,7 @@ module FatFreeCRM
 
     # Returns the plain-text version of an email, or strips html tags
     # if only html is present.
-    #--------------------------------------------------------------------------------------    
+    #--------------------------------------------------------------------------------------
     def plain_text_body(email)
       parts = email.parts.collect {|c| (c.respond_to?(:parts) && !c.parts.empty?) ? c.parts : c}.flatten
       if parts.empty?
