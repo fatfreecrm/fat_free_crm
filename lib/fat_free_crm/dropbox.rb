@@ -350,7 +350,7 @@ module FatFreeCRM
 
       data.each do |key, value|
         key = key.downcase
-        defaults[key.to_sym] = value if klass.column_names.include?(key)
+        defaults[key.to_sym] = value if klass.new.respond_to?(key + '=')
       end
 
       defaults
