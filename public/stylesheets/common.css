@@ -99,7 +99,6 @@
   color: #3f3f3f;
   font-size: 12px;
   margin: 8px 0px 0px 0px;
-  display: inline;
   padding-right: 13px; }
 
 .top {
@@ -120,7 +119,6 @@
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px; }
   .section table {
-    width: 500px;
     border-spacing: 0px;
     border-collapse: collapse; }
     .section table td {
