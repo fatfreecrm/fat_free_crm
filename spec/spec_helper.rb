@@ -47,7 +47,7 @@ RSpec.configure do |config|
   config.before(:each, :type => :view) do
     I18n.locale = 'en-US'
   end
-  
+
   config.after(:each, :type => :view) do
     # detect html-quoted entities in all rendered responses
     rendered.should_not match(/&amp;[A-Za-z]{1,6};/) if rendered
@@ -150,7 +150,7 @@ ActionView::TestCase::TestController.class_eval do
 end
 
 if RUBY_VERSION.to_f >= 1.9
-  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do 
+  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do
     def render_with_mock_response(*args)
       render_without_mock_response *args
       @response = mock(:body => rendered)
@@ -158,7 +158,7 @@ if RUBY_VERSION.to_f >= 1.9
     alias_method_chain :render, :mock_response
   end
 else
-  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do 
+  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do
     # Ruby 1.8.x doesnt support alias_method_chain with blocks,
     # so we are just overwriting the whole method verbatim.
     def render(options={}, local_assigns={}, &block)
@@ -166,7 +166,7 @@ else
       super(options, local_assigns, &block)
       @response = mock(:body => rendered)
     end
-  end  
+  end
 end
 
 ActionView::Base.class_eval do
