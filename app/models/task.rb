@@ -91,10 +91,11 @@ class Task < ActiveRecord::Base
   validates_presence_of :user
   validates_presence_of :name, :message => :missing_task_name
   validates_presence_of :calendar, :if => "self.bucket == 'specific_time' && !self.completed_at"
-  validate              :specific_time, :unless => "self.completed_at"
+  validate              :specific_time, :unless => :completed?
 
-  before_create :set_due_date, :notify_assignee
-  before_update :set_due_date, :notify_assignee
+  before_create :set_due_date
+  before_update :set_due_date, :unless => :completed?
+  before_save :notify_assignee
 
   # Matcher for the :my named scope.
   #----------------------------------------------------------------------------
@@ -216,5 +217,4 @@ class Task < ActiveRecord::Base
   rescue
     errors.add(:calendar, :invalid_date)
   end
-
 end

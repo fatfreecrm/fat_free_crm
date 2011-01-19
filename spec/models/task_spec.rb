@@ -148,6 +148,14 @@ describe Task do
       task.completed_at.should_not == nil
       task.completor.should == @current_user
     end
+
+    it "completion should preserve original due date" do
+      due_at = 42.days.ago
+      task = Factory(:task, :due_at => due_at, :bucket => "specific_time", :calendar => due_at.to_s)
+      task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id, :calendar => '')
+      task.completed?.should == true
+      task.due_at.to_i.should == due_at.to_i
+    end
   end
 
   # named_scope :my, lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
