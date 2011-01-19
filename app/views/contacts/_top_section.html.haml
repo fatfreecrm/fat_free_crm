@@ -51,13 +51,10 @@
           %td
             .label #{t :assigned_to}:
             = collection_select :contact, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
-          %td(colspan="3")
-            .label= t(:background_info) << ':'
-            = f.text_area :background_info, :style =>"width:500px", :rows => 3
 
         - if Setting.background_info && Setting.background_info.include?(:contact)
           %tr
-            %td(valign="top" colspan="3")
+            %td(colspan="3")
               .label= t(:background_info) << ':'
               = f.text_area :background_info, :style =>"width:500px", :rows => 3
 
