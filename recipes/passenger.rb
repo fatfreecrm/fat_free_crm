@@ -42,7 +42,7 @@ namespace :passenger do
     sudo "cp -f #{release_path}/config/httpd-rails.conf /etc/httpd/sites-enabled/010-#{application}-#{stage}.conf"
     sudo "sed -i -e 's,@DEPLOY_TO@,#{deploy_to},g' -e 's,@IP_ADDR@,#{ip_address},g' -e 's,@SERVER_NAME@,#{site_domain_name},g' /etc/httpd/sites-enabled/010-#{application}-#{stage}.conf"
     sudo "cp -f #{release_path}/config/passenger.conf /etc/httpd/mods-enabled/passenger.conf"
-    sudo "sed -i -e 's,@PASSENGER_VERSION@,#{passenger_version},g' /etc/httpd/mods-enabled/passenger.conf"
+    sudo "sed -i -e 's,@RVM_RUBY_STRING@,#{rvm_ruby_string},g' -e 's,@PASSENGER_VERSION@,#{passenger_version},g' /etc/httpd/mods-enabled/passenger.conf"
   end
 
 end
