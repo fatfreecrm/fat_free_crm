@@ -31,14 +31,4 @@ module Admin::UsersHelper
   def link_to_confirm(user)
     link_to(t(:delete) + "?", confirm_admin_user_path(user), :method => :get, :remote => true)
   end
-
-  #----------------------------------------------------------------------------
-  def link_to_delete(model, params = {})
-    name = model.class.name.underscore.downcase
-    link_to_remote(t(:yes_button),
-      :url => params[:url] || send("admin_#{name}_path", model),
-      :method => :delete,
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
-    )
-  end
 end
