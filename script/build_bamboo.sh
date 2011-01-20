@@ -4,8 +4,8 @@ touch ./log/punishments/missile_log.avi
 
 # Project variables
 # -----------------------------------------------------
-ruby_version=1.9.2
-bundler_version=1.0.0
+ruby_version=ruby-1.9.2-p136
+bundler_version=1.0.9
 
 ruby_packages="ruby ruby-devel gcc rubygems"
 cucumber_packages="libxml2 libxml2-devel libxslt libxslt-devel xorg-x11-server-Xvfb firefox ImageMagick"
