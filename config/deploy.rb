@@ -1,4 +1,4 @@
-require 'capistrano_colors'
+#~ require 'capistrano_colors'
 require 'capistrano/ext/multistage'
 require 'rvm/capistrano'
 require 'bundler/capistrano'
