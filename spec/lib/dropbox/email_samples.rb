@@ -1,4 +1,4 @@
-EMAIL = {
+EMAIL_SAMPLE = {
   :plain => <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>

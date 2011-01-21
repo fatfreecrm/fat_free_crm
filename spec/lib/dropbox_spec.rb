@@ -27,7 +27,7 @@ describe "IMAP Dropbox" do
     @imap.stub!(:disconnect).and_return(true)
   end
 
-  def mock_message(body = EMAIL[:plain])
+  def mock_message(body = EMAIL_SAMPLE[:plain])
     @fetch_data = mock
     @fetch_data.stub!(:attr).and_return("RFC822" => body)
     @imap.stub!(:uid_search).and_return([ :uid ])
@@ -202,7 +202,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should find the named asset and attach the email message" do
-      mock_message(EMAIL[:first_line])
+      mock_message(EMAIL_SAMPLE[:first_line])
       @campaign = Factory(:campaign, :name => "Got milk!?")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
@@ -213,7 +213,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create the named asset and attach the email message" do
-      mock_message(EMAIL[:first_line])
+      mock_message(EMAIL_SAMPLE[:first_line])
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -225,7 +225,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should find the lead and attach the email message" do
-      mock_message(EMAIL[:first_line_lead])
+      mock_message(EMAIL_SAMPLE[:first_line_lead])
       @lead = Factory(:lead, :first_name => "Cindy", :last_name => "Cluster")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
@@ -236,7 +236,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create the lead and attach the email message" do
-      mock_message(EMAIL[:first_line_lead])
+      mock_message(EMAIL_SAMPLE[:first_line_lead])
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -249,7 +249,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should find the contact and attach the email message" do
-      mock_message(EMAIL[:first_line_contact])
+      mock_message(EMAIL_SAMPLE[:first_line_contact])
       @contact = Factory(:contact, :first_name => "Cindy", :last_name => "Cluster")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
@@ -260,7 +260,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create the contact and attach the email message" do
-      mock_message(EMAIL[:first_line_contact])
+      mock_message(EMAIL_SAMPLE[:first_line_contact])
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -272,7 +272,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should move on if first line has no keyword" do
-      mock_message(EMAIL[:plain])
+      mock_message(EMAIL_SAMPLE[:plain])
       @crawler.should_receive(:with_recipients).twice
       @crawler.should_receive(:with_forwarded_recipient).twice
       @crawler.run
@@ -284,7 +284,7 @@ describe "IMAP Dropbox" do
     before(:each) do
       mock_connect
       mock_disconnect
-      mock_message(EMAIL[:plain])
+      mock_message(EMAIL_SAMPLE[:plain])
       Factory(:user, :email => "aaron@example.com")
     end
 
@@ -311,7 +311,7 @@ describe "IMAP Dropbox" do
       mock_connect
       mock_disconnect
       Factory(:user, :email => "aaron@example.com")
-      mock_message(EMAIL[:forwarded])
+      mock_message(EMAIL_SAMPLE[:forwarded])
     end
 
     it "should find the asset and attach the email message" do
@@ -359,7 +359,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create a contact from the email recipient (To: recipient, Bcc: dropbox)" do
-      mock_message(EMAIL[:plain])
+      mock_message(EMAIL_SAMPLE[:plain])
       @crawler.should_receive(:archive).once
       @crawler.run
 
@@ -370,7 +370,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create a contact from the forwarded email (To: dropbox)" do
-      mock_message(EMAIL[:forwarded])
+      mock_message(EMAIL_SAMPLE[:forwarded])
       @crawler.should_receive(:archive).once
       @crawler.run
 
