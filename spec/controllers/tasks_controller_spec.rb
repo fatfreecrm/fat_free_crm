@@ -8,7 +8,7 @@ describe TasksController do
   end
 
   def produce_tasks(user, view)
-    Time.zone = 'UTC'
+    #~ Time.zone = 'UTC'
     settings = (view != "completed" ? Setting.task_bucket : Setting.task_completed)
 
     settings.inject({}) do | hash, due |
@@ -80,7 +80,6 @@ describe TasksController do
 
         (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
         (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
-        #~ require 'ruby-debug';debugger
         response.body.should == @tasks.to_xml
       end
     end
