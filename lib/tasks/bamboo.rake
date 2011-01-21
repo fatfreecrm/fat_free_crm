@@ -7,7 +7,7 @@ unless ARGV.any? {|a| a =~ /^gems/} # Don't load anything when running the gems:
     namespace :bamboo do
       desc 'Run the cucumbers for bamboo. Use HEADLESS=true if you want to run in xvfb'
       Cucumber::Rake::Task.new(:cucumber) do |t|
-        t.rcov = true
+        #~ t.rcov = true
         t.cucumber_opts = ["--format junit --out 'features/reports'"]
       end
     end
