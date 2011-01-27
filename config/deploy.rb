@@ -31,7 +31,7 @@ set :deploy_via, :remote_cache
 set :packages_for_project, %w(ImageMagick-devel)
 set :gems_for_project, "bundler"
 
-set :rvm_ruby_string, "ruby-1.9.2-p136"
+set :rvm_ruby_string, "ruby-1.9.2-p0"
 set :passenger_version, "3.0.1"
 
 set :httpd_user, "apache"
