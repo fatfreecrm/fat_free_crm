@@ -16,6 +16,7 @@
 #------------------------------------------------------------------------------
 require "net/imap"
 require "mail"
+require "nokogiri"
 include Rails.application.routes.url_helpers
 
 module FatFreeCRM
@@ -189,7 +190,8 @@ module FatFreeCRM
     def with_pipe_separated_data(email)
       first_line = plain_text_body(email).split("\n").first
       if first_line.start_with?("##")
-        yield YAML.load(first_line.gsub(/^## ?/,"").gsub(/ ?\| ?/, "\n"))
+        # Fix up yaml and parse
+        yield YAML.load((first_line+"\n").gsub(/^## ?/,"").gsub(/: ?(\||\n)/, ": ''|").gsub(/ ?\| ?/, "\n"))
       end
     end
 
@@ -197,7 +199,6 @@ module FatFreeCRM
     #--------------------------------------------------------------------------------------
     def with_explicit_keyword(email)
       first_line = plain_text_body(email).split("\n").first
-
       if first_line =~ %r|^[\./]?(#{KEYWORDS.join('|')})\s(.+)$|i
         yield $1.capitalize, $2.strip
       end
@@ -250,8 +251,32 @@ module FatFreeCRM
         log "#{data["Type"]} #{data["Email"]} <#{data["Name"]}> not found, creating new one..."
         asset = klass.create!(default_values(klass, data))
         attach(email, asset, :strip_first_line)
+        parse_and_create_address(email, asset)
       end
       true
+    end
+
+    def parse_and_create_address(email, asset)
+      if address_xml = plain_text_body(email)[/(<address>.*<\/address>)/m, 1]
+        address = Nokogiri::Slop(address_xml).address
+        
+        # Find country code from name
+        countries_hash = ActionView::Helpers::FormOptionsHelper::COUNTRIES_HASH.invert
+        country_code = countries_hash[address.country.text.strip].to_s || "-----"
+        
+        Address.create!(:street1 => address.street1.text.strip,
+                        :street2 => address.street2.text.strip,
+                        :city    => address.city.text.strip,
+                        :state   => address.state.text.strip,      
+                        :zipcode => address.zipcode.text.strip,
+                        :country => country_code,
+                        :address_type => "Business",
+                        :addressable => asset)
+      end
+      log "Parsed and created address for #{asset.class.to_s}."
+    rescue Exception => e
+      $stderr.puts "Dropbox: Failed to create #{asset.class.to_s}'s address: #{e.inspect}"
+      nil
     end
 
 
