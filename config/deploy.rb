@@ -28,7 +28,7 @@ set :repository, "git://github.com/crossroads/fat_free_crm.git"
 set :git_enable_submodules, 1
 set :deploy_via, :remote_cache
 
-set :packages_for_project, %w(ImageMagick-devel)
+set :packages_for_project, %w(ImageMagick-devel libxml2 libxml2-devel libxslt libxslt-devel)
 set :gems_for_project, "bundler"
 
 set :rvm_ruby_string, "ruby-1.9.2-p0"
