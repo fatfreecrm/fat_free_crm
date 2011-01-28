@@ -30,6 +30,7 @@ gem 'whenever'
 gem 'meta_search', '>= 0.9.9.1'
 gem 'hoptoad_notifier', '>= 2.4.2'
 gem 'ffaker'
+gem 'nokogiri' # for dropbox, parsing any XML data from emails
 
 group :cucumber, :test, :development do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9

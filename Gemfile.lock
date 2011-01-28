@@ -260,6 +260,7 @@ DEPENDENCIES
   is_paranoid!
   meta_search (>= 0.9.9.1)
   newrelic_rpm
+  nokogiri
   paperclip!
   pg (>= 0.9.0)
   rails (= 3.0.3)
