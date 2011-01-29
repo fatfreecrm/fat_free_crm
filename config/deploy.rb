@@ -59,7 +59,7 @@ namespace :crm do
     task :default do
       prompt_with_default("Username", :admin_username, "admin")
       prompt_with_default("Password", :admin_password, "admin")
-      prompt_with_default("Email", :admin_email, "admin@crossroadsint.org")
+      prompt_with_default("Email", :admin_email, "#{admin_username}@crossroadsint.org")
       run "cd #{current_path} && RAILS_ENV=production rake crm:setup USERNAME=#{admin_username} PASSWORD=#{admin_password} EMAIL=#{admin_email} PROCEED=true"
     end
 
@@ -67,7 +67,7 @@ namespace :crm do
     task :admin do
       prompt_with_default("Username", :admin_username, "admin")
       prompt_with_default("Password", :admin_password, "admin")
-      prompt_with_default("Email", :admin_email, "admin@crossroadsint.org")
+      prompt_with_default("Email", :admin_email, "#{admin_username}@crossroadsint.org")
       run "cd #{current_path} && RAILS_ENV=production rake crm:setup:admin USERNAME=#{admin_username} PASSWORD=#{admin_password} EMAIL=#{admin_email}"
     end
 
@@ -164,3 +164,6 @@ before "deploy:symlink",        "deploy:symlink_crowd"
 after  "deploy:symlink",        "deploy:set_permissions"
 after  "deploy:migrate",        "deploy:migrate_plugins"
 after "deploy", "deploy:cleanup"
+
+after "crm:setup", "crm:crossroads:seed"
+
