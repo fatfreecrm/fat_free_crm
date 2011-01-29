@@ -256,8 +256,12 @@ module FatFreeCRM
       true
     end
 
+    def parsed_address(email)
+      plain_text_body(email)[/(<address>.*<\/address>)/m, 1]
+    end
+
     def parse_and_create_address(email, asset)
-      if address_xml = plain_text_body(email)[/(<address>.*<\/address>)/m, 1]
+      if address_xml = parsed_address(email) 
         address = Nokogiri::Slop(address_xml).address
         
         # Find country code from name
@@ -315,6 +319,9 @@ module FatFreeCRM
       else
         plain_text_body(email)
       end
+      
+      # Remove parsed address from email text
+      email_body = email_body.gsub(parsed_address(email).to_s, "").strip
 
       Email.create(
         :imap_message_id => email.message_id,
