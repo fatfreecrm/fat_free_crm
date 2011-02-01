@@ -60,7 +60,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @lead = Lead.new(:access => Setting.default_access)
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
     @campaigns = Campaign.my(@current_user).all(:order => "name")
     if params[:related]
       model, id = params[:related].split("_")
@@ -80,7 +80,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
     @campaigns = Campaign.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
       @previous = Lead.my(@current_user).find($1)
@@ -96,7 +96,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @lead = Lead.new(params[:lead])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
     @campaigns = Campaign.my(@current_user).all(:order => "name")
 
     respond_to do |format|
@@ -128,7 +128,7 @@ class LeadsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all
+        @users = User.except(@current_user).active.all
         @campaigns = Campaign.my(@current_user).all(:order => "name")
         format.js
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
@@ -161,7 +161,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def convert
     @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my(@current_user).all(:order => "name")
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
@@ -179,7 +179,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def promote
     @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
     @account, @opportunity, @contact = @lead.promote(params)
     @accounts = Account.my(@current_user).all(:order => "name")
     @stage = Setting.unroll(:opportunity_stage)

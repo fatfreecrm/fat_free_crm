@@ -60,7 +60,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @account = Account.new(:user => @current_user, :access => Setting.default_access)
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
@@ -76,7 +76,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @account = Account.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
     if params[:previous] =~ /(\d+)\z/
       @previous = Account.my(@current_user).find($1)
     end
@@ -91,7 +91,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @account = Account.new(params[:account])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
 
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
@@ -118,7 +118,7 @@ class AccountsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all # Need it to redraw [Edit Account] form.
+        @users = User.except(@current_user).active.all # Need it to redraw [Edit Account] form.
         format.js
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
