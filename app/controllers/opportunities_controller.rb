@@ -61,7 +61,7 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @opportunity = Opportunity.new(:user => @current_user, :stage => "prospecting", :access => Setting.default_access)
-    @users       = User.except(@current_user).all
+    @users       = User.except(@current_user).active.all
     @account     = Account.new(:user => @current_user)
     @accounts    = Account.my(@current_user).all(:order => "name")
     if params[:related]
@@ -82,7 +82,7 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @opportunity = Opportunity.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).all
+    @users = User.except(@current_user).active.all
     @account  = @opportunity.account || Account.new(:user => @current_user)
     @accounts = Account.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
@@ -111,7 +111,7 @@ class OpportunitiesController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
-        @users = User.except(@current_user).all
+        @users = User.except(@current_user).active.all
         @accounts = Account.my(@current_user).all(:order => "name")
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
@@ -146,7 +146,7 @@ class OpportunitiesController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all
+        @users = User.except(@current_user).active.all
         @accounts = Account.my(@current_user).all(:order => "name")
         if @opportunity.account
           @account = Account.find(@opportunity.account.id)
