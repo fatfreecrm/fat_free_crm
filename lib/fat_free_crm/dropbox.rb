@@ -264,9 +264,11 @@ module FatFreeCRM
       if address_xml = parsed_address(email)
         address = Nokogiri::Slop(address_xml).address
 
-        # Find country code from name
+        # Find country code from name or 2 digit country code.
         countries_hash = ActionView::Helpers::FormOptionsHelper::COUNTRIES_HASH.invert
-        country_code = countries_hash[address.country.text.strip].to_s || "-----"
+        country = address.country.text.strip
+        country_code = countries_hash[country].to_s
+        country_code = country.upcase if country_code.blank? and country.size == 2
 
         Address.create!(:street1 => address.street1.text.strip,
                         :street2 => address.street2.text.strip,
