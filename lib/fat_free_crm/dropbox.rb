@@ -270,9 +270,9 @@ module FatFreeCRM
 
         Address.create!(:street1 => address.street1.text.strip,
                         :street2 => address.street2.text.strip,
-                        :city    => address.city.text.strip rescue "",
-                        :state   => address.state.text.strip rescue "",
-                        :zipcode => address.zipcode.text.strip rescue "",
+                        :city    => (address.city.text.strip rescue ""),
+                        :state   => (address.state.text.strip rescue ""),
+                        :zipcode => (address.zipcode.text.strip rescue ""),
                         :country => country_code,
                         :address_type => "Business",
                         :addressable => asset)
