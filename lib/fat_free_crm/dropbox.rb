@@ -261,18 +261,18 @@ module FatFreeCRM
     end
 
     def parse_and_create_address(email, asset)
-      if address_xml = parsed_address(email) 
+      if address_xml = parsed_address(email)
         address = Nokogiri::Slop(address_xml).address
-        
+
         # Find country code from name
         countries_hash = ActionView::Helpers::FormOptionsHelper::COUNTRIES_HASH.invert
         country_code = countries_hash[address.country.text.strip].to_s || "-----"
-        
+
         Address.create!(:street1 => address.street1.text.strip,
                         :street2 => address.street2.text.strip,
-                        :city    => address.city.text.strip,
-                        :state   => address.state.text.strip,      
-                        :zipcode => address.zipcode.text.strip,
+                        :city    => address.city.text.strip rescue "",
+                        :state   => address.state.text.strip rescue "",
+                        :zipcode => address.zipcode.text.strip rescue "",
                         :country => country_code,
                         :address_type => "Business",
                         :addressable => asset)
@@ -319,7 +319,7 @@ module FatFreeCRM
       else
         plain_text_body(email)
       end
-      
+
       # Remove parsed address from email text
       email_body = email_body.gsub(parsed_address(email).to_s, "").strip
 
@@ -470,3 +470,4 @@ module FatFreeCRM
 
   end # class Dropbox
 end # module FatFreeCRM
+
