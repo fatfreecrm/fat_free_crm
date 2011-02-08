@@ -67,7 +67,7 @@ class Contact < ActiveRecord::Base
 
   scope :search, lambda { |query|
     query = query.gsub(/[^@\w\s\-\.']/, '').strip
-    where('(first_name || \' \' || last_name) ILIKE :m OR email ILIKE :m OR alt_email ILIKE :m OR phone ILIKE :m OR mobile ILIKE :m', :m => "%#{query}%")
+    where('(first_name || \' \' || last_name) ILIKE :m OR (last_name || \' \' || first_name) ILIKE :m OR email ILIKE :m OR alt_email ILIKE :m OR phone ILIKE :m OR mobile ILIKE :m', :m => "%#{query}%")
   }
 
   uses_user_permissions
