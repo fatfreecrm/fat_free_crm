@@ -66,10 +66,10 @@ class Contact < ActiveRecord::Base
   scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
 
   scope :search, lambda { |query|
-    query = query.gsub(/[^\w\s\-\.']/, '').strip
-    where('first_name ILIKE :s OR last_name ILIKE :s OR email ILIKE :m', :s => "#{query}%", :m => "%#{query}%")
+    query = query.gsub(/[^@\w\s\-\.']/, '').strip
+    where('(first_name || \' \' || last_name) ILIKE :m OR email ILIKE :m OR alt_email ILIKE :m OR phone ILIKE :m OR mobile ILIKE :m', :m => "%#{query}%")
   }
-    
+
   uses_user_permissions
   acts_as_commentable
   is_paranoid
@@ -174,3 +174,4 @@ class Contact < ActiveRecord::Base
   end
 
 end
+
