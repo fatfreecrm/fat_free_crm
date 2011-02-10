@@ -28,8 +28,16 @@ FatFreeCRM::Application.configure do
   end
 end
 
+ActiveSupport.on_load(:after_initialize) do
+  ActionController::Base.before_filter do
+    ActionController::Base.view_paths.each(&:clear_cache)
+  end
+end
+
+
 # Optionally load 'awesome_print' for debugging in development mode.
 begin
   require 'ap'
 rescue LoadError
 end
+
