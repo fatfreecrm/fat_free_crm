@@ -90,8 +90,10 @@ done
 
 # Create test and cucumber databases
 # -----------------------------------------------------
+RAILS_ENV=test rake db:drop
 RAILS_ENV=test rake db:create
 RAILS_ENV=test rake db:migrate db:migrate:plugins
+RAILS_ENV=cucumber rake db:drop
 RAILS_ENV=cucumber rake db:create
 RAILS_ENV=cucumber rake db:migrate db:migrate:plugins
 
@@ -121,3 +123,4 @@ RAILS_ENV=test HEADLESS=true rake bamboo:cucumber
 # -----------------------------------------------------
 RAILS_ENV=test rake db:drop
 RAILS_ENV=cucumber rake db:drop
+
