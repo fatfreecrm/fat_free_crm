@@ -7,6 +7,7 @@ log/*.log
 public/avatars/**/*
 public/javascripts/cache/*.js
 public/stylesheets/cache/*.css
+public/stylesheets/crm_*.css
 public/plugin_assets
 spec/reports
 nbproject
@@ -21,3 +22,4 @@ tmp
 features/screengrabs
 features/reports
 config/crowd_settings.yml
+
