@@ -216,6 +216,8 @@ var crm = {
   flip_subtitle: function(el) {
     var arrow = Element.down(el, "small");
     var intro = Element.down(Element.next(Element.up(el)), "small");
+    // Optionally, the intro might be next to the link.
+    if(!intro){ intro = Element.next(el, "small");};
     var section = Element.down(Element.next(Element.up(el)), "div");
 
     if (Element.visible(section)) {
@@ -463,3 +465,4 @@ document.observe("dom:loaded", function() {
 
 // Event.observe(window, "load", function() { crm.focus_on_first_field() })
 document.observe("dom:loaded", function() { crm.focus_on_first_field() });
+
