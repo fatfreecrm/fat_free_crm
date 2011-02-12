@@ -736,3 +736,44 @@ div.auto_complete {
 
   .standalone input[type="submit"] {
     font-size: 3em; } }
+
+table.asset_attributes {
+  width: 100%;
+  border-spacing: 4px; }
+  table.asset_attributes td, table.asset_attributes th {
+    border-bottom: 1px dotted silver;
+    vertical-align: top;
+    text-align: left; }
+  table.asset_attributes th {
+    font-weight: normal;
+    width: 18%;
+    padding-right: 7px;
+    text-align: right; }
+  table.asset_attributes td {
+    width: 32%;
+    color: #202020; }
+  table.asset_attributes td.last, table.asset_attributes th.last {
+    border-bottom: none; }
+
+span.fbtag {
+  -moz-border-radius: 6px 6px 6px 6px;
+  background: none repeat scroll 0 0 #dee7f8;
+  border: 1px solid #cad8f3;
+  padding: 1px 5px 2px;
+  margin: 1px;
+  font: 11px "Lucida Grande", "Verdana";
+  display: inline-block; }
+
+.section.nostyle {
+  background-color: white;
+  padding: 0;
+  color: black; }
+  .section.nostyle table {
+    border-spacing: 4px;
+    border-collapse: separate; }
+
+.subtitle.show_attributes {
+  margin-top: 6px; }
+
+small.subtitle_inline_info {
+  margin-left: 5px; }
