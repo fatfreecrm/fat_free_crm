@@ -540,7 +540,8 @@ tt {
   font-size: 12px;
   font-weight: bold; }
 .filters input[type=text] {
-  margin-bottom: 4px; }
+  margin-bottom: 4px;
+  float: none; }
 
 .panel div {
   margin: 0px 0px 10px 0px; }
