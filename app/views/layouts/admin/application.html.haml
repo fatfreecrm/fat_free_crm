@@ -9,6 +9,8 @@
 
     = javascript_include_tag :defaults, :cache => "cache/all"
     = javascript_include_tag "crm_classes.js", "modalbox.js", :cache => "cache/classes"
+    = hook(:javascript_includes, self)
+
     %script{:type => "text/javascript"}= yield :javascript
     = csrf_meta_tag
 
@@ -20,3 +22,4 @@
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
       = yield :javascript_epilogue
+
