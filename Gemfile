@@ -31,6 +31,7 @@ gem 'meta_search', '>= 0.9.9.1'
 gem 'hoptoad_notifier', '>= 2.4.2'
 gem 'ffaker'
 gem 'nokogiri' # for dropbox, parsing any XML data from emails
+gem 'acts_as_list'
 
 group :cucumber, :test, :development do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
@@ -74,3 +75,4 @@ end
 gem 'soap4r', :git => 'git://github.com/tribalvibes/soap4r-spox.git'
 gem 'crowd-crossroads', :git => 'git://github.com/crossroads/crowd.git'
 gem 'crowd_rails', :git => 'git://github.com/crossroads/crowd_rails.git'
+

@@ -784,3 +784,24 @@ span.fbtag {
 
 small.subtitle_inline_info {
   margin-left: 5px; }
+
+.customfield_check_ok {
+  border: 5px lightgreen solid;
+  background: whitesmoke;
+  margin: 0px;
+  padding: 0px 10px 0px 10px;
+  position: relative; }
+
+.customfield_check_fail {
+  border: 5px red solid;
+  background: lightred;
+  margin: 0px;
+  padding: 0px 10px 0px 10px;
+  position: relative; }
+
+span.handle img {
+  vertical-align: middle;
+  margin-right: 5px; }
+
+list li tt {
+  vertical-align: middle; }

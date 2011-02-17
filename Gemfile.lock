@@ -81,6 +81,7 @@ GEM
     activesupport (3.0.3)
     acts-as-taggable-on (2.0.6)
     acts_as_commentable (3.0.1)
+    acts_as_list (0.1.2)
     archive-tar-minitar (0.5.2)
     arel (2.0.7)
     autotest-rails (4.1.0)
@@ -243,6 +244,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (>= 2.0.6)
   acts_as_commentable (>= 3.0.1)
+  acts_as_list
   authlogic!
   autotest-rails
   capistrano-ext
