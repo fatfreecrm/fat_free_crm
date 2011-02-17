@@ -18,20 +18,22 @@ describe "/contacts/update.js.rjs" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
       end
 
+      # Reloads the page now, to refresh contact details. (crm_crossroads)
+      # --------------------------------------------------------------------------
       it "should flip [edit_contact] form" do
         render
         rendered.should_not have_rjs("contact_#{@contact.id}")
-        rendered.should include('crm.flip_form("edit_contact"')
+        rendered.should include('window.location.reload(true)')
       end
 
-      it "should update sidebar" do
-        render
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=summary]")
-          with_tag("div[id=recently]")
-        end
-        rendered.should include('$("summary").visualEffect("shake"')
-      end
+#      it "should update sidebar" do
+#        render
+#        rendered.should have_rjs("sidebar") do |rjs|
+#          with_tag("div[id=summary]")
+#          with_tag("div[id=recently]")
+#        end
+#        rendered.should include('$("summary").visualEffect("shake"')
+#      end
     end
 
     describe "on contacts index page -" do
@@ -139,3 +141,4 @@ describe "/contacts/update.js.rjs" do
     end
   end # errors
 end
+
