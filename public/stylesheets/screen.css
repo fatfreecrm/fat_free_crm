@@ -799,9 +799,11 @@ small.subtitle_inline_info {
   padding: 0px 10px 0px 10px;
   position: relative; }
 
-span.handle img {
-  vertical-align: middle;
-  margin-right: 5px; }
+span.handle {
+  cursor: move; }
+  span.handle img {
+    vertical-align: middle;
+    margin-right: 5px; }
 
 list li tt {
   vertical-align: middle; }
