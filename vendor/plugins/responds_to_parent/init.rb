@@ -1,1 +1,1 @@
-rails/init.rb
+require File.dirname(__FILE__) + "/rails/init.rb"
