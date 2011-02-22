@@ -1,0 +1,95 @@
+We're pleased to announce version 0.0.4 of Net::LDAP, the pure-Ruby LDAP library.
+
+This version adds an implementation of Net::LDAP#bind_as, which allows
+you to authenticate users who log into your applications using simple
+identifiers like email addresses and simple usernames. Thanks to Simon Claret
+for suggesting the original implementation in his page on the Rails-Wiki,
+and for valuable comments and help with testing.
+
+We have un-deprecated Net::LDAP#modify, which can be useful with
+LDAP servers that observe non-standard transactional and concurrency
+semantics in LDAP Modify operations. Note: this is a documentation change,
+not a code change. Thanks to Justin Forder for providing the rationale
+for this change.
+
+We added a larger set of special characters which may appear in RFC-2254
+standard search filters. Thanks to Andre Nathan for this patch.
+
+We fixed a bug that was preventing Net::LDAP#open from being called more
+than once on the same object.
+
+
+Net::LDAP is a feature-complete LDAP client which can access as much as
+possible of the functionality of the most-used LDAP server implementations.
+This library does not wrap any existing native-code LDAP libraries, creates no
+Ruby extensions, and has no dependencies external to Ruby.
+
+If anyone wants to contribute suggestions, insights or (especially)
+code, please email me at garbagecat10 .. .. gmail.com.
+
+= What is Net::LDAP for Ruby?
+This library provides a pure-Ruby implementation of an LDAP client.
+It can be used to access any server which implements the LDAP protocol.
+
+Net::LDAP is intended to provide full LDAP functionality while hiding
+the more arcane aspects of the LDAP protocol itself, so as to make the
+programming interface as Ruby-like as possible.
+
+In particular, this means that there is no direct dependence on the
+structure of the various "traditional" LDAP clients. This is a ground-up
+rethinking of the LDAP API.
+
+Net::LDAP is based on RFC-2251, which specifies the Lightweight Directory
+Access Protocol, as amended and extended by subsequent RFCs and by the more
+widely-used directory implementations.
+
+Homepage::  http://rubyforge.org/projects/net-ldap/
+Download::  http://rubyforge.org/frs/?group_id=143
+Copyright:: 2006 by Francis Cianfrocca
+
+== LICENCE NOTES
+Please read the file LICENCE for licensing restrictions on this library. In
+the simplest terms, this library is available under the same terms as Ruby
+itself.
+
+== Requirements and Installation
+Net::LDAP requires Ruby 1.8.2 or better.
+
+Net::LDAP can be installed with:
+
+ % ruby setup.rb
+
+Alternatively, you can use the RubyGems version of Net::LDAP available
+as ruby-net-ldap-0.0.2.gem from the usual sources.
+
+== Whet your appetite:
+    require 'net/ldap'
+    
+    ldap = Net::LDAP.new :host => server_ip_address,
+         :port => 389,
+         :auth => {
+               :method => :simple,
+               :username => "cn=manager,dc=example,dc=com",
+               :password => "opensesame"
+         }
+  
+    filter = Net::LDAP::Filter.eq( "cn", "George*" )
+    treebase = "dc=example,dc=com"
+    
+    ldap.search( :base => treebase, :filter => filter ) do |entry|
+      puts "DN: #{entry.dn}"
+      entry.each do |attribute, values|
+        puts "   #{attribute}:"
+        values.each do |value|
+          puts "      --->#{value}"
+        end
+      end
+    end
+    
+    p ldap.get_operation_result
+
+== Net::LDAP 0.0.2: May 3, 2006
+* Fixed malformation in distro tarball and gem.
+* Improved documentation.
+* Supported "paged search control."
+
