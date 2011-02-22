@@ -28,7 +28,7 @@ namespace :deploy do
   task :initial_setup do
     run "mkdir -p #{shared_path}/config"
     put File.read(File.join(File.expand_path(File.dirname(__FILE__)), "database.yml.example")), "#{shared_path}/config/database.yml", :mode => 0600
-    # put File.read(File.join(File.expand_path(File.dirname(__FILE__)), "application.yml")), "#{shared_path}/config/application.yml", :mode => 0600
+    put File.read(File.join(File.expand_path(File.dirname(__FILE__)), "ldap.yml.example")), "#{shared_path}/config/ldap.yml", :mode => 0600
   end
 
   after "deploy:setup", "deploy:create_asset_dirs"
@@ -39,7 +39,7 @@ namespace :deploy do
   after "deploy:finalize_update", "deploy:symlink_configs"
   task :symlink_configs do
     run "ln -fs #{shared_path}/config/database.yml #{latest_release}/config/database.yml"
-    # run "ln -fs #{shared_path}/config/application.yml #{latest_release}/config/application.yml"
+    run "ln -fs #{shared_path}/config/ldap.yml #{latest_release}/config/ldap.yml"
     run "rm -rf #{latest_release}/public/avatars && ln -s #{shared_path}/avatars #{latest_release}/public/avatars"
   end
 
