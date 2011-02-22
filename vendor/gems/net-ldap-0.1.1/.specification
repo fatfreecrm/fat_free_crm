@@ -1,0 +1,216 @@
+--- !ruby/object:Gem::Specification 
+name: net-ldap
+version: !ruby/object:Gem::Version 
+  hash: 25
+  prerelease: false
+  segments: 
+  - 0
+  - 1
+  - 1
+  version: 0.1.1
+platform: ruby
+authors: 
+- Francis Cianfrocca
+- Emiel van de Laar
+- Rory O'Connell
+- Kaspar Schiess
+- Austin Ziegler
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-03-18 00:00:00 +00:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: rubyforge
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 7
+        segments: 
+        - 2
+        - 0
+        - 4
+        version: 2.0.4
+  type: :development
+  version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: gemcutter
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 11
+        segments: 
+        - 0
+        - 5
+        - 0
+        version: 0.5.0
+  type: :development
+  version_requirements: *id002
+- !ruby/object:Gem::Dependency 
+  name: archive-tar-minitar
+  prerelease: false
+  requirement: &id003 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: 9
+        segments: 
+        - 0
+        - 5
+        - 1
+        version: 0.5.1
+  type: :development
+  version_requirements: *id003
+- !ruby/object:Gem::Dependency 
+  name: hanna
+  prerelease: false
+  requirement: &id004 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: 31
+        segments: 
+        - 0
+        - 1
+        - 2
+        version: 0.1.2
+  type: :development
+  version_requirements: *id004
+- !ruby/object:Gem::Dependency 
+  name: hoe-git
+  prerelease: false
+  requirement: &id005 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: 1
+        segments: 
+        - 1
+        version: "1"
+  type: :development
+  version_requirements: *id005
+- !ruby/object:Gem::Dependency 
+  name: hoe
+  prerelease: false
+  requirement: &id006 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 27
+        segments: 
+        - 2
+        - 5
+        - 0
+        version: 2.5.0
+  type: :development
+  version_requirements: *id006
+description: Pure Ruby LDAP library.
+email: 
+- blackhedd@rubyforge.org
+- gemiel@gmail.com
+- rory.ocon@gmail.com
+- kaspar.schiess@absurd.li
+- austin@rubyforge.org
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- History.txt
+- Manifest.txt
+- README.txt
+files: 
+- COPYING
+- History.txt
+- LICENSE
+- Manifest.txt
+- README.txt
+- Rakefile
+- lib/net-ldap.rb
+- lib/net/ber.rb
+- lib/net/ber/ber_parser.rb
+- lib/net/ldap.rb
+- lib/net/ldap/core_ext/all.rb
+- lib/net/ldap/core_ext/array.rb
+- lib/net/ldap/core_ext/bignum.rb
+- lib/net/ldap/core_ext/false_class.rb
+- lib/net/ldap/core_ext/fixnum.rb
+- lib/net/ldap/core_ext/string.rb
+- lib/net/ldap/core_ext/true_class.rb
+- lib/net/ldap/dataset.rb
+- lib/net/ldap/entry.rb
+- lib/net/ldap/filter.rb
+- lib/net/ldap/pdu.rb
+- lib/net/ldap/psw.rb
+- lib/net/ldif.rb
+- lib/net/snmp.rb
+- spec/integration/ssl_ber_spec.rb
+- spec/spec.opts
+- spec/spec_helper.rb
+- spec/unit/ber/ber_spec.rb
+- test/common.rb
+- test/test_ber.rb
+- test/test_entry.rb
+- test/test_filter.rb
+- test/test_ldif.rb
+- test/test_password.rb
+- test/test_snmp.rb
+- test/testdata.ldif
+- testserver/ldapserver.rb
+- testserver/testdata.ldif
+has_rdoc: true
+homepage: http://net-ldap.rubyforge.org/
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --main
+- README.txt
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 57
+      segments: 
+      - 1
+      - 8
+      - 7
+      version: 1.8.7
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: net-ldap
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: Pure Ruby LDAP support library with most client features and some server features.
+test_files: 
+- test/test_ber.rb
+- test/test_entry.rb
+- test/test_filter.rb
+- test/test_ldif.rb
+- test/test_password.rb
+- test/test_snmp.rb
