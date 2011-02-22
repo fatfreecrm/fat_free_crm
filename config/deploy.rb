@@ -31,16 +31,16 @@ namespace :deploy do
     # put File.read(File.join(File.expand_path(File.dirname(__FILE__)), "application.yml")), "#{shared_path}/config/application.yml", :mode => 0600
   end
 
-  # after "deploy:setup", "deploy:create_asset_dirs"
-  # task :create_asset_dirs do
-  #   run "mkdir -p #{shared_path}/assets"
-  # end
+  after "deploy:setup", "deploy:create_asset_dirs"
+  task :create_asset_dirs do
+    run "mkdir -p #{shared_path}/avatars"
+  end
 
   after "deploy:finalize_update", "deploy:symlink_configs"
   task :symlink_configs do
     run "ln -fs #{shared_path}/config/database.yml #{latest_release}/config/database.yml"
     # run "ln -fs #{shared_path}/config/application.yml #{latest_release}/config/application.yml"
-    # run "rm -rf #{latest_release}/public/assets && ln -s #{shared_path}/assets #{latest_release}/public/assets"
+    run "rm -rf #{latest_release}/public/avatars && ln -s #{shared_path}/avatars #{latest_release}/public/avatars"
   end
 
   # Clean up old releases (by default keeps last 5)
