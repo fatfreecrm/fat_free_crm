@@ -1,0 +1,16 @@
+defaults : &defaults
+  host: ldap.unboxedconsulting.com
+  port: 389
+  bind_dn: 'uid=user.name,ou=people,dc=unboxedconsulting,dc=com'
+  bind_passwd: 'secret'
+  search_base: "ou=people,dc=unboxedconsulting,dc=com"
+  user_filter: "(uid=%s)" # Must be a printf format string with a single string param that's replaced with the username
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

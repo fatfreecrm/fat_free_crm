@@ -15,3 +15,5 @@ nbproject
 *~
 *.swp
 vendor/plugins/crm_*
+
+config/ldap.yml
