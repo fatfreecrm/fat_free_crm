@@ -51,6 +51,14 @@
 #  suspended_at      :datetime
 #
 class User < ActiveRecord::Base
+  LDAP_ATTRIBUTES_MAP = {
+    :email => :mail,
+    :first_name => :givenname,
+    :last_name => :sn,
+    :phone => :telephonenumber,
+    :mobile => :mobile
+  }
+  LDAP_ATTRIBUTES = LDAP_ATTRIBUTES_MAP.keys
   attr_protected :admin, :suspended_at
 
   before_create  :check_if_needs_approval
@@ -122,6 +130,28 @@ class User < ActiveRecord::Base
     Notifier.deliver_password_reset_instructions(self)
   end
 
+  def self.find_or_create_from_ldap(username)
+    if u = find_by_username(username)
+      return u
+    end
+    if details = LDAPAccess.get_user_details(username)
+      u = User.new(:username => username)
+      u.set_attributes_from_ldap( details )
+      u.save
+      return u
+    end
+    return nil
+  end
+
+  def set_attributes_from_ldap( details = nil )
+    # details ||= LdapAccess.get_user_details(login)
+    # unless details.nil?
+      LDAP_ATTRIBUTES_MAP.each do |k,v|
+        write_attribute(k, details[v])
+      end
+    # end
+    self
+  end
 
   private
 

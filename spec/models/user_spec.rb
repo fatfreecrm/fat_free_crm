@@ -130,4 +130,58 @@ describe User do
     @user.suspended?.should == false
   end
 
+  describe "LDAP integration" do
+    describe "find_or_create_from_ldap" do
+      describe "when a matching user exists" do
+        it "should return the user" do
+          u = Factory.create(:user, :username => 'test.user')
+          User.find_or_create_from_ldap('test.user').should == u
+        end
+      end
+
+      describe "when no matching user exists" do
+        it "should get the users details from ldap" do
+          LDAPAccess.should_receive(:get_user_details).with('test.user').and_return( nil )
+          User.find_or_create_from_ldap('test.user')
+        end
+
+        it "should return nil if user not found in ldap" do
+          LDAPAccess.stub!(:get_user_details).with('test.user').and_return( nil )
+          User.find_or_create_from_ldap('test.user').should be_nil
+        end
+
+        it "should create a user with the details from ldap" do
+          LDAPAccess.stub!(:get_user_details).with('test.user').and_return( mock_ldap_user_details() )
+          u = nil
+          lambda do
+            u = User.find_or_create_from_ldap('test.user')
+          end.should change(User, :count).by(1)
+          u.should_not be_nil
+          u.should_not be_new_record
+          u.username.should == 'test.user'
+          u.first_name.should == 'Test'
+          u.last_name.should == 'User'
+          u.email.should == 'test.user@example.com'
+          u.phone.should == '+44 2071834250'
+          u.mobile.should == '+44 7890123456'
+        end
+      end
+    end
+
+    def mock_ldap_user_details(options = {})
+      {
+        :mail => 'test.user@example.com',
+        :objectclass => 'organizationalPerson',
+        :uid => 'test.user',
+        :telephonenumber => '+44 2071834250',
+        :mobile => '+44 7890123456',
+        :cn => 'Test User',
+        :userpassword => "{SHA}1hjGSLBIHmbdLGniQAzrOhSQu7w=",
+        :sn => 'User',
+        :dn => 'uid=test.user,dc=example,dc=com',
+        :displayname => 'Test User',
+        :givenname => 'Test'
+      }.merge(options)
+    end
+  end
 end
