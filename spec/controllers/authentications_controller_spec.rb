@@ -2,11 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe AuthenticationsController do
 
-  before(:each) do
-    activate_authlogic
-    logout
-  end
-
   # Authentication filters
   #----------------------------------------------------------------------------
   describe "authentication filters" do
@@ -52,90 +47,115 @@ describe AuthenticationsController do
   #----------------------------------------------------------------------------
   describe "POST authentications" do
     before(:each) do
-      @login = { :username => "user", :password => "pass", :remember_me => "0" }
-      @authentication = mock_model(Authentication, @login)
+      @user = Factory.create(:user, :username => 'test.user')
+      @user.stub!(:valid_ldap_credentials?).and_return(true)
+      User.stub!(:find_or_create_from_ldap).and_return(@user)
+    end
+    def do_login
+      post :create, :authentication => {:username => 'test.user', :password => "something", :remember_me => "0"}
     end
 
     describe "successful authentication " do
-      before(:each) do
-        @authentication.stub!(:save).and_return(true)
-        Authentication.stub!(:new).and_return(@authentication)
+      it "should use find_or_create_from_ldap to find the user" do
+        User.should_receive(:find_or_create_from_ldap).with('test.user').and_return(@user)
+        do_login
+      end
+
+      it "should create a session upon successfull login" do
+        do_login
+        session = Authentication.find
+        session.should_not be_nil
+        session.user.should == @user
       end
 
       it "displays welcome message and redirects to the home page" do
-        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 0)
-        @authentication.stub!(:user).and_return(@user)
-
-        post :create, :authentication => @login
+        @user.update_attributes!(:login_count => 0)
+        do_login
         flash[:notice].should_not == nil
         flash[:notice].should_not =~ /last login/
         response.should redirect_to(root_url)
       end
 
       it "displays last login time if it's not the first login" do
-        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 42)
-        @authentication.stub!(:user).and_return(@user)
-
-        post :create, :authentication => @login
+        do_login
         flash[:notice].should =~ /last login/
         response.should redirect_to(root_url)
       end
     end
 
-    describe "authenticaion failure" do
-      describe "user is not suspended" do
-        it "redirects to login page if username or password are invalid" do
-          @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
-          @authentication.stub!(:user).and_return(@user)
-          @authentication.stub!(:save).and_return(false) # <--- Authentication failure.
-          Authentication.stub!(:new).and_return(@authentication)
-
-          post :create, :authentication => @login
-          flash[:warning].should_not == nil
-          response.should redirect_to(:action => :new)
-        end
+    describe "invalid password" do
+      before :each do
+        @user.stub!(:valid_ldap_credentials?).and_return(false)
       end
 
-      describe "user has been suspended" do
-        before(:each) do
-          @authentication.stub!(:save).and_return(true)
-          Authentication.stub!(:new).and_return(@authentication)
-        end
-
-        # This tests :before_save update_info callback in Authentication model.
-        it "keeps user login attributes intact" do
-          @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday, :login_count => 0, :last_login_at => nil, :last_login_ip => nil)
-          @authentication.stub!(:user).and_return(@user)
-
-          post :create, :authentication => @login
-          @authentication.user.login_count.should == 0
-          @authentication.user.last_login_at.should be_nil
-          @authentication.user.last_login_ip.should be_nil
-        end
-
-        it "redirects to login page if user is suspended" do
-          @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday)
-          @authentication.stub!(:user).and_return(@user)
-
-          post :create, :authentication => @login
-          flash[:warning].should_not == nil # Invalid username/password.
-          flash[:notice].should == nil      # Not approved yet.
-          response.should redirect_to(:action => :new)
-        end
-
-        it "redirects to login page with the message if signup needs approval and user hasn't been activated yet" do
-          Setting.stub!(:user_signup).and_return(:needs_approval)
-          @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday, :login_count => 0)
-          @authentication.stub!(:user).and_return(@user)
-
-          post :create, :authentication => @login
-          flash[:warning].should == nil     # Invalid username/password.
-          flash[:notice].should_not == nil  # Not approved yet.
-          response.should redirect_to(:action => :new)
-        end
+      it "should not create a session" do
+        do_login
+        Authentication.find.should be_nil
       end
 
-    end # authentication failure
+      it "redirects to login page" do
+        do_login
+        flash[:warning].should_not == nil
+        response.should redirect_to(:action => :new)
+      end
+    end
+
+    describe "user has been suspended" do
+      before :each do
+        @user.suspended_at = Date.yesterday
+        @user.save!
+      end
+
+      it "should not create a session" do
+        pending "So it seems that suspending a user never worked."
+        do_login
+        Authentication.find.should be_nil
+      end
+
+      # This tests :before_save update_info callback in Authentication model.
+      it "keeps user login attributes intact" do
+        @user.update_attributes!(:login_count => 0, :last_login_at => nil, :last_login_ip => nil)
+        do_login
+        @user.reload
+        @user.login_count.should == 0
+        @user.last_login_at.should be_nil
+        @user.last_login_ip.should be_nil
+      end
+
+      it "redirects to login page if user is suspended" do
+        do_login
+        flash[:warning].should_not == nil # Invalid username/password.
+        flash[:notice].should == nil      # Not approved yet.
+        response.should redirect_to(:action => :new)
+      end
+
+      it "redirects to login page with the message if signup needs approval and user hasn't been activated yet" do
+        @user.update_attributes!(:login_count => 0)
+        Setting.stub!(:user_signup).and_return(:needs_approval)
+        do_login
+        flash[:warning].should == nil     # Invalid username/password.
+        flash[:notice].should_not == nil  # Not approved yet.
+        response.should redirect_to(:action => :new)
+      end
+    end
+
+    describe "non-existant user" do
+      before :each do
+        User.stub!(:find_or_create_from_ldap).and_return(nil)
+      end
+
+      it "should not create a session" do
+        do_login
+        Authentication.find.should be_nil
+      end
+
+      it "redirects to login page" do
+        do_login
+        flash[:warning].should_not == nil
+        response.should redirect_to(:action => :new)
+      end
+    end
+
   end # POST authenticate
 
 end
