@@ -1,0 +1,247 @@
+--- !ruby/object:Gem::Specification 
+name: factory_girl
+version: !ruby/object:Gem::Version 
+  hash: 29
+  prerelease: false
+  segments: 
+  - 1
+  - 3
+  - 3
+  version: 1.3.3
+platform: ruby
+authors: 
+- Joe Ferris
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2011-01-11 00:00:00 +00:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: rcov
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: rspec
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id002
+- !ruby/object:Gem::Dependency 
+  name: cucumber
+  prerelease: false
+  requirement: &id003 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id003
+- !ruby/object:Gem::Dependency 
+  name: activerecord
+  prerelease: false
+  requirement: &id004 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: 9
+        segments: 
+        - 2
+        - 3
+        - 5
+        version: 2.3.5
+  type: :development
+  version_requirements: *id004
+- !ruby/object:Gem::Dependency 
+  name: activerecord
+  prerelease: false
+  requirement: &id005 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: -1848230021
+        segments: 
+        - 3
+        - 0
+        - 0
+        - beta3
+        version: 3.0.0.beta3
+  type: :development
+  version_requirements: *id005
+- !ruby/object:Gem::Dependency 
+  name: rr
+  prerelease: false
+  requirement: &id006 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id006
+- !ruby/object:Gem::Dependency 
+  name: sqlite3
+  prerelease: false
+  requirement: &id007 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id007
+description: |-
+  factory_girl provides a framework and DSL for defining and
+                         using factories - less error-prone, more explicit, and
+                         all-around easier to work with than fixtures.
+email: jferris@thoughtbot.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- README.rdoc
+files: 
+- Changelog
+- CONTRIBUTION_GUIDELINES.rdoc
+- LICENSE
+- Rakefile
+- README.rdoc
+- lib/factory_girl/aliases.rb
+- lib/factory_girl/attribute/association.rb
+- lib/factory_girl/attribute/callback.rb
+- lib/factory_girl/attribute/dynamic.rb
+- lib/factory_girl/attribute/static.rb
+- lib/factory_girl/attribute.rb
+- lib/factory_girl/factory.rb
+- lib/factory_girl/proxy/attributes_for.rb
+- lib/factory_girl/proxy/build.rb
+- lib/factory_girl/proxy/create.rb
+- lib/factory_girl/proxy/stub.rb
+- lib/factory_girl/proxy.rb
+- lib/factory_girl/rails2.rb
+- lib/factory_girl/sequence.rb
+- lib/factory_girl/step_definitions.rb
+- lib/factory_girl/syntax/blueprint.rb
+- lib/factory_girl/syntax/generate.rb
+- lib/factory_girl/syntax/make.rb
+- lib/factory_girl/syntax/sham.rb
+- lib/factory_girl/syntax.rb
+- lib/factory_girl.rb
+- spec/acceptance/acceptance_helper.rb
+- spec/acceptance/acceptance_spec.rb
+- spec/acceptance/models.rb
+- spec/acceptance/syntax/blueprint_spec.rb
+- spec/acceptance/syntax/generate_spec.rb
+- spec/acceptance/syntax/make_spec.rb
+- spec/acceptance/syntax/sham_spec.rb
+- spec/factory_girl/aliases_spec.rb
+- spec/factory_girl/attribute/association_spec.rb
+- spec/factory_girl/attribute/callback_spec.rb
+- spec/factory_girl/attribute/dynamic_spec.rb
+- spec/factory_girl/attribute/static_spec.rb
+- spec/factory_girl/attribute_spec.rb
+- spec/factory_girl/factory_spec.rb
+- spec/factory_girl/proxy/attributes_for_spec.rb
+- spec/factory_girl/proxy/build_spec.rb
+- spec/factory_girl/proxy/create_spec.rb
+- spec/factory_girl/proxy/stub_spec.rb
+- spec/factory_girl/proxy_spec.rb
+- spec/factory_girl/sequence_spec.rb
+- spec/spec_helper.rb
+- features/factory_girl_steps.feature
+- features/step_definitions/database_steps.rb
+- features/support/env.rb
+- features/support/factories.rb
+- features/support/test.db
+has_rdoc: true
+homepage: http://thoughtbot.com/projects/factory_girl
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --line-numbers
+- --main
+- README.rdoc
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: factory_girl provides a framework and DSL for defining and using model instance factories.
+test_files: 
+- spec/acceptance/acceptance_spec.rb
+- spec/acceptance/syntax/blueprint_spec.rb
+- spec/acceptance/syntax/generate_spec.rb
+- spec/acceptance/syntax/make_spec.rb
+- spec/acceptance/syntax/sham_spec.rb
+- spec/factory_girl/aliases_spec.rb
+- spec/factory_girl/attribute/association_spec.rb
+- spec/factory_girl/attribute/callback_spec.rb
+- spec/factory_girl/attribute/dynamic_spec.rb
+- spec/factory_girl/attribute/static_spec.rb
+- spec/factory_girl/attribute_spec.rb
+- spec/factory_girl/factory_spec.rb
+- spec/factory_girl/proxy/attributes_for_spec.rb
+- spec/factory_girl/proxy/build_spec.rb
+- spec/factory_girl/proxy/create_spec.rb
+- spec/factory_girl/proxy/stub_spec.rb
+- spec/factory_girl/proxy_spec.rb
+- spec/factory_girl/sequence_spec.rb
+- features/factory_girl_steps.feature
+- features/step_definitions/database_steps.rb
+- features/support/env.rb
+- features/support/factories.rb
+- features/support/test.db

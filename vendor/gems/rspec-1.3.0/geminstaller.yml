@@ -1,0 +1,28 @@
+# Basics needed to run 'rake' from this directory
+gems:
+- name: cucumber
+  version: '>= 0.3.101'
+- name: diff-lcs
+  version: '>= 1.1.2'
+- name: fakefs
+  version: '>= 0.2'
+- name: flexmock
+  version: '>= 0.8.6'
+- name: heckle
+  version: '>= 1.4.2'
+- name: hoe
+  version: '>= 2.0'
+- name: nokogiri
+  version: '>= 1.2.3'
+- name: mocha
+  version: '>= 0.9.5'
+- name: rake
+  version: '>= 0.8.4'
+- name: spicycode-rcov
+  version: '>= 0.8.2.1'
+- name: syntax
+  version: '>= 1.0.0'
+- name: rr
+  version: '>= 0.10.0'
+- name: ruby-debug
+  version: '>= 0.10.3'
