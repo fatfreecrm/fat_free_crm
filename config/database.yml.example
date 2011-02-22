@@ -1,0 +1,17 @@
+defaults: &defaults
+  adapter: mysql
+  encoding: utf8
+  username: ffcrm
+  password:
+
+development:
+  <<: *defaults
+  database: ffcrm_development
+
+test:
+  <<: *defaults
+  database: ffcrm_test
+
+production:
+  <<: *defaults
+  database: ffcrm_production
