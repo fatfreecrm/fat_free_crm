@@ -168,6 +168,27 @@ describe User do
       end
     end
 
+    describe "valid_ldap_credentials" do
+      before :each do
+        @user = Factory.create(:user, :username => 'test.user')
+      end
+
+      it "should call LdapAccess.authenticate with the username and password" do
+        LDAPAccess.should_receive(:authenticate).with('test.user', 'secret')
+        @user.send(:valid_ldap_credentials?, 'secret')
+      end
+
+      it "should return true if the authenticate call is successful" do
+        LDAPAccess.stub!(:authenticate).and_return(true)
+        @user.send(:valid_ldap_credentials?, 'secret').should be_true
+      end
+
+      it "should return false if the authenticate call fails" do
+        LDAPAccess.stub!(:authenticate).and_return(false)
+        @user.send(:valid_ldap_credentials?, 'secret').should be_false
+      end
+    end
+
     def mock_ldap_user_details(options = {})
       {
         :mail => 'test.user@example.com',

@@ -153,6 +153,12 @@ class User < ActiveRecord::Base
     self
   end
 
+  protected
+
+  def valid_ldap_credentials?(password)
+    LDAPAccess.authenticate(self.username, password)
+  end
+
   private
 
   # Suspend newly created user if signup requires an approval.
