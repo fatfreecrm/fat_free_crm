@@ -123,7 +123,10 @@ private
     unless current_user
       store_location
       flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
-      redirect_to login_url
+      respond_to do |format|
+        format.html { redirect_to login_url }
+        format.js   { render(:index) { |page| page.redirect_to login_url } }
+      end
     end
   end
 
@@ -270,3 +273,4 @@ private
   end
 
 end
+
