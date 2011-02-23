@@ -1,0 +1,95 @@
+--- !ruby/object:Gem::Specification 
+name: ruby-net-ldap
+version: !ruby/object:Gem::Version 
+  hash: 23
+  prerelease: false
+  segments: 
+  - 0
+  - 0
+  - 4
+  version: 0.0.4
+platform: ruby
+authors: 
+- Francis Cianfrocca
+autorequire: 
+bindir: bin
+cert_chain: 
+date: 2006-08-15 00:00:00 +01:00
+default_executable: 
+dependencies: []
+
+description: Net::LDAP is an LDAP support library written in pure Ruby. It supports all LDAP client features, and a subset of server features as well.
+email: garbagecat10@gmail.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- README
+- ChangeLog
+- LICENCE
+- COPYING
+files: 
+- README
+- LICENCE
+- ChangeLog
+- COPYING
+- tests/testfilter.rb
+- tests/testpsw.rb
+- tests/testem.rb
+- tests/testdata.ldif
+- tests/testber.rb
+- tests/testldif.rb
+- tests/testldap.rb
+- lib/net
+- lib/net/ber.rb
+- lib/net/ldap.rb
+- lib/net/ldap
+- lib/net/ldif.rb
+- lib/net/ldap/filter.rb
+- lib/net/ldap/entry.rb
+- lib/net/ldap/psw.rb
+- lib/net/ldap/dataset.rb
+- lib/net/ldap/pdu.rb
+has_rdoc: true
+homepage: http://rubyforge.org/projects/net-ldap
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --title
+- Net::LDAP
+- --main
+- README
+- --line-numbers
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">"
+    - !ruby/object:Gem::Version 
+      hash: 31
+      segments: 
+      - 0
+      - 0
+      - 0
+      version: 0.0.0
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: net-ldap
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 1
+summary: A pure Ruby LDAP client library.
+test_files: 
+- tests/testem.rb

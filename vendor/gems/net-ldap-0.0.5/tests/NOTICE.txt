@@ -1,6 +1,0 @@
-Most of the tests here have been migrated to ../test
-where all new tests will be created. These have been
-left here for now just for reference and will me
-migrated as well.
-
-These will not be run automatically by rake.

@@ -1,4 +1,4 @@
-# $Id$
+# $Id: ldap.rb 154 2006-08-15 09:35:43Z blackhedd $
 #
 # Net::LDAP for Ruby
 #
@@ -261,9 +261,9 @@ module Net
 
   class LDAP
 
-    class LdapError < StandardError; end
+    class LdapError < Exception; end
 
-    VERSION = "0.0.5"
+    VERSION = "0.0.4"
 
 
     SearchScope_BaseObject = 0
@@ -271,11 +271,8 @@ module Net
     SearchScope_WholeSubtree = 2
     SearchScopes = [SearchScope_BaseObject, SearchScope_SingleLevel, SearchScope_WholeSubtree]
 
-    AsnSyntax = BER.compile_syntax({
+    AsnSyntax = {
       :application => {
-	:primitive => {
-	  2 => :null		    # UnbindRequest body
-        },
         :constructed => {
           0 => :array,              # BindRequest
           1 => :array,              # BindResponse
@@ -303,27 +300,19 @@ module Net
           0 => :string,             # password
           1 => :string,             # Kerberos v4
           2 => :string,             # Kerberos v5
-          7 => :string,             # serverSaslCreds
         },
         :constructed => {
-          0 => :array,              # RFC-2251 Control and Filter-AND
-          1 => :array,              # SearchFilter-OR
-          2 => :array,              # SearchFilter-NOT
+          0 => :array,              # RFC-2251 Control
           3 => :array,              # Seach referral
-          4 => :array,              # unknown use in Microsoft Outlook
-          5 => :array,              # SearchFilter-GE
-          6 => :array,              # SearchFilter-LE
-          7 => :array,              # serverSaslCreds
         }
       }
-    })
+    }
 
     DefaultHost = "127.0.0.1"
     DefaultPort = 389
     DefaultAuth = {:method => :anonymous}
     DefaultTreebase = "dc=com"
 
-    StartTlsOid = "1.3.6.1.4.1.1466.20037"
 
     ResultStrings = {
       0 => "Success",
@@ -332,12 +321,12 @@ module Net
       3 => "Time Limit Exceeded",
       4 => "Size Limit Exceeded",
       12 => "Unavailable crtical extension",
-      14 => "saslBindInProgress",
       16 => "No Such Attribute",
       17 => "Undefined Attribute Type",
       20 => "Attribute or Value Exists",
       32 => "No Such Object",
       34 => "Invalid DN Syntax",
+      48 => "Invalid DN Syntax",
       48 => "Inappropriate Authentication",
       49 => "Invalid Credentials",
       50 => "Insufficient Access Rights",
@@ -476,9 +465,8 @@ module Net
     # unencrypted connections.]</i>
     #
     def encryption args
-      case args
-      when :simple_tls, :start_tls
-	      args = {:method => args}
+      if args == :simple_tls
+        args = {:method => :simple_tls}
       end
       @encryption = args
     end
@@ -514,21 +502,9 @@ module Net
     #    puts "Message: #{ldap.get_operation_result.message}"
     #  end
     #
-    # Certain operations return additional information, accessible through members
-    # of the object returned from #get_operation_result. Check #get_operation_result.error_message
-    # and #get_operation_result.matched_dn.
-    #
-    #--
-    # Modified the implementation, 20Mar07. We might get a hash of LDAP response codes
-    # instead of a simple numeric code.
-    #
     def get_operation_result
       os = OpenStruct.new
-      if @result.is_a?(Hash)
-	      os.code = (@result[:resultCode] || "").to_i
-	      os.error_message = @result[:errorMessage]
-	      os.matched_dn = @result[:matchedDN]
-      elsif @result
+      if @result
         os.code = @result
       else
         os.code = 0
@@ -563,14 +539,11 @@ module Net
     # if the bind was unsuccessful.
     def open
       raise LdapError.new( "open already in progress" ) if @open_connection
-      begin
-        @open_connection = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
-        @open_connection.bind @auth
-        yield self
-      ensure
-        @open_connection.close if @open_connection
-        @open_connection = nil
-      end
+      @open_connection = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
+      @open_connection.bind @auth
+      yield self
+      @open_connection.close
+      @open_connection = nil
     end
 
 
@@ -582,7 +555,6 @@ module Net
     # * :return_result (a boolean specifying whether to return a result set).
     # * :attributes_only (a boolean flag, defaults false)
     # * :scope (one of: Net::LDAP::SearchScope_BaseObject, Net::LDAP::SearchScope_SingleLevel, Net::LDAP::SearchScope_WholeSubtree. Default is WholeSubtree.)
-    # * :size (an integer indicating the maximum number of search entries to return. Default is zero, which signifies no limit.)
     #
     # #search queries the LDAP server and passes <i>each entry</i> to the
     # caller-supplied block, as an object of type Net::LDAP::Entry.
@@ -653,10 +625,6 @@ module Net
     # array, so we can provide sort methods and what-not.
     #
     def search args = {}
-      unless args[:ignore_server_caps]
-        args[:paged_searches_supported] = paged_searches_supported?
-      end
-
       args[:base] ||= @base
       result_set = (args and args[:return_result] == false) ? nil : []
 
@@ -667,17 +635,14 @@ module Net
         }
       else
         @result = 0
-        begin
-          conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
-          if (@result = conn.bind( args[:auth] || @auth )) == 0
-            @result = conn.search( args ) {|entry|
-              result_set << entry if result_set
-              yield( entry ) if block_given?
-            }
-          end
-        ensure
-          conn.close if conn
+        conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
+        if (@result = conn.bind( args[:auth] || @auth )) == 0
+          @result = conn.search( args ) {|entry|
+            result_set << entry if result_set
+            yield( entry ) if block_given?
+          }
         end
+        conn.close
       end
 
       @result == 0 and result_set
@@ -715,23 +680,6 @@ module Net
     #    p ldap.get_operation_result
     #  end
     #
-    # Here's a more succinct example which does exactly the same thing, but
-    # collects all the required parameters into arguments:
-    #
-    #  require 'net/ldap'
-    #  ldap = Net::LDAP.new( :host=>your_server_ip_address, :port=>389 )
-    #  if ldap.bind( :method=>:simple, :username=>your_user_name, :password=>your_user_password )
-    #    # authentication succeeded
-    #  else
-    #    # authentication failed
-    #    p ldap.get_operation_result
-    #  end
-    #
-    # You don't need to pass a user-password as a String object to bind. You can
-    # also pass a Ruby Proc object which returns a string. This will cause bind to
-    # execute the Proc (which might then solicit input from a user with console display
-    # suppressed). The String value returned from the Proc is used as the password.
-    #
     # You don't have to create a new instance of Net::LDAP every time
     # you perform a binding in this way. If you prefer, you can cache the Net::LDAP object
     # and re-use it to perform subsequent bindings, <i>provided</i> you call
@@ -749,17 +697,13 @@ module Net
       if @open_connection
         @result = @open_connection.bind auth
       else
-        begin
-          conn = Connection.new( :host => @host, :port => @port , :encryption => @encryption)
-          @result = conn.bind auth
-        ensure
-          conn.close if conn
-        end
+        conn = Connection.new( :host => @host, :port => @port , :encryption => @encryption)
+        @result = conn.bind @auth
+        conn.close
       end
 
       @result == 0
     end
-
 
     #
     # #bind_as is for testing authentication credentials.
@@ -844,23 +788,17 @@ module Net
     #  Net::LDAP.open (:host => host) do |ldap|
     #    ldap.add( :dn => dn, :attributes => attr )
     #  end
-    #--
-    # Provisional modification: Connection#add returns a full hash with LDAP status values,
-    # instead of the simple result number we're used to getting.
     #
     def add args
       if @open_connection
           @result = @open_connection.add( args )
       else
         @result = 0
-        begin
-          conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption)
-          if (@result = conn.bind( args[:auth] || @auth )) == 0
-            @result = conn.add( args )
-          end
-        ensure
-          conn.close if conn
+        conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption)
+        if (@result = conn.bind( args[:auth] || @auth )) == 0
+          @result = conn.add( args )
         end
+        conn.close
       end
       @result == 0
     end
@@ -951,14 +889,11 @@ module Net
           @result = @open_connection.modify( args )
       else
         @result = 0
-        begin
-          conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
-          if (@result = conn.bind( args[:auth] || @auth )) == 0
-            @result = conn.modify( args )
-          end
-        ensure
-          conn.close if conn
+        conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
+        if (@result = conn.bind( args[:auth] || @auth )) == 0
+          @result = conn.modify( args )
         end
+        conn.close
       end
       @result == 0
     end
@@ -1026,14 +961,11 @@ module Net
           @result = @open_connection.rename( args )
       else
         @result = 0
-        begin
-          conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
-          if (@result = conn.bind( args[:auth] || @auth )) == 0
-            @result = conn.rename( args )
-          end
-        ensure
-          conn.close if conn
+        conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
+        if (@result = conn.bind( args[:auth] || @auth )) == 0
+          @result = conn.rename( args )
         end
+        conn.close
       end
       @result == 0
     end
@@ -1059,98 +991,13 @@ module Net
           @result = @open_connection.delete( args )
       else
         @result = 0
-        begin
-          conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
-          if (@result = conn.bind( args[:auth] || @auth )) == 0
-            @result = conn.delete( args )
-          end
-        ensure
-          conn.close
+        conn = Connection.new( :host => @host, :port => @port, :encryption => @encryption )
+        if (@result = conn.bind( args[:auth] || @auth )) == 0
+          @result = conn.delete( args )
         end
+        conn.close
       end
       @result == 0
-    end
-
-
-    # (Experimental, subject to change).
-    # Return the rootDSE record from the LDAP server as a Net::LDAP::Entry, or an
-    # empty Entry if the server doesn't return the record.
-    #--
-    # cf. RFC4512 graf 5.1.
-    # Note that the rootDSE record we return on success has an empty DN, which is correct.
-    # On failure, the empty Entry will have a nil DN. There's no real reason for that,
-    # so it can be changed if desired.
-    # The funky number-disagreements in the set of attribute names is correct per the RFC.
-    # We may be called by #search itself, which may need to determine things like paged
-    # search capabilities. So to avoid an infinite regress, set :ignore_server_caps,
-    # which prevents us getting called recursively.
-    #
-    def search_root_dse
-      rs = search(
-        :ignore_server_caps=>true,
-        :base=>"",
-        :scope=>SearchScope_BaseObject,
-        :attributes=>[:namingContexts,:supportedLdapVersion,:altServer,:supportedControl,:supportedExtension,:supportedFeatures,:supportedSASLMechanisms]
-      )
-      (rs and rs.first) or Entry.new
-    end
-
-
-	# Return the root Subschema record from the LDAP server as a Net::LDAP::Entry,
-	# or an empty Entry if the server doesn't return the record. On success, the
-	# Net::LDAP::Entry returned from this call will have the attributes :dn,
-	# :objectclasses, and :attributetypes. If there is an error, call #get_operation_result
-	# for more information.
-	#  
-	#  ldap = Net::LDAP.new
-	#  ldap.host = "your.ldap.host"
-	#  ldap.auth "your-user-dn", "your-psw"
-	#  subschema_entry = ldap.search_subschema_entry
-	#  
-	#  subschema_entry.attributetypes.each do |attrtype|
-	#      # your code
-	#  end
-	#  
-	#  subschema_entry.objectclasses.each do |attrtype|
-	#      # your code
-	#  end
-	#--
-	# cf. RFC4512 section 4, particulary graff 4.4.
-	# The :dn attribute in the returned Entry is the subschema name as returned from
-	# the server.
-	# Set :ignore_server_caps, see the notes in search_root_dse.
-	#
-	def search_subschema_entry
-		rs = search(
-			    :ignore_server_caps=>true,
-			    :base=>"",
-			    :scope=>SearchScope_BaseObject,
-			    :attributes=>[:subschemaSubentry]
-		)
-		return Entry.new unless (rs and rs.first)
-		subschema_name = rs.first.subschemasubentry
-		return Entry.new unless (subschema_name and subschema_name.first)
-
-		rs = search(
-			    :ignore_server_caps=>true,
-			    :base=>subschema_name.first,
-			    :scope=>SearchScope_BaseObject,
-			    :filter=>"objectclass=subschema",
-			    :attributes=>[:objectclasses, :attributetypes]
-		)
-
-		(rs and rs.first) or Entry.new
-	end
-
-
-    #--
-    # Convenience method to query server capabilities.
-    # Only do this once per Net::LDAP object.
-    # Note, we call a search, and we might be called from inside a search!
-    # MUST refactor the root_dse call out.
-    def paged_searches_supported?
-      @server_caps ||= search_root_dse
-      @server_caps[:supportedcontrol].include?(LdapControls::PagedResults)
     end
 
   end # class LDAP
@@ -1162,7 +1009,6 @@ module Net
   class Connection # :nodoc:
 
     LdapVersion = 3
-    MaxSaslChallenges = 10
 
 
     #--
@@ -1170,7 +1016,7 @@ module Net
     #
     def initialize server
       begin
-        @conn = TCPSocket.new( server[:host], server[:port] )
+        @conn = TCPsocket.new( server[:host], server[:port] )
       rescue
         raise LdapError.new( "no connection to server" )
       end
@@ -1202,12 +1048,7 @@ module Net
     # It doesn't do any server-cert validation and requires nothing in the way
     # of key files and root-cert files, etc etc.
     # OBSERVE: WE REPLACE the value of @conn, which is presumed to be a connected
-    # TCPSocket object.
-    #
-    # The start_tls method is supported by many servers over the standard LDAP port.
-    # It does not require an alternative port for encrypted communications, as with
-    # simple_tls.
-    # Thanks for Kouhei Sutou for generously contributing the :start_tls path.
+    # TCPsocket object.
     #
     def setup_encryption args
       case args[:method]
@@ -1218,24 +1059,6 @@ module Net
         @conn.connect
         @conn.sync_close = true
       # additional branches requiring server validation and peer certs, etc. go here.
-	when :start_tls
-		raise LdapError.new("openssl unavailable") unless $net_ldap_openssl_available
-		msgid = next_msgid.to_ber
-		request = [StartTlsOid.to_ber].to_ber_appsequence( Net::LdapPdu::ExtendedRequest )
-		request_pkt = [msgid, request].to_ber_sequence
-		@conn.write request_pkt
-		be = @conn.read_ber(AsnSyntax)
-		raise LdapError.new("no start_tls result") if be.nil?
-		pdu = Net::LdapPdu.new(be)
-		raise LdapError.new("no start_tls result") if pdu.nil?
-		if pdu.result_code.zero?
-			ctx = OpenSSL::SSL::SSLContext.new
-			@conn = OpenSSL::SSL::SSLSocket.new(@conn, ctx)
-			@conn.connect
-			@conn.sync_close = true
-		else
-			raise LdapError.new("start_tls failed: #{pdu.result_code}")
-		end
       else
         raise LdapError.new( "unsupported encryption method #{args[:method]}" )
       end
@@ -1265,30 +1088,12 @@ module Net
     # bind
     #
     def bind auth
-      meth = auth[:method]
-      if [:simple, :anonymous, :anon].include?( meth )
-        bind_simple auth
-      elsif meth == :sasl
-        bind_sasl( auth )
-      elsif meth == :gss_spnego
-        bind_gss_spnego( auth )
-      else
-        raise LdapError.new( "unsupported auth method (#{meth})" )
-      end
-    end
-
-    #--
-    # bind_simple
-    # Implements a simple user/psw authentication.
-    # Accessed by calling #bind with a method of :simple or :anonymous.
-    #
-    def bind_simple auth
-      user,psw = if auth[:method] == :simple
-        [auth[:username] || auth[:dn], auth[:password]]
-      else
+      user,psw = case auth[:method]
+      when :anonymous
         ["",""]
+      when :simple
+        [auth[:username] || auth[:dn], auth[:password]]
       end
-
       raise LdapError.new( "invalid binding information" ) unless (user && psw)
 
       msgid = next_msgid.to_ber
@@ -1299,74 +1104,6 @@ module Net
       (be = @conn.read_ber(AsnSyntax) and pdu = Net::LdapPdu.new( be )) or raise LdapError.new( "no bind result" )
       pdu.result_code
     end
-
-    #--
-    # bind_sasl
-    # Required parameters: :mechanism, :initial_credential and :challenge_response
-    # Mechanism is a string value that will be passed in the SASL-packet's "mechanism" field.
-    # Initial credential is most likely a string. It's passed in the initial BindRequest
-    # that goes to the server. In some protocols, it may be empty.
-    # Challenge-response is a Ruby proc that takes a single parameter and returns an object
-    # that will typically be a string. The challenge-response block is called when the server
-    # returns a BindResponse with a result code of 14 (saslBindInProgress). The challenge-response
-    # block receives a parameter containing the data returned by the server in the saslServerCreds
-    # field of the LDAP BindResponse packet. The challenge-response block may be called multiple
-    # times during the course of a SASL authentication, and each time it must return a value
-    # that will be passed back to the server as the credential data in the next BindRequest packet.
-    #
-    def bind_sasl auth
-      mech,cred,chall = auth[:mechanism],auth[:initial_credential],auth[:challenge_response]
-      raise LdapError.new( "invalid binding information" ) unless (mech && cred && chall)
-
-      n = 0
-      loop {
-        msgid = next_msgid.to_ber
-        sasl = [mech.to_ber, cred.to_ber].to_ber_contextspecific(3)
-        request = [LdapVersion.to_ber, "".to_ber, sasl].to_ber_appsequence(0)
-        request_pkt = [msgid, request].to_ber_sequence
-        @conn.write request_pkt
-
-        (be = @conn.read_ber(AsnSyntax) and pdu = Net::LdapPdu.new( be )) or raise LdapError.new( "no bind result" )
-        return pdu.result_code unless pdu.result_code == 14 # saslBindInProgress
-        raise LdapError.new("sasl-challenge overflow") if ((n += 1) > MaxSaslChallenges)
-
-        cred = chall.call( pdu.result_server_sasl_creds )
-      }
-
-      raise LdapError.new( "why are we here?")
-    end
-    private :bind_sasl
-
-    #--
-    # bind_gss_spnego
-    # PROVISIONAL, only for testing SASL implementations. DON'T USE THIS YET.
-    # Uses Kohei Kajimoto's Ruby/NTLM. We have to find a clean way to integrate it without
-    # introducing an external dependency.
-    # This authentication method is accessed by calling #bind with a :method parameter of
-    # :gss_spnego. It requires :username and :password attributes, just like the :simple
-    # authentication method. It performs a GSS-SPNEGO authentication with the server, which
-    # is presumed to be a Microsoft Active Directory.
-    #
-    def bind_gss_spnego auth
-      require 'ntlm.rb'
-
-      user,psw = [auth[:username] || auth[:dn], auth[:password]]
-      raise LdapError.new( "invalid binding information" ) unless (user && psw)
-
-      nego = proc {|challenge|
-        t2_msg = NTLM::Message.parse( challenge )
-        t3_msg = t2_msg.response( {:user => user, :password => psw}, {:ntlmv2 => true} )
-        t3_msg.serialize
-      }
-
-      bind_sasl( {
-        :method => :sasl,
-        :mechanism => "GSS-SPNEGO",
-        :initial_credential => NTLM::Message::Type1.new.serialize,
-        :challenge_response => nego
-      })
-    end
-    private :bind_gss_spnego
 
     #--
     # search
@@ -1385,7 +1122,6 @@ module Net
     # you won't get more than 1000 results back from a query.
     # This implementation is kindof clunky and should probably be refactored.
     # Also, is it my imagination, or are A/Ds the slowest directory servers ever???
-    # OpenLDAP newer than version 2.2.0 supports paged searches.
     #
     def search args = {}
       search_filter = (args && args[:filter]) || Filter.eq( "objectclass", "*" )
@@ -1393,9 +1129,6 @@ module Net
       search_base = (args && args[:base]) || "dc=example,dc=com"
       search_attributes = ((args && args[:attributes]) || []).map {|attr| attr.to_s.to_ber}
       return_referrals = args && args[:return_referrals] == true
-      sizelimit = (args && args[:size].to_i) || 0
-      raise LdapError.new( "invalid search-size" ) unless sizelimit >= 0
-      paged_searches_supported = (args && args[:paged_searches_supported])
 
       attributes_only = (args and args[:attributes_only] == true)
       scope = args[:scope] || Net::LDAP::SearchScope_WholeSubtree
@@ -1405,40 +1138,17 @@ module Net
       # page limit of 1000 records, but openLDAP newer than version 2.2.0 chokes
       # on anything bigger than 126. You get a silent error that is easily visible
       # by running slapd in debug mode. Go figure.
-      #
-      # Changed this around 06Sep06 to support a caller-specified search-size limit.
-      # Because we ALWAYS do paged searches, we have to work around the problem that
-      # it's not legal to specify a "normal" sizelimit (in the body of the search request)
-      # that is larger than the page size we're requesting. Unfortunately, I have the
-      # feeling that this will break with LDAP servers that don't support paged searches!!!
-      # (Because we pass zero as the sizelimit on search rounds when the remaining limit
-      # is larger than our max page size of 126. In these cases, I think the caller's
-      # search limit will be ignored!)
-      # CONFIRMED: This code doesn't work on LDAPs that don't support paged searches
-      # when the size limit is larger than 126. We're going to have to do a root-DSE record
-      # search and not do a paged search if the LDAP doesn't support it. Yuck.
-      #
       rfc2696_cookie = [126, ""]
       result_code = 0
-      n_results = 0
 
       loop {
         # should collect this into a private helper to clarify the structure
-
-        query_limit = 0
-        if sizelimit > 0
-          if paged_searches_supported
-            query_limit = (((sizelimit - n_results) < 126) ? (sizelimit - n_results) : 0)
-          else
-            query_limit = sizelimit
-          end
-        end
 
         request = [
           search_base.to_ber,
           scope.to_ber_enumerated,
           0.to_ber_enumerated,
-          query_limit.to_ber, # size limit
+          0.to_ber,
           0.to_ber,
           attributes_only.to_ber,
           search_filter.to_ber,
@@ -1462,7 +1172,6 @@ module Net
         while (be = @conn.read_ber(AsnSyntax)) && (pdu = LdapPdu.new( be ))
           case pdu.app_tag
           when 4 # search-data
-            n_results += 1
             yield( pdu.search_entry ) if block_given?
           when 19 # search-referral
             if return_referrals
@@ -1487,14 +1196,6 @@ module Net
         # then query again for the next page of results.
         # If not, we're done.
         # Don't screw this up or we'll break every search we do.
-        #
-        # Noticed 02Sep06, look at the read_ber call in this loop,
-        # shouldn't that have a parameter of AsnSyntax? Does this
-        # just accidentally work? According to RFC-2696, the value
-        # expected in this position is of type OCTET STRING, covered
-        # in the default syntax supported by read_ber, so I guess
-        # we're ok.
-        #
         more_pages = false
         if result_code == 0 and controls
           controls.each do |c|
@@ -1516,6 +1217,7 @@ module Net
 
       result_code
     end
+
 
 
 
@@ -1542,17 +1244,13 @@ module Net
       @conn.write pkt
 
       (be = @conn.read_ber(AsnSyntax)) && (pdu = LdapPdu.new( be )) && (pdu.app_tag == 7) or raise LdapError.new( "response missing or invalid" )
-      pdu.result
+      pdu.result_code
     end
 
 
     #--
     # add
     # TODO, need to support a time limit, in case the server fails to respond.
-    # Unlike other operation-methods in this class, we return a result hash rather
-    # than a simple result number. This is experimental, and eventually we'll want
-    # to do this with all the others. The point is to have access to the error message
-    # and the matched-DN returned by the server.
     #
     def add args
       add_dn = args[:dn] or raise LdapError.new("Unable to add empty DN")
@@ -1566,7 +1264,7 @@ module Net
       @conn.write pkt
 
       (be = @conn.read_ber(AsnSyntax)) && (pdu = LdapPdu.new( be )) && (pdu.app_tag == 9) or raise LdapError.new( "response missing or invalid" )
-      pdu.result
+      pdu.result_code
     end
 
 

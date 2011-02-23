@@ -1,4 +1,4 @@
-# $Id$
+# $Id: ldif.rb 78 2006-04-26 02:57:34Z blackhedd $
 #
 # Net::LDIF for Ruby
 #

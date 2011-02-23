@@ -1,14 +1,21 @@
 # $Id: testldif.rb 61 2006-04-18 20:55:55Z blackhedd $
+#
+#
 
-require 'common'
 
+$:.unshift "lib"
+
+require 'test/unit'
+
+require 'net/ldap'
 require 'net/ldif'
-require 'digest/sha1'
+
+require 'sha1'
 require 'base64'
 
 class TestLdif < Test::Unit::TestCase
 
-  TestLdifFilename = "#{File.dirname(__FILE__)}/testdata.ldif"
+  TestLdifFilename = "tests/testdata.ldif"
 
   def test_empty_ldif
     ds = Net::LDAP::Dataset::read_ldif( StringIO.new )
@@ -24,7 +31,7 @@ class TestLdif < Test::Unit::TestCase
 
   def test_ldif_with_password
     psw = "goldbricks"
-    hashed_psw = "{SHA}" + Base64::encode64(Digest::SHA1.digest(psw)).chomp
+    hashed_psw = "{SHA}" + Base64::encode64( SHA1.new(psw).digest ).chomp
 
     ldif_encoded = Base64::encode64( hashed_psw ).chomp
     ds = Net::LDAP::Dataset::read_ldif( StringIO.new( "dn: Goldbrick\r\nuserPassword:: #{ldif_encoded}\r\n\r\n" ))
@@ -48,12 +55,15 @@ class TestLdif < Test::Unit::TestCase
 
   # TODO, need some tests.
   # Must test folded lines and base64-encoded lines as well as normal ones.
-  #def test_to_ldif
-  #  File.open( TestLdifFilename, "r" ) {|f|
-  #    ds = Net::LDAP::Dataset::read_ldif( f )
-  #    ds.to_ldif
-  #    assert_equal( true, false ) # REMOVE WHEN WE HAVE SOME TESTS HERE.
-  #  }
-  #end
+  def test_to_ldif
+    File.open( TestLdifFilename, "r" ) {|f|
+      ds = Net::LDAP::Dataset::read_ldif( f )
+      ds.to_ldif
+      assert_equal( true, false ) # REMOVE WHEN WE HAVE SOME TESTS HERE.
+    }
+  end
+
 
 end
+
+

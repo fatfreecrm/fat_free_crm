@@ -1,4 +1,4 @@
-# $Id$
+# $Id: filter.rb 151 2006-08-15 08:34:53Z blackhedd $
 #
 #
 #----------------------------------------------------------------------------
@@ -115,11 +115,6 @@ class Filter
   # Removed GT and LT. They're not in the RFC.
   def ~@; Filter.new :not, self, nil; end
 
-  	# Equality operator for filters, useful primarily for constructing unit tests.
-	def == filter
-		str = "[@op,@left,@right]"
-		self.instance_eval(str) == filter.instance_eval(str)
-	end
 
   def to_s
     case @op
@@ -208,12 +203,12 @@ class Filter
         end
         [@left.to_s.to_ber, seq.to_ber].to_ber_contextspecific 4
       else                      #equality
-        [@left.to_s.to_ber, unescape(@right).to_ber].to_ber_contextspecific 3
+        [@left.to_s.to_ber, @right.to_ber].to_ber_contextspecific 3
       end
     when :ge
-      [@left.to_s.to_ber, unescape(@right).to_ber].to_ber_contextspecific 5
+      [@left.to_s.to_ber, @right.to_ber].to_ber_contextspecific 5
     when :le
-      [@left.to_s.to_ber, unescape(@right).to_ber].to_ber_contextspecific 6
+      [@left.to_s.to_ber, @right.to_ber].to_ber_contextspecific 6
     when :and
       ary = [@left.coalesce(:and), @right.coalesce(:and)].flatten
       ary.map {|a| a.to_ber}.to_ber_contextspecific( 0 )
@@ -228,109 +223,6 @@ class Filter
       raise "unimplemented search filter"
     end
   end
-
-  def unescape(right)
-    right.gsub(/\\([a-fA-F\d]{2,2})/) do
-      [$1.hex].pack("U")
-    end
-  end
-
-
-	# Converts an LDAP search filter in BER format to an Net::LDAP::Filter
-	# object. The incoming BER object most likely came to us by parsing an
-	# LDAP searchRequest PDU.
-	# Cf the comments under #to_ber, including the grammar snippet from the RFC.
-	#--
-	# We're hardcoding the BER constants from the RFC. Ought to break them out
-	# into constants.
-	#
-	def Filter::parse_ber ber
-		case ber.ber_identifier
-		when 0xa0 # context-specific constructed 0, "and"
-			ber.map {|b| Filter::parse_ber(b)}.inject {|memo,obj| memo & obj}
-		when 0xa1 # context-specific constructed 1, "or"
-			ber.map {|b| Filter::parse_ber(b)}.inject {|memo,obj| memo | obj}
-		when 0xa2 # context-specific constructed 2, "not"
-			~ Filter::parse_ber( ber.first )
-		when 0xa3 # context-specific constructed 3, "equalityMatch"
-			if ber.last == "*"
-			else
-				Filter.eq( ber.first, ber.last )
-			end
-		when 0xa4 # context-specific constructed 4, "substring"
-			str = ""
-			final = false
-			ber.last.each {|b|
-				case b.ber_identifier
-				when 0x80 # context-specific primitive 0, SubstringFilter "initial"
-					raise "unrecognized substring filter, bad initial" if str.length > 0
-					str += b
-				when 0x81 # context-specific primitive 0, SubstringFilter "any"
-					str += "*#{b}"
-				when 0x82 # context-specific primitive 0, SubstringFilter "final"
-					str += "*#{b}"
-					final = true
-				end
-			}
-			str += "*" unless final
-			Filter.eq( ber.first.to_s, str )
-		when 0xa5 # context-specific constructed 5, "greaterOrEqual"
-			Filter.ge( ber.first.to_s, ber.last.to_s )
-		when 0xa6 # context-specific constructed 5, "lessOrEqual"
-			Filter.le( ber.first.to_s, ber.last.to_s )
-		when 0x87 # context-specific primitive 7, "present"
-			# call to_s to get rid of the BER-identifiedness of the incoming string.
-			Filter.pres( ber.to_s )
-		else
-			raise "invalid BER tag-value (#{ber.ber_identifier}) in search filter"
-		end
-	end
-
-
-	# Perform filter operations against a user-supplied block. This is useful when implementing
-	# an LDAP directory server. The caller's block will be called with two arguments: first, a
-	# symbol denoting the "operation" of the filter; and second, an array consisting of arguments
-	# to the operation. The user-supplied block (which is MANDATORY) should perform some desired
-	# application-defined processing, and may return a locally-meaningful object that will appear
-	# as a parameter in the :and, :or and :not operations detailed below.
-	#
-	# A typical object to return from the user-supplied block is an array of
-	# Net::LDAP::Filter objects.
-	#
-	# These are the possible values that may be passed to the user-supplied block:
-	#  :equalityMatch (the arguments will be an attribute name and a value to be matched);
-	#  :substrings (two arguments: an attribute name and a value containing one or more * characters);
-	#  :present (one argument: an attribute name);
-	#  :greaterOrEqual (two arguments: an attribute name and a value to be compared against);
-	#  :lessOrEqual (two arguments: an attribute name and a value to be compared against);
-	#  :and (two or more arguments, each of which is an object returned from a recursive call
-	#     to #execute, with the same block;
-	#  :or (two or more arguments, each of which is an object returned from a recursive call
-	#     to #execute, with the same block;
-	#  :not (one argument, which is an object returned from a recursive call to #execute with the
-	#     the same block.
-	#
-	def execute &block
-		case @op
-		when :eq
-			if @right == "*"
-				yield :present, @left
-			elsif @right.index '*'
-				yield :substrings, @left, @right
-			else
-				yield :equalityMatch, @left, @right
-			end
-		when :ge
-			yield :greaterOrEqual, @left, @right
-		when :le
-			yield :lessOrEqual, @left, @right
-		when :or, :and
-			yield @op, (@left.execute(&block)), (@right.execute(&block))
-		when :not
-			yield @op, (@left.execute(&block))
-		end || []
-	end
-
 
   #--
   # coalesce
@@ -366,8 +258,6 @@ class Filter
       raise LdapError.new( "unknown ldap search-filter type: #{obj.ber_identifier}" )
     end
   end
-
-
 
 
   #--
@@ -417,8 +307,8 @@ class FilterParser #:nodoc:
   end
 
   def parse_paren_expression scanner
-    if scanner.scan(/\s*\(\s*/)
-      b = if scanner.scan(/\s*\&\s*/)
+    if scanner.scan /\s*\(\s*/
+      b = if scanner.scan /\s*\&\s*/
         a = nil
         branches = []
         while br = parse_paren_expression(scanner)
@@ -431,7 +321,7 @@ class FilterParser #:nodoc:
           end
           a
         end
-      elsif scanner.scan(/\s*\|\s*/)
+      elsif scanner.scan /\s*\|\s*/
         # TODO: DRY!
         a = nil
         branches = []
@@ -445,7 +335,7 @@ class FilterParser #:nodoc:
           end
           a
         end
-      elsif scanner.scan(/\s*\!\s*/)
+      elsif scanner.scan /\s*\!\s*/
         br = parse_paren_expression(scanner)
         if br
           ~ br
@@ -462,16 +352,14 @@ class FilterParser #:nodoc:
 
   # Added a greatly-augmented filter contributed by Andre Nathan
   # for detecting special characters in values. (15Aug06)
-  # Added blanks to the attribute filter (26Oct06)
   def parse_filter_branch scanner
-    scanner.scan(/\s*/)
+    scanner.scan /\s*/
     if token = scanner.scan( /[\w\-_]+/ )
-      scanner.scan(/\s*/)
+      scanner.scan /\s*/
       if op = scanner.scan( /\=|\<\=|\<|\>\=|\>|\!\=/ )
-        scanner.scan(/\s*/)
+        scanner.scan /\s*/
         #if value = scanner.scan( /[\w\*\.]+/ ) (ORG)
-        #if value = scanner.scan( /[\w\*\.\+\-@=#\$%&! ]+/ ) (ff suggested by Kouhei Sutou
-	if value = scanner.scan( /(?:[\w\*\.\+\-@=,#\$%&! ]|\\[a-fA-F\d]{2,2})+/ )
+        if value = scanner.scan( /[\w\*\.\+\-@=#\$%&!]+/ )
           case op
           when "="
             Filter.eq( token, value )

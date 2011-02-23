@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem 'rack', :version => "1.1.0"
   config.gem 'will_paginate', :version => '2.3.14'
-  config.gem 'net-ldap', :lib => 'net/ldap', :version => "~> 0.0.5"
+  config.gem 'ruby-net-ldap', :lib => 'net/ldap'
 
   if %w(development test).include?(RAILS_ENV)
     # rspec 1.3.1 has a bug that causes loads of tests to fail: https://rspec.lighthouseapp.com/projects/5645/tickets/1049
