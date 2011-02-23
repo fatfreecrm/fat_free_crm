@@ -785,19 +785,21 @@ span.fbtag {
 small.subtitle_inline_info {
   margin-left: 5px; }
 
-.mail .body p {
+.mail .textile, .comment .textile {
+  margin: -5px 0 0 25px; }
+
+.mail .body p, .comment .body p {
   margin: 15px;
     margin-top: 10px; }
-.mail .body h1, .mail .body h2, .mail .body h3, .mail .body h4 {
-  clear: both;
+.mail .body h1, .mail .body h2, .mail .body h3, .mail .body h4, .comment .body h1, .comment .body h2, .comment .body h3, .comment .body h4 {
   margin: 12px; }
-.mail .body table {
+.mail .body table, .comment .body table {
   margin: 7px; }
-  .mail .body table th, .mail .body table td {
+  .mail .body table th, .mail .body table td, .comment .body table th, .comment .body table td {
     padding: 3px 5px; }
-  .mail .body table th {
+  .mail .body table th, .comment .body table th {
     text-align: right; }
-  .mail .body table td {
+  .mail .body table td, .comment .body table td {
     text-align: left; }
 
 .customfield_check_ok {

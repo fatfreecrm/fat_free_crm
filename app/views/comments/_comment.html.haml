@@ -18,8 +18,8 @@
     - if collapsable
       %dt{ hidden_if(comment.expanded?), :id => dom_id(comment, :truncated) }
         = truncated
-      %div{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted), :style => "clear: both;" }
+      .textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
         = auto_link(formatted)
     - else
-      %div{:style => "clear: both;"}= auto_link(formatted)
+      .textile= auto_link(formatted)
 

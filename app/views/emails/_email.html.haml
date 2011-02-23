@@ -17,7 +17,7 @@
       %p
         = h(email.subject)
         %tt= " - " << truncated
-    %div{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
+    .textile{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
       %p= h(email.subject)
       = auto_link(formatted)
 
