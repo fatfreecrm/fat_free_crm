@@ -37,15 +37,6 @@ describe UsersController do
     it "maps #upload_avatar" do
       route_for(:controller => "users", :action => "upload_avatar", :id => "1").should == { :path => "/users/1/upload_avatar", :method => :put }
     end
-
-    it "maps #password" do
-      route_for(:controller => "users", :action => "password", :id => "1").should == "/users/1/password"
-    end
-
-    it "maps #change_password" do
-      route_for(:controller => "users", :action => "change_password", :id => "1").should == { :path => "/users/1/change_password", :method => :put }
-    end
-
   end
 
   describe "route recognition" do
@@ -83,14 +74,6 @@ describe UsersController do
 
     it "should generate params for #upload_avatar" do
       params_from(:put, "/users/upload_avatar/1").should == {:controller => "users", :action => "upload_avatar", :id => "1"}
-    end
-
-    it "should generate params for #password" do
-      params_from(:put, "/users/password/1").should == {:controller => "users", :action => "password", :id => "1"}
-    end
-
-    it "should generate params for #change_password" do
-      params_from(:put, "/users/change_password/1").should == {:controller => "users", :action => "change_password", :id => "1"}
     end
   end
 end

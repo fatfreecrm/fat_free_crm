@@ -130,30 +130,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1/password
-  # GET /users/1/password.xml                                              AJAX
-  #----------------------------------------------------------------------------
-  def password
-    # <-- render password.js.rjs
-  end
-
-  # PUT /users/1/change_password
-  # PUT /users/1/change_password.xml                                       AJAX
-  #----------------------------------------------------------------------------
-  def change_password
-    if @user.valid_password?(params[:current_password], true) || @user.password_hash.blank?
-      unless params[:user][:password].blank?
-        @user.update_attributes(params[:user])
-        flash[:notice] = t(:msg_password_changed)
-      else
-        flash[:notice] = t(:msg_password_not_changed)
-      end
-    else
-      @user.errors.add(:current_password, t(:msg_invalid_password))
-    end
-    # <-- render change_password.js.rjs
-  end
-
   # POST /users/1/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   def redraw
