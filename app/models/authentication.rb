@@ -20,7 +20,7 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
   after_save :check_if_suspended
 
   verify_password_method :valid_ldap_credentials?
-  find_by_login_method :find_or_create_from_ldap
+  find_by_login_method :update_or_create_from_ldap
 
   # Disabling HTTP Basic auth as we don't want site auth to mix with staging access auth.
   allow_http_basic_auth false

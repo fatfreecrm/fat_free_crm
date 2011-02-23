@@ -49,15 +49,15 @@ describe AuthenticationsController do
     before(:each) do
       @user = Factory.create(:user, :username => 'test.user')
       @user.stub!(:valid_ldap_credentials?).and_return(true)
-      User.stub!(:find_or_create_from_ldap).and_return(@user)
+      User.stub!(:update_or_create_from_ldap).and_return(@user)
     end
     def do_login
       post :create, :authentication => {:username => 'test.user', :password => "something", :remember_me => "0"}
     end
 
     describe "successful authentication " do
-      it "should use find_or_create_from_ldap to find the user" do
-        User.should_receive(:find_or_create_from_ldap).with('test.user').and_return(@user)
+      it "should use update_or_create_from_ldap to find the user" do
+        User.should_receive(:update_or_create_from_ldap).with('test.user').and_return(@user)
         do_login
       end
 
@@ -141,7 +141,7 @@ describe AuthenticationsController do
 
     describe "non-existant user" do
       before :each do
-        User.stub!(:find_or_create_from_ldap).and_return(nil)
+        User.stub!(:update_or_create_from_ldap).and_return(nil)
       end
 
       it "should not create a session" do

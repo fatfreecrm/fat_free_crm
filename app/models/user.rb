@@ -122,7 +122,7 @@ class User < ActiveRecord::Base
   end
   alias :pref :preference
 
-  def self.find_or_create_from_ldap(username)
+  def self.update_or_create_from_ldap(username)
     if u = find_by_username(username)
       return u
     end

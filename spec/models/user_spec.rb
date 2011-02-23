@@ -129,23 +129,23 @@ describe User do
   end
 
   describe "LDAP integration" do
-    describe "find_or_create_from_ldap" do
+    describe "update_or_create_from_ldap" do
       describe "when a matching user exists" do
         it "should return the user" do
           u = Factory.create(:user, :username => 'test.user')
-          User.find_or_create_from_ldap('test.user').should == u
+          User.update_or_create_from_ldap('test.user').should == u
         end
       end
 
       describe "when no matching user exists" do
         it "should get the users details from ldap" do
           LDAPAccess.should_receive(:get_user_details).with('test.user').and_return( nil )
-          User.find_or_create_from_ldap('test.user')
+          User.update_or_create_from_ldap('test.user')
         end
 
         it "should return nil if user not found in ldap" do
           LDAPAccess.stub!(:get_user_details).with('test.user').and_return( nil )
-          User.find_or_create_from_ldap('test.user').should be_nil
+          User.update_or_create_from_ldap('test.user').should be_nil
         end
 
         it "should create a user with the details from ldap" do
@@ -153,7 +153,7 @@ describe User do
           LDAPAccess.stub!(:get_user_details).with('test.user').and_return( mock_ldap_user_details() )
           u = nil
           lambda do
-            u = User.find_or_create_from_ldap('test.user')
+            u = User.update_or_create_from_ldap('test.user')
           end.should change(User, :count).by(1)
           u.should_not be_nil
           u.should_not be_new_record
@@ -170,7 +170,7 @@ describe User do
           LDAPAccess.stub!(:get_user_details).with('test.user').and_return( mock_ldap_user_details() )
           u = nil
           lambda do
-            u = User.find_or_create_from_ldap('test.user')
+            u = User.update_or_create_from_ldap('test.user')
           end.should change(User, :count).by(1)
           u.should_not be_nil
           u.should_not be_new_record
