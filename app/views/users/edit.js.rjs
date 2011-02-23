@@ -4,7 +4,6 @@ if params[:cancel].true?
 else
   page[:edit_profile].replace_html :partial => "profile"
   page.call "crm.hide_form", :upload_avatar
-  page.call "crm.hide_form", :change_password
   page.call "crm.flip_form", :edit_profile
   page.call "crm.set_title", :edit_profile, t(:edit_profile)
 end

@@ -23,7 +23,6 @@ describe "/users/avatar.js.rjs" do
       with_tag("form[class=edit_user]")
     end
     response.should include_text('crm.hide_form("edit_profile")')
-    response.should include_text('crm.hide_form("change_password")')
     response.should include_text('crm.flip_form("upload_avatar")')
     response.should include_text('crm.set_title("upload_avatar"')
   end
