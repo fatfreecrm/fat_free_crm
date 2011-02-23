@@ -18,7 +18,7 @@ describe AuthenticationsController do
 
     describe "user must not be logged" do
       before(:each) do
-        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
+        @user = Factory(:user)
         @controller.stub!(:current_user).and_return(@user)
       end
 

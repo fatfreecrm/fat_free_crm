@@ -39,8 +39,6 @@ describe User do
   before(:each) do
     @valid_attributes = {
       :username => "username",
-      :password => "password",
-      :password_confirmation => "password",
       :email => "user@example.com"
     }
   end

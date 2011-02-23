@@ -74,7 +74,6 @@ class Admin::UsersController < Admin::ApplicationController
   # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
-    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.new(params[:user])
     @user.admin = (params[:user][:admin] == "1")
 
@@ -94,7 +93,6 @@ class Admin::UsersController < Admin::ApplicationController
   # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
-    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.find(params[:id])
     @user.admin = (params[:user][:admin] == "1")
 

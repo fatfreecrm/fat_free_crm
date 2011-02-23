@@ -102,19 +102,19 @@ describe Admin::UsersController do
         @user = Factory.build(:user, :username => @username, :email => @email)
         User.stub!(:new).and_return(@user)
 
-        xhr :post, :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
+        xhr :post, :create, :user => { :username => @username, :email => @email }
         assigns[:user].should == @user
         response.should render_template("admin/users/create")
       end
 
       it "creates admin user when requested so" do
-        xhr :post, :create, :user => { :username => @username, :email => @email, :admin => "1", :password => @password, :password_confirmation => @password }
+        xhr :post, :create, :user => { :username => @username, :email => @email, :admin => "1" }
         assigns[:user].admin.should == true
         response.should render_template("admin/users/create")
       end
 
       it "doesn't create admin user unless requested so" do
-        xhr :post, :create, :user => { :username => @username, :email => @email, :admin => "0", :password => @password, :password_confirmation => @password }
+        xhr :post, :create, :user => { :username => @username, :email => @email, :admin => "0" }
         assigns[:user].admin.should == false
         response.should render_template("admin/users/create")
       end
