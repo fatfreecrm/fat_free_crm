@@ -122,12 +122,6 @@ class User < ActiveRecord::Base
   end
   alias :pref :preference
 
-  #----------------------------------------------------------------------------
-  def deliver_password_reset_instructions!
-    reset_perishable_token!
-    Notifier.deliver_password_reset_instructions(self)
-  end
-
   def self.find_or_create_from_ldap(username)
     if u = find_by_username(username)
       return u

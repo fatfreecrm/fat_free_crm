@@ -4,7 +4,6 @@ ActionController::Routing::Routes.draw do |map|
   map.root      :controller => "home", :action => "index"
   map.resource  :authentication
   map.resources :users, :member => { :avatar => :get, :upload_avatar => :put }
-  map.resources :passwords
   map.resources :comments
   map.resources :emails
 
