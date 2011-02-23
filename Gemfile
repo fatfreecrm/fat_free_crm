@@ -32,6 +32,7 @@ gem 'hoptoad_notifier', '>= 2.4.2'
 gem 'ffaker'
 gem 'nokogiri' # for dropbox, parsing any XML data from emails
 gem 'acts_as_list'
+gem 'RedCloth', '>= 4.2.7'
 
 
 group :cucumber, :test, :development do

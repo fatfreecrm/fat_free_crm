@@ -785,25 +785,17 @@ span.fbtag {
 small.subtitle_inline_info {
   margin-left: 5px; }
 
-.customfield_check_ok {
-  border: 5px lightgreen solid;
-  background: whitesmoke;
-  margin: 0px;
-  padding: 0px 10px 0px 10px;
-  position: relative; }
-
-.customfield_check_fail {
-  border: 5px red solid;
-  background: lightred;
-  margin: 0px;
-  padding: 0px 10px 0px 10px;
-  position: relative; }
-
-span.handle {
-  cursor: move; }
-  span.handle img {
-    vertical-align: middle;
-    margin-right: 5px; }
-
-list li tt {
-  vertical-align: middle; }
+.mail .body p {
+  margin: 15px;
+    margin-top: 10px; }
+.mail .body h1, .mail .body h2, .mail .body h3, .mail .body h4 {
+  clear: both;
+  margin: 12px; }
+.mail .body table {
+  margin: 7px; }
+  .mail .body table th, .mail .body table td {
+    padding: 3px 5px; }
+  .mail .body table th {
+    text-align: right; }
+  .mail .body table td {
+    text-align: left; }

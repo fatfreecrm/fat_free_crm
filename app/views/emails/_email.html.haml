@@ -1,5 +1,5 @@
 - truncated = h(truncate(email.body.to_s.gsub("\n", " "), :length => 125 - email.subject.to_s.size))
-- formatted = simple_format h(email.body)
+- formatted = email.body
 
 %li.mail{ highlightable(dom_id(email, :tools), :off => "#f2f2f2"), :id => dom_id(email) }
   .body
@@ -17,6 +17,7 @@
       %p
         = h(email.subject)
         %tt= " - " << truncated
-    %dt{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
+    %div{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
       %p= h(email.subject)
       = auto_link(formatted)
+

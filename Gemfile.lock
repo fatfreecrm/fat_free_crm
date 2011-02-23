@@ -50,6 +50,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    RedCloth (4.2.7)
     ZenTest (4.4.2)
     aaronh-chronic (0.3.9)
     abstract (1.0.0)
@@ -242,6 +243,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth (>= 4.2.7)
   acts-as-taggable-on (>= 2.0.6)
   acts_as_commentable (>= 3.0.1)
   acts_as_list
