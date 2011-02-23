@@ -129,6 +129,7 @@ class User < ActiveRecord::Base
     if details = LDAPAccess.get_user_details(username)
       u = User.new(:username => username)
       u.set_attributes_from_ldap( details )
+      u.admin = true if User.count == 0
       u.save
       return u
     end

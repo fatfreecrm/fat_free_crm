@@ -149,6 +149,7 @@ describe User do
         end
 
         it "should create a user with the details from ldap" do
+          Factory.create(:user)
           LDAPAccess.stub!(:get_user_details).with('test.user').and_return( mock_ldap_user_details() )
           u = nil
           lambda do
@@ -162,6 +163,18 @@ describe User do
           u.email.should == 'test.user@example.com'
           u.phone.should == '+44 2071834250'
           u.mobile.should == '+44 7890123456'
+          u.admin.should == false
+        end
+
+        it "should create the user as an admin if they are the first user" do
+          LDAPAccess.stub!(:get_user_details).with('test.user').and_return( mock_ldap_user_details() )
+          u = nil
+          lambda do
+            u = User.find_or_create_from_ldap('test.user')
+          end.should change(User, :count).by(1)
+          u.should_not be_nil
+          u.should_not be_new_record
+          u.admin.should == true
         end
       end
     end
