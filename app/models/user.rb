@@ -124,9 +124,10 @@ class User < ActiveRecord::Base
 
   def self.update_or_create_from_ldap(username)
     if u = find_by_username(username)
+      u.set_attributes_from_ldap
+      u.save
       return u
-    end
-    if details = LDAPAccess.get_user_details(username)
+    elsif details = LDAPAccess.get_user_details(username)
       u = User.new(:username => username)
       u.set_attributes_from_ldap( details )
       u.admin = true if User.count == 0
@@ -137,12 +138,12 @@ class User < ActiveRecord::Base
   end
 
   def set_attributes_from_ldap( details = nil )
-    # details ||= LdapAccess.get_user_details(login)
-    # unless details.nil?
+    details ||= LDAPAccess.get_user_details(username)
+    unless details.nil?
       LDAP_ATTRIBUTES_MAP.each do |k,v|
         write_attribute(k, details[v])
       end
-    # end
+    end
     self
   end
 

@@ -131,9 +131,28 @@ describe User do
   describe "LDAP integration" do
     describe "update_or_create_from_ldap" do
       describe "when a matching user exists" do
+        before :each do
+          @user = Factory.create(:user, :username => 'test.user')
+          LDAPAccess.stub!(:get_user_details).with('test.user').and_return( mock_ldap_user_details() )
+        end
+
         it "should return the user" do
-          u = Factory.create(:user, :username => 'test.user')
-          User.update_or_create_from_ldap('test.user').should == u
+          User.update_or_create_from_ldap('test.user').should == @user
+        end
+
+        it "should update the user's details from ldap" do
+          u = User.update_or_create_from_ldap('test.user')
+          u.username.should == 'test.user'
+          u.first_name.should == 'Test'
+          u.last_name.should == 'User'
+          u.email.should == 'test.user@example.com'
+          u.phone.should == '+44 2071834250'
+          u.mobile.should == '+44 7890123456'
+        end
+
+        it "should just return the user if they aren't found in ldap" do
+          LDAPAccess.stub!(:get_user_details).with('test.user').and_return( nil )
+          User.update_or_create_from_ldap('test.user').should == @user
         end
       end
 
