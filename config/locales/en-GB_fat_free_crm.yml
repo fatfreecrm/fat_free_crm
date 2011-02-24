@@ -290,7 +290,7 @@ en-GB:
   actual: Actual
   actual_performance: Actual Performance
   budget: Budget
-  budget_label: Budget ($)
+  budget_label: Budget (£)
   campaign: Campaign
   campaign_and_leads: campaign and its leads
   campaign_small: campaign
@@ -312,7 +312,7 @@ en-GB:
   objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
   objectives_small: campaign objectives
   revenue: Revenue
-  revenue_label: Revenue ($)
+  revenue_label: Revenue (£)
   revenue_number: "%{value} in revenue"
   save_campaign: Save Campaign
   start_date: Start date
@@ -390,7 +390,7 @@ en-GB:
   closes_today: expected to close today!
   closing_date: closing date is %{value}
   create_opportunity: Create Opportunity
-  currency: ($)
+  currency: (£)
   days_late: Late by
   days_left: Days left
   discount: Discount
