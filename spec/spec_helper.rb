@@ -54,7 +54,7 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
 
-# Load default settings from config/settings.yml
+# Load default settings from spec/settings_test.yml
 #----------------------------------------------------------------------------
 begin
   # Truncate settings so that we always start with empty table.
@@ -64,7 +64,7 @@ begin
     ActiveRecord::Base.connection.execute("TRUNCATE settings")
   end
 
-  settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
+  settings = YAML.load_file("#{RAILS_ROOT}/spec/settings_test.yml")
   settings.keys.each do |key|
     Factory.create(:setting,
         :name => key.to_s,
