@@ -46,6 +46,12 @@ namespace :deploy do
   # Clean up old releases (by default keeps last 5)
   after "deploy:update_code", "deploy:cleanup"
 
+  after "deploy:migrate", "deploy:load_settings"
+  desc "Load in all the settings from config/settings.yml"
+  task :load_settings do
+    run "cd #{latest_release} && RAILS_ENV=#{rails_env} rake crm:settings:load"
+  end
+
   task :start do
   end
 
