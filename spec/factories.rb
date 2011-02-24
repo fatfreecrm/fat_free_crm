@@ -334,25 +334,3 @@ end
 Factory.define :admin, :class => User do |u|
   u.admin               true
 end
-
-# Load default settings from config/settings.yml file.
-#----------------------------------------------------------------------------
-Factory.define :default_settings, :parent => :setting do |s|
-
-  # Truncate settings so that we always start with empty table.
-  if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
-    ActiveRecord::Base.connection.execute("DELETE FROM settings")
-  else # mysql and postgres
-    ActiveRecord::Base.connection.execute("TRUNCATE settings")
-  end
-
-  settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
-  settings.keys.each do |key|
-    Factory.define key.to_sym, :parent => :setting do |factory|
-      factory.name key.to_s
-      factory.default_value Base64.encode64(Marshal.dump(settings[key]))
-    end
-    Factory(key.to_sym) # <--- That's where the data gets loaded.
-  end
-end
-

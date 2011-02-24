@@ -55,7 +55,23 @@ Spec::Runner.configure do |config|
 end
 
 # Load default settings from config/settings.yml
-Factory(:default_settings)
+#----------------------------------------------------------------------------
+begin
+  # Truncate settings so that we always start with empty table.
+  if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
+    ActiveRecord::Base.connection.execute("DELETE FROM settings")
+  else # mysql and postgres
+    ActiveRecord::Base.connection.execute("TRUNCATE settings")
+  end
+
+  settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
+  settings.keys.each do |key|
+    Factory.create(:setting,
+        :name => key.to_s,
+        :default_value => Base64.encode64(Marshal.dump(settings[key]))
+    )
+  end
+end
 
 # See vendor/plugins/authlogic/lib/authlogic/test_case.rb
 #----------------------------------------------------------------------------
