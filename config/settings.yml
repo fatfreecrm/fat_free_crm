@@ -60,7 +60,7 @@
 #   Public  -- public access, share with everyone.
 #   Shared  -- shared with selected accounts, should be selected by the user.
 #
-:default_access: "Private"
+:default_access: "Public"
 
 # Background information.
 #------------------------------------------------------------------------------
