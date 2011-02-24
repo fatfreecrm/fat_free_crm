@@ -520,8 +520,8 @@ en-GB:
   street1: Street 1 # NEW
   street2: Street 2 # NEW
   city: City
-  zipcode: Zip Code
-  state: State
+  zipcode: Post Code
+  state: County
   country: Country
 
   # Views -> Layout.
@@ -614,13 +614,13 @@ en-GB:
   #----------------------------------------------------------------------------
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
-      mmdd: "%b %e"
-      mmddyy: "%b %e, %Y"
+      mmddyyyy: "%Y-%m-%d"
+      mmdd: "%e %b"
+      mmddyy: "%e %b, %Y"
 
   time:
     formats:
-      mmddhhss: "%b %e at %l:%M%p"
+      mmddhhss: "%e %b at %l:%M%p"
 
   calendar_date_select:
     ok: OK
@@ -630,4 +630,4 @@ en-GB:
 
   # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: american
+  calendar_date_select_format: iso_date
