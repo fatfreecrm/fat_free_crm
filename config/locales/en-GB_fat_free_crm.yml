@@ -276,7 +276,7 @@ en-GB:
   open_in_window: Open %{value} in a new window
   mail_to: Mail to %{value}
   phone_small: phone
-  phone_toll_free: Toll-free
+  phone_toll_free: Freephone
   keep_private: Keep it private, do not share with others
   make_public: Share it with everyone
   same_as_billing: same as billing
