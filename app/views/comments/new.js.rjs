@@ -1,8 +1,12 @@
+id_prefix = "#{@commentable}_" + params["#{@commentable}_id"]
+
+
 if session["#{@commentable}_new_comment"]
-  page[:ask].hide
-  page[:post].show
-  page[:comment_comment].focus
+  page["#{id_prefix}_ask"].hide
+  page["#{id_prefix}_post"].show
+  page["#{id_prefix}_comment_comment"].focus
 else
-  page[:post].hide
-  page[:ask].show
+  page["#{id_prefix}_post"].hide
+  page["#{id_prefix}_ask"].show
 end
+

@@ -1,5 +1,6 @@
 - class_name = commentable.class.name.downcase
-.comment#comment_new{ highlightable(:comment_new_tools, :off => "#f2f2f2") }
+- id_prefix = "#{class_name}_#{commentable.id}"
+.comment{ {:id => "#{class_name}_#{commentable.id}_comment_new"}.merge(highlightable("#{class_name}_#{commentable.id}_comment_new_tools", :off => "#f2f2f2")) }
 
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].
@@ -7,19 +8,20 @@
   = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}"
 
   = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
-  .tools#comment_new_tools{ invisible }
+  .tools{ {:id => "#{id_prefix}_comment_new_tools"}.merge(invisible) }
     = link_to_function("Expand All", "crm.flip_notes_and_emails('Expanded', 'More...', 'Less...')") << " | "
     = link_to_function("Collapse All", "crm.flip_notes_and_emails('Collapsed', 'More...', 'Less...')")
 
-  #post{ hidden_if(session["#{class_name}_new_comment"].nil?) }
-    = form_for(@comment, :remote => true) do |f|
-      = hidden_field_tag "comment[user_id]", @current_user.id
-      = hidden_field_tag "comment[commentable_id]", commentable.id
-      = hidden_field_tag "comment[commentable_type]", class_name.capitalize
-      = f.text_area :comment
+  %div{ {:id => "#{id_prefix}_post"}.merge(hidden_if(true))}
+    = form_for(@comment, :remote => true, :html => {:id => "#{id_prefix}_new_comment"}) do |f|
+      = hidden_field_tag "comment[user_id]", @current_user.id, :id => "#{id_prefix}_comment_user_id"
+      = hidden_field_tag "comment[commentable_id]", commentable.id, :id => "#{id_prefix}_comment_commentable_id"
+      = hidden_field_tag "comment[commentable_type]", class_name.capitalize, :id => "#{id_prefix}_comment_commentable_type"
+      = f.text_area :comment, :id => "#{id_prefix}_comment_comment"
       %div{:style => "padding:6px 0px 0px 40px;"}
-        = f.submit t(:add_note)
+        = f.submit t(:add_note), :id => "#{id_prefix}_comment_submit"
         #{t :or}
         = link_to_remote(t(:cancel), :url => new_comment_path("#{class_name}_id" => commentable), :method => :get, :with => "'cancel=true'")
-  #ask{ hidden_if(session["#{class_name}_new_comment"])}
-    = text_field_tag :post_new_note, t(:add_note_help), :onclick => remote_function(:url => new_comment_path("#{class_name}_id" => commentable), :method => :get)
+  %div{ {:id => "#{id_prefix}_ask"}.merge(hidden_if(false))}
+    = text_field_tag :post_new_note, t(:add_note_help), :onclick => remote_function(:url => new_comment_path("#{class_name}_id" => commentable), :method => :get), :id => "#{id_prefix}_post_new_note"
+
