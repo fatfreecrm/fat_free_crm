@@ -109,6 +109,7 @@ GEM
     childprocess (0.1.6)
       ffi (~> 0.6.3)
     columnize (0.3.2)
+    crossroads_capistrano (1.2.0)
     cucumber (0.10.0)
       builder (>= 2.1.2)
       diff-lcs (~> 1.1.2)
@@ -252,6 +253,7 @@ DEPENDENCIES
   capistrano-ext
   capybara
   ci_reporter!
+  crossroads_capistrano
   crowd-crossroads!
   crowd_rails!
   cucumber-rails
