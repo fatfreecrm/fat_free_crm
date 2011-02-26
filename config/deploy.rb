@@ -4,14 +4,8 @@ require 'rvm/capistrano'
 require 'bundler/capistrano'
 require 'hoptoad_notifier/capistrano'
 
-load 'recipes/prompt.rb'
-load 'recipes/rvm.rb'
-load 'recipes/passenger.rb'
-load 'recipes/postgresql.rb'
-load 'recipes/whenever.rb'
-load 'recipes/stack.rb'
-load 'recipes/newrelic.rb'
-load 'recipes/log.rb'
+require 'crossroads_capistrano'
+CrossroadsCapistrano.load_recipes :all
 
 default_run_options[:pty] = true
 

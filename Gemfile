@@ -34,6 +34,7 @@ gem 'nokogiri' # for dropbox, parsing any XML data from emails
 gem 'acts_as_list'
 gem 'RedCloth', '>= 4.2.7'
 
+gem 'crossroads_capistrano'
 
 group :cucumber, :test, :development do
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
