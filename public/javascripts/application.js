@@ -256,16 +256,26 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  flip_notes_and_emails: function(state, more, less) {
-    var notes = $("shown_notes").value;
-    var emails = $("shown_emails").value;
+  flip_notes_and_emails: function(state, more, less, el_prefix) {
+    if(!el_prefix){
+      var notes_field  = "shown_notes";
+      var emails_field = "shown_emails";
+      var comment_new_field = "comment_new";
+    } else {
+      var notes_field  = el_prefix + "_shown_notes";
+      var emails_field = el_prefix + "_shown_emails";
+      var comment_new_field = el_prefix + "_comment_new";
+    };
+
+    var notes = $(notes_field).value;
+    var emails = $(emails_field).value;
 
     if (notes != "" || emails != "") {
       new Ajax.Request(this.base_url + "/home/timeline", {
         method     : "get",
         parameters : { type : "", id : notes + "+" + emails, state : state },
         onComplete : function() {
-          $("comment_new").adjacent("li").each( function(li) {
+          $(comment_new_field).adjacent("li").each( function(li) {
             var a = li.select("tt a.toggle")[0];
             var dt = li.select("dt");
             if (typeof(a) != "undefined") {

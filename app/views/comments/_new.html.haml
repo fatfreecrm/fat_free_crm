@@ -4,13 +4,13 @@
 
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].
-  = hidden_field_tag :shown_notes, "#{commentable.comment_ids.join(',')}"
-  = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}"
+  = hidden_field_tag :shown_notes, "#{commentable.comment_ids.join(',')}", :id => "#{id_prefix}_shown_notes"
+  = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}", :id => "#{id_prefix}_shown_emails"
 
   = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
   .tools{ {:id => "#{id_prefix}_comment_new_tools"}.merge(invisible) }
-    = link_to_function("Expand All", "crm.flip_notes_and_emails('Expanded', 'More...', 'Less...')") << " | "
-    = link_to_function("Collapse All", "crm.flip_notes_and_emails('Collapsed', 'More...', 'Less...')")
+    = link_to_function("Expand All", "crm.flip_notes_and_emails('Expanded', 'More...', 'Less...', '#{id_prefix}')") << " | "
+    = link_to_function("Collapse All", "crm.flip_notes_and_emails('Collapsed', 'More...', 'Less...', '#{id_prefix}')")
 
   %div{ {:id => "#{id_prefix}_post"}.merge(hidden_if(true))}
     = form_for(@comment, :remote => true, :html => {:id => "#{id_prefix}_new_comment"}) do |f|

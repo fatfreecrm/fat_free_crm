@@ -1,4 +1,4 @@
-- truncated = h(truncate(email.body.to_s.gsub("\n", " "), :length => 125 - email.subject.to_s.size))
+- truncated = h(truncate(email.body_without_textile.to_s.gsub("\n", " "), :length => 125 - email.subject.to_s.size))
 - formatted = email.body
 
 %li.mail{ highlightable(dom_id(email, :tools), :off => "#f2f2f2"), :id => dom_id(email) }
@@ -17,7 +17,8 @@
       %p
         = h(email.subject)
         %tt= " - " << truncated
-    .textile{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
-      %p= h(email.subject)
-      = auto_link(formatted)
+    %dt.textile{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
+      .email_content
+        %p= h(email.subject)
+        = auto_link(formatted)
 
