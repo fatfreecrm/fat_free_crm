@@ -5,7 +5,7 @@ touch ./log/punishments/missile_log.avi
 # Project variables
 # -----------------------------------------------------
 ruby_version=ruby-1.9.2-p136
-bundler_version=1.0.9
+bundler_version=1.0.10
 
 ruby_packages="ruby ruby-devel gcc rubygems"
 cucumber_packages="libxml2 libxml2-devel libxslt libxslt-devel xorg-x11-server-Xvfb firefox ImageMagick"
@@ -32,7 +32,7 @@ fi
 if ! (rvm list | grep $ruby_version); then rvm install $ruby_version; fi;
 rvm use $ruby_version
 
-if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version --no-rdoc --no-ri; fi;
+if ! (gem list | grep "bundler" | grep $bundler_version); then gem install bundler -v=$bundler_version --no-rdoc --no-ri; fi;
 
 # update rubygems
 gem update --system
