@@ -34,6 +34,9 @@ rvm use $ruby_version
 
 if ! (gem list | grep "bundler"); then gem install bundler -v=$bundler_version --no-rdoc --no-ri; fi;
 
+# update rubygems
+gem update --system
+
 # Install Bundle!
 # -----------------------------------------------------
 bundle install --deployment
