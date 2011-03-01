@@ -17,6 +17,7 @@
 
 class AccountsController < ApplicationController
   before_filter :require_user
+  before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
   after_filter  :update_recently_viewed, :only => :show
 
@@ -99,6 +100,7 @@ class AccountsController < ApplicationController
         # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
         @accounts = get_accounts
+        get_data_for_sidebar
         format.js   # create.js.rjs
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
@@ -116,6 +118,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.update_with_permissions(params[:account], params[:users])
+        get_data_for_sidebar
         format.js
         format.xml  { head :ok }
       else
@@ -191,16 +194,25 @@ class AccountsController < ApplicationController
     render :index
   end
 
+  # POST /accounts/filter                                                  AJAX
+  #----------------------------------------------------------------------------
+  def filter
+    session[:filter_by_account_category] = params[:category]
+    @accounts = get_accounts(:page => 1)
+    render :index
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_accounts(options = {})
-    get_list_of_records(Account, options)
+    get_list_of_records(Account, options.merge!(:filter => :filter_by_account_category))
   end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
       @accounts = get_accounts
+      get_data_for_sidebar
       if @accounts.blank?
         @accounts = get_accounts(:page => current_page - 1) if current_page > 1
         render :index and return
@@ -213,4 +225,15 @@ class AccountsController < ApplicationController
     end
   end
 
+  #----------------------------------------------------------------------------
+  def get_data_for_sidebar
+    @account_category_total = Hash[
+      Setting.account_category.map do |key|
+        [ key, Account.my.where(:category => key.to_s).count ]
+      end
+    ]
+    categorized = @account_category_total.values.sum
+    @account_category_total[:all] = Account.my.count
+    @account_category_total[:other] = @account_category_total[:all] - categorized
+  end
 end

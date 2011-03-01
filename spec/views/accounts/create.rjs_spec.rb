@@ -3,16 +3,17 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/accounts/create.js.rjs" do
   include AccountsHelper
 
-  before(:each) do
+  before do
     login_and_assign
   end
 
   # Note: [Create Account] is only called from Accounts index. Unlike other
   # core object Account partial is not embedded.
   describe "create success" do
-    before(:each) do
+    before do
       assign(:account, @account = Factory(:account))
       assign(:accounts, [ @account ].paginate)
+      assign(:account_category_total, Hash.new(1))
       render
     end
 

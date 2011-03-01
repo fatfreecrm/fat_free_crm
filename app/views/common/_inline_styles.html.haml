@@ -2,8 +2,8 @@
 - content_for :styles do
 
   - if models.include?(:account)
-    li.account .none { background: gainsboro; color: gray; }
-    li.account .some { background: lime; }
+    - Setting.account_category_color.each do |key, value|
+      li.account .#{key} { background:#{value}; }
 
   - if models.include?(:campaign)
     - Setting.campaign_status_color.each do |key, value|

@@ -17,16 +17,16 @@
           = f.select :status, lead_status_codes_for(@lead), { :selected => (@lead.status || "new").to_sym }, { :style => "width:160px" }
         %td= spacer
         %td
-          .label.top #{t :source}:
+          .label.top #{t :rating}:
+          = rating_select "lead[rating]", { :id => :lead_rating, :selected => @lead.rating, :style => "width:160px" }
+      %tr
+        %td
+          .label #{t :source}:
           - if @campaign && !edit # Create a lead from Campaign landing page: select :campaign as a source and disable the dropdown.
             = f.select :source, Setting.unroll(:lead_source), { :selected => :campaign }, { :style => "width:160px;", :disabled => true }
             = hidden_field_tag "lead[source]", "campaign"
           - else
             = f.select :source, Setting.unroll(:lead_source), { :selected => (@lead.source || "other").to_sym }, { :style => "width:160px" }
-      %tr
-        %td
-          .label #{t :rating}:
-          = rating_select "lead[rating]", { :id => :lead_rating, :selected => @lead.rating, :style => "width:100%" }
         %td= spacer
         %td{ :colspan => 3 }
           .label #{t :campaign}:

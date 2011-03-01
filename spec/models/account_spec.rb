@@ -114,4 +114,18 @@ describe Account do
       end
     end
   end
+
+  describe "Before save" do
+    it "create new: should replace empty category string with nil" do
+      account = Factory.build(:account, :category => '')
+      account.save
+      account.category.should == nil
+    end
+
+    it "update existing: should replace empty category string with nil" do
+      account = Factory(:account, :category => '')
+      account.save
+      account.category.should == nil
+    end
+  end
 end

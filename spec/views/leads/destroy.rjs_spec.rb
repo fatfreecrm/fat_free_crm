@@ -1,12 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/leads/destroy.js.rjs" do
-  include LeadsHelper
-
-  before(:each) do
+  before do
     login_and_assign
     assign(:lead, @lead = Factory(:lead))
-    assign(:lead_status_total, { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 })
+    assign(:lead_status_total, Hash.new(1))
   end
 
   it "should blind up destroyed lead partial" do
