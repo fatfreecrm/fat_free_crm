@@ -808,6 +808,9 @@ small.subtitle_inline_info {
 .list li.mail .gravatar, .list li.comment .gravatar {
   margin-left: 7px !important; }
 
+.indentslim a.contact_name {
+  font-size: 15px; }
+
 .customfield_check_ok {
   border: 5px lightgreen solid;
   background: whitesmoke;
