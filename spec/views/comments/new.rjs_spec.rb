@@ -7,6 +7,8 @@ describe "/comments/new.js.rjs" do
     assign(:comment, stub_model(Comment,
       :new_record? => true
     ))
+    assign(:commentable, "contact")
+    params["contact_id"] = "123"
   end
 
   it "should render new form" do
@@ -16,3 +18,4 @@ describe "/comments/new.js.rjs" do
     rendered.should include("show()")
   end
 end
+
