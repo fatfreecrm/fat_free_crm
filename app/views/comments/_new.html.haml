@@ -1,6 +1,6 @@
 - class_name = commentable.class.name.downcase
 - id_prefix = "#{class_name}_#{commentable.id}"
-.comment{ {:id => "#{class_name}_#{commentable.id}_comment_new"}.merge(highlightable("#{class_name}_#{commentable.id}_comment_new_tools", :off => "#f2f2f2")) }
+.comment.new_comment{ {:id => "#{class_name}_#{commentable.id}_comment_new"}.merge(highlightable("#{class_name}_#{commentable.id}_comment_new_tools", :off => "#f2f2f2")) }
 
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].

@@ -5,6 +5,7 @@
     %title Fat Free CRM
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag "screen", "modalbox.css", :cache => "cache/all"
+    = stylesheet_link_tag "print", :media => "print"
     - unless tabless_layout?
       = stylesheet_link_tag "calendar_date_select/default.css"
     %style= content_for :styles
