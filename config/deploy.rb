@@ -26,7 +26,7 @@ set :packages_for_project, %w(ImageMagick-devel libxml2 libxml2-devel libxslt li
 set :gems_for_project, "bundler"
 
 set :rvm_ruby_string, "ruby-1.9.2-p136"
-set :passenger_version, "3.0.1"
+set :passenger_version, "3.0.3"
 
 set :httpd_user, "apache"
 set :httpd_grp,  "apache"
