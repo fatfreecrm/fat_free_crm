@@ -194,7 +194,7 @@ describe "IMAP Dropbox" do
   end
 
   #------------------------------------------------------------------------------
-  describe "Pipieline: processing keywords on the first line" do
+  describe "Pipeline: processing keywords on the first line" do
     before(:each) do
       mock_connect
       mock_disconnect
@@ -407,3 +407,4 @@ describe "IMAP Dropbox" do
   end
 
 end
+
