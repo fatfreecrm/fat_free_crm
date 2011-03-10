@@ -62,7 +62,7 @@ describe Activity do
 
   %w(account campaign contact lead opportunity task).each do |subject|
     describe "Create, update, and delete (#{subject})" do
-      before do
+      before :each do
         @subject = Factory(subject.to_sym, :user => @current_user)
         @conditions = [ 'user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', @current_user.id, @subject.id, @subject.class.name ]
       end
@@ -94,7 +94,7 @@ describe Activity do
       end
 
       it "should add an activity when commenting on a #{subject}" do
-        @comment = Factory(:comment, :commentable => @subject)
+        @comment = Factory(:comment, :commentable => @subject, :user => @current_user)
 
         @activity = Activity.where(@conditions << 'commented').first
         @activity.should_not == nil
@@ -106,7 +106,7 @@ describe Activity do
 # ---------------------------------------------------------------
 #      describe "on a record marked as deleted" do
 #        it "should still be able to update" do
-#                   
+#
 #          @subject.destroy
 #          deleted = @subject.class.find_with_destroyed(@subject)
 
@@ -349,3 +349,4 @@ describe Activity do
     end
   end
 end
+
