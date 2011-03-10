@@ -25,7 +25,6 @@ require "fat_free_crm/exportable"
 require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
-require "fat_free_crm/plugin"
 
 ActionView::Base.send(:include, FatFreeCRM::I18n)
 ActionController::Base.send(:include, FatFreeCRM::I18n)
@@ -43,4 +42,7 @@ require "crossroads/opportunity"
 require "crossroads/activemodel_datetime_patch"
 
 require "fat_free_crm/dropbox" if defined?(::Rake)
+
+# Must require plugins after everything else.
+require "fat_free_crm/plugin"
 
