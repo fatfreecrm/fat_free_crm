@@ -17,15 +17,15 @@
 
 module HomeHelper
   def sort_by_assets
-    Activity::ASSETS.map do |key, value|
-      %Q[{ name: "#{t(value)}", on_select: function() { #{redraw(:asset, [ key, t(value).downcase ], url_for(:action => :redraw))} } }]
+    Activity::ASSETS.map do |asset|
+      %Q[{ name: "#{t(asset)}", on_select: function() { #{redraw(:asset, [ asset, t(asset).downcase ], url_for(:action => :redraw))} } }]
     end
   end
 
   #----------------------------------------------------------------------------
   def sort_by_duration
-    Activity::DURATION.map do |key, value|
-      %Q[{ name: "#{t(value)}", on_select: function() { #{redraw(:duration, [ key, t(value).downcase ], url_for(:action => :redraw))} } }]
+    Activity::DURATION.map do |duration|
+      %Q[{ name: "#{t(duration)}", on_select: function() { #{redraw(:duration, [ duration, t(duration).downcase ], url_for(:action => :redraw))} } }]
     end
   end
 
