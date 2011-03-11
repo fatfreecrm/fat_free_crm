@@ -28,6 +28,9 @@ namespace :crm do
     task :load => :environment do
       plugin = ENV["PLUGIN"]
       yaml = File.join(Rails.root, (plugin ? "/vendor/plugins/#{plugin}" : "") + "/config/settings.yml")
+
+      puts "== Loading settings#{plugin ? (' from ' << plugin) : ''}..."
+
       begin
         settings = YAML.load_file(yaml)
       rescue
@@ -53,6 +56,8 @@ namespace :crm do
         sql = [ "INSERT INTO settings (name, default_value, created_at, updated_at) VALUES(?, ?, ?, ?)", key.to_s, Base64.encode64(Marshal.dump(settings[key])), Time.now, Time.now ]
         Rake::Task.sanitize_and_execute(sql)
       end
+
+      puts "===== Settings have been loaded."
     end
 
     desc "Show current application settings"
@@ -82,7 +87,7 @@ namespace :crm do
     # Migrating plugins is not part of Rails 3 yet, but it is coming. See
     # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
     Rake::Task["db:migrate:plugins"].invoke
-    
+
     Rake::Task["crm:settings:load"].invoke
     Rake::Task["crm:setup:admin"].invoke
   end
