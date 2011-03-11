@@ -651,6 +651,7 @@ en-US:
   # Recent activities extension
   #----------------------------------------------------------------------------
   created: created
+  email: emailed
   commented: commented
   viewed: viewed
   updated: updated
@@ -658,6 +659,7 @@ en-US:
   all_actions: activities
   created_past_participle: Creations
   commented_past_participle: Comments
+  email_past_participle: Emails
   viewed_past_participle: Views
   updated_past_participle: Updates
   deleted_past_participle: Deletions

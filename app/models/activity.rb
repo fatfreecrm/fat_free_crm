@@ -50,7 +50,7 @@ class Activity < ActiveRecord::Base
   exportable
 
   ASSETS   = %w(all tasks campaigns leads accounts contacts opportunities)
-  ACTIONS  = %w(all_actions created viewed updated deleted commented)
+  ACTIONS  = %w(all_actions created viewed updated deleted commented email)
   DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
 
   #----------------------------------------------------------------------------
