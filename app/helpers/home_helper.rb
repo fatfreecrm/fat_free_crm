@@ -18,7 +18,14 @@
 module HomeHelper
   def sort_by_assets
     Activity::ASSETS.map do |asset|
-      %Q[{ name: "#{t(asset)}", on_select: function() { #{redraw(:asset, [ asset, t(asset).downcase ], url_for(:action => :redraw))} } }]
+      %Q[{ name: "#{t(asset).singularize}", on_select: function() { #{redraw(:asset, [ asset, t(asset).singularize.downcase ], url_for(:action => :redraw))} } }]
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def sort_by_actions
+    Activity::ACTIONS.map do |action|
+      %Q[{ name: "#{t(action + '_past_participle')}", on_select: function() { #{redraw(:action_type, [ action, t(action + '_past_participle').downcase ], url_for(:action => :redraw))} } }]
     end
   end
 

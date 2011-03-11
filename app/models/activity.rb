@@ -39,8 +39,9 @@ class Activity < ActiveRecord::Base
   scope :without_actions, lambda { |*actions| where('action NOT IN (?)', actions) }
   scope :latest, lambda { |options|
     includes(:user).
-    where(options[:asset] ? {:subject_type => options[:asset]} : nil).
-    where(options[:user] ? {:user_id => options[:user]} : nil).
+    where(options[:asset] ?  {:subject_type => options[:asset]} : nil).
+    where(options[:action] ? {:action => options[:action]} : nil).
+    where(options[:user] ?   {:user_id => options[:user]} : nil).
     where('activities.created_at >= ?', Time.zone.now - (options[:duration] || 2.days)).
     order('activities.created_at DESC')
   }
@@ -48,7 +49,8 @@ class Activity < ActiveRecord::Base
   validates_presence_of :user, :subject
   exportable
 
-  ASSETS = %w(all tasks campaigns leads accounts contacts opportunities)
+  ASSETS   = %w(all tasks campaigns leads accounts contacts opportunities)
+  ACTIONS  = %w(all_actions created viewed updated deleted commented)
   DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
 
   #----------------------------------------------------------------------------

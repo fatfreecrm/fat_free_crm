@@ -13,6 +13,7 @@ en-US:
   select_blank: '-- Select --'
   yes_button: 'Yes'
 
+
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Dashboard
@@ -186,7 +187,7 @@ en-US:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: Show %{models} activities performed by %{user} in the past %{period}.
+  activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}.
   all_users: all users
   option_after: after
   option_all: all
@@ -210,7 +211,7 @@ en-US:
   option_target_leads: target leads
   option_target_revenue: target revenue
   option_updated_at: date updated
-  show_per_page: Show %{number} %{models} per page using %{fmt} format. 
+  show_per_page: Show %{number} %{models} per page using %{fmt} format.
   sort_by: Sort %{models} by %{field}.
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
 
@@ -608,7 +609,7 @@ en-US:
     comment:
       one: '1 comment'
       other: '%{count} comments'
-    contact: 
+    contact:
       one: '1 contact'
       other: '%{count} contacts'
     opportunity:
@@ -646,3 +647,19 @@ en-US:
   # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: american
+
+  # Recent activities extension
+  #----------------------------------------------------------------------------
+  created: created
+  commented: commented
+  viewed: viewed
+  updated: updated
+  deleted: deleted
+  all_actions: activities
+  created_past_participle: Creations
+  commented_past_participle: Comments
+  viewed_past_participle: Views
+  updated_past_participle: Updates
+  deleted_past_participle: Deletions
+  all_actions_past_participle: Activities
+
