@@ -35,8 +35,9 @@ ActiveSupport.on_load(:after_initialize) do
 end
 
 
-# Optionally load 'awesome_print' for debugging in development mode.
+# Optionally load 'ruby-debug' and 'awesome_print' for debugging in development mode.
 begin
+  require 'ruby-debug'
   require 'ap'
 rescue LoadError
 end

@@ -38,6 +38,8 @@ end
 
 # Optionally load 'awesome_print' for debugging in development mode.
 begin
+  require 'ruby-debug'
   require 'ap'
 rescue LoadError
 end
+
