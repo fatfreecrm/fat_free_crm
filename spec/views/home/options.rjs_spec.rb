@@ -10,6 +10,7 @@ describe "/home/options.rjs" do
 
     assign(:asset, "all")
     assign(:user, "all_users")
+    assign(:action, "all_actions")
     assign(:duration, "two_days")
     assign(:all_users, [ Factory(:user) ])
 
@@ -29,6 +30,7 @@ describe "/home/options.rjs" do
   it "should load :options partial with JavaScript code for menus" do
     params[:cancel] = nil
     assign(:asset, "all")
+    assign(:action, "all_actions")
     assign(:user, "all_users")
     assign(:duration, "two_days")
     assign(:all_users, [ Factory(:user) ])
@@ -47,3 +49,4 @@ describe "/home/options.rjs" do
     rendered.should include('crm.set_title("title", "Recent Activity")')
   end
 end
+
