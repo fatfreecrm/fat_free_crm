@@ -772,7 +772,7 @@ span.fbtag {
   display: inline-block; }
 
 .section.nostyle {
-  background-color: white;
+  background-color: transparent;
   padding: 0;
   color: black; }
   .section.nostyle table {
@@ -810,6 +810,12 @@ small.subtitle_inline_info {
 
 .indentslim a.contact_name {
   font-size: 15px; }
+
+.list li.contact {
+  -moz-box-shadow: 1px 1px 2px #cccccc, -2px -1px 2px #cccccc;
+  border: 1px solid #cccccc;
+  margin: 13px 0;
+  padding: 6px; }
 
 .customfield_check_ok {
   border: 5px lightgreen solid;
