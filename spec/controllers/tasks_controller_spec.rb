@@ -80,10 +80,9 @@ describe TasksController do
 
         (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
         (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
-
-        #TODO Ridiculous XML -> timezone bug. Fix later.
-        # -----------------------------------------------
-        #response.body.should == @tasks.to_xml
+        if view == "completed" # TODO: pending and assigned
+          response.body.should == @tasks.to_xml
+        end
       end
     end
   end

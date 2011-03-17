@@ -2,6 +2,7 @@
   = link_to_inline(:create_task, url_for(:action => :new, :view => @view))
 .title#title
   = (@view == "assigned" ? t(:assigned_tasks) : t(:tasks))
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 
 .remote#options{ hidden }
 .remote#create_task{ hidden }

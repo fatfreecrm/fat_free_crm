@@ -80,6 +80,15 @@ module ApplicationHelper
     end
   end
 
+  # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
+  #----------------------------------------------------------------------------
+  def rating_select(name, options = {})
+    stars = Hash[ (1..5).map { |star| [ star, "&#9733;" * star ] } ].sort
+    options_for_select = %Q(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
+    options_for_select << stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
+    select_tag name, options_for_select.html_safe, options
+  end
+
   #----------------------------------------------------------------------------
   def link_to_inline(id, url, options = {})
     text = options[:text] || id.to_s.titleize
@@ -235,7 +244,7 @@ module ApplicationHelper
   def refresh_sidebar_for(view, action = nil, shake = nil)
     update_page do |page|
       page[:sidebar].replace_html :partial => "layouts/sidebar", :locals => { :view => view, :action => action }
-      page[shake].visual_effect(:shake, :duration => 0.4, :distance => 3) if shake
+      page[shake].visual_effect(:shake, :duration => 0.2, :distance => 3) if shake
     end
   end
 
@@ -380,9 +389,14 @@ module ApplicationHelper
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
   def links_to_export
-    path = controller.controller_name == 'home' ?
-      '/activities' : send("#{controller.controller_name}_path")
     token = @current_user.single_access_token
+    path = if controller.controller_name == 'home'
+      activities_path
+    elsif controller.class.to_s.starts_with?("Admin::")
+      send("admin_#{controller.controller_name}_path")
+    else
+      send("#{controller.controller_name}_path")
+    end
 
     exports = %w(xls csv).map do |format|
       link_to(format.upcase, "#{path}.#{format}", :title => I18n.t(:"to_#{format}"))

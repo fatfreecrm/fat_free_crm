@@ -107,7 +107,9 @@ class OpportunitiesController < ApplicationController
         if called_from_index_page?
           @opportunities = get_opportunities
           get_data_for_sidebar
-        else
+        elsif called_from_landing_page?(:accounts)
+          get_data_for_sidebar(:account)
+        elsif called_from_landing_page?(:campaigns)
           get_data_for_sidebar(:campaign)
         end
         format.js   # create.js.rjs
@@ -142,7 +144,9 @@ class OpportunitiesController < ApplicationController
       if @opportunity.update_with_account_and_permissions(params)
         if called_from_index_page?
           get_data_for_sidebar
-        else
+        elsif called_from_landing_page?(:accounts)
+          get_data_for_sidebar(:account)
+        elsif called_from_landing_page?(:campaigns)
           get_data_for_sidebar(:campaign)
         end
         format.js
@@ -169,6 +173,11 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @opportunity = Opportunity.my.find(params[:id])
+    if called_from_landing_page?(:accounts)
+      @account = @opportunity.account   # Reload related account if any.
+    elsif called_from_landing_page?(:campaigns)
+      @campaign = @opportunity.campaign # Reload related campaign if any.
+    end
     @opportunity.destroy if @opportunity
 
     respond_to do |format|
@@ -254,7 +263,6 @@ class OpportunitiesController < ApplicationController
         end
       else # Called from related asset.
         self.current_page = 1
-        @campaign = @opportunity.campaign # Reload related campaign if any.
       end
       # At this point render destroy.js.rjs
     else

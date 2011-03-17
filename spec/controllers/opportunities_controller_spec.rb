@@ -6,7 +6,7 @@ describe OpportunitiesController do
     @stage = Setting.unroll(:opportunity_stage)
   end
 
-  before(:each) do
+  before do
     require_user
     set_current_tab(:opportunities)
   end
@@ -16,7 +16,7 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
 
-    before(:each) do
+    before do
       get_data_for_sidebar
     end
 
@@ -89,7 +89,7 @@ describe OpportunitiesController do
   describe "responding to GET show" do
 
     describe "with mime type of HTML" do
-      before(:each) do
+      before do
         @opportunity = Factory(:opportunity, :id => 42)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
@@ -250,7 +250,7 @@ describe OpportunitiesController do
     end
 
     describe "(previous opportunity got deleted or is otherwise unavailable)" do
-      before(:each) do
+      before do
         @opportunity = Factory(:opportunity, :user => @current_user)
         @previous = Factory(:opportunity, :user => Factory(:user))
       end
@@ -282,7 +282,7 @@ describe OpportunitiesController do
 
     describe "with valid params" do
 
-      before(:each) do
+      before do
         @opportunity = Factory.build(:opportunity, :user => @current_user)
         Opportunity.stub!(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
@@ -300,6 +300,22 @@ describe OpportunitiesController do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
         assigns(:opportunity_stage_total).should be_an_instance_of(HashWithIndifferentAccess)
+      end
+
+      it "should find related account if called from account landing page" do
+        @account = Factory(:account, :user => @current_user)
+        request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
+
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :id => @account.id }, :users => %w(1 2 3)
+        assigns(:account).should == @account
+      end
+
+      it "should find related campaign if called from campaign landing page" do
+        @campaign = Factory(:campaign, :user => @current_user)
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        assigns(:campaign).should == @campaign
       end
 
       it "should reload opportunities to update pagination if called from opportunities index" do
@@ -439,6 +455,25 @@ describe OpportunitiesController do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => { :name => "Test Account" }
         assigns(:opportunity_stage_total).should be_an_instance_of(HashWithIndifferentAccess)
+      end
+
+      it "should find related account if called from account landing page" do
+        @account = Factory(:account, :user => @current_user)
+        @oppportunity = Factory(:opportunity, :id => 42, :account => @account)
+        request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
+
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}
+        assigns(:account).should == @account
+      end
+
+      it "should find related campaign if called from campaign landing page" do
+        @campaign = Factory(:campaign, :user => @current_user)
+        @opportunity = Factory(:opportunity, :id => 42, :user => @current_user)
+        @campaign.opportunities << @opportunity
+        request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
+
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world", :campaign_id => @campaign.id }, :account => {}
+        assigns(:campaign).should == @campaign
       end
 
       it "should be able to create an account and associate it with updated opportunity" do
@@ -589,7 +624,7 @@ describe OpportunitiesController do
   # DELETE /opportunities/1.xml                                            AJAX
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-    before(:each) do
+    before do
       @opportunity = Factory(:opportunity, :user => @current_user)
     end
 
@@ -603,7 +638,7 @@ describe OpportunitiesController do
       end
 
       describe "when called from Opportunities index page" do
-        before(:each) do
+        before do
           request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         end
 
@@ -635,6 +670,16 @@ describe OpportunitiesController do
 
           xhr :delete, :destroy, :id => @opportunity.id
           session[:opportunities_current_page].should == 1
+          response.should render_template("opportunities/destroy")
+        end
+
+        it "should reload campaiign to be able to refresh its summary" do
+          @account = Factory(:account)
+          @opportunity = Factory(:opportunity, :user => @current_user, :account => @account)
+          request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
+
+          xhr :delete, :destroy, :id => @opportunity.id
+          assigns[:account].should == @account
           response.should render_template("opportunities/destroy")
         end
 
@@ -696,10 +741,10 @@ describe OpportunitiesController do
 
   end
 
-  # GET /opportunities/search/query                                                AJAX
+  # GET /opportunities/search/query                                        AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
-    before(:each) do
+    before do
       @first  = Factory(:opportunity, :user => @current_user, :name => "The first one")
       @second = Factory(:opportunity, :user => @current_user, :name => "The second one")
       @opportunities = [ @first, @second ]
@@ -770,7 +815,7 @@ describe OpportunitiesController do
   # POST /opportunities/auto_complete/query                                AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
-    before(:each) do
+    before do
       @auto_complete_matches = [ Factory(:opportunity, :name => "Hello World", :user => @current_user) ]
     end
 

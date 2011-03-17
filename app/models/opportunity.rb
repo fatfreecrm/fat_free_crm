@@ -54,7 +54,9 @@ class Opportunity < ActiveRecord::Base
   }
   scope :created_by, lambda { |user| where('user_id = ?', user.id) }
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
-  scope :not_lost, where("opportunities.stage <> 'lost'")
+  scope :won,      where("opportunities.stage = 'won'")
+  scope :lost,     where("opportunities.stage = 'lost'")
+  scope :pipeline, where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')")
 
   # Search by name OR id
   scope :search, lambda { |query|

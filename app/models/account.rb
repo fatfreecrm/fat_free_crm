@@ -51,6 +51,9 @@ class Account < ActiveRecord::Base
   accepts_nested_attributes_for :billing_address, :allow_destroy => true
   accepts_nested_attributes_for :shipping_address, :allow_destroy => true
 
+  scope :state, lambda { |filters|
+    where('category IN (?)' + (filters.delete('other') ? ' OR category IS NULL' : ''), filters)
+  }
   scope :created_by, lambda { |user| where(:user_id => user.id) }
   scope :assigned_to, lambda { |user| where(:assigned_to => user.id) }
 
@@ -63,11 +66,12 @@ class Account < ActiveRecord::Base
   acts_as_commentable
   is_paranoid
   exportable
-  sortable :by => [ "name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable :by => [ "name ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_account_name
   validates_uniqueness_of :name, :scope => :deleted_at
   validate :users_for_shared_access
+  before_save :nullify_blank_category
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
@@ -123,4 +127,7 @@ class Account < ActiveRecord::Base
     errors.add(:access, :share_account) if self[:access] == "Shared" && !self.permissions.any?
   end
 
+  def nullify_blank_category
+    self.category = nil if self.category.blank?
+  end
 end

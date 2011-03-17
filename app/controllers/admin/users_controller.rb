@@ -28,6 +28,10 @@ class Admin::UsersController < Admin::ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @users }
+      format.xls  { send_data @users.to_xls, :type => :xls }
+      format.csv  { send_data @users.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -192,11 +196,11 @@ class Admin::UsersController < Admin::ApplicationController
     self.current_page  = options[:page]  if options[:page]
     self.current_query = options[:query] if options[:query]
 
-    if current_query.blank?
-      User.by_id.paginate(:page => current_page)
-    else
-      User.by_id.search(current_query).paginate(:page => current_page)
-    end
+    wants = request.format
+    scope = User.by_id
+    scope = scope.search(current_query)           unless current_query.blank?
+    scope = scope.unscoped                        if wants.csv?
+    scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
+    scope
   end
-
 end

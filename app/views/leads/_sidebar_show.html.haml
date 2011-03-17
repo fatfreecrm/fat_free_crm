@@ -23,7 +23,7 @@
 
   .caption #{t :lead_summary}
   %li
-    %dt#lead_status= t(@lead.status, :default => :n_a)
+    %dt= t(@lead.status, :default => :n_a)
     %tt #{t :status}:
   %li
     %dt= t(@lead.source, :default => :n_a)

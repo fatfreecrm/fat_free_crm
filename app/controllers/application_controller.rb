@@ -49,6 +49,7 @@ class ApplicationController < ActionController::Base
     model = controller_name.classify.constantize.my.find(params[:id])
     @attachment = params[:assets].classify.constantize.find(params[:asset_id])
     @attached = model.attach!(@attachment)
+    @account  = model.reload if model.is_a?(Account)
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
@@ -66,6 +67,7 @@ class ApplicationController < ActionController::Base
     model = controller_name.classify.constantize.my.find(params[:id])
     @attachment = params[:attachment].constantize.find(params[:attachment_id])
     model.discard!(@attachment)
+    @account  = model.reload if model.is_a?(Account)
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
@@ -82,14 +84,16 @@ private
   def set_context
     ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
-    if Setting.locale
-      I18n.locale = Setting.locale
-    else
-      # Pre-I18n settings that need to be reloaded. Use English message text since the actual locale is unknown.
+    I18n.locale = Setting.locale if Setting.locale
+
+    # Check if the latest settings have been loaded. Display error message in English
+    # the actual locale might be unknown.
+    if !Setting.locale || !Setting.account_category
       raise FatFreeCRM::ObsoleteSettings, <<-OBSOLETE
-        It looks like you are upgrading from the older version of Fat Free CRM. Please review
-        <b>config/settings.yml</b> file, and re-run<br><b>rake crm:settings:load</b> command
-        in development and production environments.
+        It looks like you are upgrading from the older version of Fat Free CRM.
+        Please review <b>config/settings.yml</b> file and re-run<br><br><b>$ rake
+        crm:settings:load</b><br><br> command in Rails development and production
+        environments.
       OBSOLETE
     end
   end
