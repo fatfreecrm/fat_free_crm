@@ -18,12 +18,15 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
 
+# Uncomment the database adapter you would like to use.
+#gem 'pg', '>= 0.9.0'
+gem 'mysql2'
+
 gem 'acts_as_commentable', '>= 3.0.1'
 gem 'acts-as-taggable-on', '>= 2.0.6'
 gem 'authlogic', :git => 'git://github.com/crossroads/authlogic.git', :branch => 'rails3'
 gem 'haml', '>= 3.0.18'
 gem 'is_paranoid', :git => 'git://github.com/crossroads/is_paranoid.git', :branch => 'rails3'
-gem 'pg', '>= 0.9.0'
 gem 'paperclip', :git => 'git://github.com/crossroads/paperclip.git'
 gem 'will_paginate', '>= 3.0.pre2'
 gem 'whenever'
