@@ -752,7 +752,7 @@ table.asset_attributes {
     vertical-align: top;
     text-align: left; }
   table.asset_attributes th {
-    font-weight: normal;
+    font-weight: bold;
     width: 18%;
     padding-right: 7px;
     text-align: right; }
