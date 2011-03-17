@@ -37,12 +37,8 @@ ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
 ActiveRecord::Base.send(:include, FatFreeCRM::Exportable)
 ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
 
-# ------ Require Crossroads Core Extensions
-require "crossroads/opportunity"
-require "crossroads/activemodel_datetime_patch"
-
 require "fat_free_crm/dropbox" if defined?(::Rake)
 
-# Must require plugins after everything else.
+# Require plugins after everything else.
 require "fat_free_crm/plugin"
 
