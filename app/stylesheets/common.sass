@@ -1,21 +1,21 @@
 // Fat Free CRM
 // Copyright (C) 2008-2010 by Michael Dvorkin
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-//
+// 
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-!color_title    = black
+!color_title    = #342d7e
 !color_subtitle = "darkslateblue"
 !sidebar_width  = 210px
 
@@ -53,8 +53,6 @@
 .subtitle_tools
   :font-size 11px
   :float right
-  a
-    :border-bottom 2px solid white
 
 .radio_box
   :line-height 20px
@@ -65,11 +63,11 @@
 
 .check_box
   :line-height 20px
-
+  
   input
     :position relative
     :top -3px
-
+  
   label
     :font-size 11px
 
@@ -81,10 +79,10 @@
 
 .standalone
   :background whitesmoke
-  :border 20px #860000 solid
-  :margin 75px auto 6px auto
+  :border 20px lightsteelblue solid
+  :margin 75px auto 6px auto 
   :padding 20px
-  :width 400px
+  :width 400px 
   :-moz-border-radius 6px
   :-moz-box-shadow 5px 5px 15px #bbb, -5px 0px 15px #bbb
   :-webkit-border-radius 6px
@@ -108,7 +106,7 @@
   :-moz-box-shadow 2px 2px 8px #bbb, -2px 0px 8px #bbb
   :-webkit-border-radius 4px
   :-webkit-box-shadow 2px 2px 8px #bbb, -2px 0px 8px #bbb
-
+  
 .sidebar
   :color #3f3f3f
   :font-size 11px
@@ -134,14 +132,14 @@
   :color #3f3f3f
   :font-size 12px
   :margin 8px 0px 0px 0px
-  :padding-right 13px
+  :padding 0px 8px 0px 0px
 
 .top
   :margin 5px 0px 0px 0px
 
 .req
-  :color #330000
-  :background url("/images/asterisk.gif") no-repeat scroll right top transparent
+  :background url("/images/asterisk.gif") no-repeat scroll center right transparent
+  :color navy
   :float left
 
 .intro
@@ -155,6 +153,7 @@
   :margin 0px 0px 2px 0px
   :padding 4px 15px 8px 15px
   table
+    :width 500px
     :border-spacing 0px
     :border-collapse collapse /* IE */
     td
@@ -164,7 +163,7 @@
         :width 240px
 
 .remote
-  :border 5px lightgrey solid
+  :border 5px lightblue solid
   :background whitesmoke
   :margin 0px
   :padding 0px 10px 0px 10px
@@ -176,7 +175,7 @@
       :left 1px gainsboro solid
       :bottom 1px grey solid
       :right 1px grey solid
-    :color #330000
+    :color navy
     :cursor pointer
     :height 16px
     :margin 3px
@@ -196,14 +195,9 @@
 .section textarea, .sidebar textarea, .inline textarea
   :margin 3px 0px 0px 0px
   :vertical-align middle
-  :clear both
-  :float left
-
-#taggings
-  :clear both
 
 .cool
-  :color darkgreen
+  :color darkgreen 
 
 .warn
   :color crimson
@@ -363,40 +357,14 @@
   :font-size 9px
   :margin 12px 0px 0px 0px
 
-.pagination
-  :background white
-  a, span, em
-    :padding .2em .5em
-    :display block
-    :float left
-    :margin-right 1px
-  span.disabled
-    :color #999
-    :border 1px solid #DDD
-  em
-    :font-weight bold
-    :background #2E6AB1
-    :color white
-    :border 1px solid #2E6AB1
-  a
-    :text-decoration none
-    :color #105CB6
-    :border 1px solid #9AAFE5
-    &:hover, &:focus
-      :color #003
-      :border-color #003
+#paginate
+  :float right
+  :font-size 10px
+  :margin 4px 0px 0px 0px
 
-  /* self-clearing method:
-  &:after
-    :content "."
-    :display block
-    :height 0
-    :clear both
-    :visibility hidden
-  * html &
-    :height 1%
-  *:first-child+html &
-    :overflow hidden
+#paging
+  :float right
+  :margin 7px 5px 0px 0px
 
 .confirm
   :background #cdfecd
@@ -443,7 +411,7 @@
 .list
   :padding 8px 0px 0px 0px
   li
-    :border-bottom 1px silver dotted
+    :border-bottom 1px silver dotted 
     :clear both
     :color #3f3f3f
     :font-size 12px
@@ -487,12 +455,11 @@
 
 .filters
   h4
-    :color #330000
+    :color navy
     :font-size 12px
     :font-weight bold
   input[type=text]
     :margin-bottom 4px
-    :float none
 
 .panel
   div
@@ -516,13 +483,13 @@
 
   .caption
     :border-bottom 1px grey solid
-    :color #330000
+    :color navy
     :font
       :size 12px
       :weight bold
     :margin 4px 0px 2px 0px
     :padding 2px 0px 2px 0px
-
+    
   &#recently
     :background floralwhite
 
@@ -646,4 +613,3 @@
 //   margin-right: 0px;
 //   background-position: 0 -50px;
 // }
-

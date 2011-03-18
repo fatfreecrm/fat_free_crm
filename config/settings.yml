@@ -56,11 +56,11 @@
 # Default records permissions.
 #------------------------------------------------------------------------------
 # Set the defaults permission for new records. Possible values are:
-#   Private -- private access, only for the creator of the record. This is the default.
-#   Public  -- public access, share with everyone.
+#   Private -- private access, only for the creator of the record.
+#   Public  -- public access, share with everyone. This is the default.
 #   Shared  -- shared with selected accounts, should be selected by the user.
 #
-:default_access: "Private"
+:default_access: "Public"
 
 # Background information.
 #------------------------------------------------------------------------------
