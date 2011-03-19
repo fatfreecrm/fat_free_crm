@@ -2,11 +2,20 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
 
-# Uncomment the database adapter you would like to use.
-# -----------------------------------------------------
-#gem 'pg', '>= 0.9.0'
-gem 'mysql2',              '>= 0.2.6'
-# -----------------------------------------------------
+# Loads the database adapter gem based on config/database.yml (Default: mysql2)
+# -----------------------------------------------------------------------------
+db_gems = {"mysql2"     => ["mysql2", ">= 0.2.6"],
+           "postgresql" => ["pg",     ">= 0.9.0"],
+           "sqlite3"    => ["sqlite3"]}
+adapter = if File.exists?(db_config = File.join(File.dirname(__FILE__),"config","database.yml"))
+  db = YAML.load_file(db_config)
+  # Fetch the first configured adapter from config/database.yml
+  (db["production"] || db["development"] || db["test"])["adapter"]
+else
+  "mysql2"
+end
+gem *db_gems[adapter]
+# -----------------------------------------------------------------------------
 
 gem 'acts_as_commentable', '>= 3.0.1'
 gem 'acts-as-taggable-on', '>= 2.0.6'
