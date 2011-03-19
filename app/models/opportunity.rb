@@ -81,7 +81,8 @@ class Opportunity < ActiveRecord::Base
 
   # Validate presence of account_opportunity unless the opportunity is deleted [with is_paranoid],
   # in which case the account_opportunity will still exist but will be in a deleted state.
-  validates :account_opportunity, :presence => true, :unless => Proc.new { |o| o.destroyed? }
+  # validates :account_opportunity, :presence => true, :unless => Proc.new { |o| o.destroyed? }
+  # TODO: Mike, what do you think about the above validation?
 
   after_create  :increment_opportunities_count
   after_destroy :decrement_opportunities_count
@@ -112,10 +113,11 @@ class Opportunity < ActiveRecord::Base
   # Backend handler for [Update Opportunity] form (see opportunity/update).
   #----------------------------------------------------------------------------
   def update_with_account_and_permissions(params)
-    if params[:account][:id] == "" || params[:account][:name] == ""
+    # Remove account only if blank :account param is given.
+    if params[:account] && (params[:account][:id] == "" || params[:account][:name] == "")
       self.account = nil # Opportunity is not associated with the account anymore.
       self.reload
-    else
+    elsif params[:account]
       account = Account.create_or_select_for(self, params[:account], params[:users])
       self.account_opportunity.delete if self.account_opportunity
       self.reload
@@ -183,3 +185,4 @@ class Opportunity < ActiveRecord::Base
   end
 
 end
+

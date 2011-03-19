@@ -156,8 +156,8 @@ describe OpportunitiesController do
   describe "responding to GET new" do
 
     it "should expose a new opportunity as @opportunity and render [new] template" do
-      @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
-      @account = Account.new(:user => @current_user, :access => "Private")
+      @opportunity = Opportunity.new(:user => @current_user, :access => Setting.default_access, :stage => "prospecting")
+      @account = Account.new(:user => @current_user, :access => Setting.default_access)
       @users = [ Factory(:user) ]
       @accounts = [ Factory(:account, :user => @current_user) ]
 
@@ -433,7 +433,7 @@ describe OpportunitiesController do
   # PUT /opportunities/1
   # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
 
@@ -462,8 +462,17 @@ describe OpportunitiesController do
         @oppportunity = Factory(:opportunity, :id => 42, :account => @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }
         assigns(:account).should == @account
+      end
+
+      it "should remove related account if blank :account param is given" do
+        @account = Factory(:account, :user => @current_user)
+        @oppportunity = Factory(:opportunity, :id => 42, :account => @account)
+        request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
+
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}
+        assigns(:account).should == nil
       end
 
       it "should find related campaign if called from campaign landing page" do
