@@ -442,7 +442,7 @@ describe OpportunitiesController do
         @stage = Setting.unroll(:opportunity_stage)
 
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => { :name => "Test Account" }, :users => %w(1 2 3)
-        @opportunity.reload.name.should == "#42 Hello world"
+        @opportunity.reload.name.should == "Hello world"
         assigns(:opportunity).should == @opportunity
         assigns(:stage).should == @stage
         assigns(:opportunity_stage_total).should == nil
@@ -486,7 +486,7 @@ describe OpportunitiesController do
         @opportunity.account.name.should == "new account"
       end
 
-      it "should be able to create an account and associate it with updated opportunity" do       
+      it "should be able to create an account and associate it with updated opportunity" do
         @old_account = Factory(:account, :id => 111)
         @new_account = Factory(:account, :id => 999)
         @opportunity = Factory(:opportunity, :id => 42, :account => @old_account)
@@ -601,7 +601,7 @@ describe OpportunitiesController do
         @opportunity = Factory(:opportunity, :id => 42, :name => "Hello people")
 
         xhr :put, :update, :id => 42, :opportunity => { :name => nil }, :account => { :name => "Test Account" }
-        @opportunity.reload.name.should == "#42 Hello people"
+        @opportunity.reload.name.should == "Hello people"
         assigns(:opportunity).should == @opportunity
         assigns(:opportunity_stage_total).should == nil
         response.should render_template("opportunities/update")
@@ -897,3 +897,4 @@ describe OpportunitiesController do
   end
 
 end
+
