@@ -61,6 +61,8 @@ namespace :crm do
       %w(leads opportunities contacts campaigns accounts).each do |table|
         ActiveRecord::Migration.change_column_default(table, 'access', settings[:default_access])
       end
+      # Re-dump the schema in case default access has changed (Critical for RSpec)
+      Rake::Task["db:schema:dump"].invoke
 
       puts "===== Settings have been loaded."
     end
