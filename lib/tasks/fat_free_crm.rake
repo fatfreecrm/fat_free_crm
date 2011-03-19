@@ -57,6 +57,11 @@ namespace :crm do
         Rake::Task.sanitize_and_execute(sql)
       end
 
+      # Change default access on models, as specified in settings.yml
+      %w(leads opportunities contacts campaigns accounts).each do |table|
+        ActiveRecord::Migration.change_column_default(table, 'access', settings[:default_access])
+      end
+
       puts "===== Settings have been loaded."
     end
 
