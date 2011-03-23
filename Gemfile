@@ -26,28 +26,17 @@ gem 'paperclip',           :git => 'git://github.com/crossroads/paperclip.git'
 gem 'will_paginate',       '>= 3.0.pre2'
 gem 'meta_search',         '>= 0.9.9.1'
 
-group :development do
-  gem 'annotate',           '>= 2.4.0'
-end
-
 group :development, :test do
   if RUBY_VERSION.to_f >= 1.9
     gem 'ruby-debug19'
   else
     gem 'ruby-debug'
   end
+  gem 'annotate',           '>= 2.4.0'
   gem 'awesome_print',      '>= 0.3.1'
   gem 'ffaker',             '>= 1.0.0'
-end
 
-group :test do
-  gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
   gem "rspec-rails",        '>= 2.4.1'
-  gem "rspec",              '>= 2.4.0'
-  gem "rspec-core",         '>= 2.4.0'
-  gem "rspec-expectations", '>= 2.4.0'
-  gem "rspec-mocks",        '>= 2.4.0'
-  gem 'factory_girl',       '>= 1.3.2'
 end
 
 
