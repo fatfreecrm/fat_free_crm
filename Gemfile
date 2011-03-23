@@ -29,7 +29,6 @@ gem 'haml',                '>= 3.0.24'
 gem 'is_paranoid',         :git => 'git://github.com/crossroads/is_paranoid.git', :branch => 'rails3'
 gem 'paperclip',           :git => 'git://github.com/crossroads/paperclip.git'
 gem 'will_paginate',       '>= 3.0.pre2'
-gem 'meta_search',         '>= 0.9.9.1'
 
 group :development, :test do
   if RUBY_VERSION.to_f >= 1.9
