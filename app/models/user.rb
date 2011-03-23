@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
 
   scope :search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.']/, '').strip
-    where('username ILIKE :s OR first_name ILIKE :s OR last_name ILIKE :s', :s => "#{query}%")
+    where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', :s => "#{query}%")
   }
 
   acts_as_authentic do |c|
@@ -165,3 +165,4 @@ class User < ActiveRecord::Base
   end
 
 end
+

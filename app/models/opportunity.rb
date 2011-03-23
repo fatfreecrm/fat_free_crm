@@ -63,9 +63,9 @@ class Opportunity < ActiveRecord::Base
     query = query.gsub(/[^\w\s\-\.']/, '').strip
     # postgresql does not like to compare string to integer field
     if query =~ /^\d+$/
-      where('name ILIKE :name OR opportunities.id = :id', :name => "%#{query}%", :id => query)
+      where('upper(name) LIKE upper(:name) OR opportunities.id = :id', :name => "%#{query}%", :id => query)
     else
-      where('name ILIKE :name', :name => "%#{query}%")
+      where('upper(name) LIKE upper(:name)', :name => "%#{query}%")
     end
   }
 

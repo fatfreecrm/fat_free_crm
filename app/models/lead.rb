@@ -69,7 +69,7 @@ class Lead < ActiveRecord::Base
 
   scope :search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.']/, '').strip
-    where('first_name ILIKE :s OR last_name ILIKE :s OR company ILIKE :m OR email ILIKE :m', :s => "#{query}%", :m => "%#{query}%")
+    where('upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s) OR upper(company) LIKE upper(:m) OR upper(email) LIKE upper(:m)', :s => "#{query}%", :m => "%#{query}%")
   }
 
   uses_user_permissions
@@ -182,3 +182,4 @@ class Lead < ActiveRecord::Base
   end
 
 end
+
