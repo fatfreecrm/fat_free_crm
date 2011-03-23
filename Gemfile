@@ -38,10 +38,11 @@ group :development, :test do
   end
   gem 'annotate',           '>= 2.4.0'
   gem 'awesome_print',      '>= 0.3.1'
-  gem 'ffaker',             '>= 1.0.0'
 
-  gem 'factory_girl',       '>= 1.3.2'
+  gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
   gem "rspec-rails",        '>= 2.4.1'
+  gem 'ffaker',             '>= 1.0.0'
+  gem 'factory_girl',       '>= 1.3.2'
 end
 
 
