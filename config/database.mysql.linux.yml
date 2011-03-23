@@ -16,7 +16,7 @@
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 #------------------------------------------------------------------------------
 development:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   database: fat_free_crm_development
   pool: 5
@@ -28,7 +28,7 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   database: fat_free_crm_test
   pool: 5
@@ -37,14 +37,11 @@ test: &test
   socket: /var/run/mysqld/mysqld.sock
 
 production:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   database: fat_free_crm_production
   pool: 5
   username: root
   password:
   socket: /var/run/mysqld/mysqld.sock
-
-cucumber:
-  <<: *test
 
