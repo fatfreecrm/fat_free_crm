@@ -5,6 +5,7 @@ gem 'rails', '3.0.3'
 # Loads the database adapter gem based on config/database.yml (Default: mysql2)
 # -----------------------------------------------------------------------------
 db_gems = {"mysql2"     => ["mysql2", ">= 0.2.6"],
+           "mysql"      => ["mysql"],
            "postgresql" => ["pg",     ">= 0.9.0"],
            "sqlite3"    => ["sqlite3"]}
 adapter = if File.exists?(db_config = File.join(File.dirname(__FILE__),"config","database.yml"))
@@ -14,7 +15,11 @@ adapter = if File.exists?(db_config = File.join(File.dirname(__FILE__),"config",
 else
   "mysql2"
 end
-gem *db_gems[adapter]
+if db_gems[adapter]
+  gem *db_gems[adapter]
+else
+  raise "Sorry, the db adapter in database.yml is unknown. Please add it to 'db_gems' in your Gemfile."
+end
 # -----------------------------------------------------------------------------
 
 gem 'acts_as_commentable', '>= 3.0.1'
