@@ -124,6 +124,3 @@ DEPENDENCIES
   sqlite3-ruby
   test-unit (= 1.2.3)
   will_paginate (>= 3.0.pre2)
-
-METADATA
-  version: 1.0.6
