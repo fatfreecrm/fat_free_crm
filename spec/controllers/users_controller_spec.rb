@@ -54,7 +54,7 @@ describe UsersController do
         @user = Factory(:user)
 
         get :show, :id => @user.id
-        response.body.should == @user.to_xml
+        response.body.should == @user.reload.to_xml
       end
 
       it "should render current user as XML if no specific user was requested" do

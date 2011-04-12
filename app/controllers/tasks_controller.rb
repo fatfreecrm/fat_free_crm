@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-
+require 'ap'
 class TasksController < ApplicationController
   before_filter :require_user
   before_filter :auto_complete, :only => :auto_complete
@@ -30,8 +30,11 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.haml
-      # Hash keys must be strings... symbols generate "undefined method 'singularize' error"
-      format.xml  { render :xml => @tasks.inject({}) { |tasks, (k,v)| tasks[k.to_s] = v; tasks } }
+      format.xml  { render :xml => @tasks }
+      format.xls  { send_data @tasks.values.flatten.to_xls, :type => :xls }
+      format.csv  { send_data @tasks.values.flatten.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -40,7 +43,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     respond_to do |format|
-      format.html { render :action => :index }
+      format.html { render :index }
       format.xml  { @task = Task.tracked_by(@current_user).find(params[:id]);  render :xml => @task }
     end
   end
@@ -51,12 +54,12 @@ class TasksController < ApplicationController
   def new
     @view = params[:view] || "pending"
     @task = Task.new
-    @users = User.except(@current_user).by_name.all
+    @users = User.except(@current_user).by_name
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@asset", model.classify.constantize.my(@current_user).find(id))
+      instance_variable_set("@asset", model.classify.constantize.my.find(id))
     end
 
     respond_to do |format|
@@ -73,7 +76,7 @@ class TasksController < ApplicationController
   def edit
     @view = params[:view] || "pending"
     @task = Task.tracked_by(@current_user).find(params[:id])
-    @users = User.except(@current_user).by_name.all
+    @users = User.except(@current_user).by_name
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?

@@ -1,18 +1,7 @@
 require 'responds_to_parent/action_controller'
 
-module ActionController
-  class Base
-    include RespondsToParent::ActionController
-  end
-end
-
-if ENV["RAILS_ENV"] == "test"
+ActionController::Base.send(:include, RespondsToParent)
+if Rails.env.test?
   require 'responds_to_parent/selector_assertion'
-  module ActionController
-    module Assertions
-      module SelectorAssertions
-        include RespondsToParent::SelectorAssertion
-      end
-    end
-  end
+  ActionDispatch::Assertions::SelectorAssertions.send(:include, RespondsToParent::SelectorAssertion)
 end

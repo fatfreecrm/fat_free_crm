@@ -1,18 +1,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/leads/create.js.rjs" do
-  include LeadsHelper
-
-  before(:each) do
+  before do
     login_and_assign
     assign(:campaigns, [ Factory(:campaign) ])
   end
 
   describe "create success" do
-    before(:each) do
+    before do
       assign(:lead, @lead = Factory(:lead))
       assign(:leads, [ @lead ].paginate)
-      assign(:lead_status_total, { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 })
+      assign(:lead_status_total, Hash.new(1))
     end
 
     it "should hide [Create Lead] form and insert lead partial" do

@@ -1,4 +1,4 @@
-- outline_menu_items = %w(brief long).inject([]) { |items, outline| items << options_menu_item(:outline, outline) }
+- outline_menu_items = %w(brief long).map { |outline| options_menu_item(:outline, outline) }
 
 :plain
   new crm.Menu({

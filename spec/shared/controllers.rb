@@ -36,6 +36,9 @@ module SharedControllerSpecs
       if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
         assigns[:campaign].should == @attachment.reload.campaign
       end
+      if @model.is_a?(Account) && @attachment.respond_to?(:account) # Skip Tasks...
+        assigns[:account].should == @attachment.reload.account
+      end
       response.should render_template("common/attach")
     end
 
@@ -72,6 +75,9 @@ module SharedControllerSpecs
       xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
       assigns[:attachment].should == @attachment.reload                     # The attachment should still exist.
       @model.reload.send("#{@attachment.class.name.tableize}").should == [] # But no longer associated with the model.
+      assigns[:account].should == @model if @model.is_a?(Account)
+      assigns[:campaign].should == @model if @model.is_a?(Campaign)
+
       response.should render_template("common/discard")
     end
 

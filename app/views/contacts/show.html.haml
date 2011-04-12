@@ -8,12 +8,12 @@
 
 %div#edit_contact{ hidden }
 
-= render :partial => "comments/new", :locals => { :commentable => @contact }
+= render "comments/new", :commentable => @contact
 = render :partial => "common/timeline", :collection => @timeline
 
 = section(@contact, :tasks)
 .log#tasks
-  = render :partial => "common/tasks"
+  = render "common/tasks"
 
 = section(@contact, :opportunities)
 .list#opportunities

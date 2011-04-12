@@ -15,14 +15,14 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class ActionController::Base
-
-  # Extract helper names from files in app/helpers/*.rb -- no app/admin/helpers
-  # or any other subdirectories are included.
-  #----------------------------------------------------------------------------
-  def self.application_helpers
-    extract = /^#{Regexp.quote(helpers_path.first)}\/?(.*)_helper.rb$/
-    Dir["#{helpers_path.first}/*_helper.rb"].map { |file| file.sub extract, '\1' }
+unless Rails.env.test?
+  class ActionController::Base
+    # Remove helpers residing in subdirectories from the list of application
+    # helpers.  Basically we don't want helpers in app/helpers/admin/* to
+    # override the ones in app/helpers/*.
+    #----------------------------------------------------------------------------
+    def self.all_application_helpers
+      super.delete_if { |helper| helper.include?(File::SEPARATOR) }
+    end
   end
-
 end

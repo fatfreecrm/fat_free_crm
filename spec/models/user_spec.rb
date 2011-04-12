@@ -36,21 +36,17 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe User do
-  before(:each) do
-    @valid_attributes = {
-      :username => "username",
-      :password => "password",
-      :password_confirmation => "password",
-      :email => "user@example.com"
-    }
-  end
-
   it "should create a new instance given valid attributes" do
-    User.create!(@valid_attributes)
+    User.create!(
+      :username => "username",
+      :email    => "user@example.com",
+      :password => "password",
+      :password_confirmation => "password"
+    )
   end
 
-  describe "should destroy the users unless she has no related assets" do
-    before(:each) do
+  describe "Destroying users with and without related assets" do
+    before do
       @user = Factory(:user)
     end
 
@@ -130,4 +126,42 @@ describe User do
     @user.suspended?.should == false
   end
 
+  describe "Setting I18n.locale" do
+    before do
+      @user = Factory(:user)
+      @locale = I18n.locale
+    end
+
+    after do
+      I18n.locale = @locale
+    end
+
+    it "should update I18n.locale if proference[:locale] is set" do
+      @user.preference[:locale] = :esperanto
+      @user.set_individual_locale
+      I18n.locale.should == :esperanto
+    end
+
+    it "should not update I18n.locale if proference[:locale] is not set" do
+      @user.preference[:locale] = nil
+      @user.set_individual_locale
+      I18n.locale.should == @locale
+    end
+  end
+
+  describe "Setting single access token" do
+    it "should update single_access_token attribute if it is not set already" do
+      @user = Factory(:user, :single_access_token => nil)
+
+      @user.set_single_access_token
+      @user.single_access_token.should_not == nil
+    end
+
+    it "should not update single_access_token attribute if it is set already" do
+      @user = Factory(:user, :single_access_token => "token")
+
+      @user.set_single_access_token
+      @user.single_access_token.should == "token"
+    end
+  end
 end

@@ -1,6 +1,6 @@
 unless @campaigns.blank?
-  page[:campaigns].replace_html render(:partial => "campaign", :collection => @campaigns)
+  page[:campaigns].replace_html render @campaigns
 else
-  page[:campaigns].replace_html render(:partial => "common/empty")
+  page[:campaigns].replace_html :partial => "common/empty"
 end
-page[:paginate].replace_html render(:partial => "common/paginate")
+page[:paginate].replace_html :partial => "common/paginate"

@@ -25,18 +25,18 @@ class CommentsController < ApplicationController
   def index
     @commentable = extract_commentable_name(params)
     if @commentable
-      @asset = @commentable.classify.constantize.my(@current_user).find(params[:"#{@commentable}_id"])
-      @comments = @asset.comments(:order => "created_at DESC")
+      @asset = @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
+      @comments = @asset.comments.order("created_at DESC")
     end
     respond_to do |format|
-      format.html { redirect_to(@asset) }
+      format.html { redirect_to @asset }
       format.xml  { render :xml => @comments }
     end
 
   rescue ActiveRecord::RecordNotFound # Kicks in if @asset was not found.
     flash[:warning] = t(:msg_assets_not_available, "notes")
     respond_to do |format|
-      format.html { redirect_to(root_url) }
+      format.html { redirect_to root_url }
       format.xml  { render :text => flash[:warning], :status => :not_found }
     end
   end
@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
 
     if @commentable
       update_commentable_session
-      @commentable.classify.constantize.my(@current_user).find(params[:"#{@commentable}_id"])
+      @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
     end
 
     respond_to do |format|
@@ -80,7 +80,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
 
     if @comment.commentable
-      @comment.commentable_type.constantize.my(@current_user).find(@comment.commentable.id)
+      @comment.commentable_type.constantize.my.find(@comment.commentable.id)
     else
       raise ActiveRecord::RecordNotFound
     end
@@ -97,7 +97,7 @@ class CommentsController < ApplicationController
 
     # Make sure commentable object exists and is accessible to the current user.
     if @comment.commentable
-      @comment.commentable_type.constantize.my(@current_user).find(@comment.commentable.id)
+      @comment.commentable_type.constantize.my.find(@comment.commentable.id)
     else
       raise ActiveRecord::RecordNotFound
     end

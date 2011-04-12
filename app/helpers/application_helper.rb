@@ -71,13 +71,22 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def load_select_popups_for(related, *assets)
-    js = assets.inject("") do |str, asset|
-      str << render(:partial => "common/select_popup", :locals => { :related => related, :popup => asset })
-    end
+    js = assets.map do |asset|
+      render(:partial => "common/select_popup", :locals => { :related => related, :popup => asset })
+    end.join
 
     content_for(:javascript_epilogue) do
-      "document.observe('dom:loaded', function() { #{js} });"
+      raw "document.observe('dom:loaded', function() { #{js} });"
     end
+  end
+
+  # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
+  #----------------------------------------------------------------------------
+  def rating_select(name, options = {})
+    stars = Hash[ (1..5).map { |star| [ star, "&#9733;" * star ] } ].sort
+    options_for_select = %Q(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
+    options_for_select << stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
+    select_tag name, options_for_select.html_safe, options
   end
 
   #----------------------------------------------------------------------------
@@ -168,8 +177,8 @@ module ApplicationHelper
   def jumpbox(current)
     tabs = [ :campaigns, :accounts, :leads, :contacts, :opportunities ]
     current = tabs.first unless tabs.include?(current)
-    tabs.inject([]) do |html, tab|
-      html << link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", :class => (tab == current ? 'selected' : ''))
+    tabs.map do |tab|
+      link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", :class => (tab == current ? 'selected' : ''))
     end.join(" | ").html_safe
   end
 
@@ -236,21 +245,20 @@ module ApplicationHelper
   def refresh_sidebar_for(view, action = nil, shake = nil)
     update_page do |page|
       page[:sidebar].replace_html :partial => "layouts/sidebar", :locals => { :view => view, :action => action }
-      page[shake].visual_effect(:shake, :duration => 0.4, :distance => 3) if shake
+      page[shake].visual_effect(:shake, :duration => 0.2, :distance => 3) if shake
     end
   end
 
   # Display web presence mini-icons for Contact or Lead.
   #----------------------------------------------------------------------------
   def web_presence_icons(person)
-    [ :blog, :linkedin, :facebook, :twitter ].inject([]) do |links, site|
+    [ :blog, :linkedin, :facebook, :twitter ].map do |site|
       url = person.send(site)
       unless url.blank?
         url = "http://" << url unless url.match(/^https?:\/\//)
-        links << link_to(image_tag("#{site}.gif", :size => "15x15"), url, :"data-popup" => true, :title => t(:open_in_window, url))
+        link_to(image_tag("#{site}.gif", :size => "15x15"), url, :"data-popup" => true, :title => t(:open_in_window, url))
       end
-      links
-    end.join("\n").html_safe
+    end.compact.join("\n").html_safe
   end
 
   # Ajax helper to refresh current index page once the user selects an option.
@@ -379,4 +387,26 @@ module ApplicationHelper
        (!request.xhr? && request.fullpath =~ %r|/\w+/\d+|))
   end
 
+  # Helper to display links to supported data export formats.
+  #----------------------------------------------------------------------------
+  def links_to_export
+    token = @current_user.single_access_token
+    path = if controller.controller_name == 'home'
+      activities_path
+    elsif controller.class.to_s.starts_with?("Admin::")
+      send("admin_#{controller.controller_name}_path")
+    else
+      send("#{controller.controller_name}_path")
+    end
+
+    exports = %w(xls csv).map do |format|
+      link_to(format.upcase, "#{path}.#{format}", :title => I18n.t(:"to_#{format}"))
+    end
+
+    feeds = %w(rss atom).map do |format|
+      link_to(format.upcase, "#{path}.#{format}?authentication_credentials=#{token}", :title => I18n.t(:"to_#{format}"))
+    end
+
+    (exports + feeds).join(' | ')
+  end
 end

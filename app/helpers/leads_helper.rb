@@ -54,20 +54,16 @@ module LeadsHelper
     end
   end
 
-  # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
-  #----------------------------------------------------------------------------
-  def rating_select(name, options = {})
-    stars = (1..5).inject({}) { |hash, star| hash[star] = "&#9733;" * star; hash }.sort
-    options_for_select = %Q(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
-    options_for_select << stars.inject([]) {|array, star| array << %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>); array }.join
-    select_tag name, options_for_select.html_safe, options
-  end
-
   # Sidebar checkbox control for filtering leads by status.
   #----------------------------------------------------------------------------
   def lead_status_checbox(status, count)
     checked = (session[:filter_by_lead_status] ? session[:filter_by_lead_status].split(",").include?(status.to_s) : count.to_i > 0)
-    onclick = remote_function(:url => { :action => :filter }, :with => h(%Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+    onclick = remote_function(
+      :url      => { :action => :filter },
+      :with     => h(%Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/),
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
     check_box_tag("status[]", status, checked, :id => status, :onclick => onclick)
   end
 
@@ -102,4 +98,22 @@ module LeadsHelper
     end
   end
 
+  # Lead summary for RSS/ATOM feed.
+  #----------------------------------------------------------------------------
+  def lead_summary(lead)
+    summary = []
+    summary << (lead.status ? t(lead.status) : t(:other))
+
+    if lead.company? && lead.title?
+      summary << t(:works_at, :job_title => lead.title, :company => lead.company)
+    else
+      summary << lead.company if lead.company?
+      summary << lead.title if lead.title?
+    end
+    summary << "#{t(:referred_by_small)} #{lead.referred_by}" if lead.referred_by?
+    summary << lead.email if lead.email.present?
+    summary << "#{t(:phone_small)}: #{lead.phone}" if lead.phone.present?
+    summary << "#{t(:mobile_small)}: #{lead.mobile}" if lead.mobile.present?
+    summary.join(', ')
+  end
 end

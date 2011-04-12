@@ -24,4 +24,9 @@ module UsersHelper
     language || "English"
   end
 
+  def sort_by_language
+    languages.sort.map do |locale, language|
+      %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw))} } }]
+    end
+  end
 end

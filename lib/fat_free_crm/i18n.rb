@@ -18,18 +18,14 @@ module FatFreeCRM
     # (i.e. *_fat_free_crm.yml) and return locale part of the file name.
     #----------------------------------------------------------------------------
     def locales
-      @@locales ||= Dir.entries(Rails.root + "/config/locales").grep(/_fat_free_crm\.yml$/) { |f| f.sub("_fat_free_crm.yml", "") }
+      @@locales ||= Dir.entries("#{Rails.root}/config/locales").grep(/_fat_free_crm\.yml$/) { |f| f.sub("_fat_free_crm.yml", "") }
     end
 
     # Return a hash where the key is locale name, and the value is language name
     # as defined in the locale_fat_free_crm.yml file.
     #----------------------------------------------------------------------------
     def languages
-      @@languages ||= locales.inject({}) do |hash, locale|
-        hash[locale] = t(:language, :locale => locale)
-        hash
-      end
+      @@languages ||= Hash[ locales.map{ |locale| [ locale, t(:language, :locale => locale) ] } ]
     end
-
   end
 end

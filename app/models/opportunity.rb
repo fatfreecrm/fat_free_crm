@@ -54,7 +54,9 @@ class Opportunity < ActiveRecord::Base
   }
   scope :created_by, lambda { |user| where('user_id = ?', user.id) }
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
-  scope :not_lost, where("opportunities.stage <> 'lost'")
+  scope :won,      where("opportunities.stage = 'won'")
+  scope :lost,     where("opportunities.stage = 'lost'")
+  scope :pipeline, where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')")
 
   simple_column_search :name,
     :match => :middle,
@@ -63,6 +65,7 @@ class Opportunity < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   is_paranoid
+  exportable
   sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_opportunity_name
@@ -85,6 +88,8 @@ class Opportunity < ActiveRecord::Base
   # Backend handler for [Create New Opportunity] form (see opportunity/create).
   #----------------------------------------------------------------------------
   def save_with_account_and_permissions(params)
+    # Quick sanitization, makes sure Account will not search for blank id.
+    params[:account].delete(:id) if params[:account][:id].blank?
     account = Account.create_or_select_for(self, params[:account], params[:users])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
     self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?

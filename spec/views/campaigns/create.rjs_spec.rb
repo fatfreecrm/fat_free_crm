@@ -1,17 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/campaigns/create.js.rjs" do
-  include CampaignsHelper
-
-  before(:each) do
+  before do
     login_and_assign
   end
 
   describe "create success" do
-    before(:each) do
+    before do
       assign(:campaign, @campaign = Factory(:campaign))
       assign(:campaigns, [ @campaign ].paginate)
-      assign(:campaign_status_total, { :called_off => 1, "Explicit" => 1 })
+      assign(:campaign_status_total, Hash.new(1))
       render
     end
 

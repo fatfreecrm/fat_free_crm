@@ -1,9 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/destroy.js.rjs" do
-  include Admin::UsersHelper
-
-  before(:each) do
+  before do
     login_and_assign(:admin => true)
   end
 

@@ -1,9 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/home/options.rjs" do
-  include HomeHelper
-
-  before(:each) do
+  before do
     login_and_assign
   end
 
@@ -13,6 +11,7 @@ describe "/home/options.rjs" do
     assign(:asset, "all")
     assign(:user, "all_users")
     assign(:duration, "two_days")
+    assign(:all_users, [ Factory(:user) ])
 
     render
 
@@ -29,6 +28,11 @@ describe "/home/options.rjs" do
 
   it "should load :options partial with JavaScript code for menus" do
     params[:cancel] = nil
+    assign(:asset, "all")
+    assign(:user, "all_users")
+    assign(:duration, "two_days")
+    assign(:all_users, [ Factory(:user) ])
+
     render
 
     view.should render_template(:partial => "_options")
@@ -42,5 +46,4 @@ describe "/home/options.rjs" do
     rendered.should include('crm.flip_form("options")')
     rendered.should include('crm.set_title("title", "Recent Activity")')
   end
-
 end

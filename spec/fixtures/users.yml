@@ -52,6 +52,7 @@ aaron:
   password_salt: ce6e0200c96f4dd326b91f3967115a31421a0e7dcddc9ffb63a77f598a9fcb5326fe532dbd9836a2446e46840d398fa32c81f8f4da1a0fcfe931989e9639a013
   persistence_token: d7cdeffd3625f7cb265b21126b85da7c930d47c4a708365c20eb857560055a6b57c9775becb8a957dfdb46df8aee17eb120a011b380e9cc0882f9dfaa2b7ba26
   perishable_token: TarXlrOPfaokNOzls2U8
+  single_access_token: TarXlrOPfaokNOzls2U8
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
@@ -77,6 +78,7 @@ ben:
   password_salt: fce13d8b784003b4fb8d030866b5c3a003a914b9d52832d02b5f85db53413bcc8dd078d3e57e6c50b9bb8e8eb520e04a5f79cfb089a8bbe224e15e840b0dc594
   persistence_token: 8d3789d1486d8aa421d5e7ca0c670badecf0e3b876dab5cf6de21fa867023d379f79e2d823cbdfc2a512d12e62b5343a62c4fc69f065c7c4850de424880399c5
   perishable_token: VyiXHtZ4HsFS62xCnK4I
+  single_access_token: VyiXHtZ4HsFS62xCnK4I
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
@@ -102,6 +104,7 @@ cindy:
   password_salt: bc41b1a96c66ac155c79cf68ff3a16dd97d4730bc3476575fcab3c2ae7751776cc48e6faa036961be40ed04a27690b6f5189234968d4a6fff981105f040d9014
   persistence_token: 3f391c651f5f7edca17a34b044b7e1ac866625903dd9567bfbfe5eea74c9f571d502cae8fae83ca29eba7df2f2cd1ed0d71d380f680eaaeabaaf194a4009cba1
   perishable_token: eRGJ2agxeuuds5qlJSqY
+  single_access_token: eRGJ2agxeuuds5qlJSqY
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
@@ -127,6 +130,7 @@ dan:
   password_salt: e01633b1b2396fa3be0f689b87d68a55a831c043faffba0401131338e6aab5a8492a0b47a6947f0d96dd7188f51ecc530a2d72603802c7b409f1c42ce138de0b
   persistence_token: a521f06f9a3ebacf0bab032cd46544d17d6bdbb9c2d1b413d9aa7c663da563e51a447e63f6af2d852d58d0c126411935ffea446fbad77549b77b99645c0b488d
   perishable_token: fniVMOjbZLRnKhd2DLIx
+  single_access_token: fniVMOjbZLRnKhd2DLIx
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
@@ -152,6 +156,7 @@ elizabeth:
   password_salt: 80caf26a2981892f70acbc0ddb8fdd19c789163bfdefa3809355aef4bd989c8c6aa251c05b0923ef307e7b5269b6efdca380b0c28b8bf8f72ee5385a8557ed9b
   persistence_token: f60bf40210246af4e7f85f1010e1b592a9862827015f506328b54afd7e487f760e3b382231dfc25dee3353f014cce419705f0453aa96b9b566065b2db7b93c1c
   perishable_token: EtPRtOAiXBm2XDYHtjMC
+  single_access_token: EtPRtOAiXBm2XDYHtjMC
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 
   last_login_ip: 127.0.0.1
@@ -177,6 +182,7 @@ frank:
   password_salt: 805983077fdba9438de1d84007e093f658620211e1d0087d33662a5ca387b04206d098e152aeea896ab65aa026ac1fb9ce69dbe22a45fb9b21c3b6dcad4909f3
   persistence_token: 6158edf71b5cdd674f9d86082f7c580ac27277fcaa9ea6732d2eefdaac09f20fa4554307c028fa294c2f2d4fbb6035f118048dffa351768d8cb9125285d06baf
   perishable_token: SnxgLcY4wRMVKoa1jPLK
+  single_access_token: SnxgLcY4wRMVKoa1jPLK
   last_request_at:
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at:
@@ -203,6 +209,7 @@ george:
   password_salt: 80b5c87fb4c9fa5c50815016bc0160eb08c4e22e88fee558b5e739557d5178c61b06fcbebf6c4c62f37f0f7984ccc0d025e2f073880cd655b57542343e4981b6
   persistence_token: 5eaccdebf683a87050df34e45c5e3aa9d884b132be4e1bc1d759924814518fa9d29adfe8556ad6e7223ec692a481d4f96772796ee835f3b14a7e86cba222abd6
   perishable_token: SYFLlZ466jZ04ylTnvXv
+  single_access_token: SYFLlZ466jZ04ylTnvXv
   last_request_at:
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at:
@@ -229,6 +236,7 @@ heather:
   password_salt: 729ab318245afa827a8c29e36c885c7b0d07e15193727b68a7cf5edac517e4d6fcafa4e5ddfff9c9305d3ccd37ef735823ba66ba8e2876fd2b06c7c27f3c9482
   persistence_token: 6fd550c1ec1d422c3077f497fb3a886dbd9e24b10d0148ef1d8a0e477395594c7217857906fcab5deedadda246c932e39131837ff023c28d4902cb5990e6c87a
   perishable_token: a0HA6LWqvfc1h0aj0wqG
+  single_access_token: a0HA6LWqvfc1h0aj0wqG
   last_request_at: 
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at: 

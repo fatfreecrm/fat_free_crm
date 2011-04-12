@@ -3,10 +3,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/accounts/destroy.js.rjs" do
   include AccountsHelper
 
-  before(:each) do
+  before do
     login_and_assign
     assign(:account, @account = Factory(:account))
     assign(:accounts, [ @account ].paginate)
+    assign(:account_category_total, Hash.new(1))
     render
   end
 

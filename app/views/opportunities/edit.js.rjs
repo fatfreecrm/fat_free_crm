@@ -32,5 +32,5 @@ else # <----------------------------------------- Show requested [Edit Opportuni
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
   page.call "crm.date_select_popup", "opportunity_closes_on"
   page[:opportunity_name].focus
-
+  hook(:edit_opportunity_rjs, self, :page => page)
 end

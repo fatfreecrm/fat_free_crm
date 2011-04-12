@@ -22,4 +22,4 @@
         = "#{t :mobile}: <b>#{@user.mobile}</b>" unless @user.mobile.blank?
 
 - if Setting.per_user_locale
-  %script= render :partial => "languages"
+  %script= render "languages"

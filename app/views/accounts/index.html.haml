@@ -11,8 +11,10 @@
 .remote#create_account{ hidden }
 
 .list#accounts
-  - unless @accounts.empty?
-    = render :partial => "account", :collection => @accounts
+  - if @accounts.any?
+    = render @accounts
   - else
-    = render :partial => "common/empty"
-#paginate= render :partial => "common/paginate"
+    = render "common/empty"
+
+#paginate= render "common/paginate"
+#export= render "common/export"

@@ -9,30 +9,30 @@
   .section
     %small
       #{t(:create_opp_for_contact, @lead.full_name)}
-    %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %table
       %tr
-        %td{ :valign => :top }
+        %td
           .label #{t :name}:
           = o.text_field :name, :style => "width:325px"
         %td= spacer
-        %td{ :valign => :top }
+        %td
           .label #{t :stage}:
           = o.select :stage, Setting.unroll(:opportunity_stage), { :selected => @opportunity.stage ? @opportunity.stage.to_sym : nil }, { :style => "width:160px" }
 
-    %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %table
       %tr
-        %td{ :valign => :top }
+        %td
           .label #{t :close_date}:
           = o.text_field :closes_on, :style => "width:110px;", :autocomplete => :off
         %td= spacer
-        %td{ :valign => :top }
+        %td
           .label #{t :probability} (%):
           = o.text_field :probability, :style => "width:110px; text-align:right;"
         %td= spacer
-        %td{ :valign => :top }
+        %td
           .label #{t :amount} #{t :currency}:
           = o.text_field :amount, :style => "width:110px; text-align:right;"
         %td= spacer
-        %td{ :valign => :top }
+        %td
           .label #{t :discount} #{t :currency}:
           = o.text_field :discount, :style => "width:110px; text-align:right;"

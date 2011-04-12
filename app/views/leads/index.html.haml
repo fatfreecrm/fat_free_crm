@@ -11,8 +11,10 @@
 .remote#create_lead{ hidden }
 
 .list#leads
-  - unless @leads.empty?
-    = render :partial => "lead", :collection => @leads
+  - if @leads.any?
+    = render @leads
   - else
-    = render :partial => "common/empty"
-#paginate= render :partial => "common/paginate"
+    = render "common/empty"
+
+#paginate= render "common/paginate"
+#export= render "common/export"

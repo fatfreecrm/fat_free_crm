@@ -10,11 +10,12 @@
     = javascript_include_tag :defaults, :cache => "cache/all"
     = javascript_include_tag "crm_classes.js", "modalbox.js", :cache => "cache/classes"
     %script{:type => "text/javascript"}= yield :javascript
+    = csrf_meta_tag
 
   %body.admin
-    = render :partial => "layouts/admin/header"
-    = render :partial => "layouts/tabbed"
-    = render :partial => "layouts/footer"
+    = render "layouts/admin/header"
+    = render "layouts/tabbed"
+    = render "layouts/footer"
     %script{:type => "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset

@@ -29,6 +29,10 @@ class ContactsController < ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @contacts }
+      format.xls  { send_data @contacts.to_xls, :type => :xls }
+      format.csv  { send_data @contacts.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -36,7 +40,7 @@ class ContactsController < ApplicationController
   # GET /contacts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
-    @contact = Contact.my(@current_user).find(params[:id])
+    @contact = Contact.my.find(params[:id])
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
 
@@ -57,11 +61,11 @@ class ContactsController < ApplicationController
   def new
     @contact  = Contact.new(:user => @current_user, :access => Setting.default_access)
     @account  = Account.new(:user => @current_user)
-    @users    = User.except(@current_user).all
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @users    = User.except(@current_user)
+    @accounts = Account.my.order("name")
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.my(@current_user).find(id))
+      instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
     end
 
     respond_to do |format|
@@ -76,12 +80,12 @@ class ContactsController < ApplicationController
   # GET /contacts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @contact  = Contact.my(@current_user).find(params[:id])
-    @users    = User.except(@current_user).all
+    @contact  = Contact.my.find(params[:id])
+    @users    = User.except(@current_user)
     @account  = @contact.account || Account.new(:user => @current_user)
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @accounts = Account.my.order("name")
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Contact.my(@current_user).find($1)
+      @previous = Contact.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -101,8 +105,8 @@ class ContactsController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
-        @users = User.except(@current_user).all
-        @accounts = Account.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @accounts = Account.my.order("name")
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
         else
@@ -123,15 +127,15 @@ class ContactsController < ApplicationController
   # PUT /contacts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    @contact = Contact.my(@current_user).find(params[:id])
+    @contact = Contact.my.find(params[:id])
 
     respond_to do |format|
       if @contact.update_with_account_and_permissions(params)
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).all
-        @accounts = Account.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @accounts = Account.my.order("name")
         if @contact.account
           @account = Account.find(@contact.account.id)
         else
@@ -150,7 +154,7 @@ class ContactsController < ApplicationController
   # DELETE /contacts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @contact = Contact.my(@current_user).find(params[:id])
+    @contact = Contact.my.find(params[:id])
     @contact.destroy if @contact
 
     respond_to do |format|
@@ -183,7 +187,7 @@ class ContactsController < ApplicationController
     @contacts = get_contacts(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @contacts.to_xml }
     end
   end
@@ -218,34 +222,13 @@ class ContactsController < ApplicationController
     end
 
     @contacts = get_contacts(:page => 1) # Start one the first page.
-    render :action => :index
+    render :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_contacts(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.pref[:contacts_sort_by] || Contact.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.pref[:contacts_per_page]
-    }
-
-    # Call :get_contacts hook and return its output if any.
-    contacts = hook(:get_contacts, self, :records => records, :pages => pages)
-    return contacts.last unless contacts.empty?
-
-    # Default processing if no :get_contacts hooks are present.
-    if current_query.blank?
-      Contact.my(records)
-    else
-      Contact.my(records).search(current_query)
-    end.paginate(pages)
+  def get_contacts(options = {})
+    get_list_of_records(Contact, options)
   end
 
   #----------------------------------------------------------------------------
@@ -255,7 +238,7 @@ class ContactsController < ApplicationController
         @contacts = get_contacts
         if @contacts.blank?
           @contacts = get_contacts(:page => current_page - 1) if current_page > 1
-          render :action => :index and return
+          render :index and return
         end
       else
         self.current_page = 1
@@ -264,7 +247,7 @@ class ContactsController < ApplicationController
     else
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @contact.full_name)
-      redirect_to(contacts_path)
+      redirect_to contacts_path
     end
   end
 

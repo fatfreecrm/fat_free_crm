@@ -21,7 +21,12 @@ module CampaignsHelper
   #----------------------------------------------------------------------------
   def campaign_status_checbox(status, count)
     checked = (session[:filter_by_campaign_status] ? session[:filter_by_campaign_status].split(",").include?(status.to_s) : count.to_i > 0)
-    onclick = remote_function(:url => { :action => :filter }, :with => h(%Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+    onclick = remote_function(
+      :url      => { :action => :filter },
+      :with     => h(%Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/),
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
     check_box_tag("status[]", status, checked, :id => status, :onclick => onclick)
   end
 
@@ -39,5 +44,12 @@ module CampaignsHelper
     html || ""
   end
 
+  # Quick campaign summary for RSS/ATOM feeds.
+  #----------------------------------------------------------------------------
+  def campaign_summary(campaign)
+    status  = render :file => "campaigns/_status.html.haml",  :locals => { :campaign => campaign }
+    metrics = render :file => "campaigns/_metrics.html.haml", :locals => { :campaign => campaign }
+    "#{t(campaign.status)}, " << [ status, metrics ].map { |str| strip_tags(str) }.join(' ').gsub("\n", '')
+  end
 end
 

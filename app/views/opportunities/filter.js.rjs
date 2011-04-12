@@ -1,1 +1,0 @@
-page[:opportunities].replace_html render(:partial => "opportunity", :collection => @opportunities)

@@ -3,16 +3,17 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/accounts/update.js.rjs" do
   include AccountsHelper
 
-  before(:each) do
+  before do
     login_and_assign
 
     assign(:account, @account = Factory(:account, :user => @current_user))
     assign(:users, [ @current_user ])
+    assign(:account_category_total, Hash.new(1))
   end
 
   describe "no errors:" do
     describe "on account landing page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       end
 
@@ -33,7 +34,7 @@ describe "/accounts/update.js.rjs" do
     end
 
     describe "on accounts index page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
       end
 
@@ -58,12 +59,12 @@ describe "/accounts/update.js.rjs" do
   end # no errors
 
   describe "validation errors:" do
-    before(:each) do
+    before do
       @account.errors.add(:name)
     end
 
     describe "on account landing page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       end
 
@@ -79,7 +80,7 @@ describe "/accounts/update.js.rjs" do
     end
 
     describe "on accounts index page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
       end
 

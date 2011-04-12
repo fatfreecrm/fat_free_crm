@@ -11,7 +11,7 @@
       - if @current_user.admin?
         = link_to(t(:admin), admin_path) << " |"
       = link_to(t(:logout), logout_path, :method => :delete)
-      = render :partial => "/layouts/jumpbox"
+      = render "/layouts/jumpbox"
     - else
       = link_to(t(:login), login_path) << " |"
       = link_to(t(:sign_up), signup_path) << " |" if can_signup?

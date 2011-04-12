@@ -126,6 +126,34 @@ task_calendar_with_time: false
   { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
 
+# Account Category. To add custom account type use string value, for example:
+#
+# account_category:
+#   - :affiliate
+#   - :competitor
+#   - :customer
+#   - :partner
+#   - :reseller
+#   - :vendor
+#   - "Custom"
+#
+#------------------------------------------------------------------------------
+account_category:
+  - :affiliate
+  - :competitor
+  - :customer
+  - :partner
+  - :reseller
+  - :vendor
+
+account_category_color:
+  :affiliate   : lavender
+  :competitor  : paleturquoise
+  :customer    : pink
+  :partner     : bisque
+  :reseller    : thistle
+  :vendor      : skyblue
+
 # Campaign Status. To add custom status use string value, for example:
 #
 # campaign_status:

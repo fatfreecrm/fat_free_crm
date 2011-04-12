@@ -1,6 +1,6 @@
 unless @leads.blank?
-  page[:leads].replace_html render(:partial => "lead", :collection => @leads)
+  page[:leads].replace_html render @leads
 else
-  page[:leads].replace_html render(:partial => "common/empty")
+  page[:leads].replace_html :partial => "common/empty"
 end
-page[:paginate].replace_html render(:partial => "common/paginate")
+page[:paginate].replace_html :partial => "common/paginate"
