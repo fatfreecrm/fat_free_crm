@@ -5,58 +5,58 @@ sv-SE:
 
   # Generic terms.
   #----------------------------------------------------------------------------
-  all: All
-  at: at
-  here: here
-  no_button: 'No'
-  not_implemented: Not implemented yet.
-  or: or
-  select_none: '-- None --'
-  select_blank: '-- Select --'
-  yes_button: 'Yes'
+  all: Alla
+  at: vid
+  here: här
+  no_button: 'Nej'
+  not_implemented: Ej implementerad.
+  or: eller 
+  select_none: '-- Ingen --'
+  select_blank: '-- Välj --'
+  yes_button: 'Ja'
 
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Kontrollpanel
   tab_tasks: Ärende 
   tab_campaigns: Kampanjer
-  tab_leads: Lead
-  tab_accounts: Konto
+  tab_leads: Leads
+  tab_accounts: Konton
   tab_contacts: Kontakter
   tab_opportunities: Affärer
 
-  admin_tab_users: Users
-  admin_tab_settings: Settings
-  admin_tab_plugins: Plugins
+  admin_tab_users: Användare
+  admin_tab_settings: Inställningar
+  admin_tab_plugins: Tilläggsmoduler
 
-  planned: Planned
-  started: Started
-  on_hold: On Hold
-  completed: Completed
-  called_off: Called Off
+  planned: Planerad
+  started: Påbörjat
+  on_hold: På is
+  completed: Genomfört
+  called_off: Avvisat
 
-  new: New
-  contacted: Contacted
-  converted: Converted
-  rejected: Rejected
+  new: Ny
+  contacted: Kontaktade
+  converted: Koverterad
+  rejected: Avslag
 
-  cold_call: Cold Call
-  conference: Conference
-  online: Online Marketing
-  referral: Referral
-  self: Self Generated
-  web: Website
-  word_of_mouth: Word of Mouth
-  other: Other
+  cold_call: Kallringning
+  conference: Konferans
+  online: Web-marknadsföring
+  referral: Referens
+  self: Kundinitiativ
+  web: Hemsida 
+  word_of_mouth: Mun till mun 
+  other: Övrigt
 
-  prospecting: Prospecting
-  analysis: Analysis
+  prospecting: Prospektering
+  analysis: Analys
   presentation: Presentation
-  proposal: Proposal
-  negotiation: Negotiation
-  final_review: Final Review
-  won: Closed/Won
-  lost: Closed/Lost
+  proposal: Offert
+  negotiation: Förhandling
+  final_review: Besulttagande
+  won: Avslutad positiv
+  lost: Avslutad negativ
 
   call: Call
   email: Email
@@ -293,7 +293,7 @@ sv-SE:
   actual_performance: Actual Performance
   budget: Budget
   budget_label: Budget ($)
-  campaign: Campaign
+  campaign: Kampanj
   campaign_and_leads: campaign and its leads
   campaign_small: campaign
   campaign_summary: Campaign Summary
