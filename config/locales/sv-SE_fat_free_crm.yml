@@ -211,8 +211,7 @@ sv-SE:
   option_target_leads: uppskattning leads
   option_target_revenue: uppskattning intäkter
   option_updated_at: datum uppdaterad
-  # Changed 'format' to 'fmt' because it conflicts with RESERVED_KEYS of i18n.
-  show_per_page: Visa %{number} %{models} per sida med formatet %{fmt}.
+  show_per_page: Visa %{number} %{models} per sida med formatet %{format}.
   sort_by: Sortera %{models} på %{field}.
   sort_by_displaying: "Sortera %{models} på %{field} och visa förnamn %{position} efternamn." 
 
@@ -374,10 +373,10 @@ sv-SE:
   lead_status_small: lead status
   lead_summary: Lead Summary
   leads: Leads
-  leads_options: Leads Options
+  leads_options: Leads Alternativ
   leads_small: leads
-  none: None
-  rating: Rating
+  none: Ingen
+  rating: Gradering
   reject: Reject
   reject_lead_confirm: Are you sure you want to reject this lead?
   save_lead: Save Lead
@@ -387,32 +386,32 @@ sv-SE:
 
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
-  amount: Amount
-  close_date: Close date
-  closed_ago_on: closed %{time_ago} ago on %{date}
+  amount: Belopp
+  close_date: Slutdatum 
+  closed_ago_on: avslutad %{time_ago} sedan, dvs. den %{date}
   closes_today: expected to close today!
   closing_date: closing date is %{value}
-  create_opportunity: Create Opportunity
-  currency: ($)
+  create_opportunity: Skapa affär
+  currency: (kr)
   days_late: Late by
   days_left: Days left
-  discount: Discount
+  discount: Rabatt
   discount_number: with %{value} discount
   expected_to_close: expected to close in %{time} on %{date}
   from: from
   no_closing_date: no expected closing date
   no_discount: with no discount
-  opportunities: Opportunities
-  opportunities_options: Opportunities Options
-  opportunities_small: opportunities
-  opportunity: Opportunity
-  opportunity_small: opportunity
+  opportunities: Affärer
+  opportunities_options: Affärsalternativ
+  opportunities_small: affärer
+  opportunity: Affär
+  opportunity_small: affär
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: "%{amount} with %{discount} discount and %{probability} probability" 
   past_due: past due, was expected to close %{value} ago
-  probability: Probability
+  probability: Sannolikhet
   probability_number: and %{value} probability
-  save_opportunity: Save Opportunity
+  save_opportunity: Spara affär 
   stage: Skede
   total_opportunities: Total Opportunities
   weighted_amount: Weighted amount
@@ -425,7 +424,7 @@ sv-SE:
   category: Category
   completed_tab: Completed
   completed_tasks: Completed Tasks
-  create_task: Create Task
+  create_task: Skapa ärende
   create_task_small: create new task
   due: Due
   feel_free: Feel free to
@@ -452,7 +451,7 @@ sv-SE:
   task_overdue: late, was due on
   task_pending: The task has been moved to pending tasks
   task_small: task
-  tasks: Tasks
+  tasks: Ärende
   total_tasks: Total %{value}
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
@@ -482,10 +481,10 @@ sv-SE:
 
   # Views -> Common.
   #----------------------------------------------------------------------------
-  add_note: Add Note
-  save_note: Save Note
+  add_note: Lägg till anteckning
+  save_note: Spara anteckning
   add_note_help: Add a new note...
-  edit_note: Edit Note
+  edit_note: Ändra anteckning
   added_ago: added %{value} ago
   added_by: added %{time_ago} ago by %{user} 
   back: Back
@@ -495,27 +494,27 @@ sv-SE:
   copy_permissions: Copy %{value} permissions
   could_not_find: "Couldn't find %{value}. Feel free to"
   could_not_find_matching: "Couldn't find %{value} matching"
-  create_new: create new
-  select_existing: select existing
-  delete: Delete
+  create_new: skapa ny
+  select_existing: välj befintlig 
+  delete: Ta bort
   discard: Discard
-  edit: Edit
+  edit: Ändra
   items_total: '%{count} total.'
-  less: Less...
+  less: Mindre...
   me: me
-  more: More...
+  more: Mera...
   n_a: N/A
-  name: Name
+  name: Namn
   no_match: No %{value} match
   no_recent_items: There are no recent items to display yet.
-  options: Options
-  permissions: Permissions
+  options: Alternativ
+  permissions: Rättigheter
   please_retry: please try another query.
   recent_items: Recent Items
-  select_contact: Select Contact
-  select_lead: Select Lead
-  select_task: Select Task
-  select_opportunity: Select Opportunity
+  select_contact: Välj kontakt 
+  select_lead: Välj lead
+  select_task: Välj ärende
+  select_opportunity: Välj affär
   search_assets: Search %{value}
   time_ago: "%{value} ago"
   background_info: Background
@@ -541,9 +540,9 @@ sv-SE:
   about_twitter: Twitter commit updates
   about_user_group: Discussion group for users
   admin: Admin
-  logout: Logout
+  logout: Logga ut
   quick_find: Quick find
-  welcome: Welcome
+  welcome: Välkommen
 
   # Views -> Comments.
   #----------------------------------------------------------------------------
@@ -561,16 +560,16 @@ sv-SE:
   # Views -> Admin
   #----------------------------------------------------------------------------
   back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  crm_admin_page: Administration 
 
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
   approve: Approve
-  create_user: Create User
+  create_user: Skapa användare
   last_seen: last seen %{value} ago
   personal_information: Personal Information
   reactivate: Reactivate
-  save_user: Save User
+  save_user: Spara användare
   suspend: Suspend
   user_active: Active
   user_admin: Admin
@@ -583,8 +582,8 @@ sv-SE:
   user_since: user since %{value}
   user_suspended: Suspended
   user_suspended_on: suspended on %{value}
-  users: Users
-  users_small: users
+  users: Användare
+  users_small: användare
 
   # Dropbox.
   #----------------------------------------------------------------------------
@@ -598,20 +597,20 @@ sv-SE:
   #----------------------------------------------------------------------------
   pluralize:
     contact: 
-      one: '1 contact'
-      other: '%{count} contacts'
+      one: '1 kontakt'
+      other: '%{count} kontakter'
     opportunity:
-      one: '1 opportunity'
-      other: '%{count} opportunities'
+      one: '1 affär'
+      other: '%{count} affärer'
     lead:
       one: '1 lead'
       other: '%{count} leads'
     day:
-      one: '1 day'
-      other: '%{count} days'
+      one: '1 dag'
+      other: '%{count} dagar'
     login:
-      one: '1 login'
-      other: '%{count} logins'
+      one: '1 inloggning'
+      other: '%{count} inloggningar'
 
   # Custom date/time formats.
   #----------------------------------------------------------------------------
@@ -627,9 +626,9 @@ sv-SE:
       
   calendar_date_select:
     ok: OK
-    now: Now
-    today: Today
-    clear: Clear
+    now: Nu
+    today: Idag
+    clear: Rensa
 
   # If you need custom format look at 
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
