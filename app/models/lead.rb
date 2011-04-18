@@ -163,6 +163,11 @@ class Lead < ActiveRecord::Base
     save
   end
 
+  def delete_tag(tag_to_delete)
+    tag_list.remove(tag_to_delete)
+    save
+  end
+
   private
   #----------------------------------------------------------------------------
   def increment_leads_count

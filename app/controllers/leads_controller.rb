@@ -291,6 +291,13 @@ class LeadsController < ApplicationController
     redirect_to lead_path(@lead)
   end
 
+  # PUT /leads/1/delete_tag
+  def delete_tag
+    @lead = Lead.my(@current_user).find(params[:id])
+    @lead.delete_tag(params[:tag])
+    redirect_to lead_path(@lead)
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_leads(options = { :page => nil, :query => nil })

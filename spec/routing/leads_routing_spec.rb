@@ -53,6 +53,10 @@ describe LeadsController do
     it "maps #add_tag" do
       route_for(:controller => "leads", :action => "add_tag", :id => "1").should == { :path => "/leads/1/add_tag", :method => :put }
     end
+
+    it "maps #delete_tag" do
+      route_for(:controller => "leads", :action => "delete_tag", :id => "1").should == { :path => "/leads/1/delete_tag", :method => :put }
+    end
   end
 
   describe "route recognition" do
@@ -102,6 +106,10 @@ describe LeadsController do
 
     it "should generate params for #add_tag" do
       params_from(:put, "/leads/1/add_tag").should == {:controller => "leads", :action => "add_tag", :id => "1"}
+    end
+
+    it "should generate params for #delete_tag" do
+      params_from(:put, "/leads/1/delete_tag").should == {:controller => "leads", :action => "delete_tag", :id => "1"}
     end
 
     it "should generate params for #auto_complete" do

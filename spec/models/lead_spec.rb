@@ -113,5 +113,25 @@ describe Lead do
         @lead.tag_list.should == %w(moo foo bar)
       end
     end
+
+    describe 'deleting' do
+      it 'handles deleting nil' do
+        @lead.delete_tag(nil)
+        @lead.tag_list.should be_empty
+      end
+
+      it 'handles deleting an unexisting tag' do
+        @lead.add_tag('foo')
+        @lead.delete_tag('moo')
+        @lead.tag_list.should == ['foo']
+      end
+
+
+      it 'handles deleting an existing tag' do
+        @lead.add_tag('foo')
+        @lead.delete_tag('foo')
+        @lead.tag_list.should be_empty
+      end
+    end
   end
 end

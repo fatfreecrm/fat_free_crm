@@ -1044,4 +1044,23 @@ describe LeadsController do
       end
     end
   end
+
+  # PUT /leads/1/add_tag
+  describe "responding to PUT delete_tag" do
+    before(:each) do
+      @lead = Factory(:lead, :tag_list => "moo, foo, bar")
+    end
+
+    describe "HTML request" do
+      it "deleting a tag" do
+        put :delete_tag, :id => @lead.id, :tag => "moo"
+        assigns(:lead).tag_list.should == %w(foo bar)
+      end
+
+      it "should redirect to the lead show page" do
+        put :delete_tag, :id => @lead.id, :tag_list => "moo"
+        response.should redirect_to(lead_path(@lead))
+      end
+    end
+  end
 end

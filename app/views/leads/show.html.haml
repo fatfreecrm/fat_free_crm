@@ -21,7 +21,13 @@
   - if @lead.tag_list.empty?
     %p= 'No tags'
   - else
-    %p= @lead.tag_list
+    %ul
+      - @lead.tag_list.each do |t|
+        %li
+          = t
+          - form_for @lead, :url => delete_tag_lead_path(@lead) do |f|
+            = hidden_field_tag :tag, t
+            = f.submit 'Delete'
 
   - form_for @lead, :url => add_tag_lead_path(@lead) do |f|
     = f.text_field :tag_list, :value => ''
