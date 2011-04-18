@@ -284,6 +284,13 @@ class LeadsController < ApplicationController
     render :action => :index
   end
 
+  # PUT /leads/1/add_tag
+  def add_tag
+    @lead = Lead.my(@current_user).find(params[:id])
+    @lead.add_tag(params[:lead][:tag_list])
+    redirect_to lead_path(@lead)
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_leads(options = { :page => nil, :query => nil })

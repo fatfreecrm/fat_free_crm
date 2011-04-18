@@ -74,4 +74,44 @@ describe Lead do
       @lead.tasks.count.should == 0
     end
   end
+
+  describe "tags" do
+    before do
+      @lead = Factory(:lead)
+    end
+
+    it "has no tags by default" do
+      @lead.tags.should be_empty
+    end
+
+    it "can have tags assigned" do
+      @lead.tag_list = "foo, bar, example"
+      @lead.save
+      tags = @lead.tag_list
+      tags.size.should == 3
+      tags.should include('foo', 'bar', 'example')
+    end
+
+    describe 'adding' do
+      it "handles appending 0 tags" do
+        @lead.add_tag("")
+        @lead.tag_list.should be_empty
+      end
+
+      it "handles appending nil" do
+        @lead.add_tag(nil)
+        @lead.tag_list.should be_empty
+      end
+
+      it "can add 1 tag" do
+        @lead.add_tag("moo")
+        @lead.tag_list.should == %w(moo)
+      end
+
+      it "can add more than 1 tag" do
+        @lead.add_tag("moo, foo, bar")
+        @lead.tag_list.should == %w(moo foo bar)
+      end
+    end
+  end
 end

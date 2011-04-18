@@ -1026,4 +1026,22 @@ describe LeadsController do
 
   end
 
+  # PUT /leads/1/add_tag
+  describe "responding to PUT add_tag" do
+    before(:each) do
+      @lead = Factory(:lead, :tag_list => "moo, foo, bar")
+    end
+
+    describe "HTML request" do
+      it "adds the tags to the current tag list" do
+        put :add_tag, :id => @lead.id, :lead => {:tag_list => "go, apple"}
+        assigns(:lead).tag_list.should == %w(moo foo bar go apple)
+      end
+
+      it "should redirect to the lead show page" do
+        put :add_tag, :id => @lead.id, :lead => {:tag_list => "moo"}
+        response.should redirect_to(lead_path(@lead))
+      end
+    end
+  end
 end

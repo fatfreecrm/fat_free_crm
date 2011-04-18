@@ -48,6 +48,8 @@
 #  background_info :string(255)
 #
 class Lead < ActiveRecord::Base
+  acts_as_taggable
+
   belongs_to  :user
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -154,6 +156,12 @@ class Lead < ActiveRecord::Base
     end
   end
   alias :name :full_name
+
+  #----------------------------------------------------------------------------
+  def add_tag(tags_to_add)
+    tag_list.add(tags_to_add, :parse => true)
+    save
+  end
 
   private
   #----------------------------------------------------------------------------

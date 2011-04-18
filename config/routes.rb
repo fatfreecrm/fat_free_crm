@@ -28,7 +28,8 @@ ActionController::Routing::Routes.draw do |map|
       :convert => :get,
       :discard => :post,
       :promote => :put,
-      :reject  => :put
+      :reject  => :put,
+      :add_tag => :put
     }
 
   [ :accounts, :campaigns, :contacts, :opportunities ].each do |resource|

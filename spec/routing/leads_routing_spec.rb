@@ -49,6 +49,10 @@ describe LeadsController do
     it "maps #auto_complete" do
       route_for(:controller => "leads", :action => "auto_complete", :id => "1").should == "/leads/auto_complete/1"
     end
+
+    it "maps #add_tag" do
+      route_for(:controller => "leads", :action => "add_tag", :id => "1").should == { :path => "/leads/1/add_tag", :method => :put }
+    end
   end
 
   describe "route recognition" do
@@ -94,6 +98,10 @@ describe LeadsController do
 
     it "should generate params for #reject" do
       params_from(:put, "/leads/1/reject").should == {:controller => "leads", :action => "reject", :id => "1"}
+    end
+
+    it "should generate params for #add_tag" do
+      params_from(:put, "/leads/1/add_tag").should == {:controller => "leads", :action => "add_tag", :id => "1"}
     end
 
     it "should generate params for #auto_complete" do
