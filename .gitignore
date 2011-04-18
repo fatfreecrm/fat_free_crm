@@ -17,3 +17,4 @@ nbproject
 vendor/plugins/crm_*
 
 config/ldap.yml
+.rvmrc
