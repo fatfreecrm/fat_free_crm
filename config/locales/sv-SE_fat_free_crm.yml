@@ -37,7 +37,7 @@ sv-SE:
 
   new: Ny
   contacted: Kontaktade
-  converted: Koverterad
+  converted: Konverterad
   rejected: Avslag
 
   cold_call: Kallringning
@@ -360,76 +360,76 @@ sv-SE:
   #----------------------------------------------------------------------------
   convert: Konvertera
   convert_lead: Konvertera Lead
-  convert_lead_permissions_intro: Kontakt rättigheterna kopieras från leaden som konverteras. Du kan ändra rättigheterna senare.
-  convert_lead_text: Genoma att konvertera leaden %{value}, så förvandlas leaden till en kontakt associerad med ett befintligt eller nyskapat konto. Statusen kommer att sättas automatiskt till konverterad.
+  convert_lead_permissions_intro: Kontakträttigheterna kopieras från leaden som konverteras. Du kan ändra rättigheterna senare.
+  convert_lead_text: Genoma att konvertera leaden %{value}, så förvandlas leaden till en kontakt associerad med ett befintligt eller nyskapat konto. Statusen kommer att ändras automatiskt till konverterad.
   create_lead: Skapa lead
   create_opp_for_contact: Du kan välja att skapa en affär med kontakten %{value} genom att namnge affären och ange nuvarande skede, beräknat avslutningsdatum, försäljningssannolikhet, affärens belopp, och erbjuden rabatt.
   lead: Lead
   lead_info_small: lead kontakt
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
+  lead_permissions_intro_private: Normalt kommer rättigheterna att bli kopierade från kampanjen eller så blir de privata rättigheter. Du kan ändra rättigherna på leaden senare.
+  lead_permissions_intro_public: Normalt kommer rättigheterna att bli kopierade från kampanjen eller så blir de publika rättigheter. Du kan ändra rättigheterna på leaden senare.
+  lead_permissions_intro_shared: Normalt kommer rättigheterna att bli kopierade från kampanjen eller så blir de delade rättigheter med specificerade användare. Du kan ändra rättigheterna på leaden senare.
   lead_small: lead
   lead_status_small: lead status
-  lead_summary: Lead Summary
+  lead_summary: Lead översikt
   leads: Leads
-  leads_options: Leads Alternativ
+  leads_options: Leads alternativ
   leads_small: leads
   none: Ingen
   rating: Gradering
-  reject: Reject
-  reject_lead_confirm: Are you sure you want to reject this lead?
-  save_lead: Save Lead
-  source: Source
+  reject: Avvisad
+  reject_lead_confirm: Är du säker på att du vill avvisa leaden?
+  save_lead: Spara Lead
+  source: Källa
   status: Status
-  total_leads: Total Leads
+  total_leads: Totala Leads
 
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
   amount: Belopp
   close_date: Slutdatum 
   closed_ago_on: avslutad %{time_ago} sedan, dvs. den %{date}
-  closes_today: expected to close today!
-  closing_date: closing date is %{value}
+  closes_today: förväntas bli avslutad idag!
+  closing_date: avslutningsdatum är %{value}
   create_opportunity: Skapa affär
   currency: (kr)
-  days_late: Late by
-  days_left: Days left
+  days_late: Försenad med
+  days_left: Dagar kvar
   discount: Rabatt
-  discount_number: with %{value} discount
-  expected_to_close: expected to close in %{time} on %{date}
-  from: from
-  no_closing_date: no expected closing date
-  no_discount: with no discount
+  discount_number: med rabatt %{value} 
+  expected_to_close: förväntas bli avslutad %{time} %{date}
+  from: från
+  no_closing_date: avslutningdatum ej angiven
+  no_discount: utan rabatt
   opportunities: Affärer
   opportunities_options: Affärsalternativ
   opportunities_small: affärer
   opportunity: Affär
   opportunity_small: affär
-  opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: "%{amount} with %{discount} discount and %{probability} probability" 
-  past_due: past due, was expected to close %{value} ago
+  opportunity_summary: Affärsöversikt
+  opportunity_summary_text: "%{amount} med rabatt %{discount} och sannolikhet %{probability}"
+  past_due: förfallen, skulle ha varit avslutad %{value} sedan
   probability: Sannolikhet
-  probability_number: and %{value} probability
+  probability_number: och sannolikhet %{value}
   save_opportunity: Spara affär 
   stage: Skede
-  total_opportunities: Total Opportunities
-  weighted_amount: Weighted amount
+  total_opportunities: Totala affärer 
+  weighted_amount: Beräknat belopp
 
   # Views -> Tasks.
   #----------------------------------------------------------------------------
-  assign_to: Assign to
-  assigned_tab: Assigned
-  assigned_tasks: Assigned Tasks
-  category: Category
-  completed_tab: Completed
-  completed_tasks: Completed Tasks
+  assign_to: Tilldela till
+  assigned_tab: Tilldelad 
+  assigned_tasks: Tilldelade ärenden
+  category: Kategori
+  completed_tab: Utförd
+  completed_tasks: Utförda ärenden
   create_task: Skapa ärende
-  create_task_small: create new task
-  due: Due
-  feel_free: Feel free to
-  move_to: move to
-  no_tasks: "You don't have any %{value} tasks"
+  create_task_small: skapa nytt ärende
+  due: Förfaller
+  feel_free: Tveka inte att
+  move_to: flytta till
+  no_tasks: "Du har inga %{value} ärenden"
   no_tasks_pending: pending
   no_tasks_assigned: assigned
   no_tasks_completed: completed
@@ -485,12 +485,12 @@ sv-SE:
   save_note: Spara anteckning
   add_note_help: Add a new note...
   edit_note: Ändra anteckning
-  added_ago: added %{value} ago
-  added_by: added %{time_ago} ago by %{user} 
-  back: Back
-  cancel: Cancel
-  close_form: Close form
-  confirm_delete: Are you sure you want to delete this %{value}?
+  added_ago: skapad %{value} sedan
+  added_by: skapad %{time_ago} sedan av %{user} 
+  back: Tillbaka
+  cancel: Avbryt
+  close_form: Stäng sidan
+  confirm_delete: Är du säker på att du vill ta bort denna/detta %{value}?
   copy_permissions: Copy %{value} permissions
   could_not_find: "Couldn't find %{value}. Feel free to"
   could_not_find_matching: "Couldn't find %{value} matching"
