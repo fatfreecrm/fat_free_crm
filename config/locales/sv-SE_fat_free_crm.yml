@@ -187,7 +187,7 @@ sv-SE:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": beräknat belopp
-  activity_options: "Visa %{models} aktiviteterna utförda av %{user} under perioden %{period}."
+  activity_options: "Visa %{models} aktiviteterna utförda av %{user} under %{period}."
   all_users: alla användare
   option_after: efter
   option_all: alla
@@ -267,7 +267,7 @@ sv-SE:
   accounts: konton
   accounts_options: Kontoalternativ 
   accounts_small: konton
-  assigned_to: Tilldelad till 
+  assigned_to: Tilldela till 
   billing_address: Faktureringsadress
   create_account: Skapa konto
   date_created: Datum skapad/t 
@@ -413,71 +413,71 @@ sv-SE:
   probability_number: och sannolikhet %{value}
   save_opportunity: Spara affär 
   stage: Skede
-  total_opportunities: Totala affärer 
+  total_opportunities: Totala Affärer 
   weighted_amount: Beräknat belopp
 
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   assign_to: Tilldela till
-  assigned_tab: Tilldelad 
-  assigned_tasks: Tilldelade ärenden
+  assigned_tab: Tilldelade 
+  assigned_tasks: Tilldelade Ärenden
   category: Kategori
-  completed_tab: Utförd
-  completed_tasks: Utförda ärenden
+  completed_tab: Utförda
+  completed_tasks: Utförda Ärenden
   create_task: Skapa ärende
   create_task_small: skapa nytt ärende
   due: Förfaller
   feel_free: Tveka inte att
   move_to: flytta till
-  no_tasks: "Du har inga %{value} ärenden"
-  no_tasks_pending: pending
-  no_tasks_assigned: assigned
-  no_tasks_completed: completed
-  pending_tab: Pending
-  pending_tasks: Pending Tasks
-  related: 're:'
-  save_task: Save Task
-  task_assigned: The task has been assigned to %{value}
-  task_assigned_to: and assigned to %{value}
-  task_completed: completed
-  task_completed_ago: completed %{value} ago
-  task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
-  task_created: The task has been created
-  task_due_in: due in %{value}
-  task_due_later: due sometime soon
-  task_due_now: due now
-  task_due_today: due today
-  task_from: From %{value}
-  task_overdue: late, was due on
-  task_pending: The task has been moved to pending tasks
-  task_small: task
+  no_tasks: "Du har inga ärenden %{value}"
+  no_tasks_pending: på Kö
+  no_tasks_assigned: tilldelade
+  no_tasks_completed: utförda
+  pending_tab: På kö
+  pending_tasks: Ärenden på kö
+  related: 'SV:'
+  save_task: Spara ärendet
+  task_assigned: Ärendet har tilldelats till %{value}
+  task_assigned_to: och tilldelats till %{value}
+  task_completed: utfört
+  task_completed_ago: utfört %{value} sedan
+  task_completed_by: utfört %{time_ago} sedan (%{date}) av %{user}
+  task_created: Ärendet har skapats
+  task_due_in: förfaller om %{value}
+  task_due_later: förfaller snart
+  task_due_now: förfaller nu
+  task_due_today: förfaller idag
+  task_from: Från %{value}
+  task_overdue: försenat, har förfallit den
+  task_pending: Ärendet har lagts på kö
+  task_small: ärende
   tasks: Ärende
-  total_tasks: Total %{value}
-  view_assigned_tasks: view assigned tasks
-  view_pending_tasks: view pending tasks
+  total_tasks: Antal %{value}
+  view_assigned_tasks: visa tilldelade ärenden
+  view_pending_tasks: visa ärenden på kö
 
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_commented: commented on
-  action_completed: completed
-  action_created: created
-  action_deleted: deleted
-  action_email: exchanged emails with
-  action_reassigned: reassigned
-  action_rejected: rejected
-  action_rescheduled: rescheduled
-  action_updated: updated
-  action_viewed: viewed
-  action_won: won
-  no_activity_records: No activity records found.
-  recent_activity: Recent Activity
-  recent_activity_options: Recent Activity Options
-  subject_account: account
-  subject_campaign: campaign
-  subject_contact: contact
+  action_commented: "har kommenterat:" 
+  action_completed: utförd
+  action_created: "har skapat:"
+  action_deleted: "har tagit bort:"
+  action_email: "har utväxlat e-post med:"
+  action_reassigned: "vidare tilldelat:"
+  action_rejected: "har avvisat:"
+  action_rescheduled: "har omplanerat:"
+  action_updated: "har uppdaterat:"
+  action_viewed: "har undersökt:"
+  action_won: "har vunnit:"
+  no_activity_records: Aktivitet poster saknas.
+  recent_activity: Senaste aktiviteter
+  recent_activity_options: Aktivitetsalternativ
+  subject_account: konto
+  subject_campaign: kampanj
+  subject_contact: kontakt
   subject_lead: lead
-  subject_opportunity: opportunity
-  subject_task: task
+  subject_opportunity: affär
+  subject_task: ärende
 
   # Views -> Common.
   #----------------------------------------------------------------------------
@@ -491,19 +491,19 @@ sv-SE:
   cancel: Avbryt
   close_form: Stäng sidan
   confirm_delete: Är du säker på att du vill ta bort denna/detta %{value}?
-  copy_permissions: Copy %{value} permissions
+  copy_permissions: Kopiera %{value} rättigheter
   could_not_find: "Couldn't find %{value}. Feel free to"
   could_not_find_matching: "Couldn't find %{value} matching"
-  create_new: skapa ny
-  select_existing: välj befintlig 
+  create_new: skapa nytt
+  select_existing: välj befintligt
   delete: Ta bort
   discard: Discard
   edit: Ändra
   items_total: '%{count} total.'
   less: Mindre...
-  me: me
+  me: mig
   more: Mera...
-  n_a: N/A
+  n_a: saknas
   name: Namn
   no_match: No %{value} match
   no_recent_items: There are no recent items to display yet.
