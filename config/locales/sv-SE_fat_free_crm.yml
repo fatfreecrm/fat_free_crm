@@ -166,7 +166,7 @@ sv-SE:
   msg_asset_rejected: "%{value} har avvisats."
   msg_bad_image_file: "^Omöjligt att ladda upp eller ändra storleken på bilden."
   msg_cant_create_related: "Omöjligt att skapa %{asset} därför att %{related} är ej längre tillgänglig/t."
-  msg_cant_delete_user: "^Omöjligt att ta bort användaren därför att %{value} har tillgångar."
+  msg_cant_delete_user: "^Omöjligt att ta bort användaren därför att %{value} äger relaterad information."
   msg_cant_do: "Omöjligt att %{action} %{asset} eftersom den/det ej längre är tillgänglig/t."
   msg_email_not_found: "Ingen användare hittades med den angivna e-postadressen."
   msg_enter_new_password: "Ange ditt nya lösenord."
@@ -306,7 +306,7 @@ sv-SE:
   conversion_number: "%{value} konverterinsgrad" 
   create_campaign: Skapa kampanj 
   end_date: Slutdatum
-  finished_on: avslutad den %{value}
+  finished_on: avslutad %{value}
   finishes_in: avslutas om %{value}
   no_start_date: startdatum ej angiven
   number_of_leads: Antal leads
@@ -323,7 +323,7 @@ sv-SE:
   starts_today: startar idag!
   target: Uppskattning
   total_campaigns: Totala antal kampanjer
-  was_supposed_to_finish: skulle ha varit avslutad den %{value}
+  was_supposed_to_finish: skulle ha varit avslutad %{value}
   was_supposed_to_start: skulle ha varit påbörjad för %{time_ago} sedan, dvs %{start_date}
   was_supposed_to_start_in: påbörjas om %{starts_in}, dvs %{start_date}
     
@@ -388,7 +388,7 @@ sv-SE:
   #----------------------------------------------------------------------------
   amount: Belopp
   close_date: Slutdatum 
-  closed_ago_on: avslutad %{time_ago} sedan, dvs. den %{date}
+  closed_ago_on: avslutad %{time_ago} sedan, dvs. %{date}
   closes_today: förväntas bli avslutad idag!
   closing_date: avslutningsdatum är %{value}
   create_opportunity: Skapa affär
@@ -483,7 +483,7 @@ sv-SE:
   #----------------------------------------------------------------------------
   add_note: Lägg till anteckning
   save_note: Spara anteckning
-  add_note_help: Add a new note...
+  add_note_help: Lägg till en ny antekning...
   edit_note: Ändra anteckning
   added_ago: skapad %{value} sedan
   added_by: skapad %{time_ago} sedan av %{user} 
@@ -492,106 +492,106 @@ sv-SE:
   close_form: Stäng sidan
   confirm_delete: Är du säker på att du vill ta bort denna/detta %{value}?
   copy_permissions: Kopiera %{value} rättigheter
-  could_not_find: "Couldn't find %{value}. Feel free to"
-  could_not_find_matching: "Couldn't find %{value} matching"
+  could_not_find: "Kunde inte hitta: %{value}. Tveka inte att"
+  could_not_find_matching: "Inga %{value} hittades som matchade"
   create_new: skapa nytt
   select_existing: välj befintligt
   delete: Ta bort
-  discard: Discard
+  discard: Kasta bort
   edit: Ändra
-  items_total: '%{count} total.'
+  items_total: 'totalt: %{count}.'
   less: Mindre...
   me: mig
   more: Mera...
   n_a: saknas
   name: Namn
-  no_match: No %{value} match
-  no_recent_items: There are no recent items to display yet.
+  no_match: "Inga %{value} hittades som matchade"
+  no_recent_items: Det finns inga nya poster att visa ännu.
   options: Alternativ
   permissions: Rättigheter
-  please_retry: please try another query.
-  recent_items: Recent Items
+  please_retry: försök igen.
+  recent_items: Senaste poster
   select_contact: Välj kontakt 
   select_lead: Välj lead
   select_task: Välj ärende
   select_opportunity: Välj affär
-  search_assets: Search %{value}
-  time_ago: "%{value} ago"
-  background_info: Background
-  address: Address
-  street1: Street 1 # NEW
-  street2: Street 2 # NEW
-  city: City
-  zipcode: Zip Code
-  state: State
-  country: Country
+  search_assets: Sök %{value}
+  time_ago: "%{value} sedan"
+  background_info: Bakgrund
+  address: Adress
+  street1: Rad 1 # NEW
+  street2: Rad 2 # NEW
+  city: Ort
+  zipcode: Postkod
+  state: Stat/region
+  country: Land
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
-  about: About
-  about_dev_group: Discussion group for developers
-  about_features: Features and bugs
-  about_ffc: About Fat Free CRM
-  about_ffc_resources: Fat Free CRM resources (links open a new window)
+  about: Om
+  about_dev_group: Diskussionsgrupp för utvecklare
+  about_features: Funktioner och buggar
+  about_ffc: Om Fat Free CRM
+  about_ffc_resources: Fat Free CRM resurser (länken öppnas i ett nytt fönster)
   about_ffc_version: Fat Free CRM version
-  about_home_page: Home page
-  about_project_page: Project page
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
-  about_twitter: Twitter commit updates
-  about_user_group: Discussion group for users
-  admin: Admin
+  about_home_page: Hemsida
+  about_project_page: Projektsida
+  about_thank_you: Tack för att du använder Fat Free CRM! 
+  about_twitter: Twitter poster om programuppdateringar
+  about_user_group: Diskussionsgrup för användare
+  admin: Administration
   logout: Logga ut
-  quick_find: Quick find
+  quick_find: Snabbsökning
   welcome: Välkommen
 
   # Views -> Comments.
   #----------------------------------------------------------------------------
-  edit_comment: Editing comment
-  show: Show
-  update: Update
+  edit_comment: Ändra kommentar
+  show: Visa
+  update: Uppdatera
 
   # Views -> Passwords.
   #----------------------------------------------------------------------------
-  confirm_password_intro: Please type your new password and then confirm it.
-  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
-  reset_password: Reset Password
-  update_password_and_login: Update Password and Login
+  confirm_password_intro: Skriv ditt nya lösenord och bekräfta det.
+  password_intro: Ange din e-postadress och instruktioner för att återställa ditt lösenord kommer att skickas til dig.
+  reset_password: Återställ lösenord
+  update_password_and_login: Uppdatera lösenord och inloggingsuppgifter
 
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
+  back_to_crm: Tillbaks till huvudprogrammet
   crm_admin_page: Administration 
 
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
-  approve: Approve
+  approve: Godkänn
   create_user: Skapa användare
-  last_seen: last seen %{value} ago
-  personal_information: Personal Information
-  reactivate: Reactivate
+  last_seen: senast inloggad %{value} sedan
+  personal_information: Personuppgifter
+  reactivate: Återaktivera
   save_user: Spara användare
-  suspend: Suspend
-  user_active: Active
-  user_admin: Admin
-  user_awaits_approval: awaits your approval
-  user_confirm_delete: A user can only be deleted if no related assets are left behind.
-  user_is_admin: The user is Administrator
-  user_never_logged_in: "hasn't logged in yet"
-  user_signed_up: Signed Up
-  user_signed_up_on: signed up on %{value}
-  user_since: user since %{value}
-  user_suspended: Suspended
-  user_suspended_on: suspended on %{value}
+  suspend: Avstäng
+  user_active: Aktiv
+  user_admin: Administrator
+  user_awaits_approval: inväntar godkännandet
+  user_confirm_delete: En användare får tas bort endast om det inte finns relaterad kvarstående information.
+  user_is_admin: Användaren är administrator
+  user_never_logged_in: "har inte loggat in ännu"
+  user_signed_up: Registrerad
+  user_signed_up_on: registrerade %{value}
+  user_since: användare sedan %{value}
+  user_suspended: Avstängd 
+  user_suspended_on: avstängd %{value}
   users: Användare
   users_small: användare
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Added email - %{subject}
-  dropbox_ack_intro: Succesfully added the email you sent to dropbox
-  dropbox_ack_to: Added to
-  subject: Subject
-  body: Body
+  dropbox_ack_subject: Dropbox - e-postadress tillagd - %{subject}
+  dropbox_ack_intro: E-postmeddelandet har lagts till i Dropbox
+  dropbox_ack_to: Lagts till
+  subject: Ämne
+  body: Text
 
   # Pluralizations.
   #----------------------------------------------------------------------------
@@ -616,13 +616,13 @@ sv-SE:
   #----------------------------------------------------------------------------
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
+      mmddyyyy: "%Y-%m-%d"
       mmdd: "%b %e"
-      mmddyy: "%b %e, %Y"
+      mmddyy: "%B %e, %Y"
 
   time:
     formats:
-      mmddhhss: "%b %e at %l:%M%p"
+      mmddhhss: "%b %e, kl %H:%M"
       
   calendar_date_select:
     ok: OK
