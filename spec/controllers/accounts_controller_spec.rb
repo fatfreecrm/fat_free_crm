@@ -532,4 +532,41 @@ describe AccountsController do
     end
   end
 
+  # PUT /accounts/1/add_tag
+  describe "responding to PUT add_tag" do
+    before(:each) do
+      @account = Factory(:account, :tag_list => "moo, foo, bar")
+    end
+
+    describe "HTML request" do
+      it "adds the tags to the current tag list" do
+        put :add_tag, :id => @account.id, :account => {:tag_list => "go, apple"}
+        assigns(:account).tag_list.should == %w(moo foo bar go apple)
+      end
+
+      it "should redirect to the account show page" do
+        put :add_tag, :id => @account.id, :account => {:tag_list => "moo"}
+        response.should redirect_to(account_path(@account))
+      end
+    end
+  end
+
+  # PUT /accounts/1/add_tag
+  describe "responding to PUT delete_tag" do
+    before(:each) do
+      @account = Factory(:account, :tag_list => "moo, foo, bar")
+    end
+
+    describe "HTML request" do
+      it "deleting a tag" do
+        put :delete_tag, :id => @account.id, :tag => "moo"
+        assigns(:account).tag_list.should == %w(foo bar)
+      end
+
+      it "should redirect to the account show page" do
+        put :delete_tag, :id => @account.id, :tag_list => "moo"
+        response.should redirect_to(account_path(@account))
+      end
+    end
+  end
 end

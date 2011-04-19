@@ -6,8 +6,7 @@
       - tags.each do |t|
         %li{:id => "tag-#{t.id}"}
           = t.name
-          - remote_form_for @lead, :url => delete_tag_lead_path(@lead) do |f|
+          - remote_form_for owner, :url => path_to_delete_tag_for(owner) do |f|
             = hidden_field_tag :tag, t.name
             = hidden_field_tag :tag_id, t.id
             = f.submit 'Delete'
-

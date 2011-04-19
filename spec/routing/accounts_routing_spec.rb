@@ -37,6 +37,14 @@ describe AccountsController do
     it "maps #auto_complete" do
       route_for(:controller => "accounts", :action => "auto_complete", :id => "1").should == "/accounts/auto_complete/1"
     end
+
+    it "maps #add_tag" do
+      route_for(:controller => "accounts", :action => "add_tag", :id => "1").should == { :path => "/accounts/1/add_tag", :method => :put }
+    end
+
+    it "maps #delete_tag" do
+      route_for(:controller => "accounts", :action => "delete_tag", :id => "1").should == { :path => "/accounts/1/delete_tag", :method => :put }
+    end
   end
 
   describe "route recognition" do
@@ -74,6 +82,14 @@ describe AccountsController do
 
     it "should generate params for #auto_complete" do
       params_from(:post, "/accounts/auto_complete/1").should == {:controller => "accounts", :action => "auto_complete", :id => "1"}
+    end
+
+    it "should generate params for #add_tag" do
+      params_from(:put, "/accounts/1/add_tag").should == {:controller => "accounts", :action => "add_tag", :id => "1"}
+    end
+
+    it "should generate params for #delete_tag" do
+      params_from(:put, "/accounts/1/delete_tag").should == {:controller => "accounts", :action => "delete_tag", :id => "1"}
     end
   end
 end

@@ -286,21 +286,21 @@ class LeadsController < ApplicationController
 
   # PUT /leads/1/add_tag
   def add_tag
-    @lead = Lead.my(@current_user).find(params[:id])
+    @owner = @lead = Lead.my(@current_user).find(params[:id])
     @lead.add_tag(params[:lead][:tag_list])
     respond_to do |format|
       format.html { redirect_to lead_path(@lead)}
-      format.js
+      format.js { render :template => 'common/add_tag' }
     end
   end
 
   # PUT /leads/1/delete_tag
   def delete_tag
-    @lead = Lead.my(@current_user).find(params[:id])
+    @owner = @lead = Lead.my(@current_user).find(params[:id])
     @lead.delete_tag(params[:tag])
     respond_to do |format|
       format.html {redirect_to lead_path(@lead) }
-      format.js
+      format.js { render :template => 'common/delete_tag' }
     end
   end
 

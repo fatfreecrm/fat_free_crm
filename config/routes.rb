@@ -44,7 +44,9 @@ ActionController::Routing::Routes.draw do |map|
       },
       :member => {
         :attach  => :put,
-        :discard => :post
+        :discard => :post,
+        :add_tag => :put,
+        :delete_tag => :put
       }
   end
 

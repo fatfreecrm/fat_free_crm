@@ -190,6 +190,26 @@ class AccountsController < ApplicationController
     render :action => :index
   end
 
+  # PUT /leads/1/add_tag
+  def add_tag
+    @owner = @account = Account.my(@current_user).find(params[:id])
+    @account.add_tag(params[:account][:tag_list])
+    respond_to do |format|
+      format.html { redirect_to account_path(@account)}
+      format.js { render :template => 'common/add_tag' }
+    end
+  end
+
+  # PUT /leads/1/delete_tag
+  def delete_tag
+    @owner = @account = Account.my(@current_user).find(params[:id])
+    @account.delete_tag(params[:tag])
+    respond_to do |format|
+      format.html {redirect_to account_path(@account) }
+      format.js { render :template => 'common/delete_tag' }
+    end
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_accounts(options = { :page => nil, :query => nil })

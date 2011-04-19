@@ -1,2 +1,0 @@
-page['tags'].replace :partial => "common/tags", :locals => {:tags => @lead.tags}
-page.call "$('new_tag').reset"

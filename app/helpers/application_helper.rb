@@ -374,4 +374,8 @@ module ApplicationHelper
        (!request.xhr? && request.request_uri =~ %r|/\w+/\d+|))
   end
 
+  def path_to_delete_tag_for(owner)
+    class_name = owner.class.name.downcase
+    send(:"delete_tag_#{class_name}_path", owner)
+  end
 end

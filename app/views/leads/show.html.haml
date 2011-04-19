@@ -19,7 +19,7 @@
 .subtitle
   = 'Tags'
 %div
-  = render :partial => "common/tags", :locals => {:tags => @lead.tags}
+  = render :partial => "common/tags", :locals => {:tags => @lead.tags, :owner => @lead}
 
   - remote_form_for @lead, :url => add_tag_lead_path(@lead), :html => {:id => 'new_tag'} do |f|
     = f.text_field :tag_list, :value => ''

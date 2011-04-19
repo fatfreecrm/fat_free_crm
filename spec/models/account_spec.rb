@@ -104,4 +104,64 @@ describe Account do
       @account.opportunities.count.should == 0
     end
   end
+
+  describe "tags" do
+    before do
+      @account = Factory(:account)
+    end
+
+    it "has no tags by default" do
+      @account.tags.should be_empty
+    end
+
+    it "can have tags assigned" do
+      @account.tag_list = "foo, bar, example"
+      @account.save
+      tags = @account.tag_list
+      tags.size.should == 3
+      tags.should include('foo', 'bar', 'example')
+    end
+
+    describe 'adding' do
+      it "handles appending 0 tags" do
+        @account.add_tag("")
+        @account.tag_list.should be_empty
+      end
+
+      it "handles appending nil" do
+        @account.add_tag(nil)
+        @account.tag_list.should be_empty
+      end
+
+      it "can add 1 tag" do
+        @account.add_tag("moo")
+        @account.tag_list.should == %w(moo)
+      end
+
+      it "can add more than 1 tag" do
+        @account.add_tag("moo, foo, bar")
+        @account.tag_list.should == %w(moo foo bar)
+      end
+    end
+
+    describe 'deleting' do
+      it 'handles deleting nil' do
+        @account.delete_tag(nil)
+        @account.tag_list.should be_empty
+      end
+
+      it 'handles deleting an unexisting tag' do
+        @account.add_tag('foo')
+        @account.delete_tag('moo')
+        @account.tag_list.should == ['foo']
+      end
+
+
+      it 'handles deleting an existing tag' do
+        @account.add_tag('foo')
+        @account.delete_tag('foo')
+        @account.tag_list.should be_empty
+      end
+    end
+  end
 end
