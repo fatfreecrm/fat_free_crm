@@ -288,14 +288,20 @@ class LeadsController < ApplicationController
   def add_tag
     @lead = Lead.my(@current_user).find(params[:id])
     @lead.add_tag(params[:lead][:tag_list])
-    redirect_to lead_path(@lead)
+    respond_to do |format|
+      format.html { redirect_to lead_path(@lead)}
+      format.js
+    end
   end
 
   # PUT /leads/1/delete_tag
   def delete_tag
     @lead = Lead.my(@current_user).find(params[:id])
     @lead.delete_tag(params[:tag])
-    redirect_to lead_path(@lead)
+    respond_to do |format|
+      format.html {redirect_to lead_path(@lead) }
+      format.js
+    end
   end
 
   private

@@ -1,0 +1,5 @@
+if @lead.tags.empty?
+  page['tags'].replace :partial => "common/tags", :locals => {:tags => []}
+else
+  page.remove("tag-#{params[:tag_id]}")
+end

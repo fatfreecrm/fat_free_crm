@@ -18,18 +18,10 @@
 
 .subtitle
   = 'Tags'
-  - if @lead.tag_list.empty?
-    %p= 'No tags'
-  - else
-    %ul
-      - @lead.tag_list.each do |t|
-        %li
-          = t
-          - form_for @lead, :url => delete_tag_lead_path(@lead) do |f|
-            = hidden_field_tag :tag, t
-            = f.submit 'Delete'
+%div
+  = render :partial => "common/tags", :locals => {:tags => @lead.tags}
 
-  - form_for @lead, :url => add_tag_lead_path(@lead) do |f|
+  - remote_form_for @lead, :url => add_tag_lead_path(@lead), :html => {:id => 'new_tag'} do |f|
     = f.text_field :tag_list, :value => ''
     = f.submit 'Add tags'
 
