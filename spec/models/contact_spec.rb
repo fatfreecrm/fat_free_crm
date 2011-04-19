@@ -132,4 +132,64 @@ describe Contact do
       @contact.opportunities.count.should == 0
     end
   end
+
+  describe "tags" do
+    before do
+      @contact = Factory(:contact)
+    end
+
+    it "has no tags by default" do
+      @contact.tags.should be_empty
+    end
+
+    it "can have tags assigned" do
+      @contact.tag_list = "foo, bar, example"
+      @contact.save
+      tags = @contact.tag_list
+      tags.size.should == 3
+      tags.should include('foo', 'bar', 'example')
+    end
+
+    describe 'adding' do
+      it "handles appending 0 tags" do
+        @contact.add_tag("")
+        @contact.tag_list.should be_empty
+      end
+
+      it "handles appending nil" do
+        @contact.add_tag(nil)
+        @contact.tag_list.should be_empty
+      end
+
+      it "can add 1 tag" do
+        @contact.add_tag("moo")
+        @contact.tag_list.should == %w(moo)
+      end
+
+      it "can add more than 1 tag" do
+        @contact.add_tag("moo, foo, bar")
+        @contact.tag_list.should == %w(moo foo bar)
+      end
+    end
+
+    describe 'deleting' do
+      it 'handles deleting nil' do
+        @contact.delete_tag(nil)
+        @contact.tag_list.should be_empty
+      end
+
+      it 'handles deleting an unexisting tag' do
+        @contact.add_tag('foo')
+        @contact.delete_tag('moo')
+        @contact.tag_list.should == ['foo']
+      end
+
+
+      it 'handles deleting an existing tag' do
+        @contact.add_tag('foo')
+        @contact.delete_tag('foo')
+        @contact.tag_list.should be_empty
+      end
+    end
+  end
 end

@@ -48,6 +48,8 @@
 #  background_info :string(255)
 #
 class Contact < ActiveRecord::Base
+  acts_as_taggable
+
   belongs_to  :user
   belongs_to  :lead
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -165,11 +167,22 @@ class Contact < ActiveRecord::Base
     contact
   end
 
+  #----------------------------------------------------------------------------
+  def add_tag(tags_to_add)
+    tag_list.add(tags_to_add, :parse => true)
+    save
+  end
+
+  #----------------------------------------------------------------------------
+  def delete_tag(tag_to_delete)
+    tag_list.remove(tag_to_delete)
+    save
+  end
+
   private
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, :share_contact) if self[:access] == "Shared" && !self.permissions.any?
   end
-
 end

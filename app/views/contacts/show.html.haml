@@ -11,6 +11,15 @@
 = render :partial => "comments/new", :locals => { :commentable => @contact }
 = render :partial => "common/timeline", :collection => @timeline
 
+.subtitle
+  = 'Tags'
+%div
+  = render :partial => "common/tags", :locals => {:tags => @contact.tags, :owner => @contact}
+
+  - remote_form_for @contact, :url => add_tag_contact_path(@contact), :html => {:id => 'new_tag'} do |f|
+    = f.text_field :tag_list, :value => ''
+    = f.submit 'Add tags'
+
 = section(@contact, :tasks)
 .log#tasks
   = render :partial => "common/tasks"

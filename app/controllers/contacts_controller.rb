@@ -224,6 +224,25 @@ class ContactsController < ApplicationController
     render :action => :index
   end
 
+  def add_tag
+    @owner = @contact = Contact.my(@current_user).find(params[:id])
+    @contact.add_tag(params[:contact][:tag_list])
+    respond_to do |format|
+      format.html { redirect_to contact_path(@contact)}
+      format.js { render :template => 'common/add_tag' }
+    end
+  end
+
+  # PUT /leads/1/delete_tag
+  def delete_tag
+    @owner = @contact = Contact.my(@current_user).find(params[:id])
+    @contact.delete_tag(params[:tag])
+    respond_to do |format|
+      format.html {redirect_to contact_path(@contact) }
+      format.js { render :template => 'common/delete_tag' }
+    end
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_contacts(options = { :page => nil, :query => nil })

@@ -64,4 +64,24 @@ describe ApplicationHelper do
       helper.shown_on_landing_page?.should == false
     end
   end
+
+  describe "path_to_delete_tag_for" do
+    it "can generate a path for a lead" do
+      lead = Factory(:lead)
+      path = helper.path_to_delete_tag_for(lead)
+      path.should == "/leads/#{lead.id}/delete_tag"
+    end
+
+    it "can generate a path for a contact" do
+      contact = Factory(:contact)
+      path = helper.path_to_delete_tag_for(contact)
+      path.should == "/contacts/#{contact.id}/delete_tag"
+    end
+
+    it "can generate a path for an account" do
+      account = Factory(:account)
+      path = helper.path_to_delete_tag_for(account)
+      path.should == "/accounts/#{account.id}/delete_tag"
+    end
+  end
 end
