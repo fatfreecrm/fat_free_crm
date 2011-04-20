@@ -686,41 +686,19 @@ describe ContactsController do
     end
   end
 
-  # PUT /contacts/1/add_tag
   describe "responding to PUT add_tag" do
     before(:each) do
-      @contact = Factory(:contact, :tag_list => "moo, foo, bar")
+      @tagable = Factory(:contact, :tag_list => "moo, foo, bar")
     end
 
-    describe "HTML request" do
-      it "adds the tags to the current tag list" do
-        put :add_tag, :id => @contact.id, :contact => {:tag_list => "go, apple"}
-        assigns(:contact).tag_list.should == %w(moo foo bar go apple)
-      end
-
-      it "should redirect to the contact show page" do
-        put :add_tag, :id => @contact.id, :contact => {:tag_list => "moo"}
-        response.should redirect_to(contact_path(@contact))
-      end
-    end
+    it_should_behave_like("add_tag")
   end
 
-  # PUT /accounts/1/add_tag
   describe "responding to PUT delete_tag" do
     before(:each) do
-      @contact = Factory(:contact, :tag_list => "moo, foo, bar")
+      @tagable = Factory(:contact, :tag_list => "moo, foo, bar")
     end
 
-    describe "HTML request" do
-      it "deleting a tag" do
-        put :delete_tag, :id => @contact.id, :tag => "moo"
-        assigns(:contact).tag_list.should == %w(foo bar)
-      end
-
-      it "should redirect to the contact show page" do
-        put :delete_tag, :id => @contact.id, :tag_list => "moo"
-        response.should redirect_to(contact_path(@contact))
-      end
-    end
+    it_should_behave_like("delete_tag")
   end
 end

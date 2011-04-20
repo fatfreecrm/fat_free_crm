@@ -27,6 +27,46 @@ module SharedControllerSpecs
     end
   end
 
+  describe "add_tag", :shared => true do
+    before(:each) do
+      @class_name = @tagable.class.name.downcase
+    end
+
+    describe "HTML request" do
+      it "adds the tags to the current tag list" do
+        put :add_tag, :id => @tagable.id, @class_name.to_sym => {:tag_list => "go, apple"}
+        assigns(@class_name.to_sym).tag_list.should == %w(moo foo bar go apple)
+      end
+
+      it "should redirect to the lead show page" do
+        tagable_path = send(:"#{@class_name}_path", @tagable)
+        put :add_tag, :id => @tagable.id, @class_name.to_sym => {:tag_list => "moo"}
+        response.should redirect_to(tagable_path)
+      end
+    end
+  end
+
+  describe "delete_tag", :shared => true do
+    before(:each) do
+      @class_name = @tagable.class.name.downcase
+    end
+
+    describe "HTML request" do
+      it "deleting a tag" do
+        put :delete_tag, :id => @tagable.id, :tag => "moo"
+        assigns(@class_name.to_sym).tag_list.should == %w(foo bar)
+      end
+
+      it "should redirect to the lead show page" do
+        class_name = @tagable.class.name.downcase
+        tagable_path = send(:"#{@class_name}_path", @tagable)
+
+        put :delete_tag, :id => @tagable.id, :tag_list => "moo"
+        response.should redirect_to(tagable_path)
+      end
+    end
+  end
+
   describe "attach", :shared => true do
     it "should attach existing asset to the parent asset of different type" do
       xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id

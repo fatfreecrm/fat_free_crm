@@ -944,6 +944,22 @@ describe LeadsController do
     it_should_behave_like("auto complete")
   end
 
+  describe "responding to PUT add_tag" do
+    before(:each) do
+      @tagable = Factory(:lead, :tag_list => "moo, foo, bar")
+    end
+
+    it_should_behave_like("add_tag")
+  end
+
+  describe "responding to PUT delete_tag" do
+    before(:each) do
+      @tagable = Factory(:lead, :tag_list => "moo, foo, bar")
+    end
+
+    it_should_behave_like("delete_tag")
+  end
+
   # GET /leads/options                                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET options" do
@@ -1022,45 +1038,6 @@ describe LeadsController do
       xhr :post, :filter, :status => "new"
 
       session[:leads_current_page].should == 1
-    end
-
-  end
-
-  # PUT /leads/1/add_tag
-  describe "responding to PUT add_tag" do
-    before(:each) do
-      @lead = Factory(:lead, :tag_list => "moo, foo, bar")
-    end
-
-    describe "HTML request" do
-      it "adds the tags to the current tag list" do
-        put :add_tag, :id => @lead.id, :lead => {:tag_list => "go, apple"}
-        assigns(:lead).tag_list.should == %w(moo foo bar go apple)
-      end
-
-      it "should redirect to the lead show page" do
-        put :add_tag, :id => @lead.id, :lead => {:tag_list => "moo"}
-        response.should redirect_to(lead_path(@lead))
-      end
-    end
-  end
-
-  # PUT /leads/1/add_tag
-  describe "responding to PUT delete_tag" do
-    before(:each) do
-      @lead = Factory(:lead, :tag_list => "moo, foo, bar")
-    end
-
-    describe "HTML request" do
-      it "deleting a tag" do
-        put :delete_tag, :id => @lead.id, :tag => "moo"
-        assigns(:lead).tag_list.should == %w(foo bar)
-      end
-
-      it "should redirect to the lead show page" do
-        put :delete_tag, :id => @lead.id, :tag_list => "moo"
-        response.should redirect_to(lead_path(@lead))
-      end
     end
   end
 end
