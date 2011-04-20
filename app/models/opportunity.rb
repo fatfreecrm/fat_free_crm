@@ -38,6 +38,8 @@
 #  background_info :string(255)
 #
 class Opportunity < ActiveRecord::Base
+  acts_as_taggable
+
   belongs_to  :user
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -134,6 +136,18 @@ class Opportunity < ActiveRecord::Base
       end
     end
     opportunity
+  end
+
+  #----------------------------------------------------------------------------
+  def add_tag(tags_to_add)
+    tag_list.add(tags_to_add, :parse => true)
+    save
+  end
+
+  #----------------------------------------------------------------------------
+  def delete_tag(tag_to_delete)
+    tag_list.remove(tag_to_delete)
+    save
   end
 
   private

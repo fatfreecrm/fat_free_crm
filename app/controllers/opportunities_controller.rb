@@ -232,6 +232,26 @@ class OpportunitiesController < ApplicationController
     render :action => :index
   end
 
+  # PUT /opportunities/1/add_tag
+  def add_tag
+    @owner = @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity.add_tag(params[:opportunity][:tag_list])
+    respond_to do |format|
+      format.html { redirect_to opportunity_path(@opportunity)}
+      format.js { render :template => 'common/add_tag' }
+    end
+  end
+
+  # PUT /opportunties/1/delete_tag
+  def delete_tag
+    @owner = @opportunity = Opportunity.my(@current_user).find(params[:id])
+    @opportunity.delete_tag(params[:tag])
+    respond_to do |format|
+      format.html {redirect_to opportunity_path(@opportunity) }
+      format.js { render :template => 'common/delete_tag' }
+    end
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_opportunities(options = { :page => nil, :query => nil })

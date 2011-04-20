@@ -141,4 +141,63 @@ describe Opportunity do
     end
   end
 
+  describe "tags" do
+    before do
+      @opportunity = Factory(:opportunity)
+    end
+
+    it "has no tags by default" do
+      @opportunity.tags.should be_empty
+    end
+
+    it "can have tags assigned" do
+      @opportunity.tag_list = "foo, bar, example"
+      @opportunity.save
+      tags = @opportunity.tag_list
+      tags.size.should == 3
+      tags.should include('foo', 'bar', 'example')
+    end
+
+    describe 'adding' do
+      it "handles appending 0 tags" do
+        @opportunity.add_tag("")
+        @opportunity.tag_list.should be_empty
+      end
+
+      it "handles appending nil" do
+        @opportunity.add_tag(nil)
+        @opportunity.tag_list.should be_empty
+      end
+
+      it "can add 1 tag" do
+        @opportunity.add_tag("moo")
+        @opportunity.tag_list.should == %w(moo)
+      end
+
+      it "can add more than 1 tag" do
+        @opportunity.add_tag("moo, foo, bar")
+        @opportunity.tag_list.should == %w(moo foo bar)
+      end
+    end
+
+    describe 'deleting' do
+      it 'handles deleting nil' do
+        @opportunity.delete_tag(nil)
+        @opportunity.tag_list.should be_empty
+      end
+
+      it 'handles deleting an unexisting tag' do
+        @opportunity.add_tag('foo')
+        @opportunity.delete_tag('moo')
+        @opportunity.tag_list.should == ['foo']
+      end
+
+
+      it 'handles deleting an existing tag' do
+        @opportunity.add_tag('foo')
+        @opportunity.delete_tag('foo')
+        @opportunity.tag_list.should be_empty
+      end
+    end
+  end
 end

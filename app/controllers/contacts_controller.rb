@@ -224,6 +224,7 @@ class ContactsController < ApplicationController
     render :action => :index
   end
 
+  # PUT /opportunities/1/add_tag
   def add_tag
     @owner = @contact = Contact.my(@current_user).find(params[:id])
     @contact.add_tag(params[:contact][:tag_list])
@@ -233,7 +234,7 @@ class ContactsController < ApplicationController
     end
   end
 
-  # PUT /leads/1/delete_tag
+  # PUT /opportunities/1/delete_tag
   def delete_tag
     @owner = @contact = Contact.my(@current_user).find(params[:id])
     @contact.delete_tag(params[:tag])

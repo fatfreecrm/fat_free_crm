@@ -835,7 +835,43 @@ describe OpportunitiesController do
 
       session[:opportunities_current_page].should == 1
     end
-
   end
 
+  # PUT /accounts/1/add_tag
+  describe "responding to PUT add_tag" do
+    before(:each) do
+      @opportunity = Factory(:opportunity, :tag_list => "moo, foo, bar")
+    end
+
+    describe "HTML request" do
+      it "adds the tags to the current tag list" do
+        put :add_tag, :id => @opportunity.id, :opportunity => {:tag_list => "go, apple"}
+        assigns(:opportunity).tag_list.should == %w(moo foo bar go apple)
+      end
+
+      it "should redirect to the opportunity show page" do
+        put :add_tag, :id => @opportunity.id, :opportunity => {:tag_list => "moo"}
+        response.should redirect_to(opportunity_path(@opportunity))
+      end
+    end
+  end
+
+  # PUT /accounts/1/add_tag
+  describe "responding to PUT delete_tag" do
+    before(:each) do
+      @opportunity = Factory(:opportunity, :tag_list => "moo, foo, bar")
+    end
+
+    describe "HTML request" do
+      it "deleting a tag" do
+        put :delete_tag, :id => @opportunity.id, :tag => "moo"
+        assigns(:opportunity).tag_list.should == %w(foo bar)
+      end
+
+      it "should redirect to the account show page" do
+        put :delete_tag, :id => @opportunity.id, :tag_list => "moo"
+        response.should redirect_to(opportunity_path(@opportunity))
+      end
+    end
+  end
 end

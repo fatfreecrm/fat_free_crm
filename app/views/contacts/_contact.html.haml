@@ -25,5 +25,6 @@
         = link_to_email(contact.email) << " | " if contact.email.present?
         = "#{t :phone_small}: <b>" + h(contact.phone) << "</b> | " if contact.phone.present?
         = "#{t :mobile_small}: <b>" + h(contact.mobile) << "</b> | " if contact.mobile.present?
+        = "#{t :tags}: <b>" + h(contact.tag_list) << "</b> |" if contact.tags.any?
         = t(:added_ago, time_ago_in_words(contact.created_at))
       = hook(:contact_bottom, self, :contact => contact)
