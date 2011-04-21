@@ -69,7 +69,12 @@ module LeadsHelper
     checked = (session[:filter_by_lead_status] ? session[:filter_by_lead_status].split(",").include?(status.to_s) : count.to_i > 0)
     check_box_tag("status[]", status, checked, :id => status, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
   end
-  
+
+  def lead_tag_checkbox(tagg)
+    checked = (session[:filter_by_lead_tag]) ? session[:filter_by_lead_tags].split(",").include?(tagg.name) : false
+    check_box_tag("tags[]", tagg.name, checked, :id => "tag-#{tagg.id}", :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"tags=" + $$("input[name='tags[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+  end
+
   # Returns default permissions intro for leads
   #----------------------------------------------------------------------------
   def get_lead_default_permissions_intro(access)

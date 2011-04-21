@@ -280,6 +280,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_lead_status] = params[:status]
+    session[:filter_by_lead_tags] = params[:tags]
     @leads = get_leads(:page => 1) # Start one the first page.
     render :action => :index
   end
@@ -322,6 +323,11 @@ class LeadsController < ApplicationController
     # Call :get_leads hook and return its output if any.
     leads = hook(:get_leads, self, :records => records, :pages => pages)
     return leads.last unless leads.empty?
+
+#    return Lead.search_and_filter(:user => @current_user,
+#                                  :query => current_query,
+#                                  :filter => session[:filter_by_lead_status],
+#                                  :tags => session[:filter_by_lead_tags])
 
     # Default processing if no :get_leads hooks are present.
     if session[:filter_by_lead_status]

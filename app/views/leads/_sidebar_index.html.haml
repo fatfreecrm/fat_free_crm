@@ -17,4 +17,14 @@
     %div{:style => "float:right;"}
       %b= @lead_status_total[:all]
     %b #{t :total_leads}
+
+.filters#tags
+  %h4 Tags
+  - Lead.tag_counts.each do |tagg|
+    .check_box{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = tagg.count
+      = lead_tag_checkbox(tagg)
+      = label_tag("tag-#{tagg.id}", tagg.name)
+
   = hook(:index_lead_sidebar_bottom, self)

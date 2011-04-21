@@ -88,6 +88,19 @@ class Lead < ActiveRecord::Base
   def self.outline  ; "long"              ; end
   def self.first_name_position ; "before" ; end
 
+  # Search and filter by user, tags, query and status
+  #----------------------------------------------------------------------------
+  def self.search_and_filter(options)
+    user, filtered, query, tags = options[:user], options[:filter], options[:query], options[:tags]
+    order = user.preference[:leads_sort_by] || Lead.sort_by
+
+    leads = Lead.my(:user => user, :order => order)
+    leads = leads.send(:only, filtered.split(',')) if options[:filter]
+    leads = leads.send(:search, query) if !query.blank?
+    leads = leads.send(:tagged_with, tags) if !tags.blank?
+    leads
+  end
+
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
   def save_with_permissions(params)
