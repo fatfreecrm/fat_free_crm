@@ -180,15 +180,15 @@ describe Lead do
       leads.should include(lead3)
     end
 
-    it "returns the leads filtered by tags" do
+    it "returns the user's leads filtered by tags" do
       lead1 = Factory(:lead, :user => @user, :tag_list => "moo")
       lead2 = Factory(:lead, :user => @user, :tag_list => "moo, foo")
       lead3 = Factory(:lead, :user => @user, :tag_list => "moo, bar")
       lead4 = Factory(:lead, :user => @user)
+      lead5 = Factory(:lead, :tag_list => 'foo, moo, bar', :access => 'private')
 
       leads = Lead.search_and_filter(:user => @user, :tags => "foo, moo")
-      leads.size.should == 1
-      leads.should include(lead2)
+      leads.should == [lead2]
     end
 
     it "returns leads sorted by default field if user doesn't have a preference" do
@@ -212,12 +212,39 @@ describe Lead do
     end
 
     it "can combine different search and filter options" do
-      lead1 = Factory(:lead, :user => @user, :first_name => "alan", :tag_list => "investigate", :status => "contacted")
-      lead2 = Factory(:lead, :first_name => "alan", :tag_list => "investigate", :status => "contacted")
-      lead3 = Factory(:lead, :user => @user, :tag_list => "investigate")
+      # mine
+      # query, tagged, filtered
+      lead1 = Factory(:lead, :company => 'house', :user => @user, :first_name => "alan", :tag_list => "investigate", :status => "contacted")
+      # query, tagged
+      lead2 = Factory(:lead, :company => 'house', :user => @user, :tag_list => "investigate", :status => 'ignored')
+      # query, filtered
+      lead3 = Factory(:lead, :user => @user, :last_name => 'house', :tag_list => 'boring', :status => 'contacted')
+      # tagged, filtered
+      lead4 = Factory(:lead, :user => @user, :tag_list => 'investigate', :status => 'contacted')
 
-      leads = Lead.search_and_filter(:user => @user)
-      leads.should == [lead1]
+      # public
+      # query, tagged, filtered
+      lead5 = Factory(:lead, :company => 'house', :first_name => "alan", :tag_list => "investigate", :status => "contacted")
+      # query, tagged
+      lead6 = Factory(:lead, :company => 'house', :tag_list => "investigate", :status => 'ignored')
+      # query, filtered
+      lead7 = Factory(:lead, :last_name => 'house', :tag_list => 'boring', :status => 'contacted')
+      # tagged, filtered
+      lead8 = Factory(:lead, :tag_list => 'investigate', :status => 'contacted')
+
+      # private
+      # query, tagged, filtered
+      lead9 = Factory(:lead, :access => 'private', :company => 'house', :first_name => "alan", :tag_list => "investigate", :status => "contacted")
+      # query, tagged
+      lead10 = Factory(:lead, :access => 'private', :company => 'house', :tag_list => "investigate", :status => 'ignored')
+      # query, filtered
+      lead11 = Factory(:lead, :access => 'private', :last_name => 'house', :tag_list => 'boring', :status => 'contacted')
+      # tagged, filtered
+      lead12 = Factory(:lead, :access => 'private', :tag_list => 'investigate', :status => 'contacted')
+
+      # get all my and all public leads tagged 'investigate' in the state 'contacted' with 'house' somewhere in the text
+      leads = Lead.search_and_filter(:user => @user, :tags => 'investigate', :query => 'house', :filter => 'contacted')
+      leads.should == [lead1, lead5]
     end
   end
 end

@@ -95,9 +95,9 @@ class Lead < ActiveRecord::Base
     order = user.preference[:leads_sort_by] || Lead.sort_by
 
     leads = Lead.my(:user => user, :order => order)
-    leads = leads.send(:only, filtered.split(',')) if options[:filter]
-    leads = leads.send(:search, query) if !query.blank?
-    leads = leads.send(:tagged_with, tags) if !tags.blank?
+    leads = leads.only(filtered.split(',')) unless filtered.blank?
+    leads = leads.search(query) unless query.blank?
+    leads = leads.tagged_with(tags) unless tags.blank?
     leads
   end
 
