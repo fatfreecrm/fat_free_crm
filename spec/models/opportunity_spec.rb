@@ -200,4 +200,117 @@ describe Opportunity do
       end
     end
   end
+
+  describe "search_and_filter" do
+    before(:each) do
+      @user = Factory(:user)
+    end
+
+    it "returns nothing when no leads" do
+      Opportunity.search_and_filter(:user => @user).should be_empty
+    end
+
+    it "returns the leads of the user" do
+      opportunity1 = Factory(:opportunity, :user => @user, :access => 'private')
+      opportunity2 = Factory(:opportunity, :user => @user, :access => 'private')
+      Factory(:opportunity, :access => 'private')
+
+      leads = Opportunity.search_and_filter(:user => @user)
+      leads.size.should == 2
+      leads.should include(opportunity1, opportunity2)
+    end
+
+    it "returns the leads of the user with given statuses" do
+      opportunity1 = Factory(:opportunity, :user => @user, :access => 'private', :stage => 'new')
+      opportunity2 = Factory(:opportunity, :user => @user, :access => 'private', :stage => 'new')
+      opportunity3 = Factory(:opportunity, :user => @user, :access => 'private', :stage => 'contacted')
+      opportunity4 = Factory(:opportunity, :user => @user, :access => 'private', :stage => 'converted')
+
+      leads = Opportunity.search_and_filter(:user => @user, :filter => "new,contacted")
+      leads.size.should == 3
+      leads.should include(opportunity1)
+      leads.should include(opportunity2)
+      leads.should include(opportunity3)
+    end
+
+    it "returns the leads matching the query" do
+      opportunity1 = Factory(:opportunity, :access => 'private', :user => @user, :name => 'house')
+      opportunity2 = Factory(:opportunity, :access => 'private', :user => @user, :name => 'house')
+      opportunity3 = Factory(:opportunity, :access => 'private', :user => @user, :name => 'house')
+      opportunity4 = Factory(:opportunity, :access => 'private', :user => @user)
+
+      leads = Opportunity.search_and_filter(:user => @user, :query => 'house')
+      leads.size.should == 3
+      leads.should include(opportunity1)
+      leads.should include(opportunity2)
+      leads.should include(opportunity3)
+    end
+
+    it "returns the user's leads filtered by tags" do
+      opportunity1 = Factory(:opportunity, :user => @user, :tag_list => "moo")
+      opportunity2 = Factory(:opportunity, :user => @user, :tag_list => "moo, foo")
+      opportunity3 = Factory(:opportunity, :user => @user, :tag_list => "moo, bar")
+      opportunity4 = Factory(:opportunity, :user => @user)
+      opportunity5 = Factory(:opportunity, :tag_list => 'foo, moo, bar', :access => 'private')
+
+      leads = Opportunity.search_and_filter(:user => @user, :tags => "foo, moo")
+      leads.should == [opportunity2]
+    end
+
+    it "returns leads sorted by default field if user doesn't have a preference" do
+      opportunity1 = Factory(:opportunity, :user => @user, :name => "zone", :created_at => 3.days.ago)
+      opportunity2 = Factory(:opportunity, :user => @user, :name => "alan", :created_at => 2.days.ago)
+      opportunity3 = Factory(:opportunity, :user => @user, :name => "albert", :created_at => 1.day.ago)
+
+      leads = Opportunity.search_and_filter(:user => @user)
+      leads.should == [opportunity3, opportunity2, opportunity1]
+    end
+
+    it "returns leads sorted by the user preference" do
+      Factory(:preference, :user => @user, :name => 'opportunities_sort_by', :value => Base64.encode64(Marshal.dump("opportunities.name ASC")))
+
+      opportunity1 = Factory(:opportunity, :user => @user, :name => "zone", :created_at => 3.days.ago)
+      opportunity2 = Factory(:opportunity, :user => @user, :name => "alan", :created_at => 2.days.ago)
+      opportunity3 = Factory(:opportunity, :user => @user, :name => "albert", :created_at => 1.day.ago)
+
+      leads = Opportunity.search_and_filter(:user => @user)
+      leads.should == [opportunity2, opportunity3, opportunity1]
+    end
+
+    it "can combine different search and filter options" do
+      # mine
+      # query, tagged, filtered
+      opportunity1 = Factory(:opportunity, :name => 'house', :user => @user, :tag_list => "investigate", :stage => "contacted")
+      # query, tagged
+      opportunity2 = Factory(:opportunity, :name => 'house', :user => @user, :tag_list => "investigate", :stage => 'ignored')
+      # query, filtered
+      opportunity3 = Factory(:opportunity, :user => @user, :name => 'house', :tag_list => 'boring', :stage => 'contacted')
+      # tagged, filtered
+      opportunity4 = Factory(:opportunity, :user => @user, :tag_list => 'investigate', :stage => 'contacted')
+
+      # public
+      # query, tagged, filtered
+      opportunity5 = Factory(:opportunity, :name => 'house', :tag_list => "investigate", :stage => "contacted")
+      # query, tagged
+      opportunity6 = Factory(:opportunity, :name => 'house', :tag_list => "investigate", :stage => 'ignored')
+      # query, filtered
+      opportunity7 = Factory(:opportunity, :name => 'house', :tag_list => 'boring', :stage => 'contacted')
+      # tagged, filtered
+      opportunity8 = Factory(:opportunity, :tag_list => 'investigate', :stage => 'contacted')
+
+      # private
+      # query, tagged, filtered
+      opportunity9 = Factory(:opportunity, :access => 'private', :name => 'house', :tag_list => "investigate", :stage => "contacted")
+      # query, tagged
+      opportunity10 = Factory(:opportunity, :access => 'private', :name => 'house', :tag_list => "investigate", :stage => 'ignored')
+      # query, filtered
+      opportunity11 = Factory(:opportunity, :access => 'private', :name => 'house', :tag_list => 'boring', :stage => 'contacted')
+      # tagged, filtered
+      opportunity12 = Factory(:opportunity, :access => 'private', :tag_list => 'investigate', :stage => 'contacted')
+
+      # get all my and all public leads tagged 'investigate' in the state 'contacted' with 'house' somewhere in the text
+      leads = Opportunity.search_and_filter(:user => @user, :tags => 'investigate', :query => 'house', :filter => 'contacted')
+      leads.should == [opportunity1, opportunity5]
+    end
+  end
 end

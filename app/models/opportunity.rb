@@ -74,6 +74,19 @@ class Opportunity < ActiveRecord::Base
   def self.per_page ; 20     ; end
   def self.outline  ; "long" ; end
 
+  # Search and filter by user, tags, query and status
+  #----------------------------------------------------------------------------
+  def self.search_and_filter(options)
+    user, filtered, query, tags = options[:user], options[:filter], options[:query], options[:tags]
+    order = user.preference[:opportunities_sort_by] || Opportunity.sort_by
+
+    opportunities = Opportunity.my(:user => user, :order => order)
+    opportunities = opportunities.only(filtered.split(',')) unless filtered.blank?
+    opportunities = opportunities.search(query) unless query.blank?
+    opportunities = opportunities.tagged_with(tags) unless tags.blank?
+    opportunities
+  end
+
   #----------------------------------------------------------------------------
   def weighted_amount
     ((amount || 0) - (discount || 0)) * (probability || 0) / 100.0
