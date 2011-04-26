@@ -324,18 +324,10 @@ class LeadsController < ApplicationController
     leads = hook(:get_leads, self, :records => records, :pages => pages)
     return leads.last unless leads.empty?
 
-#    return Lead.search_and_filter(:user => @current_user,
-#                                  :query => current_query,
-#                                  :filter => session[:filter_by_lead_status],
-#                                  :tags => session[:filter_by_lead_tags])
-
     # Default processing if no :get_leads hooks are present.
-    if session[:filter_by_lead_status]
-      filtered = session[:filter_by_lead_status].split(",")
-      current_query.blank? ? Lead.my(records).only(filtered) : Lead.my(records).only(filtered).search(current_query)
-    else
-      current_query.blank? ? Lead.my(records) : Lead.my(records).search(current_query)
-    end.paginate(pages)
+    return Lead.search_and_filter(records.merge(:query => current_query,
+                                                :filter => session[:filter_by_lead_status],
+                                                :tags => session[:filter_by_lead_tags])).paginate(pages)
   end
 
   #----------------------------------------------------------------------------

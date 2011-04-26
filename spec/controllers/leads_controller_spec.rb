@@ -52,6 +52,46 @@ describe LeadsController do
       assigns[:leads].map(&:status).sort.should == %w(contacted new)
     end
 
+    it "should filter out leads by tag" do
+      controller.session[:filter_by_lead_tags] = "foo, bar"
+      @leads = [
+        Factory(:lead, :tag_list => "foo, bar", :user => @current_user),
+        Factory(:lead, :tag_list => "foo, moo, bar", :user => @current_user)
+      ]
+
+      # This one should be filtered out.
+      Factory(:lead, :status => "moo, foo", :user => @current_user)
+
+      get :index
+
+      assigns[:leads].size.should == @leads.size
+      @leads.each do |lead|
+        assigns[:leads].should include lead
+      end
+    end
+
+    it "should filter out leads by status and tags" do
+      controller.session[:filter_by_lead_status] = "new,contacted"
+      controller.session[:filter_by_lead_tags] = "foo, bar"
+      @leads = [
+        Factory(:lead, :tag_list => 'foo, bar', :status => "new", :user => @current_user),
+        Factory(:lead, :tag_list => 'foo, moo, bar', :status => "contacted", :user => @current_user)
+      ]
+
+      # These ones should be filtered out.
+      Factory(:lead, :status => "rejected", :user => @current_user)
+      Factory(:lead, :status => "moo, foo", :user => @current_user)
+      Factory(:lead, :status => 'new', :tag_list => 'foo, moo', :user => @current_user)
+      Factory(:lead, :status => 'contacted', :tag_list => 'moo, bar', :user => @current_user)
+
+      get :index
+
+      assigns[:leads].size.should == @leads.size
+      @leads.each do |lead|
+        assigns[:leads].should include lead
+      end
+    end
+
     describe "AJAX pagination" do
       it "should pick up page number from params" do
         @leads = [ Factory(:lead, :user => @current_user) ]
@@ -184,7 +224,7 @@ describe LeadsController do
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
         @campaign = Factory(:campaign, :access => "Private")
-        
+
         xhr :get, :new, :related => "campaign_#{@campaign.id}"
         flash[:warning].should_not == nil
         response.body.should == 'window.location.href = "/campaigns";'
@@ -322,7 +362,7 @@ describe LeadsController do
       it "should reload lead campaign if called from campaign landing page" do
         @campaign = Factory(:campaign)
         @lead = Factory.build(:lead, :user => @current_user, :campaign => @campaign)
-      
+
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
         assigns[:campaign].should == @campaign
@@ -441,7 +481,7 @@ describe LeadsController do
       it "should reload lead campaign if called from campaign landing page" do
         @campaign = Factory(:campaign)
         @lead = Factory(:lead, :campaign => @campaign)
-      
+
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :put, :update, :id => @lead.id, :lead => { :first_name => "Hello" }
         assigns[:campaign].should == @campaign
@@ -840,7 +880,7 @@ describe LeadsController do
       it "should reload lead campaign if called from campaign landing page" do
         @campaign = Factory(:campaign)
         @lead = Factory(:lead, :campaign => @campaign)
-      
+
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :put, :reject, :id => @lead.id
         assigns[:campaign].should == @campaign
