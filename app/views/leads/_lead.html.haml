@@ -36,4 +36,5 @@
         = "#{t :phone_small}: " + lead.phone  << " | " if lead.phone.present?
         = "#{t :mobile_small}: " + lead.mobile << " | " if lead.mobile.present?
         = t(:added_ago, time_ago_in_words(lead.created_at))
+      = render 'common/inline_tag_list', :tagged => lead
       = hook(:lead_bottom, self, :lead => lead)
