@@ -1,5 +1,5 @@
 .title_tools
-  = link_to_inline(:create_task, url_for(:action => :new, :view => @view))
+  = link_to_inline(:create_task, url_for(:action => :new, :view => @view), :text => t(:create_task))
 .title#title
   = (@view == "assigned" ? t(:assigned_tasks) : t(:tasks))
 
