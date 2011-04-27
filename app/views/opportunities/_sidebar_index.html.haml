@@ -17,4 +17,14 @@
     %div{:style => "float:right;"}
       %b= @opportunity_stage_total[:all]
     %b #{t :total_opportunities}
+
+.filters#tags
+  %h4 Tags
+  - Opportunity.tag_counts.each do |tagg|
+    .check_box{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = tagg.count
+      = opportunity_tag_checkbox(tagg)
+      = label_tag("tag-#{tagg.id}", tagg.name)
+
   = hook(:index_opportunity_sidebar_bottom, self)
