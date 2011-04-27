@@ -49,6 +49,46 @@ describe OpportunitiesController do
       assigns[:opportunities].map(&:stage).sort.should == %w(negotiation prospecting)
     end
 
+    it "should filter out opportunities by tag" do
+      controller.session[:filter_by_opportunity_tags] = "foo, bar"
+      @opportunities = [
+        Factory(:opportunity, :user => @current_user, :tag_list => "foo, bar"),
+        Factory(:opportunity, :user => @current_user, :tag_list => "moo, bar, foo")
+      ]
+      # These should be filtered out.
+      Factory(:opportunity, :user => @current_user, :tag_list => "foo")
+      Factory(:opportunity, :user => @current_user, :tag_list => "bar")
+
+      get :index
+      # Note: can't compare opportunities directly because of BigDecimal objects.
+      assigns[:opportunities].size.should == @opportunities.size
+      @opportunities.each do |opp|
+        assigns[:opportunities].should include(opp)
+      end
+    end
+
+    it "should filter out opportunities by stage and tag" do
+      controller.session[:filter_by_opportunity_stage] = "prospecting,negotiation"
+      controller.session[:filter_by_opportunity_tags] = "foo, bar"
+      @opportunities = [
+        Factory(:opportunity, :user => @current_user, :stage => 'prospecting', :tag_list => "foo, bar"),
+        Factory(:opportunity, :user => @current_user, :stage => 'negotiation', :tag_list => "moo, bar, foo")
+      ]
+      # These should be filtered out.
+      Factory(:opportunity, :user => @current_user, :tag_list => "foo")
+      Factory(:opportunity, :user => @current_user, :tag_list => "bar")
+      Factory(:opportunity, :user => @current_user, :stage => 'analysis', :tag_list => "foo")
+      Factory(:opportunity, :user => @current_user, :stage => 'prospecting', :tag_list => "moo, bar")
+      Factory(:opportunity, :user => @current_user, :stage => 'analysis', :tag_list => "foo, bar")
+
+      get :index
+      # Note: can't compare opportunities directly because of BigDecimal objects.
+      assigns[:opportunities].size.should == @opportunities.size
+      @opportunities.each do |opp|
+        assigns[:opportunities].should include(opp)
+      end
+    end
+
     describe "AJAX pagination" do
       it "should pick up page number from params" do
         @opportunities = [ Factory(:opportunity, :user => @current_user) ]

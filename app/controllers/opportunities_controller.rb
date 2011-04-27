@@ -228,6 +228,7 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def filter
     session[:filter_by_opportunity_stage] = params[:stage]
+    session[:filter_by_opportunity_tags] = params[:tags]
     @opportunities = get_opportunities(:page => 1)
     render :action => :index
   end
@@ -271,13 +272,12 @@ class OpportunitiesController < ApplicationController
     opportunities = hook(:get_opportunities, self, :records => records, :pages => pages)
     return opportunities.last unless opportunities.empty?
 
+
     # Default processing if no :get_opportunities hooks are present.
-    if session[:filter_by_opportunity_stage]
-      filtered = session[:filter_by_opportunity_stage].split(",")
-      current_query.blank? ? Opportunity.my(records).only(filtered) : Opportunity.my(records).only(filtered).search(current_query)
-    else
-      current_query.blank? ? Opportunity.my(records) : Opportunity.my(records).search(current_query)
-    end.paginate(pages)
+    return Opportunity.search_and_filter(records.merge(:query => current_query,
+                                                       :filter => session[:filter_by_opportunity_stage],
+                                                       :tags => session[:filter_by_opportunity_tags])).paginate(pages)
+
   end
 
   #----------------------------------------------------------------------------
