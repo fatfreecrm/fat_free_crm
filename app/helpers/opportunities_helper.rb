@@ -23,6 +23,8 @@ module OpportunitiesHelper
     filtering_checkbox(Opportunity, 'stage', stage, (count.to_i > 0), :id => stage)
   end
 
+  # Sidebar checkbox control for filtering opportunities by tag.
+  #----------------------------------------------------------------------------
   def opportunity_tag_checkbox(tagg)
     filtering_checkbox(Opportunity, 'tags', tagg.name, false, :id => "tag-#{tagg.id}")
   end

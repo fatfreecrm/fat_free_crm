@@ -69,6 +69,8 @@ module LeadsHelper
     filtering_checkbox(Lead, 'status', status, (count.to_i > 0), :id => status)
   end
 
+  # Sidebar checkbox control for filtering leads by tag.
+  #----------------------------------------------------------------------------
   def lead_tag_checkbox(tagg)
     filtering_checkbox(Lead, 'tags', tagg.name, false, :id => "tag-#{tagg.id}")
   end
