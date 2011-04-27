@@ -164,4 +164,106 @@ describe Account do
       end
     end
   end
+
+  describe "search_and_filter" do
+    before(:each) do
+      @user = Factory(:user)
+    end
+
+    it "returns nothing when no accounts" do
+      Account.search_and_filter(:user => @user).should be_empty
+    end
+
+    it "returns the accounts of the user" do
+      account1 = Factory(:account, :user => @user, :access => 'private')
+      account2 = Factory(:account, :user => @user, :access => 'private')
+      Factory(:account, :access => 'private')
+
+      accounts = Account.search_and_filter(:user => @user)
+      accounts.size.should == 2
+      accounts.should include(account1, account2)
+    end
+
+    it "ignores any filter param because Account doesn't have an :only scope" do
+      account1 = Factory(:account, :user => @user, :access => 'private', :name => 'house')
+      account2 = Factory(:account, :user => @user, :access => 'private', :email => 'house@example.com')
+      Factory(:account, :access => 'private')
+
+      accounts = Account.search_and_filter(:user => @user, :filter => 'house')
+      accounts.size.should == 2
+      accounts.should include(account1, account2)
+    end
+
+    it "returns the accounts matching the query" do
+      account1 = Factory(:account, :access => 'private', :user => @user, :name => 'house')
+      account2 = Factory(:account, :access => 'private', :user => @user, :email => 'house@example.com')
+      account3 = Factory(:account, :access => 'private', :user => @user)
+
+      accounts = Account.search_and_filter(:user => @user, :query => 'house')
+      accounts.size.should == 2
+      accounts.should include(account1)
+      accounts.should include(account2)
+    end
+
+    it "returns the user's accounts filtered by tags" do
+      account1 = Factory(:account, :user => @user, :tag_list => "moo")
+      account2 = Factory(:account, :user => @user, :tag_list => "moo, foo")
+      account3 = Factory(:account, :user => @user, :tag_list => "moo, bar")
+      account4 = Factory(:account, :user => @user)
+      account5 = Factory(:account, :tag_list => 'foo, moo, bar', :access => 'private')
+
+      accounts = Account.search_and_filter(:user => @user, :tags => "foo, moo")
+      accounts.should == [account2]
+    end
+
+    it "returns accounts sorted by default field if user doesn't have a preference" do
+      account1 = Factory(:account, :user => @user, :name => "zone", :created_at => 3.days.ago)
+      account2 = Factory(:account, :user => @user, :name => "alan", :created_at => 2.days.ago)
+      account3 = Factory(:account, :user => @user, :name => "albert", :created_at => 1.day.ago)
+
+      accounts = Account.search_and_filter(:user => @user)
+      accounts.should == [account3, account2, account1]
+    end
+
+    it "returns accounts sorted by the user preference" do
+      Factory(:preference, :user => @user, :name => 'accounts_sort_by', :value => Base64.encode64(Marshal.dump("accounts.name DESC")))
+
+      account1 = Factory(:account, :user => @user, :name => "zone", :created_at => 3.days.ago)
+      account2 = Factory(:account, :user => @user, :name => "alan", :created_at => 2.days.ago)
+      account3 = Factory(:account, :user => @user, :name => "albert", :created_at => 1.day.ago)
+
+      accounts = Account.search_and_filter(:user => @user)
+      accounts.should == [account1, account3, account2]
+    end
+
+    it "can combine different search and filter options" do
+      # mine
+      # query, tagged
+      account1 = Factory(:account, :name => 'Mr. house', :user => @user, :tag_list => "investigate")
+      # query
+      account2 = Factory(:account, :user => @user, :name => 'Dr. house', :tag_list => 'boring')
+      # tagged
+      account3 = Factory(:account, :user => @user, :tag_list => 'investigate')
+
+      # public
+      # query, tagged
+      account4 = Factory(:account, :name => 'Mrs. house', :tag_list => 'investigate')
+      # query
+      account5 = Factory(:account, :name => 'Miss house', :tag_list => 'boring')
+      # tagged
+      account6 = Factory(:account, :tag_list => 'investigate')
+
+      # private
+      # query, tagged
+      account7 = Factory(:account, :access => 'private', :name => 'Lord house', :tag_list => "investigate")
+      # query
+      account8 = Factory(:account, :access => 'private', :name => 'Rev. house', :tag_list => 'boring')
+      # tagged
+      account9 = Factory(:account, :access => 'private', :tag_list => 'investigate')
+
+      # get all my and all public leads tagged 'investigate' in the state 'contacted' with 'house' somewhere in the text
+      accounts = Account.search_and_filter(:user => @user, :tags => 'investigate', :query => 'house')
+      accounts.should == [account1, account4]
+    end
+  end
 end

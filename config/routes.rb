@@ -21,7 +21,8 @@ ActionController::Routing::Routes.draw do |map|
       :auto_complete => :post,
       :options => :get,
       :redraw  => :post,
-      :search  => :get
+      :search  => :get,
+      :filter  => :post
     },
     :member => {
       :attach  => :put,
@@ -33,7 +34,25 @@ ActionController::Routing::Routes.draw do |map|
       :delete_tag => :put
     }
 
-  [ :accounts, :campaigns, :contacts, :opportunities ].each do |resource|
+  [ :accounts, :opportunities ].each do |resource|
+    map.resources resource,
+      :has_many => [ :comments, :emails ],
+      :collection => {
+        :auto_complete => :post,
+        :options => :get,
+        :redraw  => :post,
+        :search  => :get,
+        :filter  => :post
+      },
+      :member => {
+        :attach  => :put,
+        :discard => :post,
+        :add_tag => :put,
+        :delete_tag => :put
+      }
+  end
+
+  [ :campaigns, :contacts ].each do |resource|
     map.resources resource,
       :has_many => [ :comments, :emails ],
       :collection => {

@@ -532,6 +532,43 @@ describe AccountsController do
     end
   end
 
+  # POST /accounts/filter                                                  AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST filter" do
+
+    it "should filter out accounts as @accounts and render :index action" do
+      @accounts = [ Factory(:account, :user => @current_user) ]
+      xhr :post, :filter
+      assigns[:accounts].should == @accounts
+      response.should be_a_success
+      response.should render_template("accounts/index")
+    end
+
+    it 'should set filter_by_account_tags in the session to the value of the tags param' do
+      session[:filter_by_account_tags] = "foo, bar"
+      xhr :post, :filter, :tags => 'moo'
+      session[:filter_by_account_tags].should == 'moo'
+    end
+
+    it 'should set filter_by_account_tags in the session to the value of the tags param (even if it is blank)' do
+      session[:filter_by_account_tags] = "foo, bar"
+      xhr :post, :filter, :tags => ''
+      session[:filter_by_account_tags].should == ''
+    end
+
+    it 'should not set filter_by_account_tags in the session if the tags param is not present' do
+      session[:filter_by_account_tags] = "foo, bar"
+      xhr :post, :filter
+      session[:filter_by_account_tags].should == 'foo, bar'
+    end
+
+    it "should reset current page to 1" do
+      xhr :post, :filter, :status => "new"
+
+      session[:accounts_current_page].should == 1
+    end
+  end
+
   describe "responding to PUT add_tag" do
     before(:each) do
       @tagable = Factory(:account, :tag_list => "moo, foo, bar")

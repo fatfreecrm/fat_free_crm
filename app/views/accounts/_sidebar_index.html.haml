@@ -1,3 +1,12 @@
 .filters#filters
   = render :partial => "common/search"
+
+  %h4 #{t(:filter_by, t(:tags))}
+  - Account.tag_counts.each do |tagg|
+    .check_box{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = tagg.count
+      = account_tag_checkbox(tagg)
+      = label_tag("tag-#{tagg.id}", tagg.name)
+
   = hook(:index_account_sidebar_bottom, self)

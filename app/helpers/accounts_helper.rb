@@ -16,4 +16,9 @@
 #------------------------------------------------------------------------------
 
 module AccountsHelper
+  # Sidebar checkbox control for filtering accounts by tag.
+  #----------------------------------------------------------------------------
+  def account_tag_checkbox(tagg)
+    filtering_checkbox(Account, 'tags', tagg.name, false, :id => "tag-#{tagg.id}")
+  end
 end
