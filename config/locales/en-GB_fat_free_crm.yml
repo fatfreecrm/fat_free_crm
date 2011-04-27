@@ -523,6 +523,9 @@ en-GB:
   zipcode: Post Code
   state: County
   country: Country
+  filter_by: Filter by %{value}
+  tags: Tags
+
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
