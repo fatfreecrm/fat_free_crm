@@ -75,6 +75,8 @@ class Lead < ActiveRecord::Base
   acts_as_paranoid
   sortable :by => [ "first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
+  is_searchable_and_filterable
+
   validates_presence_of :first_name, :message => :missing_first_name
   validates_presence_of :last_name, :message => :missing_last_name
   validate :users_for_shared_access
@@ -87,19 +89,6 @@ class Lead < ActiveRecord::Base
   def self.per_page ; 20                  ; end
   def self.outline  ; "long"              ; end
   def self.first_name_position ; "before" ; end
-
-  # Search and filter by user, tags, query and status
-  #----------------------------------------------------------------------------
-  def self.search_and_filter(options)
-    user, filtered, query, tags = options[:user], options[:filter], options[:query], options[:tags]
-    order = user.preference[:leads_sort_by] || Lead.sort_by
-
-    leads = Lead.my(:user => user, :order => order)
-    leads = leads.only(filtered.split(',')) unless filtered.blank?
-    leads = leads.search(query) unless query.blank?
-    leads = leads.tagged_with(tags) unless tags.blank?
-    leads
-  end
 
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------

@@ -62,6 +62,8 @@ class Opportunity < ActiveRecord::Base
   acts_as_paranoid
   sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
+  is_searchable_and_filterable
+
   validates_presence_of :name, :message => :missing_opportunity_name
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
@@ -73,19 +75,6 @@ class Opportunity < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.per_page ; 20     ; end
   def self.outline  ; "long" ; end
-
-  # Search and filter by user, tags, query and status
-  #----------------------------------------------------------------------------
-  def self.search_and_filter(options)
-    user, filtered, query, tags = options[:user], options[:filter], options[:query], options[:tags]
-    order = user.preference[:opportunities_sort_by] || Opportunity.sort_by
-
-    opportunities = Opportunity.my(:user => user, :order => order)
-    opportunities = opportunities.only(filtered.split(',')) unless filtered.blank?
-    opportunities = opportunities.search(query) unless query.blank?
-    opportunities = opportunities.tagged_with(tags) unless tags.blank?
-    opportunities
-  end
 
   #----------------------------------------------------------------------------
   def weighted_amount
