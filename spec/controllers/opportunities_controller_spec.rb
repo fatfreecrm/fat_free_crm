@@ -869,6 +869,36 @@ describe OpportunitiesController do
       response.should render_template("opportunities/index")
     end
 
+    it 'should set filter_by_opportunity_status in the session to the value of the stage param' do
+      session[:filter_by_opportunity_stage] = "negotiation,analysis"
+      xhr :post, :filter, :stage => 'prospecting'
+      session[:filter_by_opportunity_stage].should == 'prospecting'
+    end
+
+    it 'should set filter_by_opportunity_status in the session to the value of the stage param (even if it is blank)' do
+      session[:filter_by_opportunity_stage] = "negotiation,analysis"
+      xhr :post, :filter, :stage => ''
+      session[:filter_by_opportunity_stage].should == ''
+    end
+
+    it 'should not set filter_by_opportunity_status in the session if the stage param is not present' do
+      session[:filter_by_opportunity_stage] = "negotiation,analysis"
+      xhr :post, :filter
+      session[:filter_by_opportunity_stage].should == 'negotiation,analysis'
+    end
+
+    it 'should set filter_by_opportunity_tags in the session to the value of the tags param' do
+      session[:filter_by_opportunity_tags] = "foo, bar"
+      xhr :post, :filter, :tags => 'moo'
+      session[:filter_by_opportunity_tags].should == 'moo'
+    end
+
+    it 'should set filter_by_opportunity_tags in the session to the value of the tags param (even if it is blank)' do
+      session[:filter_by_opportunity_tags] = "foo, bar"
+      xhr :post, :filter, :tags => ''
+      session[:filter_by_opportunity_tags].should == ''
+    end
+
     it "should reset current page to 1" do
       @opportunities = []
       xhr :get, :filter, :status => "new"

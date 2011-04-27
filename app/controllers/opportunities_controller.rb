@@ -227,8 +227,8 @@ class OpportunitiesController < ApplicationController
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
-    session[:filter_by_opportunity_stage] = params[:stage]
-    session[:filter_by_opportunity_tags] = params[:tags]
+    session[:filter_by_opportunity_stage] = params[:stage] if params.has_key?(:stage)
+    session[:filter_by_opportunity_tags] = params[:tags] if params.has_key?(:tags)
     @opportunities = get_opportunities(:page => 1)
     render :action => :index
   end

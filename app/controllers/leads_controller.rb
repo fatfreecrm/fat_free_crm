@@ -279,8 +279,8 @@ class LeadsController < ApplicationController
   # POST /leads/filter                                                     AJAX
   #----------------------------------------------------------------------------
   def filter
-    session[:filter_by_lead_status] = params[:status]
-    session[:filter_by_lead_tags] = params[:tags]
+    session[:filter_by_lead_status] = params[:status] if params.has_key?(:status)
+    session[:filter_by_lead_tags] = params[:tags] if params.has_key?(:tags)
     @leads = get_leads(:page => 1) # Start one the first page.
     render :action => :index
   end

@@ -1073,6 +1073,42 @@ describe LeadsController do
       response.should render_template("leads/index")
     end
 
+    it 'should set filter_by_lead_status in the session to the value of the status param' do
+      session[:filter_by_lead_status] = "contacted,rejected"
+      xhr :post, :filter, :status => 'new'
+      session[:filter_by_lead_status].should == 'new'
+    end
+
+    it 'should set filter_by_lead_status in the session to the value of the status param (even if it is blank)' do
+      session[:filter_by_lead_status] = "contacted,rejected"
+      xhr :post, :filter, :status => ''
+      session[:filter_by_lead_status].should == ''
+    end
+
+    it 'should not set filter_by_lead_status in the session if the status param is not present' do
+      session[:filter_by_lead_status] = "contacted,rejected"
+      xhr :post, :filter
+      session[:filter_by_lead_status].should == 'contacted,rejected'
+    end
+
+    it 'should set filter_by_lead_tags in the session to the value of the tags param' do
+      session[:filter_by_lead_tags] = "foo, bar"
+      xhr :post, :filter, :tags => 'moo'
+      session[:filter_by_lead_tags].should == 'moo'
+    end
+
+    it 'should set filter_by_lead_tags in the session to the value of the tags param (even if it is blank)' do
+      session[:filter_by_lead_tags] = "foo, bar"
+      xhr :post, :filter, :tags => ''
+      session[:filter_by_lead_tags].should == ''
+    end
+
+    it 'should not set filter_by_lead_tags in the session if the tags param is not present' do
+      session[:filter_by_lead_tags] = "foo, bar"
+      xhr :post, :filter
+      session[:filter_by_lead_tags].should == 'foo, bar'
+    end
+
     it "should reset current page to 1" do
       @leads = []
       xhr :post, :filter, :status => "new"
