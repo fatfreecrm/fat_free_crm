@@ -238,8 +238,8 @@ class AccountsController < ApplicationController
     return accounts.last unless accounts.empty?
 
     # Default processing if no :get_accounts hooks are present.
-    return Account.search_and_filter(records.merge(:query => current_query,
-                                                   :tags => session[:filter_by_account_tags])).paginate(pages)
+    Account.search_and_filter(records.merge(:query => current_query,
+                                            :tags => session[:filter_by_account_tags])).paginate(pages)
   end
 
   #----------------------------------------------------------------------------

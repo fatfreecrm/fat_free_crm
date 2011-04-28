@@ -274,10 +274,9 @@ class OpportunitiesController < ApplicationController
 
 
     # Default processing if no :get_opportunities hooks are present.
-    return Opportunity.search_and_filter(records.merge(:query => current_query,
-                                                       :filter => session[:filter_by_opportunity_stage],
-                                                       :tags => session[:filter_by_opportunity_tags])).paginate(pages)
-
+    Opportunity.search_and_filter(records.merge(:query => current_query,
+                                                :filter => session[:filter_by_opportunity_stage],
+                                                :tags => session[:filter_by_opportunity_tags])).paginate(pages)
   end
 
   #----------------------------------------------------------------------------

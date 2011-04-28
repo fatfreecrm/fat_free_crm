@@ -325,9 +325,9 @@ class LeadsController < ApplicationController
     return leads.last unless leads.empty?
 
     # Default processing if no :get_leads hooks are present.
-    return Lead.search_and_filter(records.merge(:query => current_query,
-                                                :filter => session[:filter_by_lead_status],
-                                                :tags => session[:filter_by_lead_tags])).paginate(pages)
+    Lead.search_and_filter(records.merge(:query => current_query,
+                                         :filter => session[:filter_by_lead_status],
+                                         :tags => session[:filter_by_lead_tags])).paginate(pages)
   end
 
   #----------------------------------------------------------------------------
