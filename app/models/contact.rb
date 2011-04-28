@@ -75,6 +75,8 @@ class Contact < ActiveRecord::Base
   acts_as_paranoid
   sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "last_name ASC"
 
+  is_searchable_and_filterable
+
   validates_presence_of :first_name, :message => :missing_first_name
   validates_presence_of :last_name, :message => :missing_last_name
   validate :users_for_shared_access

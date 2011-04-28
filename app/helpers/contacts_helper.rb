@@ -16,4 +16,9 @@
 #------------------------------------------------------------------------------
 
 module ContactsHelper
+  # Sidebar checkbox control for filtering accounts by tag.
+  #----------------------------------------------------------------------------
+  def contact_tag_checkbox(tagg)
+    filtering_checkbox(Contact, 'tags', tagg.name, false, :id => "tag-#{tagg.id}")
+  end
 end

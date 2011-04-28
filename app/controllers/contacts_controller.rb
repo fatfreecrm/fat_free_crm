@@ -191,6 +191,14 @@ class ContactsController < ApplicationController
     end
   end
 
+  # POST /accounts/filter                                                  AJAX
+  #----------------------------------------------------------------------------
+  def filter
+    session[:filter_by_contact_tags] = params[:tags] if params.has_key?(:tags)
+    @contacts = get_contacts(:page => 1) # Start one the first page.
+    render :action => :index
+  end
+
   # GET /contacts/options                                                  AJAX
   #----------------------------------------------------------------------------
   def options
@@ -264,11 +272,8 @@ class ContactsController < ApplicationController
     return contacts.last unless contacts.empty?
 
     # Default processing if no :get_contacts hooks are present.
-    if current_query.blank?
-      Contact.my(records)
-    else
-      Contact.my(records).search(current_query)
-    end.paginate(pages)
+    Contact.search_and_filter(records.merge(:query => current_query,
+                                            :tags => session[:filter_by_contact_tags])).paginate(pages)
   end
 
   #----------------------------------------------------------------------------

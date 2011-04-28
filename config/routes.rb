@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
       :delete_tag => :put
     }
 
-  [ :accounts, :opportunities ].each do |resource|
+  [ :accounts, :contacts, :opportunities ].each do |resource|
     map.resources resource,
       :has_many => [ :comments, :emails ],
       :collection => {
@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
       }
   end
 
-  [ :campaigns, :contacts ].each do |resource|
+  [ :campaigns ].each do |resource|
     map.resources resource,
       :has_many => [ :comments, :emails ],
       :collection => {

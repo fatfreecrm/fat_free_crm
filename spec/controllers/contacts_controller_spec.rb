@@ -686,6 +686,43 @@ describe ContactsController do
     end
   end
 
+  # POST /contacts/filter                                                     AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST filter" do
+
+    it "should filter out contacts as @contacts and render :index action" do
+      @contacts = [ Factory(:contact, :user => @current_user) ]
+      xhr :post, :filter
+      assigns[:contacts].should == @contacts
+      response.should be_a_success
+      response.should render_template("contacts/index")
+    end
+
+    it 'should set filter_by_contact_tags in the session to the value of the tags param' do
+      session[:filter_by_contact_tags] = "foo, bar"
+      xhr :post, :filter, :tags => 'moo'
+      session[:filter_by_contact_tags].should == 'moo'
+    end
+
+    it 'should set filter_by_contact_tags in the session to the value of the tags param (even if it is blank)' do
+      session[:filter_by_contact_tags] = "foo, bar"
+      xhr :post, :filter, :tags => ''
+      session[:filter_by_contact_tags].should == ''
+    end
+
+    it 'should not set filter_by_contact_tags in the session if the tags param is not present' do
+      session[:filter_by_contact_tags] = "foo, bar"
+      xhr :post, :filter
+      session[:filter_by_contact_tags].should == 'foo, bar'
+    end
+
+    it "should reset current page to 1" do
+      xhr :post, :filter, :status => "new"
+
+      session[:contacts_current_page].should == 1
+    end
+  end
+
   describe "responding to PUT add_tag" do
     before(:each) do
       @tagable = Factory(:contact, :tag_list => "moo, foo, bar")
