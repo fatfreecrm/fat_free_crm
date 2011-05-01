@@ -1,10 +1,10 @@
 .panel#summary
   .caption #{t :campaign_summary}
   %li
-    %dt= @campaign.starts_on ? @campaign.starts_on.strftime("%b %e") : t(:n_a)
+    %dt= @campaign.starts_on ? l(@campaign.starts_on, :format => :mmdd) : t(:n_a)
     %tt #{t :start_date}:
   %li
-    %dt= @campaign.ends_on ? @campaign.ends_on.strftime("%b %e") : t(:n_a)
+    %dt= @campaign.ends_on ? l(@campaign.ends_on, :format => :mmdd) : t(:n_a)
     %tt #{t :end_date}:
   %li
     %dt= @campaign.status ? t(@campaign.status) : t(:n_a)

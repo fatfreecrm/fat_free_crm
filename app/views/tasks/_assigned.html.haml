@@ -38,10 +38,10 @@
             %span.warn
               = distance_of_time_in_words(assigned.due_at, Time.now) 
               = t(:task_overdue) 
-              = assigned.due_at.localtime.strftime('%b %e')
+              = l(assigned.due_at.localtime.to_date, :format => :mmdd)
           - elsif assigned.due_at > Date.today
             = t(:task_due_in, distance_of_time_in_words(Time.now, assigned.due_at.localtime.end_of_day))
-            = ' (' << assigned.due_at.localtime.strftime('%b %e') << ')'
+            = ' (' << l(assigned.due_at.localtime.to_date, :format => :mmdd) << ')'
           - else
             %span.cool= t(:task_due_today)
 

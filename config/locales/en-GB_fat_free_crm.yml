@@ -1,5 +1,5 @@
-en-US:
-  language: English (US)
+en-GB:
+  language: English (UK)
 
   # Generic terms.
   #----------------------------------------------------------------------------
@@ -209,9 +209,9 @@ en-US:
   option_target_leads: target leads
   option_target_revenue: target revenue
   option_updated_at: date updated
-  show_per_page: Show %{number} %{models} per page using %{fmt} format. 
+  show_per_page: Show %{number} %{models} per page using %{fmt} format.
   sort_by: Sort %{models} by %{field}.
-  sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name. 
+  sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
@@ -276,7 +276,7 @@ en-US:
   open_in_window: Open %{value} in a new window
   mail_to: Mail to %{value}
   phone_small: phone
-  phone_toll_free: Toll-free
+  phone_toll_free: Freephone
   keep_private: Keep it private, do not share with others
   make_public: Share it with everyone
   same_as_billing: same as billing
@@ -290,7 +290,7 @@ en-US:
   actual: Actual
   actual_performance: Actual Performance
   budget: Budget
-  budget_label: Budget ($)
+  budget_label: Budget (£)
   campaign: Campaign
   campaign_and_leads: campaign and its leads
   campaign_small: campaign
@@ -301,7 +301,7 @@ en-US:
   campaigns_small: campaigns
   conversion: Conversion
   conversion_label: Conversion (%)
-  conversion_number: "%{value} conversion" 
+  conversion_number: "%{value} conversion"
   create_campaign: Create Campaign
   end_date: End date
   finished_on: completed on %{value}
@@ -312,7 +312,7 @@ en-US:
   objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
   objectives_small: campaign objectives
   revenue: Revenue
-  revenue_label: Revenue ($)
+  revenue_label: Revenue (£)
   revenue_number: "%{value} in revenue"
   save_campaign: Save Campaign
   start_date: Start date
@@ -324,7 +324,7 @@ en-US:
   was_supposed_to_finish: was supposed to finish on %{value}
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
   was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
-    
+
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Other
@@ -343,7 +343,7 @@ en-US:
   facebook: Facebook
   linked_in: LinkedIn
   myself: Myself
-  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.  
+  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.
   permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
   permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
   referred_by: Referred by
@@ -365,8 +365,8 @@ en-US:
   lead: Lead
   lead_info_small: lead contact
   lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
+  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.
   lead_small: lead
   lead_status_small: lead status
   lead_summary: Lead Summary
@@ -390,7 +390,7 @@ en-US:
   closes_today: expected to close today!
   closing_date: closing date is %{value}
   create_opportunity: Create Opportunity
-  currency: ($)
+  currency: (£)
   days_late: Late by
   days_left: Days left
   discount: Discount
@@ -405,7 +405,7 @@ en-US:
   opportunity: Opportunity
   opportunity_small: opportunity
   opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: "%{amount} with %{discount} discount and %{probability} probability" 
+  opportunity_summary_text: "%{amount} with %{discount} discount and %{probability} probability"
   past_due: past due, was expected to close %{value} ago
   probability: Probability
   probability_number: and %{value} probability
@@ -484,7 +484,7 @@ en-US:
   add_note_help: Add a new note...
   edit_note: Edit Note
   added_ago: added %{value} ago
-  added_by: added %{time_ago} ago by %{user} 
+  added_by: added %{time_ago} ago by %{user}
   back: Back
   cancel: Cancel
   close_form: Close form
@@ -520,8 +520,8 @@ en-US:
   street1: Street 1 # NEW
   street2: Street 2 # NEW
   city: City
-  zipcode: Zip Code
-  state: State
+  zipcode: Post Code
+  state: County
   country: Country
 
   # Views -> Layout.
@@ -594,7 +594,7 @@ en-US:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
-    contact: 
+    contact:
       one: '1 contact'
       other: '%{count} contacts'
     opportunity:
@@ -614,20 +614,20 @@ en-US:
   #----------------------------------------------------------------------------
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
-      mmdd: "%b %e"
-      mmddyy: "%b %e, %Y"
+      mmddyyyy: "%Y-%m-%d"
+      mmdd: "%e %b"
+      mmddyy: "%e %b, %Y"
 
   time:
     formats:
-      mmddhhss: "%b %e at %l:%M%p"
-      
+      mmddhhss: "%e %b at %l:%M%p"
+
   calendar_date_select:
     ok: OK
     now: Now
     today: Today
     clear: Clear
 
-  # If you need custom format look at 
+  # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: american
+  calendar_date_select_format: iso_date
