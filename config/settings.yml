@@ -42,7 +42,7 @@
 # with the one set above. To enable language selection in User/Profile set
 # the following option to true.
 #
-:per_user_locale: false
+:per_user_locale: true
 
 # User Signup.
 #------------------------------------------------------------------------------
