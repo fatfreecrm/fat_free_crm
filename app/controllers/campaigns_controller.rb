@@ -147,7 +147,7 @@ class CampaignsController < ApplicationController
     respond_to_not_found(:html, :js, :xml)
   end
 
-  # GET /campaigns/search/query                                           AJAX
+  # GET /campaigns/search/query                                            AJAX
   #----------------------------------------------------------------------------
   def search
     @campaigns = get_campaigns(:query => params[:query], :page => 1)

@@ -344,16 +344,6 @@ module ApplicationHelper
     end
   end
 
-  # Returns default permissions intro
-  #----------------------------------------------------------------------------
-  def get_default_permissions_intro(access, text)
-    case access
-      when "Private" then t(:permissions_intro_private, text)
-      when "Public" then t(:permissions_intro_public, text)
-      when "Shared" then t(:permissions_intro_shared, text)
-    end
-  end
-
   # Render a text field that is part of compound address.
   #----------------------------------------------------------------------------
   def address_field(form, object, attribute, extra_styles)

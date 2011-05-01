@@ -80,8 +80,13 @@ describe TasksController do
 
         (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
         (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
-        if view == "completed" # TODO: pending and assigned
-          response.body.should == @tasks.to_xml
+        hash = Hash.from_xml(response.body)
+        hash["hash"].keys.each do |key|
+          hash["hash"][key].each do |attr|
+            task = Task.new(attr)
+            task.should be_instance_of(Task)
+            task.valid?.should == true
+          end
         end
       end
     end
