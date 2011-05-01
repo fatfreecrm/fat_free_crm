@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require 'ffaker'
+require 'faker'
 
 Factory.sequence :address do |x|
   Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"

@@ -19,7 +19,7 @@
 #  deleted_at       :datetime
 #
 <% 
-  require "ffaker"
+  require "faker"
   puts "Loading addresses..."
 
   type = %w(Billing Shipping)

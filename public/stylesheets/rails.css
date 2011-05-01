@@ -30,8 +30,8 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: khaki;
-  color: #220000;
+  background: #ddff99;
+  color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {
@@ -94,7 +94,7 @@ div.auto_complete {
     text-decoration: none;
     color: #105cb6;
     border: 1px solid #9aafe5; }
-    .pagination a:hover, .pagination a:focus {
+    .pagination ahover, .pagination afocus {
       color: navy;
       background: lightyellow;
       border-color: navy; }

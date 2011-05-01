@@ -24,9 +24,9 @@ ul li {
 
 a {
   text-decoration: none; }
-  a:link, a:visited {
+  alink, avisited {
     color: #0033cc; }
-  a:hover {
+  ahover {
     background: #0033cc;
     color: white; }
   a img {
@@ -39,7 +39,7 @@ a {
   border-bottom: 1px dotted darkcyan;
   color: darkcyan;
   text-decoration: none; }
-  #options a:hover {
+  #options ahover {
     background: #e5e5e5;
     border-bottom: 1px dotted darkblue;
     color: darkblue; }
@@ -57,12 +57,12 @@ tt {
   font-size: 12px; }
 
 #header {
-  background: #330000;
-  color: #cd7570;
+  background: #1e4262;
+  color: skyblue;
   padding: 8px 16px 8px 16px; }
   #header h3 a {
-    background: #330000;
-    color: white;
+    background: #1e4262;
+    color: greenyellow;
     font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
   #header #welcome {
@@ -72,8 +72,8 @@ tt {
       color: lightyellow;
       padding: 1px 4px 2px 4px;
       text-decoration: none; }
-      #header #welcome a:hover {
-        background: #330000;
+      #header #welcome ahover {
+        background: #1e4262;
         color: yellow; }
     #header #welcome a.selected {
       background: steelblue;
@@ -84,6 +84,7 @@ tt {
       -webkit-border-top-right-radius: 2px; }
   #header #jumpbox {
     background: steelblue;
+    margin: 2px 0px 0px 0px;
     padding: 12px;
     position: absolute;
     -moz-border-radius-bottomleft: 6px;
@@ -94,22 +95,22 @@ tt {
       color: white;
       padding: 0px 0px 4px 0px; }
       #header #jumpbox #jumpbox_menu a.selected {
-        color: #330000; }
-      #header #jumpbox #jumpbox_menu a:hover {
+        color: navy; }
+      #header #jumpbox #jumpbox_menu ahover {
         background: steelblue; }
     #header #jumpbox #jumpbox_label {
       color: white; }
     #header #jumpbox input {
       margin: 2px 0px 0px 0px; }
-    #header #jumpbox input#auto_complete_query {
-      width: 310px; }
 
 #tabs {
-  background: #330000;
+  background: #1e4262;
   height: 24px;
   padding: 0px;
   text-align: center;
-  width: 100%; }
+  width: 100%;
+  ahover-background: #97baff;
+  ahover-color: navy; }
   #tabs li {
     float: left;
     font-size: 12px;
@@ -117,7 +118,7 @@ tt {
     margin: 0px 4px 0px 16px;
     width: 80px; }
   #tabs a:link, #tabs a:visited {
-    background: #860000;
+    background: #466bb1;
     color: white;
     float: left;
     padding: 4px 8px 5px 8px;
@@ -128,12 +129,9 @@ tt {
     -moz-border-radius-topright: 3px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px; }
-  #tabs a:hover {
-    background: #cd7570;
-    color: #330000; }
   #tabs a:link.active, #tabs a:visited.active {
-    background: white;
-    color: #330000;
+    background: azure;
+    color: navy;
     text-decoration: none; }
 
 #footer {
@@ -143,7 +141,7 @@ tt {
 
 .title {
   border-bottom: 1px gray solid;
-  color: black;
+  color: #342d7e;
   font-size: 17px;
   font-weight: bold;
   padding-bottom: 2px; }
@@ -160,18 +158,15 @@ tt {
   border-bottom: 1px silver solid;
   color: #2f2f2f;
   font-size: 13px;
-  font-weight: bold; }
+  font-weight: bold;
+  ahover-background: none; }
   .subtitle a:link, .subtitle a:visited {
     color: darkslateblue;
     text-decoration: none; }
-  .subtitle a:hover {
-    background: none; }
 
 .subtitle_tools {
   font-size: 11px;
   float: right; }
-  .subtitle_tools a {
-    border-bottom: 2px solid white; }
 
 .radio_box {
   line-height: 20px; }
@@ -193,7 +188,7 @@ tt {
 
 .standalone {
   background: whitesmoke;
-  border: 20px #860000 solid;
+  border: 20px lightsteelblue solid;
   margin: 75px auto 6px auto;
   padding: 20px;
   width: 400px;
@@ -242,14 +237,14 @@ tt {
   color: #3f3f3f;
   font-size: 12px;
   margin: 8px 0px 0px 0px;
-  padding-right: 13px; }
+  padding: 0px 8px 0px 0px; }
 
 .top {
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: #330000;
-  background: url("/images/asterisk.gif") no-repeat scroll right top transparent;
+  background: url("/images/asterisk.gif") no-repeat scroll center right transparent;
+  color: navy;
   float: left; }
 
 .intro {
@@ -263,6 +258,7 @@ tt {
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px; }
   .section table {
+    width: 500px;
     border-spacing: 0px;
     border-collapse: collapse; }
     .section table td {
@@ -272,7 +268,7 @@ tt {
         width: 240px; }
 
 .remote {
-  border: 5px lightgrey solid;
+  border: 5px lightblue solid;
   background: whitesmoke;
   margin: 0px;
   padding: 0px 10px 0px 10px;
@@ -283,7 +279,7 @@ tt {
     border-left: 1px gainsboro solid;
     border-bottom: 1px grey solid;
     border-right: 1px grey solid;
-    color: #330000;
+    color: navy;
     cursor: pointer;
     height: 16px;
     margin: 3px;
@@ -302,12 +298,7 @@ tt {
 .section select, .sidebar select, .inline select,
 .section textarea, .sidebar textarea, .inline textarea {
   margin: 3px 0px 0px 0px;
-  vertical-align: middle;
-  clear: both;
-  float: left; }
-
-#taggings {
-  clear: both; }
+  vertical-align: middle; }
 
 .cool {
   color: darkgreen; }
@@ -443,39 +434,14 @@ tt {
   font-size: 9px;
   margin: 12px 0px 0px 0px; }
 
-.pagination {
-  background: white;
-  /* self-clearing method: */ }
-  .pagination a, .pagination span, .pagination em {
-    padding: 0.2em 0.5em;
-    display: block;
-    float: left;
-    margin-right: 1px; }
-  .pagination span.disabled {
-    color: #999999;
-    border: 1px solid #dddddd; }
-  .pagination em {
-    font-weight: bold;
-    background: #2e6ab1;
-    color: white;
-    border: 1px solid #2e6ab1; }
-  .pagination a {
-    text-decoration: none;
-    color: #105cb6;
-    border: 1px solid #9aafe5; }
-    .pagination a:hover, .pagination a:focus {
-      color: #000033;
-      border-color: #000033; }
-  .pagination:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden; }
-  * html .pagination {
-    height: 1%; }
-  *:first-child + html .pagination {
-    overflow: hidden; }
+#paginate {
+  float: right;
+  font-size: 10px;
+  margin: 4px 0px 0px 0px; }
+
+#paging {
+  float: right;
+  margin: 7px 5px 0px 0px; }
 
 .confirm {
   background: #cdfecd;
@@ -551,12 +517,11 @@ tt {
   -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .filters h4 {
-  color: #330000;
+  color: navy;
   font-size: 12px;
   font-weight: bold; }
 .filters input[type=text] {
-  margin-bottom: 4px;
-  float: none; }
+  margin-bottom: 4px; }
 
 .panel div {
   margin: 0px 0px 10px 0px; }
@@ -578,7 +543,7 @@ tt {
     border-bottom: none; }
 .panel .caption {
   border-bottom: 1px grey solid;
-  color: #330000;
+  color: navy;
   font-size: 12px;
   font-weight: bold;
   margin: 4px 0px 2px 0px;
@@ -631,7 +596,9 @@ tt {
   position: absolute;
   top: 0px;
   width: 12em;
-  -webkit-box-shadow: 10px 10px 15px gainsboro; }
+  -webkit-box-shadow: 10px 10px 15px gainsboro;
+  ahover-background: mediumblue;
+  ahover-color: white; }
   .menu ul {
     list-style: none;
     margin: 0px;
@@ -646,9 +613,6 @@ tt {
     outline: none;
     padding: 4px 15px;
     text-decoration: none; }
-  .menu a:hover {
-    background: mediumblue;
-    color: white; }
 
 .errorExplanation {
   background-color: seashell;
@@ -682,8 +646,8 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: khaki;
-  color: #220000;
+  background: #ddff99;
+  color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {
@@ -746,111 +710,15 @@ div.auto_complete {
     text-decoration: none;
     color: #105cb6;
     border: 1px solid #9aafe5; }
-    .pagination a:hover, .pagination a:focus {
+    .pagination ahover, .pagination afocus {
       color: navy;
       background: lightyellow;
       border-color: navy; }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+@media screen and (-webkit-min-device-pixel-ratio0:) {
   .log input {
     float: left;
     margin: 1px 4px 0px 0px; }
 
   .standalone input[type="submit"] {
     font-size: 3em; } }
-
-table.asset_attributes {
-  width: 100%;
-  border-spacing: 4px; }
-  table.asset_attributes td, table.asset_attributes th {
-    border-bottom: 1px dotted silver;
-    vertical-align: top;
-    text-align: left; }
-  table.asset_attributes th {
-    font-weight: bold;
-    width: 18%;
-    padding-right: 7px;
-    text-align: right; }
-  table.asset_attributes td {
-    width: 32%;
-    color: #202020; }
-  table.asset_attributes td.last, table.asset_attributes th.last {
-    border-bottom: none; }
-
-span.fbtag {
-  -moz-border-radius: 6px 6px 6px 6px;
-  background: none repeat scroll 0 0 #dee7f8;
-  border: 1px solid #cad8f3;
-  padding: 1px 5px 2px;
-  margin: 1px;
-  font: 11px "Lucida Grande", "Verdana";
-  display: inline-block; }
-
-.section.nostyle {
-  background-color: transparent;
-  padding: 0;
-  color: black; }
-  .section.nostyle table {
-    border-spacing: 4px;
-    border-collapse: separate; }
-
-.subtitle.show_attributes {
-  margin-top: 6px; }
-
-small.subtitle_inline_info {
-  margin-left: 5px; }
-
-.mail .textile, .comment .textile {
-  margin: -5px 0 0 25px; }
-
-.mail .body p, .comment .body p {
-  margin: 15px;
-    margin-top: 10px; }
-.mail .body h1, .mail .body h2, .mail .body h3, .mail .body h4, .comment .body h1, .comment .body h2, .comment .body h3, .comment .body h4 {
-  margin: 12px; }
-.mail .body table, .comment .body table {
-  margin: 7px; }
-  .mail .body table th, .mail .body table td, .comment .body table th, .comment .body table td {
-    padding: 3px 5px; }
-  .mail .body table th, .comment .body table th {
-    text-align: right; }
-  .mail .body table td, .comment .body table td {
-    text-align: left; }
-
-.list li.mail .gravatar, .list .comment .gravatar {
-  padding: 0 !important; }
-
-.list li.mail .gravatar, .list li.comment .gravatar {
-  margin-left: 7px !important; }
-
-.indentslim a.contact_name {
-  font-size: 15px; }
-
-.list li.contact {
-  -moz-box-shadow: 1px 1px 2px #cccccc, -2px -1px 2px #cccccc;
-  border: 1px solid #cccccc;
-  margin: 13px 0;
-  padding: 6px; }
-
-.customfield_check_ok {
-  border: 5px lightgreen solid;
-  background: whitesmoke;
-  margin: 0px;
-  padding: 0px 10px 0px 10px;
-  position: relative; }
-
-.customfield_check_fail {
-  border: 5px red solid;
-  background: lightred;
-  margin: 0px;
-  padding: 0px 10px 0px 10px;
-  position: relative; }
-
-span.handle {
-  cursor: move; }
-  span.handle img {
-    vertical-align: middle;
-    margin-right: 5px; }
-
-list li tt {
-  vertical-align: middle; }

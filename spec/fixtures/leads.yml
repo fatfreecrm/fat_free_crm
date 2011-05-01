@@ -31,7 +31,7 @@
 #  background_info :string(255)
 #
 <%
-  require "ffaker"
+  require "faker"
   puts "Loading leads..."
 
   Faker::PhoneNumber::Formats = ["(###)###-####"]

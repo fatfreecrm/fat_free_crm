@@ -1,10 +1,10 @@
 #header {
-  background: #330000;
-  color: #cd7570;
+  background: #1e4262;
+  color: skyblue;
   padding: 8px 16px 8px 16px; }
   #header h3 a {
-    background: #330000;
-    color: white;
+    background: #1e4262;
+    color: greenyellow;
     font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
   #header #welcome {
@@ -14,8 +14,8 @@
       color: lightyellow;
       padding: 1px 4px 2px 4px;
       text-decoration: none; }
-      #header #welcome a:hover {
-        background: #330000;
+      #header #welcome ahover {
+        background: #1e4262;
         color: yellow; }
     #header #welcome a.selected {
       background: steelblue;
@@ -26,6 +26,7 @@
       -webkit-border-top-right-radius: 2px; }
   #header #jumpbox {
     background: steelblue;
+    margin: 2px 0px 0px 0px;
     padding: 12px;
     position: absolute;
     -moz-border-radius-bottomleft: 6px;
@@ -36,22 +37,22 @@
       color: white;
       padding: 0px 0px 4px 0px; }
       #header #jumpbox #jumpbox_menu a.selected {
-        color: #330000; }
-      #header #jumpbox #jumpbox_menu a:hover {
+        color: navy; }
+      #header #jumpbox #jumpbox_menu ahover {
         background: steelblue; }
     #header #jumpbox #jumpbox_label {
       color: white; }
     #header #jumpbox input {
       margin: 2px 0px 0px 0px; }
-    #header #jumpbox input#auto_complete_query {
-      width: 310px; }
 
 #tabs {
-  background: #330000;
+  background: #1e4262;
   height: 24px;
   padding: 0px;
   text-align: center;
-  width: 100%; }
+  width: 100%;
+  ahover-background: #97baff;
+  ahover-color: navy; }
   #tabs li {
     float: left;
     font-size: 12px;
@@ -59,7 +60,7 @@
     margin: 0px 4px 0px 16px;
     width: 80px; }
   #tabs a:link, #tabs a:visited {
-    background: #860000;
+    background: #466bb1;
     color: white;
     float: left;
     padding: 4px 8px 5px 8px;
@@ -70,12 +71,9 @@
     -moz-border-radius-topright: 3px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px; }
-  #tabs a:hover {
-    background: #cd7570;
-    color: #330000; }
   #tabs a:link.active, #tabs a:visited.active {
-    background: white;
-    color: #330000;
+    background: azure;
+    color: navy;
     text-decoration: none; }
 
 #footer {

@@ -1,6 +1,6 @@
 .title {
   border-bottom: 1px gray solid;
-  color: black;
+  color: #342d7e;
   font-size: 17px;
   font-weight: bold;
   padding-bottom: 2px; }
@@ -17,18 +17,15 @@
   border-bottom: 1px silver solid;
   color: #2f2f2f;
   font-size: 13px;
-  font-weight: bold; }
+  font-weight: bold;
+  ahover-background: none; }
   .subtitle a:link, .subtitle a:visited {
     color: darkslateblue;
     text-decoration: none; }
-  .subtitle a:hover {
-    background: none; }
 
 .subtitle_tools {
   font-size: 11px;
   float: right; }
-  .subtitle_tools a {
-    border-bottom: 2px solid white; }
 
 .radio_box {
   line-height: 20px; }
@@ -50,7 +47,7 @@
 
 .standalone {
   background: whitesmoke;
-  border: 20px #860000 solid;
+  border: 20px lightsteelblue solid;
   margin: 75px auto 6px auto;
   padding: 20px;
   width: 400px;
@@ -99,14 +96,14 @@
   color: #3f3f3f;
   font-size: 12px;
   margin: 8px 0px 0px 0px;
-  padding-right: 13px; }
+  padding: 0px 8px 0px 0px; }
 
 .top {
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: #330000;
-  background: url("/images/asterisk.gif") no-repeat scroll right top transparent;
+  background: url("/images/asterisk.gif") no-repeat scroll center right transparent;
+  color: navy;
   float: left; }
 
 .intro {
@@ -120,6 +117,7 @@
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px; }
   .section table {
+    width: 500px;
     border-spacing: 0px;
     border-collapse: collapse; }
     .section table td {
@@ -129,7 +127,7 @@
         width: 240px; }
 
 .remote {
-  border: 5px lightgrey solid;
+  border: 5px lightblue solid;
   background: whitesmoke;
   margin: 0px;
   padding: 0px 10px 0px 10px;
@@ -140,7 +138,7 @@
     border-left: 1px gainsboro solid;
     border-bottom: 1px grey solid;
     border-right: 1px grey solid;
-    color: #330000;
+    color: navy;
     cursor: pointer;
     height: 16px;
     margin: 3px;
@@ -159,12 +157,7 @@
 .section select, .sidebar select, .inline select,
 .section textarea, .sidebar textarea, .inline textarea {
   margin: 3px 0px 0px 0px;
-  vertical-align: middle;
-  clear: both;
-  float: left; }
-
-#taggings {
-  clear: both; }
+  vertical-align: middle; }
 
 .cool {
   color: darkgreen; }
@@ -300,39 +293,14 @@
   font-size: 9px;
   margin: 12px 0px 0px 0px; }
 
-.pagination {
-  background: white;
-  /* self-clearing method: */ }
-  .pagination a, .pagination span, .pagination em {
-    padding: 0.2em 0.5em;
-    display: block;
-    float: left;
-    margin-right: 1px; }
-  .pagination span.disabled {
-    color: #999999;
-    border: 1px solid #dddddd; }
-  .pagination em {
-    font-weight: bold;
-    background: #2e6ab1;
-    color: white;
-    border: 1px solid #2e6ab1; }
-  .pagination a {
-    text-decoration: none;
-    color: #105cb6;
-    border: 1px solid #9aafe5; }
-    .pagination a:hover, .pagination a:focus {
-      color: #000033;
-      border-color: #000033; }
-  .pagination:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden; }
-  * html .pagination {
-    height: 1%; }
-  *:first-child + html .pagination {
-    overflow: hidden; }
+#paginate {
+  float: right;
+  font-size: 10px;
+  margin: 4px 0px 0px 0px; }
+
+#paging {
+  float: right;
+  margin: 7px 5px 0px 0px; }
 
 .confirm {
   background: #cdfecd;
@@ -408,12 +376,11 @@
   -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .filters h4 {
-  color: #330000;
+  color: navy;
   font-size: 12px;
   font-weight: bold; }
 .filters input[type=text] {
-  margin-bottom: 4px;
-  float: none; }
+  margin-bottom: 4px; }
 
 .panel div {
   margin: 0px 0px 10px 0px; }
@@ -435,7 +402,7 @@
     border-bottom: none; }
 .panel .caption {
   border-bottom: 1px grey solid;
-  color: #330000;
+  color: navy;
   font-size: 12px;
   font-weight: bold;
   margin: 4px 0px 2px 0px;
@@ -488,7 +455,9 @@
   position: absolute;
   top: 0px;
   width: 12em;
-  -webkit-box-shadow: 10px 10px 15px gainsboro; }
+  -webkit-box-shadow: 10px 10px 15px gainsboro;
+  ahover-background: mediumblue;
+  ahover-color: white; }
   .menu ul {
     list-style: none;
     margin: 0px;
@@ -503,6 +472,3 @@
     outline: none;
     padding: 4px 15px;
     text-decoration: none; }
-  .menu a:hover {
-    background: mediumblue;
-    color: white; }
