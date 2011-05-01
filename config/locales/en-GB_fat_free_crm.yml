@@ -1,5 +1,5 @@
-en-US:
-  language: English
+en-GB:
+  language: English (UK)
 
   # Generic terms.
   #----------------------------------------------------------------------------
@@ -12,7 +12,6 @@ en-US:
   select_none: '-- None --'
   select_blank: '-- Select --'
   yes_button: 'Yes'
-
 
   # Settings.
   #----------------------------------------------------------------------------
@@ -194,7 +193,7 @@ en-US:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
-  activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}.
+  activity_options: Show %{models} activities performed by %{user} in the past %{period}.
   all_users: all users
   option_after: after
   option_all: all
@@ -289,7 +288,7 @@ en-US:
   mobile_small: mobile
   open_in_window: Open %{value} in a new window
   phone_small: phone
-  phone_toll_free: Toll-free
+  phone_toll_free: Freephone
   pipeline: Pipeline
   same_as_billing: same as billing
   save_account: Save Account
@@ -303,7 +302,7 @@ en-US:
   actual: Actual
   actual_performance: Actual Performance
   budget: Budget
-  budget_label: Budget ($)
+  budget_label: Budget (£)
   campaign: Campaign
   campaign_and_leads: campaign and its leads
   campaign_small: campaign
@@ -325,7 +324,7 @@ en-US:
   objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
   objectives_small: campaign objectives
   revenue: Revenue
-  revenue_label: Revenue ($)
+  revenue_label: Revenue (£)
   revenue_number: "%{value} in revenue"
   save_campaign: Save Campaign
   start_date: Start date
@@ -403,7 +402,7 @@ en-US:
   closes_today: expected to close today!
   closing_date: closing date is %{value}
   create_opportunity: Create Opportunity
-  currency: ($)
+  currency: (£)
   days_late: Late by
   days_left: Days left
   discount: Discount
@@ -504,8 +503,8 @@ en-US:
   close_form: Close form
   confirm_delete: Are you sure you want to delete this %{value}?
   copy_permissions: Copy %{value} permissions
-  could_not_find: "Couldn't find any %{value}. Feel free to"
-  could_not_find_matching: "Couldn't find any %{value} matching"
+  could_not_find: "Couldn't find %{value}. Feel free to"
+  could_not_find_matching: "Couldn't find %{value} matching"
   create_new: create new
   create_a_new: create a new
   select_existing: select existing
@@ -535,8 +534,8 @@ en-US:
   street1: Street 1 # NEW
   street2: Street 2 # NEW
   city: City
-  zipcode: Zip Code
-  state: State
+  zipcode: Post Code
+  state: County
   country: Country
 
   # Views -> Layout.
@@ -639,14 +638,14 @@ en-US:
   #----------------------------------------------------------------------------
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
-      mmdd: "%b %e"
-      mmddyy: "%b %e, %Y"
+      mmddyyyy: "%Y-%m-%d"
+      mmdd: "%e %b"
+      mmddyy: "%e %b, %Y"
 
   time:
     formats:
-      mmddhhss: "%b %e at %l:%M%p"
-      mmddyyyy_hhmm: "%m/%d/%Y %H:%M"
+      mmddhhss: "%e %b at %l:%M%p"
+      mmddyyyy_hhmm: "%Y-%m-%d %H:%M"
 
   calendar_date_select:
     ok: OK
@@ -656,7 +655,8 @@ en-US:
 
   # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: american
+  calendar_date_select_format: iso_date
+
 
   # Recent activities extension
   #----------------------------------------------------------------------------
