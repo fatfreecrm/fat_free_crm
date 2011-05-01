@@ -32,18 +32,19 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
     self.invalid_password = false
 
     self.attempted_record = search_for_record(find_by_login_method, send(login_field))
-    if self.attempted_record.blank?
-      errors.add(login_field, :is_not_valid)
-    else
-      # Run password verification first, but then adjust the validity if both
-      # password hash and password field are blank.
-      self.invalid_password = !self.attempted_record.send(verify_password_method, send("protected_#{password_field}"))
-      if self.attempted_record.password_hash.blank? && send("protected_#{password_field}").blank?
-        self.invalid_password = false
-      end
-      if self.invalid_password?
-        errors.add(password_field, :is_not_valid)
-      end
+    if attempted_record.blank?
+      generalize_credentials_error_messages? ?
+        add_general_credentials_error :
+        errors.add(login_field, I18n.t('error_messages.login_not_found', :default => "is not valid"))
+      return
+    end
+
+    if !attempted_record.send(verify_password_method, send("protected_#{password_field}"))
+      self.invalid_password = true
+      generalize_credentials_error_messages? ?
+        add_general_credentials_error :
+        errors.add(password_field, I18n.t('error_messages.password_invalid', :default => "is not valid"))
+      return
     end
   end
 
