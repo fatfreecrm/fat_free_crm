@@ -3,16 +3,16 @@
     - when :started
       - if campaign.starts_on
         - if campaign.starts_on > Date.today
-          %span.warn= t(:was_supposed_to_start_in, :starts_in => time_ago_in_words(campaign.starts_on), :start_date => campaign.starts_on.strftime('%b %e, %Y'))
+          %span.warn= t(:was_supposed_to_start_in, :starts_in => time_ago_in_words(campaign.starts_on), :start_date => l(campaign.starts_on, :format => :mmddyy))
         - else
           = t(:started_ago, time_ago_in_words(campaign.starts_on))
-          = ' (' + campaign.starts_on.strftime('%b %e, %Y') + ')'
+          = ' (' + l(campaign.starts_on, :format => :mmddyy) + ')'
         - if campaign.ends_on
           - if campaign.ends_on > Date.today
             %span>= ", " + t(:finishes_in, distance_of_time_in_words(Date.today, campaign.ends_on))
-            = ' (' << campaign.ends_on.strftime('%b %e, %Y') << ')'
+            = ' (' << l(campaign.ends_on, :format => :mmddyy) << ')'
           - else
-            %span.warn= t(:was_supposed_to_finish, campaign.starts_on.strftime('%b %e, %Y'))
+            %span.warn= t(:was_supposed_to_finish, l(campaign.starts_on, :format => :mmddyy))
       - else
         %span.warn> #{t :no_start_date}
     - when :planned
@@ -20,10 +20,10 @@
         - if campaign.starts_on > Date.today
           = t(:starts_in, distance_of_time_in_words(Date.today, campaign.starts_on))
         - elsif campaign.starts_on < Date.today
-          %span.warn= t(:was_supposed_to_start, :time_ago => distance_of_time_in_words(campaign.starts_on, Date.today), :start_date => campaign.starts_on.strftime('%b %e, %Y'))
+          %span.warn= t(:was_supposed_to_start, :time_ago => distance_of_time_in_words(campaign.starts_on, Date.today), :start_date => l(campaign.starts_on, :format => :mmddyy))
         - else
           %span.cool #{t :starts_today}
       - else
         %span.warn> #{t :no_start_date}
     - when :completed
-      = t(:finished_on, campaign.ends_on.strftime('%b %e, %Y')) if campaign.ends_on
+      = t(:finished_on, l(campaign.ends_on, :format => :mmddyy)) if campaign.ends_on
