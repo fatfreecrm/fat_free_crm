@@ -48,8 +48,6 @@
 #  background_info :string(255)
 #
 class Lead < ActiveRecord::Base
-  acts_as_taggable
-
   belongs_to  :user
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -76,6 +74,7 @@ class Lead < ActiveRecord::Base
   sortable :by => [ "first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   is_searchable_and_filterable
+  is_taggable
 
   validates_presence_of :first_name, :message => :missing_first_name
   validates_presence_of :last_name, :message => :missing_last_name
@@ -158,18 +157,6 @@ class Lead < ActiveRecord::Base
     end
   end
   alias :name :full_name
-
-  #----------------------------------------------------------------------------
-  def add_tag(tags_to_add)
-    tag_list.add(tags_to_add, :parse => true)
-    save
-  end
-
-  #----------------------------------------------------------------------------
-  def delete_tag(tag_to_delete)
-    tag_list.remove(tag_to_delete)
-    save
-  end
 
   private
   #----------------------------------------------------------------------------

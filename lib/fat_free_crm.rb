@@ -40,5 +40,6 @@ ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
     ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
     ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
     ActiveRecord::Base.send(:include, FatFreeCRM::SearchableAndFilterable)
+    ActiveRecord::Base.send(:include, FatFreeCRM::Taggable)
 
  Rails::Plugin::Loader.send(:include, FatFreeCRM::PrependEngineViews)

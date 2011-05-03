@@ -48,8 +48,6 @@
 #  background_info :string(255)
 #
 class Contact < ActiveRecord::Base
-  acts_as_taggable
-
   belongs_to  :user
   belongs_to  :lead
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -76,6 +74,7 @@ class Contact < ActiveRecord::Base
   sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "last_name ASC"
 
   is_searchable_and_filterable
+  is_taggable
 
   validates_presence_of :first_name, :message => :missing_first_name
   validates_presence_of :last_name, :message => :missing_last_name
@@ -167,18 +166,6 @@ class Contact < ActiveRecord::Base
       end
     end
     contact
-  end
-
-  #----------------------------------------------------------------------------
-  def add_tag(tags_to_add)
-    tag_list.add(tags_to_add, :parse => true)
-    save
-  end
-
-  #----------------------------------------------------------------------------
-  def delete_tag(tag_to_delete)
-    tag_list.remove(tag_to_delete)
-    save
   end
 
   private
