@@ -23,6 +23,7 @@ require 'spec/autorun'
 require 'spec/rails'
 require "factory_girl"
 require RAILS_ROOT + "/spec/factories"
+require "email_spec"
 
 # Load shared behavior modules to be included by Runner config.
 Dir[File.dirname(__FILE__) + "/shared/*.rb"].map do |file|
@@ -40,6 +41,8 @@ Spec::Runner.configure do |config|
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
 
   config.include(SharedControllerSpecs, :type => :controller)
+  config.include(EmailSpec::Helpers)
+  config.include(EmailSpec::Matchers)
 
   config.after(:each, :type => :view) do
     # detect html-quoted entities in all rendered responses
