@@ -5,7 +5,9 @@ class UserMailer < ActionMailer::Base
     from "CRM <crm@unboxedconsulting.com>"
     reply_to "#{account.user.email}"
     recipients "#{account.assignee.email}"
-    body[:account] = account
+    body :account_url => account_url(account.id, :protocol => 'https', :host => "crm.unboxedconsulting.com"),
+         :assigner => account.user.full_name,
+         :account => account.name
   end
 
 end

@@ -1,4 +1,4 @@
-Your colleague <%= @account.user.full_name %> has assigned you Account <%= @account.name %>. 
-<%= account_url(@account.id, :protocol => 'https', :host => "crm.unboxedconsulting.com") %>
+Your colleague <%= @assigner %> has assigned you Account <%= @account %>. 
+<%= @account_url %>
 Please check the record is as complete as possible. 
 Love CRM.
