@@ -27,7 +27,6 @@ namespace :deploy do
   after "deploy:setup", "deploy:initial_setup"
   task :initial_setup do
     run "mkdir -p #{shared_path}/config"
-    put File.read(File.join(File.expand_path(File.dirname(__FILE__)), "database.yml.example")), "#{shared_path}/config/database.yml", :mode => 0600
     put File.read(File.join(File.expand_path(File.dirname(__FILE__)), "ldap.yml.example")), "#{shared_path}/config/ldap.yml", :mode => 0600
   end
 
