@@ -11,9 +11,17 @@ describe OpportunityObserver do
       end
     end
     context "stage is changed to 'lost'" do
-      it "should not change the probability" do
+      it "should set the probability to 0%" do
         opp = Factory(:opportunity, :stage => "prospecting", :probability => 25)
         opp.update_attributes(:stage => "lost")
+        opp.reload
+        opp.probability.should == 0
+      end
+    end
+    context "stage is changed to 'final_review'" do
+      it "should not change the probability" do
+        opp = Factory(:opportunity, :stage => "prospecting", :probability => 25)
+        opp.update_attributes(:stage => "final_review")
         opp.reload
         opp.probability.should == 25
       end
