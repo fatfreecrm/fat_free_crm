@@ -226,7 +226,7 @@ sv-SE:
   contact_info: Kontakt information
   current_password: Aktuellt lösenord
   edit_profile: Ändra profil
-  email: E-post
+  # email: E-post # <-- Already defined as the task type if Settings.
   first_name: Förnamn
   google: Google IM
   gravatar_help: Känner du inte till Gravatars? Lär dig om Gravatars

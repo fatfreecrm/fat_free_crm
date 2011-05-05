@@ -236,7 +236,7 @@ ru:
   contact_info: Контактная Информация
   current_password: Текущий пароль
   edit_profile: Изменить Профиль
-  email: E-mail
+  # email: E-mail # <-- Already defined as the task type if Settings.
   first_name: Имя
   google: Google IM
   gravatar_help: Не знаете что такое Gravatar? Почитать про Gravatar

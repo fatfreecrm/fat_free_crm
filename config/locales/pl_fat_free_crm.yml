@@ -236,7 +236,7 @@ pl:
   contact_info: Informacje kontaktowe
   current_password: Aktualne hasło
   edit_profile: Zmień dane
-  email: Email
+  # email: Email # <-- Already defined as the task type if Settings.
   first_name: Imię
   google: Google IM
   gravatar_help: Nie wiesz, co to są gravatary? Dowiedz się

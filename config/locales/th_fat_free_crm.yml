@@ -234,7 +234,7 @@ th:
   contact_info: ข้อมูลใช้ในการติดต่อ
   current_password: รหัสผ่านปัจจุบัน
   edit_profile: แก้ไขโพรไฟล์
-  email: อีเมล์
+  # email: อีเมล์ # <-- Already defined as the task type if Settings.
   first_name: ชื่อจริง
   google: Google IM
   gravatar_help: หากไม่เข้าใจ Gravatars ลองเรียนรูป Gravatars ได้

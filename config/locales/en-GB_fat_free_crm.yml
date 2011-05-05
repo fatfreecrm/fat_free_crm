@@ -232,7 +232,7 @@ en-GB:
   contact_info: Contact Information
   current_password: Current password
   edit_profile: Edit Profile
-  email: Email
+  # email: Email # <-- Already defined as the task type if Settings.
   first_name: First name
   google: Google IM
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
@@ -656,22 +656,3 @@ en-GB:
   # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: iso_date
-
-
-  # Recent activities extension
-  #----------------------------------------------------------------------------
-  created: created
-  email: emailed
-  commented: commented
-  viewed: viewed
-  updated: updated
-  deleted: deleted
-  all_actions: activities
-  created_past_participle: Creations
-  commented_past_participle: Comments
-  email_past_participle: Emails
-  viewed_past_participle: Views
-  updated_past_participle: Updates
-  deleted_past_participle: Deletions
-  all_actions_past_participle: Activities
-

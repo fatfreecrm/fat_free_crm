@@ -234,7 +234,7 @@ ja:
   contact_info: 連絡先情報
   current_password: 現在のパスワード
   edit_profile: プロフィール編集
-  email: Eメール
+  # email: Eメール # <-- Already defined as the task type if Settings.
   first_name: First name
   google: Google IM
   gravatar_help: Gravatarsをご存知ない？ Gravatarsについては

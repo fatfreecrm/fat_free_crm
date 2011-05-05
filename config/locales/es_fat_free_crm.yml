@@ -239,7 +239,7 @@
   contact_info: Información de Contacto
   current_password: Contraseña actual
   edit_profile: Editar Perfil
-  email: Correo electrónico
+  # email: Correo electrónico # <-- Already defined as the task type if Settings.
   first_name: Nombre
   google: Google IM
   gravatar_help: ¿No sabe qué son Gravatars? Conózcalos

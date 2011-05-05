@@ -234,7 +234,7 @@ zh-CN:
   contact_info: 联系人信息
   current_password: 旧密码
   edit_profile: 编辑个人设置
-  email: Email
+  # email: Email # <-- Already defined as the task type if Settings.
   first_name: 名
   google: Google IM
   gravatar_help: 不熟悉 Gravatars? 了解 Gravatars
