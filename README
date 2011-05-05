@@ -4,13 +4,6 @@ This is Rails3 branch of Fat Free CRM. Visit http://www.fatfreecrm.com
 for more information about the project.
 
 
-Additional information for developing on the Crossroads fat_free_crm fork:
-
-* clone the repo - git clone git@github.com:crossroads/fat_free_crm.git
-* initialise submodules - git submodule init
-* install git hooks for submodules - rake git:install_hooks
-
-
 === License
 
 Copyright (c) 2008-2011 by Michael Dvorkin. All rights reserved.
