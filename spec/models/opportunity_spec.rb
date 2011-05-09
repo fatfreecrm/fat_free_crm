@@ -313,4 +313,34 @@ describe Opportunity do
       leads.should == [opportunity1, opportunity5]
     end
   end
+  describe "named_scopes" do
+    context "mine" do
+      before :each do
+        @user = Factory(:user, :first_name => "it_is", :last_name => "me", :email => "me@example.com")
+        @opportunity_1 = Factory(:opportunity, :name => "Your first opportunity", :closes_on => 15.days.from_now, :assigned_to => @user.id)      
+        @opportunity_2 = Factory(:opportunity, :name => "Another opportunity for you", :closes_on => 10.days.from_now, :assigned_to => @user.id)
+        @opportunity_3 = Factory(:opportunity, :name => "Third Opportunity", :closes_on => 5.days.from_now, :assigned_to => @user.id)
+        @opportunity_4 = Factory(:opportunity, :name => "Fourth Opportunity", :closes_on => 50.days.from_now, :assigned_to => nil, :user_id => @user.id)
+
+        @opportunity_5 = Factory(:opportunity, :user_id => @user.id, :name => "Someone else's Opportunity", :assigned_to => Factory(:user))
+        @opportunity_6 = Factory(:opportunity, :name => "Not my opportunity", :assigned_to => Factory(:user))
+
+      end
+      it "should return opportunities assigned to a given user" do
+        Opportunity.mine(@user).include?(@opportunity_1).should be_true
+        Opportunity.mine(@user).include?(@opportunity_2).should be_true
+        Opportunity.mine(@user).include?(@opportunity_3).should be_true
+      end
+      it "should return opportunities created by a given user and not assigned to anyone" do
+        Opportunity.mine(@user).include?(@opportunity_4).should be_true
+      end
+      it "should not include opportunities assigned to anyone else" do
+        Opportunity.mine(@user).exclude?(@opportunity_5).should be_true
+        Opportunity.mine(@user).exclude?(@opportunity_6).should be_true
+      end
+      it "should order by 'closes_on'" do
+        Opportunity.mine(@user).should == [@opportunity_3, @opportunity_2, @opportunity_1, @opportunity_4]
+      end
+    end
+  end
 end
