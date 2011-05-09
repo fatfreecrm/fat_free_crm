@@ -12,6 +12,29 @@
   - else
     #{t :no_activity_records}
 
+.title
+  %span#title #{t :my_tasks}
+.list#tasks
+  - unless @my_tasks.empty?
+    = render :partial => "home/task", :collection => @my_tasks
+  - else
+    #{t :no_task_records}
+        
+.title
+  %span#title #{t :my_opportunities}
+.list#opportunities
+  - unless @my_opportunities.empty?
+    = render :partial => "home/opportunity", :collection => @my_opportunities
+  - else
+    #{t :no_opportunity_records}
+    
+.title
+  %span#title #{t :my_accounts}
+.list#accounts
+  - unless @my_accounts.empty?
+    = render :partial => "home/account", :collection => @my_accounts
+  - else
+    #{t :no_account_records}
 /
   Check out HTML source to view the output of the hook if you have sample plugin installed
   http://github.com/michaeldv/crm_sample_plugin/tree/master

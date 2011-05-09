@@ -26,6 +26,9 @@ class HomeController < ApplicationController
     hook(:home_controller, self, :params => "it works!")
 
     @activities = get_activities
+    @my_tasks = Task.my({:user => @current_user, :order => "due_at ASC"})
+    @my_opportunities = Opportunity.mine(@current_user)
+    @my_accounts = Account.mine(@current_user)
   end
 
   # GET /home/options                                                      AJAX
