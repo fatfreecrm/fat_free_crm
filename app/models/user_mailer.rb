@@ -24,7 +24,7 @@ class UserMailer < ActionMailer::Base
   
   def assigned_to_resource_email_notification(resource)
     subject "You have been assigned #{@resource_name} #{resource.class.name} in CRM"
-    from "CRM <#{AppConfig.admin_email_address}>"
+    from "CRM donotreply@crm.ubxdstage.com"
     reply_to "#{resource.user.email}"
     recipients "#{resource.assignee.email}"
     body :resource_url => self.send("#{resource.class.name.downcase}_url".to_sym, resource.id, :protocol => 'https', :host => "crm.unboxedconsulting.com"),
