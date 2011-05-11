@@ -1,4 +1,4 @@
-set :rails_env, "production"
+set :rails_env, "staging"
 
 set :app_server, "crm.ubxdstage.com"
 
