@@ -1,0 +1,8 @@
+development:
+  admin_email_address: donotreply@crm.unboxedconsulting.com
+  
+production:
+  admin_email_address: donotreply@crm.unboxedconsulting.com
+
+staging:
+  admin_email_address: donotreply@crm.unboxedconsulting.com
