@@ -84,4 +84,23 @@ describe ApplicationHelper do
       path.should == "/accounts/#{account.id}/delete_tag"
     end
   end
+  describe "assigned_to_select" do
+    before :each do
+      @user1 = Factory(:user, :first_name => "michael", :last_name => "smith")
+      @user2 = Factory(:user, :first_name => "jack", :last_name => "wilson")
+      @user3 = Factory(:user, :first_name => "anne", :last_name => "wilkinson")
+      assigns[:users] = [@user1, @user2, @user3]
+      assigns[:current_user] = @user2
+      @opportunity = Factory(:opportunity, :assigned_to => @user1.id)
+    end
+    it "should generate a select tag with the assigned user selected" do
+      (helper.assigned_to_select_for(@opportunity) =~ Regexp.new("<option value=\\\"#{@user1.id}\\\" selected=\\\"selected\\\">#{@user1.full_name}</option>")).should_not be_nil
+    end
+    it "should include the current_user" do
+      (helper.assigned_to_select_for(@opportunity) =~ Regexp.new("<option value=\\\"#{@user2.id}\\\">#{t(:myself)}</option>")).should_not be_nil
+    end
+    it "should include unassigned" do
+      (helper.assigned_to_select_for(@opportunity) =~ Regexp.new("<option value=\\\"\\\">#{t(:unassigned)}</option>")).should_not be_nil
+    end
+  end
 end

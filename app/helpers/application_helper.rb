@@ -378,4 +378,8 @@ module ApplicationHelper
     class_name = owner.class.name.downcase
     send(:"delete_tag_#{class_name}_path", owner)
   end
+  
+  def assigned_to_select_for(object)
+    select(object.class.name.downcase, :assigned_to, options_for_select([[t(:myself), current_user.id]]+@users.collect{|user| [ user.full_name, user.id ]}, :selected =>object.assigned_to), { :include_blank => t(:unassigned)}, { :style => "width:160px" })
+  end
 end
