@@ -91,13 +91,14 @@ describe ApplicationHelper do
       @user3 = Factory(:user, :first_name => "anne", :last_name => "wilkinson")
       assigns[:users] = [@user1, @user2, @user3]
       assigns[:current_user] = @user2
-      @opportunity = Factory(:opportunity, :assigned_to => @user1.id)
+      @opportunity = Factory(:opportunity, :assigned_to => nil)
     end
     it "should generate a select tag with the assigned user selected" do
+      @opportunity.update_attributes(:assigned_to => @user1.id)
       (helper.assigned_to_select_for(@opportunity) =~ Regexp.new("<option value=\\\"#{@user1.id}\\\" selected=\\\"selected\\\">#{@user1.full_name}</option>")).should_not be_nil
     end
-    it "should include the current_user" do
-      (helper.assigned_to_select_for(@opportunity) =~ Regexp.new("<option value=\\\"#{@user2.id}\\\">#{t(:myself)}</option>")).should_not be_nil
+    it "should generate a select tag with the current_user selected by default" do
+      (helper.assigned_to_select_for(@opportunity) =~ Regexp.new("<option value=\\\"#{@user2.id}\\\" selected=\\\"selected\\\">#{t(:myself)}</option>")).should_not be_nil
     end
     it "should include unassigned" do
       (helper.assigned_to_select_for(@opportunity) =~ Regexp.new("<option value=\\\"\\\">#{t(:unassigned)}</option>")).should_not be_nil
