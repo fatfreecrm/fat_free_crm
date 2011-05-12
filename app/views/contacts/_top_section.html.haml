@@ -41,7 +41,7 @@
         %td= spacer
         %td(valign="top")
           .label #{t :assigned_to}:
-          = collection_select :contact, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
+          = assigned_to_select_for(@contact)
 
       - if Setting.background_info && Setting.background_info.include?(:contact)
         %tr

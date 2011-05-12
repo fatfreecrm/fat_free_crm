@@ -10,7 +10,7 @@
       %tr
         %td{ :valign => :top }
           .label.top #{t :assigned_to}:
-          = collection_select :lead, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
+          = assigned_to_select_for(@lead)
         %td= spacer
         %td{ :valign => :top }
           .label.top #{t :status}:

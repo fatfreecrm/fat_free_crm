@@ -17,7 +17,7 @@
       %td= spacer
       %td(valign="top")
         .label.req #{t :assign_to}:
-        = collection_select :task, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px", :disabled => @task.assigned_to == @current_user.id }
+        = assigned_to_select_for(@task)
       %td= spacer
       %td(valign="top")
         .label.req #{t :category}:
