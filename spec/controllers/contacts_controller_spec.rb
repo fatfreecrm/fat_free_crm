@@ -139,6 +139,15 @@ describe ContactsController do
       assigns[:opportunity].should == nil
       response.should render_template("contacts/new")
     end
+    
+    it "should order the assigned @users by name" do
+      @contact = Contact.new(:user => @current_user)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :new
+      assigns[:users].should == [user2, user1, user3]
+    end
 
     it "should created an instance of related object when necessary" do
       @opportunity = Factory(:opportunity)
@@ -181,6 +190,15 @@ describe ContactsController do
       assigns[:account].attributes.should == @account.attributes
       assigns[:previous].should == nil
       response.should render_template("contacts/edit")
+    end
+    
+    it "should order the assigned @users by name" do
+      @contact = Factory(:contact, :id => 42, :user => @current_user, :lead => nil)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :edit, :id => 42
+      assigns[:users].should == [user2, user1, user3]
     end
 
     it "should expose the requested contact as @contact and linked account as @account" do
@@ -262,7 +280,7 @@ describe ContactsController do
         assigns(:contact).account.name.should == "Hello world"
         response.should render_template("contacts/create")
       end
-
+      
       it "should be able to associate newly created contact with the opportunity" do
         @opportunity = Factory(:opportunity, :id => 987);
         @contact = Factory.build(:contact)
@@ -291,6 +309,15 @@ describe ContactsController do
         @users = [ Factory(:user) ]
       end
 
+      it "should order the assigned @users by name" do
+        @account = Factory(:account, :id => 42, :user => @current_user)
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :post, :create, :contact => {}, :account => { :id => 42, :user_id => @current_user.id }
+        assigns[:users].should == User.except(@current_user).active.by_name.all
+      end
+      
       # Redraw [create] form with selected account.
       it "should redraw [Create Contact] form with selected account" do
         @account = Factory(:account, :id => 42, :user => @current_user)
@@ -418,6 +445,16 @@ describe ContactsController do
         assigns(:account).attributes.should == @account.attributes
         assigns(:users).should == @users
         response.should render_template("contacts/update")
+      end
+      
+      it "should order the assigned @users by name" do
+        @contact = Factory(:contact, :id => 42, :user => @current_user, :first_name => "Billy", :lead => nil)
+        @account = Account.new(:user => @current_user)
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => {}
+        assigns[:users].should == User.except(@current_user).active.by_name.all
       end
 
       it "should expose existing account as @account if selected" do
