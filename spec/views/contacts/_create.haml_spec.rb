@@ -25,7 +25,8 @@ describe "/contacts/_create.html.haml" do
   it "should pick default assignee (Myself)" do
     render "/contacts/_create.html.haml"
     response.should have_tag("select[id=contact_assigned_to]") do |options|
-      options.to_s.should_not include_text(%Q/selected="selected"/)
+      with_tag "option[selected=selected]"
+      with_tag "option[value=#{@current_user.id}]"
     end
   end
 

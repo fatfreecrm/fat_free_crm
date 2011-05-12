@@ -26,10 +26,11 @@ describe "/contacts/edit.html.erb" do
   it "should pick default assignee (Myself)" do
     assigns[:users] = [ @current_user ]
     assigns[:contact] = Factory(:contact, :assignee => nil)
-
+    
     render "/contacts/_edit.html.haml"
     response.should have_tag("select[id=contact_assigned_to]") do |options|
-      options.to_s.should_not include_text(%Q/selected="selected"/)
+      with_tag "option[selected=selected]"
+      with_tag "option[value=#{@current_user.id}]"
     end
   end
 
