@@ -61,7 +61,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @campaign = Campaign.new(:user => @current_user, :access => Setting.default_access)
-    @users = User.except(@current_user).active.all
+    @users = User.except(@current_user).active.by_name.all
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
@@ -77,7 +77,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @campaign = Campaign.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).active.all
+    @users = User.except(@current_user).active.by_name.all
     if params[:previous] =~ /(\d+)\z/
       @previous = Campaign.my(@current_user).find($1)
     end
@@ -92,7 +92,6 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @campaign = Campaign.new(params[:campaign])
-    @users = User.except(@current_user).active.all
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
@@ -101,6 +100,7 @@ class CampaignsController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
       else
+        @users = User.except(@current_user).active.by_name.all
         format.js   # create.js.rjs
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
@@ -119,7 +119,7 @@ class CampaignsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).active.all # Need it to redraw [Edit Campaign] form.
+        @users = User.except(@current_user).active.by_name.all # Need it to redraw [Edit Campaign] form.
         format.js
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end

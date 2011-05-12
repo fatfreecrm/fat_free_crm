@@ -164,6 +164,15 @@ describe CampaignsController do
       response.should render_template("campaigns/new")
     end
 
+    it "should order the assigned @users by name" do
+      @campaign = Campaign.new(:user => @current_user)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :new
+      assigns[:users].should == [user2, user1, user3]
+    end
+    
     it "should create related object when necessary" do
       @lead = Factory(:lead, :id => 42)
 
@@ -185,6 +194,15 @@ describe CampaignsController do
       assigns[:campaign].should == @campaign
       assigns[:users].should == @users
       response.should render_template("campaigns/edit")
+    end
+    
+    it "should order the assigned @users by name" do
+      @campaign = Factory(:campaign, :id => 42, :user => @current_user)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :edit, :id => 42
+      assigns[:users].should == [user2, user1, user3]
     end
 
     it "should find previous campaign as necessary" do
@@ -255,10 +273,9 @@ describe CampaignsController do
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns(:campaign).should == @campaign
-        assigns(:users).should == @users
         response.should render_template("campaigns/create")
       end
-
+      
       it "should get data to update campaign sidebar" do
         @campaign = Factory.build(:campaign, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
@@ -290,6 +307,16 @@ describe CampaignsController do
         assigns(:users).should == @users
         response.should render_template("campaigns/create")
       end
+      
+      it "should order the assigned @users by name" do
+        @campaign = Factory.build(:campaign, :id => nil, :name => nil, :user => nil)
+        Campaign.stub!(:new).and_return(@campaign)     
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :post, :create, :campaign => nil, :users => %w(1 2 3)
+        assigns[:users].should == [user2, user1, user3]      
+      end
 
     end
 
@@ -298,7 +325,7 @@ describe CampaignsController do
   # PUT /campaigns/1
   # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
 
@@ -310,7 +337,7 @@ describe CampaignsController do
         assigns(:campaign).should == @campaign
         response.should render_template("campaigns/update")
       end
-
+      
       it "should get data for campaigns sidebar when called from Campaigns index" do
         @campaign = Factory(:campaign, :id => 42)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
@@ -362,6 +389,15 @@ describe CampaignsController do
         assigns(:campaign).should == @campaign
         assigns(:users).should == @users
         response.should render_template("campaigns/update")
+      end
+      
+      it "should order the assigned @users by name" do
+        @campaign = Factory(:campaign, :id => 42, :name => "Hello", :user => nil)
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :put, :update, :id => 42, :campaign => { :name => nil }
+        assigns[:users].should == [user2, user1, user3]      
       end
 
     end
