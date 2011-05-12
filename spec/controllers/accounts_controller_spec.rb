@@ -134,6 +134,15 @@ describe AccountsController do
       response.should render_template("accounts/new")
     end
 
+    it "should order the assigned @users by name" do
+      @account = Account.new(:user => @current_user)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :new
+      assigns[:users].should == [user2, user1, user3]
+    end
+    
     it "should created an instance of related object when necessary" do
       @contact = Factory(:contact, :id => 42)
 
@@ -158,6 +167,15 @@ describe AccountsController do
       response.should render_template("accounts/edit")
     end
 
+    it "should order the assigned @users by name" do
+      @account = Factory(:account, :id => 42, :user => @current_user)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :edit, :id => 42
+      assigns[:users].should == [user2, user1, user3]
+    end
+    
     it "should expose previous account as @previous when necessary" do
       @account = Factory(:account, :id => 42)
       @previous = Factory(:account, :id => 41)
@@ -222,13 +240,12 @@ describe AccountsController do
         @account = Factory.build(:account, :name => "Hello world", :user => @current_user)
         Account.stub!(:new).and_return(@account)
         @users = [ Factory(:user) ]
-
+        
         xhr :post, :create, :account => { :name => "Hello world" }, :users => %w(1 2 3)
         assigns(:account).should == @account
-        assigns(:users).should == @users
         response.should render_template("accounts/create")
       end
-
+      
       # Note: [Create Account] is shown only on Accounts index page.
       it "should reload accounts to update pagination" do
         @account = Factory.build(:account, :user => @current_user)
@@ -251,6 +268,16 @@ describe AccountsController do
         assigns(:users).should == @users
         response.should render_template("accounts/create")
       end
+      
+      it "should order the assigned @users by name" do
+        @account = Factory.build(:account, :name => nil, :user => nil)
+        Account.stub!(:new).and_return(@account)
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :post, :create, :account => {}, :users => []
+        assigns[:users].should == [user2, user1, user3]
+      end
     end
   
   end
@@ -258,7 +285,7 @@ describe AccountsController do
   # PUT /accounts/1
   # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
   
     describe "with valid params" do
       it "should update the requested account, expose the requested account as @account, and render [update] template" do
@@ -269,7 +296,7 @@ describe AccountsController do
         assigns(:account).should == @account
         response.should render_template("accounts/update")
       end
-
+      
       it "should update account permissions when sharing with specific users" do
         @account = Factory(:account, :id => 42, :access => "Public")
         he  = Factory(:user, :id => 7)
@@ -308,6 +335,15 @@ describe AccountsController do
         @account.reload.name.should == "Hello people"
         assigns(:account).should == @account
         response.should render_template("accounts/update")
+      end
+      
+      it "should order the assigned @users by name" do
+        @account = Factory(:account, :id => 42, :name => "Hello people", :user => nil)
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :put, :update, :id => 42, :account => { :name => nil }
+        assigns[:users].should == [user2, user1, user3]
       end
     end
 
