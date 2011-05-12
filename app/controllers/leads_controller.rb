@@ -60,7 +60,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @lead = Lead.new(:access => Setting.default_access)
-    @users = User.except(@current_user).active.all
+    @users = User.except(@current_user).active.by_name.all
     @campaigns = Campaign.my(@current_user).all(:order => "name")
     if params[:related]
       model, id = params[:related].split("_")
@@ -80,7 +80,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).active.all
+    @users = User.except(@current_user).active.by_name.all
     @campaigns = Campaign.my(@current_user).all(:order => "name")
     if params[:previous] =~ /(\d+)\z/
       @previous = Lead.my(@current_user).find($1)
@@ -96,7 +96,6 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @lead = Lead.new(params[:lead])
-    @users = User.except(@current_user).active.all
     @campaigns = Campaign.my(@current_user).all(:order => "name")
 
     respond_to do |format|
@@ -110,6 +109,7 @@ class LeadsController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
       else
+        @users = User.except(@current_user).active.by_name.all
         format.js   # create.js.rjs
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
@@ -128,7 +128,7 @@ class LeadsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).active.all
+        @users = User.except(@current_user).active.by_name.all
         @campaigns = Campaign.my(@current_user).all(:order => "name")
         format.js
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }

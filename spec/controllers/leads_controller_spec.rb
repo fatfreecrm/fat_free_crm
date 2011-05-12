@@ -205,6 +205,16 @@ describe LeadsController do
       assigns[:campaigns].should == @campaigns
       response.should render_template("leads/new")
     end
+    
+    it "should order the assigned @users by name" do
+      @lead = Factory.build(:lead, :user => @current_user, :campaign => nil)
+      Lead.stub!(:new).and_return(@lead)      
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :new
+      assigns[:users].should == [user2, user1, user3]
+    end
 
     it "should create related object when necessary" do
       @campaign = Factory(:campaign, :id => 123)
@@ -247,6 +257,15 @@ describe LeadsController do
       assigns[:users].should == @users
       assigns[:campaigns].should == @campaigns
       response.should render_template("leads/edit")
+    end
+    
+    it "should order the assigned @users by name" do
+      @lead = Factory(:lead, :id => 42, :user => @current_user, :campaign => nil)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :edit, :id => 42
+      assigns[:users].should == [user2, user1, user3]
     end
 
     it "should find previous lead when necessary" do
@@ -312,12 +331,10 @@ describe LeadsController do
       it "should expose a newly created lead as @lead and render [create] template" do
         @lead = Factory.build(:lead, :user => @current_user, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
-        @users = [ Factory(:user) ]
         @campaigns = [ Factory(:campaign, :user => @current_user) ]
 
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
         assigns(:lead).should == @lead
-        assigns(:users).should == @users
         assigns(:campaigns).should == @campaigns
         assigns[:lead_status_total].should be_nil
         response.should render_template("leads/create")
@@ -385,6 +402,16 @@ describe LeadsController do
         assigns[:lead_status_total].should == nil
         response.should render_template("leads/create")
       end
+      
+      it "should order the assigned @users by name" do
+        @lead = Factory.build(:lead, :user => @current_user, :first_name => nil, :campaign => nil)
+        Lead.stub!(:new).and_return(@lead)       
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :post, :create, :lead => { :first_name => nil }, :users => nil
+        assigns[:users].should == [user2, user1, user3]
+      end
 
     end
 
@@ -393,7 +420,7 @@ describe LeadsController do
   # PUT /leads/1
   # PUT /leads/1.xml
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
 
@@ -406,7 +433,7 @@ describe LeadsController do
         assigns[:lead_status_total].should == nil
         response.should render_template("leads/update")
       end
-
+      
       it "should update lead status" do
         @lead = Factory(:lead, :status => "new", :user => @current_user)
 
@@ -520,6 +547,16 @@ describe LeadsController do
         response.should render_template("leads/update")
       end
 
+      it "should order the assigned @users by name" do
+        @lead = Factory(:lead, :id => 42, :user => @current_user, :campaign => nil)
+     
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :put, :update, :id => 42, :lead => { :first_name => nil }
+        assigns[:users].should == [user2, user1, user3]
+      end
+      
     end
 
   end
