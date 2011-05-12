@@ -207,6 +207,15 @@ describe OpportunitiesController do
       response.should render_template("opportunities/new")
     end
 
+    it "should order the assigned @users by name" do
+      @opportunity = Opportunity.new(:user => @current_user, :access => "Private", :stage => "prospecting")
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :new
+      assigns[:users].should == [user2, user1, user3]
+    end
+    
     it "should created an instance of related object when necessary" do
       @contact = Factory(:contact, :id => 42)
 
@@ -257,6 +266,15 @@ describe OpportunitiesController do
       response.should render_template("opportunities/edit")
     end
 
+    it "should order the assigned @users by name" do
+      @opportunity = Factory(:opportunity, :id => 42, :user => @current_user, :campaign => nil)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :edit, :id => 42
+      assigns[:users].should == [user2, user1, user3]
+    end
+    
     it "should expose previous opportunity as @previous when necessary" do
       @opportunity = Factory(:opportunity, :id => 42)
       @previous = Factory(:opportunity, :id => 41)
@@ -441,6 +459,16 @@ describe OpportunitiesController do
         assigns(:contact).should == @contact
         response.should render_template("opportunities/create")
       end
+      
+      it "should order the assigned @users by name" do
+        @opportunity = Factory.build(:opportunity, :name => nil, :campaign => nil, :user => @current_user)
+        Opportunity.stub!(:new).and_return(@opportunity)
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :post, :create, :opportunity => {}, :account => { :user_id => @current_user.id }
+        assigns[:users].should == [user2, user1, user3]
+      end
 
     end
 
@@ -449,7 +477,7 @@ describe OpportunitiesController do
   # PUT /opportunities/1
   # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
 
@@ -608,6 +636,18 @@ describe OpportunitiesController do
 
         xhr :put, :update, :id => 42, :opportunity => { :name => nil }, :account => { :id => 99 }
         assigns(:account).should == @account
+      end
+      
+      it "should order the assigned @users by name" do
+        @opportunity = Factory.build(:opportunity, :name => nil, :campaign => nil, :user => nil)
+        Opportunity.stub!(:find).and_return(@opportunity)
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        
+        xhr :put, :update, :id => 42, :opportunity => { :name => nil }, :account => {}
+        
+        assigns[:users].should == [user2, user1, user3]
       end
 
     end
