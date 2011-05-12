@@ -125,6 +125,17 @@ describe TasksController do
       response.should render_template("tasks/new")
     end
 
+    it "should order the assigned @users by name" do
+      account = Factory(:account, :user => @current_user)
+      @task = Factory.build(:task, :user => @current_user, :asset => account)
+      Task.stub!(:new).and_return(@task)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :new
+      assigns[:users].should == [user2, user1, user3]
+    end
+    
     it "should find related asset when necessary" do
       @asset = Factory(:account, :id => 42)
 
@@ -171,6 +182,16 @@ describe TasksController do
       assigns[:category].should == @category
       assigns[:asset].should == @asset
       response.should render_template("tasks/edit")
+    end
+    
+    it "should order the assigned @users by name" do
+      @asset = Factory(:account, :user => @current_user)
+      @task = Factory(:task, :user => @current_user, :asset => @asset)
+      user1 = Factory(:user, :first_name => "berty")
+      user2 = Factory(:user, :first_name => "a-man")
+      user3 = Factory(:user, :first_name => "danny")
+      xhr :get, :edit, :id => @task.id
+      assigns[:users].should == [user2, user1, user3]
     end
 
     it "should find previously open task when necessary" do
@@ -271,6 +292,16 @@ describe TasksController do
         assigns[:task_total].should == nil
         response.should render_template("tasks/create")
       end
+      
+      it "should order the assigned @users by name" do
+        @task = Factory.build(:task, :name => nil, :user => @current_user)
+        Task.stub!(:new).and_return(@task)
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :post, :create, :task => {}
+        assigns[:users].should == [user2, user1, user3]
+      end
 
     end
 
@@ -314,6 +345,16 @@ describe TasksController do
         assigns(:view).should == "pending"
         assigns[:task_total].should == nil
         response.should render_template("tasks/update")
+      end
+      
+      it "should order the assigned @users by name" do
+        @task = Factory(:task, :name => "Hi", :user => @current_user)
+        
+        user1 = Factory(:user, :first_name => "berty")
+        user2 = Factory(:user, :first_name => "a-man")
+        user3 = Factory(:user, :first_name => "danny")
+        xhr :put, :update, :id => @task.id, :task => { :name => nil }
+        assigns[:users].should == [user2, user1, user3]
       end
     end
 

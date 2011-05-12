@@ -99,6 +99,8 @@ class TasksController < ApplicationController
         format.js   # create.js.rjs
         format.xml  { render :xml => @task, :status => :created, :location => @task }
       else
+        @users = User.except(@current_user).active.by_name.all
+        
         format.js   # create.js.rjs
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
@@ -131,6 +133,8 @@ class TasksController < ApplicationController
         format.js   # update.js.rjs
         format.xml  { head :ok }
       else
+        @users = User.except(@current_user).active.by_name.all
+        
         format.js   # update.js.rjs
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
