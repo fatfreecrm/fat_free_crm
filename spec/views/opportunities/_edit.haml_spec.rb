@@ -26,7 +26,7 @@ describe "/opportunities/_edit.html.haml" do
     assigns[:opportunity] = Factory(:opportunity, :assignee => nil)
     render "/opportunities/_edit.html.haml"
 
-    response.should have_tag("select[id=contact_assigned_to]") do |options|
+    response.should have_tag("select[id=opportunity_assigned_to]") do |options|
       with_tag "option[selected=selected]"
       with_tag "option[value=#{@current_user.id}]"
     end

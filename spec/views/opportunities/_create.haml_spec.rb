@@ -5,7 +5,7 @@ describe "/opportunities/_create.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:opportunity] = Factory.build(:opportunity)
+    assigns[:opportunity] = Factory.build(:opportunity, :assigned_to => nil)
     @account = Factory(:account)
     assigns[:account] = @account
     assigns[:accounts] = [ @account ]
@@ -23,7 +23,7 @@ describe "/opportunities/_create.html.haml" do
 
   it "should pick default assignee (Myself)" do
     render "/opportunities/_create.html.haml"
-    response.should have_tag("select[id=contact_assigned_to]") do |options|
+    response.should have_tag("select[id=opportunity_assigned_to]") do |options|
       with_tag "option[selected=selected]"
       with_tag "option[value=#{@current_user.id}]"
     end
