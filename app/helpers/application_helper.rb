@@ -380,6 +380,11 @@ module ApplicationHelper
   end
   
   def assigned_to_select_for(object)
-    select(object.class.name.downcase, :assigned_to, options_for_select([[t(:myself), current_user.id]]+@users.collect{|user| [ user.full_name, user.id ]}, :selected =>object.assigned_to||current_user.id), { :include_blank => t(:unassigned)}, { :style => "width:160px" })
+    selected = if object.new_record?
+                 current_user.id
+               else
+                 object.assigned_to
+               end
+    select(object.class.name.downcase, :assigned_to, options_for_select([[t(:myself), current_user.id]]+@users.collect{|user| [ user.full_name, user.id ]}, :selected => selected), { :include_blank => t(:unassigned)}, { :style => "width:160px" })
   end
 end
