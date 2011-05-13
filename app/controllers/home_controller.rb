@@ -27,7 +27,7 @@ class HomeController < ApplicationController
 
     @activities = get_activities(:limit => 5)
     @my_tasks = Task.assigned_to({:user => @current_user, :order => "due_at ASC"})
-    @my_opportunities = Opportunity.assigned_to({:user => @current_user, :order => "closes_on ASC"})
+    @my_opportunities = Opportunity.assigned_to({:user => @current_user, :order => "closes_on ASC"}).not_closed
     @my_accounts = Account.assigned_to({:user => @current_user, :order => "name ASC"})
 
   end

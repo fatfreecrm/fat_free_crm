@@ -45,19 +45,30 @@ describe HomeController do
       get :index
       assigns[:my_tasks].should == [task_1, task_2, task_3]
     end
-    it "should get a list of my opportunities ordered by closes_on" do
+    context "list of opportunities" do
+      it "should get a list of my opportunities ordered by closes_on" do
+        #tasks assigned to the current user
+        opportunity_1 = Factory(:opportunity, :name => "Your first opportunity", :stage => "prospecting", :closes_on => 15.days.from_now, :assigned_to => @current_user.id)      
+        opportunity_2 = Factory(:opportunity, :name => "Another opportunity for you", :stage => "prospecting", :closes_on => 10.days.from_now, :assigned_to => @current_user.id)
+        opportunity_3 = Factory(:opportunity, :name => "Third Opportunity", :stage => "prospecting", :closes_on => 5.days.from_now, :assigned_to => @current_user.id)
       
-      #tasks assigned to the current user
-      opportunity_1 = Factory(:opportunity, :name => "Your first opportunity", :closes_on => 15.days.from_now, :assigned_to => @current_user.id)      
-      opportunity_2 = Factory(:opportunity, :name => "Another opportunity for you", :closes_on => 10.days.from_now, :assigned_to => @current_user.id)
-      opportunity_3 = Factory(:opportunity, :name => "Third Opportunity", :closes_on => 5.days.from_now, :assigned_to => @current_user.id)
-      
-      opportunity_4 = Factory(:opportunity, :name => "Fourth Opportunity", :closes_on => 50.days.from_now, :assigned_to => nil, :user_id => @current_user.id)
-      Factory(:opportunity, :name => "Someone else's Opportunity", :assigned_to => Factory(:user).id)
-      Factory(:opportunity, :name => "Not my opportunity", :assigned_to => Factory(:user).id)
+        opportunity_4 = Factory(:opportunity, :name => "Fourth Opportunity", :closes_on => 50.days.from_now, :assigned_to => nil, :user_id => @current_user.id)
+        Factory(:opportunity, :name => "Someone else's Opportunity", :assigned_to => Factory(:user).id)
+        Factory(:opportunity, :name => "Not my opportunity", :assigned_to => Factory(:user).id)
 
-      get :index
-      assigns[:my_opportunities].should == [opportunity_3, opportunity_2, opportunity_1]
+        get :index
+        assigns[:my_opportunities].should == [opportunity_3, opportunity_2, opportunity_1]
+      end
+      it "should not include won opportunities" do
+        Factory(:opportunity, :name => "Your first opportunity", :stage => "won", :closes_on => 5.days.ago, :assigned_to => @current_user.id)      
+        get :index
+        assigns[:my_opportunities].should == []
+      end
+      it "should not include lost opportunities" do
+        Factory(:opportunity, :name => "Your first opportunity", :stage => "lost", :closes_on => 5.days.ago, :assigned_to => @current_user.id)      
+        get :index
+        assigns[:my_opportunities].should == []
+      end
     end
     it "should get a list of my accounts ordered by name" do
       
