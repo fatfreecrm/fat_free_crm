@@ -222,4 +222,52 @@ describe Task do
     end
   end
 
+  describe "named_scopes" do
+    context "assigned_to" do
+      before :each do
+        @user = Factory(:user)
+      end
+      context "a user object is given as input" do
+        it "should return tasks which are assigned to a given user" do
+          task = Factory(:task, :assigned_to => @user.id)
+          Task.assigned_to(@user).should == [task]
+        end
+      
+        it "should not return tasks which are not assigned to a given user" do
+          Factory(:task, :assigned_to => Factory(:user))
+          Task.assigned_to(@user).should == []
+        end
+        it "should order by 'due_at ASC'" do
+          task1 = Factory.build(:task, :bucket => "specific_time", :assigned_to => @user.id)
+          task1.calendar = 5.days.from_now.to_s
+          task1.save
+          task2 = Factory.build(:task, :bucket => "specific_time", :assigned_to => @user.id)
+          task2.calendar = 2.days.from_now.to_s
+          task2.save
+          Task.assigned_to(@user).should == [task2, task1]
+        end
+      end
+      context "a user with options is given as input(a hash)" do
+        it "should return tasks which are assigned to a given user" do
+          task = Factory(:task, :assigned_to => @user.id)
+          Task.assigned_to({:user => @user}).should == [task]
+        end
+        it "should not return tasks which are not assigned to a given user" do
+          Factory(:task, :assigned_to => Factory(:user))
+          Task.assigned_to({:user => @user}).should == []
+        end
+        it "should order by 'name ASC'" do
+          task1 = Factory(:task, :name => "eat your lunch", :assigned_to => @user.id)
+          task2 = Factory(:task, :name => "zebra racing", :assigned_to => @user.id)
+          Task.assigned_to({:user => @user, :order => "name ASC"}).should == [task1, task2]
+        end
+        it "should have a limit of 2" do
+          Factory(:task, :name => "eat your lunch", :assigned_to => @user.id)
+          Factory(:task, :name => "zebra racing", :assigned_to => @user.id)
+          Factory(:task, :name => "dog walking", :assigned_to => @user.id)
+          Task.assigned_to({:user => @user, :limit => 2}).count.should == 2
+        end
+      end
+    end
+  end
 end

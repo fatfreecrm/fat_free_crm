@@ -54,6 +54,13 @@ class Task < ActiveRecord::Base
     :limit => user[:limit], # nil selects all records
     :include => :assignee
   } }
+  
+  named_scope :assigned_to, lambda { |user| {
+    :conditions => ["assigned_to = ?", user[:user] || user],
+    :order => user[:order] || "due_at ASC",
+    :limit => user[:limit], # nil selects all records
+    :include => :assignee
+  } }
 
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.
   named_scope :assigned_by, lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?", user.id, user.id ], :include => :assignee } }
