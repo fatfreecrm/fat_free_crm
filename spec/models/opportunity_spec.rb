@@ -313,33 +313,47 @@ describe Opportunity do
       leads.should == [opportunity1, opportunity5]
     end
   end
+  
   describe "named_scopes" do
-    context "mine" do
+    context "assigned_to" do
       before :each do
-        @user = Factory(:user, :first_name => "it_is", :last_name => "me", :email => "me@example.com")
-        @opportunity_1 = Factory(:opportunity, :name => "Your first opportunity", :closes_on => 15.days.from_now, :assigned_to => @user.id)      
-        @opportunity_2 = Factory(:opportunity, :name => "Another opportunity for you", :closes_on => 10.days.from_now, :assigned_to => @user.id)
-        @opportunity_3 = Factory(:opportunity, :name => "Third Opportunity", :closes_on => 5.days.from_now, :assigned_to => @user.id)
-        @opportunity_4 = Factory(:opportunity, :name => "Fourth Opportunity", :closes_on => 50.days.from_now, :assigned_to => nil, :user_id => @user.id)
-
-        @opportunity_5 = Factory(:opportunity, :user_id => @user.id, :name => "Someone else's Opportunity", :assigned_to => Factory(:user))
-        @opportunity_6 = Factory(:opportunity, :name => "Not my opportunity", :assigned_to => Factory(:user))
-
+        @user = Factory(:user)
       end
-      it "should return opportunities assigned to a given user" do
-        Opportunity.mine(@user).include?(@opportunity_1).should be_true
-        Opportunity.mine(@user).include?(@opportunity_2).should be_true
-        Opportunity.mine(@user).include?(@opportunity_3).should be_true
+      context "a user object is given as input" do
+        it "should return opportunities which are assigned to a given user" do
+          opportunity = Factory(:opportunity, :assigned_to => @user.id)
+          Opportunity.assigned_to(@user).should == [opportunity]
+        end
+        it "should not return opportunities which are not assigned to a given user" do
+          Factory(:opportunity, :assigned_to => Factory(:user))
+          Opportunity.assigned_to(@user).should == []
+        end
+        it "should order by 'closes_on ASC'" do
+          opportunity1 = Factory(:opportunity, :closes_on => 2.days.from_now, :assigned_to => @user.id)
+          opportunity2 = Factory(:opportunity, :closes_on => 1.day.from_now, :assigned_to => @user.id)
+          Opportunity.assigned_to(@user).should == [opportunity2, opportunity1]
+        end
       end
-      it "should return opportunities created by a given user and not assigned to anyone" do
-        Opportunity.mine(@user).include?(@opportunity_4).should be_true
-      end
-      it "should not include opportunities assigned to anyone else" do
-        Opportunity.mine(@user).exclude?(@opportunity_5).should be_true
-        Opportunity.mine(@user).exclude?(@opportunity_6).should be_true
-      end
-      it "should order by 'closes_on'" do
-        Opportunity.mine(@user).should == [@opportunity_3, @opportunity_2, @opportunity_1, @opportunity_4]
+      context "a user with options is given as input(a hash)" do
+        it "should return opportunities which are assigned to a given user" do
+          opportunity = Factory(:opportunity, :assigned_to => @user.id)
+          Opportunity.assigned_to({:user => @user}).should == [opportunity]
+        end
+        it "should not return opportunities which are not assigned to a given user" do
+          Factory(:opportunity, :assigned_to => Factory(:user))
+          Opportunity.assigned_to({:user => @user}).should == []
+        end
+        it "should order by 'name ASC'" do
+          opportunity1 = Factory(:opportunity, :name => "eat your lunch", :assigned_to => @user.id)
+          opportunity2 = Factory(:opportunity, :name => "zebra racing", :assigned_to => @user.id)
+          Opportunity.assigned_to({:user => @user, :order => "name ASC"}).should == [opportunity1, opportunity2]
+        end
+        it "should have a limit of 2" do
+          Factory(:opportunity, :name => "eat your lunch", :assigned_to => @user.id)
+          Factory(:opportunity, :name => "zebra racing", :assigned_to => @user.id)
+          Factory(:opportunity, :name => "dog walking", :assigned_to => @user.id)
+          Opportunity.assigned_to({:user => @user, :limit => 2}).count.should == 2
+        end
       end
     end
   end

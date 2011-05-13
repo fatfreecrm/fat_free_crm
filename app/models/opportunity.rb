@@ -51,15 +51,15 @@ class Opportunity < ActiveRecord::Base
   
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ?", user.id ] } }
-  named_scope :assigned_to, lambda { |user| { :conditions => [ "assigned_to = ?" ,user.id ] } }
   named_scope :not_lost, { :conditions => "opportunities.stage <> 'lost'"}
   
-  #this includes opportunities created by the given user but are unassigned since when you assign it to yourself it sets 'assigned_to' to nil
-  named_scope :mine, lambda { |user| {
-    :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user, user ],
-    :order => "closes_on ASC",
+  named_scope :assigned_to, lambda { |user| {
+    :conditions => ["assigned_to = ?", user[:user] || user],
+    :order => user[:order] || "closes_on ASC",
+    :limit => user[:limit], # nil selects all records
     :include => :assignee
   } }
+  
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   uses_user_permissions
   acts_as_commentable
