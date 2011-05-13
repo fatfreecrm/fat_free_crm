@@ -18,44 +18,51 @@ describe HomeController do
     end
 
     it "should get a list of my tasks ordered by due_at" do
+      
+      #tasks assigned to the current user
       task_1 = Factory(:task, :name => "Your first task", :bucket => "due_asap", :assigned_to => @current_user.id)
       task_2 = Factory.build(:task, :name => "Another task for you", :bucket => "specific_time", :assigned_to => @current_user.id)
       task_2.calendar = 5.days.from_now.to_s
       task_2.save
       task_3 = Factory(:task, :name => "Third Task", :bucket => "due_next_week", :assigned_to => @current_user.id)
+      
+      
       task_4 = Factory.build(:task, :name => "i've assigned it to myself", :user => @current_user, :assigned_to => nil, :bucket => "specific_time")
       task_4.calendar = 20.days.from_now.to_s
       task_4.save
-      
       Factory(:task, :name => "Someone else's Task", :user_id => @current_user.id, :bucket => "due_asap", :assigned_to => Factory(:user).id)
       Factory(:task, :name => "Not my task", :bucket => "due_asap", :assigned_to => Factory(:user).id)
       
       get :index
-      assigns[:my_tasks].should == [task_1, task_2, task_3, task_4]
+      assigns[:my_tasks].should == [task_1, task_2, task_3]
     end
     it "should get a list of my opportunities ordered by closes_on" do
+      
+      #tasks assigned to the current user
       opportunity_1 = Factory(:opportunity, :name => "Your first opportunity", :closes_on => 15.days.from_now, :assigned_to => @current_user.id)      
       opportunity_2 = Factory(:opportunity, :name => "Another opportunity for you", :closes_on => 10.days.from_now, :assigned_to => @current_user.id)
       opportunity_3 = Factory(:opportunity, :name => "Third Opportunity", :closes_on => 5.days.from_now, :assigned_to => @current_user.id)
+      
       opportunity_4 = Factory(:opportunity, :name => "Fourth Opportunity", :closes_on => 50.days.from_now, :assigned_to => nil, :user_id => @current_user.id)
-
       Factory(:opportunity, :name => "Someone else's Opportunity", :assigned_to => Factory(:user).id)
       Factory(:opportunity, :name => "Not my opportunity", :assigned_to => Factory(:user).id)
 
       get :index
-      assigns[:my_opportunities].should == [opportunity_3, opportunity_2, opportunity_1, opportunity_4]
+      assigns[:my_opportunities].should == [opportunity_3, opportunity_2, opportunity_1]
     end
     it "should get a list of my accounts ordered by name" do
-      account_1 = Factory(:account, :name => "Anderson", :assigned_to => @current_user.id)      
+      
+      #tasks assigned to the current user
+      account_1 = Factory(:account, :name => "Anderson", :assigned_to => @current_user.id)
       account_2 = Factory(:account, :name => "Wilson", :assigned_to => @current_user.id)
       account_3 = Factory(:account, :name => "Triple", :assigned_to => @current_user.id)
+      
       account_4 = Factory(:account, :name => "Double", :assigned_to => nil, :user_id => @current_user.id)
-
       Factory(:account, :name => "Someone else's Account", :assigned_to => Factory(:user).id)
       Factory(:account, :name => "Not my account", :assigned_to => Factory(:user).id)
 
       get :index
-      assigns[:my_accounts].should == [account_1, account_4, account_3, account_2]
+      assigns[:my_accounts].should == [account_1, account_3, account_2]
     end
     it "should assign @hello and call hook" do
       require_user
