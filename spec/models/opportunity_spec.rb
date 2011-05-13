@@ -315,6 +315,16 @@ describe Opportunity do
   end
   
   describe "named_scopes" do
+    context "not_lost" do
+      it "should return opportunities which have NOT been lost" do
+        won_opp = Factory(:opportunity, :stage => "won")
+        Opportunity.not_lost.should == [won_opp]
+      end
+      it "should NOT return opportunities which have been lost" do
+        Factory(:opportunity, :stage => "lost")
+        Opportunity.not_lost.should == []
+      end
+    end
     context "assigned_to" do
       before :each do
         @user = Factory(:user)
