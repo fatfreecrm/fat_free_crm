@@ -336,6 +336,22 @@ describe Opportunity do
         Opportunity.not_lost.should == []
       end
     end
+    
+    context "not_closed" do
+      it "should NOT return opportunities which have been lost" do
+        Factory(:opportunity, :stage => "lost")
+        Opportunity.not_closed.should == []
+      end
+      it "should NOT return opportunities which have been won" do
+        Factory(:opportunity, :stage => "won")
+        Opportunity.not_closed.should == []
+      end
+      it "should return opportunities which have NOT been won and have NOT been lost" do
+        prospecting_opp = Factory(:opportunity, :stage => "prospecting")
+        Opportunity.not_closed.should == [prospecting_opp]
+      end
+    end
+    
     context "assigned_to" do
       before :each do
         @user = Factory(:user)
