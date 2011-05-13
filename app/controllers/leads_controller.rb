@@ -100,6 +100,8 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.save_with_permissions(params)
+        @lead.update_attributes(:last_updater => @current_user)
+        
         if called_from_index_page?
           @leads = get_leads
           get_data_for_sidebar
@@ -124,6 +126,8 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
+        @lead.update_attributes(:last_updater => @current_user)
+        
         update_sidebar
         format.js
         format.xml  { head :ok }

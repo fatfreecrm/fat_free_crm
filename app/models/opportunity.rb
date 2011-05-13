@@ -41,6 +41,8 @@ class Opportunity < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
+  belongs_to  :last_updater, :class_name => "User", :foreign_key => :last_updated_by
+  
   has_one     :account_opportunity, :dependent => :destroy
   has_one     :account, :through => :account_opportunity
   has_many    :contact_opportunities, :dependent => :destroy

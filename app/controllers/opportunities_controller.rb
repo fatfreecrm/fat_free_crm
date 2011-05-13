@@ -102,6 +102,8 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
+        @opportunity.update_attributes(:last_updater => @current_user)
+        
         if called_from_index_page?
           @opportunities = get_opportunities
           get_data_for_sidebar
@@ -138,6 +140,8 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       if @opportunity.update_with_account_and_permissions(params)
+        @opportunity.update_attributes(:last_updater => @current_user)
+        
         if called_from_index_page?
           get_data_for_sidebar
         else

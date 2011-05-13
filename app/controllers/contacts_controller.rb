@@ -100,6 +100,8 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
+        @contact.update_attributes(:last_updater => @current_user)
+        
         @contacts = get_contacts if called_from_index_page?
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
@@ -130,6 +132,8 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.update_with_account_and_permissions(params)
+        @contact.update_attributes(:last_updater => @current_user)
+        
         format.js
         format.xml  { head :ok }
       else
