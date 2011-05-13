@@ -21,17 +21,6 @@ describe "/opportunities/_edit.html.haml" do
     end
   end
 
-  it "should pick default assignee (Myself)" do
-    assigns[:users] = [ @current_user ]
-    assigns[:opportunity] = Factory(:opportunity, :assignee => nil)
-    render "/opportunities/_edit.html.haml"
-
-    response.should have_tag("select[id=opportunity_assigned_to]") do |options|
-      with_tag "option[selected=selected]"
-      with_tag "option[value=#{@current_user.id}]"
-    end
-  end
-
   it "should show correct assignee" do
     @user = Factory(:user)
     assigns[:users] = [ @current_user, @user ]
