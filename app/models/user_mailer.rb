@@ -23,7 +23,7 @@ class UserMailer < ActionMailer::Base
   protected
   
   def assigned_to_resource_email_notification(resource)
-    assigner = resource.last_updater || resource.user
+    assigner = resource.last_updater
     subject "You have been assigned #{@resource_name} #{resource.class.name} in CRM"
     from "CRM <crm@unboxedconsulting.com>"
     reply_to "#{assigner.email}"
