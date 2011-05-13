@@ -25,7 +25,7 @@ class HomeController < ApplicationController
     @hello = "Hello world" # The hook below can access controller's instance variables.
     hook(:home_controller, self, :params => "it works!")
 
-    @activities = get_activities
+    @activities = get_activities(:limit => 5)
     @my_tasks = Task.assigned_to({:user => @current_user, :order => "due_at ASC"})
     @my_opportunities = Opportunity.assigned_to({:user => @current_user, :order => "closes_on ASC"})
     @my_accounts = Account.assigned_to({:user => @current_user, :order => "name ASC"})
@@ -101,7 +101,7 @@ class HomeController < ApplicationController
     options[:user] ||= activity_user
     options[:duration] ||= activity_duration
 
-    Activity.latest(options).except(:viewed).visible_to(@current_user)
+    Activity.latest(options).except(:viewed).visible_to(@current_user).limit(options[:limit])
   end
 
   #----------------------------------------------------------------------------

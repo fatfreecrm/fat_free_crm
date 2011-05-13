@@ -9,12 +9,21 @@ describe HomeController do
       require_user
     end
 
-    it "should get a list of activities" do
-      @activity = Factory(:activity, :subject => Factory(:account, :user => @current_user))
-      controller.should_receive(:get_activities).once.and_return([ @activity ])
+    context "list of activities" do
+      it "should get a list of activities" do
+        @activity = Factory(:activity, :subject => Factory(:account, :user => @current_user))
+        controller.should_receive(:get_activities).once.and_return([ @activity ])
   
-      get :index
-      assigns[:activities].should == [ @activity ]
+        get :index
+        assigns[:activities].should == [ @activity ]
+      end
+      it "should limit the list to 5" do
+        10.times do
+          Factory(:activity, :subject => Factory(:account, :user => @current_user))
+        end
+        get :index
+        assigns[:activities].count.should == 5
+      end
     end
 
     it "should get a list of my tasks ordered by due_at" do
