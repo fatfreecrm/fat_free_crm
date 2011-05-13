@@ -35,7 +35,7 @@
     %dt= @lead.referred_by ? truncate(@lead.referred_by, :length => 16) : t(:n_a)
     %tt #{t :referred_by}:
   %li
-    %dt= truncate((@lead.assigned_to ? @lead.assignee.full_name : @lead.user.full_name), :length => 16)
+    %dt= truncate((@lead.assigned_to ? @lead.assignee.full_name : t(:unassigned)), :length => 16)
     %tt #{t :assigned_to}:
   %li.last
     %dt
