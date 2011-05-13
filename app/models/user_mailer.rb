@@ -23,12 +23,13 @@ class UserMailer < ActionMailer::Base
   protected
   
   def assigned_to_resource_email_notification(resource)
+    assigner = resource.last_updater || resource.user
     subject "You have been assigned #{@resource_name} #{resource.class.name} in CRM"
     from "CRM <crm@unboxedconsulting.com>"
-    reply_to "#{resource.user.email}"
+    reply_to "#{assigner.email}"
     recipients "#{resource.assignee.email}"
     body :resource_url => self.send("#{resource.class.name.downcase}_url".to_sym, resource.id, :protocol => 'https', :host => "crm.unboxedconsulting.com"),
-         :assigner => resource.user.full_name,
+         :assigner => assigner.full_name,
          :resource => @resource_name,
          :resource_type => resource.class.name
     template :assigned_to_resource_email_notification

@@ -20,7 +20,7 @@ describe ResourceObserver do
         it "should NOT call deliver_assigned_to_#{resource_type}_email_notification" do
           user = Factory(:user)
           UserMailer.should_not_receive("deliver_assigned_to_#{resource_type}_email_notification")
-          Factory(resource_type, :assignee => user, :user => user)
+          Factory(resource_type, :assignee => user, :last_updater => user)
         end
       end
     end
@@ -44,7 +44,7 @@ describe ResourceObserver do
       context "if #{resource_type} has been re-assigned to the assigner" do
         it "should NOT call deliver_assigned_to_#{resource_type}_email_notification" do
           user = Factory(:user)
-          resource = Factory(resource_type, :user => user, :assignee => Factory(:user))
+          resource = Factory(resource_type, :last_updater => user, :assignee => Factory(:user))
           UserMailer.should_not_receive("deliver_assigned_to_#{resource_type}_email_notification")
           resource.update_attributes(:assignee => user)
         end

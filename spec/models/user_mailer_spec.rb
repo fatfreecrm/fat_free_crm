@@ -7,7 +7,7 @@ describe UserMailer do
       before :each do
         @assigner = Factory(:user, :first_name => "mike", :last_name => "reid", :email => "mike_reid@example.com")
         @assignee = Factory(:user, :first_name => "john", :last_name => "manne", :email => "john_manne@example.com")
-        @account = Factory(:account, :name => "Mastermind", :user => @assigner, :assignee => @assignee)
+        @account = Factory(:account, :name => "Mastermind", :last_updater => @assigner, :assignee => @assignee)
         @email = UserMailer.create_assigned_to_account_email_notification(@account)
       end
 
@@ -39,7 +39,7 @@ describe UserMailer do
       before :each do
         @assigner = Factory(:user, :first_name => "mike", :last_name => "reid", :email => "mike_reid@example.com")
         @assignee = Factory(:user, :first_name => "john", :last_name => "manne", :email => "john_manne@example.com")
-        @lead = Factory(:lead, :first_name => "Master", :last_name => "Mind", :user => @assigner, :assignee => @assignee)
+        @lead = Factory(:lead, :first_name => "Master", :last_name => "Mind", :last_updater => @assigner, :assignee => @assignee)
         @email = UserMailer.create_assigned_to_lead_email_notification(@lead)
       end
 
@@ -71,7 +71,7 @@ describe UserMailer do
       before :each do
         @assigner = Factory(:user, :first_name => "mike", :last_name => "reid", :email => "mike_reid@example.com")
         @assignee = Factory(:user, :first_name => "john", :last_name => "manne", :email => "john_manne@example.com")
-        @opportunity = Factory(:opportunity, :name => "Mastermind", :user => @assigner, :assignee => @assignee)
+        @opportunity = Factory(:opportunity, :name => "Mastermind", :last_updater => @assigner, :assignee => @assignee)
         @email = UserMailer.create_assigned_to_opportunity_email_notification(@opportunity)
       end
 
@@ -103,7 +103,7 @@ describe UserMailer do
       before :each do
         @assigner = Factory(:user, :first_name => "mike", :last_name => "reid", :email => "mike_reid@example.com")
         @assignee = Factory(:user, :first_name => "john", :last_name => "manne", :email => "john_manne@example.com")
-        @contact = Factory(:contact, :first_name => "Master", :last_name => "Mind", :user => @assigner, :assignee => @assignee)
+        @contact = Factory(:contact, :first_name => "Master", :last_name => "Mind", :last_updater => @assigner, :assignee => @assignee)
         @email = UserMailer.create_assigned_to_contact_email_notification(@contact)
       end
 
