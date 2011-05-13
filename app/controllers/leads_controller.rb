@@ -97,10 +97,10 @@ class LeadsController < ApplicationController
   def create
     @lead = Lead.new(params[:lead])
     @campaigns = Campaign.my(@current_user).all(:order => "name")
-
+    @lead.last_updated_by = @current_user.id
+    
     respond_to do |format|
       if @lead.save_with_permissions(params)
-        @lead.update_attributes(:last_updater => @current_user)
         
         if called_from_index_page?
           @leads = get_leads
@@ -123,10 +123,10 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @lead = Lead.my(@current_user).find(params[:id])
+    @lead.last_updated_by = @current_user.id
 
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
-        @lead.update_attributes(:last_updater => @current_user)
         
         update_sidebar
         format.js

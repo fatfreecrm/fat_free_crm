@@ -91,11 +91,10 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @account = Account.new(params[:account])
+    @account.last_updated_by = @current_user.id
 
     respond_to do |format|
-      if @account.save_with_permissions(params[:users])
-        @account.update_attributes(:last_updater => @current_user)
-        
+      if @account.save_with_permissions(params[:users])        
         # None: account can only be created from the Accounts index page, so we 
         # don't have to check whether we're on the index page.
         @accounts = get_accounts
@@ -114,11 +113,10 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @account = Account.my(@current_user).find(params[:id])
+    @account.last_updated_by = @current_user.id
 
     respond_to do |format|
-      if @account.update_with_permissions(params[:account], params[:users])
-        
-        @account.update_attributes(:last_updater => @current_user)
+      if @account.update_with_permissions(params[:account], params[:users])        
         format.js
         format.xml  { head :ok }
       else

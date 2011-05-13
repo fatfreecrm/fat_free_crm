@@ -97,11 +97,10 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @contact = Contact.new(params[:contact])
+    @contact.last_updated_by = @current_user.id
 
     respond_to do |format|
-      if @contact.save_with_account_and_permissions(params)
-        @contact.update_attributes(:last_updater => @current_user)
-        
+      if @contact.save_with_account_and_permissions(params)        
         @contacts = get_contacts if called_from_index_page?
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
@@ -129,11 +128,10 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @contact = Contact.my(@current_user).find(params[:id])
+    @contact.last_updated_by = @current_user.id
 
     respond_to do |format|
       if @contact.update_with_account_and_permissions(params)
-        @contact.update_attributes(:last_updater => @current_user)
-        
         format.js
         format.xml  { head :ok }
       else
