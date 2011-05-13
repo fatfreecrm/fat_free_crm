@@ -52,13 +52,11 @@ class Account < ActiveRecord::Base
   accepts_nested_attributes_for :shipping_address, :allow_destroy => true
   
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ? ", user.id ] } }
-  named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ? ", user.id ] } }
 
-  
-  #this includes accounts created by the given user but are unassigned since when you assign it to yourself it sets 'assigned_to' to nil
-  named_scope :mine, lambda { |user| {
-    :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user, user ],
-    :order => "name ASC",
+  named_scope :assigned_to, lambda { |user| {
+    :conditions => ["assigned_to = ?", user[:user] || user],
+    :order => user[:order] || "name ASC",
+    :limit => user[:limit], # nil selects all records
     :include => :assignee
   } }
   

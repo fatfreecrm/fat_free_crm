@@ -267,32 +267,45 @@ describe Account do
     end
   end
   describe "named_scopes" do
-    context "my" do
+    context "assigned_to" do
       before :each do
-        @user = Factory(:user, :email => "me@example.com")
-        @account_1 = Factory(:account, :name => "Anderson", :assigned_to => @user.id)      
-        @account_2 = Factory(:account, :name => "Wilson", :assigned_to => @user.id)
-        @account_3 = Factory(:account, :name => "Triple", :assigned_to => @user.id)
-        @account_4 = Factory(:account, :name => "Double", :assigned_to => nil, :user_id => @user.id)
-
-        @account_5 = Factory(:account, :user_id => @user.id, :name => "Someone else's Account", :assigned_to => Factory(:user).id)
-        @account_6 = Factory(:account, :name => "Not my account", :assigned_to => Factory(:user).id)
-
+        @user = Factory(:user)
       end
-      it "should return accounts assigned to a given user" do
-        Account.mine(@user).include?(@account_1).should be_true
-        Account.mine(@user).include?(@account_2).should be_true
-        Account.mine(@user).include?(@account_3).should be_true
+      context "a user object is given as input" do
+        it "should return accounts which are assigned to a given user" do
+          account = Factory(:account, :assigned_to => @user.id)
+          Account.assigned_to(@user).should == [account]
+        end
+        it "should not return accounts which are not assigned to a given user" do
+          Factory(:account, :assigned_to => Factory(:user))
+          Account.assigned_to(@user).should == []
+        end
+        it "should order by 'name ASC'" do
+          account1 = Factory(:account, :name => "ape", :assigned_to => @user.id)
+          account2 = Factory(:account, :name => "zebra", :assigned_to => @user.id)
+          Account.assigned_to(@user).should == [account1, account2]
+        end
       end
-      it "should return accounts created by a given user and not assigned to anyone" do
-        Account.mine(@user).include?(@account_4).should be_true
-      end
-      it "should not include accounts assigned to anyone else" do
-        Account.mine(@user).exclude?(@account_5).should be_true
-        Account.mine(@user).exclude?(@account_6).should be_true
-      end
-      it "should order by 'name'" do
-        Account.mine(@user).should == [@account_1, @account_4, @account_3, @account_2]
+      context "a user with options is given as input(a hash)" do
+        it "should return accounts which are assigned to a given user" do
+          account = Factory(:account, :assigned_to => @user.id)
+          Account.assigned_to({:user => @user}).should == [account]
+        end
+        it "should not return accounts which are not assigned to a given user" do
+          Factory(:account, :assigned_to => Factory(:user))
+          Account.assigned_to({:user => @user}).should == []
+        end
+        it "should order by 'name DESC'" do
+          account1 = Factory(:account, :name => "eat your lunch", :assigned_to => @user.id)
+          account2 = Factory(:account, :name => "zebra racing", :assigned_to => @user.id)
+          Account.assigned_to({:user => @user, :order => "name DESC"}).should == [account2, account1]
+        end
+        it "should have a limit of 2" do
+          Factory(:account, :name => "eat your lunch", :assigned_to => @user.id)
+          Factory(:account, :name => "zebra racing", :assigned_to => @user.id)
+          Factory(:account, :name => "dog walking", :assigned_to => @user.id)
+          Account.assigned_to({:user => @user, :limit => 2}).count.should == 2
+        end
       end
     end
   end
