@@ -52,6 +52,7 @@ class Opportunity < ActiveRecord::Base
   named_scope :only, lambda { |filters| { :conditions => [ "stage IN (?)" + (filters.delete("other") ? " OR stage IS NULL" : ""), filters ] } }
   named_scope :created_by, lambda { |user| { :conditions => ["user_id = ?", user.id ] } }
   named_scope :not_lost, { :conditions => "opportunities.stage <> 'lost'"}
+  named_scope :not_won,  { :conditions => "opportunities.stage <> 'won'" }
   
   named_scope :assigned_to, lambda { |user| {
     :conditions => ["assigned_to = ?", user[:user] || user],

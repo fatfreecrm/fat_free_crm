@@ -315,6 +315,17 @@ describe Opportunity do
   end
   
   describe "named_scopes" do
+    context "not_won" do
+      it "should return opportunities which have NOT been won" do
+        lost_opp = Factory(:opportunity, :stage => "lost")
+        Opportunity.not_won.should == [lost_opp]
+      end
+      it "should NOT return opportunities which have been won" do
+        Factory(:opportunity, :stage => "won")
+        Opportunity.not_won.should == []
+      end
+    end
+    
     context "not_lost" do
       it "should return opportunities which have NOT been lost" do
         won_opp = Factory(:opportunity, :stage => "won")
