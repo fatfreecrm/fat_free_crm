@@ -255,14 +255,14 @@ describe AccountsController do
         assigns[:accounts].should == [ @account ]
       end
       
-      it "should set the last_updated_at field to @current_user for @account " do
+      it "should set the updater to @current_user for @account " do
         @account = Factory.build(:account, :name => "Hello world", :user => @current_user)
         Account.stub!(:new).and_return(@account)
         @users = [ Factory(:user) ]
         
         xhr :post, :create, :account => { :name => "Hello world" }, :users => %w(1 2 3)
         @account.reload
-        @account.last_updater.should == @current_user
+        @account.updater.should == @current_user
       end
 
     end
@@ -318,11 +318,11 @@ describe AccountsController do
         assigns[:account].should == @account
       end
       
-      it "should set the last_updated_at field to @current_user for @account " do
+      it "should set the updater to @current_user for @account " do
         @account = Factory(:account, :id => 42, :name => "Hello people")
         xhr :put, :update, :id => 42, :account => { :name => "Hello world" }
         @account.reload
-        @account.last_updater.should == @current_user
+        @account.updater.should == @current_user
       end
 
       describe "account got deleted or otherwise unavailable" do

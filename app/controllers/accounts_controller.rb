@@ -91,8 +91,7 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @account = Account.new(params[:account])
-    @account.last_updated_by = @current_user.id
-
+    
     respond_to do |format|
       if @account.save_with_permissions(params[:users])        
         # None: account can only be created from the Accounts index page, so we 
@@ -113,7 +112,6 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @account = Account.my(@current_user).find(params[:id])
-    @account.last_updated_by = @current_user.id
 
     respond_to do |format|
       if @account.update_with_permissions(params[:account], params[:users])        

@@ -281,13 +281,13 @@ describe ContactsController do
         response.should render_template("contacts/create")
       end
       
-      it "should set the last_updated_at field to @current_user for @contact " do
+      it "should set the updater to @current_user for @contact " do
         @contact = Factory.build(:contact, :first_name => "Billy", :last_name => "Bones")
         Contact.stub!(:new).and_return(@contact)
 
         xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => { :name => "Hello world" }, :users => %w(1 2 3)
         @contact.reload
-        @contact.last_updater.should == @current_user
+        @contact.updater.should == @current_user
       end
       
       it "should be able to associate newly created contact with the opportunity" do
@@ -393,12 +393,12 @@ describe ContactsController do
         response.should render_template("contacts/update")
       end
       
-      it "should set the last_updated_at field to @current_user for @contact " do
+      it "should set the updater to @current_user for @contact " do
         @contact = Factory(:contact, :id => 42, :first_name => "Billy")
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => {}
         @contact.reload
-        @contact.last_updater.should == @current_user
+        @contact.updater.should == @current_user
       end
 
       it "should be able to create a new account and link it to the contact" do

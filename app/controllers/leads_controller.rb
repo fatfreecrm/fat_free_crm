@@ -97,7 +97,6 @@ class LeadsController < ApplicationController
   def create
     @lead = Lead.new(params[:lead])
     @campaigns = Campaign.my(@current_user).all(:order => "name")
-    @lead.last_updated_by = @current_user.id
     
     respond_to do |format|
       if @lead.save_with_permissions(params)
@@ -123,8 +122,7 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @lead = Lead.my(@current_user).find(params[:id])
-    @lead.last_updated_by = @current_user.id
-
+    
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
         

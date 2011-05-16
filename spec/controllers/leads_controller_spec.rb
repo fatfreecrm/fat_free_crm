@@ -340,12 +340,12 @@ describe LeadsController do
         response.should render_template("leads/create")
       end
 
-      it "should set the last_updated_at field to @current_user for @lead " do
+      it "should set the updater to @current_user for @lead " do
         @lead = Factory.build(:lead, :user => @current_user, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
         @lead.reload
-        @lead.last_updater.should == @current_user
+        @lead.updater.should == @current_user
       end
       
       it "should copy selected campaign permissions unless asked otherwise" do
@@ -442,12 +442,12 @@ describe LeadsController do
         response.should render_template("leads/update")
       end
       
-      it "should set the last_updated_at field to @current_user for @lead " do
+      it "should set the updater to @current_user for @lead " do
         @lead = Factory(:lead, :first_name => "Billy", :user => @current_user)
         
         xhr :put, :update, :id => @lead.id, :lead => { :first_name => "Bones" }
         @lead.reload
-        @lead.last_updater.should == @current_user
+        @lead.updater.should == @current_user
       end
       
       it "should update lead status" do

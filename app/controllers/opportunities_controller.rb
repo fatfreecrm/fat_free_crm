@@ -99,8 +99,6 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @opportunity = Opportunity.new(params[:opportunity])
-    @opportunity.last_updated_by = @current_user.id
-    
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
         
@@ -137,7 +135,6 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @opportunity = Opportunity.my(@current_user).find(params[:id])
-    @opportunity.last_updated_by = @current_user.id
     respond_to do |format|
       if @opportunity.update_with_account_and_permissions(params)
         

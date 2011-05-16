@@ -348,11 +348,10 @@ describe OpportunitiesController do
         response.should render_template("opportunities/create")
       end
       
-      it "should set the last_updated_at field to @current_user for @opportunity " do
+      it "should set the updater field to @current_user for @opportunity " do
         xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
-
         @opportunity.reload
-        @opportunity.last_updater.should == @current_user
+        @opportunity.updater.should == @current_user
       end
 
       it "should get sidebar data if called from opportunities index" do
@@ -500,12 +499,12 @@ describe OpportunitiesController do
         response.should render_template("opportunities/update")
       end
       
-      it "should set the last_updated_at field to @current_user for @opportunity " do
+      it "should set the updater field to @current_user for @opportunity " do
         @opportunity = Factory(:opportunity, :id => 42)
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}, :users => %w(1 2 3)
 
         @opportunity.reload
-        @opportunity.last_updater.should == @current_user
+        @opportunity.updater.should == @current_user
       end
 
       it "should get sidebar data if called from opportunities index" do

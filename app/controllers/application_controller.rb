@@ -24,7 +24,10 @@ class ApplicationController < ActionController::Base
   before_filter :set_context
   before_filter "hook(:app_before_filter, self)"
   after_filter "hook(:app_after_filter, self)"
-
+  
+  #define which models userstamp plugin should stamp
+  user_stamp Account, Contact, Lead, Opportunity
+  
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   # protect_from_forgery # :secret => '165eb65bfdacf95923dad9aea10cc64a'
