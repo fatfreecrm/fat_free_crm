@@ -12,11 +12,11 @@ class ResourceObserver < ActiveRecord::Observer
   private
 
   def deliver_notification_if_assigned_to_user(resource)
-    UserMailer.send("deliver_assigned_to_#{resource.class.name.downcase}_email_notification", resource) if resource.assignee.present? && (resource.last_updater != resource.assignee)
+    UserMailer.send("deliver_assigned_to_#{resource.class.name.downcase}_email_notification", resource) if resource.assignee.present? && (resource.updater != resource.assignee)
   end
   
   def deliver_notification_if_reassigned_to_user(resource)
-    UserMailer.send("deliver_assigned_to_#{resource.class.name.downcase}_email_notification", resource) if resource.changed.include?("assigned_to") && resource.assignee.present? && (resource.last_updater != resource.assignee)
+    UserMailer.send("deliver_assigned_to_#{resource.class.name.downcase}_email_notification", resource) if resource.changed.include?("assigned_to") && resource.assignee.present? && (resource.updater != resource.assignee)
   end
   
 end

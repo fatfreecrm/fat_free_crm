@@ -20,7 +20,7 @@ describe ResourceObserver do
         it "should NOT call deliver_assigned_to_#{resource_type}_email_notification" do
           user = Factory(:user)
           UserMailer.should_not_receive("deliver_assigned_to_#{resource_type}_email_notification")
-          Factory(resource_type, :assignee => user, :last_updater => user)
+          Factory(resource_type, :assignee => user, :updater => user)
         end
       end
     end
@@ -28,7 +28,7 @@ describe ResourceObserver do
     describe "after_update" do
       context "if #{resource_type} has been re-assigned_to a user" do
         it "calls deliver_assigned_to_#{resource_type}_email_notification UserMailer" do
-          resource = Factory(resource_type, :assignee => Factory(:user))
+          resource = Factory(resource_type, :updater => Factory(:user), :assignee => Factory(:user))
           new_assignee = Factory(:user)
           UserMailer.should_receive("deliver_assigned_to_#{resource_type}_email_notification")
           resource.update_attributes(:assignee => new_assignee)
@@ -36,7 +36,7 @@ describe ResourceObserver do
       end
       context "if #{resource_type} has NOT been re-assigned to a user" do
         it "should NOT call deliver_assigned_to_#{resource_type}_email_notification" do
-          resource = Factory(resource_type, :assignee => Factory(:user))
+          resource = Factory(resource_type, :updater => Factory(:user), :assignee => Factory(:user))
           UserMailer.should_not_receive("deliver_assigned_to_#{resource_type}_email_notification")
           resource.touch
         end
@@ -44,7 +44,7 @@ describe ResourceObserver do
       context "if #{resource_type} has been re-assigned to the assigner" do
         it "should NOT call deliver_assigned_to_#{resource_type}_email_notification" do
           user = Factory(:user)
-          resource = Factory(resource_type, :last_updater => user, :assignee => Factory(:user))
+          resource = Factory(resource_type, :updater => user, :assignee => Factory(:user))
           UserMailer.should_not_receive("deliver_assigned_to_#{resource_type}_email_notification")
           resource.update_attributes(:assignee => user)
         end
