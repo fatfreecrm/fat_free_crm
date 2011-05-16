@@ -51,7 +51,6 @@ class Lead < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  belongs_to  :last_updater, :class_name => "User", :foreign_key => :last_updated_by
   
   #userstamp
   belongs_to  :creator, :class_name => "User", :foreign_key => :creator_id
