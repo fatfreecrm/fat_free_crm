@@ -1,0 +1,37 @@
+= UserStamp
+
+Rails plugin that makes stamping records with a user when they are 
+created and updated dirt simple. It assumes that your controller has 
+a current_user method. It also assumes that any record being stamped
+has two attributes--creator_id and updater_id. You can override both
+of these assumptions easily.
+
+== Setup
+
+1. script/plugin install git://github.com/jnunemaker/user_stamp.git
+2. Add user_stamp to application.rb, like the following:
+		
+		class ApplicationController < ActionController::Base
+		  user_stamp Post, Asset, Job
+		end
+
+
+== Defaults
+
+  UserStamp.creator_attribute   = :creator_id
+  UserStamp.updater_attribute   = :updater_id
+  UserStamp.current_user_method = :current_user
+
+If your user stamped columns and current_user method are different, 
+just create an initializer such as config/initializers/user_stamp.rb
+and copy and paste the defaults above, changing them to fit your app.
+
+== Problems?
+
+Use the issue tracker on Github.
+
+== Docs
+
+http://rdoc.info/projects/jnunemaker/user_stamp
+
+Copyright (c) 2008 [John Nunemaker], released under the MIT license
