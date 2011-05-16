@@ -43,6 +43,10 @@ class Opportunity < ActiveRecord::Base
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   belongs_to  :last_updater, :class_name => "User", :foreign_key => :last_updated_by
   
+  #userstamp
+  belongs_to  :creator, :class_name => "User", :foreign_key => :creator_id
+  belongs_to  :updater, :class_name => "User", :foreign_key => :updater_id
+  
   has_one     :account_opportunity, :dependent => :destroy
   has_one     :account, :through => :account_opportunity
   has_many    :contact_opportunities, :dependent => :destroy
@@ -72,7 +76,7 @@ class Opportunity < ActiveRecord::Base
 
   is_searchable_and_filterable
   is_taggable
-
+    
   validates_presence_of :name, :message => :missing_opportunity_name
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access

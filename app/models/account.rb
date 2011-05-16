@@ -40,6 +40,10 @@ class Account < ActiveRecord::Base
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   belongs_to  :last_updater, :class_name => "User", :foreign_key => :last_updated_by
   
+  #userstamp
+  belongs_to  :creator, :class_name => "User", :foreign_key => :creator_id
+  belongs_to  :updater, :class_name => "User", :foreign_key => :updater_id
+  
   has_many    :account_contacts, :dependent => :destroy
   has_many    :contacts, :through => :account_contacts, :uniq => true
   has_many    :account_opportunities, :dependent => :destroy

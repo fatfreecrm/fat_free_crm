@@ -53,6 +53,10 @@ class Lead < ActiveRecord::Base
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   belongs_to  :last_updater, :class_name => "User", :foreign_key => :last_updated_by
   
+  #userstamp
+  belongs_to  :creator, :class_name => "User", :foreign_key => :creator_id
+  belongs_to  :updater, :class_name => "User", :foreign_key => :updater_id
+  
   has_one     :contact, :dependent => :nullify # On destroy keep the contact, but nullify its lead_id
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
