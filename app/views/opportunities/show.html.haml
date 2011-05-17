@@ -16,9 +16,11 @@
 %div
   = render :partial => "common/tags", :locals => {:tags => @opportunity.tags, :owner => @opportunity}
 
-  - remote_form_for @opportunity, :url => add_tag_opportunity_path(@opportunity), :html => {:id => 'new_tag'} do |f|
-    = f.text_field :tag_list, :value => ''
-    = f.submit 'Add tags'
+  - remote_form_for @opportunity, :url => add_tag_opportunity_path(@opportunity), :html => {:id => 'new_tag'} do
+    = text_field_with_auto_complete :tag, :name, {:class => 'txt-std'},{:indicator => "auto_tag_loading",:tokens=>",",:skip_style=>true}
+    = image_tag "ajax_loading.gif",:id=>'auto_tag_loading', :style=>"display:none;"
+    = submit_tag 'Add tags'
+
 
 = section(@opportunity, :tasks)
 .log#tasks

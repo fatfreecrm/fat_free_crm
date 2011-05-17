@@ -22,6 +22,8 @@ class ContactsController < ApplicationController
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
+  auto_complete_for :tag, :name
+
   # GET /contacts
   # GET /contacts.xml                                             AJAX and HTML
   #----------------------------------------------------------------------------
@@ -232,10 +234,12 @@ class ContactsController < ApplicationController
     render :action => :index
   end
 
-  # PUT /opportunities/1/add_tag
+  # PUT /contacts/1/add_tag
   def add_tag
     @owner = @contact = Contact.my(@current_user).find(params[:id])
-    @contact.add_tag(params[:contact][:tag_list])
+    tag_list = params[:tag][:name]
+    @contact.add_tag(tag_list)
+    
     respond_to do |format|
       format.html { redirect_to contact_path(@contact)}
       format.js { render :template => 'common/add_tag' }

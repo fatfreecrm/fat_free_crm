@@ -25,6 +25,8 @@ class OpportunitiesController < ApplicationController
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
+  auto_complete_for :tag, :name
+
   # GET /opportunities
   # GET /opportunities.xml
   #----------------------------------------------------------------------------
@@ -236,7 +238,9 @@ class OpportunitiesController < ApplicationController
   # PUT /opportunities/1/add_tag
   def add_tag
     @owner = @opportunity = Opportunity.my(@current_user).find(params[:id])
-    @opportunity.add_tag(params[:opportunity][:tag_list])
+    tag_list = params[:tag][:name]
+    @opportunity.add_tag(tag_list)
+    
     respond_to do |format|
       format.html { redirect_to opportunity_path(@opportunity)}
       format.js { render :template => 'common/add_tag' }

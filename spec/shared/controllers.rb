@@ -34,13 +34,13 @@ module SharedControllerSpecs
 
     describe "HTML request" do
       it "adds the tags to the current tag list" do
-        put :add_tag, :id => @tagable.id, @class_name.to_sym => {:tag_list => "go, apple"}
+        put :add_tag, :id => @tagable.id, :tag => {:name => "go, apple"}
         assigns(@class_name.to_sym).tag_list.should == %w(moo foo bar go apple)
       end
 
       it "should redirect to the lead show page" do
         tagable_path = send(:"#{@class_name}_path", @tagable)
-        put :add_tag, :id => @tagable.id, @class_name.to_sym => {:tag_list => "moo"}
+        put :add_tag, :id => @tagable.id, :tag => {:name => "moo"}
         response.should redirect_to(tagable_path)
       end
     end

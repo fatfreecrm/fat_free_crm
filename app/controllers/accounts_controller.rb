@@ -23,6 +23,8 @@ class AccountsController < ApplicationController
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
+  auto_complete_for :tag, :name
+
   # GET /accounts
   # GET /accounts.xml                                             HTML and AJAX
   #----------------------------------------------------------------------------
@@ -198,10 +200,12 @@ class AccountsController < ApplicationController
     render :action => :index
   end
 
-  # PUT /leads/1/add_tag
+  # PUT /accounts/1/add_tag
   def add_tag
     @owner = @account = Account.my(@current_user).find(params[:id])
-    @account.add_tag(params[:account][:tag_list])
+    tag_list = params[:tag][:name]
+    @account.add_tag(tag_list)
+    
     respond_to do |format|
       format.html { redirect_to account_path(@account)}
       format.js { render :template => 'common/add_tag' }

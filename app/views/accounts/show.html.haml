@@ -16,9 +16,10 @@
 %div
   = render :partial => "common/tags", :locals => {:tags => @account.tags, :owner => @account}
 
-  - remote_form_for @account, :url => add_tag_account_path(@account), :html => {:id => 'new_tag'} do |f|
-    = f.text_field :tag_list, :value => ''
-    = f.submit 'Add tags'
+  - remote_form_for @account, :url => add_tag_account_path(@account), :html => {:id => 'new_tag'} do
+    = text_field_with_auto_complete :tag, :name, {:class => 'txt-std'},{:indicator => "auto_tag_loading",:tokens=>",",:skip_style=>true}
+    = image_tag "ajax_loading.gif",:id=>'auto_tag_loading', :style=>"display:none;"
+    = submit_tag 'Add tags'
 
 = section(@account, :tasks)
 .log#tasks

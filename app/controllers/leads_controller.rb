@@ -24,6 +24,8 @@ class LeadsController < ApplicationController
   before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
+  auto_complete_for :tag, :name
+  
   # GET /leads
   # GET /leads.xml                                                AJAX and HTML
   #----------------------------------------------------------------------------
@@ -290,7 +292,9 @@ class LeadsController < ApplicationController
   # PUT /leads/1/add_tag
   def add_tag
     @owner = @lead = Lead.my(@current_user).find(params[:id])
-    @lead.add_tag(params[:lead][:tag_list])
+    tag_list = params[:tag][:name]
+    @lead.add_tag(tag_list)
+    
     respond_to do |format|
       format.html { redirect_to lead_path(@lead)}
       format.js { render :template => 'common/add_tag' }
