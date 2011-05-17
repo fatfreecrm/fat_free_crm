@@ -589,6 +589,10 @@ tt {
 form#new_tag input[type=submit] {
   display: block; }
 
+img#auto_tag_loading {
+  position: relative;
+  top: 2px; }
+
 .errorExplanation {
   background-color: seashell;
   border: 2px solid salmon;
