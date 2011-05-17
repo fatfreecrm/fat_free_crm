@@ -7,7 +7,7 @@ describe ResourceObserver do
       context "if #{resource_type} has been assigned_to a user" do
         it "calls deliver_assigned_to_#{resource_type}_email_notification UserMailer" do
           UserMailer.should_receive("deliver_assigned_to_#{resource_type}_email_notification")
-          Factory(resource_type, :assignee => Factory(:user))
+          Factory(resource_type, :updater => Factory(:user), :assignee => Factory(:user))
         end
       end
       context "if #{resource_type} has NOT been assigned to a user" do
