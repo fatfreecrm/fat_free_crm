@@ -586,6 +586,9 @@ tt {
     background: mediumblue //#006;
     color: #fff; }
 
+form#new_tag input[type=submit] {
+  display: block; }
+
 .errorExplanation {
   background-color: seashell;
   border: 2px solid salmon;
