@@ -352,6 +352,24 @@ describe Opportunity do
       end
     end
     
+    context "unassigned" do
+      it "should return opportunities which have NOT been assigned to a user" do
+        opportunity = Factory(:opportunity, :assignee => nil)
+        Opportunity.unassigned.should == [opportunity]
+      end
+      it "should NOT return opportunities which have been assigned to a user" do
+        Factory(:opportunity, :assignee => Factory(:user))
+        Opportunity.unassigned.should == []
+      end
+      it "should order opportunities by stage" do
+        opportunity1 = Factory(:opportunity, :stage => "prospecting",:assignee => nil)
+        opportunity2 = Factory(:opportunity, :stage => "proposal", :assignee => nil)
+        opportunity3 = Factory(:opportunity, :stage => "prospecting",:assignee => nil)
+        
+        Opportunity.unassigned.should == [opportunity2, opportunity1, opportunity3]
+      end
+
+    end
     context "assigned_to" do
       before :each do
         @user = Factory(:user)

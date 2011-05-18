@@ -67,6 +67,10 @@ class Opportunity < ActiveRecord::Base
     :include => :assignee
   } }
   
+  named_scope :unassigned,
+              :conditions => "opportunities.assigned_to IS NULL",
+              :order => "stage ASC"
+              
   simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
   uses_user_permissions
   acts_as_commentable
