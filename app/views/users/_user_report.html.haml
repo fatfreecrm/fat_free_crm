@@ -1,0 +1,8 @@
+
+%li
+  .title
+    %span#title
+      = user_report.full_name
+  %ul.list#opportunities
+    - if user_report.assigned_opportunities.any?
+      = render :partial => "opportunity", :collection => user_report.assigned_opportunities

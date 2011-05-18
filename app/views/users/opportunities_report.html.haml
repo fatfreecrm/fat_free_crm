@@ -1,0 +1,7 @@
+= styles_for :opportunity
+
+%ul
+  - if @users.any?
+    = render :partial => "user_report", :collection => @users
+  - else
+    #{t :no_users_found_with_assigned_opportunities}

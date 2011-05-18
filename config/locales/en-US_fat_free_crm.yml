@@ -455,6 +455,11 @@ en-US:
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
 
+  # Views -> Users.
+  #----------------------------------------------------------------------------
+  user_has_no_opportunity_records: User has no assigned opportunities
+  no_users_found_with_assigned_opportunities: There were no users found with assigned opportunities
+  
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_commented: commented on
