@@ -246,6 +246,10 @@ describe Task do
           task2.save
           Task.assigned_to(@user).should == [task2, task1]
         end
+        it "should not include completed tasks" do
+          Factory(:task, :completed_at => 5.days.ago)
+          Task.assigned_to(@user).should == []
+        end
       end
       context "a user with options is given as input(a hash)" do
         it "should return tasks which are assigned to a given user" do

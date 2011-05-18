@@ -56,7 +56,7 @@ class Task < ActiveRecord::Base
   } }
   
   named_scope :assigned_to, lambda { |user| {
-    :conditions => ["assigned_to = ?", user[:user] || user],
+    :conditions => ["completed_at IS NULL AND assigned_to = ?", user[:user] || user],
     :order => user[:order] || "due_at ASC",
     :limit => user[:limit], # nil selects all records
     :include => :assignee
