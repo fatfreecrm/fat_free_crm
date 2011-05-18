@@ -147,6 +147,9 @@ class User < ActiveRecord::Base
     self
   end
 
+  def assigned_opportunities
+    Opportunity.assigned_to(:user => self, :order => "stage ASC").not_closed
+  end
   protected
 
   def valid_ldap_credentials?(password)

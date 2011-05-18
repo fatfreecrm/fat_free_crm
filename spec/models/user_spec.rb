@@ -235,4 +235,42 @@ describe User do
       }.merge(options)
     end
   end
+  describe "instance methods" do
+    describe "assigned_opportunities" do
+      it "should return an array of assigned opportunities" do
+        user = Factory(:user)
+        opportunity = Factory(:opportunity, :stage => "prospecting", :assignee => user)
+        
+        user.assigned_opportunities.should == [opportunity]
+      end
+      it "should not return opportunities which are assigned to another user" do
+        user = Factory(:user)
+        Factory(:opportunity, :assignee => Factory(:user))
+        
+        user.assigned_opportunities.should == []
+      end
+      it "should not return opportunities which were created by the user" do
+        user = Factory(:user)
+        Factory(:opportunity, :user => user)
+        
+        user.assigned_opportunities.should == []
+      end
+      it "should not return closed opportunities" do
+        user = Factory(:user)
+        Factory(:opportunity, :stage => "won", :assignee => user)
+        Factory(:opportunity, :stage => "lost", :assignee => user)
+        
+        user.assigned_opportunities.should == []
+      end
+      it "should order by 'stage'" do
+        user = Factory(:user)
+        opportunity1 = Factory(:opportunity, :stage => "negotiation", :assignee => user)
+        opportunity2 = Factory(:opportunity, :stage => "prospecting", :assignee => user)
+        opportunity3 = Factory(:opportunity, :stage => "prospecting", :assignee => user)
+        opportunity4 = Factory(:opportunity, :stage => "presentation", :assignee => user)
+        
+        user.assigned_opportunities.should == [opportunity1, opportunity4, opportunity2, opportunity3]
+      end
+    end
+  end
 end
