@@ -96,6 +96,14 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :message => :missing_username
   validates_presence_of :email,    :message => :missing_email
 
+  #named_scopes----------------------------------------------------------------
+  
+  named_scope :have_assigned_opportunities,
+              :joins => "INNER JOIN opportunities ON opportunities.assigned_to = users.id",
+              :order => "first_name ASC",
+              :group => "users.first_name",
+              :conditions => "opportunities.stage <> 'lost' AND opportunities.stage <> 'won'"
+              
   #----------------------------------------------------------------------------
   def name
     self.first_name.blank? ? self.username : self.first_name

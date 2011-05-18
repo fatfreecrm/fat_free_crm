@@ -273,4 +273,39 @@ describe User do
       end
     end
   end
+  describe "scopes" do
+    describe "have_assigned_opportunities" do
+      it "should return users who have assigned open opportunities" do
+        user = Factory(:user)
+        Factory(:opportunity, :stage => "prospecting", :assignee => user)
+        Factory(:opportunity, :stage => "won", :assignee => user)
+        Factory(:opportunity, :stage => "lost", :assignee => user)
+        
+        Factory(:opportunity, :assignee => nil)
+        
+        User.have_assigned_opportunities.should == [user]
+      end
+
+      it "should not return users have no assigned open opportunities" do
+        user = Factory(:user)
+        Factory(:opportunity, :assignee => nil)
+        Factory(:opportunity, :assignee => user, :stage => "won")
+        Factory(:opportunity, :assignee => user, :stage => "lost")
+        
+        User.have_assigned_opportunities.should == []
+      end
+      it "should order them by 'first_name'" do
+        user1 = Factory(:user, :first_name => "Karl", :last_name => "Kennedy")
+        Factory(:opportunity, :assignee => user1)
+        
+        user2 = Factory(:user, :first_name => "Alan", :last_name => "Fletcher")
+        Factory(:opportunity, :assignee => user2)
+        
+        user3 = Factory(:user, :first_name => "Zebra", :last_name => "Man")
+        Factory(:opportunity, :assignee => user3)
+        
+        User.have_assigned_opportunities.should == [user2, user1, user3]
+      end
+    end
+  end
 end
