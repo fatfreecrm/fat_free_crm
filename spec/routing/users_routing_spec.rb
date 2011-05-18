@@ -37,6 +37,10 @@ describe UsersController do
     it "maps #upload_avatar" do
       route_for(:controller => "users", :action => "upload_avatar", :id => "1").should == { :path => "/users/1/upload_avatar", :method => :put }
     end
+    
+    it "maps #opportunities_report" do
+      route_for(:controller => "users", :action => "opportunities_report").should == { :path => "/users/opportunities_report", :method => :get }
+    end
   end
 
   describe "route recognition" do
@@ -74,6 +78,10 @@ describe UsersController do
 
     it "should generate params for #upload_avatar" do
       params_from(:put, "/users/upload_avatar/1").should == {:controller => "users", :action => "upload_avatar", :id => "1"}
+    end
+    
+    it "should generate params for #opportunities_report" do
+      params_from(:get, "/users/opportunities_report").should == {:controller => "users", :action => "opportunities_report"}
     end
   end
 end

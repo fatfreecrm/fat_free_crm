@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
   map.root      :controller => "home", :action => "index"
   map.resource  :authentication
-  map.resources :users, :member => { :avatar => :get, :upload_avatar => :put }
+  map.resources :users, :member => { :avatar => :get, :upload_avatar => :put }, :collection => { :opportunities_report => :get }
   map.resources :comments
   map.resources :emails
 
