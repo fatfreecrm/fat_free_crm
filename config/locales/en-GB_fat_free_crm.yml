@@ -460,6 +460,8 @@ en-GB:
   #----------------------------------------------------------------------------
   user_has_no_opportunity_records: User has no assigned opportunities
   no_users_found_with_assigned_opportunities: There were no users found with assigned opportunities
+  unassigned_opportunities: Unassigned Opportunities
+  
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_commented: commented on

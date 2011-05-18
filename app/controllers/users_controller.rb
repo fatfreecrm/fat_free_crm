@@ -139,6 +139,7 @@ class UsersController < ApplicationController
 
   def opportunities_report
     @users = User.have_assigned_opportunities
+    @unassigned_opportunities = Opportunity.unassigned.not_closed
   end
 
   private

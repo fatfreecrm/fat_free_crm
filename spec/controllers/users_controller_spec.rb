@@ -311,6 +311,16 @@ describe UsersController do
       xhr :get, :opportunities_report
       response.should render_template("users/opportunities_report")
     end
+    it "should assign @unassigned_opportunities" do
+      opportunity = Factory(:opportunity, :stage => "prospecting", :assigned_to => nil)
+      xhr :get, :opportunities_report
+      assigns[:unassigned_opportunities].should == [opportunity]
+    end
+    it "@unassigned_opportunities should not include closed opportunities" do
+      Factory(:opportunity, :stage => "lost", :assigned_to => nil)
+      xhr :get, :opportunities_report
+      assigns[:unassigned_opportunities].should == []
+    end
   end
 
 end

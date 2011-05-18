@@ -5,3 +5,9 @@
     = render :partial => "user_report", :collection => @users
   - else
     #{t :no_users_found_with_assigned_opportunities}
+  - if @unassigned_opportunities.any?
+    %li
+      .title
+        %span#title
+          = t(:unassigned_opportunities)
+      = render :partial => "opportunity", :collection => @unassigned_opportunities
