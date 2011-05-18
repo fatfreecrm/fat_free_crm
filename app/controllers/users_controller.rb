@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [ :new, :create ]
   before_filter :require_user, :only => [ :show, :redraw ]
-  before_filter :set_current_tab, :only => [ :show ] # Don't hightlight any tabs.
+  before_filter :set_current_tab, :only => [ :show, :opportunities_report ]
   before_filter :require_and_assign_user, :except => [ :new, :create, :show ]
 
   # GET /users
@@ -135,6 +135,10 @@ class UsersController < ApplicationController
   def redraw
     @current_user.preference[:locale] = params[:locale]
     render(:update) { |page| page.redirect_to user_path(@current_user) }
+  end
+
+  def opportunities_report
+    @users = User.have_assigned_opportunities
   end
 
   private

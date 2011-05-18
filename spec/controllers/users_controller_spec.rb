@@ -267,5 +267,50 @@ describe UsersController do
       response.should render_template("users/upload_avatar")
     end
   end
+  
+  # GET /users/opportunities
+  # GET /users/opportunities.xml                                         HTML
+  #----------------------------------------------------------------------------
+  describe "responding to GET opportunities_report" do
+    before(:each) do
+      require_user
+      @user = @current_user
+      @user.update_attributes(:first_name => "Apple", :last_name => "Boy")
+    end
+
+    it "should assign @users" do
+      Factory(:opportunity, :stage => "prospecting", :assignee => @user)
+      xhr :get, :opportunities_report
+      assigns[:users].should == [@current_user]
+    end
+    it "@users should be ordered by name" do
+      Factory(:opportunity, :stage => "prospecting", :assignee => @user)
+  
+      user1 = Factory(:user, :first_name => "Zebra", :last_name => "Stripes")
+      Factory(:opportunity, :stage => "prospecting", :assignee => user1)
+      
+      user2 = Factory(:user, :first_name => "Bilbo", :last_name => "Magic")
+      Factory(:opportunity, :stage => "prospecting", :assignee => user2)
+      
+      xhr :get, :opportunities_report
+      
+      assigns[:users].should == [@user, user2, user1]
+    end
+    
+    it "should not include users who have no assigned opportunities" do
+      xhr :get, :opportunities_report
+      assigns[:users].should == []
+    end
+    it "should not include users who have no open assigned opportunities" do
+      Factory(:opportunity, :stage => "won", :assignee => @user)
+      
+      xhr :get, :opportunities_report
+      assigns[:users].should == []
+    end
+    it "should render users/opportunities" do
+      xhr :get, :opportunities_report
+      response.should render_template("users/opportunities_report")
+    end
+  end
 
 end
