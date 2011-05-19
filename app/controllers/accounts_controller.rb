@@ -95,8 +95,9 @@ class AccountsController < ApplicationController
     @account = Account.new(params[:account])
     
     respond_to do |format|
-      if @account.save_with_permissions(params[:users])        
-        # None: account can only be created from the Accounts index page, so we 
+      if @account.save_with_permissions(params[:users])
+        @account.add_tag(params[:tag][:name]) if params[:tag]
+        # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
         @accounts = get_accounts
         format.js   # create.js.rjs

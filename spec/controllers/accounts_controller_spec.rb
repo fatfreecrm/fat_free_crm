@@ -264,6 +264,13 @@ describe AccountsController do
         @account.reload
         @account.updater.should == @current_user
       end
+      
+      it "should tag the account" do
+        @account = Factory.build(:account, :name => "Hello world", :user => @current_user)
+        Account.stub!(:new).and_return(@account)
+        @account.should_receive(:add_tag).with("tag1, tag2")
+        xhr :post, :create, :account => { :name => "Hello world" }, :users => %w(1 2 3), :tag => {:name => "tag1, tag2"}
+      end
 
     end
 
