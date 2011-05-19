@@ -393,6 +393,13 @@ describe LeadsController do
         assigns[:campaign].should == @campaign
       end
 
+      it "should tag the lead" do
+        @lead = Factory.build(:lead, :user => @current_user, :campaign => nil)
+        Lead.stub!(:new).and_return(@lead)
+        @lead.should_receive(:add_tag).with("tag1, tag2")
+
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3), :tag => {:name => "tag1, tag2"}
+      end
     end
 
     describe "with invalid params" do

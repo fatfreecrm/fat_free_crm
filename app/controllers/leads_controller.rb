@@ -102,6 +102,7 @@ class LeadsController < ApplicationController
     
     respond_to do |format|
       if @lead.save_with_permissions(params)
+        @lead.add_tag(params[:tag][:name]) if params[:tag].present?
         
         if called_from_index_page?
           @leads = get_leads

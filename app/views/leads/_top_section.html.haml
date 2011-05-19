@@ -16,7 +16,12 @@
       %td(valign="top")
         .label #{t :phone}:
         = f.text_field :phone, :style => "width:240px"
-
+    %tr
+      %td
+        .label.req #{t :tags}:
+        %div#tag_form_field
+          = text_field_with_auto_complete :tag, :name, {:class => 'txt-std'},{:indicator => "auto_tag_loading",:tokens=>",",:skip_style=>true}
+          = image_tag "loading.gif", :size => "16x16", :id=>'auto_tag_loading', :style=>"display:none;"
     - if Setting.background_info && Setting.background_info.include?(:lead)
       %tr
         %td(valign="top" colspan="3")
