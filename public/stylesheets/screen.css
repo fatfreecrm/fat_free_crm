@@ -450,7 +450,7 @@ tt {
     margin: 0px 4px 0px 0px; }
 
 .list {
-  padding: 8px 0px 7px 0px; }
+  padding: 8px 0px 8px 0px; }
   .list li {
     border-bottom: 1px silver dotted;
     clear: both;
@@ -589,9 +589,19 @@ tt {
 form#new_tag input[type=submit] {
   display: block; }
 
-img#auto_tag_loading {
-  position: relative;
-  top: 2px; }
+div#tag_form_field input[type=text] {
+  width: 220px; }
+div#tag_form_field img#auto_tag_loading {
+  margin: -5px 0;
+  position: static; }
+
+form#new_tag div#tag_form_field img#auto_tag_loading {
+  top: 2px;
+  margin: 0;
+  position: relative; }
+
+div.auto_complete {
+  z-index: 1; }
 
 .errorExplanation {
   background-color: seashell;
