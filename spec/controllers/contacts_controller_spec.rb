@@ -308,6 +308,13 @@ describe ContactsController do
         xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}, :users => %w(1 2 3)
         assigns[:contacts].should == [ @contact ]
       end
+      
+      it "should tag the contact" do
+        @contact = Factory.build(:contact, :first_name => "Billy", :last_name => "Bones")
+        Contact.stub!(:new).and_return(@contact)
+        @contact.should_receive(:add_tag).with("tag1, tag2")
+        xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}, :tag => {:name => "tag1, tag2"}
+      end
     end
 
     describe "with invalid params" do
