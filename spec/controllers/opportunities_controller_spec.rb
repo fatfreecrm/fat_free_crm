@@ -411,6 +411,13 @@ describe OpportunitiesController do
         @opportunity.campaign.should == @campaign.reload
         @campaign.revenue.to_i.should == 1000 # 1000 - 100 discount.
       end
+      it "should tag the opportunity" do
+        @opportunity = Factory.build(:opportunity, :user => @current_user, :stage => "won")
+        Opportunity.stub!(:new).and_return(@opportunity)
+        @opportunity.should_receive(:add_tag).with("tag1, tag2")
+        
+        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => {}, :tag => {:name => "tag1, tag2"}
+      end
     end
 
     describe "with invalid params" do

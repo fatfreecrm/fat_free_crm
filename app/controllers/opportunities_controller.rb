@@ -103,6 +103,7 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.new(params[:opportunity])
     respond_to do |format|
       if @opportunity.save_with_account_and_permissions(params)
+        @opportunity.add_tag(params[:tag][:name]) if params[:tag].present?
         
         if called_from_index_page?
           @opportunities = get_opportunities
