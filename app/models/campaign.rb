@@ -95,6 +95,10 @@ class Campaign < ActiveRecord::Base
     end
   end
 
+  def add_note(message, user)
+    Comment.create(:comment => message, :commentable => self, :user => user)
+  end
+  
   private
   # Make sure end date > start date.
   #----------------------------------------------------------------------------

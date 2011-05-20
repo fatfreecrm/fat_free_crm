@@ -109,4 +109,20 @@ describe Campaign do
       @campaign.reload.opportunities_count.should == 42
     end
   end
+  
+  describe "instance methods" do
+    describe "add_note" do
+      it "should add a note to the campaign" do
+        campaign = Factory(:campaign)
+        user = Factory(:user)
+        comment_text = "this is an important campaign"
+        comment = Factory.build(:comment, :comment => comment_text, :user => user, :commentable => campaign)
+        Comment.stub(:new).and_return(comment)
+        campaign.add_note(comment_text, user)
+        campaign.reload
+        campaign.comments.should == [comment]
+      end
+    end
+  end
+  
 end
