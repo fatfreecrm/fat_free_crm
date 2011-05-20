@@ -97,6 +97,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save_with_permissions(params[:users])
         @account.add_tag(params[:tag][:name]) if params[:tag]
+        @account.add_note(params[:comment], @current_user) if params[:comment]
         # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
         @accounts = get_accounts

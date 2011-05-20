@@ -271,6 +271,21 @@ describe AccountsController do
         @account.should_receive(:add_tag).with("tag1, tag2")
         xhr :post, :create, :account => { :name => "Hello world" }, :users => %w(1 2 3), :tag => {:name => "tag1, tag2"}
       end
+      
+      it "should add a comment(note) to the account" do
+        @account = Factory.build(:account, :name => "Hello world", :user => @current_user)
+        Account.stub!(:new).and_return(@account)
+        @account.should_receive(:add_note).with("a useful account", @current_user)
+
+        xhr :post, :create, :account => { :name => "Hello world" }, :users => %w(1 2 3), :comment => "a useful account"
+      end
+      it "should not add a comment(note) to the account if the comment is blank" do
+        @account = Factory.build(:account, :name => "Hello world", :user => @current_user)
+        Account.stub!(:new).and_return(@account)
+        @account.should_not_receive(:add_note)
+        
+        xhr :post, :create, :account => { :name => "Hello world" }, :users => %w(1 2 3)
+      end
 
     end
 
