@@ -314,6 +314,20 @@ describe Opportunity do
     end
   end
   
+  describe "instance methods" do
+    describe "add_note" do
+      it "should add a note to the opportunity" do
+        opportunity = Factory(:opportunity)
+        user = Factory(:user)
+        comment_text = "this is an important opportunity"
+        comment = Factory.build(:comment, :comment => comment_text, :user => user, :commentable => opportunity)
+        Comment.stub(:new).and_return(comment)
+        opportunity.add_note(comment_text, user)
+        opportunity.reload
+        opportunity.comments.should == [comment]
+      end
+    end
+  end
   describe "named_scopes" do
     context "not_won" do
       it "should return opportunities which have NOT been won" do
