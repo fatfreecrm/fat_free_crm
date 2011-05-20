@@ -11,6 +11,8 @@ describe "/accounts/_create.html.haml" do
 
   it "should render [create account] form" do
     template.should_receive(:render).with(hash_including(:partial => "accounts/top_section"))
+    template.should_receive(:render).with(hash_including(:partial => "accounts/comment"))
+    template.should_receive(:render).with(hash_including(:partial => "accounts/tags"))
     template.should_receive(:render).with(hash_including(:partial => "accounts/contact_info"))
     template.should_receive(:render).with(hash_including(:partial => "accounts/permissions"))
 

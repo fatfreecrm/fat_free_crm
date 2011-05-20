@@ -187,6 +187,7 @@ en-GB:
   #----------------------------------------------------------------------------
   "option_amount*probability": weighted amount
   activity_options: Show %{models} activities performed by %{user} in the past %{period}.
+  opportunity_options: Show %{stages} opportunities.
   all_users: all users
   option_after: after
   option_all: all
@@ -541,6 +542,9 @@ en-GB:
   country: Country
   filter_by: Filter by %{value}
   tags: Tags
+  comment: Note
+  tags_intro: "You can add tags later"
+  comment_intro: "You can add notes later"
 
 
   # Views -> Layout.

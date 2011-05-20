@@ -1,0 +1,8 @@
+- edit ||= false
+- collapsed = session[:account_comment].nil? # && @account.errors.empty?
+= subtitle :account_comment, collapsed, t(:comment)
+.section
+  %small#account_comment_intro{ hidden_if(!collapsed) }
+    = t(:comment_intro)
+  #account_comment{ hidden_if(collapsed) }
+    = text_area_tag :comment

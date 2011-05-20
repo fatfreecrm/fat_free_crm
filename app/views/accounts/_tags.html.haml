@@ -1,0 +1,10 @@
+- edit ||= false
+- collapsed = session[:account_tags].nil? # && @account.errors.empty?
+= subtitle :account_tags, collapsed, t(:tags)
+.section
+  %small#account_tags_intro{ hidden_if(!collapsed) }
+    = t(:tags_intro)
+  #account_tags{ hidden_if(collapsed) }
+    %div#tag_form_field
+      = text_field_with_auto_complete :tag, :name, {:class => 'txt-std'},{:indicator => "auto_tag_loading",:tokens=>",",:skip_style=>true}
+      = image_tag "loading.gif", :size => "16x16", :id=>'auto_tag_loading', :style=>"display:none;"

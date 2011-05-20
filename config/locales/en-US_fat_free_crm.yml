@@ -539,7 +539,11 @@ en-US:
   zipcode: Zip Code
   state: State
   country: Country
-
+  tags: Tags
+  comment: Note
+  tags_intro: "You can add tags later"
+  comment_intro: "You can add notes later"
+  
   # Views -> Layout.
   #----------------------------------------------------------------------------
   about: About
