@@ -296,12 +296,10 @@ describe User do
       end
       it "should order them by 'first_name'" do
         user1 = Factory(:user, :first_name => "Karl", :last_name => "Kennedy")
-        Factory(:opportunity, :assignee => user1)
-        
         user2 = Factory(:user, :first_name => "Alan", :last_name => "Fletcher")
-        Factory(:opportunity, :assignee => user2)
-        
         user3 = Factory(:user, :first_name => "Zebra", :last_name => "Man")
+        Factory(:opportunity, :assignee => user1)
+        Factory(:opportunity, :assignee => user2)
         Factory(:opportunity, :assignee => user3)
         
         User.have_assigned_opportunities.should == [user2, user1, user3]
