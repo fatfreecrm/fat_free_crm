@@ -292,7 +292,21 @@ describe CampaignsController do
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:campaigns].should == [ @campaign ]
       end
+      
+      it "should add a comment(note) to the campaign" do
+        @campaign = Factory.build(:campaign, :user => @current_user)
+        Campaign.stub!(:new).and_return(@campaign)
+        @campaign.should_receive(:add_note).with("nice campaign", @current_user)
 
+        xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3), :comment => "nice campaign"
+      end
+      it "should not add a comment(note) to the campaign if the comment is blank" do
+        @campaign = Factory.build(:campaign, :user => @current_user)
+        Campaign.stub!(:new).and_return(@campaign)
+        @campaign.should_not_receive(:add_note)
+        
+        xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
+      end
     end
 
     describe "with invalid params" do

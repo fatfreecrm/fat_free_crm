@@ -95,6 +95,7 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
+        @campaign.add_note(params[:comment], @current_user) if params[:comment].present?
         @campaigns = get_campaigns
         get_data_for_sidebar
         format.js   # create.js.rjs
