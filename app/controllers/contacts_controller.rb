@@ -103,6 +103,8 @@ class ContactsController < ApplicationController
     respond_to do |format|
       if @contact.save_with_account_and_permissions(params)
         @contact.add_tag(params[:tag][:name]) if params[:tag]
+        @contact.add_note(params[:comment], @current_user) if params[:comment].present?
+        
         @contacts = get_contacts if called_from_index_page?
         format.js   # create.js.rjs
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }

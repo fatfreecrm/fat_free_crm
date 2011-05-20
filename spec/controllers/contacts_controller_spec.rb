@@ -315,6 +315,21 @@ describe ContactsController do
         @contact.should_receive(:add_tag).with("tag1, tag2")
         xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}, :tag => {:name => "tag1, tag2"}
       end
+      
+      it "should add a comment(note) to the contact" do
+        @contact = Factory.build(:contact, :first_name => "Billy", :last_name => "Bones")
+        Contact.stub!(:new).and_return(@contact)
+        @contact.should_receive(:add_note).with("nice contact", @current_user)
+
+        xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}, :comment => "nice contact"
+      end
+      it "should not add a comment(note) to the contact if the comment is blank" do
+        @contact = Factory.build(:contact, :first_name => "Billy", :last_name => "Bones")
+        Contact.stub!(:new).and_return(@contact)
+        @contact.should_not_receive(:add_note)
+        
+        xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}
+      end
     end
 
     describe "with invalid params" do
