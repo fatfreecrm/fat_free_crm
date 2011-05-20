@@ -295,4 +295,18 @@ describe Contact do
       contacts.should include(contact1, contact4)
     end
   end
+  describe "instance methods" do
+    describe "add_note" do
+      it "should add a note to the contact" do
+        contact = Factory(:contact)
+        user = Factory(:user)
+        comment_text = "this is an important contact"
+        comment = Factory.build(:comment, :comment => comment_text, :user => user, :commentable => contact)
+        Comment.stub(:new).and_return(comment)
+        contact.add_note(comment_text, user)
+        contact.reload
+        contact.comments.should == [comment]
+      end
+    end
+  end
 end

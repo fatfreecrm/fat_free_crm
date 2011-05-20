@@ -143,6 +143,10 @@ class Contact < ActiveRecord::Base
     end
   end
 
+  def add_note(message, user)
+    Comment.create(:comment => message, :commentable => self, :user => user)
+  end
+  
   # Class methods.
   #----------------------------------------------------------------------------
   def self.create_for(model, account, opportunity, params)
