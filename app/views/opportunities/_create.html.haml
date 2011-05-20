@@ -5,6 +5,8 @@
   = f.hidden_field :user_id
   = f.error_messages
   = render :partial => "opportunities/top_section", :locals => { :f => f }
+  = render :partial => "opportunities/comment", :locals => { :f => f }
+  = render :partial => "opportunities/tags", :locals => { :f => f }
   = render :partial => "opportunities/permissions", :locals => { :f => f }
   .buttonbar
     = f.submit t(:create_opportunity), :onclick => %/$("account_assigned_to").value = $F("opportunity_assigned_to"); if ($("account_id").visible()) { $("account_id").enable(); }/
