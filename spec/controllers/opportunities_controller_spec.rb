@@ -418,6 +418,20 @@ describe OpportunitiesController do
         
         xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => {}, :tag => {:name => "tag1, tag2"}
       end
+      it "should add a comment(note) to the opportunity" do
+        @opportunity = Factory.build(:opportunity, :user => @current_user, :stage => "won")
+        Opportunity.stub!(:new).and_return(@opportunity)
+        @opportunity.should_receive(:add_note).with("nice opportunity", @current_user)
+
+        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => {}, :comment => "nice opportunity"
+      end
+      it "should not add a comment(note) to the opportunity if the comment is blank" do
+        @opportunity = Factory.build(:opportunity, :user => @current_user, :stage => "won")
+        Opportunity.stub!(:new).and_return(@opportunity)
+        @opportunity.should_not_receive(:add_note)
+        
+        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => {}
+      end
     end
 
     describe "with invalid params" do
