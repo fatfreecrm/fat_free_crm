@@ -247,4 +247,18 @@ describe Lead do
       leads.should == [lead1, lead5]
     end
   end
+  describe "instance methods" do
+    describe "add_note" do
+      it "should add a note to the lead" do
+        lead = Factory(:lead)
+        user = Factory(:user)
+        comment_text = "this is an important lead"
+        comment = Factory.build(:comment, :comment => comment_text, :user => user, :commentable => lead)
+        Comment.stub(:new).and_return(comment)
+        lead.add_note(comment_text, user)
+        lead.reload
+        lead.comments.should == [comment]
+      end
+    end
+  end
 end

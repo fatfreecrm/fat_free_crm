@@ -163,6 +163,9 @@ class Lead < ActiveRecord::Base
   end
   alias :name :full_name
 
+  def add_note(message, user)
+    Comment.create(:comment => message, :commentable => self, :user => user)
+  end
   private
   #----------------------------------------------------------------------------
   def increment_leads_count
