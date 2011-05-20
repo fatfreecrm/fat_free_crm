@@ -266,6 +266,22 @@ describe Account do
       accounts.should == [account1, account4]
     end
   end
+  
+  describe "instance methods" do
+    describe "add_note" do
+      it "should add a note to the account" do
+        account = Factory(:account)
+        user = Factory(:user)
+        comment_text = "this is an important opportunity"
+        comment = Factory.build(:comment, :comment => comment_text, :user => user, :commentable => account)
+        Comment.stub(:new).and_return(comment)
+        account.add_note(comment_text, user)
+        account.reload
+        account.comments.should == [comment]
+      end
+    end
+  end
+  
   describe "named_scopes" do
     context "assigned_to" do
       before :each do
