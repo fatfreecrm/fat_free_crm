@@ -4,6 +4,9 @@
   = f.hidden_field :user_id
   = f.error_messages
   = render :partial => "contacts/top_section", :locals => { :f => f }
+  = render :partial => "contacts/comment",     :locals => { :f => f }
+  = render :partial => "contacts/tags",        :locals => { :f => f }
+  
   = render :partial => "contacts/extra",       :locals => { :f => f }
   = render :partial => "contacts/web",         :locals => { :f => f }
   = render :partial => "contacts/permissions", :locals => { :f => f }

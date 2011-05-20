@@ -14,6 +14,8 @@ describe "/contacts/_create.html.haml" do
 
   it "should render [create contact] form" do
     template.should_receive(:render).with(hash_including(:partial => "contacts/top_section"))
+    template.should_receive(:render).with(hash_including(:partial => "contacts/comment"))
+    template.should_receive(:render).with(hash_including(:partial => "contacts/tags"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/extra"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/web"))
     template.should_receive(:render).with(hash_including(:partial => "contacts/permissions"))
