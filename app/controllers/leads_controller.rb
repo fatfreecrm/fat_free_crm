@@ -103,7 +103,7 @@ class LeadsController < ApplicationController
     respond_to do |format|
       if @lead.save_with_permissions(params)
         @lead.add_tag(params[:tag][:name]) if params[:tag].present?
-        
+        @lead.add_note(params[:comment], @current_user) if params[:comment].present?
         if called_from_index_page?
           @leads = get_leads
           get_data_for_sidebar

@@ -400,6 +400,20 @@ describe LeadsController do
 
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3), :tag => {:name => "tag1, tag2"}
       end
+      it "should add a comment(note) to the lead" do
+        @lead = Factory.build(:lead, :user => @current_user, :campaign => nil)
+        Lead.stub!(:new).and_return(@lead)
+        @lead.should_receive(:add_note).with("nice lead", @current_user)
+
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3), :comment => "nice lead"
+      end
+      it "should not add a comment(note) to the lead if the comment is blank" do
+        @lead = Factory.build(:lead, :user => @current_user, :campaign => nil)
+        Lead.stub!(:new).and_return(@lead)
+        @lead.should_not_receive(:add_note)
+        
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3), :comment => ""
+      end
     end
 
     describe "with invalid params" do
