@@ -3,6 +3,7 @@
   = hidden_field_tag "campaign[user_id]", @current_user.id
   = f.error_messages
   = render :partial => "campaigns/top_section", :locals => { :f => f }
+  = render :partial => "campaigns/comment",      :locals => { :f => f }
   = render :partial => "campaigns/objectives",  :locals => { :f => f }
   = render :partial => "campaigns/permissions", :locals => { :f => f }
   .buttonbar

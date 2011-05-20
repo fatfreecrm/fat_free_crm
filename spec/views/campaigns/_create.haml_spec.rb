@@ -11,6 +11,7 @@ describe "/campaigns/_create.html.haml" do
 
   it "should render [create campaign] form" do
     template.should_receive(:render).with(hash_including(:partial => "campaigns/top_section"))
+    template.should_receive(:render).with(hash_including(:partial => "campaigns/comment"))
     template.should_receive(:render).with(hash_including(:partial => "campaigns/objectives"))
     template.should_receive(:render).with(hash_including(:partial => "campaigns/permissions"))
 
