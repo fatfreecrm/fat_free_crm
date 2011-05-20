@@ -13,6 +13,8 @@ describe "/leads/_create.html.haml" do
 
   it "should render [create lead] form" do
     template.should_receive(:render).with(hash_including(:partial => "leads/top_section"))
+    template.should_receive(:render).with(hash_including(:partial => "leads/comment"))
+    template.should_receive(:render).with(hash_including(:partial => "leads/tags"))
     template.should_receive(:render).with(hash_including(:partial => "leads/status"))
     template.should_receive(:render).with(hash_including(:partial => "leads/contact"))
     template.should_receive(:render).with(hash_including(:partial => "leads/web"))
