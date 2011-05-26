@@ -1,7 +1,7 @@
 require 'rubygems'
 
 require 'yaml'
-YAML::ENGINE.yamler = 'syck'
+YAML::ENGINE.yamler = 'syck' if RUBY_VERSION == "1.9.2"
 
 # Set up gems listed in the Gemfile.
 gemfile = File.expand_path('../../Gemfile', __FILE__)
