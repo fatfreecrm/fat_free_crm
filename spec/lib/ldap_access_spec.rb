@@ -125,6 +125,7 @@ describe LDAPAccess do
     it "should get the params from the Config" do
       LDAPAccess::Config.should_receive(:host).and_return('test.host')
       LDAPAccess::Config.should_receive(:port).and_return(389)
+      LDAPAccess::Config.should_receive(:ssl).and_return(false)
       LDAPAccess::Config.should_receive(:bind_dn).and_return('uid=admin,dc=example,dc=com')
       LDAPAccess::Config.should_receive(:bind_passwd).and_return('secret')
       Net::LDAP.stub!(:new).and_return(:wibble)
@@ -136,6 +137,7 @@ describe LDAPAccess do
       Net::LDAP.should_receive(:new).with( {
               :host => 'test.host',
               :port => 389,
+              :encryption => nil,
               :auth => {
                 :method => :simple,
                 :username => 'uid=admin,dc=example,dc=com',
@@ -144,11 +146,19 @@ describe LDAPAccess do
             } ).and_return(:wibble)
       LDAPAccess.send(:connect).should == :wibble
     end
+
+    it "should create a new Net::LDAP object with SSL when requested" do
+      stub_ldap_config()
+      LDAPAccess::Config.stub!(:ssl).and_return(true)
+      Net::LDAP.should_receive(:new).with( hash_including(:encryption => :simple_tls)).and_return(:wibble)
+      LDAPAccess.send(:connect).should == :wibble
+    end
   end
 
   def stub_ldap_config()
     LDAPAccess::Config.stub!(:host).and_return('test.host')
     LDAPAccess::Config.stub!(:port).and_return(389)
+    LDAPAccess::Config.stub!(:ssl).and_return(false)
     LDAPAccess::Config.stub!(:bind_dn).and_return('uid=admin,dc=example,dc=com')
     LDAPAccess::Config.stub!(:bind_passwd).and_return('secret')
     LDAPAccess::Config.stub!(:search_base).and_return('dc=example,dc=com')
@@ -216,7 +226,7 @@ describe LDAPAccess::Config do
     after :all do
       load 'lib/ldap_access.rb' # Clear the cached config
     end
-    %w(host port bind_dn bind_passwd search_base user_filter).each do |attribute|
+    %w(host port ssl bind_dn bind_passwd search_base user_filter).each do |attribute|
       it "should have parameter #{attribute}" do
         LDAPAccess::Config.send(attribute.to_sym).should_not be_blank
       end

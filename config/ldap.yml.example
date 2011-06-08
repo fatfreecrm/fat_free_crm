@@ -1,6 +1,7 @@
 defaults : &defaults
   host: ldap.unboxedconsulting.com
-  port: 389
+  port: 636
+  ssl: true
   bind_dn: 'uid=user.name,ou=people,dc=unboxedconsulting,dc=com'
   bind_passwd: 'secret'
   search_base: "ou=people,dc=unboxedconsulting,dc=com"

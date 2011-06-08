@@ -32,6 +32,7 @@ class LDAPAccess
       return Net::LDAP.new(
         :host => Config.host,
         :port => Config.port,
+        :encryption => Config.ssl ? :simple_tls : nil,
         :auth => {
           :method => :simple,
           :username => Config.bind_dn,
