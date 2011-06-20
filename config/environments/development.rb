@@ -26,6 +26,17 @@ FatFreeCRM::Application.configure do
     Debugger.start_remote
     File.delete(File.join(Rails.root, 'tmp', 'debug.txt'))
   end
+
+  ActionMailer::Base.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :enable_starttls_auto => true,
+    :port => 587,
+    :authentication => :plain,
+    :user_name => "test@domain.com",
+    :password => 'password'
+  }
+
+  config.action_mailer.default_url_options = { :host => 'dev.mydomain.com' }
 end
 
 ActiveSupport.on_load(:after_initialize) do
