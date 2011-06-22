@@ -46,10 +46,14 @@ class Comment < ActiveRecord::Base
 
   private
   def log_activity
-    authentication = Authentication.find
-    if authentication
-      current_user = authentication.record
-      Activity.log(current_user, commentable, :commented) if current_user
+    begin
+      authentication = Authentication.find
+      if authentication
+        current_user = authentication.record
+        Activity.log(current_user, commentable, :commented) if current_user
+      end
+    rescue
+      true
     end
   end
 
