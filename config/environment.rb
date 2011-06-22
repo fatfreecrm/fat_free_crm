@@ -26,7 +26,6 @@ Rails::Initializer.run do |config|
   config.gem 'will_paginate', :version => '2.3.14'
   config.gem 'ruby-net-ldap', :lib => 'net/ldap'
   config.gem 'acts-as-taggable-on'
-  config.gem 'fastercsv'
   if %w(development test).include?(RAILS_ENV)
     # rspec 1.3.1 has a bug that causes loads of tests to fail: https://rspec.lighthouseapp.com/projects/5645/tickets/1049
     config.gem 'rspec', :version => "1.3.0", :lib => false
