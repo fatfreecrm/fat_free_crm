@@ -1,5 +1,5 @@
 - truncated = simple_format h(truncate(comment.comment.gsub("\n", " "), :length => 125))
-- formatted = defined?(RedCloth) ? RedCloth.new(h(comment.comment)).to_html.html_safe : simple_format(h(comment.comment))
+- formatted = defined?(RedCloth) ? RedCloth.new(h(comment.comment)).to_html.html_safe : simple_format(h(comment.comment)).html_safe
 - collapsable = formatted.size > 150
 
 %li[comment]{ highlightable(dom_id(comment, :tools), :off => "#f2f2f2") }
