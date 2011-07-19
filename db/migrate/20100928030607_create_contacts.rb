@@ -28,7 +28,7 @@ class CreateContacts < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :contacts, [ :user_id, :last_name, :deleted_at ], :unique => true
+    add_index :contacts, [ :user_id, :last_name, :deleted_at ], :unique => true, :name => 'id_last_name_deleted'
     add_index :contacts, :assigned_to
   end
 
@@ -36,3 +36,4 @@ class CreateContacts < ActiveRecord::Migration
     drop_table :contacts
   end
 end
+

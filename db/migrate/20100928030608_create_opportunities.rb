@@ -17,7 +17,7 @@ class CreateOpportunities < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :opportunities, [ :user_id, :name, :deleted_at ], :unique => true
+    add_index :opportunities, [ :user_id, :name, :deleted_at ], :unique => true, :name => 'id_name_deleted'
     add_index :opportunities, :assigned_to
   end
 
@@ -25,3 +25,4 @@ class CreateOpportunities < ActiveRecord::Migration
     drop_table :opportunities
   end
 end
+
