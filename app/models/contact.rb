@@ -40,6 +40,7 @@
 #  linkedin        :string(128)
 #  facebook        :string(128)
 #  twitter         :string(128)
+#  skype           :string(128)
 #  born_on         :date
 #  do_not_call     :boolean(1)      not null
 #  deleted_at      :datetime
@@ -157,7 +158,7 @@ class Contact < ActiveRecord::Base
       :assigned_to => params[:account][:assigned_to],
       :access      => params[:access]
     }
-    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter do_not_call background_info).each do |name|
+    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
       attributes[name] = model.send(name.intern)
     end
 

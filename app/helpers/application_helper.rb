@@ -22,7 +22,7 @@ module ApplicationHelper
     if tabs
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
-    else
+  else
       raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake crm:setup</b> command."
     end
   end
@@ -251,7 +251,7 @@ module ApplicationHelper
   # Display web presence mini-icons for Contact or Lead.
   #----------------------------------------------------------------------------
   def web_presence_icons(person)
-    [ :blog, :linkedin, :facebook, :twitter ].map do |site|
+    [ :blog, :linkedin, :facebook, :twitter, :skype ].map do |site|
       url = person.send(site)
       unless url.blank?
         url = "http://" << url unless url.match(/^https?:\/\//)
@@ -399,3 +399,4 @@ module ApplicationHelper
     (exports + feeds).join(' | ')
   end
 end
+

@@ -362,6 +362,7 @@ en-US:
   referred_by: Referred by
   referred_by_small: referred by
   save_contact: Save Contact
+  skype: Skype
   twitter: Twitter
   web_presence: Web Presence
   web_presence_small: web presence
@@ -657,3 +658,4 @@ en-US:
   # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: american
+

@@ -40,6 +40,7 @@
 #  linkedin        :string(128)
 #  facebook        :string(128)
 #  twitter         :string(128)
+#  skype           :string(128)
 #  rating          :integer(4)      default(0), not null
 #  do_not_call     :boolean(1)      not null
 #  deleted_at      :datetime
