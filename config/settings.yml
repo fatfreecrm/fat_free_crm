@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -56,11 +56,11 @@
 # Default records permissions.
 #------------------------------------------------------------------------------
 # Set the defaults permission for new records. Possible values are:
-#   Private -- private access, only for the creator of the record. This is the default.
-#   Public  -- public access, share with everyone.
+#   Private -- private access, only for the creator of the record.
+#   Public  -- public access, share with everyone. This is the default.
 #   Shared  -- shared with selected accounts, should be selected by the user.
 #
-:default_access: "Private"
+:default_access: "Public"
 
 # Background information.
 #------------------------------------------------------------------------------
@@ -82,7 +82,7 @@
 #   true  -- use separate street1, street2, city, state, zipcode, and country field.
 #   false -- use single text area field to enter the entire address. This is the default.
 #
-:compound_address: false
+:compound_address: true
 
 # Dropdown calendar format.
 #------------------------------------------------------------------------------
@@ -91,27 +91,27 @@
 #   true  -- allow selecting date and time.
 #   false -- allow selecting date only. This is the default.
 #
-task_calendar_with_time: false
+task_calendar_with_time: true
 
-# Sets the email dropbox feature, this are the connections settings for 
+# Sets the email dropbox feature, this are the connections settings for
 # the imap account, server and folders.
 #------------------------------------------------------------------------------
 :email_dropbox:
-  :server                     : imap.example.com      # IMAP server name.
-  :port                       : 993                   # IMAP server port number.
-  :ssl                        : true                  # True for secure IMAP connection, false othewise.
-  :address                    : dropbox@example.com   # Dropbox email address.
-  :user                       : user@example.com      # User to login to the IMAP server.
-  :password                   : password              # Password to login to the IMAP server.
-  :scan_folder                : inbox                 # Folder to scan for dropbox messages.
-  :move_to_folder             : processed             # Optional: folder to move processed messages to.
-  :move_invalid_to_folder     : invalid               # Optional: folder to move invalid messages to.
-  :attach_to_account          : false                 # Attach emails to contact's account, if any. The same rule applies to opportunities.
+  :server                     : @IMAP_SERVER@          # IMAP server name.
+  :port                       : @IMAP_PORT@            # IMAP server port number.
+  :ssl                        : @IMAP_SSL@             # True for secure IMAP connection, false othewise.
+  :address                    : @IMAP_ADDRESS@         # Dropbox email address.
+  :user                       : @IMAP_USER@            # User to login to the IMAP server.
+  :password                   : @IMAP_PASSWORD@        # Password to login to the IMAP server.
+  :scan_folder                : @IMAP_INBOX@           # Folder to scan for dropbox messages.
+#  :move_to_folder             : @IMAP_MOVE@            # Optional: folder to move processed messages to.
+#  :move_invalid_to_folder     : @IMAP_INVALID@         # Optional: folder to move invalid messages to.
+  :attach_to_account          : @IMAP_ATTACH@          # Attach emails to contact's account, if any. The same rule applies to opportunities.
 
 # Main and Admin Tabs.
 #------------------------------------------------------------------------------
 :tabs: [
-  { :active : true,  :text : :tab_dashboard,     :url : { :controller : "/"              } },
+  { :active : true,  :text : :tab_dashboard,     :url : { :controller : "home"           } },
   { :active : false, :text : :tab_tasks,         :url : { :controller : "tasks"          } },
   { :active : false, :text : :tab_campaigns,     :url : { :controller : "campaigns"      } },
   { :active : false, :text : :tab_leads,         :url : { :controller : "leads"          } },
@@ -125,6 +125,34 @@ task_calendar_with_time: false
   { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
   { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
+
+# Account Category. To add custom account type use string value, for example:
+#
+# account_category:
+#   - :affiliate
+#   - :competitor
+#   - :customer
+#   - :partner
+#   - :reseller
+#   - :vendor
+#   - "Custom"
+#
+#------------------------------------------------------------------------------
+account_category:
+  - :affiliate
+  - :competitor
+  - :customer
+  - :partner
+  - :reseller
+  - :vendor
+
+account_category_color:
+  :affiliate   : lavender
+  :competitor  : paleturquoise
+  :customer    : pink
+  :partner     : bisque
+  :reseller    : thistle
+  :vendor      : skyblue
 
 # Campaign Status. To add custom status use string value, for example:
 #
@@ -145,11 +173,11 @@ campaign_status:
   - :called_off
 
 campaign_status_color:
-  :planned    : palegreen
-  :started    : paleturquoise
-  :completed  : bisque
-  :on_hold    : pink
-  :called_off : thistle
+  :planned    : Gold
+  :started    : Turquoise
+  :completed  : Lime
+  :on_hold    : Orchid
+  :called_off : OrangeRed
 
 # Lead Status and Source.
 #------------------------------------------------------------------------------
@@ -160,10 +188,10 @@ lead_status:
   - :rejected
 
 lead_status_color:
-  :new       : palegreen
-  :contacted : paleturquoise
-  :converted : bisque
-  :rejected  : thistle
+  :new       : Silver
+  :contacted : Turquoise
+  :converted : Lime
+  :rejected  : OrangeRed
 
 lead_source:
   - :campaign
@@ -189,14 +217,14 @@ opportunity_stage:
   - :lost
 
 opportunity_stage_color:
-  :prospecting  : lavender
-  :analysis     : mistyrose
-  :presentation : wheat
-  :proposal     : thistle
-  :negotiation  : skyblue
-  :final_review : aquamarine
-  :won          : lightgreen
-  :lost         : pink
+  :prospecting  : Silver
+  :analysis     : PaleGoldenRod
+  :presentation : Salmon
+  :proposal     : Gold
+  :negotiation  : Orchid
+  :final_review : Turquoise
+  :won          : Lime
+  :lost         : OrangeRed
 
 # Task Category, Due Date, and Completed Date.
 #------------------------------------------------------------------------------
@@ -211,14 +239,14 @@ task_category:
   - :trip
 
 task_category_color:
-  :call         : lavender
-  :email        : paleturquoise
-  :follow_up    : mistyrose
-  :lunch        : wheat
-  :meeting      : thistle
-  :money        : lightgreen
-  :presentation : aquamarine
-  :trip         : skyblue
+  :call         : Silver
+  :email        : Turquoise
+  :follow_up    : Gold
+  :lunch        : Tomato
+  :meeting      : Orchid
+  :money        : Lime
+  :presentation : Salmon
+  :trip         : Turquoise
 
 task_bucket:
   - :overdue
@@ -235,3 +263,4 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
+

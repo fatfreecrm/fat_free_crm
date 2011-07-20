@@ -8,20 +8,26 @@
 
 %div#edit_account{ hidden }
 
-= render :partial => "comments/new", :locals => { :commentable => @account }
+= render "comments/new", :commentable => @account
 = render :partial => "common/timeline", :collection => @timeline
 
 = section(@account, :tasks)
 .log#tasks
-  = render :partial => "common/tasks"
+  = render "common/tasks"
 
 = section(@account, :contacts)
 .list#contacts
-  = render :partial => "contacts/contact", :collection => @account.contacts
+  - @contacts = @account.contacts.paginate(:page => 1, :per_page => 20)
+  = render :partial => "contacts/contact", :collection => @contacts
+= will_paginate @contacts, :id => true, :params => {:action => :contacts}
+
+%br( style="clear:both" )
 
 = section(@account, :opportunities)
 .list#opportunities
-  = render :partial => "opportunities/opportunity", :collection => @account.opportunities
+  - @opportunities = @account.opportunities.paginate(:page => 1, :per_page => 20)
+  = render :partial => "opportunities/opportunity", :collection => @opportunities
+= will_paginate @opportunities, :id => true, :params => {:action => :opportunities}
 
 = load_select_popups_for(@account, :tasks, :contacts, :opportunities)
 

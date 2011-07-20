@@ -151,6 +151,15 @@ pt-BR:
               missing_email: "^Por favor, informe o e-mail."
               email_in_use: "^Já existe um usuário com este e-mail."
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one: "Não foi possível gravar %{model}: 1 erro"
+        other: "Não foi possível gravar %{model}: %{count} erros."
+      body: "Por favor, verifique o(s) seguinte(s) campo(s):"
+
   msg_account_suspended: A conta do usuário foi suspensa.
   password_reset_instruction: Instruções de redefinição da senha
 
@@ -160,6 +169,7 @@ pt-BR:
   msg_account_not_approved: Sua conta ainda não foi aprovada.
   msg_asset_deleted: "%{value} foi removido."
   msg_asset_not_available: Este(a) %{value} não está mais disponível.
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: Estes(as) %{value} não estão mais disponíveis.
   msg_asset_rejected: "%{value} foi rejeitado."
   msg_bad_image_file: "^Não foi possível enviar ou redimensionar a imagem que você escolheu."
@@ -218,12 +228,13 @@ pt-BR:
   aim: AOL IM
   already_signed_up: Já é cadastrado?
   alt_email: Email alternativo
+  avatar: Imagem
   change_password: Mudar senha
   company: Empresa
   contact_info: Informações para contato
   current_password: Senha atual
   edit_profile: Editar perfil
-  email: Email
+  # email: Email # <-- Already defined as the task type if Settings.
   first_name: Primeiro nome
   google: Google IM
   gravatar_help: Não conhece o Gravatar? Saiba mais sobre
@@ -590,6 +601,9 @@ pt-BR:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: '1 contato'
       other: '%{count} contatos'

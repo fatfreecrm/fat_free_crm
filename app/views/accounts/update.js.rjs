@@ -8,7 +8,7 @@ if @account.errors.empty?
   else
     page[id].replace :partial => "account", :collection => [ @account ]
     page[id].visual_effect :highlight, :duration => 1.0
-    page << refresh_sidebar(:index)
+    page << refresh_sidebar(:index, :filters)
   end
 else  
   page[id].replace_html :partial => "edit"

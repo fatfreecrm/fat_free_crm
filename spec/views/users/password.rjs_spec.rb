@@ -5,28 +5,28 @@ describe "/users/password.js.rjs" do
   
   before(:each) do
     login_and_assign
-    assigns[:user] = @current_user
+    assign(:user, @current_user)
   end
 
   it "cancel: should hide [Change Password] form and restore title" do
     params[:cancel] = "true"
     
-    render "users/password.js.rjs"
-    response.should include_text('crm.flip_form("change_password")')
-    response.should include_text('crm.set_title("change_password", "My Profile")')
+    render
+    rendered.should include('crm.flip_form("change_password")')
+    rendered.should include('crm.set_title("change_password", "My Profile")')
   end
 
   it "edit profile: should hide [Edit Profile] and [Upload Avatar] forms and show [Change Password]" do
-    render "users/password.js.rjs"
+    render
 
-    response.should have_rjs("change_password") do |rjs|
+    rendered.should have_rjs("change_password") do |rjs|
       with_tag("form[class=edit_user]")
     end
-    response.should include_text('crm.hide_form("edit_profile")')
-    response.should include_text('crm.hide_form("upload_avatar")')
-    response.should include_text('crm.flip_form("change_password")')
-    response.should include_text('crm.set_title("change_password"')
-    response.should include_text('$("current_password").focus()')
+    rendered.should include('crm.hide_form("edit_profile")')
+    rendered.should include('crm.hide_form("upload_avatar")')
+    rendered.should include('crm.flip_form("change_password")')
+    rendered.should include('crm.set_title("change_password"')
+    rendered.should include('$("current_password").focus()')
   end
 
 end

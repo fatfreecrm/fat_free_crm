@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -19,9 +19,6 @@ class CampaignsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :attach, :only => :attach
-  before_filter :discard, :only => :discard
-  before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /campaigns
@@ -34,6 +31,10 @@ class CampaignsController < ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @campaigns }
+      format.xls  { send_data @campaigns.to_xls, :type => :xls }
+      format.csv  { send_data @campaigns.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -41,7 +42,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns/1.xml                                                   HTML
   #----------------------------------------------------------------------------
   def show
-    @campaign = Campaign.my(@current_user).find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
 
@@ -61,7 +62,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     @campaign = Campaign.new(:user => @current_user, :access => Setting.default_access)
-    @users = User.except(@current_user).active.all
+    @users = User.except(@current_user)
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
@@ -76,10 +77,10 @@ class CampaignsController < ApplicationController
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
-    @campaign = Campaign.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).active.all
-    if params[:previous] =~ /(\d+)\z/
-      @previous = Campaign.my(@current_user).find($1)
+    @campaign = Campaign.my.find(params[:id])
+    @users = User.except(@current_user)
+    if params[:previous].to_s =~ /(\d+)\z/
+      @previous = Campaign.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -92,7 +93,7 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @campaign = Campaign.new(params[:campaign])
-    @users = User.except(@current_user).active.all
+    @users = User.except(@current_user)
 
     respond_to do |format|
       if @campaign.save_with_permissions(params[:users])
@@ -111,7 +112,7 @@ class CampaignsController < ApplicationController
   # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def update
-    @campaign = Campaign.my(@current_user).find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
 
     respond_to do |format|
       if @campaign.update_with_permissions(params[:campaign], params[:users])
@@ -119,7 +120,7 @@ class CampaignsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).active.all # Need it to redraw [Edit Campaign] form.
+        @users = User.except(@current_user) # Need it to redraw [Edit Campaign] form.
         format.js
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
@@ -133,7 +134,7 @@ class CampaignsController < ApplicationController
   # DELETE /campaigns/1.xml                                       HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @campaign = Campaign.my(@current_user).find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
     @campaign.destroy if @campaign
 
     respond_to do |format|
@@ -146,13 +147,13 @@ class CampaignsController < ApplicationController
     respond_to_not_found(:html, :js, :xml)
   end
 
-  # GET /campaigns/search/query                                           AJAX
+  # GET /campaigns/search/query                                            AJAX
   #----------------------------------------------------------------------------
   def search
     @campaigns = get_campaigns(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @campaigns.to_xml }
     end
   end
@@ -160,16 +161,16 @@ class CampaignsController < ApplicationController
   # PUT /campaigns/1/attach
   # PUT /campaigns/1/attach.xml                                            AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :attach, :only => :attach
+  # Handled by ApplicationController :attach
 
   # PUT /campaigns/1/discard
   # PUT /campaigns/1/discard.xml                                           AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :discard, :only => :discard
+  # Handled by ApplicationController :discard
 
   # POST /campaigns/auto_complete/query                                    AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
+  # Handled by ApplicationController :auto_complete
 
   # GET /campaigns/options                                                 AJAX
   #----------------------------------------------------------------------------
@@ -181,6 +182,18 @@ class CampaignsController < ApplicationController
     end
   end
 
+  # GET /accounts/leads                                                    AJAX
+  #----------------------------------------------------------------------------
+  def leads
+    @campaign = Campaign.my.find(params[:id])
+  end
+
+  # GET /accounts/opportunities                                            AJAX
+  #----------------------------------------------------------------------------
+  def opportunities
+    @campaign = Campaign.my.find(params[:id])
+  end
+
   # POST /campaigns/redraw                                                 AJAX
   #----------------------------------------------------------------------------
   def redraw
@@ -188,7 +201,7 @@ class CampaignsController < ApplicationController
     @current_user.pref[:campaigns_outline]  = params[:outline]  if params[:outline]
     @current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(:page => 1)
-    render :action => :index
+    render :index
   end
 
   # POST /campaigns/filter                                                 AJAX
@@ -196,35 +209,13 @@ class CampaignsController < ApplicationController
   def filter
     session[:filter_by_campaign_status] = params[:status]
     @campaigns = get_campaigns(:page => 1)
-    render :action => :index
+    render :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_campaigns(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.pref[:campaigns_sort_by] || Campaign.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.pref[:campaigns_per_page]
-    }
-
-    # Call :get_campaigns hook and return its output if any.
-    campaigns = hook(:get_campaigns, self, :records => records, :pages => pages)
-    return campaigns.last unless campaigns.empty?
-
-    # Default processing if no :get_campaigns hooks are present.
-    if session[:filter_by_campaign_status]
-      filtered = session[:filter_by_campaign_status].split(",")
-      current_query.blank? ? Campaign.my(records).only(filtered) : Campaign.my(records).only(filtered).search(current_query)
-    else
-      current_query.blank? ? Campaign.my(records) : Campaign.my(records).search(current_query)
-    end.paginate(pages)
+  def get_campaigns(options = {})
+    get_list_of_records(Campaign, options.merge!(:filter => :filter_by_campaign_status))
   end
 
   #----------------------------------------------------------------------------
@@ -234,21 +225,21 @@ class CampaignsController < ApplicationController
       @campaigns = get_campaigns
       if @campaigns.blank?
         @campaigns = get_campaigns(:page => current_page - 1) if current_page > 1
-        render :action => :index and return
+        render :index and return
       end
       # At this point render destroy.js.rjs
     else # :html request
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @campaign.name)
-      redirect_to(campaigns_path)
+      redirect_to campaigns_path
     end
   end
 
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
-    @campaign_status_total = { :all => Campaign.my(@current_user).count, :other => 0 }
+    @campaign_status_total = { :all => Campaign.my.count, :other => 0 }
     Setting.campaign_status.each do |key|
-      @campaign_status_total[key] = Campaign.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
+      @campaign_status_total[key] = Campaign.my.where(:status => key.to_s).count
       @campaign_status_total[:other] -= @campaign_status_total[key]
     end
     @campaign_status_total[:other] += @campaign_status_total[:all]

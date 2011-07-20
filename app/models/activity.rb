@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -33,21 +33,25 @@
 class Activity < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :subject, :polymorphic => true
-  named_scope :recent, { :conditions => "action='viewed'", :order => "updated_at DESC", :limit => 10 }
-  named_scope :for,    lambda { |user|     { :conditions => [ "user_id =?", user.id] } }
-  named_scope :only,   lambda { |*actions| { :conditions => "action     IN (#{actions.join("','").wrap("'")})" } }
-  named_scope :except, lambda { |*actions| { :conditions => "action NOT IN (#{actions.join("','").wrap("'")})" } }
-  named_scope :latest, lambda { |options|  {
-    :conditions => [ "#{options[:asset] ? "subject_type = ?" : "0=?"} AND #{options[:user] ? "user_id = ?" : "0=?"} AND activities.created_at >= ?",
-      options[:asset] || 0, options[:user] || 0, Time.zone.now - (options[:duration] || 2.days) ],
-    :include => :user,
-    :order => "activities.created_at DESC"
-  } }
+  scope :recent, where(:action => 'viewed').order('activities.updated_at DESC').limit(10)
+  scope :for,    lambda { |user| where(:user_id => user.id) }
+  scope :with_actions,    lambda { |*actions| where('action IN (?)', actions) }
+  scope :without_actions, lambda { |*actions| where('action NOT IN (?)', actions) }
+  scope :latest, lambda { |options|
+    includes(:user).
+    where(options[:asset] ?  {:subject_type => options[:asset]} : nil).
+    where(options[:action] ? {:action => options[:action]} : nil).
+    where(options[:user] ?   {:user_id => options[:user]} : nil).
+    where('activities.created_at >= ?', Time.zone.now - (options[:duration] || 2.days)).
+    order('activities.created_at DESC')
+  }
 
   validates_presence_of :user, :subject
+  exportable
 
-  ASSETS = %w(all tasks campaigns leads accounts contacts opportunities).inject([]) { |arr, asset| arr << [ asset, I18n.t(asset) ] }
-  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month).inject([]) { |arr, duration| arr << [ duration, I18n.t(duration) ] }
+  ASSETS   = %w(all tasks campaigns leads accounts contacts opportunities)
+  ACTIONS  = %w(all_actions created viewed updated deleted commented email)
+  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
 
   #----------------------------------------------------------------------------
   def self.log(user, subject, action)
@@ -81,7 +85,7 @@ class Activity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def self.update_activity(user, subject, action)
-    activity = Activity.first(:conditions => [ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
+    activity = Activity.where('user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', user.id, subject.id, subject.class.name, action.to_s).first
     if activity
       activity.update_attribute(:updated_at, Time.now)
     else
@@ -92,10 +96,11 @@ class Activity < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.delete_activity(user, subject, action)
     unless user
-      delete_all([ "subject_id=? AND subject_type=? AND action=?", subject.id, subject.class.name, action.to_s ])
+      delete_all([ 'subject_id = ? AND subject_type = ? AND action = ?', subject.id, subject.class.name, action.to_s ])
     else
-      delete_all([ "user_id=? AND subject_id=? AND subject_type=? AND action=?", user.id, subject.id, subject.class.name, action.to_s ])
+      delete_all([ 'user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', user.id, subject.id, subject.class.name, action.to_s ])
     end
   end
 
 end
+

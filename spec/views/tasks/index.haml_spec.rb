@@ -2,39 +2,38 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/tasks/index.html.haml" do
   include TasksHelper
-  
+
   before(:each) do
     login_and_assign
   end
 
-  VIEWS.each do |view|
+  TASK_STATUSES.each do |status|
     before(:each) do
-      @asap  = Factory(:task, :asset => Factory(:account), :bucket => "due_asap")
-      @today = Factory(:task, :asset => Factory(:account), :bucket => "due_today")
+      user = Factory(:user)
+      account = Factory(:account)
+      @due  = Factory(:task, :asset => account, :bucket => "due_asap", :assignee => user)
+      @completed = Factory(:task, :asset => account, :bucket => "completed_today", :assignee => user, :completed_at => 1.hour.ago, :completor => user)
     end
 
-    it "should render list of #{view} tasks if list of tasks is not empty" do
-      assigns[:view] = view
-      assigns[:tasks] = { :due_asap => [ @asap ], :due_today => [ @today ] }
-      
-      number_of_buckets = (view == "completed" ? Setting.task_completed : Setting.task_bucket).size
-      template.should_receive(:render).with(hash_including(:partial => view)).exactly(number_of_buckets).times
-      template.should_not_receive(:render).with(:partial => "empty")
+    it "should render list of #{status} tasks if list of tasks is not empty" do
+      assign(:view, status)
+      assign(:tasks, { :due_asap => [ @due ], :completed_today => [ @completed ] })
 
-      render "/tasks/index.html.haml"
-    end
-  end
+      render
 
-  VIEWS.each do |view|
-    it "should render a message if there're no #{view} tasks" do
-      assigns[:view] = view
-      assigns[:tasks] = { :due_asap => [], :due_today => [] }
-
-      template.should_receive(:render).with(:partial => "empty")
-
-      render "/tasks/index.html.haml"
+      view.should render_template(:partial => "_" << status, :count => 1)
+      view.should_not render_template(:partial => "_empty")
     end
   end
 
+  TASK_STATUSES.each do |status|
+    it "should render a message if there're no #{status} tasks" do
+      assign(:view, status)
+      assign(:tasks, { :due_asap => [], :due_today => [] })
+
+      render
+
+      view.should render_template(:partial => "_empty")
+    end
+  end
 end
-

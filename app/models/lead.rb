@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -40,6 +40,7 @@
 #  linkedin        :string(128)
 #  facebook        :string(128)
 #  twitter         :string(128)
+#  skype           :string(128)
 #  rating          :integer(4)      default(0), not null
 #  do_not_call     :boolean(1)      not null
 #  deleted_at      :datetime
@@ -56,21 +57,26 @@ class Lead < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Business'"
   has_many    :emails, :as => :mediator
-  
-  accepts_nested_attributes_for :business_address, :allow_destroy => true
-  
-  named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
-  named_scope :converted, :conditions => "status='converted'"
-  named_scope :for_campaign, lambda { |id| { :conditions => [ "campaign_id=?", id ] } }
-  named_scope :created_by, lambda { |user| { :conditions => [ "user_id = ?" , user.id ] } }
-  named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ? " , user.id ] } }
 
-  simple_column_search :first_name, :last_name, :company, :email,
-    :match => lambda { |column| column == :email ? :middle : :start },
-    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  accepts_nested_attributes_for :business_address, :allow_destroy => true
+
+  scope :state, lambda { |filters|
+    where([ 'status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters ])
+  }
+  scope :converted, where(:status => 'converted')
+  scope :for_campaign, lambda { |id| where('campaign_id = ?', id) }
+  scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
+  scope :assigned_to, lambda { |user| where('assigned_to = ?' , user.id) }
+
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s) OR upper(company) LIKE upper(:m) OR upper(email) LIKE upper(:m)', :s => "#{query}%", :m => "%#{query}%")
+  }
+
   uses_user_permissions
   acts_as_commentable
-  acts_as_paranoid
+  is_paranoid
+  exportable
   sortable :by => [ "first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :first_name, :message => :missing_first_name
@@ -177,3 +183,4 @@ class Lead < ActiveRecord::Base
   end
 
 end
+

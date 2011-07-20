@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
+# Copyright (C) 2008-2011 by Michael Dvorkin
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require "faker"
+require 'faker'
 
 Factory.sequence :address do |x|
   Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
@@ -31,7 +31,7 @@ Factory.sequence :website do |x|
 end
 
 Factory.sequence :title do |x|
-  [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ].rand
+  [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ].sample
 end
 
 Factory.sequence :time do |x|
@@ -98,7 +98,7 @@ Factory.define :address do |a|
   a.zipcode             { Faker::Address.zip_code }
   a.country             { Faker::Address.uk_country }
   a.full_address        { Factory.next(:address) }
-  a.address_type        { %w(Business Billing Shipping).rand }
+  a.address_type        { %w(Business Billing Shipping).sample }
   a.updated_at          { Factory.next(:time) }
   a.created_at          { Factory.next(:time) }
   a.deleted_at          nil
@@ -121,7 +121,7 @@ Factory.define :campaign do |c|
   c.name                { Faker::Lorem.sentence[0,64] }
   c.assigned_to         nil
   c.access              "Public"
-  c.status              { %w(planned started completed planned started completed on_hold called_off).rand }
+  c.status              { %w(planned started completed planned started completed on_hold called_off).sample }
   c.budget              { rand(500) }
   c.target_leads        { rand(200) }
   c.target_conversion   { rand(20) }
@@ -161,7 +161,7 @@ Factory.define :contact do |c|
   c.access              "Public"
   c.title               { Factory.next(:title) }
   c.department          { Faker::Name.name + " Dept." }
-  c.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).rand }
+  c.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).sample }
   c.email               { Faker::Internet.email }
   c.alt_email           { Faker::Internet.email }
   c.phone               { Faker::PhoneNumber.phone_number }
@@ -219,8 +219,8 @@ Factory.define :lead do |l|
   l.access              "Public"
   l.company             { Faker::Company.name }
   l.title               { Factory.next(:title) }
-  l.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).rand }
-  l.status              { %w(new contacted converted rejected).rand }
+  l.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).sample }
+  l.status              { %w(new contacted converted rejected).sample }
   l.rating              1
   l.referred_by         { Faker::Name.name }
   l.do_not_call         false
@@ -242,11 +242,12 @@ end
 Factory.define :opportunity do |o|
   o.user                { |a| a.association(:user) }
   o.campaign            { |a| a.association(:campaign) }
+  o.account             { Factory.create(:account) }
   o.assigned_to         nil
   o.name                { Faker::Lorem.sentence[0,64] }
   o.access              "Public"
-  o.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).rand }
-  o.stage               { %w(prospecting analysis presentation proposal negotiation final_review won lost).rand }
+  o.source              { %w(campaign cold_call conference online referral self web word_of_mouth other).sample }
+  o.stage               { %w(prospecting analysis presentation proposal negotiation final_review won lost).sample }
   o.probability         { rand(50) }
   o.amount              { rand(1000) }
   o.discount            { rand(100) }
@@ -286,13 +287,12 @@ end
 #----------------------------------------------------------------------------
 Factory.define :task do |t|
   t.user                { |a| a.association(:user) }
-  t.asset_id            nil
-  t.asset_type          nil
+  t.asset               nil
   t.assigned_to         nil
   t.completed_by        nil
   t.name                { Faker::Lorem.sentence[0,64] }
   t.priority            nil
-  t.category            { %w(call email follow_up lunch meeting money presentation trip).rand }
+  t.category            { %w(call email follow_up lunch meeting money presentation trip).sample }
   t.bucket              "due_asap"
   t.due_at              { Factory.next(:time) }
   t.background_info     { Faker::Lorem.paragraph[0,255] }
@@ -322,6 +322,7 @@ Factory.define :user do |u|
   u.password_salt       "ce6e0200c96f4dd326b91f3967115a31421a0e7dcddc9ffb63a77f598a9fcb5326fe532dbd9836a2446e46840d398fa32c81f8f4da1a0fcfe931989e9639a013"
   u.persistence_token   "d7cdeffd3625f7cb265b21126b85da7c930d47c4a708365c20eb857560055a6b57c9775becb8a957dfdb46df8aee17eb120a011b380e9cc0882f9dfaa2b7ba26"
   u.perishable_token    "TarXlrOPfaokNOzls2U8"
+  u.single_access_token nil
   u.last_request_at     { Factory.next(:time) }
   u.current_login_at    { Factory.next(:time) }
   u.last_login_at       { Factory.next(:time) }
@@ -352,7 +353,7 @@ Factory.define :default_settings, :parent => :setting do |s|
     ActiveRecord::Base.connection.execute("TRUNCATE settings")
   end
 
-  settings = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")
+  settings = YAML.load_file("#{::Rails.root}/config/settings.yml")
   settings.keys.each do |key|
     Factory.define key.to_sym, :parent => :setting do |factory|
       factory.name key.to_s
@@ -361,4 +362,3 @@ Factory.define :default_settings, :parent => :setting do |s|
     Factory(key.to_sym) # <--- That's where the data gets loaded.
   end
 end
-

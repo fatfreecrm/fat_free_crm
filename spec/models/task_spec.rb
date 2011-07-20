@@ -24,9 +24,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Task do
 
-  before(:each) do
-    login
-  end
+  before { login }
 
   describe "Task/Create" do
     it "should create a new task instance given valid attributes" do
@@ -36,7 +34,7 @@ describe Task do
     end
 
     [ nil, Time.now.utc_offset + 3600 ].each do |offset|
-      before(:each) do
+      before do
         adjust_timezone(offset)
       end
 
@@ -48,10 +46,10 @@ describe Task do
       end
 
       it "should create a task with due date selected from the calendar within #{offset ? 'different' : 'current'} timezone" do
-        task = Factory(:task, :bucket => "specific_time", :calendar => "01/31/2020")
+        task = Factory(:task, :bucket => "specific_time", :calendar => "5/5/2020")
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == Time.parse("2020-01-31")
+        task.due_at.should == Time.parse("2020-05-05")
       end
     end
   end
@@ -91,7 +89,7 @@ describe Task do
     end
 
     [ nil, Time.now.utc_offset + 3600 ].each do |offset|
-      before(:each) do
+      before do
         adjust_timezone(offset)
       end
 
@@ -105,10 +103,10 @@ describe Task do
 
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
         task = Factory(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
-        task.update_attributes( { :bucket => "specific_time", :calendar => "01/31/2020" } )
+        task.update_attributes( { :bucket => "specific_time", :calendar => "05/05/2020" } )
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == Time.parse("2020-01-31")
+        task.due_at.should == Time.parse("2020-05-05")
       end
     end
 
@@ -151,10 +149,11 @@ describe Task do
 
     it "completion should preserve original due date" do
       due_at = 42.days.ago
-      task = Factory(:task, :due_at => due_at, :bucket => "specific_time", :calendar => due_at.to_s)
+      task = Factory(:task, :due_at => due_at, :bucket => "specific_time", :calendar => due_at.strftime("%m/%d/%Y"))
       task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id, :calendar => '')
       task.completed?.should == true
-      task.due_at.to_i.should == due_at.to_i
+      # Setting.task_calendar_with_time == false, so due_at should be tested without HH:MM
+      task.due_at.to_i.should == Time.new(due_at.year, due_at.month, due_at.day).to_i
     end
   end
 
@@ -222,4 +221,39 @@ describe Task do
     end
   end
 
+  describe "Exportable" do
+    describe "unassigned tasks" do
+      before do
+        Task.delete_all
+        Factory(:task, :user => Factory(:user), :assignee => nil)
+        Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Task.all }
+      end
+    end
+
+    describe "assigned tasks" do
+      before do
+        Task.delete_all
+        Factory(:task, :user => Factory(:user), :assignee => Factory(:user))
+        Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Task.all }
+      end
+    end
+
+    describe "completed tasks" do
+      before do
+        Task.delete_all
+        Factory(:task, :user => Factory(:user), :completor => Factory(:user), :completed_at => 1.day.ago)
+        Factory(:task, :user => Factory(:user, :first_name => nil, :last_name => nil), :completor => Factory(:user, :first_name => nil, :last_name => nil), :completed_at => 1.day.ago)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Task.all }
+      end
+    end
+  end
 end
+

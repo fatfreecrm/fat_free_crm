@@ -151,6 +151,15 @@ ja:
               missing_email: "^Please specify email address."
               email_in_use: "^There is another user with the same email."
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one:   "%{model}にエラーが発生しました。"
+        other: "%{model}に%{count}つのエラーが発生しました。"
+      body: "次の項目を確認してください。"
+
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions
 
@@ -160,11 +169,12 @@ ja:
   msg_account_not_approved: Your account has not been approved yet.
   msg_asset_deleted: "%{value} has been deleted."
   msg_asset_not_available: This %{value} is no longer available.
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: The %{value} are not available.
   msg_asset_rejected: "%{value} has been rejected."
   msg_bad_image_file: "^Could't upload or resize the image file you specified."
   msg_cant_create_related: "Can't create the %{asset} since the %{related} is no longer available."
-  msg_cant_delete_user: "^Couldn't delete the user since %{value} has related assets present."
+  msg_cant_delete_user: "Couldn't delete the user since %{value} has related assets present."
   msg_cant_do: "Can't %{action} the %{asset} since it's no longer available."
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.
@@ -218,12 +228,13 @@ ja:
   aim: AOL IM
   already_signed_up: Already signed up?
   alt_email: その他のEメール
+  avatar: Avatar
   change_password: パスワード変更
   company: 会社名
   contact_info: 連絡先情報
   current_password: 現在のパスワード
   edit_profile: プロフィール編集
-  email: Eメール
+  # email: Eメール # <-- Already defined as the task type if Settings.
   first_name: First name
   google: Google IM
   gravatar_help: Gravatarsをご存知ない？ Gravatarsについては
@@ -582,6 +593,9 @@ ja:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: '1 contact'
       other: '%{count} contacts'

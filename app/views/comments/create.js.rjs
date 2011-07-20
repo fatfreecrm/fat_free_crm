@@ -1,7 +1,11 @@
+class_name = @comment.commentable.class.name.downcase
+id_prefix = "#{class_name}_#{@comment.commentable.id}"
+
 if @comment.valid?
-  page.insert_html :after, :comment_new, :partial => "comment", :locals => { :comment => @comment }
+  page.insert_html :after, "#{id_prefix}_comment_new", :partial => "comment", :locals => { :comment => @comment }
   page[dom_id(@comment)].visual_effect :highlight, :duration => 1.5
 end
-page[:shown_notes].value = @comment.commentable.comment_ids.join(',')
-page[:comment_comment].clear
-page[:comment_comment].focus
+page["#{id_prefix}_shown_notes"].value = @comment.commentable.comment_ids.join(',')
+page["#{id_prefix}_comment_comment"].clear
+page["#{id_prefix}_comment_comment"].focus
+

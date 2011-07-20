@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/index.html.haml" do
+describe "/common/auto_complete.html.haml" do
   include AccountsHelper
-  
+
   before(:each) do
     login_and_assign
   end
@@ -16,28 +16,27 @@ describe "/accounts/index.html.haml" do
       else
         Factory(model, :name => "Hello, World!")
       end
-      assigns[:auto_complete] = [ @auto_complete ]
-      
-      render "common/auto_complete.html.haml"
-      response.should have_tag("ul", :count => 1) do |list|
+      assign(:auto_complete, [ @auto_complete ])
+
+      render
+      rendered.should have_tag("ul", :count => 1) do |list|
         unless model == :lead
-          list.should have_tag("li", :id => @auto_complete.id, :text => @auto_complete.name)
+          list.should have_tag("li", :id => @auto_complete.id.to_s, :text => @auto_complete.name)
         else
-          list.should have_tag("li", :id => @auto_complete.id, :text => "#{@auto_complete.name} (#{@auto_complete.company})")
+          list.should have_tag("li", :id => @auto_complete.id.to_s, :text => "#{@auto_complete.name} (#{@auto_complete.company})")
         end
       end
     end
 
     it "should render a message if #{model} doesn't match the query" do
-      assigns[:query] = "Hello"
-      assigns[:auto_complete] = []
+      assign(:query, "Hello")
+      assign(:auto_complete, [])
 
-      render "common/auto_complete.html.haml"
-      response.should have_tag("ul", :count => 1) do |list|
+      render
+      rendered.should have_tag("ul", :count => 1) do |list|
         with_tag("li", :id => nil, :count => 1, :text => /^No/)
       end
     end
 
   end
-
 end

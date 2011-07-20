@@ -16,7 +16,7 @@
         - %Q{<span style="color:black;">#{h(activity.subject.name)}</span>} # Individual tasks have no landing pages where we could link to.
     - else
       - activity.info # Use info if the subject has been deleted.
-    
-    = t("activity_text", :user => user, :action => action, :type => type, :subject => subject, :default => "#{user} #{action} #{type} #{subject}") # locales optionally can change the word order for activities using 'activity_text'
+
+    = t("activity_text", :user => user, :action => action, :type => type, :subject => subject, :default => "#{user} #{action} #{type} #{subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
 
 

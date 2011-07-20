@@ -1,23 +1,23 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
 class HomeController < ApplicationController
   before_filter :require_user, :except => [ :toggle, :timezone ]
-  before_filter "set_current_tab('/')", :only => :index
+  before_filter :set_current_tab, :only => :index
   before_filter "hook(:home_before_filter, self, :amazing => true)"
 
   #----------------------------------------------------------------------------
@@ -26,6 +26,15 @@ class HomeController < ApplicationController
     hook(:home_controller, self, :params => "it works!")
 
     @activities = get_activities
+    respond_to do |format|
+      format.html # index.html.haml
+      format.js   # index.js.rjs
+      format.xml  { render :xml => @activities }
+      format.xls  { send_data @activities.to_xls, :type => :xls }
+      format.csv  { send_data @activities.to_csv, :type => :csv }
+      format.rss  { render "index.rss.builder" }
+      format.atom { render "index.atom.builder" }
+    end
   end
 
   # GET /home/options                                                      AJAX
@@ -33,8 +42,10 @@ class HomeController < ApplicationController
   def options
     unless params[:cancel].true?
       @asset = @current_user.pref[:activity_asset] || "all"
+      @action = @current_user.pref[:activity_action_type] || "all_actions"
       @user = @current_user.pref[:activity_user] || "all_users"
       @duration = @current_user.pref[:activity_duration] || "two_days"
+      @all_users = User.order("first_name, last_name")
     end
   end
 
@@ -42,13 +53,14 @@ class HomeController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     @current_user.pref[:activity_asset] = params[:asset] if params[:asset]
+    @current_user.pref[:activity_action_type] = params[:action_type] if params[:action_type]
     @current_user.pref[:activity_user] = params[:user] if params[:user]
     @current_user.pref[:activity_duration] = params[:duration] if params[:duration]
 
     @activities = get_activities
-    render :action => "index"
+    render :index
   end
-  
+
   # GET /home/toggle                                                       AJAX
   #----------------------------------------------------------------------------
   def toggle
@@ -93,11 +105,12 @@ class HomeController < ApplicationController
   private
   #----------------------------------------------------------------------------
   def get_activities(options = {})
-    options[:asset] ||= activity_asset
-    options[:user] ||= activity_user
+    options[:asset]    ||= activity_asset
+    options[:action]   ||= activity_action_type
+    options[:user]     ||= activity_user
     options[:duration] ||= activity_duration
 
-    Activity.latest(options).except(:viewed).visible_to(@current_user)
+    Activity.latest(options).without_actions(:viewed).visible_to(@current_user)
   end
 
   #----------------------------------------------------------------------------
@@ -111,13 +124,23 @@ class HomeController < ApplicationController
   end
 
   #----------------------------------------------------------------------------
+  def activity_action_type
+    action_type = @current_user.pref[:activity_action_type]
+    if action_type.nil? || action_type == "all_actions"
+      nil
+    else
+      action_type
+    end
+  end
+
+  #----------------------------------------------------------------------------
   def activity_user
     user = @current_user.pref[:activity_user]
     if user && user != "all users"
       user = if user =~ /\s/  # first_name last_name
-        User.first(:conditions => [ "first_name = ? AND last_name = ?" ] + user.split)
+        User.where([ "first_name = ? AND last_name = ?" ] + user.split).first
       elsif user =~ /@/ # email
-        User.first(:conditions => [ "email = ?", user ])
+        User.where(:email => user).first
       end
     end
     user.is_a?(User) ? user.id : nil
@@ -135,3 +158,4 @@ class HomeController < ApplicationController
   end
 
 end
+

@@ -120,6 +120,7 @@ de:
   assigned_tasks: "zugeordnete Aufgaben"
   assigned_to: "Zugeordnet zu"
   at: "bei"
+  avatar: "Avatar"
   back: "Zurück"
   background_info: "Hintergrund-Informationen"
   before: "vor"
@@ -134,7 +135,7 @@ de:
     now: "Jetzt"
     ok: "OK"
     today: "Heute"
-  calendar_date_select_format: "deutsch"
+  calendar_date_select_format: "euro_24hr"
   call: "Anruf"
   called_off: "Abgesagt"
   campaign: "Kampagne"
@@ -248,6 +249,12 @@ de:
   edit_profile_link: "Profil bearbeiten"
   email: Email
   end_date: "Enddatum"
+  errors:
+    template:
+      header:
+        one:    "Konnte %{model} nicht speichern: ein Fehler."
+        other:  "Konnte %{model} nicht speichern: %{count} Fehler."
+      body: "Bitte überprüfen Sie die folgenden Felder:"
   expected_to_close: "Abschluss erwartet in %{time} am %{date}"
   extra_info: "Zusatzinformation"
   extra_info_small: "zusätzliche Kontaktdaten"
@@ -319,6 +326,7 @@ de:
   msg_account_suspended: "Das Benutzerkonto wurde abgelehnt."
   msg_asset_deleted: "%{value} wurde gelöscht."
   msg_asset_not_available: "%{value} ist nicht länger verfügbar."
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_asset_rejected: "%{value} wurde abgelehnt."
   msg_assets_not_available: "%{value} sind nicht verfügbar."
   msg_bad_image_file: "^Konnte das angegebene Bild nicht hochladen oder zu zuschneiden."
@@ -428,6 +436,9 @@ de:
   planned: "Geplant"
   please_retry: "Versuchen Sie eine andere Abfrage."
   pluralize: 
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: "1 Kontakt"
       other: "%{count} Kontakte"

@@ -7,6 +7,7 @@ js_test/unit/cds_helper_methods.html
 js_test/unittest.js
 lib/calendar_date_select/calendar_date_select.rb
 lib/calendar_date_select/includes_helper.rb
+lib/calendar_date_select/form_helpers.rb
 lib/calendar_date_select.rb
 Manifest.txt
 MIT-LICENSE
@@ -33,7 +34,9 @@ public/stylesheets/calendar_date_select/plain.css
 public/stylesheets/calendar_date_select/red.css
 public/stylesheets/calendar_date_select/silver.css
 Rakefile
-Readme.txt
-test/functional/calendar_date_select_test.rb
-test/functional/helper_methods_test.rb
-test/test_helper.rb
+README.txt
+spec/
+spec/calendar_date_select
+spec/calendar_date_select/calendar_date_select_spec.rb
+spec/calendar_date_select/form_helpers_spec.rb
+spec/spec_helper.rb

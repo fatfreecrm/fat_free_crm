@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
+# Copyright (C) 2008-2011 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -44,10 +44,11 @@ module FatFreeCRM
       #   "last_name"  => "leads.last_name ASC"
       #--------------------------------------------------------------------------
       def sort_by_map
-        self.sort_by_fields.zip(self.sort_by_clauses).inject({}) do |hash, (field, clause)|
-          hash[field] = self.name.tableize + "." + clause
-          hash
-        end
+        Hash[
+          self.sort_by_fields.zip(self.sort_by_clauses).map do |field, clause|
+            [ field, self.name.tableize + "." + clause ]
+          end
+        ]
       end
 
     end # ClassMethods

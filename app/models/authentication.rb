@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -18,6 +18,10 @@
 class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord model.
   authenticate_with User
   after_save :check_if_suspended
+
+  def to_key
+    id ? id : nil
+  end
 
   private
 
@@ -28,18 +32,19 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
     self.invalid_password = false
 
     self.attempted_record = search_for_record(find_by_login_method, send(login_field))
-    if self.attempted_record.blank?
-      errors.add(login_field, :is_not_valid)
-    else
-      # Run password verification first, but then adjust the validity if both
-      # password hash and password field are blank.
-      self.invalid_password = !self.attempted_record.send(verify_password_method, send("protected_#{password_field}"))
-      if self.attempted_record.password_hash.blank? && send("protected_#{password_field}").blank?
-        self.invalid_password = false
-      end
-      if self.invalid_password?
-        errors.add(password_field, :is_not_valid)
-      end
+    if attempted_record.blank?
+      generalize_credentials_error_messages? ?
+        add_general_credentials_error :
+        errors.add(login_field, I18n.t('error_messages.login_not_found', :default => "is not valid"))
+      return
+    end
+
+    if !attempted_record.send(verify_password_method, send("protected_#{password_field}"))
+      self.invalid_password = true
+      generalize_credentials_error_messages? ?
+        add_general_credentials_error :
+        errors.add(password_field, I18n.t('error_messages.password_invalid', :default => "is not valid"))
+      return
     end
   end
 
@@ -53,7 +58,6 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
 
   #----------------------------------------------------------------------------
   def check_if_suspended
-    self.errors.add_to_base(I18n.t(:msg_account_suspended)) if self.user.suspended?
+    self.errors.add(:base, I18n.t(:msg_account_suspended)) if self.user.suspended?
   end
-
 end

@@ -1,4 +1,4 @@
-// CalendarDateSelect version 1.12 - a prototype based date picker
+// CalendarDateSelect version 1.16.1 - a prototype based date picker
 // Questions, comments, bugs? - see the project page: http://code.google.com/p/calendardateselect
 if (typeof Prototype == 'undefined') alert("CalendarDateSelect Error: Prototype could not be found. Please make sure that your application's layout includes prototype.js (.g. <%= javascript_include_tag :defaults %>) *before* it includes calendar_date_select.js (.g. <%= calendar_date_select_includes %>).");
 if (Prototype.Version < "1.6") alert("Prototype 1.6.0 is required.  If using earlier version of prototype, please use calendar_date_select version 1.8.3");
@@ -15,9 +15,8 @@ Element.addMethods({
 Element.buildAndAppend = function(type, options, style)
 {
   var e = $(document.createElement(type));
-  $H(options).each(function(pair) { eval("e." + pair.key + " = pair.value" ); });
-  if (style) 
-    $H(style).each(function(pair) { eval("e.style." + pair.key + " = pair.value" ); });
+  $H(options).each(function(pair) { e[pair.key] = pair.value });
+  if (style) e.setStyle(style);
   return e;
 };
 nil = null;
@@ -100,7 +99,7 @@ CalendarDateSelect.prototype = {
       this.positionCalendarDiv()
       // set the click handler to check if a user has clicked away from the document
       Event.observe(document, "mousedown", this.closeIfClickedOut_handler = this.closeIfClickedOut.bindAsEventListener(this));
-      Event.observe(document, "keydown", this.keyPress_handler = this.keyPress.bindAsEventListener(this)); // MiD "keydown" makes it work with Safari.
+      Event.observe(document, "keypress", this.keyPress_handler = this.keyPress.bindAsEventListener(this));
     }
     this.callback("after_show")
   },
@@ -314,7 +313,7 @@ CalendarDateSelect.prototype = {
   validYear: function(year) { if (this.flexibleYearRange()) { return true;} else { return this.yearRange().include(year);}  },
   dayHover: function(element) {
     var hover_date = new Date(this.selected_date);
-    hover_date.setYear(element.year); hover_date.setMonth(element.month); hover_date.setDate(element.day);
+    hover_date.setFullYear(element.year, element.month, element.day);
     this.updateFooter(hover_date.toFormattedString(this.use_time));
   },
   dayHoverOut: function(element) { this.updateFooter(); },
@@ -334,9 +333,14 @@ CalendarDateSelect.prototype = {
   parseDate: function()
   {
     var value = $F(this.target_element).strip()
-    this.selection_made = (value != "");
+    var default_time = this.options.get("default_time");
+    this.selection_made = (value != "" || default_time);
     this.date = value=="" ? NaN : Date.parseFormattedString(this.options.get("date") || value);
-    if (isNaN(this.date)) this.date = new Date();
+    if (isNaN(this.date) && !default_time)
+        this.date = new Date();
+    else if (isNaN(this.date) && default_time)
+        this.date = (Object.prototype.toString.apply(default_time) === '[object Function]') ? default_time() : default_time;
+
     if (!this.validYear(this.date.getFullYear())) this.date.setYear( (this.date.getFullYear() < this.yearRange().start) ? this.yearRange().start : this.yearRange().end);
     this.selected_date = new Date(this.date);
     this.use_time = /[0-9]:[0-9]{2}/.exec(value) ? true : false;
@@ -345,18 +349,18 @@ CalendarDateSelect.prototype = {
   updateFooter:function(text) { if (!text) text = this.dateString(); this.footer_div.purgeChildren(); this.footer_div.build("span", {innerHTML: text }); },
   clearDate:function() {
     if ((this.target_element.disabled || this.target_element.readOnly) && this.options.get("popup") != "force") return false;
+    var last_value = this.target_element.value;
     this.target_element.value = "";
     this.clearSelectedClass();
     this.updateFooter('&#160;');
+    if (last_value!=this.target_element.value) this.callback("onchange");
   },
   updateSelectedDate:function(partsOrElement, via_click) {
     var parts = $H(partsOrElement);
     if ((this.target_element.disabled || this.target_element.readOnly) && this.options.get("popup") != "force") return false;
     if (parts.get("day")) {
       var t_selected_date = this.selected_date, vdc = this.options.get("valid_date_check");
-      for (var x = 0; x<=3; x++) t_selected_date.setDate(parts.get("day"));
-      t_selected_date.setYear(parts.get("year"));
-      t_selected_date.setMonth(parts.get("month"));
+      t_selected_date.setFullYear(parts.get("year"), parts.get("month"), parts.get("day"));
       
       if (vdc && ! vdc(t_selected_date.stripTime())) { return false; }
       this.selected_date = t_selected_date;
@@ -429,14 +433,14 @@ CalendarDateSelect.prototype = {
     Event.stopObserving(document, "keypress", this.keyPress_handler);
     this.calendar_div.remove(); this.closed = true;
     if (this.iframe) this.iframe.remove();
-    if (this.target_element.type!="hidden") this.target_element.focus();
+    if (this.target_element.type != "hidden" && ! this.target_element.disabled) this.target_element.focus();
     this.callback("after_close");
   },
   closeIfClickedOut: function(e) {
     if (! $(Event.element(e)).descendantOf(this.calendar_div) ) this.close();
   },
   keyPress: function(e) {
-    if (e.keyCode==Event.KEY_ESC || e.keyCode==Event.KEY_TAB) this.close(); // MiD: Tab acts as Esc
+    if (e.keyCode==Event.KEY_ESC) this.close();
   },
   callback: function(name, param) { if (this.options.get(name)) { this.options.get(name).bind(this.target_element)(param); } }
 }

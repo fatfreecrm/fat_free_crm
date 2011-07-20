@@ -32,4 +32,5 @@ else # <----------------------------------------- Show [Edit Contact] form.
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
   page[:contact_first_name].focus
 
+  hook(:edit_contact_rjs, self, :page => page)
 end

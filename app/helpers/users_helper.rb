@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
+# Copyright (C) 2008-2011 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -24,4 +24,9 @@ module UsersHelper
     language || "English"
   end
 
+  def sort_by_language
+    languages.sort.map do |locale, language|
+      %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw))} } }]
+    end
+  end
 end

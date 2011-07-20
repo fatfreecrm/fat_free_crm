@@ -5,21 +5,22 @@ describe "/contacts/show.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:contact] = Factory(:contact, :id => 42)
-    assigns[:users] = [ @current_user ]
-    assigns[:comment] = Comment.new
+    @contact = Factory(:contact, :id => 42,
+      :opportunities => [ Factory(:opportunity) ])
+    assign(:contact, @contact)
+    assign(:users, [ @current_user ])
+    assign(:comment, Comment.new)
+    assign(:timeline, [ Factory(:comment, :commentable => @contact) ])
   end
 
   it "should render contact landing page" do
-    template.should_receive(:render).with(hash_including(:partial => "comments/new"))
-    template.should_receive(:render).with(hash_including(:partial => "common/timeline"))
-    template.should_receive(:render).with(hash_including(:partial => "common/tasks"))
-    template.should_receive(:render).with(hash_including(:partial => "opportunities/opportunity"))
+    render
+    view.should render_template(:partial => "comments/_new")
+    view.should render_template(:partial => "common/_timeline")
+    view.should render_template(:partial => "common/_tasks")
+    view.should render_template(:partial => "opportunities/_opportunity")
 
-    render "/contacts/show.html.haml"
-
-    response.should have_tag("div[id=edit_contact]")
+    rendered.should have_tag("div[id=edit_contact]")
   end
 
 end
-

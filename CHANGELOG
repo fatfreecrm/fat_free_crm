@@ -4,6 +4,16 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Tue, Sep 7, 2010
+---------------------------------------------------------------------
+- Added Gemfile and Gemfile.lock.
+- Installed plugins.
+- Merged with crossroads/rails3 fork; (runs 'rake crm:setup').
+
+Mon, Sep 6, 2010
+---------------------------------------------------------------------
+- Generated empty Rails3 project.
+
 Tue, Aug 31, 2010
 ---------------------------------------------------------------------
 - Release 0.10.1.
@@ -192,6 +202,10 @@ Wed, May 5, 2010
 ---------------------------------------------------------------------
 - Added migration to have index on permissions (thanks, Yura!)
 - Added link_to_email to Bcc: to dropbox if it has been set up (closes LH #183).
+
+Mon, May 3, 2010
+---------------------------------------------------------------------
+- Pushed [rails3] branch to Github, let the porting start :-)
 
 Thu, Apr 29, 2010
 ---------------------------------------------------------------------

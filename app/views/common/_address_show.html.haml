@@ -4,8 +4,10 @@
 - unless address.blank?
   - if Setting.compound_address
     %div
-      %b #{t title}
-      %br= h address.street1
+      - if title
+        %b #{t title}
+        %br
+      = h address.street1
       - unless address.street2.blank?
         %br= h address.street2
       %br= h "#{address.city}, #{address.state} #{address.zipcode}"
@@ -15,3 +17,4 @@
     %div
       %b #{t title}
       %br= h(address.full_address).n2br
+

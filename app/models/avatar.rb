@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -37,17 +37,20 @@ class Avatar < ActiveRecord::Base
   belongs_to :entity, :polymorphic => true
 
   # We want to store avatars in separate directories based on entity type
-  # (/avatar/User/, /avatars/Lead/, etc.), so we're using lambda to build
-  # target url on the fly. Also, Paperclip doesn't seem to care too much
-  # about preserving styles hash, so we must use dup.
-
-  has_attached_file :image, :styles => STYLES.dup, :url => lambda { |attachment| "/avatars/#{attachment.instance.entity_type}/:id/:style_:filename" }, :default_url => "/images/avatar.jpg"
-
+  # (i.e. /avatar/User/, /avatars/Lead/, etc.), so we are adding :entity_type
+  # interpolation to the Paperclip::Interpolations module.  Also, Paperclip
+  # doesn't seem to care preserving styles hash so we must use STYLES.dup.
+  #----------------------------------------------------------------------------
+  Paperclip::Interpolations.module_eval do
+    def entity_type(attachment, style_name = nil)
+      attachment.instance.entity_type
+    end
+  end
+  has_attached_file :image, :styles => STYLES.dup, :url => "/avatars/:entity_type/:id/:style_:filename", :default_url => "/images/avatar.jpg"
 
   # Invert STYLES hash removing trailing #.
   #----------------------------------------------------------------------------
   def self.styles
-    STYLES.inject({}) { |hash, (key, value)| hash[value[0..-2]] = key; hash }
+    Hash[STYLES.map{ |key, value| [ value[0..-2], key ] }]
   end
-
 end

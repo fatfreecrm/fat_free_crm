@@ -24,9 +24,9 @@ ul li {
 
 a {
   text-decoration: none; }
-  a:link, a:visited {
+  alink, avisited {
     color: #0033cc; }
-  a:hover {
+  ahover {
     background: #0033cc;
     color: white; }
   a img {
@@ -39,7 +39,7 @@ a {
   border-bottom: 1px dotted darkcyan;
   color: darkcyan;
   text-decoration: none; }
-  #options a:hover {
+  #options ahover {
     background: #e5e5e5;
     border-bottom: 1px dotted darkblue;
     color: darkblue; }

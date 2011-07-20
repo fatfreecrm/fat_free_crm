@@ -1,65 +1,71 @@
-# Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http:#www.gnu.org/licenses/>.
-#------------------------------------------------------------------------------
-
-# This file is copied to ~/spec when you run 'ruby script/generate rspec'
-# from the project root directory.
+# This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
-require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
-require 'spec/autorun'
-require 'spec/rails'
-require "factory_girl"
-require RAILS_ROOT + "/spec/factories"
+require File.expand_path("../../config/environment", __FILE__)
+require 'rspec/rails'
+
+require 'factory_girl'
+require "#{::Rails.root}/spec/factories"
+
+# Load factories from plugins (to allow extra validations / etc.)
+Dir.glob("vendor/plugins/**/spec/factories.rb").each{ |f| require File.expand_path(f) }
+
+
+# Requires supporting ruby files with custom matchers and macros, etc,
+# in spec/support/ and its subdirectories.
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 # Load shared behavior modules to be included by Runner config.
-Dir[File.dirname(__FILE__) + "/shared/*.rb"].map do |file|
-  require file
-end
+Dir[File.dirname(__FILE__) + "/shared/*.rb"].map {|f| require f}
 
-VIEWS = %w(pending assigned completed).freeze
-
-Spec::Runner.configure do |config|
-  # If you're not using ActiveRecord you should remove these
-  # lines, delete config/database.yml and disable :active_record
-  # in your config/boot.rb
-  config.use_transactional_fixtures = true
-  config.use_instantiated_fixtures  = false
-  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
-
-  config.include(SharedControllerSpecs, :type => :controller)
-
-  config.after(:each, :type => :view) do
-    # detect html-quoted entities in all rendered responses
-    if response && response.body
-      response.body.should_not match /&amp;\S{1,6};/
-    end
-  end
-
-  #
-  # == Notes
-  #
-  # For more information take a look at Spec::Runner::Configuration and Spec::Runner
-end
+TASK_STATUSES = %w(pending assigned completed).freeze
 
 # Load default settings from config/settings.yml
 Factory(:default_settings)
+Setting.task_calendar_with_time = false
+
+I18n.locale = 'en-US'
+
+RSpec.configure do |config|
+  # == Mock Framework
+  #
+  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
+  #
+  # config.mock_with :mocha
+  # config.mock_with :flexmock
+  # config.mock_with :rr
+  config.mock_with :rspec
+
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+  config.include RSpec::Rails::Matchers
+
+  # RSpec configuration options for Fat Free CRM.
+  config.include RSpec::Rails::Matchers
+  config.include(SharedControllerSpecs, :type => :controller)
+  config.include(SharedModelSpecs,      :type => :model)
+
+  config.before(:each, :type => :view) do
+    I18n.locale = 'en-US'
+  end
+
+  config.after(:each, :type => :view) do
+    # detect html-quoted entities in all rendered responses
+    rendered.should_not match(/&amp;[A-Za-z]{1,6};/) if rendered
+  end
+
+  # If you're not using ActiveRecord, or you'd prefer not to run each of your
+  # examples within a transaction, comment the following line or assign false
+  # instead of true.
+  config.use_transactional_fixtures = true
+end
 
 # See vendor/plugins/authlogic/lib/authlogic/test_case.rb
 #----------------------------------------------------------------------------
 def activate_authlogic
+  require 'authlogic/test_case/rails_request_adapter'
+  require 'authlogic/test_case/mock_cookie_jar'
+  require 'authlogic/test_case/mock_request'
+
   Authlogic::Session::Base.controller = (@request && Authlogic::TestCase::RailsRequestAdapter.new(@request)) || controller
 end
 
@@ -67,13 +73,13 @@ end
 #----------------------------------------------------------------------------
 def login(user_stubs = {}, session_stubs = {})
   User.current_user = @current_user = Factory(:user, user_stubs)
-  @current_user_session = mock_model(Authentication, {:record => @current_user}.merge(session_stubs))
+  @current_user_session = mock(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
-  set_timezone
+  #set_timezone
 end
 alias :require_user :login
 
-#----------------------------------------------------------------------------
+#- ---------------------------------------------------------------------------
 def login_and_assign(user_stubs = {}, session_stubs = {})
   login(user_stubs, session_stubs)
   assigns[:current_user] = @current_user
@@ -134,5 +140,45 @@ def adjust_timezone(offset)
     ActiveSupport::TimeZone[offset]
     adjusted_time = Time.now + offset.seconds
     Time.stub(:now).and_return(adjusted_time)
+  end
+end
+
+ActionView::TestCase::TestController.class_eval do
+  def self.controller_name
+    controller_path.split("/").last
+  end
+end
+
+if RUBY_VERSION.to_f >= 1.9
+  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do
+    def render_with_mock_response(*args)
+      render_without_mock_response *args
+      @response = mock(:body => rendered)
+    end
+    alias_method_chain :render, :mock_response
+  end
+else
+  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do
+    # Ruby 1.8.x doesnt support alias_method_chain with blocks,
+    # so we are just overwriting the whole method verbatim.
+    def render(options={}, local_assigns={}, &block)
+      options = {:template => _default_file_to_render} if Hash === options and options.empty?
+      super(options, local_assigns, &block)
+      @response = mock(:body => rendered)
+    end
+  end
+end
+
+ActionView::Base.class_eval do
+  def called_from_index_page?(controller = controller_name)
+    if controller != "tasks"
+      request.referer =~ %r(/#{controller}$)
+    else
+      request.referer =~ /tasks\?*/
+    end
+  end
+
+  def called_from_landing_page?(controller = controller_name)
+    request.referer =~ %r(/#{controller}/\w+)
   end
 end

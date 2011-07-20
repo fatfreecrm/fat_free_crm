@@ -32,7 +32,7 @@ describe CampaignsController do
       @campaigns = [ Factory(:campaign, :user => @current_user) ]
 
       get :index
-      (assigns[:campaign_status_total].keys - (@status << :all << :other)).should == []
+      (assigns[:campaign_status_total].keys.map(&:to_sym) - (@status << :all << :other)).should == []
     end
 
     it "should filter out campaigns by status" do
@@ -76,7 +76,7 @@ describe CampaignsController do
     describe "with mime type of XML" do
       it "should render all campaigns as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        @campaigns = [ Factory(:campaign, :user => @current_user) ]
+        @campaigns = [ Factory(:campaign, :user => @current_user).reload ]
 
         get :index
         response.body.should == @campaigns.to_xml
@@ -117,13 +117,14 @@ describe CampaignsController do
         @campaign = Factory(:campaign, :id => 42, :user => @current_user)
 
         get :show, :id => 42
-        response.body.should == @campaign.to_xml
+        response.body.should == @campaign.reload.to_xml
       end
     end
 
     describe "campaign got deleted or otherwise unavailable" do
       it "should redirect to campaign index if the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user).destroy
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy
 
         get :show, :id => @campaign.id
         flash[:warning].should_not == nil
@@ -139,7 +140,8 @@ describe CampaignsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @campaign = Factory(:campaign, :user => @current_user).destroy
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @campaign.id
@@ -198,7 +200,8 @@ describe CampaignsController do
 
     describe "(campaign got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user).destroy
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy
 
         xhr :get, :edit, :id => @campaign.id
         flash[:warning].should_not == nil
@@ -265,7 +268,7 @@ describe CampaignsController do
         @users = [ Factory(:user) ]
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
-        assigns[:campaign_status_total].should be_instance_of(Hash)
+        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload campaigns to update pagination" do
@@ -317,7 +320,7 @@ describe CampaignsController do
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
         assigns(:campaign).should == @campaign
-        assigns[:campaign_status_total].should be_instance_of(Hash)
+        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should update campaign permissions when sharing with specific users" do
@@ -333,7 +336,8 @@ describe CampaignsController do
 
       describe "campaign got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the campaign got deleted" do
-          @campaign = Factory(:campaign, :user => @current_user).destroy
+          @campaign = Factory(:campaign, :user => @current_user)
+          @campaign.destroy
 
           xhr :put, :update, :id => @campaign.id, :users => []
           flash[:warning].should_not == nil
@@ -382,14 +386,14 @@ describe CampaignsController do
         xhr :delete, :destroy, :id => @campaign.id
 
         assigns[:campaigns].should == [ @another_campaign ]
-        lambda { @campaign.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { Campaign.find(@campaign) }.should raise_error(ActiveRecord::RecordNotFound)
         response.should render_template("campaigns/destroy")
       end
 
       it "should get data for campaigns sidebar" do
         xhr :delete, :destroy, :id => @campaign.id
 
-        assigns[:campaign_status_total].should be_instance_of(Hash)
+        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should try previous page and render index action if current page has no campaigns" do
@@ -410,7 +414,8 @@ describe CampaignsController do
 
       describe "campaign got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the campaign got deleted" do
-          @campaign = Factory(:campaign, :user => @current_user).destroy
+          @campaign = Factory(:campaign, :user => @current_user)
+          @campaign.destroy
 
           xhr :delete, :destroy, :id => @campaign.id
           flash[:warning].should_not == nil
@@ -436,7 +441,8 @@ describe CampaignsController do
       end
 
       it "should redirect to campaign index with the flash message is the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user).destroy
+        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign.destroy
 
         delete :destroy, :id => @campaign.id
         flash[:warning].should_not == nil
@@ -477,7 +483,7 @@ describe CampaignsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "again?!"
 
-        response.body.should == [ @second ].to_xml
+        response.body.should == [ @second.reload ].to_xml
       end
     end
   end
@@ -608,7 +614,7 @@ describe CampaignsController do
   describe "responding to POST redraw" do
     it "should save user selected campaign preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
-      @current_user.preference[:campaigns_per_page].should == "42"
+      @current_user.preference[:campaigns_per_page].should == 42
       @current_user.preference[:campaigns_outline].should  == "brief"
       @current_user.preference[:campaigns_sort_by].should  == "campaigns.name ASC"
     end

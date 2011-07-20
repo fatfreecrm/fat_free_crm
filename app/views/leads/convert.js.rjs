@@ -34,4 +34,5 @@ else # <----------------------------------------  Show [Convert Lead] form.
   page.call "crm.date_select_popup", "opportunity_closes_on"
   page[:account_name].focus
 
+  hook(:convert_lead_rjs, self, :page => page)
 end

@@ -8,23 +8,23 @@ describe "/contacts/index.js.rjs" do
   end
 
   it "should render [contact] template with @contacts collection if there are contacts" do
-    assigns[:contacts] = [ Factory(:contact, :id => 42) ].paginate
+    assign(:contacts, [ Factory(:contact, :id => 42) ].paginate)
 
-    render "/contacts/index.js.rjs"
-    response.should have_rjs("contacts") do |rjs|
+    render
+    rendered.should have_rjs("contacts") do |rjs|
       with_tag("li[id=contact_#{42}]")
     end
-    response.should have_rjs("paginate")
+    rendered.should have_rjs("paginate")
   end
 
   it "should render [empty] template if @contacts collection if there are no contacts" do
-    assigns[:contacts] = [].paginate
+    assign(:contacts, [].paginate)
 
-    render "/contacts/index.js.rjs"
-    response.should have_rjs("contacts") do |rjs|
+    render
+    rendered.should have_rjs("contacts") do |rjs|
       with_tag("div[id=empty]")
     end
-    response.should have_rjs("paginate")
+    rendered.should have_rjs("paginate")
   end
 
 end

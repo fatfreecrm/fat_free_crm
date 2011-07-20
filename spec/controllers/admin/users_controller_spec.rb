@@ -68,7 +68,8 @@ describe Admin::UsersController do
     end
 
     it "reloads current page with the flash message if user got deleted" do
-      @user = Factory(:user).destroy
+      @user = Factory(:user)
+      @user.destroy
 
       xhr :get, :edit, :id => @user.id
       flash[:warning].should_not == nil
@@ -77,7 +78,8 @@ describe Admin::UsersController do
 
     it "notifies the view if previous user got deleted" do
       @user = Factory(:user)
-      @previous = Factory(:user).destroy
+      @previous = Factory(:user)
+      @previous.destroy
 
       xhr :get, :edit, :id => @user.id, :previous => @previous.id
       flash[:warning].should == nil # no warning, just silently remove the div
@@ -90,7 +92,7 @@ describe Admin::UsersController do
   # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   describe "POST create" do
-  
+
     describe "with valid params" do
       before(:each) do
         @username = "none"
@@ -119,7 +121,7 @@ describe Admin::UsersController do
         response.should render_template("admin/users/create")
       end
     end
-  
+
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and re-renders [create] template" do
         @user = Factory.build(:user, :username => "", :email => "")
@@ -130,26 +132,27 @@ describe Admin::UsersController do
         response.should render_template("admin/users/create")
       end
     end
-  
+
   end
-  
+
   # PUT /admin/users/1
   # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   describe "PUT update" do
-  
+
     describe "with valid params" do
       it "updates the requested user, assigns it to @user, and renders [update] template" do
         @user = Factory(:user, :username => "flip", :email => "flip@example.com")
 
-        put :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
+        xhr :put, :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
         assigns[:user].should == @user.reload
         assigns[:user].username.should == "flop"
         response.should render_template("admin/users/update")
       end
 
       it "reloads current page is the user got deleted" do
-        @user = Factory(:user).destroy
+        @user = Factory(:user)
+        @user.destroy
 
         xhr :put, :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
         flash[:warning].should_not == nil
@@ -172,18 +175,18 @@ describe Admin::UsersController do
         response.should render_template("admin/users/update")
       end
     end
-  
+
     describe "with invalid params" do
       it "doesn't update the requested user, but assigns it to @user and renders [update] template" do
         @user = Factory(:user, :username => "flip", :email => "flip@example.com")
 
-        put :update, :id => @user.id, :user => {}
+        xhr :put, :update, :id => @user.id, :user => {}
         assigns[:user].should == @user.reload
         assigns[:user].username.should == "flip"
         response.should render_template("admin/users/update")
       end
     end
-  
+
   end
 
   # GET /admin/users/1/confirm                                             AJAX
@@ -198,7 +201,8 @@ describe Admin::UsersController do
     end
 
     it "reloads current page is the user got deleted" do
-      @user = Factory(:user).destroy
+      @user = Factory(:user)
+      @user.destroy
 
       xhr :get, :confirm, :id => @user.id
       flash[:warning].should_not == nil
@@ -214,7 +218,7 @@ describe Admin::UsersController do
       @user = Factory(:user)
 
       xhr :delete, :destroy, :id => @user.id
-      lambda { @user.reload }.should raise_error(ActiveRecord::RecordNotFound)
+      lambda { User.find(@user) }.should raise_error(ActiveRecord::RecordNotFound)
       response.should render_template("admin/users/destroy")
     end
 
@@ -224,7 +228,7 @@ describe Admin::UsersController do
 
       xhr :delete, :destroy, :id => @user.id
       flash[:warning].should_not == nil
-      lambda { @user.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+      lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
       response.should render_template("admin/users/destroy")
     end
   end
@@ -250,9 +254,9 @@ describe Admin::UsersController do
     describe "with mime type of XML" do
       it "performs lookup using query string and render XML" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :search, :query => "amy?!"
+        get :search, :query => "amy"
 
-        response.body.should == [ @amy ].to_xml
+        response.body.should == [ @amy.reload ].to_xml
       end
     end
   end
@@ -288,7 +292,8 @@ describe Admin::UsersController do
     end
 
     it "reloads current page is the user got deleted" do
-      @user = Factory(:user).destroy
+      @user = Factory(:user)
+      @user.destroy
 
       xhr :put, :suspend, :id => @user.id
       flash[:warning].should_not == nil
@@ -309,7 +314,8 @@ describe Admin::UsersController do
     end
 
     it "reloads current page is the user got deleted" do
-      @user = Factory(:user).destroy
+      @user = Factory(:user)
+      @user.destroy
 
       xhr :put, :reactivate, :id => @user.id
       flash[:warning].should_not == nil

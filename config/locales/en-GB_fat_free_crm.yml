@@ -27,6 +27,13 @@ en-GB:
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
 
+  affiliate: Affiliate
+  competitor: Competitor
+  customer: Customer
+  partner: Partner
+  reseller: Reseller
+  vendor: Vendor
+
   planned: Planned
   started: Started
   on_hold: On Hold
@@ -160,6 +167,7 @@ en-GB:
   msg_account_not_approved: Your account has not been approved yet.
   msg_asset_deleted: "%{value} has been deleted."
   msg_asset_not_available: This %{value} is no longer available.
+  msg_asset_not_authorized: You are not authorized to view this %{value}.
   msg_assets_not_available: The %{value} are not available.
   msg_asset_rejected: "%{value} has been rejected."
   msg_bad_image_file: "^Could't upload or resize the image file you specified."
@@ -218,12 +226,13 @@ en-GB:
   aim: AOL IM
   already_signed_up: Already signed up?
   alt_email: Alternative email
+  avatar: Avatar
   change_password: Change Password
   company: Company
   contact_info: Contact Information
   current_password: Current password
   edit_profile: Edit Profile
-  email: Email
+  # email: Email # <-- Already defined as the task type if Settings.
   first_name: First name
   google: Google IM
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
@@ -262,6 +271,7 @@ en-GB:
   #----------------------------------------------------------------------------
   account: Account
   account_small: account
+  account_summary: Account Summary
   accounts: Accounts
   accounts_options: Accounts Options
   accounts_small: accounts
@@ -272,17 +282,19 @@ en-GB:
   date_updated: Date Updated
   fax: Fax
   intro: You can add %{value} information later.
+  keep_private: Keep it private, do not share with others
+  mail_to: Mail to %{value}
+  make_public: Share it with everyone
   mobile_small: mobile
   open_in_window: Open %{value} in a new window
-  mail_to: Mail to %{value}
   phone_small: phone
   phone_toll_free: Freephone
-  keep_private: Keep it private, do not share with others
-  make_public: Share it with everyone
+  pipeline: Pipeline
   same_as_billing: same as billing
   save_account: Save Account
   share_with: Share it with the following people
   shipping_address: Shipping address
+  total_accounts: Total Accounts
   website: Website
 
   # Views -> Campaigns.
@@ -467,6 +479,7 @@ en-GB:
   action_updated: updated
   action_viewed: viewed
   action_won: won
+  activities: Activities
   no_activity_records: No activity records found.
   recent_activity: Recent Activity
   recent_activity_options: Recent Activity Options
@@ -493,6 +506,7 @@ en-GB:
   could_not_find: "Couldn't find %{value}. Feel free to"
   could_not_find_matching: "Couldn't find %{value} matching"
   create_new: create new
+  create_a_new: create a new
   select_existing: select existing
   delete: Delete
   discard: Discard
@@ -583,6 +597,13 @@ en-GB:
   users: Users
   users_small: users
 
+  # Export.
+  #----------------------------------------------------------------------------
+  to_xls: Export to Excel
+  to_csv: Export to comma-delimited file format (including deleted records)
+  to_rss: RSS feed
+  to_atom: Atom feed
+
   # Dropbox.
   #----------------------------------------------------------------------------
   dropbox_ack_subject: dropbox - Added email - %{subject}
@@ -594,6 +615,9 @@ en-GB:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment'
+      other: '%{count} comments'
     contact:
       one: '1 contact'
       other: '%{count} contacts'
@@ -621,6 +645,7 @@ en-GB:
   time:
     formats:
       mmddhhss: "%e %b at %l:%M%p"
+      mmddyyyy_hhmm: "%Y-%m-%d %H:%M"
 
   calendar_date_select:
     ok: OK

@@ -12,36 +12,41 @@ describe AuthenticationsController do
   describe "authentication filters" do
     describe "user must not be logged" do
       describe "DELETE authentication (logout form)" do
-        it "displays must be logged msg and redirects to login page" do
+        it "displays 'must be logged out message' and redirects to login page" do
           delete :destroy
           flash[:notice].should_not == nil
           flash[:notice].should =~ /^You must be logged in/
-          response.should redirect_to(login_url)
+          response.should redirect_to(login_path)
+        end
+
+        it "redirects to login page" do
+          get :show
+          response.should redirect_to(login_path)
         end
       end
     end
 
-    describe "user must not be logged" do
+    describe "user must not be logged in" do
       before(:each) do
         @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
         @controller.stub!(:current_user).and_return(@user)
       end
 
       describe "GET authentication (login form)" do
-        it "displays must be logged out msg and redirects to profile page" do
+        it "displays 'must be logged out message' and redirects to profile page" do
           get :new
           flash[:notice].should_not == nil
           flash[:notice].should =~ /^You must be logged out/
-          response.should redirect_to(profile_url)
+          response.should redirect_to(profile_path)
         end
       end
 
       describe "POST authentication" do
-        it "displays must be logged out msg and redirects to profile page" do
+        it "displays 'must be logged out message' and redirects to profile page" do
           post :create, :authentication => @login
           flash[:notice].should_not == nil
           flash[:notice].should =~ /^You must be logged out/
-          response.should redirect_to(profile_url)
+          response.should redirect_to(profile_path)
         end
       end
     end
@@ -53,7 +58,7 @@ describe AuthenticationsController do
   describe "POST authentications" do
     before(:each) do
       @login = { :username => "user", :password => "pass", :remember_me => "0" }
-      @authentication = mock_model(Authentication, @login)
+      @authentication = mock(Authentication, @login)
     end
 
     describe "successful authentication " do
@@ -69,7 +74,7 @@ describe AuthenticationsController do
         post :create, :authentication => @login
         flash[:notice].should_not == nil
         flash[:notice].should_not =~ /last login/
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
       end
 
       it "displays last login time if it's not the first login" do
@@ -78,7 +83,7 @@ describe AuthenticationsController do
 
         post :create, :authentication => @login
         flash[:notice].should =~ /last login/
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
       end
     end
 
@@ -139,3 +144,4 @@ describe AuthenticationsController do
   end # POST authenticate
 
 end
+

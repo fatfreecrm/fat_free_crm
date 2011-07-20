@@ -1,5 +1,5 @@
-- truncated = h(truncate(email.body.to_s.gsub("\n", " "), :length => 125 - email.subject.to_s.size))
-- formatted = simple_format h(email.body)
+- truncated = h(truncate(email.body_without_textile.to_s.gsub("\n", " "), :length => 125 - email.subject.to_s.size))
+- formatted = email.body
 
 %li.mail{ highlightable(dom_id(email, :tools), :off => "#f2f2f2"), :id => dom_id(email) }
   .body
@@ -8,15 +8,17 @@
       = link_to_delete(email)
 
     %tt
-      = "To " << link_to(email.user.full_name, user_path(email.user))
-      = "from " << link_to_email(email.sent_from) << ", sent on "
+      = "To ".html_safe << link_to(email.user.full_name, user_path(email.user))
+      = "from ".html_safe << link_to_email(email.sent_from) << ", sent on ".html_safe
       = l(email.sent_at, :format => :mmddhhss)
-      = " | " + link_to_function(email.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
+      = " | ".html_safe + link_to_function(email.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
 
     %dt{ hidden_if(email.expanded?), :id => dom_id(email, :truncated) }
       %p
         = h(email.subject)
         %tt= " - " << truncated
-    %dt{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
-      %p= h(email.subject)
-      = auto_link(formatted)
+    %dt.textile{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
+      .email_content
+        %p= h(email.subject)
+        = auto_link(formatted)
+

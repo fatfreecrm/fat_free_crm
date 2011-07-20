@@ -5,22 +5,26 @@ describe "/campaigns/show.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:campaign] = Factory(:campaign, :id => 42)
-    assigns[:users] = [ @current_user ]
-    assigns[:comment] = Comment.new
+    @campaign = Factory(:campaign, :id => 42,
+      :leads => [ Factory(:lead) ],
+      :opportunities => [ Factory(:opportunity) ])
+    assign(:campaign, @campaign)
+    assign(:users, [ @current_user ])
+    assign(:comment, Comment.new)
+    assign(:timeline, [ Factory(:comment, :commentable => @campaign) ])
   end
 
   it "should render campaign landing page" do
-    template.should_receive(:render).with(hash_including(:partial => "comments/new"))
-    template.should_receive(:render).with(hash_including(:partial => "common/timeline"))
-    template.should_receive(:render).with(hash_including(:partial => "common/tasks"))
-    template.should_receive(:render).with(hash_including(:partial => "leads/lead"))
-    template.should_receive(:render).with(hash_including(:partial => "opportunities/opportunity"))
+    render
+    view.should render_template(:partial => "comments/_new")
+    view.should render_template(:partial => "common/_timeline")
+    view.should render_template(:partial => "common/_tasks")
 
-    render "/campaigns/show.html.haml"
+    # XXX: Not rendering due to paginate
+    #~ view.should render_template(:partial => "leads/_lead")
+    #~ view.should render_template(:partial => "opportunities/_opportunity")
 
-    response.should have_tag("div[id=edit_campaign]")
+    rendered.should have_tag("div[id=edit_campaign]")
   end
 
 end
-

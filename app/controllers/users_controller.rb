@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -56,13 +56,13 @@ class UsersController < ApplicationController
       redirect_to login_path
     end
   end
-  
+
   # GET /users/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
     # <-- render edit.js.rjs
   end
-  
+
   # POST /users
   # POST /users.xml                                                        HTML
   #----------------------------------------------------------------------------
@@ -77,10 +77,10 @@ class UsersController < ApplicationController
         redirect_back_or_default profile_url
       end
     else
-      render :action => :new
+      render :new
     end
   end
-  
+
   # PUT /users/1
   # PUT /users/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
@@ -126,7 +126,11 @@ class UsersController < ApplicationController
           @user.avatar.errors.add(:image, t(:msg_bad_image_file))
         end
       end
-      responds_to_parent { render }
+      responds_to_parent do
+        # Without return RSpec2 screams bloody murder about rendering twice:
+        # within the block and after yield in responds_to_parent.
+        render and (return if Rails.env.test?)
+      end
     end
   end
 

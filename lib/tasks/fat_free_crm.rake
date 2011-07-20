@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
+# Copyright (C) 2008-2011 by Michael Dvorkin
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -16,11 +16,7 @@
 #------------------------------------------------------------------------------
 class Rake::Task
   def self.sanitize_and_execute(sql)
-    sanitized = if Rails::VERSION::STRING < "2.3.3"
-      ActiveRecord::Base.send(:sanitize_sql, sql)
-    else # Rails 2.3.3 introduced extra "table_name" parameter.
-      ActiveRecord::Base.send(:sanitize_sql, sql, nil)
-    end
+    sanitized = ActiveRecord::Base.send(:sanitize_sql, sql, nil)
     ActiveRecord::Base.connection.execute(sanitized)
   end
 end
@@ -31,7 +27,10 @@ namespace :crm do
     desc "Load default application settings"
     task :load => :environment do
       plugin = ENV["PLUGIN"]
-      yaml = RAILS_ROOT + (plugin ? "/vendor/plugins/#{plugin}" : "") + "/config/settings.yml"
+      yaml = File.join(Rails.root, (plugin ? "/vendor/plugins/#{plugin}" : "") + "/config/settings.yml")
+
+      puts "== Loading settings#{plugin ? (' from ' << plugin) : ''}..."
+
       begin
         settings = YAML.load_file(yaml)
       rescue
@@ -57,6 +56,15 @@ namespace :crm do
         sql = [ "INSERT INTO settings (name, default_value, created_at, updated_at) VALUES(?, ?, ?, ?)", key.to_s, Base64.encode64(Marshal.dump(settings[key])), Time.now, Time.now ]
         Rake::Task.sanitize_and_execute(sql)
       end
+
+      # Change default access on models, as specified in settings.yml
+      %w(leads opportunities contacts campaigns accounts).each do |table|
+        ActiveRecord::Migration.change_column_default(table, 'access', settings[:default_access])
+      end
+      # Re-dump the schema in case default access has changed (Critical for RSpec)
+      Rake::Task["db:schema:dump"].invoke
+
+      puts "===== Settings have been loaded."
     end
 
     desc "Show current application settings"
@@ -82,7 +90,9 @@ namespace :crm do
       return unless proceed =~ /y(?:es)*/i # Don't continue unless user typed y(es)
     end
     Rake::Task["db:migrate:reset"].invoke
-    Rake::Task["db:migrate:plugins"].invoke
+    # Migrating plugins is not part of Rails 3 yet, but it is coming. See
+    # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
+    Rake::Task["db:migrate:plugins"].invoke rescue nil
     Rake::Task["crm:settings:load"].invoke
     Rake::Task["crm:setup:admin"].invoke
   end
@@ -149,8 +159,8 @@ namespace :crm do
       # Simulate random user activities.
       $stdout.sync = true
       puts "Generating user activities..."
-      %w(Account Campaign Contact Lead Opportunity Task).inject([]) do |assets, model|
-        assets << model.constantize.send(:find, :all)
+      %w(Account Campaign Contact Lead Opportunity Task).map do |model|
+        model.constantize.send(:find, :all)
       end.flatten.shuffle.each do |subject|
         info = subject.respond_to?(:full_name) ? subject.full_name : subject.name
         Activity.create(:action => "created", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
@@ -158,7 +168,7 @@ namespace :crm do
         unless subject.is_a?(Task)
           time = subject.updated_at + rand(12 * 60).minutes
           Activity.create(:action => "viewed", :created_at => time, :user => subject.user, :subject => subject, :info => info)
-          comments = Comment.find(:all, :conditions => [ "commentable_id=? AND commentable_type=?", subject.id, subject.class.name ])
+          comments = Comment.where(:commentable_id => subject.id, :commentable_type => subject.class.name)
           comments.each_with_index do |comment, i|
             time = subject.created_at + rand(12 * 60 * i).minutes
             if time > Time.now
@@ -167,7 +177,7 @@ namespace :crm do
             comment.update_attribute(:created_at, time)
             Activity.create(:action => "commented", :created_at => time, :user => comment.user, :subject => subject, :info => info)
           end
-          emails = Email.find(:all, :conditions => [ "mediator_id=? AND mediator_type=?", subject.id, subject.class.name ])
+          emails = Email.where(:mediator_id => subject.id, :mediator_type => subject.class.name)
           emails.each do |email|
             time = subject.created_at + rand(24 * 60).minutes
             if time > Time.now

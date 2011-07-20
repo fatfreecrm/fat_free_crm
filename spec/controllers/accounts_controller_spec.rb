@@ -1,7 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe AccountsController do
-  before(:each) do
+  def get_data_for_sidebar
+    @category = Setting.account_category
+  end
+
+  before do
     require_user
     set_current_tab(:accounts)
   end
@@ -10,12 +14,36 @@ describe AccountsController do
   # GET /accounts.xml
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
+    before(:each) do
+      get_data_for_sidebar
+    end
 
     it "should expose all accounts as @accounts and render [index] template" do
       @accounts = [ Factory(:account, :user => @current_user) ]
       get :index
       assigns[:accounts].should == @accounts
       response.should render_template("accounts/index")
+    end
+
+    it "should collect the data for the accounts sidebar" do
+      @accounts = [ Factory(:account, :user => @current_user) ]
+
+      get :index
+      (assigns[:account_category_total].keys.map(&:to_sym) - (@category << :all << :other)).should == []
+    end
+
+    it "should filter out accounts by category" do
+      categories = %w(customer vendor)
+      controller.session[:filter_by_account_category] = categories.join(',')
+      @accounts = [
+        Factory(:account, :user => @current_user, :category => categories.first),
+        Factory(:account, :user => @current_user, :category => categories.last)
+      ]
+      # This one should be filtered out.
+      Factory(:account, :user => @current_user, :category => "competitor")
+
+      get :index
+      assigns[:accounts].should == @accounts
     end
 
     describe "AJAX pagination" do
@@ -44,7 +72,7 @@ describe AccountsController do
 
       it "should render all accounts as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
-        @accounts = [ Factory(:account, :user => @current_user) ]
+        @accounts = [ Factory(:account, :user => @current_user).reload ]
         get :index
         response.body.should == @accounts.to_xml
       end
@@ -59,7 +87,7 @@ describe AccountsController do
   describe "responding to GET show" do
 
     describe "with mime type of HTML" do
-      before(:each) do
+      before do
         @account = Factory(:account, :user => @current_user)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
@@ -86,13 +114,14 @@ describe AccountsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @account.id
-        response.body.should == @account.to_xml
+        response.body.should == @account.reload.to_xml
       end
     end
 
     describe "account got deleted or otherwise unavailable" do
       it "should redirect to account index if the account got deleted" do
-        @account = Factory(:account, :user => @current_user).destroy
+        @account = Factory(:account, :user => @current_user)
+        @account.destroy
 
         get :show, :id => @account.id
         flash[:warning].should_not == nil
@@ -108,7 +137,8 @@ describe AccountsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @account = Factory(:account, :user => @current_user).destroy
+        @account = Factory(:account, :user => @current_user)
+        @account.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @account.id
@@ -168,7 +198,8 @@ describe AccountsController do
 
     describe "(account got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the account got deleted" do
-        @account = Factory(:account, :user => @current_user).destroy
+        @account = Factory(:account, :user => @current_user)
+        @account.destroy
 
         xhr :get, :edit, :id => @account.id
         flash[:warning].should_not == nil
@@ -185,7 +216,7 @@ describe AccountsController do
     end
 
     describe "(previous account got deleted or is otherwise unavailable)" do
-      before(:each) do
+      before do
         @account = Factory(:account, :user => @current_user)
         @previous = Factory(:account, :user => Factory(:user))
       end
@@ -238,6 +269,14 @@ describe AccountsController do
         assigns[:accounts].should == [ @account ]
       end
 
+      it "should get data to update account sidebar" do
+        @account = Factory.build(:account, :name => "Hello", :user => @current_user)
+        Campaign.stub!(:new).and_return(@account)
+        @users = [ Factory(:user) ]
+
+        xhr :post, :create, :account => { :name => "Hello" }, :users => %w(1 2 3)
+        assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
+      end
     end
 
     describe "with invalid params" do
@@ -252,14 +291,14 @@ describe AccountsController do
         response.should render_template("accounts/create")
       end
     end
-  
+
   end
 
   # PUT /accounts/1
   # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT udpate" do
-  
+
     describe "with valid params" do
       it "should update the requested account, expose the requested account as @account, and render [update] template" do
         @account = Factory(:account, :id => 42, :name => "Hello people")
@@ -268,6 +307,15 @@ describe AccountsController do
         @account.reload.name.should == "Hello world"
         assigns(:account).should == @account
         response.should render_template("accounts/update")
+      end
+
+      it "should get data for accounts sidebar when called from Campaigns index" do
+        @account = Factory(:account, :id => 42)
+        request.env["HTTP_REFERER"] = "http://localhost/accounts"
+
+        xhr :put, :update, :id => 42, :account => { :name => "Hello" }, :users => []
+        assigns(:account).should == @account
+        assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should update account permissions when sharing with specific users" do
@@ -283,7 +331,8 @@ describe AccountsController do
 
       describe "account got deleted or otherwise unavailable" do
         it "should reload current page is the account got deleted" do
-          @account = Factory(:account, :user => @current_user).destroy
+          @account = Factory(:account, :user => @current_user)
+          @account.destroy
 
           xhr :put, :update, :id => @account.id
           flash[:warning].should_not == nil
@@ -299,7 +348,7 @@ describe AccountsController do
         end
       end
     end
-  
+
     describe "with invalid params" do
       it "should not update the requested account but still expose the requested account as @account, and render [update] template" do
         @account = Factory(:account, :id => 42, :name => "Hello people")
@@ -312,12 +361,12 @@ describe AccountsController do
     end
 
   end
-  
+
   # DELETE /accounts/1
   # DELETE /accounts/1.xml
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-    before(:each) do
+    before do
       @account = Factory(:account, :user => @current_user)
     end
 
@@ -326,9 +375,15 @@ describe AccountsController do
         @another_account = Factory(:account, :user => @current_user)
         xhr :delete, :destroy, :id => @account.id
 
-        lambda { @account.reload }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { Account.find(@account) }.should raise_error(ActiveRecord::RecordNotFound)
         assigns[:accounts].should == [ @another_account ] # @account got deleted
         response.should render_template("accounts/destroy")
+      end
+
+      it "should get data for accounts sidebar" do
+        xhr :delete, :destroy, :id => @account.id
+
+        assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should try previous page and render index action if current page has no accounts" do
@@ -349,7 +404,8 @@ describe AccountsController do
 
       describe "account got deleted or otherwise unavailable" do
         it "should reload current page is the account got deleted" do
-          @account = Factory(:account, :user => @current_user).destroy
+          @account = Factory(:account, :user => @current_user)
+          @account.destroy
 
           xhr :delete, :destroy, :id => @account.id
           flash[:warning].should_not == nil
@@ -375,7 +431,8 @@ describe AccountsController do
       end
 
       it "should redirect to account index with the flash message is the account got deleted" do
-        @account = Factory(:account, :user => @current_user).destroy
+        @account = Factory(:account, :user => @current_user)
+        @account.destroy
 
         delete :destroy, :id => @account.id
         flash[:warning].should_not == nil
@@ -396,7 +453,7 @@ describe AccountsController do
   # GET /accounts/search/query                                             AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
-    before(:each) do
+    before do
       @first  = Factory(:account, :user => @current_user, :name => "The first one")
       @second = Factory(:account, :user => @current_user, :name => "The second one")
       @accounts = [ @first, @second ]
@@ -416,7 +473,7 @@ describe AccountsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "second?!"
 
-        response.body.should == [ @second ].to_xml
+        response.body.should == [ @second.reload ].to_xml
       end
     end
   end
@@ -469,14 +526,16 @@ describe AccountsController do
         @model = Factory(:account)
         @model.opportunities << @attachment
       end
-      it_should_behave_like("discard")
+      # 'super from singleton method that is defined to multiple classes is not supported;'
+      # TODO: Uncomment this when it is fixed in 1.9.3
+      # it_should_behave_like("discard")
     end
   end
 
   # POST /accounts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
-    before(:each) do
+    before do
       @auto_complete_matches = [ Factory(:account, :name => "Hello World", :user => @current_user) ]
     end
 
@@ -510,7 +569,7 @@ describe AccountsController do
   describe "responding to POST redraw" do
     it "should save user selected account preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
-      @current_user.preference[:accounts_per_page].should == "42"
+      @current_user.preference[:accounts_per_page].should == 42
       @current_user.preference[:accounts_outline].should  == "brief"
       @current_user.preference[:accounts_sort_by].should  == "accounts.name ASC"
     end
@@ -532,4 +591,24 @@ describe AccountsController do
     end
   end
 
+  # POST /accounts/filter                                                  AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to POST filter" do
+    it "should expose filtered accounts as @accounts and render [index] template" do
+      session[:filter_by_account_category] = "customer,vendor"
+      @accounts = [ Factory(:account, :category => "partner", :user => @current_user) ]
+
+      xhr :post, :filter, :category => "partner"
+      assigns(:accounts).should == @accounts
+      response.should render_template("accounts/index")
+    end
+
+    it "should reset current page to 1" do
+      @accounts = []
+      xhr :post, :filter, :category => "partner"
+
+      session[:accounts_current_page].should == 1
+    end
+  end
 end
+

@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -40,6 +40,7 @@
 #  linkedin        :string(128)
 #  facebook        :string(128)
 #  twitter         :string(128)
+#  skype           :string(128)
 #  born_on         :date
 #  do_not_call     :boolean(1)      not null
 #  deleted_at      :datetime
@@ -57,21 +58,36 @@ class Contact < ActiveRecord::Base
   has_many    :opportunities, :through => :contact_opportunities, :uniq => true, :order => "opportunities.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
-  has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Business'"
+  has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
   has_many    :emails, :as => :mediator
-  
+
   accepts_nested_attributes_for :business_address, :allow_destroy => true
 
-  named_scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
-  named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
+  scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
+  scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
 
-  simple_column_search :first_name, :last_name, :email,
-    :match => lambda { |column| column == :email ? :middle : :start },
-    :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^@\w\s\-\.']/, '').strip
+    # We can't be sure that names are searched in the right order, so we take the query and
+    # split it into all possible first/last name combinations.
+    # => "Zhong Fai Gao" matches last name "Zhong Fai" and "Fai Gao"
+    a = query.split(" ")
+    parts = [[a[0], a[1..-1].join(" ")],[a.reverse[0], a.reverse[1..-1].reverse.join(" ")]]
+    name_query = if a.size > 1
+      parts.map{ |first, last|
+        "(upper(first_name) LIKE upper('%#{first}%') AND upper(last_name) LIKE upper('%#{last}%'))"
+      }.join(" OR ")
+    else
+      "upper(first_name) LIKE upper('%#{query}%') OR upper(last_name) LIKE upper('%#{query}%')"
+    end
+    where("#{name_query} OR upper(email) LIKE upper(:m) OR upper(alt_email) LIKE upper(:m) OR phone LIKE :m OR mobile LIKE :m", :m => "%#{query}%")
+  }
+
   uses_user_permissions
   acts_as_commentable
-  acts_as_paranoid
-  sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "last_name ASC"
+  is_paranoid
+  exportable
+  sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :first_name, :message => :missing_first_name
   validates_presence_of :last_name, :message => :missing_last_name
@@ -85,9 +101,7 @@ class Contact < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def full_name(format = nil)
-    if self.first_name.empty? and self.last_name.empty? and self.account
-      self.account.name
-    elsif format.nil? || format == "before"
+    if format.nil? || format == "before"
       "#{self.first_name} #{self.last_name}"
     else
       "#{self.last_name}, #{self.first_name}"
@@ -144,10 +158,10 @@ class Contact < ActiveRecord::Base
       :assigned_to => params[:account][:assigned_to],
       :access      => params[:access]
     }
-    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter do_not_call background_info).each do |name|
+    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
       attributes[name] = model.send(name.intern)
     end
-    
+
     contact = Contact.new(attributes)
     contact.business_address = Address.new(:street1 => model.business_address.street1, :street2 => model.business_address.street2, :city => model.business_address.city, :state => model.business_address.state, :zipcode => model.business_address.zipcode, :country => model.business_address.country, :full_address => model.business_address.full_address, :address_type => "Business") unless model.business_address.nil?
 
@@ -173,3 +187,4 @@ class Contact < ActiveRecord::Base
   end
 
 end
+

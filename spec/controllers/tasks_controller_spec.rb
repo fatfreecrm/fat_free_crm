@@ -8,6 +8,7 @@ describe TasksController do
   end
 
   def produce_tasks(user, view)
+    #~ Time.zone = 'UTC'
     settings = (view != "completed" ? Setting.task_bucket : Setting.task_completed)
 
     settings.inject({}) do | hash, due |
@@ -24,7 +25,7 @@ describe TasksController do
       when "completed"
         completed_at = case due
           when :completed_today
-            Date.today
+            Date.yesterday + 1.day
           when :completed_yesterday
             Date.yesterday
           when :completed_last_week
@@ -50,36 +51,45 @@ describe TasksController do
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
 
-    before(:each) do
+    before do
       update_sidebar
+      @timezone, Time.zone = Time.zone, :utc
     end
 
-    VIEWS.each do |view|
+    after do
+      Time.zone = @timezone
+    end
+
+    TASK_STATUSES.each do |view|
       it "should expose all tasks as @tasks and render [index] template for #{view} view" do
         @tasks = produce_tasks(@current_user, view)
 
         get :index, :view => view
 
-        (assigns[:tasks].keys - @tasks.keys).should == []
+        (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
         (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
-        assigns[:task_total].should == @task_total
+        assigns[:task_total].symbolize_keys.should == @task_total
         response.should render_template("tasks/index")
       end
 
-      # it "should render all tasks as xml for #{view} view" do
-      #   @tasks = produce_tasks(@current_user, view)
-      # 
-      #   # Convert symbol keys to strings, otherwise to_xml fails (Rails 2.2).
-      #   @tasks = @tasks.inject({}) { |tasks, (k,v)| tasks[k.to_s] = v; tasks }
-      # 
-      #   request.env["HTTP_ACCEPT"] = "application/xml"
-      #   get :index, :view => view
-      #   (assigns[:tasks].keys.map(&:to_s) - @tasks.keys).should == []
-      #   (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
-      #   response.body.should == @tasks.to_xml unless Date.tomorrow == Date.today.end_of_week # Cheating...
-      # end
-    end
+      it "should render all tasks as xml for #{view} view" do
+        @tasks = produce_tasks(@current_user, view)
 
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :index, :view => view
+
+        (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
+        (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
+        hash = Hash.from_xml(response.body)
+        hash["hash"].keys.each do |key|
+          hash["hash"][key].each do |attr|
+            task = Task.new(attr)
+            task.should be_instance_of(Task)
+            task.valid?.should == true
+          end
+        end
+      end
+    end
   end
 
   # GET /tasks/1
@@ -87,7 +97,7 @@ describe TasksController do
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
 
-    VIEWS.each do |view|
+    TASK_STATUSES.each do |view|
       it "should render tasks index for #{view} view (since a task doesn't have landing page)" do
         get :show, :id => 42, :view => view
         response.should render_template("tasks/index")
@@ -98,10 +108,9 @@ describe TasksController do
         @task = Factory(:task, :user => @current_user)
 
         get :show, :id => @task.id, :view => "pending"
-        response.body.should == @task.to_xml
+        response.body.should == @task.reload.to_xml
       end
     end
-
   end
 
   # GET /tasks/new
@@ -135,7 +144,8 @@ describe TasksController do
 
     describe "(when creating related task)" do
       it "should redirect to parent asset's index page with the message if parent asset got deleted" do
-        @account = Factory(:account).destroy
+        @account = Factory(:account)
+        @account.destroy
 
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
@@ -144,13 +154,12 @@ describe TasksController do
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
         @account = Factory(:account, :access => "Private")
-        
+
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
         response.body.should == 'window.location.href = "/accounts";'
       end
     end
-
   end
 
   # GET /tasks/1/edit                                                      AJAX
@@ -185,7 +194,8 @@ describe TasksController do
 
     describe "(task got deleted or reassigned)" do
       it "should reload current page with the flash message if the task got deleted" do
-        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+        @task.destroy
 
         xhr :get, :edit, :id => @task.id
         flash[:warning].should_not == nil
@@ -225,7 +235,6 @@ describe TasksController do
         response.should render_template("tasks/edit")
       end
     end
-
   end
 
   # POST /tasks
@@ -253,10 +262,9 @@ describe TasksController do
 
           request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
           xhr :post, :create, :task => { :name => "Hello world" }
-          assigns[:task_total].should be_an_instance_of(Hash)
+          assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
         end
       end
-
     end
 
     describe "with invalid params" do
@@ -271,9 +279,7 @@ describe TasksController do
         assigns[:task_total].should == nil
         response.should render_template("tasks/create")
       end
-
     end
-
   end
 
   # PUT /tasks/1
@@ -299,7 +305,7 @@ describe TasksController do
 
           request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
           xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
-          assigns[:task_total].should be_an_instance_of(Hash)
+          assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
         end
       end
     end
@@ -319,7 +325,8 @@ describe TasksController do
 
     describe "task got deleted or reassigned" do
       it "should reload current page with the flash message if the task got deleted" do
-        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+        @task.destroy
 
         xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
         flash[:warning].should_not == nil
@@ -334,7 +341,6 @@ describe TasksController do
         response.body.should == "window.location.reload();"
       end
     end
-
   end
 
   # DELETE /tasks/1
@@ -358,7 +364,7 @@ describe TasksController do
 
         request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
         xhr :delete, :destroy, :id => @task.id, :bucket => "due_asap"
-        assigns[:task_total].should be_an_instance_of(Hash)
+        assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
       end
     end
 
@@ -371,7 +377,8 @@ describe TasksController do
 
     describe "task got deleted or reassigned" do
       it "should reload current page with the flash message if the task got deleted" do
-        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+        @task.destroy
 
         xhr :delete, :destroy, :id => @task.id
         flash[:warning].should_not == nil
@@ -386,7 +393,6 @@ describe TasksController do
         response.body.should == "window.location.reload();"
       end
     end
-
   end
 
   # PUT /tasks/1/complete
@@ -418,12 +424,13 @@ describe TasksController do
       @task = Factory(:task, :completed_at => nil, :user => @current_user)
 
       xhr :put, :complete, :id => @task.id, :bucket => "due_asap"
-      assigns[:task_total].should be_an_instance_of(Hash)
+      assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
     end
 
     describe "task got deleted or reassigned" do
       it "should reload current page with the flash message if the task got deleted" do
-        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user).destroy
+        @task = Factory(:task, :user => Factory(:user), :assignee => @current_user)
+        @task.destroy
 
         xhr :put, :complete, :id => @task.id
         flash[:warning].should_not == nil
@@ -438,14 +445,13 @@ describe TasksController do
         response.body.should == "window.location.reload();"
       end
     end
-
   end
 
   # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do
 
-    VIEWS.each do |view|
+    TASK_STATUSES.each do |view|
       it "should remove a filter from session and render [filter] template for #{view} view" do
         name = "filter_by_task_#{view}"
         session[name] = "due_asap,due_today,due_tomorrow"
@@ -468,7 +474,6 @@ describe TasksController do
         response.should render_template("tasks/filter")
       end
     end
-
   end
-
 end
+

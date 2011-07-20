@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -19,9 +19,6 @@ class LeadsController < ApplicationController
   before_filter :require_user
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :attach, :only => :attach
-  before_filter :discard, :only => :discard
-  before_filter :auto_complete, :only => :auto_complete
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /leads
@@ -34,6 +31,10 @@ class LeadsController < ApplicationController
       format.html # index.html.erb
       format.js   # index.js.rjs
       format.xml  { render :xml => @leads }
+      format.xls  { send_data @leads.to_xls, :type => :xls }
+      format.csv  { send_data @leads.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -41,7 +42,7 @@ class LeadsController < ApplicationController
   # GET /leads/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
-    @lead = Lead.my(@current_user).find(params[:id])
+    @lead = Lead.my.find(params[:id])
     @comment = Comment.new
 
     @timeline = Timeline.find(@lead)
@@ -59,12 +60,12 @@ class LeadsController < ApplicationController
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
-    @lead = Lead.new(:access => Setting.default_access)
-    @users = User.except(@current_user).active.all
-    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    @lead = Lead.new(:user => @current_user, :access => Setting.default_access)
+    @users = User.except(@current_user)
+    @campaigns = Campaign.my.order("name")
     if params[:related]
       model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.my(@current_user).find(id))
+      instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
     end
 
     respond_to do |format|
@@ -79,11 +80,11 @@ class LeadsController < ApplicationController
   # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).active.all
-    @campaigns = Campaign.my(@current_user).all(:order => "name")
-    if params[:previous] =~ /(\d+)\z/
-      @previous = Lead.my(@current_user).find($1)
+    @lead = Lead.my.find(params[:id])
+    @users = User.except(@current_user)
+    @campaigns = Campaign.my.order("name")
+    if params[:previous].to_s =~ /(\d+)\z/
+      @previous = Lead.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -96,8 +97,8 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @lead = Lead.new(params[:lead])
-    @users = User.except(@current_user).active.all
-    @campaigns = Campaign.my(@current_user).all(:order => "name")
+    @users = User.except(@current_user)
+    @campaigns = Campaign.my.order("name")
 
     respond_to do |format|
       if @lead.save_with_permissions(params)
@@ -120,7 +121,7 @@ class LeadsController < ApplicationController
   # PUT /leads/1.xml
   #----------------------------------------------------------------------------
   def update
-    @lead = Lead.my(@current_user).find(params[:id])
+    @lead = Lead.my.find(params[:id])
 
     respond_to do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
@@ -128,8 +129,8 @@ class LeadsController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user).active.all
-        @campaigns = Campaign.my(@current_user).all(:order => "name")
+        @users = User.except(@current_user)
+        @campaigns = Campaign.my.order("name")
         format.js
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
@@ -143,7 +144,7 @@ class LeadsController < ApplicationController
   # DELETE /leads/1.xml                                           HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @lead = Lead.my(@current_user).find(params[:id])
+    @lead = Lead.my.find(params[:id])
     @lead.destroy if @lead
 
     respond_to do |format|
@@ -160,13 +161,13 @@ class LeadsController < ApplicationController
   # GET /leads/1/convert.xml                                               AJAX
   #----------------------------------------------------------------------------
   def convert
-    @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).active.all
+    @lead = Lead.my.find(params[:id])
+    @users = User.except(@current_user)
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @accounts = Account.my.order("name")
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
-    if params[:previous] =~ /(\d+)\z/
-      @previous = Lead.my(@current_user).find($1)
+    if params[:previous].to_s =~ /(\d+)\z/
+      @previous = Lead.my.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -178,10 +179,10 @@ class LeadsController < ApplicationController
   # PUT /leads/1/promote.xml                                               AJAX
   #----------------------------------------------------------------------------
   def promote
-    @lead = Lead.my(@current_user).find(params[:id])
-    @users = User.except(@current_user).active.all
+    @lead = Lead.my.find(params[:id])
+    @users = User.except(@current_user)
     @account, @opportunity, @contact = @lead.promote(params)
-    @accounts = Account.my(@current_user).all(:order => "name")
+    @accounts = Account.my.order("name")
     @stage = Setting.unroll(:opportunity_stage)
 
     respond_to do |format|
@@ -204,12 +205,12 @@ class LeadsController < ApplicationController
   # PUT /leads/1/reject.xml                                       AJAX and HTML
   #----------------------------------------------------------------------------
   def reject
-    @lead = Lead.my(@current_user).find(params[:id])
+    @lead = Lead.my.find(params[:id])
     @lead.reject if @lead
     update_sidebar
 
     respond_to do |format|
-      format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to(leads_path) }
+      format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to leads_path }
       format.js   # reject.js.rjs
       format.xml  { head :ok }
     end
@@ -224,7 +225,7 @@ class LeadsController < ApplicationController
     @leads = get_leads(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @leads.to_xml }
     end
   end
@@ -232,16 +233,16 @@ class LeadsController < ApplicationController
   # PUT /leads/1/attach
   # PUT /leads/1/attach.xml                                                AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :attach, :only => :attach
+  # Handled by ApplicationController :attach
 
   # POST /leads/1/discard
   # POST /leads/1/discard.xml                                              AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :discard, :only => :discard
+  # Handled by ApplicationController :discard
 
   # POST /leads/auto_complete/query                                        AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
+  # Handled by ApplicationController :auto_complete
 
   # GET /leads/options                                                     AJAX
   #----------------------------------------------------------------------------
@@ -273,7 +274,7 @@ class LeadsController < ApplicationController
     end
 
     @leads = get_leads(:page => 1) # Start one the first page.
-    render :action => :index
+    render :index
   end
 
   # POST /leads/filter                                                     AJAX
@@ -281,35 +282,13 @@ class LeadsController < ApplicationController
   def filter
     session[:filter_by_lead_status] = params[:status]
     @leads = get_leads(:page => 1) # Start one the first page.
-    render :action => :index
+    render :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_leads(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.preference[:leads_sort_by] || Lead.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.preference[:leads_per_page]
-    }
-
-    # Call :get_leads hook and return its output if any.
-    leads = hook(:get_leads, self, :records => records, :pages => pages)
-    return leads.last unless leads.empty?
-
-    # Default processing if no :get_leads hooks are present.
-    if session[:filter_by_lead_status]
-      filtered = session[:filter_by_lead_status].split(",")
-      current_query.blank? ? Lead.my(records).only(filtered) : Lead.my(records).only(filtered).search(current_query)
-    else
-      current_query.blank? ? Lead.my(records) : Lead.my(records).search(current_query)
-    end.paginate(pages)
+  def get_leads(options = {})
+    get_list_of_records(Lead, options.merge!(:filter => :filter_by_lead_status))
   end
 
   #----------------------------------------------------------------------------
@@ -320,7 +299,7 @@ class LeadsController < ApplicationController
         @leads = get_leads                        # Get leads for current page.
         if @leads.blank?                          # If no lead on this page then try the previous one.
           @leads = get_leads(:page => current_page - 1) if current_page > 1
-          render :action => :index and return     # And reload the whole list even if it's empty.
+          render :index and return                # And reload the whole list even if it's empty.
         end
       else                                        # Called from related asset.
         self.current_page = 1                     # Reset current page to 1 to make sure it stays valid.
@@ -329,7 +308,7 @@ class LeadsController < ApplicationController
     else # :html destroy
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @lead.full_name)
-      redirect_to(leads_path)
+      redirect_to leads_path
     end
   end
 
@@ -338,9 +317,9 @@ class LeadsController < ApplicationController
     if related
       instance_variable_set("@#{related}", @lead.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      @lead_status_total = { :all => Lead.my(@current_user).count, :other => 0 }
+      @lead_status_total = { :all => Lead.my.count, :other => 0 }
       Setting.lead_status.each do |key|
-        @lead_status_total[key] = Lead.my(@current_user).count(:conditions => [ "status=?", key.to_s ])
+        @lead_status_total[key] = Lead.my.where(:status => key.to_s).count
         @lead_status_total[:other] -= @lead_status_total[key]
       end
       @lead_status_total[:other] += @lead_status_total[:all]

@@ -153,6 +153,15 @@ pl:
               missing_email: "^Proszę podać email."
               email_in_use: "^Istnieje już użytkownik z takim emailem."
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one:    "%{model} nie został zachowany z powodu jednego błędu"
+        other:  "%{model} nie został zachowany z powodu %{count} błędów"
+      body: "Błędy dotyczą następujących pól:"
+
   msg_account_suspended: Konto użytkownika zostało zawieszone.
   password_reset_instruction: instrukcje odzyskania hasła
 
@@ -162,6 +171,7 @@ pl:
   msg_account_not_approved: Twoje konto nie zostało jeszcze zaakceptowane.
   msg_asset_deleted: "Usunięto %{value}."
   msg_asset_not_available: "%{value} nie jest dostępne."
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: "%{value} nie są dostępne."
   msg_asset_rejected: "%{value} został oznaczony jako Stracony."
   msg_bad_image_file: "^Nie można załadować ani zmienić rozmiaru obrazka."
@@ -220,12 +230,13 @@ pl:
   aim: AOL IM
   already_signed_up: Już zarejestrowany?
   alt_email: Alternatywny email
+  avatar: Obrazek
   change_password: Zmień hasło
   company: Firma
   contact_info: Informacje kontaktowe
   current_password: Aktualne hasło
   edit_profile: Zmień dane
-  email: Email
+  # email: Email # <-- Already defined as the task type if Settings.
   first_name: Imię
   google: Google IM
   gravatar_help: Nie wiesz, co to są gravatary? Dowiedz się
@@ -593,6 +604,9 @@ pl:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact: 
       one: '1 kontakt'
       few: '%{count} kontakty'

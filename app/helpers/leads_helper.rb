@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -21,31 +21,31 @@ module LeadsHelper
   #----------------------------------------------------------------------------
   def stars_for(lead)
     if lead.rating == RATING_STARS
-      "&#9733;" * RATING_STARS
+      "&#9733;".html_safe * RATING_STARS
     elsif lead.rating.nil? || lead.rating == 0
-      %(<font color="gainsboro">#{"&#9733;" * RATING_STARS}</font>)
+      %(<font color="gainsboro">#{"&#9733;" * RATING_STARS}</font>).html_safe
     else
-      "&#9733;" * lead.rating + %(<font color="gainsboro">#{"&#9733;" * (RATING_STARS - lead.rating)}</font>)
+      "&#9733;".html_safe * lead.rating + %(<font color="gainsboro">#{"&#9733;" * (RATING_STARS - lead.rating)}</font>).html_safe
     end
   end
 
   #----------------------------------------------------------------------------
   def link_to_convert(lead)
-    link_to_remote(t(:convert),
+    link_to(t(:convert), convert_lead_path(lead),
       :method => :get,
-      :url    => convert_lead_path(lead),
-      :with   => "{ previous: crm.find_form('edit_lead') }"
+      :with   => "{ previous: crm.find_form('edit_lead') }",
+      :remote => true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_reject(lead)
-    link_to_remote(t(:reject) + "!", :method => :put, :url => reject_lead_path(lead))
+    link_to(t(:reject) + "!", reject_lead_path(lead), :method => :put, :remote => true)
   end
 
   #----------------------------------------------------------------------------
   def confirm_reject(lead)
-    question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>)
+    question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>).html_safe
     yes = link_to(t(:yes_button), reject_lead_path(lead), :method => :put)
     no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
     update_page do |page|
@@ -54,22 +54,19 @@ module LeadsHelper
     end
   end
 
-  # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
-  #----------------------------------------------------------------------------
-  def rating_select(name, options = {})
-    stars = (1..5).inject({}) { |hash, star| hash[star] = "&#9733;" * star; hash }.sort
-    options_for_select = %Q(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
-    options_for_select << stars.inject([]) {|array, star| array << %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>); array }.join
-    select_tag name, options_for_select, options
-  end
-
   # Sidebar checkbox control for filtering leads by status.
   #----------------------------------------------------------------------------
   def lead_status_checbox(status, count)
     checked = (session[:filter_by_lead_status] ? session[:filter_by_lead_status].split(",").include?(status.to_s) : count.to_i > 0)
-    check_box_tag("status[]", status, checked, :id => status, :onclick => remote_function(:url => { :action => :filter }, :with => %Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/))
+    onclick = remote_function(
+      :url      => { :action => :filter },
+      :with     => h(%Q/"status=" + $$("input[name='status[]']").findAll(function (el) { return el.checked }).pluck("value")/),
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    check_box_tag("status[]", status, checked, :id => status, :onclick => onclick)
   end
-  
+
   # Returns default permissions intro for leads
   #----------------------------------------------------------------------------
   def get_lead_default_permissions_intro(access)
@@ -78,7 +75,7 @@ module LeadsHelper
       when "Public" then t(:lead_permissions_intro_public, t(:opportunity_small))
       when "Shared" then t(:lead_permissions_intro_shared, t(:opportunity_small))
     end
-  end  
+  end
 
   # Returns default permissions intro for leads.
   #----------------------------------------------------------------------------
@@ -101,4 +98,22 @@ module LeadsHelper
     end
   end
 
+  # Lead summary for RSS/ATOM feed.
+  #----------------------------------------------------------------------------
+  def lead_summary(lead)
+    summary = []
+    summary << (lead.status ? t(lead.status) : t(:other))
+
+    if lead.company? && lead.title?
+      summary << t(:works_at, :job_title => lead.title, :company => lead.company)
+    else
+      summary << lead.company if lead.company?
+      summary << lead.title if lead.title?
+    end
+    summary << "#{t(:referred_by_small)} #{lead.referred_by}" if lead.referred_by?
+    summary << lead.email if lead.email.present?
+    summary << "#{t(:phone_small)}: #{lead.phone}" if lead.phone.present?
+    summary << "#{t(:mobile_small)}: #{lead.mobile}" if lead.mobile.present?
+    summary.join(', ')
+  end
 end

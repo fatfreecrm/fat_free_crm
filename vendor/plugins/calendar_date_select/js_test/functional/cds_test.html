@@ -127,6 +127,21 @@
       assert($('global').onchange_called, "onchange wasnt called");
       $("global").remove();
     }},
+    test_onchangeCallbackChangedOnclear: function() { with(this){
+      $("cds_test").up().build("div", {id: "global"});
+      cds = new CalendarDateSelect($("cds_test"), {time: "mixed", 
+        onchange: function() { $("global").onchange_called = true},
+      });
+      $("cds_test").value = "";
+      cds.clearDate();
+      assert( ! $('global').onchange_called, "onchange was called, when the value wasn't actually changed");
+      $("cds_test").value = "boogy";
+      cds.clearDate();
+      assert( $('global').onchange_called, "onchange wasnt called, but should ahve been");
+      cds.close();
+      $("global").remove();
+    }},
+    
     test_disabledElement_cantUpdate: function() {with(this){
       $("cds_test").value = "May 10, 2007";
       $("cds_test").disabled = true;
@@ -199,6 +214,22 @@
       $("cds_test").value = "December 1, 2007 ";
       cds = new CalendarDateSelect($("cds_test"), {time:true});
       assert(cds.use_time)
+      cds.close();
+    }},
+    test_parseDate_defaultTime_javaScriptFunctionPassed_shouldReturnDateFromJavaScriptFunction: function() {with(this){
+      $("cds_test").value = " ";
+      cds = new CalendarDateSelect($("cds_test"), {default_time:function() { return new Date('January 02, 2008 2:00 PM') }});
+      assertEqual('2008', cds.selected_date.getFullYear());
+      assertEqual('2008', cds.date.getFullYear());
+      assert(cds.selection_made)
+      cds.close();
+    }},
+    test_parseDate_defaultTime_javaScriptDatePassed_shouldReturnJavaScriptDate: function() {with(this){
+      $("cds_test").value = " ";
+      cds = new CalendarDateSelect($("cds_test"), {default_time:new Date('January 02, 2007 05:45 PM') });
+      assertEqual('2007', cds.selected_date.getFullYear());
+      assertEqual('2007', cds.date.getFullYear());
+      assert(cds.selection_made)
       cds.close();
     }},
     test_passDivElement__shouldUseChildInputForTargetElement: function() {with(this){

@@ -24,9 +24,9 @@ ul li {
 
 a {
   text-decoration: none; }
-  a:link, a:visited {
+  alink, avisited {
     color: #0033cc; }
-  a:hover {
+  ahover {
     background: #0033cc;
     color: white; }
   a img {
@@ -39,7 +39,7 @@ a {
   border-bottom: 1px dotted darkcyan;
   color: darkcyan;
   text-decoration: none; }
-  #options a:hover {
+  #options ahover {
     background: #e5e5e5;
     border-bottom: 1px dotted darkblue;
     color: darkblue; }
@@ -72,7 +72,7 @@ tt {
       color: lightyellow;
       padding: 1px 4px 2px 4px;
       text-decoration: none; }
-      #header #welcome a:hover {
+      #header #welcome ahover {
         background: #1e4262;
         color: yellow; }
     #header #welcome a.selected {
@@ -96,7 +96,7 @@ tt {
       padding: 0px 0px 4px 0px; }
       #header #jumpbox #jumpbox_menu a.selected {
         color: navy; }
-      #header #jumpbox #jumpbox_menu a:hover {
+      #header #jumpbox #jumpbox_menu ahover {
         background: steelblue; }
     #header #jumpbox #jumpbox_label {
       color: white; }
@@ -108,7 +108,9 @@ tt {
   height: 24px;
   padding: 0px;
   text-align: center;
-  width: 100%; }
+  width: 100%;
+  ahover-background: #97baff;
+  ahover-color: navy; }
   #tabs li {
     float: left;
     font-size: 12px;
@@ -127,9 +129,6 @@ tt {
     -moz-border-radius-topright: 3px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px; }
-  #tabs a:hover {
-    background: #97baff;
-    color: navy; }
   #tabs a:link.active, #tabs a:visited.active {
     background: azure;
     color: navy;
@@ -159,12 +158,11 @@ tt {
   border-bottom: 1px silver solid;
   color: #2f2f2f;
   font-size: 13px;
-  font-weight: bold; }
+  font-weight: bold;
+  ahover-background: none; }
   .subtitle a:link, .subtitle a:visited {
     color: darkslateblue;
     text-decoration: none; }
-  .subtitle a:hover {
-    background: none; }
 
 .subtitle_tools {
   font-size: 11px;
@@ -195,9 +193,9 @@ tt {
   padding: 20px;
   width: 400px;
   -moz-border-radius: 6px;
-  -moz-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb;
+  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
   -webkit-border-radius: 6px;
-  -webkit-box-shadow: 5px 5px 15px #bbb, -5px 0px 15px #bbb; }
+  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb; }
   .standalone input[type="text"], .standalone input[type="password"] {
     font-size: 16px;
     padding: 2px;
@@ -212,9 +210,9 @@ tt {
   background: white;
   padding: 8px 15px 15px 15px;
   -moz-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
   -webkit-border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .sidebar {
   color: #3f3f3f;
@@ -238,13 +236,16 @@ tt {
 .label {
   color: #3f3f3f;
   font-size: 12px;
-  margin: 8px 0px 0px 0px; }
+  margin: 8px 0px 0px 0px;
+  padding: 0px 8px 0px 0px; }
 
 .top {
   margin: 5px 0px 0px 0px; }
 
 .req {
-  color: navy; }
+  background: url("/images/asterisk.gif") no-repeat scroll center right transparent;
+  color: navy;
+  float: left; }
 
 .intro {
   color: dimgray;
@@ -256,6 +257,15 @@ tt {
   color: #3f3f3f;
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px; }
+  .section table {
+    width: 500px;
+    border-spacing: 0px;
+    border-collapse: collapse; }
+    .section table td {
+      vertical-align: top;
+      padding: 0px; }
+      .section table td input[type="text"], .section table td input[type="password"] {
+        width: 240px; }
 
 .remote {
   border: 5px lightblue solid;
@@ -307,6 +317,21 @@ tt {
 
 .grayed {
   color: silver !important; }
+
+.amount {
+  background: palegreen;
+  color: black;
+  font-size: 11px;
+  text-align: center;
+  padding: 0px 3px 0px 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px; }
 
 .strip {
   background: gainsboro;
@@ -405,6 +430,10 @@ tt {
 .toggle {
   font-weight: normal; }
 
+#export {
+  font-size: 9px;
+  margin: 12px 0px 0px 0px; }
+
 #paginate {
   float: right;
   font-size: 10px;
@@ -484,8 +513,8 @@ tt {
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
-  -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb; }
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
 
 .filters h4 {
   color: navy;
@@ -558,16 +587,18 @@ tt {
 
 .menu {
   background: #f4f5eb;
-  border-top: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #666;
-  border-bottom: 1px solid #666;
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #666666;
+  border-bottom: 1px solid #666666;
   left: 0px;
   padding: 2px 0px;
   position: absolute;
   top: 0px;
   width: 12em;
-  -webkit-box-shadow: 10px 10px 15px gainsboro; }
+  -webkit-box-shadow: 10px 10px 15px gainsboro;
+  ahover-background: mediumblue;
+  ahover-color: white; }
   .menu ul {
     list-style: none;
     margin: 0px;
@@ -575,16 +606,13 @@ tt {
   .menu li {
     list-style-position: outside; }
   .menu a {
-    color: #555;
+    color: #555555;
     cursor: default;
     display: block;
     margin: 0px 2px;
     outline: none;
     padding: 4px 15px;
     text-decoration: none; }
-  .menu a:hover {
-    background: mediumblue //#006;
-    color: #fff; }
 
 .errorExplanation {
   background-color: seashell;
@@ -618,19 +646,19 @@ p.flash_warning, p.flash_error {
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_notice, p.flash_message {
-  background: #df9;
+  background: #ddff99;
   color: darkgreen;
   margin: 0px;
   padding: 5px 0px 5px 16px; }
 p.flash_exception {
-  background: #df9;
+  background: #ddff99;
   border: 5px limegreen solid;
   font-size: 14px;
   margin: 50px auto;
   padding: 50px;
   width: 450px;
-  -moz-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999;
-  -webkit-box-shadow: 5px 5px 15px #999, -5px 0px 15px #999; }
+  -moz-box-shadow: 5px 5px 15px #999999, -5px 0px 15px #999999;
+  -webkit-box-shadow: 5px 5px 15px #999999, -5px 0px 15px #999999; }
 
 div.auto_complete {
   background: white;
@@ -666,28 +694,28 @@ div.auto_complete {
   font-size: 11px;
   margin: 6px 0px 0px 0px; }
   .pagination a, .pagination span {
-    padding: .2em .5em;
+    padding: 0.2em 0.5em;
     display: block;
     float: left;
     margin: 0px 2px 0px 0px; }
   .pagination span.disabled {
-    color: #999;
-    border: 1px solid #DDD; }
+    color: #999999;
+    border: 1px solid #dddddd; }
   .pagination span.current {
     font-weight: bold;
-    background: #2E6AB1;
+    background: #2e6ab1;
     color: white;
-    border: 1px solid #2E6AB1; }
+    border: 1px solid #2e6ab1; }
   .pagination a {
     text-decoration: none;
-    color: #105CB6;
-    border: 1px solid #9AAFE5; }
-    .pagination a:hover, .pagination a:focus {
+    color: #105cb6;
+    border: 1px solid #9aafe5; }
+    .pagination ahover, .pagination afocus {
       color: navy;
       background: lightyellow;
       border-color: navy; }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+@media screen and (-webkit-min-device-pixel-ratio0:) {
   .log input {
     float: left;
     margin: 1px 4px 0px 0px; }

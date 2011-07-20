@@ -1,23 +1,22 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
 class Admin::UsersController < Admin::ApplicationController
   before_filter "set_current_tab('admin/users')", :only => [ :index, :show ]
-  before_filter :auto_complete, :only => :auto_complete
 
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
@@ -29,6 +28,10 @@ class Admin::UsersController < Admin::ApplicationController
       format.html # index.html.haml
       format.js   # index.js.rjs
       format.xml  { render :xml => @users }
+      format.xls  { send_data @users.to_xls, :type => :xls }
+      format.csv  { send_data @users.to_csv, :type => :csv }
+      format.rss  { render "common/index.rss.builder" }
+      format.atom { render "common/index.atom.builder" }
     end
   end
 
@@ -61,7 +64,7 @@ class Admin::UsersController < Admin::ApplicationController
   def edit
     @user = User.find(params[:id])
 
-    if params[:previous] =~ /(\d+)\z/
+    if params[:previous].to_s =~ /(\d+)\z/
       @previous = User.find($1)
     end
 
@@ -145,14 +148,14 @@ class Admin::UsersController < Admin::ApplicationController
     @users = get_users(:query => params[:query], :page => 1)
 
     respond_to do |format|
-      format.js   { render :action => :index }
+      format.js   { render :index }
       format.xml  { render :xml => @users.to_xml }
     end
   end
 
   # POST /users/auto_complete/query                                        AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
+  # Handled by Admin::ApplicationController :auto_complete
 
   # PUT /admin/users/1/suspend
   # PUT /admin/users/1/suspend.xml                                         AJAX
@@ -189,15 +192,15 @@ class Admin::UsersController < Admin::ApplicationController
 
   private
   #----------------------------------------------------------------------------
-  def get_users(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
+  def get_users(options = {})
+    self.current_page  = options[:page]  if options[:page]
     self.current_query = options[:query] if options[:query]
 
-    if current_query.blank?
-      User.paginate(:page => current_page)
-    else
-      User.search(current_query).paginate(:page => current_page)
-    end
+    wants = request.format
+    scope = User.by_id
+    scope = scope.search(current_query)           unless current_query.blank?
+    scope = scope.unscoped                        if wants.csv?
+    scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
+    scope
   end
-
 end

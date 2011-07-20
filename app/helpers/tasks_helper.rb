@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -23,7 +23,13 @@ module TasksHelper
   def task_filter_checbox(view, filter, count)
     name = "filter_by_task_#{view}"
     checked = (session[name] ? session[name].split(",").include?(filter.to_s) : count > 0)
-    check_box_tag("filters[]", filter, checked, :id => "filter_#{filter}", :onclick => remote_function(:url => { :action => :filter, :view => view }, :with => "{filter: this.value, checked:this.checked}" ))
+    onclick = remote_function(
+      :url      => { :action => :filter, :view => view },
+      :with     => "'filter='+this.value+'&checked='+this.checked",
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    check_box_tag("filters[]", filter, checked, :onclick => onclick)
   end
 
   #----------------------------------------------------------------------------
@@ -39,27 +45,70 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_edit(task, bucket)
-    link_to_remote(t(:edit),
-      :url    => edit_task_path(task),
+    link_to(t(:edit), edit_task_path(task),
       :method => :get,
-      :with   => "{ bucket: '#{bucket}', view: '#{@view}', previous: crm.find_form('edit_task') }"
+      :with   => "{ bucket: '#{bucket}', view: '#{@view}', previous: crm.find_form('edit_task') }",
+      :remote => true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_task_delete(task, bucket)
-    link_to_remote(t(:delete) + "!",
-      :url    => task_path(task),
+    link_to(t(:delete) + "!", task_path(task),
       :method => :delete,
       :with   => "{ bucket: '#{bucket}', view: '#{@view}' }",
-      :before => visual_effect(:highlight, dom_id(task), :startcolor => "#ffe4e1")
+      :before => visual_effect(:highlight, dom_id(task), :startcolor => "#ffe4e1"),
+      :remote => true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_task_complete(pending, bucket)
     onclick = %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "{ bucket: '#{bucket}' }")
+    onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "'bucket=#{bucket}'")
+  end
+
+  # Helper to display XLS, CSV, RSS, and ATOM links for tasks.
+  #----------------------------------------------------------------------------
+  def links_to_task_export(view)
+    token = @current_user.single_access_token
+
+    exports = %w(xls csv).map do |format|
+      link_to(format.upcase, "#{tasks_path}.#{format}?view=#{view}", :title => I18n.t(:"to_#{format}"))
+    end
+    feeds = %w(rss atom).map do |format|
+      link_to(format.upcase, "#{tasks_path}.#{format}?view=#{view}&authentication_credentials=#{token}", :title => I18n.t(:"to_#{format}"))
+    end
+
+    (exports + feeds).join(' | ')
+  end
+
+  # Task summary for RSS/ATOM feed.
+  #----------------------------------------------------------------------------
+  def task_summary(task)
+    summary = [ task.category.blank? ? t(:other) : t(task.category) ]
+    if @view != "completed"
+      if @view == "pending" && task.user != @current_user
+        summary << t(:task_from, task.user.full_name)
+      elsif @view == "assigned"
+        summary << t(:task_from, task.assignee.full_name)
+      end
+      summary << "#{t(:related)} #{task.asset.name} (#{task.asset_type.downcase})" if task.asset_id?
+      summary << if task.bucket == "due_asap"
+        t(:task_due_now)
+      elsif task.bucket == "due_later"
+        t(:task_due_later)
+      else
+        l(task.due_at.localtime, :format => :mmddhhss)
+      end
+    else # completed
+      summary << "#{t(:related)} #{task.asset.name} (#{task.asset_type.downcase})" if task.asset_id?
+      summary << t(:task_completed_by,
+                   :time_ago => distance_of_time_in_words(task.completed_at, Time.now),
+                   :date     => l(task.completed_at.localtime, :format => :mmddhhss),
+                   :user     => task.completor.full_name)
+    end
+    summary.join(', ')
   end
 
   #----------------------------------------------------------------------------

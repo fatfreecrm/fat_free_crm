@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -44,25 +44,34 @@ class Account < ActiveRecord::Base
   has_many    :opportunities, :through => :account_opportunities, :uniq => true, :order => "opportunities.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
-  has_one     :billing_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Billing'"
-  has_one     :shipping_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Shipping'" 
+  has_one     :billing_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Billing'"
+  has_one     :shipping_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Shipping'"
   has_many    :emails, :as => :mediator
 
   accepts_nested_attributes_for :billing_address, :allow_destroy => true
   accepts_nested_attributes_for :shipping_address, :allow_destroy => true
-  
-  named_scope :created_by, lambda { |user| { :conditions => ["user_id = ? ", user.id ] } }
-  named_scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ? ", user.id ] } }
 
-  simple_column_search :name, :email, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  scope :state, lambda { |filters|
+    where('category IN (?)' + (filters.delete('other') ? ' OR category IS NULL' : ''), filters)
+  }
+  scope :created_by, lambda { |user| where(:user_id => user.id) }
+  scope :assigned_to, lambda { |user| where(:assigned_to => user.id) }
+
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('upper(name) LIKE upper(:m) OR upper(email) LIKE upper(:m)', :m => "%#{query}%")
+  }
+
   uses_user_permissions
   acts_as_commentable
-  acts_as_paranoid
-  sortable :by => [ "name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  is_paranoid
+  exportable
+  sortable :by => [ "name ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_account_name
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => :deleted_at
   validate :users_for_shared_access
+  before_save :nullify_blank_category
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
@@ -81,12 +90,7 @@ class Account < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def attach!(attachment)
     unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      if attachment.is_a?(Contact)
-        attachment.account = self
-        [ attachment ]
-      else
-        self.send(attachment.class.name.tableize) << attachment
-      end
+      self.send(attachment.class.name.tableize) << attachment
     end
   end
 
@@ -123,4 +127,8 @@ class Account < ActiveRecord::Base
     errors.add(:access, :share_account) if self[:access] == "Shared" && !self.permissions.any?
   end
 
+  def nullify_blank_category
+    self.category = nil if self.category.blank?
+  end
 end
+

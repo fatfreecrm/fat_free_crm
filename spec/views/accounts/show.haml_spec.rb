@@ -5,22 +5,25 @@ describe "/accounts/show.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:account] = Factory(:account, :id => 42)
-    assigns[:users] = [ @current_user ]
-    assigns[:comment] = Comment.new
+    @account = Factory(:account, :id => 42,
+      :contacts => [ Factory(:contact) ],
+      :opportunities => [ Factory(:opportunity) ])
+    assign(:account, @account)
+    assign(:users, [ @current_user ])
+    assign(:comment, Comment.new)
+    assign(:timeline, [ Factory(:comment, :commentable => @account) ])
   end
 
   it "should render account landing page" do
-    template.should_receive(:render).with(hash_including(:partial => "comments/new"))
-    template.should_receive(:render).with(hash_including(:partial => "common/timeline"))
-    template.should_receive(:render).with(hash_including(:partial => "common/tasks"))
-    template.should_receive(:render).with(hash_including(:partial => "contacts/contact"))
-    template.should_receive(:render).with(hash_including(:partial => "opportunities/opportunity"))
+    render
 
-    render "/accounts/show.html.haml"
+    view.should render_template(:partial => "comments/_new")
+    view.should render_template(:partial => "common/_timeline")
+    view.should render_template(:partial => "common/_tasks")
+    view.should render_template(:partial => "contacts/_contact")
+    view.should render_template(:partial => "opportunities/_opportunity")
 
-    response.should have_tag("div[id=edit_account]")
+    rendered.should have_tag("div[id=edit_account]")
   end
 
 end
-

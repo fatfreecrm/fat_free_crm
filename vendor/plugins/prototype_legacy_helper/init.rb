@@ -1,0 +1,1 @@
+ActionController::Base.helper PrototypeHelper

@@ -24,12 +24,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Opportunity do
 
-  before(:each) do
-    login
-  end
+  before { login }
 
   it "should create a new instance given valid attributes" do
-    Opportunity.create!(:name => "Opportunity")
+    @account = Factory(:account)
+    Opportunity.create!(:name => "Opportunity", :account => @account)
   end
 
   it "should be possible to create opportunity with the same name" do
@@ -49,7 +48,7 @@ describe Opportunity do
         :opportunity => { :name => "Hello" }
       })}.should change(Account, :count).by(1)
       Account.last.name.should == "New account"
-      @opportunity.name.should == "Hello"
+      @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
     it "should update the account another account was selected" do
@@ -59,37 +58,42 @@ describe Opportunity do
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
       @opportunity.account.should == @another_account
-      @opportunity.name.should == "Hello"
+      @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
-    it "should drop existing Account if [create new account] is blank" do
+    it "should not drop existing Account if [create new account] is blank" do
       lambda { @opportunity.update_with_account_and_permissions({
         :account => { :name => "" },
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
-      @opportunity.account.should == nil
-      @opportunity.name.should == "Hello"
+      @opportunity.account.should_not == nil
+      @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
-    it "should drop existing Account if [-- None --] is selected from list of accounts" do
+    it "should not drop existing Account if [-- None --] is selected from list of accounts" do
       lambda { @opportunity.update_with_account_and_permissions({
         :account => { :id => "" },
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
-      @opportunity.account.should == nil
-      @opportunity.name.should == "Hello"
+      @opportunity.account.should_not == nil
+      @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
   end
 
   describe "Named scopes" do
     it "should find non-closed opportunities" do
       @opportunities = [
+        Factory(:opportunity, :stage => nil,        :amount => 1),
         Factory(:opportunity, :stage => "analysis", :amount => 1),
         Factory(:opportunity, :stage => "won",      :amount => 2),
-        Factory(:opportunity, :stage => "lost",     :amount => 7)
+        Factory(:opportunity, :stage => "won",      :amount => 2),
+        Factory(:opportunity, :stage => "lost",     :amount => 3),
+        Factory(:opportunity, :stage => "lost",     :amount => 3)
       ]
-      Opportunity.sum(:amount).should == 10
-      Opportunity.not_lost.sum(:amount).should == 3
+      Opportunity.pipeline.sum(:amount).should ==  2
+      Opportunity.won.sum(:amount).should      ==  4
+      Opportunity.lost.sum(:amount).should     ==  6
+      Opportunity.sum(:amount).should          == 12
     end
   end
 
@@ -141,4 +145,27 @@ describe Opportunity do
     end
   end
 
+  describe "Exportable" do
+    describe "assigned opportunity" do
+      before do
+        Opportunity.delete_all
+        Factory(:opportunity, :user => Factory(:user), :assignee => Factory(:user))
+        Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Opportunity.all }
+      end
+    end
+
+    describe "unassigned opportunity" do
+      before do
+        Account.delete_all
+        Factory(:opportunity, :user => Factory(:user), :assignee => nil)
+        Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+      end
+      it_should_behave_like("exportable") do
+        let(:exported) { Opportunity.all }
+      end
+    end
+  end
 end

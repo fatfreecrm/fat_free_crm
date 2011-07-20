@@ -1,96 +1,130 @@
-ActionController::Routing::Routes.draw do |map|
+FatFreeCRM::Application.routes.draw do
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  map.root      :controller => "home", :action => "index"
-  map.resource  :authentication
-  map.resources :users, :member => { :avatar => :get, :upload_avatar => :put, :password => :get, :change_password => :put }
-  map.resources :passwords
-  map.resources :comments
-  map.resources :emails
+  root :to => 'home#index'
 
-  map.resources :tasks,
-    :collection => {
-      :auto_complete => :post
-    },
-    :member => {
-      :complete => :put
-    }
+  match 'activities' => 'home#index'
+  match 'admin'      => 'admin/users#index',       :as => :admin
+  match 'login'      => 'authentications#new',     :as => :login
+  match 'logout'     => 'authentications#destroy', :as => :logout
+  match 'options'    => 'home#options'
+  match 'profile'    => 'users#show',              :as => :profile
+  match 'signup'     => 'users#new',               :as => :signup
+  match 'timeline'   => 'home#timeline',           :as => :timeline
+  match 'timezone'   => 'home#timezone',           :as => :timezone
+  match 'toggle'     => 'home#toggle'
 
-  map.resources :leads,
-    :has_many => [ :comments, :emails ],
-    :collection => {
-      :auto_complete => :post,
-      :options => :get,
-      :redraw  => :post,
-      :search  => :get
-    },
-    :member => {
-      :attach  => :put,
-      :convert => :get,
-      :discard => :post,
-      :promote => :put,
-      :reject  => :put
-    }
+  resource  :authentication
+  resources :comments
+  resources :emails
+  resources :passwords
 
-  [ :accounts, :campaigns, :contacts, :opportunities ].each do |resource|
-    map.resources resource,
-      :has_many => [ :comments, :emails ],
-      :collection => {
-        :auto_complete => :post,
-        :options => :get,
-        :redraw  => :post,
-        :search  => :get
-      },
-      :member => {
-        :attach  => :put,
-        :discard => :post
-      }
+  resources :accounts do
+    collection do
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      put :attach
+      post :discard
+    end
   end
 
-  map.signup  "signup",  :controller => "users",           :action => "new"
-  map.profile "profile", :controller => "users",           :action => "show"
-  map.login   "login",   :controller => "authentications", :action => "new"
-  map.logout  "logout",  :controller => "authentications", :action => "destroy"
-  map.admin   "admin",   :controller => "admin/users",     :action => "index"
-
-  map.namespace :admin do |admin|
-    admin.resources :users, :collection => { :search => :get, :auto_complete => :post }, :member => { :suspend => :put, :reactivate => :put, :confirm => :get }
-    admin.resources :settings
-    admin.resources :plugins
+  resources :campaigns do
+    collection do
+      get  :filter
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      put  :attach
+      post :discard
+    end
   end
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
+  resources :contacts do
+    collection do
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      put  :attach
+      post :discard
+    end
+  end
 
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
+  resources :leads do
+    collection do
+      get  :filter
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      get  :convert
+      post :discard
+      put  :attach
+      put  :promote
+      put  :reject
+    end
+  end
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
+  resources :opportunities do
+    collection do
+      get  :filter
+      get  :options
+      get  :search
+      post :auto_complete
+      post :redraw
+    end
+    member do
+      put  :attach
+      post :discard
+    end
+  end
 
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+  resources :tasks do
+    collection do
+      get  :filter
+      post :auto_complete
+    end
+    member do
+      put :complete
+    end
+  end
 
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
+  resources :users do
+    member do
+      get :avatar
+      get :password
+      put :upload_avatar
+      put :change_password
+    end
+  end
 
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
+  namespace :admin do
+    resources :users do
+      collection do
+        get  :search
+        post :auto_complete
+      end
+      member do
+        get :confirm
+        put :suspend
+        put :reactivate
+      end
+    end
 
-  # See how all your routes lay out with "rake routes"
+    resources :settings
+    resources :plugins
+  end
 
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing the them or commenting them out if you're using named routes and resources.
-  
-  map.connect ":controller/:action/:id"
-  map.connect ":controller/:action/:id.:format"
+  match '/:controller(/:action(/:id))'
 end
+

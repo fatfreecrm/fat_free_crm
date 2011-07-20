@@ -1,96 +1,97 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/accounts/update.js.rjs" do
   include AccountsHelper
-  
-  before(:each) do
+
+  before do
     login_and_assign
 
-    assigns[:account] = @account = Factory(:account, :user => @current_user)
-    assigns[:users] = [ @current_user ]
+    assign(:account, @account = Factory(:account, :user => @current_user))
+    assign(:users, [ @current_user ])
+    assign(:account_category_total, Hash.new(1))
   end
 
   describe "no errors:" do
     describe "on account landing page -" do
-      before(:each) do
-        request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+      before do
+        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       end
 
       it "should flip [edit_account] form" do
-        render "accounts/update.js.rjs"
-        response.should_not have_rjs("account_#{@account.id}")
-        response.should include_text('crm.flip_form("edit_account"')
+        render
+        rendered.should_not have_rjs("account_#{@account.id}")
+        rendered.should include('crm.flip_form("edit_account"')
       end
 
       it "should update sidebar" do
-        render "accounts/update.js.rjs"
-        response.should have_rjs("sidebar") do |rjs|
+        render
+        rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=summary]")
           with_tag("div[id=recently]")
         end
-        response.should include_text('$("summary").visualEffect("shake"')
+        rendered.should include('$("summary").visualEffect("shake"')
       end
     end
 
     describe "on accounts index page -" do
-      before(:each) do
-        request.env["HTTP_REFERER"] = "http://localhost/accounts"
+      before do
+        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
       end
 
       it "should update sidebar" do
-        render "accounts/update.js.rjs"
-        response.should have_rjs("sidebar") do |rjs|
+        render
+        rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[id=filters]")
           with_tag("div[id=recently]")
         end
       end
- 
+
       it "should replace [edit_account] form with account partial and highligh it" do
-        request.env["HTTP_REFERER"] = "http://localhost/accounts"
-        render "accounts/update.js.rjs"
- 
-        response.should have_rjs("account_#{@account.id}") do |rjs|
+        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
+        render
+
+        rendered.should have_rjs("account_#{@account.id}") do |rjs|
           with_tag("li[id=account_#{@account.id}]")
         end
-        response.should include_text(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
       end
     end
   end # no errors
 
   describe "validation errors:" do
-    before(:each) do
-      @account.errors.add(:error)
+    before do
+      @account.errors.add(:name)
     end
 
     describe "on account landing page -" do
-      before(:each) do
-        request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+      before do
+        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       end
 
       it "should redraw the [edit_account] form and shake it" do
-        render "accounts/update.js.rjs"
- 
-        response.should have_rjs("edit_account") do |rjs|
+        render
+
+        rendered.should have_rjs("edit_account") do |rjs|
           with_tag("form[class=edit_account]")
         end
-        response.should include_text('$("edit_account").visualEffect("shake"')
-        response.should include_text('focus()')
+        rendered.should include('$("edit_account").visualEffect("shake"')
+        rendered.should include('focus()')
       end
     end
 
     describe "on accounts index page -" do
-      before(:each) do
-        request.env["HTTP_REFERER"] = "http://localhost/accounts"
+      before do
+        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
       end
 
       it "should redraw the [edit_account] form and shake it" do
-        render "accounts/update.js.rjs"
- 
-        response.should have_rjs("account_#{@account.id}") do |rjs|
+        render
+
+        rendered.should have_rjs("account_#{@account.id}") do |rjs|
           with_tag("form[class=edit_account]")
         end
-        response.should include_text(%Q/$("account_#{@account.id}").visualEffect("shake"/)
-        response.should include_text('focus()')
+        rendered.should include(%Q/$("account_#{@account.id}").visualEffect("shake"/)
+        rendered.should include('focus()')
       end
     end
   end # errors

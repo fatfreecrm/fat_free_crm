@@ -24,10 +24,9 @@
         == #{t :due_later}.
       - elsif related.due_at < Date.today
         %span.warn= distance_of_time_in_words(related.due_at, Date.today) 
-        == #{t :overdue} #{l(related.due_at.to_date, :format => :mmdd)}
+        == #{t :overdue} #{related.due_at.strftime('%b %e')}
       - elsif related.due_at > Date.today
         = t(:task_due_in, distance_of_time_in_words(Time.now, related.due_at.end_of_day))
-        = ' (' << l(related.due_at.to_date, :format => :mmdd) << ')'
       - else
         %span.cool
         == #{t :due_today}.

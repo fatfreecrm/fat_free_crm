@@ -1,5 +1,5 @@
 // Fat Free CRM
-// Copyright (C) 2008-2010 by Michael Dvorkin
+// Copyright (C) 2008-2011 by Michael Dvorkin
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -64,15 +64,6 @@ crm.Popup = Class.create({
   //----------------------------------------------------------------------------
   show_popup: function(e) {
     e.stop();
-    if (this.options.under) {
-      var coordinates = $(this.options.under).viewportOffset();
-      var under = $(this.options.under).getDimensions();
-      var popup = $(this.popup).getDimensions();
-      var y_offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-      var x = (coordinates[0] + under.width - popup.width) + "px";
-      var y = (coordinates[1] + under.height + y_offset) + "px";
-      this.popup.setStyle({ left: x, top: y });
-    }
     this.popup.setStyle({ zIndex: this.options.zindex });
 
     // Add custom "trigger" attribute to the popup div so we could check who has triggered it.
@@ -81,8 +72,12 @@ crm.Popup = Class.create({
     this.options.before_show(e);
     if (!this.options.appear) {
       this.popup.show();
+      this.set_position(e);
       this.options.after_show(e);
     } else {
+      this.popup.show();
+      this.set_position(e);
+      this.popup.hide();
       Effect.Appear(this.popup, { duration: this.options.appear, afterFinish: function(e) { this.options.after_show(e); }.bind(this) });
     }
   },
@@ -112,6 +107,19 @@ crm.Popup = Class.create({
     } else {
       Effect.Fade(this.popup, { duration: this.options.fade, afterFinish: function(e) { this.options.after_hide(e); }.bind(this) });
     }
+  },
+
+  set_position: function(e) {
+    if (this.options.under) {
+      var coordinates = $(this.options.under).viewportOffset();
+      var under = $(this.options.under)
+      var popup = $(this.popup)
+      var y_offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+
+      var x = (coordinates[0] + under.offsetWidth - popup.offsetWidth) + "px";
+      var y = (coordinates[1] + under.offsetHeight + y_offset) + "px";
+      this.popup.setStyle({ left: x, top: y });
+    }    
   }
 
 });

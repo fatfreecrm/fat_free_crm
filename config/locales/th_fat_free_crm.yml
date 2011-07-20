@@ -151,6 +151,15 @@ th:
               missing_email: "^โปรดระบุอีเมล์ที่ใช้"
               email_in_use: "^มีผู้ใช้อื่นที่ใช้อีเมล์นี้แล้ว"
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one:   "พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้"
+        other: "พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้"
+      body: "โปรดตรวจสอบข้อมูลในช่องต่อไปนี้:"
+
   msg_account_suspended: บัญชีผู้ใช้ถูกระงับแล้ว.
   password_reset_instruction: ขั้นตอนการตั้งค่ารหัสผ่าน
 
@@ -160,6 +169,7 @@ th:
   msg_account_not_approved: บัญชีของคุณยังไม่ได้รับการอนุมัติ
   msg_asset_deleted: "%{value} ได้ถูกลบไปแล้ว"
   msg_asset_not_available: เอกสาร %{value} ไม่มีในระบบ
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: เอกสาร %{value} ไม่มีในระบบ.
   msg_asset_rejected: "%{value} ได้ถูกปฏิเสธแล้ว"
   msg_bad_image_file: "^ไม่สามารถอัปโหลดหรือเปลี่ยนขนาดของรูปภาพที่คุณระบุได้"
@@ -209,7 +219,7 @@ th:
   option_target_leads: เป้าหมายของจำนวนผู้สนใจ
   option_target_revenue: เป้าหมายของผลตอนแทน
   option_updated_at: วันที่แก้ไข
-  show_per_page: แสดง %{number} %{models} ต่อหนึ่งหน้า ในแบบ %{format}
+  show_per_page: แสดง %{number} %{models} ต่อหนึ่งหน้า ในแบบ %{fmt}
   sort_by: เรียงลำดับ%{models} โดย %{field}.
   sort_by_displaying: เรียงลำดับ%{models} โดย %{field} แสดงชื่อจริง %{position} นามสกุล.
 
@@ -218,12 +228,13 @@ th:
   aim: AOL IM
   already_signed_up: เป็นสมาชิกอยู่แล้ว
   alt_email: อีเมล์ ทางเลือก
+  avatar: Avatar
   change_password: เปลี่ยนรหัสผ่าน
   company: บริษัท
   contact_info: ข้อมูลใช้ในการติดต่อ
   current_password: รหัสผ่านปัจจุบัน
   edit_profile: แก้ไขโพรไฟล์
-  email: อีเมล์
+  # email: อีเมล์ # <-- Already defined as the task type if Settings.
   first_name: ชื่อจริง
   google: Google IM
   gravatar_help: หากไม่เข้าใจ Gravatars ลองเรียนรูป Gravatars ได้
@@ -594,6 +605,9 @@ th:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact:
       one: 'ผู้ติดต่อหนึ่งคน'
       other: '%{count} ผู้ติดต่อ'

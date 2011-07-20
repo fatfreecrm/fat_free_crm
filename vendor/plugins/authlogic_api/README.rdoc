@@ -1,0 +1,135 @@
+= authlogic-api
+
+http://github.com/phurni/authlogic_api
+
+== DESCRIPTION:
+
+This is a plugin for Authlogic to allow API requests to be authenticated automatically by using
+an api_key/signature mechanism. The plugin will automatically compute the hashed sum of the
+request params and compare it to the passed signature.
+
+== REQUIREMENTS:
+
+* authlogic
+
+== INSTALL:
+
+* script/plugin install git://github.com/phurni/authlogic_api.git
+* optionally create a migration for an application_accounts table.
+* create an application session model and configure it with Authlogic.
+
+== EXAMPLE:
+
+You certainly want to separate User sessions from Application sessions. You'll have to create say an ApplicationSession like this:
+  class ApplicationSession < Authlogic::Session::Base
+    authenticate_with ApplicationAccount
+
+    api_key_param 'app_key'
+  end
+
+Because Authlogic will infer the model holding the credentials from the session class name, which would result in _Application_,
+we explicitely tell it to use our ApplicationAccount model.
+
+Then to enable API access, we tell AuthlogicApi the name of the param key which will get the application id.
+
+The ApplicationAccount model will look like:
+  class ApplicationAccount < ActiveRecord::Base
+    acts_as_authentic do |config|
+    end # the configuration block is optional
+  end
+
+The table should have a _api_key_ field and also a _api_secret_ field. You can change these default names with the config
+block on the acts_as_authentic call.
+
+Everything is now setup to authenticate API request. Note that it's up to you to create your controllers, 
+configure them to respond with your prefered data format and all the other stuff.
+
+Read the AuthlogicApi::ActsAsAuthentic::Config portion for config options.
+
+=== Client side
+
+I'll describe here what the client has to do to create requests that will be authenticated by the AuthlogicApi backend.
+
+==== GET requests
+
+Every parameter given in the query string will be summed and hashed to form a signature. Here is the pseudo-code to use:
+  args = array of arguments for the request, each argument is a key/value pair
+  args += app_key
+  sorted_args = alphabetically_sort_array_by_keys(args);
+  request_str = concatenate_in_order(sorted_args);
+  signature = md5(concatenate(request_str, secret))
+  
+Let's take an example:
+  here is the original URL of the request:
+    http://montain.mil/private/rockets/launch?rocket_id=42&speed=5
+  
+  The args with the app_key:
+    rocket_id: 42
+    speed: 5
+    app_key: A6G87bqY
+    
+  The sorted args
+    app_key: A6G87bqY
+    rocket_id: 42
+    speed: 5
+    
+  The request string (note that there is no delimiter between key/value, neither between arguments)
+    app_keyA6G87bqYrocket_id42speed5
+
+  Now the client has to know the application secret, it must add it to the request string:
+    app_keyA6G87bqYrocket_id42speed5SECRET
+    
+  Hash this with MD5:
+    5266bf02b183ffac3898b802e62d45d6
+    
+  here is the URL for the signed request:
+    http://montain.mil/private/rockets/launch?rocket_id=42&speed=5&app_key=A6G87bqY&signature=5266bf02b183ffac3898b802e62d45d6
+    
+==== POST requests
+
+The principle is the same, but only the POST data is hased. The app_key and the signature are passed into the query string.
+
+Example:
+  here is the original URL of the request:
+    http://montain.mil/private/rockets/launch
+    
+  the POST data:
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rocket>
+      <id>42</id>
+      <speed>5</speed>
+    </rocket>
+
+  the MD5 hash of the post data:
+    82f5aef6d4a4ad710a60b74e0355b74d
+
+  here is the URL for the signed request:
+    http://montain.mil/private/rockets/launch?app_key=A6G87bqY&signature=82f5aef6d4a4ad710a60b74e0355b74d
+  
+  Note that the POST data is left untouched.
+
+
+== LICENSE:
+
+(The MIT License)
+
+Copyright (c) 2010 Pascal Hurni
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

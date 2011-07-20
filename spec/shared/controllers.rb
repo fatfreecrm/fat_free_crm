@@ -1,6 +1,6 @@
 module SharedControllerSpecs
 
-  describe "auto complete", :shared => true do
+  shared_examples_for "auto complete" do
     before(:each) do
       @query = "Hello"
     end
@@ -10,7 +10,7 @@ module SharedControllerSpecs
       assigns[:query].should == @query
       assigns[:auto_complete].should == @auto_complete_matches # Each controller must define it.
     end
-    
+
     it "should save current autocomplete controller in a session" do
       post :auto_complete, :auto_complete_query => @query
 
@@ -27,7 +27,7 @@ module SharedControllerSpecs
     end
   end
 
-  describe "attach", :shared => true do
+  shared_examples_for "attach" do
     it "should attach existing asset to the parent asset of different type" do
       xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
       @model.send(@attachment.class.name.tableize).should include(@attachment)
@@ -35,6 +35,9 @@ module SharedControllerSpecs
       assigns[:attached].should == [ @attachment ]
       if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
         assigns[:campaign].should == @attachment.reload.campaign
+      end
+      if @model.is_a?(Account) && @attachment.respond_to?(:account) # Skip Tasks...
+        assigns[:account].should == @attachment.reload.account
       end
       response.should render_template("common/attach")
     end
@@ -67,11 +70,14 @@ module SharedControllerSpecs
     end
   end
 
-  describe "discard", :shared => true do
+  shared_examples_for "discard" do
     it "should discard the attachment without deleting it" do
       xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
-      assigns[:attachment].should == @attachment.reload               # The attachment should still exist.
-      @model.send("#{@attachment.class.name.tableize}").should == []  # But no longer associated with the model.
+      assigns[:attachment].should == @attachment.reload                     # The attachment should still exist.
+      @model.reload.send("#{@attachment.class.name.tableize}").should == [] # But no longer associated with the model.
+      assigns[:account].should == @model if @model.is_a?(Account)
+      assigns[:campaign].should == @model if @model.is_a?(Campaign)
+
       response.should render_template("common/discard")
     end
 

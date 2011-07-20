@@ -2,18 +2,18 @@
   - if lead.status
     .strip{:class => lead.status} #{t(lead.status)}
   - else
-    .strip.white #{t :other}
+    .strip{:style => "color: gray;"} #{t :other}
 
   .tools{ invisible, :id => dom_id(lead, :tools) }
     = link_to_edit(lead) + " | "
     - unless %w(converted rejected).include?(lead.status)
       = link_to_convert(lead) + " | "
     - else
-      = "<font color='silver'>#{t :convert}</font> | "
+      = "<font color='silver'>#{t :convert}</font> | ".html_safe
     - if lead.status != "rejected"
       = link_to_reject(lead) + " | "
     - else
-      = "<font color='silver'>#{t :reject}</font> | "
+      = "<font color='silver'>#{t :reject}</font> | ".html_safe
     = link_to_discard(lead) + " | " if shown_on_landing_page?
     = link_to_delete(lead)
 
@@ -37,3 +37,4 @@
         = "#{t :mobile_small}: " + lead.mobile << " | " if lead.mobile.present?
         = t(:added_ago, time_ago_in_words(lead.created_at))
       = hook(:lead_bottom, self, :lead => lead)
+

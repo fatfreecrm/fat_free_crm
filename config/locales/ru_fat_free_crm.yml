@@ -151,6 +151,17 @@ ru:
               msg_missing_email: "^Пожалуйста введите e-mail адрес."
               email_in_use: "^Пользователь с данным e-mail адресом уже существует."
 
+  # dynamic_form plugin translations.
+  #----------------------------------------------------------------------------
+  errors:
+    template:
+      header:
+        one:   "%{model}: сохранение не удалось из-за %{count} ошибки"
+        few:   "%{model}: сохранение не удалось из-за %{count} ошибок"
+        many:  "%{model}: сохранение не удалось из-за %{count} ошибок"
+        other: "%{model}: сохранение не удалось из-за %{count} ошибки"
+      body: "Проблемы возникли со следующими полями:"
+
   msg_account_suspended: Пользователь заблокирован.
   password_reset_instruction: инструкции по перемене пароля
 
@@ -160,16 +171,17 @@ ru:
   msg_account_not_approved: Ваш аккаунт еще не активирован.
   msg_asset_deleted: Этот %{value} был удален.
   msg_asset_not_available: Этот %{value} более недоступен.
+  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
   msg_assets_not_available: Эти %{value} более недоступны. 
   msg_asset_rejected: Этот %{value} отклонен.
-  msg_bad_image_file: Ошибка при загрузке или изменении размера указанного изображения.
+  msg_bad_image_file: ^Ошибка при загрузке или изменении размера указанного изображения.
   msg_cant_create_related: Невозвожно создать %{asset} так как %{related} более недоступен.
-  msg_cant_delete_user: "Невозможно удалить пользователя так как к %{value} привязаны объекты."
+  msg_cant_delete_user: "^Невозможно удалить пользователя так как к %{value} привязаны объекты."
   msg_cant_do: Нельзя %{action} %{asset}, его больше не существует.
   msg_email_not_found: Пользователя с таким адресом не найдено.
   msg_enter_new_password: Пожалуйста введите новый пароль.
   msg_goodbye: Вы вышли. Спасибо за использование Fat Free CRM!
-  msg_invalid_password: Введите правильный пароль.
+  msg_invalid_password: "^Введите правильный пароль."
   msg_invalig_login: Неправильный логин или пароль.
   msg_last_login: Последний раз Вы заходили %{value}.
   msg_login_needed: Для доступа к этой странице нужно войти в систему.
@@ -209,7 +221,7 @@ ru:
   option_target_leads: планируемому количеству потенциальных клиентов
   option_target_revenue: планируемым доходам
   option_updated_at: дате обновления
-  show_per_page: Показывать %{models} в %{format} формате по %{number} записей на странице.
+  show_per_page: Показывать %{models} в %{fmt} формате по %{number} записей на странице.
   sort_by: Сортировать %{models} по %{field}.
   sort_by_displaying: Сортировать %{models} по %{field} показывая имя %{position} фамилии.
 
@@ -218,12 +230,13 @@ ru:
   aim: AOL IM
   already_signed_up: Уже регистрировались?
   alt_email: Альтернативный E-mail
+  avatar: Изображение
   change_password: Изменить Пароль
   company: Организация
   contact_info: Контактная Информация
   current_password: Текущий пароль
   edit_profile: Изменить Профиль
-  email: E-mail
+  # email: E-mail # <-- Already defined as the task type if Settings.
   first_name: Имя
   google: Google IM
   gravatar_help: Не знаете что такое Gravatar? Почитать про Gravatar
@@ -593,6 +606,9 @@ ru:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
+    comment:
+      one: '1 comment' # TODO
+      other: '%{count} comments' # TODO
     contact:
       zero: '0 контактов'
       one: '1 контакт'

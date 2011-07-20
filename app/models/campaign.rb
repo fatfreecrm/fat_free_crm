@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -50,18 +50,25 @@ class Campaign < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
   has_many    :emails, :as => :mediator
 
-  named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }
-  named_scope :created_by, lambda { |user| { :conditions => [ "user_id = ?" , user.id ] } }
-  named_scope :assigned_to, lambda { |user| { :conditions => [ "assigned_to = ?", user.id ] } }
+  scope :state, lambda { |filters|
+    where('status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters)
+  }
+  scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
+  scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
 
-  simple_column_search :name, :match => :middle, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('upper(name) LIKE upper(?)', "%#{query}%")
+  }
+
   uses_user_permissions
   acts_as_commentable
-  acts_as_paranoid
+  is_paranoid
+  exportable
   sortable :by => [ "name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_campaign_name
-  validates_uniqueness_of :name, :scope => :user_id
+  validates_uniqueness_of :name, :scope => [ :user_id, :deleted_at ]
   validate :start_and_end_dates
   validate :users_for_shared_access
 
@@ -111,3 +118,4 @@ class Campaign < ActiveRecord::Base
   end
 
 end
+

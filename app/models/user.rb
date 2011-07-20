@@ -1,16 +1,16 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
-# 
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -67,14 +67,19 @@ class User < ActiveRecord::Base
   has_many    :activities,  :dependent => :destroy
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
-  named_scope :except, lambda { |user| { :conditions => [ "id != ? ", user.id ] } }
-  named_scope :by_name, :order => "first_name, last_name, email"
-  named_scope :active, :conditions => "suspended_at IS NULL"
-  default_scope :order => "id DESC" # Show newest users first.
 
-  simple_column_search :username, :first_name, :last_name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }
+  is_paranoid
 
-  acts_as_paranoid
+  # For some reason this does not play nice with is_paranoid when set as default scope
+  scope :by_id, order('id DESC')
+  scope :except, lambda { |user| where('id != ?', user.id) }
+  scope :by_name, order('first_name, last_name, email')
+
+  scope :search, lambda { |query|
+    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', :s => "#{query}%")
+  }
+
   acts_as_authentic do |c|
     c.session_class = Authentication
     c.validates_uniqueness_of_login_field_options = { :message => :username_taken }
@@ -119,9 +124,20 @@ class User < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    Notifier.deliver_password_reset_instructions(self)
+    Notifier.password_reset_instructions(self).deliver
   end
 
+  # Override global I18n.locale if the user has individual local preference.
+  #----------------------------------------------------------------------------
+  def set_individual_locale
+    I18n.locale = self.preference[:locale] if self.preference[:locale]
+  end
+
+  # Generate the value of single access token if it hasn't been set already.
+  #----------------------------------------------------------------------------
+  def set_single_access_token
+    self.single_access_token ||= update_attribute(:single_access_token, Authlogic::Random.friendly_token)
+  end
 
   private
 
@@ -134,7 +150,7 @@ class User < ActiveRecord::Base
   # Prevent current user from deleting herself.
   #----------------------------------------------------------------------------
   def check_if_current_user
-    User.current_user && User.current_user != self
+    User.current_user.nil? || User.current_user != self
   end
 
   # Prevent deleting a user unless she has no artifacts left.
@@ -149,3 +165,4 @@ class User < ActiveRecord::Base
   end
 
 end
+

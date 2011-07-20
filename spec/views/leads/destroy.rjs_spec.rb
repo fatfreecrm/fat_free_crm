@@ -1,44 +1,42 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/leads/destroy.js.rjs" do
-  include LeadsHelper
-
-  before(:each) do
+  before do
     login_and_assign
-    assigns[:lead] = @lead = Factory(:lead)
-    assigns[:lead_status_total] = { :contacted => 1, :converted => 1, :new => 1, :rejected => 1, :other => 1, :all => 5 }
+    assign(:lead, @lead = Factory(:lead))
+    assign(:lead_status_total, Hash.new(1))
   end
 
   it "should blind up destroyed lead partial" do
-    render "leads/destroy.js.rjs"
-    response.should include_text(%Q/$("lead_#{@lead.id}").visualEffect("blind_up"/)
+    render
+    rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("blind_up"/)
   end
 
   it "should update leads sidebar when called from leads index" do
-    assigns[:leads] = [ @lead ].paginate
-    request.env["HTTP_REFERER"] = "http://localhost/leads"
-    render "leads/destroy.js.rjs"
+    assign(:leads, [ @lead ].paginate)
+    controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+    render
 
-    response.should have_rjs("sidebar") do |rjs|
+    rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
     end
-    response.should include_text('$("filters").visualEffect("shake"')
+    rendered.should include('$("filters").visualEffect("shake"')
   end
 
   it "should update pagination when called from leads index" do
-    assigns[:leads] = [ @lead ].paginate
-    request.env["HTTP_REFERER"] = "http://localhost/leads"
-    render "leads/destroy.js.rjs"
+    assign(:leads, [ @lead ].paginate)
+    controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+    render
 
-    response.should have_rjs("paginate")
+    rendered.should have_rjs("paginate")
   end
 
   it "should update related asset sidebar when called from related asset" do
-    assigns[:campaign] = campaign = Factory(:campaign)
-    request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-    render "leads/destroy.js.rjs"
+    assign(:campaign, campaign = Factory(:campaign))
+    controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+    render
 
-    response.should have_rjs("sidebar") do |rjs|
+    rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[class=panel][id=summary]")
       with_tag("div[class=panel][id=recently]")
     end

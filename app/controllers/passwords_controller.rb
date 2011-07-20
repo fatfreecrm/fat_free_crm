@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2010 by Michael Dvorkin
+# Copyright (C) 2008-2011 by Michael Dvorkin
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -47,12 +47,12 @@ class PasswordsController < ApplicationController
   def update
     if empty_password?
       flash[:notice] = t(:msg_enter_new_password)
-      render :action => :edit
+      render :edit
     elsif @user.update_attributes(params[:user])
       flash[:notice] = t(:msg_password_updated)
       redirect_to profile_url
     else
-      render :action => :edit
+      render :edit
     end
   end
 

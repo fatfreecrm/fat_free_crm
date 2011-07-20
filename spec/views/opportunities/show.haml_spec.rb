@@ -5,21 +5,22 @@ describe "/opportunities/show.html.haml" do
 
   before(:each) do
     login_and_assign
-    assigns[:opportunity] = Factory(:opportunity, :id => 42)
-    assigns[:users] = [ @current_user ]
-    assigns[:comment] = Comment.new
+    @opportunity = Factory(:opportunity, :id => 42,
+      :contacts => [ Factory(:contact) ])
+    assign(:opportunity, @opportunity)
+    assign(:users, [ @current_user ])
+    assign(:comment, Comment.new)
+    assign(:timeline, [ Factory(:comment, :commentable => @opportunity) ])
   end
 
   it "should render opportunity landing page" do
-    template.should_receive(:render).with(hash_including(:partial => "comments/new"))
-    template.should_receive(:render).with(hash_including(:partial => "common/timeline"))
-    template.should_receive(:render).with(hash_including(:partial => "common/tasks"))
-    template.should_receive(:render).with(hash_including(:partial => "contacts/contact"))
+    render
+    view.should render_template(:partial => "comments/_new")
+    view.should render_template(:partial => "common/_timeline")
+    view.should render_template(:partial => "common/_tasks")
+    view.should render_template(:partial => "contacts/_contact")
 
-    render "/opportunities/show.html.haml"
-
-    response.should have_tag("div[id=edit_opportunity]")
+    rendered.should have_tag("div[id=edit_opportunity]")
   end
 
 end
-

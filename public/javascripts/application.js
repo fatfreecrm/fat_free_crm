@@ -1,16 +1,16 @@
 // Fat Free CRM
-// Copyright (C) 2008-2010 by Michael Dvorkin
-// 
+// Copyright (C) 2008-2011 by Michael Dvorkin
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
@@ -216,6 +216,8 @@ var crm = {
   flip_subtitle: function(el) {
     var arrow = Element.down(el, "small");
     var intro = Element.down(Element.next(Element.up(el)), "small");
+    // Optionally, the intro might be next to the link.
+    if(!intro){ intro = Element.next(el, "small");};
     var section = Element.down(Element.next(Element.up(el)), "div");
 
     if (Element.visible(section)) {
@@ -250,20 +252,30 @@ var crm = {
     new Ajax.Request(this.base_url + "/home/timeline", {
       method     : "get",
       parameters : { type : arr[1], id : arr[2], state : state }
-    });    
+    });
   },
 
   //----------------------------------------------------------------------------
-  flip_notes_and_emails: function(state, more, less) {
-    var notes = $("shown_notes").value;
-    var emails = $("shown_emails").value;
+  flip_notes_and_emails: function(state, more, less, el_prefix) {
+    if(!el_prefix){
+      var notes_field  = "shown_notes";
+      var emails_field = "shown_emails";
+      var comment_new_field = "comment_new";
+    } else {
+      var notes_field  = el_prefix + "_shown_notes";
+      var emails_field = el_prefix + "_shown_emails";
+      var comment_new_field = el_prefix + "_comment_new";
+    };
+
+    var notes = $(notes_field).value;
+    var emails = $(emails_field).value;
 
     if (notes != "" || emails != "") {
       new Ajax.Request(this.base_url + "/home/timeline", {
         method     : "get",
         parameters : { type : "", id : notes + "+" + emails, state : state },
         onComplete : function() {
-          $("comment_new").adjacent("li").each( function(li) {
+          $(comment_new_field).adjacent("li").each( function(li) {
             var a = li.select("tt a.toggle")[0];
             var dt = li.select("dt");
             if (typeof(a) != "undefined") {
@@ -406,7 +418,7 @@ var crm = {
       Event.stopObserving(this.autocompleter.element);
       delete this.autocompleter;
     }
-    this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", { 
+    this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", {
       frequency: 0.25,
       afterUpdateElement: function(text, el) {
         if (el.id) {      // Autocomplete entry found.
@@ -433,9 +445,34 @@ var crm = {
   }
 }
 
+document.observe("dom:loaded", function() {
+  // the element in which we will observe all clicks and capture
+  // ones originating from pagination links
+  var container = $(document.body)
+
+  if (container) {
+    var img = new Image;
+    img.src = '/images/loading.gif';
+
+    function createSpinner() {
+      return new Element('img', { src: img.src, 'class': 'spinner' })
+    }
+
+    container.observe('click', function(e) {
+      var el = e.element();
+      if (el.match('.pagination a')) {
+        el.up('.pagination').update(createSpinner());
+        new Ajax.Request(el.href, { method: 'get' });
+        e.stop();
+      }
+    });
+  }
+});
+
 // Note: observing "dom:loaded" is supposedly faster that "window.onload" since
 // it will fire immediately after the HTML document is fully loaded, but before
 // images on the page are fully loaded.
 
 // Event.observe(window, "load", function() { crm.focus_on_first_field() })
 document.observe("dom:loaded", function() { crm.focus_on_first_field() });
+

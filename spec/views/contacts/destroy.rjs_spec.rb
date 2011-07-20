@@ -5,36 +5,36 @@ describe "/contacts/destroy.js.rjs" do
 
   before(:each) do
     login_and_assign
-    assigns[:contact] = @contact = Factory(:contact)
-    assigns[:contacts] = [ @contact ].paginate
+    assign(:contact, @contact = Factory(:contact))
+    assign(:contacts, [ @contact ].paginate)
   end
 
   it "should blind up destroyed contact partial" do
-    render "contacts/destroy.js.rjs"
-    response.should include_text(%Q/$("contact_#{@contact.id}").visualEffect("blind_up"/)
+    render
+    rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("blind_up"/)
   end
 
   it "should update contacts sidebar when called from contacts index" do
-    request.env["HTTP_REFERER"] = "http://localhost/contacts"
-    render "contacts/destroy.js.rjs"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+    render
 
-    response.should have_rjs("sidebar") do |rjs|
+    rendered.should have_rjs("sidebar") do |rjs|
       with_tag("div[id=recently]")
     end
   end
 
   it "should update pagination when called from contacts index" do
-    request.env["HTTP_REFERER"] = "http://localhost/contacts"
-    render "contacts/destroy.js.rjs"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+    render
 
-    response.should have_rjs("paginate")
+    rendered.should have_rjs("paginate")
   end
 
   it "should update recently viewed items when called from related asset" do
-    request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
-    render "contacts/destroy.js.rjs"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+    render
 
-    response.should have_rjs("recently")
+    rendered.should have_rjs("recently")
   end
 
 end
