@@ -31,14 +31,7 @@ Here are the steps to get Fat Free CRM up and running on your system.
 * Discussion group for developers: http://groups.google.com/group/fat-free-crm-dev
 * IRC channel: #fatfreecrm on irc.freenode.net
 
-=== Installing Gem Dependencies
-
-Run the following command from the application's root directory:
-
-    $ bundle install
-
-
-=== Setting Up The Database
+=== Setting Up The Database Configuration
 
 Fat Free CRM supports MySQL and SQLite databases. The source code comes with
 two sample database configuration files: +config+/+database+.+mysql+.+yml+
@@ -48,8 +41,21 @@ of the database create the actual database configuration file, for example:
    $ cp config/database.mysql.yml config/database.yml
 
 Edit config/database.yml and specify database names and authentication
-details. Once you have database configuration file ready run rake to create
-the database:
+details.
+
+
+=== Installing Gem Dependencies
+
+Fat Free CRM includes a 'smart' Gemfile that detects your chosen database,
+and installs the required gems. After you have configured your database.yml file,
+run the following command from the applications root directory:
+
+    $ bundle install
+
+
+=== Create The Database
+
+Now you are ready to create the database:
 
    $ rake db:create
 
