@@ -19,7 +19,7 @@
       %dt{ hidden_if(comment.expanded?), :id => dom_id(comment, :truncated) }
         = truncated
       %dt.textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
-        = auto_link(formatted)
+        = auto_link(formatted).html_safe
     - else
-      %dt.textile= auto_link(formatted)
+      %dt.textile= auto_link(formatted).html_safe
 
