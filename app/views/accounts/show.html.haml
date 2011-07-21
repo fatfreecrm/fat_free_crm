@@ -11,24 +11,25 @@
 = render "comments/new", :commentable => @account
 = render :partial => "common/timeline", :collection => @timeline
 
-= section(@account, :tasks)
-.log#tasks
-  = render "common/tasks"
+= hook(:show_account_bottom, self) do
 
-= section(@account, :contacts)
-.list#contacts
-  - @contacts = @account.contacts.paginate(:page => 1, :per_page => 20)
-  = render :partial => "contacts/contact", :collection => @contacts
-= will_paginate @contacts, :id => true, :params => {:action => :contacts}
+  = section(@account, :tasks)
+  .log#tasks
+    = render "common/tasks"
 
-%br( style="clear:both" )
+  = section(@account, :contacts)
+  .list#contacts
+    - @contacts = @account.contacts.paginate(:page => 1, :per_page => 20)
+    = render :partial => "contacts/contact", :collection => @contacts
+  = will_paginate @contacts, :id => true, :params => {:action => :contacts}
 
-= section(@account, :opportunities)
-.list#opportunities
-  - @opportunities = @account.opportunities.paginate(:page => 1, :per_page => 20)
-  = render :partial => "opportunities/opportunity", :collection => @opportunities
-= will_paginate @opportunities, :id => true, :params => {:action => :opportunities}
+  %br( style="clear:both" )
 
-= load_select_popups_for(@account, :tasks, :contacts, :opportunities)
+  = section(@account, :opportunities)
+  .list#opportunities
+    - @opportunities = @account.opportunities.paginate(:page => 1, :per_page => 20)
+    = render :partial => "opportunities/opportunity", :collection => @opportunities
+  = will_paginate @opportunities, :id => true, :params => {:action => :opportunities}
 
-= hook(:show_account_bottom, self)
+  = load_select_popups_for(@account, :tasks, :contacts, :opportunities)
+

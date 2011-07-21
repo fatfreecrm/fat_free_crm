@@ -11,16 +11,17 @@
 = render "comments/new", :commentable => @contact
 = render :partial => "common/timeline", :collection => @timeline
 
-= section(@contact, :tasks)
-.log#tasks
-  = render "common/tasks"
+= hook(:show_contact_bottom, self) do
 
-= section(@contact, :opportunities)
-.list#opportunities
-  - @opportunities = @contact.opportunities.paginate(:page => 1, :per_page => 20)
-  = render :partial => "opportunities/opportunity", :collection => @contact.opportunities.paginate(:page => 1, :per_page => 20)
-= will_paginate @opportunities, :id => true, :params => {:action => :opportunities}
+  = section(@contact, :tasks)
+  .log#tasks
+    = render "common/tasks"
 
-= load_select_popups_for(@contact, :tasks, :opportunities)
+  = section(@contact, :opportunities)
+  .list#opportunities
+    - @opportunities = @contact.opportunities.paginate(:page => 1, :per_page => 20)
+    = render :partial => "opportunities/opportunity", :collection => @contact.opportunities.paginate(:page => 1, :per_page => 20)
+  = will_paginate @opportunities, :id => true, :params => {:action => :opportunities}
 
-= hook(:show_contact_bottom, self)
+  = load_select_popups_for(@contact, :tasks, :opportunities)
+
