@@ -68,7 +68,7 @@ class Contact < ActiveRecord::Base
 
   scope :search, lambda { |query|
     query = query.gsub(/[^@\w\s\-\.']/, '').strip
-    # We can't be sure that names are searched in the right order, so we take the query and
+    # We can't be sure that names are always entered in the right order, so we take the query and
     # split it into all possible first/last name combinations.
     # => "Zhong Fai Gao" matches last name "Zhong Fai" and "Fai Gao"
     a = query.split(" ")
@@ -89,8 +89,9 @@ class Contact < ActiveRecord::Base
   exportable
   sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
-  validates_presence_of :first_name, :message => :missing_first_name
-  validates_presence_of :last_name, :message => :missing_last_name
+  # Validate that either first_name OR last_name is present.
+  validates_presence_of :first_name, :message => :missing_first_name, :unless => Proc.new {|c| c.last_name.present? }
+  validates_presence_of :last_name, :message => :missing_last_name, :unless => Proc.new {|c| c.first_name.present? }
   validate :users_for_shared_access
 
   # Default values provided through class methods.
