@@ -12,9 +12,8 @@ db_gems = {
   "sqlite3"    => [ "sqlite3" ]
 }
 adapter = if File.exists?(db_config = File.join(File.dirname(__FILE__),"config","database.yml"))
-  db = YAML.load_file(db_config)
-  # Fetch the first configured adapter from config/database.yml
-  (db["production"] || db["development"] || db["test"])["adapter"]
+  # Fetch any configured adapters from config/database.yml
+  db = YAML.load_file(db_config); (db["development"] || db["test"] || db["production"])["adapter"]
 else
   "mysql2"
 end
