@@ -20,16 +20,17 @@ Here are the steps to get Fat Free CRM up and running on your system.
 * Git source code repository: git://github.com/michaeldv/fat_free_crm.git
 * .zip or .tgz archives: http://github.com/michaeldv/fat_free_crm/downloads
 
-=== Resources
 
-* Home page: http://www.fatfreecrm.com
-* Online demo: http://demo.fatfreecrm.com
-* Project page: http://github.com/michaeldv/fat_free_crm/tree/master
-* Features and bugs: http://fatfreecrm.lighthouseapp.com
-* Twitter commit updates: http://twitter.com/fatfreecrm
-* Discussion group for users: http://groups.google.com/group/fat-free-crm-users
-* Discussion group for developers: http://groups.google.com/group/fat-free-crm-dev
-* IRC channel: #fatfreecrm on irc.freenode.net
+=== Upgrading from a previous version of Fat Free CRM
+
+If you are upgrading from version 0.10.1 or below, your database schema
+needs to be updated. After you have installed the latest Rails 3 version,
+please run the following commands in this order:
+
+   $ bundle install              # Installs gem dependencies
+   $ rake crm:upgrade:schema     # Updates your old schema to use the new timestamped migrations
+   $ rake db:migrate             # Runs the new database migrations.
+
 
 === Setting Up The Database Configuration
 
@@ -97,6 +98,18 @@ to http://localhost:3000
 When deploying with Phusion Passenger, also install Rack 1.0.1:
 
    $ gem install rack -v 1.0.1
+
+
+=== Resources
+
+* Home page: http://www.fatfreecrm.com
+* Online demo: http://demo.fatfreecrm.com
+* Project page: http://github.com/michaeldv/fat_free_crm/tree/master
+* Features and bugs: http://fatfreecrm.lighthouseapp.com
+* Twitter commit updates: http://twitter.com/fatfreecrm
+* Discussion group for users: http://groups.google.com/group/fat-free-crm-users
+* Discussion group for developers: http://groups.google.com/group/fat-free-crm-dev
+* IRC channel: #fatfreecrm on irc.freenode.net
 
 
 === For Developers
