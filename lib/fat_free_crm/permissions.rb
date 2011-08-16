@@ -42,7 +42,8 @@ module FatFreeCRM
           #   :order => primary key descending
           #   :limit => none
           #
-          scope :my, lambda { |options = {}|
+          scope :my, lambda { |*args|
+            options = args[0] || {}
             includes(:permissions).
             where("#{quoted_table_name}.user_id     = :user OR " <<
                   "#{quoted_table_name}.assigned_to = :user OR " <<
