@@ -1,17 +1,23 @@
-config/database.yml
-config/deploy/live.rb
+config/*.yml
+!config/database.mysql.linux.yml
+!config/database.mysql.yml
+!config/database.postgres.yml
+!config/database.sqlite.yml
+!config/settings.yml.example
+
+.rspec
+spec/reports
 coverage/*
 db/schema.rb
 db/*.sql*
 log/*.log
+
 public/avatars/**/*
 public/javascripts/cache/*.js
 public/stylesheets/cache/*.css
 public/stylesheets/crm_*.css
 public/plugin_assets
-spec/reports
-nbproject
-.rspec
+
 tmp
 .bundle
 .idea/
@@ -19,7 +25,4 @@ tmp
 .rvmrc
 *~
 *.swp
-features/screengrabs
-features/reports
-config/crowd_settings.yml
 
