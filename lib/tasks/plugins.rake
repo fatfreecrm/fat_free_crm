@@ -36,21 +36,23 @@ namespace :db do
 
     desc "Run plugin migrations"
     task :plugins => :environment do
-      ActiveRecord::Migration.verbose = ENV["VERBOSE"] ? ENV["VERBOSE"] == "true" : true
+      if Dir.glob("#{Rails.root}/vendor/plugins/*/db/migrate/*.rb").any?
+        ActiveRecord::Migration.verbose = ENV["VERBOSE"] ? ENV["VERBOSE"] == "true" : true
 
-      # The following tweak becomes necessary when plugins start to depend
-      # on each others migrations.
-      # ------------------------------------------------------------------------------
+        # The following tweak becomes necessary when plugins start to depend
+        # on each others migrations.
+        # ------------------------------------------------------------------------------
 
-      # Copy all plugin migrations to temp directory
-      system("mkdir -p /tmp/plugin_migrations && rm -rf /tmp/plugin_migrations/* && \
-              cp #{Rails.root}/vendor/plugins/*/db/migrate/*.rb /tmp/plugin_migrations")
-      # Run all plugin migrations, ordered by timestamp
-      ActiveRecord::Migrator.migrate("/tmp/plugin_migrations", ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
-      # Remove temp migration directory
-      system("rm -rf /tmp/plugin_migrations")
+        # Copy all plugin migrations to temp directory
+        system("mkdir -p /tmp/plugin_migrations && rm -rf /tmp/plugin_migrations/* && \
+                cp #{Rails.root}/vendor/plugins/*/db/migrate/*.rb /tmp/plugin_migrations")
+        # Run all plugin migrations, ordered by timestamp
+        ActiveRecord::Migrator.migrate("/tmp/plugin_migrations", ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+        # Remove temp migration directory
+        system("rm -rf /tmp/plugin_migrations")
 
-      Rake::Task["db:schema:dump"].invoke if ActiveRecord::Base.schema_format == :ruby
+        Rake::Task["db:schema:dump"].invoke if ActiveRecord::Base.schema_format == :ruby
+      end
     end
 
   end
