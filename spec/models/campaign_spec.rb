@@ -101,7 +101,7 @@ describe Campaign do
     it "should discard an opportunity" do
       @opportunity = Factory(:opportunity, :campaign => @campaign)
       @campaign.reload.opportunities_count.should == 43
-    
+
       @campaign.discard!(@opportunity)
       @campaign.opportunities.should == []
       @campaign.reload.opportunities_count.should == 42
@@ -112,7 +112,7 @@ describe Campaign do
     describe "assigned campaign" do
       before do
         Campaign.delete_all
-        Factory(:campaign, :user => Factory(:user), :assignee => Factory(:user))
+        Factory(:campaign, :user => Factory(:user, :first_name => "John", :last_name => "Smith"), :assignee => Factory(:user))
         Factory(:campaign, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
@@ -132,3 +132,4 @@ describe Campaign do
     end
   end
 end
+
