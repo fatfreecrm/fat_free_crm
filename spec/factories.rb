@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require 'faker'
+require 'ffaker'
 
 Factory.sequence :address do |x|
   Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
@@ -362,3 +362,4 @@ Factory.define :default_settings, :parent => :setting do |s|
     Factory(key.to_sym) # <--- That's where the data gets loaded.
   end
 end
+

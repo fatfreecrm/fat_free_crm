@@ -38,7 +38,7 @@ group :development, :test do
 
   gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
   gem "rspec-rails",        '>= 2.5.0'
-  gem 'faker',              '>= 0.9.5'
+  gem 'ffaker',             '>= 1.5.0'
   gem 'factory_girl',       '>= 1.3.3'
 end
 
