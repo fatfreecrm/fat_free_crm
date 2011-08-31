@@ -1,0 +1,2 @@
+require 'is_paranoid'
+
