@@ -31,11 +31,8 @@ gem 'paperclip',           '>= 2.3.3'
 gem 'will_paginate',       '>= 3.0.pre2'
 
 group :development, :test do
-  if RUBY_VERSION.to_f >= 1.9
-    gem 'ruby-debug19'
-  else
-    gem 'ruby-debug'
-  end
+  gem 'ruby-debug',   :platform => :mri_18
+  gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug'
   gem 'annotate',           '>= 2.4.0'
   gem 'awesome_print',      '>= 0.3.1'
 
