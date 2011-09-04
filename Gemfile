@@ -27,7 +27,7 @@ end
 gem 'acts_as_commentable', '>= 3.0.1'
 gem 'haml',                '>= 3.1.1'
 gem 'sass',                '>= 3.1.1'
-gem 'paperclip',           '>= 2.3.3'
+gem 'paperclip',           '~> 2.3.3'
 gem 'will_paginate',       '>= 3.0.pre2'
 
 group :development, :test do
