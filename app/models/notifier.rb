@@ -24,7 +24,7 @@ class Notifier < ActionMailer::Base
     mail(:subject => "Fat Free CRM: " + I18n.t(:password_reset_instructions),
          :to => user.email,
          :from => "Fat Free CRM <noreply@fatfreecrm.com>",
-         :sent_on => Time.now)
+         :date => Time.now)
   end
 
   #----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ class Notifier < ActionMailer::Base
     mail(:subject => I18n.t(:dropbox_ack_subject, :subject => email.subject),
          :to => user.email,
          :from => from,
-         :sent_on => Time.now)
+         :date => Time.now)
   end
 
 end
