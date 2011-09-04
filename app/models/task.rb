@@ -48,7 +48,8 @@ class Task < ActiveRecord::Base
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
-  scope :my, lambda { |user|
+  scope :my, lambda { |*args|
+    user = args[0] || User.current_user
     includes(:assignee).
     where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user[:user] || user, user[:user] || user).
     order(user[:order] || 'name ASC').
