@@ -48,11 +48,13 @@ class Task < ActiveRecord::Base
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
-  scope :my, lambda { |user|
+  scope :my, lambda { |*args|
+    options = args[0] || {}
+    user_option = options[:user] || User.current_user
     includes(:assignee).
-    where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user[:user] || user, user[:user] || user).
-    order(user[:order] || 'name ASC').
-    limit(user[:limit]) # nil selects all records
+    where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user_option, user_option).
+    order(options[:order] || 'name ASC').
+    limit(options[:limit]) # nil selects all records
   }
 
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.

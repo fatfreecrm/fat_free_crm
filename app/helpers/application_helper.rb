@@ -91,7 +91,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_inline(id, url, options = {})
-    text = options[:text] || id.to_s.titleize
+    text = options[:text] || t(id, :default => id.to_s.titleize)
     text = (arrow_for(id) + text) unless options[:plain]
     related = (options[:related] ? "+'&related=#{options[:related]}'" : '')
 

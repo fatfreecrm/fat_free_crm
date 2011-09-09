@@ -177,7 +177,7 @@ module FatFreeCRM
 
     #------------------------------------------------------------------------------
     def find_sender(email_address)
-      @sender = User.where('lower(email) = ? AND suspended_at IS NULL', email_address.downcase).first
+      @sender = User.first(:conditions => [ "(lower(email) = ? OR lower(alt_email) = ?) AND suspended_at IS NULL", email_address.downcase, email_address.downcase ])
     end
 
     # Checks the email to detect keyword on the first line.
