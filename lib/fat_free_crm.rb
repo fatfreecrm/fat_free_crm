@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-require Rails.root.join('vendor/plugins/is_paranoid/init')
-
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"
 require "fat_free_crm/exceptions"
@@ -39,7 +37,5 @@ ActiveRecord::Base.send(:include, FatFreeCRM::Exportable)
 ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
 
 require "fat_free_crm/dropbox" if defined?(::Rake)
-
-# Require plugins after everything else.
-require "fat_free_crm/plugin"
+require "fat_free_crm/plugin"  # Require crm_* plugins last.
 
