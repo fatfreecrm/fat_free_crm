@@ -1,5 +1,0 @@
-Description:
-  Creates a session model for use with Authlogic
-
-Usage:
-  rails generate authlogic:session NAME
