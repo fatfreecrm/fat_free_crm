@@ -1,11 +1,12 @@
-=== Welcome to Fat Free CRM!
+= Welcome to Fat Free CRM!
 
-Fat Free CRM is next generation open source CRM platform. Active development
+Fat Free CRM is a next generation open source CRM platform.
+
+Active development
 has started in November 2008; new features, enhancements, and updates appear
 on daily basis.
 
-Here are the steps to get Fat Free CRM up and running on your system.
-
+Here's how to get Fat Free CRM up and running on your system.
 
 === System Requirements
 
@@ -21,44 +22,60 @@ Here are the steps to get Fat Free CRM up and running on your system.
 * .zip or .tgz archives: http://github.com/michaeldv/fat_free_crm/downloads
 
 
-=== Upgrading from a previous version of Fat Free CRM
+=== Upgrading from previous versions of Fat Free CRM
 
 If you are upgrading from version 0.10.1 or below, your database schema
 needs to be updated. After you have installed the latest Rails 3 version,
 please run the following commands in this order:
 
-   $ bundle install              # Installs gem dependencies
-   $ rake crm:upgrade:schema     # Updates your old schema to use the new timestamped migrations
-   $ rake db:migrate             # Runs the new database migrations.
+   bundle install              # Installs gem dependencies
+   rake crm:upgrade:schema     # Updates your old schema to use the new timestamped migrations
+   rake db:migrate             # Runs any new database migrations.
 
+
+== Install on Heroku
+
+You will need the heroku gem on your system.
+
+    gem install heroku
+
+To set up Fat Free CRM on Heroku, run the following commands:
+
+    heroku create {organization-crm} --stack bamboo-mri-1.9.2
+    git push heroku master
+    heroku config:add HEROKU=true
+    heroku rake crm:setup USERNAME=admin PASSWORD=admin EMAIL=admin@example.com
+
+
+== Install locally or on a server
 
 === Setting Up The Database Configuration
 
-Fat Free CRM supports MySQL and SQLite databases. The source code comes with
-two sample database configuration files: +config+/+database+.+mysql+.+yml+
-for MySQL and +config+/+database+.+sqlite+.+yml+ for SQLite. Based on your choice
-of the database create the actual database configuration file, for example:
+Fat Free CRM supports PostGreSQL, MySQL and SQLite databases. The source code comes with
+sample database configuration files, such as: +config+/+database+.+mysql+.+yml+
+for MySQL and +config+/+database+.+sqlite+.+yml+ for SQLite.
 
-   $ cp config/database.mysql.yml config/database.yml
+Based on your choice of database, create +config+/+database.yml+:
 
-Edit config/database.yml and specify database names and authentication
-details.
+    cp config/database.mysql.yml config/database.yml
 
+* Edit config/database.yml and specify database names and authentication details.
+
+* Then, edit your +Gemfile+ and uncomment only your chosen database.
 
 === Installing Gem Dependencies
 
-Fat Free CRM includes a 'smart' Gemfile that detects your chosen database,
-and installs the required gems. After you have configured your database.yml file,
-run the following command from the applications root directory:
+After you have uncommented the right database adapter in your +Gemfile+,
+run the following command from the application's root directory:
 
-    $ bundle install
+    bundle install
 
 
 === Create The Database
 
 Now you are ready to create the database:
 
-   $ rake db:create
+   rake db:create
 
 
 === Setting Up The Application
@@ -67,7 +84,12 @@ The next step is to load default Fat Free CRM settings, such as menu structures,
 default colors, etc. and create the Admin user. This is done by running the
 following rake task:
 
-   $ rake crm:setup
+   rake crm:setup
+
+The previous command will prompt you for an admin user, password and email.
+If you want to run this task without any user input, you can set the following variables:
+
+   rake crm:setup USERNAME=admin PASSWORD=password EMAIL=admin@example.com
 
 
 === Loading Demo Data
@@ -76,7 +98,7 @@ You can test drive Fat Free CRM by loading sample records that are generated
 on the fly mimic the actual use. IMPORTANT: loading demo will delete all the
 existing data.
 
-   $ rake crm:demo:load
+   rake crm:demo:load
 
 Among other things the demo generator creates 8 sample user records with the
 following usernames: +aaron+, +ben+, +cindy+, +dan+, +elizabeth+, +frank+, +george+,
@@ -85,7 +107,7 @@ The demo site at http://demo.fatfreecrm.com provides access as a sample user as 
 
 You can reset the database and reload demo data at any time by using:
 
-   $ rake crm:demo:reload
+   rake crm:demo:reload
 
 
 === Running The App
@@ -93,14 +115,10 @@ You can reset the database and reload demo data at any time by using:
 Now you should be able to launch the Rails server and point your web browser
 to http://localhost:3000
 
-   $ ruby script/server
-
-When deploying with Phusion Passenger, also install Rack 1.0.1:
-
-   $ gem install rack -v 1.0.1
+   rails server
 
 
-=== Resources
+= Resources
 
 * Home page: http://www.fatfreecrm.com
 * Online demo: http://demo.fatfreecrm.com
@@ -109,10 +127,10 @@ When deploying with Phusion Passenger, also install Rack 1.0.1:
 * Twitter commit updates: http://twitter.com/fatfreecrm
 * Discussion group for users: http://groups.google.com/group/fat-free-crm-users
 * Discussion group for developers: http://groups.google.com/group/fat-free-crm-dev
-* IRC channel: #fatfreecrm on irc.freenode.net
+* IRC channel: {#fatfreecrm}[http://webchat.freenode.net/] on irc.freenode.net
 
 
-=== For Developers
+= For Developers
 
 Fat Free CRM can be customized by implementing callback hooks and extended by
 creating Rails Engines plugins. Check out these sample repositories demonstrating
@@ -124,7 +142,7 @@ the concepts:
    http://github.com/michaeldv/crm_tags/tree/master
 
 
-=== License
+== License
 
 Copyright (c) 2008-2011 by Michael Dvorkin. All rights reserved.
 
