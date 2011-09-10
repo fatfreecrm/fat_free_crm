@@ -21,7 +21,7 @@
 #  background_info :string(255)
 #
 <%
-  require "faker"
+  require "ffaker"
   puts "Loading tasks..."
 
   category = %w(call email follow_up lunch meeting money presentation trip) << ""

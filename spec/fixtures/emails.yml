@@ -22,7 +22,7 @@
 #  updated_at      :datetime
 #
 <% 
-  require "faker"
+  require "ffaker"
   puts "Loading emails..."
 
   users = %w(aaron bed cindy dan elizabeth frank george heather)

@@ -31,7 +31,7 @@
 #  background_info :string(255)
 #
 <%
-  require "faker"
+  require "ffaker"
   puts "Loading contacts..."
 
   title = [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ]
