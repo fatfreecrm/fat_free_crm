@@ -539,6 +539,10 @@ en-US:
   zipcode: Zip Code
   state: State
   country: Country
+  expand_all: Expand all
+  collapse_all: Collapse all
+  expanded: Expanded
+  collapsed: Collapsed
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
