@@ -1,11 +1,12 @@
 development: &development
   adapter: postgresql
   database: fat_free_crm_development
-  username: 
+  username:
   password:
   host:     localhost
   port:     5432
   schema_search_path: public
+  min_messages: warning
 
 test:
   <<: *development
@@ -18,3 +19,4 @@ cucumber:
 production:
   <<: *development
   database: fat_free_crm_production
+
