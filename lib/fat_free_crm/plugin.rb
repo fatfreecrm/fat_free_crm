@@ -101,7 +101,12 @@ module FatFreeCRM
         @@list.values
       end
 
+      def list_ids
+        @@list.keys
+      end
+
     end
 
   end # class Plugin
 end # module FatFreeCRM
+
