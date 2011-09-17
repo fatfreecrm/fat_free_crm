@@ -18,8 +18,8 @@ describe "/accounts/show.html.haml" do
     render
 
     view.should render_template(:partial => "comments/_new")
-    view.should render_template(:partial => "common/_timeline")
-    view.should render_template(:partial => "common/_tasks")
+    view.should render_template(:partial => "shared/_timeline")
+    view.should render_template(:partial => "shared/_tasks")
     view.should render_template(:partial => "contacts/_contact")
     view.should render_template(:partial => "opportunities/_opportunity")
 

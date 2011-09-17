@@ -11,7 +11,7 @@
   - unless @contact.department.blank?
     = t(:department_small, h(@contact.department))
 
-  %div= render "common/address_show", :asset => @contact, :type => 'business', :title => :address
+  %div= render "shared/address_show", :asset => @contact, :type => 'business', :title => :address
 
   %div
     - unless @contact.phone.blank?

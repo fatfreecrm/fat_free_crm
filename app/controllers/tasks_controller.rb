@@ -32,8 +32,8 @@ class TasksController < ApplicationController
       format.xml  { render :xml => @tasks }
       format.xls  { send_data @tasks.values.flatten.to_xls, :type => :xls }
       format.csv  { send_data @tasks.values.flatten.to_csv, :type => :csv }
-      format.rss  { render "common/index.rss.builder" }
-      format.atom { render "common/index.atom.builder" }
+      format.rss  { render "shared/index.rss.builder" }
+      format.atom { render "shared/index.atom.builder" }
     end
   end
 

@@ -14,11 +14,11 @@
 %div#edit_lead{ hidden }
 
 = render "comments/new", :commentable => @lead
-= render :partial => "common/timeline", :collection => @timeline
+= render :partial => "shared/timeline", :collection => @timeline
 
 = section(@lead, :tasks)
 .log#tasks
-  = render "common/tasks"
+  = render "shared/tasks"
 
 = load_select_popups_for(@lead, :tasks)
 

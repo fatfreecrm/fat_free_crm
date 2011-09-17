@@ -11,7 +11,7 @@ if @contact.errors.empty?
     if called_from_index_page?
       page << refresh_sidebar(:index)
     else
-      page[:recently].replace :partial => "common/recently"
+      page[:recently].replace :partial => "shared/recently"
     end
   end
 else  

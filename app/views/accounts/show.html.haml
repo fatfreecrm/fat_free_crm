@@ -9,13 +9,13 @@
 %div#edit_account{ hidden }
 
 = render "comments/new", :commentable => @account
-= render :partial => "common/timeline", :collection => @timeline
+= render :partial => "shared/timeline", :collection => @timeline
 
 = hook(:show_account_bottom, self) do
 
   = section(@account, :tasks)
   .log#tasks
-    = render "common/tasks"
+    = render "shared/tasks"
 
   = section(@account, :contacts)
   .list#contacts

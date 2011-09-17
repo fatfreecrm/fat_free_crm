@@ -72,7 +72,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def load_select_popups_for(related, *assets)
     js = assets.map do |asset|
-      render(:partial => "common/select_popup", :locals => { :related => related, :popup => asset })
+      render(:partial => "shared/select_popup", :locals => { :related => related, :popup => asset })
     end.join
 
     content_for(:javascript_epilogue) do
@@ -183,7 +183,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def styles_for(*models)
-    render :partial => "common/inline_styles", :locals => { :models => models }
+    render :partial => "shared/inline_styles", :locals => { :models => models }
   end
 
   #----------------------------------------------------------------------------

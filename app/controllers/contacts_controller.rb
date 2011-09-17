@@ -31,8 +31,8 @@ class ContactsController < ApplicationController
       format.xml  { render :xml => @contacts }
       format.xls  { send_data @contacts.to_xls, :type => :xls }
       format.csv  { send_data @contacts.to_csv, :type => :csv }
-      format.rss  { render "common/index.rss.builder" }
-      format.atom { render "common/index.atom.builder" }
+      format.rss  { render "shared/index.rss.builder" }
+      format.atom { render "shared/index.atom.builder" }
     end
   end
 

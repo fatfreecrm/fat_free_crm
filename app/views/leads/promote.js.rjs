@@ -16,7 +16,7 @@ if @lead.status == "converted"
         page.insert_html :top, :opportunities, :partial => "opportunities/opportunity", :collection => [ @opportunity ]
       end
     else
-      page[:recently].replace :partial => "common/recently"
+      page[:recently].replace :partial => "shared/recently"
     end
   end
 else  

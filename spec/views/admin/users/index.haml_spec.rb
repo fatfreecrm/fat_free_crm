@@ -10,6 +10,6 @@ describe "/admin/users/index.html.haml" do
 
     render
     view.should render_template(:partial => "_user")
-    view.should render_template(:partial => "common/_paginate")
+    view.should render_template(:partial => "shared/_paginate")
   end
 end

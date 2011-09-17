@@ -13,7 +13,7 @@ describe "/opportunities/index.html.haml" do
 
     render
     view.should render_template(:partial => "_opportunity")
-    view.should render_template(:partial => "common/_paginate")
+    view.should render_template(:partial => "shared/_paginate")
   end
 
   it "should render a message if there're no opportunities" do
@@ -21,8 +21,8 @@ describe "/opportunities/index.html.haml" do
 
     render
     view.should_not render_template(:partial => "_opportunities")
-    view.should render_template(:partial => "common/_empty")
-    view.should render_template(:partial => "common/_paginate")
+    view.should render_template(:partial => "shared/_empty")
+    view.should render_template(:partial => "shared/_paginate")
   end
 
 end

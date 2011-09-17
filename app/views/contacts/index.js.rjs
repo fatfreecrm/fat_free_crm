@@ -1,6 +1,6 @@
 unless @contacts.blank?
   page[:contacts].replace_html render(:partial => "contact", :collection => @contacts)
 else
-  page[:contacts].replace_html render(:partial => "common/empty")
+  page[:contacts].replace_html render(:partial => "shared/empty")
 end
-page[:paginate].replace_html render(:partial => "common/paginate")
+page[:paginate].replace_html render(:partial => "shared/paginate")

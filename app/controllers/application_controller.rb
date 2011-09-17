@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
       @auto_complete = @auto_complete.last
     end
     session[:auto_complete] = controller_name.to_sym
-    render "common/auto_complete", :layout => nil
+    render "shared/auto_complete", :layout => nil
   end
 
   # Common attach handler for all core controllers.
@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
-      format.js  { render "common/attach" }
+      format.js  { render "shared/attach" }
       format.xml { render :xml => model.reload.to_xml }
     end
 
@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
-      format.js  { render "common/discard" }
+      format.js  { render "shared/discard" }
       format.xml { render :xml => model.reload.to_xml }
     end
 

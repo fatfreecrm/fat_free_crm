@@ -25,7 +25,7 @@
             = f.text_field :mobile
         %tr
           %td
-            = render "common/address", :f => f, :asset => @contact, :type => 'business', :title => :address
+            = render "shared/address", :f => f, :asset => @contact, :type => 'business', :title => :address
           %td= spacer
           %td
             .label #{t :fax}:

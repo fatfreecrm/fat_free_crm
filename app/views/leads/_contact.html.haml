@@ -24,7 +24,7 @@
           = f.text_field :mobile
       %tr
         %td
-          = render "common/address", :f => f, :asset => @lead, :type => 'business', :title => :address
+          = render "shared/address", :f => f, :asset => @lead, :type => 'business', :title => :address
         %td= spacer
         %td
           .label #{t :referred_by}:

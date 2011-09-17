@@ -1,2 +1,2 @@
 page[:users].replace_html render @users
-page[:paginate].replace_html :partial => "common/paginate"
+page[:paginate].replace_html :partial => "shared/paginate"

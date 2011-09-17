@@ -1,6 +1,6 @@
 unless @accounts.blank?
   page[:accounts].replace_html render @accounts
 else
-  page[:accounts].replace_html :partial => "common/empty"
+  page[:accounts].replace_html :partial => "shared/empty"
 end
-page[:paginate].replace_html :partial => "common/paginate"
+page[:paginate].replace_html :partial => "shared/paginate"

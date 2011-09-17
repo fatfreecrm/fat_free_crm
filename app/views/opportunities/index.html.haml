@@ -14,10 +14,10 @@
   - if @opportunities.any?
     = render @opportunities
   - else
-    = render "common/empty"
+    = render "shared/empty"
 
-#paginate= render "common/paginate"
-#export= render "common/export"
+#paginate= render "shared/paginate"
+#export= render "shared/export"
 
 = hook(:opportunity_index_after, self)
 

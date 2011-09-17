@@ -21,8 +21,8 @@
     - if @account.fax
       #{t :fax}: <b>#{@account.fax}</b><br />
 
-  %div= render "common/address_show", :asset => @account, :type => 'billing', :title => :billing_address
-  %div= render "common/address_show", :asset => @account, :type => 'shipping', :title => :shipping_address
+  %div= render "shared/address_show", :asset => @account, :type => 'billing', :title => :billing_address
+  %div= render "shared/address_show", :asset => @account, :type => 'shipping', :title => :shipping_address
 
   .caption #{t :account_summary}
   %li

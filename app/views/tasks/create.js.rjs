@@ -8,12 +8,12 @@ if @task.valid?
     # Show flash if assigned to somebody else from the [Pending Tasks] page.
     if @view == "pending" && @task.assigned_to && @task.assigned_to != @current_user.id
       page << tasks_flash("#{t :task_created} #{t(:task_assigned_to, @task.assignee.full_name)} (" << link_to(t(:view_assigned_tasks), url_for(:view => "assigned")) << ").")
-      page[:recently].replace :partial => "common/recently"
+      page[:recently].replace :partial => "shared/recently"
 
     # Show flash if assigned to current user from the [Assigned Tasks] page.
     elsif @view == "assigned" && @task.assigned_to.blank?
       page << tasks_flash("#{t :task_created}  (" << link_to(t(:view_pending_tasks), tasks_url) << ").")
-      page[:recently].replace :partial => "common/recently"
+      page[:recently].replace :partial => "shared/recently"
 
     # Show newly created task by inserting its div into appropriate bucket; then update tasks sidebar.
     else
@@ -31,7 +31,7 @@ if @task.valid?
     partial = (@task.assigned_to && @task.assigned_to != @current_user.id) ? "assigned" : "pending"
     page.insert_html :top, :tasks, :partial => "tasks/#{partial}", :collection => [@task], :locals => { :bucket => nil }
     page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
-    page[:recently].replace :partial => "common/recently"
+    page[:recently].replace :partial => "shared/recently"
   end
 
 else # Couldn't create the task -- validation failed.

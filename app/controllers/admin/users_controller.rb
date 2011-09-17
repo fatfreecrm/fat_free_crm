@@ -30,8 +30,8 @@ class Admin::UsersController < Admin::ApplicationController
       format.xml  { render :xml => @users }
       format.xls  { send_data @users.to_xls, :type => :xls }
       format.csv  { send_data @users.to_csv, :type => :csv }
-      format.rss  { render "common/index.rss.builder" }
-      format.atom { render "common/index.atom.builder" }
+      format.rss  { render "shared/index.rss.builder" }
+      format.atom { render "shared/index.atom.builder" }
     end
   end
 

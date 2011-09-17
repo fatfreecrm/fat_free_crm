@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/common/auto_complete.html.haml" do
+describe "/shared/auto_complete.html.haml" do
   include AccountsHelper
 
   before(:each) do

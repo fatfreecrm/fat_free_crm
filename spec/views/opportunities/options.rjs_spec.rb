@@ -39,9 +39,9 @@ describe "/opportunities/options.rjs" do
       params[:cancel] = nil
 
       render
-      view.should render_template(:partial => "common/_sort_by")
-      view.should render_template(:partial => "common/_per_page")
-      view.should render_template(:partial => "common/_outline")
+      view.should render_template(:partial => "shared/_sort_by")
+      view.should render_template(:partial => "shared/_per_page")
+      view.should render_template(:partial => "shared/_outline")
     end
   end
 

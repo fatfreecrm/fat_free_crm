@@ -1,5 +1,5 @@
 .filters#filters
-  = render "common/search"
+  = render "shared/search"
   = hook(:index_account_sidebar_bottom, self)
   - Setting.account_category.each do |key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}

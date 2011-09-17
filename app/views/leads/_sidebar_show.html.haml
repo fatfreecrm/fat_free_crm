@@ -8,7 +8,7 @@
     %div= @lead.title unless @lead.title.blank?
     %div= @lead.company unless @lead.company.blank?
 
-  %div= render "common/address_show", :asset => @lead, :type => 'business', :title => :address
+  %div= render "shared/address_show", :asset => @lead, :type => 'business', :title => :address
 
   %div
     - if @lead.phone.present?

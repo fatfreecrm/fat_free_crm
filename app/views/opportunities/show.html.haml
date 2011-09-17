@@ -9,13 +9,13 @@
 %div#edit_opportunity{ hidden }
 
 = render "comments/new", :commentable => @opportunity
-= render :partial => "common/timeline", :collection => @timeline
+= render :partial => "shared/timeline", :collection => @timeline
 
 = hook(:show_opportunity_bottom, self) do
 
   = section(@opportunity, :tasks)
   .log#tasks
-    = render "common/tasks"
+    = render "shared/tasks"
 
   = section(@opportunity, :contacts)
   .list#contacts
