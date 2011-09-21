@@ -49,9 +49,9 @@ To set up Fat Free CRM on Heroku, run the following commands:
 
 ```bash
 heroku create {organization-crm} --stack bamboo-mri-1.9.2
-heroku config:add HEROKU=true
 git push heroku master
 heroku rake crm:setup USERNAME=admin PASSWORD=admin EMAIL=admin@example.com
+heroku config:add HEROKU=true
 ```
 
 ## Install locally, or on a server
