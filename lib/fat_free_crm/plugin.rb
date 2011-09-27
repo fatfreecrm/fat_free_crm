@@ -50,11 +50,7 @@ module FatFreeCRM
 
       plugins.each do |name|
         plugin_path = File.join(Rails.root, 'vendor/plugins', name.to_s)
-        if File.directory?(plugin_path)
-          @initializer.send(:eval, File.read(File.join(plugin_path, 'init.rb')))
-        else
-          require name.to_s
-        end
+        require File.directory?(plugin_path) ? File.join(plugin_path, 'init') : name.to_s
       end
     end
 
