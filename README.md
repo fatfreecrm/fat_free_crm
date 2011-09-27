@@ -7,9 +7,40 @@ New features, enhancements, and updates appear on regular basis.
 
 Pull requests and bug reports are always welcome!
 
------------------------------------------------------------
+<table>
+  <tr>
+    <td align="center">
+      <a href="http://fatfreecrm.com/images/contact_create.png" target="_blank" title="Create Contacts">
+        <img src="http://fatfreecrm.com/images/contact_create_t.png" alt="Create Contacts">
+      </a>
+      <br />
+      <em>Contacts</em>
+    </td>
+    <td align="center">
+      <a href="http://fatfreecrm.com/images/contact_opportunity.png" target="_blank" title="Manage Opportunities">
+        <img src="http://fatfreecrm.com/images/contact_opportunity_t.png" alt="Manage Opportunities">
+      </a>
+      <br />
+      <em>Opportunities</em>
+    </td>
+    <td align="center">
+      <a href="http://fatfreecrm.com/images/account_edit.png" target="_blank" title="Edit Accounts">
+        <img src="http://fatfreecrm.com/images/account_edit_t.png" alt="Edit Accounts">
+      </a>
+      <br />
+      <em>Accounts</em>
+    </td>
+    <td align="center">
+      <a href="http://fatfreecrm.com/images/task_create.png" target="_blank" title="Create Tasks">
+        <img src="http://fatfreecrm.com/images/task_create_t.png" alt="Create Tasks">
+      </a>
+      <br />
+      <em>Tasks</em>
+    </td>
+  </tr>
+</table>
 
-### System Requirements
+## System Requirements
 
 * Ruby v1.8.7 or v1.9.2
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
