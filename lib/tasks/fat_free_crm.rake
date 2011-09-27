@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
+require 'fileutils'
+
 class Rake::Task
   def self.sanitize_and_execute(sql)
     sanitized = ActiveRecord::Base.send(:sanitize_sql, sql, nil)
@@ -22,6 +24,19 @@ class Rake::Task
 end
 
 namespace :crm do
+  desc "Copy example config files"
+  task :copy_default_config do
+    config_files = { 'database.postgres.yml' => 'database.yml' }
+    puts "Copying example config files..."
+    config_files.each do |old, new|
+      if File.exists?("config/#{new}")
+        puts "-- Skipping config/#{new}: already exists"
+      else
+        puts "-- Copying config/#{old} to config/#{new}"
+        FileUtils.cp "config/#{old}", "config/#{new}"
+      end
+    end
+  end
 
   namespace :settings do
     desc "Load default application settings"
