@@ -5,7 +5,7 @@ class CreateCampaigns < ActiveRecord::Migration
       t.references  :user
       t.integer     :assigned_to
       t.string      :name,   :limit => 64, :null => false, :default => ""
-      t.string      :access, :limit => 8, :default => "Private" # %w(Private Public Shared)
+      t.string      :access, :limit => 8, :default => "Public" # %w(Private Public Shared)
       t.string      :status, :limit => 64
       t.decimal     :budget, :precision => 12, :scale => 2
       # Target metrics.

@@ -8,7 +8,7 @@ class CreateContacts < ActiveRecord::Migration
       t.integer     :reports_to
       t.string      :first_name,  :limit => 64, :null => false, :default => ""
       t.string      :last_name,   :limit => 64, :null => false, :default => ""
-      t.string      :access,      :limit => 8, :default => "Private"
+      t.string      :access,      :limit => 8, :default => "Public"
       t.string      :title,       :limit => 64
       t.string      :department,  :limit => 64
       t.string      :source,      :limit => 32
