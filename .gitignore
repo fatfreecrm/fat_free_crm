@@ -19,6 +19,7 @@ public/stylesheets/crm_*.css
 public/plugin_assets
 
 tmp
+Design
 .bundle
 .idea/
 .DS_Store
