@@ -1,6 +1,6 @@
-# Welcome to Fat Free CRM!
+# Fat Free CRM [![TravisCI](http://travis-ci.org/fatfreecrm/fat_free_crm.png?branch=master)](http://travis-ci.org/fatfreecrm/fat_free_crm)
 
-**Fat Free CRM is a next generation open source CRM platform.**
+**A next generation open source CRM platform.**
 
 Active development started in November 2008.
 New features, enhancements, and updates appear on regular basis.
@@ -13,7 +13,7 @@ Pull requests and bug reports are always welcome!
 
 * Ruby v1.8.7 or v1.9.2
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
-* ImageMagick (optional, only if you would like to use avatars)
+* ImageMagick (optional, only needed if you would like to use avatars)
 
 (Ruby on Rails v3 and other gem dependencies will be installed automatically by Bundler.)
 
@@ -33,7 +33,7 @@ Please run the following commands in this order:
 
 ```bash
 bundle install              # Installs gem dependencies
-rake crm:upgrade:schema     # Updates your old schema to use the new timestamped migrations
+rake crm:upgrade:schema     # Updates your schema to use the new timestamped migrations
 rake db:migrate             # Runs any new database migrations.
 ```
 
