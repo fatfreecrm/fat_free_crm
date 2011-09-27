@@ -15,6 +15,8 @@ namespace :spec do
     tmp_env = Rails.env
     Rails.env = "test"
     Rake::Task["crm:copy_default_config"].invoke
+    puts "Running initial migrations..."
+    Rake::Task["db:migrate"].invoke
     puts "Preparing test database..."
     Rake::Task["db:test:prepare"].invoke
     Rails.env = tmp_env
