@@ -1,11 +1,10 @@
 # Fat Free CRM [![TravisCI](http://travis-ci.org/fatfreecrm/fat_free_crm.png?branch=master)](http://travis-ci.org/fatfreecrm/fat_free_crm)
 
-**A next generation open source CRM platform.**
+**An open source, Ruby on Rails
+[customer relationship management (CRM)](http://en.wikipedia.org/wiki/Customer_relationship_management)
+platform.**
 
-Active development started in November 2008.
-New features, enhancements, and updates appear on regular basis.
-
-Pull requests and bug reports are always welcome!
+Out of the box it features group collaboration, campaign and lead management, contact lists, and opportunity tracking.
 
 <table>
   <tr>
@@ -39,6 +38,11 @@ Pull requests and bug reports are always welcome!
     </td>
   </tr>
 </table>
+
+Active development started in November 2008.
+New features, enhancements, and updates appear on regular basis.
+
+Pull requests and bug reports are always welcome!
 
 ## System Requirements
 
