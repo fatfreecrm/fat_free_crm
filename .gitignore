@@ -16,6 +16,8 @@ public/avatars/**/*
 public/javascripts/cache/*.js
 public/stylesheets/cache/*.css
 public/stylesheets/crm_*.css
+public/stylesheets/print.css
+public/stylesheets/screen.css
 public/plugin_assets
 
 tmp
