@@ -1,6 +1,6 @@
 Sass::Plugin.options.merge!(
   :template_location => 'app/stylesheets/media',
-  :css_location => 'tmp/stylesheets'
+  :css_location => ENV['HEROKU'] ? 'tmp/stylesheets' : 'public/stylesheets'
 )
 
 Rails.configuration.middleware.delete('Sass::Plugin::Rack')
