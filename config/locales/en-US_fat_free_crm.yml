@@ -164,7 +164,7 @@ en-US:
 
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: Your account has been created and is awating approval by the system administrator.
+  msg_account_created: Your account has been created and is awaiting approval by the system administrator.
   msg_account_not_approved: Your account has not been approved yet.
   msg_asset_deleted: "%{value} has been deleted."
   msg_asset_not_available: This %{value} is no longer available.
