@@ -44,6 +44,17 @@ New features, enhancements, and updates appear on regular basis.
 
 Pull requests and bug reports are always welcome!
 
+## User Survey
+
+We would like to invite you to take part in a
+[Fat Free CRM Survey](http://www.formstack.com/forms/?1118780-yrROQqSjPx).
+Your input is valuable whether you are new to the project, or an experienced contributor.
+
+We are planning a Fat Free CRM renovation, and we would really like you to help us steer
+the project in the right direction.
+
+**[Please click here to fill in the survey.](http://www.formstack.com/forms/?1118780-yrROQqSjPx)**
+
 ## System Requirements
 
 * Ruby v1.8.7 or v1.9.2
