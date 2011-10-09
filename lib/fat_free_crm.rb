@@ -14,6 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
+# Plugin dependencies
+require Rails.root.join('vendor/plugins/is_paranoid/init')
+# Overrides
+require "overrides/authlogic/session/cookies"
+
+# Fat Free CRM
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"
 require "fat_free_crm/exceptions"
