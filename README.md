@@ -66,8 +66,8 @@ the project in the right direction.
 
 ### Downloads
 
-* Git source code repository: git://github.com/michaeldv/fat_free_crm.git
-* .zip or .tgz archives: http://github.com/michaeldv/fat_free_crm/downloads
+* Git source code repository: git://github.com/fatfreecrm/fat_free_crm.git
+* .zip or .tgz archives: http://github.com/fatfreecrm/fat_free_crm/downloads
 
 
 ### Upgrading from previous versions of Fat Free CRM
