@@ -31,6 +31,7 @@ class Setting < ActiveRecord::Base
   
   #-------------------------------------------------------------------
   def self.method_missing(method, *args)
+    return nil unless Setting.table_exists?
     begin
       super(method, *args)
     rescue NoMethodError
