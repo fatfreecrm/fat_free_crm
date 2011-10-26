@@ -44,14 +44,10 @@ New features, enhancements, and updates appear on regular basis.
 
 Pull requests and bug reports are always welcome!
 
-## User Survey
+## Help us find a new name!
 
-We would like to invite you to take part in a
-[Fat Free CRM Survey](http://www.formstack.com/forms/?1118780-yrROQqSjPx).
-Your input is valuable whether you are new to the project, or an experienced contributor.
-
-We are planning a Fat Free CRM renovation, and we would really like you to help us steer
-the project in the right direction.
+The results of our previous survey are in, and we have decided to give this application a new name.
+[Please click here to vote on your favorite names.](https://docs.google.com/spreadsheet/viewform?formkey=dG05QlBqbHFVMmFIdHNVT0ZtYWVzQ2c6MQ&theme=0AX42CRMsmRFbUy04ZWQwMDYwMS02YjZhLTQ2ZjMtYjcyNy0zYWNlMzlmYTAxNmY&ifq)
 
 **[Please click here to fill in the survey.](http://www.formstack.com/forms/?1118780-yrROQqSjPx)**
 
