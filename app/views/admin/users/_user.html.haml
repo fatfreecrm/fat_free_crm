@@ -9,7 +9,7 @@
   - else
     .strip.active #{t :user_active}
 
-  = gravatar_for(user, :size => "30x30")
+  = avatar_for(user, :size => "30x30")
 
   .indentfull
     .tools{ invisible, :id => dom_id(user, :tools) }
