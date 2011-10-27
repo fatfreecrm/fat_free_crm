@@ -28,6 +28,7 @@ $size_tab_height:             24px
 $size_tab_width:              80px
 $color_footer:                grey
 
+
 // Header, tabs, and footer.
 //------------------------------------------------------------------------------
 #header
@@ -92,23 +93,26 @@ $color_footer:                grey
   width: 100%
 
   ul
-    // margin: 0px 25%,  18% for 5th tab
-
+    // :margin 0px 25%,  18% for 5th tab
+    margin-left: 15px
   li
     float: left
     font-size: 12px
+    line-height: 16px
     list-style: none
-    margin: 0px 4px 0px 16px
-    width: $size_tab_width
-
+    margin: 0px 4px 0px 1px
   a:link, a:visited
+    img
+      background: none
+      vertical-align: bottom
+      float: none
+      margin-right: 7px
     background: $color_tab_background
     color: white
     float: left
-    padding: 4px 8px 5px 8px
+    padding: 4px 15px 6px
     text-align: center
     text-decoration: none
-    width: $size_tab_width
     -moz-border-radius:
       topleft: 3px
       topright: 3px
