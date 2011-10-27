@@ -20,7 +20,8 @@ class UsersController < ApplicationController
   before_filter :require_no_user, :only => [ :new, :create ]
   before_filter :require_user, :only => [ :show, :redraw ]
   before_filter :set_current_tab, :only => [ :show ] # Don't hightlight any tabs.
-  before_filter :require_and_assign_user, :except => [ :new, :create, :show, :avatar ]
+  before_filter :require_and_assign_user, :except => [ :new, :create, :show, :avatar, :upload_avatar ]
+  before_filter :assign_given_or_current_user, :only => [ :show, :avatar, :upload_avatar ]
 
   # GET /users
   # GET /users.xml                              HTML (not directly exposed yet)
@@ -33,8 +34,6 @@ class UsersController < ApplicationController
   # GET /users/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
-    @user = params[:id] ? User.find(params[:id]) : @current_user
-
     respond_to do |format|
       format.html # show.html.haml
       format.xml  { render :xml => @user }
@@ -107,7 +106,6 @@ class UsersController < ApplicationController
   # GET /users/1/avatar.xml                                                AJAX
   #----------------------------------------------------------------------------
   def avatar
-    @user = params[:id] ? User.find(params[:id]) : @current_user
     # <-- render avatar.js.rjs
   end
 
@@ -171,6 +169,10 @@ class UsersController < ApplicationController
   def require_and_assign_user
     require_user
     @user = @current_user
+  end
+
+  def assign_given_or_current_user
+    @user = params[:id] ? User.find(params[:id]) : @current_user
   end
 
 end
