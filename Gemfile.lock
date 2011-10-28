@@ -134,7 +134,7 @@ DEPENDENCIES
   factory_girl (>= 1.3.3)
   ffaker (>= 1.5.0)
   haml (>= 3.1.1)
-  paperclip (~> 2.3.3)
+  paperclip (~> 2.3.6)
   pg (>= 0.9.0)
   rails (= 3.0.7)
   rake (= 0.8.7)
