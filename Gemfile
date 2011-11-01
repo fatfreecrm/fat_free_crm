@@ -15,6 +15,7 @@ gem 'haml',                '>= 3.1.1'
 gem 'sass',                '>= 3.1.1'
 gem 'paperclip',           '~> 2.3.6'
 gem 'will_paginate',       '>= 3.0.pre2'
+gem 'acts_as_list',        '~> 0.1.4'
 
 group :development, :test do
   gem 'ruby-debug',   :platform => :mri_18

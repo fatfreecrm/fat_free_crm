@@ -29,6 +29,7 @@ GEM
       activesupport (= 3.0.7)
     activesupport (3.0.7)
     acts_as_commentable (3.0.1)
+    acts_as_list (0.1.4)
     annotate (2.4.0)
     archive-tar-minitar (0.5.2)
     arel (2.0.10)
@@ -128,6 +129,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_commentable (>= 3.0.1)
+  acts_as_list (~> 0.1.4)
   annotate (>= 2.4.0)
   authlogic (~> 3.0.3)
   awesome_print (>= 0.3.1)
