@@ -7,5 +7,4 @@ class FieldGroup < ActiveRecord::Base
   def table_name
     klass.table_name
   end
-
 end
