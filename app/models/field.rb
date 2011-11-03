@@ -1,6 +1,8 @@
 class Field < ActiveRecord::Base
   acts_as_list
 
+  serialize :collection
+
   belongs_to :field_group
 
   delegate :klass, :to => :field_group
@@ -53,6 +55,12 @@ class Field < ActiveRecord::Base
         FIELD_TYPES[field_type][:#{attr}]
       end
     }
+  end
+
+  def input_attributes
+    attributes.reject { |k,v|
+      %w(type field_group position maxlength).include?(k)
+    }.merge(:input_html => {:maxlength => attributes[:maxlength]})
   end
 
   ## Default validations for model

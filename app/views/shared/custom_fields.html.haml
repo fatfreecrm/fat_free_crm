@@ -1,0 +1,5 @@
+- f.object.class.custom_fields.in_groups_of(2) do |group|
+  %tr
+  - group.each do |field|
+    %td
+      = f.imput field.name, field.input_attributes

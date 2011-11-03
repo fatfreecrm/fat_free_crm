@@ -3,16 +3,16 @@ class CreateFields < ActiveRecord::Migration
     create_table :fields, :force => true do |t|
       t.string      :type
       t.references  :field_group
-      t.string      :field_type,  :limit => 32
+      t.integer     :position
       t.string      :name,        :limit => 64
       t.string      :label,       :limit => 64
-      t.integer     :position
-      t.string      :default
-      t.string      :tooltip
-      t.string      :options
-      t.integer     :max_size,    :limit => 4
-      t.boolean     :required
+      t.string      :hint
+      t.string      :placeholder
+      t.string      :as,          :limit => 32
+      t.string      :collection
       t.boolean     :disabled
+      t.boolean     :required
+      t.integer     :maxlength,   :limit => 4
       t.timestamps
     end
     add_index :fields, :name

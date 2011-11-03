@@ -1,5 +1,5 @@
 .remote
-  = form_for(@account, :html => one_submit_only(:account), :remote => true) do |f|
+  = simple_form_for(@account, :html => one_submit_only(:account), :remote => true) do |f|
     = link_to_close edit_account_path(@account)
     = f.hidden_field :user_id
 
@@ -7,6 +7,7 @@
 
     = render "accounts/top_section",  :f => f, :edit => true
     = render "accounts/contact_info", :f => f, :edit => true
+    = render "shared/custom_fields",  :f => f, :edit => true
     = render "accounts/permissions",  :f => f, :edit => true
 
     .buttonbar
