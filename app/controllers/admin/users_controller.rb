@@ -27,7 +27,7 @@ class Admin::UsersController < Admin::ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.js   # index.js.rjs
-      format.xml  { render :xml => @users }
+      format.xml  { render :xml => User.all }
       format.xls  { send_data @users.to_xls, :type => :xls }
       format.csv  { send_data @users.to_csv, :type => :csv }
       format.rss  { render "shared/index.rss.builder" }
