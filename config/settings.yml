@@ -36,7 +36,7 @@
 #------------------------------------------------------------------------------
 # Default locale is American English.
 #
-:locale: "it"
+:locale: "en-US"
 
 # By default individual users can't pick their own locale and are presented
 # with the one set above. To enable language selection in User/Profile set

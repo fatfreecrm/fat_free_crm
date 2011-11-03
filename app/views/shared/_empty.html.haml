@@ -2,6 +2,6 @@
 - asset = assets.singularize
 #empty
   - if @current_query.blank?
-    == #{t(:could_not_find, (t:"#{asset}"))} #{link_to_inline(:"create_#{asset}", send("new_" << asset << "_path"), :plain => true, :text => t(:create_a_new) << ' ' << t(asset + '_small'))}.
+    == #{t(:could_not_find, assets.capitalize)} #{link_to_inline(:"create_#{asset}", send("new_" << asset << "_path"), :plain => true, :text => t(:create_a_new) << ' ' << t(asset + '_small'))}.
   - else
     == #{t(:could_not_find_matching, t(assets.downcase + '_small'))} <span class="cool"><b>#{h @current_query}</b></span>; #{t :please_retry}
