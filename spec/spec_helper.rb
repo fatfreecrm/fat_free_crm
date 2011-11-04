@@ -19,8 +19,6 @@ Dir[File.dirname(__FILE__) + "/shared/*.rb"].map {|f| require f}
 
 TASK_STATUSES = %w(pending assigned completed).freeze
 
-# Load default settings from config/settings.yml
-Factory(:default_settings)
 Setting.task_calendar_with_time = false
 
 I18n.locale = 'en-US'
@@ -59,89 +57,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 end
 
-# See vendor/plugins/authlogic/lib/authlogic/test_case.rb
-#----------------------------------------------------------------------------
-def activate_authlogic
-  require 'authlogic/test_case/rails_request_adapter'
-  require 'authlogic/test_case/mock_cookie_jar'
-  require 'authlogic/test_case/mock_request'
-
-  Authlogic::Session::Base.controller = (@request && Authlogic::TestCase::RailsRequestAdapter.new(@request)) || controller
-end
-
-# Note: Authentication is NOT ActiveRecord model, so we mock and stub it using RSpec.
-#----------------------------------------------------------------------------
-def login(user_stubs = {}, session_stubs = {})
-  User.current_user = @current_user = Factory(:user, user_stubs)
-  @current_user_session = mock(Authentication, {:record => @current_user}.merge(session_stubs))
-  Authentication.stub!(:find).and_return(@current_user_session)
-  #set_timezone
-end
-alias :require_user :login
-
-#- ---------------------------------------------------------------------------
-def login_and_assign(user_stubs = {}, session_stubs = {})
-  login(user_stubs, session_stubs)
-  assigns[:current_user] = @current_user
-end
-
-#----------------------------------------------------------------------------
-def logout
-  @current_user = nil
-  @current_user_session = nil
-  Authentication.stub!(:find).and_return(nil)
-end
-alias :require_no_user :logout
-
-#----------------------------------------------------------------------------
-def current_user
-  @current_user
-end
-
-#----------------------------------------------------------------------------
-def current_user_session
-  @current_user_session
-end
-
-#----------------------------------------------------------------------------
-def set_current_tab(tab)
-  controller.session[:current_tab] = tab
-end
-
-#----------------------------------------------------------------------------
-def stub_task(view)
-  if view == "completed"
-    assigns[:task] = Factory(:task, :completed_at => Time.now - 1.minute)
-  elsif view == "assigned"
-    assigns[:task] = Factory(:task, :assignee => Factory(:user))
-  else
-    assigns[:task] = Factory(:task)
-  end
-end
-
-#----------------------------------------------------------------------------
-def stub_task_total(view = "pending")
-  settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-  settings.inject({ :all => 0 }) { |hash, key| hash[key] = 1; hash }
-end
-
-# Get current server timezone and set it (see rake time:zones:local for details).
-#----------------------------------------------------------------------------
-def set_timezone
-  offset = [ Time.now.beginning_of_year.utc_offset, Time.now.beginning_of_year.change(:month => 7).utc_offset ].min
-  offset *= 3600 if offset.abs < 13
-  Time.zone = ActiveSupport::TimeZone.all.select { |zone| zone.utc_offset == offset }.first
-end
-
-# Adjusts current timezone by given offset (in seconds).
-#----------------------------------------------------------------------------
-def adjust_timezone(offset)
-  if offset
-    ActiveSupport::TimeZone[offset]
-    adjusted_time = Time.now + offset.seconds
-    Time.stub(:now).and_return(adjusted_time)
-  end
-end
+# Load default settings from config/settings.yml
+load_default_settings if Setting.table_exists?
 
 ActionView::TestCase::TestController.class_eval do
   def self.controller_name
