@@ -1,10 +1,10 @@
 class CreateFieldGroups < ActiveRecord::Migration
   def self.up
     create_table :field_groups do |t|
-      t.string      :klass_name,  :limit => 32
-      t.string      :label,       :limit => 64
+      t.string      :name,        :limit => 64
+      t.string      :label,       :limit => 128
       t.integer     :position
-      t.string      :tooltip
+      t.string      :hint
       t.timestamps
     end
   end

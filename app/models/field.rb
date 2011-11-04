@@ -5,59 +5,38 @@ class Field < ActiveRecord::Base
 
   belongs_to :field_group
 
-  delegate :klass, :to => :field_group
-
   FIELD_TYPES = {
-    'short_answer' => {
-      :name          => 'Short Answer',
-      :column_type   => 'TEXT',
-      :display_width => 200
-    },
-    'long_answer' => {
-      :name          => 'Long Answer',
-      :column_type   => 'TEXT',
-      :display_width => 250
-    },
-    'select_list' => {
-      :name          => 'Dropdown List',
-      :column_type   => 'TEXT',
-      :display_width => 200
-    },
-    'multi_select' => {
-      :name          => 'Multi-select Dropdown List',
-      :column_type   => 'TEXT',
-      :display_width => 200
-    },
-    'checkbox' => {
-      :name          => 'Checkbox',
-      :column_type   => 'BOOLEAN'
-    },
-    'date' => {
-      :name          => 'Date',
-      :column_type   => 'DATE',
-      :display_width => 100
-    },
-    'datetime' => {
-      :name          => 'Date & Time',
-      :column_type   => 'TIMESTAMP',
-      :display_width => 150
-    },
-    'number' => {
-      :name          => 'Number',
-      :column_type   => 'DECIMAL',
-      :display_width => 60
-    }
+    'string'      => :string,
+    'text'        => :text,
+    'email'       => :string,
+    'url'         => :string,
+    'tel'         => :string,
+    'select'      => :string,
+    'radio'       => :string,
+    'checkboxes'  => :text,
+    'multiselect' => :text,
+    'checkbox'    => :boolean,
+    'date'        => :date,
+    'datetime'    => :timestamp,
+    'currency'    => [:decimal, {:scale => 2}],
+    'integer'     => :integer,
+    'float'       => :float
   }
 
-  %w(column_type display_width).each do |attr|
-    class_eval %Q{
-      def #{attr}
-        FIELD_TYPES[field_type][:#{attr}]
-      end
-    }
+  def self.field_types
+    # Expands concise FIELD_TYPES into a more usable hash
+    @field_types ||= FIELD_TYPES.inject({}) do |hash, n|
+      arr = [n[1]].flatten
+      hash[n[0]] = {:type => arr[0], :options => arr[1]}
+      hash
+    end
   end
 
-  def input_attributes
+  def column_type(field_type = self.as)
+    (opts = Field.field_types[field_type]) ? opts[:type] : raise("Unknown field_type: #{field_type}")
+  end
+
+  def input_options
     attributes.reject { |k,v|
       %w(type field_group position maxlength).include?(k)
     }.merge(:input_html => {:maxlength => attributes[:maxlength]})
@@ -65,17 +44,17 @@ class Field < ActiveRecord::Base
 
   ## Default validations for model
   #
-  validates_presence_of :name, :message => "^Please enter a Field name."
-  validates_format_of :name, :with => /\A[A-Za-z_]+\z/, :allow_blank => true, :message => "^Please specify Field name without any special characters or numbers, spaces are not allowed - use [A-Za-z_] "
-  validates_length_of :name, :maximum => 64, :message => "^The Field name must be less than 64 characters in length."
-
   validates_presence_of :label, :message => "^Please enter a Field label."
   validates_length_of :label, :maximum => 64, :message => "^The Field name must be less than 64 characters in length."
 
-  validates_numericality_of :max_size, :only_integer => true, :allow_blank => true, :message => "^Max size can only be whole number."
+  validates_numericality_of :maxlength, :only_integer => true, :allow_blank => true, :message => "^Max size can only be whole number."
 
-  validates_presence_of :field_type, :message => "^Please specify a Field type."
-  validates_inclusion_of :field_type, :in => FIELD_TYPES.keys, :message => "^Hack alert::Field type Please dont change the HTML source of this application."
+  validates_presence_of :as, :message => "^Please specify a Field type."
+  validates_inclusion_of :as, :in => FIELD_TYPES.keys, :message => "Invalid Field Type."
+
+  def klass
+    klass_name.constantize
+  end
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------

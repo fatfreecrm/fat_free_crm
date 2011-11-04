@@ -22,4 +22,60 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe CustomField do
+
+  it "should add a column to the database" do
+    c = Factory.create(:custom_field, :name => "cf_test_field", :klass_name => "Contact")
+    c.klass.columns.map(&:name).should include("cf_test_field")
+  end
+
+  it "should generate a unique column name for a custom field" do
+    c = Factory.build(:custom_field, :label => "Test Field", :klass_name => "Contact")
+
+    # Overwrite :klass_column_names with instance variable accessors
+    c.class_eval { attr_accessor :klass_column_names }
+    c.klass_column_names = []
+
+    %w(cf_test_field cf_test_field_2 cf_test_field_3).each do |expected|
+      c.send(:generate_column_name).should == expected
+      c.klass_column_names << expected
+    end
+  end
+
+  it "should evaluate the safety of database transitions" do
+    c = Factory.build(:custom_field, :as => "string")
+    c.send(:db_transition_safety, c.as, "email").should == :null
+    c.send(:db_transition_safety, c.as, "text").should == :safe
+    c.send(:db_transition_safety, c.as, "datetime").should == :unsafe
+
+    c = Factory.build(:custom_field, :as => "datetime")
+    c.send(:db_transition_safety, c.as, "date").should == :safe
+    c.send(:db_transition_safety, c.as, "url").should == :unsafe
+  end
+
+  it "should return a safe list of types for the 'as' select options" do
+    {"email"   => %w(string email url tel select radio),
+     "integer" => %w(integer float)}.each do |type, expected_arr|
+      c = Factory.create(:custom_field, :as => type)
+      opts = c.edit_as_options
+      expected_arr.each {|t| opts.should include(t) }
+    end
+  end
+
+  # Find ActiveRecord column by name
+  def ar_column(custom_field, column)
+    custom_field.klass.columns.detect{|c| c.name == column }
+  end
+
+  it "should change a column's type for safe transitions" do
+    c = Factory.create(:custom_field,
+                       :label => "Test Field",
+                       :name => nil,
+                       :as => "email",
+                       :klass_name => "Contact")
+    ar_column(c, "cf_test_field").type.should == :string
+    c.as = "text"
+    c.save
+    ar_column(c, "cf_test_field").type.should == :text
+  end
+
 end
