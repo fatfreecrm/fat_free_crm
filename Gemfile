@@ -27,7 +27,11 @@ group :development, :test do
   gem 'test-unit', '1.2.3', :platform => :mri_19
   gem "rspec-rails",        '>= 2.5.0'
   gem 'ffaker',             '>= 1.5.0'
-  gem 'factory_girl',       '>= 1.3.3'
+  gem 'factory_girl',       '~> 1.3.3'
+end
+
+group :test do
+  gem 'factory_girl_rails', '~> 1.0.1'
 end
 
 
