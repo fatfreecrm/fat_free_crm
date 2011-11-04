@@ -21,8 +21,9 @@ namespace :crm do
     task :schema => :environment do
       timestamps = Dir.glob("db/migrate/*.rb").map{|f| File.basename(f)[/(\d+)/,1] }.sort
       timestamps[0..30].each_with_index do |timestamp, i|
+        puts "== #{i+1} => #{timestamp}"
         ActiveRecord::Base.connection.
-          execute("update schema_migrations set version=#{timestamp} where version=#{i+1};")
+          execute("update schema_migrations set version=#{timestamp} where version='#{i+1}';")
       end
     end
   end
