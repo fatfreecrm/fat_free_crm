@@ -1,16 +1,16 @@
 # Fat Free CRM
 # Copyright (C) 2008-2011 by Michael Dvorkin
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
@@ -28,10 +28,9 @@
 #  updated_at    :datetime
 #
 class Setting < ActiveRecord::Base
-  
+
   #-------------------------------------------------------------------
   def self.method_missing(method, *args)
-    return nil unless Setting.table_exists?
     begin
       super(method, *args)
     rescue NoMethodError
@@ -65,4 +64,13 @@ class Setting < ActiveRecord::Base
     send(setting).map { |key| [ key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym ] }
   end
 
+end
+
+
+# Disable Setting model if migrations haven't been run yet.
+unless Setting.table_exists?
+  Setting.class_eval do
+    def self.[] (*args); nil; end
+    def self.[]= (*args); nil; end
+  end
 end
