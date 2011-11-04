@@ -20,7 +20,7 @@
 # Adding database columns dynamically is not usually recommended,
 # and can be potentially unsafe. However, the only alternative would be static migrations,
 # and we want to let users add custom fields without having to restart their server.
-# We could not recommend the EAV model due to performance concerns, since we need the
+# We could not use the EAV model for performance reasons, since we need to retain the
 # ability to filter and search across thousands of records with potentially hundreds
 # of custom fields.
 #
