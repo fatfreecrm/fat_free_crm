@@ -10,5 +10,6 @@ class CreateFieldGroups < ActiveRecord::Migration
   end
 
   def self.down
+    drop_table :field_groups
   end
 end

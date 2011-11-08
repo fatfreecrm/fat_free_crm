@@ -1,27 +1,27 @@
-= styles_for :custom_fields
+= styles_for :fields
 
 .title_tools
-  = link_to_inline(:create_custom_field, new_admin_custom_field_path)
+  = link_to_inline(:create_field, new_admin_field_path)
 
 .title
-  %span#create_custom_field_title Custom Fields for #{t(@klass_name.downcase)}
+  %span#create_field_title Fields
 
 .remote#options{ hidden }
-.remote#create_custom_field{ hidden }
+.remote#create_field{ hidden }
 
-.list#custom_fields
-  - unless @custom_fields.empty?
-    = render :partial => "custom_field", :collection => @custom_fields
-  - else
-    - # Special case for 'empty' partial for admin controller.
-    - assets = controller.controller_name
-    - asset = assets.singularize
-    - path_prefix = "admin_"
-    #empty
-      - if @current_query.blank?
-        == #{t(:could_not_find, assets)} #{link_to(t(:create_new) << ' ' << t(asset + '_small'), :url => send("new_" << path_prefix << asset << "_path"), :remote => true)}.
-      - else
-        == #{t(:could_not_find_matching, t(assets.downcase + '_small'))} <span class="cool"><b>#{h @current_query}</b></span>; #{t :please_retry}
+.tabs
+  %ul
+    - @klasses.each do |klass|
+      %li{ :"data-tab-class" => klass.name.downcase }= klass
 
--# #paginate= render :partial => "shared/paginate"
+- @klasses.each do |klass|
+  - asset = klass.name.downcase
+  .fields{ :id => "#{asset}_fields", :style => ("display: none;" if klass != Contact) }
+    %h3= klass
 
+    .create_new
+      == #{link_to(t(:create_new_custom_field_for, :klass => t(asset + '_small')), :url => new_admin_field_path(:klass_name => klass.name), :remote => true)}.
+
+    .list#fields
+      - if klass.fields.present?
+        = render :partial => "field", :collection => klass.fields

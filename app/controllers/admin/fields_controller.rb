@@ -21,18 +21,24 @@ class Admin::FieldsController < Admin::ApplicationController
   before_filter :auto_complete, :only => :auto_complete
 
   def sort
-    params[:custom_fields].each_with_index do |id, index|
+    params[:fields].each_with_index do |id, index|
       CustomField.update_all(['position=?', index+1], ['id=?', id])
     end
     render :nothing => true
   end
 
+  # GET /fields
+  # GET /fields.xml                                                      HTML
+  #----------------------------------------------------------------------------
+  def index
+    @klasses = Field::KLASSES
+  end
 
-  # GET /custom_fields/1
-  # GET /custom_fields/1.xml                                                    HTML
+  # GET /fields/1
+  # GET /fields/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
-    @custom_field = CustomField.find(params[:id])
+    @custom_field = Field.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -43,12 +49,11 @@ class Admin::FieldsController < Admin::ApplicationController
     respond_to_not_found(:html, :xml)
   end
 
-  # GET /custom_fields/new
-  # GET /custom_fields/new.xml                                                  AJAX
+  # GET /fields/new
+  # GET /fields/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @custom_field = CustomField.new(:user => @current_user, :tag_id => params[:tag_id])
-    @disabled = false
+    @custom_field = CustomField.new(:klass_name => params[:klass_name])
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -59,14 +64,13 @@ class Admin::FieldsController < Admin::ApplicationController
     respond_to_not_found(:html, :xml)
   end
 
-  # GET /custom_fields/1/edit                                                   AJAX
+  # GET /fields/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @custom_field = CustomField.find(params[:id])
-    @disabled = :disabled
+    @field = Field.find(params[:id])
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = CustomField.find($1)
+      @previous = Field.find($1)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -74,20 +78,14 @@ class Admin::FieldsController < Admin::ApplicationController
     respond_to_not_found(:js) unless @custom_field
   end
 
-  # POST /custom_fields
-  # POST /custom_fields.xml                                                     AJAX
+  # POST /fields
+  # POST /fields.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    @custom_field = CustomField.new(params[:custom_field])
-    @disabled = false
+    @custom_field = CustomField.new(params[:field])
 
     respond_to do |format|
       if @custom_field.save
-        @custom_fields = if params[:custom_field][:tag_id]
-          ActsAsTaggableOn::Tag.find(params[:custom_field][:tag_id]).custom_fields
-        elsif called_from_index_page?
-          get_custom_fields
-        end
         format.js   # create.js.rjs
         format.xml  { render :xml => @custom_field, :status => :created, :location => @custom_field }
       else
@@ -97,14 +95,14 @@ class Admin::FieldsController < Admin::ApplicationController
     end
   end
 
-  # PUT /custom_fields/1
-  # PUT /custom_fields/1.xml                                                    AJAX
+  # PUT /fields/1
+  # PUT /fields/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    @custom_field = CustomField.find(params[:id])
+    @field = Field.find(params[:id])
 
     respond_to do |format|
-      if @custom_field.update_attributes(params[:custom_field])
+      if @field.update_attributes(params[:field])
         format.js
         format.xml  { head :ok }
       else
@@ -117,8 +115,8 @@ class Admin::FieldsController < Admin::ApplicationController
     respond_to_not_found(:js, :xml)
   end
 
-  # DELETE /custom_fields/1
-  # DELETE /custom_fields/1.xml                                        HTML and AJAX
+  # DELETE /fields/1
+  # DELETE /fields/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @custom_field = CustomField.find(params[:id])
@@ -134,77 +132,19 @@ class Admin::FieldsController < Admin::ApplicationController
     respond_to_not_found(:html, :js, :xml)
   end
 
-  # GET /custom_fields/search/query                                             AJAX
-  #----------------------------------------------------------------------------
-  def search
-    @custom_fields = get_custom_fields(:query => params[:query], :page => 1)
-
-    respond_to do |format|
-      format.js   { render :action => :index }
-      format.xml  { render :xml => @custom_fields.to_xml }
-    end
-  end
-
-  # POST /custom_fields/auto_complete/query                                     AJAX
+  # POST /fields/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
 
-  # GET /custom_fields/options                                                  AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel] == "true"
-      @per_page = @current_user.pref[:custom_fields_per_page] || CustomField.per_page
-      @outline  = @current_user.pref[:custom_fields_outline]  || CustomField.outline
-      @sort_by  = @current_user.pref[:custom_fields_sort_by]  || CustomField.sort_by
-      @sort_by  = CustomField::SORT_BY.invert[@sort_by]
-    end
-  end
-
-  # POST /custom_fields/redraw                                                  AJAX
-  #----------------------------------------------------------------------------
-  def redraw
-    @current_user.pref[:custom_fields_per_page] = params[:per_page] if params[:per_page]
-    @current_user.pref[:custom_fields_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:custom_fields_sort_by]  = CustomField::SORT_BY[params[:sort_by]] if params[:sort_by]
-    @custom_fields = get_custom_fields(:page => 1) # Start one the first page.
-
-    render :action => :index
-  end
-
   private
-  #----------------------------------------------------------------------------
-  def get_custom_fields(options = { :page => nil, :query => nil })
-    self.current_page = options[:page] if options[:page]
-    self.current_query = options[:query] if options[:query]
-
-    records = {
-      :user => @current_user,
-      :order => @current_user.pref[:custom_fields_sort_by] || CustomField.sort_by
-    }
-    pages = {
-      :page => current_page,
-      :per_page => @current_user.pref[:custom_fields_per_page]
-    }
-
-    # Call :get_custom_fields hook and return its output if any.
-    custom_fields = hook(:get_custom_fields, self, :records => records, :pages => pages)
-    return custom_fields.last unless custom_fields.empty?
-
-    # Default processing if no :get_custom_fields hooks are present.
-    if current_query.blank?
-      CustomField.find(:all)
-    else
-      CustomField.search(current_query)
-    end.paginate(pages)
-  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
       if called_from_index_page?
-        @custom_fields = get_custom_fields
-        if @custom_fields.blank?
-          @custom_fields = get_custom_fields(:page => current_page - 1) if current_page > 1
+        @fields = get_fields
+        if @fields.blank?
+          @fields = get_fields(:page => current_page - 1) if current_page > 1
           render :action => :index and return
         end
       else
@@ -214,7 +154,7 @@ class Admin::FieldsController < Admin::ApplicationController
     else
       self.current_page = 1
       flash[:notice] = "#{@custom_field.field_name} has beed deleted."
-      redirect_to(custom_fields_path)
+      redirect_to(fields_path)
     end
   end
 end

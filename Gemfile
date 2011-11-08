@@ -17,6 +17,7 @@ gem 'paperclip',           '~> 2.3.6'
 gem 'will_paginate',       '>= 3.0.pre2'
 gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
+#~ gem 'jquery-rails' TODO: Go to rails 3.1
 
 group :development, :test do
   gem 'ruby-debug',   :platform => :mri_18

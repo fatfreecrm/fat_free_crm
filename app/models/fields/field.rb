@@ -5,13 +5,12 @@ class Field < ActiveRecord::Base
 
   belongs_to :field_group
 
-  KLASSES = %w(Task Campaign Lead Contact Account Opportunity).map(&:constantize)
+  KLASSES = [Task, Campaign, Lead, Contact, Account, Opportunity]
   KLASSES.each do |klass|
     klass.class_eval do
-      def self.fields(field_type = "CoreField")
-        Field.where(:klass_name => self.name, :type => field_type)
-      end
-      def self.custom_fields; fields("CustomField"); end
+      def self.fields; Field.where(:klass_name => self.name); end
+      def self.core_fields; fields.where(:type => "CoreField"); end
+      def self.custom_fields; fields.where(:type => "CustomField"); end
     end
   end
 
@@ -65,19 +64,4 @@ class Field < ActiveRecord::Base
   def klass
     klass_name.constantize
   end
-
-  # Default values provided through class methods.
-  #----------------------------------------------------------------------------
-  def self.per_page ; 20                       ; end
-  def self.outline  ; "long"                   ; end
-  def self.sort_by  ; "fields.created_at DESC" ; end
-
-  SORT_BY = {
-    "field name"     => "fields.name ASC",
-    "field label"    => "fields.label DESC",
-    "field type"     => "fields.field_type DESC",
-    "max size"       => "fields.max_size DESC",
-    "date created"   => "fields.created_at DESC",
-    "date updated"   => "fields.updated_at DESC"
-  }
 end
