@@ -1,34 +1,34 @@
-id = dom_id(@customfield)
+id = dom_id(@field)
 
-if params[:cancel] == "true" # <----------------- Hide [Edit Customfield]
+if params[:cancel] == "true" # <----------------- Hide [Edit field]
 
   if called_from_landing_page?
-    page.call "crm.flip_form", :edit_customfield
-    page.call "crm.set_title", :edit_customfield, @customfield.field_label
-  else                                            # Called from customfields list item...
-    page[id].replace :partial => "customfield", :collection => [ @customfield ]
+    page.call "crm.flip_form", :edit_field
+    page.call "crm.set_title", :edit_field, @field.field_label
+  else                                            # Called from fields list item...
+    page[id].replace :partial => "field", :collection => [ @field ]
   end
 
-else # <----------------------------------------- Show [Edit Customfield] form.
+else # <----------------------------------------- Show [Edit field] form.
 
-  if params[:cancel].blank?                       # Called from customfields list item...
-    if @previous                                  # Hide open [Edit Customfield] form if any.
-      if @previous.is_a?(Customfield)
-        page[dom_id(@previous)].replace :partial => "customfield", :collection => [ @previous ]
+  if params[:cancel].blank?                       # Called from fields list item...
+    if @previous                                  # Hide open [Edit field] form if any.
+      if @previous.is_a?(field)
+        page[dom_id(@previous)].replace :partial => "field", :collection => [ @previous ]
       else
-        page.call "crm.flick", "customfield_#{@previous}", :remove
+        page.call "crm.flick", "field_#{@previous}", :remove
       end
     end
     page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
-    page.call "crm.hide_form", :create_customfield    # Hide [Create Customfield] form if any.
-    page[id].replace_html :partial => "edit"      # Show [Edit Customfield] form.
+    page.call "crm.hide_form", :create_field    # Hide [Create field] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit field] form.
 
-  elsif params[:cancel] == "false"                # Called from title of the customfield landing page...
-    page[:edit_customfield].replace_html :partial => "edit"
-    page.call "crm.flip_form", :edit_customfield
-    page.call "crm.set_title", :edit_customfield, "Edit #{@customfield.field_label}"
+  elsif params[:cancel] == "false"                # Called from title of the field landing page...
+    page[:edit_field].replace_html :partial => "edit"
+    page.call "crm.flip_form", :edit_field
+    page.call "crm.set_title", :edit_field, "Edit #{@field.field_label}"
   end
 
-  page[:customfield_field_label].focus
+  page[:field_field_label].focus
 
 end

@@ -103,7 +103,6 @@ protected
     Field.field_types[self.as][:options] || {}
   end
 
-
   def add_column
     self.name = generate_column_name if name.blank?
     connection.add_column(table_name, name, column_type, column_options)

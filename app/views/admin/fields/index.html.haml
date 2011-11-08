@@ -1,27 +1,28 @@
 = styles_for :fields
 
-.title_tools
-  = link_to_inline(:create_field, new_admin_field_path)
-
 .title
   %span#create_field_title Fields
 
 .remote#options{ hidden }
-.remote#create_field{ hidden }
 
-.tabs
+.inline_tabs
   %ul
     - @klasses.each do |klass|
-      %li{ :"data-tab-class" => klass.name.downcase }= klass
+      %li{ "data-tab-class" => klass.name.downcase, :class => ("selected" if klass == Contact) }
+        = link_to t(klass.name.downcase), "#"
+
+.remote#create_field{ hidden }
 
 - @klasses.each do |klass|
   - asset = klass.name.downcase
-  .fields{ :id => "#{asset}_fields", :style => ("display: none;" if klass != Contact) }
-    %h3= klass
+  .fields{ :id => "#{asset}_section", :style => ("display: none;" if klass != Contact) }
+    .create_field
+      = link_to_inline(:create_field, new_admin_field_path(:klass_name => klass.name), :text => t(:create_new_custom_field_for, :klass_name => t(asset + 's_small')))
 
-    .create_new
-      == #{link_to(t(:create_new_custom_field_for, :klass => t(asset + '_small')), :url => new_admin_field_path(:klass_name => klass.name), :remote => true)}.
+    %hr
 
-    .list#fields
+    .list{ :id => "#{asset}_fields" }
       - if klass.fields.present?
         = render :partial => "field", :collection => klass.fields
+
+  = sortable_element("#{asset}_fields", :url => sort_admin_fields_path(:klass_name => klass.name))

@@ -1,43 +1,41 @@
-= styles_for :customfield
+= styles_for :field
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to_inline(:edit_customfield, edit_admin_customfield_path(@customfield), :text => "Edit") + " | "
-.title#edit_customfield_title= @customfield.field_label
+  = link_to_inline(:edit_field, edit_admin_field_path(@field), :text => "Edit") + " | "
+.title#edit_field_title= @field.field_label
 
-%div#edit_customfield{ hidden }
+%div#edit_field{ hidden }
 
 %tt
   %br
   Label:
   %b
-    - if @customfield.field_label? 
-      = @customfield.field_label
+    - if @field.field_label?
+      = @field.field_label
   %br
   Name:
   %b
-    - if @customfield.field_name? 
-      = @customfield.field_name
+    - if @field.field_name?
+      = @field.field_name
   %br
   Table:
   %b
-    - if @customfield.table_name? 
-      = @customfield.table_name.pluralize
+    - if @field.table_name?
+      = @field.table_name.pluralize
   %br
   Type:
   %b
-    - if @customfield.field_type? 
-      = @customfield.field_type
+    - if @field.field_type?
+      = @field.field_type
   %br
   %br
   Created at:
   %b
-    = @customfield.created_at.to_s
+    = @field.created_at.to_s
   %br
   Updated at:
   %b
-    = @customfield.updated_at.to_s
+    = @field.updated_at.to_s
 
-
-
-= hook(:show_customfield_bottom, self)
+= hook(:show_field_bottom, self)

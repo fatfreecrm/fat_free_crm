@@ -21,8 +21,10 @@ class Admin::FieldsController < Admin::ApplicationController
   before_filter :auto_complete, :only => :auto_complete
 
   def sort
-    params[:fields].each_with_index do |id, index|
-      CustomField.update_all(['position=?', index+1], ['id=?', id])
+    klass_name = params[:klass_name]
+    param_name = klass_name.downcase + '_fields'
+    params[param_name].each_with_index do |id, index|
+      Field.update_all(['position=?', index+1], ['id=?', id])
     end
     render :nothing => true
   end
@@ -53,11 +55,11 @@ class Admin::FieldsController < Admin::ApplicationController
   # GET /fields/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @custom_field = CustomField.new(:klass_name => params[:klass_name])
+    @field = Field.new(:klass_name => params[:klass_name])
 
     respond_to do |format|
       format.js   # new.js.rjs
-      format.xml  { render :xml => @custom_field }
+      format.xml  { render :xml => @field }
     end
 
   rescue ActiveRecord::RecordNotFound # Kicks in if related asset was not found.
@@ -82,15 +84,15 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    @custom_field = CustomField.new(params[:field])
+    @field = CustomField.new(params[:field])
 
     respond_to do |format|
-      if @custom_field.save
+      if @field.save
         format.js   # create.js.rjs
-        format.xml  { render :xml => @custom_field, :status => :created, :location => @custom_field }
+        format.xml  { render :xml => @field, :status => :created, :location => @field }
       else
         format.js   # create.js.rjs
-        format.xml  { render :xml => @custom_field.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @field.errors, :status => :unprocessable_entity }
       end
     end
   end

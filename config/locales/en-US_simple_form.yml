@@ -1,4 +1,4 @@
-en:
+en-US:
   simple_form:
     "yes": 'Yes'
     "no": 'No'
@@ -21,18 +21,20 @@ en:
     # hints:
     #   username: 'User name to sign in.'
     #   password: 'No special characters, please.'
-    field_types:
-      string:      Short Answer
-      text:        Long Answer
-      select:      Select List
-      radio:       Radio Buttons
-      checkbox:    Checkbox
-      check_boxes: Checkbox List
-      date:        Date
-      datetime:    Date & Time
-      email:       Email Address
-      url:         URL
-      tel:         Phone Number
-      currency:    Currency
-      integer:     Number (Integer)
-      float:       Number (Floating Point)
+
+  field_types:
+    string:      Short Answer
+    text:        Long Answer
+    select:      Select List
+    multiselect: Multi Select
+    radio:       Radio Buttons
+    checkbox:    Checkbox
+    check_boxes: Checkbox List
+    date:        Date
+    datetime:    Date & Time
+    email:       Email Address
+    url:         URL
+    tel:         Phone Number
+    currency:    Currency
+    integer:     Number (Integer)
+    float:       Number (Floating Point)

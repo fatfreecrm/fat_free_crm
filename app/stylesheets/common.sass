@@ -1,16 +1,16 @@
 // Fat Free CRM
 // Copyright (C) 2008-2011 by Michael Dvorkin
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
@@ -63,11 +63,11 @@ $sidebar_width:  210px
 
 .check_box
   line-height: 20px
-  
+
   input
     position: relative
     top: -3px
-  
+
   label
     font-size: 11px
 
@@ -106,7 +106,7 @@ $sidebar_width:  210px
   -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb
   -webkit-border-radius: 4px
   -webkit-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb
-  
+
 .sidebar
   color: #3f3f3f
   font-size: 11px
@@ -197,7 +197,7 @@ $sidebar_width:  210px
   vertical-align: middle
 
 .cool
-  color: darkgreen 
+  color: darkgreen
 
 .warn
   color: crimson
@@ -489,7 +489,7 @@ $sidebar_width:  210px
       weight: bold
     margin: 4px 0px 2px 0px
     padding: 2px 0px 2px 0px
-    
+
   &#recently
     background: floralwhite
 
@@ -613,3 +613,31 @@ $sidebar_width:  210px
 //   margin-right: 0px;
 //   background-position: 0 -50px;
 // }
+
+// Admin Tabs
+
+.inline_tabs ul
+  margin: 20px 0
+  li
+    display: inline
+    a
+      display: inline-block
+      background: #FAFAFA
+      padding: 5px
+      border: 1px solid #BBB
+      margin-right: 5px
+      width: 75px
+      text-align: center
+      color: black
+    &.selected a
+      background: #1E4262
+      color: white
+      font-weight: bold
+
+.list li
+  cursor: move
+
+span.handle img
+  vertical-align: middle
+  margin-right: 5px
+

@@ -478,9 +478,14 @@ document.observe("dom:loaded", function() { crm.focus_on_first_field() });
 
 // Admin Field Tabs
 document.on("click", "*[data-tab-class]", function(event, element) {
+  event.stop();
+
   var klass = element.readAttribute('data-tab-class');
   $$(".fields").each(function(el){ el.hide(); });
-  $(klass + "_fields").show();
+  $$(".inline_tabs ul li").each(function(el){ el.removeClassName('selected'); });
+
+  $(klass + "_section").show();
+  element.addClassName('selected');
 });
 
 

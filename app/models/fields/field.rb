@@ -8,7 +8,7 @@ class Field < ActiveRecord::Base
   KLASSES = [Task, Campaign, Lead, Contact, Account, Opportunity]
   KLASSES.each do |klass|
     klass.class_eval do
-      def self.fields; Field.where(:klass_name => self.name); end
+      def self.fields; Field.where(:klass_name => self.name).order(:position); end
       def self.core_fields; fields.where(:type => "CoreField"); end
       def self.custom_fields; fields.where(:type => "CustomField"); end
     end
@@ -27,7 +27,7 @@ class Field < ActiveRecord::Base
     'checkbox'    => :boolean,
     'date'        => :date,
     'datetime'    => :timestamp,
-    'currency'    => [:decimal, {:scale => 2}],
+    'currency'    => [:decimal, {:precision => 15, :scale => 2}],
     'integer'     => :integer,
     'float'       => :float
   }

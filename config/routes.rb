@@ -130,6 +130,8 @@ FatFreeCRM::Application.routes.draw do
           post :sort
         end
       end
+      resources :fields, :as => :custom_fields
+      resources :fields, :as => :core_fields
 
       resources :settings
       resources :plugins

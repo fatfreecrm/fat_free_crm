@@ -1,10 +1,9 @@
 
-= form_for([:admin, @customfield], :html => one_submit_only(:customfield), :remote => true) do |f|
-  = link_to_close new_admin_customfield_path
+= form_for([:admin, @field], :html => one_submit_only(:field), :remote => true) do |f|
+  = link_to_close new_admin_field_path
   = f.error_messages
-  = f.hidden_field :tag_id
-  = render :partial => "admin/customfields/top_section", :locals => { :f => f }
+  = render :partial => "admin/fields/top_section", :locals => { :f => f }
   .buttonbar
-    = f.submit "Create Customfield"
+    = f.submit "Create field"
     or
-    = link_to_cancel new_admin_customfield_path
+    = link_to_cancel new_admin_field_path

@@ -1,13 +1,14 @@
-if @customfield.valid?
-  page[:create_customfield_arrow].replace_html "&#9658;"
-  page[:create_customfield_title].replace_html "Customfields"
-  page.visual_effect :toggle_blind, :create_customfield, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
-  page.insert_html :top, :customfields, :partial => "customfield", :collection => [ @customfield ]
-  page[dom_id(@customfield)].visual_effect :highlight, :duration => 1.5
+if @field.valid?
+  page[:create_field_arrow].replace_html "&#9658;"
+  page[:create_field_title].replace_html "fields"
+  page.visual_effect :toggle_blind, :create_field, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, "#{@field.klass_name.downcase}_fields", :partial => "field", :collection => [ @field ]
+  page[dom_id(@field)].visual_effect :highlight, :duration => 1.5
   page.call "crm.flick", :empty, :remove
+  page.insert_html :bottom, "#{@field.klass_name.downcase}_fields", sortable_element("#{@field.klass_name.downcase}_fields", :url => sort_admin_fields_path(:klass_name => @field.klass.name))
 else
-  page[:create_customfield].replace_html :partial => "create"
-  page[:create_customfield].visual_effect :shake, :duration => 0.25, :distance => 6
-  page[:customfield_field_label].focus
+  page[:create_field].replace_html :partial => "create"
+  page[:create_field].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:field_field_label].focus
 end
 
