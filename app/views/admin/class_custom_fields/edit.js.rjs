@@ -1,0 +1,34 @@
+id = dom_id(@super_tag)
+
+if params[:cancel] == "true" # <----------------- Hide [Edit Super tag]
+
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_super_tag
+    page.call "crm.set_title", :edit_super_tag, @super_tag.name
+  else                                            # Called from super_tags list item...
+    page[id].replace :partial => "super_tag", :collection => [ @super_tag ]
+  end
+
+else # <----------------------------------------- Show [Edit Super tag] form.
+
+  if params[:cancel].blank?                       # Called from super_tags list item...
+    if @previous                                  # Hide open [Edit Super tag] form if any.
+      if @previous.is_a?(ActsAsTaggableOn::Tag)
+        page[dom_id(@previous)].replace :partial => "super_tag", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "super_tag_#{@previous}", :remove
+      end
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_super_tag  # Hide [Create Super tag] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit Super tag] form.
+
+  elsif params[:cancel] == "false"                # Called from title of the super_tag landing page...
+    page[:edit_super_tag].replace_html :partial => "edit"
+    page.call "crm.flip_form", :edit_super_tag
+    page.call "crm.set_title", :edit_super_tag, "Edit #{@super_tag.name}"
+  end
+
+  page[:acts_as_taggable_on_tag_name].focus
+
+end

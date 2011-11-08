@@ -79,6 +79,10 @@ class ApplicationController < ActionController::Base
     respond_to_not_found(:html, :js, :xml)
   end
 
+  def timeline(asset)
+    (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
+  end
+
 private
   #----------------------------------------------------------------------------
   def set_context

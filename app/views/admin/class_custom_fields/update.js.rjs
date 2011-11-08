@@ -1,0 +1,15 @@
+id = called_from_landing_page? ? "edit_super_tag" : dom_id(@super_tag)
+
+if @super_tag.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_super_tag
+    page.call "crm.set_title", :edit_super_tag, @super_tag.name
+  else
+    page[id].replace :partial => "super_tag", :collection => [ @super_tag ]
+    page[id].visual_effect :highlight, :duration => 1.0
+  end
+else
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:acts_as_taggable_on_tag_name].focus
+end

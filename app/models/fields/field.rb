@@ -5,6 +5,16 @@ class Field < ActiveRecord::Base
 
   belongs_to :field_group
 
+  KLASSES = %w(Task Campaign Lead Contact Account Opportunity).map(&:constantize)
+  KLASSES.each do |klass|
+    klass.class_eval do
+      def self.fields(field_type = "CoreField")
+        Field.where(:klass_name => self.name, :type => field_type)
+      end
+      def self.custom_fields; fields("CustomField"); end
+    end
+  end
+
   FIELD_TYPES = {
     'string'      => :string,
     'text'        => :text,

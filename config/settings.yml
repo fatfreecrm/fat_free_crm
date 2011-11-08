@@ -121,9 +121,10 @@ task_calendar_with_time: true
 ]
 
 :admin_tabs: [
-  { :active : true,  :text : :admin_tab_users,    :url : { :controller : "admin/users"    } },
-  { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
-  { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
+  { :active : true,  :text : :admin_tab_users,         :url : { :controller : "admin/users"         } },
+  { :active : true,  :text : :admin_tab_custom_fields, :url : { :controller : "admin/custom_fields" } },
+  { :active : false, :text : :admin_tab_settings,      :url : { :controller : "admin/settings"      } },
+  { :active : false, :text : :admin_tab_plugins,       :url : { :controller : "admin/plugins"       } }
 ]
 
 # Account Category. To add custom account type use string value, for example:

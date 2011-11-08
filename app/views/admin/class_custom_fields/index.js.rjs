@@ -1,0 +1,6 @@
+unless @super_tags.blank?
+  page[:super_tags].replace_html render(:partial => "super_tag", :collection => @super_tags)
+else
+  page[:super_tags].replace_html render(:partial => "common/empty")
+end
+page[:paginate].replace_html render(:partial => "common/paginate")

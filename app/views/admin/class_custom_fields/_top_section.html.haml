@@ -1,0 +1,12 @@
+.section
+  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %tr
+      %td{ :valign => :top }
+        .label.top.req Name:
+        = f.text_field :name, :style => "width:140px"
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top Type:
+        = f.select :taggable_type, %w(Account Campaign Contact Lead Opportunity), :include_blank => true, :style => "width:140px"
+
+= hook(:super_tag_top_section_bottom, self, :f => f)

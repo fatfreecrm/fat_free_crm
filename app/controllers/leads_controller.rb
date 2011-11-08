@@ -45,7 +45,7 @@ class LeadsController < ApplicationController
     @lead = Lead.my.find(params[:id])
     @comment = Comment.new
 
-    @timeline = Timeline.find(@lead)
+    @timeline = timeline(@lead)
 
     respond_to do |format|
       format.html # show.html.erb

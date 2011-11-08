@@ -1,0 +1,13 @@
+if @customfield.valid?
+  page[:create_customfield_arrow].replace_html "&#9658;"
+  page[:create_customfield_title].replace_html "Customfields"
+  page.visual_effect :toggle_blind, :create_customfield, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, :customfields, :partial => "customfield", :collection => [ @customfield ]
+  page[dom_id(@customfield)].visual_effect :highlight, :duration => 1.5
+  page.call "crm.flick", :empty, :remove
+else
+  page[:create_customfield].replace_html :partial => "create"
+  page[:create_customfield].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:customfield_field_label].focus
+end
+

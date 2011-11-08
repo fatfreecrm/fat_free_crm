@@ -1,0 +1,6 @@
+unless @custom_fields.blank?
+  page[:custom_fields].replace_html render(:partial => "super_tag", :collection => @custom_fields)
+else
+  page[:custom_fields].replace_html render(:partial => "common/empty")
+end
+page[:paginate].replace_html render(:partial => "shared/paginate")

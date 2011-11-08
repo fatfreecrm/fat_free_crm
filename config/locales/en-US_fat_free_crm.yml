@@ -25,6 +25,7 @@ en-US:
   tab_opportunities: Opportunities
 
   admin_tab_users: Users
+  admin_tab_custom_fields: Custom Fields
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
 
@@ -675,7 +676,10 @@ en-US:
         zero: "No %{plural} found"
         one: "Displaying 1 %{name}"
         other: "Displaying all %{count} %{plural}"
-      
+
       multi_page: "Displaying %{plural} %{from} - %{to} of %{total} in total"
 
-
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
+  custom_fields: Custom Fields
+  create_custom_field: Create Custom Field

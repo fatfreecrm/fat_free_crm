@@ -1,0 +1,15 @@
+id = called_from_landing_page? ? "edit_customfield" : dom_id(@customfield)
+
+if @customfield.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_customfield
+    page.call "crm.set_title", :edit_customfield, @customfield.field_name
+  else
+    page[id].replace :partial => "customfield", :collection => [ @customfield ]
+    page[id].visual_effect :highlight, :duration => 1.0
+  end
+else  
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:customfield_field_name].focus
+end

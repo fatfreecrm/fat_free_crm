@@ -47,7 +47,7 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.my.find(params[:id])
     @comment = Comment.new
 
-    @timeline = Timeline.find(@opportunity)
+    @timeline = timeline(@opportunity)
 
     respond_to do |format|
       format.html # show.html.erb
