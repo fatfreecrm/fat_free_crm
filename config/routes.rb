@@ -121,16 +121,7 @@ FatFreeCRM::Application.routes.draw do
         end
       end
 
-      resources :class_custom_fields do
-        collection do
-          post :auto_complete
-          get :options
-          post :redraw
-          get :search
-        end
-      end
-
-      resources :custom_fields, :except => :index do
+      resources :fields do
         collection do
           post :auto_complete
           get :options
