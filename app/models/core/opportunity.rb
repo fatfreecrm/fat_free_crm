@@ -72,6 +72,7 @@ class Opportunity < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   is_paranoid
+  has_fields
   exportable
   sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 

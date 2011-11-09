@@ -99,6 +99,7 @@ class Task < ActiveRecord::Base
 
   acts_as_commentable
   is_paranoid
+  has_fields
   exportable
 
   validates_presence_of :user

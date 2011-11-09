@@ -27,6 +27,7 @@ require "fat_free_crm/errors"
 require "fat_free_crm/i18n"
 require "fat_free_crm/permissions"
 require "fat_free_crm/exportable"
+require "fat_free_crm/fields"
 require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
@@ -40,6 +41,7 @@ ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
 
 ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
 ActiveRecord::Base.send(:include, FatFreeCRM::Exportable)
+ActiveRecord::Base.send(:include, FatFreeCRM::Fields)
 ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
 
 require "fat_free_crm/dropbox" if defined?(::Rake)

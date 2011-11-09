@@ -32,7 +32,7 @@
     = hook(:customfield_top_section_bottom, self, :f => f)
 
     :javascript
-      Event.observe($('field_as'),'change',function(){
+      var toggleCollection = function(){
         var select_el = $('field_collection_string');
         switch($('field_as').value){
           case "select":
@@ -43,5 +43,10 @@
           default:
             select_el.hide().previous().hide();
         }
-      });
+      };
+
+      toggleCollection();
+
+      Event.observe($('field_as'),'change',toggleCollection);
+
 

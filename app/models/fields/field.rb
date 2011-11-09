@@ -6,13 +6,6 @@ class Field < ActiveRecord::Base
   belongs_to :field_group
 
   KLASSES = [Task, Campaign, Lead, Contact, Account, Opportunity]
-  KLASSES.each do |klass|
-    klass.class_eval do
-      def self.fields; Field.where(:klass_name => self.name).order(:position); end
-      def self.core_fields; fields.where(:type => "CoreField"); end
-      def self.custom_fields; fields.where(:type => "CustomField"); end
-    end
-  end
 
   FIELD_TYPES = {
     'string'      => :string,
