@@ -1,50 +1,47 @@
 .section
   = f.hidden_field :klass_name
 
-  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+  %table
     %tr
-      %td{ :valign => :top }
+      %td
         .label.top.req Field label:
-        = f.text_field :label, :style => "width:140px"
-      %td= spacer
-      %td{ :valign => :top }
-        .label.top.req Field type:
-        = f.select :as, Field.field_types.keys, { :style => "width:140px", :disabled => @disabled }
+        = f.text_field :label, :id => :field_label
+
+      - if f.object.is_a? CustomField
+        %td= spacer
+        %td
+          .label.top.req Field type:
+          = f.select :as, field_edit_as_options(f.object)
     %tr
-      %td{ :valign => :top, :colspan => 2 }
+      %td{:colspan => 2 }
         .label.top.req Select Options (pipe separated):
-        = f.text_field :collection, :style => "width:300px"
+        = f.text_field :collection_string
     %tr
-      %td{ :valign => :top }
+      %td
         .label.top Required:
         = f.check_box :required
       %td= spacer
-      %td{ :valign => :top }
+      %td
         .label.top Disabled:
         = f.check_box :disabled
     %tr
-      %td{ :valign => :top }
+      %td
         .label.top Hint:
         = f.text_area :hint
 
     = hook(:customfield_top_section_bottom, self, :f => f)
 
     :javascript
-      Event.observe($('customfield_form_field_type'),'change',function(){
-        var select_el = $('customfield_select_options');
-        switch($('customfield_form_field_type').value){
-          // fall-through switch statement for both 'select_list' and 'multi_select' (see this thread for info: http://www.webdeveloper.com/forum/showthread.php?t=191026)
+      Event.observe($('field_as'),'change',function(){
+        var select_el = $('field_collection');
+        switch($('field_as').value){
           case "select":
           case "multiselect":
           case "checkboxes":
             select_el.show().previous().show().innerHTML = "Select Options (pipe separated):";
             break;
-          case "checkbox":
-            select_el.show().previous().show().innerHTML = "Checkbox Value:";
-            break;
           default:
             select_el.hide().previous().hide();
         }
       });
-      fireEvent($('customfield_form_field_type'), 'change');
 

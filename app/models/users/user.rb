@@ -117,7 +117,7 @@ class User < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def preference
-    Preference.new(:user => self)
+    @preference ||= Preference.new(:user => self)
   end
   alias :pref :preference
 

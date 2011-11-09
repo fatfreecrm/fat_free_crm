@@ -9,6 +9,6 @@ if @field.valid?
 else
   page[:create_field].replace_html :partial => "new"
   page[:create_field].visual_effect :shake, :duration => 0.25, :distance => 6
-  page[:field_field_label].focus
+  page[:field_label].focus
 end
 

@@ -4,7 +4,7 @@ if params[:cancel] == "true" # <----------------- Hide [Edit field]
 
   if called_from_landing_page?
     page.call "crm.flip_form", :edit_field
-    page.call "crm.set_title", :edit_field, @field.field_label
+    page.call "crm.set_title", :edit_field, @field.label
   else                                            # Called from fields list item...
     page[id].replace :partial => "field", :collection => [ @field ]
   end
@@ -13,7 +13,7 @@ else # <----------------------------------------- Show [Edit field] form.
 
   if params[:cancel].blank?                       # Called from fields list item...
     if @previous                                  # Hide open [Edit field] form if any.
-      if @previous.is_a?(field)
+      if @previous.is_a?(Field)
         page[dom_id(@previous)].replace :partial => "field", :collection => [ @previous ]
       else
         page.call "crm.flick", "field_#{@previous}", :remove
@@ -26,9 +26,9 @@ else # <----------------------------------------- Show [Edit field] form.
   elsif params[:cancel] == "false"                # Called from title of the field landing page...
     page[:edit_field].replace_html :partial => "edit"
     page.call "crm.flip_form", :edit_field
-    page.call "crm.set_title", :edit_field, "Edit #{@field.field_label}"
+    page.call "crm.set_title", :edit_field, "Edit #{@field.label}"
   end
 
-  page[:field_field_label].focus
+  page[:field_label].focus
 
 end

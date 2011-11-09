@@ -46,14 +46,10 @@ class CustomField < Field
     :one => {:string => :text}
   }
 
-  # Returns the list of :null and :safe database column transitions.
-  # Only these options should be shown on the custom field edit form.
-  def edit_as_options
-    # Return every available field_type if no restriction
-    return Field.field_types.keys if as.blank?
-    Field.field_types.select { |new_type, params|
+  def available_as
+    Field.field_types.select do |new_type, params|
       db_transition_safety(as, new_type) != :unsafe
-    }.keys
+    end
   end
 
 protected
@@ -112,7 +108,7 @@ protected
   def update_column
     # Change database column type if appropriate
     # (NOTE: Columns will never be renamed or destroyed)
-    if self.errors.empty? && db_transition_safety(as_was)
+    if self.errors.empty? && db_transition_safety(as_was) == :safe
       connection.change_column(table_name, name, column_type, column_options)
       klass.reset_column_information
     end

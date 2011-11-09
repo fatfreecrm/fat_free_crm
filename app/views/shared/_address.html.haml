@@ -16,7 +16,7 @@
       .label #{t title}:
     = a.text_area :full_address, :style =>"width:240px", :rows => 4
   - else
-    %table(width="240" cellpadding="0" cellspacing="0")
+    %table.address(cellpadding="0" cellspacing="0")
       %tr
         %td
           - if same_as_billing
@@ -27,16 +27,15 @@
           - else
             .label #{t title}:
           = address_field(a, address, :street1, "width:240px; margin-top:3px")
-          %br
           = address_field(a, address, :street2, "width:240px;")
-    %table(width="240" cellpadding="0" cellspacing="0")
+    %table.address(cellpadding="0" cellspacing="0")
       %tr
         %td
           = address_field(a, address, :city, "width:165px;")
         %td= spacer
         %td
           = address_field(a, address, :state, "width:60px;")
-    %table(width="240" cellpadding="0" cellspacing="0")
+    %table.address(cellpadding="0" cellspacing="0")
       %tr
         %td
           = address_field(a, address, :zipcode, "width:80px;")

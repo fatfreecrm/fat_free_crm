@@ -1,7 +1,7 @@
 class Field < ActiveRecord::Base
   acts_as_list
 
-  serialize :collection
+  serialize :collection, Array
 
   belongs_to :field_group
 
@@ -22,7 +22,7 @@ class Field < ActiveRecord::Base
     'tel'         => :string,
     'select'      => :string,
     'radio'       => :string,
-    'checkboxes'  => :text,
+    'check_boxes' => :text,
     'multiselect' => :text,
     'checkbox'    => :boolean,
     'date'        => :date,
@@ -31,6 +31,15 @@ class Field < ActiveRecord::Base
     'integer'     => :integer,
     'float'       => :float
   }
+
+  validates_presence_of :label, :message => "^Please enter a Field label."
+  validates_length_of :label, :maximum => 64, :message => "^The Field name must be less than 64 characters in length."
+
+  validates_numericality_of :maxlength, :only_integer => true, :allow_blank => true, :message => "^Max size can only be whole number."
+
+  validates_presence_of :as, :message => "^Please specify a Field type."
+  validates_inclusion_of :as, :in => FIELD_TYPES.keys, :message => "Invalid Field Type."
+
 
   def self.field_types
     # Expands concise FIELD_TYPES into a more usable hash
@@ -53,15 +62,12 @@ class Field < ActiveRecord::Base
     }.merge(:input_html => input_html)
   end
 
-  ## Default validations for model
-  #
-  validates_presence_of :label, :message => "^Please enter a Field label."
-  validates_length_of :label, :maximum => 64, :message => "^The Field name must be less than 64 characters in length."
-
-  validates_numericality_of :maxlength, :only_integer => true, :allow_blank => true, :message => "^Max size can only be whole number."
-
-  validates_presence_of :as, :message => "^Please specify a Field type."
-  validates_inclusion_of :as, :in => FIELD_TYPES.keys, :message => "Invalid Field Type."
+  def collection_string=(value)
+    self.collection = value.split("|").map(&:strip).reject(&:blank?)
+  end
+  def collection_string
+    collection.try(:join, "|")
+  end
 
   def klass
     klass_name.constantize
