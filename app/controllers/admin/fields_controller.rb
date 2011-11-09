@@ -84,7 +84,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    @field = CustomField.new(params[:custom_field])
+    @field = CustomField.new(params[:field])
 
     respond_to do |format|
       if @field.save
@@ -104,7 +104,7 @@ class Admin::FieldsController < Admin::ApplicationController
     @field = Field.find(params[:id])
 
     respond_to do |format|
-      if @field.update_attributes(params[:custom_field] || params[:core_field])
+      if @field.update_attributes(params[:field])
         format.js
         format.xml  { head :ok }
       else
