@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/_create.html.haml" do
+describe "/accounts/_new.html.haml" do
   include AccountsHelper
 
   before(:each) do

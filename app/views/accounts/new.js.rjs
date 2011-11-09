@@ -3,7 +3,7 @@ page.call "crm.hide_form", :options if called_from_index_page?
 page.call "crm.flip_form", :create_account
 
 unless params[:cancel].true?
-  page[:create_account].replace_html :partial => "create"
+  page[:create_account].replace_html :partial => "new"
   page.call "crm.set_title", :create_account, t(:create_account)
 else
   page.call "crm.set_title", :create_account, t(:accounts)
