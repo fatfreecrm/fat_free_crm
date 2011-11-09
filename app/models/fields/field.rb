@@ -46,9 +46,11 @@ class Field < ActiveRecord::Base
   end
 
   def input_options
+    input_html = {:maxlength => attributes[:maxlength]}
+
     attributes.reject { |k,v|
       %w(type field_group position maxlength).include?(k)
-    }.merge(:input_html => {:maxlength => attributes[:maxlength]})
+    }.merge(:input_html => input_html)
   end
 
   ## Default validations for model
