@@ -45,8 +45,10 @@ class Setting < ActiveRecord::Base
 
   #-------------------------------------------------------------------
   def self.[] (name)
-    setting = self.find_by_name(name.to_s)
-    setting ? Marshal.load(Base64.decode64(setting.value || setting.default_value)) : nil
+    return cached_settings[name.to_s] if cached_settings.has_key?(name.to_s)
+    cached_settings[name.to_s] = if (setting = self.find_by_name(name.to_s))
+      Marshal.load(Base64.decode64(setting.value || setting.default_value))
+    end
   end
 
   #-------------------------------------------------------------------
@@ -54,6 +56,7 @@ class Setting < ActiveRecord::Base
     setting = self.find_by_name(name.to_s) || self.new(:name => name.to_s)
     setting.value = Base64.encode64(Marshal.dump(value))
     setting.save
+    cached_settings[name.to_s] = value
   end
 
   # Unrolls [ :one, :two ] settings array into [[ "One", :one ], [ "Two", :two ]]
@@ -62,6 +65,10 @@ class Setting < ActiveRecord::Base
   #-------------------------------------------------------------------
   def self.unroll(setting)
     send(setting).map { |key| [ key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym ] }
+  end
+
+  def self.cached_settings
+    @@cached_settings ||= {}
   end
 
 end
