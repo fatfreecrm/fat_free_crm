@@ -1,5 +1,17 @@
-- f.object.class.custom_fields.in_groups_of(2) do |group|
-  %tr
-  - group.each do |field|
-    %td
-      = f.input field.name, field.input_options
+- if f.object.class.custom_fields.present?
+  - collapsed = session[:custom_fields].nil?
+  = subtitle :custom_fields, collapsed, t(:custom_fields)
+  .section
+    %small#custom_fields_intro{ hidden_if(!collapsed) }
+    #custom_fields{ hidden_if(collapsed) }
+      %table
+        - f.object.class.custom_fields.in_groups_of(2) do |group|
+          %tr
+            %td
+              - if (field = group[0])
+                = f.input field.name, field.input_options
+            %td
+              = spacer
+            %td
+              - if (field = group[1])
+                = f.input field.name, field.input_options

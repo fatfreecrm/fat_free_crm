@@ -1,4 +1,5 @@
-= form_for(@opportunity, :html => one_submit_only(:opportunity), :remote => true) do |f|
+
+= simple_form_for(@opportunity, :html => one_submit_only(:opportunity), :remote => true) do |f|
   = link_to_close new_opportunity_path
   = f.hidden_field :user_id
   = hidden_field_tag "contact",  "#{@contact.id  if @contact}"
@@ -7,7 +8,9 @@
   = f.error_messages :object_name => t('opportunity')
 
   = render "opportunities/top_section", :f => f
+  = render "shared/custom_fields",      :f => f
   = render "opportunities/permissions", :f => f
+
   .buttonbar
     = f.submit t(:create_opportunity), :onclick => %/$("account_assigned_to").value = $F("opportunity_assigned_to"); if ($("account_id").visible()) { $("account_id").enable(); }/
     #{t :or}

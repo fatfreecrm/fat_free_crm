@@ -1,5 +1,5 @@
 .remote
-  = form_for(@contact, :html => one_submit_only(:contact), :remote => true) do |f|
+  = simple_form_for(@contact, :html => one_submit_only(:contact), :remote => true) do |f|
     = link_to_close edit_contact_path(@contact)
     = f.hidden_field :user_id
 
@@ -8,7 +8,9 @@
     = render "contacts/top_section", :f => f, :edit => true
     = render "contacts/extra",       :f => f, :edit => true
     = render "contacts/web",         :f => f, :edit => true
+    = render "shared/custom_fields", :f => f, :edit => true
     = render "contacts/permissions", :f => f, :edit => true
+
     .buttonbar
       = f.submit t(:save_contact), :onclick => "crm.save_contact()"
       #{t :or}

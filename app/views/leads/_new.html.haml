@@ -1,15 +1,18 @@
-= form_for(@lead, :html => one_submit_only(:lead), :remote => true) do |f|
+
+= simple_form_for(@lead, :html => one_submit_only(:lead), :remote => true) do |f|
   = link_to_close new_lead_path
   = f.hidden_field :user_id
   = hidden_field_tag "campaign", "#{@campaign.id if @campaign}"
 
   = f.error_messages :object_name => t('lead')
 
-  = render "leads/top_section", :f => f
-  = render "leads/status",      :f => f
-  = render "leads/contact",     :f => f
-  = render "leads/web",         :f => f
-  = render "leads/permissions", :f => f
+  = render "leads/top_section",    :f => f
+  = render "leads/status",         :f => f
+  = render "leads/contact",        :f => f
+  = render "leads/web",            :f => f
+  = render "shared/custom_fields", :f => f
+  = render "leads/permissions",    :f => f
+
   .buttonbar
     - if Setting.compound_address
       = f.submit t(:create_lead), :onclick => "crm.clear_all_hints()"

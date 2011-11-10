@@ -1,4 +1,5 @@
-= form_for(@account, :html => one_submit_only(:account), :remote => true) do |f|
+
+= simple_form_for(@account, :html => one_submit_only(:account), :remote => true) do |f|
   = link_to_close new_account_path
   = f.hidden_field :user_id
 
@@ -6,7 +7,9 @@
 
   = render "accounts/top_section",  :f => f
   = render "accounts/contact_info", :f => f
+  = render "shared/custom_fields",  :f => f
   = render "accounts/permissions",  :f => f
+
   .buttonbar
     - if Setting.compound_address
       = f.submit t(:create_account), :onclick => "crm.clear_all_hints()"
