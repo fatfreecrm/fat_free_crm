@@ -35,6 +35,6 @@ en-US:
     email:       Email Address
     url:         URL
     tel:         Phone Number
-    currency:    Currency
+    decimal:     Number (Decimal)
     integer:     Number (Integer)
     float:       Number (Floating Point)

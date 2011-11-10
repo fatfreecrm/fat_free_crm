@@ -16,11 +16,10 @@ class Field < ActiveRecord::Base
     'select'      => :string,
     'radio'       => :string,
     'check_boxes' => :text,
-    'multiselect' => :text,
     'checkbox'    => :boolean,
     'date'        => :date,
     'datetime'    => :timestamp,
-    'currency'    => [:decimal, {:precision => 15, :scale => 2}],
+    'decimal'     => [:decimal, {:precision => 15, :scale => 2}],
     'integer'     => :integer,
     'float'       => :float
   }
@@ -50,9 +49,9 @@ class Field < ActiveRecord::Base
   def input_options
     input_html = {:maxlength => attributes[:maxlength]}
 
-    attributes.reject { |k,v|
-      %w(type field_group position maxlength).include?(k)
-    }.merge(:input_html => input_html)
+    attributes.select { |k,v|
+      %w(as collection disabled hint label placeholder required).include?(k)
+    }.symbolize_keys.merge(:input_html => input_html)
   end
 
   def collection_string=(value)
