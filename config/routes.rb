@@ -11,6 +11,7 @@ FatFreeCRM::Application.routes.draw do
     match 'signup'     => 'users#new',               :as => :signup
     match 'timeline'   => 'home#timeline',           :as => :timeline
     match 'timezone'   => 'home#timezone',           :as => :timezone
+    match 'redraw'     => 'home#redraw',             :as => :redraw
     match 'toggle'     => 'home#toggle'
 
     resource  :authentication
