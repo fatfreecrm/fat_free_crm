@@ -20,6 +20,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :accounts do
       collection do
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -33,7 +34,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :campaigns do
       collection do
-        get  :filter
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -47,6 +48,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :contacts do
       collection do
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -60,7 +62,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :leads do
       collection do
-        get  :filter
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -77,7 +79,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :opportunities do
       collection do
-        get  :filter
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -91,7 +93,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :tasks do
       collection do
-        get  :filter
+        post :filter
         post :auto_complete
       end
       member do
