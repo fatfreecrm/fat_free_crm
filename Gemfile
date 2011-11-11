@@ -18,6 +18,8 @@ gem 'will_paginate',       '>= 3.0.pre2'
 gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
 #~ gem 'jquery-rails' TODO: Go to rails 3.1
+gem 'ffaker',              '>= 1.5.0' # For demo data
+
 
 group :development, :test do
   gem 'ruby-debug',   :platform => :mri_18
@@ -28,7 +30,7 @@ group :development, :test do
   gem 'test-unit', '1.2.3', :platform => :mri_19
   gem "rspec-rails",        '>= 2.5.0'
   gem 'ffaker',             '>= 1.5.0'
-  gem 'factory_girl',       '~> 1.3.3'
+  gem 'factory_girl',       '>= 1.3.3'
 end
 
 group :test do
