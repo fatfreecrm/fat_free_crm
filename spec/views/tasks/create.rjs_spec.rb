@@ -3,13 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/create.js.rjs" do
   include TasksHelper
 
-  before(:each) do
+  before do
     login_and_assign
   end
 
   (TASK_STATUSES - %w(completed)).each do |status|
     describe "create from #{status} tasks page" do
-      before(:each) do
+      before do
         assign(:view, status)
         assign(:task, @task = stub_task(status))
         assign(:task_total, stub_task_total(status))
@@ -86,7 +86,7 @@ describe "/tasks/create.js.rjs" do
 
   (TASK_STATUSES - %w(assigned)).each do |status|
     describe "create from outside the Tasks tab" do
-      before(:each) do
+      before do
         @task = Factory(:task, :id => 42)
         assign(:view, status)
         assign(:task, @task)

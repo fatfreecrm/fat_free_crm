@@ -6,7 +6,7 @@ describe "admin/users/create.js.rjs" do
   end
 
   describe "create success" do
-    before(:each) do
+    before do
       assign(:user, @user = Factory(:user))
       assign(:users, [ @user ]) # .paginate
     end

@@ -3,13 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/destroy.js.rjs" do
   include TasksHelper
 
-  before(:each) do
+  before do
     login_and_assign
   end
 
   TASK_STATUSES.each do |status|
     describe "destroy from Tasks tab (#{status} view)" do
-      before(:each) do
+      before do
         @task = Factory(:task)
         assign(:task, @task)
         assign(:view, status)

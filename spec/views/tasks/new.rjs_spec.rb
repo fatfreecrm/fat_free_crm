@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/new.js.rjs" do
   include TasksHelper
 
-  before(:each) do
+  before do
     login_and_assign
     assign(:task, Factory.build(:task))
     assign(:users, [ @current_user ])

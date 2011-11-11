@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/edit.js.rjs" do
   include TasksHelper
 
-  before(:each) do
+  before do
     login_and_assign
     assign(:users, [ @current_user ])
     assign(:bucket, Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ])

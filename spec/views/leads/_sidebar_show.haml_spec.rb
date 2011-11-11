@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/leads/_sidebar_show.html.haml" do
   include LeadsHelper
 
-  before(:each) do
+  before do
     login_and_assign
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)

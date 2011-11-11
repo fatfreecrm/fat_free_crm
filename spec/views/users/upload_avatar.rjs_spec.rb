@@ -3,12 +3,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/users/upload_avatar.js.rjs" do
   include UsersHelper
 
-  before(:each) do
+  before do
     login_and_assign
   end
 
   describe "no errors:" do
-    before(:each) do
+    before do
       @avatar = Factory(:avatar, :entity => @current_user)
       @current_user.stub!(:avatar).and_return(@avatar)
       assign(:user, @user = @current_user)
@@ -23,7 +23,7 @@ describe "/users/upload_avatar.js.rjs" do
   end # no errors
 
   describe "validation errors:" do
-    before(:each) do
+    before do
       @avatar = Factory(:avatar, :entity => @current_user)
       @avatar.errors.add(:image, "error")
       @current_user.stub!(:avatar).and_return(@avatar)

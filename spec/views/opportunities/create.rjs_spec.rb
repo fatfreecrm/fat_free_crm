@@ -7,7 +7,7 @@ describe "/opportunities/create.js.rjs" do
   end
 
   describe "create success" do
-    before(:each) do
+    before do
       assign(:opportunity, @opportunity = Factory(:opportunity))
       assign(:opportunities, [ @opportunities ].paginate)
       assign(:opportunity_stage_total, Hash.new(1))

@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/users/update.js.rjs" do
   include UsersHelper
 
-  before(:each) do
+  before do
     login_and_assign
     assign(:user, @user = @current_user)
   end
@@ -26,7 +26,7 @@ describe "/users/update.js.rjs" do
   end # no errors
 
   describe "validation errors :" do
-    before(:each) do
+    before do
       @user.errors.add(:first_name)
     end
 

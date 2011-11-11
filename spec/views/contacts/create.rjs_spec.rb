@@ -3,12 +3,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/contacts/create.js.rjs" do
   include ContactsHelper
 
-  before(:each) do
+  before do
     login_and_assign
   end
 
   describe "create success" do
-    before(:each) do
+    before do
       assign(:contact, @contact = Factory(:contact))
       assign(:contacts, [ @contact ].paginate)
     end

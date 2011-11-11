@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/contacts/update.js.rjs" do
   include ContactsHelper
 
-  before(:each) do
+  before do
     login_and_assign
 
     assign(:contact, @contact = Factory(:contact, :user => @current_user))
@@ -14,7 +14,7 @@ describe "/contacts/update.js.rjs" do
 
   describe "no errors:" do
     describe "on contact landing page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
       end
 
@@ -34,7 +34,7 @@ describe "/contacts/update.js.rjs" do
     end
 
     describe "on contacts index page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
       end
 
@@ -57,7 +57,7 @@ describe "/contacts/update.js.rjs" do
     end
 
     describe "on related asset page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       end
 
@@ -81,12 +81,12 @@ describe "/contacts/update.js.rjs" do
   end # no errors
 
   describe "validation errors:" do
-    before(:each) do
+    before do
       @contact.errors.add(:first_name)
     end
 
     describe "on contact landing page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
       end
 
@@ -102,7 +102,7 @@ describe "/contacts/update.js.rjs" do
     end
 
     describe "on contacts index page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
       end
 
@@ -118,7 +118,7 @@ describe "/contacts/update.js.rjs" do
     end
 
     describe "on related asset page -" do
-      before(:each) do
+      before do
         controller.request.env["HTTP_REFERER"] = @referer = "http://localhost/accounts/123"
       end
 

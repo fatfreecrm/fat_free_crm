@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/opportunities/index.html.haml" do
   include OpportunitiesHelper
 
-  before(:each) do
+  before do
     login_and_assign
     assign(:stage, Setting.unroll(:opportunity_stage))
   end

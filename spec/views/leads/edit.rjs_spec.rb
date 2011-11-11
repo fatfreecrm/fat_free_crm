@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/leads/edit.js.rjs" do
   include LeadsHelper
   
-  before(:each) do
+  before do
     login_and_assign
     assign(:lead, @lead = Factory(:lead, :status => "new", :user => @current_user))
     assign(:users, [ @current_user ])

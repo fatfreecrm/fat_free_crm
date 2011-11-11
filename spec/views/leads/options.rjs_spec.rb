@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/leads/options.rjs" do
   include LeadsHelper
 
-  before(:each) do
+  before do
     login_and_assign
     assign(:sort_by, "leads.first_name ASC")
     assign(:outline, "option_long")

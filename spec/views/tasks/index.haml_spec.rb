@@ -3,12 +3,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/index.html.haml" do
   include TasksHelper
 
-  before(:each) do
+  before do
     login_and_assign
   end
 
   TASK_STATUSES.each do |status|
-    before(:each) do
+    before do
       user = Factory(:user)
       account = Factory(:account)
       @due  = Factory(:task, :asset => account, :bucket => "due_asap", :assignee => user)

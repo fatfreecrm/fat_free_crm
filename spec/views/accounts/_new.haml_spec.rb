@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/accounts/_new.html.haml" do
   include AccountsHelper
 
-  before(:each) do
+  before do
     login_and_assign
     assign(:account, Account.new)
     assign(:users, [ @current_user ])

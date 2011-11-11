@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/accounts/edit.js.rjs" do
   include AccountsHelper
   
-  before(:each) do
+  before do
     login_and_assign
     assign(:account, @account = Factory(:account, :user => @current_user))
     assign(:users, [ @current_user ])

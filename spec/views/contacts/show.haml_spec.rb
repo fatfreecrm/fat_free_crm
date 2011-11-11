@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/contacts/show.html.haml" do
   include ContactsHelper
 
-  before(:each) do
+  before do
     login_and_assign
     @contact = Factory(:contact, :id => 42,
       :opportunities => [ Factory(:opportunity) ])

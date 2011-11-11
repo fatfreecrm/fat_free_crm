@@ -18,7 +18,7 @@ describe "admin/users/update.js.rjs" do
   end # no errors
 
   describe "validation errors:" do
-    before(:each) do
+    before do
       @user.errors.add(:name)
     end
 

@@ -3,12 +3,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/tasks/update.js.rjs" do
   include TasksHelper
 
-  before(:each) do
+  before do
     login_and_assign
   end
 
   describe "Changing due date" do
-    before(:each) do
+    before do
       assign(:task_before_update, Factory(:task, :bucket => "due_asap"))
       assign(:task, @task       = Factory(:task, :bucket => "due_tomorrow"))
       assign(:view, "pending")
@@ -60,7 +60,7 @@ describe "/tasks/update.js.rjs" do
   end
 
   describe "Reassigning" do
-    before(:each) do
+    before do
       assign(:task_total, stub_task_total("pending"))
     end
 

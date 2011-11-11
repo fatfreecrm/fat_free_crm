@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/authentications/new.html.haml" do
   include AuthenticationsHelper
 
-  before(:each) do
+  before do
     activate_authlogic
     assign(:authentication, @authentication = Authentication.new)
   end

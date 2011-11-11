@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/leads/_convert.html.haml" do
   include LeadsHelper
 
-  before(:each) do
+  before do
     login_and_assign
     @account = Factory(:account)
     assign(:lead, Factory(:lead))

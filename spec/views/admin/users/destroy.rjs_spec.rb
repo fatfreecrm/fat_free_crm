@@ -6,7 +6,7 @@ describe "admin/users/destroy.js.rjs" do
   end
 
   describe "user got deleted" do
-    before(:each) do
+    before do
       @user = Factory(:user)
       @user.destroy
       assign(:user, @user)
@@ -20,7 +20,7 @@ describe "admin/users/destroy.js.rjs" do
   end
 
   describe "user was not deleted" do
-    before(:each) do
+    before do
       assign(:user, @user = Factory(:user))
     end
 

@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/comments/new.js.rjs" do
   include CommentsHelper
 
-  before(:each) do
+  before do
     assign(:comment, stub_model(Comment,
       :new_record? => true
     ))
