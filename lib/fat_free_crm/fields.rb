@@ -25,14 +25,12 @@ module FatFreeCRM
     module ClassMethods
       def has_fields
         unless included_modules.include?(InstanceMethods)
-          include InstanceMethods
           extend SingletonMethods
+          include InstanceMethods
         end
       end
     end
 
-    module InstanceMethods
-    end
 
     module SingletonMethods
       def fields
@@ -47,5 +45,28 @@ module FatFreeCRM
         fields.where(:type => "CustomField")
       end
     end
+
+
+    module InstanceMethods
+      def attributes=(new_attributes, guard_protected_attributes = true)
+        super
+      # If attribute is unknown, a new custom field may have been added.
+      # Refresh columns and try again.
+      rescue ActiveRecord::UnknownAttributeError
+        self.class.reset_column_information
+        super
+      end
+
+      def method_missing(method, *args)
+        if method.to_s =~ /^cf_/
+          # Refresh columns and try again.
+          self.class.reset_column_information
+          respond_to?(method) ? send(method, *args) : nil
+        else
+          super
+        end
+      end
+    end
   end
 end
+
