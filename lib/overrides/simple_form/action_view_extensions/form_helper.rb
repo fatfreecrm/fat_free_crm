@@ -1,16 +1,19 @@
 #
-# Changes the default css class for generated forms
-# from '<asset>' to 'edit_<asset>' or 'new_<asset>'
-# (using params[:action])
+# Removes simple_form's css class logic.
 module SimpleForm
   module ActionViewExtensions
     module FormHelper
-      def css_class_with_action(record, html_options)
-        css_class = css_class_without_action(record, html_options)
-        # Return defined class, or prepend controller action.
-        html_options.key?(:class) ? css_class : [params[:action], css_class].join('_')
+      def simple_form_for(record, options={}, &block)
+        options[:builder] ||= SimpleForm::FormBuilder
+        options[:html] ||= {}
+        unless options[:html].key?(:novalidate)
+          options[:html][:novalidate] = !SimpleForm.browser_validations
+        end
+
+        with_custom_field_error_proc do
+          form_for(record, options, &block)
+        end
       end
-      alias_method_chain :css_class, :action
     end
   end
 end
