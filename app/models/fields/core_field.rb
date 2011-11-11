@@ -18,8 +18,9 @@
 class CoreField < Field
   # Some CoreField attributes should be read-only
   attr_readonly :klass_name, :name, :as, :collection
+  before_destroy :error_on_destroy
 
-  def before_destroy
+  def error_on_destroy
     errors.add_to_base "Core fields cannot be deleted."
   end
 end
