@@ -86,7 +86,7 @@ describe CustomField do
     c.save
   end
 
-  it "should reload column information, in case a new custom field is added by another instance" do
+  it "should refresh column info and retry on attribute error, in case a new custom field was added by a different instance" do
     Contact.should_receive(:reset_column_information).twice
 
     lambda { Contact.new :cf_unknown_field => 123 }.should raise_error(ActiveRecord::UnknownAttributeError)
