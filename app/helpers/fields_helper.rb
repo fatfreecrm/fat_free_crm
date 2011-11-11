@@ -1,18 +1,18 @@
 module FieldsHelper
 
   def display_value(object, field)
-    value = object.try(field.name)
+    value = object.send(field.name)
 
-    case field.field_type
+    case field.as
     when 'checkbox'
-      value == 0 ? "no" : "yes"
+      value.to_s == '0' ? "no" : "yes"
     when 'date'
-      value && value.strftime("%d/%m/%Y")
+      value && value.strftime(I18n.t("date.formats.default"))
     when 'datetime'
-      value && value.strftime("%d/%m/%Y %h:%m")
-    when 'multi_select'
+      value && value.strftime(I18n.t("time.formats.short"))
+    when 'check_boxes'
       # Comma separated, 2 per line.
-      (Array === value ? value : [value]).in_groups_of(2).map { |g| g.join(', ') }.join(tag(:br))
+      [value].flatten.in_groups_of(2).map { |g| g.compact.join(', ') }.join(tag(:br))
     else
       value.to_s
     end

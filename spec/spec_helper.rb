@@ -4,10 +4,10 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
 require 'factory_girl'
-require "#{::Rails.root}/spec/factories"
+require Rails.root.join("spec/factories")
 
 # Load factories from plugins (to allow extra validations / etc.)
-Dir.glob("vendor/plugins/**/spec/factories.rb").each{ |f| require File.expand_path(f) }
+Dir.glob(Rails.root.join("vendor/plugins/**/spec/factories.rb")).each{ |f| require File.expand_path(f) }
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
