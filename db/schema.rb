@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110719082054) do
+ActiveRecord::Schema.define(:version => 20111101090312) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -194,6 +194,37 @@ ActiveRecord::Schema.define(:version => 20110719082054) do
   end
 
   add_index "emails", ["mediator_id", "mediator_type"], :name => "index_emails_on_mediator_id_and_mediator_type"
+
+  create_table "field_groups", :force => true do |t|
+    t.string   "name",       :limit => 64
+    t.string   "label",      :limit => 128
+    t.integer  "position"
+    t.string   "hint"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fields", :force => true do |t|
+    t.string   "type"
+    t.integer  "field_group_id"
+    t.string   "klass_name",     :limit => 32
+    t.integer  "position"
+    t.string   "name",           :limit => 64
+    t.string   "label",          :limit => 128
+    t.string   "hint"
+    t.string   "placeholder"
+    t.string   "as",             :limit => 32
+    t.string   "collection"
+    t.boolean  "disabled"
+    t.boolean  "required"
+    t.integer  "maxlength"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fields", ["field_group_id"], :name => "index_fields_on_field_group_id"
+  add_index "fields", ["klass_name"], :name => "index_fields_on_klass_name"
+  add_index "fields", ["name"], :name => "index_fields_on_name"
 
   create_table "leads", :force => true do |t|
     t.integer  "user_id"
