@@ -58,7 +58,7 @@ class Account < ActiveRecord::Base
   scope :assigned_to, lambda { |user| where(:assigned_to => user.id) }
 
   scope :search, lambda { |query|
-    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(:m) OR upper(email) LIKE upper(:m)', :m => "%#{query}%")
   }
 
