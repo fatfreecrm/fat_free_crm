@@ -35,7 +35,7 @@
     %dt= lost != 0.0 ? number_to_currency(lost, :precision => 0) : t(:n_a)
     %tt #{t :lost}:
   %li
-    %dt= t(@account.category, :default => :other)
+    %dt= @account.category ? t(@account.category) : t(:other)
     %tt #{t :category}:
   %li
     %span{:style => "float:right;"}= stars_for(@account)

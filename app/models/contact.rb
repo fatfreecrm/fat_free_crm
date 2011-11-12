@@ -67,7 +67,7 @@ class Contact < ActiveRecord::Base
   scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
 
   scope :search, lambda { |query|
-    query = query.gsub(/[^@\w\s\-\.']/, '').strip
+    query = query.gsub(/[^@\w\s\-\.'\p{L}]/u, '').strip
     # We can't be sure that names are always entered in the right order, so we take the query and
     # split it into all possible first/last name combinations.
     # => "Zhong Fai Gao" matches last name "Zhong Fai" and "Fai Gao"

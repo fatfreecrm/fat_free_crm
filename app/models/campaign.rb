@@ -57,7 +57,7 @@ class Campaign < ActiveRecord::Base
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
 
   scope :search, lambda { |query|
-    query = query.gsub(/[^\w\s\-\.']/, '').strip
+    query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(?)', "%#{query}%")
   }
 
