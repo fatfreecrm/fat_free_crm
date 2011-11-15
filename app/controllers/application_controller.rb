@@ -261,7 +261,7 @@ private
     scope = klass.my(records)
     scope = scope.state(filter)                   if filter.present?
     scope = scope.search(current_query)           if current_query.present?
-    scope = scope.tagged_with(tags, :on => :tags) if current_tags.present?
+    scope = scope.tagged_with(tags, :on => :tags) if tags.present?
     scope = scope.unscoped                        if wants.csv?
     scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?
     scope
