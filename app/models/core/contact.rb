@@ -85,6 +85,7 @@ class Contact < ActiveRecord::Base
 
   uses_user_permissions
   acts_as_commentable
+  acts_as_taggable_on :tags
   is_paranoid
   has_fields
   exportable

@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+var fbtaglist = null;
+
 var crm = {
 
   EXPANDED      : "&#9660;",
@@ -56,10 +58,23 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  search_tagged: function(query, controller) {
+    if ($('query')) {
+      $('query').value = query;
+    }
+    crm.search(query, controller);
+  },
+
+  /*
+   * remove any duplicate 'facebook-list' elements before running the 'BlindUp' effect.
+   * (The disappearing facebook-list takes precedence over the newly created facebook-list
+   * that is being AJAX loaded, and messes up the initialization.. )
+   */
   hide_form: function(id) {
+    if($('facebook-list')) $('facebook-list').remove();
     var arrow = $(id + "_arrow") || $("arrow");
     arrow.update(this.COLLAPSED);
-    Effect.BlindUp(id, { duration: 0.25, afterFinish: function() { $(id).update("") } });
+    Effect.BlindUp(id, { duration: 0.25, afterFinish: function() { $(id).update("").setStyle({height: 'auto'}); } });
   },
 
   //----------------------------------------------------------------------------

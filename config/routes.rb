@@ -140,6 +140,7 @@ FatFreeCRM::Application.routes.draw do
       resources :plugins
     end
 
+    get '/:controller/tagged/:id' => '#tagged'
   end
 end
 

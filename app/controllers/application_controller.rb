@@ -83,6 +83,15 @@ class ApplicationController < ActionController::Base
     (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
   end
 
+  # Controller instance method that responds to /controlled/tagged/tag request.
+  # It stores given tag as current query and redirect to index to display all
+  # records tagged with the tag.
+  #----------------------------------------------------------------------------
+  def tagged
+    self.send(:current_query=, "#" << params[:id]) unless params[:id].blank?
+    redirect_to :action => "index"
+  end
+
 private
   #----------------------------------------------------------------------------
   def set_context
@@ -228,7 +237,7 @@ private
   def get_list_of_records(klass, options = {})
     items = klass.name.tableize
     self.current_page  = options[:page]  if options[:page]
-    self.current_query = options[:query] if options[:query]
+    self.current_query, tags = parse_query_and_tags(context[:query])
 
     records = {
       :user  => @current_user,
@@ -250,10 +259,11 @@ private
     filter = session[options[:filter]].to_s.split(',') if options[:filter]
 
     scope = klass.my(records)
-    scope = scope.state(filter)         unless filter.blank?
-    scope = scope.search(current_query) unless current_query.blank?
-    scope = scope.unscoped              if wants.csv?
-    scope = scope.paginate(pages)       if wants.html? || wants.js? || wants.xml?
+    scope = scope.state(filter)                   if filter.present?
+    scope = scope.search(current_query)           if current_query.present?
+    scope = scope.tagged_with(tags, :on => :tags) if current_tags.present?
+    scope = scope.unscoped                        if wants.csv?
+    scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?
     scope
   end
 
@@ -280,5 +290,21 @@ private
     @current_query = params[:query] || session["#{controller_name}_current_query".to_sym] || ""
   end
 
+  # Somewhat simplistic parser that extracts query and hash-prefixed tags from
+  # the search string and returns them as two element array, for example:
+  #
+  # "#real Billy Bones #pirate" => [ "Billy Bones", "real, pirate" ]
+  #----------------------------------------------------------------------------
+  def parse_query_and_tags(search_string)
+    query, tags = [], []
+    search_string.scan(/[\w@\-\.'#]+/).each do |token|
+      if token.starts_with?("#")
+        tags << token[1 .. -1]
+      else
+        query << token
+      end
+    end
+    [ query.join(" "), tags.join(", ") ]
+  end
 end
 

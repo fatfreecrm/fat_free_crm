@@ -14,19 +14,19 @@
     %tt #{t :budget}:
 
   .caption #{t :campaign_targets}
-  
+
   -# Target Leads.
   -#---------------------------------------------------------------------------
   %li
     %dt= @campaign.target_leads || t(:n_a)
     %tt #{t :leads}:
-    
+
   -# Target Conversion Ratio.
   -#---------------------------------------------------------------------------
   %li
     %dt= number_to_percentage(@campaign.target_conversion, :precision => 1) || t(:n_a)
     %tt #{t :conversion}:
-    
+
   -# Target Opportunities: calculated based on target number of leads and
   -# expected conversion ratio.
   -#---------------------------------------------------------------------------
@@ -81,5 +81,9 @@
   - unless @campaign.background_info.blank?
     .caption #{t :background_info}
     = auto_link(simple_format h(@campaign.background_info))
+
+  - if @campaign.tag_list.present?
+    %dt
+      .tags= tags_for_index(@campaign)
 
   = hook(:show_campaign_sidebar_bottom, self, :campaign => @campaign)

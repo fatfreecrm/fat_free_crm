@@ -52,4 +52,8 @@
     .caption #{t :background_info}
     = auto_link(simple_format h(@opportunity.background_info))
 
+  - if @opportunity.tag_list.present?
+    %dt
+      .tags= tags_for_index(@opportunity)
+
   = hook(:show_opportunity_sidebar_bottom, self, :opportunity => @opportunity)

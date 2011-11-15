@@ -23,7 +23,7 @@
         - unless won_or_lost
           == #{number_to_currency(opportunity.amount || 0, :precision => 0)}
           == #{opportunity.discount ? t(:discount_number, number_to_currency(opportunity.discount, :precision => 0)) : t(:no_discount)}
-          = t(:probability_number, (opportunity.probability || 0).to_s + '%') + " | " 
+          = t(:probability_number, (opportunity.probability || 0).to_s + '%') + " | "
         - if opportunity.closes_on
           - if won_or_lost
             - if opportunity.closes_on >= Date.today
@@ -38,4 +38,8 @@
             %span.warn= t(:past_due, distance_of_time_in_words(opportunity.closes_on, Date.today))
         - else
           = t(:no_closing_date)
+      - if opportunity.tag_list.present?
+        %dt
+          .tags= tags_for_index(opportunity)
+
       = hook(:opportunity_bottom, self, :opportunity => opportunity)
