@@ -236,8 +236,9 @@ private
   #----------------------------------------------------------------------------
   def get_list_of_records(klass, options = {})
     items = klass.name.tableize
-    self.current_page  = options[:page]  if options[:page]
-    self.current_query, tags = parse_query_and_tags(context[:query])
+    self.current_page = options[:page]                        if options[:page]
+    query, tags       = parse_query_and_tags(options[:query]) if options[:query]
+    self.current_query = query
 
     records = {
       :user  => @current_user,
@@ -260,7 +261,7 @@ private
 
     scope = klass.my(records)
     scope = scope.state(filter)                   if filter.present?
-    scope = scope.search(current_query)           if current_query.present?
+    scope = scope.search(query)                   if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
     scope = scope.unscoped                        if wants.csv?
     scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?
@@ -297,7 +298,7 @@ private
   #----------------------------------------------------------------------------
   def parse_query_and_tags(search_string)
     query, tags = [], []
-    search_string.scan(/[\w@\-\.'#]+/).each do |token|
+    search_string.scan(/[\w@\-\.#]+/).each do |token|
       if token.starts_with?("#")
         tags << token[1 .. -1]
       else
@@ -307,4 +308,3 @@ private
     [ query.join(" "), tags.join(", ") ]
   end
 end
-

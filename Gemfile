@@ -11,6 +11,7 @@ gem "pg", ">= 0.9.0"
 
 gem 'authlogic',           '~> 3.0.3'
 gem 'acts_as_commentable', '>= 3.0.1'
+gem 'acts-as-taggable-on', '>= 2.0.6'
 gem 'haml',                '>= 3.1.1'
 gem 'sass',                '>= 3.1.1'
 gem 'paperclip',           '~> 2.3.6'
@@ -37,7 +38,6 @@ group :test do
   gem 'factory_girl_rails', '~> 1.0.1'
 end
 
-
 # Gem watch list:
 #---------------------------------------------------------------------
 # gem 'authlogic',         :git => 'git://github.com/crossroads/authlogic.git', :branch => 'rails3'
@@ -53,4 +53,3 @@ end
 # is_paranoid,             git://github.com/theshortcut/is_paranoid.git
 # prototype_legacy_helper, git://github.com/rails/prototype_legacy_helper.git
 # responds_to_parent,      git://github.com/markcatley/responds_to_parent.git
-

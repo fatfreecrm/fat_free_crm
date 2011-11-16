@@ -29,7 +29,7 @@ module TagsHelper
         query += " #{hashtag}"
       end
       arr << link_to_function(tag, "crm.search_tagged('#{query}', '#{model.class.to_s.tableize}')", :title => tag)
-    end.join(" ")
+    end.join(" ").html_safe
   end
 
   # Generate tag links for the asset landing page (shown on a sidebar).
@@ -37,7 +37,7 @@ module TagsHelper
   def tags_for_show(model)
     model.tag_list.inject([]) do |arr, tag|
       arr << link_to(tag, url_for(:action => "tagged", :id => tag), :title => tag)
-    end.join(" ")
+    end.join(" ").html_safe
   end
 
   # Return asset tags to be built manually if the asset failed validation.
