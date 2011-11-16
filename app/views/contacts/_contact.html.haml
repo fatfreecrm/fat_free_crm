@@ -27,4 +27,8 @@
         = "#{t :phone_small}: <b>".html_safe + h(contact.phone) << "</b> | ".html_safe if contact.phone.present?
         = "#{t :mobile_small}: <b>".html_safe + h(contact.mobile) << "</b> | ".html_safe if contact.mobile.present?
         = t(:added_ago, time_ago_in_words(contact.created_at))
+      - if contact.tag_list.present?
+        %dt
+          .tags= tags_for_index(contact)
+
       = hook(:contact_bottom, self, :contact => contact)

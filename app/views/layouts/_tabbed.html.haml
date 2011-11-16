@@ -4,7 +4,9 @@
       %li
         = link_to(tab[:url], :class => tab[:active] ? "active" : "") do
           - unless request.fullpath.include?("/admin")
-            = image_tag("tab_icons/#{tab[:text].to_s.sub(/^tab_/, '')}#{tab[:active] ? "_active" : ""}.png")
+            - img_base_path = "tab_icons/#{tab[:text].to_s.downcase.sub(/^tab_/, '')}"
+            - if File.exists?(Rails.root.join("public/images/#{img_base_path}.png"))
+              = image_tag("#{img_base_path}#{tab[:active] ? "_active" : ""}.png")
           = t(tab[:text])
 
 = show_flash
@@ -14,3 +16,4 @@
       = render "layouts/sidebar"
     %td{ :class => :main, :id => :main, :valign => :top }
       = yield
+

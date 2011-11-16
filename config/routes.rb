@@ -11,6 +11,7 @@ FatFreeCRM::Application.routes.draw do
     match 'signup'     => 'users#new',               :as => :signup
     match 'timeline'   => 'home#timeline',           :as => :timeline
     match 'timezone'   => 'home#timezone',           :as => :timezone
+    match 'redraw'     => 'home#redraw',             :as => :redraw
     match 'toggle'     => 'home#toggle'
 
     resource  :authentication
@@ -20,6 +21,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :accounts do
       collection do
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -33,7 +35,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :campaigns do
       collection do
-        get  :filter
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -47,6 +49,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :contacts do
       collection do
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -60,7 +63,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :leads do
       collection do
-        get  :filter
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -77,7 +80,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :opportunities do
       collection do
-        get  :filter
+        post :filter
         get  :options
         get  :search
         post :auto_complete
@@ -91,7 +94,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :tasks do
       collection do
-        get  :filter
+        post :filter
         post :auto_complete
       end
       member do
@@ -137,7 +140,7 @@ FatFreeCRM::Application.routes.draw do
       resources :plugins
     end
 
-    match '/:controller(/:action(/:id))'
+    get '/:controller/tagged/:id' => '#tagged'
   end
 end
 

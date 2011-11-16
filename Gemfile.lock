@@ -28,6 +28,8 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
+    acts-as-taggable-on (2.1.1)
+      rails
     acts_as_commentable (3.0.1)
     acts_as_list (0.1.4)
     annotate (2.4.0)
@@ -134,12 +136,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on (>= 2.0.6)
   acts_as_commentable (>= 3.0.1)
   acts_as_list (~> 0.1.4)
   annotate (>= 2.4.0)
   authlogic (~> 3.0.3)
   awesome_print (>= 0.3.1)
-  factory_girl (~> 1.3.3)
+  factory_girl (>= 1.3.3)
   factory_girl_rails (~> 1.0.1)
   ffaker (>= 1.5.0)
   haml (>= 3.1.1)

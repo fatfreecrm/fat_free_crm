@@ -8,7 +8,6 @@ config/*.yml
 .rspec
 spec/reports
 coverage/*
-db/schema.rb
 db/*.sql*
 log/*.log
 

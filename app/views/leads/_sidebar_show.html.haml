@@ -49,4 +49,8 @@
     .caption #{t :background_info}
     = auto_link(simple_format h(@lead.background_info))
 
+  - if @lead.tag_list.present?
+    %dt
+      .tags= tags_for_index(@lead)
+
   = hook(:show_lead_sidebar_bottom, self, :lead => @lead)

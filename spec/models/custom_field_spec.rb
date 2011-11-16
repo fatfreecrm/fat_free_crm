@@ -24,8 +24,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe CustomField do
 
   it "should add a column to the database" do
-    c = Factory.create(:custom_field, :name => "cf_test_field", :klass_name => "Contact")
-    c.klass.columns.map(&:name).should include("cf_test_field")
+    CustomField.connection.should_receive(:add_column).
+                with("contacts", "cf_test_field", :string, {})
+
+    c = Factory.create(:custom_field,
+                       :as => "string",
+                       :name => "cf_test_field",
+                       :klass_name => "Contact")
   end
 
   it "should generate a unique column name for a custom field" do
@@ -55,8 +60,8 @@ describe CustomField do
   it "should return a safe list of types for the 'as' select options" do
     {"email"   => %w(string email url tel select radio),
      "integer" => %w(integer float)}.each do |type, expected_arr|
-      c = Factory.create(:custom_field, :as => type)
-      opts = c.edit_as_options
+      c = Factory.build(:custom_field, :as => type)
+      opts = c.available_as
       expected_arr.each {|t| opts.should include(t) }
     end
   end
@@ -67,15 +72,28 @@ describe CustomField do
   end
 
   it "should change a column's type for safe transitions" do
+    CustomField.connection.should_receive(:add_column).
+                with("contacts", "cf_test_field", :string, {})
+    CustomField.connection.should_receive(:change_column).
+                with("contacts", "cf_test_field", :text, {})
+
     c = Factory.create(:custom_field,
                        :label => "Test Field",
                        :name => nil,
                        :as => "email",
                        :klass_name => "Contact")
-    ar_column(c, "cf_test_field").type.should == :string
     c.as = "text"
     c.save
-    ar_column(c, "cf_test_field").type.should == :text
+  end
+
+  it "should refresh column info and retry on attribute error, in case a new custom field was added by a different instance" do
+    Contact.should_receive(:reset_column_information).twice
+
+    lambda { Contact.new :cf_unknown_field => 123 }.should raise_error(ActiveRecord::UnknownAttributeError)
+
+    contact = Factory.build(:contact)
+    contact.cf_another_new_field.should == nil
   end
 
 end
+

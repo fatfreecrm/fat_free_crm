@@ -121,12 +121,10 @@ class Admin::FieldsController < Admin::ApplicationController
   # DELETE /fields/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @custom_field = CustomField.find(params[:id])
-    @custom_field.destroy if @custom_field
+    @field = CustomField.find(params[:id])
 
     respond_to do |format|
-      format.html { respond_to_destroy(:html) }
-      format.js   { respond_to_destroy(:ajax) }
+      format.js   # destroy.js.rjs
       format.xml  { head :ok }
     end
 
@@ -137,27 +135,4 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
-
-  private
-
-  #----------------------------------------------------------------------------
-  def respond_to_destroy(method)
-    if method == :ajax
-      if called_from_index_page?
-        @fields = get_fields
-        if @fields.blank?
-          @fields = get_fields(:page => current_page - 1) if current_page > 1
-          render :action => :index and return
-        end
-      else
-        self.current_page = 1
-      end
-      # At this point render destroy.js.rjs
-    else
-      self.current_page = 1
-      flash[:notice] = "#{@custom_field.field_name} has beed deleted."
-      redirect_to(fields_path)
-    end
-  end
 end
-
