@@ -3,8 +3,7 @@ namespace :super_tags do
   desc "Migrate super_tags plugin to core custom_fields"
   task :migrate => :environment do
     def dryrun?
-      true
-      #~ ENV['DRYRUN'] == 'true'
+      ENV['DRYRUN'] == 'true'
     end
 
     connection = ActiveRecord::Base.connection
@@ -18,11 +17,11 @@ namespace :super_tags do
     tag_ids = field_data.map {|row| row['tag_id']}.uniq
     tag_ids.each do |tag_id|
       tag = ActsAsTaggableOn::Tag.find(tag_id)
-      group_params = {:tag_id => tag.id, :name => tag.name}
+      group_params = {:tag_id => tag.id, :name => tag.name + ' Details'}
       if dryrun?
         puts group_params
       else
-        group = CustomFieldGroup.create group_params
+        group = FieldGroup.create group_params
         group_ids[tag_id] = group.id
       end
     end
@@ -51,26 +50,27 @@ namespace :super_tags do
     end
 
     tag_ids.each do |tag_id|
-      data = connection.select_all "SELECT * FROM tag#{tag_id}s"
-      keys = data.first.keys.reject {|k| %w(id customizable_type).include?(k)}
+      if (data = connection.select_all "SELECT * FROM tag#{tag_id}s").present?
+        keys = data.first.keys.reject {|k| %w(id customizable_type).include?(k)}
 
-      klass_names = data.map {|row| row['customizable_type']}.uniq
-      klass_names.each do |klass_name|
-        klass = klass_name.constantize
-        values = data.map do |row|
-          keys.map {|k| row[k] =~ /^\d$/ ? row[k] : "'#{row[k]}'"}.join(', ')
-        end
-        keys.shift # We don't need customizable_id anymore
+        klass_names = data.map {|row| row['customizable_type']}.uniq
+        klass_names.each do |klass_name|
+          klass = klass_name.constantize
+          values = data.map do |row|
+            keys.map {|k| row[k] =~ /^\d*$/ ? row[k] : "'#{row[k].gsub("'","''")}'"}.join(', ')
+          end
+          keys.shift # We don't need customizable_id anymore
 
-        insert = %Q{
-          INSERT INTO #{klass.table_name} (#{([klass.primary_key] + keys).join(', ')})
-            VALUES (#{values.join('), (')})
-            ON DUPLICATE KEY UPDATE #{keys.map {|k| "#{k} = VALUES(#{k})"}.join(', ')}
-        }
-        if dryrun?
-          puts insert
-        else
-          connection.execute insert
+          insert = %Q{
+            INSERT INTO #{klass.table_name} (#{([klass.primary_key] + keys).join(', ')})
+              VALUES (#{values.join('), (')})
+              ON DUPLICATE KEY UPDATE #{keys.map {|k| "#{k} = VALUES(#{k})"}.join(', ')}
+          }
+          if dryrun?
+            puts insert
+          else
+            connection.execute insert
+          end
         end
       end
     end
