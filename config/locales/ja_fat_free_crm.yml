@@ -312,7 +312,7 @@ ja:
   campaigns_small: キャンペーン
   conversion: Conversion
   conversion_label: Conversion (%)
-  conversion_number: "%{value} conversion" 
+  conversion_number: "%{value} conversion"
   create_campaign: キャンペーンを作成
   end_date: End date
   finished_on: completed on %{value}
@@ -334,7 +334,7 @@ ja:
   total_campaigns: キャンペーンの合計
   was_supposed_to_finish: was supposed to finish on %{value}
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
-    
+
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: その他
@@ -375,8 +375,8 @@ ja:
   lead: リード
   lead_info_small: リード連絡先
   lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
+  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.
   lead_small: リード
   lead_status_small: リードステータス
   lead_summary: Lead Summary
@@ -596,7 +596,7 @@ ja:
     comment:
       one: '1 comment' # TODO
       other: '%{count} comments' # TODO
-    contact: 
+    contact:
       one: '1 contact'
       other: '%{count} contacts'
     opportunity:
@@ -623,13 +623,14 @@ ja:
   time:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
-      
+      mmddyyyy_hhmm: "%m/%d/%Y %l:%M %p"
+
   calendar_date_select:
     ok: OK
     now: Now
     today: Today
     clear: Clear
 
-  # If you need custom format look at 
+  # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: american
