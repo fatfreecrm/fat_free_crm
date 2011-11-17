@@ -14,7 +14,7 @@ namespace :super_tags do
       'long_answer'  => 'text',
       'select_list'  => 'select',
       'multi_select' => 'check_boxes',
-      'checkbox'     => 'checkbox',
+      'checkbox'     => 'boolean',
       'date'         => 'date',
       'datetime'     => 'datetime'
     }
