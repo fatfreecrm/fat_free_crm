@@ -19,6 +19,9 @@ Dir[File.dirname(__FILE__) + "/shared/*.rb"].map {|f| require f}
 
 TASK_STATUSES = %w(pending assigned completed).freeze
 
+# Load default settings from config/settings.yml
+load_default_settings if Setting.table_exists?
+
 Setting.task_calendar_with_time = false
 
 I18n.locale = 'en-US'
@@ -56,9 +59,6 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 end
-
-# Load default settings from config/settings.yml
-load_default_settings if Setting.table_exists?
 
 ActionView::TestCase::TestController.class_eval do
   def self.controller_name
