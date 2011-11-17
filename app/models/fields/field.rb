@@ -16,7 +16,7 @@ class Field < ActiveRecord::Base
     'select'      => :string,
     'radio'       => :string,
     'check_boxes' => :text,
-    'checkbox'    => :boolean,
+    'boolean'     => :boolean,
     'date'        => :date,
     'datetime'    => :timestamp,
     'decimal'     => [:decimal, {:precision => 15, :scale => 2}],
