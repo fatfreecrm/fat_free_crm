@@ -67,7 +67,7 @@ it:
   call: Chiamata
   email: Email
   follow_up: Seguito
-  lunch: Pranzo	
+  lunch: Pranzo
   meeting: Incontro
   money: Soldi
   presentation: Presentazione
@@ -93,7 +93,7 @@ it:
   one_hour: Un'ora
   one_day: Un giorno
   two_days: Due giorni
-  one_week: Una settimana 
+  one_week: Una settimana
   two_weeks: Due settimane
   one_month: Un mese
 
@@ -161,7 +161,7 @@ it:
 
   msg_account_suspended: Questo utente e' stato sospeso.
   password_reset_instruction: istruzioni per il reset della password
-  
+
   # Controllers.
   #----------------------------------------------------------------------------
   msg_account_created: Il tuo account e' stato creato ed e' in attesa di approvazione dall'amministratore.
@@ -519,7 +519,7 @@ it:
   more: Piu'...
   n_a: N/A
   name: Nome
-  no_match: Nessuna corrispondenza %{value} 
+  no_match: Nessuna corrispondenza %{value}
   no_recent_items: Non ci sono ancora elementi recenti da mostrare.
   options: Opzioni
   permissions: Permessi
@@ -644,14 +644,14 @@ it:
   #----------------------------------------------------------------------------
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
+      mmddyyyy: "%d/%m/%Y"
       mmdd: "%b %e"
       mmddyy: "%b %e, %Y"
 
   time:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
-      mmddyyyy_hhmm: "%m/%d/%Y %H:%M"
+      mmddyyyy_hhmm: "%d/%m/%Y %H:%M"
 
   calendar_date_select:
     ok: OK

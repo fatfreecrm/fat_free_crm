@@ -11,7 +11,7 @@ sv-SE:
   here: här
   no_button: 'Nej'
   not_implemented: Ej implementerad.
-  or: eller 
+  or: eller
   select_none: '-- Ingen --'
   select_blank: '-- Välj --'
   yes_button: 'Ja'
@@ -19,7 +19,7 @@ sv-SE:
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Kontrollpanel
-  tab_tasks: Ärende 
+  tab_tasks: Ärende
   tab_campaigns: Kampanjer
   tab_leads: Leads
   tab_accounts: Konton
@@ -46,8 +46,8 @@ sv-SE:
   online: Web-marknadsföring
   referral: Referens
   self: Kundinitiativ
-  web: Hemsida 
-  word_of_mouth: Mun till mun 
+  web: Hemsida
+  word_of_mouth: Mun till mun
   other: Övrigt
 
   prospecting: Prospektering
@@ -193,15 +193,15 @@ sv-SE:
   option_after: efter
   option_all: alla
   option_all_users: Alla användare
-  option_amount: belopp 
+  option_amount: belopp
   option_before: före
   option_brief: sammandrag
-  option_closes_on: datum avslutad 
+  option_closes_on: datum avslutad
   option_company: företag
   option_created_at: datum skapad
   option_ends_on: datum avslutad
   option_first_name: förnamn
-  option_last_name: efternamn 
+  option_last_name: efternamn
   option_leads_count: fakstiska leads
   option_long: lång
   option_name: namn
@@ -214,7 +214,7 @@ sv-SE:
   option_updated_at: datum uppdaterad
   show_per_page: Visa %{number} %{models} per sida med formatet %{format}.
   sort_by: Sortera %{models} på %{field}.
-  sort_by_displaying: "Sortera %{models} på %{field} och visa förnamn %{position} efternamn." 
+  sort_by_displaying: "Sortera %{models} på %{field} och visa förnamn %{position} efternamn."
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
@@ -233,7 +233,7 @@ sv-SE:
   image_file: Bildfil
   image_help: Bildfilen som du laddar upp kommer automatiskt att ändras till storlek 75 x 75 pixlar. Godkända format är GIF, JPG och PNG.
   job_title: Titel
-  last_name: Efternamn 
+  last_name: Efternamn
   login_now_link: Logga in nu!
   mobile: Mobil
   my_profile: Min Profil
@@ -244,8 +244,8 @@ sv-SE:
   profile: Profil
   profile_language: Språk
   save_profile: Spara Profil
-  sign_up: Registrera dig 
-  sign_up_button: Registrera 
+  sign_up: Registrera dig
+  sign_up_button: Registrera
   skype: Skype
   upload_picture: Ladda upp bild
   use_gravatar: Använd Gravatar
@@ -255,23 +255,23 @@ sv-SE:
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Glömt lösenord 
+  forgot_password: Glömt lösenord
   login: Logga in
-  no_account: Har du inget konto? 
-  remember_me: Kom i håg mig 
-  sign_up_now: Registrera dig nu! 
+  no_account: Har du inget konto?
+  remember_me: Kom i håg mig
+  sign_up_now: Registrera dig nu!
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Konto
   account_small: konto
   accounts: konton
-  accounts_options: Kontoalternativ 
+  accounts_options: Kontoalternativ
   accounts_small: konton
-  assigned_to: Tilldela till 
+  assigned_to: Tilldela till
   billing_address: Faktureringsadress
   create_account: Skapa konto
-  date_created: Datum skapad/t 
+  date_created: Datum skapad/t
   date_updated: Datum Uppdatarad/t
   fax: Fax
   intro: Du kan lägga till %{value} information senare.
@@ -279,11 +279,11 @@ sv-SE:
   open_in_window: Öppna %{value} i ett nytt fönster
   mail_to: Skicka e-post till %{value}
   phone_small: telefon
-  phone_toll_free: Avgiftsfri 
+  phone_toll_free: Avgiftsfri
   keep_private: Privat, dela inte med andra
-  make_public: Dela med alla 
+  make_public: Dela med alla
   same_as_billing: same as billing
-  save_account: Spara konto 
+  save_account: Spara konto
   share_with: Dela med följande personer
   shipping_address: Leveransadress
   website: Hemsida
@@ -304,15 +304,15 @@ sv-SE:
   campaigns_small: kampanjer
   conversion: Konvertering
   conversion_label: Konvertering (%)
-  conversion_number: "%{value} konverterinsgrad" 
-  create_campaign: Skapa kampanj 
+  conversion_number: "%{value} konverterinsgrad"
+  create_campaign: Skapa kampanj
   end_date: Slutdatum
   finished_on: avslutad %{value}
   finishes_in: avslutas om %{value}
   no_start_date: startdatum ej angiven
   number_of_leads: Antal leads
   objectives: Målsättning
-  objectives_help: Ange förväntade antal leads, förväntad konverteringsgrad, förväntade intäkter och kampanjbudget. Dessa siffror tillåter dig att övervaka kampanjens faktiska prestanda.  
+  objectives_help: Ange förväntade antal leads, förväntad konverteringsgrad, förväntade intäkter och kampanjbudget. Dessa siffror tillåter dig att övervaka kampanjens faktiska prestanda.
   objectives_small: campaign objectives
   revenue: Intäkter
   revenue_label: Intäkter (kr)
@@ -327,7 +327,7 @@ sv-SE:
   was_supposed_to_finish: skulle ha varit avslutad %{value}
   was_supposed_to_start: skulle ha varit påbörjad för %{time_ago} sedan, dvs %{start_date}
   was_supposed_to_start_in: påbörjas om %{starts_in}, dvs %{start_date}
-    
+
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Alternativ
@@ -341,8 +341,8 @@ sv-SE:
   department: Avdelning
   department_small: '%{value} avdelning'
   do_not_call: Ring ej
-  extra_info: Övrig 
-  extra_info_small: övrig 
+  extra_info: Övrig
+  extra_info_small: övrig
   facebook: Facebook
   linked_in: LinkedIn
   myself: Mig själv
@@ -388,7 +388,7 @@ sv-SE:
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
   amount: Belopp
-  close_date: Slutdatum 
+  close_date: Slutdatum
   closed_ago_on: avslutad %{time_ago} sedan, dvs. %{date}
   closes_today: förväntas bli avslutad idag!
   closing_date: avslutningsdatum är %{value}
@@ -397,7 +397,7 @@ sv-SE:
   days_late: Försenad med
   days_left: Dagar kvar
   discount: Rabatt
-  discount_number: med rabatt %{value} 
+  discount_number: med rabatt %{value}
   expected_to_close: förväntas bli avslutad %{time} %{date}
   from: från
   no_closing_date: avslutningdatum ej angiven
@@ -412,15 +412,15 @@ sv-SE:
   past_due: förfallen, skulle ha varit avslutad %{value} sedan
   probability: Sannolikhet
   probability_number: och sannolikhet %{value}
-  save_opportunity: Spara affär 
+  save_opportunity: Spara affär
   stage: Skede
-  total_opportunities: Totala Affärer 
+  total_opportunities: Totala Affärer
   weighted_amount: Beräknat belopp
 
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   assign_to: Tilldela till
-  assigned_tab: Tilldelade 
+  assigned_tab: Tilldelade
   assigned_tasks: Tilldelade Ärenden
   category: Kategori
   completed_tab: Utförda
@@ -459,7 +459,7 @@ sv-SE:
 
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_commented: "har kommenterat:" 
+  action_commented: "har kommenterat:"
   action_completed: utförd
   action_created: "har skapat:"
   action_deleted: "har tagit bort:"
@@ -487,7 +487,7 @@ sv-SE:
   add_note_help: Lägg till en ny antekning...
   edit_note: Ändra anteckning
   added_ago: skapad %{value} sedan
-  added_by: skapad %{time_ago} sedan av %{user} 
+  added_by: skapad %{time_ago} sedan av %{user}
   back: Tillbaka
   cancel: Avbryt
   close_form: Stäng sidan
@@ -512,7 +512,7 @@ sv-SE:
   permissions: Rättigheter
   please_retry: försök igen.
   recent_items: Senaste poster
-  select_contact: Välj kontakt 
+  select_contact: Välj kontakt
   select_lead: Välj lead
   select_task: Välj ärende
   select_opportunity: Välj affär
@@ -537,7 +537,7 @@ sv-SE:
   about_ffc_version: Fat Free CRM version
   about_home_page: Hemsida
   about_project_page: Projektsida
-  about_thank_you: Tack för att du använder Fat Free CRM! 
+  about_thank_you: Tack för att du använder Fat Free CRM!
   about_twitter: Twitter poster om programuppdateringar
   about_user_group: Diskussionsgrup för användare
   admin: Administration
@@ -561,7 +561,7 @@ sv-SE:
   # Views -> Admin
   #----------------------------------------------------------------------------
   back_to_crm: Tillbaks till huvudprogrammet
-  crm_admin_page: Administration 
+  crm_admin_page: Administration
 
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
@@ -581,7 +581,7 @@ sv-SE:
   user_signed_up: Registrerad
   user_signed_up_on: registrerade %{value}
   user_since: användare sedan %{value}
-  user_suspended: Avstängd 
+  user_suspended: Avstängd
   user_suspended_on: avstängd %{value}
   users: Användare
   users_small: användare
@@ -597,7 +597,7 @@ sv-SE:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
-    contact: 
+    contact:
       one: '1 kontakt'
       other: '%{count} kontakter'
     opportunity:
@@ -621,16 +621,18 @@ sv-SE:
       mmdd: "%b %e"
       mmddyy: "%B %e, %Y"
 
+
   time:
     formats:
       mmddhhss: "%b %e, kl %H:%M"
-      
+      mmddyyyy_hhmm: "%m/%d/%Y %l:%M %p"
+
   calendar_date_select:
     ok: OK
     now: Nu
     today: Idag
     clear: Rensa
 
-  # If you need custom format look at 
+  # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: american
