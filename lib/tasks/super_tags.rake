@@ -3,75 +3,105 @@ namespace :super_tags do
   desc "Migrate super_tags plugin to core custom_fields"
   task :migrate => :environment do
     def dryrun?
+      #~ true
       ENV['DRYRUN'] == 'true'
     end
 
+    columns = %w(tag_id field_name field_type field_label table_name select_options max_size required disabled form_field_type field_info)
+    map_as = {
+      'short_answer' => 'string',
+      'number'       => 'decimal',
+      'long_answer'  => 'text',
+      'select_list'  => 'select',
+      'multi_select' => 'check_boxes',
+      'checkbox'     => 'checkbox',
+      'date'         => 'date',
+      'datetime'     => 'datetime'
+    }
+    group_ids = {}
+    updates = []
+
     connection = ActiveRecord::Base.connection
 
-    columns = %w(tag_id field_name field_type field_label table_name select_options max_size required disabled form_field_type field_info)
-
     field_data = connection.select_all "SELECT #{columns.join(', ')} FROM customfields"
-
-    group_ids = {}
 
     tag_ids = field_data.map {|row| row['tag_id']}.uniq
     tag_ids.each do |tag_id|
       tag = ActsAsTaggableOn::Tag.find(tag_id)
-      group_params = {:tag_id => tag.id, :name => tag.name + ' Details'}
-      if dryrun?
-        puts group_params
-      else
-        group = FieldGroup.create group_params
-        group_ids[tag_id] = group.id
-      end
-    end
 
-    field_data.each do |row|
-      if (table_name = row['table_name']).present?
-        field_params = {
-          :klass_name => table_name.singularize.camelize,
-          :name       => row['field_name'],
-          :label      => row['field_label'],
-          :position   => row['position'],
-          :collection => row['select_options'],
-          :on         => row['form_field_type'],
-          :hint       => row['field_info'],
-          :required   => row['required'],
-          :disabled   => row['disabled'],
-          :maxlength  => row['max_size'],
-          :field_group_id => group_ids[row['tag_id']]
-        }
-        if dryrun?
-          puts field_params
-        else
-          field = CustomField.create field_params
-        end
-      end
-    end
-
-    tag_ids.each do |tag_id|
       if (data = connection.select_all "SELECT * FROM tag#{tag_id}s").present?
-        keys = data.first.keys.reject {|k| %w(id customizable_type).include?(k)}
+        keys = data.first.keys.reject {|k| %w(id customizable_id customizable_type).include?(k)}
+
+        # FieldGroup
+        unless field_group = FieldGroup.find_by_tag_id(tag.id)
+          group_params = {:tag_id => tag.id, :name => tag.name + ' Details'}
+          if dryrun?
+            puts group_params
+          else
+            field_group = FieldGroup.create! group_params
+          end
+        end
 
         klass_names = data.map {|row| row['customizable_type']}.uniq
         klass_names.each do |klass_name|
           klass = klass_name.constantize
-          values = data.map do |row|
-            keys.map {|k| row[k] =~ /^\d*$/ ? row[k] : "'#{row[k].gsub("'","''")}'"}.join(', ')
-          end
-          keys.shift # We don't need customizable_id anymore
 
-          insert = %Q{
-            INSERT INTO #{klass.table_name} (#{([klass.primary_key] + keys).join(', ')})
-              VALUES (#{values.join('), (')})
-              ON DUPLICATE KEY UPDATE #{keys.map {|k| "#{k} = VALUES(#{k})"}.join(', ')}
-          }
-          if dryrun?
-            puts insert
-          else
-            connection.execute insert
+          # CustomField
+          field_data.each do |row|
+            next unless row['tag_id'] == tag_id
+
+            unless field = CustomField.find_by_klass_name_and_name(klass_name, row['field_name'])
+
+              collection = row['select_options'].split('|').map(&:strip) if row['select_options']
+
+              field_params = {
+                :klass_name => klass_name,
+                :name       => row['field_name'],
+                :label      => row['field_label'],
+                :position   => row['position'],
+                :collection => collection,
+                :as         => map_as[row['form_field_type']],
+                :hint       => row['field_info'],
+                :required   => row['required'],
+                :disabled   => row['disabled'],
+                :maxlength  => row['max_size'],
+                :field_group_id => field_group.try(:id)
+              }
+              if dryrun?
+                puts field_params
+              else
+                field = CustomField.create! field_params
+              end
+            end
+          end
+
+          # Data
+          data.each do |row|
+            values = []
+            keys.each do |key|
+              next unless klass.column_names.include?(key)
+
+              value = if row[key] =~ /^\d+$/
+                row[key]
+              elsif row[key].present?
+                connection.quote(row[key])
+              end
+              values << "#{key} = #{value}" if value.present?
+            end
+
+            updates << "UPDATE #{klass.table_name} SET #{values.join(', ')} WHERE #{klass.primary_key} = #{row['customizable_id']}" if values.present?
           end
         end
+      end
+    end
+
+    if dryrun?
+      File.open('update.sql', 'w') do |file|
+        file << updates.join(";\n")
+      end
+    else
+      updates.each do |update|
+        connection.execute update
       end
     end
   end
