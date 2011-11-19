@@ -18,6 +18,7 @@ namespace :spec do
     puts "Running initial migrations..."
     puts "Preparing test database..."
     Rake::Task["db:schema:load"].invoke
+    Rake::Task["crm:settings:load"].invoke
     Rails.env = tmp_env
   end
 end
