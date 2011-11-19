@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111101090312) do
+ActiveRecord::Schema.define(:version => 20111117041311) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -202,6 +202,7 @@ ActiveRecord::Schema.define(:version => 20111101090312) do
     t.string   "hint"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tag_id"
   end
 
   create_table "fields", :force => true do |t|
@@ -214,7 +215,7 @@ ActiveRecord::Schema.define(:version => 20111101090312) do
     t.string   "hint"
     t.string   "placeholder"
     t.string   "as",             :limit => 32
-    t.string   "collection"
+    t.text     "collection"
     t.boolean  "disabled"
     t.boolean  "required"
     t.integer  "maxlength"
