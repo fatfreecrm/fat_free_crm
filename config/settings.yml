@@ -91,7 +91,7 @@
 #   true  -- allow selecting date and time.
 #   false -- allow selecting date only. This is the default.
 #
-task_calendar_with_time: true
+task_calendar_with_time: false
 
 # Sets the email dropbox feature, this are the connections settings for
 # the imap account, server and folders.
