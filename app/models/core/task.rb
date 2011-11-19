@@ -235,10 +235,10 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def parse_calendar_date
-    puts "task_calendar_with_time: " << Setting.task_calendar_with_time
-    puts "locale: " << I18n.locale
-    puts "time fmt: " << I18n.t('time.formats.mmddyyyy_hhmm')
-    puts "date fmt: " << I18n.t('date.formats.mmddyyyy')
+    puts "task_calendar_with_time: " << Setting.task_calendar_with_time.to_s
+    puts "locale: " << I18n.locale.to_s
+    puts "time fmt: " << I18n.t('time.formats.mmddyyyy_hhmm').to_s
+    puts "date fmt: " << I18n.t('date.formats.mmddyyyy').to_s
     Time.strptime(self.calendar, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
   end
 end
