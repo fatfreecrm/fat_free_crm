@@ -18,6 +18,9 @@ describe "/tasks/new.js.rjs" do
   end
 
   describe "new task" do
+    before(:all) { @task_with_time = Setting.task_calendar_with_time }
+    after(:all) { Setting.task_calendar_with_time = @task_with_time }
+
     it "create: should render [new.html.haml] template into :create_task div" do
       params[:cancel] = nil
       render
@@ -56,3 +59,4 @@ describe "/tasks/new.js.rjs" do
   end
 
 end
+
