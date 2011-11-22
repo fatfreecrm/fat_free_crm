@@ -25,4 +25,7 @@ module Admin::FieldsHelper
     options.map{|k| [t("field_types.#{k}"), k] }
   end
 
+  def field_group_options
+    FieldGroup.all.map {|fg| [fg.name, fg.id]}
+  end
 end

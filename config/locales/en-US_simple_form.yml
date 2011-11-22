@@ -28,7 +28,7 @@ en-US:
     select:      Select List
     multiselect: Multi Select
     radio:       Radio Buttons
-    checkbox:    Checkbox
+    boolean:     Checkbox
     check_boxes: Checkbox List
     date:        Date
     datetime:    Date & Time

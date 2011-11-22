@@ -13,9 +13,13 @@
           .label.top.req Field type:
           = f.select :as, field_edit_as_options(f.object)
     %tr
-      %td{ :colspan => 3 }
+      %td
         .label.top.req Select Options (pipe separated):
         = f.text_field :collection_string
+      %td= spacer
+      %td
+        .label.top.req Field group:
+        = f.select :field_group_id, field_group_options
     %tr
       %td
         .label.top Required:
@@ -27,11 +31,11 @@
     %tr
       %td
         .label.top Hint:
-        = f.text_area :hint
+        = f.text_area :hint, :rows => 5
       %td= spacer
       %td
         .label.top Placeholder:
-        = f.text_area :placeholder
+        = f.text_area :placeholder, :rows => 5
 
     = hook(:customfield_top_section_bottom, self, :f => f)
 
