@@ -7,7 +7,7 @@
       #facebook-list
         = f.text_field :tag_list, :id => "tag_list", :style => "width:500px", :autocomplete => "off"
         #facebook-auto
-          .default Type the name of a tag you'd like to use.  Use commas to separate multiple tags.
+          .default Type the name of a tag you'd like to use. Use commas to separate multiple tags.
           %ul.feed
             - # Get tags from the object.
             - f.object.tags.map{|t| t.name }.each do |tag|

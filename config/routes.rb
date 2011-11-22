@@ -141,6 +141,7 @@ FatFreeCRM::Application.routes.draw do
     end
 
     get '/:controller/tagged/:id' => '#tagged'
+    get '/:controller/field_group' => '#field_group'
   end
 end
 

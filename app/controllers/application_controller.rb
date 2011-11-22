@@ -92,6 +92,19 @@ class ApplicationController < ActionController::Base
     redirect_to :action => "index"
   end
 
+  def field_group
+    if params[:tags]
+      klass = controller_name.classify.constantize
+      tags = params[:tags].split(",")
+      @tags = tags.map do |t|
+        ActsAsTaggableOn::Tag.where(:name => t.strip).where('taggable_type IS NULL OR taggable_type = ?', klass.name).first
+      end.compact.uniq
+      @asset = klass.find_by_id(params[:asset_id]) || klass.new
+      render :template => 'shared/tags.js'
+    else
+      render :text => ''
+    end
+  end
 private
   #----------------------------------------------------------------------------
   def set_context
