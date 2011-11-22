@@ -1,11 +1,17 @@
-- if f.object.class.custom_fields.present?
-  - collapsed = session[:custom_fields].nil?
-  = subtitle :custom_fields, collapsed, t(:custom_fields)
+- asset = controller_name.singularize
+- f.object.tags = unsaved_param_tags(asset) if params[asset] and params[asset][:tag_list]
+
+- f.object.class.custom_fields.group_by(&:field_group_id).each do |field_group_id, fields|
+  - field_group = FieldGroup.find(field_group_id)
+  - next unless field_group.tag_id.nil? or f.object.tags.map(&:id).include?(field_group.tag_id)
+
+  - collapsed = session[field_group.key].nil?
+  = subtitle field_group.key, collapsed, field_group.name
   .section
-    %small#custom_fields_intro{ hidden_if(!collapsed) }
-    #custom_fields{ hidden_if(collapsed) }
+    %small{ hidden_if(!collapsed).merge(:id => "#{field_group.key}_intro") }
+    %div[field_group]{ hidden_if(collapsed) }
       %table
-        - f.object.class.custom_fields.in_groups_of(2) do |group|
+        - fields.sort_by(&:position).in_groups_of(2) do |group|
           %tr
             %td
               - if (field = group[0])

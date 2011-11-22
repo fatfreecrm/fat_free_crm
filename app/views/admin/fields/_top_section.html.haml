@@ -13,7 +13,7 @@
           .label.top.req Field type:
           = f.select :as, field_edit_as_options(f.object)
     %tr
-      %td{:colspan => 2 }
+      %td{ :colspan => 3 }
         .label.top.req Select Options (pipe separated):
         = f.text_field :collection_string
     %tr
@@ -28,6 +28,10 @@
       %td
         .label.top Hint:
         = f.text_area :hint
+      %td= spacer
+      %td
+        .label.top Placeholder:
+        = f.text_area :placeholder
 
     = hook(:customfield_top_section_bottom, self, :f => f)
 
@@ -47,6 +51,4 @@
 
       toggleCollection();
 
-      Event.observe($('field_as'),'change',toggleCollection);
-
-
+      Event.observe($('field_as'), 'change', toggleCollection);
