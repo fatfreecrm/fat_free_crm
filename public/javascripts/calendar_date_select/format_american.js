@@ -15,7 +15,7 @@ Date.parseFormattedString = function (string) {
   // 11/1/1111 01pm
   // 1/1/1111 01:11pm
   // 1/1/1111 1:11pm
-  var regexp = "(([0-1]?[0-9])\/[0-3]?[0-9]\/[0-9]{4}) *(([0-9]{1,2})(:[0-9]{2})? *(am|pm))?";
+  var regexp = "(([0-1]?[0-9])\/[0-3]?[0-9]\/[0-9]{4}) *([0-9]{1,2}(:[0-9]{2})? *(am|pm))?";
   string = string.strip();
   var d = string.match(new RegExp(regexp, "i"));
   if (d==null) {
@@ -26,10 +26,10 @@ Date.parseFormattedString = function (string) {
   hrs = 0;
   mts = 0;
   if(d[3] != null && d[3].strip() != "") {
-    hrs = parseInt(d[3], 10);
-    if(d[6].toLowerCase() == 'pm') { hrs += 12; } // Add 12 more to hrs
-    mts = d[5].split(':')[1];
+    hrs = parseInt(d[3].split('')[0], 10);
+    if(d[5].toLowerCase() == 'pm') { hrs += 12; } // Add 12 more to hrs
+    mts = d[4].split(':')[1];
   }
-
+  
   return new Date(mdy[2], parseInt(mdy[0], 10)-1, mdy[1], hrs, mts, 0);
 }
