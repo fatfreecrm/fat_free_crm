@@ -16,8 +16,12 @@ module IsParanoid
     #  end
     def is_paranoid
       unless included_modules.include?(InstanceMethods)
-        extend SingletonMethods
-        include InstanceMethods
+        # Override the default destroy to allow us to flag deleted_at.
+        # This preserves the before_destroy and after_destroy callbacks.
+        # Because this is also called internally by Model.destroy_all and
+        # the Model.destroy(id), we don't need to specify those methods
+        # separately.
+        alias_method :destroy!, :destroy
 
         # This is the real magic.  All calls made to this model will
         # append the conditions deleted_at => nil.  Exceptions require
@@ -25,12 +29,8 @@ module IsParanoid
         # self.count_with_destroyed, and self.find_with_destroyed )
         default_scope where(:deleted_at => nil)
 
-        # Override the default destroy to allow us to flag deleted_at.
-        # This preserves the before_destroy and after_destroy callbacks.
-        # Because this is also called internally by Model.destroy_all and
-        # the Model.destroy(id), we don't need to specify those methods
-        # separately.
-        alias_method :destroy!, :destroy
+        include InstanceMethods
+        extend SingletonMethods
       end
     end
   end
