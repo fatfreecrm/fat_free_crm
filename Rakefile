@@ -23,7 +23,5 @@ namespace :spec do
   end
 end
 
-Rake::Task["spec"].prerequisites.clear
-Rake::Task["spec"].prerequisites.push("spec:prepare")
-task :default => ['spec']
+task :default => ["spec:prepare", "spec"]
 
