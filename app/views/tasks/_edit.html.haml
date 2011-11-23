@@ -6,7 +6,7 @@
     = hidden_field_tag "task[asset_type]", "#{@asset.class if @asset}"
 
     = render "tasks/top_section",    :f => f, :edit => true
-    = render "shared/custom_fields", :f => f, :edit => true
+    = render "fields/groups", :f => f, :edit => true
 
     .buttonbar
       = f.submit t :save_task

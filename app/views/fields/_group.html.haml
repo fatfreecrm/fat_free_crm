@@ -1,0 +1,18 @@
+- collapsed = session[field_group.key].nil?
+
+%div{ :id => "#{field_group.key}_container" }
+  = subtitle field_group.key, collapsed, field_group.name
+  .section
+    %small{ hidden_if(!collapsed).merge(:id => "#{field_group.key}_intro") }
+    %div[field_group]{ hidden_if(collapsed) }
+      %table
+        - fields.sort_by(&:position).in_groups_of(2) do |group|
+          %tr
+            %td
+              - if (field = group[0])
+                = f.input field.name, field.input_options
+            %td
+              = spacer
+            %td
+              - if (field = group[1])
+                = f.input field.name, field.input_options

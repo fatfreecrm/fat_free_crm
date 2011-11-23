@@ -7,7 +7,7 @@
     = f.error_messages :object_name => t('opportunity')
 
     = render "opportunities/top_section", :f => f, :edit => true
-    = render "shared/custom_fields",      :f => f, :edit => true
+    = render "fields/groups",      :f => f, :edit => true
     = render "opportunities/permissions", :f => f, :edit => true
 
     .buttonbar

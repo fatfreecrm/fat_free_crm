@@ -24,11 +24,12 @@ FatFreeCRM::Application.routes.draw do
         post :filter
         get  :options
         get  :search
+        get  :field_group
         post :auto_complete
         post :redraw
       end
       member do
-        put :attach
+        put  :attach
         post :discard
       end
     end
@@ -38,6 +39,7 @@ FatFreeCRM::Application.routes.draw do
         post :filter
         get  :options
         get  :search
+        get  :field_group
         post :auto_complete
         post :redraw
       end
@@ -52,6 +54,7 @@ FatFreeCRM::Application.routes.draw do
         post :filter
         get  :options
         get  :search
+        get  :field_group
         post :auto_complete
         post :redraw
       end
@@ -66,6 +69,7 @@ FatFreeCRM::Application.routes.draw do
         post :filter
         get  :options
         get  :search
+        get  :field_group
         post :auto_complete
         post :redraw
       end
@@ -83,6 +87,7 @@ FatFreeCRM::Application.routes.draw do
         post :filter
         get  :options
         get  :search
+        get  :field_group
         post :auto_complete
         post :redraw
       end
@@ -141,7 +146,6 @@ FatFreeCRM::Application.routes.draw do
     end
 
     get '/:controller/tagged/:id' => '#tagged'
-    get '/:controller/field_group' => '#field_group'
   end
 end
 

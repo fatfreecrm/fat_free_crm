@@ -31,12 +31,12 @@ crm.set_tag_list_event = function(controller, asset, asset_id) {
 
 //----------------------------------------------------------------------------
 // AJAX loads the form fields for each field group
-crm.load_field_group = function(controller, tags, asset_id) {
-  new Ajax.Request('/' + controller + '/field_groups', {
-    asynchronous  : true,
-    evalScripts:true,
-    method:'get',
-    parameters: { tags      : tags,
+crm.load_field_group = function(controller, tag, asset_id) {
+  new Ajax.Request('/'+ controller +'/field_group', {
+    asynchronous: true,
+    evalScripts: true,
+    method: 'get',
+    parameters: { tag       : tag,
                   asset_id  : asset_id,
                   collapsed : "no" }
   });

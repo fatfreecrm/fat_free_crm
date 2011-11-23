@@ -93,14 +93,13 @@ class ApplicationController < ActionController::Base
   end
 
   def field_group
-    if params[:tags]
+    if @tag = ActsAsTaggableOn::Tag.find_by_name(params[:tag].strip) and
+       @field_group = FieldGroup.find_by_tag_id(@tag.id)
+
       klass = controller_name.classify.constantize
-      tags = params[:tags].split(",")
-      @tags = tags.map do |t|
-        ActsAsTaggableOn::Tag.where(:name => t.strip).where('taggable_type IS NULL OR taggable_type = ?', klass.name).first
-      end.compact.uniq
       @asset = klass.find_by_id(params[:asset_id]) || klass.new
-      render :template => 'shared/tags.js'
+
+      render 'fields/group'
     else
       render :text => ''
     end
