@@ -161,7 +161,13 @@ $sidebar_width:  210px
     td
       vertical-align: top
       padding: 0px
-      input[type="text"], input[type="password"], select
+
+      div.input
+        display: inline
+      img.tooltip-icon
+        display: inline
+        vertical-align: bottom
+      input, select
         width: 240px
         display: block
 
@@ -637,7 +643,7 @@ $sidebar_width:  210px
       color: white
       font-weight: bold
 
-.list li
+.list li.position
   cursor: move
 
 span.handle img
@@ -655,3 +661,4 @@ span.handle img
   a:hover
     :background steelblue
     :color yellow
+
