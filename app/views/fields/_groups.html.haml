@@ -4,8 +4,7 @@
 
 #field_groups
   - f.object.class.custom_fields.group_by(&:field_group_id).each do |field_group_id, fields|
-
-    - field_group = FieldGroup.find(field_group_id)
+    - field_group = field_group_id ? FieldGroup.find(field_group_id) : FieldGroup.new(:name => "Custom Fields")
     - tag = f.object.tags.detect { |tag| tag.id == field_group.tag_id }
     - field_groups[tag.name.downcase] = "#{field_group.key}_container" if tag
 
@@ -16,3 +15,4 @@
     crm.set_tag_list_event('#{controller_name}', '#{asset}', '#{params[:id]}');
     loadedFieldGroups = $H(#{field_groups.to_json});
   }
+
