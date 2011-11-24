@@ -551,7 +551,7 @@ de:
   task_due_today: "heute fällig"
   task_from: "Von %{value}"
   task_name: "Aufgabenbezeichnung"
-  task_overdue: "zu spät, war fäälig am"
+  task_overdue: "zu spät, war fällig am"
   task_pending: "Aufgabe wurde in die Warteschlange bewegt"
   task_small: "Aufgabe"
   tasks: "Aufgabe"
