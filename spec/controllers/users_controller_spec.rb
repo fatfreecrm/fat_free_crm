@@ -158,7 +158,7 @@ describe UsersController do
   # PUT /users/1
   # PUT /users/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
     before(:each) do
       require_user
       @user = @current_user

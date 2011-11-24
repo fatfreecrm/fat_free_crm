@@ -349,7 +349,7 @@ describe LeadsController do
   # PUT /leads/1
   # PUT /leads/1.xml
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
 
