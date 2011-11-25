@@ -36,9 +36,6 @@ FatFreeCRM::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-
-  ActionMailer::Base
-  config.action_mailer.default_url_options = { :host => 'localhost' }
 end
 
 # Optionally load 'awesome_print' for debugging in development mode.

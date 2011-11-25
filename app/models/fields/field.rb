@@ -50,7 +50,7 @@ class Field < ActiveRecord::Base
     input_html = {:maxlength => attributes[:maxlength]}
 
     attributes.select { |k,v|
-      %w(as collection disabled hint label placeholder required).include?(k)
+      %w(as collection disabled label placeholder required).include?(k)
     }.symbolize_keys.merge(:input_html => input_html)
   end
 
@@ -65,3 +65,4 @@ class Field < ActiveRecord::Base
     klass_name.constantize
   end
 end
+

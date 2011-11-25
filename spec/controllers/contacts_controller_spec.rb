@@ -348,7 +348,7 @@ describe ContactsController do
   # PUT /contacts/1
   # PUT /contacts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
 

@@ -8,11 +8,11 @@
       %table
         - fields.sort_by(&:position).in_groups_of(2) do |group|
           %tr
-            %td
-              - if (field = group[0])
+            - group.compact.each_with_index do |field, i|
+              %td
+                - if field.hint.present?
+                  = image_tag "info_tiny.png", :title => field.hint, :class => "tooltip-icon"
                 = f.input field.name, field.input_options
-            %td
-              = spacer
-            %td
-              - if (field = group[1])
-                = f.input field.name, field.input_options
+              - if i == 0
+                %td= spacer
+

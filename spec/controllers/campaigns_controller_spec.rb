@@ -301,7 +301,7 @@ describe CampaignsController do
   # PUT /campaigns/1
   # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
 

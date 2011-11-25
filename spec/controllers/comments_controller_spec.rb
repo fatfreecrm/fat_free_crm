@@ -186,7 +186,7 @@ describe CommentsController do
   # PUT /comments/1
   # PUT /comments/1.xml                                          not implemened
   #----------------------------------------------------------------------------
-  # describe "responding to PUT udpate" do
+  # describe "responding to PUT update" do
   #
   #   describe "with valid params" do
   #     it "should update the requested comment" do

@@ -157,13 +157,30 @@ $sidebar_width:  210px
     &.address
       width: 240px
     border-spacing: 0px
-    border-collapse: collapse /* IE */
+    border-collapse: collapse
     td
       vertical-align: top
       padding: 0px
-      input[type="text"], input[type="password"], select
+
+      div.input
+        display: inline
+        padding: 3px
+      img.tooltip-icon
+        display: inline
+        vertical-align: bottom
+      input, select, textarea
         width: 240px
         display: block
+      input[type="checkbox"]
+        display: inline
+        width: auto
+      label
+        vertical-align: bottom
+      div.input.check_boxes > span
+        display: block
+        padding-top: 2px
+        input
+          margin-right: 5px
 
 .remote
   border: 5px lightblue solid
@@ -637,7 +654,7 @@ $sidebar_width:  210px
       color: white
       font-weight: bold
 
-.list li
+.list li.position
   cursor: move
 
 span.handle img
@@ -655,3 +672,4 @@ span.handle img
   a:hover
     :background steelblue
     :color yellow
+

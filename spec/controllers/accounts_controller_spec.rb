@@ -297,7 +297,7 @@ describe AccountsController do
   # PUT /accounts/1
   # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT udpate" do
+  describe "responding to PUT update" do
 
     describe "with valid params" do
       it "should update the requested account, expose the requested account as @account, and render [update] template" do

@@ -32,6 +32,20 @@
 #
 :base_url: ""
 
+# Mail host
+#------------------------------------------------------------------------------
+# Default host used when action mailer generates urls.
+#
+# When sending email, you will need to set the host name so that the mailer can
+# generate urls inside emails that point back to your site. Unlike controllers
+# from Action Pack, the mailer instance doesn’t have any context about the
+# incoming request, so you’ll need to provide all of the details needed to
+# generate a URL.
+#
+# :mail_host: "http://www.example.com"
+#
+:mail_host: ""
+
 # Locale.
 #------------------------------------------------------------------------------
 # Default locale is American English.
