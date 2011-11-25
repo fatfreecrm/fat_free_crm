@@ -978,7 +978,7 @@ describe LeadsController do
   describe "responding to POST redraw" do
     it "should save user selected lead preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "long", :sort_by => "first_name", :naming => "after"
-      @current_user.preference[:leads_per_page].should == 42
+      @current_user.preference[:leads_per_page].should == "42"
       @current_user.preference[:leads_outline].should  == "long"
       @current_user.preference[:leads_sort_by].should  == "leads.first_name ASC"
       @current_user.preference[:leads_naming].should   == "after"

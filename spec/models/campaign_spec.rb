@@ -122,7 +122,7 @@ describe Campaign do
 
     describe "unassigned campaign" do
       before do
-        Account.delete_all
+        Campaign.delete_all
         Factory(:campaign, :user => Factory(:user), :assignee => nil)
         Factory(:campaign, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end

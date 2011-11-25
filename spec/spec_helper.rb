@@ -61,8 +61,8 @@ RSpec.configure do |config|
 end
 
 ActionView::TestCase::TestController.class_eval do
-  def self.controller_name
-    controller_path.split("/").last
+  def controller_name
+    request.path_parameters["controller"].split('/').last
   end
 end
 
@@ -87,6 +87,10 @@ else
 end
 
 ActionView::Base.class_eval do
+  def controller_name
+    request.path_parameters["controller"].split('/').last
+  end
+
   def called_from_index_page?(controller = controller_name)
     if controller != "tasks"
       request.referer =~ %r(/#{controller}$)

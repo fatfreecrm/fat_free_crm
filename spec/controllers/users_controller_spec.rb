@@ -247,7 +247,7 @@ describe UsersController do
     end
 
     it "should save the user avatar if it was successfully uploaded and resized" do
-      @image = fixture_file_upload("spec/fixtures/rails.png", "image/png")
+      @image = fixture_file_upload("/rails.png", "image/png")
 
       xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
       @user.avatar.should_not == nil

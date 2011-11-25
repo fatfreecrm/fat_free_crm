@@ -115,17 +115,15 @@ class Opportunity < ActiveRecord::Base
   # Backend handler for [Update Opportunity] form (see opportunity/update).
   #----------------------------------------------------------------------------
   def update_with_account_and_permissions(params)
-    # Remove account only if blank :account param is given.
     if params[:account] && (params[:account][:id] == "" || params[:account][:name] == "")
       self.account = nil # Opportunity is not associated with the account anymore.
-      self.reload
     elsif params[:account]
       account = Account.create_or_select_for(self, params[:account], params[:users])
-      self.account_opportunity.delete if self.account_opportunity
-      self.reload
-      self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
-      self.account = account
+      if self.account != account and account.id.present?
+        self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self)
+      end
     end
+    self.reload
     self.update_with_permissions(params[:opportunity], params[:users])
   end
 

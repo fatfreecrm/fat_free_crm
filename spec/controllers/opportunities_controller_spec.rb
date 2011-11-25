@@ -450,7 +450,7 @@ describe OpportunitiesController do
       end
 
       it "should get sidebar data if called from opportunities index" do
-        @oppportunity = Factory(:opportunity, :id => 42)
+        @opportunity = Factory(:opportunity, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => { :name => "Test Account" }
@@ -459,7 +459,7 @@ describe OpportunitiesController do
 
       it "should find related account if called from account landing page" do
         @account = Factory(:account, :user => @current_user)
-        @oppportunity = Factory(:opportunity, :id => 42, :account => @account)
+        @opportunity = Factory(:opportunity, :id => 42, :account => @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }
@@ -468,10 +468,10 @@ describe OpportunitiesController do
 
       it "should remove related account if blank :account param is given" do
         @account = Factory(:account, :user => @current_user)
-        @oppportunity = Factory(:opportunity, :id => 42, :account => @account)
+        @opportunity = Factory(:opportunity, :id => 42, :account => @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => {}
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => { :id => "" }
         assigns(:account).should == nil
       end
 
@@ -858,7 +858,7 @@ describe OpportunitiesController do
   describe "responding to POST redraw" do
     it "should save user selected opportunity preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
-      @current_user.preference[:opportunities_per_page].should == 42
+      @current_user.preference[:opportunities_per_page].should == "42"
       @current_user.preference[:opportunities_outline].should  == "brief"
       @current_user.preference[:opportunities_sort_by].should  == "opportunities.name ASC"
     end

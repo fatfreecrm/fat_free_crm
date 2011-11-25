@@ -55,7 +55,7 @@ describe Contact do
       @contact.first_name.should == "Billy"
     end
 
-    it "should update the account another account was selected" do
+    it "should change account if another account was selected" do
       @another_account = Factory(:account)
       lambda { @contact.update_with_account_and_permissions({
         :account => { :id => @another_account.id },

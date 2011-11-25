@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/leads/create.js.rjs" do
   before do
+    controller.controller_path = 'leads'
     login_and_assign
     assign(:campaigns, [ Factory(:campaign) ])
   end
@@ -63,10 +64,6 @@ describe "/leads/create.js.rjs" do
         with_tag("form[class=new_lead]")
       end
       rendered.should include('$("create_lead").visualEffect("shake"')
-
     end
   end
-
 end
-
-

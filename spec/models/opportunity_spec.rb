@@ -61,27 +61,28 @@ describe Opportunity do
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
-    it "should not drop existing Account if [create new account] is blank" do
+    it "should drop existing Account if [create new account] is blank" do
       lambda { @opportunity.update_with_account_and_permissions({
         :account => { :name => "" },
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
-      @opportunity.account.should_not == nil
+      @opportunity.account.should be_nil
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
-    it "should not drop existing Account if [-- None --] is selected from list of accounts" do
+    it "should drop existing Account if [-- None --] is selected from list of accounts" do
       lambda { @opportunity.update_with_account_and_permissions({
         :account => { :id => "" },
         :opportunity => { :name => "Hello" }
       })}.should_not change(Account, :count)
-      @opportunity.account.should_not == nil
+      @opportunity.account.should be_nil
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
   end
 
   describe "Named scopes" do
     it "should find non-closed opportunities" do
+      Opportunity.delete_all
       @opportunities = [
         Factory(:opportunity, :stage => nil,        :amount => 1),
         Factory(:opportunity, :stage => "analysis", :amount => 1),
@@ -159,7 +160,7 @@ describe Opportunity do
 
     describe "unassigned opportunity" do
       before do
-        Account.delete_all
+        Opportunity.delete_all
         Factory(:opportunity, :user => Factory(:user), :assignee => nil)
         Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end

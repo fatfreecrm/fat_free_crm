@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.7'
+gem 'rails', '3.1.3'
 gem 'rake',  '0.8.7'
 
 # Uncomment the database that you have configured in config/database.yml
@@ -18,7 +18,7 @@ gem 'paperclip',           '~> 2.3.6'
 gem 'will_paginate',       '>= 3.0.pre2'
 gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
-#~ gem 'jquery-rails' TODO: Go to rails 3.1
+gem 'prototype-rails',     '>= 3.1.0'
 gem 'ffaker',              '>= 1.5.0' # For demo data
 
 
@@ -29,7 +29,7 @@ group :development, :test do
   gem 'awesome_print',      '>= 0.3.1'
 
   gem 'test-unit', '1.2.3', :platform => :mri_19
-  gem "rspec-rails",        '>= 2.5.0'
+  gem 'rspec-rails',        '>= 2.5.0'
   gem 'ffaker',             '>= 1.5.0'
   gem 'factory_girl',       '>= 1.3.3'
 end
@@ -37,12 +37,6 @@ end
 group :test do
   gem 'factory_girl_rails', '~> 1.0.1'
 end
-
-# Gem watch list:
-#---------------------------------------------------------------------
-# gem 'authlogic',         :git => 'git://github.com/crossroads/authlogic.git', :branch => 'rails3'
-# gem 'gravatar-ultimate', :git => 'git://github.com/crossroads/gravatar.git'
-# gem 'paperclip',         :git => 'http://github.com/thoughtbot/paperclip.git'
 
 # Rails3 plugins that we use and their source repositories:
 #---------------------------------------------------------------------
