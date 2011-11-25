@@ -157,21 +157,30 @@ $sidebar_width:  210px
     &.address
       width: 240px
     border-spacing: 0px
-    border-collapse: collapse /* IE */
+    border-collapse: collapse
     td
       vertical-align: top
       padding: 0px
 
       div.input
         display: inline
+        padding: 3px
       img.tooltip-icon
         display: inline
         vertical-align: bottom
-      input, select
+      input, select, textarea
         width: 240px
         display: block
       input[type="checkbox"]
         display: inline
+        width: auto
+      label
+        vertical-align: bottom
+      div.input.check_boxes > span
+        display: block
+        padding-top: 2px
+        input
+          margin-right: 5px
 
 .remote
   border: 5px lightblue solid
