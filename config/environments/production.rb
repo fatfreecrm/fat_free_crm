@@ -46,8 +46,5 @@ FatFreeCRM::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-
-  # ActionMailer needs to be loaded here so that we can set default_url_options in the controller.
-  ActionMailer::Base
 end
 

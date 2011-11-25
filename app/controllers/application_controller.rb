@@ -108,7 +108,6 @@ private
   #----------------------------------------------------------------------------
   def set_context
     Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
-    ActionMailer::Base.default_url_options[:host] = request.host_with_port
     I18n.locale = Setting.locale if Setting.locale
 
     # Check if the latest settings have been loaded. Display error message in English
