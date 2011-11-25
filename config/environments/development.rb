@@ -27,8 +27,6 @@ FatFreeCRM::Application.configure do
     File.delete(File.join(Rails.root, 'tmp', 'debug.txt'))
   end
 
-  # ActionMailer needs to be loaded here so that we can set default_url_options in the controller.
-  ActionMailer::Base
 end
 
 ActiveSupport.on_load(:after_initialize) do
