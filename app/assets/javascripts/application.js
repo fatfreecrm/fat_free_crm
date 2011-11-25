@@ -15,6 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+//= require prototype
+//= require prototype_ujs
+//= require modalbox
+//= require facebooklist
+//= require facebooklist.simulate
+
 var fbtaglist = null;
 
 var crm = {
@@ -467,7 +473,7 @@ document.observe("dom:loaded", function() {
 
   if (container) {
     var img = new Image;
-    img.src = '/images/loading.gif';
+    img.src = '/assets/loading.gif';
 
     function createSpinner() {
       return new Element('img', { src: img.src, 'class': 'spinner' })
