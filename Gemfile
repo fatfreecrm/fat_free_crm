@@ -5,7 +5,7 @@ gem 'rake',  '0.8.7'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-# gem "mysql2", "0.2.7"
+# gem "mysql2", "0.3.10"
 # gem "sqlite3"
 gem "pg", ">= 0.9.0"
 
