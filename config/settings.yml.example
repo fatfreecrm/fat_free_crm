@@ -111,16 +111,16 @@ task_calendar_with_time: false
 # the imap account, server and folders.
 #------------------------------------------------------------------------------
 :email_dropbox:
-  :server                     : @IMAP_SERVER@          # IMAP server name.
-  :port                       : @IMAP_PORT@            # IMAP server port number.
-  :ssl                        : @IMAP_SSL@             # True for secure IMAP connection, false othewise.
-  :address                    : @IMAP_ADDRESS@         # Dropbox email address.
-  :user                       : @IMAP_USER@            # User to login to the IMAP server.
-  :password                   : @IMAP_PASSWORD@        # Password to login to the IMAP server.
-  :scan_folder                : @IMAP_INBOX@           # Folder to scan for dropbox messages.
-#  :move_to_folder             : @IMAP_MOVE@            # Optional: folder to move processed messages to.
-#  :move_invalid_to_folder     : @IMAP_INVALID@         # Optional: folder to move invalid messages to.
-  :attach_to_account          : @IMAP_ATTACH@          # Attach emails to contact's account, if any. The same rule applies to opportunities.
+  :server                     : ""        # IMAP server name.
+  :port                       : ""        # IMAP server port number.
+  :ssl                        : ""        # True for secure IMAP connection, false othewise.
+  :address                    : ""        # Dropbox email address.
+  :user                       : ""        # User to login to the IMAP server.
+  :password                   : ""        # Password to login to the IMAP server.
+  :scan_folder                : ""        # Folder to scan for dropbox messages.
+#  :move_to_folder            : ""        # Optional: folder to move processed messages to.
+#  :move_invalid_to_folder    : ""        # Optional: folder to move invalid messages to.
+  :attach_to_account          : ""        # Attach emails to contact's account, if any. The same rule applies to opportunities.
 
 # Main and Admin Tabs
 #------------------------------------------------------------------------------
