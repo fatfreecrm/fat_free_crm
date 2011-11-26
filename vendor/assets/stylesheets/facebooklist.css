@@ -13,7 +13,7 @@ ul.hoder li.bit-input input.maininput { margin: 0; }
 #facebook-list ul.holder li.bit-box { padding-right: 15px; position: relative; }
 ul.holder li.bit-hover { background: #BBCEF1; border: 1px solid #6D95E0; }
 ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: #fff; }
-ul.holder li.bit-box a.closebutton { width: 7px; height: 7px; background: url('/images/facebook-close.gif'); }
+ul.holder li.bit-box a.closebutton { width: 7px; height: 7px; background: url('/assets/facebook-close.gif'); }
 ul.holder li.bit-box a.closebutton:hover { background-position: 7px; }
 ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutton:hover { background-position: bottom; }
 
