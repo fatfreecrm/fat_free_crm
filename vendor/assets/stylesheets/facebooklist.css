@@ -1,0 +1,47 @@
+/* TextboxList sample CSS */
+ul.holder { margin: 0; border: 1px solid #999; border-color:#C4C4C4 #E4E4E4 #E4E4E4 #C4C4C4; overflow: hidden; height: auto !important; height: 1%; padding: 3px 6px 0; }
+*:first-child+html ul.holder { padding-bottom: 2px; } * html ul.holder { padding-bottom: 2px; } /* ie7 and below */
+ul.holder li { float: left; list-style-type: none; margin: 0 5px 4px 0; }
+ul.holder li.bit-box, ul.holder li.bit-input input { font: 11px "Lucida Grande", "Verdana"; }
+ul.holder li.bit-box { -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; border: 1px solid #CAD8F3; background: #DEE7F8; padding: 1px 5px 2px; }
+ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: #fff; }
+ul.holder li.bit-input input { width: 150px; margin: 0; border: none; outline: 0; padding: 3px 0 2px; } /* no left/right padding here please */
+ul.holder li.bit-input input.smallinput { width: 20px; }
+ul.hoder li.bit-input input.maininput { margin: 0; }
+
+/* Facebook demo CSS */
+#facebook-list ul.holder li.bit-box { padding-right: 15px; position: relative; }
+ul.holder li.bit-hover { background: #BBCEF1; border: 1px solid #6D95E0; }
+ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: #fff; }
+ul.holder li.bit-box a.closebutton { width: 7px; height: 7px; background: url('/assets/facebook-close.gif'); }
+ul.holder li.bit-box a.closebutton:hover { background-position: 7px; }
+ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutton:hover { background-position: bottom; }
+
+/* Autocompleter */
+
+#facebook-auto { display: none; position: absolute; width: 500px; background: #eee; z-index: 9999; }
+#facebook-auto .default { padding: 5px 7px; border: 1px solid #ccc; border-width: 0 1px 1px; }
+#facebook-auto ul { display: none; margin: 0; padding: 0; overflow: auto; }
+#facebook-auto ul li { padding: 5px 12px; z-index: 1000; cursor: pointer; margin: 0; list-style-type: none; border: 1px solid #ccc; border-width: 0 1px 1px; font: 11px "Lucida Grande", "Verdana"; }
+#facebook-auto ul li em { font-weight: bold; font-style: normal; background: #ccc; }
+#facebook-auto ul li.auto-focus { background: #4173CC; color: #fff; }
+#facebook-auto ul li.auto-focus em { background: none; }
+
+#demo ul.holder li.bit-input input { padding: 2px 0 1px; border: 1px solid #999; }
+#add a { color: #666; }
+#add-test { width: 100px; padding: 2px; }
+#button_container { margin-left: 70px; margin-bottom: 30px;}
+
+/* Fixes for FFCRM */
+#facebook-list { margin: 0 0 18px; background-color: white; }
+#facebook-list li { border-bottom: 0; clear: none; }
+ul.holder li { padding: 0; }
+.facebook-tags { padding: 0; margin: 0; }
+
+
+/* Fixes for 'Peek-a-boo' bug in IE7 and below */
+#facebook-list ul.holder li.bit-box { padding-right: 5px; position: static; }
+ul.holder li.bit-box a.closebutton { display: inline-block; margin-left: 3px;}
+*:first-child+html ul.holder li.bit-box a.closebutton { margin-bottom: 2px; }
+* html ul.holder li.bit-box a.closebutton { margin-bottom: 2px; }
+

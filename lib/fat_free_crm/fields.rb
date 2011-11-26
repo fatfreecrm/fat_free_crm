@@ -48,7 +48,7 @@ module FatFreeCRM
 
 
     module InstanceMethods
-      def attributes=(new_attributes, guard_protected_attributes = true)
+      def assign_attributes(new_attributes, options = {})
         super
       # If attribute is unknown, a new custom field may have been added.
       # Refresh columns and try again.
@@ -57,11 +57,11 @@ module FatFreeCRM
         super
       end
 
-      def method_missing(method, *args)
-        if method.to_s =~ /^cf_/
+      def method_missing(method_id, *args, &block)
+        if method_id.to_s =~ /^cf_/
           # Refresh columns and try again.
           self.class.reset_column_information
-          respond_to?(method) ? send(method, *args) : nil
+          respond_to?(method_id) ? send(method_id, *args) : nil
         else
           super
         end

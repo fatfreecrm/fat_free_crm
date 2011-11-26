@@ -86,14 +86,19 @@ describe CustomField do
     c.save
   end
 
-  it "should refresh column info and retry on attribute error, in case a new custom field was added by a different instance" do
-    Contact.should_receive(:reset_column_information).twice
+  describe "in case a new custom field was added by a different instance" do
+    it "should refresh column info and retry on assignment error" do
+      Contact.should_receive(:reset_column_information)
 
-    lambda { Contact.new :cf_unknown_field => 123 }.should raise_error(ActiveRecord::UnknownAttributeError)
+      lambda { Contact.new :cf_unknown_field => 123 }.should raise_error(ActiveRecord::UnknownAttributeError)
+    end
 
-    contact = Factory.build(:contact)
-    contact.cf_another_new_field.should == nil
+    it "should refresh column info and retry on attribute error" do
+      Contact.should_receive(:reset_column_information)
+
+      contact = Factory.build(:contact)
+      contact.cf_another_new_field.should == nil
+    end
   end
-
 end
 

@@ -16,7 +16,6 @@
 #------------------------------------------------------------------------------
 require "net/imap"
 require "mail"
-include Rails.application.routes.url_helpers
 
 module FatFreeCRM
   class Dropbox

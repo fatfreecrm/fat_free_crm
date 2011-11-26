@@ -614,7 +614,7 @@ describe CampaignsController do
   describe "responding to POST redraw" do
     it "should save user selected campaign preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
-      @current_user.preference[:campaigns_per_page].should == 42
+      @current_user.preference[:campaigns_per_page].should == "42"
       @current_user.preference[:campaigns_outline].should  == "brief"
       @current_user.preference[:campaigns_sort_by].should  == "campaigns.name ASC"
     end

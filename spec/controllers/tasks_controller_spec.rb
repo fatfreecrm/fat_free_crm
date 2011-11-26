@@ -53,7 +53,7 @@ describe TasksController do
 
     before do
       update_sidebar
-      @timezone, Time.zone = Time.zone, :utc
+      @timezone, Time.zone = Time.zone, 'UTC'
     end
 
     after do

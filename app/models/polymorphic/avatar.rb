@@ -46,7 +46,7 @@ class Avatar < ActiveRecord::Base
       attachment.instance.entity_type
     end
   end
-  has_attached_file :image, :styles => STYLES.dup, :url => "/avatars/:entity_type/:id/:style_:filename", :default_url => "/images/avatar.jpg"
+  has_attached_file :image, :styles => STYLES.dup, :url => "/avatars/:entity_type/:id/:style_:filename", :default_url => "/assets/avatar.jpg"
 
   # Invert STYLES hash removing trailing #.
   #----------------------------------------------------------------------------

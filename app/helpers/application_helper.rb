@@ -331,7 +331,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def default_avatar_url
-    "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/images/avatar.jpg"
+    "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/assets/avatar.jpg"
   end
 
   # Returns default permissions intro.
