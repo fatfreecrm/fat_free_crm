@@ -20,7 +20,21 @@
 #   rake crm:settings:load
 #
 
-# Base URL.
+# Host
+#------------------------------------------------------------------------------
+# Host for URLS when action mailer generates emails.
+#
+# When sending email, you will need to set the host name so that the mailer can
+# generate urls inside emails that point back to your site. Unlike controllers
+# from Action Pack, the mailer instance doesn’t have any context about the
+# incoming request, so you’ll need to provide all of the details needed to
+# generate a URL.
+#
+# :host: "http://www.example.com"
+#
+:host: ""
+
+# Base URL
 #------------------------------------------------------------------------------
 # Leave base_url blank if Fat Free CRM has been deployed in root URL, otherwise
 # specify subdirectory. For example, when deployed to:
@@ -32,21 +46,7 @@
 #
 :base_url: ""
 
-# Mail host
-#------------------------------------------------------------------------------
-# Default host used when action mailer generates urls.
-#
-# When sending email, you will need to set the host name so that the mailer can
-# generate urls inside emails that point back to your site. Unlike controllers
-# from Action Pack, the mailer instance doesn’t have any context about the
-# incoming request, so you’ll need to provide all of the details needed to
-# generate a URL.
-#
-# :mail_host: "http://www.example.com"
-#
-:mail_host: ""
-
-# Locale.
+# Locale
 #------------------------------------------------------------------------------
 # Default locale is American English.
 #
@@ -58,7 +58,7 @@
 #
 :per_user_locale: false
 
-# User Signup.
+# User Signup
 #------------------------------------------------------------------------------
 # The following setting controls user signup. Possible values are:
 #   :allowed        -- users can sign up and use the system once they have registered.
@@ -67,7 +67,7 @@
 #
 :user_signup: :not_allowed
 
-# Default records permissions.
+# Default records permissions
 #------------------------------------------------------------------------------
 # Set the defaults permission for new records. Possible values are:
 #   Private -- private access, only for the creator of the record.
@@ -76,7 +76,7 @@
 #
 :default_access: "Public"
 
-# Background information.
+# Background information
 #------------------------------------------------------------------------------
 # Specify model names that should have background information displayed. Select any combination
 # from the following list. By default no background information is shown.
@@ -90,7 +90,7 @@
 #
 :background_info: []
 
-# Address format.
+# Address format
 #------------------------------------------------------------------------------
 # Sets the address format for Accounts, Contacts, and Leads.
 #   true  -- use separate street1, street2, city, state, zipcode, and country field.
@@ -98,7 +98,7 @@
 #
 :compound_address: true
 
-# Dropdown calendar format.
+# Dropdown calendar format
 #------------------------------------------------------------------------------
 # The following setting controls whether to show time in dropdown calendar
 # when scheduling a task for specific date.
@@ -122,7 +122,7 @@ task_calendar_with_time: false
 #  :move_invalid_to_folder     : @IMAP_INVALID@         # Optional: folder to move invalid messages to.
   :attach_to_account          : @IMAP_ATTACH@          # Attach emails to contact's account, if any. The same rule applies to opportunities.
 
-# Main and Admin Tabs.
+# Main and Admin Tabs
 #------------------------------------------------------------------------------
 :tabs: [
   { :active : true,  :text : :tab_dashboard,     :url : { :controller : "home"           } },
