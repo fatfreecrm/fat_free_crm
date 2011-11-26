@@ -132,8 +132,17 @@ rake db:create
 #### Set Up Application
 
 The next step is to load default Fat Free CRM settings, such as menu structures,
-default colors, etc. and create the Admin user. This is done by running the
-following rake task:
+default colors, etc. and create the Admin user. 
+ 
+Using the provided sample, create your <tt>config/settings.yml</tt>:
+
+```bash
+cp config/settings.yml.example config/settings.yml
+```
+
+* Edit <tt>config/settings.yml</tt> and modify any personalized settings you wish to include.
+
+Next, run the following rake task: 
 
 ```bash
 rake crm:setup
