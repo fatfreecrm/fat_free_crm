@@ -3,7 +3,6 @@ config/*.yml
 !config/database.mysql.yml
 !config/database.postgres.yml
 !config/database.sqlite.yml
-!config/settings.yml
 
 .rspec
 spec/reports
