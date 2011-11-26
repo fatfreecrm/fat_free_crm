@@ -26,7 +26,8 @@ end
 namespace :crm do
   desc "Copy example config files"
   task :copy_default_config do
-    config_files = { 'database.postgres.yml' => 'database.yml' }
+    config_files = { 'database.postgres.yml' => 'database.yml',
+                     'settings.yml.example' => 'settings.yml' }
     puts "Copying example config files..."
     config_files.each do |old, new|
       if File.exists?("config/#{new}")
