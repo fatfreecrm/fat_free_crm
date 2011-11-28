@@ -19,13 +19,13 @@ gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
 gem 'prototype-rails',     '>= 3.1.0'
 gem 'ffaker',              '>= 1.5.0' # For demo data
+gem 'uglifier'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails', '~> 3.1.1'
   gem 'coffee-rails', '~> 3.1.1'
-  gem 'uglifier'
   gem 'therubyracer'
 end
 
