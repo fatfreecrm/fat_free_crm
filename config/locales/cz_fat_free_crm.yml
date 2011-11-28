@@ -24,6 +24,7 @@ cz:
   tab_opportunities: Příležitosti
 
   admin_tab_users: Uživatelé
+  admin_tab_fields: Pole
   admin_tab_settings: Nastavení
   admin_tab_plugins: Pluginy
 
@@ -54,8 +55,8 @@ cz:
   word_of_mouth: O čem se mluví
   other: Ostatní
 
-  prospecting: Prozkoumávání
-  analysis: Analíza
+  prospecting: Průzkum
+  analysis: Analýza
   presentation: Prezentace
   proposal: Nabídka
   negotiation: Jednání
@@ -67,9 +68,9 @@ cz:
   email: Email
   follow_up: Pokračování
   lunch: Oběd
-  meeting: Schúzka
+  meeting: Schůzka
   money: Peníze
-  presentation: Presentace
+  presentation: Prezentace
   trip: Cesta
 
   overdue: Opožděný
@@ -118,7 +119,7 @@ cz:
             name:
               missing_campaign_name: "^Zadejte jméno kampaně."
             ends_on:
-              dates_not_in_sequence: "^Ujistěte se že koncové datum je po počátečním."
+              dates_not_in_sequence: "^Ujistěte se, že počáteční datum je před konečným."
             access:
               share_campaign: "^Určete uživatele pro sdílení kampaně."
         contact:
@@ -136,7 +137,7 @@ cz:
             last_name:
               missing_last_name: "^Zadejte příjmení."
             access:
-              share_lead: "^Určete uživatele pro sdílení možného ho klienta."
+              share_lead: "^Určete uživatele pro sdílení s lead."
         opportunity:
           attributes:
             name:
@@ -167,7 +168,7 @@ cz:
   msg_account_not_approved: Váš účet ještě nebyl schválen.
   msg_asset_deleted: "%{value} byl smazán."
   msg_asset_not_available: Toto %{value} již není dostupné.
-  msg_asset_not_authorized: Nejte autorizován prohlížet %{value}.
+  msg_asset_not_authorized: Nejste autorizován prohlížet %{value}.
   msg_assets_not_available: %{value} není dostupné.
   msg_asset_rejected: "%{value} byla odmítnuta."
   msg_bad_image_file: "^Nahrávaný obrázek je příliš velký - upravte velikost."
@@ -178,12 +179,12 @@ cz:
   msg_enter_new_password: Zadejte heslo.
   msg_goodbye: Byl jste odhlášen. Díky za použití Fat Free CRM!
   msg_invalid_password: "^Zadejte správne aktální heslo"
-  msg_invalig_login: Spatné jméno nebo heslo.
+  msg_invalig_login: Špatné jméno nebo heslo.
   msg_last_login: Váše poslední přihlášení bylo %{value}.
   msg_login_needed: Pro přístup k této stránce musíte být přihlášen.
   msg_logout_needed: Pro přístup k této stránce musíte být odhlášen.
   msg_password_changed: Vaše heslo byl změněno.
-  msg_password_not_changed: Vaše heslo nebyl změněno.
+  msg_password_not_changed: Vaše heslo nebylo změněno.
   msg_password_updated: Vaše heslo byl úspěšne upraveno.
   msg_pwd_instructions_sent: Instrukce pro přenastavení hesla vám byly zaslány na email.
   msg_require_admin: Pro přístup k této stránce musíte být přihlášen jako administrátor.
@@ -193,7 +194,7 @@ cz:
   # Options.
   #----------------------------------------------------------------------------
   "option_amount*probability": hodnota zvýhodnění
-  activity_options: Zobraz %{models} aktivity uživatele %{user} za období %{period}.
+  activity_options: Zobraz %{models} %{action_type} uživatelem %{user} za období %{period}.
   all_users: všichni uživatelé
   option_after: po
   option_all: vše
@@ -208,7 +209,7 @@ cz:
   option_first_name: Jméno
   option_last_name: Příjmení
   option_leads_count: aktuální z možných kl.
-  option_long: dlouhé
+  option_long: dlouhý
   option_name: Název
   option_probability: pravděpodobnost
   option_rating: hodnocení
@@ -217,6 +218,13 @@ cz:
   option_target_leads: cíloví možní kl.
   option_target_revenue: cílový výnos
   option_updated_at: upraveno
+  all_actions_past_participle: a všechny akce vytvořené
+  created_past_participle: vytvořené
+  updated_past_participle: upravené
+  viewed_past_participle: zobrazené
+  deleted_past_participle: smazané
+  commented_past_participle: okomentované
+  email_past_participle: email
   show_per_page: Zobraz %{number} %{models} za stránku užívající %{fmt} format.
   sort_by: Setřiď %{models} podle %{field}.
   sort_by_displaying: Setřiď %{models} podle %{field} zobrazující jméno %{position} příjmení.
@@ -230,7 +238,7 @@ cz:
   change_password: Změň heslo
   company: Společnost
   contact_info: Kontaktní informace
-  current_password: Aktální heslo
+  current_password: Aktuální heslo
   edit_profile: Upravit profil
   # email: Email # <-- Already defined as the task type if Settings.
   first_name: Jméno
@@ -241,7 +249,7 @@ cz:
   job_title: Popis
   last_name: Příjmění
   login_now_link: Přihlašte se!
-  mobile: Mobilní
+  mobile: Mobil
   my_profile: Můj profil
   new_password: Nové heslo
   password: Heslo
@@ -279,22 +287,22 @@ cz:
   billing_address: Fakturační adresa
   create_account: Vytvořit klienta
   date_created: Vytvořeno
-  date_updated: upraveno
+  date_updated: Upraveno
   fax: Fax
-  intro: Můžete přidat %{value} infomaci později.
+  intro: Později můžete přidat %{value}.
   keep_private: Uchovat soukromé, nesdílet s ostatními
   mail_to: Email na %{value}
   make_public: Sdílet s ostatními
   mobile_small: mobil
   open_in_window: Otevřít %{value} v novém okně
   phone_small: telfon
-  phone_toll_free: bezplatná linka
+  phone_toll_free: Bezplatná linka
   pipeline: potrubní
   same_as_billing: stejná jako fakturační
   save_account: Uložit klienta
   share_with: Sdílet s uživateli
   shipping_address: Doručovací adresa
-  total_accounts: Celkem kleintů
+  total_accounts: Celkem klientů
   website: Webstránka
 
   # Views -> Campaigns.
@@ -305,7 +313,7 @@ cz:
   budget_label: Ropočet (CZK)
   campaign: Kampaň
   campaign_and_leads: Kampaň a možní klienti
-  campaign_small: Kampaň
+  campaign_small: kampaň
   campaign_summary: Přehled kampaně
   campaign_targets: Cíle kampaně
   campaigns: Kampaně
@@ -315,14 +323,14 @@ cz:
   conversion_label: Konverze (%)
   conversion_number: "%{value} konverze"
   create_campaign: Vytvořit kampaň
-  end_date: koncové datum
+  end_date: Koncové datum
   finished_on: hotovo na %{value}
   finishes_in: hotovo za %{value}
   no_start_date: nebyl určeno počáteční datum
   number_of_leads: Možných klientů
   objectives: Cíle
   objectives_help: Zadejte cílový počet budoucích možných klientů, poměr konverze z možných klientů do příležitostí, cílová tržba a rozpočet kampaně. Tato čísla pomohou určit výkonost kampaně.
-  objectives_small: Cíle kampaně
+  objectives_small: cíle kampaně
   revenue: tržba
   revenue_label: Tržba (CZK)
   revenue_number: "%{value} tržba"
@@ -344,14 +352,14 @@ cz:
   contact: Kontakt
   contact_small: kontakt
   contacts: Kontakty
-  contacts_options: Nastavení kontkaktů
+  contacts_options: Nastavení kontaktů
   contacts_small: kontakty
   create_contact: Vytvořit kontakt
   department: Oddělení
   department_small: '%{value} oddělení'
   do_not_call: Nevolat
   extra_info: Extra informace
-  extra_info_small: extra kontaka
+  extra_info_small: extra informace
   facebook: Facebook
   linked_in: LinkedIn
   myself: Já osobně
@@ -376,10 +384,10 @@ cz:
   create_opp_for_contact: Můžete automaticky vytvořit příležitost pro kontkat %{value} tím že určíte jméno, aktuální stádium, očekávaný čas ukončení, prodejní pravděpodobnost, objem nabídky, a nabídnutý rabat.
   lead: Možný klient
   lead_info_small: kontakt možného klienta
-  lead_permissions_intro_private: Standardně budou oprávnění zkopírována z kamaně nebo nebo jako soukromá. Oprávnění můžete změnit později.
-  lead_permissions_intro_public: Standardně budou oprávnění zkopírována z kamaně nebo nebo jako veřejná. Oprávnění můžete změnit později.
-  lead_permissions_intro_shared: Standardně budou oprávnění zkopírována z kamaně nebo nebo sdílená s určenými uživateli. Oprávnění můžete změnit později.
-  lead_small: Možný
+  lead_permissions_intro_private: Standardně budou oprávnění zkopírována z kampaně nebo jako soukromá. Oprávnění můžete změnit později.
+  lead_permissions_intro_public: Standardně budou oprávnění zkopírována z kampaně nebo jako veřejná. Oprávnění můžete změnit později.
+  lead_permissions_intro_shared: Standardně budou oprávnění zkopírována z kampaně nebo sdílená s určenými uživateli. Oprávnění můžete změnit později.
+  lead_small: možný klient
   lead_status_small: stav možného klienta
   lead_summary: Souhrn možného klienta
   leads: Možní klienti
@@ -401,7 +409,7 @@ cz:
   closed_ago_on: uzavřeno před %{time_ago} v %{date}
   closes_today: Očekávané uzavření dnes!
   closing_date: datum uzavření je %{value}
-  create_opportunity: Vytvožit příležitost
+  create_opportunity: Vytvořit příležitost
   currency: (CZK)
   days_late: Spoždění
   days_left: Zbývá dnů
@@ -412,14 +420,14 @@ cz:
   no_closing_date: chybí očekávaný datum uzavření
   no_discount: bez rabatu
   opportunities: Příležitosti
-  opportunities_options: Nastaebí příležitostí
+  opportunities_options: Nastavení příležitostí
   opportunities_small: příležitosti
   opportunity: Příležitost
   opportunity_small: příležitost
   opportunity_summary: Letmý náhled na příležitost
   opportunity_summary_text: "%{amount} s rabatem %{discount} a %{probability} pravděpodobností"
   past_due: zpoždění, očekávaný datum ukončení byl před %{value}
-  probability: Pravdpodobnost
+  probability: Pravděpodobnost
   probability_number: a %{value} pravděpodobnosti
   save_opportunity: Uložit příležitost
   stage: Stadium
@@ -428,16 +436,20 @@ cz:
 
   # Views -> Tasks.
   #----------------------------------------------------------------------------
+  task: Úkol
+  task_small: úkol
+  tasks: Úkoly
+  tasks_small: úkoly
   assign_to: Přiřazeno k
   assigned_tab: Přiřazeno
   assigned_tasks: Přiřazené úkoly
   category: Kategorie
   completed_tab: Hotovo
-  completed_tasks: Hotových úkolů
+  completed_tasks: Hotové úkoly
   create_task: Vytvořit úkol
   create_task_small: vytvořit nový úkol
   due: kdy
-  feel_free: Směle do
+  feel_free: Směle můžete
   move_to: přesunout do
   no_tasks: "Nemáte žádné %{value} úkoly"
   no_tasks_pending: nevyřízené
@@ -468,17 +480,17 @@ cz:
 
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_commented: zkomentováno
-  action_completed: dokončeno
-  action_created: vytvořeno
-  action_deleted: smazáno
+  action_commented: zkomentoval
+  action_completed: dokončil
+  action_created: vytvořil
+  action_deleted: smazal
   action_email: emaily vyměněny s
-  action_reassigned: znovu přiřazeny
-  action_rejected: odmítnuty
-  action_rescheduled: přečasovány
-  action_updated: upraveny
-  action_viewed: zbrazeny
-  action_won: vyhra
+  action_reassigned: znovu přiřadil
+  action_rejected: odmítnul
+  action_rescheduled: přečasoval
+  action_updated: upravil
+  action_viewed: zobrazil
+  action_won: vyhrál
   activities: Aktivity
   no_activity_records: Nebyly nalezeny další aktivity.
   recent_activity: Aktuální aktivity
@@ -503,17 +515,17 @@ cz:
   close_form: Zavřít formulář
   confirm_delete: Jste si jitstý že chcete smazat %{value}?
   copy_permissions: Kopírovat %{value} oprávnění
-  could_not_find: "Nemohu najít %{value}. Bezobav "
+  could_not_find: "Nenalezeny žádné záznamy. Zde lze "
   could_not_find_matching: "Nemohu nalézt odpovídající %{value}"
-  create_new: vytvořit nové
-  create_a_new: vytvořit nové
+  create_new: vytvořit
+  create_a_new: vytvořit
   select_existing: vyber existující
-  delete: Zmazat
+  delete: Smazat
   discard: Vyřadit
   edit: Upravit
   items_total: '%{count} celkem.'
   less: Méně...
-  me: mě
+  me: mnou
   more: více...
   n_a: Nedostupné
   name: Název
@@ -537,6 +549,10 @@ cz:
   zipcode: PSČ
   state: Stát
   country: Kraj
+  expand_all: Rozvinout vše
+  collapse_all: Sbalit vše
+  expanded: Rozvinutý
+  collapsed: Sbalený
 
   # Views -> Layout.
   #----------------------------------------------------------------------------
@@ -549,7 +565,7 @@ cz:
   about_home_page: Domácí stránka
   about_project_page: Stránka projektu
   about_thank_you: Díky že používíte Fat Free CRM! Vážímwe si vašeho businesu a doufáme že jste spokojeni s naším software.
-  about_twitter: správy z Twitteru
+  about_twitter: Zprávy z Twitteru
   about_user_group: Diskutní skupina pro uživatele
   admin: Admin.
   logout: Odhlásit
@@ -581,16 +597,16 @@ cz:
   last_seen: naposledy viděn před %{value}
   personal_information: Osobní informace
   reactivate: Reaktivovat
-  save_user: uložit uživatele
+  save_user: Uložit uživatele
   suspend: Pozastavit
-  user_active: aktivovat
+  user_active: Aktivovat
   user_admin: Admin
   user_awaits_approval: čeka na schválení
   user_confirm_delete: Uživatel může být smazan, pokud nemá žádné návaznosti.
   user_is_admin: Uživatel je Administrator
   user_never_logged_in: "Ještě se nepřihlásil"
   user_signed_up: Regisrován
-  user_signed_up_on: regisrován %{value}
+  user_signed_up_on: registrován %{value}
   user_since: uživatelm od %{value}
   user_suspended: Pozastaven
   user_suspended_on: pozastaven na %{value}
@@ -600,7 +616,7 @@ cz:
   # Export.
   #----------------------------------------------------------------------------
   to_xls: Export do Excelu
-  to_csv: Export td čárkama oddělěného textu (včetně smazaných záznamů)
+  to_csv: Export do CSV formátu (včetně smazaných záznamů)
   to_rss: RSS feed
   to_atom: Atom feed
 
@@ -644,7 +660,7 @@ cz:
 
   time:
     formats:
-      mmddhhss: "%e %b v %l:%M%p"
+      mmddhhss: "%e %b v %H:%M"
       mmddyyyy_hhmm: "%Y-%m-%d %H:%M"
 
   calendar_date_select:
@@ -657,7 +673,23 @@ cz:
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: iso_date
 
+  # will_paginate translations copied for 'en-US'
+  #----------------------------------------------------------------------------
   will_paginate:
     previous_label: Předchozí
     next_label: Další
-    
+    page_gap: "&hellip;"
+
+    page_entries_info:
+      single_page:
+        zero: "Žádní %{plural} nenalezeni"
+        one: "Zobrazen 1 %{name}"
+        other: "Zobrazeni %{count} %{plural}"
+
+      multi_page: "Zobrazeni %{plural} %{from} - %{to} z %{total} celkem"
+
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
+  custom_fields: Uživatelská pole
+  create_custom_field: Vytvořit uživatelské pole
+  create_new_custom_field_for: Vytvořit nové uživatelské pole pro %{klass_name}
