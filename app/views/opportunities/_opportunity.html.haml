@@ -11,7 +11,7 @@
 
   .indent
     = link_to(h(opportunity.name), opportunity)
-    - if opportunity.account
+    - if opportunity.account && opportunity.account.id
       == #{t :from} #{link_to(h(opportunity.account.name), account_path(opportunity.account))}
     %tt
       &ndash;
