@@ -18,6 +18,7 @@
 //= require prototype
 //= require effects
 //= require controls
+//= require dragdrop
 //= require prototype_ujs
 //= require modalbox
 //= require facebooklist
