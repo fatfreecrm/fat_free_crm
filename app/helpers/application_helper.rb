@@ -22,7 +22,7 @@ module ApplicationHelper
     if tabs
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
-  else
+    else
       raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake crm:setup</b> command."
     end
   end
@@ -48,9 +48,10 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-      link_to_remote("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
-        :url    => url_for(:controller => :home, :action => :toggle, :id => id),
-        :before => "crm.flip_subtitle(this)"
+      link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
+        url_for(:controller => :home, :action => :toggle, :id => id),
+        :remote => true,
+        :onclick => "crm.flip_subtitle(this)"
       ), :class => "subtitle")
   end
 
@@ -93,12 +94,12 @@ module ApplicationHelper
   def link_to_inline(id, url, options = {})
     text = options[:text] || t(id, :default => id.to_s.titleize)
     text = (arrow_for(id) + text) unless options[:plain]
-    related = (options[:related] ? "+'&related=#{options[:related]}'" : '')
+    related = (options[:related] ? "&related=#{options[:related]}" : '')
 
-    link_to_remote(text,
-      :url    => url,
-      :method => :get,
-      :with   => "'cancel='+Element.visible('#{id}')#{related}"
+    link_to(text,
+      url +'?cancel=false'+ related,
+      :remote => true,
+      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
     )
   end
 
@@ -110,20 +111,21 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_edit(model, params = {})
     name = model.class.name.underscore.downcase
-    link_to_remote(t(:edit),
-      :url    => params[:url] || send(:"edit_#{name}_path", model),
-      :method => :get,
-      :with   => "'previous='+crm.find_form('edit_#{name}')"
+    link_to(t(:edit),
+      params[:url] || send(:"edit_#{name}_path", model),
+      :remote  => true,
+      :onclick => "this.href += '?previous='+ crm.find_form('edit_#{name}');"
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_delete(model, params = {})
     name = model.class.name.underscore.downcase
-    link_to_remote(t(:delete) + "!",
-      :url    => params[:url] || url_for(model),
+    link_to(t(:delete) + "!",
+      params[:url] || url_for(model),
       :method => :delete,
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :remote => true,
+      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
 
@@ -133,30 +135,30 @@ module ApplicationHelper
     current_url = (request.xhr? ? request.referer : request.fullpath)
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
-    link_to_remote(t(:discard),
-      :url    => url_for(:controller => parent, :action => :discard, :id => parent_id),
-      :method => :post,
-      :with   => "'attachment=#{model.class.name}&attachment_id=#{model.id}'",
-      :before => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+    link_to(t(:discard),
+      url_for(:controller => parent, :action => :discard, :id => parent_id, :attachment => model.class.name, :attachment_id => model.id),
+      :method  => :post,
+      :remote  => true,
+      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_cancel(url, params = {})
-    link_to_remote(t(:cancel),
-      :url    => params[:url] || url,
-      :method => :get,
-      :with   => "'cancel=true'"
+    link_to(t(:cancel),
+      (params[:url] || url) + '?cancel=true',
+      :remote => true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_close(url)
-    content_tag("div", "x",
-      :class => "close", :title => t(:close_form),
+    content_tag(:div,
+      link_to("x", url + '?cancel=true', :remote => true),
+      :class => "close",
+      :title => t(:close_form),
       :onmouseover => "this.style.background='lightsalmon'",
-      :onmouseout => "this.style.background='lightblue'",
-      :onclick => remote_function(:url => url, :method => :get, :with => "'cancel=true'")
+      :onmouseout => "this.style.background='lightblue'"
     )
   end
 
