@@ -17,7 +17,9 @@
 
 class ApplicationController < ActionController::Base
 
-  # helper :all gets called authomagically in Rails3.
+  # TODO: This is a fix for plugin loading under Rails 3.1 otherwise we don't get helpers loaded correctly
+  helper :accounts, :addresses, :application, :authentications, :campaigns, :comments, :contacts, :emails, :fields, :home, :leads, :opportunities, :passwords, :tags, :tasks, :users
+
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
 
