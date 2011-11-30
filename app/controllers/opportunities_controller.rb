@@ -24,6 +24,7 @@ class OpportunitiesController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /opportunities
+  # GET /opportunities.json
   # GET /opportunities.xml
   #----------------------------------------------------------------------------
   def index
@@ -32,6 +33,7 @@ class OpportunitiesController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.js   # index.js.rjs
+      format.json { render :json => @opportunities }
       format.xml  { render :xml => @opportunities }
       format.xls  { send_data @opportunities.to_xls, :type => :xls }
       format.csv  { send_data @opportunities.to_csv, :type => :csv }
@@ -41,6 +43,7 @@ class OpportunitiesController < ApplicationController
   end
 
   # GET /opportunities/1
+  # GET /opportunities/1.json
   # GET /opportunities/1.xml                                               HTML
   #----------------------------------------------------------------------------
   def show
@@ -51,14 +54,16 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.json { render :json => @opportunity }
       format.xml  { render :xml => @opportunity }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :xml)
+    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /opportunities/new
+  # GET /opportunities/new.json
   # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
@@ -73,6 +78,7 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
+      format.json { render :json => @opportunity }
       format.xml  { render :xml => @opportunity }
     end
 
@@ -97,6 +103,7 @@ class OpportunitiesController < ApplicationController
   end
 
   # POST /opportunities
+  # POST /opportunities.json
   # POST /opportunities.xml                                                AJAX
   #----------------------------------------------------------------------------
   def create
@@ -113,6 +120,7 @@ class OpportunitiesController < ApplicationController
           get_data_for_sidebar(:campaign)
         end
         format.js   # create.js.rjs
+        format.json { render :json => @opportunity, :status => :created, :location => @opportunity }
         format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
         @users = User.except(@current_user)
@@ -129,12 +137,14 @@ class OpportunitiesController < ApplicationController
         @contact = Contact.find(params[:contact]) unless params[:contact].blank?
         @campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
         format.js   # create.js.rjs
+        format.json { render :json => @opportunity.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /opportunities/1
+  # PUT /opportunities/1.json
   # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
   def update
@@ -150,6 +160,7 @@ class OpportunitiesController < ApplicationController
           get_data_for_sidebar(:campaign)
         end
         format.js
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         @users = User.except(@current_user)
@@ -160,15 +171,17 @@ class OpportunitiesController < ApplicationController
           @account = Account.new(:user => @current_user)
         end
         format.js
+        format.json { render :json => @opportunity.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /opportunities/1
+  # DELETE /opportunities/1.json
   # DELETE /opportunities/1.xml                                   HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
@@ -183,11 +196,12 @@ class OpportunitiesController < ApplicationController
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
+      format.json { head :ok }
       format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # PUT /opportunities/1/attach
@@ -211,6 +225,7 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
+      format.json { render :json => @opportunities.as_json }
       format.xml  { render :xml => @opportunities.to_xml }
     end
   end

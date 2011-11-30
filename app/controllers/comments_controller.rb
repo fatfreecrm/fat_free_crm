@@ -20,6 +20,7 @@ class CommentsController < ApplicationController
   COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id).freeze
 
   # GET /comments
+  # GET /comments.json
   # GET /comments.xml
   #----------------------------------------------------------------------------
   def index
@@ -30,6 +31,7 @@ class CommentsController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to @asset }
+      format.json { render :json => @comments }
       format.xml  { render :xml => @comments }
     end
 
@@ -37,11 +39,13 @@ class CommentsController < ApplicationController
     flash[:warning] = t(:msg_assets_not_available, "notes")
     respond_to do |format|
       format.html { redirect_to root_url }
+      format.json { render :text => flash[:warning], :status => :not_found }
       format.xml  { render :text => flash[:warning], :status => :not_found }
     end
   end
 
   # GET /comments/1
+  # GET /comments/1.json
   # GET /comments/1.xml                                         not implemented
   #----------------------------------------------------------------------------
   # def show
@@ -49,11 +53,13 @@ class CommentsController < ApplicationController
   # 
   #   respond_to do |format|
   #     format.html # show.html.erb
+  #     format.json { render :json => @comment }
   #     format.xml  { render :xml => @comment }
   #   end
   # end
 
   # GET /comments/new
+  # GET /comments/new.json
   # GET /comments/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
@@ -67,6 +73,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
+      format.json { render :json => @comment }
       format.xml  { render :xml => @comment }
     end
 
@@ -90,6 +97,7 @@ class CommentsController < ApplicationController
   end
 
   # POST /comments
+  # POST /comments.json
   # POST /comments.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
@@ -105,9 +113,11 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         format.js   # create.js.rjs
+        format.json { render :json => @comment, :status => :created, :location => @comment }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
       else
         format.js   # create.js.rjs
+        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
       end
     end
@@ -117,6 +127,7 @@ class CommentsController < ApplicationController
   end
 
   # PUT /comments/1
+  # PUT /comments/1.json
   # PUT /comments/1.xml                                          not implemened
   #----------------------------------------------------------------------------
   def update
@@ -125,17 +136,20 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
         format.js
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         format.js
+        format.json { render :json => @contact.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end
     end
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /comments/1
+  # DELETE /comments/1.json
   # DELETE /comments/1.xml                                      not implemented
   #----------------------------------------------------------------------------
   def destroy
@@ -144,15 +158,17 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.destroy
         format.js   # destroy.js.rjs
+        format.json { render :json => @comment, :status => :deleted, :location => @comment }
         format.xml  { render :xml => @comment, :status => :deleted, :location => @comment }
       else
         format.js   # destroy.js.rjs
+        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)    
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   private
