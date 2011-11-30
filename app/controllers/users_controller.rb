@@ -31,16 +31,19 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1
+  # GET /users/1.json
   # GET /users/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
     respond_to do |format|
       format.html # show.html.haml
+      format.json { render :json => @user }
       format.xml  { render :xml => @user }
     end
   end
 
   # GET /users/new
+  # GET /users/new.json
   # GET /users/new.xml                                                     HTML
   #----------------------------------------------------------------------------
   def new
@@ -49,6 +52,7 @@ class UsersController < ApplicationController
 
       respond_to do |format|
         format.html # new.html.haml <-- signup form
+        format.json { render :json => @user }
         format.xml  { render :xml => @user }
       end
     else
@@ -81,16 +85,19 @@ class UsersController < ApplicationController
   end
 
   # PUT /users/1
+  # PUT /users/1.json
   # PUT /users/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   def update
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.js
-        format.xml { head :ok }
+        format.json { head :ok }
+        format.xml  { head :ok }
       else
         format.js
-        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+        format.json { render :json => @user.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
   end

@@ -53,8 +53,9 @@ class ApplicationController < ActionController::Base
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
-      format.js  { render "shared/attach" }
-      format.xml { render :xml => model.reload.to_xml }
+      format.js   { render "shared/attach" }
+      format.json { render :json => model.reload.as_json }
+      format.xml  { render :xml => model.reload.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -71,8 +72,9 @@ class ApplicationController < ActionController::Base
     @campaign = model.reload if model.is_a?(Campaign)
 
     respond_to do |format|
-      format.js  { render "shared/discard" }
-      format.xml { render :xml => model.reload.to_xml }
+      format.js   { render "shared/discard" }
+      format.json { render :json => model.reload.as_json }
+      format.xml  { render :xml => model.reload.to_xml }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -226,6 +228,7 @@ private
     respond_to do |format|
       format.html { redirect_to :action => :index }                          if types.include?(:html)
       format.js   { render(:update) { |page| page.reload } }                 if types.include?(:js)
+      format.json { render :text => flash[:warning], :status => :not_found } if types.include?(:json)
       format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
   end
@@ -239,6 +242,7 @@ private
     respond_to do |format|
       format.html { redirect_to url }                                        if types.include?(:html)
       format.js   { render(:update) { |page| page.redirect_to url } }        if types.include?(:js)
+      format.json { render :text => flash[:warning], :status => :not_found } if types.include?(:json)
       format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
     end
   end
