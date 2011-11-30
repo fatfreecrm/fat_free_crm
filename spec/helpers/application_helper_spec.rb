@@ -35,7 +35,7 @@ describe ApplicationHelper do
 
     link = helper.link_to_discard(lead)
     link.should =~ %r|leads/#{lead.id}/discard|
-    link.should =~ %r|parameters:'attachment=Lead&amp;attachment_id=#{lead.id}'\}|
+    link.should =~ %r|attachment=Lead&amp;attachment_id=#{lead.id}|
   end
 
   describe "shown_on_landing_page?" do
