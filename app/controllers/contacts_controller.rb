@@ -202,8 +202,8 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
-      format.json { render :json => @contacts.as_json }
-      format.xml  { render :xml => @contacts.to_xml }
+      format.json { render :json => @contacts }
+      format.xml  { render :xml => @contacts }
     end
   end
 

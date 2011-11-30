@@ -168,8 +168,8 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
-      format.json { render :json => @campaigns.as_json }
-      format.xml  { render :xml => @campaigns.to_xml }
+      format.json { render :json => @campaigns }
+      format.xml  { render :xml => @campaigns }
     end
   end
 

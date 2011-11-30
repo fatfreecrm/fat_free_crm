@@ -245,8 +245,8 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
-      format.json { render :json => @leads.as_json }
-      format.xml  { render :xml => @leads.to_xml }
+      format.json { render :json => @leads }
+      format.xml  { render :xml => @leads }
     end
   end
 
