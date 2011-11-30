@@ -4,4 +4,9 @@
 %h4 #{t(:search_assets, t(controller.controller_name + "_small"))}
 %div{ :style => "margin: 0px 0px 6px 0px" }
   = text_field_tag("query", @current_query, :size => 23)
-  = observe_field("query", :frequency => 0.75, :function => "crm.search(value, '#{path}')")
+
+:javascript
+  $("query").on('change', function(event) {
+    element = event.element();
+    crm.search(element.value, '#{path}');
+  });
