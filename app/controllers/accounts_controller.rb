@@ -22,6 +22,7 @@ class AccountsController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /accounts
+  # GET /accounts.json
   # GET /accounts.xml                                             HTML and AJAX
   #----------------------------------------------------------------------------
   def index
@@ -30,6 +31,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.js   # index.js.rjs
+      format.json { render :json => @accounts }
       format.xml  { render :xml => @accounts }
       format.xls  { send_data @accounts.to_xls, :type => :xls }
       format.csv  { send_data @accounts.to_csv, :type => :csv }
@@ -39,6 +41,7 @@ class AccountsController < ApplicationController
   end
 
   # GET /accounts/1
+  # GET /accounts/1.json
   # GET /accounts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
@@ -50,14 +53,16 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.haml
+      format.json { render :json => @account }
       format.xml  { render :xml => @account }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :xml)
+    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /accounts/new
+  # GET /accounts/new.json
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
@@ -70,6 +75,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
+      format.json { render :json => @account }
       format.xml  { render :xml => @account }
     end
   end
@@ -89,6 +95,7 @@ class AccountsController < ApplicationController
   end
 
   # POST /accounts
+  # POST /accounts.json
   # POST /accounts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
@@ -102,15 +109,18 @@ class AccountsController < ApplicationController
         @accounts = get_accounts
         get_data_for_sidebar
         format.js   # create.js.rjs
+        format.json { render :json => @account, :status => :created, :location => @account }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
         format.js   # create.js.rjs
+        format.json { render :json => @account.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /accounts/1
+  # PUT /accounts/1.json
   # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
@@ -120,16 +130,18 @@ class AccountsController < ApplicationController
       if @account.update_with_permissions(params[:account], params[:users])
         get_data_for_sidebar
         format.js
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         @users = User.except(@current_user) # Need it to redraw [Edit Account] form.
         format.js
+        format.json { render :json => @account.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /accounts/1
@@ -142,11 +154,12 @@ class AccountsController < ApplicationController
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
+      format.json { head :ok }
       format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # GET /accounts/search/query                                             AJAX
@@ -156,6 +169,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
+      format.json { render :json => @accounts.as_json }
       format.xml  { render :xml => @accounts.to_xml }
     end
   end
