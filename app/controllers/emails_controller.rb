@@ -31,6 +31,7 @@ class EmailsController < ApplicationController
   # end
 
   # DELETE /emails/1
+  # DELETE /emails/1.json
   # DELETE /emails/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def destroy
@@ -39,15 +40,17 @@ class EmailsController < ApplicationController
     respond_to do |format|
       if @email.destroy
         format.js   # destroy.js.rjs
+        format.json { render :json => @email, :status => :deleted, :location => @email }
         format.xml  { render :xml => @email, :status => :deleted, :location => @email }
       else
         format.js   # destroy.js.rjs
+        format.json { render :json => @email.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)    
+    respond_to_not_found(:html, :js, :json, :xml)
   end
   
 end

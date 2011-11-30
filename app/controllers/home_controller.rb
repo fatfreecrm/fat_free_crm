@@ -29,6 +29,7 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.js   # index.js.rjs
+      format.json { render :json => @activities }
       format.xml  { render :xml => @activities }
       format.xls  { send_data @activities.to_xls, :type => :xls }
       format.csv  { send_data @activities.to_csv, :type => :csv }

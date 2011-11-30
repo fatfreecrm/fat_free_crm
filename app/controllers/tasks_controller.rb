@@ -21,6 +21,7 @@ class TasksController < ApplicationController
   before_filter :set_current_tab, :only => [ :index, :show ]
 
   # GET /tasks
+  # GET /tasks.json
   # GET /tasks.xml
   #----------------------------------------------------------------------------
   def index
@@ -29,6 +30,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.haml
+      format.json { render :json => @tasks }
       format.xml  { render :xml => @tasks }
       format.xls  { send_data @tasks.values.flatten.to_xls, :type => :xls }
       format.csv  { send_data @tasks.values.flatten.to_csv, :type => :csv }
@@ -38,16 +40,22 @@ class TasksController < ApplicationController
   end
 
   # GET /tasks/1
+  # GET /tasks/1.json
   # GET /tasks/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
     respond_to do |format|
       format.html { render :index }
+      format.json { @task = Task.tracked_by(@current_user).find(params[:id]);  render :json => @task }
       format.xml  { @task = Task.tracked_by(@current_user).find(params[:id]);  render :xml => @task }
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # GET /tasks/new
+  # GET /tasks/new.json
   # GET /tasks/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
@@ -63,6 +71,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
+      format.json { render :json => @task }
       format.xml  { render :xml => @task }
     end
 
@@ -89,6 +98,7 @@ class TasksController < ApplicationController
   end
 
   # POST /tasks
+  # POST /tasks.json
   # POST /tasks.xml                                                        AJAX
   #----------------------------------------------------------------------------
   def create
@@ -99,15 +109,18 @@ class TasksController < ApplicationController
       if @task.save
         update_sidebar if called_from_index_page?
         format.js   # create.js.rjs
+        format.json { render :json => @task, :status => :created, :location => @task }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
       else
         format.js   # create.js.rjs
+        format.json { render :json => @task.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /tasks/1
+  # PUT /tasks/1.json
   # PUT /tasks/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   def update
@@ -131,18 +144,21 @@ class TasksController < ApplicationController
           update_sidebar
         end
         format.js   # update.js.rjs
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         format.js   # update.js.rjs
+        format.json { render :json => @task.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /tasks/1
+  # DELETE /tasks/1.json
   # DELETE /tasks/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def destroy
@@ -158,14 +174,16 @@ class TasksController < ApplicationController
     update_sidebar if called_from_index_page?
     respond_to do |format|
       format.js   # destroy.js.rjs
+      format.json { head :ok }
       format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # PUT /tasks/1/complete
+  # PUT /tasks/1/complete.json
   # PUT /leads/1/complete.xml                                              AJAX
   #----------------------------------------------------------------------------
   def complete
@@ -180,11 +198,12 @@ class TasksController < ApplicationController
     update_sidebar unless params[:bucket].blank?
     respond_to do |format|
       format.js   # complete.js.rjs
+      format.json { head :ok }
       format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # POST /tasks/auto_complete/query                                        AJAX

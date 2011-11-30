@@ -22,6 +22,7 @@ class LeadsController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /leads
+  # GET /leads.json
   # GET /leads.xml                                                AJAX and HTML
   #----------------------------------------------------------------------------
   def index
@@ -30,6 +31,7 @@ class LeadsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js   # index.js.rjs
+      format.json { render :json => @leads }
       format.xml  { render :xml => @leads }
       format.xls  { send_data @leads.to_xls, :type => :xls }
       format.csv  { send_data @leads.to_csv, :type => :csv }
@@ -39,6 +41,7 @@ class LeadsController < ApplicationController
   end
 
   # GET /leads/1
+  # GET /leads/1.json
   # GET /leads/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
@@ -49,14 +52,16 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.json { render :json => @lead }
       format.xml  { render :xml => @lead }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :xml)
+    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /leads/new
+  # GET /leads/new.json
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
@@ -70,6 +75,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
+      format.json { render :json => @lead }
       format.xml  { render :xml => @lead }
     end
 
@@ -93,6 +99,7 @@ class LeadsController < ApplicationController
   end
 
   # POST /leads
+  # POST /leads.json
   # POST /leads.xml                                                        AJAX
   #----------------------------------------------------------------------------
   def create
@@ -109,15 +116,18 @@ class LeadsController < ApplicationController
           get_data_for_sidebar(:campaign)
         end
         format.js   # create.js.rjs
+        format.json { render :json => @lead, :status => :created, :location => @lead }
         format.xml  { render :xml => @lead, :status => :created, :location => @lead }
       else
         format.js   # create.js.rjs
+        format.json { render :json => @lead.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /leads/1
+  # PUT /leads/1.json
   # PUT /leads/1.xml
   #----------------------------------------------------------------------------
   def update
@@ -127,20 +137,23 @@ class LeadsController < ApplicationController
       if @lead.update_with_permissions(params[:lead], params[:users])
         update_sidebar
         format.js
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         @users = User.except(@current_user)
         @campaigns = Campaign.my.order("name")
         format.js
+        format.json { render :json => @lead.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @lead.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /leads/1
+  # DELETE /leads/1.json
   # DELETE /leads/1.xml                                           HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
@@ -150,11 +163,12 @@ class LeadsController < ApplicationController
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
+      format.json { head :ok }
       format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # GET /leads/1/convert
@@ -172,10 +186,11 @@ class LeadsController < ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     @previous ||= $1.to_i
-    respond_to_not_found(:js, :xml) unless @lead
+    respond_to_not_found(:js, :json, :xml) unless @lead
   end
 
   # PUT /leads/1/promote
+  # PUT /leads/1/promote.json
   # PUT /leads/1/promote.xml                                               AJAX
   #----------------------------------------------------------------------------
   def promote
@@ -190,18 +205,21 @@ class LeadsController < ApplicationController
         @lead.convert
         update_sidebar
         format.js   # promote.js.rjs
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         format.js   # promote.js.rjs
+        format.json { render :json => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # PUT /leads/1/reject
+  # PUT /leads/1/reject.json
   # PUT /leads/1/reject.xml                                       AJAX and HTML
   #----------------------------------------------------------------------------
   def reject
@@ -212,11 +230,12 @@ class LeadsController < ApplicationController
     respond_to do |format|
       format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to leads_path }
       format.js   # reject.js.rjs
+      format.json { head :ok }
       format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # GET /leads/search/query                                                AJAX
@@ -226,6 +245,7 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
+      format.json { render :json => @leads.as_json }
       format.xml  { render :xml => @leads.to_xml }
     end
   end
