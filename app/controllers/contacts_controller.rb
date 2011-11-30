@@ -20,6 +20,7 @@ class ContactsController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /contacts
+  # GET /contacts.json
   # GET /contacts.xml                                             AJAX and HTML
   #----------------------------------------------------------------------------
   def index
@@ -28,6 +29,7 @@ class ContactsController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.js   # index.js.rjs
+      format.json { render :json => @contacts }
       format.xml  { render :xml => @contacts }
       format.xls  { send_data @contacts.to_xls, :type => :xls }
       format.csv  { send_data @contacts.to_csv, :type => :csv }
@@ -37,6 +39,7 @@ class ContactsController < ApplicationController
   end
 
   # GET /contacts/1
+  # GET /contacts/1.json
   # GET /contacts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
@@ -48,14 +51,16 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.json { render :json => @contact }
       format.xml  { render :xml => @contact }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :xml)
+    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /contacts/new
+  # GET /contacts/new.json
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
@@ -70,6 +75,7 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
+      format.json { render :json => @contact }
       format.xml  { render :xml => @contact }
     end
 
@@ -94,6 +100,7 @@ class ContactsController < ApplicationController
   end
 
   # POST /contacts
+  # POST /contacts.json
   # POST /contacts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
@@ -103,6 +110,7 @@ class ContactsController < ApplicationController
       if @contact.save_with_account_and_permissions(params)
         @contacts = get_contacts if called_from_index_page?
         format.js   # create.js.rjs
+        format.json { render :json => @contact, :status => :created, :location => @contact }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
         @users = User.except(@current_user)
@@ -118,12 +126,14 @@ class ContactsController < ApplicationController
         end
         @opportunity = Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
         format.js   # create.js.rjs
+        format.json { render :json => @contact.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /contacts/1
+  # PUT /contacts/1.json
   # PUT /contacts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
@@ -132,6 +142,7 @@ class ContactsController < ApplicationController
     respond_to do |format|
       if @contact.update_with_account_and_permissions(params)
         format.js
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         @users = User.except(@current_user)
@@ -142,15 +153,17 @@ class ContactsController < ApplicationController
           @account = Account.new(:user => @current_user)
         end
         format.js
+        format.json { render :json => @contact.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /contacts/1
+  # DELETE /contacts/1.json
   # DELETE /contacts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
@@ -160,11 +173,12 @@ class ContactsController < ApplicationController
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
+      format.json { head :ok }
       format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # PUT /contacts/1/attach
@@ -188,6 +202,7 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
+      format.json { render :json => @contacts.as_json }
       format.xml  { render :xml => @contacts.to_xml }
     end
   end
