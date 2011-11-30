@@ -22,6 +22,7 @@ class CampaignsController < ApplicationController
   after_filter  :update_recently_viewed, :only => :show
 
   # GET /campaigns
+  # GET /campaigns.json
   # GET /campaigns.xml                                            AJAX and HTML
   #----------------------------------------------------------------------------
   def index
@@ -30,6 +31,7 @@ class CampaignsController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.js   # index.js.rjs
+      format.json { render :json => @campaigns }
       format.xml  { render :xml => @campaigns }
       format.xls  { send_data @campaigns.to_xls, :type => :xls }
       format.csv  { send_data @campaigns.to_csv, :type => :csv }
@@ -39,6 +41,7 @@ class CampaignsController < ApplicationController
   end
 
   # GET /campaigns/1
+  # GET /campaigns/1.json
   # GET /campaigns/1.xml                                                   HTML
   #----------------------------------------------------------------------------
   def show
@@ -50,14 +53,16 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.haml
+      format.json { render :json => @campaign }
       format.xml  { render :xml => @campaign }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :xml)
+    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /campaigns/new
+  # GET /campaigns/new.json
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
@@ -70,6 +75,7 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       format.js   # new.js.rjs
+      format.json { render :json => @campaign }
       format.xml  { render :xml => @campaign }
     end
   end
@@ -89,6 +95,7 @@ class CampaignsController < ApplicationController
   end
 
   # POST /campaigns
+  # POST /campaigns.json
   # POST /campaigns.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def create
@@ -100,15 +107,18 @@ class CampaignsController < ApplicationController
         @campaigns = get_campaigns
         get_data_for_sidebar
         format.js   # create.js.rjs
+        format.json { render :json => @campaign, :status => :created, :location => @campaign }
         format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
       else
         format.js   # create.js.rjs
+        format.json { render :json => @campaign.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /campaigns/1
+  # PUT /campaigns/1.json
   # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def update
@@ -118,19 +128,22 @@ class CampaignsController < ApplicationController
       if @campaign.update_with_permissions(params[:campaign], params[:users])
         get_data_for_sidebar if called_from_index_page?
         format.js
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         @users = User.except(@current_user) # Need it to redraw [Edit Campaign] form.
         format.js
+        format.json { render :json => @campaign.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /campaigns/1
+  # DELETE /campaigns/1.json
   # DELETE /campaigns/1.xml                                       HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
@@ -140,11 +153,12 @@ class CampaignsController < ApplicationController
     respond_to do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
+      format.json { head :ok }
       format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # GET /campaigns/search/query                                            AJAX
@@ -154,6 +168,7 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
+      format.json { render :json => @campaigns.as_json }
       format.xml  { render :xml => @campaigns.to_xml }
     end
   end

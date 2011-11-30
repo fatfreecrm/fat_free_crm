@@ -21,7 +21,7 @@
       %div{:style => "padding:6px 0px 0px 40px;"}
         = f.submit t(:add_note), :id => "#{id_prefix}_comment_submit"
         #{t :or}
-        = link_to_remote(t(:cancel), :url => new_comment_path("#{class_name}_id" => commentable), :method => :get, :with => "'cancel=true'")
+        = link_to(t(:cancel), new_comment_path("#{class_name}_id" => commentable) + '?cancel=true', :remote => true)
   %div{ {:id => "#{id_prefix}_ask"}.merge(hidden_if(false))}
     = text_field_tag :post_new_note, t(:add_note_help), :onclick => remote_function(:url => new_comment_path("#{class_name}_id" => commentable), :method => :get), :id => "#{id_prefix}_post_new_note"
 

@@ -34,10 +34,11 @@ module Admin::UsersHelper
 
   #----------------------------------------------------------------------------
   def link_to_delete(user)
-    link_to_remote(t(:yes_button),
-      :method => :delete,
-      :url => admin_user_path(user),
-      :before => visual_effect(:highlight, dom_id(user), :startcolor => "#ffe4e1")
+    link_to(t(:yes_button),
+      admin_user_path(user),
+      :method  => :delete,
+      :remote  => true,
+      :onclick => visual_effect(:highlight, dom_id(user), :startcolor => "#ffe4e1")
     )
   end
 
