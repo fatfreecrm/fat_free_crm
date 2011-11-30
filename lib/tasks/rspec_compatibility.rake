@@ -8,7 +8,7 @@ namespace :spec do
         require 'active_record/fixtures'
         ActiveRecord::Base.establish_connection(Rails.env.to_sym)
         (ENV['FIXTURES'] ? ENV['FIXTURES'].split(/,/) : Dir.glob(File.join(Rails.root, 'spec', 'fixtures', '*.{yml,csv}'))).each do |fixture_file|
-          Fixtures.create_fixtures('spec/fixtures', File.basename(fixture_file, '.*'))
+          ActiveRecord::Fixtures.create_fixtures('spec/fixtures', File.basename(fixture_file, '.*'))
         end
       end
     end
