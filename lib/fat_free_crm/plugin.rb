@@ -46,8 +46,6 @@ module FatFreeCRM
     # Preload other plugins that are required by the plugin being loaded.
     #--------------------------------------------------------------------------
     def dependencies(*plugins)
-      plugins << :prototype_legacy_helper
-
       plugins.each do |name|
         plugin_path = File.join(Rails.root, 'vendor/plugins', name.to_s)
         require File.directory?(plugin_path) ? File.join(plugin_path, 'init') : name.to_s
