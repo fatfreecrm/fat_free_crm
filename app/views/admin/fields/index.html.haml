@@ -17,7 +17,7 @@
   - asset = klass.name.downcase
   .fields{ :id => "#{asset}_section", :style => ("display: none;" if klass != Contact) }
     .create_field
-      = link_to_inline(:create_field, new_admin_field_path(:klass_name => klass.name), :text => t(:create_new_custom_field_for, :klass_name => t(asset + 's_small')))
+      = link_to_inline(:create_field, new_admin_field_path(:klass_name => klass.name), :text => t(:create_new_custom_field_for, :klass_name => t(asset.pluralize + '_small')))
 
     %hr
 
