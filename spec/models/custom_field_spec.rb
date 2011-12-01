@@ -30,11 +30,11 @@ describe CustomField do
     c = Factory.create(:custom_field,
                        :as => "string",
                        :name => "cf_test_field",
-                       :klass_name => "Contact")
+                       :field_group => Factory.create(:field_group, :klass_name => "Contact"))
   end
 
   it "should generate a unique column name for a custom field" do
-    c = Factory.build(:custom_field, :label => "Test Field", :klass_name => "Contact")
+    c = Factory.build(:custom_field, :label => "Test Field", :field_group => Factory.create(:field_group, :klass_name => "Contact"))
 
     # Overwrite :klass_column_names with instance variable accessors
     c.class_eval { attr_accessor :klass_column_names }
@@ -81,7 +81,7 @@ describe CustomField do
                        :label => "Test Field",
                        :name => nil,
                        :as => "email",
-                       :klass_name => "Contact")
+                       :field_group => Factory.create(:field_group, :klass_name => "Contact"))
     c.as = "text"
     c.save
   end

@@ -1,18 +1,17 @@
 - collapsed = session[field_group.key].nil?
 
 %div{ :id => "#{field_group.key}_container" }
-  = subtitle field_group.key, collapsed, field_group.name
+  = subtitle field_group.key, collapsed, t(field_group.name, :default => field_group.label)
   .section
     %small{ hidden_if(!collapsed).merge(:id => "#{field_group.key}_intro") }
     %div[field_group]{ hidden_if(collapsed) }
       %table
-        - fields.sort_by(&:position).in_groups_of(2) do |group|
+        - field_group.custom_fields.in_groups_of(2, false) do |group|
           %tr
-            - group.compact.each_with_index do |field, i|
+            - group.each_with_index do |field, i|
               %td
                 - if field.hint.present?
                   = image_tag "info_tiny.png", :title => field.hint, :class => "tooltip-icon"
                 = f.input field.name, field.input_options
               - if i == 0
                 %td= spacer
-

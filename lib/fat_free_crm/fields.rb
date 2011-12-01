@@ -32,20 +32,20 @@ module FatFreeCRM
     end
 
     module SingletonMethods
+      def field_groups
+        FieldGroup.where(:klass_name => self.name)
+      end
+
       def fields
-        Field.where(:klass_name => self.name).order(:position)
-      end
-
-      def core_fields
-        fields.where(:type => "CoreField")
-      end
-
-      def custom_fields
-        fields.where(:type => "CustomField")
+        field_groups.map(&:fields).flatten
       end
     end
 
     module InstanceMethods
+      def field_groups
+        self.class.field_groups.where(['tag_id IS NULL OR tag_id IN (?)', tag_ids])
+      end
+
       def assign_attributes(new_attributes, options = {})
         super
       # If attribute is unknown, a new custom field may have been added.

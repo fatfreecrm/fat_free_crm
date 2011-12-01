@@ -9,9 +9,14 @@ Factory.sequence :field_name do |x|
 end
 
 
+Factory.define :field_group do |f|
+  f.klass_name          { Factory.next(:klass_name) }
+end
+
+
 Factory.define :field do |f|
   f.type                "Field"
-  f.klass_name          { Factory.next(:klass_name) }
+  f.field_group         { Factory.create(:field_group) }
   f.position            { Factory.next(:field_position) }
   f.name                { Factory.next(:field_name) }
   f.label               {|f| f.name }

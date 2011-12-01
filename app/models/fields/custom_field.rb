@@ -86,8 +86,8 @@ protected
     # If column name is already taken, a numeric suffix is appended.
     # Example column sequence: cf_custom, cf_custom_2, cf_custom_3, ...
     suffix = nil
-    field_name = 'cf_' + label.underscore.gsub(/[^a-z0-9_ ]/, '').gsub(/[_ ]+/, '_')
-    while (final_name = [field_name, suffix].compact.join("_")) &&
+    field_name = 'cf_' + label.downcase.gsub(/[^a-z0-9]+/, '_')
+    while (final_name = [field_name, suffix].compact.join('_')) &&
           klass_column_names.include?(final_name) do
       suffix = (suffix || 1) + 1
     end
