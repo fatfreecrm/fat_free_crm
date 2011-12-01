@@ -66,6 +66,16 @@ describe LeadsController do
       end
     end
 
+    describe "with mime type of JSON" do
+      it "should render all leads as JSON" do
+        @leads = [ Factory(:lead, :user => @current_user).reload ]
+
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :index
+        response.body.should == @leads.to_json
+      end
+    end
+
     describe "with mime type of XML" do
       it "should render all leads as xml" do
         @leads = [ Factory(:lead, :user => @current_user).reload ]
@@ -102,6 +112,16 @@ describe LeadsController do
       end
     end
 
+    describe "with mime type of JSON" do
+      it "should render the requested lead as JSON" do
+        @lead = Factory(:lead, :id => 42, :user => @current_user)
+
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :show, :id => 42
+        response.body.should == @lead.reload.to_json
+      end
+    end
+
     describe "with mime type of XML" do
       it "should render the requested lead as xml" do
         @lead = Factory(:lead, :id => 42, :user => @current_user)
@@ -128,6 +148,15 @@ describe LeadsController do
         get :show, :id => @private.id
         flash[:warning].should_not == nil
         response.should redirect_to(leads_path)
+      end
+
+      it "should return 404 (Not Found) JSON error" do
+        @lead = Factory(:lead, :user => @current_user)
+        @lead.destroy
+        request.env["HTTP_ACCEPT"] = "application/json"
+
+        get :show, :id => @lead.id
+        response.code.should == "404" # :not_found
       end
 
       it "should return 404 (Not Found) XML error" do
@@ -802,6 +831,15 @@ describe LeadsController do
       assigns[:current_query].should == "bill"
       session[:leads_current_query].should == "bill"
       response.should render_template("index")
+    end
+
+    describe "with mime type of JSON" do
+      it "should perform lookup using query string and render JSON" do
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :search, :query => "bill?!"
+
+        response.body.should == [ @billy_bones.reload ].to_json
+      end
     end
 
     describe "with mime type of XML" do

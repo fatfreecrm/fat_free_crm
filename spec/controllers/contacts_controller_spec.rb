@@ -42,8 +42,17 @@ describe ContactsController do
       end
     end
 
-    describe "with mime type of XML" do
+    describe "with mime type of JSON" do
+      it "should render all contacts as JSON" do
+        @contacts = [ Factory(:contact, :user => @current_user).reload ]
 
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :index
+        response.body.should == @contacts.to_json
+      end
+    end
+
+    describe "with mime type of XML" do
       it "should render all contacts as xml" do
         @contacts = [ Factory(:contact, :user => @current_user).reload ]
 
@@ -79,6 +88,16 @@ describe ContactsController do
       it "should update an activity when viewing the contact" do
         Activity.should_receive(:log).with(@current_user, @contact, :viewed).once
         get :show, :id => @contact.id
+      end
+    end
+
+    describe "with mime type of JSON" do
+      it "should render the requested contact as JSON" do
+        @contact = Factory(:contact, :id => 42)
+
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :show, :id => 42
+        response.body.should == @contact.reload.to_json
       end
     end
 
@@ -548,6 +567,15 @@ describe ContactsController do
       assigns[:current_query].should == "bill"
       session[:contacts_current_query].should == "bill"
       response.should render_template("index")
+    end
+
+    describe "with mime type of JSON" do
+      it "should perform lookup using query string and render JSON" do
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :search, :query => "bill?!"
+
+        response.body.should == [ @billy_bones.reload ].to_json
+      end
     end
 
     describe "with mime type of XML" do

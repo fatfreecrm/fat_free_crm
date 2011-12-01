@@ -30,6 +30,25 @@ describe CommentsController do
         end
       end # HTML
 
+      describe "(JSON)" do
+        before(:each) do
+          @asset = Factory(asset)
+          @asset.comments = [ Factory(:comment, :commentable => @asset) ]
+          request.env["HTTP_ACCEPT"] = "application/json"
+        end
+
+        it "should render all comments as JSON if the asset is found found" do
+          get :index, :"#{asset}_id" => @asset.id
+          response.body.should == @asset.comments.to_json
+        end
+
+        it "JSON: should return 404 (Not Found) JSON error if the asset is not found" do
+          get :index, :"#{asset}_id" => @asset.id + 42
+          flash[:warning].should_not == nil
+          response.code.should == "404"
+        end
+      end # JSON
+
       describe "(XML)" do
         before(:each) do
           @asset = Factory(asset)
