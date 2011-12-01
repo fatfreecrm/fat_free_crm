@@ -685,4 +685,3 @@ en-US:
   #----------------------------------------------------------------------------
   custom_fields: Custom Fields
   create_custom_field: Create Custom Field
-  create_new_custom_field_for: Create new Custom Field for %{klass_name}

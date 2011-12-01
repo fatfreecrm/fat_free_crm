@@ -1,5 +1,5 @@
 .section
-  = f.hidden_field :klass_name
+  = f.hidden_field :field_group_id
 
   %table
     %tr
@@ -16,10 +16,6 @@
       %td
         .label.top.req Select Options (pipe separated):
         = f.text_field :collection_string
-      %td= spacer
-      %td
-        .label.top.req Field group:
-        = f.select :field_group_id, field_group_options
     %tr
       %td
         .label.top Required:

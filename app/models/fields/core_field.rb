@@ -17,7 +17,7 @@
 
 class CoreField < Field
   # Some CoreField attributes should be read-only
-  attr_readonly :klass_name, :name, :as, :collection
+  attr_readonly :name, :as, :collection
   before_destroy :error_on_destroy
 
   def error_on_destroy

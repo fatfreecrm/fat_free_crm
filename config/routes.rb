@@ -136,6 +136,7 @@ FatFreeCRM::Application.routes.draw do
           post :redraw
           get :search
           post :sort
+          post :group_sort
         end
       end
       resources :fields, :as => :custom_fields

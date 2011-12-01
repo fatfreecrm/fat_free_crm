@@ -33,7 +33,7 @@ module FatFreeCRM
 
     module SingletonMethods
       def field_groups
-        FieldGroup.where(:klass_name => self.name)
+        FieldGroup.where(:klass_name => self.name).order(:position)
       end
 
       def fields

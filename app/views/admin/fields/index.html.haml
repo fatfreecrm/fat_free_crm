@@ -7,22 +7,37 @@
 
 .inline_tabs
   %ul
-    - @klasses.each do |klass|
+    - Field::KLASSES.each do |klass|
       %li{ "data-tab-class" => klass.name.downcase, :class => ("selected" if klass == Contact) }
         = link_to t(klass.name.downcase), "#"
 
 .remote#create_field{ hidden }
 
-- @klasses.each do |klass|
+- Field::KLASSES.each do |klass|
   - asset = klass.name.downcase
   .fields{ :id => "#{asset}_section", :style => ("display: none;" if klass != Contact) }
-    .create_field
-      = link_to_inline(:create_field, new_admin_field_path(:klass_name => klass.name), :text => t(:create_new_custom_field_for, :klass_name => t(asset.pluralize + '_small')))
 
-    %hr
+    - group_list_ids = []
+    - asset_list_id = "#{asset}_fields"
+    .list{ :id => asset_list_id }
 
-    .list{ :id => "#{asset}_fields" }
-      - if klass.fields.present?
-        = render :partial => "field", :collection => klass.fields
+      - klass.field_groups.each do |field_group|
 
-  = sortable_element("#{asset}_fields", :url => sort_admin_fields_path(:klass_name => klass.name))
+        .field_group
+          .title_tools
+            = link_to_inline(:create_field, new_admin_field_path(:field_group_id => field_group.id), :text => t(:create_custom_field))
+
+          .title
+            = t(field_group.name, :default => field_group.label)
+
+          - group_list_id = "#{field_group.id}_fields"
+          - group_list_ids << group_list_id
+          .list{ :id => group_list_id }
+            - if (fields = field_group.fields).present?
+              = render :partial => "field", :collection => fields
+          %br
+
+    - group_list_ids.each do |group_list_id|
+      = sortable_element(group_list_id, :url => sort_admin_fields_path(:param_name => group_list_id), :containment => group_list_ids)
+
+    = sortable_element(asset_list_id, :url => group_sort_admin_fields_path(:param_name => asset_list_id), :tag => :div)

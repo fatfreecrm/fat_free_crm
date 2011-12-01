@@ -21,10 +21,16 @@ class Admin::FieldsController < Admin::ApplicationController
   before_filter :auto_complete, :only => :auto_complete
 
   def sort
-    klass_name = params[:klass_name]
-    param_name = klass_name.downcase + '_fields'
+    param_name = params[:param_name]
     params[param_name].each_with_index do |id, index|
-      Field.update_all(['position=?', index+1], ['id=?', id])
+      Field.update_all(['position = ?, field_group_id = ?', index+1, param_name.to_i], ['id = ?', id])
+    end
+    render :nothing => true
+  end
+
+  def group_sort
+    params[params[:param_name]].each_with_index do |id, index|
+      FieldGroup.update_all(['position = ?', index+1], ['id = ?', id])
     end
     render :nothing => true
   end
@@ -33,7 +39,6 @@ class Admin::FieldsController < Admin::ApplicationController
   # GET /fields.xml                                                      HTML
   #----------------------------------------------------------------------------
   def index
-    @klasses = Field::KLASSES
   end
 
   # GET /fields/1
@@ -55,7 +60,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # GET /fields/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @field = CustomField.new(:klass_name => params[:klass_name])
+    @field = CustomField.new(:field_group_id => params[:field_group_id])
 
     respond_to do |format|
       format.js   # new.js.rjs
