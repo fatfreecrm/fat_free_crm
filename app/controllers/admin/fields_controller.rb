@@ -21,17 +21,24 @@ class Admin::FieldsController < Admin::ApplicationController
   before_filter :auto_complete, :only => :auto_complete
 
   def sort
-    param_name = params[:param_name]
-    params[param_name].each_with_index do |id, index|
-      Field.update_all(['position = ?, field_group_id = ?', index+1, param_name.to_i], ['id = ?', id])
+    field_group_id = params[:field_group_id].to_i
+    field_ids = params["field_group_#{field_group_id}_fields"] || []
+
+    field_ids.each_with_index do |id, index|
+      Field.update_all({:position => index+1, :field_group_id => field_group_id}, {:id => id})
     end
+
     render :nothing => true
   end
 
   def group_sort
-    params[params[:param_name]].each_with_index do |id, index|
-      FieldGroup.update_all(['position = ?', index+1], ['id = ?', id])
+    asset = params[:asset]
+    field_group_ids = params["#{asset}_field_groups"]
+
+    field_group_ids.each_with_index do |id, index|
+      FieldGroup.update_all({:position => index+1}, {:id => id})
     end
+
     render :nothing => true
   end
 
