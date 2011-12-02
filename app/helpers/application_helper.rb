@@ -97,7 +97,7 @@ module ApplicationHelper
     related = (options[:related] ? "&related=#{options[:related]}" : '')
 
     link_to(text,
-      url +'?cancel=false'+ related,
+      url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
       :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
     )
