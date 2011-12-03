@@ -23,10 +23,10 @@
 
     - unless @current_user.preference[:accounts_outline] == "brief"
       %dt
-        = stars_for(account) + " | "
-        = link_to(account.website, account.website.to_url) << " | " if account.website.present?
-        = link_to_email(account.email) << " | " if account.email.present?
-        = t(:phone_small) << ": " << (account.toll_free_phone || account.phone) if account.toll_free_phone? || account.phone?
+        = stars_for(account)
+        = " | ".html_safe << link_to(account.website, account.website.to_url) if account.website.present?
+        = " | ".html_safe << link_to_email(account.email) if account.email.present?
+        = " | ".html_safe << t(:phone_small) << ": " << (account.toll_free_phone || account.phone) if account.toll_free_phone? || account.phone?
 
       - if account.tag_list.present?
         %dt

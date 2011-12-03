@@ -11,6 +11,7 @@ db/*.sql*
 log/*.log
 
 public/avatars/**/*
+public/assets
 
 tmp
 Design

@@ -19,7 +19,7 @@ if @lead.errors.empty?
 else
   page[id].replace_html :partial => "edit"
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
-  if error_message_on(@lead, :first_name).blank? and !error_message_on(@lead, :last_name).blank?
+  if @lead.errors[:first_name].blank? and @lead.errors[:last_name].present?
     page[:lead_last_name].focus
   else
     page[:lead_first_name].focus
