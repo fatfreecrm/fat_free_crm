@@ -1,0 +1,2 @@
+module Admin::FieldGroupsHelper
+end

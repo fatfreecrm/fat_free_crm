@@ -129,6 +129,12 @@ FatFreeCRM::Application.routes.draw do
         end
       end
 
+      resources :field_groups, :except => :index do
+        collection do
+          post :sort
+        end
+      end
+
       resources :fields do
         collection do
           post :auto_complete
@@ -136,7 +142,6 @@ FatFreeCRM::Application.routes.draw do
           post :redraw
           get :search
           post :sort
-          post :group_sort
         end
       end
       resources :fields, :as => :custom_fields

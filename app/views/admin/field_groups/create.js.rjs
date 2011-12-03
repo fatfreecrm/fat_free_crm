@@ -1,0 +1,14 @@
+if @field_group.valid?
+  page[:create_field_group_arrow].replace_html "&#9658;"
+  page.visual_effect :toggle_blind, :create_field_group, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  asset_list_id = "#{@field_group.klass_name.downcase}_field_groups"
+  page.insert_html :bottom, asset_list_id, :partial => "field_group", :collection => [ @field_group ]
+  page[dom_id(@field_group)].visual_effect :highlight, :duration => 1.5
+  page.call "crm.flick", :empty, :remove
+  page.insert_html :bottom, asset_list_id, sortable_element(asset_list_id, :url => sort_admin_field_groups_path(:asset => asset))
+else
+  page[:create_field_group].replace_html :partial => "new"
+  page[:create_field_group].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:field_label].focus
+end
+

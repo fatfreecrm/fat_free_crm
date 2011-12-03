@@ -1,0 +1,12 @@
+.section
+  = f.hidden_field :klass_name
+
+  %table
+    %tr
+      %td
+        .label.top.req Label:
+        = f.text_field :label
+      %td= spacer
+      %td
+        .label.top.req Tag:
+        = f.select :tag_id, ActsAsTaggableOn::Tag.all.map { |tag| [tag.name, tag.id] }

@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2011 by Michael Dvorkin
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -19,28 +19,6 @@ class Admin::FieldsController < Admin::ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :auto_complete, :only => :auto_complete
-
-  def sort
-    field_group_id = params[:field_group_id].to_i
-    field_ids = params["field_group_#{field_group_id}_fields"] || []
-
-    field_ids.each_with_index do |id, index|
-      Field.update_all({:position => index+1, :field_group_id => field_group_id}, {:id => id})
-    end
-
-    render :nothing => true
-  end
-
-  def group_sort
-    asset = params[:asset]
-    field_group_ids = params["#{asset}_field_groups"]
-
-    field_group_ids.each_with_index do |id, index|
-      FieldGroup.update_all({:position => index+1}, {:id => id})
-    end
-
-    render :nothing => true
-  end
 
   # GET /fields
   # GET /fields.xml                                                      HTML
@@ -142,6 +120,19 @@ class Admin::FieldsController < Admin::ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:html, :js, :xml)
+  end
+
+  # POST /fields/sort
+  #----------------------------------------------------------------------------
+  def sort
+    field_group_id = params[:field_group_id].to_i
+    field_ids = params["field_group_#{field_group_id}_fields"] || []
+
+    field_ids.each_with_index do |id, index|
+      Field.update_all({:position => index+1, :field_group_id => field_group_id}, {:id => id})
+    end
+
+    render :nothing => true
   end
 
   # POST /fields/auto_complete/query                                     AJAX

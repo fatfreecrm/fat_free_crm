@@ -1,0 +1,9 @@
+
+= form_for([:admin, @field_group], :html => one_submit_only(:field_group), :remote => true) do |f|
+  = link_to_close new_admin_field_group_path
+  = f.error_messages
+  = render :partial => "admin/field_groups/top_section", :locals => { :f => f }
+  .buttonbar
+    = f.submit "Create field group"
+    or
+    = link_to_cancel new_admin_field_group_path

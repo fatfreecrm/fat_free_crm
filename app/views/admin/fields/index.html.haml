@@ -3,13 +3,13 @@
 .title
   %span#create_field_title Fields
 
-.remote#options{ hidden }
-
 .inline_tabs
   %ul
     - Field::KLASSES.each do |klass|
       %li{ "data-tab-class" => klass.name.downcase, :class => ("selected" if klass == Contact) }
         = link_to t(klass.name.downcase), "#"
+
+.remote#create_field_group{ hidden }
 
 .remote#create_field{ hidden }
 
@@ -17,26 +17,16 @@
   - asset = klass.name.downcase
   .fields{ :id => "#{asset}_section", :style => ("display: none;" if klass != Contact) }
 
-    - group_list_ids = []
+    .title_tools
+      = link_to_inline(:create_field_group, new_admin_field_group_path(:klass_name => klass.name), :text => t(:create_field_group))
+
+    .title
+      = t(asset)
+
     - asset_list_id = "#{asset}_field_groups"
+    - group_list_ids = klass.field_groups.map {|field_group| "field_group_#{field_group.id}_fields"}
+
     .list{ :id => asset_list_id }
+      = render :partial => "fields_groups/field_group", :collection => klass.field_groups, :locals => {:group_list_ids => group_list_ids}
 
-      - klass.field_groups.each do |field_group|
-
-        .field_group[field_group]
-          .title_tools
-            = link_to_inline(:create_field, new_admin_field_path(:field_group_id => field_group.id), :text => t(:create_custom_field))
-
-          .title
-            = t(field_group.name, :default => field_group.label)
-
-          - group_list_id = "field_group_#{field_group.id}_fields"
-          - group_list_ids << group_list_id
-          .list{ :id => group_list_id }
-            - if (fields = field_group.fields).present?
-              = render :partial => "field", :collection => fields
-
-    - klass.field_groups.each do |field_group|
-      = sortable_element("field_group_#{field_group.id}_fields", :url => sort_admin_fields_path(:field_group_id => field_group.id), :containment => group_list_ids, :dropOnEmpty => true)
-
-    = sortable_element(asset_list_id, :url => group_sort_admin_fields_path(:asset => asset), :tag => :div)
+    = sortable_element(asset_list_id, :url => sort_admin_field_groups_path(:asset => asset), :tag => :div)
