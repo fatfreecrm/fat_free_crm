@@ -60,3 +60,4 @@ module FatFreeCRM
   end # Exportable
 end # FatFreeCRM
 
+ActiveRecord::Base.send(:include, FatFreeCRM::Exportable)

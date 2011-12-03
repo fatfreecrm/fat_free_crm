@@ -31,7 +31,6 @@ module FatFreeCRM
       end
     end
 
-
     module SingletonMethods
       def fields
         Field.where(:klass_name => self.name).order(:position)
@@ -45,7 +44,6 @@ module FatFreeCRM
         fields.where(:type => "CustomField")
       end
     end
-
 
     module InstanceMethods
       def assign_attributes(new_attributes, options = {})
@@ -69,4 +67,6 @@ module FatFreeCRM
     end
   end
 end
+
+ActiveRecord::Base.send(:include, FatFreeCRM::Fields)
 

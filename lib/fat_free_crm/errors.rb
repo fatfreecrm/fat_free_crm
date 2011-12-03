@@ -47,3 +47,4 @@ module FatFreeCRM
   end
 end
 
+ActiveModel::Errors.send(:include, FatFreeCRM::ActiveModel::Errors)

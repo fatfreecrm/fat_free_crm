@@ -139,3 +139,6 @@ module FatFreeCRM
   end # module Callback
 end # module FatFreeCRM
 
+
+ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
+ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)

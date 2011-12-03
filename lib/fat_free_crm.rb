@@ -16,6 +16,7 @@
 #------------------------------------------------------------------------------
 # Plugin dependencies
 require Rails.root.join('vendor/plugins/is_paranoid/init')
+
 # Overrides
 require "overrides/authlogic/session/cookies"
 require "overrides/simple_form/action_view_extensions/form_helper"
@@ -30,22 +31,9 @@ require "fat_free_crm/i18n"
 require "fat_free_crm/permissions"
 require "fat_free_crm/exportable"
 require "fat_free_crm/fields"
+require "fat_free_crm/tags"
 require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
-
-ActionView::Base.send(:include, FatFreeCRM::I18n)
-ActionController::Base.send(:include, FatFreeCRM::I18n)
-ActiveModel::Errors.send(:include, FatFreeCRM::ActiveModel::Errors)
-
-ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
-ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
-
-ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
-ActiveRecord::Base.send(:include, FatFreeCRM::Exportable)
-ActiveRecord::Base.send(:include, FatFreeCRM::Fields)
-ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
-
 require "fat_free_crm/dropbox" if defined?(::Rake)
-require "fat_free_crm/plugin"  # Require crm_* plugins last.
-
+require "fat_free_crm/plugin"

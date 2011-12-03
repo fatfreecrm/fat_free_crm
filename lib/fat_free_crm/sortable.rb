@@ -55,3 +55,5 @@ module FatFreeCRM
 
   end
 end
+
+ActiveRecord::Base.send(:include, FatFreeCRM::Sortable)
