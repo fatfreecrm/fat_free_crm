@@ -44,3 +44,4 @@ describe CampaignsController do
     end
   end
 end
+

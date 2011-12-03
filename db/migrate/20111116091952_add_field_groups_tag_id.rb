@@ -7,3 +7,4 @@ class AddFieldGroupsTagId < ActiveRecord::Migration
     remove_column :field_groups, :tag_id
   end
 end
+

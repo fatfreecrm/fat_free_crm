@@ -398,3 +398,4 @@ ActiveRecord::Schema.define(:version => 20111117041311) do
   add_index "users", ["username", "deleted_at"], :name => "index_users_on_username_and_deleted_at", :unique => true
 
 end
+

@@ -325,3 +325,4 @@ private
     [ query.join(" "), tags.join(", ") ]
   end
 end
+

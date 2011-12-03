@@ -8,3 +8,4 @@ describe PasswordsController do
   end
 
 end
+

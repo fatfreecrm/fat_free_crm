@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/users/upload_avatar.js.rjs" do
   include UsersHelper
 
@@ -39,3 +39,4 @@ describe "/users/upload_avatar.js.rjs" do
     end
   end # errors
 end
+

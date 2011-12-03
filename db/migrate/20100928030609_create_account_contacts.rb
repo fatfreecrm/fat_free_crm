@@ -12,3 +12,4 @@ class CreateAccountContacts < ActiveRecord::Migration
     drop_table :account_contacts
   end
 end
+

@@ -24,3 +24,4 @@ class CreateAccounts < ActiveRecord::Migration
     drop_table :accounts
   end
 end
+

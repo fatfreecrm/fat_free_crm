@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/tasks/edit.js.rjs" do
   include TasksHelper
 
@@ -17,7 +17,7 @@ describe "/tasks/edit.js.rjs" do
       @task = stub_task(view)
       assign(:view, view)
       assign(:task, @task)
-    
+
       render
       rendered.should have_rjs("task_#{@task.id}") do |rjs|
         with_tag("li[id=task_#{@task.id}]")
@@ -75,3 +75,4 @@ describe "/tasks/edit.js.rjs" do
   end
 
 end
+

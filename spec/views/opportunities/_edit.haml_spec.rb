@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/opportunities/_edit.html.haml" do
   include OpportunitiesHelper
-  
+
   before do
     login_and_assign
     assign(:account, @account = Factory(:account))
@@ -61,3 +61,4 @@ describe "/opportunities/_edit.html.haml" do
     rendered.should_not have_tag("textarea[id=opportunity_background_info]")
   end
 end
+

@@ -659,3 +659,4 @@ describe CampaignsController do
   end
 
 end
+

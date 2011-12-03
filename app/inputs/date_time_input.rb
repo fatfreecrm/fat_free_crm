@@ -36,3 +36,4 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
       input_html_options[:autocomplete] ||= 'off'
     end
 end
+

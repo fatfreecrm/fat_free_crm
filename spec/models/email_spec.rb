@@ -32,3 +32,4 @@ describe Email do
     @email.should be_valid
   end
 end
+

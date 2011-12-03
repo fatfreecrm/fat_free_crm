@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/leads/convert.js.rjs" do
   include LeadsHelper
-  
+
   before do
     login_and_assign
-    
+
     assign(:lead, @lead = Factory(:lead, :user => @current_user))
     assign(:users, [ @current_user ])
     assign(:account, @account = Factory(:account))
@@ -15,7 +15,7 @@ describe "/leads/convert.js.rjs" do
 
   it "cancel from lead index page: should replace [Convert Lead] form with lead partial" do
     params[:cancel] = "true"
-    
+
     render
     rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
       with_tag("li[id=lead_#{@lead.id}]")
@@ -29,7 +29,7 @@ describe "/leads/convert.js.rjs" do
     render
     rendered.should include('crm.flip_form("convert_lead"')
   end
-  
+
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
     params[:cancel] = nil
     assign(:previous, previous = Factory(:lead, :user => @current_user))
@@ -47,10 +47,10 @@ describe "/leads/convert.js.rjs" do
     render
     rendered.should include(%Q/crm.flick("lead_#{previous}", "remove");/)
   end
-  
+
   it "convert from leads index page: should turn off highlight, hide [Create Lead] form, and replace current lead with [Convert Lead] form" do
     params[:cancel] = nil
-    
+
     render
     rendered.should include(%Q/crm.highlight_off("lead_#{@lead.id}");/)
     rendered.should include('crm.hide_form("create_lead")')
@@ -58,10 +58,10 @@ describe "/leads/convert.js.rjs" do
       with_tag("form[class=edit_lead]")
     end
   end
-  
+
   it "convert from lead landing page: should hide [Edit Lead] and show [Convert Lead] form" do
     params[:cancel] = "false"
-    
+
     render
     rendered.should have_rjs("convert_lead") do |rjs|
       with_tag("form[class=edit_lead]")
@@ -80,3 +80,4 @@ describe "/leads/convert.js.rjs" do
   end
 
 end
+

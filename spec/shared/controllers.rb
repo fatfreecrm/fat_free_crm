@@ -99,3 +99,4 @@ module SharedControllerSpecs
   end
 
 end
+

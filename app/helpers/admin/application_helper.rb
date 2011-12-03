@@ -17,3 +17,4 @@
 
 module Admin::ApplicationHelper
 end
+

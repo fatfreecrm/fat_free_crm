@@ -54,3 +54,4 @@ class Avatar < ActiveRecord::Base
     Hash[STYLES.map{ |key, value| [ value[0..-2], key ] }]
   end
 end
+

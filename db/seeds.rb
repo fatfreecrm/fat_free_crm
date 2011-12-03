@@ -7,3 +7,4 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 #~ require Rails.root.join('db/seeds/fields')
+

@@ -14,3 +14,4 @@ Factory.define :task do |t|
   t.updated_at          { Factory.next(:time) }
   t.created_at          { Factory.next(:time) }
 end
+

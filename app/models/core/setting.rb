@@ -81,3 +81,4 @@ unless Setting.table_exists?
     def self.[]= (*args); nil; end
   end
 end
+

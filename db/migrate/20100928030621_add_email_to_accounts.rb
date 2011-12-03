@@ -7,3 +7,4 @@ class AddEmailToAccounts < ActiveRecord::Migration
     remove_column :accounts, :email
   end
 end
+

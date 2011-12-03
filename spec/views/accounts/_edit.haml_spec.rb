@@ -35,3 +35,4 @@ describe "/accounts/_edit.html.haml" do
     rendered.should_not have_tag("textarea[id=account_background_info]")
   end
 end
+

@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/users/avatar.js.rjs" do
   include UsersHelper
-  
+
   before do
     login_and_assign
     assign(:user, @current_user)
@@ -10,7 +10,7 @@ describe "/users/avatar.js.rjs" do
 
   it "cancel: should hide [Upload Avatar] form and restore title" do
     params[:cancel] = "true"
-    
+
     render
     rendered.should include('crm.flip_form("upload_avatar")')
     rendered.should include('crm.set_title("upload_avatar", "My Profile")')
@@ -29,3 +29,4 @@ describe "/users/avatar.js.rjs" do
   end
 
 end
+

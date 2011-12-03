@@ -30,3 +30,4 @@ describe "/accounts/index.html.haml" do
     view.should render_template(:partial => "shared/_paginate")
   end
 end
+

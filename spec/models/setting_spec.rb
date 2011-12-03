@@ -40,3 +40,4 @@ describe Setting do
     Setting[:world].should == "hello"
   end
 end
+

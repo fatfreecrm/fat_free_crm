@@ -21,3 +21,4 @@ class CreateOpenidTables < ActiveRecord::Migration
     drop_table :open_id_authentication_nonces
   end
 end
+

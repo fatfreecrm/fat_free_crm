@@ -27,3 +27,4 @@ describe "/accounts/destroy.js.rjs" do
   end
 
 end
+

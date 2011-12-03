@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/leads/edit.js.rjs" do
   include LeadsHelper
-  
+
   before do
     login_and_assign
     assign(:lead, @lead = Factory(:lead, :status => "new", :user => @current_user))
@@ -12,7 +12,7 @@ describe "/leads/edit.js.rjs" do
 
   it "cancel from lead index page: should replace [Edit Lead] form with lead partial" do
     params[:cancel] = "true"
-    
+
     render
     rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
       with_tag("li[id=lead_#{@lead.id}]")
@@ -22,7 +22,7 @@ describe "/leads/edit.js.rjs" do
   it "cancel from lead landing page: should hide [Edit Lead] form" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
     params[:cancel] = "true"
-    
+
     render
     rendered.should include('crm.flip_form("edit_lead"')
   end
@@ -44,10 +44,10 @@ describe "/leads/edit.js.rjs" do
     render
     rendered.should include(%Q/crm.flick("lead_#{previous}", "remove");/)
   end
-  
+
   it "edit from leads index page: should turn off highlight, hide [Create Lead] form, and replace current lead with [Edit Lead] form" do
     params[:cancel] = nil
-    
+
     render
     rendered.should include(%Q/crm.highlight_off("lead_#{@lead.id}");/)
     rendered.should include('crm.hide_form("create_lead")')
@@ -55,10 +55,10 @@ describe "/leads/edit.js.rjs" do
       with_tag("form[class=edit_lead]")
     end
   end
-  
+
   it "edit from lead landing page: should hide [Convert Lead] and show [Edit Lead] form" do
     params[:cancel] = "false"
-    
+
     render
     rendered.should have_rjs("edit_lead") do |rjs|
       with_tag("form[class=edit_lead]")
@@ -76,3 +76,4 @@ describe "/leads/edit.js.rjs" do
   end
 
 end
+

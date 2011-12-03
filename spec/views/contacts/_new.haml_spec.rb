@@ -44,3 +44,4 @@ describe "/contacts/_new.html.haml" do
   end
 
 end
+

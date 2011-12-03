@@ -65,3 +65,4 @@ describe "/tasks/complete.js.rjs" do
   end
 
 end
+

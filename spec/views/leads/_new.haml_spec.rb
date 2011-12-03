@@ -36,3 +36,4 @@ describe "/leads/_new.html.haml" do
     rendered.should_not have_tag("textarea[id=lead_background_info]")
   end
 end
+

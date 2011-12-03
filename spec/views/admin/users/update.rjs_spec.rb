@@ -33,3 +33,4 @@ describe "admin/users/update.js.rjs" do
     end
   end # errors
 end
+

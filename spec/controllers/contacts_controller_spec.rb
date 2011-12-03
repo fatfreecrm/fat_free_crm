@@ -694,3 +694,4 @@ describe ContactsController do
   end
 
 end
+

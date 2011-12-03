@@ -26,3 +26,4 @@ describe "/opportunities/index.html.haml" do
   end
 
 end
+

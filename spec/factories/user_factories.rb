@@ -53,3 +53,4 @@ Factory.define :preference do |p|
   p.updated_at          { Factory.next(:time) }
   p.created_at          { Factory.next(:time) }
 end
+

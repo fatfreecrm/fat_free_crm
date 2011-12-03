@@ -43,3 +43,4 @@ describe "/leads/destroy.js.rjs" do
   end
 
 end
+

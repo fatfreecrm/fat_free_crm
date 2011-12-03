@@ -22,3 +22,4 @@ describe "/leads/_convert.html.haml" do
   end
 
 end
+

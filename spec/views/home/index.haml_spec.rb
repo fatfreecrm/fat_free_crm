@@ -23,3 +23,4 @@ describe "/home/index.html.haml" do
     rendered.should include("No activity records found.")
   end
 end
+

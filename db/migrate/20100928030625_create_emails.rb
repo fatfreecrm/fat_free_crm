@@ -24,3 +24,4 @@ class CreateEmails < ActiveRecord::Migration
     drop_table :emails
   end
 end
+

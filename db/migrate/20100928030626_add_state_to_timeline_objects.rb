@@ -11,3 +11,4 @@ class AddStateToTimelineObjects < ActiveRecord::Migration
     remove_column :emails,   :state
   end
 end
+

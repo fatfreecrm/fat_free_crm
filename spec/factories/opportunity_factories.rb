@@ -16,3 +16,4 @@ Factory.define :opportunity do |o|
   o.updated_at          { Factory.next(:time) }
   o.created_at          { Factory.next(:time) }
 end
+

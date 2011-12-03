@@ -64,3 +64,4 @@ describe "/contacts/_edit.html.haml" do
     rendered.should_not have_tag("textarea[id=contact_background_info]")
   end
 end
+

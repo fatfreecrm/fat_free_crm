@@ -25,3 +25,4 @@ describe "/home/index.js.rjs" do
   end
 
 end
+

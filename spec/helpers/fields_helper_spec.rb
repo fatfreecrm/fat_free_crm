@@ -22,3 +22,4 @@ describe FieldsHelper do
 
   end
 end
+

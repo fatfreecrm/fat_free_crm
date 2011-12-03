@@ -9,3 +9,4 @@ class AddRatingAndCategoryToAccounts < ActiveRecord::Migration
     remove_column :accounts, :rating
   end
 end
+

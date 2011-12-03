@@ -47,3 +47,4 @@ describe "/users/update.js.rjs" do
 
   end # errors
 end
+

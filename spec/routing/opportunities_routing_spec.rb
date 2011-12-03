@@ -44,3 +44,4 @@ describe OpportunitiesController do
     end
   end
 end
+

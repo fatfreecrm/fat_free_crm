@@ -24,3 +24,4 @@ describe Permission do
     Permission.create!(@valid_attributes)
   end
 end
+

@@ -17,3 +17,4 @@ class AddBackgroundInfoToModels < ActiveRecord::Migration
     remove_column :tasks, :background_info
   end
 end
+

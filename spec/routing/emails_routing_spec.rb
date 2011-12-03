@@ -32,3 +32,4 @@ describe EmailsController do
     end
   end
 end
+

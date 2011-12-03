@@ -24,3 +24,4 @@ class CoreField < Field
     errors.add_to_base "Core fields cannot be deleted."
   end
 end
+

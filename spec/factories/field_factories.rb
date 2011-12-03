@@ -24,3 +24,4 @@ end
 Factory.define :custom_field, :parent => :field, :class => :custom_field do |f|
   f.type    "CustomField"
 end
+

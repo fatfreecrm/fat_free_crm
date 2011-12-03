@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/users/change_password.js.rjs" do
   include UsersHelper
 
@@ -46,3 +46,4 @@ describe "/users/change_password.js.rjs" do
 
   end # errors
 end
+

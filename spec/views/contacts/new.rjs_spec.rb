@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/contacts/new.js.rjs" do
   include ContactsHelper
-  
+
   before do
     login_and_assign
     @account = Factory(:account)
@@ -29,7 +29,7 @@ describe "/contacts/new.js.rjs" do
     it "should render [new.html.haml] template into :create_contact div" do
       params[:cancel] = nil
       render
-    
+
       rendered.should have_rjs("create_contact") do |rjs|
         with_tag("form[class=new_contact]")
       end
@@ -40,7 +40,7 @@ describe "/contacts/new.js.rjs" do
     it "should hide [create contact] form" do
       params[:cancel] = "true"
       render
-    
+
       rendered.should_not have_rjs("create_contact")
       rendered.should include('crm.flip_form("create_contact");')
     end

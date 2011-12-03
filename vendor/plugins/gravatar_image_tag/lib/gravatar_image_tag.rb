@@ -60,3 +60,4 @@ module GravatarImageTag
 end
 
 ActionView::Base.send(:include, GravatarImageTag) if defined?(ActionView::Base)
+

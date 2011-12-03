@@ -1,6 +1,6 @@
 class EmailsController < ApplicationController
   before_filter :require_user
-  
+
   # GET /email
   # GET /email.xml                                              not implemented
   #----------------------------------------------------------------------------
@@ -52,5 +52,6 @@ class EmailsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:html, :js, :json, :xml)
   end
-  
+
 end
+

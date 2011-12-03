@@ -261,3 +261,4 @@ class CampaignsController < ApplicationController
   end
 
 end
+

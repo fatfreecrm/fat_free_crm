@@ -13,3 +13,4 @@ class CreatePermissions < ActiveRecord::Migration
     drop_table :permissions
   end
 end
+

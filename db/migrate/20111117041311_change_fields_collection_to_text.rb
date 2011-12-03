@@ -7,3 +7,4 @@ class ChangeFieldsCollectionToText < ActiveRecord::Migration
     change_column :fields, :collection, :string
   end
 end
+

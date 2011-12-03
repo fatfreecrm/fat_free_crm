@@ -44,3 +44,4 @@ describe "admin/users/destroy.js.rjs" do
     end
   end
 end
+

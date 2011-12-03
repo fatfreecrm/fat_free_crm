@@ -12,3 +12,4 @@ class CreateAccountOpportunities < ActiveRecord::Migration
     drop_table :account_opportunities
   end
 end
+

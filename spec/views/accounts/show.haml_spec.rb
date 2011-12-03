@@ -27,3 +27,4 @@ describe "/accounts/show.html.haml" do
   end
 
 end
+

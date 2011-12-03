@@ -159,3 +159,4 @@ describe "/opportunities/update.js.rjs" do
     end
   end # errors
 end
+

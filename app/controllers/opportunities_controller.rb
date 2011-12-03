@@ -314,3 +314,4 @@ class OpportunitiesController < ApplicationController
   end
 
 end
+

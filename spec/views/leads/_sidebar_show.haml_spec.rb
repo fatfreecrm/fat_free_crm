@@ -22,3 +22,4 @@ describe "/leads/_sidebar_show.html.haml" do
     rendered.should_not have_tag("a[href=http://www.facebook/profile]")
   end
 end
+

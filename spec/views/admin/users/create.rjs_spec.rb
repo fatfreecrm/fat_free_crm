@@ -39,3 +39,4 @@ describe "admin/users/create.js.rjs" do
   end
 
 end
+

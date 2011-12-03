@@ -170,3 +170,4 @@ describe Opportunity do
     end
   end
 end
+

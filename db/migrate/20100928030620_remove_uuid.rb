@@ -21,3 +21,4 @@ class RemoveUuid < ActiveRecord::Migration
     @@uuid_configured = config[:uuid]
   end
 end
+

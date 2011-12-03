@@ -8,3 +8,4 @@ class RespondsToParentTest < Test::Unit::TestCase
   end
 
 end
+

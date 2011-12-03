@@ -24,7 +24,7 @@ module ActionView
         return country_options + options_for_select(COUNTRIES, selected)
       end
       # All the countries included in the country_options output.
-        
+
       COUNTRIES = [
         ['Andorra', 'AN'],
         ['United Arab Emirates', 'AE'],
@@ -271,7 +271,7 @@ module ActionView
         ['Zambia', 'ZA'],
         ['Zimbabwe', 'ZI']
       ].sort unless const_defined?("COUNTRIES")
-      
+
       COUNTRIES_HASH = {
         :AN => 'Andorra',
         :AE => 'United Arab Emirates',
@@ -518,14 +518,14 @@ module ActionView
         :ZA => 'Zambia',
         :ZI => 'Zimbabwe',
         :WW => 'Worldwide'
-      }        
+      }
     end
-    
+
     def country_name(code)
       return "" if code.blank?
       return COUNTRIES_HASH[code.to_sym] || code
-    end    
-    
+    end
+
     class InstanceTag
       def to_country_select_tag(priority_countries, options, html_options)
         html_options = html_options.stringify_keys
@@ -539,7 +539,7 @@ module ActionView
         )
       end
     end
-    
+
     class FormBuilder
       def country_select(method, priority_countries = nil, options = {}, html_options = {})
         @template.country_select(@object_name, method, priority_countries, options.merge(:object => @object), html_options)
@@ -547,3 +547,4 @@ module ActionView
     end
   end
 end
+

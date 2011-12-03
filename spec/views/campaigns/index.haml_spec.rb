@@ -25,3 +25,4 @@ describe "/campaigns/index.html.haml" do
   end
 
 end
+

@@ -91,3 +91,4 @@ describe "/opportunities/create.js.rjs" do
   end
 
 end
+

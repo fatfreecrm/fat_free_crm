@@ -50,3 +50,4 @@ describe "/tasks/destroy.js.rjs" do
     end
   end
 end
+

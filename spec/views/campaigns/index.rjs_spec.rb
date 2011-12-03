@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/campaigns/index.js.rjs" do
   include CampaignsHelper
-  
+
   before do
     login_and_assign
   end

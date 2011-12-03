@@ -15,3 +15,4 @@ class AddExtraContactFields < ActiveRecord::Migration
     end
   end
 end
+

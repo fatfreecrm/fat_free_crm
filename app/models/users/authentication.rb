@@ -61,3 +61,4 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
     self.errors.add(:base, I18n.t(:msg_account_suspended)) if self.user.suspended?
   end
 end
+

@@ -24,3 +24,4 @@ class CreateTasks < ActiveRecord::Migration
     drop_table :tasks
   end
 end
+

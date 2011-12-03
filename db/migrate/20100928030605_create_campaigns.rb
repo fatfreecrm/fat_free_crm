@@ -32,3 +32,4 @@ class CreateCampaigns < ActiveRecord::Migration
     drop_table :campaigns
   end
 end
+

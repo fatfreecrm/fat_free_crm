@@ -37,3 +37,4 @@ describe "/tasks/index.html.haml" do
     end
   end
 end
+

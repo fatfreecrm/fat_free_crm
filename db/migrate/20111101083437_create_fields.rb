@@ -25,3 +25,4 @@ class CreateFields < ActiveRecord::Migration
     drop_table :fields
   end
 end
+

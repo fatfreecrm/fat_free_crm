@@ -38,3 +38,4 @@ describe "/contacts/destroy.js.rjs" do
   end
 
 end
+

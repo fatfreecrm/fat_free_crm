@@ -66,3 +66,4 @@ describe "/contacts/create.js.rjs" do
   end
 
 end
+

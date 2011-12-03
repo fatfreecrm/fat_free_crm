@@ -25,3 +25,4 @@ describe "/campaigns/destroy.js.rjs" do
   end
 
 end
+

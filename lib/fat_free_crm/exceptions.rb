@@ -31,3 +31,4 @@ class ActionController::Base
     render :layout => false, :template => "/layouts/500.html.haml", :status => 500, :locals => { :exception => exception.to_s.html_safe }
   end
 end
+

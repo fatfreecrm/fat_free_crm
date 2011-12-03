@@ -29,3 +29,4 @@ module Admin::FieldsHelper
     FieldGroup.all.map {|fg| [fg.name, fg.id]}
   end
 end
+

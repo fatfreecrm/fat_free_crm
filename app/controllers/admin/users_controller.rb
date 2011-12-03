@@ -204,3 +204,4 @@ class Admin::UsersController < Admin::ApplicationController
     scope
   end
 end
+

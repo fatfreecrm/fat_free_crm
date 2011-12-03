@@ -14,3 +14,4 @@ class CreateSessions < ActiveRecord::Migration
     drop_table :sessions
   end
 end
+

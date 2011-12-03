@@ -25,3 +25,4 @@ describe "/leads/index.html.haml" do
   end
 
 end
+

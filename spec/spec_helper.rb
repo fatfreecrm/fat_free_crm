@@ -103,3 +103,4 @@ ActionView::Base.class_eval do
     request.referer =~ %r(/#{controller}/\w+)
   end
 end
+

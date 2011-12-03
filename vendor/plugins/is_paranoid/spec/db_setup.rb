@@ -21,3 +21,4 @@ begin
 ensure
   $stdout = old_stdout
 end
+

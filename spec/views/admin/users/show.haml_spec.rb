@@ -9,3 +9,4 @@ describe "/admin/users/show.html.haml" do
     render
   end
 end
+

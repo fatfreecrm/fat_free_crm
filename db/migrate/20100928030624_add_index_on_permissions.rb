@@ -7,3 +7,4 @@ class AddIndexOnPermissions < ActiveRecord::Migration
     remove_index :permissions, [ :asset_id, :asset_type ]
   end
 end
+

@@ -19,3 +19,4 @@ describe "admin/users/index.js.rjs" do
   end
 
 end
+

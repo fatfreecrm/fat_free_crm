@@ -13,3 +13,4 @@ class CreatePreferences < ActiveRecord::Migration
     drop_table :preferences
   end
 end
+

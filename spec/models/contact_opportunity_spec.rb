@@ -25,3 +25,4 @@ describe ContactOpportunity do
     ContactOpportunity.create!(@valid_attributes)
   end
 end
+

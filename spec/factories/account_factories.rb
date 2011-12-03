@@ -31,3 +31,4 @@ Factory.define :account_opportunity do |a|
   a.updated_at          { Factory.next(:time) }
   a.created_at          { Factory.next(:time) }
 end
+

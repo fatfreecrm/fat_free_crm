@@ -136,3 +136,4 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   # Handled by before_filter :auto_complete, :only => :auto_complete
 end
+

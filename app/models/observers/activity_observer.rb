@@ -84,3 +84,4 @@ class ActivityObserver < ActiveRecord::Observer
   end
 
 end
+

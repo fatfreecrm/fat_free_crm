@@ -57,3 +57,4 @@ describe "/opportunities/options.rjs" do
   end
 
 end
+

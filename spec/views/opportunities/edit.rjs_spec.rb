@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/opportunities/edit.js.rjs" do
   include OpportunitiesHelper
-  
+
   before do
     login_and_assign
-    
+
     assign(:opportunity, @opportunity = Factory(:opportunity, :user => @current_user))
     assign(:users, [ @current_user ])
     assign(:account, @account = Factory(:account))
@@ -15,7 +15,7 @@ describe "/opportunities/edit.js.rjs" do
 
   it "cancel from opportunity index page: should replace [Edit Opportunity] form with opportunity partial" do
     params[:cancel] = "true"
-    
+
     render
     rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
       with_tag("li[id=opportunity_#{@opportunity.id}]")
@@ -25,7 +25,7 @@ describe "/opportunities/edit.js.rjs" do
   it "cancel from opportunity landing page: should hide [Edit Opportunity] form" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
     params[:cancel] = "true"
-    
+
     render
     rendered.should include('crm.flip_form("edit_opportunity"')
   end
@@ -47,10 +47,10 @@ describe "/opportunities/edit.js.rjs" do
     render
     rendered.should include(%Q/crm.flick("opportunity_#{previous}", "remove");/)
   end
-  
+
   it "edit from opportunities index page: should turn off highlight, hide [Create Opportunity] form, and replace current opportunity with [Edit Opportunity] form" do
     params[:cancel] = nil
-    
+
     render
     rendered.should include(%Q/crm.highlight_off("opportunity_#{@opportunity.id}");/)
     rendered.should include('crm.hide_form("create_opportunity")')
@@ -58,17 +58,17 @@ describe "/opportunities/edit.js.rjs" do
       with_tag("form[class=edit_opportunity]")
     end
   end
-  
+
   it "edit from opportunity landing page: should show [Edit Opportunity] form" do
     params[:cancel] = "false"
-    
+
     render
     rendered.should have_rjs("edit_opportunity") do |rjs|
       with_tag("form[class=edit_opportunity]")
     end
     rendered.should include('crm.flip_form("edit_opportunity"')
   end
-  
+
   it "edit: should handle new or existing account for the opportunity" do
 
     render
@@ -76,3 +76,4 @@ describe "/opportunities/edit.js.rjs" do
   end
 
 end
+

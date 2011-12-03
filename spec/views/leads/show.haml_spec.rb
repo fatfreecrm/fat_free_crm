@@ -21,3 +21,4 @@ describe "/leads/show.html.haml" do
   end
 
 end
+

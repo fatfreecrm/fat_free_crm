@@ -14,3 +14,4 @@ class CreateAvatars < ActiveRecord::Migration
     drop_table :avatars
   end
 end
+

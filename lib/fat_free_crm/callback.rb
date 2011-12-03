@@ -125,7 +125,7 @@ module FatFreeCRM
             hooks[:replace].each{|data| view_data << data }
           end
           hooks[:after].each{|data| view_data << data }
-          
+
           view_data.join.html_safe
 
         else
@@ -138,3 +138,4 @@ module FatFreeCRM
 
   end # module Callback
 end # module FatFreeCRM
+

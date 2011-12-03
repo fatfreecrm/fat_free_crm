@@ -16,3 +16,4 @@ describe Field do
     Field.field_types['string'].should == {:type => :string, :options => nil}
   end
 end
+

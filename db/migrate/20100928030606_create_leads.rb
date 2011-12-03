@@ -36,3 +36,4 @@ class CreateLeads < ActiveRecord::Migration
     drop_table :leads
   end
 end
+

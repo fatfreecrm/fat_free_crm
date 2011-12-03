@@ -19,3 +19,4 @@ Factory.define :campaign do |c|
   c.updated_at          { Factory.next(:time) }
   c.created_at          { Factory.next(:time) }
 end
+

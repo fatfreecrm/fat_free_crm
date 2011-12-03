@@ -14,3 +14,4 @@ describe "admin/users/_new.html.haml" do
     rendered.should have_tag("form[class=new_user]")
   end
 end
+

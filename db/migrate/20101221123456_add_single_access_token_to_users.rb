@@ -7,3 +7,4 @@ class AddSingleAccessTokenToUsers < ActiveRecord::Migration
     remove_column :users, :single_access_token
   end
 end
+

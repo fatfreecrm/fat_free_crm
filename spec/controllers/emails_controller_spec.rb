@@ -29,3 +29,4 @@ describe EmailsController, "handling GET /emails" do
   end
 
 end
+

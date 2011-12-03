@@ -13,3 +13,4 @@ class CreateSettings < ActiveRecord::Migration
     drop_table :settings
   end
 end
+

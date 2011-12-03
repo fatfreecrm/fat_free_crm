@@ -57,3 +57,4 @@ def load_default_settings
     Factory(key.to_sym) # <--- That's where the data gets loaded.
   end
 end
+

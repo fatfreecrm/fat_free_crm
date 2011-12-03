@@ -49,3 +49,4 @@ describe "/campaigns/create.js.rjs" do
   end
 
 end
+

@@ -117,3 +117,4 @@ module LeadsHelper
     summary.join(', ')
   end
 end
+

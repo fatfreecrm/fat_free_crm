@@ -149,3 +149,4 @@ describe "/tasks/update.js.rjs" do
   end
 
 end
+

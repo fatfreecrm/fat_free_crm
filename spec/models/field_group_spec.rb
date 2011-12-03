@@ -5,3 +5,4 @@ describe FieldGroup do
     FieldGroup.new.should respond_to(:fields)
   end
 end
+

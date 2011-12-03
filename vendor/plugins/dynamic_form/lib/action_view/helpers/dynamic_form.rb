@@ -298,3 +298,4 @@ module ActionView
 end
 
 I18n.load_path << File.expand_path("../../locale/en-US.yml", __FILE__)
+

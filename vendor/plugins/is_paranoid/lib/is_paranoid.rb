@@ -103,3 +103,4 @@ module IsParanoid
 end
 
 ActiveSupport.on_load(:active_record) { include IsParanoid }
+

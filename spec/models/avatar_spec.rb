@@ -38,3 +38,4 @@ describe Avatar do
   end
 
 end
+

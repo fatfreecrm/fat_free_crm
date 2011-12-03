@@ -56,3 +56,4 @@ describe "/accounts/options.rjs" do
   end
 
 end
+

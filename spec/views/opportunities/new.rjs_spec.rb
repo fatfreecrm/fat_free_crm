@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/opportunities/new.js.rjs" do
   include OpportunitiesHelper
-  
+
   before do
     login_and_assign
     @account = Factory(:account)
@@ -12,7 +12,7 @@ describe "/opportunities/new.js.rjs" do
     assign(:accounts, [ @account ])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
- 
+
   it "should toggle empty message div if it exists" do
     render
 
@@ -30,7 +30,7 @@ describe "/opportunities/new.js.rjs" do
     it "should render [new.html.haml] template into :create_opportunity div" do
       params[:cancel] = nil
       render
-    
+
       rendered.should have_rjs("create_opportunity") do |rjs|
         with_tag("form[class=new_opportunity]")
       end
@@ -44,7 +44,7 @@ describe "/opportunities/new.js.rjs" do
       rendered.should include('crm.date_select_popup("opportunity_closes_on")')
     end
   end
-  
+
   describe "cancel new opportunity" do
     it "should hide [create campaign] form" do
       params[:cancel] = "true"

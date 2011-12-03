@@ -40,3 +40,4 @@ describe "/shared/auto_complete.html.haml" do
 
   end
 end
+

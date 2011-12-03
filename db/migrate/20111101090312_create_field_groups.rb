@@ -13,3 +13,4 @@ class CreateFieldGroups < ActiveRecord::Migration
     drop_table :field_groups
   end
 end
+

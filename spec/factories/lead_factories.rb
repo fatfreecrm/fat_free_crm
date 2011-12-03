@@ -25,3 +25,4 @@ Factory.define :lead do |l|
   l.updated_at          { Factory.next(:time) }
   l.created_at          { Factory.next(:time) }
 end
+

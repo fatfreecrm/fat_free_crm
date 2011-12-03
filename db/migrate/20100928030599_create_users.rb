@@ -30,7 +30,7 @@ class CreateUsers < ActiveRecord::Migration
       # >>> End of [authlogic] maintained fields.
       t.datetime :deleted_at
       t.timestamps
-    end     
+    end
 
     add_index :users, [ :username, :deleted_at ], :unique => true
     add_index :users, :email
@@ -43,3 +43,4 @@ class CreateUsers < ActiveRecord::Migration
     drop_table :users
   end
 end
+

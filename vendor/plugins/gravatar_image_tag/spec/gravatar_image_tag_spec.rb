@@ -80,3 +80,4 @@ describe GravatarImageTag do
   end
 
 end
+

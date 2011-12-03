@@ -34,3 +34,4 @@ describe "/accounts/_new.html.haml" do
   end
 
 end
+

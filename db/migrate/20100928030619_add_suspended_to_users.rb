@@ -9,3 +9,4 @@ class AddSuspendedToUsers < ActiveRecord::Migration
     remove_column :users, :suspended_at
   end
 end
+

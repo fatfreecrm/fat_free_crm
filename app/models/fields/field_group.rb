@@ -6,3 +6,4 @@ class FieldGroup < ActiveRecord::Base
     "field_group_#{id}"
   end
 end
+

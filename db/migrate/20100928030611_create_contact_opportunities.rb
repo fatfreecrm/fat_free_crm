@@ -13,3 +13,4 @@ class CreateContactOpportunities < ActiveRecord::Migration
     drop_table :contact_opportunities
   end
 end
+

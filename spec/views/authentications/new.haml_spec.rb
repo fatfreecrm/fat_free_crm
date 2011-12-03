@@ -22,3 +22,4 @@ describe "/authentications/new.html.haml" do
     rendered.should have_tag("a[href=#{signup_path}]")
   end
 end
+

@@ -47,3 +47,4 @@ module TagsHelper
     }.compact.uniq
   end
 end
+

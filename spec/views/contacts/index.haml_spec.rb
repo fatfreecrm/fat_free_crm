@@ -25,3 +25,4 @@ describe "/contacts/index.html.haml" do
   end
 
 end
+

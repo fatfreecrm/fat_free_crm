@@ -25,3 +25,4 @@ describe Comment do
     Comment.create!(:comment => "Hello", :user => Factory(:user), :commentable => Factory(:lead))
   end
 end
+

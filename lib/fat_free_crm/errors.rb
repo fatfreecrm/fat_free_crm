@@ -46,3 +46,4 @@ module FatFreeCRM
     end
   end
 end
+

@@ -58,3 +58,4 @@ describe "/contacts/options.js.rjs" do
   end
 
 end
+

@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
- 
+
 describe "/users/password.js.rjs" do
   include UsersHelper
-  
+
   before do
     login_and_assign
     assign(:user, @current_user)
@@ -10,7 +10,7 @@ describe "/users/password.js.rjs" do
 
   it "cancel: should hide [Change Password] form and restore title" do
     params[:cancel] = "true"
-    
+
     render
     rendered.should include('crm.flip_form("change_password")')
     rendered.should include('crm.set_title("change_password", "My Profile")')
