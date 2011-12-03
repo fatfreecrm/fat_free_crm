@@ -43,6 +43,7 @@ end
 
 group :test do
   gem 'factory_girl_rails', '~> 1.0.1'
+  gem 'simplecov', :platform => :mri_19
 end
 
 # Rails3 plugins that we use and their source repositories:
