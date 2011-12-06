@@ -9,24 +9,24 @@
       %li{ "data-tab-class" => klass.name.downcase, :class => ("selected" if klass == Contact) }
         = link_to t(klass.name.downcase), "#"
 
-.remote#create_field_group{ hidden }
-
-.remote#create_field{ hidden }
-
 - Field::KLASSES.each do |klass|
   - asset = klass.name.downcase
   .fields{ :id => "#{asset}_section", :style => ("display: none;" if klass != Contact) }
 
+    - create_form_id = "#{asset}_create_field_group"
+
     .title_tools
-      = link_to_inline(:create_field_group, new_admin_field_group_path(:klass_name => klass.name), :text => t(:create_field_group))
+      = link_to_inline(create_form_id, new_admin_field_group_path(:klass_name => klass.name), :text => t(:create_field_group))
 
     .title
       = t(asset)
 
+    .remote{ hidden.merge(:id => create_form_id) }
+
     - asset_list_id = "#{asset}_field_groups"
-    - group_list_ids = klass.field_groups.map {|field_group| "field_group_#{field_group.id}_fields"}
+    - group_list_ids = klass.field_groups.map {|field_group| dom_id(field_group, :fields)}
 
     .list{ :id => asset_list_id }
-      = render :partial => "fields_groups/field_group", :collection => klass.field_groups, :locals => {:group_list_ids => group_list_ids}
+      = render :partial => "admin/field_groups/field_group", :collection => klass.field_groups, :locals => {:group_list_ids => group_list_ids}
 
     = sortable_element(asset_list_id, :url => sort_admin_field_groups_path(:asset => asset), :tag => :div)

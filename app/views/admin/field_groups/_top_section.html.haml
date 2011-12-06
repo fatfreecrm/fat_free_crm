@@ -8,5 +8,5 @@
         = f.text_field :label
       %td= spacer
       %td
-        .label.top.req Tag:
-        = f.select :tag_id, ActsAsTaggableOn::Tag.all.map { |tag| [tag.name, tag.id] }
+        .label.top Tag:
+        = f.select :tag_id, ActsAsTaggableOn::Tag.all.map { |tag| [tag.name, tag.id] }, :include_blank => true

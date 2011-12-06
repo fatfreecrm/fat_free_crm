@@ -1,9 +1,9 @@
+asset = @field_group.klass_name.downcase
+id = "#{asset}_create_field_group"
+
 page.call "crm.flick", :empty, :toggle
-page.call "crm.flip_form", :create_field_group
+page.call "crm.flip_form", id
 
 if params[:cancel] != "true"
-  page[:create_field_group].replace_html :partial => "new"
-  page.call "crm.set_title", :create_field_group
-else
-  page.call "crm.set_title", :create_field_group, "Custom field groups"
+  page[id].replace_html :partial => "new"
 end

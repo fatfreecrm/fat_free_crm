@@ -67,7 +67,7 @@ class Admin::FieldsController < Admin::ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @custom_field
+    respond_to_not_found(:js)
   end
 
   # POST /fields
@@ -99,7 +99,7 @@ class Admin::FieldsController < Admin::ApplicationController
         format.xml  { head :ok }
       else
         format.js
-        format.xml  { render :xml => @custom_field.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @field.errors, :status => :unprocessable_entity }
       end
     end
 

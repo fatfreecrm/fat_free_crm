@@ -1,4 +1,5 @@
 id = called_from_landing_page? ? "edit_field" : dom_id(@field)
+container_id = "#{@field.klass_name.downcase}_fields"
 
 if @field.errors.empty?
   if called_from_landing_page?
@@ -7,7 +8,7 @@ if @field.errors.empty?
   else
     page[id].replace :partial => "field", :collection => [ @field ]
     page[id].visual_effect :highlight, :duration => 1.0
-    sortable_element("#{@field.klass_name.downcase}_fields", :url => sort_admin_fields_path(:klass_name => @field.klass.name))
+    sortable_element(container_id, :url => sort_admin_fields_path(:klass_name => @field.klass.name))
   end
 else
   page[id].replace_html :partial => "edit"

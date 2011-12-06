@@ -684,5 +684,8 @@ en-US:
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
   custom_fields: Custom Fields
-  create_custom_field: Create Custom Field
-  create_field_group: Create Field Group
+  create_field: Create field
+  save_field: Save field
+  create_field_group: Create field group
+  edit_field_group: Edit field group
+  save_field_group: Save field group
