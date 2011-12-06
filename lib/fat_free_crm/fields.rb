@@ -43,7 +43,8 @@ module FatFreeCRM
 
     module InstanceMethods
       def field_groups
-        self.class.field_groups.where(['tag_id IS NULL OR tag_id IN (?)', tag_ids])
+        field_groups = self.class.field_groups
+        respond_to?(:tag_ids) ? field_groups.with_tags(tag_ids) : field_groups
       end
 
       def assign_attributes(new_attributes, options = {})
