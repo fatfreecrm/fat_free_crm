@@ -126,7 +126,7 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def sort
     field_group_id = params[:field_group_id].to_i
-    field_ids = params["field_group_#{field_group_id}_fields"] || []
+    field_ids = params["fields_field_group_#{field_group_id}"] || []
 
     field_ids.each_with_index do |id, index|
       Field.update_all({:position => index+1, :field_group_id => field_group_id}, {:id => id})

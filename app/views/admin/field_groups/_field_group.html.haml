@@ -13,9 +13,6 @@
   .remote{ hidden.merge(:id => edit_form_id) }
   .remote{ hidden.merge(:id => create_form_id) }
 
-  - list_id = dom_id(field_group, :fields)
-  .list{ :id => list_id }
+  .list{ :id => dom_id(field_group, :fields) }
     - if (fields = field_group.fields).present?
       = render :partial => "admin/fields/field", :collection => fields
-
-  = sortable_element(list_id, :url => sort_admin_fields_path(:field_group_id => field_group.id), :containment => group_list_ids, :dropOnEmpty => true)
