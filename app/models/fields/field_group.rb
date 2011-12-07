@@ -1,6 +1,6 @@
 class FieldGroup < ActiveRecord::Base
   has_many :fields
-  belongs_to :tag
+  belongs_to :tag, :class_name => 'ActsAsTaggableOn::Tag'
 
   validates_presence_of :label
 
