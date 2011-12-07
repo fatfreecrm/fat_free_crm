@@ -15,8 +15,16 @@ describe CampaignsController do
       { :get => "/campaigns/1" }.should route_to(:controller => "campaigns", :action => "show", :id => "1")
     end
 
+    it "doesn't recognize #show with non-numeric id" do
+      { :get => "/campaigns/aaron" }.should_not be_routable
+    end
+
     it "recognizes and generates #edit" do
       { :get => "/campaigns/1/edit" }.should route_to(:controller => "campaigns", :action => "edit", :id => "1")
+    end
+
+    it "doesn't recognize #edit with non-numeric id" do
+      { :get => "/campaigns/aaron/edit" }.should_not be_routable
     end
 
     it "recognizes and generates #create" do
@@ -27,8 +35,16 @@ describe CampaignsController do
       { :put => "/campaigns/1" }.should route_to(:controller => "campaigns", :action => "update", :id => "1")
     end
 
+    it "doesn't recognize #update with non-numeric id" do
+      { :put => "/campaigns/aaron" }.should_not be_routable
+    end
+
     it "recognizes and generates #destroy" do
       { :delete => "/campaigns/1" }.should route_to(:controller => "campaigns", :action => "destroy", :id => "1")
+    end
+
+    it "doesn't recognize #destroy with non-numeric id" do
+      { :delete => "/campaigns/aaron" }.should_not be_routable
     end
 
     it "recognizes and generates #search" do
@@ -44,4 +60,3 @@ describe CampaignsController do
     end
   end
 end
-

@@ -15,8 +15,16 @@ describe OpportunitiesController do
       { :get => "/opportunities/1" }.should route_to(:controller => "opportunities", :action => "show", :id => "1")
     end
 
+    it "doesn't recognize #show with non-numeric id" do
+      { :get => "/opportunities/aaron" }.should_not be_routable
+    end
+
     it "recognizes and generates #edit" do
       { :get => "/opportunities/1/edit" }.should route_to(:controller => "opportunities", :action => "edit", :id => "1")
+    end
+
+    it "doesn't recognize #edit with non-numeric id" do
+      { :get => "/opportunities/aaron/edit" }.should_not be_routable
     end
 
     it "recognizes and generates #create" do
@@ -27,8 +35,16 @@ describe OpportunitiesController do
       { :put => "/opportunities/1" }.should route_to(:controller => "opportunities", :action => "update", :id => "1")
     end
 
+    it "doesn't recognize #update with non-numeric id" do
+      { :put => "/opportunities/aaron" }.should_not be_routable
+    end
+
     it "recognizes and generates #destroy" do
       { :delete => "/opportunities/1" }.should route_to(:controller => "opportunities", :action => "destroy", :id => "1")
+    end
+
+    it "doesn't recognize #destroy with non-numeric id" do
+      { :delete => "/opportunities/aaron" }.should_not be_routable
     end
 
     it "recognizes and generates #search" do
