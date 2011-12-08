@@ -38,14 +38,14 @@ module FatFreeCRM
       end
 
       def self.included(base)
-        if base.instance_methods.include?(:assignee)
+        if base.instance_methods.include?(:assignee) or base.instance_methods.include?('assignee')
           define_method :assigned_to_full_name do
             user = self.assignee
             user ? user.full_name : ''
           end
         end
 
-        if base.instance_methods.include?(:completor)
+        if base.instance_methods.include?(:completor) or base.instance_methods.include?('completor')
           define_method :completed_by_full_name do
             user = self.completor
             user ? user.full_name : ''

@@ -42,7 +42,3 @@ Factory.sequence :date do |x|
   Date.today - x.days
 end
 
-
-
-
-
