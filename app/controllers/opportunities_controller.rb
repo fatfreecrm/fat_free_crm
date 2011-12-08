@@ -225,8 +225,8 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
-      format.json { render :json => @opportunities.as_json }
-      format.xml  { render :xml => @opportunities.to_xml }
+      format.json { render :json => @opportunities }
+      format.xml  { render :xml => @opportunities }
     end
   end
 
