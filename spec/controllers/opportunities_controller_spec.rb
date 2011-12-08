@@ -71,6 +71,26 @@ describe OpportunitiesController do
       end
     end
 
+    describe "with mime type of JSON" do
+      it "should render all opportunities as JSON" do
+        request.env["HTTP_ACCEPT"] = "application/json"
+        @opportunities = [ Factory(:opportunity, :user => @current_user).reload ]
+
+        get :index
+        response.body.should == @opportunities.to_json
+      end
+    end
+
+    describe "with mime type of JSON" do
+      it "should render all opportunities as JSON" do
+        request.env["HTTP_ACCEPT"] = "application/json"
+        @opportunities = [ Factory(:opportunity, :user => @current_user).reload ]
+
+        get :index
+        response.body.should == @opportunities.to_json
+      end
+    end
+
     describe "with mime type of XML" do
       it "should render all opportunities as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -109,6 +129,17 @@ describe OpportunitiesController do
       end
     end
 
+    describe "with mime type of JSON" do
+      it "should render the requested opportunity as JSON" do
+        @opportunity = Factory(:opportunity, :id => 42)
+        @stage = Setting.unroll(:opportunity_stage)
+
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :show, :id => 42
+        response.body.should == @opportunity.reload.to_json
+      end
+    end
+
     describe "with mime type of XML" do
       it "should render the requested opportunity as xml" do
         @opportunity = Factory(:opportunity, :id => 42)
@@ -136,6 +167,15 @@ describe OpportunitiesController do
         get :show, :id => @private.id
         flash[:warning].should_not == nil
         response.should redirect_to(opportunities_path)
+      end
+
+      it "should return 404 (Not Found) JSON error" do
+        @opportunity = Factory(:opportunity, :user => @current_user)
+        @opportunity.destroy
+        request.env["HTTP_ACCEPT"] = "application/json"
+
+        get :show, :id => @opportunity.id
+        response.code.should == "404" # :not_found
       end
 
       it "should return 404 (Not Found) XML error" do
@@ -766,6 +806,15 @@ describe OpportunitiesController do
       assigns[:current_query].should == "second"
       session[:opportunities_current_query].should == "second"
       response.should render_template("index")
+    end
+
+    describe "with mime type of JSON" do
+      it "should perform lookup using query string and render JSON" do
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :search, :query => "second?!"
+
+        response.body.should == [ @second.reload ].to_json
+      end
     end
 
     describe "with mime type of XML" do

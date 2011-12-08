@@ -56,12 +56,12 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.js   { render "shared/attach" }
-      format.json { render :json => model.reload.as_json }
-      format.xml  { render :xml => model.reload.to_xml }
+      format.json { render :json => model.reload }
+      format.xml  { render :xml => model.reload }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # Common discard handler for all core controllers.
@@ -75,12 +75,12 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.js   { render "shared/discard" }
-      format.json { render :json => model.reload.as_json }
-      format.xml  { render :xml => model.reload.to_xml }
+      format.json { render :json => model.reload }
+      format.xml  { render :xml => model.reload }
     end
 
   rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :xml)
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   def timeline(asset)

@@ -72,6 +72,25 @@ describe TasksController do
         response.should render_template("tasks/index")
       end
 
+      it "should render all tasks as JSON for #{view} view" do
+        @tasks = produce_tasks(@current_user, view)
+
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :index, :view => view
+
+        (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
+        (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
+        hash = ActiveSupport::JSON.decode(response.body)
+
+        hash.keys.each do |key|
+          hash[key].each do |attr|
+            task = Task.new(attr["task"])
+            task.should be_instance_of(Task)
+            task.valid?.should == true
+          end
+        end
+      end
+
       it "should render all tasks as xml for #{view} view" do
         @tasks = produce_tasks(@current_user, view)
 
@@ -101,6 +120,14 @@ describe TasksController do
       it "should render tasks index for #{view} view (since a task doesn't have landing page)" do
         get :show, :id => 42, :view => view
         response.should render_template("tasks/index")
+      end
+
+      it "should render the requested task as JSON for #{view} view" do
+        request.env["HTTP_ACCEPT"] = "application/json"
+        @task = Factory(:task, :user => @current_user)
+
+        get :show, :id => @task.id, :view => "pending"
+        response.body.should == @task.reload.to_json
       end
 
       it "should render the requested task as xml for #{view} view" do

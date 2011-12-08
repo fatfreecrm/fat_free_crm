@@ -68,8 +68,16 @@ describe AccountsController do
       end
     end
 
-    describe "with mime type of XML" do
+    describe "with mime type of JSON" do
+      it "should render all accounts as json" do
+        request.env["HTTP_ACCEPT"] = "application/json"
+        @accounts = [ Factory(:account, :user => @current_user).reload ]
+        get :index
+        response.body.should == @accounts.to_json
+      end
+    end
 
+    describe "with mime type of XML" do
       it "should render all accounts as xml" do
         request.env["HTTP_ACCEPT"] = "application/xml"
         @accounts = [ Factory(:account, :user => @current_user).reload ]
@@ -107,6 +115,17 @@ describe AccountsController do
       end
     end
 
+    describe "with mime type of JSON" do
+      it "should render the requested account as json" do
+        @account = Factory(:account, :user => @current_user)
+        @stage = Setting.unroll(:opportunity_stage)
+        request.env["HTTP_ACCEPT"] = "application/json"
+
+        get :show, :id => @account.id
+        response.body.should == @account.reload.to_json
+      end
+    end
+
     describe "with mime type of XML" do
       it "should render the requested account as xml" do
         @account = Factory(:account, :user => @current_user)
@@ -134,6 +153,15 @@ describe AccountsController do
         get :show, :id => @private.id
         flash[:warning].should_not == nil
         response.should redirect_to(accounts_path)
+      end
+
+      it "should return 404 (Not Found) JSON error" do
+        @account = Factory(:account, :user => @current_user)
+        @account.destroy
+        request.env["HTTP_ACCEPT"] = "application/json"
+
+        get :show, :id => @account.id
+        response.code.should == "404" # :not_found
       end
 
       it "should return 404 (Not Found) XML error" do
@@ -466,6 +494,15 @@ describe AccountsController do
       assigns[:current_query].should == "second"
       session[:accounts_current_query].should == "second"
       response.should render_template("index")
+    end
+
+    describe "with mime type of JSON" do
+      it "should perform lookup using query string and render JSON" do
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :search, :query => "second?!"
+
+        response.body.should == [ @second.reload ].to_json
+      end
     end
 
     describe "with mime type of XML" do

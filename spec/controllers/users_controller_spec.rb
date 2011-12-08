@@ -45,6 +45,24 @@ describe UsersController do
       response.should render_template("users/show")
     end
 
+    describe "with mime type of JSON" do
+      before(:each) do
+        request.env["HTTP_ACCEPT"] = "application/json"
+      end
+
+      it "should render the requested user as JSON" do
+        @user = Factory(:user)
+
+        get :show, :id => @user.id
+        response.body.should == @user.reload.to_json
+      end
+
+      it "should render current user as JSON if no specific user was requested" do
+        get :show
+        response.body.should == @current_user.to_json
+      end
+    end
+
     describe "with mime type of xml" do
       before(:each) do
         request.env["HTTP_ACCEPT"] = "application/xml"
