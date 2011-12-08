@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
-gem 'rake',  '0.8.7'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
