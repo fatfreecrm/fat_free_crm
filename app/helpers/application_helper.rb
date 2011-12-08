@@ -97,7 +97,7 @@ module ApplicationHelper
     related = (options[:related] ? "&related=#{options[:related]}" : '')
 
     link_to(text,
-      url +'?cancel=false'+ related,
+      url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
       :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
     )
@@ -145,8 +145,9 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_cancel(url, params = {})
+    url = params[:url] if params[:url]
     link_to(t(:cancel),
-      (params[:url] || url) + '?cancel=true',
+      url + "#{url.include?('?') ? '&' : '?'}cancel=true",
       :remote => true
     )
   end
@@ -154,7 +155,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_close(url)
     content_tag(:div,
-      link_to("x", url + '?cancel=true', :remote => true),
+      link_to("x", url + "#{url.include?('?') ? '&' : '?'}cancel=true", :remote => true),
       :class => "close",
       :title => t(:close_form),
       :onmouseover => "this.style.background='lightsalmon'",

@@ -3,12 +3,12 @@
 - field_groups = {}
 
 #field_groups
-  - f.object.class.custom_fields.group_by(&:field_group_id).each do |field_group_id, fields|
-    - field_group = field_group_id ? FieldGroup.find(field_group_id) : FieldGroup.new(:name => "Custom Fields")
-    - tag = f.object.tags.detect { |tag| tag.id == field_group.tag_id }
-    - field_groups[tag.name.downcase] = "#{field_group.key}_container" if tag
+  - f.object.field_groups.each do |field_group|
+    - if field_group.fields.present?
 
-    = render :partial => 'fields/group', :locals => {:f => f, :field_group => field_group, :fields => fields}
+      - field_groups[field_group.tag.name.downcase] = "#{field_group.key}_container" if field_group.tag
+
+      = render :partial => 'fields/group', :locals => {:f => f, :field_group => field_group}
 
 :javascript
   if (fbtaglist) {

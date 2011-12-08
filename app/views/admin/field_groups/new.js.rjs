@@ -1,4 +1,5 @@
-id = dom_id(@field.field_group, :create_field)
+asset = @field_group.klass_name.downcase
+id = "#{asset}_create_field_group"
 
 page.call "crm.flick", :empty, :toggle
 page.call "crm.flip_form", id

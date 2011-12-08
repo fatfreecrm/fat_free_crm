@@ -15,8 +15,16 @@ describe ContactsController do
       { :get => "/contacts/1" }.should route_to(:controller => "contacts", :action => "show", :id => "1")
     end
 
+    it "doesn't recognize #show with non-numeric id" do
+      { :get => "/contacts/aaron" }.should_not be_routable
+    end
+
     it "recognizes and generates #edit" do
       { :get => "/contacts/1/edit" }.should route_to(:controller => "contacts", :action => "edit", :id => "1")
+    end
+
+    it "doesn't recognize #edit with non-numeric id" do
+      { :get => "/campaigns/aaron/edit" }.should_not be_routable
     end
 
     it "recognizes and generates #create" do
@@ -27,8 +35,16 @@ describe ContactsController do
       { :put => "/contacts/1" }.should route_to(:controller => "contacts", :action => "update", :id => "1")
     end
 
+    it "doesn't recognize #update with non-numeric id" do
+      { :put => "/campaigns/aaron" }.should_not be_routable
+    end
+
     it "recognizes and generates #destroy" do
       { :delete => "/contacts/1" }.should route_to(:controller => "contacts", :action => "destroy", :id => "1")
+    end
+
+    it "doesn't recognize #delete with non-numeric id" do
+      { :delete => "/campaigns/aaron" }.should_not be_routable
     end
 
     it "recognizes and generates #search" do

@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2009 by Michael Dvorkin
+# Copyright (C) 2008-2011 by Michael Dvorkin
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -20,20 +20,10 @@ class Admin::FieldsController < Admin::ApplicationController
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :auto_complete, :only => :auto_complete
 
-  def sort
-    klass_name = params[:klass_name]
-    param_name = klass_name.downcase + '_fields'
-    params[param_name].each_with_index do |id, index|
-      Field.update_all(['position=?', index+1], ['id=?', id])
-    end
-    render :nothing => true
-  end
-
   # GET /fields
   # GET /fields.xml                                                      HTML
   #----------------------------------------------------------------------------
   def index
-    @klasses = Field::KLASSES
   end
 
   # GET /fields/1
@@ -55,7 +45,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # GET /fields/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @field = CustomField.new(:klass_name => params[:klass_name])
+    @field = CustomField.new(:field_group_id => params[:field_group_id])
 
     respond_to do |format|
       format.js   # new.js.rjs
@@ -77,7 +67,7 @@ class Admin::FieldsController < Admin::ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @custom_field
+    respond_to_not_found(:js)
   end
 
   # POST /fields
@@ -109,7 +99,7 @@ class Admin::FieldsController < Admin::ApplicationController
         format.xml  { head :ok }
       else
         format.js
-        format.xml  { render :xml => @custom_field.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @field.errors, :status => :unprocessable_entity }
       end
     end
 
@@ -130,6 +120,19 @@ class Admin::FieldsController < Admin::ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:html, :js, :xml)
+  end
+
+  # POST /fields/sort
+  #----------------------------------------------------------------------------
+  def sort
+    field_group_id = params[:field_group_id].to_i
+    field_ids = params["fields_field_group_#{field_group_id}"] || []
+
+    field_ids.each_with_index do |id, index|
+      Field.update_all({:position => index+1, :field_group_id => field_group_id}, {:id => id})
+    end
+
+    render :nothing => true
   end
 
   # POST /fields/auto_complete/query                                     AJAX

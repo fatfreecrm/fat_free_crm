@@ -1,0 +1,18 @@
+.field_group[field_group]
+  - edit_form_id = dom_id(field_group, :edit)
+  - create_form_id = dom_id(field_group, :create_field)
+
+  .subtitle_tools
+    = link_to_inline(edit_form_id, edit_admin_field_group_path(field_group), :text => t(:edit_field_group))
+    |
+    = link_to_inline(create_form_id, new_admin_field_path(:field_group_id => field_group.id), :text => t(:create_field))
+
+  .subtitle{ :id => "#{dom_id(field_group)}_title" }
+    = t(field_group.name, :default => field_group.label)
+
+  .remote{ hidden.merge(:id => edit_form_id) }
+  .remote{ hidden.merge(:id => create_form_id) }
+
+  .list{ :id => dom_id(field_group, :fields) }
+    - if (fields = field_group.fields).present?
+      = render :partial => "admin/fields/field", :collection => fields

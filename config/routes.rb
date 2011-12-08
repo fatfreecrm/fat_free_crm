@@ -19,7 +19,7 @@ FatFreeCRM::Application.routes.draw do
     resources :emails
     resources :passwords
 
-    resources :accounts do
+    resources :accounts, :id => /\d+/ do
       collection do
         post :filter
         get  :options
@@ -34,7 +34,7 @@ FatFreeCRM::Application.routes.draw do
       end
     end
 
-    resources :campaigns do
+    resources :campaigns, :id => /\d+/ do
       collection do
         post :filter
         get  :options
@@ -49,7 +49,7 @@ FatFreeCRM::Application.routes.draw do
       end
     end
 
-    resources :contacts do
+    resources :contacts, :id => /\d+/ do
       collection do
         post :filter
         get  :options
@@ -64,7 +64,7 @@ FatFreeCRM::Application.routes.draw do
       end
     end
 
-    resources :leads do
+    resources :leads, :id => /\d+/ do
       collection do
         post :filter
         get  :options
@@ -82,7 +82,7 @@ FatFreeCRM::Application.routes.draw do
       end
     end
 
-    resources :opportunities do
+    resources :opportunities, :id => /\d+/ do
       collection do
         post :filter
         get  :options
@@ -97,7 +97,7 @@ FatFreeCRM::Application.routes.draw do
       end
     end
 
-    resources :tasks do
+    resources :tasks, :id => /\d+/ do
       collection do
         post :filter
         post :auto_complete
@@ -107,7 +107,7 @@ FatFreeCRM::Application.routes.draw do
       end
     end
 
-    resources :users do
+    resources :users, :id => /\d+/ do
       member do
         get :avatar
         get :password
@@ -126,6 +126,12 @@ FatFreeCRM::Application.routes.draw do
           get :confirm
           put :suspend
           put :reactivate
+        end
+      end
+
+      resources :field_groups, :except => :index do
+        collection do
+          post :sort
         end
       end
 

@@ -5,6 +5,8 @@ class Field < ActiveRecord::Base
 
   belongs_to :field_group
 
+  delegate :klass, :klass_name, :klass_name=, :to => :field_group
+
   KLASSES = [Task, Campaign, Lead, Contact, Account, Opportunity]
 
   FIELD_TYPES = {
@@ -59,10 +61,6 @@ class Field < ActiveRecord::Base
   end
   def collection_string
     collection.try(:join, "|")
-  end
-
-  def klass
-    klass_name.constantize
   end
 end
 
