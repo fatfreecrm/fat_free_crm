@@ -9,6 +9,7 @@ spec/reports
 coverage/*
 db/*.sql*
 log/*.log
+doc/
 
 public/avatars/**/*
 public/assets
