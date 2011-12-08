@@ -88,6 +88,7 @@ gem install heroku
 To set up Fat Free CRM on Heroku, run the following commands:
 
 ```bash
+cp config/settings.yml.example config/settings.yml
 heroku create {organization-crm} --stack bamboo-mri-1.9.2
 git push heroku master
 heroku rake crm:setup USERNAME=admin PASSWORD=admin EMAIL=admin@example.com
@@ -96,7 +97,7 @@ heroku config:add HEROKU=true
 
 ## Install locally, or on a server
 
-#### Set Up Database Configuration
+#### Set Up Configuration (Database & Settings)
 
 Fat Free CRM supports PostGreSQL, MySQL and SQLite databases. The source code comes with
 sample database configuration files, such as: <tt>config/database.mysql.yml</tt>
@@ -111,6 +112,7 @@ cp config/database.mysql.yml config/database.yml
 * Edit <tt>config/database.yml</tt> and specify database names and authentication details.
 
 * Then, edit your <tt>Gemfile</tt> and uncomment only your chosen database.
+
 
 #### Install Gem Dependencies
 
@@ -140,7 +142,8 @@ Using the provided sample, create your <tt>config/settings.yml</tt>:
 cp config/settings.yml.example config/settings.yml
 ```
 
-* Edit <tt>config/settings.yml</tt> and modify any personalized settings you wish to include.
+* Edit <tt>config/settings.yml</tt> and configure any required settings, such as your host, base URL and language (locale).
+
 
 Next, run the following rake task: 
 
