@@ -12,6 +12,7 @@
               %td
                 - if field.hint.present?
                   = image_tag "info_tiny.png", :title => field.hint, :class => "tooltip-icon"
-                = f.input field.name, field.input_options
+                - checked = YAML.load(f.object.send(field.name)) if field.as == 'check_boxes'
+                = f.input field.name, field.input_options.merge(:checked => checked)
               - if i == 0
                 %td= spacer
