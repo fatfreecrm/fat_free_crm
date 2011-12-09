@@ -11,15 +11,15 @@ describe FieldsHelper do
     object = mock('Object')
 
     #  as  |  value  |  expected
-    [[ "check_boxes", [1, 2, 3],           "1, 2<br />3" ],
-     [ "checkbox",    "0",                 "no" ],
-     [ "checkbox",    1,                 "yes" ],
-     [ "date",        Time.new(2011,4,19), "2011-04-19" ]].each do |as, value, expected|
+    [["check_boxes", [1, 2, 3].to_yaml,       "1, 2<br />3"],
+     ["check_boxes", [1, 2, 3],               "1, 2<br />3"],
+     ["checkbox",    "0",                     "no"],
+     ["checkbox",    1,                       "yes"],
+     ["date",        DateTime.new(2011,4,19), "2011-04-19"]].each do |as, value, expected|
       field.as = as
       object.stub!(field.name).and_return(value)
       display_value(object, field).should == expected
     end
-
   end
 end
 

@@ -58,11 +58,11 @@ describe CustomField do
   end
 
   it "should return a safe list of types for the 'as' select options" do
-    {"email"   => %w(string email url tel select radio),
+    {"email"   => %w(check_boxes text string email url tel select radio),
      "integer" => %w(integer float)}.each do |type, expected_arr|
       c = Factory.build(:custom_field, :as => type)
       opts = c.available_as
-      expected_arr.each {|t| opts.should include(t) }
+      opts.map(&:first).should =~ expected_arr
     end
   end
 

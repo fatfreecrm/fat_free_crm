@@ -49,7 +49,7 @@ describe Task do
         task = Factory(:task, :bucket => "specific_time", :calendar => "5/5/2020")
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == Time.parse("2020-05-05")
+        task.due_at.should == DateTime.parse("2020-05-05")
       end
     end
   end
@@ -106,7 +106,7 @@ describe Task do
         task.update_attributes( { :bucket => "specific_time", :calendar => "05/05/2020" } )
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == Time.parse("2020-05-05")
+        task.due_at.should == DateTime.parse("2020-05-05")
       end
     end
 
@@ -153,7 +153,7 @@ describe Task do
       task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id, :calendar => '')
       task.completed?.should == true
       # Setting.task_calendar_with_time == false, so due_at should be tested without HH:MM
-      task.due_at.to_i.should == Time.new(due_at.year, due_at.month, due_at.day).to_i
+      task.due_at.to_i.should == DateTime.new(due_at.year, due_at.month, due_at.day).to_i
     end
   end
 

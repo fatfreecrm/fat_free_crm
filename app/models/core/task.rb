@@ -229,13 +229,13 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def specific_time
     parse_calendar_date if self.bucket == "specific_time"
-  rescue
+  rescue ArgumentError
     errors.add(:calendar, :invalid_date)
   end
 
   #----------------------------------------------------------------------------
   def parse_calendar_date
-    Time.strptime(self.calendar, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
+    DateTime.strptime(self.calendar, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
   end
 end
 
