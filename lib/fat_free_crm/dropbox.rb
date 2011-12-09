@@ -19,12 +19,15 @@ require "mail"
 
 module FatFreeCRM
   class Dropbox
-
-    ASSETS   = [ Account, Contact, Lead ].freeze
     KEYWORDS = %w(account campaign contact lead opportunity).freeze
 
     #--------------------------------------------------------------------------------------
     def initialize
+      # Models are autoloaded, so the following @@assets class variable should only be set
+      # when Dropbox is initialized. This needs to be done so that Rake tasks such as
+      # 'assets:precompile' can run on Heroku without depending on a database.
+      # See: http://devcenter.heroku.com/articles/rails31_heroku_cedar#troubleshooting
+      @@assets = [ Account, Contact, Lead ].freeze
       @settings = Setting.email_dropbox
       @archived, @discarded = 0, 0
     end
@@ -242,7 +245,7 @@ module FatFreeCRM
     #----------------------------------------------------------------------------------------
     def find_and_attach(email, recipient)
       attached = false
-      ASSETS.each do |klass|
+      @@assets.each do |klass|
         asset = klass.find_by_email(recipient)
 
         # Leads and Contacts have an alt_email: try it if lookup by primary email has failed.
