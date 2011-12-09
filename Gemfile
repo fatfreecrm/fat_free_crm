@@ -45,6 +45,11 @@ group :test do
   gem 'simplecov', :platform => :mri_19
 end
 
+group :heroku do
+  gem 'unicorn'
+end
+
+
 # Rails3 plugins that we use and their source repositories:
 #---------------------------------------------------------------------
 # gravatar_image_tag,      git://github.com/mdeering/gravatar_image_tag.git

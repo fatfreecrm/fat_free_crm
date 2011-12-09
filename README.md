@@ -88,10 +88,13 @@ gem install heroku
 To set up Fat Free CRM on Heroku, run the following commands:
 
 ```bash
+app_name="{{organization-crm}}" # <- Replace with your desired application name
 cp config/settings.yml.example config/settings.yml
-heroku create {organization-crm} --stack bamboo-mri-1.9.2
+git add -f config/settings.yml
+git commit -m "Added default settings.yml"
+heroku create $app_name --stack cedar
 git push heroku master
-heroku rake crm:setup USERNAME=admin PASSWORD=admin EMAIL=admin@example.com
+heroku run rake crm:setup USERNAME=admin PASSWORD=admin EMAIL=admin@example.com
 heroku config:add HEROKU=true
 ```
 
@@ -134,8 +137,8 @@ rake db:create
 #### Set Up Application
 
 The next step is to load default Fat Free CRM settings, such as menu structures,
-default colors, etc. and create the Admin user. 
- 
+default colors, etc. and create the Admin user.
+
 Using the provided sample, create your <tt>config/settings.yml</tt>:
 
 ```bash
@@ -145,7 +148,7 @@ cp config/settings.yml.example config/settings.yml
 * Edit <tt>config/settings.yml</tt> and configure any required settings, such as your host, base URL and language (locale).
 
 
-Next, run the following rake task: 
+Next, run the following rake task:
 
 ```bash
 rake crm:setup
