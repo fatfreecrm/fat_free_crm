@@ -70,23 +70,25 @@ describe AccountsController do
 
     describe "with mime type of JSON" do
       it "should render all accounts as json" do
+        @controller.should_receive(:get_list_of_records).and_return(accounts = mock("Array of Accounts"))
+        accounts.should_receive(:to_json).and_return("generated JSON")
+
         request.env["HTTP_ACCEPT"] = "application/json"
-        @accounts = [ Factory(:account, :user => @current_user).reload ]
         get :index
-        response.body.should == @accounts.to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should render all accounts as xml" do
+        @controller.should_receive(:get_list_of_records).and_return(accounts = mock("Array of Accounts"))
+        accounts.should_receive(:to_xml).and_return("generated XML")
+
         request.env["HTTP_ACCEPT"] = "application/xml"
-        @accounts = [ Factory(:account, :user => @current_user).reload ]
         get :index
-        response.body.should == @accounts.to_xml
+        response.body.should == "generated XML"
       end
-
     end
-
   end
 
   # GET /accounts/1
@@ -117,23 +119,23 @@ describe AccountsController do
 
     describe "with mime type of JSON" do
       it "should render the requested account as json" do
-        @account = Factory(:account, :user => @current_user)
-        @stage = Setting.unroll(:opportunity_stage)
-        request.env["HTTP_ACCEPT"] = "application/json"
+        Account.stub_chain(:my, :find).and_return(account = mock_model(Account, :name => ''))
+        account.should_receive(:to_json).and_return("generated JSON")
 
-        get :show, :id => @account.id
-        response.body.should == @account.reload.to_json
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :show, :id => 42
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should render the requested account as xml" do
-        @account = Factory(:account, :user => @current_user)
-        @stage = Setting.unroll(:opportunity_stage)
-        request.env["HTTP_ACCEPT"] = "application/xml"
+        Account.stub_chain(:my, :find).and_return(account = mock_model(Account, :name => ''))
+        account.should_receive(:to_xml).and_return("generated XML")
 
-        get :show, :id => @account.id
-        response.body.should == @account.reload.to_xml
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :show, :id => 42
+        response.body.should == "generated XML"
       end
     end
 
@@ -481,13 +483,11 @@ describe AccountsController do
   # GET /accounts/search/query                                             AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
-    before do
-      @first  = Factory(:account, :user => @current_user, :name => "The first one")
-      @second = Factory(:account, :user => @current_user, :name => "The second one")
-      @accounts = [ @first, @second ]
-    end
 
     it "should perform lookup using query string and redirect to index" do
+      @first  = Factory(:account, :user => @current_user, :name => "The first one")
+      @second = Factory(:account, :user => @current_user, :name => "The second one")
+
       xhr :get, :search, :query => "second"
 
       assigns[:accounts].should == [ @second ]
@@ -498,19 +498,23 @@ describe AccountsController do
 
     describe "with mime type of JSON" do
       it "should perform lookup using query string and render JSON" do
+        @controller.should_receive(:get_list_of_records).and_return(accounts = mock("Array of Accounts"))
+        accounts.should_receive(:to_json).and_return("generated JSON")
+
         request.env["HTTP_ACCEPT"] = "application/json"
         get :search, :query => "second?!"
-
-        response.body.should == [ @second.reload ].to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should perform lookup using query string and render XML" do
+        @controller.should_receive(:get_list_of_records).and_return(accounts = mock("Array of Accounts"))
+        accounts.should_receive(:to_xml).and_return("generated XML")
+
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "second?!"
-
-        response.body.should == [ @second.reload ].to_xml
+        response.body.should == "generated XML"
       end
     end
   end

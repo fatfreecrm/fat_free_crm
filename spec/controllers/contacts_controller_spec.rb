@@ -44,25 +44,25 @@ describe ContactsController do
 
     describe "with mime type of JSON" do
       it "should render all contacts as JSON" do
-        @contacts = [ Factory(:contact, :user => @current_user).reload ]
+        @controller.should_receive(:get_list_of_records).and_return(contacts = mock("Array of Contacts"))
+        contacts.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :index
-        response.body.should == @contacts.to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should render all contacts as xml" do
-        @contacts = [ Factory(:contact, :user => @current_user).reload ]
+        @controller.should_receive(:get_list_of_records).and_return(contacts = mock("Array of Contacts"))
+        contacts.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
-        response.body.should == @contacts.to_xml
+        response.body.should == "generated XML"
       end
-
     end
-
   end
 
   # GET /contacts/1
@@ -93,21 +93,23 @@ describe ContactsController do
 
     describe "with mime type of JSON" do
       it "should render the requested contact as JSON" do
-        @contact = Factory(:contact, :id => 42)
+        Contact.stub_chain(:my, :find).and_return(contact = mock_model(Contact, :name => ''))
+        contact.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
-        response.body.should == @contact.reload.to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should render the requested contact as xml" do
-        @contact = Factory(:contact, :id => 42)
+        Contact.stub_chain(:my, :find).and_return(contact = mock_model(Contact, :name => ''))
+        contact.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
-        response.body.should == @contact.reload.to_xml
+        response.body.should == "generated XML"
       end
     end
 
@@ -554,13 +556,11 @@ describe ContactsController do
   # GET /contacts/search/query                                             AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
-    before(:each) do
-      @billy_bones   = Factory(:contact, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
-      @captain_flint = Factory(:contact, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
-      @contacts = [ @billy_bones, @captain_flint ]
-    end
 
     it "should perform lookup using query string and redirect to index" do
+      @billy_bones   = Factory(:contact, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
+      @captain_flint = Factory(:contact, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
+
       xhr :get, :search, :query => "bill"
 
       assigns[:contacts].should == [ @billy_bones ]
@@ -571,19 +571,23 @@ describe ContactsController do
 
     describe "with mime type of JSON" do
       it "should perform lookup using query string and render JSON" do
+        @controller.should_receive(:get_list_of_records).and_return(contacts = mock("Array of Contacts"))
+        contacts.should_receive(:to_json).and_return("generated JSON")
+
         request.env["HTTP_ACCEPT"] = "application/json"
         get :search, :query => "bill?!"
-
-        response.body.should == [ @billy_bones.reload ].to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should perform lookup using query string and render XML" do
+        @controller.should_receive(:get_list_of_records).and_return(contacts = mock("Array of Contacts"))
+        contacts.should_receive(:to_xml).and_return("generated XML")
+
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "bill?!"
-
-        response.body.should == [ @billy_bones.reload ].to_xml
+        response.body.should == "generated XML"
       end
     end
   end
