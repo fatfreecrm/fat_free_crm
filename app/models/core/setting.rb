@@ -45,6 +45,7 @@ class Setting < ActiveRecord::Base
 
   #-------------------------------------------------------------------
   def self.[] (name)
+    return nil unless table_exists?
     return cached_settings[name.to_s] if cached_settings.has_key?(name.to_s)
     cached_settings[name.to_s] = if (setting = self.find_by_name(name.to_s))
       Marshal.load(Base64.decode64(setting.value || setting.default_value))
@@ -53,6 +54,7 @@ class Setting < ActiveRecord::Base
 
   #-------------------------------------------------------------------
   def self.[]= (name, value)
+    return nil unless table_exists?
     setting = self.find_by_name(name.to_s) || self.new(:name => name.to_s)
     setting.value = Base64.encode64(Marshal.dump(value))
     setting.save
@@ -71,14 +73,11 @@ class Setting < ActiveRecord::Base
     @@cached_settings ||= {}
   end
 
-end
-
-
-# Disable Setting model if migrations haven't been run yet.
-unless Setting.table_exists?
-  Setting.class_eval do
-    def self.[] (*args); nil; end
-    def self.[]= (*args); nil; end
+  def self.table_exists?
+    # Returns false if table or database is unavailable.
+    super rescue false
   end
 end
+
+
 

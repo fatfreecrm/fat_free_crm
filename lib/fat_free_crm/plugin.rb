@@ -62,7 +62,7 @@ module FatFreeCRM
         options = main_or_admin.dup   # ...and use :main as default.
         main_or_admin = :main
       end
-      if ActiveRecord::Base.connection.table_exists?("settings")
+      if Setting.table_exists?
         tabs = FatFreeCRM::Tabs.send(main_or_admin)
         if tabs                         # Might be nil when running rake task (ex: rake crm:setup).
           if block_given?
