@@ -1,0 +1,8 @@
+- asset.field_groups.each do |field_group|
+  - if field_group.fields.select{|f| asset.send(f.name).present? }.any?
+    %div
+      .caption #{field_group.label_i18n}
+      - field_group.custom_fields.each do |field|
+        - if asset.send(field.name).present?
+          == #{field.label}:<br /> <b>#{truncate(field.render_value(asset), :length => 35)}</b><br />
+  
