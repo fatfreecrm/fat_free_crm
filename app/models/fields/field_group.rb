@@ -1,5 +1,5 @@
 class FieldGroup < ActiveRecord::Base
-  has_many :fields
+  has_many :fields, :order => :position
   belongs_to :tag, :class_name => 'ActsAsTaggableOn::Tag'
 
   validates_presence_of :label
@@ -26,6 +26,10 @@ class FieldGroup < ActiveRecord::Base
 
   def self.with_tags(tag_ids)
     where 'tag_id IS NULL OR tag_id IN (?)', tag_ids
+  end
+
+  def label_i18n
+    I18n.t(name, :default => label)
   end
 end
 
