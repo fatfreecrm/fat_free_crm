@@ -10,8 +10,9 @@
       = stylesheet_link_tag 'calendar_date_select/default'
     %style= content_for :styles
 
-    = javascript_include_tag :application
-    - unless tabless_layout?
+    - if tabless_layout?
+      = javascript_include_tag :application
+    - else
       = javascript_include_tag :application_tabbed
       = javascript_include_tag "calendar_date_select/format_#{t(:calendar_date_select_format, :default => 'american')}"
 
