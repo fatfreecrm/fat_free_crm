@@ -75,8 +75,8 @@ class Field < ActiveRecord::Base
     when 'datetime'
       value && value.strftime(I18n.t("time.formats.short"))
     when 'check_boxes'
-      value = YAML.load(value) if String === value
-      value.in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value
+      value = YAML.load(value) if value.is_a?(String)
+      value.select(&:present?).in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value
     else
       value.to_s
     end

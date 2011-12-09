@@ -3,8 +3,8 @@
     %img( src="/assets/sortable.gif" )
   .tools{ invisible, :id => dom_id(field, :tools) }
     %small
-      = link_to_edit(field, :url => edit_admin_field_path(field)) + " | "
-      = link_to_delete(field, :url => admin_field_path(field))
+      = link_to_edit(field, :url => edit_admin_field_path(field), :klass_name => 'Field') + " | "
+      = link_to_delete(field, :url => admin_field_path(field), :klass_name => 'Field')
   %tt
     %b
       = field.label
