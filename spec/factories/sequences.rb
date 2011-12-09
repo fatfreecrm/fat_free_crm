@@ -1,5 +1,3 @@
-require 'ffaker'
-
 Factory.sequence :address do |x|
   Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
   Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code
@@ -24,4 +22,3 @@ end
 Factory.sequence :date do |x|
   Date.today - x.days
 end
-
