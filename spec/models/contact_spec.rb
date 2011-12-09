@@ -146,7 +146,7 @@ describe Contact do
 
     describe "unassigned contact" do
       before do
-        Account.delete_all
+        Contact.delete_all
         Factory(:contact, :user => Factory(:user), :assignee => nil)
         Factory(:contact, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end

@@ -87,7 +87,7 @@ describe Lead do
 
     describe "unassigned lead" do
       before do
-        Account.delete_all
+        Lead.delete_all
         Factory(:lead, :user => Factory(:user), :assignee => nil)
         Factory(:lead, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
