@@ -16,15 +16,14 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: accounts
 #
-#  id              :integer(4)      not null, primary key
-#  user_id         :integer(4)
-#  assigned_to     :integer(4)
+#  id              :integer         not null, primary key
+#  user_id         :integer
+#  assigned_to     :integer
 #  name            :string(64)      default(""), not null
-#  access          :string(8)       default("Private")
+#  access          :string(8)       default("Public")
 #  website         :string(64)
 #  toll_free_phone :string(32)
 #  phone           :string(32)
@@ -34,7 +33,10 @@
 #  updated_at      :datetime
 #  email           :string(64)
 #  background_info :string(255)
+#  rating          :integer         default(0), not null
+#  category        :string(32)
 #
+
 class Account < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to

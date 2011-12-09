@@ -1,15 +1,15 @@
 # == Schema Information
-# Schema version: 27
 #
 # Table name: preferences
 #
-#  id         :integer(4)      not null, primary key
-#  user_id    :integer(4)
+#  id         :integer         not null, primary key
+#  user_id    :integer
 #  name       :string(32)      default(""), not null
 #  value      :text
 #  created_at :datetime
 #  updated_at :datetime
 #
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Preference do

@@ -16,16 +16,15 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: tasks
 #
-#  id              :integer(4)      not null, primary key
-#  user_id         :integer(4)
-#  assigned_to     :integer(4)
-#  completed_by    :integer(4)
+#  id              :integer         not null, primary key
+#  user_id         :integer
+#  assigned_to     :integer
+#  completed_by    :integer
 #  name            :string(255)     default(""), not null
-#  asset_id        :integer(4)
+#  asset_id        :integer
 #  asset_type      :string(255)
 #  priority        :string(32)
 #  category        :string(32)
@@ -37,6 +36,7 @@
 #  updated_at      :datetime
 #  background_info :string(255)
 #
+
 class Task < ActiveRecord::Base
   attr_accessor :calendar
 

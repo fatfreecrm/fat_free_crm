@@ -16,20 +16,20 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: avatars
 #
-#  id                 :integer(4)      not null, primary key
-#  user_id            :integer(4)
-#  entity_id          :integer(4)
+#  id                 :integer         not null, primary key
+#  user_id            :integer
+#  entity_id          :integer
 #  entity_type        :string(255)
-#  image_file_size    :integer(4)
+#  image_file_size    :integer
 #  image_file_name    :string(255)
 #  image_content_type :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
 #
+
 class Avatar < ActiveRecord::Base
   STYLES = { :large => "75x75#", :medium => "50x50#", :small => "25x25#", :thumb => "16x16#" }.freeze
 

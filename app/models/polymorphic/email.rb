@@ -16,14 +16,13 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: emails
 #
-#  id              :integer(4)      not null, primary key
+#  id              :integer         not null, primary key
 #  imap_message_id :string(255)     not null
-#  user_id         :integer(4)
-#  mediator_id     :integer(4)
+#  user_id         :integer
+#  mediator_id     :integer
 #  mediator_type   :string(255)
 #  sent_from       :string(255)     not null
 #  sent_to         :string(255)     not null
@@ -37,7 +36,9 @@
 #  deleted_at      :datetime
 #  created_at      :datetime
 #  updated_at      :datetime
+#  state           :string(16)      default("Expanded"), not null
 #
+
 class Email < ActiveRecord::Base
   belongs_to :mediator, :polymorphic => true
   belongs_to :user

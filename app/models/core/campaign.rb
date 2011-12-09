@@ -16,22 +16,21 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: campaigns
 #
-#  id                  :integer(4)      not null, primary key
-#  user_id             :integer(4)
-#  assigned_to         :integer(4)
+#  id                  :integer         not null, primary key
+#  user_id             :integer
+#  assigned_to         :integer
 #  name                :string(64)      default(""), not null
-#  access              :string(8)       default("Private")
+#  access              :string(8)       default("Public")
 #  status              :string(64)
 #  budget              :decimal(12, 2)
-#  target_leads        :integer(4)
+#  target_leads        :integer
 #  target_conversion   :float
 #  target_revenue      :decimal(12, 2)
-#  leads_count         :integer(4)
-#  opportunities_count :integer(4)
+#  leads_count         :integer
+#  opportunities_count :integer
 #  revenue             :decimal(12, 2)
 #  starts_on           :date
 #  ends_on             :date
@@ -41,6 +40,7 @@
 #  updated_at          :datetime
 #  background_info     :string(255)
 #
+
 class Campaign < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to

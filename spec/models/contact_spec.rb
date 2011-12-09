@@ -1,16 +1,15 @@
 # == Schema Information
-# Schema version: 27
 #
 # Table name: contacts
 #
-#  id              :integer(4)      not null, primary key
-#  user_id         :integer(4)
-#  lead_id         :integer(4)
-#  assigned_to     :integer(4)
-#  reports_to      :integer(4)
+#  id              :integer         not null, primary key
+#  user_id         :integer
+#  lead_id         :integer
+#  assigned_to     :integer
+#  reports_to      :integer
 #  first_name      :string(64)      default(""), not null
 #  last_name       :string(64)      default(""), not null
-#  access          :string(8)       default("Private")
+#  access          :string(8)       default("Public")
 #  title           :string(64)
 #  department      :string(64)
 #  source          :string(32)
@@ -24,12 +23,14 @@
 #  facebook        :string(128)
 #  twitter         :string(128)
 #  born_on         :date
-#  do_not_call     :boolean(1)      not null
+#  do_not_call     :boolean         default(FALSE), not null
 #  deleted_at      :datetime
 #  created_at      :datetime
 #  updated_at      :datetime
 #  background_info :string(255)
+#  skype           :string(128)
 #
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Contact do
