@@ -65,6 +65,7 @@ GEM
       rake (~> 0.8)
     i18n (0.6.0)
     json (1.6.1)
+    kgio (2.6.0)
     libv8 (3.3.10.2)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
@@ -109,6 +110,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (~> 0.14.6)
+    raindrops (0.8.0)
     rake (0.8.7)
     rbx-require-relative (0.0.5)
     rdoc (3.11)
@@ -172,6 +174,10 @@ GEM
     uglifier (1.1.0)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    unicorn (4.1.1)
+      kgio (~> 2.4)
+      rack
+      raindrops (~> 0.6)
     will_paginate (3.0.2)
 
 PLATFORMS
@@ -202,4 +208,5 @@ DEPENDENCIES
   test-unit (= 1.2.3)
   therubyracer
   uglifier
+  unicorn
   will_paginate (>= 3.0.pre2)
