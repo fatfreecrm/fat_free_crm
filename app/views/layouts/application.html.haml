@@ -12,7 +12,8 @@
 
     = javascript_include_tag :application
     - unless tabless_layout?
-      = javascript_include_tag 'crm_classes', 'fields', 'calendar_date_select/calendar_date_select', "calendar_date_select/format_#{t(:calendar_date_select_format, :default => 'american')}"
+      = javascript_include_tag :application_tabbed
+      = javascript_include_tag "calendar_date_select/format_#{t(:calendar_date_select_format, :default => 'american')}"
 
     = hook(:javascript_includes, self)
 
