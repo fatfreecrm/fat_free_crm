@@ -68,10 +68,8 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  # Formatting Options
-  config.color_enabled = true
-  config.tty = true
-  config.formatter = "Fuubar"
+  # Fuubar formatter doesn't work too well on Travis
+  config.formatter = ENV["TRAVIS"] ? :progress : "Fuubar"
 end
 
 ActionView::TestCase::TestController.class_eval do
