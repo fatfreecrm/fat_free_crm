@@ -1,4 +1,4 @@
-# Fat Free CRM [![TravisCI](https://travis-ci.org/fatfreecrm/fat_free_crm.png?branch=master)](http://travis-ci.org/fatfreecrm/fat_free_crm)
+# Fat Free CRM [![TravisCI](https://secure.travis-ci.org/fatfreecrm/fat_free_crm.png?branch=master)](http://travis-ci.org/fatfreecrm/fat_free_crm)
 
 **An open source, Ruby on Rails
 [customer relationship management (CRM)](http://en.wikipedia.org/wiki/Customer_relationship_management)
