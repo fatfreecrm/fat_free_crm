@@ -494,6 +494,13 @@ en-US:
   subject_lead: lead
   subject_opportunity: opportunity
   subject_task: task
+  created_past_participle: Record Creations
+  commented_past_participle: Comments
+  viewed_past_participle: Views
+  updated_past_participle: Updates
+  deleted_past_participle: Deletions
+  email_past_participle: Emails
+  all_actions_past_participle: Activities
 
   # Views -> Common.
   #----------------------------------------------------------------------------
