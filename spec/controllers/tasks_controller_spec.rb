@@ -123,19 +123,21 @@ describe TasksController do
       end
 
       it "should render the requested task as JSON for #{view} view" do
-        request.env["HTTP_ACCEPT"] = "application/json"
-        @task = Factory(:task, :user => @current_user)
+        Task.stub_chain(:tracked_by, :find).and_return(task = mock("Task"))
+        task.should_receive(:to_json).and_return("generated JSON")
 
-        get :show, :id => @task.id, :view => "pending"
-        response.body.should == @task.reload.to_json
+        request.env["HTTP_ACCEPT"] = "application/json"
+        get :show, :id => 42, :view => "pending"
+        response.body.should == "generated JSON"
       end
 
       it "should render the requested task as xml for #{view} view" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        @task = Factory(:task, :user => @current_user)
+        Task.stub_chain(:tracked_by, :find).and_return(task = mock("Task"))
+        task.should_receive(:to_xml).and_return("generated XML")
 
-        get :show, :id => @task.id, :view => "pending"
-        response.body.should == @task.reload.to_xml
+        request.env["HTTP_ACCEPT"] = "application/xml"
+        get :show, :id => 42, :view => "pending"
+        response.body.should == "generated XML"
       end
     end
   end

@@ -46,12 +46,12 @@ class LeadsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @lead = Lead.my.find(params[:id])
-    @comment = Comment.new
-
-    @timeline = timeline(@lead)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+        @comment = Comment.new
+        @timeline = timeline(@lead)
+      end
       format.json { render :json => @lead }
       format.xml  { render :xml => @lead }
     end

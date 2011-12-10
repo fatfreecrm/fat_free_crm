@@ -48,12 +48,12 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @opportunity = Opportunity.my.find(params[:id])
-    @comment = Comment.new
-
-    @timeline = timeline(@opportunity)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+        @comment = Comment.new
+        @timeline = timeline(@opportunity)
+      end
       format.json { render :json => @opportunity }
       format.xml  { render :xml => @opportunity }
     end
