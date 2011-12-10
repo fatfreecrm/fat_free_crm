@@ -34,7 +34,7 @@ group :development, :test do
   gem 'annotate',           '~> 2.4.1.beta', :require => false
   gem 'awesome_print',      '>= 0.3.1'
 
-  gem 'test-unit', '1.2.3', :platform => :mri_19
+  gem 'test-unit',          '2.4.2',  :platform => :mri_19
   gem 'rspec-rails',        '>= 2.5.0'
   gem 'ffaker',             '>= 1.5.0'
   gem 'factory_girl',       '>= 1.3.3'
