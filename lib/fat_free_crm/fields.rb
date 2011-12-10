@@ -12,7 +12,7 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http:#www.gnu.org/licenses/>.
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
 module FatFreeCRM
@@ -60,7 +60,7 @@ module FatFreeCRM
         if method_id.to_s =~ /^cf_/
           # Refresh columns and try again.
           self.class.reset_column_information
-          respond_to?(method_id) ? send(method_id, *args) : nil
+          self.respond_to?(method_id) ? self.send(method_id, *args) : nil
         else
           super
         end

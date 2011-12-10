@@ -16,20 +16,21 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: comments
 #
-#  id               :integer(4)      not null, primary key
-#  user_id          :integer(4)
-#  commentable_id   :integer(4)
+#  id               :integer         not null, primary key
+#  user_id          :integer
+#  commentable_id   :integer
 #  commentable_type :string(255)
-#  private          :boolean(1)
+#  private          :boolean
 #  title            :string(255)     default("")
 #  comment          :text
 #  created_at       :datetime
 #  updated_at       :datetime
+#  state            :string(16)      default("Expanded"), not null
 #
+
 class Comment < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :commentable, :polymorphic => true

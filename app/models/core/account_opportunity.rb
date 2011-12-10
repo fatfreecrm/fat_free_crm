@@ -16,17 +16,17 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: account_opportunities
 #
-#  id             :integer(4)      not null, primary key
-#  account_id     :integer(4)
-#  opportunity_id :integer(4)
+#  id             :integer         not null, primary key
+#  account_id     :integer
+#  opportunity_id :integer
 #  deleted_at     :datetime
 #  created_at     :datetime
 #  updated_at     :datetime
 #
+
 class AccountOpportunity < ActiveRecord::Base
   belongs_to :account
   belongs_to :opportunity

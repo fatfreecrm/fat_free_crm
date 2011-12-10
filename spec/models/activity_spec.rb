@@ -1,18 +1,18 @@
 # == Schema Information
-# Schema version: 27
 #
 # Table name: activities
 #
-#  id           :integer(4)      not null, primary key
-#  user_id      :integer(4)
-#  subject_id   :integer(4)
+#  id           :integer         not null, primary key
+#  user_id      :integer
+#  subject_id   :integer
 #  subject_type :string(255)
 #  action       :string(32)      default("created")
 #  info         :string(255)     default("")
-#  private      :boolean(1)
+#  private      :boolean         default(FALSE)
 #  created_at   :datetime
 #  updated_at   :datetime
 #
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Activity do

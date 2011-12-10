@@ -12,21 +12,21 @@
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http:#www.gnu.org/licenses/>.
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: permissions
 #
-#  id         :integer(4)      not null, primary key
-#  user_id    :integer(4)
-#  asset_id   :integer(4)
+#  id         :integer         not null, primary key
+#  user_id    :integer
+#  asset_id   :integer
 #  asset_type :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #
+
 class Permission < ActiveRecord::Base
   belongs_to :user
   belongs_to :asset, :polymorphic => true

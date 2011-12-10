@@ -16,17 +16,17 @@
 #------------------------------------------------------------------------------
 
 # == Schema Information
-# Schema version: 27
 #
 # Table name: settings
 #
-#  id            :integer(4)      not null, primary key
+#  id            :integer         not null, primary key
 #  name          :string(32)      default(""), not null
 #  value         :text
 #  default_value :text
 #  created_at    :datetime
 #  updated_at    :datetime
 #
+
 class Setting < ActiveRecord::Base
 
   #-------------------------------------------------------------------

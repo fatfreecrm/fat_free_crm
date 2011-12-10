@@ -30,10 +30,12 @@
 
   - unless @contact.background_info.blank?
     .caption #{t :background_info}
-    = auto_link(simple_format h(@contact.background_info))
+    = auto_link(simple_format @contact.background_info).html_safe
+
+  = render "fields/sidebar_show", :asset => @contact
 
   - if @contact.tag_list.present?
     %dt
-      .tags= tags_for_index(@contact)
+      .tags= tags_for_index(@contact) 
 
   = hook(:show_contact_sidebar_bottom, self, :contact => @contact)

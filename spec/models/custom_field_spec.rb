@@ -1,23 +1,24 @@
 # == Schema Information
-# Schema version: 23
 #
-# Table name: CustomFields
+# Table name: fields
 #
-#  id                   :integer(4)      not null, primary key
-#  user_id              :integer(4)
-#  field_name,          :string(64)
-#  field_type,          :string(32)
-#  field_label,         :string(64)
-#  table_name,          :string(32)
-#  display_sequence,    :integer(4)
-#  display_block,       :integer(4)
-#  display_width,       :integer(4)
-#  max_size,            :integer(4)
-#  disabled,            :boolean
-#  required,            :boolean
-#  created_at           :datetime
-#  updated_at           :datetime
+#  id             :integer         not null, primary key
+#  type           :string(255)
+#  field_group_id :integer
+#  position       :integer
+#  name           :string(64)
+#  label          :string(128)
+#  hint           :string(255)
+#  placeholder    :string(255)
+#  as             :string(32)
+#  collection     :text
+#  disabled       :boolean
+#  required       :boolean
+#  maxlength      :integer
+#  created_at     :datetime
+#  updated_at     :datetime
 #
+
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 

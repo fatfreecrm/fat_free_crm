@@ -31,7 +31,7 @@ end
 group :development, :test do
   gem 'ruby-debug',   :platform => :mri_18
   gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug'
-  gem 'annotate',           '>= 2.4.0'
+  gem 'annotate',           '~> 2.4.1.beta', :require => false
   gem 'awesome_print',      '>= 0.3.1'
 
   gem 'test-unit', '1.2.3', :platform => :mri_19

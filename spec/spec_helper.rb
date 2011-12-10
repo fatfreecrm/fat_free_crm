@@ -4,22 +4,27 @@ if ENV["COVERAGE"]
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
+
+# Load factories
 require 'factory_girl'
-require Rails.root.join("spec/factories")
+require 'ffaker'
+require Rails.root.join("spec/factories/sequences")
+Dir.glob(Rails.root.join("spec/factories/*_factories.rb")).each{ |f| require File.expand_path(f) }
+
 
 # Load factories from plugins (to allow extra validations / etc.)
 Dir.glob(Rails.root.join("vendor/plugins/**/spec/factories.rb")).each{ |f| require File.expand_path(f) }
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each{ |f| require File.expand_path(f) }
 
 # Load shared behavior modules to be included by Runner config.
-Dir[File.dirname(__FILE__) + "/shared/*.rb"].map {|f| require f}
+Dir[File.dirname(__FILE__) + "/shared/*.rb"].each{ |f| require File.expand_path(f) }
 
 TASK_STATUSES = %w(pending assigned completed).freeze
 

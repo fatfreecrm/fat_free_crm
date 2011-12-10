@@ -1,38 +1,39 @@
 # == Schema Information
-# Schema version: 27
 #
 # Table name: users
 #
-#  id                :integer(4)      not null, primary key
-#  username          :string(32)      default(""), not null
-#  email             :string(64)      default(""), not null
-#  first_name        :string(32)
-#  last_name         :string(32)
-#  title             :string(64)
-#  company           :string(64)
-#  alt_email         :string(64)
-#  phone             :string(32)
-#  mobile            :string(32)
-#  aim               :string(32)
-#  yahoo             :string(32)
-#  google            :string(32)
-#  skype             :string(32)
-#  password_hash     :string(255)     default(""), not null
-#  password_salt     :string(255)     default(""), not null
-#  persistence_token :string(255)     default(""), not null
-#  perishable_token  :string(255)     default(""), not null
-#  last_request_at   :datetime
-#  last_login_at     :datetime
-#  current_login_at  :datetime
-#  last_login_ip     :string(255)
-#  current_login_ip  :string(255)
-#  login_count       :integer(4)      default(0), not null
-#  deleted_at        :datetime
-#  created_at        :datetime
-#  updated_at        :datetime
-#  admin             :boolean(1)      not null
-#  suspended_at      :datetime
+#  id                  :integer         not null, primary key
+#  username            :string(32)      default(""), not null
+#  email               :string(64)      default(""), not null
+#  first_name          :string(32)
+#  last_name           :string(32)
+#  title               :string(64)
+#  company             :string(64)
+#  alt_email           :string(64)
+#  phone               :string(32)
+#  mobile              :string(32)
+#  aim                 :string(32)
+#  yahoo               :string(32)
+#  google              :string(32)
+#  skype               :string(32)
+#  password_hash       :string(255)     default(""), not null
+#  password_salt       :string(255)     default(""), not null
+#  persistence_token   :string(255)     default(""), not null
+#  perishable_token    :string(255)     default(""), not null
+#  last_request_at     :datetime
+#  last_login_at       :datetime
+#  current_login_at    :datetime
+#  last_login_ip       :string(255)
+#  current_login_ip    :string(255)
+#  login_count         :integer         default(0), not null
+#  deleted_at          :datetime
+#  created_at          :datetime
+#  updated_at          :datetime
+#  admin               :boolean         default(FALSE), not null
+#  suspended_at        :datetime
+#  single_access_token :string(255)
 #
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe User do

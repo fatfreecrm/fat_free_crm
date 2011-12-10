@@ -1,3 +1,41 @@
+# Fat Free CRM
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#------------------------------------------------------------------------------
+
+# == Schema Information
+#
+# Table name: fields
+#
+#  id             :integer         not null, primary key
+#  type           :string(255)
+#  field_group_id :integer
+#  position       :integer
+#  name           :string(64)
+#  label          :string(128)
+#  hint           :string(255)
+#  placeholder    :string(255)
+#  as             :string(32)
+#  collection     :text
+#  disabled       :boolean
+#  required       :boolean
+#  maxlength      :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 class Field < ActiveRecord::Base
   acts_as_list
 
@@ -7,7 +45,7 @@ class Field < ActiveRecord::Base
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
 
-  KLASSES = [Task, Campaign, Lead, Contact, Account, Opportunity]
+  KLASSES = [Campaign, Lead, Contact, Account, Opportunity]
 
   FIELD_TYPES = {
     'string'      => :string,
@@ -61,6 +99,25 @@ class Field < ActiveRecord::Base
   end
   def collection_string
     collection.try(:join, "|")
+  end
+
+
+  def render_value(object)
+    value = object.send(name)
+
+    case as
+    when 'checkbox'
+      value.to_s == '0' ? "no" : "yes"
+    when 'date'
+      value && value.strftime(I18n.t("date.formats.default"))
+    when 'datetime'
+      value && value.strftime(I18n.t("time.formats.short"))
+    when 'check_boxes'
+      value = YAML.load(value) if value.is_a?(String)
+      value.select(&:present?).in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value
+    else
+      value.to_s
+    end
   end
 end
 

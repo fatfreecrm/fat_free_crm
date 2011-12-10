@@ -110,7 +110,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_edit(model, params = {})
-    name = model.class.name.underscore.downcase
+    name = (params[:klass_name] || model.class.name).underscore.downcase
     link_to(t(:edit),
       params[:url] || send(:"edit_#{name}_path", model),
       :remote  => true,
@@ -120,7 +120,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_delete(model, params = {})
-    name = model.class.name.underscore.downcase
+    name = (params[:klass_name] || model.class.name).underscore.downcase
     link_to(t(:delete) + "!",
       params[:url] || url_for(model),
       :method => :delete,
