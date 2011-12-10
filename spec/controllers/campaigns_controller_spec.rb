@@ -75,24 +75,25 @@ describe CampaignsController do
 
     describe "with mime type of JSON" do
       it "should render all campaigns as JSON" do
-        request.env["HTTP_ACCEPT"] = "application/json"
-        @campaigns = [ Factory(:campaign, :user => @current_user).reload ]
+        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
+        campaigns.should_receive(:to_json).and_return("generated JSON")
 
+        request.env["HTTP_ACCEPT"] = "application/json"
         get :index
-        response.body.should == @campaigns.to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should render all campaigns as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        @campaigns = [ Factory(:campaign, :user => @current_user).reload ]
+        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
+        campaigns.should_receive(:to_xml).and_return("generated XML")
 
+        request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
-        response.body.should == @campaigns.to_xml
+        response.body.should == "generated XML"
       end
     end
-
   end
 
   # GET /campaigns/1
@@ -123,21 +124,23 @@ describe CampaignsController do
 
     describe "with mime type of JSON" do
       it "should render the requested campaign as JSON" do
-        request.env["HTTP_ACCEPT"] = "application/json"
-        @campaign = Factory(:campaign, :id => 42, :user => @current_user)
+        Campaign.stub_chain(:my, :find).and_return(campaign = mock_model(Campaign, :name => ''))
+        campaign.should_receive(:to_json).and_return("generated JSON")
 
+        request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
-        response.body.should == @campaign.reload.to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should render the requested campaign as XML" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        @campaign = Factory(:campaign, :id => 42, :user => @current_user)
+        Campaign.stub_chain(:my, :find).and_return(campaign = mock_model(Campaign, :name => ''))
+        campaign.should_receive(:to_xml).and_return("generated XML")
 
+        request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
-        response.body.should == @campaign.reload.to_xml
+        response.body.should == "generated XML"
       end
     end
 
@@ -204,8 +207,8 @@ describe CampaignsController do
 
   end
 
-  # # GET /campaigns/1/edit                                                  AJAX
-  # #----------------------------------------------------------------------------
+  # GET /campaigns/1/edit                                                  AJAX
+  #----------------------------------------------------------------------------
   describe "responding to GET edit" do
 
     it "should expose the requested campaign as @campaign and render [edit] template" do
@@ -492,13 +495,11 @@ describe CampaignsController do
   # GET /campaigns/search/query                                                AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET search" do
-    before(:each) do
-      @first  = Factory(:campaign, :user => @current_user, :name => "Hello, world!")
-      @second = Factory(:campaign, :user => @current_user, :name => "Hello again")
-      @campaigns = [ @first, @second ]
-    end
 
     it "should perform lookup using query string and redirect to index" do
+      @first  = Factory(:campaign, :user => @current_user, :name => "Hello, world!")
+      @second = Factory(:campaign, :user => @current_user, :name => "Hello again")
+
       xhr :get, :search, :query => "again"
 
       assigns[:campaigns].should == [ @second ]
@@ -509,19 +510,23 @@ describe CampaignsController do
 
     describe "with mime type of JSON" do
       it "should perform lookup using query string and render JSON" do
+        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
+        campaigns.should_receive(:to_json).and_return("generated JSON")
+
         request.env["HTTP_ACCEPT"] = "application/json"
         get :search, :query => "again?!"
-
-        response.body.should == [ @second.reload ].to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should perform lookup using query string and render XML" do
+        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
+        campaigns.should_receive(:to_xml).and_return("generated XML")
+
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "again?!"
-
-        response.body.should == [ @second.reload ].to_xml
+        response.body.should == "generated XML"
       end
     end
   end

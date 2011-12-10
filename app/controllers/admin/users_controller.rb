@@ -149,7 +149,7 @@ class Admin::UsersController < Admin::ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
-      format.xml  { render :xml => @users.to_xml }
+      format.xml  { render :xml => @users }
     end
   end
 

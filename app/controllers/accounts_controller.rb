@@ -46,13 +46,14 @@ class AccountsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @account = Account.my.find(params[:id])
-    @stage = Setting.unroll(:opportunity_stage)
-    @comment = Comment.new
-
-    @timeline = timeline(@account)
 
     respond_to do |format|
-      format.html # show.html.haml
+      format.html do
+        @stage = Setting.unroll(:opportunity_stage)
+        @comment = Comment.new
+
+        @timeline = timeline(@account)
+      end
       format.json { render :json => @account }
       format.xml  { render :xml => @account }
     end
@@ -169,8 +170,8 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :index }
-      format.json { render :json => @accounts.as_json }
-      format.xml  { render :xml => @accounts.to_xml }
+      format.json { render :json => @accounts }
+      format.xml  { render :xml => @accounts }
     end
   end
 

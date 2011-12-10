@@ -253,10 +253,12 @@ describe Admin::UsersController do
 
     describe "with mime type of XML" do
       it "performs lookup using query string and render XML" do
+        @controller.should_receive(:get_users).and_return(users = mock("Array of Users"))
+        users.should_receive(:to_xml).and_return("generated XML")
+
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "amy"
-
-        response.body.should == [ @amy.reload ].to_xml
+        response.body.should == "generated XML"
       end
     end
   end

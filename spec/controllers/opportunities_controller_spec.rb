@@ -73,34 +73,36 @@ describe OpportunitiesController do
 
     describe "with mime type of JSON" do
       it "should render all opportunities as JSON" do
-        request.env["HTTP_ACCEPT"] = "application/json"
-        @opportunities = [ Factory(:opportunity, :user => @current_user).reload ]
+        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
+        opportunities.should_receive(:to_json).and_return("generated JSON")
 
+        request.env["HTTP_ACCEPT"] = "application/json"
         get :index
-        response.body.should == @opportunities.to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of JSON" do
       it "should render all opportunities as JSON" do
-        request.env["HTTP_ACCEPT"] = "application/json"
-        @opportunities = [ Factory(:opportunity, :user => @current_user).reload ]
+        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
+        opportunities.should_receive(:to_json).and_return("generated JSON")
 
+        request.env["HTTP_ACCEPT"] = "application/json"
         get :index
-        response.body.should == @opportunities.to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should render all opportunities as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        @opportunities = [ Factory(:opportunity, :user => @current_user).reload ]
+        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
+        opportunities.should_receive(:to_xml).and_return("generated XML")
 
+        request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
-        response.body.should == @opportunities.to_xml
+        response.body.should == "generated XML"
       end
     end
-
   end
 
   # GET /opportunities/1
@@ -131,23 +133,23 @@ describe OpportunitiesController do
 
     describe "with mime type of JSON" do
       it "should render the requested opportunity as JSON" do
-        @opportunity = Factory(:opportunity, :id => 42)
-        @stage = Setting.unroll(:opportunity_stage)
+        Opportunity.stub_chain(:my, :find).and_return(opportunity = mock_model(Opportunity, :name => ''))
+        opportunity.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
-        response.body.should == @opportunity.reload.to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should render the requested opportunity as xml" do
-        @opportunity = Factory(:opportunity, :id => 42)
-        @stage = Setting.unroll(:opportunity_stage)
+        Opportunity.stub_chain(:my, :find).and_return(opportunity = mock_model(Opportunity, :name => ''))
+        opportunity.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
-        response.body.should == @opportunity.reload.to_xml
+        response.body.should == "generated XML"
       end
     end
 
@@ -810,19 +812,23 @@ describe OpportunitiesController do
 
     describe "with mime type of JSON" do
       it "should perform lookup using query string and render JSON" do
+        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
+        opportunities.should_receive(:to_json).and_return("generated JSON")
+
         request.env["HTTP_ACCEPT"] = "application/json"
         get :search, :query => "second?!"
-
-        response.body.should == [ @second.reload ].to_json
+        response.body.should == "generated JSON"
       end
     end
 
     describe "with mime type of XML" do
       it "should perform lookup using query string and render XML" do
+        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
+        opportunities.should_receive(:to_xml).and_return("generated XML")
+
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :search, :query => "second?!"
-
-        response.body.should == [ @second.reload ].to_xml
+        response.body.should == "generated XML"
       end
     end
   end

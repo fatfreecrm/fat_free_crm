@@ -2,27 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersController do
 
-  before(:each) do
-  end
-
-  # GET /users
-  # GET /users.xml                              HTML (not directly exposed yet)
-  #----------------------------------------------------------------------------
-  describe "responding to GET index" do
-    before(:each) do
-      require_user
-    end
-
-    it "should expose all users as @users" do
-    end
-
-    describe "with mime type of xml" do
-      it "should render all users as xml" do
-      end
-    end
-
-  end
-
   # GET /users/1
   # GET /users/1.xml                                                       HTML
   #----------------------------------------------------------------------------
@@ -51,15 +30,18 @@ describe UsersController do
       end
 
       it "should render the requested user as JSON" do
-        @user = Factory(:user)
+        User.should_receive(:find).and_return(user = mock("User"))
+        user.should_receive(:to_json).and_return("generated JSON")
 
-        get :show, :id => @user.id
-        response.body.should == @user.reload.to_json
+        get :show, :id => 42
+        response.body.should == "generated JSON"
       end
 
       it "should render current user as JSON if no specific user was requested" do
+        @current_user.should_receive(:to_json).and_return("generated JSON")
+
         get :show
-        response.body.should == @current_user.to_json
+        response.body.should == "generated JSON"
       end
     end
 
@@ -69,19 +51,20 @@ describe UsersController do
       end
 
       it "should render the requested user as XML" do
-        @user = Factory(:user)
+        User.should_receive(:find).and_return(user = mock("User"))
+        user.should_receive(:to_xml).and_return("generated XML")
 
-        get :show, :id => @user.id
-        response.body.should == @user.reload.to_xml
+        get :show, :id => 42
+        response.body.should == "generated XML"
       end
 
       it "should render current user as XML if no specific user was requested" do
+        @current_user.should_receive(:to_xml).and_return("generated XML")
+
         get :show
-        response.body.should == @current_user.to_xml
+        response.body.should == "generated XML"
       end
-
     end
-
   end
 
   # GET /users/new
@@ -109,7 +92,6 @@ describe UsersController do
         response.should redirect_to(login_path)
       end
     end
-
   end
 
   # GET /users/1/edit                                                      AJAX

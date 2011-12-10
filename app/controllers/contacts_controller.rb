@@ -45,13 +45,14 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @contact = Contact.my.find(params[:id])
-    @stage = Setting.unroll(:opportunity_stage)
-    @comment = Comment.new
-
-    @timeline = timeline(@contact)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+        @stage = Setting.unroll(:opportunity_stage)
+        @comment = Comment.new
+
+        @timeline = timeline(@contact)
+      end
       format.json { render :json => @contact }
       format.xml  { render :xml => @contact }
     end

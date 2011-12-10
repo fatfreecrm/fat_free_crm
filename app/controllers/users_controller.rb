@@ -23,13 +23,6 @@ class UsersController < ApplicationController
   before_filter :require_and_assign_user, :except => [ :new, :create, :show, :avatar, :upload_avatar ]
   before_filter :assign_given_or_current_user, :only => [ :show, :avatar, :upload_avatar ]
 
-  # GET /users
-  # GET /users.xml                              HTML (not directly exposed yet)
-  #----------------------------------------------------------------------------
-  def index
-    # not exposed
-  end
-
   # GET /users/1
   # GET /users/1.json
   # GET /users/1.xml                                                       HTML

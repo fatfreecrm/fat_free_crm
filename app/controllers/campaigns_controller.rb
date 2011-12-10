@@ -46,13 +46,14 @@ class CampaignsController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @campaign = Campaign.my.find(params[:id])
-    @stage = Setting.unroll(:opportunity_stage)
-    @comment = Comment.new
-
-    @timeline = timeline(@campaign)
 
     respond_to do |format|
-      format.html # show.html.haml
+      format.html do
+        @stage = Setting.unroll(:opportunity_stage)
+        @comment = Comment.new
+
+        @timeline = timeline(@campaign)
+      end
       format.json { render :json => @campaign }
       format.xml  { render :xml => @campaign }
     end
