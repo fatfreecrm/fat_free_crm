@@ -51,7 +51,7 @@ namespace :super_tags do
 
         # FieldGroup
         unless field_group = FieldGroup.find_by_tag_id(tag.id)
-          group_params = {:tag_id => tag.id, :name => tag.name + ' Details'}
+          group_params = {:tag_id => tag.id, :label => tag.name + ' Details'}
           if dryrun?
             puts group_params
           else
