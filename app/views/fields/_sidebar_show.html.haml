@@ -3,6 +3,6 @@
     %div
       .caption #{field_group.label_i18n}
       - field_group.custom_fields.each do |field|
-        - if asset.send(field.name).present?
-          == #{field.label}:<br /> <b>#{truncate(field.render_value(asset), :length => 35)}</b><br />
-  
+        - if (value = field.render_value(asset)).present?
+          == #{field.label}:<br /> <b>#{truncate(value, :length => 35)}</b><br />
+
