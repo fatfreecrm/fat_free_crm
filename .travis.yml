@@ -2,9 +2,14 @@ rvm:
   - 1.9.2
   - 1.8.7
 
+env:
+  - DB=mysql
+  - DB=postgres
+
 # Create database before testing
 before_script:
   - "psql -c 'create database fat_free_crm_test;' -U postgres"
+  - "mysql -e 'create database fat_free_crm_test;'"
 
 # Only build master branch
 branches:
