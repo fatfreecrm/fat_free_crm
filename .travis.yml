@@ -7,12 +7,13 @@ env:
   - DB=postgres
 
 gemfile: Gemfile.ci
-bundler_args: --path=vendor/bundle
-
-# Create database before testing
+bundler_args: --path=vendor/bundle --without heroku
+ 
+# Create databases before testing
 before_script:
   - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
   - sh -c "if [ \"$DB\" = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"
+  
 # Only build master branch
 branches:
   only:
