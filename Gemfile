@@ -41,7 +41,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'factory_girl_rails', '~> 1.0.1'
+  gem 'factory_girl_rails', '~> 1.4.0'
   gem 'simplecov', :platform => :mri_19
   gem 'fuubar'
 end
