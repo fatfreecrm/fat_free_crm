@@ -8,7 +8,7 @@ gem 'rails', '3.1.3'
 # gem "sqlite3"
 gem "pg", ">= 0.9.0"
 
-gem 'authlogic',           '~> 3.0.3'
+gem 'authlogic',           '~> 3.1.0'
 gem 'acts_as_commentable', '>= 3.0.1'
 gem 'acts-as-taggable-on', '>= 2.0.6'
 gem 'haml',                '>= 3.1.1'
