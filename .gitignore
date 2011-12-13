@@ -1,5 +1,5 @@
 config/*.yml
-!config/database.mysql.linux.yml
+!config/database.mysql.mac.yml
 !config/database.mysql.yml
 !config/database.postgres.yml
 !config/database.sqlite.yml
