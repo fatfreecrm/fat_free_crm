@@ -6,10 +6,12 @@ env:
   - DB=mysql
   - DB=postgres
 
+gemfile: Gemfile.ci
+
 # Create database before testing
 before_script:
-  - "psql -c 'create database fat_free_crm_test;' -U postgres"
-  - "mysql -e 'create database fat_free_crm_test;'"
+  - "if [ '$DB' = 'pgsql' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
+  - "if [ '$DB' = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"
 
 # Only build master branch
 branches:
