@@ -10,7 +10,6 @@ branches:
 env:
   - DB=mysql
   - DB=postgres
-  - DB=sqlite
 
 gemfile: Gemfile.ci
 bundler_args: --path=vendor/bundle --without heroku
