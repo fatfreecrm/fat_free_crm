@@ -89,8 +89,8 @@ class Field < ActiveRecord::Base
   def input_options
     input_html = {:maxlength => attributes[:maxlength]}
 
-    attributes.select { |k,v|
-      %w(as collection disabled label placeholder required).include?(k)
+    attributes.reject { |k,v|
+      !%w(as collection disabled label placeholder required).include?(k)
     }.symbolize_keys.merge(:input_html => input_html)
   end
 
