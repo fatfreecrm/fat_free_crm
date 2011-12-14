@@ -2,14 +2,27 @@ rvm:
   - 1.9.2
   - 1.8.7
 
-# Create database before testing
-before_script:
-  - "psql -c 'create database fat_free_crm_test;' -U postgres"
-
 # Only build master branch
 branches:
   only:
     - master
+
+env:
+  - DB=mysql
+  - DB=postgres
+  - DB=sqlite
+
+gemfile: Gemfile.ci
+bundler_args: --path=vendor/bundle --without heroku
+ 
+before_script:
+  - gem install bundler --pre
+  - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
+  - sh -c "if [ \"$DB\" = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"
+  
+# Run RSpec tests and ensure that assets can compile without errors
+script: "bundle exec rake && bundle exec rake assets:precompile"
+  
 
 # To stop Travis from running tests for a new commit,
 # add the following to your commit message: [ci skip]

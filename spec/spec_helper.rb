@@ -12,9 +12,6 @@ require 'fuubar'
 # Load factories
 require 'factory_girl'
 require 'ffaker'
-require Rails.root.join("spec/factories/sequences")
-Dir.glob(Rails.root.join("spec/factories/*_factories.rb")).each{ |f| require File.expand_path(f) }
-
 
 # Load factories from plugins (to allow extra validations / etc.)
 Dir.glob(Rails.root.join("vendor/plugins/**/spec/factories.rb")).each{ |f| require File.expand_path(f) }
