@@ -1,5 +1,5 @@
 FatFreeCRM::Application.routes.draw do
-  scope (Setting.base_url.blank? ? "/" : Setting.base_url) do
+  scope Setting.base_url.to_s do
     root :to => 'home#index'
 
     match 'activities' => 'home#index'

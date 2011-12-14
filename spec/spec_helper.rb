@@ -26,7 +26,7 @@ Dir[File.dirname(__FILE__) + "/shared/*.rb"].each{ |f| require File.expand_path(
 TASK_STATUSES = %w(pending assigned completed).freeze
 
 # Load default settings from config/settings.yml
-load_default_settings if Setting.table_exists?
+load_default_settings if Setting.database_and_table_exists?
 
 Setting.task_calendar_with_time = false
 
