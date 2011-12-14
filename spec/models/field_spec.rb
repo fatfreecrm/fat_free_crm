@@ -33,10 +33,14 @@ describe Field do
     )
   end
 
+
   it "should return a list of field types" do
     Field.field_types['string'].should == {:type => :string, :options => nil}
   end
 
+  it "should return a hash of input options" do
+    Field.new.input_options.should be_a(Hash)
+  end
 
   it "should be able to display a empty multi_select value" do
     field = Field.new(
