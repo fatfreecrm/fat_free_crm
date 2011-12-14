@@ -68,8 +68,8 @@ class CustomField < Field
   }
 
   def available_as
-    Field.field_types.select do |new_type, params|
-      db_transition_safety(as, new_type) != :unsafe
+    Field.field_types.reject do |new_type, params|
+      db_transition_safety(as, new_type) == :unsafe
     end
   end
 
