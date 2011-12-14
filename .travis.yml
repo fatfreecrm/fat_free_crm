@@ -22,7 +22,7 @@ before_script:
   - sh -c "if [ \"$DB\" = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"
   
 # Run RSpec tests and ensure that assets can compile without errors
-script: "bundle exec rake && bundle exec rake assets:precompile"
+script: "bundle exec rake && bundle exec rake assets:precompile RAILS_ENV=production"
   
 
 # To stop Travis from running tests for a new commit,
