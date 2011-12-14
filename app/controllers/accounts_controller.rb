@@ -247,7 +247,7 @@ class AccountsController < ApplicationController
       # At this point render default destroy.js.rjs template.
     else # :html request
       self.current_page = 1 # Reset current page to 1 to make sure it stays valid.
-      flash[:notice] = "#{t(:asset_deleted, @account.name)}"
+      flash[:notice] = t(:msg_asset_deleted, @account.name)
       redirect_to accounts_path
     end
   end
