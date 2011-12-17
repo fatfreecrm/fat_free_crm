@@ -74,6 +74,7 @@ Spork.prefork do
       rendered.should_not match(/&amp;[A-Za-z]{1,6};/) if rendered
     end
 
+
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, comment the following line or assign false
     # instead of true.
@@ -81,6 +82,12 @@ Spork.prefork do
 
     # Fuubar formatter doesn't work too well on Travis
     config.formatter = ENV["TRAVIS"] ? :progress : "Fuubar"
+
+    # If true, the base class of anonymous controllers will be inferred
+    # automatically. This will be the default behavior in future versions of
+    # rspec-rails.
+    config.infer_base_class_for_anonymous_controllers = false
+
   end
 
   ActionView::TestCase::TestController.class_eval do
@@ -89,10 +96,9 @@ Spork.prefork do
     end
   end
 
-
   ActionView::Base.class_eval do
     def controller_name
-      request.path_parameters["controller"].split('/').last
+      HashWithIndifferentAccess.new(request.path_parameters)["controller"].split('/').last
     end
 
     def called_from_index_page?(controller = controller_name)
