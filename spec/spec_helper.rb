@@ -17,10 +17,12 @@ Spork.prefork do
     SimpleCov.start 'rails'
   end
 
+
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] = 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
+  require 'rspec/autorun'
   require 'fuubar'
 
   # Load factories
@@ -76,7 +78,7 @@ Spork.prefork do
 
 
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
-    # examples within a transaction, comment the following line or assign false
+    # examples within a transaction, remove the following line or assign false
     # instead of true.
     config.use_transactional_fixtures = true
 
@@ -87,7 +89,6 @@ Spork.prefork do
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
-
   end
 
   ActionView::TestCase::TestController.class_eval do
