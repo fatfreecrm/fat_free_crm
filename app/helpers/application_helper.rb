@@ -154,12 +154,10 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_close(url)
-    content_tag(:div,
-      link_to("x", url + "#{url.include?('?') ? '&' : '?'}cancel=true", :remote => true),
+    link_to("x", url + "#{url.include?('?') ? '&' : '?'}cancel=true",
+      :remote => true,
       :class => "close",
-      :title => t(:close_form),
-      :onmouseover => "this.style.background='lightsalmon'",
-      :onmouseout => "this.style.background='lightblue'"
+      :title => t(:close_form)
     )
   end
 
