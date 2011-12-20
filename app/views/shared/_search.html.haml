@@ -6,7 +6,6 @@
   = text_field_tag("query", @current_query, :size => 23)
 
 :javascript
-  $("query").on('change', function(event) {
-    element = event.element();
-    crm.search(element.value, '#{path}');
+  new Form.Element.Observer('query', 1.5, function(element, value) {
+    crm.search(value, '#{path}')
   });
