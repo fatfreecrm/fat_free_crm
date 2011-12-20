@@ -23,7 +23,7 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
       params = if input_type =~ /time/
         [value.localtime, {:format => :mmddyyyy_hhmm}]
       else
-        [value.to_date, {:format => :mmddyyy}]
+        [value.to_date, {:format => :mmddyyyy}]
       end
       { :value => I18n.localize(*params).html_safe }
     end

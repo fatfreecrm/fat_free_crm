@@ -19,4 +19,4 @@
 //= require crm_classes
 //= require crm_loginout
 //= require crm_fields
-//= calendar_date_select/calendar_date_select
+//= require calendar_date_select/calendar_date_select
