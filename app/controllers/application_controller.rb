@@ -97,16 +97,14 @@ class ApplicationController < ActionController::Base
   end
 
   def field_group
-    if @tag = ActsAsTaggableOn::Tag.find_by_name(params[:tag].strip) and
-       @field_group = FieldGroup.find_by_tag_id(@tag.id)
-
+    if @tag = ActsAsTaggableOn::Tag.find_by_name(params[:tag].strip)
       klass = controller_name.classify.constantize
-      @asset = klass.find_by_id(params[:asset_id]) || klass.new
-
-      render 'fields/group'
-    else
-      render :text => ''
+      if @field_group = FieldGroup.find_by_klass_name_and_tag_id(klass.name, @tag.id)
+        @asset = klass.find_by_id(params[:asset_id]) || klass.new
+        render 'fields/group' and return
+      end
     end
+    render :text => ''
   end
 private
   #----------------------------------------------------------------------------
