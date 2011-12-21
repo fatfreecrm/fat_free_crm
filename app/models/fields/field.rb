@@ -90,7 +90,7 @@ class Field < ActiveRecord::Base
     input_html = {:maxlength => attributes[:maxlength]}
 
     attributes.reject { |k,v|
-      !%w(as collection disabled label placeholder required).include?(k)
+      !%w(as collection disabled label placeholder required).include?(k) or v.blank?
     }.symbolize_keys.merge(:input_html => input_html)
   end
 
