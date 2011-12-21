@@ -13,13 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20111209175716) do
 
-  create_table "account_aliases", :force => true do |t|
-    t.integer  "account_id"
-    t.integer  "destroyed_account_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
     t.integer  "contact_id"
@@ -39,8 +32,8 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",            :limit => 128, :default => "",       :null => false
-    t.string   "access",          :limit => 8,   :default => "Public"
+    t.string   "name",            :limit => 64, :default => "",       :null => false
+    t.string   "access",          :limit => 8,  :default => "Public"
     t.string   "website",         :limit => 64
     t.string   "toll_free_phone", :limit => 32
     t.string   "phone",           :limit => 32
@@ -50,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
     t.datetime "updated_at"
     t.string   "email",           :limit => 64
     t.string   "background_info"
-    t.integer  "rating",                         :default => 0,        :null => false
+    t.integer  "rating",                        :default => 0,        :null => false
     t.string   "category",        :limit => 32
   end
 
@@ -88,15 +81,6 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
-
-  create_table "application_accounts", :force => true do |t|
-    t.string   "name"
-    t.string   "api_key"
-    t.string   "api_secret"
-    t.string   "persistence_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -146,13 +130,6 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
   end
 
-  create_table "contact_aliases", :force => true do |t|
-    t.integer  "contact_id"
-    t.integer  "destroyed_contact_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "contact_opportunities", :force => true do |t|
     t.integer  "contact_id"
     t.integer  "opportunity_id"
@@ -167,61 +144,32 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",                         :default => ""
-    t.string   "last_name",                          :default => ""
-    t.string   "access",              :limit => 8,   :default => "Public"
-    t.string   "title",               :limit => 64
-    t.string   "department",          :limit => 64
-    t.string   "source",              :limit => 32
-    t.string   "email",               :limit => 64
-    t.string   "alt_email",           :limit => 64
-    t.string   "phone",               :limit => 32
-    t.string   "mobile",              :limit => 32
-    t.string   "fax",                 :limit => 32
-    t.string   "blog",                :limit => 128
-    t.string   "linkedin",            :limit => 128
-    t.string   "facebook",            :limit => 128
-    t.string   "twitter",             :limit => 128
+    t.string   "first_name",      :limit => 64,  :default => "",       :null => false
+    t.string   "last_name",       :limit => 64,  :default => "",       :null => false
+    t.string   "access",          :limit => 8,   :default => "Public"
+    t.string   "title",           :limit => 64
+    t.string   "department",      :limit => 64
+    t.string   "source",          :limit => 32
+    t.string   "email",           :limit => 64
+    t.string   "alt_email",       :limit => 64
+    t.string   "phone",           :limit => 32
+    t.string   "mobile",          :limit => 32
+    t.string   "fax",             :limit => 32
+    t.string   "blog",            :limit => 128
+    t.string   "linkedin",        :limit => 128
+    t.string   "facebook",        :limit => 128
+    t.string   "twitter",         :limit => 128
     t.date     "born_on"
-    t.boolean  "do_not_call",                        :default => false,    :null => false
+    t.boolean  "do_not_call",                    :default => false,    :null => false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "background_info"
-    t.string   "cf_chinese_name"
-    t.string   "cf_preferred_name"
-    t.string   "cf_salutation"
-    t.string   "octopus"
-    t.string   "email_subscriptions"
-    t.string   "skype",               :limit => 128
+    t.string   "skype",           :limit => 128
   end
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
-  add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "index_contacts_on_user_id_and_last_name_and_deleted_at", :unique => true
-
-  create_table "customfields", :force => true do |t|
-    t.string   "uuid",             :limit => 36
-    t.integer  "user_id"
-    t.integer  "tag_id"
-    t.string   "field_name",       :limit => 64
-    t.string   "field_type",       :limit => 32
-    t.string   "field_label",      :limit => 64
-    t.string   "table_name",       :limit => 32
-    t.integer  "display_sequence"
-    t.integer  "display_block"
-    t.integer  "display_width"
-    t.integer  "max_size"
-    t.boolean  "required"
-    t.boolean  "disabled"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "form_field_type"
-    t.string   "field_info"
-    t.text     "select_options"
-    t.integer  "position"
-  end
-
-  add_index "customfields", ["field_name"], :name => "index_customfields_on_field_name"
+  add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "id_last_name_deleted", :unique => true
 
   create_table "emails", :force => true do |t|
     t.string   "imap_message_id",                                       :null => false
@@ -327,7 +275,7 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
   end
 
   add_index "opportunities", ["assigned_to"], :name => "index_opportunities_on_assigned_to"
-  add_index "opportunities", ["user_id", "name", "deleted_at"], :name => "index_opportunities_on_user_id_and_name_and_deleted_at", :unique => true
+  add_index "opportunities", ["user_id", "name", "deleted_at"], :name => "id_name_deleted", :unique => true
 
   create_table "permissions", :force => true do |t|
     t.integer  "user_id"
@@ -370,58 +318,6 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
 
-  create_table "tag1s", :force => true do |t|
-    t.integer "customizable_id"
-    t.string  "customizable_type"
-    t.string  "main_activity"
-    t.boolean "follow_up_permitted"
-    t.string  "swd_client_id"
-    t.string  "swd_reference"
-    t.string  "swd_client_name"
-    t.date    "collect_date"
-  end
-
-  create_table "tag2s", :force => true do |t|
-    t.integer "customizable_id"
-    t.string  "customizable_type"
-    t.text    "description"
-  end
-
-  create_table "tag3s", :force => true do |t|
-    t.integer "customizable_id"
-    t.string  "customizable_type"
-    t.text    "description"
-    t.text    "registration"
-  end
-
-  create_table "tag4s", :force => true do |t|
-    t.integer "customizable_id"
-    t.string  "customizable_type"
-    t.boolean "receive_email"
-    t.text    "languages_spoken"
-    t.date    "tour_date"
-    t.text    "availability"
-    t.text    "school_or_company"
-    t.text    "skills"
-    t.text    "resume"
-    t.text    "interests"
-    t.text    "volunteering_type"
-    t.text    "why_would_you_like_to_volunteer"
-    t.text    "how_did_you_hear_about_crossroads"
-    t.text    "interested_in_doing"
-    t.text    "other_information"
-    t.text    "service_certificates"
-    t.date    "seventy_hour_service_certificate"
-    t.date    "one_hundred_forty_hour_service_certificate"
-    t.text    "age"
-  end
-
-  create_table "tag5s", :force => true do |t|
-    t.integer "customizable_id"
-    t.string  "customizable_type"
-    t.string  "edu_type"
-  end
-
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -436,10 +332,7 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "taggable_type"
+    t.string "name"
   end
 
   create_table "tasks", :force => true do |t|
