@@ -13,7 +13,7 @@ gem 'acts_as_commentable', '>= 3.0.1'
 gem 'acts-as-taggable-on', '>= 2.0.6'
 gem 'haml',                '>= 3.1.1'
 gem 'paperclip',           '~> 2.4.5'
-gem 'will_paginate',       '>= 3.0.pre2'
+gem 'will_paginate',       '~> 3.0.2'
 gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
 gem 'prototype-rails',     '>= 3.1.0'
@@ -23,8 +23,8 @@ gem 'uglifier'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '~> 3.1.1'
-  gem 'coffee-rails', '~> 3.1.1'
+  gem 'sass-rails', '>= 3.1.1'
+  gem 'coffee-rails', '>= 3.1.1'
   gem 'therubyracer'
 end
 

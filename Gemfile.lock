@@ -29,7 +29,7 @@ GEM
       activesupport (= 3.1.3)
     activesupport (3.1.3)
       multi_json (~> 1.0)
-    acts-as-taggable-on (2.2.0)
+    acts-as-taggable-on (2.2.1)
       rails (~> 3.1)
     acts_as_commentable (3.0.1)
     acts_as_list (0.1.4)
@@ -48,11 +48,11 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.1.3)
-    columnize (0.3.5)
+    coffee-script-source (1.2.0)
+    columnize (0.3.6)
     diff-lcs (1.1.3)
     erubis (2.7.0)
-    execjs (1.2.12)
+    execjs (1.2.13)
       multi_json (~> 1.0)
     factory_girl (2.3.2)
       activesupport
@@ -119,7 +119,7 @@ GEM
     rake-compiler (0.7.9)
       rake
     rbx-require-relative (0.0.5)
-    rdoc (3.11)
+    rdoc (3.12)
       json (~> 1.4)
     rspec (2.7.0)
       rspec-core (~> 2.7.0)
@@ -151,7 +151,7 @@ GEM
     ruby-progressbar (0.0.10)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
-    sass (3.1.11)
+    sass (3.1.12)
     sass-rails (3.1.5)
       actionpack (~> 3.1.0)
       railties (~> 3.1.0)
@@ -177,7 +177,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.31)
-    uglifier (1.1.0)
+    uglifier (1.2.0)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
     unicorn (4.1.1)
@@ -196,7 +196,7 @@ DEPENDENCIES
   annotate (~> 2.4.1.beta)
   authlogic (~> 3.1.0)
   awesome_print (>= 0.3.1)
-  coffee-rails (~> 3.1.1)
+  coffee-rails (>= 3.1.1)
   factory_girl (>= 1.3.3)
   factory_girl_rails (~> 1.4.0)
   ffaker (>= 1.5.0)
@@ -209,11 +209,11 @@ DEPENDENCIES
   rspec-rails (>= 2.5.0)
   ruby-debug
   ruby-debug19
-  sass-rails (~> 3.1.1)
+  sass-rails (>= 3.1.1)
   simple_form (~> 1.5.2)
   simplecov
   test-unit (~> 2.4.3)
   therubyracer
   uglifier
   unicorn
-  will_paginate (>= 3.0.pre2)
+  will_paginate (~> 3.0.2)
