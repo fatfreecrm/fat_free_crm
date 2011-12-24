@@ -49,6 +49,16 @@ describe OpportunitiesController do
       assigns[:opportunities].map(&:stage).sort.should == %w(negotiation prospecting)
     end
 
+    it "should perform lookup using query string" do
+      @first  = Factory(:opportunity, :user => @current_user, :name => "The first one")
+      @second = Factory(:opportunity, :user => @current_user, :name => "The second one")
+
+      get :index, :query => "second"
+      assigns[:opportunities].should == [ @second ]
+      assigns[:current_query].should == "second"
+      session[:opportunities_current_query].should == "second"
+    end
+
     describe "AJAX pagination" do
       it "should pick up page number from params" do
         @opportunities = [ Factory(:opportunity, :user => @current_user) ]
@@ -787,48 +797,6 @@ describe OpportunitiesController do
         delete :destroy, :id => @private.id
         flash[:warning].should_not == nil
         response.should redirect_to(opportunities_path)
-      end
-    end
-
-  end
-
-  # GET /opportunities/search/query                                        AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET search" do
-    before do
-      @first  = Factory(:opportunity, :user => @current_user, :name => "The first one")
-      @second = Factory(:opportunity, :user => @current_user, :name => "The second one")
-      @opportunities = [ @first, @second ]
-    end
-
-    it "should perform lookup using query string and redirect to index" do
-      xhr :get, :search, :query => "second"
-
-      assigns[:opportunities].should == [ @second ]
-      assigns[:current_query].should == "second"
-      session[:opportunities_current_query].should == "second"
-      response.should render_template("index")
-    end
-
-    describe "with mime type of JSON" do
-      it "should perform lookup using query string and render JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
-        opportunities.should_receive(:to_json).and_return("generated JSON")
-
-        request.env["HTTP_ACCEPT"] = "application/json"
-        get :search, :query => "second?!"
-        response.body.should == "generated JSON"
-      end
-    end
-
-    describe "with mime type of XML" do
-      it "should perform lookup using query string and render XML" do
-        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
-        opportunities.should_receive(:to_xml).and_return("generated XML")
-
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        get :search, :query => "second?!"
-        response.body.should == "generated XML"
       end
     end
   end

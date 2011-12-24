@@ -47,10 +47,6 @@ describe LeadsController do
       { :delete => "/leads/aaron" }.should_not be_routable
     end
 
-    it "recognizes and generates #search" do
-      { :get => "/leads/search" }.should route_to( :controller => "leads", :action => "search" )
-    end
-
     it "recognizes and generates #auto_complete" do
       { :post => "/leads/auto_complete" }.should route_to( :controller => "leads", :action => "auto_complete" )
     end
@@ -82,6 +78,6 @@ describe LeadsController do
     it "doesn't recognize #reject with non-numeric id" do
       { :put => "/leads/aaron/reject" }.should_not be_routable
     end
-    
+
   end
 end

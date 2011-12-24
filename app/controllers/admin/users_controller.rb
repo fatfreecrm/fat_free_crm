@@ -142,17 +142,6 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
-  # GET /users/search/query                                                AJAX
-  #----------------------------------------------------------------------------
-  def search
-    @users = get_users(:query => params[:query], :page => 1)
-
-    respond_to do |format|
-      format.js   { render :index }
-      format.xml  { render :xml => @users }
-    end
-  end
-
   # POST /users/auto_complete/query                                        AJAX
   #----------------------------------------------------------------------------
   # Handled by Admin::ApplicationController :auto_complete
@@ -193,8 +182,8 @@ class Admin::UsersController < Admin::ApplicationController
   private
   #----------------------------------------------------------------------------
   def get_users(options = {})
-    self.current_page  = options[:page]  if options[:page]
-    self.current_query = options[:query] if options[:query]
+    self.current_page  = options[:page] if options[:page]
+    self.current_query = params[:query] if params[:query]
 
     wants = request.format
     scope = User.by_id

@@ -14,7 +14,7 @@ describe AccountsController do
     it "recognizes and generates #show" do
       { :get => "/accounts/1" }.should route_to(:controller => "accounts", :action => "show", :id => "1")
     end
-    
+
     it "doesn't recognize #show with non-numeric id" do
       { :get => "/accounts/aaron" }.should_not be_routable
     end
@@ -45,10 +45,6 @@ describe AccountsController do
 
     it "doesn't recognize #destroy with non-numeric id" do
       { :delete => "/accounts/aaron" }.should_not be_routable
-    end
-
-    it "recognizes and generates #search" do
-      { :get => "/accounts/search" }.should route_to( :controller => "accounts", :action => "search" )
     end
 
     it "recognizes and generates #auto_complete" do

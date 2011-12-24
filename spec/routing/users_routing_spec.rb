@@ -7,17 +7,9 @@ describe UsersController do
       { :get => "/users" }.should route_to(:controller => "users", :action => "index")
     end
 
-    # it "recognizes and generates #new" do
-    #   { :get => "/users/new" }.should route_to(:controller => "users", :action => "new")
-    # end
-
     it "recognizes and generates #new as /signup" do
       { :get => "/signup" }.should route_to(:controller => "users", :action => "new")
     end
-
-    # it "recognizes and generates #show" do
-    #   { :get => "/users/123" }.should route_to(:controller => "users", :action => "show", :id => "1")
-    # end
 
     it "recognizes and generates #show as /profile" do
       { :get => "/profile" }.should route_to(:controller => "users", :action => "show")

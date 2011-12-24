@@ -20,6 +20,16 @@ describe ContactsController do
       response.should render_template("contacts/index")
     end
 
+    it "should perform lookup using query string" do
+      @billy_bones   = Factory(:contact, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
+      @captain_flint = Factory(:contact, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
+
+      get :index, :query => "bill"
+      assigns[:contacts].should == [ @billy_bones ]
+      assigns[:current_query].should == "bill"
+      session[:contacts_current_query].should == "bill"
+    end
+
     describe "AJAX pagination" do
       it "should pick up page number from params" do
         @contacts = [ Factory(:contact, :user => @current_user) ]
@@ -549,45 +559,6 @@ describe ContactsController do
         delete :destroy, :id => @private.id
         flash[:warning].should_not == nil
         response.should redirect_to(contacts_path)
-      end
-    end
-  end
-
-  # GET /contacts/search/query                                             AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET search" do
-
-    it "should perform lookup using query string and redirect to index" do
-      @billy_bones   = Factory(:contact, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
-      @captain_flint = Factory(:contact, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
-
-      xhr :get, :search, :query => "bill"
-
-      assigns[:contacts].should == [ @billy_bones ]
-      assigns[:current_query].should == "bill"
-      session[:contacts_current_query].should == "bill"
-      response.should render_template("index")
-    end
-
-    describe "with mime type of JSON" do
-      it "should perform lookup using query string and render JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(contacts = mock("Array of Contacts"))
-        contacts.should_receive(:to_json).and_return("generated JSON")
-
-        request.env["HTTP_ACCEPT"] = "application/json"
-        get :search, :query => "bill?!"
-        response.body.should == "generated JSON"
-      end
-    end
-
-    describe "with mime type of XML" do
-      it "should perform lookup using query string and render XML" do
-        @controller.should_receive(:get_list_of_records).and_return(contacts = mock("Array of Contacts"))
-        contacts.should_receive(:to_xml).and_return("generated XML")
-
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        get :search, :query => "bill?!"
-        response.body.should == "generated XML"
       end
     end
   end

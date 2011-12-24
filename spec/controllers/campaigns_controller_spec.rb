@@ -51,6 +51,16 @@ describe CampaignsController do
       assigns[:campaigns].map(&:status).sort.should == %w(planned started)
     end
 
+    it "should perform lookup using query string" do
+      @first  = Factory(:campaign, :user => @current_user, :name => "Hello, world!")
+      @second = Factory(:campaign, :user => @current_user, :name => "Hello again")
+
+      get :index, :query => "again"
+      assigns[:campaigns].should == [ @second ]
+      assigns[:current_query].should == "again"
+      session[:campaigns_current_query].should == "again"
+    end
+
     describe "AJAX pagination" do
       it "should pick up page number from params" do
         @campaigns = [ Factory(:campaign, :user => @current_user) ]
@@ -180,7 +190,6 @@ describe CampaignsController do
         response.code.should == "404" # :not_found
       end
     end
-
   end
 
   # GET /campaigns/new
@@ -204,7 +213,6 @@ describe CampaignsController do
       xhr :get, :new, :related => "lead_42"
       assigns[:lead].should == @lead
     end
-
   end
 
   # GET /campaigns/1/edit                                                  AJAX
@@ -273,7 +281,6 @@ describe CampaignsController do
         response.should render_template("campaigns/edit")
       end
     end
-
   end
 
   # POST /campaigns
@@ -310,7 +317,6 @@ describe CampaignsController do
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:campaigns].should == [ @campaign ]
       end
-
     end
 
     describe "with invalid params" do
@@ -325,9 +331,7 @@ describe CampaignsController do
         assigns(:users).should == @users
         response.should render_template("campaigns/create")
       end
-
     end
-
   end
 
   # PUT /campaigns/1
@@ -384,7 +388,6 @@ describe CampaignsController do
           response.body.should == "window.location.reload();"
         end
       end
-
     end
 
     describe "with invalid params" do
@@ -399,9 +402,7 @@ describe CampaignsController do
         assigns(:users).should == @users
         response.should render_template("campaigns/update")
       end
-
     end
-
   end
 
   # DELETE /campaigns/1
@@ -487,46 +488,6 @@ describe CampaignsController do
         delete :destroy, :id => @private.id
         flash[:warning].should_not == nil
         response.should redirect_to(campaigns_path)
-      end
-    end
-
-  end
-
-  # GET /campaigns/search/query                                                AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET search" do
-
-    it "should perform lookup using query string and redirect to index" do
-      @first  = Factory(:campaign, :user => @current_user, :name => "Hello, world!")
-      @second = Factory(:campaign, :user => @current_user, :name => "Hello again")
-
-      xhr :get, :search, :query => "again"
-
-      assigns[:campaigns].should == [ @second ]
-      assigns[:current_query].should == "again"
-      session[:campaigns_current_query].should == "again"
-      response.should render_template("index")
-    end
-
-    describe "with mime type of JSON" do
-      it "should perform lookup using query string and render JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
-        campaigns.should_receive(:to_json).and_return("generated JSON")
-
-        request.env["HTTP_ACCEPT"] = "application/json"
-        get :search, :query => "again?!"
-        response.body.should == "generated JSON"
-      end
-    end
-
-    describe "with mime type of XML" do
-      it "should perform lookup using query string and render XML" do
-        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
-        campaigns.should_receive(:to_xml).and_return("generated XML")
-
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        get :search, :query => "again?!"
-        response.body.should == "generated XML"
       end
     end
   end

@@ -197,18 +197,6 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /contacts/search/query                                             AJAX
-  #----------------------------------------------------------------------------
-  def search
-    @contacts = get_contacts(:query => params[:query], :page => 1)
-
-    respond_to do |format|
-      format.js   { render :index }
-      format.json { render :json => @contacts }
-      format.xml  { render :xml => @contacts }
-    end
-  end
-
   # GET /contacts/options                                                  AJAX
   #----------------------------------------------------------------------------
   def options

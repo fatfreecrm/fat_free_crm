@@ -251,6 +251,7 @@ private
   #----------------------------------------------------------------------------
   def get_list_of_records(klass, options = {})
     items = klass.name.tableize
+    options[:query] ||= params[:query]                        if params[:query]
     self.current_page = options[:page]                        if options[:page]
     query, tags       = parse_query_and_tags(options[:query]) if options[:query]
     self.current_query = query

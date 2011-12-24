@@ -19,6 +19,16 @@ describe Admin::UsersController do
       assigns[:users].last.should == @users.first
       response.should render_template("admin/users/index")
     end
+
+    it "performs lookup using query string" do
+      @amy = Factory(:user, :username => "amy")
+      @bob = Factory(:user, :username => "bob")
+
+      get :index, :query => "amy"
+      assigns[:users].should == [ @amy ]
+      assigns[:current_query].should == "amy"
+      session[:users_current_query].should == "amy"
+    end
   end
 
   # GET /admin/users/1
@@ -230,36 +240,6 @@ describe Admin::UsersController do
       flash[:warning].should_not == nil
       lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
       response.should render_template("admin/users/destroy")
-    end
-  end
-
-  # GET /users/search/query                                                AJAX
-  #----------------------------------------------------------------------------
-  describe "GET search" do
-    before(:each) do
-      @amy = Factory(:user, :username => "amy")
-      @bob = Factory(:user, :username => "bob")
-      @accounts = [ @amy, @bob, @current_user ]
-    end
-
-    it "performs lookup using query string and redirect to index" do
-      xhr :get, :search, :query => "amy"
-
-      assigns[:users].should == [ @amy ]
-      assigns[:current_query].should == "amy"
-      session[:users_current_query].should == "amy"
-      response.should render_template("admin/users/index")
-    end
-
-    describe "with mime type of XML" do
-      it "performs lookup using query string and render XML" do
-        @controller.should_receive(:get_users).and_return(users = mock("Array of Users"))
-        users.should_receive(:to_xml).and_return("generated XML")
-
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        get :search, :query => "amy"
-        response.body.should == "generated XML"
-      end
     end
   end
 

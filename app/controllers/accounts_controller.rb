@@ -163,18 +163,6 @@ class AccountsController < ApplicationController
     respond_to_not_found(:html, :js, :json, :xml)
   end
 
-  # GET /accounts/search/query                                             AJAX
-  #----------------------------------------------------------------------------
-  def search
-    @accounts = get_accounts(:query => params[:query], :page => 1)
-
-    respond_to do |format|
-      format.js   { render :index }
-      format.json { render :json => @accounts }
-      format.xml  { render :xml => @accounts }
-    end
-  end
-
   # PUT /accounts/1/attach
   # PUT /accounts/1/attach.xml                                             AJAX
   #----------------------------------------------------------------------------

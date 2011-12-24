@@ -23,7 +23,6 @@ FatFreeCRM::Application.routes.draw do
       collection do
         post :filter
         get  :options
-        get  :search
         get  :field_group
         post :auto_complete
         post :redraw
@@ -38,7 +37,6 @@ FatFreeCRM::Application.routes.draw do
       collection do
         post :filter
         get  :options
-        get  :search
         get  :field_group
         post :auto_complete
         post :redraw
@@ -53,7 +51,6 @@ FatFreeCRM::Application.routes.draw do
       collection do
         post :filter
         get  :options
-        get  :search
         get  :field_group
         post :auto_complete
         post :redraw
@@ -68,7 +65,6 @@ FatFreeCRM::Application.routes.draw do
       collection do
         post :filter
         get  :options
-        get  :search
         get  :field_group
         post :auto_complete
         post :redraw
@@ -86,7 +82,6 @@ FatFreeCRM::Application.routes.draw do
       collection do
         post :filter
         get  :options
-        get  :search
         get  :field_group
         post :auto_complete
         post :redraw
@@ -119,7 +114,6 @@ FatFreeCRM::Application.routes.draw do
     namespace :admin do
       resources :users do
         collection do
-          get  :search
           post :auto_complete
         end
         member do
@@ -140,7 +134,6 @@ FatFreeCRM::Application.routes.draw do
           post :auto_complete
           get :options
           post :redraw
-          get :search
           post :sort
         end
       end

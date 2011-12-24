@@ -218,18 +218,6 @@ class OpportunitiesController < ApplicationController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /opportunities/search/query                                        AJAX
-  #----------------------------------------------------------------------------
-  def search
-    @opportunities = get_opportunities(:query => params[:query], :page => 1)
-
-    respond_to do |format|
-      format.js   { render :index }
-      format.json { render :json => @opportunities }
-      format.xml  { render :xml => @opportunities }
-    end
-  end
-
   # GET /opportunities/options                                             AJAX
   #----------------------------------------------------------------------------
   def options

@@ -46,6 +46,16 @@ describe AccountsController do
       assigns[:accounts].should == @accounts
     end
 
+    it "should perform lookup using query string" do
+      @first  = Factory(:account, :user => @current_user, :name => "The first one")
+      @second = Factory(:account, :user => @current_user, :name => "The second one")
+
+      get :index, :query => "second"
+      assigns[:accounts].should == [ @second ]
+      assigns[:current_query].should == "second"
+      session[:accounts_current_query].should == "second"
+    end
+
     describe "AJAX pagination" do
       it "should pick up page number from params" do
         @accounts = [ Factory(:account, :user => @current_user) ]
@@ -478,45 +488,6 @@ describe AccountsController do
       end
     end
 
-  end
-
-  # GET /accounts/search/query                                             AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET search" do
-
-    it "should perform lookup using query string and redirect to index" do
-      @first  = Factory(:account, :user => @current_user, :name => "The first one")
-      @second = Factory(:account, :user => @current_user, :name => "The second one")
-
-      xhr :get, :search, :query => "second"
-
-      assigns[:accounts].should == [ @second ]
-      assigns[:current_query].should == "second"
-      session[:accounts_current_query].should == "second"
-      response.should render_template("index")
-    end
-
-    describe "with mime type of JSON" do
-      it "should perform lookup using query string and render JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(accounts = mock("Array of Accounts"))
-        accounts.should_receive(:to_json).and_return("generated JSON")
-
-        request.env["HTTP_ACCEPT"] = "application/json"
-        get :search, :query => "second?!"
-        response.body.should == "generated JSON"
-      end
-    end
-
-    describe "with mime type of XML" do
-      it "should perform lookup using query string and render XML" do
-        @controller.should_receive(:get_list_of_records).and_return(accounts = mock("Array of Accounts"))
-        accounts.should_receive(:to_xml).and_return("generated XML")
-
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        get :search, :query => "second?!"
-        response.body.should == "generated XML"
-      end
-    end
   end
 
   # PUT /accounts/1/attach

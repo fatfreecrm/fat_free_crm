@@ -47,10 +47,6 @@ describe OpportunitiesController do
       { :delete => "/opportunities/aaron" }.should_not be_routable
     end
 
-    it "recognizes and generates #search" do
-      { :get => "/opportunities/search" }.should route_to( :controller => "opportunities", :action => "search" )
-    end
-
     it "recognizes and generates #auto_complete" do
       { :post => "/opportunities/auto_complete" }.should route_to( :controller => "opportunities", :action => "auto_complete" )
     end

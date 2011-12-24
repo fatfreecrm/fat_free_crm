@@ -238,18 +238,6 @@ class LeadsController < ApplicationController
     respond_to_not_found(:html, :js, :json, :xml)
   end
 
-  # GET /leads/search/query                                                AJAX
-  #----------------------------------------------------------------------------
-  def search
-    @leads = get_leads(:query => params[:query], :page => 1)
-
-    respond_to do |format|
-      format.js   { render :index }
-      format.json { render :json => @leads }
-      format.xml  { render :xml => @leads }
-    end
-  end
-
   # PUT /leads/1/attach
   # PUT /leads/1/attach.xml                                                AJAX
   #----------------------------------------------------------------------------

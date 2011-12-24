@@ -162,18 +162,6 @@ class CampaignsController < ApplicationController
     respond_to_not_found(:html, :js, :json, :xml)
   end
 
-  # GET /campaigns/search/query                                            AJAX
-  #----------------------------------------------------------------------------
-  def search
-    @campaigns = get_campaigns(:query => params[:query], :page => 1)
-
-    respond_to do |format|
-      format.js   { render :index }
-      format.json { render :json => @campaigns }
-      format.xml  { render :xml => @campaigns }
-    end
-  end
-
   # PUT /campaigns/1/attach
   # PUT /campaigns/1/attach.xml                                            AJAX
   #----------------------------------------------------------------------------

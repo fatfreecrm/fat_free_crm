@@ -47,10 +47,6 @@ describe CampaignsController do
       { :delete => "/campaigns/aaron" }.should_not be_routable
     end
 
-    it "recognizes and generates #search" do
-      { :get => "/campaigns/search" }.should route_to( :controller => "campaigns", :action => "search" )
-    end
-
     it "recognizes and generates #auto_complete" do
       { :post => "/campaigns/auto_complete" }.should route_to( :controller => "campaigns", :action => "auto_complete" )
     end

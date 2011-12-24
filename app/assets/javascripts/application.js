@@ -411,7 +411,7 @@ var crm = {
       }
       $("loading").show();
       $(list).setStyle({ opacity: 0.4 });
-      new Ajax.Request(this.base_url + "/" + controller + "/search", {
+      new Ajax.Request(this.base_url + "/" + controller, {
         method     : "get",
         parameters : { query : query },
         onSuccess  : function() {
