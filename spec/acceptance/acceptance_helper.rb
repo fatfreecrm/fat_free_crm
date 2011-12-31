@@ -1,18 +1,7 @@
-require File.expand_path("../spec_helper.rb", __FILE__)
+require File.expand_path("../../spec_helper.rb", __FILE__)
 
 require 'steak'
 require 'capybara/rails'
-
-module Steak::Capybara
-  include Rack::Test::Methods
-  include Capybara
-
-  def app
-    ::Rails.application
-  end
-end
-
-RSpec.configuration.include Steak::Capybara, :type => :acceptance
 
 # Put your acceptance spec helpers inside /spec/acceptance/support
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
@@ -30,6 +19,27 @@ if ENV['HEADLESS'] == 'true'
     headless.destroy
   end
   puts "Running in Headless mode. Display #{HEADLESS_DISPLAY}"
+end
+
+# How to clean your database when transactions are turned off. See
+# http://github.com/bmabey/database_cleaner for more info.
+if defined?(ActiveRecord::Base)
+  begin
+    require 'database_cleaner'
+    DatabaseCleaner.strategy = :truncation, {:except => ['settings']}
+  rescue LoadError => ignore_if_database_cleaner_not_present
+  end
+end
+
+RSpec.configuration.use_transactional_fixtures = false
+
+RSpec.configuration.before(:each, :type => :acceptance) do
+  DatabaseCleaner.clean
+end
+
+# Chrome browser
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end
 
 # Default timeout for extended for AJAX based application

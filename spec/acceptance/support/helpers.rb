@@ -8,7 +8,7 @@ module HelperMethods
     fill_in "authentication_password", :with => user.password
     click_button "Login"
   end
- 
+
 end
 
 RSpec.configuration.include HelperMethods, :type => :acceptance

@@ -47,7 +47,7 @@ group :development, :test do
   gem 'rspec-rails',        '~> 2.8.0'
   gem 'factory_girl'
   gem 'steak',              '~> 2.0.0'
-  gem 'headless',           '~> 0.2.2'    
+  gem 'headless',           '~> 0.2.2'
 end
 
 group :development do
