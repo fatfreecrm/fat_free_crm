@@ -2,7 +2,7 @@
 - f.object.tags = unsaved_param_tags(asset) if params[asset] && params[asset][:tag_list]
 %tr
   %td{ :valign => :top, :colspan => span }
-    .label.req Tags: <small>(comma separated, letters and digits only)</small>
+    .label Tags: <small>(comma separated, letters and digits only)</small>
     #taggings
       #facebook-list
         = f.text_field :tag_list, :id => "tag_list", :style => "width:500px", :autocomplete => "off"
