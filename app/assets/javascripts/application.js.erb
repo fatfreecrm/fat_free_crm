@@ -30,7 +30,7 @@
 
 <%
 FatFreeCRM::Plugin.list_ids.each do |plugin|
-  require_asset(plugin.to_s) rescue FileNotFound
+  require_asset(plugin.to_s) rescue Sprockets::FileNotFound
 end
 %>
 
