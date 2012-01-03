@@ -8,7 +8,7 @@
     = stylesheet_link_tag :print, :media => 'print'
     %style= yield :styles
 
-    = javascript_include_tag :application_tabbed
+    = javascript_include_tag :application
     = hook(:javascript_includes, self)
 
     %script{:type => "text/javascript"}= yield :javascript

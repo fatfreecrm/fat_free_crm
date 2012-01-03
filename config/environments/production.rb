@@ -45,7 +45,6 @@ FatFreeCRM::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
   config.assets.precompile += ['print.css',
-                               'application_tabbed.js',
                                'calendar_date_select/default.css',
                                /calendar_date_select\/[^\/]*\.js/]
 

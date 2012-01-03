@@ -23,6 +23,11 @@
 //= require modalbox
 //= require facebooklist
 //= require facebooklist.simulate
+//= require crm_classes
+//= require crm_loginout
+//= require crm_fields
+//= require calendar_date_select/calendar_date_select
+
 
 var fbtaglist = null;
 
