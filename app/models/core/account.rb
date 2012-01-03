@@ -111,7 +111,7 @@ class Account < ActiveRecord::Base
   # Class methods.
   #----------------------------------------------------------------------------
   def self.create_or_select_for(model, params, users)
-    if params[:id]
+    if params[:id].present?
       account = Account.find(params[:id])
     else
       account = Account.new(params)
