@@ -28,6 +28,11 @@
 //= require crm_fields
 //= require calendar_date_select/calendar_date_select
 
+<%
+FatFreeCRM::Plugin.list_ids.each do |plugin|
+  require_asset(plugin.to_s) rescue FileNotFound
+end
+%>
 
 var fbtaglist = null;
 
