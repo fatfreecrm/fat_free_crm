@@ -16,13 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *------------------------------------------------------------------------------
  */
- 
+
 /*
+ *= require modalbox
+ *= require facebooklist
+ *= require chosen
  *= require base
  *= require header
  *= require common
  *= require rails
  *= require safari
- *= require modalbox
- *= require facebooklist
  */
+
+<%
+FatFreeCRM::Plugin.list_ids.each do |plugin|
+  require_asset(plugin.to_s) rescue Sprockets::FileNotFound
+end
+%>
