@@ -1,7 +1,7 @@
 case ENV['DB']
 when "mysql"; gem "mysql2", "0.3.10"
 when "sqlite"; gem "sqlite3" 
-when "postgres"; gem "pg", ">= 0.9.0"
+when "postgres"; gem "pg", "0.12.0"
 end
 
 def gem(*args)
