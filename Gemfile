@@ -47,7 +47,7 @@ group :test do
 end
 
 group :heroku do
-  gem 'unicorn'
+  gem 'unicorn', :platform => :ruby
 end
 
 
