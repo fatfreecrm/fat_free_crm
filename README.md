@@ -75,9 +75,9 @@ needs to be updated.
 Please run the following commands in this order:
 
 ```bash
-bundle install              # Installs gem dependencies
-rake crm:upgrade:schema     # Updates your schema to use the new timestamped migrations
-rake db:migrate             # Runs any new database migrations.
+bundle install --without heroku   # Installs gem dependencies
+rake crm:upgrade:schema           # Updates your schema to use the new timestamped migrations
+rake db:migrate                   # Runs any new database migrations.
 ```
 
 ## Install on Heroku
@@ -126,7 +126,7 @@ After you have uncommented the right database adapter in your <tt>Gemfile</tt>,
 run the following command from the application's root directory:
 
 ```bash
-bundle install
+bundle install --without heroku
 ```
 
 #### Create Database
