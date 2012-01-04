@@ -1,7 +1,7 @@
 case ENV['DB']
 when "mysql"; gem "mysql2", "0.3.10"
-when "sqlite"; gem "sqlite3" 
-when "postgres"; gem "pg", "0.12.0"
+when "sqlite"; gem "sqlite3"
+when "postgres"; gem "pg", "~> 0.12.2"
 end
 
 def gem(*args)
@@ -10,4 +10,4 @@ def gem(*args)
 end
 
 # Eval Gemfile
-eval(IO.read(File.join(File.dirname(__FILE__), 'Gemfile')), binding) 
+eval(IO.read(File.join(File.dirname(__FILE__), 'Gemfile')), binding)
