@@ -75,25 +75,6 @@ ActionView::TestCase::TestController.class_eval do
   end
 end
 
-if RUBY_VERSION.to_f >= 1.9
-  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do
-    def render_with_mock_response(*args)
-      render_without_mock_response *args
-      @response = mock(:body => rendered)
-    end
-    alias_method_chain :render, :mock_response
-  end
-else
-  RSpec::Rails::ViewExampleGroup::InstanceMethods.module_eval do
-    # Ruby 1.8.x doesnt support alias_method_chain with blocks,
-    # so we are just overwriting the whole method verbatim.
-    def render(options={}, local_assigns={}, &block)
-      options = {:template => _default_file_to_render} if Hash === options and options.empty?
-      super(options, local_assigns, &block)
-      @response = mock(:body => rendered)
-    end
-  end
-end
 
 ActionView::Base.class_eval do
   def controller_name

@@ -39,5 +39,12 @@ describe Setting do
     Setting.world.should == "hello"
     Setting[:world].should == "hello"
   end
+  
+  it "should handle false and nil values correctly" do
+    Setting[:hello] = false
+    Setting[:hello].should == false
+    Setting.hello.should == false
+  end
+  
 end
 
