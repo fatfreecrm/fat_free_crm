@@ -1,6 +1,6 @@
-- won = @account.opportunities.won.map(&:amount).sum
-- lost = @account.opportunities.lost.map(&:amount).sum
-- pipeline = @account.opportunities.pipeline.map(&:weighted_amount).sum
+- won = @account.opportunities.won.map(&:amount).compact.sum
+- lost = @account.opportunities.lost.map(&:amount).compact.sum
+- pipeline = @account.opportunities.pipeline.map(&:weighted_amount).compact.sum
 
 .panel#summary
   %h4= h(@account.name)
