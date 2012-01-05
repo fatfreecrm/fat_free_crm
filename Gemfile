@@ -30,7 +30,7 @@ end
 
 group :development, :test do
   gem 'ruby-debug',   :platform => :mri_18
-  gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug'
+  gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug' if RUBY_VERSION == "1.9.2"
   gem 'awesome_print'
 
   gem 'test-unit',          '~> 2.4.3',  :platform => :mri_19, :require => false
