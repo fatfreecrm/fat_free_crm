@@ -29,7 +29,7 @@ module FatFreeCRM
       # 'assets:precompile' can run on Heroku without depending on a database.
       # See: http://devcenter.heroku.com/articles/rails31_heroku_cedar#troubleshooting
       @@assets = [ Account, Contact, Lead ].freeze
-      @settings = Setting.email_dropbox
+      @settings = Setting.email_dropbox.dup
       @archived, @discarded = 0, 0
     end
 

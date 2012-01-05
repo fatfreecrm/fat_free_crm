@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe AccountsController do
   def get_data_for_sidebar
-    @category = Setting.account_category
+    @category = Setting.account_category.dup
   end
 
   before do

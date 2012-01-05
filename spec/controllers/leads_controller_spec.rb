@@ -22,7 +22,7 @@ describe LeadsController do
 
     it "should collect the data for the leads sidebar" do
       @leads = [ Factory(:lead, :user => @current_user) ]
-      @status = Setting.lead_status
+      @status = Setting.lead_status.dup
 
       get :index
       (assigns[:lead_status_total].keys.map(&:to_sym) - (@status << :all << :other)).should == []

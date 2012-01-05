@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe CampaignsController do
 
   def get_data_for_sidebar
-    @status = Setting.campaign_status
+    @status = Setting.campaign_status.dup
   end
 
   before(:each) do
