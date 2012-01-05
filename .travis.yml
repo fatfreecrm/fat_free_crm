@@ -29,7 +29,7 @@ branches:
     - master
 
 gemfile: Gemfile.ci
-bundler_args: --path=vendor/bundle --without heroku
+bundler_args: --path=vendor/bundle --without heroku development
 
 before_install: gem install bundler --pre
 

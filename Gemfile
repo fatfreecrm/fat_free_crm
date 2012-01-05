@@ -17,8 +17,12 @@ gem 'paperclip',           '~> 2.4.5'
 gem 'will_paginate',       '~> 3.0.2'
 gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
-gem 'ffaker',              '~> 1.11.0' # For demo data
+gem 'ffaker',              '~> 1.11.0' # For loading demo data
 gem 'uglifier'
+
+group :heroku do
+  gem 'unicorn', :platform => :ruby
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -29,9 +33,11 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'ruby-debug',   :platform => :mri_18
-  gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug' if RUBY_VERSION == "1.9.2"
-  gem 'awesome_print'
+  unless ENV["CI"]
+    gem 'ruby-debug',   :platform => :mri_18
+    gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug' if RUBY_VERSION == "1.9.2"
+    gem 'awesome_print'
+  end
 
   gem 'test-unit',          '~> 2.4.3',  :platform => :mri_19, :require => false
   gem 'rspec-rails',        '~> 2.8.0'
@@ -40,12 +46,8 @@ end
 
 group :test do
   gem 'factory_girl_rails', '~> 1.4.0'
-  gem 'simplecov', :platform => :mri_19
+  gem 'simplecov', :platform => :mri_19 unless ENV["CI"]  # Until Travis supports build artifacts
   gem 'fuubar'
-end
-
-group :heroku do
-  gem 'unicorn', :platform => :ruby
 end
 
 # For annotating models with Schema information
