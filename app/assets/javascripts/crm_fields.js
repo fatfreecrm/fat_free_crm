@@ -17,7 +17,7 @@
 
 //----------------------------------------------------------------------------
 // Adds the 'on_change' hook for the FacebookList, to AJAX load custom field groups.
-crm.set_tag_list_event = function(controller, asset, asset_id) {
+crm.set_tag_list_event = function(controller, asset_id) {
   var extra_field_group_options = $H({
       onAdd: function(tag, el){
         // Check that the tag is not being added more than twice (case INSENSITIVE)

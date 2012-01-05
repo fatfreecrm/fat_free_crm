@@ -21,13 +21,12 @@
 //= require dragdrop
 //= require prototype_ujs
 //= require modalbox
-//= require facebooklist
-//= require facebooklist.simulate
 //= require crm
 //= require crm_classes
 //= require crm_loginout
 //= require crm_fields
 //= require calendar_date_select/calendar_date_select
+//= require event.simulate
 //= require ajax-chosen-prototype
 
 <%
@@ -35,5 +34,3 @@ FatFreeCRM::Plugin.list_ids.each do |plugin|
   require_asset(plugin.to_s) rescue Sprockets::FileNotFound
 end
 %>
-
-var fbtaglist = null;
