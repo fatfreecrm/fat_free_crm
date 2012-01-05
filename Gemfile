@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
+gem 'prototype-rails'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
@@ -9,15 +10,14 @@ gem 'rails', '3.1.3'
 gem "pg", "~> 0.12.2"
 
 gem 'authlogic',           '~> 3.1.0'
-gem 'acts_as_commentable', '>= 3.0.1'
-gem 'acts-as-taggable-on', '>= 2.0.6'
-gem 'haml',                '>= 3.1.1'
+gem 'acts_as_commentable', '~> 3.0.1'
+gem 'acts-as-taggable-on', '~> 2.2.1'
+gem 'haml',                '~> 3.1.3'
 gem 'paperclip',           '~> 2.4.5'
 gem 'will_paginate',       '~> 3.0.2'
 gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
-gem 'prototype-rails',     '>= 3.1.0'
-gem 'ffaker',              '>= 1.5.0' # For demo data
+gem 'ffaker',              '~> 1.11.0' # For demo data
 gem 'uglifier'
 
 # Gems used only for assets and not required
@@ -31,13 +31,11 @@ end
 group :development, :test do
   gem 'ruby-debug',   :platform => :mri_18
   gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug'
-  gem 'annotate',           '~> 2.4.1.beta', :require => false
-  gem 'awesome_print',      '>= 0.3.1'
+  gem 'awesome_print'
 
   gem 'test-unit',          '~> 2.4.3',  :platform => :mri_19, :require => false
-  gem 'rspec-rails',        '>= 2.8.0'
-  gem 'ffaker',             '>= 1.5.0'
-  gem 'factory_girl',       '>= 1.3.3'
+  gem 'rspec-rails',        '~> 2.8.0'
+  gem 'factory_girl'
 end
 
 group :test do
@@ -50,6 +48,8 @@ group :heroku do
   gem 'unicorn', :platform => :ruby
 end
 
+# For annotating models with Schema information
+gem 'annotate', '~> 2.4.1.beta', :require => false, :group => :development
 
 # Rails3 plugins that we use and their source repositories:
 #---------------------------------------------------------------------
