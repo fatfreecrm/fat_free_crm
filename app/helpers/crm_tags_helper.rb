@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-module TagsHelper
+module CrmTagsHelper
 
   # Generate tag links for use on asset index pages.
   #----------------------------------------------------------------------------
