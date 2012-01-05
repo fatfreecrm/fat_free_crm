@@ -35,7 +35,7 @@ group :development, :test do
   gem 'awesome_print',      '>= 0.3.1'
 
   gem 'test-unit',          '~> 2.4.3',  :platform => :mri_19, :require => false
-  gem 'rspec-rails',        '>= 2.5.0'
+  gem 'rspec-rails',        '>= 2.8.0'
   gem 'ffaker',             '>= 1.5.0'
   gem 'factory_girl',       '>= 1.3.3'
 end
