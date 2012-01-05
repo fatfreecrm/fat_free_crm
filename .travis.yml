@@ -15,10 +15,8 @@ matrix:
       env: DB=postgres
     - rvm: 1.8.7
       env: DB=mysql
-  exclude:
     - rvm: 1.9.2
       env: DB=sqlite
-  exclude:
     - rvm: 1.9.3
       env: DB=sqlite
     - rvm: 1.9.3
