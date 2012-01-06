@@ -18,6 +18,8 @@
 class ContactsController < ApplicationController
   before_filter :require_user
   before_filter :get_users, :only => [ :new, :create, :edit, :update ]
+  before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
+  
   before_filter :set_current_tab, :only => [ :index, :show ]
   after_filter  :update_recently_viewed, :only => :show
 
@@ -233,6 +235,10 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def get_contacts(options = {})
     get_list_of_records(Contact, options)
+  end
+
+  def get_accounts
+    @accounts = Account.my.order("name")
   end
 
   #----------------------------------------------------------------------------
