@@ -149,7 +149,11 @@ describe Task do
 
     it "completion should preserve original due date" do
       due_at = 42.days.ago
-      task = Factory(:task, :due_at => due_at, :bucket => "specific_time", :calendar => due_at.strftime("%m/%d/%Y"))
+      task = Factory(:task, :due_at => due_at, :bucket => "specific_time",
+                            :calendar => due_at.strftime(
+                              I18n.t(Setting.task_calendar_with_time ?
+                                      'time.formats.mmddyyyy_hhmm' :
+                                      'date.formats.mmddyyyy')))
       task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id, :calendar => '')
       task.completed?.should == true
       # Setting.task_calendar_with_time == false, so due_at should be tested without HH:MM
