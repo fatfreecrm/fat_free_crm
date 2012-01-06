@@ -1,6 +1,6 @@
 require File.expand_path("../acceptance_helper.rb", __FILE__)
 
-feature 'Accounts feature', %q{
+feature 'Accounts', %q{
   In order to increase customer satisfaction
   As a user
   I want to manage accounts
