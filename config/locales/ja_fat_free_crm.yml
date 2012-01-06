@@ -103,13 +103,13 @@ ja:
         account:
           attributes:
             name:
-              missing_account_name: "^Please specify account name."
+              missing_account_name: "^取引先名を指定してください。"
             access:
               share_account: "^Please specify users to share the account with."
         campaign:
           attributes:
             name:
-              missing_campaign_name: "^Please specify campaign name."
+              missing_campaign_name: "^キャンペーン名を指定してください。"
             ends_on:
               dates_not_in_sequence: "^Please make sure the campaign end date is after the start date."
             access:
@@ -117,39 +117,39 @@ ja:
         contact:
           attributes:
             first_name:
-              missing_first_name: "^Please specify first name."
+              missing_first_name: "^名を指定してください。"
             last_name:
-              missing_last_name: "^Please specify last name."
+              missing_last_name: "^姓を指定してください。"
             access:
               share_contact: "^Please specify users to share the contact with."
         lead:
           attributes:
             first_name:
-              missing_first_name: "^Please specify first name."
+              missing_first_name: "^名を指定してください。"
             last_name:
-              missing_last_name: "^Please specify last name."
+              missing_last_name: "^姓を指定してください。"
             access:
               share_lead: "^Please specify users to share the lead with."
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: "^Please specify opportunity name."
+              missing_opportunity_name: "^商談名を指定してください。"
             access:
               share_opportunity: "^Please specify users to share the opportunity with."
         task:
           attributes:
             name:
-              missing_task_name: "^Please specify task name."
+              missing_task_name: "^タスク名を指定してください。"
             calendar:
-              invalid_date: "^Please specify valid date."
+              invalid_date: "^正しい日付を指定してください。"
         user:
           attributes:
             username:
-              missing_username: "^Please specify username."
-              username_taken: "^This username is already taken."
+              missing_username: "^ユーザ名を指定してください。"
+              username_taken: "^このユーザ名は既に取得されています。"
             email:
-              missing_email: "^Please specify email address."
-              email_in_use: "^There is another user with the same email."
+              missing_email: "^Eメールアドレスを指定してください。"
+              email_in_use: "^同じEメールアドレスを持つ他のユーザがいます。"
 
   # dynamic_form plugin translations.
   #----------------------------------------------------------------------------
@@ -165,32 +165,32 @@ ja:
 
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: Your account has been created and is awating approval by the system administrator.
-  msg_account_not_approved: Your account has not been approved yet.
-  msg_asset_deleted: "%{value} has been deleted."
+  msg_account_created: あなたのアカウントは生成され、システム管理者の承認待ちです。
+  msg_account_not_approved: あなたのアカウントは承認されていません。
+  msg_asset_deleted: "%{value} は削除されています。"
   msg_asset_not_available: This %{value} is no longer available.
   msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
-  msg_assets_not_available: The %{value} are not available.
-  msg_asset_rejected: "%{value} has been rejected."
+  msg_assets_not_available: %{value} は存在しません。
+  msg_asset_rejected: "%{value} は拒否されています。"
   msg_bad_image_file: "^Could't upload or resize the image file you specified."
   msg_cant_create_related: "Can't create the %{asset} since the %{related} is no longer available."
   msg_cant_delete_user: "Couldn't delete the user since %{value} has related assets present."
   msg_cant_do: "Can't %{action} the %{asset} since it's no longer available."
   msg_email_not_found: No user was found with that email address.
-  msg_enter_new_password: Please enter your new password.
+  msg_enter_new_password: 新しいパスワードを入力してください。
   msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
   msg_invalid_password: "^Please specify valid current password"
   msg_invalig_login: Invalid username or password.
   msg_last_login: Your last login was on %{value}.
-  msg_login_needed: You must be logged in to access this page.
-  msg_logout_needed: You must be logged out to access this page.
+  msg_login_needed: このページへのアクセスにはログインが必要です。
+  msg_logout_needed: このページへのアクセスにはログアウトが必要です。
   msg_password_changed: Your password has been changed.
   msg_password_not_changed: Your password has not been changed.
   msg_password_updated: Password was successfully updated.
   msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
-  msg_require_admin: You must be Administrator to access this page.
+  msg_require_admin: このページへのアクセスは管理者でなければなりません。
   msg_successful_signup: Successfull signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
+  msg_welcome: Fat Free CRM へようこそ!
 
   # Options.
   #----------------------------------------------------------------------------
@@ -207,8 +207,8 @@ ja:
   option_company: 会社名
   option_created_at: 作成日
   option_ends_on: 終了日
-  option_first_name: first name
-  option_last_name: last name
+  option_first_name: 名
+  option_last_name: 姓
   option_leads_count: actual leads
   option_long: 詳細
   option_name: 名前
@@ -221,27 +221,27 @@ ja:
   option_updated_at: 更新日
   show_per_page: "%{fmt}書式で1ページ%{number}件ずつ%{models}を表示。"
   sort_by: "%{field}で%{models}を並べ替える。"
-  sort_by_displaying: "last nameをfirst nameの%{position}に表示にして、%{field}で%{models}を並べ替える。"
+  sort_by_displaying: "姓を名の%{position}に表示にして、%{field}で%{models}を並べ替える。"
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
   aim: AOL IM
   already_signed_up: Already signed up?
   alt_email: その他のEメール
-  avatar: Avatar
+  avatar: アバター
   change_password: パスワード変更
   company: 会社名
   contact_info: 連絡先情報
   current_password: 現在のパスワード
   edit_profile: プロフィール編集
   # email: Eメール # <-- Already defined as the task type if Settings.
-  first_name: First name
+  first_name: 名
   google: Google IM
   gravatar_help: Gravatarsをご存知ない？ Gravatarsについては
   image_file: 画像ファイル
   image_help: アップロードされた画像ファイルは自動的に 75 x 75 ピクセルの大きさに調整されます。対応フォーマットは GIF, JPG, PNG です。
   job_title: 役職
-  last_name: Last name
+  last_name: 姓
   login_now_link: 今すぐログイン！
   mobile: 携帯電話
   my_profile: 自分のプロフィール
@@ -252,8 +252,8 @@ ja:
   profile: プロフィール
   profile_language: 言語
   save_profile: プロフィール保存
-  sign_up: Sign Up
-  sign_up_button: Sign Up
+  sign_up: サインアップ
+  sign_up_button: サインアップ
   skype: Skype
   upload_picture: 画像アップロード
   use_gravatar: ユーザのGravatar
@@ -326,7 +326,7 @@ ja:
   revenue_label: Revenue ($)
   revenue_number: "%{value} in revenue"
   save_campaign: キャンペーンを保存
-  start_date: Start date
+  start_date: 開始日
   started_ago: started %{value} ago
   starts_in: starts in %{value}
   starts_today: starts today!
@@ -366,7 +366,7 @@ ja:
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
-  convert: Convert
+  convert: コンバート
   convert_lead: Convert Lead
   convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
   convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
@@ -385,7 +385,7 @@ ja:
   leads_small: リード
   none: None
   rating: Rating
-  reject: Reject
+  reject: 拒否
   reject_lead_confirm: Are you sure you want to reject this lead?
   save_lead: リードを保存
   source: Source
@@ -447,7 +447,7 @@ ja:
   save_task: タスクを保存
   task_assigned: The task has been assigned to %{value}
   task_assigned_to: and assigned to %{value}
-  task_completed: completed
+  task_completed: 完了
   task_completed_ago: completed %{value} ago
   task_completed_by: completed %{time_ago} ago by %{user}
   task_created: タスクが作成されました
@@ -462,7 +462,7 @@ ja:
   tasks: タスク
   total_tasks: "%{value}の合計"
   view_assigned_tasks: 担当タスクを表示
-  view_pending_tasks: view pending tasks
+  view_pending_tasks: 見完了タスクを表示
 
   # Views -> Home.
   #----------------------------------------------------------------------------
@@ -535,11 +535,11 @@ ja:
   about: About
   about_dev_group: Discussion group for developers
   about_features: Features and bugs
-  about_ffc: About Fat Free CRM
+  about_ffc: Fat Free CRM について
   about_ffc_resources: Fat Free CRM resources (links open a new window)
-  about_ffc_version: Fat Free CRM version
+  about_ffc_version: Fat Free CRM バージョン
   about_home_page: Home page
-  about_project_page: Project page
+  about_project_page: プロジェクトページ
   about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
   about_twitter: Twitter commit updates
   about_user_group: Discussion group for users
@@ -564,7 +564,7 @@ ja:
   # Views -> Admin
   #----------------------------------------------------------------------------
   # TODO
-  back_to_crm: Back to Fat Free CRM
+  back_to_crm: Fat Free CRM に戻る
   crm_admin_page: Fat Free CRM Administration
 
   # Views -> Admin -> Users.
