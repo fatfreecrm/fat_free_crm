@@ -24,8 +24,13 @@ feature 'Accounts', %q{
     page.should have_content('Create Account')
     click_link 'Create Account'
     fill_in 'account_name', :with => 'My new account'
+    click_link("Contact Information")
+    fill_in 'account_phone', :with => '+1 2345 6789'
+    fill_in 'account_website', :with => 'http://www.example.com'
     click_button 'Create Account'
     page.should have_content('My new account')
+    page.should have_content('+1 2345 6789')
+    page.should have_content('http://www.example.com')
   end
 
   scenario 'should ajax search for an account', :js => true do
@@ -42,38 +47,7 @@ feature 'Accounts', %q{
     find('#accounts').has_selector?('li', :count => 2)
     fill_in 'query', :with => "Contact"
     find('#accounts').has_selector?('li', :count => 0)
-  end
 
-  scenario 'should ajax search for an account', :js => true do
-    2.times { |i| Factory(:account, :name => "Account #{i}") }
-    visit accounts_path
-    find('#accounts').should have_content("Account 0")
-    find('#accounts').should have_content("Account 1")
-    fill_in 'query', :with => "Account 0"
-    find('#accounts').should have_content("Account 0")
-    find('#accounts').has_selector?('li', :count => 1)
-    fill_in 'query', :with => "Account"
-    find('#accounts').should have_content("Account 0")
-    find('#accounts').should have_content("Account 1")
-    find('#accounts').has_selector?('li', :count => 2)
-    fill_in 'query', :with => "Contact"
-    find('#accounts').has_selector?('li', :count => 0)
-  end
-
-  scenario 'should ajax search for an account', :js => true do
-    2.times { |i| Factory(:account, :name => "Account #{i}") }
-    visit accounts_path
-    find('#accounts').should have_content("Account 0")
-    find('#accounts').should have_content("Account 1")
-    fill_in 'query', :with => "Account 0"
-    find('#accounts').should have_content("Account 0")
-    find('#accounts').has_selector?('li', :count => 1)
-    fill_in 'query', :with => "Account"
-    find('#accounts').should have_content("Account 0")
-    find('#accounts').should have_content("Account 1")
-    find('#accounts').has_selector?('li', :count => 2)
-    fill_in 'query', :with => "Contact"
-    find('#accounts').has_selector?('li', :count => 0)
   end
 
 end
