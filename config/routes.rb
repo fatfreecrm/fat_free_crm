@@ -30,6 +30,8 @@ FatFreeCRM::Application.routes.draw do
       member do
         put  :attach
         post :discard
+        get :contacts
+        get :opportunities
       end
     end
 
@@ -44,6 +46,8 @@ FatFreeCRM::Application.routes.draw do
       member do
         put  :attach
         post :discard
+        get :leads
+        get :opportunities
       end
     end
 
@@ -58,6 +62,7 @@ FatFreeCRM::Application.routes.draw do
       member do
         put  :attach
         post :discard
+        get :opportunities
       end
     end
 
@@ -89,6 +94,7 @@ FatFreeCRM::Application.routes.draw do
       member do
         put  :attach
         post :discard
+        get :contacts
       end
     end
 
