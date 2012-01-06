@@ -35,14 +35,17 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
-    @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
+    @auto_complete = hook(:auto_complete, self, :query => @query, :user => current_user)
     if @auto_complete.empty?
-      @auto_complete = controller_name.classify.constantize.my.search(@query).limit(10)
+      @auto_complete = controller_name.classify.constantize.my.search(@query).limit(params[:limit] || 10)
     else
       @auto_complete = @auto_complete.last
     end
     session[:auto_complete] = controller_name.to_sym
-    render "shared/auto_complete", :layout => nil
+    respond_to do |format|
+      format.js   { render "shared/auto_complete", :layout => nil }
+      format.json { render :json => @auto_complete.inject({}){|h,a| h[a.id] = a.name; h } }
+    end
   end
 
   # Common attach handler for all core controllers.
@@ -106,6 +109,7 @@ class ApplicationController < ActionController::Base
     end
     render :text => ''
   end
+  
 private
   #----------------------------------------------------------------------------
   def set_context
@@ -140,12 +144,15 @@ private
 
   #----------------------------------------------------------------------------
   def current_user
-    @current_user ||= (current_user_session && current_user_session.record)
-    if @current_user
-      @current_user.set_individual_locale
-      @current_user.set_single_access_token
+    unless @current_user
+      @current_user = (current_user_session && current_user_session.record)
+      if @current_user
+        @current_user.set_individual_locale
+        @current_user.set_single_access_token
+      end
+      User.current_user = @current_user
     end
-    User.current_user = @current_user
+    @current_user
   end
 
   #----------------------------------------------------------------------------
@@ -167,6 +174,11 @@ private
       flash[:notice] = t(:msg_logout_needed)
       redirect_to profile_url
     end
+  end
+
+  #----------------------------------------------------------------------------
+  def get_users
+    @users ||= User.except(current_user)
   end
 
   #----------------------------------------------------------------------------
@@ -203,7 +215,7 @@ private
   def update_recently_viewed
     subject = instance_variable_get("@#{controller_name.singularize}")
     if subject
-      Activity.log(@current_user, subject, :viewed)
+      Activity.log(current_user, subject, :viewed)
     end
   end
 
@@ -257,12 +269,12 @@ private
     self.current_query = query
 
     records = {
-      :user  => @current_user,
-      :order => @current_user.pref[:"#{items}_sort_by"] || klass.sort_by
+      :user  => current_user,
+      :order => current_user.pref[:"#{items}_sort_by"] || klass.sort_by
     }
     pages = {
       :page     => current_page,
-      :per_page => @current_user.pref[:"#{items}_per_page"]
+      :per_page => current_user.pref[:"#{items}_per_page"]
     }
 
     # Call the hook and return its output if any.

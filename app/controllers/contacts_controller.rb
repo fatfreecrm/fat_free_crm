@@ -17,6 +17,7 @@
 
 class ContactsController < ApplicationController
   before_filter :require_user
+  before_filter :get_users, :only => [ :new, :create, :edit, :update ]
   before_filter :set_current_tab, :only => [ :index, :show ]
   after_filter  :update_recently_viewed, :only => :show
 
@@ -68,8 +69,6 @@ class ContactsController < ApplicationController
   def new
     @contact  = Contact.new(:user => @current_user, :access => Setting.default_access)
     @account  = Account.new(:user => @current_user)
-    @users    = User.except(@current_user)
-    @accounts = Account.my.order("name")
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
@@ -89,9 +88,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @contact  = Contact.my.find(params[:id])
-    @users    = User.except(@current_user)
     @account  = @contact.account || Account.new(:user => @current_user)
-    @accounts = Account.my.order("name")
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Contact.my.find($1)
     end
@@ -115,8 +112,6 @@ class ContactsController < ApplicationController
         format.json { render :json => @contact, :status => :created, :location => @contact }
         format.xml  { render :xml => @contact, :status => :created, :location => @contact }
       else
-        @users = User.except(@current_user)
-        @accounts = Account.my.order("name")
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
         else
@@ -147,8 +142,6 @@ class ContactsController < ApplicationController
         format.json { head :ok }
         format.xml  { head :ok }
       else
-        @users = User.except(@current_user)
-        @accounts = Account.my.order("name")
         if @contact.account
           @account = Account.find(@contact.account.id)
         else
