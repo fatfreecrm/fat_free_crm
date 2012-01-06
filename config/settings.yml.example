@@ -77,6 +77,12 @@
 #
 :default_access: "Public"
 
+# Require last name on Leads and Contacts
+#------------------------------------------------------------------------------
+# If this validation is disabled, records will only require a first name.
+#
+:require_last_names: true
+
 # Background information
 #------------------------------------------------------------------------------
 # Specify model names that should have background information displayed. Select any combination
