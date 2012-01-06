@@ -40,5 +40,13 @@ module AccountsHelper
       t('pluralize.comment', account.comments.count)
     ].join(', ')
   end
+  
+  def account_select(options = {})
+    # Generates a select list with the first 25 accounts,
+    # and prepends the currently selected account, if available
+    options[:selected] = (@account && @account.id) || 0
+    accounts = ([@account] + Account.order("name").my.limit(25)).compact.uniq
+    collection_select :account, :id, accounts, :id, :name, options, { :style => "width:330px; display:none;" }
+  end
 end
 

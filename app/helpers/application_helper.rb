@@ -99,7 +99,7 @@ module ApplicationHelper
     link_to(text,
       url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
-      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
+      :onclick => "crm.close_all_forms(); this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
     )
   end
 
@@ -114,7 +114,7 @@ module ApplicationHelper
     link_to(t(:edit),
       params[:url] || send(:"edit_#{name}_path", model),
       :remote  => true,
-      :onclick => "this.href += '?previous='+ crm.find_form('edit_#{name}');"
+      :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}');"
     )
   end
 

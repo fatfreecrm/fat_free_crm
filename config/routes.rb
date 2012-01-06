@@ -24,7 +24,7 @@ FatFreeCRM::Application.routes.draw do
         post :filter
         get  :options
         get  :field_group
-        post :auto_complete
+        match :auto_complete
         post :redraw
       end
       member do

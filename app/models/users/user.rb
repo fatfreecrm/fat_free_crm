@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
 
   # For some reason this does not play nice with is_paranoid when set as default scope
   scope :by_id, order('id DESC')
-  scope :except, lambda { |user| where('id != ?', user.id) }
+  scope :except, lambda { |user| where('id != ?', user.id).by_name }
   scope :by_name, order('first_name, last_name, email')
 
   scope :search, lambda { |query|

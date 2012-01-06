@@ -63,7 +63,9 @@ crm.load_field_group = function(controller, tag, asset_id) {
 // Fires an 'onclick' event on all '.close' buttons in the DOM.
 // (closes any current edit forms)
 crm.close_all_forms = function() {
-  $$('.close').each(function(el){el.onclick();});
+  $$('.close').each(function(el){
+    new Ajax.Request(el.href, {method: "get"})
+  });
 };
 
 // Initialize the hash to store which field groups have been loaded.
