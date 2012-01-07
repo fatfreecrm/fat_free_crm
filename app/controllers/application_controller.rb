@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   helper_method :called_from_index_page?, :called_from_landing_page?
 
   before_filter :set_context
+  before_filter :clear_setting_cache
   before_filter "hook(:app_before_filter, self)"
   after_filter  "hook(:app_after_filter,  self)"
 
@@ -111,6 +112,11 @@ class ApplicationController < ActionController::Base
   end
   
 private
+  #----------------------------------------------------------------------------
+  def clear_setting_cache
+    Setting.clear_cache!
+  end
+
   #----------------------------------------------------------------------------
   def set_context
     Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]

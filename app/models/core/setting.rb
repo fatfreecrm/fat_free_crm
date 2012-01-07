@@ -29,6 +29,10 @@
 
 class Setting < ActiveRecord::Base
 
+  # Use a class variable as a cache. This is cleared before each request.
+  def self.clear_cache!; @@cache = {}; end
+  cattr_accessor :cache; @@cache = {}
+
   #-------------------------------------------------------------------
   def self.method_missing(method, *args)
     begin
@@ -46,20 +50,22 @@ class Setting < ActiveRecord::Base
   #-------------------------------------------------------------------
   def self.[] (name)
     return nil unless database_and_table_exists?
-    Rails.cache.fetch("setting_" << name.to_s) do
-      if setting = self.find_by_name(name.to_s)
-        Marshal.load(Base64.decode64(setting.value.nil? ? setting.default_value : setting.value))
-      end
-    end || false
+    k = name.to_s
+    return cache[k] if cache.has_key?(k)
+    if setting = self.find_by_name(k)
+      value = Marshal.load(Base64.decode64(setting.value.nil? ? setting.default_value : setting.value))
+      cache[k] = value
+    end
   end
 
   #-------------------------------------------------------------------
   def self.[]= (name, value)
     return nil unless database_and_table_exists?
-    setting = self.find_by_name(name.to_s) || self.new(:name => name.to_s)
+    k = name.to_s
+    setting = self.find_by_name(k) || self.new(:name => k)
     setting.value = Base64.encode64(Marshal.dump(value))
     setting.save
-    Rails.cache.write("setting_" << name.to_s, value)
+    cache[k] = value
   end
 
   # Unrolls [ :one, :two ] settings array into [[ "One", :one ], [ "Two", :two ]]
