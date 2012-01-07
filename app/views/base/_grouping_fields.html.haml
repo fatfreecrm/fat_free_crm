@@ -1,0 +1,11 @@
+%fieldset.fields{ 'data-object-name' => f.object_name }
+  %legend
+    Match #{f.combinator_select} conditions #{button_to_remove_fields "remove", f}
+
+  = f.condition_fields do |c|
+    = render 'condition_fields', :f => c
+
+  = button_to_add_fields "Add Condition", f, :condition
+
+  = f.grouping_fields do |g|
+    = render 'grouping_fields', :f => g

@@ -1,0 +1,10 @@
+%fieldset.fields.condition{ "data-object-name" => f.object_name }
+  %legend
+    Condition #{button_to_remove_fields "remove", f}
+
+  = f.attribute_fields do |a|
+    = render 'attribute_fields', :f => a
+
+  = f.predicate_select :compounds => false
+  = f.value_fields do |v|
+    = render 'value_fields', :f => v

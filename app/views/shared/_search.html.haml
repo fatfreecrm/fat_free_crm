@@ -3,9 +3,46 @@
 
 %h4 #{t(:search_assets, t(controller.controller_name + "_small"))}
 %div{ :style => "margin: 0px 0px 6px 0px" }
-  = text_field_tag("query", @current_query, :size => 23)
+  = text_field_tag('query', @current_query, :size => 23)
 
 :javascript
   new Form.Element.Observer('query', 1.5, function(element, value) {
     crm.search(value, '#{path}')
   });
+
+%h4 Advanced search
+
+- @search ||= klass.search(params[:q])
+= search_form_for @search, :url => url_for(:action => :index), :html => {:method => :get} do |f|
+
+  :javascript
+    (function($) {
+      $(document).ready(function() {
+        var search = new Search({
+          grouping: "#{j template_fields(f, :grouping)}"
+        });
+        $('button.add_fields').live('click', function() {
+          search.add_fields(this, $(this).data('fieldType'), $(this).data('content'));
+          return false;
+        });
+        $('button.remove_fields').live('click', function() {
+          search.remove_fields(this);
+          return false;
+        });
+        $('button.nest_fields').live('click', function() {
+          search.nest_fields(this, $(this).data('fieldType'));
+          return false;
+        });
+      });
+    })(jQuery);
+
+  %fieldset
+    %legend Condition Groups
+    = f.grouping_fields do |g|
+      = render 'grouping_fields', :f => g
+
+    = button_to_add_fields "Add Condition Group", f, :grouping
+
+  = hidden_field_tag :distinct, '1'
+
+  = f.submit
