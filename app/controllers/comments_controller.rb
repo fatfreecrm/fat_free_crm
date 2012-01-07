@@ -17,6 +17,10 @@
 
 class CommentsController < ApplicationController
   before_filter :require_user
+
+  respond_to :js
+  respond_to :json, :xml, :except => :edit
+
   COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id).freeze
 
   # GET /comments
@@ -29,10 +33,8 @@ class CommentsController < ApplicationController
       @asset = @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
       @comments = @asset.comments.order("created_at DESC")
     end
-    respond_to do |format|
+    respond_with(@comments) do |format|
       format.html { redirect_to @asset }
-      format.json { render :json => @comments }
-      format.xml  { render :xml => @comments }
     end
 
   rescue ActiveRecord::RecordNotFound # Kicks in if @asset was not found.
@@ -43,20 +45,6 @@ class CommentsController < ApplicationController
       format.xml  { render :text => flash[:warning], :status => :not_found }
     end
   end
-
-  # GET /comments/1
-  # GET /comments/1.json
-  # GET /comments/1.xml                                         not implemented
-  #----------------------------------------------------------------------------
-  # def show
-  #   @comment = Comment.find(params[:id])
-  #
-  #   respond_to do |format|
-  #     format.html # show.html.erb
-  #     format.json { render :json => @comment }
-  #     format.xml  { render :xml => @comment }
-  #   end
-  # end
 
   # GET /comments/new
   # GET /comments/new.json
@@ -71,11 +59,7 @@ class CommentsController < ApplicationController
       @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
     end
 
-    respond_to do |format|
-      format.js   # new.js.rjs
-      format.json { render :json => @comment }
-      format.xml  { render :xml => @comment }
-    end
+    respond_with(@comment)
 
   rescue ActiveRecord::RecordNotFound # Kicks in if commentable asset was not found.
     respond_to_related_not_found(@commentable, :js)
@@ -110,17 +94,8 @@ class CommentsController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
 
-    respond_to do |format|
-      if @comment.save
-        format.js   # create.js.rjs
-        format.json { render :json => @comment, :status => :created, :location => @comment }
-        format.xml  { render :xml => @comment, :status => :created, :location => @comment }
-      else
-        format.js   # create.js.rjs
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
-      end
-    end
+    @comment.save
+    respond_with(@comment)
 
   rescue ActiveRecord::RecordNotFound # Kicks in if commentable asset was not found.
     respond_to_related_not_found(params[:comment][:commentable_type].downcase, :js, :xml)
@@ -132,18 +107,9 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @comment = Comment.find(params[:id])
+    @comment.update_attributes(params[:comment])
+    respond_with(@comment)
 
-    respond_to do |format|
-      if @comment.update_attributes(params[:comment])
-        format.js
-        format.json { head :ok }
-        format.xml  { head :ok }
-      else
-        format.js
-        format.json { render :json => @contact.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @contact.errors, :status => :unprocessable_entity }
-      end
-    end
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:js, :json, :xml)
   end
@@ -154,18 +120,8 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      if @comment.destroy
-        format.js   # destroy.js.rjs
-        format.json { render :json => @comment, :status => :deleted, :location => @comment }
-        format.xml  { render :xml => @comment, :status => :deleted, :location => @comment }
-      else
-        format.js   # destroy.js.rjs
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
-      end
-    end
+    @comment.destroy
+    respond_with(@comment)
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:html, :js, :json, :xml)
@@ -186,6 +142,4 @@ class CommentsController < ApplicationController
       session["#{@commentable}_new_comment"] = true
     end
   end
-
 end
-

@@ -15,34 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class TasksController < ApplicationController
-  before_filter :require_user
+class TasksController < BaseController
   before_filter :auto_complete, :only => :auto_complete
   before_filter :update_sidebar, :only => :index
-  before_filter :set_current_tab, :only => [ :index, :show ]
+  skip_after_filter :update_recently_viewed
 
   # GET /tasks
-  # GET /tasks.json
-  # GET /tasks.xml
   #----------------------------------------------------------------------------
   def index
     @view = params[:view] || "pending"
     @tasks = Task.find_all_grouped(@current_user, @view)
-
-    respond_to do |format|
-      format.html # index.html.haml
-      format.json { render :json => @tasks }
-      format.xml  { render :xml => @tasks }
-      format.xls  { send_data @tasks.values.flatten.to_xls, :type => :xls }
-      format.csv  { send_data @tasks.values.flatten.to_csv, :type => :csv }
-      format.rss  { render "shared/index.rss.builder" }
-      format.atom { render "shared/index.atom.builder" }
-    end
+    respond_with(@tasks)
   end
 
   # GET /tasks/1
-  # GET /tasks/1.json
-  # GET /tasks/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
     respond_to do |format|
@@ -56,8 +42,6 @@ class TasksController < ApplicationController
   end
 
   # GET /tasks/new
-  # GET /tasks/new.json
-  # GET /tasks/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def new
     @view = params[:view] || "pending"
@@ -69,12 +53,7 @@ class TasksController < ApplicationController
       model, id = params[:related].split("_")
       instance_variable_set("@asset", model.classify.constantize.my.find(id))
     end
-
-    respond_to do |format|
-      format.js   # new.js.rjs
-      format.json { render :json => @task }
-      format.xml  { render :xml => @task }
-    end
+    respond_with(@task)
 
   rescue ActiveRecord::RecordNotFound # Kicks in if related asset was not found.
     respond_to_related_not_found(model, :js) if model
@@ -92,6 +71,7 @@ class TasksController < ApplicationController
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Task.tracked_by(@current_user).find($1)
     end
+    respond_with(@task)
 
   rescue ActiveRecord::RecordNotFound
     @previous ||= $1.to_i
@@ -99,30 +79,19 @@ class TasksController < ApplicationController
   end
 
   # POST /tasks
-  # POST /tasks.json
-  # POST /tasks.xml                                                        AJAX
   #----------------------------------------------------------------------------
   def create
-    @task = Task.new(params[:task]) # NOTE: we don't display validation messages for tasks.
     @view = params[:view] || "pending"
+    @task = Task.new(params[:task]) # NOTE: we don't display validation messages for tasks.
 
-    respond_to do |format|
+    respond_with(@task) do |format|
       if @task.save
         update_sidebar if called_from_index_page?
-        format.js   # create.js.rjs
-        format.json { render :json => @task, :status => :created, :location => @task }
-        format.xml  { render :xml => @task, :status => :created, :location => @task }
-      else
-        format.js   # create.js.rjs
-        format.json { render :json => @task.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /tasks/1
-  # PUT /tasks/1.json
-  # PUT /tasks/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   def update
     @view = params[:view] || "pending"
@@ -135,7 +104,7 @@ class TasksController < ApplicationController
       @task_before_update.bucket = @task.computed_bucket
     end
 
-    respond_to do |format|
+    respond_with(@task) do |format|
       if @task.update_attributes(params[:task])
         @task.bucket = @task.computed_bucket
         if called_from_index_page?
@@ -144,13 +113,6 @@ class TasksController < ApplicationController
           end
           update_sidebar
         end
-        format.js   # update.js.rjs
-        format.json { head :ok }
-        format.xml  { head :ok }
-      else
-        format.js   # update.js.rjs
-        format.json { render :json => @task.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
 
@@ -159,8 +121,6 @@ class TasksController < ApplicationController
   end
 
   # DELETE /tasks/1
-  # DELETE /tasks/1.json
-  # DELETE /tasks/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def destroy
     @view = params[:view] || "pending"
@@ -173,19 +133,13 @@ class TasksController < ApplicationController
     end
 
     update_sidebar if called_from_index_page?
-    respond_to do |format|
-      format.js   # destroy.js.rjs
-      format.json { head :ok }
-      format.xml  { head :ok }
-    end
+    respond_with(@task)
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:js, :json, :xml)
   end
 
   # PUT /tasks/1/complete
-  # PUT /tasks/1/complete.json
-  # PUT /leads/1/complete.xml                                              AJAX
   #----------------------------------------------------------------------------
   def complete
     @task = Task.tracked_by(@current_user).find(params[:id])
@@ -197,11 +151,7 @@ class TasksController < ApplicationController
     end
 
     update_sidebar unless params[:bucket].blank?
-    respond_to do |format|
-      format.js   # complete.js.rjs
-      format.json { head :ok }
-      format.xml  { head :ok }
-    end
+    respond_with(@task)
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:js, :json, :xml)
@@ -260,6 +210,4 @@ class TasksController < ApplicationController
       session[name] = filters unless filters.blank?
     end
   end
-
 end
-

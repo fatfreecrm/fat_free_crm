@@ -23,16 +23,16 @@ class UsersController < ApplicationController
   before_filter :require_and_assign_user, :except => [ :new, :create, :show, :avatar, :upload_avatar ]
   before_filter :assign_given_or_current_user, :only => [ :show, :avatar, :upload_avatar ]
 
+  respond_to :html, :only => [ :show, :new ]
+  respond_to :js
+  respond_to :json, :xml, :except => :edit
+
   # GET /users/1
   # GET /users/1.json
   # GET /users/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   def show
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render :json => @user }
-      format.xml  { render :xml => @user }
-    end
+    respond_with(@user)
   end
 
   # GET /users/new
@@ -42,12 +42,7 @@ class UsersController < ApplicationController
   def new
     if can_signup?
       @user = User.new
-
-      respond_to do |format|
-        format.html # new.html.haml <-- signup form
-        format.json { render :json => @user }
-        format.xml  { render :xml => @user }
-      end
+      respond_with(@user)
     else
       redirect_to login_path
     end
@@ -56,7 +51,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    # <-- render edit.js.rjs
+    respond_with(@user)
   end
 
   # POST /users
@@ -82,17 +77,8 @@ class UsersController < ApplicationController
   # PUT /users/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   def update
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.js
-        format.json { head :ok }
-        format.xml  { head :ok }
-      else
-        format.js
-        format.json { render :json => @user.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
-    end
+    @user.update_attributes(params[:user])
+    respond_with(@user)
   end
 
   # DELETE /users/1
@@ -106,7 +92,7 @@ class UsersController < ApplicationController
   # GET /users/1/avatar.xml                                                AJAX
   #----------------------------------------------------------------------------
   def avatar
-    # <-- render avatar.js.rjs
+    respond_with(@user)
   end
 
   # PUT /users/1/upload_avatar
@@ -137,7 +123,7 @@ class UsersController < ApplicationController
   # GET /users/1/password.xml                                              AJAX
   #----------------------------------------------------------------------------
   def password
-    # <-- render password.js.rjs
+    respond_with(@user)
   end
 
   # PUT /users/1/change_password
@@ -154,7 +140,7 @@ class UsersController < ApplicationController
     else
       @user.errors.add(:current_password, t(:msg_invalid_password))
     end
-    # <-- render change_password.js.rjs
+    respond_with(@user)
   end
 
   # POST /users/1/redraw                                                   AJAX
@@ -174,6 +160,4 @@ class UsersController < ApplicationController
   def assign_given_or_current_user
     @user = params[:id] ? User.find(params[:id]) : @current_user
   end
-
 end
-

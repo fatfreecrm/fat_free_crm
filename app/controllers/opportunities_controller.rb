@@ -15,47 +15,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class OpportunitiesController < ApplicationController
-  before_filter :require_user
-  before_filter :set_current_tab, :only => [ :index, :show ]
+class OpportunitiesController < BaseController
   before_filter :load_settings
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_params, :only => [:index, :redraw, :filter]
-  after_filter  :update_recently_viewed, :only => :show
 
   # GET /opportunities
-  # GET /opportunities.json
-  # GET /opportunities.xml
   #----------------------------------------------------------------------------
   def index
     @opportunities = get_opportunities(:page => params[:page])
-
-    respond_to do |format|
-      format.html # index.html.haml
-      format.js   # index.js.rjs
-      format.json { render :json => @opportunities }
-      format.xml  { render :xml => @opportunities }
-      format.xls  { send_data @opportunities.to_xls, :type => :xls }
-      format.csv  { send_data @opportunities.to_csv, :type => :csv }
-      format.rss  { render "shared/index.rss.builder" }
-      format.atom { render "shared/index.atom.builder" }
-    end
+    respond_with(@opportunities)
   end
 
   # GET /opportunities/1
-  # GET /opportunities/1.json
-  # GET /opportunities/1.xml                                               HTML
   #----------------------------------------------------------------------------
   def show
     @opportunity = Opportunity.my.find(params[:id])
 
-    respond_to do |format|
+    respond_with(@opportunity) do |format|
       format.html do
         @comment = Comment.new
         @timeline = timeline(@opportunity)
       end
-      format.json { render :json => @opportunity }
-      format.xml  { render :xml => @opportunity }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -63,8 +44,6 @@ class OpportunitiesController < ApplicationController
   end
 
   # GET /opportunities/new
-  # GET /opportunities/new.json
-  # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   def new
     @opportunity = Opportunity.new(:user => @current_user, :stage => "prospecting", :access => Setting.default_access)
@@ -75,12 +54,7 @@ class OpportunitiesController < ApplicationController
       model, id = params[:related].split("_")
       instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
     end
-
-    respond_to do |format|
-      format.js   # new.js.rjs
-      format.json { render :json => @opportunity }
-      format.xml  { render :xml => @opportunity }
-    end
+    respond_with(@opportunity)
 
   rescue ActiveRecord::RecordNotFound # Kicks in if related asset was not found.
     respond_to_related_not_found(model, :js) if model
@@ -96,6 +70,7 @@ class OpportunitiesController < ApplicationController
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Opportunity.my.find($1)
     end
+    respond_with(@opportunity)
 
   rescue ActiveRecord::RecordNotFound
     @previous ||= $1.to_i
@@ -103,13 +78,11 @@ class OpportunitiesController < ApplicationController
   end
 
   # POST /opportunities
-  # POST /opportunities.json
-  # POST /opportunities.xml                                                AJAX
   #----------------------------------------------------------------------------
   def create
     @opportunity = Opportunity.new(params[:opportunity])
 
-    respond_to do |format|
+    respond_with(@opportunity) do |format|
       if @opportunity.save_with_account_and_permissions(params)
         if called_from_index_page?
           @opportunities = get_opportunities
@@ -119,9 +92,6 @@ class OpportunitiesController < ApplicationController
         elsif called_from_landing_page?(:campaigns)
           get_data_for_sidebar(:campaign)
         end
-        format.js   # create.js.rjs
-        format.json { render :json => @opportunity, :status => :created, :location => @opportunity }
-        format.xml  { render :xml => @opportunity, :status => :created, :location => @opportunity }
       else
         @users = User.except(@current_user)
         @accounts = Account.my.order("name")
@@ -136,21 +106,16 @@ class OpportunitiesController < ApplicationController
         end
         @contact = Contact.find(params[:contact]) unless params[:contact].blank?
         @campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
-        format.js   # create.js.rjs
-        format.json { render :json => @opportunity.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /opportunities/1
-  # PUT /opportunities/1.json
-  # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
   def update
     @opportunity = Opportunity.my.find(params[:id])
 
-    respond_to do |format|
+    respond_with(@opportunity) do |format|
       if @opportunity.update_with_account_and_permissions(params)
         if called_from_index_page?
           get_data_for_sidebar
@@ -159,9 +124,6 @@ class OpportunitiesController < ApplicationController
         elsif called_from_landing_page?(:campaigns)
           get_data_for_sidebar(:campaign)
         end
-        format.js
-        format.json { head :ok }
-        format.xml  { head :ok }
       else
         @users = User.except(@current_user)
         @accounts = Account.my.order("name")
@@ -170,9 +132,6 @@ class OpportunitiesController < ApplicationController
         else
           @account = Account.new(:user => @current_user)
         end
-        format.js
-        format.json { render :json => @opportunity.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @opportunity.errors, :status => :unprocessable_entity }
       end
     end
 
@@ -181,8 +140,6 @@ class OpportunitiesController < ApplicationController
   end
 
   # DELETE /opportunities/1
-  # DELETE /opportunities/1.json
-  # DELETE /opportunities/1.xml                                   HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @opportunity = Opportunity.my.find(params[:id])
@@ -193,11 +150,9 @@ class OpportunitiesController < ApplicationController
     end
     @opportunity.destroy if @opportunity
 
-    respond_to do |format|
+    respond_with(@opportunity) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
-      format.json { head :ok }
-      format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -205,12 +160,10 @@ class OpportunitiesController < ApplicationController
   end
 
   # PUT /opportunities/1/attach
-  # PUT /opportunities/1/attach.xml                                        AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :attach
 
   # POST /opportunities/1/discard
-  # POST /opportunities/1/discard.xml                                      AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :discard
 
@@ -300,6 +253,4 @@ class OpportunitiesController < ApplicationController
     @current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:filter_by_opportunity_stage] = params[:stage] if params[:stage]
   end
-
 end
-

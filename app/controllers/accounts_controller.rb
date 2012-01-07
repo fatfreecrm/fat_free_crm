@@ -15,47 +15,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class AccountsController < ApplicationController
-  before_filter :require_user
+class AccountsController < BaseController
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter :set_current_tab, :only => [ :index, :show ]
-  after_filter  :update_recently_viewed, :only => :show
 
   # GET /accounts
-  # GET /accounts.json
-  # GET /accounts.xml                                             HTML and AJAX
   #----------------------------------------------------------------------------
   def index
     @accounts = get_accounts(:page => params[:page])
-
-    respond_to do |format|
-      format.html # index.html.haml
-      format.js   # index.js.rjs
-      format.json { render :json => @accounts }
-      format.xml  { render :xml => @accounts }
-      format.xls  { send_data @accounts.to_xls, :type => :xls }
-      format.csv  { send_data @accounts.to_csv, :type => :csv }
-      format.rss  { render "shared/index.rss.builder" }
-      format.atom { render "shared/index.atom.builder" }
-    end
+    respond_with(@accounts)
   end
 
   # GET /accounts/1
-  # GET /accounts/1.json
-  # GET /accounts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
     @account = Account.my.find(params[:id])
 
-    respond_to do |format|
+    respond_with(@account) do |format|
       format.html do
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
-
         @timeline = timeline(@account)
       end
-      format.json { render :json => @account }
-      format.xml  { render :xml => @account }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -63,8 +43,6 @@ class AccountsController < ApplicationController
   end
 
   # GET /accounts/new
-  # GET /accounts/new.json
-  # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
     @account = Account.new(:user => @current_user, :access => Setting.default_access)
@@ -74,11 +52,7 @@ class AccountsController < ApplicationController
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
     end
 
-    respond_to do |format|
-      format.js   # new.js.rjs
-      format.json { render :json => @account }
-      format.xml  { render :xml => @account }
-    end
+    respond_with(@account)
   end
 
   # GET /accounts/1/edit                                                   AJAX
@@ -89,6 +63,7 @@ class AccountsController < ApplicationController
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Account.my.find($1)
     end
+    respond_with(@account)
 
   rescue ActiveRecord::RecordNotFound
     @previous ||= $1.to_i
@@ -96,48 +71,31 @@ class AccountsController < ApplicationController
   end
 
   # POST /accounts
-  # POST /accounts.json
-  # POST /accounts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
     @account = Account.new(params[:account])
     @users = User.except(@current_user)
 
-    respond_to do |format|
+    respond_with(@account) do |format|
       if @account.save_with_permissions(params[:users])
         # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
         @accounts = get_accounts
         get_data_for_sidebar
-        format.js   # create.js.rjs
-        format.json { render :json => @account, :status => :created, :location => @account }
-        format.xml  { render :xml => @account, :status => :created, :location => @account }
-      else
-        format.js   # create.js.rjs
-        format.json { render :json => @account.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /accounts/1
-  # PUT /accounts/1.json
-  # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
     @account = Account.my.find(params[:id])
 
-    respond_to do |format|
+    respond_with(@account) do |format|
       if @account.update_with_permissions(params[:account], params[:users])
         get_data_for_sidebar
-        format.js
-        format.json { head :ok }
-        format.xml  { head :ok }
       else
         @users = User.except(@current_user) # Need it to redraw [Edit Account] form.
-        format.js
-        format.json { render :json => @account.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
 
@@ -146,17 +104,14 @@ class AccountsController < ApplicationController
   end
 
   # DELETE /accounts/1
-  # DELETE /accounts/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @account = Account.my.find(params[:id])
     @account.destroy if @account
 
-    respond_to do |format|
+    respond_with(@account) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
-      format.json { head :ok }
-      format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -164,12 +119,10 @@ class AccountsController < ApplicationController
   end
 
   # PUT /accounts/1/attach
-  # PUT /accounts/1/attach.xml                                             AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :attach
 
   # PUT /accounts/1/discard
-  # PUT /accounts/1/discard.xml                                            AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :discard
 
@@ -252,4 +205,3 @@ class AccountsController < ApplicationController
     @account_category_total[:other] = @account_category_total[:all] - categorized
   end
 end
-

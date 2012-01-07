@@ -15,47 +15,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class CampaignsController < ApplicationController
-  before_filter :require_user
+class CampaignsController < BaseController
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter :set_current_tab, :only => [ :index, :show ]
-  after_filter  :update_recently_viewed, :only => :show
 
   # GET /campaigns
-  # GET /campaigns.json
-  # GET /campaigns.xml                                            AJAX and HTML
   #----------------------------------------------------------------------------
   def index
     @campaigns = get_campaigns(:page => params[:page])
-
-    respond_to do |format|
-      format.html # index.html.haml
-      format.js   # index.js.rjs
-      format.json { render :json => @campaigns }
-      format.xml  { render :xml => @campaigns }
-      format.xls  { send_data @campaigns.to_xls, :type => :xls }
-      format.csv  { send_data @campaigns.to_csv, :type => :csv }
-      format.rss  { render "shared/index.rss.builder" }
-      format.atom { render "shared/index.atom.builder" }
-    end
+    respond_with(@campaigns)
   end
 
   # GET /campaigns/1
-  # GET /campaigns/1.json
-  # GET /campaigns/1.xml                                                   HTML
   #----------------------------------------------------------------------------
   def show
     @campaign = Campaign.my.find(params[:id])
 
-    respond_to do |format|
+    respond_with(@campaign) do |format|
       format.html do
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
-
         @timeline = timeline(@campaign)
       end
-      format.json { render :json => @campaign }
-      format.xml  { render :xml => @campaign }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -74,11 +54,7 @@ class CampaignsController < ApplicationController
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
     end
 
-    respond_to do |format|
-      format.js   # new.js.rjs
-      format.json { render :json => @campaign }
-      format.xml  { render :xml => @campaign }
-    end
+    respond_with(@campaign)
   end
 
   # GET /campaigns/1/edit                                                  AJAX
@@ -89,6 +65,7 @@ class CampaignsController < ApplicationController
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Campaign.my.find($1)
     end
+    respond_with(@campaign)
 
   rescue ActiveRecord::RecordNotFound
     @previous ||= $1.to_i
@@ -96,46 +73,29 @@ class CampaignsController < ApplicationController
   end
 
   # POST /campaigns
-  # POST /campaigns.json
-  # POST /campaigns.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def create
     @campaign = Campaign.new(params[:campaign])
     @users = User.except(@current_user)
 
-    respond_to do |format|
+    respond_with(@campaign) do |format|
       if @campaign.save_with_permissions(params[:users])
         @campaigns = get_campaigns
         get_data_for_sidebar
-        format.js   # create.js.rjs
-        format.json { render :json => @campaign, :status => :created, :location => @campaign }
-        format.xml  { render :xml => @campaign, :status => :created, :location => @campaign }
-      else
-        format.js   # create.js.rjs
-        format.json { render :json => @campaign.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /campaigns/1
-  # PUT /campaigns/1.json
-  # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def update
     @campaign = Campaign.my.find(params[:id])
 
-    respond_to do |format|
+    respond_with(@campaign) do |format|
       if @campaign.update_with_permissions(params[:campaign], params[:users])
         get_data_for_sidebar if called_from_index_page?
-        format.js
-        format.json { head :ok }
-        format.xml  { head :ok }
       else
         @users = User.except(@current_user) # Need it to redraw [Edit Campaign] form.
-        format.js
-        format.json { render :json => @campaign.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @campaign.errors, :status => :unprocessable_entity }
       end
     end
 
@@ -144,18 +104,14 @@ class CampaignsController < ApplicationController
   end
 
   # DELETE /campaigns/1
-  # DELETE /campaigns/1.json
-  # DELETE /campaigns/1.xml                                       HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
     @campaign = Campaign.my.find(params[:id])
     @campaign.destroy if @campaign
 
-    respond_to do |format|
+    respond_with(@campaign) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
-      format.json { head :ok }
-      format.xml  { head :ok }
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -163,12 +119,10 @@ class CampaignsController < ApplicationController
   end
 
   # PUT /campaigns/1/attach
-  # PUT /campaigns/1/attach.xml                                            AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :attach
 
   # PUT /campaigns/1/discard
-  # PUT /campaigns/1/discard.xml                                           AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :discard
 
@@ -248,6 +202,4 @@ class CampaignsController < ApplicationController
     end
     @campaign_status_total[:other] += @campaign_status_total[:all]
   end
-
 end
-

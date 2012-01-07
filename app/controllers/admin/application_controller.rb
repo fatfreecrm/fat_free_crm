@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class Admin::ApplicationController < ApplicationController
+class Admin::ApplicationController < BaseController
   layout "admin/application"
   before_filter :require_admin_user
 
@@ -25,7 +25,7 @@ class Admin::ApplicationController < ApplicationController
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
-    @auto_complete = self.controller_name.classify.constantize.search(@query).limit(10)
+    @auto_complete = klass.search(@query).limit(10)
     render "shared/auto_complete", :layout => nil
   end
 

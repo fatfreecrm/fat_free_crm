@@ -18,6 +18,8 @@
 class EmailsController < ApplicationController
   before_filter :require_user
 
+  respond_to :js, :json, :xml
+
   # GET /email
   # GET /email.xml                                              not implemented
   #----------------------------------------------------------------------------
@@ -53,22 +55,10 @@ class EmailsController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @email = Email.find(params[:id])
-
-    respond_to do |format|
-      if @email.destroy
-        format.js   # destroy.js.rjs
-        format.json { render :json => @email, :status => :deleted, :location => @email }
-        format.xml  { render :xml => @email, :status => :deleted, :location => @email }
-      else
-        format.js   # destroy.js.rjs
-        format.json { render :json => @email.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
-      end
-    end
+    @email.destroy
+    respond_with(@email)
 
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:html, :js, :json, :xml)
   end
-
 end
-
