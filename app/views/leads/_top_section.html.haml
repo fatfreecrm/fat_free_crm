@@ -7,7 +7,7 @@
           = f.text_field :first_name
         %td= spacer
         %td
-          .label.top.req #{t :last_name}:
+          .label.top{ :class => "#{Setting.require_last_names ? 'req' : ''}" } #{t :last_name}:
           = f.text_field :last_name
       %tr
         %td

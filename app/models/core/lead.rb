@@ -82,7 +82,7 @@ class Lead < ActiveRecord::Base
   sortable :by => [ "first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :first_name, :message => :missing_first_name
-  validates_presence_of :last_name, :message => :missing_last_name
+  validates_presence_of :last_name, :message => :missing_last_name if Setting.require_last_names
   validate :users_for_shared_access
 
   after_create  :increment_leads_count

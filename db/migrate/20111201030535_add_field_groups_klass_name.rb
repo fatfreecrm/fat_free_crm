@@ -10,6 +10,7 @@ class AddFieldGroupsKlassName < ActiveRecord::Migration
     FieldGroup.update_all('klass_name = (SELECT MAX(klass_name) FROM fields WHERE field_group_id = field_groups.id)', {:klass_name => nil})
 
     remove_column :fields, :klass_name
+    Field.reset_column_information
   end
 
   def down
