@@ -703,8 +703,9 @@ en-US:
   restrict_by_tag: Restrict by Tag
   restrict_by_tag_info: Only show fields for %{assets} that are tagged with
   field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
+  field_group_unrestricted: This field group applies to all %{assets}
 
   admin_fields_info: |
     Custom fields are displayed in groups.
-    Create a new field group or add fields to one of the groups below.<br />
+    Create a new field group, or add fields to one of the groups below.<br />
     You can drag and drop fields to change their display order or move them between field groups.
