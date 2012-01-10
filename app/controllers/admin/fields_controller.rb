@@ -18,6 +18,7 @@
 class Admin::FieldsController < Admin::ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter "set_current_tab('admin/fields')", :only => [ :index ]
   before_filter :auto_complete, :only => :auto_complete
 
   # GET /fields
