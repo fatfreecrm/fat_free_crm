@@ -17,7 +17,7 @@ gem 'paperclip',           '~> 2.4.5'
 gem 'will_paginate',       '~> 3.0.2'
 gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
-gem 'ffaker',              '~> 1.11.0' # For loading demo data
+gem 'ffaker',              '>= 1.12.0' # For loading demo data
 gem 'uglifier'
 
 group :heroku do
