@@ -1,7 +1,9 @@
 = styles_for :fields
 
 .title
-  %span#create_field_title Fields
+  %span#create_field_title= t(:admin_tab_fields).html_safe
+
+.info= t(:admin_fields_info)
 
 .inline_tabs
   %ul
@@ -25,7 +27,7 @@
 
     - container_id = "#{asset}_field_groups"
     .list{ :id => container_id }
-      = render :partial => "admin/field_groups/field_group", :collection => klass.field_groups
+      = render :partial => "admin/field_groups/field_group", :collection => klass.field_groups, :locals => {:asset => asset, :klass => klass}
 
     - group_list_ids = klass.field_groups.map {|field_group| dom_id(field_group, :fields)}
     - klass.field_groups.each do |field_group|

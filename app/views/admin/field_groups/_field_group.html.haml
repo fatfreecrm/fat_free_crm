@@ -1,3 +1,5 @@
+- asset = field_group.klass_name.downcase
+
 .field_group[field_group]
   - edit_form_id = dom_id(field_group, :edit)
   - create_form_id = dom_id(field_group, :create_field)
@@ -9,6 +11,9 @@
 
   .subtitle{ :id => "#{dom_id(field_group)}_title" }
     = t(field_group.name, :default => field_group.label)
+    - if field_group.tag_id
+      %small{:id => "#{asset}_field_group_#{field_group.id}_intro"}
+        = t(:field_group_tag_restriction, :assets => asset.pluralize, :tag => field_group.tag.name)
 
   .remote{ hidden.merge(:id => edit_form_id) }
   .remote{ hidden.merge(:id => create_form_id) }
@@ -16,3 +21,7 @@
   .list{ :id => dom_id(field_group, :fields) }
     - if (fields = field_group.fields).present?
       = render :partial => "admin/fields/field", :collection => fields
+    - else
+      %div{:id => "empty_#{asset}_field_group_#{field_group.id}"}
+        = t(:field_group_empty)
+        = link_to_inline(create_form_id, new_admin_field_path(:field_group_id => field_group.id), :plain => true, :text => t(:create_field))

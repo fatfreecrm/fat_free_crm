@@ -25,7 +25,7 @@ en-US:
   tab_opportunities: Opportunities
 
   admin_tab_users: Users
-  admin_tab_fields: Fields
+  admin_tab_fields: Custom Fields
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
 
@@ -690,9 +690,21 @@ en-US:
 
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
+  label: Label
   custom_fields: Custom Fields
   create_field: Create field
   save_field: Save field
   create_field_group: Create field group
   edit_field_group: Edit field group
   save_field_group: Save field group
+
+  field_group_empty: There are no fields in this group.
+
+  restrict_by_tag: Restrict by Tag
+  restrict_by_tag_info: Only show fields for %{assets} that are tagged with
+  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
+
+  admin_fields_info: |
+    Custom fields are displayed in groups.
+    Create a new field group or add fields to one of the groups below.<br />
+    You can drag and drop fields to change their display order or move them between field groups.
