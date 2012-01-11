@@ -1,20 +1,27 @@
-class @Search
-  constructor: (@templates = {}) ->
+(($) ->
+  class @Search
+    constructor: (@templates = {}) ->
 
-  remove_fields: (button) ->
-    jQuery(button).closest('.fields').remove()
+    add_fields: (button, type, content) ->
+      new_id = new Date().getTime()
+      regexp = new RegExp('new_' + type, 'g')
+      $(button).closest('p').before(content.replace(regexp, new_id))
 
-  add_fields: (button, type, content) ->
-    new_id = new Date().getTime()
-    regexp = new RegExp('new_' + type, 'g')
-    jQuery(button).before(content.replace(regexp, new_id))
+    remove_fields: (button) ->
+      container = $(button).closest('.fields')
+      if (container.siblings().length > 1)
+        container.remove()
+      else
+        container.parent().closest('.fields').remove()
 
-  nest_fields: (button, type) ->
-    new_id = new Date().getTime()
-    id_regexp = new RegExp('new_' + type, 'g')
-    template = @templates[type]
-    object_name = jQuery(button).closest('.fields').attr('data-object-name')
-    sanitized_object_name = object_name.replace(/\]\[|[^-a-zA-Z0-9:.]/g, '_').replace(/_$/, '')
-    template = template.replace(/new_object_name\[/g, object_name + "[")
-    template = template.replace(/new_object_name_/, sanitized_object_name + '_')
-    jQuery(button).before(template.replace(id_regexp, new_id))
+  $(document).ready ->
+    search = new Search()
+
+    $(".add_fields").live "click", ->
+      search.add_fields this, $(this).data("fieldType"), $(this).data("content")
+      false
+
+    $(".remove_fields").live "click", ->
+      search.remove_fields this
+      false
+) jQuery

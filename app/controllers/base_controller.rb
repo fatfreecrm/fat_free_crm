@@ -25,6 +25,8 @@ class BaseController < ApplicationController
   respond_to :json, :xml, :except => :edit
   respond_to :atom, :csv, :rss, :xls, :only => :index
 
+  helper_method :search
+
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
@@ -105,6 +107,14 @@ class BaseController < ApplicationController
 
   private
 
+  def search
+    @search ||= begin
+      search = klass.search(params[:q])
+      search.build_grouping unless search.groupings.any?
+      search
+    end
+  end
+
   # Get list of records for a given model class.
   #----------------------------------------------------------------------------
   def get_list_of_records(klass, options = {})
@@ -134,8 +144,9 @@ class BaseController < ApplicationController
     filter = session[options[:filter]].to_s.split(',') if options[:filter]
 
     scope = klass.my(records)
+    scope = scope.merge(search.result)
     scope = scope.state(filter)                   if filter.present?
-    scope = scope.search(query)                   if query.present?
+    scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
     scope = scope.unscoped                        if wants.csv?
     scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?

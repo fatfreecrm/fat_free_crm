@@ -1,10 +1,11 @@
-%fieldset.fields.condition{ "data-object-name" => f.object_name }
-  %legend
-    Condition #{button_to_remove_fields "remove", f}
+.fields.condition{ "data-object-name" => f.object_name }
+  %p
+    = link_to_remove_fields t(:advanced_search_remove_condition), f
 
-  = f.attribute_fields do |a|
-    = render 'attribute_fields', :f => a
+    = f.attribute_fields do |a|
+      = render 'attribute_fields', :f => a
 
-  = f.predicate_select :compounds => false
-  = f.value_fields do |v|
-    = render 'value_fields', :f => v
+    = f.predicate_select :only => [:eq, :not_eq, :lt, :gt, :matches], :compounds => false
+
+    = f.value_fields do |v|
+      = render 'value_fields', :f => v

@@ -21,6 +21,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :accounts, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
@@ -37,6 +38,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :campaigns, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
@@ -53,6 +55,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :contacts, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
@@ -68,6 +71,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :leads, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
@@ -85,6 +89,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :opportunities, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
