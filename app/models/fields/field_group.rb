@@ -32,7 +32,7 @@
 
 class FieldGroup < ActiveRecord::Base
   has_many :fields, :order => :position
-  belongs_to :tag, :class_name => 'ActsAsTaggableOn::Tag'
+  belongs_to :tag
 
   validates_presence_of :label
 

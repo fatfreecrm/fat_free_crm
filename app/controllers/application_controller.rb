@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
   end
 
   def field_group
-    if @tag = ActsAsTaggableOn::Tag.find_by_name(params[:tag].strip)
+    if @tag = Tag.find_by_name(params[:tag].strip)
       klass = controller_name.classify.constantize
       if @field_group = FieldGroup.find_by_klass_name_and_tag_id(klass.name, @tag.id)
         @asset = klass.find_by_id(params[:asset_id]) || klass.new

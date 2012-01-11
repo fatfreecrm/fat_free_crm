@@ -17,5 +17,5 @@
                                         { newValues: true,
                                           regexSearch: false,
                                           separator: Event.KEY_COMMA });
-            var tagjson = #{ActsAsTaggableOn::Tag.all.map{|t| {"caption" => t.name, "value" => t.name} }.to_json}
+            var tagjson = #{Tag.all.map{|t| {"caption" => t.name, "value" => t.name} }.to_json}
             tagjson.each(function(t){fbtaglist.autoFeed(t)});
