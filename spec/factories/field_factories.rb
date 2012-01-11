@@ -12,6 +12,7 @@ end
 Factory.define :field_group do |f|
   f.klass_name          { Factory.next(:klass_name) }
   f.label               { Factory.next(:field_label) }
+  f.tag                 { |f| f.association :tag }
 end
 
 

@@ -9,13 +9,7 @@
     |
     = link_to_inline(create_form_id, new_admin_field_path(:field_group_id => field_group.id), :text => t(:create_field))
 
-  .subtitle{ :id => "#{dom_id(field_group)}_title" }
-    = t(field_group.name, :default => field_group.label)
-    %small{:id => "#{asset}_field_group_#{field_group.id}_intro"}
-      - if field_group.tag_id
-        = t(:field_group_tag_restriction, :assets => asset.pluralize, :tag => field_group.tag.name)
-      - else
-        = t(:field_group_unrestricted, :assets => asset.pluralize)
+  .subtitle{ :id => "#{dom_id(field_group)}_title" }= field_group_subtitle(field_group)
 
   .remote{ hidden.merge(:id => edit_form_id) }
   .remote{ hidden.merge(:id => create_form_id) }

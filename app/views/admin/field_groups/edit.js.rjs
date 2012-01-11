@@ -4,7 +4,7 @@ form_id = dom_id(@field_group, :edit)
 if params[:cancel] == "true" # <----------------- Hide [Edit field_group]
 
   page.call "crm.flip_form", form_id
-  page.call "crm.set_title", id, @field_group.label
+  page.call "crm.set_title", id, field_group_subtitle(@field_group)
 
 else # <----------------------------------------- Show [Edit field_group] form.
 

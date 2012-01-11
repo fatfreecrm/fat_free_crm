@@ -19,6 +19,8 @@ class Admin::ApplicationController < ApplicationController
   layout "admin/application"
   before_filter :require_admin_user
 
+  helper "admin/field_groups"
+
   # Autocomplete handler for all admin controllers.
   #----------------------------------------------------------------------------
   def auto_complete
