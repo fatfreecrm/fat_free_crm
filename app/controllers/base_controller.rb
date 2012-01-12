@@ -33,7 +33,7 @@ class BaseController < ApplicationController
     @query = params[:auto_complete_query]
     @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
     if @auto_complete.empty?
-      @auto_complete = klass.my.search(@query).limit(10)
+      @auto_complete = klass.my.text_search(@query).limit(10)
     else
       @auto_complete = @auto_complete.last
     end
