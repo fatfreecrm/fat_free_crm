@@ -8,15 +8,18 @@ development: &development
   schema_search_path: public
   min_messages: warning
 
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
 test:
   <<: *development
   database: fat_free_crm_test
 
-cucumber:
-  <<: *development
-  database: fat_free_crm_cucumber
-
 production:
   <<: *development
   database: fat_free_crm_production
+
+staging:
+  <<: *development
+  database: fat_free_crm_staging
 

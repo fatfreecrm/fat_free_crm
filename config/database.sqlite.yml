@@ -10,13 +10,13 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  adapter: sqlite3
+  <<: *development
   database: db/fat_free_crm_test.sqlite3
-  pool: 5
-  timeout: 5000
 
 production:
-  adapter: sqlite3
+  <<: *development
   database: db/fat_free_crm_production.sqlite3
-  pool: 5
-  timeout: 5000
+
+staging:
+  <<: *development
+  database: db/fat_free_crm_staging.sqlite3
