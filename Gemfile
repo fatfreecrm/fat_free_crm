@@ -44,14 +44,30 @@ group :development, :test do
   gem 'factory_girl'
 end
 
+group :development do
+  platforms :ruby do
+    # https://github.com/guard/guard
+    gem 'guard'
+    gem 'thin'
+    gem 'ruby_gntp'
+    gem 'guard-rails'
+    gem 'guard-sass'
+    gem 'guard-spork'
+    gem 'guard-rspec'
+    gem 'guard-livereload'
+    gem 'yajl-ruby'
+  end
+  # For annotating models with Schema information
+  gem 'annotate', '~> 2.4.1.beta', :require => false, :group => :development
+end
+
 group :test do
+  gem 'spork'
   gem 'factory_girl_rails', '~> 1.4.0'
   gem 'simplecov', :platform => :mri_19 unless ENV["CI"]  # Until Travis supports build artifacts
   gem 'fuubar'
 end
 
-# For annotating models with Schema information
-gem 'annotate', '~> 2.4.1.beta', :require => false, :group => :development
 
 # Rails3 plugins that we use and their source repositories:
 #---------------------------------------------------------------------
