@@ -46,15 +46,15 @@ end
 
 group :development do
   platforms :ruby do
-    # https://github.com/guard/guard
-    gem 'guard'
+    # These gems give you an awesome development environment.
     gem 'thin'
+    gem 'guard'             # https://github.com/guard/guard
+    gem 'guard-rails'       # https://github.com/guard/guard-rails
+    gem 'guard-sass'        # https://github.com/guard/guard-sass
+    gem 'guard-spork'       # https://github.com/guard/guard-spork
+    gem 'guard-rspec'       # https://github.com/guard/guard-rspec
+    gem 'guard-livereload'  # https://github.com/guard/guard-livereload
     gem 'ruby_gntp'
-    gem 'guard-rails'
-    gem 'guard-sass'
-    gem 'guard-spork'
-    gem 'guard-rspec'
-    gem 'guard-livereload'
     gem 'yajl-ruby'
   end
   # For annotating models with Schema information
