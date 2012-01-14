@@ -591,6 +591,7 @@ en-US:
       lt: is less than
       gt: is greater than
       matches: matches
+      cont: contains
 
   # Views -> Comments.
   #----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
     = f.attribute_fields do |a|
       = render 'attribute_fields', :f => a
 
-    = f.predicate_select :only => [:eq, :not_eq, :lt, :gt, :matches], :compounds => false
+    = f.predicate_select :only => [:cont, :eq, :not_eq, :lt, :gt, :matches], :compounds => false
 
     = f.value_fields do |v|
       = render 'value_fields', :f => v
