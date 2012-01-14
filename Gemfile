@@ -21,7 +21,7 @@ gem 'ffaker',              '>= 1.12.0' # For loading demo data
 gem 'uglifier'
 gem 'ajax-chosen-rails',   '>= 0.1.5'
 gem 'chosen-rails',        :git => "git://github.com/fatfreecrm/chosen-rails.git"
-gem 'ransack'
+gem 'ransack',             :git => "git://github.com/ndbroadbent/ransack.git", :branch => "order_by_only"
 gem 'jquery-rails'
 
 group :heroku do
