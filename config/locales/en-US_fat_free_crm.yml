@@ -591,7 +591,12 @@ en-US:
       lt: is less than
       gt: is greater than
       matches: matches
+      does_not_match: doesn't match
       cont: contains
+      not_cont: doesn't contain
+      blank: is blank
+      present: is present
+
 
   # Views -> Comments.
   #----------------------------------------------------------------------------
