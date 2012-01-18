@@ -1,7 +1,7 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
-guard 'rails', :timeout => 30, :server => :thin do
+guard 'rails', :timeout => 45, :server => :thin do
   watch('Gemfile.lock')
   watch(%r{^(config|lib)/.*})
 end
