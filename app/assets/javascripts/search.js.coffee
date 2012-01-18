@@ -24,4 +24,13 @@
     $(".remove_fields").live "click", ->
       search.remove_fields this
       false
+
+    $("select.predicate").live "change", ->
+      value_el = $(this).next("span").children("input")
+      if $(this).val() == "present" || $(this).val() == "blank"
+        value_el.val("true")
+        value_el.hide()
+      else
+        value_el.val("")
+        value_el.show()
 ) jQuery
