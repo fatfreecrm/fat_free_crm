@@ -68,13 +68,10 @@ class Contact < ActiveRecord::Base
 
   scope :search, lambda { |query|
     query = query.gsub(/[^@\w\s\-\.'\p{L}]/u, '').strip
-    # We can't be sure that names are always entered in the right order, so we take the query and
-    # split it into all possible first/last name combinations.
-    # => "Zhong Fai Gao" matches last name "Zhong Fai" and "Fai Gao"
-    a = query.split(" ")
-    parts = [[a[0], a[1..-1].join(" ")],[a.reverse[0], a.reverse[1..-1].reverse.join(" ")]]
-    name_query = if a.size > 1
-      parts.map{ |first, last|
+    # We can't always be sure that names are entered in the right order, so we must
+    # split the query into all possible first/last name permutations.
+    name_query = if query.include?(" ")
+      name_permutations(query).map{ |first, last|
         "(upper(first_name) LIKE upper('%#{first}%') AND upper(last_name) LIKE upper('%#{last}%'))"
       }.join(" OR ")
     else
@@ -188,6 +185,22 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, :share_contact) if self[:access] == "Shared" && !self.permissions.any?
+  end
+
+  def name_permutations(query)
+    parts = query.split(" ")
+    # Generates all permutations for first and last name, based on the order of parts
+    # A query with 4 words will generate 6 permutations
+    (parts.size - 1).times.map {|i|
+      # ["A", "B", "C", "D"]  =>  [["A B C", "D"], ["A B", "C D"], ["A", "B C D"]]
+      [parts[(0..i)].join(" "), parts[(i+1)..-1].join(" ")]
+    }.inject([]) { |arr, perm|
+      # Search both [first, last] and [last, first]
+      # e.g. for every ["A B C", "D"], also include ["D", "A B C"]
+      arr << perm
+      arr << perm.reverse
+      arr
+    }
   end
 
 end
