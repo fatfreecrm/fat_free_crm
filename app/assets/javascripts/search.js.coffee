@@ -26,7 +26,7 @@
       false
 
     $("select.predicate").live "change", ->
-      value_el = $(this).next("span").children("input")
+      value_el = $('input#' + $(this).attr('id').slice(0, -1) + "v_0_value");
       if $(this).val() == "present" || $(this).val() == "blank"
         value_el.val("true")
         value_el.hide()
