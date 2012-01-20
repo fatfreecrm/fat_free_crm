@@ -21,13 +21,13 @@ describe Admin::UsersController do
     end
 
     it "performs lookup using query string" do
-      @amy = Factory(:user, :username => "amy")
-      @bob = Factory(:user, :username => "bob")
+      @amy = Factory(:user, :email => "amy_a@example.com")
+      @bob = Factory(:user, :email => "bob_b@example.com")
 
-      get :index, :query => "amy"
+      get :index, :query => "amy_a@example.com"
       assigns[:users].should == [ @amy ]
-      assigns[:current_query].should == "amy"
-      session[:users_current_query].should == "amy"
+      assigns[:current_query].should == "amy_a@example.com"
+      session[:users_current_query].should == "amy_a@example.com"
     end
   end
 
