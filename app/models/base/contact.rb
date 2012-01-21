@@ -71,7 +71,7 @@ class Contact < ActiveRecord::Base
     # We can't always be sure that names are entered in the right order, so we must
     # split the query into all possible first/last name permutations.
     name_query = if query.include?(" ")
-      name_permutations(query).map{ |first, last|
+      Contact.name_permutations(query).map{ |first, last|
         "(upper(first_name) LIKE upper('%#{first}%') AND upper(last_name) LIKE upper('%#{last}%'))"
       }.join(" OR ")
     else
@@ -187,7 +187,7 @@ class Contact < ActiveRecord::Base
     errors.add(:access, :share_contact) if self[:access] == "Shared" && !self.permissions.any?
   end
 
-  def name_permutations(query)
+  def self.name_permutations(query)
     parts = query.split(" ")
     # Generates all permutations for first and last name, based on the order of parts
     # A query with 4 words will generate 6 permutations

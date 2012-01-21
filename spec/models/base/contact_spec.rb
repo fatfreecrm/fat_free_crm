@@ -167,7 +167,7 @@ describe Contact do
         ["Chi Lo", "Stephanie Man"],
         ["Man Chi Lo", "Stephanie"]
       ]
-      result = Contact.new.send(:name_permutations, "Stephanie Man Chi Lo")
+      result = Contact.send(:name_permutations, "Stephanie Man Chi Lo")
       result.sort.should == expected.sort
     end
   end
