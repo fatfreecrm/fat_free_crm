@@ -463,7 +463,7 @@ cz:
   task_assigned_to: a přiřazen k %{value}
   task_completed: dokončen
   task_completed_ago: dokončen před %{value}
-  task_completed_by: dokončen před %{time_ago} (%{date}) od %{user}
+  task_completed_by: dokončen před %{time_ago} (%{date}) uživatelem %{user}
   task_created: Úkol byl vytvořen
   task_due_in: nastane za %{value}
   task_due_later: nastane někdy brzo
