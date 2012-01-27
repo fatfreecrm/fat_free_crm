@@ -1,4 +1,6 @@
 FatFreeCRM::Application.routes.draw do
+  resources :lists
+
   scope Setting.base_url.to_s do
     root :to => 'home#index'
 

@@ -9,7 +9,10 @@
   %span#create_contact_title #{t :contacts}
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#options{ hidden }
-.remote#advanced_search{ hidden }
+.remote#advanced_search{ hidden_if(!params[:q]) }
+  - if @search
+    = render :partial => "advanced_search"
+
 .remote#create_contact{ hidden }
 
 .list#contacts

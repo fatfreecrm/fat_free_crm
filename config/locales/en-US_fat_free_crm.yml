@@ -654,6 +654,13 @@ en-US:
   subject: Subject
   body: Body
 
+  # Lists
+  #----------------------------------------------------------------------------
+  lists: Lists
+  list: List
+  no_saved_lists: No saved lists
+  make_current_view_list: Make current view a list
+
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
