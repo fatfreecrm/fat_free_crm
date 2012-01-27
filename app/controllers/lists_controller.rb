@@ -4,8 +4,13 @@ class ListsController < ApplicationController
   # POST /lists
   #----------------------------------------------------------------------------
   def create
-    @list = List.new(params[:list])
-    @list.save
+    return unless params[:list]
+    # Find any existing list with the same name (case insensitive)
+    if @list = List.find(:first, :conditions => ["lower(name) = ?", params[:list][:name].downcase])
+      @list.update_attributes(params[:list])
+    else
+      @list = List.create(params[:list])
+    end
     respond_with(@list)
   end
 
