@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209175716) do
+ActiveRecord::Schema.define(:version => 20120121054235) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -255,6 +255,13 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
 
   add_index "leads", ["assigned_to"], :name => "index_leads_on_assigned_to"
   add_index "leads", ["user_id", "last_name", "deleted_at"], :name => "index_leads_on_user_id_and_last_name_and_deleted_at", :unique => true
+
+  create_table "lists", :force => true do |t|
+    t.string   "name"
+    t.text     "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "opportunities", :force => true do |t|
     t.integer  "user_id"
