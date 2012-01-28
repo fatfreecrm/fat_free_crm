@@ -9,7 +9,9 @@
   %span#create_account_title #{t :accounts}
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#options{ hidden }
-.remote#advanced_search{ hidden }
+.remote#advanced_search{ hidden_if(!params[:q]) }
+  - if @search
+    = render :partial => "advanced_search"
 .remote#create_account{ hidden }
 
 .list#accounts
