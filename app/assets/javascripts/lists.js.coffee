@@ -26,4 +26,12 @@
       $("#list_url").val(window.location.pathname + '?' + $('form.advanced_search').serialize())
       true
 
+    # When mouseover on li, change asset icons to delete buttons
+    $("#lists li").live "mouseover", ->
+      img_el = $(this).find('.delete_on_hover img')
+      img_el.attr('src', "/assets/delete.png")
+    $("#lists li").live "mouseout", ->
+      img_el = $(this).find('.delete_on_hover img')
+      img_el.attr('src', "/assets/tab_icons/" + img_el.data('controller') + "_active.png")
+
 ) jQuery

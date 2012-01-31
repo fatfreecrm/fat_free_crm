@@ -4,7 +4,6 @@ class ListsController < ApplicationController
   # POST /lists
   #----------------------------------------------------------------------------
   def create
-    return unless params[:list]
     # Find any existing list with the same name (case insensitive)
     if @list = List.find(:first, :conditions => ["lower(name) = ?", params[:list][:name].downcase])
       @list.update_attributes(params[:list])
@@ -17,6 +16,12 @@ class ListsController < ApplicationController
   # DELETE /lists/1
   #----------------------------------------------------------------------------
   def destroy
-    #TODO
+    @list = List.find(params[:id])
+    @list.destroy
+
+    respond_with(@list)
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :json, :xml)
   end
 end
