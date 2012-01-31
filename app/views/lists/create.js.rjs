@@ -5,5 +5,5 @@ if @list.valid?
 else # Couldn't create the saved list -- validation failed.
   page[:new_list].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:list_name].focus
-  page[:list_submit].enable
+  page[:save_list].enable
 end
