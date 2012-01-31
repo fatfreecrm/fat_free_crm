@@ -660,6 +660,7 @@ en-US:
   list: List
   no_saved_lists: No saved lists
   make_current_view_list: Make current view a list
+  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
 
   # Pluralizations.
   #----------------------------------------------------------------------------
