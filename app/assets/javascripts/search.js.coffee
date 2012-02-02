@@ -33,4 +33,7 @@
       else
         value_el.val("")
         value_el.show()
+
+    # Fire change event for existing search form.
+    $("select.predicate").change()
 ) jQuery
