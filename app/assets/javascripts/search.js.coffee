@@ -31,8 +31,9 @@
         value_el.val("true")
         value_el.hide()
       else
-        value_el.val("")
-        value_el.show()
+        unless value_el.is(":visible")
+          value_el.val("")
+          value_el.show()
 
     # Fire change event for existing search form.
     $("select.predicate").change()
