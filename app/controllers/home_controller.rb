@@ -138,8 +138,16 @@ class HomeController < ApplicationController
   def activity_user
     user = @current_user.pref[:activity_user]
     if user && user != "all users"
-      user = if user =~ /\s/  # first_name last_name
-        User.where([ "first_name = ? AND last_name = ?" ] + user.split).first
+      user = if user =~ /\s/  # first_name middle_name last_name any_name
+        name_query = if user.include?(" ")
+          user.name_permutations.map{ |first, last|
+            "(upper(first_name) LIKE upper('%#{first}%') AND upper(last_name) LIKE upper('%#{last}%'))"
+          }.join(" OR ")
+        else
+          "upper(first_name) LIKE upper('%#{user}%') OR upper(last_name) LIKE upper('%#{user}%')"
+        end
+
+        User.where(name_query).first
       elsif user =~ /@/ # email
         User.where(:email => user).first
       end

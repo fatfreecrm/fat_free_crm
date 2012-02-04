@@ -54,5 +54,21 @@ class String
     self == "false"
   end
 
+  # Generates all permutations for first and last name, based on the order of parts
+  # A query with 4 words will generate 6 permutations
+  def name_permutations
+    parts = self.split(" ")
+    (parts.size - 1).times.map {|i|
+      # ["A", "B", "C", "D"]  =>  [["A B C", "D"], ["A B", "C D"], ["A", "B C D"]]
+      [parts[(0..i)].join(" "), parts[(i+1)..-1].join(" ")]
+    }.inject([]) { |arr, perm|
+      # Search both [first, last] and [last, first]
+      # e.g. for every ["A B C", "D"], also include ["D", "A B C"]
+      arr << perm
+      arr << perm.reverse
+      arr
+    }
+  end
+
 end
 

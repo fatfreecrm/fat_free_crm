@@ -71,7 +71,7 @@ class Contact < ActiveRecord::Base
     # We can't always be sure that names are entered in the right order, so we must
     # split the query into all possible first/last name permutations.
     name_query = if query.include?(" ")
-      Contact.name_permutations(query).map{ |first, last|
+      query.name_permutations.map{ |first, last|
         "(upper(first_name) LIKE upper('%#{first}%') AND upper(last_name) LIKE upper('%#{last}%'))"
       }.join(" OR ")
     else
@@ -185,22 +185,6 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, :share_contact) if self[:access] == "Shared" && !self.permissions.any?
-  end
-
-  def self.name_permutations(query)
-    parts = query.split(" ")
-    # Generates all permutations for first and last name, based on the order of parts
-    # A query with 4 words will generate 6 permutations
-    (parts.size - 1).times.map {|i|
-      # ["A", "B", "C", "D"]  =>  [["A B C", "D"], ["A B", "C D"], ["A", "B C D"]]
-      [parts[(0..i)].join(" "), parts[(i+1)..-1].join(" ")]
-    }.inject([]) { |arr, perm|
-      # Search both [first, last] and [last, first]
-      # e.g. for every ["A B C", "D"], also include ["D", "A B C"]
-      arr << perm
-      arr << perm.reverse
-      arr
-    }
   end
 
 end
