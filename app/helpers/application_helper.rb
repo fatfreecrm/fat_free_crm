@@ -99,7 +99,7 @@ module ApplicationHelper
     link_to(text,
       url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
-      :onclick => "crm.close_all_forms(); this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
+      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
     )
   end
 
