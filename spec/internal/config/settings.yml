@@ -1,0 +1,288 @@
+# Fat Free CRM
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#------------------------------------------------------------------------------
+
+#
+# Default application settings to be loaded during installation:
+#
+#   rake crm:settings:load
+#
+
+# Host
+#------------------------------------------------------------------------------
+# Host for URLS when action mailer generates emails.
+#
+# When sending email, you will need to set the host name so that the mailer can
+# generate urls inside emails that point back to your site. Unlike controllers
+# from Action Pack, the mailer instance doesn’t have any context about the
+# incoming request, so you’ll need to provide all of the details needed to
+# generate a URL.
+#
+# :host: "http://www.example.com"
+#
+:host: ""
+
+# Base URL
+#------------------------------------------------------------------------------
+# Leave base_url blank if Fat Free CRM has been deployed in root URL, otherwise
+# specify subdirectory. For example, when deployed to:
+#
+# http://www.domain.com       => :base_url: ""       # (leave blank)
+# http://crm.domain.com       => :base_url: ""       # (leave blank)
+# http://www.domain.com/crm   => :base_url: "/crm"   # (without trailing slash)
+# http://www.domain.com/a/crm => :base_url: "/a/crm" # (without trailing slash)
+#
+:base_url: ""
+
+# Locale
+#------------------------------------------------------------------------------
+# Default locale is American English.
+#
+:locale: "en-US"
+
+# By default individual users can't pick their own locale and are presented
+# with the one set above. To enable language selection in User/Profile set
+# the following option to true.
+#
+:per_user_locale: false
+
+# User Signup
+#------------------------------------------------------------------------------
+# The following setting controls user signup. Possible values are:
+#   :allowed        -- users can sign up and use the system once they have registered.
+#   :not_allowed    -- users can only be added by system administrator. This is the default.
+#   :needs_approval -- users can sign up but must be approved before they can use the system.
+#
+:user_signup: :not_allowed
+
+# Default records permissions
+#------------------------------------------------------------------------------
+# Set the defaults permission for new records. Possible values are:
+#   Private -- private access, only for the creator of the record.
+#   Public  -- public access, share with everyone. This is the default.
+#   Shared  -- shared with selected accounts, should be selected by the user.
+#
+:default_access: "Public"
+
+# Require last name on Leads and Contacts
+#------------------------------------------------------------------------------
+# If this validation is disabled, records will only require a first name.
+#
+:require_last_names: true
+
+# Background information
+#------------------------------------------------------------------------------
+# Specify model names that should have background information displayed. Select any combination
+# from the following list. By default no background information is shown.
+#   :background_info:
+#     - :account
+#     - :campaign
+#     - :contact
+#     - :lead
+#     - :opportunity
+#     - :task
+#
+:background_info: []
+
+# Address format
+#------------------------------------------------------------------------------
+# Sets the address format for Accounts, Contacts, and Leads.
+#   true  -- use separate street1, street2, city, state, zipcode, and country field.
+#   false -- use single text area field to enter the entire address. This is the default.
+#
+:compound_address: true
+
+# Dropdown calendar format
+#------------------------------------------------------------------------------
+# The following setting controls whether to show time in dropdown calendar
+# when scheduling a task for specific date.
+#   true  -- allow selecting date and time.
+#   false -- allow selecting date only. This is the default.
+#
+task_calendar_with_time: false
+
+# Sets the email dropbox feature, this are the connections settings for
+# the imap account, server and folders.
+#------------------------------------------------------------------------------
+:email_dropbox:
+  :server                     : ""        # IMAP server name.
+  :port                       : ""        # IMAP server port number.
+  :ssl                        : ""        # True for secure IMAP connection, false othewise.
+  :address                    : ""        # Dropbox email address.
+  :user                       : ""        # User to login to the IMAP server.
+  :password                   : ""        # Password to login to the IMAP server.
+  :scan_folder                : ""        # Folder to scan for dropbox messages.
+#  :move_to_folder            : ""        # Optional: folder to move processed messages to.
+#  :move_invalid_to_folder    : ""        # Optional: folder to move invalid messages to.
+  :attach_to_account          : ""        # Attach emails to contact's account, if any. The same rule applies to opportunities.
+
+# Main and Admin Tabs
+#------------------------------------------------------------------------------
+:tabs: [
+  { :active : true,  :text : :tab_dashboard,     :url : { :controller : "home"           } },
+  { :active : false, :text : :tab_tasks,         :url : { :controller : "tasks"          } },
+  { :active : false, :text : :tab_campaigns,     :url : { :controller : "campaigns"      } },
+  { :active : false, :text : :tab_leads,         :url : { :controller : "leads"          } },
+  { :active : false, :text : :tab_accounts,      :url : { :controller : "accounts"       } },
+  { :active : false, :text : :tab_contacts,      :url : { :controller : "contacts"       } },
+  { :active : false, :text : :tab_opportunities, :url : { :controller : "opportunities"  } }
+]
+
+:admin_tabs: [
+  { :active : true,  :text : :admin_tab_users,    :url : { :controller : "admin/users"    } },
+  { :active : true,  :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } },
+  { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
+  { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
+]
+
+# Account Category. To add custom account type use string value, for example:
+#
+# account_category:
+#   - :affiliate
+#   - :competitor
+#   - :customer
+#   - :partner
+#   - :reseller
+#   - :vendor
+#   - "Custom"
+#
+#------------------------------------------------------------------------------
+account_category:
+  - :affiliate
+  - :competitor
+  - :customer
+  - :partner
+  - :reseller
+  - :vendor
+
+account_category_color:
+  :affiliate   : lavender
+  :competitor  : paleturquoise
+  :customer    : pink
+  :partner     : bisque
+  :reseller    : thistle
+  :vendor      : skyblue
+
+# Campaign Status. To add custom status use string value, for example:
+#
+# campaign_status:
+#   - :planned
+#   - :started
+#   - :completed
+#   - :on_hold
+#   - :called_off
+#   - "Custom"
+#
+#------------------------------------------------------------------------------
+campaign_status:
+  - :planned
+  - :started
+  - :completed
+  - :on_hold
+  - :called_off
+
+campaign_status_color:
+  :planned    : Gold
+  :started    : Turquoise
+  :completed  : Lime
+  :on_hold    : Orchid
+  :called_off : OrangeRed
+
+# Lead Status and Source.
+#------------------------------------------------------------------------------
+lead_status:
+  - :new
+  - :contacted
+  - :converted
+  - :rejected
+
+lead_status_color:
+  :new       : Silver
+  :contacted : Turquoise
+  :converted : Lime
+  :rejected  : OrangeRed
+
+lead_source:
+  - :campaign
+  - :cold_call
+  - :conference
+  - :online
+  - :referral
+  - :self
+  - :web
+  - :word_of_mouth
+  - :other
+
+# Opportunity Stage.
+#------------------------------------------------------------------------------
+opportunity_stage:
+  - :prospecting
+  - :analysis
+  - :presentation
+  - :proposal
+  - :negotiation
+  - :final_review
+  - :won
+  - :lost
+
+opportunity_stage_color:
+  :prospecting  : Silver
+  :analysis     : PaleGoldenRod
+  :presentation : Salmon
+  :proposal     : Gold
+  :negotiation  : Orchid
+  :final_review : Turquoise
+  :won          : Lime
+  :lost         : OrangeRed
+
+# Task Category, Due Date, and Completed Date.
+#------------------------------------------------------------------------------
+task_category:
+  - :call
+  - :email
+  - :follow_up
+  - :lunch
+  - :meeting
+  - :money
+  - :presentation
+  - :trip
+
+task_category_color:
+  :call         : Silver
+  :email        : Turquoise
+  :follow_up    : Gold
+  :lunch        : Tomato
+  :meeting      : Orchid
+  :money        : Lime
+  :presentation : Salmon
+  :trip         : Turquoise
+
+task_bucket:
+  - :overdue
+  - :due_asap
+  - :due_today
+  - :due_tomorrow
+  - :due_this_week
+  - :due_next_week
+  - :due_later
+
+task_completed:
+  - :completed_today
+  - :completed_yesterday
+  - :completed_last_week
+  - :completed_this_month
+  - :completed_last_month
+

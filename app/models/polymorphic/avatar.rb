@@ -31,6 +31,7 @@
 #
 
 class Avatar < ActiveRecord::Base
+
   STYLES = { :large => "75x75#", :medium => "50x50#", :small => "25x25#", :thumb => "16x16#" }.freeze
 
   belongs_to :user

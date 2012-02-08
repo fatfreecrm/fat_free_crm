@@ -1,7 +1,7 @@
-FatFreeCRM::Application.routes.draw do
-  resources :lists
-
+Rails.application.routes.draw do
   scope Setting.base_url do
+    resources :lists
+
     root :to => 'home#index'
 
     match 'activities' => 'home#index'
@@ -170,4 +170,3 @@ FatFreeCRM::Application.routes.draw do
     get '/:controller/tagged/:id' => '#tagged'
   end
 end
-

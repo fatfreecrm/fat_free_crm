@@ -18,15 +18,15 @@
 module FatFreeCRM
   class Version
     RELEASE = 0
-    MAJOR   = 10
-    MINOR   = 1
+    MAJOR   = 2
+    MINOR   = 0
 
     def self.to_a
       [ RELEASE, MAJOR, MINOR ]
     end
 
     def self.to_s
-      self.to_a.join(".") + "-rc1"
+      self.to_a.join(".")
     end
   end
 end

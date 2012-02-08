@@ -44,10 +44,10 @@
 class Campaign < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
+  has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
   has_many    :leads, :dependent => :destroy, :order => "id DESC"
   has_many    :opportunities, :dependent => :destroy, :order => "id DESC"
-  has_many    :activities, :as => :subject, :order => 'created_at DESC'
+  has_many    :activities, :as => :subject#, :order => 'created_at DESC'
   has_many    :emails, :as => :mediator
 
   scope :state, lambda { |filters|

@@ -15,8 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
+require 'fat_free_crm/engine'
+
+# Gems
+require 'haml'
+require 'acts_as_commentable'
+require 'acts_as_list'
+require 'acts-as-taggable-on'
+
 # Plugin dependencies
-require Rails.root.join('vendor/plugins/is_paranoid/init')
+require FatFreeCRM::Engine.root.join('vendor/plugins/is_paranoid/lib/is_paranoid')
 
 # Overrides
 require "overrides/authlogic/session/cookies"

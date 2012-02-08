@@ -14,7 +14,6 @@ describe ContactsController do
 
     it "should expose all contacts as @contacts and render [index] template" do
       @contacts = [ Factory(:contact, :user => @current_user) ]
-
       get :index
       assigns[:contacts].should == @contacts
       response.should render_template("contacts/index")
