@@ -596,7 +596,7 @@ en-US:
       not_cont: doesn't contain
       blank: is blank
       present: is present
-      null: is null
+      "null": is null
       not_null: is not null
 
 
