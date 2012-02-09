@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
-describe "admin/users/reactivate.js.rjs" do
+describe "admin/users/reactivate" do
   before do
     login_and_assign(:admin => true)
     assign(:user, @user = Factory(:user, :suspended_at => Time.now.yesterday))

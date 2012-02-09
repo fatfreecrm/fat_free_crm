@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/index.js.rjs" do
+describe "/accounts/index" do
   include AccountsHelper
 
   before do
@@ -10,7 +10,8 @@ describe "/accounts/index.js.rjs" do
   it "should render [account] template with @accounts collection if there are accounts" do
     assign(:accounts, [ Factory(:account, :id => 42) ].paginate)
 
-    render
+    render :template => 'accounts/index', :formats => [:js]
+    
     rendered.should have_rjs("accounts") do |rjs|
       with_tag("li[id=account_#{42}]")
     end
@@ -20,7 +21,8 @@ describe "/accounts/index.js.rjs" do
   it "should render [empty] template if @accounts collection if there are no accounts" do
     assign(:accounts, [].paginate)
 
-    render
+    render :template => 'accounts/index', :formats => [:js]
+    
     rendered.should have_rjs("accounts") do |rjs|
       with_tag("div[id=empty]")
     end

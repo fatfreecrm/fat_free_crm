@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/index.html.haml" do
+describe "/tasks/index" do
   include TasksHelper
 
   before do

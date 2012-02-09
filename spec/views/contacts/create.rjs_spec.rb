@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/create.js.rjs" do
+describe "/contacts/create" do
   include ContactsHelper
 
   before do
@@ -48,7 +48,7 @@ describe "/contacts/create.js.rjs" do
   end
 
   describe "create failure" do
-    it "create (failure): should re-render [create.html.haml] template in :create_contact div" do
+    it "create (failure): should re-render [create] template in :create_contact div" do
       assign(:contact, Factory.build(:contact, :first_name => nil)) # make it invalid
       @current_user = Factory(:user)
       @account = Factory(:account)

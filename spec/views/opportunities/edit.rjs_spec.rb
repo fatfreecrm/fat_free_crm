@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/edit.js.rjs" do
+describe "/opportunities/edit" do
   include OpportunitiesHelper
 
   before do

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/index.js.rjs" do
+describe "/leads/index" do
   include LeadsHelper
 
   before do
@@ -10,7 +10,8 @@ describe "/leads/index.js.rjs" do
   it "should render [lead] template with @leads collection if there are leads" do
     assign(:leads, [ Factory(:lead, :id => 42) ].paginate(:page => 1, :per_page => 20))
 
-    render
+    render :template => 'leads/index', :formats => [:js]
+    
     rendered.should have_rjs("leads") do |rjs|
       with_tag("li[id=lead_#{42}]")
     end
@@ -20,7 +21,8 @@ describe "/leads/index.js.rjs" do
   it "should render [empty] template if @leads collection if there are no leads" do
     assign(:leads, [].paginate(:page => 1, :per_page => 20))
 
-    render
+    render :template => 'leads/index', :formats => [:js]
+    
     rendered.should have_rjs("leads") do |rjs|
       with_tag("div[id=empty]")
     end

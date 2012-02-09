@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
-describe "admin/users/create.js.rjs" do
+describe "admin/users/create" do
   before do
     login_and_assign(:admin => true)
   end
@@ -26,7 +26,7 @@ describe "admin/users/create.js.rjs" do
   end
 
   describe "create failure" do
-    it "should re-render [create.html.haml] template in :create_user div" do
+    it "should re-render [create] template in :create_user div" do
       assign(:user, Factory.build(:user, :username => nil)) # make it invalid
       assign(:users, [ @current_user ])
       render

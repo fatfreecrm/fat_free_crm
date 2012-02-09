@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/comments/new.js.rjs" do
+describe "/comments/new" do
   include CommentsHelper
 
   before do

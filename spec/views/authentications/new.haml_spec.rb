@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/authentications/new.html.haml" do
+describe "/authentications/new" do
   include AuthenticationsHelper
 
   before do

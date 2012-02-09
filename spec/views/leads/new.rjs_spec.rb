@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/new.js.rjs" do
+describe "/leads/new" do
   include LeadsHelper
 
   before do
@@ -26,7 +26,7 @@ describe "/leads/new.js.rjs" do
   end
 
   describe "new lead" do
-    it "should render [new.html.haml] template into :create_lead div" do
+    it "should render [new] template into :create_lead div" do
       params[:cancel] = nil
       render
 

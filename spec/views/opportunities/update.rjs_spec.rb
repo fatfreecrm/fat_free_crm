@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/update.js.rjs" do
+describe "/opportunities/update" do
   before do
     login_and_assign
 

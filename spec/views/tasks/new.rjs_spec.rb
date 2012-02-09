@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/new.js.rjs" do
+describe "/tasks/new" do
   include TasksHelper
 
   before do
@@ -21,7 +21,7 @@ describe "/tasks/new.js.rjs" do
     before(:all) { @task_with_time = Setting.task_calendar_with_time }
     after(:all) { Setting.task_calendar_with_time = @task_with_time }
 
-    it "create: should render [new.html.haml] template into :create_task div" do
+    it "create: should render [new] template into :create_task div" do
       params[:cancel] = nil
       render
 

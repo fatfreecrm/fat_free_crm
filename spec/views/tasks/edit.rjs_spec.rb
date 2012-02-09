@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/edit.js.rjs" do
+describe "/tasks/edit" do
   include TasksHelper
 
   before do

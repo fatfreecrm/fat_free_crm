@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/create.js.rjs" do
+describe "/leads/create" do
   before do
     controller.controller_path = 'leads'
     login_and_assign
@@ -54,7 +54,7 @@ describe "/leads/create.js.rjs" do
   end
 
   describe "create failure" do
-    it "should re-render [create.html.haml] template in :create_lead div" do
+    it "should re-render [create] template in :create_lead div" do
       assign(:lead, Factory.build(:lead, :first_name => nil)) # make it invalid
       assign(:users, [ Factory(:user) ])
 

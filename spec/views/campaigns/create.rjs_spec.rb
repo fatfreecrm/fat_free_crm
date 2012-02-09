@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/create.js.rjs" do
+describe "/campaigns/create" do
   before do
     login_and_assign
   end
@@ -33,7 +33,7 @@ describe "/campaigns/create.js.rjs" do
   end
 
   describe "create failure" do
-    it "should re-render [create.html.haml] template in :create_campaign div" do
+    it "should re-render [create] template in :create_campaign div" do
       assign(:campaign, Factory.build(:campaign, :name => nil)) # make it invalid
       assign(:users, [ Factory(:user) ])
 

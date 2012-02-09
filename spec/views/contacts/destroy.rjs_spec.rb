@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/destroy.js.rjs" do
+describe "/contacts/destroy" do
   include ContactsHelper
 
   before do

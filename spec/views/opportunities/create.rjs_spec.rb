@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/create.js.rjs" do
+describe "/opportunities/create" do
   before do
     login_and_assign
     assign(:stage, Setting.unroll(:opportunity_stage))
@@ -72,7 +72,7 @@ describe "/opportunities/create.js.rjs" do
   end
 
   describe "create failure" do
-    it "should re-render [create.html.haml] template in :create_opportunity div" do
+    it "should re-render [create] template in :create_opportunity div" do
       assign(:opportunity, Factory.build(:opportunity, :name => nil)) # make it invalid
       @account = Factory(:account)
       assign(:users, [ Factory(:user) ])

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/new.js.rjs" do
+describe "/accounts/new" do
   include AccountsHelper
 
   before do
@@ -23,7 +23,7 @@ describe "/accounts/new.js.rjs" do
   end
 
   describe "new account" do
-    it "should render [new.html.haml] template into :create_account div" do
+    it "should render [new] template into :create_account div" do
       params[:cancel] = nil
       render
 

@@ -22,6 +22,8 @@ module RSpec # :nodoc:
             true
           rescue ::Test::Unit::AssertionFailedError => @error
             false
+          rescue ::MiniTest::Assertion => @error
+            false
           end
         end
 

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/promote.js.rjs" do
+describe "/leads/promote" do
   before do
     login_and_assign
     assign(:users, [ @current_user ])
@@ -79,7 +79,7 @@ describe "/leads/promote.js.rjs" do
       it "should update campaign sidebar" do
         render
 
-        assert_select_rjs("sidebar") do |rjs|
+        rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[class=panel][id=summary]")
           with_tag("div[class=panel][id=recently]")
         end

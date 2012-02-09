@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/index.js.rjs" do
+describe "/campaigns/index" do
   include CampaignsHelper
 
   before do
@@ -10,7 +10,8 @@ describe "/campaigns/index.js.rjs" do
   it "should render [campaign] template with @campaigns collection if there are campaigns" do
     assign(:campaigns, [ Factory(:campaign, :id => 42) ].paginate)
 
-    render
+    render :template => 'campaigns/index', :formats => [:js]
+    
     rendered.should have_rjs("campaigns") do |rjs|
       with_tag("li[id=campaign_#{42}]")
     end
@@ -20,7 +21,8 @@ describe "/campaigns/index.js.rjs" do
   it "should render [empty] template if @campaigns collection if there are no campaigns" do
     assign(:campaigns, [].paginate)
 
-    render
+    render :template => 'campaigns/index', :formats => [:js]
+    
     rendered.should have_rjs("campaigns") do |rjs|
       with_tag("div[id=empty]")
     end

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/create.js.rjs" do
+describe "/accounts/create" do
   include AccountsHelper
 
   before do
@@ -37,7 +37,7 @@ describe "/accounts/create.js.rjs" do
   end
 
   describe "create failure" do
-    it "should re-render [create.html.haml] template in :create_account div" do
+    it "should re-render [create] template in :create_account div" do
       assign(:account, Factory.build(:account, :name => nil)) # make it invalid
       assign(:users, [ @current_user ])
       render

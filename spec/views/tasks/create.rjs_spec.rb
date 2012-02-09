@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/create.js.rjs" do
+describe "/tasks/create" do
   include TasksHelper
 
   before do
@@ -112,7 +112,7 @@ describe "/tasks/create.js.rjs" do
     end
   end
 
-  it "create failure: should re-render [create.html.haml] template in :create_task div" do
+  it "create failure: should re-render [create] template in :create_task div" do
     assign(:task, Factory.build(:task, :name => nil)) # make it invalid
     render
 

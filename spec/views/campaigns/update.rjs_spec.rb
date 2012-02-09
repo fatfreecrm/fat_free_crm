@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/update.js.rjs" do
+describe "/campaigns/update" do
   before do
     login_and_assign
     assign(:campaign, @campaign = Factory(:campaign, :user => @current_user))

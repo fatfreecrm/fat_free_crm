@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/update.js.rjs" do
+describe "/accounts/update" do
   include AccountsHelper
 
   before do
