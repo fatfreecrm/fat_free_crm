@@ -44,6 +44,16 @@ feature 'Accounts', %q{
     page.should have_content('A new account *editted*')
   end
 
+  scenario 'should delete an account', :js => true do
+    Factory(:account, :name => "My new account")
+    visit accounts_path
+    click_link 'My new account'
+    click_link 'Delete?'
+    page.should have_content('Are you sure you want to delete this account?')
+    click_link 'Yes'
+    page.should have_content('My new account has been deleted')
+  end
+
   scenario 'should search for an account', :js => true do
     2.times { |i| Factory(:account, :name => "Account #{i}") }
     visit accounts_path
