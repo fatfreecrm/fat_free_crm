@@ -33,7 +33,18 @@ feature 'Accounts', %q{
     page.should have_content('http://www.example.com')
   end
 
-  scenario 'should ajax search for an account', :js => true do
+  scenario 'should view and edit an account', :js => true do
+    Factory(:account, :name => "A new account")
+    visit accounts_path
+    click_link 'A new account'
+    page.should have_content('A new account')
+    click_link 'Edit'
+    fill_in 'account_name', :with => 'A new account *editted*'
+    click_button 'Save Account'
+    page.should have_content('A new account *editted*')
+  end
+
+  scenario 'should search for an account', :js => true do
     2.times { |i| Factory(:account, :name => "Account #{i}") }
     visit accounts_path
     find('#accounts').should have_content("Account 0")
