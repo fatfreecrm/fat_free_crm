@@ -13,6 +13,8 @@ Spork.prefork do
 
   Bundler.require :default, :development
   
+  require 'capybara/rspec'
+  
   Combustion.initialize!
 
   require 'rspec/rails'
@@ -37,6 +39,8 @@ Spork.prefork do
   Setting.task_calendar_with_time = false
 
   I18n.locale = 'en-US'
+
+  Paperclip.options[:log] = false
 
   RSpec.configure do |config|
     # == Mock Framework
