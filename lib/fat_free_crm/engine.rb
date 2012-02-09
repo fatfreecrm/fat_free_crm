@@ -2,8 +2,14 @@ module ::FatFreeCRM
   class Engine < Rails::Engine
     config.autoload_paths += Dir[root.join("app/models/**")]
     
-    initializer "fat_free_crm.init_observers", :before => :load_config_initializers do |app|
-      app.config.active_record.observers = :event_observer
+    config.to_prepare do
+      # Plugin dependencies
+      %w(is_paranoid country_select dynamic_form gravatar_image_tag responds_to_parent).each do |plugin|
+        $:.unshift File.join(File.dirname(__FILE__), '..', plugin, 'lib')
+        require plugin
+      end
+
+      ActiveRecord::Base.observers = :activity_observer
     end
   end
 end

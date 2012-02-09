@@ -23,12 +23,6 @@ require 'acts_as_commentable'
 require 'acts_as_list'
 require 'acts-as-taggable-on'
 
-# Plugin dependencies
-%w(is_paranoid country_select dynamic_form gravatar_image_tag responds_to_parent).each do |plugin|
-  $:.unshift File.join(File.dirname(__FILE__), plugin, 'lib')
-  require plugin
-end
-
 # Overrides
 require "overrides/authlogic/session/cookies"
 require "overrides/simple_form/action_view_extensions/form_helper"
