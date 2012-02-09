@@ -21,12 +21,9 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency 'fuubar'
   s.add_development_dependency 'factory_girl'
-  s.add_development_dependency 'ruby-debug19'
   s.add_dependency 'rails',               '~> 3.2.1'
   s.add_dependency 'prototype-rails'
   s.add_dependency 'jquery-rails'
-  s.add_dependency 'pg',                  '~> 0.12.2'
-  s.add_dependency 'sqlite3'
   s.add_dependency 'authlogic',           '~> 3.1.0'
   s.add_dependency 'acts_as_commentable', '~> 3.0.1'
   s.add_dependency 'acts-as-taggable-on', '~> 2.2.1'
