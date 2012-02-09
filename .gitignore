@@ -8,6 +8,7 @@ config/*.yml
 
 .rspec
 spec/reports
+spec/internal/public/avatars
 coverage/*
 db/*.sql*
 log/*.log
