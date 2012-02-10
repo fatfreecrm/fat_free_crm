@@ -36,7 +36,7 @@
 
 
 <%
-FatFreeCRM::Plugin.list_ids.each do |plugin|
-  require_asset(plugin.to_s) rescue Sprockets::FileNotFound
+Gem.loaded_specs.keys.grep(/^ffcrm_/).each do |plugin|
+  require_asset(plugin) rescue Sprockets::FileNotFound
 end
 %>

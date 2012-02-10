@@ -17,9 +17,6 @@
 
 class ApplicationController < ActionController::Base
 
-  # TODO: This is a fix for plugin loading under Rails 3.1 otherwise we don't get helpers loaded correctly
-  helper :accounts, :addresses, :application, :authentications, :campaigns, :comments, :contacts, :emails, :fields, :home, :leads, :opportunities, :passwords, :crm_tags, :tasks, :users
-
   helper_method :klass
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
