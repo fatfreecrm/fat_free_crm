@@ -1,4 +1,4 @@
-module ::FatFreeCRM
+module FatFreeCRM
   class Engine < Rails::Engine
     config.autoload_paths += Dir[root.join("app/models/**")]
     
