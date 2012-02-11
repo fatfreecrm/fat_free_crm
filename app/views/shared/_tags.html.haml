@@ -6,4 +6,12 @@
     = f.select :tag_list, Tag.all.map{|t| [t.name, t.name] }, {:value => f.object.tags.map{|t| t.name }}, {:multiple => true, :style => "width: 500px;"}
 
     :javascript
-      new Chosen($('#{asset}_tag_list'), {allow_option_creation: true});
+      new Chosen($('#{asset}_tag_list'), {
+        allow_option_creation: true,
+        on_option_add: function(tag){ 
+          crm.load_field_group('#{controller_name}', tag, '#{params[:id]}');
+        },
+        on_option_remove: function(tag){
+          crm.remove_field_group(tag);
+        }
+      });

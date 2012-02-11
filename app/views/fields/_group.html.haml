@@ -1,6 +1,6 @@
 - collapsed = session[field_group.key].nil?
 
-%div{ :id => "#{field_group.key}_container" }
+%div{ :id => "#{field_group.key}_container", :"data-tag" => field_group.tag.try(:name) }
   = subtitle field_group.key, collapsed, t(field_group.name, :default => field_group.label)
   .section
     %small{ hidden_if(!collapsed).merge(:id => "#{field_group.key}_intro") }

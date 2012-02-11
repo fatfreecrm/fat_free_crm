@@ -9,13 +9,3 @@
       - field_groups[field_group.tag.name.downcase] = "#{field_group.key}_container" if field_group.tag
 
       = render :partial => 'fields/group', :locals => {:f => f, :field_group => field_group}
-
-:javascript
-  if (fbtaglist) {
-    crm.set_tag_list_event('#{controller_name}', '#{params[:id]}');
-    loadedFieldGroups = $H(#{field_groups.to_json});
-  }
-
-  $('#{asset}_tag_list').observe('change', function() {
-    alert('hi');
-  });
