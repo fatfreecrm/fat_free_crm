@@ -5,9 +5,9 @@ gem 'prototype-rails'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-# gem "mysql2", "0.3.10"
+gem "mysql2", "0.3.10"
 # gem "sqlite3"
-gem "pg", "~> 0.12.2"
+# gem "pg", "~> 0.12.2"
 
 gem 'authlogic',           '~> 3.1.0'
 gem 'acts_as_commentable', '~> 3.0.1'

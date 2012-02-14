@@ -25,4 +25,4 @@ Design
 .sass-cache
 *~
 *.swp
-
+vendor/ruby
