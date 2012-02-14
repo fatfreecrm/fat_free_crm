@@ -4,6 +4,4 @@ simple_fields_for(@asset) do |f|
     :partial => 'fields/group',
     :locals => {:f => f, :field_group => @field_group, :fields => @field_group.fields}
   )
-
-  page << "loadedFieldGroups.set('#{@tag.name.downcase}', '#{@field_group.key}_container');"
 end

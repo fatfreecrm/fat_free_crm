@@ -94,15 +94,13 @@ class BaseController < ApplicationController
   end
 
   def field_group
-    if @tag = Tag.find_by_name(params[:tag].strip) and
-       @field_group = FieldGroup.find_by_tag_id(@tag.id)
-
-      @asset = klass.find_by_id(params[:asset_id]) || klass.new
-
-      render 'fields/group'
-    else
-      render :text => ''
+    if @tag = Tag.find_by_name(params[:tag].strip)
+      if @field_group = FieldGroup.find_by_tag_id_and_klass_name(@tag.id, klass.to_s)
+        @asset = klass.find_by_id(params[:asset_id]) || klass.new
+        render 'fields/group' and return
+      end
     end
+    render :text => ''
   end
 
   private
