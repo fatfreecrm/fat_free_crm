@@ -46,7 +46,9 @@ module AccountsHelper
     # and prepends the currently selected account, if available
     options[:selected] = (@account && @account.id) || 0
     accounts = ([@account] + Account.order("name").my.limit(25)).compact.uniq
-    collection_select :account, :id, accounts, :id, :name, options, { :style => "width:330px; display:none;" }
+    collection_select :account, :id, accounts, :id, :name, options,
+                      {:"data-placeholder" => t(:select_an_account),
+                       :style => "width:330px; display:none;" }
   end
 end
 

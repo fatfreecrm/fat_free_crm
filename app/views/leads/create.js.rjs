@@ -14,6 +14,7 @@ if @lead.valid?
   page.call "crm.flick", :empty, :remove
 else
   page[:create_lead].replace_html :partial => "new"
+  page.call "crm.init_chosen_fields"
   page[:create_lead].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:lead_first_name].focus
 end

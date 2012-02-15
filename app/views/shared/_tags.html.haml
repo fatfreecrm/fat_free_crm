@@ -3,15 +3,7 @@
 %tr
   %td{ :valign => :top, :colspan => span }
     .label Tags:
-    = f.select :tag_list, Tag.all.map{|t| [t.name, t.name] }, {:value => f.object.tags.map{|t| t.name }}, {:multiple => true, :style => "width: 500px;"}
+    = f.select :tag_list, Tag.all.map{|t| [t.name, t.name] }, {:value => f.object.tags.map{|t| t.name }}, {:multiple => true, :"data-placeholder" => t(:select_or_create_tags), :style => "width: 500px;"}
 
     :javascript
-      new Chosen($('#{asset}_tag_list'), {
-        allow_option_creation: true,
-        on_option_add: function(tag){ 
-          crm.load_field_group('#{controller_name}', tag, '#{params[:id]}');
-        },
-        on_option_remove: function(tag){
-          crm.remove_field_group(tag);
-        }
-      });
+      crm.chosen_taglist('#{asset}', '#{controller_name}', '#{params[:id]}');

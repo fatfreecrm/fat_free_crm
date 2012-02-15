@@ -113,20 +113,10 @@ var crm = {
     }
   },
 
-  ensure_chosen_account: function() {
-    if (! $("account_id_chzn")) {
-      new ajaxChosen($("account_id"), 
-      {allow_single_deselect: true,
-       show_on_activate: true,
-       url:       "/accounts/auto_complete.json",
-       parameters: {limit: 25},
-       query_key: "auto_complete_query"});
-    }
-  },
-
   // Hide accounts dropdown and show create new account edit field instead.
   //----------------------------------------------------------------------------
   create_account: function(and_focus) {
+    crm.ensure_chosen_account();
     $("account_disabled_title").hide();
     $("account_select_title").hide();
     $("account_create_title").show();
@@ -143,6 +133,7 @@ var crm = {
   // Hide create account edit field and show accounts dropdown instead.
   //----------------------------------------------------------------------------
   select_account: function(and_focus) {
+    crm.ensure_chosen_account();
     $("account_disabled_title").hide();
     $("account_create_title").hide();
     $("account_select_title").show();
@@ -155,6 +146,7 @@ var crm = {
   // Show accounts dropdown and disable it to prevent changing the account.
   //----------------------------------------------------------------------------
   select_existing_account: function() {
+    crm.ensure_chosen_account();
     $("account_create_title").hide();
     $("account_select_title").hide();
     $("account_disabled_title").show();
@@ -166,7 +158,6 @@ var crm = {
 
   //----------------------------------------------------------------------------
   create_or_select_account: function(selector) {
-    crm.ensure_chosen_account();
     if (selector !== true && selector > 0) {
       this.select_existing_account(); // disabled accounts dropdown
     } else if (selector) {

@@ -42,10 +42,6 @@ crm.remove_field_group = function(tag) {
 // (closes any current edit forms)
 crm.close_all_forms = function() {
   $$('.close').each(function(el){
-    new Ajax.Request(el.href, {method: "get"})
+    new Ajax.Request(el.href, {asynchronous: true, method: "get"})
   });
 };
-
-// Initialize the hash to store which field groups have been loaded.
-// {'tag' => 'div element id'}
-var loadedFieldGroups = new Hash();

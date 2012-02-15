@@ -273,6 +273,7 @@ en-US:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Account
+  select_an_account: Select an Account
   account_small: account
   account_summary: Account Summary
   accounts: Accounts
@@ -702,6 +703,8 @@ en-US:
   save_field_group: Save field group
 
   field_group_empty: There are no fields in this group.
+
+  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
 
   restrict_by_tag: Restrict by Tag
   restrict_by_tag_info: Only show fields for %{assets} that are tagged with
