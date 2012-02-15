@@ -19,7 +19,7 @@ gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
 gem 'ffaker',              '>= 1.12.0' # For loading demo data
 gem 'uglifier'
-gem 'ajax-chosen-rails',   '>= 0.1.1'
+gem 'ajax-chosen-rails',   '>= 0.1.5'
 gem 'chosen-rails',        :git => "git://github.com/fatfreecrm/chosen-rails.git"
 
 group :heroku do
