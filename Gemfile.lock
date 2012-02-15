@@ -182,6 +182,7 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sqlite3 (1.3.5)
     tane (0.0.2)
       awesome_print
       erubis
@@ -245,6 +246,7 @@ DEPENDENCIES
   simple_form (~> 1.5.2)
   simplecov
   spork
+  sqlite3
   tane
   test-unit (~> 2.4.3)
   thin
