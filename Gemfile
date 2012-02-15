@@ -8,6 +8,7 @@ gem 'prototype-rails'
 # gem "mysql2", "0.3.10"
 # gem "sqlite3"
 gem "pg", "~> 0.12.2"
+gem "tane"
 
 gem 'authlogic',           '~> 3.1.0'
 gem 'acts_as_commentable', '~> 3.0.1'
@@ -29,7 +30,7 @@ end
 group :assets do
   gem 'sass-rails', '>= 3.1.1'
   gem 'coffee-rails', '>= 3.1.1'
-  gem 'therubyracer', :platform => :ruby  # C Ruby (MRI) or Rubinius, but NOT Windows
+  gem 'execjs'
 end
 
 group :development, :test do
