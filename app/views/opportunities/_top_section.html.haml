@@ -52,7 +52,7 @@
           %td= spacer
           %td
             .label.req #{t :assigned_to}:
-            = collection_select :opportunity, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
+            = user_select(:opportunity)
 
         - if Setting.background_info && Setting.background_info.include?(:opportunity)
           %tr
