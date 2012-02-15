@@ -4,6 +4,7 @@ config/*.yml
 !config/database.postgres.yml
 !config/database.sqlite.yml
 
+.bushido
 .rspec
 spec/reports
 coverage/*
