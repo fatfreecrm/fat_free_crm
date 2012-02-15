@@ -42,6 +42,7 @@ group :development, :test do
   gem 'test-unit',          '~> 2.4.3',  :platform => :mri_19, :require => false
   gem 'rspec-rails',        '~> 2.8.0'
   gem 'factory_girl'
+  gem 'pry-rails'
 end
 
 group :development do
