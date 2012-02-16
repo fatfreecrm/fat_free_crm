@@ -10,7 +10,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 # https://github.com/binarylogic/authlogic/issues/262#issuecomment-1804988
 User.acts_as_authentic_config[:maintain_sessions] = false
 
-if ENV['HEADLESS'] == 'true'
+if ENV['HEADLESS'] == 'true' or ENV["CI"] == "true"
   require 'headless'
   headless = Headless.new
   headless.start
