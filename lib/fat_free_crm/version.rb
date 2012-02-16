@@ -16,17 +16,12 @@
 #------------------------------------------------------------------------------
 
 module FatFreeCRM
-  class Version
-    RELEASE = 0
-    MAJOR   = 2
-    MINOR   = 0
+  module VERSION #:nodoc:
+    MAJOR = 0
+    MINOR = 2
+    TINY  = 0
+    PRE   = nil
 
-    def self.to_a
-      [ RELEASE, MAJOR, MINOR ]
-    end
-
-    def self.to_s
-      self.to_a.join(".")
-    end
+    STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
   end
 end
