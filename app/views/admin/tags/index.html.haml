@@ -1,0 +1,12 @@
+= styles_for :tag
+
+.title_tools
+  = link_to_inline(:create_tag, new_admin_tag_path, :text => t(:create_tag))
+
+.title
+  %span#create_tag_title #{t :tags}
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#create_tag{ hidden }
+
+.list#tags= render :partial => "admin/tags/tag", :collection => @tags
+#export= render "shared/export"

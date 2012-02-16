@@ -15,17 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-module Admin::FieldGroupsHelper
-  def field_group_subtitle(field_group)
-    asset = field_group.klass_name.downcase
-    html = t(field_group.name, :default => field_group.label)
-    html << content_tag(:small, :id => "#{asset}_field_group_#{field_group.id}_intro") do
-      if field_group.tag_id
-        t(:field_group_tag_restriction, :assets => asset.pluralize, :tag => field_group.tag.try(:name))
-      else
-        t(:field_group_unrestricted, :assets => asset.pluralize)
-      end
-    end
-    html.html_safe
+module Admin::TagsHelper
+  def link_to_confirm(tag)
+    link_to(t(:delete) + "?", confirm_admin_tag_path(tag), :method => :get, :remote => true)
+  end
+  
+  #----------------------------------------------------------------------------
+  def link_to_delete(tag)
+    link_to(t(:yes_button),
+      admin_tag_path(tag),
+      :method  => :delete,
+      :remote  => true,
+      :onclick => visual_effect(:highlight, dom_id(tag), :startcolor => "#ffe4e1")
+    )
   end
 end

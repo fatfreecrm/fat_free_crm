@@ -26,13 +26,14 @@ en-US:
 
   admin_tab_users: Users
   admin_tab_fields: Custom Fields
+  admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
 
   affiliate: Affiliate
   competitor: Competitor
   customer: Customer
-  partner: Partner
+  partner: Partneradm
   reseller: Reseller
   vendor: Vendor
 
@@ -688,6 +689,7 @@ en-US:
 
       multi_page: "Displaying %{plural} %{from} - %{to} of %{total} in total"
 
+
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
   label: Label
@@ -709,3 +711,12 @@ en-US:
     Custom fields are displayed in groups.
     Create a new field group, or add fields to one of the groups below.<br />
     You can drag and drop fields to change their display order or move them between field groups.
+
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  tags: Tags
+  create_tag: Create Tag
+  save_tag: Save Tag
+  field_group_tags: Field Groups shown for this Tag
+  tag_confirm_delete: A tag can only be deleted if it is not associated with any Field Groups.  
+  msg_cant_delete_tag: "Couldn't delete the tag since '%{value}' has associated Field Groups."

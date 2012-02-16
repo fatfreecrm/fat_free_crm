@@ -1,0 +1,19 @@
+- tag_field_groups = FieldGroup.find_all_by_tag_id(tag)
+
+%li[tag]{ highlightable(dom_id(tag, :tools)) }
+  .tools{ invisible, :id => dom_id(tag, :tools) }
+    = link_to_edit(tag, :url => edit_admin_tag_path(tag)) << " | "
+
+    = link_to_confirm(tag)
+
+  %span.black= tag.name
+  %tt 
+  - if tag_field_groups.any?
+    %dt{ :style => "padding: 2px 0px 0px 0px" }
+      = t(:field_group_tags) + ":"
+      - tag_field_groups.each_with_index do |field_group, i|
+        %strong= field_group.name
+        on 
+        %strong= field_group.klass_name.pluralize
+        - if i < tag_field_groups.size - 1
+          = "|"
