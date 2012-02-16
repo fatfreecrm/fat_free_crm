@@ -64,7 +64,7 @@ class Campaign < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   acts_as_taggable_on :tags
-  is_paranoid
+  has_paper_trail
   has_fields
   exportable
   sortable :by => [ "name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"

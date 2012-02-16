@@ -31,11 +31,11 @@ class ActivityObserver < ActiveRecord::Observer
 
   def before_update(subject)
     if subject.is_a?(Task)
-      @@tasks[subject.id] = Task.find_with_destroyed(subject.id).freeze
+      @@tasks[subject.id] = Task.find(subject.id).freeze
     elsif subject.is_a?(Lead)
-      @@leads[subject.id] = Lead.find_with_destroyed(subject.id).freeze
+      @@leads[subject.id] = Lead.find(subject.id).freeze
     elsif subject.is_a?(Opportunity)
-      @@opportunities[subject.id] = Opportunity.find_with_destroyed(subject.id).freeze
+      @@opportunities[subject.id] = Opportunity.find(subject.id).freeze
     end
   end
 
@@ -66,12 +66,8 @@ class ActivityObserver < ActiveRecord::Observer
     log_activity(subject, :updated)
   end
 
-  def after_destroy(subject)
-    if subject.deleted_at               # If the record is marked as deleted...
-      log_activity(subject, :deleted)   # then log the activity. Otherwise (i.e. the record
-    else                                # is actually deleted) wipe out all related activities.
-      Activity.delete_all([ 'subject_id = ? AND subject_type = ?', subject.id, subject.class.to_s ])
-    end
+  def before_destroy(subject)
+    log_activity(subject, :deleted)
   end
 
   private

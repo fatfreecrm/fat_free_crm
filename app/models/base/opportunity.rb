@@ -72,7 +72,7 @@ class Opportunity < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   acts_as_taggable_on :tags
-  is_paranoid
+  has_paper_trail
   has_fields
   exportable
   sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
@@ -81,7 +81,7 @@ class Opportunity < ActiveRecord::Base
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
 
-  # Validate presence of account_opportunity unless the opportunity is deleted [with is_paranoid],
+  # Validate presence of account_opportunity unless the opportunity is deleted [with has_paper_trail],
   # in which case the account_opportunity will still exist but will be in a deleted state.
   # validates :account_opportunity, :presence => true, :unless => Proc.new { |o| o.destroyed? }
   # TODO: Mike, what do you think about the above validation?

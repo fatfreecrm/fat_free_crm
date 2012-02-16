@@ -394,4 +394,14 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
   add_index "users", ["persistence_token"], :name => "index_users_on_remember_token"
   add_index "users", ["username", "deleted_at"], :name => "index_users_on_username_and_deleted_at", :unique => true
 
+  create_table :versions, :force => true do |t|
+    t.string   :item_type, :null => false
+    t.integer  :item_id,   :null => false
+    t.string   :event,     :null => false
+    t.string   :whodunnit
+    t.text     :object
+    t.datetime :created_at
+  end
+  
+  add_index :versions, [:item_type, :item_id]
 end

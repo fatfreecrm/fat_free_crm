@@ -11,6 +11,7 @@ PATH
       ffaker (>= 1.12.0)
       haml (~> 3.1.3)
       jquery-rails
+      paper_trail
       paperclip (~> 2.5.2)
       prototype-rails
       rails (~> 3.2.1)
@@ -119,6 +120,8 @@ GEM
     mime-types (1.17.2)
     multi_json (1.1.0)
     nokogiri (1.5.0)
+    paper_trail (2.6.0)
+      rails (~> 3)
     paperclip (2.5.2)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)

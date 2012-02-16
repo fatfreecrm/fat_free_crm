@@ -37,4 +37,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'chosen-rails'
   s.add_dependency 'ajax-chosen-rails',   '>= 0.1.5'
   s.add_dependency 'ransack'
+  s.add_dependency 'paper_trail'
 end

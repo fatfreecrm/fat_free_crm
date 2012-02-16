@@ -98,7 +98,7 @@ class Task < ActiveRecord::Base
   }
 
   acts_as_commentable
-  is_paranoid
+  has_paper_trail
   has_fields
   exportable
 

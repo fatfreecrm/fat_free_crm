@@ -33,7 +33,7 @@ class Array
     delete_if do |item|
       is_private = false
       if item.is_a?(Activity)
-        subject = item.subject || item.subject_type.constantize.find_with_destroyed(item.subject_id)
+        subject = item.subject || Version.with_item_keys(item.subject_type, item.subject_id).last.reify
         if subject.respond_to?(:access) # NOTE: Tasks don't have :access as of yet.
           is_private = subject.user_id != user.id && subject.assigned_to != user.id &&
             (subject.access == "Private" || (subject.access == "Shared" && !subject.permissions.map(&:user_id).include?(user.id)))

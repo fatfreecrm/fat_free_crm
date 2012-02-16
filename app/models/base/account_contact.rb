@@ -32,6 +32,6 @@ class AccountContact < ActiveRecord::Base
   belongs_to :contact
   validates_presence_of :account_id, :contact_id
 
-  # is_paranoid
+  # has_paper_trail
 end
 

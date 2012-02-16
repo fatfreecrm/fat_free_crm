@@ -33,6 +33,6 @@ class ContactOpportunity < ActiveRecord::Base
   belongs_to :opportunity
   validates_presence_of :contact_id, :opportunity_id
 
-  # is_paranoid
+  # has_paper_trail
 end
 

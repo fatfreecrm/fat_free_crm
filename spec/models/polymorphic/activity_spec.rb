@@ -57,7 +57,6 @@ describe Activity do
       @activities = Activity.for(@user)
       @activities.map(&:action).sort.should == @actions
     end
-
   end
 
   %w(account campaign contact lead opportunity task).each do |subject|
@@ -100,39 +99,7 @@ describe Activity do
         @activity.should_not == nil
         @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
       end
-
-# Test is unnecessary. If a user wants to update a deleted record, they
-# should undelete it first.
-# ---------------------------------------------------------------
-#      describe "on a record marked as deleted" do
-#        it "should still be able to update" do
-#
-#          @subject.destroy
-#          deleted = @subject.class.find_with_destroyed(@subject)
-
-#          if deleted.respond_to?(:full_name)
-#            deleted.update_attributes(:first_name => "Billy", :last_name => "Bones DELETED")
-#          else
-#            deleted.update_attributes(:name => "Billy Bones DELETED")
-#          end
-#          @activity = Activity.where(@conditions << 'updated').first
-
-#          @activity.should_not == nil
-#          @activity.info.ends_with?("Billy Bones DELETED").should == true
-#        end
-#      end
-
-      describe "on an actually deleted record" do
-        it "should wipe out all associated activity records" do
-          @subject.destroy!
-          @activities = Activity.where('user_id = ? AND subject_id = ? AND subject_type = ?', @current_user.id, @subject.id, @subject.class.name)
-
-          lambda { @subject.class.find_with_destroyed(@subject) }.should raise_error(ActiveRecord::RecordNotFound)
-          @activities.should == []
-        end
-      end
     end
-
   end
 
   %w(account campaign contact lead opportunity).each do |subject|
@@ -253,7 +220,6 @@ describe Activity do
 
       @activities.map(&:action).sort.should == %w(rejected) # no :viewed, only :rejected
     end
-
   end
 
   describe "Permissions" do
@@ -321,20 +287,6 @@ describe Activity do
       @activities = Activity.latest({}).visible_to(@current_user)
       @activities.map(&:action).sort.should == %w(created updated viewed)
     end
-
-# Another unneeded test.
-# ------------------------------------------------------------
-#    it "should show deleted activity if the subject was shared with the user" do
-#      @subject = Factory(:account,
-#        :user => Factory(:user),
-#        :access => "Shared",
-#        :permissions => [ Factory.build(:permission, :user => @current_user, :asset => @subject) ]
-#      )
-#      @subject.destroy
-
-#      @activities = Activity.latest({}).visible_to(@current_user)
-#      @activities.map(&:action).sort.should == %w(created deleted)
-#    end
   end
 
   describe "Exportable" do
@@ -349,4 +301,3 @@ describe Activity do
     end
   end
 end
-
