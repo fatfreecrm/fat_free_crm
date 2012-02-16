@@ -724,3 +724,9 @@ en-US:
   field_group_tags: Field Groups shown for this Tag
   tag_confirm_delete: A tag can only be deleted if it is not associated with any Field Groups.
   msg_cant_delete_tag: "Couldn't delete '%{value}' since it has associated Field Groups."
+
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
+  author: Author
+  version: Version
+  description: Description

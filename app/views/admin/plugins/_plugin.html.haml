@@ -1,0 +1,13 @@
+%li
+  %span.black
+    %strong= plugin.name
+  %tt
+    %dt{ :style => "padding: 2px 0px 0px 0px" }
+      = t(:author) + ":"
+      %strong= plugin.author
+      %br
+      = t(:version) + ":"
+      %strong= plugin.version
+      %br
+      = t(:description) + ":"
+      = plugin.description

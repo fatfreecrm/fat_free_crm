@@ -22,6 +22,8 @@ class Admin::PluginsController < Admin::ApplicationController
   # GET /admin/plugins.xml
   #----------------------------------------------------------------------------
   def index
+    @plugins = FatFreeCRM::Plugin.list
+
     respond_to do |format|
       format.html # index.html.haml
       format.xml  { render :xml => nil }
