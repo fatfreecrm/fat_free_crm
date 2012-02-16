@@ -33,3 +33,5 @@ spec = eval(File.read('fat_free_crm.gemspec'))
 Gem::PackageTask.new(spec) do |p|
   p.gem_spec = spec
 end
+
+task :default => ['spec']
