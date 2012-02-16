@@ -28,4 +28,9 @@ module Admin::FieldGroupsHelper
     end
     html.html_safe
   end
+  
+  def link_to_confirm(field_group)
+    link_to(t(:delete) + "?", confirm_admin_field_group_path(field_group), :method => :get, :remote => true)
+  end
+
 end

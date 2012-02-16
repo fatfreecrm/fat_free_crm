@@ -32,16 +32,6 @@ module Admin::UsersHelper
     link_to(t(:delete) + "?", confirm_admin_user_path(user), :method => :get, :remote => true)
   end
 
-  #----------------------------------------------------------------------------
-  def link_to_delete(user)
-    link_to(t(:yes_button),
-      admin_user_path(user),
-      :method  => :delete,
-      :remote  => true,
-      :onclick => visual_effect(:highlight, dom_id(user), :startcolor => "#ffe4e1")
-    )
-  end
-
   # User summary info for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def user_summary(user)

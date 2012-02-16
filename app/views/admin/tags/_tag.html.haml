@@ -3,7 +3,6 @@
 %li[tag]{ highlightable(dom_id(tag, :tools)) }
   .tools{ invisible, :id => dom_id(tag, :tools) }
     = link_to_edit(tag, :url => edit_admin_tag_path(tag)) << " | "
-
     = link_to_confirm(tag)
 
   %span.black= tag.name

@@ -33,6 +33,7 @@
 class FieldGroup < ActiveRecord::Base
   has_many :fields, :order => :position
   belongs_to :tag
+  before_destroy :not_default_field_group, :move_fields_to_default_field_group
 
   validates_presence_of :label
 
@@ -62,6 +63,19 @@ class FieldGroup < ActiveRecord::Base
 
   def label_i18n
     I18n.t(name, :default => label)
+  end
+  
+  private
+  # Can't delete default field group
+  def not_default_field_group
+    name != "custom_fields"
+  end
+  
+  # When deleted, transfer fields to default field group
+  def move_fields_to_default_field_group
+    default_group = FieldGroup.find_by_name_and_klass_name("custom_fields", klass_name)
+    default_group.fields << fields
+    self.reload
   end
 end
 

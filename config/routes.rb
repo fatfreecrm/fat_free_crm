@@ -133,6 +133,9 @@ FatFreeCRM::Application.routes.draw do
         collection do
           post :sort
         end
+        member do
+          get :confirm
+        end
       end
 
       resources :fields do
