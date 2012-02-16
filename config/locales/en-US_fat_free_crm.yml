@@ -694,6 +694,7 @@ en-US:
   #----------------------------------------------------------------------------
   label: Label
   custom_fields: Custom Fields
+  custom_field_options: Custom Field Options
   create_field: Create field
   save_field: Save field
   create_field_group: Create field group
@@ -706,6 +707,7 @@ en-US:
   restrict_by_tag_info: Only show fields for %{assets} that are tagged with
   field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
   field_group_unrestricted: This field group applies to all %{assets}
+  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
 
   admin_fields_info: |
     Custom fields are displayed in groups.
