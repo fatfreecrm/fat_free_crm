@@ -35,14 +35,14 @@ bundler_args: --path=vendor/bundle --without heroku
 before_install: gem install bundler --pre
 
 before_script:
-  - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
-  - sh -c "if [ \"$DB\" = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"
+  - sh -c "if [ \"$DB\" = 'postgres' ]; then cp config/database.postgres.yml spec/internal/config/database.yml && psql -c 'create database fat_free_crm_test;' -U postgres; fi"
+  - sh -c "if [ \"$DB\" = 'mysql' ]; then cp config/database.mysql.yml spec/internal/config/database.yml && mysql -e 'create database fat_free_crm_test;'; fi"
+  - sh -c "if [ \"$DB\" = 'sqlite' ]; then cp config/database.sqlite.yml spec/internal/config/database.yml; fi"
   - "export DISPLAY=:99"
   - "sh -e /etc/init.d/xvfb start"
 
 # Run specs, acceptance tests, and ensure that assets can compile without errors
 script: "RAILS_ENV=production bundle exec rake spec:no_acceptance && bundle exec rake spec:acceptance && bundle exec rake app:assets:precompile:primary"
-
 
 # To stop Travis from running tests for a new commit,
 # add the following to your commit message: [ci skip]
