@@ -719,12 +719,14 @@ en-US:
   #----------------------------------------------------------------------------
   tags: Tags
   tag_small: tag
+  tagged: Tagged
   create_tag: Create Tag
   save_tag: Save Tag
   field_group_tags: Field Groups shown for this Tag
-  tag_confirm_delete: A tag can only be deleted if it is not associated with any Field Groups.
+  tag_with_taggings_confirm_delete: "If this tag is deleted, it will be removed from %{value} records."
   msg_cant_delete_tag: "Couldn't delete '%{value}' since it has associated Field Groups."
 
+  
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   author: Author
