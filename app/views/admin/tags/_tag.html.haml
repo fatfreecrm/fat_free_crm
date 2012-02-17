@@ -22,7 +22,7 @@
     %dt{ :style => "padding: 2px 0px 0px 0px" }
       = t(:field_group_tags) + ":"
       - tag_field_groups.each_with_index do |field_group, i|
-        %strong= field_group.name
+        %strong= field_group.label_i18n
         on
         %strong= field_group.klass_name.pluralize
         - if i < tag_field_groups.size - 1
