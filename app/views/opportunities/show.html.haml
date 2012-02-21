@@ -25,3 +25,10 @@
 
   = load_select_popups_for(@opportunity, :tasks, :contacts)
 
+  %br( style="clear:both" )
+
+  = content_tag(:div, t(:versions), :class => :subtitle)
+  .list#versions
+    - @versions = @opportunity.versions.except(:order).order('created_at DESC').paginate(:page => 1, :per_page => 20)
+    = render :partial => "versions/version", :collection => @versions
+  = will_paginate @versions, :id => true, :params => {:action => :versions}

@@ -1,0 +1,17 @@
+%li[version]{ highlightable(dom_id(version, :tools)) }
+  .body
+    .tools{ invisible, :id => dom_id(version, :tools) }
+      =# link_to_edit(version) + " | "
+      =# link_to_delete(version)
+
+    = t('version.' + version.event, :by => User.find(version.whodunnit).name, :when => time_ago_in_words(version.created_at))
+    %tt
+      - version.changeset.each do |attr_name, change|
+        - attr = t(attr_name)
+        %br
+        - if change.first.blank?
+          = t('version.set', :attr => attr, :to => change.second)
+        - elsif change.second.blank?
+          = t('version.unset', :attr => attr, :from => change.first)
+        - else
+          = t('version.change', :attr => attr, :from => change.first, :to => change.second)

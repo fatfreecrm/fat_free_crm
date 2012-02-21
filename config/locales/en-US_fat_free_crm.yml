@@ -642,6 +642,17 @@ en-US:
   users: Users
   users_small: users
 
+  # Views -> Versions
+  #----------------------------------------------------------------------------
+  versions: History
+  version:
+    create: Created by %{by} %{when} ago.
+    update: Modified by %{by} %{when} ago.
+    destroy: Destroyed by %{by} %{when} ago.
+    set: %{attr} set to %{to}
+    unset: %{attr} unset
+    change: %{attr} changed from %{from} to %{to}
+
   # Export.
   #----------------------------------------------------------------------------
   to_xls: Export to Excel

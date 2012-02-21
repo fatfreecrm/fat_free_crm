@@ -23,8 +23,6 @@
     = render :partial => "contacts/contact", :collection => @contacts
   = will_paginate @contacts, :id => true, :params => {:action => :contacts}
 
-  %br( style="clear:both" )
-
   = section(@account, :opportunities)
   .list#opportunities
     - @opportunities = @account.opportunities.paginate(:page => 1, :per_page => 20)
@@ -33,3 +31,10 @@
 
   = load_select_popups_for(@account, :tasks, :contacts, :opportunities)
 
+  %br( style="clear:both" )
+
+  = content_tag(:div, t(:versions), :class => :subtitle)
+  .list#versions
+    - @versions = @account.versions.except(:order).order('created_at DESC').paginate(:page => 1, :per_page => 20)
+    = render :partial => "versions/version", :collection => @versions
+  = will_paginate @versions, :id => true, :params => {:action => :versions}

@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
 
-  has_paper_trail
+  has_paper_trail :ignore => [:last_request_at, :perishable_token]
 
   # For some reason this does not play nice with has_paper_trail when set as default scope
   scope :by_id, order('id DESC')

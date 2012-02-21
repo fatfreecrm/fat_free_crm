@@ -11,24 +11,33 @@
 = render "comments/new", :commentable => @campaign
 = render :partial => "shared/timeline", :collection => @timeline
 
-= section(@campaign, :tasks)
-.log#tasks
-  = render "shared/tasks"
+= hook(:show_campaign_bottom, self) do
 
-= section(@campaign, :leads)
-.list#leads
-  - @leads = @campaign.leads.paginate(:page => 1, :per_page => 20)
-  = render :partial => "leads/lead", :collection => @campaign.leads.paginate(:page => 1, :per_page => 20)
-= will_paginate @leads, :id => true, :params => {:action => :leads}
+  = section(@campaign, :tasks)
+  .log#tasks
+    = render "shared/tasks"
 
-%br( style="clear:both" )
+  = section(@campaign, :leads)
+  .list#leads
+    - @leads = @campaign.leads.paginate(:page => 1, :per_page => 20)
+    = render :partial => "leads/lead", :collection => @campaign.leads.paginate(:page => 1, :per_page => 20)
+  = will_paginate @leads, :id => true, :params => {:action => :leads}
 
-= section(@campaign, :opportunities)
-.list#opportunities
-  - @opportunities = @campaign.opportunities.paginate(:page => 1, :per_page => 20)
-  = render :partial => "opportunities/opportunity", :collection => @campaign.opportunities.paginate(:page => 1, :per_page => 20)
-= will_paginate @opportunities, :id => true, :params => {:action => :opportunities}
+  %br( style="clear:both" )
 
-= load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
+  = section(@campaign, :opportunities)
+  .list#opportunities
+    - @opportunities = @campaign.opportunities.paginate(:page => 1, :per_page => 20)
+    = render :partial => "opportunities/opportunity", :collection => @campaign.opportunities.paginate(:page => 1, :per_page => 20)
+  = will_paginate @opportunities, :id => true, :params => {:action => :opportunities}
 
-= hook(:show_campaign_bottom, self)
+  = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
+
+  %br( style="clear:both" )
+
+  %br
+  = content_tag(:div, t(:versions), :class => :subtitle)
+  .list#versions
+    - @versions = @campaign.versions.except(:order).order('created_at DESC').paginate(:page => 1, :per_page => 20)
+    = render :partial => "versions/version", :collection => @versions
+  = will_paginate @versions, :id => true, :params => {:action => :versions}
