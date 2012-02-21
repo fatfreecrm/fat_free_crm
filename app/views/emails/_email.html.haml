@@ -8,7 +8,10 @@
       = link_to_delete(email)
 
     %tt
-      = "To ".html_safe << link_to(email.user.full_name, user_path(email.user))
+      - if email.sent_to.to_s.include?(", ")
+        = "To: ".html_safe << email.sent_to
+      - else
+        = "To ".html_safe << link_to_email(email.sent_to)
       = "from ".html_safe << link_to_email(email.sent_from) << ", sent on ".html_safe
       = l(email.sent_at, :format => :mmddhhss)
       = " | ".html_safe + link_to_function(email.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
