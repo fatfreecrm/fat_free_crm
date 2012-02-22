@@ -230,15 +230,24 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ajax-chosen-rails
   capybara
   coffee-rails
   combustion
   factory_girl
   fat_free_crm!
   fuubar
+  jquery-rails
+  paper_trail
+  paperclip
+  prototype-rails
+  rails
+  ransack
   rspec-rails (~> 2.8.1)
   ruby-debug
   ruby-debug19
   sass-rails
+  simple_form
   spork
   therubyracer
+  will_paginate
