@@ -652,6 +652,7 @@ en-US:
     set: %{attr} set to %{to}
     unset: %{attr} unset
     change: %{attr} changed from %{from} to %{to}
+    anonymous: anonymous
 
   # Export.
   #----------------------------------------------------------------------------
