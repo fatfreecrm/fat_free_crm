@@ -2,7 +2,8 @@
 
 .title_tools
   = link_to_inline(:create_contact, new_contact_path, :text=> t(:create_contact)) << " | "
-  = link_to_inline(:advanced_search, advanced_search_contacts_path, :text => t(:advanced_search)) << " | "
+  - if Setting.advanced_search_enabled
+    = link_to_inline(:advanced_search, advanced_search_contacts_path, :text => t(:advanced_search)) << " | "
   = link_to_inline(:options, options_contacts_path, :text=> t(:options))
 
 .title
