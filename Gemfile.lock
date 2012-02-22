@@ -64,6 +64,15 @@ GEM
       activerecord (>= 3.0.7)
     awesome_print (1.0.2)
     builder (3.0.0)
+    capybara (1.1.2)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (~> 2.0)
+      xpath (~> 0.1.4)
+    childprocess (0.3.1)
+      ffi (~> 1.0.6)
     chronic (0.6.7)
     cocaine (0.2.1)
     coffee-rails (3.1.1)
@@ -113,6 +122,7 @@ GEM
       guard (>= 0.10.0)
       spork (>= 0.8.4)
     haml (3.1.4)
+    headless (0.2.2)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.19)
@@ -131,6 +141,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.17.2)
     multi_json (1.0.4)
+    nokogiri (1.5.0)
     paperclip (2.5.2)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -202,12 +213,18 @@ GEM
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     ruby_gntp (0.3.4)
+    rubyzip (0.9.6.1)
     sass (3.1.12)
     sass-rails (3.1.5)
       actionpack (~> 3.1.0)
       railties (~> 3.1.0)
       sass (~> 3.1.10)
       tilt (~> 1.3.2)
+    selenium-webdriver (2.19.0)
+      childprocess (>= 0.2.5)
+      ffi (~> 1.0.9)
+      multi_json (~> 1.0.4)
+      rubyzip
     simple_form (1.5.2)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -220,6 +237,9 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    steak (2.0.0)
+      capybara (>= 1.0.0)
+      rspec-rails (>= 2.5.0)
     test-unit (2.4.4)
     therubyracer (0.9.9)
       libv8 (~> 3.3.10)
@@ -241,6 +261,8 @@ GEM
       rack
       raindrops (~> 0.6)
     will_paginate (3.0.2)
+    xpath (0.1.4)
+      nokogiri (~> 1.3)
     yajl-ruby (1.1.0)
 
 PLATFORMS
@@ -268,6 +290,7 @@ DEPENDENCIES
   guard-sass
   guard-spork
   haml (~> 3.1.3)
+  headless (~> 0.2.2)
   jquery-rails
   paperclip (~> 2.5.2)
   pg (~> 0.12.2)
@@ -282,6 +305,7 @@ DEPENDENCIES
   simple_form (~> 1.5.2)
   simplecov
   spork
+  steak (~> 2.0.0)
   test-unit (~> 2.4.3)
   therubyracer
   thin
