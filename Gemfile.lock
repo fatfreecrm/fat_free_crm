@@ -42,7 +42,7 @@ GEM
     acts_as_commentable (3.0.1)
     acts_as_list (0.1.4)
     addressable (2.2.6)
-    ajax-chosen-rails (0.1.1)
+    ajax-chosen-rails (0.1.5)
       chosen-rails
       railties (~> 3.0)
       thor (~> 0.14)
@@ -233,7 +233,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 2.2.1)
   acts_as_commentable (~> 3.0.1)
   acts_as_list (~> 0.1.4)
-  ajax-chosen-rails (>= 0.1.1)
+  ajax-chosen-rails (>= 0.1.5)
   annotate (~> 2.4.1.beta)
   authlogic (~> 3.1.0)
   awesome_print
