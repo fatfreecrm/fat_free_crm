@@ -779,10 +779,12 @@ en-US:
   
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  author: Author
-  version: Version
-  description: Description
-
+  views:
+    admin:
+      plugins:
+        author: Author
+        version: Version
+        description: Description
 
   # Simple Form translations
   #----------------------------------------------------------------------------
