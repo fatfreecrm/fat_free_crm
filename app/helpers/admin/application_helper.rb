@@ -25,16 +25,5 @@ module Admin::ApplicationHelper
       :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
-
-  #----------------------------------------------------------------------------
-  def link_to_delete(model, params = {})
-    name = (params[:klass_name] || model.class.name).underscore.downcase
-    link_to(t(:delete) + "!",
-      params[:url] || url_for([:admin, model]),
-      :method => :delete,
-      :remote => true,
-      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
-    )
-  end
 end
 

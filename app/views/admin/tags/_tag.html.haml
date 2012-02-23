@@ -10,7 +10,7 @@
       - if model_tagging_counts.any?
         = link_to_confirm(tag)
       - else
-        = link_to_delete(tag)
+        = link_to_delete(tag, :url => url_for([:admin, tag]))
 
   %span.black= tag.name
   %tt
