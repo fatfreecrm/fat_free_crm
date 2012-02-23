@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/fatfreecrm/chosen-rails.git
-  revision: bb12815c1e8a0c603ca1f0f69b5e351bd8dc86b1
+  revision: 33c92a8554ee14d11b7293eb531371a05c0a0b67
   specs:
     chosen-rails (0.9.5)
       railties (~> 3.0)
