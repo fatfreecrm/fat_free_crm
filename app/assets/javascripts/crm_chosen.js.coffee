@@ -23,6 +23,6 @@ crm.ensure_chosen_account = ->
 
 # Initialize chosen select lists for certain fields
 crm.init_chosen_fields = ->
-  ['assigned_to'].each (field) ->
+  ['assigned_to', '[country]'].each (field) ->
     $$("select[name*='"+field+"']").each (el) ->
       new Chosen el, { allow_single_deselect: true }
