@@ -372,6 +372,8 @@ var crm = {
 
     // Country dropdown needs special treatment ;-)
     $(to + "_attributes_country").selectedIndex = $(from + "_attributes_country").selectedIndex;
+    // Update Chosen select
+    Event.fire($(to + "_attributes_country"), "liszt:updated");
   },
 
   //----------------------------------------------------------------------------
