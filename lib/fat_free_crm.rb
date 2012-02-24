@@ -22,6 +22,7 @@ require Rails.root.join('vendor/plugins/is_paranoid/init')
 require "overrides/authlogic/session/cookies"
 require "overrides/simple_form/action_view_extensions/form_helper"
 require "overrides/rails/text_helper"
+require "overrides/active_record/schema_dumper"
 
 # Fat Free CRM
 require "fat_free_crm/version"
