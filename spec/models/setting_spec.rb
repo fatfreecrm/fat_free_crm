@@ -18,7 +18,7 @@ describe Setting do
   end
 
   it "should find existing setting by its name using [] or method notations, and cache settings" do
-    @setting = Factory(:setting, :name => "thingymabob", :value => Base64.encode64(Marshal.dump("magoody")))
+    @setting = Factory(:setting, :name => "thingymabob", :value => "magoody")
     Setting.cache.has_key?("thingymabob").should == false
     Setting[:thingymabob].should == "magoody"
     Setting.cache.has_key?("thingymabob").should == true
