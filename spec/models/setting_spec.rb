@@ -5,7 +5,6 @@
 #  id            :integer         not null, primary key
 #  name          :string(32)      default(""), not null
 #  value         :text
-#  default_value :text
 #  created_at    :datetime
 #  updated_at    :datetime
 #
@@ -15,7 +14,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Setting do
 
   it "should create a new instance given valid attributes" do
-    Setting.create!(:name => "name", :value => "value", :default_value => nil)
+    Setting.create!(:name => "name", :value => "value")
   end
 
   it "should find existing setting by its name using [] or method notations, and cache settings" do
