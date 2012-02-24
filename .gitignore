@@ -1,4 +1,5 @@
 config/*.yml
+!config/config.example.yml
 !config/database.mysql.mac.yml
 !config/database.mysql.yml
 !config/database.postgres.yml

@@ -1,0 +1,145 @@
+# Fat Free CRM
+# Copyright (C) 2008-2011 by Michael Dvorkin
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#------------------------------------------------------------------------------
+
+# Fat Free CRM settings are stored in three places, and are loaded in the following order:
+# 
+# 1) db/default_settings.yml
+# 2) config/config.yml  (if exists)
+# 3) 'settings' table in database  (if exists)
+#
+# Any configured settings in `config/config.yml` will override those in
+# `db/default_settings.yml`, and settings in the database table have the highest priority.
+# 
+# This settings arrangement offers a lot of flexibility:
+#
+# * No manual configuration is required to start the application after installation
+# * IT administrators can set up the default configuration via config.yml, with capistrano
+# * Admin users can change settings via the admin interface, without needing to edit YAML files.
+
+#------------------------------------------------------------------------------
+
+# Host
+#------------------------------------------------------------------------------
+# Host for URLs when action mailer generates emails.
+#
+# When sending email, you will need to set the host name so that the mailer can
+# generate urls inside emails that point back to your site. Unlike controllers
+# from Action Pack, the mailer instance doesn’t have any context about the
+# incoming request, so you’ll need to provide all of the details needed to
+# generate a URL.
+#
+# :host: "http://www.example.com"
+#
+:host: ""
+
+
+# Base URL
+#------------------------------------------------------------------------------
+# Leave base_url blank if Fat Free CRM has been deployed in root URL, otherwise
+# specify subdirectory. For example, when deployed to:
+#
+# http://www.domain.com       => :base_url: ""       # (leave blank)
+# http://crm.domain.com       => :base_url: ""       # (leave blank)
+# http://www.domain.com/crm   => :base_url: "/crm"   # (without trailing slash)
+# http://www.domain.com/a/crm => :base_url: "/a/crm" # (without trailing slash)
+#
+:base_url: ""
+
+
+# Locale
+#------------------------------------------------------------------------------
+# Default locale is American English.
+#
+:locale: "en-US"
+
+
+# Settings for the Email dropbox
+# - Connection settings for the imap account, server and folders.
+#------------------------------------------------------------------------------
+:email_dropbox:
+  :server                     : ""        # IMAP server name.
+  :port                       : ""        # IMAP server port number.
+  :ssl                        : ""        # True for secure IMAP connection, false othewise.
+  :address                    : ""        # Dropbox email address.
+  :user                       : ""        # User to login to the IMAP server.
+  :password                   : ""        # Password to login to the IMAP server.
+  :scan_folder                : ""        # Folder to scan for dropbox messages.
+  :attach_to_account          : ""        # Attach emails to contact's account, if any. The same rule applies to opportunities.
+#  :move_to_folder            : ""        # Optional: folder to move processed messages to.
+#  :move_invalid_to_folder    : ""        # Optional: folder to move invalid messages to.
+
+
+# Individual locales per user
+#------------------------------------------------------------------------------
+# To enable language selection in User/Profile set the following option to true. 
+# By default, individual users can't pick their own locale and are presented
+# with the default locale. 
+#
+:per_user_locale: false
+
+
+# Default records permissions
+#------------------------------------------------------------------------------
+# Set the defaults permission for new records. Possible values are:
+#   Private -- private access, only for the creator of the record.
+#   Public  -- public access, share with everyone. This is the default.
+#   Shared  -- shared with selected accounts, should be selected by the user.
+#
+:default_access: "Public"
+
+
+# User Signup
+#------------------------------------------------------------------------------
+# The following setting controls user signup. Possible values are:
+#   :allowed        -- users can sign up and use the system once they have registered.
+#   :not_allowed    -- users can only be added by system administrator. This is the default.
+#   :needs_approval -- users can sign up but must be approved before they can use the system.
+#
+:user_signup: :not_allowed
+
+
+# Address format
+#------------------------------------------------------------------------------
+# Sets the address format for Accounts, Contacts, and Leads.
+#   true  -- use separate street1, street2, city, state, zipcode, and country field.  (default)
+#   false -- use single text area field to enter the entire address.
+#
+:compound_address: true
+
+
+# Dropdown calendar format
+#------------------------------------------------------------------------------
+# The following setting controls whether to show time in dropdown calendar
+# when scheduling a task for specific date.
+#   true  -- allow selecting date and time.  (default)
+#   false -- allow selecting date only.  
+#
+:task_calendar_with_time: true
+
+
+# Require last name on Leads and Contacts
+#------------------------------------------------------------------------------
+# If this validation is disabled, records will only require a first name.
+#
+:require_last_names: true
+
+
+#------------------------------------------------------------------------------
+# There are more settings that can be configured via this file.
+# You can find a list of available settings in 'db/default_settings.yml',
+# or configure them by viewing '/admin/settings' in your browser.
+#------------------------------------------------------------------------------
