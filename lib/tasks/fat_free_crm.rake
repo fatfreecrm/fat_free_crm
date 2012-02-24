@@ -74,7 +74,6 @@ namespace :crm do
     # Migrating plugins is not part of Rails 3 yet, but it is coming. See
     # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
     Rake::Task["db:migrate:plugins"].invoke rescue nil
-    Rake::Task["crm:settings:load"].invoke
     Rake::Task["crm:setup:admin"].invoke
   end
 
@@ -135,7 +134,6 @@ namespace :crm do
     desc "Load demo data and default application settings"
     task :load => :environment do
       Rake::Task["spec:db:fixtures:load"].invoke      # loading fixtures truncates settings!
-      Rake::Task["crm:settings:load"].invoke
 
       # Simulate random user activities.
       $stdout.sync = true
