@@ -15,78 +15,54 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
+# Fat Free CRM settings are stored in three places, and are loaded in the following order:
+# 
+# 1) db/default_settings.yml
+# 2) config/config.yml  (if exists)
+# 3) 'settings' table in database  (if exists)
 #
-# Default application settings to be loaded during installation:
+# Any configured settings in `config/config.yml` will override those in
+# `db/default_settings.yml`, and settings in the database table have the highest priority.
+# 
+# This settings arrangement offers a lot of flexibility:
 #
-#   rake crm:settings:load
-#
+# * No manual configuration is required to start the application after installation
+# * IT administrators can set up the default configuration via config.yml, with capistrano
+# * Admin users can change settings via the admin interface, without needing to edit YAML files.
 
-# Host
 #------------------------------------------------------------------------------
-# Host for URLS when action mailer generates emails.
-#
-# When sending email, you will need to set the host name so that the mailer can
-# generate urls inside emails that point back to your site. Unlike controllers
-# from Action Pack, the mailer instance doesn’t have any context about the
-# incoming request, so you’ll need to provide all of the details needed to
-# generate a URL.
-#
-# :host: "http://www.example.com"
-#
+
+# Settings available in config/config.yml
+#------------------------------------------------------------------------------
 :host: ""
-
-# Base URL
-#------------------------------------------------------------------------------
-# Leave base_url blank if Fat Free CRM has been deployed in root URL, otherwise
-# specify subdirectory. For example, when deployed to:
-#
-# http://www.domain.com       => :base_url: ""       # (leave blank)
-# http://crm.domain.com       => :base_url: ""       # (leave blank)
-# http://www.domain.com/crm   => :base_url: "/crm"   # (without trailing slash)
-# http://www.domain.com/a/crm => :base_url: "/a/crm" # (without trailing slash)
-#
 :base_url: ""
-
-# Locale
-#------------------------------------------------------------------------------
-# Default locale is American English.
-#
 :locale: "en-US"
-
-# By default individual users can't pick their own locale and are presented
-# with the one set above. To enable language selection in User/Profile set
-# the following option to true.
-#
+:email_dropbox: {}
 :per_user_locale: false
-
-# User Signup
-#------------------------------------------------------------------------------
-# The following setting controls user signup. Possible values are:
-#   :allowed        -- users can sign up and use the system once they have registered.
-#   :not_allowed    -- users can only be added by system administrator. This is the default.
-#   :needs_approval -- users can sign up but must be approved before they can use the system.
-#
-:user_signup: :not_allowed
-
-# Default records permissions
-#------------------------------------------------------------------------------
-# Set the defaults permission for new records. Possible values are:
-#   Private -- private access, only for the creator of the record.
-#   Public  -- public access, share with everyone. This is the default.
-#   Shared  -- shared with selected accounts, should be selected by the user.
-#
 :default_access: "Public"
-
-# Require last name on Leads and Contacts
-#------------------------------------------------------------------------------
-# If this validation is disabled, records will only require a first name.
-#
+:user_signup: :not_allowed
 :require_last_names: true
+:compound_address: true
+:task_calendar_with_time: true
+
+
+# Beta features
+#------------------------------------------------------------------------------
+# These are features that need to be in the master branch due to extensive codebase changes,
+# but are disabled by default until ready for general use.
+#
+# - Ransack advanced search
+:advanced_search_enabled: false
+
 
 # Background information
 #------------------------------------------------------------------------------
-# Specify model names that should have background information displayed. Select any combination
-# from the following list. By default no background information is shown.
+# Specify model names that should have background information displayed. 
+# This field can be used when importing records from legacy databases,
+# to display the 'background' of where they came from.
+#
+# Select any combination from the following list.
+#
 #   :background_info:
 #     - :account
 #     - :campaign
@@ -95,39 +71,10 @@
 #     - :opportunity
 #     - :task
 #
+# By default, no background information is shown.
+#
 :background_info: []
 
-# Address format
-#------------------------------------------------------------------------------
-# Sets the address format for Accounts, Contacts, and Leads.
-#   true  -- use separate street1, street2, city, state, zipcode, and country field.
-#   false -- use single text area field to enter the entire address. This is the default.
-#
-:compound_address: true
-
-# Dropdown calendar format
-#------------------------------------------------------------------------------
-# The following setting controls whether to show time in dropdown calendar
-# when scheduling a task for specific date.
-#   true  -- allow selecting date and time.
-#   false -- allow selecting date only. This is the default.
-#
-task_calendar_with_time: false
-
-# Sets the email dropbox feature, this are the connections settings for
-# the imap account, server and folders.
-#------------------------------------------------------------------------------
-:email_dropbox:
-  :server                     : ""        # IMAP server name.
-  :port                       : ""        # IMAP server port number.
-  :ssl                        : ""        # True for secure IMAP connection, false othewise.
-  :address                    : ""        # Dropbox email address.
-  :user                       : ""        # User to login to the IMAP server.
-  :password                   : ""        # Password to login to the IMAP server.
-  :scan_folder                : ""        # Folder to scan for dropbox messages.
-#  :move_to_folder            : ""        # Optional: folder to move processed messages to.
-#  :move_invalid_to_folder    : ""        # Optional: folder to move invalid messages to.
-  :attach_to_account          : ""        # Attach emails to contact's account, if any. The same rule applies to opportunities.
 
 # Main and Admin Tabs
 #------------------------------------------------------------------------------
@@ -143,8 +90,8 @@ task_calendar_with_time: false
 
 :admin_tabs: [
   { :active : true,  :text : :admin_tab_users,    :url : { :controller : "admin/users"    } },
-  { :active : true,  :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } },
-  { :active : true,  :text : :admin_tab_tags,     :url : { :controller : "admin/tags"     } },  
+  { :active : false, :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } },
+  { :active : false, :text : :admin_tab_tags,     :url : { :controller : "admin/tags"     } },  
   { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
   { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
@@ -152,12 +99,6 @@ task_calendar_with_time: false
 # Account Category. To add custom account type use string value, for example:
 #
 # account_category:
-#   - :affiliate
-#   - :competitor
-#   - :customer
-#   - :partner
-#   - :reseller
-#   - :vendor
 #   - "Custom"
 #
 #------------------------------------------------------------------------------
@@ -180,11 +121,6 @@ account_category_color:
 # Campaign Status. To add custom status use string value, for example:
 #
 # campaign_status:
-#   - :planned
-#   - :started
-#   - :completed
-#   - :on_hold
-#   - :called_off
 #   - "Custom"
 #
 #------------------------------------------------------------------------------
@@ -286,10 +222,3 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
-
-
-# Alpha features
-#------------------------------------------------------------------------------
-# Enable the advanced search feature provided by Ransack
-# (Feature works, but UI design is still in progress)
-advanced_search_enabled: false

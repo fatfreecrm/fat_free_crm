@@ -27,62 +27,112 @@
 #  updated_at    :datetime
 #
 
+# Fat Free CRM settings are stored in three places, and are loaded in the following order:
+# 
+# 1) db/default_settings.yml
+# 2) config/config.yml  (if exists)
+# 3) 'settings' table in database  (if exists)
+#
+# Any configured settings in `config/config.yml` will override those in
+# `db/default_settings.yml`, and settings in the database table have the highest priority.
+
 class Setting < ActiveRecord::Base
 
-  # Use a class variable as a cache. This is cleared before each request.
-  def self.clear_cache!; @@cache = {}; end
-  cattr_accessor :cache; @@cache = {}
+  # Use class variables for cache and yaml settings.
+  cattr_accessor :cache, :yaml_settings
+  @@cache = @@yaml_settings = {}.with_indifferent_access
 
-  #-------------------------------------------------------------------
-  def self.method_missing(method, *args)
-    begin
-      super(method, *args)
-    rescue NoMethodError
-      method_name = method.to_s
-      if method_name.last == "="
-        self[method_name.sub("=", "")] = args.first
-      else
-        self[method_name]
+  class << self
+  
+    # Cache should be cleared before each request.
+    def clear_cache!
+      @@cache = {}.with_indifferent_access
+    end
+  
+    #-------------------------------------------------------------------
+    def method_missing(method, *args)
+      begin
+        super(method, *args)
+      rescue NoMethodError
+        method_name = method.to_s
+        if method_name.last == "="
+          self[method_name.sub("=", "")] = args.first
+        else
+          self[method_name]
+        end
       end
     end
-  end
 
-  #-------------------------------------------------------------------
-  def self.[] (name)
-    return nil unless database_and_table_exists?
-    k = name.to_s
-    return cache[k] if cache.has_key?(k)
-    if setting = self.find_by_name(k)
-      value = Marshal.load(Base64.decode64(setting.value.nil? ? setting.default_value : setting.value))
-      cache[k] = value
+    # Get setting value (from database or loaded YAML files)
+    #-------------------------------------------------------------------
+    def [](name)
+      # Return value if cached
+      return cache[name] if cache.has_key?(name)
+      # Check database
+      if database_and_table_exists? 
+        if setting = self.find_by_name(name)
+          unless setting.value.nil?
+            return cache[name] = Marshal.load(Base64.decode64(setting.value))
+          end
+        end
+      end
+      # Check YAML settings 
+      if yaml_settings.has_key?(name)
+        return cache[name] = yaml_settings[name]
+      end
     end
-  end
+      
 
-  #-------------------------------------------------------------------
-  def self.[]= (name, value)
-    return nil unless database_and_table_exists?
-    k = name.to_s
-    setting = self.find_by_name(k) || self.new(:name => k)
-    setting.value = Base64.encode64(Marshal.dump(value))
-    setting.save
-    cache[k] = value
-  end
+    # Set setting value
+    #-------------------------------------------------------------------
+    def []=(name, value)
+      return nil unless database_and_table_exists?
+      setting = self.find_by_name(name) || self.new(:name => name)
+      setting.value = Base64.encode64(Marshal.dump(value))
+      setting.save
+      cache[name] = value
+    end
+       
 
-  # Unrolls [ :one, :two ] settings array into [[ "One", :one ], [ "Two", :two ]]
-  # picking symbol translations from locale. If setting is not a symbol but
-  # string it gets copied without translation.
-  #-------------------------------------------------------------------
-  def self.unroll(setting)
-    send(setting).map { |key| [ key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym ] }
-  end
+    # Unrolls [ :one, :two ] settings array into [[ "One", :one ], [ "Two", :two ]]
+    # picking symbol translations from locale. If setting is not a symbol but
+    # string it gets copied without translation.
+    #-------------------------------------------------------------------
+    def unroll(setting)
+      send(setting).map { |key| [ key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym ] }
+    end
 
-  def self.database_and_table_exists?
-    # Returns false if table or database is unavailable.
-    # Catches all database-related errors, so that Setting will return nil
-    # instead of crashing the entire application.
-    table_exists? rescue false
+    def database_and_table_exists?
+      # Returns false if table or database is unavailable.
+      # Catches all database-related errors, so that Setting will return nil
+      # instead of crashing the entire application.
+      table_exists? rescue false
+    end
+    
+    
+    # Loads settings from YAML files
+    def load_settings_from_yaml
+      @@yaml_settings = {}.with_indifferent_access
+      default = Rails.root.join("db", "default_settings.yml")
+      custom  = Rails.root.join("config", "config.yml")
+      
+      # Load default settings, then override with custom settings
+      [default, custom].each do |file|
+        if File.exist?(file)
+          begin
+            settings = YAML.load_file(file)
+            # Merge settings into current settings hash
+            @@yaml_settings.merge!(settings)
+          rescue Exception => ex
+            puts "Settings couldn't be loaded from #{file}: #{ex.message}"
+          end
+        end
+      end
+      yaml_settings
+    end
   end
 end
 
 
-
+# Preload YAML settings as soon as class is loaded.
+Setting.load_settings_from_yaml
