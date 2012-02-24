@@ -22,7 +22,6 @@
 #  id            :integer         not null, primary key
 #  name          :string(32)      default(""), not null
 #  value         :text
-#  default_value :text
 #  created_at    :datetime
 #  updated_at    :datetime
 #
@@ -37,6 +36,8 @@
 # `db/default_settings.yml`, and settings in the database table have the highest priority.
 
 class Setting < ActiveRecord::Base
+
+  serialize :value
 
   # Use class variables for cache and yaml settings.
   cattr_accessor :cache, :yaml_settings
@@ -72,7 +73,7 @@ class Setting < ActiveRecord::Base
       if database_and_table_exists? 
         if setting = self.find_by_name(name)
           unless setting.value.nil?
-            return cache[name] = Marshal.load(Base64.decode64(setting.value))
+            return cache[name] = setting.value
           end
         end
       end
@@ -88,7 +89,7 @@ class Setting < ActiveRecord::Base
     def []=(name, value)
       return nil unless database_and_table_exists?
       setting = self.find_by_name(name) || self.new(:name => name)
-      setting.value = Base64.encode64(Marshal.dump(value))
+      setting.value = value
       setting.save
       cache[name] = value
     end
