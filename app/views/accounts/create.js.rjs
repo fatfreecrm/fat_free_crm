@@ -9,6 +9,7 @@ if @account.valid?
   page.call "crm.flick", :empty, :remove
 else
   page[:create_account].replace_html :partial => "new"
+  page.call "crm.init_chosen_fields"
   page[:create_account].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:account_name].focus
 end

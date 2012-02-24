@@ -7,4 +7,8 @@
 - begin
   = render sidebar
   - rescue MissingTemplate
+
+- if Setting.advanced_search_enabled  
+  = render "shared/lists"
+  
 = render "shared/recently"

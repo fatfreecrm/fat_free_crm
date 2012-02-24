@@ -3,7 +3,7 @@
 
 %h4 #{t(:search_assets, t(controller.controller_name + "_small"))}
 %div{ :style => "margin: 0px 0px 6px 0px" }
-  = text_field_tag("query", @current_query, :size => 23)
+  = text_field_tag('query', @current_query, :size => 23)
 
 :javascript
   new Form.Element.Observer('query', 1.5, function(element, value) {

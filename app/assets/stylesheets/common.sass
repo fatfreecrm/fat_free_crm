@@ -674,22 +674,49 @@ span.handle img
   margin-right: 5px
 
 .tags, .list li dt .tags
+  margin-top: 4px
+  
   a:link, a:visited
-    background: lightsteelblue
-    color: white
+    background-color: #eaeaea
+    color: #333333
     font-weight: normal
-    padding: 0px 6px 1px 6px
-    -moz-border-radius: 8px
-    -webkit-border-radius: 8px
+    padding: 2px 6px 1px 6px
+    margin: 4px 0 3px 4px
+    border: 1px solid #bdbdbd
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eaeaea), color-stop(0.7, #f2f2f2))
+    background-image: -webkit-linear-gradient(center bottom, #eaeaea 0%, #f2f2f2 70%)
+    background-image: -moz-linear-gradient(center bottom, #eaeaea 0%, #f2f2f2 70%)
+    background-image: -o-linear-gradient(bottom, #eaeaea 0%, #f2f2f2 70%)
+    background-image: -ms-linear-gradient(top, #eaeaea 0%, #f2f2f2 70%)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eaeaea', endColorstr='#f2f2f2',GradientType=0 )
+    background-image: linear-gradient(top, #eaeaea 0%, #f2f2f2 70%)
+    -moz-border-radius: 3px
+    -webkit-border-radius: 3px
+    border-radius: 3px
   a:hover
-    background: steelblue
-    color: yellow
+    background: #dadada
 
 .field_group .list
   padding-bottom: 30px
+
+#lists
+  .show_lists_save_form
+    text-align: right
+  .show_lists_save_form, .save_list
+    margin: 10px 0 0
+  .list_icon
+    opacity: 0.5
+    width: 12px
+  img.input_info
+    vertical-align: middle
+  input#save_list
+    margin-top: 6px
 
 .fields .subtitle
   cursor: move
 
 .fields .title
   margin-bottom: 12px
+
+.remove_fields img
+  vertical-align: text-bottom

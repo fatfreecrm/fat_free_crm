@@ -2,20 +2,8 @@
 - f.object.tags = unsaved_param_tags(asset) if params[asset] && params[asset][:tag_list]
 %tr
   %td{ :valign => :top, :colspan => span }
-    .label Tags: <small>(comma separated, letters and digits only)</small>
-    #taggings
-      #facebook-list
-        = f.text_field :tag_list, :id => "tag_list", :style => "width:500px", :autocomplete => "off"
-        #facebook-auto
-          .default Type the name of a tag you'd like to use. Use commas to separate multiple tags.
-          %ul.feed
-            - # Get tags from the object.
-            - f.object.tags.map{|t| t.name }.each do |tag|
-              %li{ :value => tag }= tag
-          :javascript
-            fbtaglist = new FacebookList('tag_list', 'facebook-auto',
-                                        { newValues: true,
-                                          regexSearch: false,
-                                          separator: Event.KEY_COMMA });
-            var tagjson = #{Tag.all.map{|t| {"caption" => t.name, "value" => t.name} }.to_json}
-            tagjson.each(function(t){fbtaglist.autoFeed(t)});
+    .label Tags:
+    = f.select :tag_list, Tag.all.map{|t| [t.name, t.name] }, {:value => f.object.tags.map{|t| t.name }}, {:multiple => true, :"data-placeholder" => t(:select_or_create_tags), :style => "width: 500px;"}
+
+    :javascript
+      crm.chosen_taglist('#{asset}', '#{controller_name}', '#{params[:id]}');

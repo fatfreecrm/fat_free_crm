@@ -1,0 +1,8 @@
+page.call "crm.flip_form", :create_tag
+
+unless params[:cancel].true?
+  page[:create_tag].replace_html :partial => "new"
+  page.call "crm.set_title", :create_tag, t(:create_tag)
+else
+  page.call "crm.set_title", :create_tag, t(:tags)
+end

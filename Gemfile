@@ -19,6 +19,10 @@ gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
 gem 'ffaker',              '>= 1.12.0' # For loading demo data
 gem 'uglifier'
+gem 'ajax-chosen-rails',   '>= 0.1.5'
+gem 'chosen-rails',        :git => "git://github.com/fatfreecrm/chosen-rails.git"
+gem 'ransack',             :git => "git://github.com/ndbroadbent/ransack.git"
+gem 'jquery-rails'
 
 group :heroku do
   gem 'unicorn', :platform => :ruby
@@ -42,6 +46,8 @@ group :development, :test do
   gem 'test-unit',          '~> 2.4.3',  :platform => :mri_19, :require => false
   gem 'rspec-rails',        '~> 2.8.0'
   gem 'factory_girl'
+  gem 'steak',              '~> 2.0.0'
+  gem 'headless',           '~> 0.2.2'
   gem 'pry-rails'
 end
 
@@ -67,6 +73,7 @@ group :test do
   gem 'factory_girl_rails', '~> 1.6.0'
   gem 'simplecov', :platform => :mri_19 unless ENV["CI"]  # Until Travis supports build artifacts
   gem 'fuubar'
+  gem 'database_cleaner'
 end
 
 

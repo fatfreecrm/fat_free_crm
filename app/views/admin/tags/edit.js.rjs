@@ -1,0 +1,21 @@
+id = dom_id(@tag)
+
+if params[:cancel].true?     # <----------------- Hide [Edit Tag]
+  page[id].replace :partial => "tag", :collection => [ @tag ]
+
+else # <----------------------------------------  Show [Edit Tag] form.
+
+  if @previous                                    # Hide open [Edit Tag] form if any.
+    if @previous.is_a?(Tag)                      # Previous tag still exists?
+      page[dom_id(@previous)].replace :partial => "tag", :collection => [ @previous ]
+    else
+      page.call "crm.flick", "tag_#{@previous}", :remove
+    end
+  end
+
+  page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
+  page.call "crm.hide_form", :create_tag         # Hide [Create Tag] form if any.
+  page[id].replace_html :partial => "edit"        # Show [Edit Tag] form.
+  page[:tag_name].focus
+
+end

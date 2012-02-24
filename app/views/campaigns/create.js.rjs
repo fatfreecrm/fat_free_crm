@@ -9,6 +9,7 @@ if @campaign.valid?
   page.call "crm.flick", :empty, :remove
 else
   page[:create_campaign].replace_html :partial => "new"
+  page.call "crm.init_chosen_fields"
   page.call "crm.date_select_popup", :campaign_starts_on
   page.call "crm.date_select_popup", :campaign_ends_on
   page[:create_campaign].visual_effect :shake, :duration => 0.25, :distance => 6

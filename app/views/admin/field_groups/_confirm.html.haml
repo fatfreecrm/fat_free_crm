@@ -1,0 +1,5 @@
+.confirm[@field_group, :confirm]
+  #{t :field_group_confirm_delete}
+  #{t :delete} <b>#{@field_group.name}</b>?
+  = link_to_confirm_delete(@field_group) << " : "
+  = link_to_function(t(:no_button), "crm.flick('#{dom_id(@field_group, :confirm)}', 'remove')")

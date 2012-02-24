@@ -2,12 +2,17 @@
 
 .title_tools
   = link_to_inline(:create_campaign, new_campaign_path, :text => t(:create_campaign)) << " | "
+  - if Setting.advanced_search_enabled
+    = link_to_inline(:advanced_search, advanced_search_campaigns_path, :text => t(:advanced_search)) << " | "
   = link_to_inline(:options, options_campaigns_path, :text => t(:options))
 
 .title
   %span#create_campaign_title #{t :campaigns}
   = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
 .remote#options{ hidden }
+.remote#advanced_search{ hidden_if(!params[:q]) }
+  - if @search
+    = render :partial => "advanced_search"
 .remote#create_campaign{ hidden }
 
 .list#campaigns

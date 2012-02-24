@@ -18,8 +18,8 @@
 class Admin::FieldGroupsController < Admin::ApplicationController
   before_filter :require_user
 
-  # GET /field_groups/new
-  # GET /field_groups/new.xml                                              AJAX
+  # GET /admin/field_groups/new
+  # GET /admin/field_groups/new.xml                                        AJAX
   #----------------------------------------------------------------------------
   def new
     @field_group = FieldGroup.new(:klass_name => params[:klass_name])
@@ -33,7 +33,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     respond_to_not_found(:html, :xml)
   end
 
-  # GET /field_groups/1/edit                                               AJAX
+  # GET /admin/field_groups/1/edit                                         AJAX
   #----------------------------------------------------------------------------
   def edit
     @field_group = FieldGroup.find(params[:id])
@@ -47,8 +47,8 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     respond_to_not_found(:js)
   end
 
-  # POST /field_groups
-  # POST /field_groups.xml                                                 AJAX
+  # POST /admin/field_groups
+  # POST /admin/field_groups.xml                                           AJAX
   #----------------------------------------------------------------------------
   def create
     @field_group = FieldGroup.new(params[:field_group])
@@ -64,8 +64,8 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     end
   end
 
-  # PUT /field_groups/1
-  # PUT /field_groups/1.xml                                                    AJAX
+  # PUT /admin/field_groups/1
+  # PUT /admin/field_groups/1.xml                                          AJAX
   #----------------------------------------------------------------------------
   def update
     @field_group = FieldGroup.find(params[:id])
@@ -84,7 +84,26 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     respond_to_not_found(:js, :xml)
   end
 
-  # POST /field_groups/sort
+  # DELETE /admin/field_groups/1
+  # DELETE /admin/field_groups/1.xml                                       AJAX
+  #----------------------------------------------------------------------------
+  def destroy
+    @field_group = FieldGroup.find(params[:id])
+
+    respond_to do |format|
+      if @field_group.destroy
+        # Redirect to fields index
+        format.js { render(:destroy) { |page| page.redirect_to admin_fields_url } }
+        format.xml  { head :ok }
+      else
+        flash[:warning] = t(:msg_cant_delete_field_group, @field_group.name)
+        format.js   # destroy.js.rjs
+        format.xml  { render :xml => @field_group.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /admin/field_groups/sort
   #----------------------------------------------------------------------------
   def sort
     asset = params[:asset]
@@ -96,4 +115,14 @@ class Admin::FieldGroupsController < Admin::ApplicationController
 
     render :nothing => true
   end
+  
+  # GET /admin/field_groups/1/confirm                                      AJAX
+  #----------------------------------------------------------------------------
+  def confirm
+    @field_group = FieldGroup.find(params[:id])
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js, :xml)
+  end
+
 end

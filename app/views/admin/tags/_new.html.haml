@@ -1,0 +1,10 @@
+- path = new_admin_tag_path
+
+= form_for([:admin, @tag], :html => one_submit_only(:tag), :remote => true) do |f|
+  = link_to_close path
+  = f.error_messages
+  = render :partial => "top_section", :locals => { :f => f }
+  .buttonbar
+    = f.submit t(:create_tag), :id => :tag_submit
+    or
+    = link_to_cancel path

@@ -1,0 +1,12 @@
+if @tag.valid?
+  page[:create_tag_arrow].replace_html "&#9658;"
+  page[:create_tag_title].replace_html t(:tags)
+  page.visual_effect :toggle_blind, :create_tag, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, :tags, :partial => "tag", :collection => [ @tag ]
+  page[dom_id(@tag)].visual_effect :highlight, :duration => 1.5
+  page.call "crm.flick", :empty, :remove
+else
+  page[:create_tag].replace_html :partial => "new"
+  page[:create_tag].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:tag_name].focus
+end

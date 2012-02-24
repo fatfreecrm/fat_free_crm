@@ -95,7 +95,7 @@ module ActionView
               sanitize = options[:sanitize] != false
               content_tag(:a, link_text, link_attributes.merge('href' => href), sanitize) + punctuation.reverse.join('')
             end
-          end
+          end.html_safe
         end
 
         # Turns all email addresses into clickable links.  If a block is given,
@@ -111,7 +111,7 @@ module ActionView
               display_text = sanitize(display_text) unless options[:sanitize] == false
               mail_to text, display_text, html_options
             end
-          end
+          end.html_safe
         end
 
         # Detects already linked context or position in the middle of a tag

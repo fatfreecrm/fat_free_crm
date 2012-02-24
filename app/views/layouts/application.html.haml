@@ -8,20 +8,21 @@
     = stylesheet_link_tag :print, :media => 'print'
     - unless tabless_layout?
       = stylesheet_link_tag 'calendar_date_select/default'
-    %style= content_for :styles
+    %style= yield :styles
 
     = javascript_include_tag :application
 
     - unless tabless_layout?
       = javascript_include_tag "calendar_date_select/format_#{t(:calendar_date_select_format, :default => 'american')}"
 
+    = csrf_meta_tag
     = hook(:javascript_includes, self)
+
+    :javascript
+      #{yield :javascript}
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
-    %script{:type => "text/javascript"}= content_for :javascript
-    = csrf_meta_tag
 
   %body
     = render "layouts/header"
@@ -33,6 +34,7 @@
 
     - unless tabless_layout? || I18n.locale == "en-US"
       = localize_calendar_date_select
+
     %script{:type => "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
