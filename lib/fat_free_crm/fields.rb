@@ -60,7 +60,12 @@ module FatFreeCRM
         if method_id.to_s =~ /^cf_/
           # Refresh columns and try again.
           self.class.reset_column_information
-          self.respond_to?(method_id) ? self.send(method_id, *args) : nil
+          if self.new_record?
+            self.class.new.send(method_id, *args)
+          else
+            self.reload
+            self.respond_to?(method_id) ? self.send(method_id, *args) : nil
+          end
         else
           super
         end
