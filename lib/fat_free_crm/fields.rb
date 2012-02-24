@@ -60,12 +60,10 @@ module FatFreeCRM
         if method_id.to_s =~ /^cf_/
           # Refresh columns and try again.
           self.class.reset_column_information
-          if self.new_record?
-            self.class.new.send(method_id, *args)
-          else
-            self.reload
-            self.respond_to?(method_id) ? self.send(method_id, *args) : nil
-          end
+          # If new record, create new object from class, else reload class
+          object = self.new_record? ? self.class.new : (self.reload && self)
+          # Try again if object now responds to method, else return nil
+          object.respond_to?(method_id) ? object.send(method_id, *args) : nil
         else
           super
         end
