@@ -21,7 +21,7 @@
 # 2) config/config.yml  (if exists)
 # 3) 'settings' table in database  (if exists)
 #
-# Any configured settings in `config/config.yml` will override those in
+# Any settings in `config/config.yml` will override those in
 # `config/default_settings.yml`, and settings in the database table have the highest priority.
 # 
 # This settings arrangement offers a lot of flexibility:
@@ -29,7 +29,10 @@
 # * No manual configuration is required to start the application after installation
 # * IT administrators can set up the default configuration via config.yml, with capistrano
 # * Admin users can change settings via the admin interface, without needing to edit YAML files.
-
+#
+# PLEASE DO NOT EDIT THE SETTINGS IN THIS FILE. 
+# CUSTOMISE YOUR SETTINGS IN `config/config.yml`
+#
 #------------------------------------------------------------------------------
 
 # Settings available in config/config.yml
