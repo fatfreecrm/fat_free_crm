@@ -28,7 +28,7 @@ namespace :license do
               "lib/fat_free_crm/**/*.rb",
               "lib/fat_free_crm.rb",
               "config/config.example.yml",
-              "db/default_settings.yml"
+              "config/default_settings.yml"
            ],
            :js => [
               "app/assets/javascripts/**/*.js",

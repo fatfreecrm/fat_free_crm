@@ -17,12 +17,12 @@
 
 # Fat Free CRM settings are stored in three places, and are loaded in the following order:
 # 
-# 1) db/default_settings.yml
+# 1) config/default_settings.yml
 # 2) config/config.yml  (if exists)
 # 3) 'settings' table in database  (if exists)
 #
 # Any configured settings in `config/config.yml` will override those in
-# `db/default_settings.yml`, and settings in the database table have the highest priority.
+# `config/default_settings.yml`, and settings in the database table have the highest priority.
 # 
 # This settings arrangement offers a lot of flexibility:
 #

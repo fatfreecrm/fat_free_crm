@@ -4,6 +4,7 @@ config/*.yml
 !config/database.mysql.yml
 !config/database.postgres.yml
 !config/database.sqlite.yml
+!config/default_settings.yml
 
 .rspec
 spec/reports
