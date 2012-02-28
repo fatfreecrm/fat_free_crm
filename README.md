@@ -221,6 +221,12 @@ the concepts:
 * http://github.com/michaeldv/crm_web_to_lead/tree/master
 * http://github.com/michaeldv/crm_tags/tree/master
 
+## Run tests
+
+    bundle exec rake spec:no_acceptance && bundle exec rake spec:acceptance
+
+*bundle exec rake spec* does not work because specifc dependencies are loaded for type *no\_acceptance* and *acceptance* only.
+The database is only cleaned for type *acceptance*.
 
 ## License
 
