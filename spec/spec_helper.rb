@@ -67,8 +67,9 @@ Spork.prefork do
     config.include(SharedControllerSpecs, :type => :controller)
     config.include(SharedModelSpecs,      :type => :model)
 
-    config.before(:each, :type => :view) do
+    config.before(:each) do
       I18n.locale = 'en-US'
+      Setting.locale = 'en-US' unless Setting.locale == 'en-US'
     end
 
     config.after(:each, :type => :view) do
