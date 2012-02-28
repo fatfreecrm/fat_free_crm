@@ -28,12 +28,12 @@
 
 # Fat Free CRM settings are stored in three places, and are loaded in the following order:
 # 
-# 1) config/default_settings.yml
-# 2) config/config.yml  (if exists)
+# 1) config/settings.default.yml
+# 2) config/settings.yml  (if exists)
 # 3) 'settings' table in database  (if exists)
 #
-# Any configured settings in `config/config.yml` will override those in
-# `config/default_settings.yml`, and settings in the database table have the highest priority.
+# Any configured settings in `config/settings.yml` will override those in
+# `config/settings.default.yml`, and settings in the database table have the highest priority.
 
 class Setting < ActiveRecord::Base
 
@@ -114,8 +114,8 @@ class Setting < ActiveRecord::Base
     # Loads settings from YAML files
     def load_settings_from_yaml
       @@yaml_settings = {}.with_indifferent_access
-      default = Rails.root.join("config", "default_settings.yml")
-      custom  = Rails.root.join("config", "config.yml")
+      default = Rails.root.join("config", "settings.default.yml")
+      custom  = Rails.root.join("config", "settings.yml")
       
       # Load default settings, then override with custom settings
       [default, custom].each do |file|

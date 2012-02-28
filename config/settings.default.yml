@@ -17,19 +17,25 @@
 
 # Fat Free CRM settings are stored in three places, and are loaded in the following order:
 # 
-# 1) config/default_settings.yml
-# 2) config/config.yml  (if exists)
+# 1) config/settings.default.yml
+# 2) config/settings.yml  (if exists)
 # 3) 'settings' table in database  (if exists)
 #
-# Any configured settings in `config/config.yml` will override those in
-# `config/default_settings.yml`, and settings in the database table have the highest priority.
+# Any settings in `config/settings.yml` will override those in
+# `config/settings.default.yml`, and settings in the database table have the highest priority.
 # 
 # This settings arrangement offers a lot of flexibility:
 #
+# * Developers can add new settings to the application with default values,
+#   without requiring the user to manually update setting files or run tasks.
 # * No manual configuration is required to start the application after installation
-# * IT administrators can set up the default configuration via config.yml, with capistrano
+# * IT administrators can change the default configuration by adding 'settings.yml'
+#   to their git repo, or by running SQL that updates the 'settings' table in the database. 
 # * Admin users can change settings via the admin interface, without needing to edit YAML files.
-
+#
+# PLEASE DO NOT EDIT THE SETTINGS IN THIS FILE. 
+# COPY THE SETTINGS THAT YOU WANT TO OVERRIDE INTO `config/settings.yml`
+#
 #------------------------------------------------------------------------------
 
 # Host
@@ -138,8 +144,179 @@
 :require_last_names: true
 
 
+# Beta features
 #------------------------------------------------------------------------------
-# There are more settings that can be configured via this file.
-# You can find a list of available settings in 'config/default_settings.yml',
-# or configure them by viewing '/admin/settings' in your browser.
+# These are features that need to be in the master branch due to extensive codebase changes,
+# but are disabled by default until ready for general use.
+#
+# - Ransack advanced search
+:advanced_search_enabled: false
+
+
+# Background information
 #------------------------------------------------------------------------------
+# Specify model names that should have background information displayed. 
+# This field can be used when importing records from legacy databases,
+# to display the 'background' of where they came from.
+#
+# Select any combination from the following list.
+#
+#   :background_info:
+#     - :account
+#     - :campaign
+#     - :contact
+#     - :lead
+#     - :opportunity
+#     - :task
+#
+# By default, no background information is shown.
+#
+:background_info: []
+
+
+# Main and Admin Tabs
+#------------------------------------------------------------------------------
+:tabs: [
+  { :active : true,  :text : :tab_dashboard,     :url : { :controller : "home"           } },
+  { :active : false, :text : :tab_tasks,         :url : { :controller : "tasks"          } },
+  { :active : false, :text : :tab_campaigns,     :url : { :controller : "campaigns"      } },
+  { :active : false, :text : :tab_leads,         :url : { :controller : "leads"          } },
+  { :active : false, :text : :tab_accounts,      :url : { :controller : "accounts"       } },
+  { :active : false, :text : :tab_contacts,      :url : { :controller : "contacts"       } },
+  { :active : false, :text : :tab_opportunities, :url : { :controller : "opportunities"  } }
+]
+
+:admin_tabs: [
+  { :active : true,  :text : :admin_tab_users,    :url : { :controller : "admin/users"    } },
+  { :active : false, :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } },
+  { :active : false, :text : :admin_tab_tags,     :url : { :controller : "admin/tags"     } },  
+  { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
+  { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
+]
+
+# Account Category. To add custom account type use string value, for example:
+#
+# account_category:
+#   - "Custom"
+#
+#------------------------------------------------------------------------------
+account_category:
+  - :affiliate
+  - :competitor
+  - :customer
+  - :partner
+  - :reseller
+  - :vendor
+
+account_category_color:
+  :affiliate   : lavender
+  :competitor  : paleturquoise
+  :customer    : pink
+  :partner     : bisque
+  :reseller    : thistle
+  :vendor      : skyblue
+
+# Campaign Status. To add custom status use string value, for example:
+#
+# campaign_status:
+#   - "Custom"
+#
+#------------------------------------------------------------------------------
+campaign_status:
+  - :planned
+  - :started
+  - :completed
+  - :on_hold
+  - :called_off
+
+campaign_status_color:
+  :planned    : Gold
+  :started    : Turquoise
+  :completed  : Lime
+  :on_hold    : Orchid
+  :called_off : OrangeRed
+
+# Lead Status and Source.
+#------------------------------------------------------------------------------
+lead_status:
+  - :new
+  - :contacted
+  - :converted
+  - :rejected
+
+lead_status_color:
+  :new       : Silver
+  :contacted : Turquoise
+  :converted : Lime
+  :rejected  : OrangeRed
+
+lead_source:
+  - :campaign
+  - :cold_call
+  - :conference
+  - :online
+  - :referral
+  - :self
+  - :web
+  - :word_of_mouth
+  - :other
+
+# Opportunity Stage.
+#------------------------------------------------------------------------------
+opportunity_stage:
+  - :prospecting
+  - :analysis
+  - :presentation
+  - :proposal
+  - :negotiation
+  - :final_review
+  - :won
+  - :lost
+
+opportunity_stage_color:
+  :prospecting  : Silver
+  :analysis     : PaleGoldenRod
+  :presentation : Salmon
+  :proposal     : Gold
+  :negotiation  : Orchid
+  :final_review : Turquoise
+  :won          : Lime
+  :lost         : OrangeRed
+
+# Task Category, Due Date, and Completed Date.
+#------------------------------------------------------------------------------
+task_category:
+  - :call
+  - :email
+  - :follow_up
+  - :lunch
+  - :meeting
+  - :money
+  - :presentation
+  - :trip
+
+task_category_color:
+  :call         : Silver
+  :email        : Turquoise
+  :follow_up    : Gold
+  :lunch        : Tomato
+  :meeting      : Orchid
+  :money        : Lime
+  :presentation : Salmon
+  :trip         : Turquoise
+
+task_bucket:
+  - :overdue
+  - :due_asap
+  - :due_today
+  - :due_tomorrow
+  - :due_this_week
+  - :due_next_week
+  - :due_later
+
+task_completed:
+  - :completed_today
+  - :completed_yesterday
+  - :completed_last_week
+  - :completed_this_month
+  - :completed_last_month

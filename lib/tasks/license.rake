@@ -27,8 +27,8 @@ namespace :license do
               "lib/tasks/**/*.rake",
               "lib/fat_free_crm/**/*.rb",
               "lib/fat_free_crm.rb",
-              "config/config.example.yml",
-              "config/default_settings.yml"
+              "config/settings.default.yml",
+              "config/settings.default.yml"
            ],
            :js => [
               "app/assets/javascripts/**/*.js",

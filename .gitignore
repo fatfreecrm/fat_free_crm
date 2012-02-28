@@ -1,10 +1,10 @@
 config/*.yml
-!config/config.example.yml
+!config/settings.default.yml
 !config/database.mysql.mac.yml
 !config/database.mysql.yml
 !config/database.postgres.yml
 !config/database.sqlite.yml
-!config/default_settings.yml
+!config/settings.default.yml
 
 .rspec
 spec/reports

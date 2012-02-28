@@ -28,7 +28,7 @@ namespace :crm do
   desc "Copy example config files"
   task :copy_default_config do
     puts "Copying example config files..."    
-    FileUtils.cp "config/config.example.yml", "config/config.yml" unless File.exists?("config/config.yml")
+    FileUtils.cp "config/settings.default.yml", "config/settings.yml" unless File.exists?("config/settings.yml")
     FileUtils.cp "config/database.#{ENV['DB'] || 'postgres'}.yml", 'config/database.yml' unless File.exists?("config/database.yml")
   end
 
