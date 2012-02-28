@@ -11,9 +11,9 @@ class BushidoUserHooks < Bushido::EventObserver
     user.email      = data['email']
     user.first_name = user.email.split('@').first
     user.last_name  = user.email.split('@').last
-    user.username   = params['data']['ido_id']
+    user.username   = data['email']
     user.deleted_at = nil
-    user.send("#{::Authlogic::Cas.cas_username_column}=".to_sym, params['data'].try(:[], 'ido_id'))
+    user.send("#{::Authlogic::Cas.cas_username_column}=".to_sym, data.try(:[], 'ido_id'))
 
     puts user.inspect
 
