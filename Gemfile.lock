@@ -45,6 +45,11 @@ GEM
       activerecord (>= 3.0.7)
     awesome_print (1.0.2)
     builder (3.0.0)
+    bushido (0.0.36)
+      highline (>= 1.6.1)
+      json (>= 1.4.6)
+      orm_adapter (~> 0.0.3)
+      rest-client (>= 1.6.1)
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -106,6 +111,7 @@ GEM
       spork (>= 0.8.4)
     haml (3.1.4)
     headless (0.2.2)
+    highline (1.6.11)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.19)
@@ -113,6 +119,8 @@ GEM
       thor (~> 0.14)
     json (1.6.5)
     kgio (2.7.0)
+    launchy (2.0.5)
+      addressable (~> 2.2.6)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
     mail (2.3.0)
@@ -122,6 +130,7 @@ GEM
     mime-types (1.17.2)
     multi_json (1.0.4)
     nokogiri (1.5.0)
+    orm_adapter (0.0.6)
     paperclip (2.5.2)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -166,6 +175,8 @@ GEM
     rbx-require-relative (0.0.5)
     rdoc (3.12)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -187,7 +198,7 @@ GEM
       linecache (>= 0.3)
     ruby-progressbar (0.0.10)
     ruby_gntp (0.3.4)
-    rubycas-client (2.3.8)
+    rubycas-client (2.2.1)
       activesupport
     rubyzip (0.9.6.1)
     sass (3.1.12)
@@ -217,6 +228,14 @@ GEM
     steak (2.0.0)
       capybara (>= 1.0.0)
       rspec-rails (>= 2.5.0)
+    tane (0.0.2)
+      awesome_print
+      erubis
+      highline
+      launchy
+      rails (~> 3.1.0)
+      rake
+      rest-client
     test-unit (2.4.4)
     thin (1.3.1)
       daemons (>= 1.0.9)
@@ -251,6 +270,7 @@ DEPENDENCIES
   annotate (~> 2.4.1.beta)
   authlogic (~> 3.1.0)
   awesome_print
+  bushido
   chosen-rails
   coffee-rails (>= 3.1.1)
   database_cleaner
@@ -276,13 +296,14 @@ DEPENDENCIES
   rspec-rails (~> 2.8.0)
   ruby-debug
   ruby_gntp
-  rubycas-client
+  rubycas-client (= 2.2.1)
   sass-rails (>= 3.1.1)
   simple_form (~> 1.5.2)
   simplecov
   spork
   sqlite3
   steak (~> 2.0.0)
+  tane
   test-unit (~> 2.4.3)
   thin
   uglifier

@@ -24,9 +24,10 @@ gem 'chosen-rails'#,        :git => "git://github.com/fatfreecrm/chosen-rails.gi
 gem 'ransack'#,             :git => "git://github.com/ndbroadbent/ransack.git"
 gem 'jquery-rails'
 
-group :bushido do
-  gem 'rubycas-client'
-end
+# Bushido dependencies
+gem 'bushido'
+gem 'rubycas-client', '2.2.1'
+gem 'tane'
 
 group :heroku do
   gem 'unicorn', :platform => :ruby
