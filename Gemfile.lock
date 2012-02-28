@@ -129,7 +129,6 @@ GEM
       thor (~> 0.14)
     json (1.6.5)
     kgio (2.7.0)
-    libv8 (3.3.10.4)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
     mail (2.3.0)
@@ -231,8 +230,6 @@ GEM
       capybara (>= 1.0.0)
       rspec-rails (>= 2.5.0)
     test-unit (2.4.4)
-    therubyracer (0.9.9)
-      libv8 (~> 3.3.10)
     thin (1.3.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -269,6 +266,7 @@ DEPENDENCIES
   chosen-rails!
   coffee-rails (>= 3.1.1)
   database_cleaner
+  execjs
   factory_girl
   factory_girl_rails (~> 1.6.0)
   ffaker (>= 1.12.0)
@@ -298,7 +296,6 @@ DEPENDENCIES
   sqlite3
   steak (~> 2.0.0)
   test-unit (~> 2.4.3)
-  therubyracer
   thin
   uglifier
   unicorn

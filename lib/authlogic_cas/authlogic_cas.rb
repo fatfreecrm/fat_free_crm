@@ -3,7 +3,7 @@ require 'rubycas-client'
 module Authlogic
   module Cas
 
-    @@cas_base_url = "http://noshido.com:3000/cas"
+    @@cas_base_url = "https://bushi.do/cas"
 
     # The login URL of the CAS server.  If undefined, will default based on cas_base_url.
     @@cas_login_url = nil
