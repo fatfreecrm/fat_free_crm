@@ -8,7 +8,7 @@ gem 'prototype-rails'
 # gem "mysql2", "0.3.10"
 # gem "sqlite3"
 gem "pg", "~> 0.12.2"
-
+gem 'sqlite3'
 gem 'authlogic',           '~> 3.1.0'
 gem 'acts_as_commentable', '~> 3.0.1'
 gem 'acts-as-taggable-on', '~> 2.2.1'
@@ -23,6 +23,10 @@ gem 'ajax-chosen-rails',   '>= 0.1.5'
 gem 'chosen-rails',        :git => "git://github.com/fatfreecrm/chosen-rails.git"
 gem 'ransack',             :git => "git://github.com/ndbroadbent/ransack.git"
 gem 'jquery-rails'
+
+group :bushido do
+  gem 'rubycas-client'
+end
 
 group :heroku do
   gem 'unicorn', :platform => :ruby

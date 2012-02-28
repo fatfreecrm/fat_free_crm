@@ -4,6 +4,11 @@ FatFreeCRM::Application.routes.draw do
   scope Setting.base_url.to_s do
     root :to => 'home#index'
 
+    match "login" => "authentications#new_bushido_session"
+    match "logout" => "authentications#destroy_bushido_session"
+    match "bushido_client/service" => "bushido_client#service", :via => :get, :as => "bushido_service"
+    match "bushido_client/service" => "bushido_client#single_signout", :via => :post, :as => "single_signout"
+    
     match 'activities' => 'home#index'
     match 'admin'      => 'admin/users#index',       :as => :admin
     match 'login'      => 'authentications#new',     :as => :login
