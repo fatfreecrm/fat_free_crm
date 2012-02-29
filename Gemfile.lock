@@ -1,3 +1,10 @@
+PATH
+  remote: ../authlogic_bushido
+  specs:
+    authlogic_bushido (0.9)
+      authlogic
+      rubycas-client (= 2.2.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -269,6 +276,7 @@ DEPENDENCIES
   ajax-chosen-rails (>= 0.1.5)
   annotate (~> 2.4.1.beta)
   authlogic (~> 3.1.0)
+  authlogic_bushido!
   awesome_print
   bushido
   chosen-rails
@@ -296,7 +304,6 @@ DEPENDENCIES
   rspec-rails (~> 2.8.0)
   ruby-debug
   ruby_gntp
-  rubycas-client (= 2.2.1)
   sass-rails (>= 3.1.1)
   simple_form (~> 1.5.2)
   simplecov

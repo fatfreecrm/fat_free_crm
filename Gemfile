@@ -26,8 +26,8 @@ gem 'jquery-rails'
 
 # Bushido dependencies
 gem 'bushido'
-gem 'rubycas-client', '2.2.1'
-gem 'tane'
+gem 'tane', :group => :development
+gem 'authlogic_bushido', :path => "../authlogic_bushido"
 
 group :heroku do
   gem 'unicorn', :platform => :ruby

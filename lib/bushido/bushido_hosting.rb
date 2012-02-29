@@ -3,6 +3,7 @@ module FatFreeCRM
     def self.enable_bushido!
       self.load_hooks!
       self.extend_user!
+      self.setup_authentication!
     end
 
     def self.extend_user!
@@ -28,12 +29,34 @@ module FatFreeCRM
         end
       end
     end
-
+    
     def self.load_hooks!
       Dir["#{Dir.pwd}/lib/bushido/**/*.rb"].each { |file| require file }
     end
+
+    def self.setup_authentication!
+      Authlogic::Cas.actor_model = User
+      Authlogic::Cas.authentication_model = Authentication
+      Authlogic::Cas.setup_authentication
+    end
   end
 end
+
+
+module ActionDispatch::Routing
+  class RouteSet
+    Mapper.class_eval do
+      def bushido_authentication_routes
+        authlogic_cas_routes
+        Rails.application.routes.draw do
+          match "login"  => "cas_authentication#new_cas_session",     :via => :get,  :as => "login"
+          match "logout" => "cas_authentication#destroy_cas_session", :via => :post, :as => "logout" 
+        end
+      end
+    end
+  end
+end
+
 
 if Bushido::Platform.on_bushido?
   class BushidoRailtie < Rails::Railtie
