@@ -49,8 +49,12 @@ module ActionDispatch::Routing
       def bushido_authentication_routes
         authlogic_cas_routes
         Rails.application.routes.draw do
-          match "login"  => "cas_authentication#new_cas_session",     :via => :get,  :as => "login"
-          match "logout" => "cas_authentication#destroy_cas_session", :via => :post, :as => "logout" 
+          scope :module => "authlogic" do
+            scope :module => "cas" do
+              match "login"  => "cas_authentication#new_cas_session",     :via => :get,  :as => "login"
+              match "logout" => "cas_authentication#destroy_cas_session", :via => :post, :as => "logout"
+            end
+          end
         end
       end
     end
