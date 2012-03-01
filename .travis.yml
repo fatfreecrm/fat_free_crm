@@ -1,7 +1,7 @@
 language: ruby
 rvm:
   - 1.9.3
-  - 1.9.2-p290
+  - 1.9.2-p180
   - 1.8.7
 
 env:
@@ -20,7 +20,7 @@ matrix:
     - rvm: 1.8.7
       env: DB=mysql
       gemfile: Gemfile.ci
-    - rvm: 1.9.2
+    - rvm: 1.9.2-p180
       env: DB=sqlite
       gemfile: Gemfile.ci
     - rvm: 1.9.3
