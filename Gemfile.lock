@@ -1,8 +1,10 @@
-PATH
-  remote: ../authlogic_bushido
+GIT
+  remote: git://github.com/Bushido/authlogic_bushido.git
+  revision: 4c9a26a346ae45915d2bec0950e177f2fb927c0b
   specs:
     authlogic_bushido (0.9)
       authlogic
+      rails
       rubycas-client (= 2.2.1)
 
 GEM
