@@ -131,7 +131,7 @@ namespace :crm do
   end
 
   namespace :demo do
-    desc "Load demo data and default application settings"
+    desc "Load demo data"
     task :load => :environment do
       Rake::Task["spec:db:fixtures:load"].invoke      # loading fixtures truncates settings!
 
