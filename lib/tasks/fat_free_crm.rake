@@ -58,7 +58,7 @@ namespace :crm do
     end
   end
 
-  desc "Prepare the database and load default application settings"
+  desc "Prepare the database"
   task :setup => :environment do
     if ENV["PROCEED"] != 'true' and ActiveRecord::Migrator.current_version > 0
       puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
