@@ -23,6 +23,7 @@ gem 'ajax-chosen-rails',   '>= 0.1.5'
 gem 'chosen-rails',        :git => "git://github.com/fatfreecrm/chosen-rails.git"
 gem 'ransack',             :git => "git://github.com/ndbroadbent/ransack.git"
 gem 'jquery-rails'
+gem 'capistrano'
 
 group :heroku do
   gem 'unicorn', :platform => :ruby
