@@ -13,13 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20120224073107) do
 
-  create_table "account_aliases", :force => true do |t|
-    t.integer  "account_id"
-    t.integer  "destroyed_account_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
     t.integer  "contact_id"
@@ -137,13 +130,6 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
   end
 
-  create_table "contact_aliases", :force => true do |t|
-    t.integer  "contact_id"
-    t.integer  "destroyed_contact_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "contact_opportunities", :force => true do |t|
     t.integer  "contact_id"
     t.integer  "opportunity_id"
@@ -183,7 +169,7 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   end
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
-  add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "id_last_name_deleted", :unique => true
+  add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "index_contacts_on_user_id_and_last_name_and_deleted_at", :unique => true
 
   create_table "emails", :force => true do |t|
     t.string   "imap_message_id",                                       :null => false
@@ -296,7 +282,7 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   end
 
   add_index "opportunities", ["assigned_to"], :name => "index_opportunities_on_assigned_to"
-  add_index "opportunities", ["user_id", "name", "deleted_at"], :name => "id_name_deleted", :unique => true
+  add_index "opportunities", ["user_id", "name", "deleted_at"], :name => "index_opportunities_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "permissions", :force => true do |t|
     t.integer  "user_id"
