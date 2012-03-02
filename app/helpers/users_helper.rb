@@ -29,5 +29,12 @@ module UsersHelper
       %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw))} } }]
     end
   end
+  
+  def user_select(asset)
+    collection_select asset, :assigned_to, @users, :id, :full_name,
+                      { :include_blank => "" }, 
+                      { :"data-placeholder" => t(:myself),
+                        :style => "width:160px" } 
+  end
 end
 

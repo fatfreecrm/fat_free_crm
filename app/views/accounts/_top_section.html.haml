@@ -8,7 +8,7 @@
       %tr
         %td
           .label #{t :assigned_to}:
-          = collection_select :account, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
+          = user_select(:account)
         %td= spacer
         %td
           .label #{t :category}:

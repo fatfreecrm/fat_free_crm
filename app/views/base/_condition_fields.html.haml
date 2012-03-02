@@ -1,0 +1,14 @@
+.fields.condition{ "data-object-name" => f.object_name }
+  %p
+    = link_to_remove_fields t(:advanced_search_remove_condition), f
+
+    = f.attribute_fields do |a|
+      %span.fields{ "data-object-name" => f.object_name }
+      = a.attribute_select :associations => %w(account tags activities emails business_address billing_address)
+
+    = f.predicate_select({:only => [:cont, :not_cont, :blank, :present, :null, :not_null, :matches, :does_not_match, :eq, :not_eq, :lt, :gt], :compounds => false}, :class => "predicate")
+
+    = f.value_fields do |v|
+      %span.fields.value{ 'data-object-name' => f.object_name }
+      = v.text_field :value
+

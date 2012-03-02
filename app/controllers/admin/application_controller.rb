@@ -25,7 +25,7 @@ class Admin::ApplicationController < BaseController
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
-    @auto_complete = klass.search(@query).limit(10)
+    @auto_complete = klass.text_search(@query).limit(10)
     render "shared/auto_complete", :layout => nil
   end
 

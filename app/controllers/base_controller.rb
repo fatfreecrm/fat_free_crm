@@ -25,18 +25,23 @@ class BaseController < ApplicationController
   respond_to :json, :xml, :except => :edit
   respond_to :atom, :csv, :rss, :xls, :only => :index
 
+  helper_method :search
+
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query]
     @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
     if @auto_complete.empty?
-      @auto_complete = klass.my.search(@query).limit(10)
+      @auto_complete = klass.my.text_search(@query).limit(10)
     else
       @auto_complete = @auto_complete.last
     end
     session[:auto_complete] = controller_name.to_sym
-    render "shared/auto_complete", :layout => nil
+    respond_to do |format|
+      format.any(:js, :html)   { render "shared/auto_complete", :layout => nil }
+      format.json { render :json => @auto_complete.inject({}){|h,a| h[a.id] = a.name; h } }
+    end
   end
 
   # Common attach handler for all core controllers.
@@ -91,18 +96,24 @@ class BaseController < ApplicationController
   end
 
   def field_group
-    if @tag = Tag.find_by_name(params[:tag].strip) and
-       @field_group = FieldGroup.find_by_tag_id(@tag.id)
-
-      @asset = klass.find_by_id(params[:asset_id]) || klass.new
-
-      render 'fields/group'
-    else
-      render :text => ''
+    if @tag = Tag.find_by_name(params[:tag].strip)
+      if @field_group = FieldGroup.find_by_tag_id_and_klass_name(@tag.id, klass.to_s)
+        @asset = klass.find_by_id(params[:asset_id]) || klass.new
+        render 'fields/group' and return
+      end
     end
+    render :text => ''
   end
 
   private
+
+  def search
+    @search ||= begin
+      search = klass.search(params[:q])
+      search.build_grouping unless search.groupings.any?
+      search
+    end
+  end
 
   # Get list of records for a given model class.
   #----------------------------------------------------------------------------
@@ -133,8 +144,9 @@ class BaseController < ApplicationController
     filter = session[options[:filter]].to_s.split(',') if options[:filter]
 
     scope = klass.my(records)
+    scope = scope.merge(search.result)
     scope = scope.state(filter)                   if filter.present?
-    scope = scope.search(query)                   if query.present?
+    scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
     scope = scope.unscoped                        if wants.csv?
     scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?

@@ -26,13 +26,14 @@ en-US:
 
   admin_tab_users: Users
   admin_tab_fields: Custom Fields
+  admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
 
   affiliate: Affiliate
   competitor: Competitor
   customer: Customer
-  partner: Partner
+  partner: Partneradm
   reseller: Reseller
   vendor: Vendor
 
@@ -272,6 +273,7 @@ en-US:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Account
+  select_an_account: Select an Account
   account_small: account
   account_summary: Account Summary
   accounts: Accounts
@@ -549,6 +551,7 @@ en-US:
   zipcode: Zip Code
   state: State
   country: Country
+  select_a_country: Select a Country
   expand_all: Expand all
   collapse_all: Collapse all
   expanded: Expanded
@@ -571,6 +574,32 @@ en-US:
   logout: Logout
   quick_find: Quick find
   welcome: Welcome
+
+  # Views -> Advanced Search.
+  accounts_advanced_search: Accounts Advanced search
+  advanced_search: Advanced search
+  advanced_search_submit: Search
+  advanced_search_add_group: Add a group of filters
+  advanced_search_group_first: Show results where %{combinator} of the following match
+  advanced_search_group_rest: ...and where %{combinator} of the following match
+  advanced_search_add_condition: Add a filter
+  advanced_search_remove_condition: Remove filter
+
+  ransack:
+    predicates:
+      eq: is
+      not_eq: is not
+      lt: is less than
+      gt: is greater than
+      matches: matches
+      does_not_match: doesn't match
+      cont: contains
+      not_cont: doesn't contain
+      blank: is blank
+      present: is present
+      "null": is null
+      not_null: is not null
+
 
   # Views -> Comments.
   #----------------------------------------------------------------------------
@@ -627,6 +656,14 @@ en-US:
   dropbox_ack_to: Added to
   subject: Subject
   body: Body
+
+  # Lists
+  #----------------------------------------------------------------------------
+  lists: Lists
+  list: List
+  no_saved_lists: No saved lists
+  make_current_view_list: Make current view a list
+  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
 
   # Pluralizations.
   #----------------------------------------------------------------------------
@@ -688,10 +725,12 @@ en-US:
 
       multi_page: "Displaying %{plural} %{from} - %{to} of %{total} in total"
 
+
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
   label: Label
   custom_fields: Custom Fields
+  custom_field_options: Custom Field Options
   create_field: Create field
   save_field: Save field
   create_field_group: Create field group
@@ -700,12 +739,34 @@ en-US:
 
   field_group_empty: There are no fields in this group.
 
+  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
+
   restrict_by_tag: Restrict by Tag
   restrict_by_tag_info: Only show fields for %{assets} that are tagged with
   field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
   field_group_unrestricted: This field group applies to all %{assets}
+  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
+  msg_cant_delete_field_group: Field Group could not be deleted.
 
   admin_fields_info: |
     Custom fields are displayed in groups.
     Create a new field group, or add fields to one of the groups below.<br />
     You can drag and drop fields to change their display order or move them between field groups.
+
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  tags: Tags
+  tag_small: tag
+  tagged: Tagged
+  create_tag: Create Tag
+  save_tag: Save Tag
+  field_group_tags: Field Groups shown for this Tag
+  tag_with_taggings_confirm_delete: "If this tag is deleted, it will be removed from %{value} records."
+  msg_cant_delete_tag: "Couldn't delete '%{value}' since it has associated Field Groups."
+
+  
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
+  author: Author
+  version: Version
+  description: Description

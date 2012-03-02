@@ -185,9 +185,13 @@ class Admin::UsersController < Admin::ApplicationController
     self.current_page  = options[:page] if options[:page]
     self.current_query = params[:query] if params[:query]
 
+    @search = klass.search(params[:q])
+    @search.build_grouping unless @search.groupings.any?
+
     wants = request.format
     scope = User.by_id
-    scope = scope.search(current_query)           unless current_query.blank?
+    scope = scope.merge(@search.result)
+    scope = scope.text_search(current_query)      if current_query.present?
     scope = scope.unscoped                        if wants.csv?
     scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
     scope

@@ -13,6 +13,7 @@ if @contact.valid?
   page.call "crm.flick", :empty, :remove
 else
   page[:create_contact].replace_html :partial => "new"
+  page.call "crm.init_chosen_fields"
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
   page[:create_contact].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:contact_first_name].focus

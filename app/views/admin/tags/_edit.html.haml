@@ -1,0 +1,9 @@
+.remote
+  = form_for([:admin, @tag], :as => :tag, :html => one_submit_only(:tag).merge(:class => "edit_tag", :id => "edit_tag_#{@tag.id}"), :remote => true) do |f|
+    = link_to_close edit_admin_tag_path(@tag)
+    = f.error_messages
+    = render :partial => "top_section", :locals => { :f => f, :edit => true }
+    .buttonbar
+      = f.submit t(:save_tag), :id => :tag_submit
+      or
+      = link_to_cancel edit_admin_tag_path(@tag)

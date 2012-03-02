@@ -1,4 +1,4 @@
-require Rails.root.join('config', 'environments','production')
+require Rails.root.join('config', 'environments', 'production')
 
 FatFreeCRM::Application.configure do
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

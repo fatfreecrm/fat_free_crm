@@ -15,24 +15,28 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+//= require jquery
+//= require jquery-noconflict
 //= require prototype
 //= require effects
 //= require controls
 //= require dragdrop
 //= require prototype_ujs
 //= require modalbox
-//= require facebooklist
-//= require facebooklist.simulate
 //= require crm
 //= require crm_classes
 //= require crm_loginout
 //= require crm_fields
 //= require calendar_date_select/calendar_date_select
+//= require event.simulate
+//= require ajax-chosen-prototype
+//= require crm_chosen
+//= require search
+//= require lists
+
 
 <%
 FatFreeCRM::Plugin.list_ids.each do |plugin|
   require_asset(plugin.to_s) rescue Sprockets::FileNotFound
 end
 %>
-
-var fbtaglist = null;

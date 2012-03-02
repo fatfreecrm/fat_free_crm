@@ -18,6 +18,7 @@ else # <----------------------------------------  Show [Edit Task] form.
   end
   page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
   page[id].replace_html :partial => "edit"        # Show [Edit Task] form.
+  page.call "crm.init_chosen_fields"
   page.call "crm.date_select_popup", :task_calendar, :task_bucket, Setting.task_calendar_with_time
   page[:task_name].focus
 

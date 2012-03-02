@@ -4,6 +4,7 @@ page.call "crm.flip_form", :create_account
 
 unless params[:cancel].true?
   page[:create_account].replace_html :partial => "new"
+  page.call "crm.init_chosen_fields"
   page.call "crm.set_title", :create_account, t(:create_account)
 else
   page.call "crm.set_title", :create_account, t(:accounts)

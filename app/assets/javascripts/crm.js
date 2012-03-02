@@ -55,7 +55,7 @@ var crm = {
     if($('facebook-list')) $('facebook-list').remove();
     var arrow = $(id + "_arrow") || $("arrow");
     arrow.update(this.COLLAPSED);
-    Effect.BlindUp(id, { duration: 0.25, afterFinish: function() { $(id).update("").setStyle({height: 'auto'}); } });
+    $(id).hide().update("").setStyle({height: 'auto'});
   },
 
   //----------------------------------------------------------------------------
@@ -116,10 +116,11 @@ var crm = {
   // Hide accounts dropdown and show create new account edit field instead.
   //----------------------------------------------------------------------------
   create_account: function(and_focus) {
+    crm.ensure_chosen_account();
     $("account_disabled_title").hide();
     $("account_select_title").hide();
     $("account_create_title").show();
-    $("account_id").hide();
+    $("account_id_chzn").hide();
     $("account_id").disable();
     $("account_name").enable();
     $("account_name").clear();
@@ -132,28 +133,27 @@ var crm = {
   // Hide create account edit field and show accounts dropdown instead.
   //----------------------------------------------------------------------------
   select_account: function(and_focus) {
+    crm.ensure_chosen_account();
     $("account_disabled_title").hide();
     $("account_create_title").hide();
     $("account_select_title").show();
     $("account_name").hide();
     $("account_name").disable();
     $("account_id").enable();
-    $("account_id").show();
-    if (and_focus) {
-      $("account_id").focus();
-    }
+    $("account_id_chzn").show();
   },
 
   // Show accounts dropdown and disable it to prevent changing the account.
   //----------------------------------------------------------------------------
   select_existing_account: function() {
+    crm.ensure_chosen_account();
     $("account_create_title").hide();
     $("account_select_title").hide();
     $("account_disabled_title").show();
     $("account_name").hide();
     $("account_name").disable();
     $("account_id").disable();
-    $("account_id").show();
+    $("account_id_chzn").show();
   },
 
   //----------------------------------------------------------------------------
@@ -372,6 +372,8 @@ var crm = {
 
     // Country dropdown needs special treatment ;-)
     $(to + "_attributes_country").selectedIndex = $(from + "_attributes_country").selectedIndex;
+    // Update Chosen select
+    Event.fire($(to + "_attributes_country"), "liszt:updated");
   },
 
   //----------------------------------------------------------------------------
@@ -483,5 +485,3 @@ document.on("click", "*[data-tab-class]", function(event, element) {
   $(klass + "_section").show();
   element.addClassName('selected');
 });
-
-
