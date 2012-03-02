@@ -41,6 +41,10 @@ gem 'premailer', :require => false
 remove 'fat_free_crm'
 
 group :development, :test do
+  # Uncomment the following two gems to deploy via Capistrano
+  gem 'capistrano'
+  gem 'capistrano_colors'
+
   gem 'rspec-rails', '~> 2.9.0'
   gem 'headless'
   unless ENV["CI"]

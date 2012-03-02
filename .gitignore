@@ -1,4 +1,5 @@
 config/*.yml
+config/deploy.rb
 !config/settings.default.yml
 !config/database.mysql.mac.yml
 !config/database.mysql.yml
