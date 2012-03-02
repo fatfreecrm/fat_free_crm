@@ -42,7 +42,7 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 
 # Run specs, acceptance tests, and ensure that assets can compile without errors
-script: "RAILS_ENV=production bundle exec rake spec:no_acceptance && bundle exec rake spec:acceptance && bundle exec rake app:assets:precompile:primary"
+script: "bundle exec rake spec:no_acceptance && bundle exec rake spec:acceptance && RAILS_ENV=production bundle exec rake app:assets:precompile:primary"
 
 # To stop Travis from running tests for a new commit,
 # add the following to your commit message: [ci skip]
