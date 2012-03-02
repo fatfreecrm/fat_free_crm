@@ -23,7 +23,6 @@ Design
 .bundle
 .idea/
 .DS_Store
-.rvmrc
 .sass-cache
 *~
 *.swp
