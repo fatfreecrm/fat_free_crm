@@ -121,7 +121,7 @@ module FatFreeCRM
       end
     end
 
-    # Connects to the imap server with the loaded settings from settings.yml
+    # Connects to the imap server with the loaded settings
     #------------------------------------------------------------------------------
     def connect!(options = {})
       @imap = Net::IMAP.new(@settings[:server], @settings[:port], @settings[:ssl])
@@ -143,7 +143,7 @@ module FatFreeCRM
       end
     end
 
-    # Discard message (not valid) action based on settings from settings.yml
+    # Discard message (not valid) action based on settings
     #------------------------------------------------------------------------------
     def discard(uid)
       if @settings[:move_invalid_to_folder]
@@ -153,7 +153,7 @@ module FatFreeCRM
       @discarded += 1
     end
 
-    # Archive message (valid) action based on settings from settings.yml
+    # Archive message (valid) action based on settings
     #------------------------------------------------------------------------------
     def archive(uid)
       if @settings[:move_to_folder]

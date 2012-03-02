@@ -28,55 +28,27 @@ namespace :crm do
   desc "Copy example config files"
   task :copy_default_config do
     puts "Copying example config files..."    
-    FileUtils.cp "config/settings.yml.example", "config/settings.yml" unless File.exists?("config/settings.yml")
+    FileUtils.cp "config/settings.default.yml", "config/settings.yml" unless File.exists?("config/settings.yml")
     FileUtils.cp "config/database.#{ENV['DB'] || 'postgres'}.yml", 'config/database.yml' unless File.exists?("config/database.yml")
   end
 
   namespace :settings do
-    desc "Load default application settings"
-    task :load => :environment do
-      plugin = ENV["PLUGIN"]
-      yaml = File.join(Rails.root, (plugin ? "/vendor/plugins/#{plugin}" : "") + "/config/settings.yml")
+    desc "Clear settings from database (reset to default)"
+    task :clear => :environment do
+      puts "== Clearing settings table..."
 
-      puts "== Loading settings#{plugin ? (' from ' << plugin) : ''}..."
-
-      begin
-        settings = YAML.load_file(yaml)
-      rescue
-        puts "Couldn't load #{yaml} configuration file."
-        exit
-      end
-
-      # Truncate settings table if loading Fat Free CRM settings.
+      # Truncate settings table
       ActiveRecord::Base.establish_connection(Rails.env)
-      unless plugin
-        if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
-          ActiveRecord::Base.connection.execute("DELETE FROM settings")
-        else # mysql and postgres
-          ActiveRecord::Base.connection.execute("TRUNCATE settings")
-        end
+      if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
+        ActiveRecord::Base.connection.execute("DELETE FROM settings")
+      else # mysql and postgres
+        ActiveRecord::Base.connection.execute("TRUNCATE settings")
       end
 
-      settings.keys.each do |key|
-        if plugin # Delete existing plugin setting if any (since we haven't truncated the whole table).
-          sql = [ "DELETE FROM settings WHERE name = ?", key.to_s ]
-          Rake::Task.sanitize_and_execute(sql)
-        end
-        sql = [ "INSERT INTO settings (name, default_value, created_at, updated_at) VALUES(?, ?, ?, ?)", key.to_s, Base64.encode64(Marshal.dump(settings[key])), Time.now, Time.now ]
-        Rake::Task.sanitize_and_execute(sql)
-      end
-
-      # Change default access on models, as specified in settings.yml
-      %w(leads opportunities contacts campaigns accounts).each do |table|
-        ActiveRecord::Migration.change_column_default(table, 'access', settings[:default_access])
-      end
-      # Re-dump the schema in case default access has changed (Critical for RSpec)
-      Rake::Task["db:schema:dump"].invoke
-
-      puts "===== Settings have been loaded."
+      puts "===== Settings table has been cleared."
     end
 
-    desc "Show current application settings"
+    desc "Show current settings in the database"
     task :show => :environment do
       ActiveRecord::Base.establish_connection(Rails.env)
       names = ActiveRecord::Base.connection.select_values("SELECT name FROM settings ORDER BY name")
@@ -86,7 +58,7 @@ namespace :crm do
     end
   end
 
-  desc "Prepare the database and load default application settings"
+  desc "Prepare the database"
   task :setup => :environment do
     if ENV["PROCEED"] != 'true' and ActiveRecord::Migrator.current_version > 0
       puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
@@ -102,7 +74,6 @@ namespace :crm do
     # Migrating plugins is not part of Rails 3 yet, but it is coming. See
     # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
     Rake::Task["db:migrate:plugins"].invoke rescue nil
-    Rake::Task["crm:settings:load"].invoke
     Rake::Task["crm:setup:admin"].invoke
   end
 
@@ -160,10 +131,9 @@ namespace :crm do
   end
 
   namespace :demo do
-    desc "Load demo data and default application settings"
+    desc "Load demo data"
     task :load => :environment do
       Rake::Task["spec:db:fixtures:load"].invoke      # loading fixtures truncates settings!
-      Rake::Task["crm:settings:load"].invoke
 
       # Simulate random user activities.
       $stdout.sync = true

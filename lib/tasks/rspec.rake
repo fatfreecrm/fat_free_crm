@@ -7,7 +7,6 @@ if defined?(RSpec)
       Rake::Task["crm:copy_default_config"].invoke
       puts "Preparing test database..."
       Rake::Task["db:schema:load"].invoke
-      Rake::Task["crm:settings:load"].invoke
       Rails.env = tmp_env
     end
     

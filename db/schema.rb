@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120121054235) do
+ActiveRecord::Schema.define(:version => 20120224073107) do
+
+  create_table "account_aliases", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "destroyed_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -128,6 +135,13 @@ ActiveRecord::Schema.define(:version => 20120121054235) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
+  end
+
+  create_table "contact_aliases", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "destroyed_contact_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "contact_opportunities", :force => true do |t|
@@ -316,9 +330,8 @@ ActiveRecord::Schema.define(:version => 20120121054235) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "settings", :force => true do |t|
-    t.string   "name",          :limit => 32, :default => "", :null => false
+    t.string   "name",       :limit => 32, :default => "", :null => false
     t.text     "value"
-    t.text     "default_value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

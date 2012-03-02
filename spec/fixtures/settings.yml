@@ -5,7 +5,6 @@
 #  id            :integer         not null, primary key
 #  name          :string(32)      default(""), not null
 #  value         :text
-#  default_value :text
 #  created_at    :datetime
 #  updated_at    :datetime
 #

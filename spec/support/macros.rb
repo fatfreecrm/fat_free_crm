@@ -38,23 +38,3 @@ def adjust_timezone(offset)
   end
 end
 
-# Load default settings from config/settings.yml file.
-#----------------------------------------------------------------------------
-def load_default_settings
-  # Truncate settings so that we always start with empty table.
-  if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
-    ActiveRecord::Base.connection.execute("DELETE FROM settings")
-  else # mysql and postgres
-    ActiveRecord::Base.connection.execute("TRUNCATE settings")
-  end
-
-  settings = YAML.load_file("#{::Rails.root}/config/settings.yml")
-  settings.keys.each do |key|
-    Factory.define key.to_sym, :parent => :setting do |factory|
-      factory.name key.to_s
-      factory.default_value Base64.encode64(Marshal.dump(settings[key]))
-    end
-    Factory(key.to_sym) # <--- That's where the data gets loaded.
-  end
-end
-

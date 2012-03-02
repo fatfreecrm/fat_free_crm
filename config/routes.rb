@@ -1,7 +1,7 @@
 FatFreeCRM::Application.routes.draw do
   resources :lists
 
-  scope Setting.base_url.to_s do
+  scope Setting.base_url do
     root :to => 'home#index'
 
     match 'activities' => 'home#index'

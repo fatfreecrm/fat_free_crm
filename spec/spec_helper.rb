@@ -41,9 +41,6 @@ Spork.prefork do
 
   TASK_STATUSES = %w(pending assigned completed).freeze
 
-  # Load default settings from config/settings.yml
-  load_default_settings if Setting.database_and_table_exists?
-
   Setting.task_calendar_with_time = false
 
   I18n.locale = 'en-US'

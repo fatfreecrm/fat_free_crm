@@ -5,7 +5,6 @@
 #  id            :integer         not null, primary key
 #  name          :string(32)      default(""), not null
 #  value         :text
-#  default_value :text
 #  created_at    :datetime
 #  updated_at    :datetime
 #
@@ -15,17 +14,20 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Setting do
 
   it "should create a new instance given valid attributes" do
-    Setting.create!(:name => "name", :value => "value", :default_value => nil)
+    Setting.create!(:name => "name", :value => "value")
   end
 
-  it "should find existing setting by its name using [] or method notations" do
-    @setting = Factory(:setting, :name => "thingymabob", :value => Base64.encode64(Marshal.dump("magoody")))
+  it "should find existing setting by its name using [] or method notations, and cache settings" do
+    @setting = Factory(:setting, :name => "thingymabob", :value => "magoody")
+    Setting.cache.has_key?("thingymabob").should == false
     Setting[:thingymabob].should == "magoody"
+    Setting.cache.has_key?("thingymabob").should == true
     Setting.thingymabob.should == "magoody"
   end
 
-  it "should use :default_value if the value is missing" do
-    @setting = Factory(:setting, :name => "magoody", :value => nil, :default_value => Base64.encode64(Marshal.dump("thingymabob")))
+  it "should use value from YAML if setting is missing from database" do
+    @setting = Factory(:setting, :name => "magoody", :value => nil)
+    Setting.yaml_settings.merge!(:magoody => "thingymabob")
     Setting[:magoody].should == "thingymabob"
     Setting.magoody.should == "thingymabob"
   end
@@ -45,6 +47,5 @@ describe Setting do
     Setting[:hello].should == false
     Setting.hello.should == false
   end
-  
 end
 
