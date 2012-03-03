@@ -1,7 +1,11 @@
 FatFreeCRM::Application.routes.draw do
+  resources :lists
+
   scope Setting.base_url.to_s do
     root :to => 'home#index'
 
+    bushido_authentication_routes if Bushido::Platform.on_bushido?
+    
     match 'activities' => 'home#index'
     match 'admin'      => 'admin/users#index',       :as => :admin
     match 'login'      => 'authentications#new',     :as => :login
@@ -21,10 +25,11 @@ FatFreeCRM::Application.routes.draw do
 
     resources :accounts, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
-        post :auto_complete
+        match :auto_complete
         post :redraw
       end
       member do
@@ -37,6 +42,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :campaigns, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
@@ -53,6 +59,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :contacts, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
@@ -68,6 +75,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :leads, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
@@ -85,6 +93,7 @@ FatFreeCRM::Application.routes.draw do
 
     resources :opportunities, :id => /\d+/ do
       collection do
+        get  :advanced_search
         post :filter
         get  :options
         get  :field_group
@@ -133,6 +142,9 @@ FatFreeCRM::Application.routes.draw do
         collection do
           post :sort
         end
+        member do
+          get :confirm
+        end
       end
 
       resources :fields do
@@ -143,6 +155,13 @@ FatFreeCRM::Application.routes.draw do
           post :sort
         end
       end
+      
+      resources :tags do
+        member do
+          get :confirm
+        end
+      end
+      
       resources :fields, :as => :custom_fields
       resources :fields, :as => :core_fields
 

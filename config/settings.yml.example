@@ -144,6 +144,7 @@ task_calendar_with_time: false
 :admin_tabs: [
   { :active : true,  :text : :admin_tab_users,    :url : { :controller : "admin/users"    } },
   { :active : true,  :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } },
+  { :active : true,  :text : :admin_tab_tags,     :url : { :controller : "admin/tags"     } },  
   { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
   { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
@@ -286,3 +287,9 @@ task_completed:
   - :completed_this_month
   - :completed_last_month
 
+
+# Alpha features
+#------------------------------------------------------------------------------
+# Enable the advanced search feature provided by Ransack
+# (Feature works, but UI design is still in progress)
+advanced_search_enabled: false

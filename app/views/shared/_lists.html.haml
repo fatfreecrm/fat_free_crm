@@ -1,0 +1,25 @@
+- @lists = List.all
+- @list = List.new
+.panel#lists
+  .caption #{t :lists}
+  %ul
+    - if @lists.none?
+      %div #{t :no_saved_lists}
+    - else
+      - @lists.sort.each_with_index do |list, i|
+        %li[list]{ :class => i < @lists.size - 1 ? "" : "last" }
+          %dt= link_to(truncate(list.name, :length => 25), list.url, :title => list.name)
+          %tt= link_to(image_tag("/assets/tab_icons/#{list.controller}_active.png", :"data-controller" => list.controller), url_for(list), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => "list_icon delete_on_hover")
+
+  .show_lists_save_form{ hidden_if(!params[:q]) }
+    = link_to(t(:make_current_view_list), '#')
+
+  .save_list{ hidden }
+    = simple_form_for(@list, :html => one_submit_only(:list), :remote => true) do |f|
+      = f.text_field :name
+      = image_tag("/assets/info_tiny.png", :title => t(:list_name_info), :class => "input_info")
+      = f.hidden_field :url
+      %br
+      = f.submit(t(:save), :id => "save_list", :style => "vertical-align: bottom;")
+      #{t :or}
+      = link_to(t(:cancel), '#', :class => "hide_lists_save_form")

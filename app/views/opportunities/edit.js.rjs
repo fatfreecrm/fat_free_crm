@@ -22,9 +22,11 @@ else # <----------------------------------------- Show requested [Edit Opportuni
     page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
     page.call "crm.hide_form", :create_opportunity# Hide [Create Opportunity] form if any.
     page[id].replace_html :partial => "edit"      # Show [Edit Opportunity] form.
+    page.call "crm.init_chosen_fields"
 
   elsif params[:cancel].false?                    # Called from title of the opportunity landing page...
     page[:edit_opportunity].replace_html :partial => "edit"
+    page.call "crm.init_chosen_fields"
     page.call "crm.flip_form", :edit_opportunity
     page.call "crm.set_title", :edit_opportunity, "#{t :edit} #{@opportunity.name}"
   end

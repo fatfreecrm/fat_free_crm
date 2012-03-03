@@ -1,0 +1,9 @@
+if @list.valid?
+  page[:lists].replace :partial => "shared/lists"
+  page.call "jQuery('.show_lists_save_form').show"
+
+else # Couldn't create the saved list -- validation failed.
+  page[:new_list].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:list_name].focus
+  page[:save_list].enable
+end

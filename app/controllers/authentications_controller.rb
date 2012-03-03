@@ -17,7 +17,7 @@
 
 class AuthenticationsController < ApplicationController
 
-  before_filter :require_no_user, :only => [ :new, :create, :show ]
+  before_filter :require_no_user, :only => [ :new, :create, :show]
   before_filter :require_user, :only => :destroy
 
   #----------------------------------------------------------------------------

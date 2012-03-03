@@ -1,0 +1,29 @@
+- tag_field_groups = FieldGroup.find_all_by_tag_id(tag)
+- model_tagging_counts = tag.model_tagging_counts
+
+%li[tag]{ highlightable(dom_id(tag, :tools)) }
+  .tools{ invisible, :id => dom_id(tag, :tools) }
+    = link_to_edit(tag, :url => edit_admin_tag_path(tag)) << " |"
+    - if tag_field_groups.any?
+      %span{:style => "color: #777"} Delete
+    - else
+      - if model_tagging_counts.any?
+        = link_to_confirm(tag)
+      - else
+        = link_to_delete(tag, :url => url_for([:admin, tag]))
+
+  %span.black= tag.name
+  %tt
+    - if model_tagging_counts.any?
+      = t(:tagged) + ":"
+      = model_tagging_counts.map {|k, c| t(pluralize(c, k.downcase)) }.join(", ")
+
+  - if tag_field_groups.any?
+    %dt{ :style => "padding: 2px 0px 0px 0px" }
+      = t(:field_group_tags) + ":"
+      - tag_field_groups.each_with_index do |field_group, i|
+        %strong= field_group.label_i18n
+        on
+        %strong= field_group.klass_name.pluralize
+        - if i < tag_field_groups.size - 1
+          = "|"

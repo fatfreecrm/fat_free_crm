@@ -8,7 +8,6 @@ gem 'prototype-rails'
 # gem "mysql2", "0.3.10"
 gem "sqlite3"
 gem "pg", "~> 0.12.2"
-gem "tane"
 
 gem 'authlogic',           '~> 3.1.0'
 gem 'acts_as_commentable', '~> 3.0.1'
@@ -20,6 +19,15 @@ gem 'acts_as_list',        '~> 0.1.4'
 gem 'simple_form',         '~> 1.5.2'
 gem 'ffaker',              '>= 1.12.0' # For loading demo data
 gem 'uglifier'
+gem 'ajax-chosen-rails',   '>= 0.1.5'
+gem 'chosen-rails'#,        :git => "git://github.com/fatfreecrm/chosen-rails.git"
+gem 'ransack'#,             :git => "git://github.com/ndbroadbent/ransack.git"
+gem 'jquery-rails'
+
+# Bushido dependencies
+gem 'bushido'
+gem 'tane', :group => :development
+gem 'authlogic_bushido', '~> 0.9'
 
 group :heroku do
   gem 'unicorn', :platform => :ruby
@@ -34,15 +42,17 @@ group :assets do
 end
 
 group :development, :test do
-  unless ENV["CI"]
-    gem 'ruby-debug',   :platform => :mri_18
-    gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug' if RUBY_VERSION == "1.9.2"
+  unless ENV["CI"] || ENV["HOSTING_PLATFORM"] == "bushido"
+    # gem 'ruby-debug',   :platform => :mri_18
+    # gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug' if RUBY_VERSION == "1.9.2"
     gem 'awesome_print'
   end
 
   gem 'test-unit',          '~> 2.4.3',  :platform => :mri_19, :require => false
   gem 'rspec-rails',        '~> 2.8.0'
   gem 'factory_girl'
+  gem 'steak',              '~> 2.0.0'
+  gem 'headless',           '~> 0.2.2'
 end
 
 group :development do
@@ -67,6 +77,7 @@ group :test do
   gem 'factory_girl_rails', '~> 1.6.0'
   gem 'simplecov', :platform => :mri_19 unless ENV["CI"]  # Until Travis supports build artifacts
   gem 'fuubar'
+  gem 'database_cleaner'
 end
 
 

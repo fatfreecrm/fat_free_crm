@@ -1,0 +1,9 @@
+page.call "crm.flick", :empty, :toggle
+page.call "crm.flip_form", :advanced_search
+
+if params[:cancel].true?
+  page.call "jQuery('.show_lists_save_form').hide"
+else
+  page.call "jQuery('.show_lists_save_form').show"
+  page[:advanced_search].replace_html :partial => "advanced_search"
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209175716) do
+ActiveRecord::Schema.define(:version => 20120227184555) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -96,16 +96,16 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
   create_table "campaigns", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",                :limit => 64,                                :default => "",       :null => false
-    t.string   "access",              :limit => 8,                                 :default => "Public"
+    t.string   "name",                :limit => 64, :default => "",       :null => false
+    t.string   "access",              :limit => 8,  :default => "Public"
     t.string   "status",              :limit => 64
-    t.decimal  "budget",                            :precision => 12, :scale => 2
+    t.decimal  "budget"
     t.integer  "target_leads"
     t.float    "target_conversion"
-    t.decimal  "target_revenue",                    :precision => 12, :scale => 2
+    t.decimal  "target_revenue"
     t.integer  "leads_count"
     t.integer  "opportunities_count"
-    t.decimal  "revenue",                           :precision => 12, :scale => 2
+    t.decimal  "revenue"
     t.date     "starts_on"
     t.date     "ends_on"
     t.text     "objectives"
@@ -213,10 +213,10 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
     t.string   "hint"
     t.string   "placeholder"
     t.string   "as",             :limit => 32
-    t.text     "collection"
+    t.text     "collection",     :limit => 255
     t.boolean  "disabled"
     t.boolean  "required"
-    t.integer  "maxlength"
+    t.integer  "maxlength",      :limit => 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -256,17 +256,24 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
   add_index "leads", ["assigned_to"], :name => "index_leads_on_assigned_to"
   add_index "leads", ["user_id", "last_name", "deleted_at"], :name => "index_leads_on_user_id_and_last_name_and_deleted_at", :unique => true
 
+  create_table "lists", :force => true do |t|
+    t.string   "name"
+    t.text     "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "opportunities", :force => true do |t|
     t.integer  "user_id"
     t.integer  "campaign_id"
     t.integer  "assigned_to"
-    t.string   "name",            :limit => 64,                                :default => "",       :null => false
-    t.string   "access",          :limit => 8,                                 :default => "Public"
+    t.string   "name",            :limit => 64, :default => "",       :null => false
+    t.string   "access",          :limit => 8,  :default => "Public"
     t.string   "source",          :limit => 32
     t.string   "stage",           :limit => 32
     t.integer  "probability"
-    t.decimal  "amount",                        :precision => 12, :scale => 2
-    t.decimal  "discount",                      :precision => 12, :scale => 2
+    t.decimal  "amount"
+    t.decimal  "discount"
     t.date     "closes_on"
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -386,6 +393,8 @@ ActiveRecord::Schema.define(:version => 20111209175716) do
     t.boolean  "admin",                             :default => false, :null => false
     t.datetime "suspended_at"
     t.string   "single_access_token"
+    t.text     "ido_id"
+    t.string   "locale"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

@@ -34,15 +34,14 @@
               %span#account_disabled_title :
 
             -# Add [-- None --] account choice when editing existing contact that has an account.
-            - options = { :selected => @account.id || 0 }
-            - options[:include_blank] = true #t(:select_none) unless @contact.new_record? || @contact.account.blank?
+            - options = {} and (options[:include_blank] = "" unless @contact.new_record? || @contact.account.blank?)
+            = account_select(options)
 
-            = collection_select :account, :id, @accounts, :id, :name, options, { :style => "width:330px; display:none;" }
             = a.text_field :name, :style => "width:324px; display:none;"
           %td= spacer
           %td
             .label #{t :assigned_to}:
-            = collection_select :contact, :assigned_to, @users, :id, :full_name, { :include_blank => t(:myself) }, { :style => "width:160px" }
+            = user_select(:contact)
 
         - if Setting.background_info && Setting.background_info.include?(:contact)
           %tr

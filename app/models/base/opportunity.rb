@@ -59,7 +59,7 @@ class Opportunity < ActiveRecord::Base
   scope :pipeline, where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')")
 
   # Search by name OR id
-  scope :search, lambda { |query|
+  scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     # postgresql does not like to compare string to integer field
     if query =~ /^\d+$/

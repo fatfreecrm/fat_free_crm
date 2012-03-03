@@ -1,3 +1,4 @@
+language: ruby
 rvm:
   - 1.9.3
   - 1.9.2
@@ -36,9 +37,11 @@ before_install: gem install bundler --pre
 before_script:
   - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
   - sh -c "if [ \"$DB\" = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"
+  - "export DISPLAY=:99"
+  - "sh -e /etc/init.d/xvfb start"
 
 # Run RSpec tests and ensure that assets can compile without errors
-script: "bundle exec rake && bundle exec rake assets:precompile RAILS_ENV=production"
+script: "bundle exec rake spec:no_acceptance && bundle exec rake spec:acceptance && bundle exec rake assets:precompile RAILS_ENV=production"
 
 # To stop Travis from running tests for a new commit,
 # add the following to your commit message: [ci skip]

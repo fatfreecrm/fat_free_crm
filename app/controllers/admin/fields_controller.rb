@@ -115,8 +115,13 @@ class Admin::FieldsController < Admin::ApplicationController
     @field = CustomField.find(params[:id])
 
     respond_to do |format|
-      format.js   # destroy.js.rjs
-      format.xml  { head :ok }
+      if @field.destroy
+        format.js   # destroy.js.rjs
+        format.xml  { head :ok }
+      else
+        format.js   # destroy.js.rjs
+        format.xml  { render :xml => @field.errors, :status => :unprocessable_entity }
+      end
     end
 
   rescue ActiveRecord::RecordNotFound

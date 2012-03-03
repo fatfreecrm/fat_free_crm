@@ -4,7 +4,7 @@ page.call "crm.flip_form", :options
 
 if params[:cancel] != "true"
   page[:options].replace_html :partial => "options"
-  page.call "crm.set_title", :create_field, "Custom field Options"
+  page.call "crm.set_title", :create_field, t(:custom_field_options)
 else
-  page.call "crm.set_title", :create_field, "Custom Fields"
+  page.call "crm.set_title", :create_field, t(:custom_fields)
 end

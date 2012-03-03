@@ -41,4 +41,4 @@
           = address_field(a, address, :zipcode, "width:80px;")
         %td= spacer
         %td
-          = a.country_select(:country, nil, {:prompt => t(:select_blank)}, {:style => "width:150px; margin-top:6px"})
+          = a.country_select(:country, nil, { :include_blank => "" }, {:"data-placeholder" => t(:select_a_country), :style => "width:150px; margin-top:6px"})
