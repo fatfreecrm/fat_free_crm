@@ -36,8 +36,6 @@ Spork.prefork do
 
   TASK_STATUSES = %w(pending assigned completed).freeze
 
-  Setting.task_calendar_with_time = false
-
   I18n.locale = 'en-US'
 
   Paperclip.options[:log] = false

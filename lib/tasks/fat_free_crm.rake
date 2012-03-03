@@ -25,11 +25,11 @@ class Rake::Task
 end
 
 namespace :config do
-  desc "Copy example config files"
-  task :copy_defaults do
-    puts "Copying example config files..."    
-    FileUtils.cp "config/settings.default.yml", "config/settings.yml" unless File.exists?("config/settings.yml")
-    FileUtils.cp "config/database.#{ENV['DB'] || 'postgres'}.yml", 'config/database.yml' unless File.exists?("config/database.yml")
+  desc "Setup database.yml"
+  task :copy_database_yml do
+    filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"
+    puts "Copying #{filename} to config/database.yml ..."    
+    FileUtils.cp filename, 'config/database.yml' unless File.exists?("config/database.yml")
   end
 end
 

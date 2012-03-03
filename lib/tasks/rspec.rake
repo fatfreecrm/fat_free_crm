@@ -5,12 +5,8 @@ if defined?(RSpec)
   namespace :spec do
     desc "Preparing test env"
     task :prepare do
-      tmp_env = Rails.env
       Rails.env = "test"
-      Rake::Task["app:config:copy_defaults"].invoke
-      puts "Preparing test database..."
-      Rake::Task["db:schema:load"].invoke
-      Rails.env = tmp_env
+      Rake::Task["config:copy_database_yml"].invoke
     end
   end
 

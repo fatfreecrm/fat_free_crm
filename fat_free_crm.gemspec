@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'therubyracer'
   s.add_development_dependency 'spork'
-  s.add_development_dependency 'steak'
   
   s.add_development_dependency 'fuubar'
   s.add_development_dependency 'factory_girl'
