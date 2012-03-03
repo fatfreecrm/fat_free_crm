@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-namespace :crm do
+namespace :db do
   namespace :upgrade do
     desc "Upgrade your database from the Rails 2.x schema to Rails 3"
     task :schema => :environment do

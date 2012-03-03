@@ -1,17 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails'
-gem 'prototype-rails'
-gem 'jquery-rails'
-gem 'ajax-chosen-rails'
-gem 'simple_form'
-gem 'will_paginate'
-gem 'ransack'
-
 gemspec
 
-gem 'paperclip'
-gem 'paper_trail'
+gem 'pg',           '~> 0.12.2'
+gem 'ransack',      :git => "git://github.com/ndbroadbent/ransack.git"
+gem 'combustion',   '~> 0.3.2', :group => :development
 
-gem 'ruby-debug',   :platform => :mri_18
-gem 'ruby-debug19', :platform => :mri_19
+group :test do
+  gem 'ruby-debug',   :platform => :mri_18
+  gem 'ruby-debug19', :platform => :mri_19
+end

@@ -14,7 +14,7 @@ Spork.prefork do
   Bundler.require :default, :development
   
   require 'capybara/rspec'
-  
+
   Combustion.initialize!
 
   require 'rspec/rails'

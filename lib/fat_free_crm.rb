@@ -15,13 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require 'fat_free_crm/engine'
-
 # Gems
+require 'rails'
 require 'haml'
 require 'acts_as_commentable'
 require 'acts_as_list'
 require 'acts-as-taggable-on'
+require 'paperclip'
 
 # Overrides
 require "overrides/authlogic/session/cookies"
@@ -29,7 +29,11 @@ require "overrides/simple_form/action_view_extensions/form_helper"
 require "overrides/rails/text_helper"
 require "overrides/active_record/schema_dumper"
 
+# Fat Free CRM Engine
+require 'fat_free_crm/engine'
+
 # Fat Free CRM
+require "fat_free_crm/yaml"
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"
 require "fat_free_crm/exceptions"
