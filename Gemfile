@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source :rubygems
 
 # Removes a gem dependency
 def remove(name)
