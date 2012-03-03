@@ -9,14 +9,13 @@ if defined?(RSpec)
       Rake::Task["db:schema:load"].invoke
       Rails.env = tmp_env
     end
-    
-    desc "Run all specs except acceptance"
-    RSpec::Core::RakeTask.new(:no_acceptance => "spec:prepare") do |c|
-      include_dirs = Dir["./spec/*/"].map { |dir| File.basename(dir) } - ["acceptance"]
-      c.pattern = "./spec/{#{include_dirs.join(",")}}/**/*_spec.rb"
-    end  
   end
 
   Rake::Task["spec"].prerequisites.clear
   Rake::Task["spec"].prerequisites.push("spec:prepare")
+
+  desc 'Run the acceptance specs in ./acceptance'
+  RSpec::Core::RakeTask.new(:acceptance => 'db:test:prepare') do |t|
+    t.pattern = 'acceptance/**/*_spec.rb'
+  end  
 end

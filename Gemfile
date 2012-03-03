@@ -43,10 +43,10 @@ group :development, :test do
     gem 'awesome_print'
   end
 
-  gem 'test-unit',          '~> 2.4.3',  :platform => :mri_19, :require => false
+  gem 'test-unit',          '~> 2.4.3', :platform => :mri_19, :require => false
   gem 'rspec-rails',        '~> 2.8.0'
   gem 'factory_girl'
-  gem 'steak',              '~> 2.0.0'
+  gem 'steak',              '~> 2.0.0', :require => false
   gem 'headless',           '~> 0.2.2'
 end
 
