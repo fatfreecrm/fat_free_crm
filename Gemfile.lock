@@ -264,6 +264,7 @@ DEPENDENCIES
   annotate (~> 2.4.1.beta)
   authlogic (~> 3.1.0)
   authlogic_bushido (~> 0.9)
+  awesome_print
   bushido
   chosen-rails
   coffee-rails (>= 3.1.1)
