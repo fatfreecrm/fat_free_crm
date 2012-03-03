@@ -16,19 +16,13 @@
 #------------------------------------------------------------------------------
 
 require 'fileutils'
-
-class Rake::Task
-  def self.sanitize_and_execute(sql)
-    sanitized = ActiveRecord::Base.send(:sanitize_sql, sql, nil)
-    ActiveRecord::Base.connection.execute(sanitized)
-  end
-end
+require "fat_free_crm/gem_ext/rake"
 
 namespace :config do
   desc "Setup database.yml"
   task :copy_database_yml do
     filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"
-    puts "Copying #{filename} to config/database.yml ..."    
+    puts "Copying #{filename} to config/database.yml ..."
     FileUtils.cp filename, 'config/database.yml' unless File.exists?("config/database.yml")
   end
 end

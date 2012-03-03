@@ -11,12 +11,9 @@ Spork.prefork do
     SimpleCov.start 'rails'
   end
 
-  Bundler.require :default, :development
-  
-  require 'capybara/rspec'
-
-  Combustion.initialize!
-
+  # This file is copied to spec/ when you run 'rails generate rspec:install'
+  ENV["RAILS_ENV"] = 'test'
+  require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
   require 'fuubar'
@@ -25,11 +22,11 @@ Spork.prefork do
   require 'factory_girl'
   require 'ffaker'
 
-  Dir[FatFreeCRM::Engine.root.join("spec/factories/**/*.rb")].each{ |f| require File.expand_path(f) }
+  Dir[Rails.root.join("spec/factories/**/*.rb")].each{ |f| require File.expand_path(f) }
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
-  Dir[FatFreeCRM::Engine.root.join("spec/support/**/*.rb")].each{ |f| require File.expand_path(f) }
+  Dir[Rails.root.join("spec/support/**/*.rb")].each{ |f| require File.expand_path(f) }
 
   # Load shared behavior modules to be included by Runner config.
   Dir[File.dirname(__FILE__) + "/shared/*.rb"].each{ |f| require File.expand_path(f) }
@@ -50,7 +47,7 @@ Spork.prefork do
     # config.mock_with :rr
     config.mock_with :rspec
 
-    config.fixture_path = "#{FatFreeCRM::Engine.root}/spec/fixtures"
+    config.fixture_path = "#{Rails.root}/spec/fixtures"
 
     # RSpec configuration options for Fat Free CRM.
     config.include RSpec::Rails::Matchers
@@ -109,5 +106,5 @@ end # Spork.prefork
 
 
 Spork.each_run do
-  Dir[FatFreeCRM::Engine.root.join("spec/support/**/*.rb")].each {|f| require f}
+  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 end

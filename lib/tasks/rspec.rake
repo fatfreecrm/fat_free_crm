@@ -5,8 +5,12 @@ if defined?(RSpec)
   namespace :spec do
     desc "Preparing test env"
     task :prepare do
+      tmp_env = Rails.env
       Rails.env = "test"
       Rake::Task["config:copy_database_yml"].invoke
+      puts "Preparing test database..."
+      Rake::Task["db:schema:load"].invoke
+      Rails.env = tmp_env
     end
   end
 
@@ -16,5 +20,5 @@ if defined?(RSpec)
   desc 'Run the acceptance specs in ./acceptance'
   RSpec::Core::RakeTask.new(:acceptance => 'db:test:prepare') do |t|
     t.pattern = 'acceptance/**/*_spec.rb'
-  end  
+  end
 end

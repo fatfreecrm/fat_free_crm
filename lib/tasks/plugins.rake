@@ -14,11 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
+require "fat_free_crm/gem_ext/rake"
+
+Rake.remove_task("db:migrate:status") # (Clears task so that it can be extended)
 
 namespace :db do
   namespace :migrate do
-    # (Extended migration status task to include plugins)
-    desc "Display status of migrations (including plugins)"
+    desc "Display status of migrations, including plugins"
     task :status => :environment do
       def find_migrations(path)
         Dir.glob(path).each do |file|
