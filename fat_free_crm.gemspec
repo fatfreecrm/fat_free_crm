@@ -34,6 +34,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'coffee-rails'
   gem.add_development_dependency 'therubyracer'
   gem.add_development_dependency 'spork'
+  gem.add_development_dependency 'database_cleaner'
   gem.add_development_dependency 'fuubar'
   gem.add_development_dependency 'factory_girl'
 end
