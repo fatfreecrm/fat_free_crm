@@ -114,11 +114,13 @@ class Setting < ActiveRecord::Base
     # Loads settings from YAML files
     def load_settings_from_yaml
       @@yaml_settings = {}.with_indifferent_access
-      default = Rails.root.join("config", "settings.default.yml")
-      custom  = Rails.root.join("config", "settings.yml")
-      
+      setting_files = [
+        Rails.root.join("config", "settings.default.yml"),
+        Rails.root.join("config", "settings.yml")
+      ]
+
       # Load default settings, then override with custom settings
-      [default, custom].each do |file|
+      setting_files.each do |file|
         if File.exist?(file)
           begin
             settings = YAML.load_file(file)
