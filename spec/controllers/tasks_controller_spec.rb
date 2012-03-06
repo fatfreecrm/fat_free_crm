@@ -440,7 +440,7 @@ describe TasksController do
     end
 
     it "should change task status, expose task as @task, and render [complete] template where task.bucket = 'specific_time'" do
-      @task = Factory(:task, :completed_at => nil, :user => @current_user, :bucket => "specific_time", :calendar => "01/01/2010")
+      @task = Factory(:task, :completed_at => nil, :user => @current_user, :bucket => "specific_time", :calendar => "01/01/2010 1:00 AM")
 
       xhr :put, :complete, :id => @task.id
       @task.reload.completed_at.should_not == nil

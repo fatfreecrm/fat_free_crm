@@ -46,7 +46,7 @@ describe Task do
       end
 
       it "should create a task with due date selected from the calendar within #{offset ? 'different' : 'current'} timezone" do
-        task = Factory(:task, :bucket => "specific_time", :calendar => "5/5/2020")
+        task = Factory(:task, :bucket => "specific_time", :calendar => "5/5/2020 12:00 AM")
         task.errors.should be_empty
         task.bucket.should == "specific_time"
         task.due_at.should == DateTime.parse("2020-05-05")
@@ -103,7 +103,7 @@ describe Task do
 
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
         task = Factory(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
-        task.update_attributes( { :bucket => "specific_time", :calendar => "05/05/2020" } )
+        task.update_attributes( { :bucket => "specific_time", :calendar => "05/05/2020 12:00 AM" } )
         task.errors.should be_empty
         task.bucket.should == "specific_time"
         task.due_at.should == DateTime.parse("2020-05-05")
@@ -130,7 +130,7 @@ describe Task do
     end
 
     it "should complete a task that is due on specific date in the future" do
-      task = Factory(:task, :calendar => "10/10/2022", :bucket => "specific_time")
+      task = Factory(:task, :calendar => "10/10/2022 12:00 AM", :bucket => "specific_time")
       task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
       task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id)
       task.errors.should be_empty
@@ -139,7 +139,7 @@ describe Task do
     end
 
     it "should complete a task that is due on specific date in the past" do
-      task = Factory(:task, :calendar => "10/10/1992", :bucket => "specific_time")
+      task = Factory(:task, :calendar => "10/10/1992 12:00 AM", :bucket => "specific_time")
       task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
       task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id)
       task.errors.should be_empty
@@ -149,15 +149,15 @@ describe Task do
 
     it "completion should preserve original due date" do
       due_at = 42.days.ago
+      time_format = I18n.t(Setting.task_calendar_with_time ? 
+                           'time.formats.mmddyyyy_hhmm' :
+                           'date.formats.mmddyyyy')
       task = Factory(:task, :due_at => due_at, :bucket => "specific_time",
-                            :calendar => due_at.strftime(
-                              I18n.t(Setting.task_calendar_with_time ?
-                                      'time.formats.mmddyyyy_hhmm' :
-                                      'date.formats.mmddyyyy')))
+                            :calendar => due_at.strftime(time_format))
       task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id, :calendar => '')
       task.completed?.should == true
-      # Setting.task_calendar_with_time == false, so due_at should be tested without HH:MM
-      task.due_at.to_i.should == DateTime.new(due_at.year, due_at.month, due_at.day).to_i
+      parsed_time = DateTime.strptime(due_at.strftime(time_format), time_format).utc
+      task.due_at.to_i.should == parsed_time.to_i
     end
   end
 
