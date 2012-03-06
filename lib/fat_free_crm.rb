@@ -15,6 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
+# Use the Syck YAML parser
+require 'fat_free_crm/syck_yaml'
+
 require "fat_free_crm/gem_dependencies"
 require "fat_free_crm/gem_ext"
 require "fat_free_crm/plugin_dependencies"
@@ -38,3 +41,12 @@ require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/dropbox" if defined?(::Rake)
 require "fat_free_crm/plugin"
+
+
+module FatFreeCRM
+  # Return the root path of either the Application or the Engine,
+  # depending on how Fat Free CRM is loaded
+  def self.root
+    (defined?(Application) ? Application : Engine).root
+  end
+end

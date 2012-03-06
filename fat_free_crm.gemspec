@@ -36,7 +36,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'spork'
   gem.add_development_dependency 'database_cleaner'
   gem.add_development_dependency 'fuubar'
-  gem.add_development_dependency 'factory_girl', '~> 2.6.0'
+  gem.add_development_dependency 'factory_girl', '~> 2.6.1'
 end
 
 

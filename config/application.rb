@@ -1,9 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
-# Use the Syck YAML parser
-require 'fat_free_crm/syck_yaml'
-
 require 'rails/all'
+require 'fat_free_crm/syck_yaml'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
