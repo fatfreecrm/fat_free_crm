@@ -1,9 +1,9 @@
 Factory.define :user do |u|
-  u.username            { Factory.next(:username) }
+  u.username            { FactoryGirl.generate(:username) }
   u.email               { Faker::Internet.email }
   u.first_name          { Faker::Name.first_name }
   u.last_name           { Faker::Name.last_name }
-  u.title               { Factory.next(:title) }
+  u.title               { FactoryGirl.generate(:title) }
   u.company             { Faker::Company.name }
   u.alt_email           { Faker::Internet.email }
   u.phone               { Faker::PhoneNumber.phone_number }
@@ -18,15 +18,15 @@ Factory.define :user do |u|
   u.persistence_token   "d7cdeffd3625f7cb265b21126b85da7c930d47c4a708365c20eb857560055a6b57c9775becb8a957dfdb46df8aee17eb120a011b380e9cc0882f9dfaa2b7ba26"
   u.perishable_token    "TarXlrOPfaokNOzls2U8"
   u.single_access_token nil
-  u.last_request_at     { Factory.next(:time) }
-  u.current_login_at    { Factory.next(:time) }
-  u.last_login_at       { Factory.next(:time) }
+  u.last_request_at     { FactoryGirl.generate(:time) }
+  u.current_login_at    { FactoryGirl.generate(:time) }
+  u.last_login_at       { FactoryGirl.generate(:time) }
   u.last_login_ip       "127.0.0.1"
   u.current_login_ip    "127.0.0.1"
   u.login_count         { rand(100) + 1 }
   u.deleted_at          nil
-  u.updated_at          { Factory.next(:time) }
-  u.created_at          { Factory.next(:time) }
+  u.updated_at          { FactoryGirl.generate(:time) }
+  u.created_at          { FactoryGirl.generate(:time) }
   u.suspended_at        nil
   u.password              "password"
   u.password_confirmation "password"
@@ -41,8 +41,8 @@ end
 Factory.define :permission do |t|
   t.user                { |a| a.association(:user) }
   t.asset               { raise "Please specify :asset for the permission" }
-  t.updated_at          { Factory.next(:time) }
-  t.created_at          { Factory.next(:time) }
+  t.updated_at          { FactoryGirl.generate(:time) }
+  t.created_at          { FactoryGirl.generate(:time) }
 end
 
 
@@ -50,7 +50,7 @@ Factory.define :preference do |p|
   p.user                { |a| a.association(:user) }
   p.name                { raise "Please specify :name for the preference" }
   p.value               { raise "Please specify :value for the preference" }
-  p.updated_at          { Factory.next(:time) }
-  p.created_at          { Factory.next(:time) }
+  p.updated_at          { FactoryGirl.generate(:time) }
+  p.created_at          { FactoryGirl.generate(:time) }
 end
 

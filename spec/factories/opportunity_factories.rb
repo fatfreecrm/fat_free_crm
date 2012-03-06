@@ -10,10 +10,10 @@ Factory.define :opportunity do |o|
   o.probability         { rand(50) }
   o.amount              { rand(1000) }
   o.discount            { rand(100) }
-  o.closes_on           { Factory.next(:date) }
+  o.closes_on           { FactoryGirl.generate(:date) }
   o.background_info     { Faker::Lorem.paragraph[0,255] }
   o.deleted_at          nil
-  o.updated_at          { Factory.next(:time) }
-  o.created_at          { Factory.next(:time) }
+  o.updated_at          { FactoryGirl.generate(:time) }
+  o.created_at          { FactoryGirl.generate(:time) }
 end
 

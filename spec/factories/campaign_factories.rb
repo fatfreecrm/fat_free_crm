@@ -11,12 +11,12 @@ Factory.define :campaign do |c|
   c.leads_count         { rand(200) }
   c.opportunities_count { rand(20) }
   c.revenue             { rand(1000) }
-  c.ends_on             { Factory.next(:date) }
-  c.starts_on           { Factory.next(:date) }
+  c.ends_on             { FactoryGirl.generate(:date) }
+  c.starts_on           { FactoryGirl.generate(:date) }
   c.objectives          { Faker::Lorem.paragraph[0,255] }
   c.background_info     { Faker::Lorem.paragraph[0,255] }
   c.deleted_at          nil
-  c.updated_at          { Factory.next(:time) }
-  c.created_at          { Factory.next(:time) }
+  c.updated_at          { FactoryGirl.generate(:time) }
+  c.created_at          { FactoryGirl.generate(:time) }
 end
 

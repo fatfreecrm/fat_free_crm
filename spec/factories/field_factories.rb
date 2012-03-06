@@ -10,8 +10,8 @@ end
 
 
 Factory.define :field_group do |f|
-  f.klass_name          { Factory.next(:klass_name) }
-  f.label               { Factory.next(:field_label) }
+  f.klass_name          { FactoryGirl.generate(:klass_name) }
+  f.label               { FactoryGirl.generate(:field_label) }
   f.tag                 { |f| f.association :tag }
 end
 
@@ -19,12 +19,12 @@ end
 Factory.define :field do |f|
   f.type                "Field"
   f.field_group         { Factory.create(:field_group) }
-  f.position            { Factory.next(:field_position) }
-  f.label               { Factory.next(:field_label) }
+  f.position            { FactoryGirl.generate(:field_position) }
+  f.label               { FactoryGirl.generate(:field_label) }
   f.name                { |f| f.label.downcase.gsub(/[^a-z0-9]+/, '_') }
   f.as                  "string"
-  f.updated_at          { Factory.next(:time) }
-  f.created_at          { Factory.next(:time) }
+  f.updated_at          { FactoryGirl.generate(:time) }
+  f.created_at          { FactoryGirl.generate(:time) }
 end
 
 
