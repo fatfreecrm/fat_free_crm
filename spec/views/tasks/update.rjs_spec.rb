@@ -9,8 +9,8 @@ describe "/tasks/update" do
 
   describe "Changing due date" do
     before do
-      assign(:task_before_update, Factory(:task, :bucket => "due_asap"))
-      assign(:task, @task       = Factory(:task, :bucket => "due_tomorrow"))
+      assign(:task_before_update, FactoryGirl.create(:task, :bucket => "due_asap"))
+      assign(:task, @task       = FactoryGirl.create(:task, :bucket => "due_tomorrow"))
       assign(:view, "pending")
       assign(:task_total, stub_task_total("pending"))
     end
@@ -65,9 +65,9 @@ describe "/tasks/update" do
     end
 
     it "pending task to somebody from Tasks tab: should remove the task and show flash message (assigned)" do
-      assignee = Factory(:user)
-      assign(:task_before_update, Factory(:task, :assignee => nil))
-      assign(:task, @task       = Factory(:task, :assignee => assignee))
+      assignee = FactoryGirl.create(:user)
+      assign(:task_before_update, FactoryGirl.create(:task, :assignee => nil))
+      assign(:task, @task       = FactoryGirl.create(:task, :assignee => assignee))
       assign(:view, "pending")
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
@@ -78,9 +78,9 @@ describe "/tasks/update" do
     end
 
     it "assigned tasks to me from Tasks tab: should remove the task and show flash message (pending)" do
-      assignee = Factory(:user)
-      assign(:task_before_update, Factory(:task, :assignee => assignee))
-      assign(:task, @task       = Factory(:task, :assignee => nil))
+      assignee = FactoryGirl.create(:user)
+      assign(:task_before_update, FactoryGirl.create(:task, :assignee => assignee))
+      assign(:task, @task       = FactoryGirl.create(:task, :assignee => nil))
       assign(:view, "assigned")
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
@@ -91,8 +91,8 @@ describe "/tasks/update" do
     end
 
     it "assigned tasks to somebody else from Tasks tab: should re-render task partial" do
-      assign(:task_before_update, Factory(:task, :assignee => Factory(:user)))
-      assign(:task, @task       = Factory(:task, :assignee => Factory(:user)))
+      assign(:task_before_update, FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
+      assign(:task, @task       = FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
       assign(:view, "assigned")
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
@@ -103,8 +103,8 @@ describe "/tasks/update" do
     end
 
     it "from Tasks tab: should update tasks sidebar" do
-      assign(:task_before_update, Factory(:task, :assignee => nil))
-      assign(:task, @task       = Factory(:task, :assignee => Factory(:user)))
+      assign(:task_before_update, FactoryGirl.create(:task, :assignee => nil))
+      assign(:task, @task       = FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
       assign(:view, "assigned")
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
       render
@@ -117,8 +117,8 @@ describe "/tasks/update" do
     end
 
     it "from asset page: should should re-render task partial" do
-      assign(:task_before_update, Factory(:task, :assignee => nil))
-      assign(:task, @task       = Factory(:task, :assignee => Factory(:user)))
+      assign(:task_before_update, FactoryGirl.create(:task, :assignee => nil))
+      assign(:task, @task       = FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
       render
 
       rendered.should have_rjs("task_#{@task.id}") do |rjs|
@@ -127,8 +127,8 @@ describe "/tasks/update" do
     end
 
     it "from asset page: should update recently viewed items" do
-      assign(:task_before_update, Factory(:task, :assignee => nil))
-      assign(:task, @task       = Factory(:task, :assignee => Factory(:user)))
+      assign(:task_before_update, FactoryGirl.create(:task, :assignee => nil))
+      assign(:task, @task       = FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
       render
 
       rendered.should have_rjs("recently") do |rjs|
@@ -139,8 +139,8 @@ describe "/tasks/update" do
   end
 
   it "error: should re-disiplay [Edit Task] form and shake it" do
-    assign(:task_before_update, Factory(:task))
-    assign(:task, @task = Factory(:task))
+    assign(:task_before_update, FactoryGirl.create(:task))
+    assign(:task, @task = FactoryGirl.create(:task))
     @task.errors.add(:name)
 
     render

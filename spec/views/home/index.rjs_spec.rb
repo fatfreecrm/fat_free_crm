@@ -8,7 +8,7 @@ describe "/home/index" do
   end
 
   it "should render [activity] template with @activities collection" do
-    assign(:activities, [ Factory(:activity, :id => 42, :action => "updated", :subject => Factory(:account)) ])
+    assign(:activities, [ FactoryGirl.create(:activity, :id => 42, :action => "updated", :subject => FactoryGirl.create(:account)) ])
 
     render :template => 'home/index', :formats => [:js]
     

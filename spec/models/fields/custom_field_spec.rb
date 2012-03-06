@@ -28,14 +28,14 @@ describe CustomField do
     CustomField.connection.should_receive(:add_column).
                 with("contacts", "cf_test_field", :string, {})
 
-    c = Factory.create(:custom_field,
+    c = FactoryGirl.create(:custom_field,
                        :as => "string",
                        :name => "cf_test_field",
-                       :field_group => Factory.create(:field_group, :klass_name => "Contact"))
+                       :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
   end
 
   it "should generate a unique column name for a custom field" do
-    c = Factory.build(:custom_field, :label => "Test Field", :field_group => Factory.create(:field_group, :klass_name => "Contact"))
+    c = FactoryGirl.build(:custom_field, :label => "Test Field", :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
 
     # Overwrite :klass_column_names with instance variable accessors
     c.class_eval { attr_accessor :klass_column_names }
@@ -48,12 +48,12 @@ describe CustomField do
   end
 
   it "should evaluate the safety of database transitions" do
-    c = Factory.build(:custom_field, :as => "string")
+    c = FactoryGirl.build(:custom_field, :as => "string")
     c.send(:db_transition_safety, c.as, "email").should == :null
     c.send(:db_transition_safety, c.as, "text").should == :safe
     c.send(:db_transition_safety, c.as, "datetime").should == :unsafe
 
-    c = Factory.build(:custom_field, :as => "datetime")
+    c = FactoryGirl.build(:custom_field, :as => "datetime")
     c.send(:db_transition_safety, c.as, "date").should == :safe
     c.send(:db_transition_safety, c.as, "url").should == :unsafe
   end
@@ -61,7 +61,7 @@ describe CustomField do
   it "should return a safe list of types for the 'as' select options" do
     {"email"   => %w(check_boxes text string email url tel select radio),
      "integer" => %w(integer float)}.each do |type, expected_arr|
-      c = Factory.build(:custom_field, :as => type)
+      c = FactoryGirl.build(:custom_field, :as => type)
       opts = c.available_as
       opts.map(&:first).should =~ expected_arr
     end
@@ -78,11 +78,11 @@ describe CustomField do
     CustomField.connection.should_receive(:change_column).
                 with("contacts", "cf_test_field", :text, {})
 
-    c = Factory.create(:custom_field,
+    c = FactoryGirl.create(:custom_field,
                        :label => "Test Field",
                        :name => nil,
                        :as => "email",
-                       :field_group => Factory.create(:field_group, :klass_name => "Contact"))
+                       :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
     c.as = "text"
     c.save
   end
@@ -97,7 +97,7 @@ describe CustomField do
     it "should refresh column info and retry on attribute error" do
       Contact.should_receive(:reset_column_information)
 
-      contact = Factory.build(:contact)
+      contact = FactoryGirl.build(:contact)
       contact.cf_another_new_field.should == nil
     end
   end

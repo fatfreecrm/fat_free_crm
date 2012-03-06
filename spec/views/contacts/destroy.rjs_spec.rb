@@ -5,7 +5,7 @@ describe "/contacts/destroy" do
 
   before do
     login_and_assign
-    assign(:contact, @contact = Factory(:contact))
+    assign(:contact, @contact = FactoryGirl.create(:contact))
     assign(:contacts, [ @contact ].paginate)
   end
 

@@ -7,7 +7,7 @@ describe "/campaigns/create" do
 
   describe "create success" do
     before do
-      assign(:campaign, @campaign = Factory(:campaign))
+      assign(:campaign, @campaign = FactoryGirl.create(:campaign))
       assign(:campaigns, [ @campaign ].paginate)
       assign(:campaign_status_total, Hash.new(1))
       render
@@ -34,8 +34,8 @@ describe "/campaigns/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_campaign div" do
-      assign(:campaign, Factory.build(:campaign, :name => nil)) # make it invalid
-      assign(:users, [ Factory(:user) ])
+      assign(:campaign, FactoryGirl.build(:campaign, :name => nil)) # make it invalid
+      assign(:users, [ FactoryGirl.create(:user) ])
 
       render
 

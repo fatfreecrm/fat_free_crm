@@ -5,12 +5,12 @@ describe "/contacts/_edit" do
 
   before do
     login_and_assign
-    assign(:account, @account = Factory(:account))
+    assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])
   end
 
   it "should render [edit contact] form" do
-    assign(:contact, @contact = Factory(:contact))
+    assign(:contact, @contact = FactoryGirl.create(:contact))
     assign(:users, [ @current_user ])
 
     render
@@ -26,7 +26,7 @@ describe "/contacts/_edit" do
 
   it "should pick default assignee (Myself)" do
     assign(:users, [ @current_user ])
-    assign(:contact, Factory(:contact, :assignee => nil))
+    assign(:contact, FactoryGirl.create(:contact, :assignee => nil))
 
     render
     rendered.should have_tag("select[id=contact_assigned_to]") do |options|
@@ -35,9 +35,9 @@ describe "/contacts/_edit" do
   end
 
   it "should show correct assignee" do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     assign(:users, [ @current_user, @user ])
-    assign(:contact, Factory(:contact, :assignee => @user))
+    assign(:contact, FactoryGirl.create(:contact, :assignee => @user))
 
     render
     rendered.should have_tag("select[id=contact_assigned_to]") do |options|
@@ -48,7 +48,7 @@ describe "/contacts/_edit" do
 
   it "should render background info field if settings require so" do
     assign(:users, [ @current_user ])
-    assign(:contact, Factory(:contact))
+    assign(:contact, FactoryGirl.create(:contact))
     Setting.background_info = [ :contact ]
 
     render
@@ -57,7 +57,7 @@ describe "/contacts/_edit" do
 
   it "should not render background info field if settings do not require so" do
     assign(:users, [ @current_user ])
-    assign(:contact, Factory(:contact))
+    assign(:contact, FactoryGirl.create(:contact))
     Setting.background_info = []
 
     render

@@ -5,12 +5,12 @@ describe "/opportunities/show" do
 
   before do
     login_and_assign
-    @opportunity = Factory(:opportunity, :id => 42,
-      :contacts => [ Factory(:contact) ])
+    @opportunity = FactoryGirl.create(:opportunity, :id => 42,
+      :contacts => [ FactoryGirl.create(:contact) ])
     assign(:opportunity, @opportunity)
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
-    assign(:timeline, [ Factory(:comment, :commentable => @opportunity) ])
+    assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @opportunity) ])
   end
 
   it "should render opportunity landing page" do

@@ -27,19 +27,19 @@ describe Account do
   before { login }
 
   it "should create a new instance given valid attributes" do
-    Account.create!(:name => "Test Account", :user => Factory(:user))
+    Account.create!(:name => "Test Account", :user => FactoryGirl.create(:user))
   end
 
   describe "Attach" do
     before do
-      @account = Factory(:account)
+      @account = FactoryGirl.create(:account)
     end
 
     it "should return nil when attaching existing asset" do
-      @task = Factory(:task, :asset => @account, :user => @current_user)
-      @contact = Factory(:contact)
+      @task = FactoryGirl.create(:task, :asset => @account, :user => @current_user)
+      @contact = FactoryGirl.create(:contact)
       @account.contacts << @contact
-      @opportunity = Factory(:opportunity)
+      @opportunity = FactoryGirl.create(:opportunity)
       @account.opportunities << @opportunity
 
       @account.attach!(@task).should == nil
@@ -48,9 +48,9 @@ describe Account do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = Factory(:task, :user => @current_user)
-      @contact = Factory(:contact)
-      @opportunity = Factory(:opportunity)
+      @task = FactoryGirl.create(:task, :user => @current_user)
+      @contact = FactoryGirl.create(:contact)
+      @opportunity = FactoryGirl.create(:opportunity)
 
       @account.attach!(@task).should == [ @task ]
       @account.attach!(@contact).should == [ @contact ]
@@ -60,11 +60,11 @@ describe Account do
 
   describe "Discard" do
     before do
-      @account = Factory(:account)
+      @account = FactoryGirl.create(:account)
     end
 
     it "should discard a task" do
-      @task = Factory(:task, :asset => @account, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @account, :user => @current_user)
       @account.tasks.count.should == 1
 
       @account.discard!(@task)
@@ -73,7 +73,7 @@ describe Account do
     end
 
     it "should discard a contact" do
-      @contact = Factory(:contact)
+      @contact = FactoryGirl.create(:contact)
       @account.contacts << @contact
       @account.contacts.count.should == 1
 
@@ -85,7 +85,7 @@ describe Account do
 # Commented out this test. "super from singleton method that is defined to multiple classes is not supported;"
 # ------------------------------------------------------
 #    it "should discard an opportunity" do
-#      @opportunity = Factory(:opportunity)
+#      @opportunity = FactoryGirl.create(:opportunity)
 #      @account.opportunities << @opportunity
 #      @account.opportunities.count.should == 1
 
@@ -99,8 +99,8 @@ describe Account do
     describe "assigned account" do
       before do
         Account.delete_all
-        Factory(:account, :user => Factory(:user), :assignee => Factory(:user))
-        Factory(:account, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+        FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
+        FactoryGirl.create(:account, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
         let(:exported) { Account.all }
@@ -110,8 +110,8 @@ describe Account do
     describe "unassigned account" do
       before do
         Account.delete_all
-        Factory(:account, :user => Factory(:user), :assignee => nil)
-        Factory(:account, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+        FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => nil)
+        FactoryGirl.create(:account, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
         let(:exported) { Account.all }
@@ -121,13 +121,13 @@ describe Account do
 
   describe "Before save" do
     it "create new: should replace empty category string with nil" do
-      account = Factory.build(:account, :category => '')
+      account = FactoryGirl.build(:account, :category => '')
       account.save
       account.category.should == nil
     end
 
     it "update existing: should replace empty category string with nil" do
-      account = Factory(:account, :category => '')
+      account = FactoryGirl.create(:account, :category => '')
       account.save
       account.category.should == nil
     end

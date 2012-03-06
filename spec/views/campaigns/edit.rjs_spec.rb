@@ -5,7 +5,7 @@ describe "/campaigns/edit" do
 
   before do
     login_and_assign
-    assign(:campaign, @campaign = Factory(:campaign, :user => @current_user))
+    assign(:campaign, @campaign = FactoryGirl.create(:campaign, :user => @current_user))
     assign(:users, [ @current_user ])
   end
 
@@ -28,7 +28,7 @@ describe "/campaigns/edit" do
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
     params[:cancel] = nil
-    assign(:previous, previous = Factory(:campaign, :user => @current_user))
+    assign(:previous, previous = FactoryGirl.create(:campaign, :user => @current_user))
 
     render
     rendered.should have_rjs("campaign_#{previous.id}") do |rjs|

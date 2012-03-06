@@ -144,19 +144,19 @@ describe "IMAP Dropbox" do
     end
 
     it "should find non-suspended user that matches From: field" do
-      @user = Factory(:user, :email => @from.first, :suspended_at => nil)
+      @user = FactoryGirl.create(:user, :email => @from.first, :suspended_at => nil)
       @crawler.send(:sent_from_known_user?, @email).should == true
       @crawler.instance_variable_get("@sender").should == @user
     end
 
     it "should not find user if his email doesn't match From: field" do
-      Factory(:user, :email => "nobody@example.com")
+      FactoryGirl.create(:user, :email => "nobody@example.com")
       @crawler.send(:sent_from_known_user?, @email).should == false
       @crawler.instance_variable_get("@sender").should == nil
     end
 
     it "should not find user if his email matches From: field but is suspended" do
-      Factory(:user, :email => @from.first, :suspended_at => Time.now)
+      FactoryGirl.create(:user, :email => @from.first, :suspended_at => Time.now)
       @crawler.send(:sent_from_known_user?, @email).should == false
       @crawler.instance_variable_get("@sender").should == nil
     end
@@ -172,7 +172,7 @@ describe "IMAP Dropbox" do
 
     it "should discard a message if it's invalid" do
       @crawler.should_receive(:is_valid?).once.and_return(false)
-      Factory(:user, :email => "aaron@example.com")
+      FactoryGirl.create(:user, :email => "aaron@example.com")
       @crawler.should_not_receive(:archive)
       @crawler.should_receive(:discard).once
       @crawler.run
@@ -186,7 +186,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should process a message if it finds the user" do
-      Factory(:user, :email => "aaron@example.com")
+      FactoryGirl.create(:user, :email => "aaron@example.com")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:discard)
       @crawler.run
@@ -198,12 +198,12 @@ describe "IMAP Dropbox" do
     before(:each) do
       mock_connect
       mock_disconnect
-      Factory(:user, :email => "aaron@example.com")
+      FactoryGirl.create(:user, :email => "aaron@example.com")
     end
 
     it "should find the named asset and attach the email message" do
       mock_message(EMAIL[:first_line])
-      @campaign = Factory(:campaign, :name => "Got milk!?")
+      @campaign = FactoryGirl.create(:campaign, :name => "Got milk!?")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -226,7 +226,7 @@ describe "IMAP Dropbox" do
 
     it "should find the lead and attach the email message" do
       mock_message(EMAIL[:first_line_lead])
-      @lead = Factory(:lead, :first_name => "Cindy", :last_name => "Cluster")
+      @lead = FactoryGirl.create(:lead, :first_name => "Cindy", :last_name => "Cluster")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -250,7 +250,7 @@ describe "IMAP Dropbox" do
 
     it "should find the contact and attach the email message" do
       mock_message(EMAIL[:first_line_contact])
-      @contact = Factory(:contact, :first_name => "Cindy", :last_name => "Cluster")
+      @contact = FactoryGirl.create(:contact, :first_name => "Cindy", :last_name => "Cluster")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -285,11 +285,11 @@ describe "IMAP Dropbox" do
       mock_connect
       mock_disconnect
       mock_message(EMAIL[:plain])
-      Factory(:user, :email => "aaron@example.com")
+      FactoryGirl.create(:user, :email => "aaron@example.com")
     end
 
     it "should find the asset and attach the email message" do
-      @lead = Factory(:lead, :email => "ben@example.com", :access => "Public")
+      @lead = FactoryGirl.create(:lead, :email => "ben@example.com", :access => "Public")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_forwarded_recipient)
       @crawler.run
@@ -310,12 +310,12 @@ describe "IMAP Dropbox" do
     before(:each) do
       mock_connect
       mock_disconnect
-      Factory(:user, :email => "aaron@example.com")
+      FactoryGirl.create(:user, :email => "aaron@example.com")
       mock_message(EMAIL[:forwarded])
     end
 
     it "should find the asset and attach the email message" do
-      @lead = Factory(:lead, :email => "ben@example.com", :access => "Public")
+      @lead = FactoryGirl.create(:lead, :email => "ben@example.com", :access => "Public")
       @crawler.should_receive(:archive).once
       @crawler.run
 
@@ -328,7 +328,7 @@ describe "IMAP Dropbox" do
       timezone = ActiveRecord::Base.default_timezone
       begin
         ActiveRecord::Base.default_timezone = :utc
-        @lead = Factory(:lead, :email => "ben@example.com", :access => "Public", :updated_at => 5.day.ago)
+        @lead = FactoryGirl.create(:lead, :email => "ben@example.com", :access => "Public", :updated_at => 5.day.ago)
 
         @crawler.run
         @lead.reload.updated_at.to_i.should >= now.to_i
@@ -338,7 +338,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should change lead's status (:new => :contacted)" do
-      @lead = Factory(:lead, :email => "ben@example.com", :access => "Public", :status => "new")
+      @lead = FactoryGirl.create(:lead, :email => "ben@example.com", :access => "Public", :status => "new")
 
       @crawler.run
       @lead.reload.status.should == "contacted"
@@ -355,7 +355,7 @@ describe "IMAP Dropbox" do
     before(:each) do
       mock_connect
       mock_disconnect
-      Factory(:user, :email => "aaron@example.com")
+      FactoryGirl.create(:user, :email => "aaron@example.com")
     end
 
     it "should create a contact from the email recipient (To: recipient, Bcc: dropbox)" do

@@ -5,13 +5,13 @@ describe "/campaigns/show" do
 
   before do
     login_and_assign
-    @campaign = Factory(:campaign, :id => 42,
-      :leads => [ Factory(:lead) ],
-      :opportunities => [ Factory(:opportunity) ])
+    @campaign = FactoryGirl.create(:campaign, :id => 42,
+      :leads => [ FactoryGirl.create(:lead) ],
+      :opportunities => [ FactoryGirl.create(:opportunity) ])
     assign(:campaign, @campaign)
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
-    assign(:timeline, [ Factory(:comment, :commentable => @campaign) ])
+    assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @campaign) ])
   end
 
   it "should render campaign landing page" do

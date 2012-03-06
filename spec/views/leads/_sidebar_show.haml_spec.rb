@@ -7,7 +7,7 @@ describe "/leads/_sidebar_show" do
     login_and_assign
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
-    assign(:lead, Factory(:lead,
+    assign(:lead, FactoryGirl.create(:lead,
                           :blog => 'http://www.blogger.com/home',
                           :linkedin => 'www.linkedin.com',
                           :twitter => 'twitter.com/account',

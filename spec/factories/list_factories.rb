@@ -1,5 +1,6 @@
-Factory.define :list do |s|
-  s.name           "Foo List"
-  s.url            "/controller/action"
+FactoryGirl.define do
+  factory :list do
+    name           "Foo List"
+    url            "/controller/action"
+  end
 end
-

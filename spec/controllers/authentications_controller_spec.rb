@@ -28,7 +28,7 @@ describe AuthenticationsController do
 
     describe "user must not be logged in" do
       before(:each) do
-        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
+        @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
         @controller.stub!(:current_user).and_return(@user)
       end
 
@@ -68,7 +68,7 @@ describe AuthenticationsController do
       end
 
       it "displays welcome message and redirects to the home page" do
-        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 0)
+        @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 0)
         @authentication.stub!(:user).and_return(@user)
 
         post :create, :authentication => @login
@@ -78,7 +78,7 @@ describe AuthenticationsController do
       end
 
       it "displays last login time if it's not the first login" do
-        @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 42)
+        @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 42)
         @authentication.stub!(:user).and_return(@user)
 
         post :create, :authentication => @login
@@ -90,7 +90,7 @@ describe AuthenticationsController do
     describe "authenticaion failure" do
       describe "user is not suspended" do
         it "redirects to login page if username or password are invalid" do
-          @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
+          @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
           @authentication.stub!(:user).and_return(@user)
           @authentication.stub!(:save).and_return(false) # <--- Authentication failure.
           Authentication.stub!(:new).and_return(@authentication)
@@ -109,7 +109,7 @@ describe AuthenticationsController do
 
         # This tests :before_save update_info callback in Authentication model.
         it "keeps user login attributes intact" do
-          @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday, :login_count => 0, :last_login_at => nil, :last_login_ip => nil)
+          @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday, :login_count => 0, :last_login_at => nil, :last_login_ip => nil)
           @authentication.stub!(:user).and_return(@user)
 
           post :create, :authentication => @login
@@ -119,7 +119,7 @@ describe AuthenticationsController do
         end
 
         it "redirects to login page if user is suspended" do
-          @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday)
+          @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday)
           @authentication.stub!(:user).and_return(@user)
 
           post :create, :authentication => @login
@@ -130,7 +130,7 @@ describe AuthenticationsController do
 
         it "redirects to login page with the message if signup needs approval and user hasn't been activated yet" do
           Setting.stub!(:user_signup).and_return(:needs_approval)
-          @user = Factory(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday, :login_count => 0)
+          @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday, :login_count => 0)
           @authentication.stub!(:user).and_return(@user)
 
           post :create, :authentication => @login

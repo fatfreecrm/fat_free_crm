@@ -9,7 +9,7 @@ describe "/contacts/create" do
 
   describe "create success" do
     before do
-      assign(:contact, @contact = Factory(:contact))
+      assign(:contact, @contact = FactoryGirl.create(:contact))
       assign(:contacts, [ @contact ].paginate)
     end
 
@@ -49,9 +49,9 @@ describe "/contacts/create" do
 
   describe "create failure" do
     it "create (failure): should re-render [create] template in :create_contact div" do
-      assign(:contact, Factory.build(:contact, :first_name => nil)) # make it invalid
-      @current_user = Factory(:user)
-      @account = Factory(:account)
+      assign(:contact, FactoryGirl.build(:contact, :first_name => nil)) # make it invalid
+      @current_user = FactoryGirl.create(:user)
+      @account = FactoryGirl.create(:account)
       assign(:users, [ @current_user ])
       assign(:account, @account)
       assign(:accounts, [ @account ])

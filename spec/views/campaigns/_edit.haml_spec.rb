@@ -5,7 +5,7 @@ describe "/campaigns/_edit" do
 
   before do
     login_and_assign
-    assign(:campaign, @campaign = Factory(:campaign))
+    assign(:campaign, @campaign = FactoryGirl.create(:campaign))
     assign(:users, [ @current_user ])
   end
 

@@ -2,7 +2,7 @@ module HelperMethods
   # Put helper methods you need to be available in all acceptance specs here.
 
   def do_login(options = {})
-    @user = Factory(:user, options)
+    @user = FactoryGirl.create(:user, options)
     visit '/login'
     fill_in "authentication_username", :with => @user.username
     fill_in "authentication_password", :with => @user.password

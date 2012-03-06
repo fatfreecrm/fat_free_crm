@@ -10,11 +10,11 @@ describe "/shared/auto_complete" do
   [ :account, :campaign, :contact, :lead, :opportunity ].each do |model|
     it "should render autocomplete list if #{model} matches found" do
       @auto_complete = if model == :lead
-        Factory(:lead, :first_name => "Billy", :last_name => "Bones", :company => "Hello, World!")
+        FactoryGirl.create(:lead, :first_name => "Billy", :last_name => "Bones", :company => "Hello, World!")
       elsif model == :contact
-        Factory(:contact, :first_name => "Billy", :last_name => "Bones")
+        FactoryGirl.create(:contact, :first_name => "Billy", :last_name => "Bones")
       else
-        Factory(model, :name => "Hello, World!")
+        FactoryGirl.create(model, :name => "Hello, World!")
       end
       assign(:auto_complete, [ @auto_complete ])
 

@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/opportunities/destroy" do
   before do
     login_and_assign
-    assign(:opportunity, @opportunity = Factory(:opportunity))
+    assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity))
     assign(:stage, Setting.unroll(:opportunity_stage))
     assign(:opportunity_stage_total, Hash.new(1))
   end
@@ -33,7 +33,7 @@ describe "/opportunities/destroy" do
   end
 
   it "should update related account sidebar when called from related account" do
-    assign(:account, account = Factory(:account))
+    assign(:account, account = FactoryGirl.create(:account))
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
     render
 
@@ -44,7 +44,7 @@ describe "/opportunities/destroy" do
   end
 
   it "should update related campaign sidebar when called from related campaign" do
-    assign(:campaign, campaign = Factory(:campaign))
+    assign(:campaign, campaign = FactoryGirl.create(:campaign))
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 

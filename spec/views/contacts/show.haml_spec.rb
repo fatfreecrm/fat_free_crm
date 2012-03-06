@@ -5,12 +5,12 @@ describe "/contacts/show" do
 
   before do
     login_and_assign
-    @contact = Factory(:contact, :id => 42,
-      :opportunities => [ Factory(:opportunity) ])
+    @contact = FactoryGirl.create(:contact, :id => 42,
+      :opportunities => [ FactoryGirl.create(:opportunity) ])
     assign(:contact, @contact)
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
-    assign(:timeline, [ Factory(:comment, :commentable => @contact) ])
+    assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @contact) ])
   end
 
   it "should render contact landing page" do

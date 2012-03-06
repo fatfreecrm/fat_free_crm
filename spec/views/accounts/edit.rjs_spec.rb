@@ -5,7 +5,7 @@ describe "/accounts/edit" do
 
   before do
     login_and_assign
-    assign(:account, @account = Factory(:account, :user => @current_user))
+    assign(:account, @account = FactoryGirl.create(:account, :user => @current_user))
     assign(:users, [ @current_user ])
   end
 
@@ -28,7 +28,7 @@ describe "/accounts/edit" do
 
   it "edit: should hide previously open [Edit Account] for and replace it with account partial" do
     params[:cancel] = nil
-    assign(:previous, previous = Factory(:account, :user => @current_user))
+    assign(:previous, previous = FactoryGirl.create(:account, :user => @current_user))
 
     render
     rendered.should have_rjs("account_#{previous.id}") do |rjs|

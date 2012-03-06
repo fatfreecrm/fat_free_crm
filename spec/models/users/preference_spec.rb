@@ -14,7 +14,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Preference do
   before(:each) do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     @magoody = Base64.encode64(Marshal.dump("magoody"))
   end
 
@@ -24,7 +24,7 @@ describe Preference do
 
   describe "get user preference" do
     it "should find and decode existing user preference by its name" do
-      @preference = Factory(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
+      @preference = FactoryGirl.create(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
       @user.preference[:thingymabob].should == "magoody"
       @user.preference["thingymabob"].should == "magoody"
     end
@@ -34,12 +34,12 @@ describe Preference do
     end
 
     it "should return correct user_id" do
-      @preference = Factory(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
+      @preference = FactoryGirl.create(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
       @user.preference[:user_id].should == @user.id
     end
 
     it "should disregard other user's preference with the same name" do
-      @preference = Factory(:preference, :user => Factory(:user), :name => "thingymabob", :value => @magoody)
+      @preference = FactoryGirl.create(:preference, :user => FactoryGirl.create(:user), :name => "thingymabob", :value => @magoody)
       @user.preference[:thingymabob].should == nil
     end
   end
@@ -51,7 +51,7 @@ describe Preference do
     end
 
     it "should update existing user preference" do
-      @preference = Factory(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
+      @preference = FactoryGirl.create(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
       @user.preference[:thingymabob] = "thingy"
       @user.reload.preference[:thingymabob].should == "thingy"
     end

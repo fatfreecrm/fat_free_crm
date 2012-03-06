@@ -9,7 +9,7 @@ describe "/opportunities/index" do
   end
 
   it "should render list of accounts if list of opportunities is not empty" do
-    assign(:opportunities, [ Factory(:opportunity) ].paginate)
+    assign(:opportunities, [ FactoryGirl.create(:opportunity) ].paginate)
 
     render
     view.should render_template(:partial => "_opportunity")

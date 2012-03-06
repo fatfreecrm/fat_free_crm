@@ -4,9 +4,9 @@ describe "/opportunities/update" do
   before do
     login_and_assign
 
-    assign(:opportunity, @opportunity = Factory(:opportunity, :user => @current_user, :assignee => Factory(:user)))
+    assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, :user => @current_user, :assignee => FactoryGirl.create(:user)))
     assign(:users, [ @current_user ])
-    assign(:account, @account = Factory(:account))
+    assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])
     assign(:stage, Setting.unroll(:opportunity_stage))
     assign(:opportunity_stage_total, Hash.new(1))
@@ -59,7 +59,7 @@ describe "/opportunities/update" do
 
     describe "on related asset page -" do
       it "should update account sidebar" do
-        assign(:account, account = Factory(:account))
+        assign(:account, account = FactoryGirl.create(:account))
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
         render
 
@@ -70,7 +70,7 @@ describe "/opportunities/update" do
       end
 
       it "should update campaign sidebar" do
-        assign(:campaign, campaign = Factory(:campaign))
+        assign(:campaign, campaign = FactoryGirl.create(:campaign))
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
         render
 

@@ -5,8 +5,8 @@ describe "/opportunities/_new" do
 
   before do
     login_and_assign
-    assign(:opportunity, Factory.build(:opportunity))
-    @account = Factory(:account)
+    assign(:opportunity, FactoryGirl.build(:opportunity))
+    @account = FactoryGirl.create(:account)
     assign(:account, @account)
     assign(:accounts, [ @account ])
     assign(:users, [ @current_user ])

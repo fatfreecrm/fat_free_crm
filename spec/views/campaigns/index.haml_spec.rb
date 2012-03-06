@@ -8,7 +8,7 @@ describe "/campaigns/index" do
   end
 
   it "should render list of accounts if list of campaigns is not empty" do
-    assign(:campaigns, [ Factory(:campaign) ].paginate)
+    assign(:campaigns, [ FactoryGirl.create(:campaign) ].paginate)
 
     render
     view.should render_template(:partial => "_campaign")

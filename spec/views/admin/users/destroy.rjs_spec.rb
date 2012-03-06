@@ -7,7 +7,7 @@ describe "admin/users/destroy" do
 
   describe "user got deleted" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @user.destroy
       assign(:user, @user)
     end
@@ -21,7 +21,7 @@ describe "admin/users/destroy" do
 
   describe "user was not deleted" do
     before do
-      assign(:user, @user = Factory(:user))
+      assign(:user, @user = FactoryGirl.create(:user))
     end
 
     it "should remove confirmation panel" do

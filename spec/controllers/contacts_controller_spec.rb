@@ -13,15 +13,15 @@ describe ContactsController do
   describe "responding to GET index" do
 
     it "should expose all contacts as @contacts and render [index] template" do
-      @contacts = [ Factory(:contact, :user => @current_user) ]
+      @contacts = [ FactoryGirl.create(:contact, :user => @current_user) ]
       get :index
       assigns[:contacts].should == @contacts
       response.should render_template("contacts/index")
     end
 
     it "should perform lookup using query string" do
-      @billy_bones   = Factory(:contact, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
-      @captain_flint = Factory(:contact, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
+      @billy_bones   = FactoryGirl.create(:contact, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
+      @captain_flint = FactoryGirl.create(:contact, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
 
       get :index, :query => "bill"
       assigns[:contacts].should == [ @billy_bones ]
@@ -31,7 +31,7 @@ describe ContactsController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @contacts = [ Factory(:contact, :user => @current_user) ]
+        @contacts = [ FactoryGirl.create(:contact, :user => @current_user) ]
         xhr :get, :index, :page => 42
 
         assigns[:current_page].to_i.should == 42
@@ -42,7 +42,7 @@ describe ContactsController do
 
       it "should pick up saved page number from session" do
         session[:contacts_current_page] = 42
-        @contacts = [ Factory(:contact, :user => @current_user) ]
+        @contacts = [ FactoryGirl.create(:contact, :user => @current_user) ]
         xhr :get, :index
 
         assigns[:current_page].should == 42
@@ -81,7 +81,7 @@ describe ContactsController do
 
     describe "with mime type of HTML" do
       before(:each) do
-        @contact = Factory(:contact, :id => 42)
+        @contact = FactoryGirl.create(:contact, :id => 42)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
@@ -124,7 +124,7 @@ describe ContactsController do
 
     describe "contact got deleted or otherwise unavailable" do
       it "should redirect to contact index if the contact got deleted" do
-        @contact = Factory(:contact, :user => @current_user)
+        @contact = FactoryGirl.create(:contact, :user => @current_user)
         @contact.destroy
 
         get :show, :id => @contact.id
@@ -133,7 +133,7 @@ describe ContactsController do
       end
 
       it "should redirect to contact index if the contact is protected" do
-        @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+        @private = FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :access => "Private")
 
         get :show, :id => @private.id
         flash[:warning].should_not == nil
@@ -141,7 +141,7 @@ describe ContactsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @contact = Factory(:contact, :user => @current_user)
+        @contact = FactoryGirl.create(:contact, :user => @current_user)
         @contact.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -160,8 +160,8 @@ describe ContactsController do
     it "should expose a new contact as @contact and render [new] template" do
       @contact = Contact.new(:user => @current_user)
       @account = Account.new(:user => @current_user)
-      @users = [ Factory(:user) ]
-      @accounts = [ Factory(:account, :user => @current_user) ]
+      @users = [ FactoryGirl.create(:user) ]
+      @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
 
       xhr :get, :new
       assigns[:contact].attributes.should == @contact.attributes
@@ -173,7 +173,7 @@ describe ContactsController do
     end
 
     it "should created an instance of related object when necessary" do
-      @opportunity = Factory(:opportunity)
+      @opportunity = FactoryGirl.create(:opportunity)
 
       xhr :get, :new, :related => "opportunity_#{@opportunity.id}"
       assigns[:opportunity].should == @opportunity
@@ -181,7 +181,7 @@ describe ContactsController do
 
     describe "(when creating related contact)" do
       it "should redirect to parent asset's index page with the message if parent asset got deleted" do
-        @account = Factory(:account)
+        @account = FactoryGirl.create(:account)
         @account.destroy
 
         xhr :get, :new, :related => "account_#{@account.id}"
@@ -190,7 +190,7 @@ describe ContactsController do
       end
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
-        @account = Factory(:account, :access => "Private")
+        @account = FactoryGirl.create(:account, :access => "Private")
 
         xhr :get, :new, :related => "account_#{@account.id}"
         flash[:warning].should_not == nil
@@ -204,8 +204,8 @@ describe ContactsController do
   describe "responding to GET edit" do
 
     it "should expose the requested contact as @contact and render [edit] template" do
-      @contact = Factory(:contact, :id => 42, :user => @current_user, :lead => nil)
-      @users = [ Factory(:user) ]
+      @contact = FactoryGirl.create(:contact, :id => 42, :user => @current_user, :lead => nil)
+      @users = [ FactoryGirl.create(:user) ]
       @account = Account.new(:user => @current_user)
 
       xhr :get, :edit, :id => 42
@@ -217,9 +217,9 @@ describe ContactsController do
     end
 
     it "should expose the requested contact as @contact and linked account as @account" do
-      @account = Factory(:account, :id => 99)
-      @contact = Factory(:contact, :id => 42, :user => @current_user, :lead => nil)
-      Factory(:account_contact, :account => @account, :contact => @contact)
+      @account = FactoryGirl.create(:account, :id => 99)
+      @contact = FactoryGirl.create(:contact, :id => 42, :user => @current_user, :lead => nil)
+      FactoryGirl.create(:account_contact, :account => @account, :contact => @contact)
 
       xhr :get, :edit, :id => 42
       assigns[:contact].should == @contact
@@ -227,8 +227,8 @@ describe ContactsController do
     end
 
     it "should expose previous contact as @previous when necessary" do
-      @contact = Factory(:contact, :id => 42)
-      @previous = Factory(:contact, :id => 1992)
+      @contact = FactoryGirl.create(:contact, :id => 42)
+      @previous = FactoryGirl.create(:contact, :id => 1992)
 
       xhr :get, :edit, :id => 42, :previous => 1992
       assigns[:previous].should == @previous
@@ -236,7 +236,7 @@ describe ContactsController do
 
     describe "(contact got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the contact got deleted" do
-        @contact = Factory(:contact, :user => @current_user)
+        @contact = FactoryGirl.create(:contact, :user => @current_user)
         @contact.destroy
 
         xhr :get, :edit, :id => @contact.id
@@ -245,7 +245,7 @@ describe ContactsController do
       end
 
       it "should reload current page with the flash message if the contact is protected" do
-        @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+        @private = FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :access => "Private")
 
         xhr :get, :edit, :id => @private.id
         flash[:warning].should_not == nil
@@ -255,8 +255,8 @@ describe ContactsController do
 
     describe "(previous contact got deleted or is otherwise unavailable)" do
       before(:each) do
-        @contact = Factory(:contact, :user => @current_user)
-        @previous = Factory(:contact, :user => Factory(:user))
+        @contact = FactoryGirl.create(:contact, :user => @current_user)
+        @previous = FactoryGirl.create(:contact, :user => FactoryGirl.create(:user))
       end
 
       it "should notify the view if previous contact got deleted" do
@@ -288,7 +288,7 @@ describe ContactsController do
     describe "with valid params" do
 
       it "should expose a newly created contact as @contact and render [create] template" do
-        @contact = Factory.build(:contact, :first_name => "Billy", :last_name => "Bones")
+        @contact = FactoryGirl.build(:contact, :first_name => "Billy", :last_name => "Bones")
         Contact.stub!(:new).and_return(@contact)
 
         xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => { :name => "Hello world" }, :users => %w(1 2 3)
@@ -298,8 +298,8 @@ describe ContactsController do
       end
 
       it "should be able to associate newly created contact with the opportunity" do
-        @opportunity = Factory(:opportunity, :id => 987);
-        @contact = Factory.build(:contact)
+        @opportunity = FactoryGirl.create(:opportunity, :id => 987);
+        @contact = FactoryGirl.build(:contact)
         Contact.stub!(:new).and_return(@contact)
 
         xhr :post, :create, :contact => { :first_name => "Billy"}, :account => {}, :opportunity => 987
@@ -308,7 +308,7 @@ describe ContactsController do
       end
 
       it "should reload contacts to update pagination if called from contacts index" do
-        @contact = Factory.build(:contact, :user => @current_user)
+        @contact = FactoryGirl.build(:contact, :user => @current_user)
         Contact.stub!(:new).and_return(@contact)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts"
@@ -320,14 +320,14 @@ describe ContactsController do
     describe "with invalid params" do
 
       before(:each) do
-        @contact = Factory.build(:contact, :first_name => nil, :user => @current_user, :lead => nil)
+        @contact = FactoryGirl.build(:contact, :first_name => nil, :user => @current_user, :lead => nil)
         Contact.stub!(:new).and_return(@contact)
-        @users = [ Factory(:user) ]
+        @users = [ FactoryGirl.create(:user) ]
       end
 
       # Redraw [create] form with selected account.
       it "should redraw [Create Contact] form with selected account" do
-        @account = Factory(:account, :id => 42, :user => @current_user)
+        @account = FactoryGirl.create(:account, :id => 42, :user => @current_user)
 
         # This redraws [create] form with blank account.
         xhr :post, :create, :contact => {}, :account => { :id => 42, :user_id => @current_user.id }
@@ -340,7 +340,7 @@ describe ContactsController do
 
       # Redraw [create] form with related account.
       it "should redraw [Create Contact] form with related account" do
-        @account = Factory(:account, :id => 123, :user => @current_user)
+        @account = FactoryGirl.create(:account, :id => 123, :user => @current_user)
 
         request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
         xhr :post, :create, :contact => { :first_name => nil }, :account => { :name => nil, :user_id => @current_user.id }
@@ -352,7 +352,7 @@ describe ContactsController do
       end
 
       it "should redraw [Create Contact] form with blank account" do
-        @accounts = [ Factory(:account, :user => @current_user) ]
+        @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
         @account = Account.new(:user => @current_user)
 
         xhr :post, :create, :contact => { :first_name => nil }, :account => { :name => nil, :user_id => @current_user.id }
@@ -364,7 +364,7 @@ describe ContactsController do
       end
 
       it "should preserve Opportunity when called from Oppotuunity page" do
-        @opportunity = Factory(:opportunity, :id => 987);
+        @opportunity = FactoryGirl.create(:opportunity, :id => 987);
 
         xhr :post, :create, :contact => {}, :account => {}, :opportunity => 987
         assigns(:opportunity).should == @opportunity
@@ -383,7 +383,7 @@ describe ContactsController do
     describe "with valid params" do
 
       it "should update the requested contact and render [update] template" do
-        @contact = Factory(:contact, :id => 42, :first_name => "Billy")
+        @contact = FactoryGirl.create(:contact, :id => 42, :first_name => "Billy")
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => {}
         @contact.reload.first_name.should == "Bones"
@@ -392,7 +392,7 @@ describe ContactsController do
       end
 
       it "should be able to create a new account and link it to the contact" do
-        @contact = Factory(:contact, :id => 42, :first_name => "Billy")
+        @contact = FactoryGirl.create(:contact, :id => 42, :first_name => "Billy")
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => { :name => "new account" }
         @contact.reload.first_name.should == "Bones"
@@ -400,8 +400,8 @@ describe ContactsController do
       end
 
       it "should be able to link existing account with the contact" do
-        @account = Factory(:account, :id => 99, :name => "Hello world")
-        @contact = Factory(:contact, :id => 42, :first_name => "Billy")
+        @account = FactoryGirl.create(:account, :id => 99, :name => "Hello world")
+        @contact = FactoryGirl.create(:contact, :id => 42, :first_name => "Billy")
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => { :id => 99 }
         @contact.reload.first_name.should == "Bones"
@@ -409,9 +409,9 @@ describe ContactsController do
       end
 
       it "should update contact permissions when sharing with specific users" do
-        @contact = Factory(:contact, :id => 42, :access => "Public")
-        he  = Factory(:user, :id => 7)
-        she = Factory(:user, :id => 8)
+        @contact = FactoryGirl.create(:contact, :id => 42, :access => "Public")
+        he  = FactoryGirl.create(:user, :id => 7)
+        she = FactoryGirl.create(:user, :id => 8)
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Hello", :access => "Shared" }, :users => %w(7 8), :account => {}
         @contact.reload.access.should == "Shared"
@@ -421,7 +421,7 @@ describe ContactsController do
 
       describe "contact got deleted or otherwise unavailable" do
         it "should reload current page is the contact got deleted" do
-          @contact = Factory(:contact, :user => @current_user)
+          @contact = FactoryGirl.create(:contact, :user => @current_user)
           @contact.destroy
 
           xhr :put, :update, :id => @contact.id
@@ -430,7 +430,7 @@ describe ContactsController do
         end
 
         it "should reload current page with the flash message if the contact is protected" do
-          @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+          @private = FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :access => "Private")
 
           xhr :put, :update, :id => @private.id
           flash[:warning].should_not == nil
@@ -443,9 +443,9 @@ describe ContactsController do
     describe "with invalid params" do
 
       it "should not update the contact, but still expose it as @contact and render [update] template" do
-        @contact = Factory(:contact, :id => 42, :user => @current_user, :first_name => "Billy", :lead => nil)
+        @contact = FactoryGirl.create(:contact, :id => 42, :user => @current_user, :first_name => "Billy", :lead => nil)
         @account = Account.new(:user => @current_user)
-        @users = [ Factory(:user) ]
+        @users = [ FactoryGirl.create(:user) ]
 
         xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => {}
         @contact.reload.first_name.should == "Billy"
@@ -456,8 +456,8 @@ describe ContactsController do
       end
 
       it "should expose existing account as @account if selected" do
-        @account = Factory(:account, :id => 99)
-        @contact = Factory(:contact, :id => 42, :account => @account)
+        @account = FactoryGirl.create(:account, :id => 99)
+        @contact = FactoryGirl.create(:contact, :id => 42, :account => @account)
 
         xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => { :id => 99 }
         assigns(:account).should == @account
@@ -472,7 +472,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before(:each) do
-      @contact = Factory(:contact, :user => @current_user)
+      @contact = FactoryGirl.create(:contact, :user => @current_user)
     end
 
     describe "AJAX request" do
@@ -517,7 +517,7 @@ describe ContactsController do
 
       describe "contact got deleted or otherwise unavailable" do
         it "should reload current page is the contact got deleted" do
-          @contact = Factory(:contact, :user => @current_user)
+          @contact = FactoryGirl.create(:contact, :user => @current_user)
           @contact.destroy
 
           xhr :delete, :destroy, :id => @contact.id
@@ -526,7 +526,7 @@ describe ContactsController do
         end
 
         it "should reload current page with the flash message if the contact is protected" do
-          @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+          @private = FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :access => "Private")
 
           xhr :delete, :destroy, :id => @private.id
           flash[:warning].should_not == nil
@@ -544,7 +544,7 @@ describe ContactsController do
       end
 
       it "should redirect to contact index with the flash message is the contact got deleted" do
-        @contact = Factory(:contact, :user => @current_user)
+        @contact = FactoryGirl.create(:contact, :user => @current_user)
         @contact.destroy
 
         delete :destroy, :id => @contact.id
@@ -553,7 +553,7 @@ describe ContactsController do
       end
 
       it "should redirect to contact index with the flash message if the contact is protected" do
-        @private = Factory(:contact, :user => Factory(:user), :access => "Private")
+        @private = FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :access => "Private")
 
         delete :destroy, :id => @private.id
         flash[:warning].should_not == nil
@@ -568,16 +568,16 @@ describe ContactsController do
   describe "responding to PUT attach" do
     describe "tasks" do
       before do
-        @model = Factory(:contact)
-        @attachment = Factory(:task, :asset => nil)
+        @model = FactoryGirl.create(:contact)
+        @attachment = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "opportunities" do
       before do
-        @model = Factory(:contact)
-        @attachment = Factory(:opportunity)
+        @model = FactoryGirl.create(:contact)
+        @attachment = FactoryGirl.create(:opportunity)
       end
       it_should_behave_like("attach")
     end
@@ -589,16 +589,16 @@ describe ContactsController do
   describe "responding to PUT attach" do
     describe "tasks" do
       before do
-        @model = Factory(:contact)
-        @attachment = Factory(:task, :asset => nil)
+        @model = FactoryGirl.create(:contact)
+        @attachment = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "opportunities" do
       before do
-        @model = Factory(:contact)
-        @attachment = Factory(:opportunity)
+        @model = FactoryGirl.create(:contact)
+        @attachment = FactoryGirl.create(:opportunity)
       end
       it_should_behave_like("attach")
     end
@@ -610,16 +610,16 @@ describe ContactsController do
   describe "responding to POST discard" do
     describe "tasks" do
       before do
-        @model = Factory(:contact)
-        @attachment = Factory(:task, :asset => @model)
+        @model = FactoryGirl.create(:contact)
+        @attachment = FactoryGirl.create(:task, :asset => @model)
       end
       it_should_behave_like("discard")
     end
 
     describe "opportunities" do
       before do
-        @attachment = Factory(:opportunity)
-        @model = Factory(:contact)
+        @attachment = FactoryGirl.create(:opportunity)
+        @model = FactoryGirl.create(:contact)
         @model.opportunities << @attachment
       end
       it_should_behave_like("discard")
@@ -630,7 +630,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [ Factory(:contact, :first_name => "Hello", :last_name => "World", :user => @current_user) ]
+      @auto_complete_matches = [ FactoryGirl.create(:contact, :first_name => "Hello", :last_name => "World", :user => @current_user) ]
     end
 
     it_should_behave_like("auto complete")
@@ -640,10 +640,10 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to GET options" do
     it "should set current user preferences when showing options" do
-      @per_page = Factory(:preference, :user => @current_user, :name => "contacts_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = Factory(:preference, :user => @current_user, :name => "contacts_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
-      @sort_by  = Factory(:preference, :user => @current_user, :name => "contacts_sort_by",  :value => Base64.encode64(Marshal.dump("contacts.first_name ASC")))
-      @naming   = Factory(:preference, :user => @current_user, :name => "contacts_naming",   :value => Base64.encode64(Marshal.dump("option_after")))
+      @per_page = FactoryGirl.create(:preference, :user => @current_user, :name => "contacts_per_page", :value => Base64.encode64(Marshal.dump(42)))
+      @outline  = FactoryGirl.create(:preference, :user => @current_user, :name => "contacts_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
+      @sort_by  = FactoryGirl.create(:preference, :user => @current_user, :name => "contacts_sort_by",  :value => Base64.encode64(Marshal.dump("contacts.first_name ASC")))
+      @naming   = FactoryGirl.create(:preference, :user => @current_user, :name => "contacts_naming",   :value => Base64.encode64(Marshal.dump("option_after")))
 
       xhr :get, :options
       assigns[:per_page].should == 42
@@ -685,8 +685,8 @@ describe ContactsController do
 
     it "should select @contacts and render [index] template" do
       @contacts = [
-        Factory(:contact, :first_name => "Alice", :user => @current_user),
-        Factory(:contact, :first_name => "Bobby", :user => @current_user)
+        FactoryGirl.create(:contact, :first_name => "Alice", :user => @current_user),
+        FactoryGirl.create(:contact, :first_name => "Bobby", :user => @current_user)
       ]
 
       xhr :post, :redraw, :per_page => 1, :sort_by => "first_name"

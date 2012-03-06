@@ -1,7 +1,8 @@
-Factory.define :setting do |s|
-  s.name                "foo"
-  s.value               nil
-  s.updated_at          { FactoryGirl.generate(:time) }
-  s.created_at          { FactoryGirl.generate(:time) }
+FactoryGirl.define do
+  factory :setting do
+    name                "foo"
+    value               nil
+    updated_at          { FactoryGirl.generate(:time) }
+    created_at          { FactoryGirl.generate(:time) }
+  end
 end
-

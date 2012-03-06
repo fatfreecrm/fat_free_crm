@@ -8,7 +8,7 @@ describe "/contacts/index" do
   end
 
   it "should render a list of contacts if it's not empty" do
-    assign(:contacts, [ Factory(:contact) ].paginate)
+    assign(:contacts, [ FactoryGirl.create(:contact) ].paginate)
 
     render
     view.should render_template(:partial => "_contact")

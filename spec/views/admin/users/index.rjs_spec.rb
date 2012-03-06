@@ -6,8 +6,8 @@ describe "admin/users/index" do
   end
 
   it "renders [admin/user] template with @users collection" do
-    amy = Factory(:user)
-    bob = Factory(:user)
+    amy = FactoryGirl.create(:user)
+    bob = FactoryGirl.create(:user)
     assign(:users, [ amy, bob ].paginate)
 
     render :template => 'admin/users/index', :formats => [:js]

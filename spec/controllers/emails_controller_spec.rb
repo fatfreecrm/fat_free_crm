@@ -15,8 +15,8 @@ describe EmailsController, "handling GET /emails" do
       describe "with valid params" do
         MEDIATOR.each do |asset|
           it "should destroy the requested email and render [destroy] template" do
-            @asset = Factory(asset)
-            @email = Factory.create(:email, :mediator => @asset, :user => @current_user)
+            @asset = FactoryGirl.create(asset)
+            @email = FactoryGirl.create(:email, :mediator => @asset, :user => @current_user)
             Email.stub!(:new).and_return(@email)
 
             xhr :delete, :destroy, :id => @email.id

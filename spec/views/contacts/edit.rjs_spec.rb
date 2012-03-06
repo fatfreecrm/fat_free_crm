@@ -5,9 +5,9 @@ describe "/contacts/edit" do
 
   before do
     login_and_assign
-    assign(:contact, @contact = Factory(:contact, :user => @current_user))
+    assign(:contact, @contact = FactoryGirl.create(:contact, :user => @current_user))
     assign(:users, [ @current_user ])
-    assign(:account, @account = Factory(:account))
+    assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])
   end
 
@@ -30,7 +30,7 @@ describe "/contacts/edit" do
 
   it "edit: should hide previously open [Edit Contact] for and replace it with contact partial" do
     params[:cancel] = nil
-    assign(:previous, previous = Factory(:contact, :user => @current_user))
+    assign(:previous, previous = FactoryGirl.create(:contact, :user => @current_user))
 
     render
     rendered.should have_rjs("contact_#{previous.id}") do |rjs|

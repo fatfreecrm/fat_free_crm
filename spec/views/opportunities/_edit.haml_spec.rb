@@ -5,14 +5,14 @@ describe "/opportunities/_edit" do
 
   before do
     login_and_assign
-    assign(:account, @account = Factory(:account))
+    assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "should render [edit opportunity] form" do
     assign(:users, [ @current_user ])
-    assign(:opportunity, @opportunity = Factory(:opportunity, :campaign => @campaign = Factory(:campaign)))
+    assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign = FactoryGirl.create(:campaign)))
     render
 
     rendered.should have_tag("form[class=edit_opportunity]") do
@@ -23,7 +23,7 @@ describe "/opportunities/_edit" do
 
   it "should pick default assignee (Myself)" do
     assign(:users, [ @current_user ])
-    assign(:opportunity, Factory(:opportunity, :assignee => nil))
+    assign(:opportunity, FactoryGirl.create(:opportunity, :assignee => nil))
     render
 
     rendered.should have_tag("select[id=opportunity_assigned_to]") do |options|
@@ -32,9 +32,9 @@ describe "/opportunities/_edit" do
   end
 
   it "should show correct assignee" do
-    @user = Factory(:user)
+    @user = FactoryGirl.create(:user)
     assign(:users, [ @current_user, @user ])
-    assign(:opportunity, Factory(:opportunity, :assignee => @user))
+    assign(:opportunity, FactoryGirl.create(:opportunity, :assignee => @user))
     render
 
     rendered.should have_tag("select[id=opportunity_assigned_to]") do |options|
@@ -45,7 +45,7 @@ describe "/opportunities/_edit" do
 
   it "should render background info field if settings require so" do
     assign(:users, [ @current_user ])
-    assign(:opportunity, Factory(:opportunity))
+    assign(:opportunity, FactoryGirl.create(:opportunity))
     Setting.background_info = [ :opportunity ]
 
     render
@@ -54,7 +54,7 @@ describe "/opportunities/_edit" do
 
   it "should not render background info field if settings do not require so" do
     assign(:users, [ @current_user ])
-    assign(:opportunity, Factory(:opportunity))
+    assign(:opportunity, FactoryGirl.create(:opportunity))
     Setting.background_info = []
 
     render

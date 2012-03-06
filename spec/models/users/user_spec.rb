@@ -48,19 +48,19 @@ describe User do
 
   describe "Destroying users with and without related assets" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
     end
 
     %w(account campaign lead contact opportunity).each do |asset|
       it "should not destroy the user if she owns #{asset}" do
-        Factory(asset, :user => @user)
+        FactoryGirl.create(asset, :user => @user)
         @user.destroy
         lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
         @user.destroyed?.should == false
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
-        Factory(asset, :assignee => @user)
+        FactoryGirl.create(asset, :assignee => @user)
         @user.destroy
         lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
         @user.destroyed?.should == false
@@ -69,8 +69,8 @@ describe User do
 
     it "should not destroy the user if she owns a comment" do
       login
-      account = Factory(:account, :user => @current_user)
-      Factory(:comment, :user => @user, :commentable => account)
+      account = FactoryGirl.create(:account, :user => @current_user)
+      FactoryGirl.create(:comment, :user => @user, :commentable => account)
       @user.destroy
       lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
       @user.destroyed?.should == false
@@ -91,24 +91,24 @@ describe User do
 
     it "once the user gets deleted all her activity records must be deleted too" do
       login
-      Factory(:activity, :user => @user, :subject => Factory(:account))
-      Factory(:activity, :user => @user, :subject => Factory(:contact))
+      FactoryGirl.create(:activity, :user => @user, :subject => FactoryGirl.create(:account))
+      FactoryGirl.create(:activity, :user => @user, :subject => FactoryGirl.create(:contact))
       @user.activities.count.should == 2
       @user.destroy
       @user.activities.count.should == 0
     end
 
     it "once the user gets deleted all her permissions must be deleted too" do
-      Factory(:permission, :user => @user, :asset => Factory(:account))
-      Factory(:permission, :user => @user, :asset => Factory(:contact))
+      FactoryGirl.create(:permission, :user => @user, :asset => FactoryGirl.create(:account))
+      FactoryGirl.create(:permission, :user => @user, :asset => FactoryGirl.create(:contact))
       @user.permissions.count.should == 2
       @user.destroy
       @user.permissions.count.should == 0
     end
 
     it "once the user gets deleted all her preferences must be deleted too" do
-      Factory(:preference, :user => @user, :name => "Hello", :value => "World")
-      Factory(:preference, :user => @user, :name => "World", :value => "Hello")
+      FactoryGirl.create(:preference, :user => @user, :name => "Hello", :value => "World")
+      FactoryGirl.create(:preference, :user => @user, :name => "World", :value => "Hello")
       @user.preferences.count.should == 2
       @user.destroy
       @user.preferences.count.should == 0
@@ -117,19 +117,19 @@ describe User do
 
   it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
     Setting.stub(:user_signup).and_return(:needs_approval)
-    @user = Factory(:user, :suspended_at => nil)
+    @user = FactoryGirl.create(:user, :suspended_at => nil)
     @user.suspended?.should == true
   end
 
   it "should not set suspended timestamp upon creation if signups need approval and the user is an admin" do
     Setting.stub(:user_signup).and_return(:needs_approval)
-    @user = Factory(:user, :admin => true, :suspended_at => nil)
+    @user = FactoryGirl.create(:user, :admin => true, :suspended_at => nil)
     @user.suspended?.should == false
   end
 
   describe "Setting I18n.locale" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @locale = I18n.locale
     end
 
@@ -152,14 +152,14 @@ describe User do
 
   describe "Setting single access token" do
     it "should update single_access_token attribute if it is not set already" do
-      @user = Factory(:user, :single_access_token => nil)
+      @user = FactoryGirl.create(:user, :single_access_token => nil)
 
       @user.set_single_access_token
       @user.single_access_token.should_not == nil
     end
 
     it "should not update single_access_token attribute if it is set already" do
-      @user = Factory(:user, :single_access_token => "token")
+      @user = FactoryGirl.create(:user, :single_access_token => "token")
 
       @user.set_single_access_token
       @user.single_access_token.should == "token"

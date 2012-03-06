@@ -3,9 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/leads/update" do
   before do
     login_and_assign
-    assign(:lead, @lead = Factory(:lead, :user => @current_user, :assignee => Factory(:user)))
+    assign(:lead, @lead = FactoryGirl.create(:lead, :user => @current_user, :assignee => FactoryGirl.create(:user)))
     assign(:users, [ @current_user ])
-    assign(:campaigns, [ Factory(:campaign) ])
+    assign(:campaigns, [ FactoryGirl.create(:campaign) ])
     assign(:lead_status_total, Hash.new(1))
   end
 
@@ -55,7 +55,7 @@ describe "/leads/update" do
 
     describe "on related asset page -" do
       before do
-        assign(:campaign, Factory(:campaign))
+        assign(:campaign, FactoryGirl.create(:campaign))
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
@@ -68,7 +68,7 @@ describe "/leads/update" do
       end
 
       it "should update campaign sidebar" do
-        assign(:campaign, campaign = Factory(:campaign))
+        assign(:campaign, campaign = FactoryGirl.create(:campaign))
         render
 
         rendered.should have_rjs("sidebar") do |rjs|

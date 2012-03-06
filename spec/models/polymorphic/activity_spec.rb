@@ -20,16 +20,16 @@ describe Activity do
   before { login }
 
   it "should create a new instance given valid attributes" do
-    Activity.create!(:user => Factory(:user), :subject => Factory(:lead))
+    Activity.create!(:user => FactoryGirl.create(:user), :subject => FactoryGirl.create(:lead))
   end
 
   describe "with multiple activity records" do
     before do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       @actions = %w(created deleted updated viewed).freeze
       @actions.each_with_index do |action, index|
-        Factory(:activity, :action => action, :user => @user, :subject => Factory(:lead))
-        Factory(:activity, :action => action, :subject => Factory(:lead)) # different user
+        FactoryGirl.create(:activity, :action => action, :user => @user, :subject => FactoryGirl.create(:lead))
+        FactoryGirl.create(:activity, :action => action, :subject => FactoryGirl.create(:lead)) # different user
       end
     end
 
@@ -62,7 +62,7 @@ describe Activity do
   %w(account campaign contact lead opportunity task).each do |subject|
     describe "Create, update, and delete (#{subject})" do
       before :each do
-        @subject = Factory(subject.to_sym, :user => @current_user)
+        @subject = FactoryGirl.create(subject.to_sym, :user => @current_user)
         @conditions = [ 'user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', @current_user.id, @subject.id, @subject.class.name ]
       end
 
@@ -93,7 +93,7 @@ describe Activity do
       end
 
       it "should add an activity when commenting on a #{subject}" do
-        @comment = Factory(:comment, :commentable => @subject, :user => @current_user)
+        @comment = FactoryGirl.create(:comment, :commentable => @subject, :user => @current_user)
 
         @activity = Activity.where(@conditions << 'commented').first
         @activity.should_not == nil
@@ -105,7 +105,7 @@ describe Activity do
   %w(account campaign contact lead opportunity).each do |subject|
     describe "Recently viewed items (#{subject})" do
       before do
-        @subject = Factory(subject.to_sym, :user => @current_user)
+        @subject = FactoryGirl.create(subject.to_sym, :user => @current_user)
         @conditions = [ "user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @current_user.id, @subject.id, @subject.class.name ]
       end
 
@@ -137,9 +137,9 @@ describe Activity do
       end
 
       it "deleting #{subject} should remove it from recently viewed items for all other users" do
-        @somebody = Factory(:user)
-        @subject = Factory(subject.to_sym, :user => @somebody,  :access => "Public")
-        Factory(:activity, :user => @somebody, :subject => @subject, :action => "viewed")
+        @somebody = FactoryGirl.create(:user)
+        @subject = FactoryGirl.create(subject.to_sym, :user => @somebody,  :access => "Public")
+        FactoryGirl.create(:activity, :user => @somebody, :subject => @subject, :action => "viewed")
 
         @activity = Activity.where("user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @somebody.id, @subject.id, @subject.class.name).first
         @activity.should_not == nil
@@ -154,7 +154,7 @@ describe Activity do
 
   describe "Recently viewed items (task)" do
     before do
-      @task = Factory(:task)
+      @task = FactoryGirl.create(:task)
       @conditions = [ "subject_id = ? AND subject_type = 'Task'", @task.id ]
     end
 
@@ -174,7 +174,7 @@ describe Activity do
 
   describe "Action refinements for task updates" do
     before do
-      @task = Factory(:task, :user => @current_user)
+      @task = FactoryGirl.create(:task, :user => @current_user)
       @conditions = [ "subject_id=? AND subject_type='Task' AND user_id=?", @task.id, @current_user ]
     end
 
@@ -193,7 +193,7 @@ describe Activity do
     end
 
     it "should create 'rescheduled' task action" do
-      @task.update_attribute(:bucket, "due_tomorrow") # Factory creates :due_asap task
+      @task.update_attribute(:bucket, "due_tomorrow") # FactoryGirl creates :due_asap task
       @activities = Activity.where(@conditions)
 
       @activities.map(&:action).sort.should == %w(created rescheduled)
@@ -202,7 +202,7 @@ describe Activity do
 
   describe "Rejecting a lead" do
     before do
-      @lead = Factory(:lead, :user => @current_user, :status => "new")
+      @lead = FactoryGirl.create(:lead, :user => @current_user, :status => "new")
       @conditions = [ "subject_id = ? AND subject_type = 'Lead' AND user_id = ?", @lead.id, @current_user ]
     end
 
@@ -224,7 +224,7 @@ describe Activity do
 
   describe "Permissions" do
     it "should not show the created/updated activities if the subject is private" do
-      @subject = Factory(:account, :user => Factory(:user), :access => "Private")
+      @subject = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
       @subject.update_attribute(:updated_at,  1.second.ago)
 
       @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
@@ -234,7 +234,7 @@ describe Activity do
     end
 
     it "should not show the deleted activity if the subject is private" do
-      @subject = Factory(:account, :user => Factory(:user), :access => "Private")
+      @subject = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
       @subject.destroy
 
       @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
@@ -244,11 +244,11 @@ describe Activity do
     end
 
     it "should not show created/updated activities if the subject was not shared with the user" do
-      @user = Factory(:user)
-      @subject = Factory(:account,
+      @user = FactoryGirl.create(:user)
+      @subject = FactoryGirl.create(:account,
         :user => @user,
         :access => "Shared",
-        :permissions => [ Factory.build(:permission, :user => @user, :asset => @subject) ]
+        :permissions => [ FactoryGirl.build(:permission, :user => @user, :asset => @subject) ]
       )
       @subject.update_attribute(:updated_at, 1.second.ago)
 
@@ -259,11 +259,11 @@ describe Activity do
     end
 
     it "should not show the deleted activity if the subject was not shared with the user" do
-      @user = Factory(:user)
-      @subject = Factory(:account,
+      @user = FactoryGirl.create(:user)
+      @subject = FactoryGirl.create(:account,
         :user => @user,
         :access => "Shared",
-        :permissions => [ Factory.build(:permission, :user => @user, :asset => @subject) ]
+        :permissions => [ FactoryGirl.build(:permission, :user => @user, :asset => @subject) ]
       )
       @subject.destroy
 
@@ -274,10 +274,10 @@ describe Activity do
     end
 
     it "should show created/updated activities if the subject was shared with the user" do
-      @subject = Factory(:account,
-        :user => Factory(:user),
+      @subject = FactoryGirl.create(:account,
+        :user => FactoryGirl.create(:user),
         :access => "Shared",
-        :permissions => [ Factory.build(:permission, :user => @current_user, :asset => @subject) ]
+        :permissions => [ FactoryGirl.build(:permission, :user => @current_user, :asset => @subject) ]
       )
       @subject.update_attribute(:updated_at, 1.second.ago)
 
@@ -292,8 +292,8 @@ describe Activity do
   describe "Exportable" do
     before do
       Activity.delete_all
-      Factory(:activity, :user => Factory(:user), :subject => Factory(:account))
-      Factory(:activity, :user => Factory(:user, :first_name => nil, :last_name => nil), :subject => Factory(:account))
+      FactoryGirl.create(:activity, :user => FactoryGirl.create(:user), :subject => FactoryGirl.create(:account))
+      FactoryGirl.create(:activity, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :subject => FactoryGirl.create(:account))
       Activity.delete_all("action IS NOT NULL") # Delete created and views actions that are created implicitly.
     end
     it_should_behave_like("exportable") do

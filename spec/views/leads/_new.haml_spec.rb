@@ -5,9 +5,9 @@ describe "/leads/_new" do
 
   before do
     login_and_assign
-    assign(:lead, Factory.build(:lead))
+    assign(:lead, FactoryGirl.build(:lead))
     assign(:users, [ @current_user ])
-    assign(:campaign, @campaign = Factory(:campaign))
+    assign(:campaign, @campaign = FactoryGirl.create(:campaign))
     assign(:campaigns, [ @campaign ])
   end
 

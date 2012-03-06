@@ -5,7 +5,7 @@ describe "/contacts/_new" do
 
   before do
     login_and_assign
-    @account = Factory(:account)
+    @account = FactoryGirl.create(:account)
     assign(:contact, Contact.new)
     assign(:users, [ @current_user ])
     assign(:account, @account)

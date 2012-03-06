@@ -8,7 +8,7 @@ describe "/campaigns/index" do
   end
 
   it "should render [campaign] template with @campaigns collection if there are campaigns" do
-    assign(:campaigns, [ Factory(:campaign, :id => 42) ].paginate)
+    assign(:campaigns, [ FactoryGirl.create(:campaign, :id => 42) ].paginate)
 
     render :template => 'campaigns/index', :formats => [:js]
     

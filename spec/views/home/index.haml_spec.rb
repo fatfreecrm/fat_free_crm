@@ -8,7 +8,7 @@ describe "/home/index" do
   end
 
   it "should render list of activities if it's not empty" do
-    assign(:activities, [ Factory(:activity, :action => "updated", :subject => Factory(:account)) ])
+    assign(:activities, [ FactoryGirl.create(:activity, :action => "updated", :subject => FactoryGirl.create(:account)) ])
 
     render
     view.should render_template(:partial => "_activity")

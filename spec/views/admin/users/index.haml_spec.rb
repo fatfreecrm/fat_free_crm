@@ -6,7 +6,7 @@ describe "/admin/users/index" do
   end
 
   it "renders a list of users" do
-    assign(:users, [ Factory(:user) ].paginate)
+    assign(:users, [ FactoryGirl.create(:user) ].paginate)
 
     render
     view.should render_template(:partial => "_user")

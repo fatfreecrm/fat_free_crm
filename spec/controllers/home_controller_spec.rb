@@ -10,7 +10,7 @@ describe HomeController do
     end
 
     it "should get a list of activities" do
-      @activity = Factory(:activity, :subject => Factory(:account, :user => @current_user))
+      @activity = FactoryGirl.create(:activity, :subject => FactoryGirl.create(:account, :user => @current_user))
       controller.should_receive(:get_activities).once.and_return([ @activity ])
 
       get :index
@@ -34,9 +34,9 @@ describe HomeController do
     end
 
     it "should assign instance variables for user preferences" do
-      @asset = Factory(:preference, :user => @current_user, :name => "activity_asset", :value => Base64.encode64(Marshal.dump("tasks")))
-      @user = Factory(:preference, :user => @current_user, :name => "activity_user", :value => Base64.encode64(Marshal.dump("Billy Bones")))
-      @duration = Factory(:preference, :user => @current_user, :name => "activity_duration", :value => Base64.encode64(Marshal.dump("two days")))
+      @asset = FactoryGirl.create(:preference, :user => @current_user, :name => "activity_asset", :value => Base64.encode64(Marshal.dump("tasks")))
+      @user = FactoryGirl.create(:preference, :user => @current_user, :name => "activity_user", :value => Base64.encode64(Marshal.dump("Billy Bones")))
+      @duration = FactoryGirl.create(:preference, :user => @current_user, :name => "activity_duration", :value => Base64.encode64(Marshal.dump("two days")))
 
       xhr :get, :options
       assigns[:asset].should == "tasks"
@@ -69,7 +69,7 @@ describe HomeController do
     end
 
     it "should get a list of activities" do
-      @activity = Factory(:activity, :subject => Factory(:account, :user => @current_user))
+      @activity = FactoryGirl.create(:activity, :subject => FactoryGirl.create(:account, :user => @current_user))
       controller.should_receive(:get_activities).once.and_return([ @activity ])
 
       get :index

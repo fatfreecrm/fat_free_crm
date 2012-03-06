@@ -8,7 +8,7 @@ describe "/accounts/index" do
   end
 
   it "should render [account] template with @accounts collection if there are accounts" do
-    assign(:accounts, [ Factory(:account, :id => 42) ].paginate)
+    assign(:accounts, [ FactoryGirl.create(:account, :id => 42) ].paginate)
 
     render :template => 'accounts/index', :formats => [:js]
     

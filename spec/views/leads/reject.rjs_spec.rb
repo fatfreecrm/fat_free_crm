@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/leads/reject" do
   before do
     login_and_assign
-    assign(:lead, @lead = Factory(:lead, :status => "new"))
+    assign(:lead, @lead = FactoryGirl.create(:lead, :status => "new"))
     assign(:lead_status_total, Hash.new(1))
   end
 
@@ -36,7 +36,7 @@ describe "/leads/reject" do
   end
 
   it "should update campaign sidebar if called from campaign landing page" do
-    assign(:campaign, campaign = Factory(:campaign))
+    assign(:campaign, campaign = FactoryGirl.create(:campaign))
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 

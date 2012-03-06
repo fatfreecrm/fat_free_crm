@@ -7,7 +7,7 @@ describe "admin/users/create" do
 
   describe "create success" do
     before do
-      assign(:user, @user = Factory(:user))
+      assign(:user, @user = FactoryGirl.create(:user))
       assign(:users, [ @user ]) # .paginate
     end
 
@@ -27,7 +27,7 @@ describe "admin/users/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_user div" do
-      assign(:user, Factory.build(:user, :username => nil)) # make it invalid
+      assign(:user, FactoryGirl.build(:user, :username => nil)) # make it invalid
       assign(:users, [ @current_user ])
       render
 

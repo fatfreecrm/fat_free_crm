@@ -19,14 +19,14 @@ describe AccountsController do
     end
 
     it "should expose all accounts as @accounts and render [index] template" do
-      @accounts = [ Factory(:account, :user => @current_user) ]
+      @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
       get :index
       assigns[:accounts].should == @accounts
       response.should render_template("accounts/index")
     end
 
     it "should collect the data for the accounts sidebar" do
-      @accounts = [ Factory(:account, :user => @current_user) ]
+      @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
 
       get :index
       (assigns[:account_category_total].keys.map(&:to_sym) - (@category << :all << :other)).should == []
@@ -36,19 +36,19 @@ describe AccountsController do
       categories = %w(customer vendor)
       controller.session[:filter_by_account_category] = categories.join(',')
       @accounts = [
-        Factory(:account, :user => @current_user, :category => categories.first),
-        Factory(:account, :user => @current_user, :category => categories.last)
+        FactoryGirl.create(:account, :user => @current_user, :category => categories.first),
+        FactoryGirl.create(:account, :user => @current_user, :category => categories.last)
       ]
       # This one should be filtered out.
-      Factory(:account, :user => @current_user, :category => "competitor")
+      FactoryGirl.create(:account, :user => @current_user, :category => "competitor")
 
       get :index
       assigns[:accounts].should == @accounts
     end
 
     it "should perform lookup using query string" do
-      @first  = Factory(:account, :user => @current_user, :name => "The first one")
-      @second = Factory(:account, :user => @current_user, :name => "The second one")
+      @first  = FactoryGirl.create(:account, :user => @current_user, :name => "The first one")
+      @second = FactoryGirl.create(:account, :user => @current_user, :name => "The second one")
 
       get :index, :query => "second"
       assigns[:accounts].should == [ @second ]
@@ -58,7 +58,7 @@ describe AccountsController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @accounts = [ Factory(:account, :user => @current_user) ]
+        @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
         xhr :get, :index, :page => 42
 
         assigns[:current_page].to_i.should == 42
@@ -69,7 +69,7 @@ describe AccountsController do
 
       it "should pick up saved page number from session" do
         session[:accounts_current_page] = 42
-        @accounts = [ Factory(:account, :user => @current_user) ]
+        @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
         xhr :get, :index
 
         assigns[:current_page].should == 42
@@ -108,7 +108,7 @@ describe AccountsController do
 
     describe "with mime type of HTML" do
       before do
-        @account = Factory(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => @current_user)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
@@ -151,7 +151,7 @@ describe AccountsController do
 
     describe "account got deleted or otherwise unavailable" do
       it "should redirect to account index if the account got deleted" do
-        @account = Factory(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => @current_user)
         @account.destroy
 
         get :show, :id => @account.id
@@ -160,7 +160,7 @@ describe AccountsController do
       end
 
       it "should redirect to account index if the account is protected" do
-        @private = Factory(:account, :user => Factory(:user), :access => "Private")
+        @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
 
         get :show, :id => @private.id
         flash[:warning].should_not == nil
@@ -168,7 +168,7 @@ describe AccountsController do
       end
 
       it "should return 404 (Not Found) JSON error" do
-        @account = Factory(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => @current_user)
         @account.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
@@ -177,7 +177,7 @@ describe AccountsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @account = Factory(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => @current_user)
         @account.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -195,7 +195,7 @@ describe AccountsController do
 
     it "should expose a new account as @account and render [new] template" do
       @account = Account.new(:user => @current_user)
-      @users = [ Factory(:user) ]
+      @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :new
       assigns[:account].attributes.should == @account.attributes
@@ -205,7 +205,7 @@ describe AccountsController do
     end
 
     it "should created an instance of related object when necessary" do
-      @contact = Factory(:contact, :id => 42)
+      @contact = FactoryGirl.create(:contact, :id => 42)
 
       xhr :get, :new, :related => "contact_42"
       assigns[:contact].should == @contact
@@ -218,8 +218,8 @@ describe AccountsController do
   describe "responding to GET edit" do
 
     it "should expose the requested account as @account and render [edit] template" do
-      @account = Factory(:account, :id => 42, :user => @current_user)
-      @users = [ Factory(:user) ]
+      @account = FactoryGirl.create(:account, :id => 42, :user => @current_user)
+      @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :edit, :id => 42
       assigns[:account].should == @account
@@ -229,8 +229,8 @@ describe AccountsController do
     end
 
     it "should expose previous account as @previous when necessary" do
-      @account = Factory(:account, :id => 42)
-      @previous = Factory(:account, :id => 41)
+      @account = FactoryGirl.create(:account, :id => 42)
+      @previous = FactoryGirl.create(:account, :id => 41)
 
       xhr :get, :edit, :id => 42, :previous => 41
       assigns[:previous].should == @previous
@@ -238,7 +238,7 @@ describe AccountsController do
 
     describe "(account got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the account got deleted" do
-        @account = Factory(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => @current_user)
         @account.destroy
 
         xhr :get, :edit, :id => @account.id
@@ -247,7 +247,7 @@ describe AccountsController do
       end
 
       it "should reload current page with the flash message if the account is protected" do
-        @private = Factory(:account, :user => Factory(:user), :access => "Private")
+        @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
 
         xhr :get, :edit, :id => @private.id
         flash[:warning].should_not == nil
@@ -257,8 +257,8 @@ describe AccountsController do
 
     describe "(previous account got deleted or is otherwise unavailable)" do
       before do
-        @account = Factory(:account, :user => @current_user)
-        @previous = Factory(:account, :user => Factory(:user))
+        @account = FactoryGirl.create(:account, :user => @current_user)
+        @previous = FactoryGirl.create(:account, :user => FactoryGirl.create(:user))
       end
 
       it "should notify the view if previous account got deleted" do
@@ -290,9 +290,9 @@ describe AccountsController do
     describe "with valid params" do
 
       it "should expose a newly created account as @account and render [create] template" do
-        @account = Factory.build(:account, :name => "Hello world", :user => @current_user)
+        @account = FactoryGirl.build(:account, :name => "Hello world", :user => @current_user)
         Account.stub!(:new).and_return(@account)
-        @users = [ Factory(:user) ]
+        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :account => { :name => "Hello world" }, :users => %w(1 2 3)
         assigns(:account).should == @account
@@ -302,7 +302,7 @@ describe AccountsController do
 
       # Note: [Create Account] is shown only on Accounts index page.
       it "should reload accounts to update pagination" do
-        @account = Factory.build(:account, :user => @current_user)
+        @account = FactoryGirl.build(:account, :user => @current_user)
         Account.stub!(:new).and_return(@account)
 
         xhr :post, :create, :account => { :name => "Hello" }, :users => %w(1 2 3)
@@ -310,9 +310,9 @@ describe AccountsController do
       end
 
       it "should get data to update account sidebar" do
-        @account = Factory.build(:account, :name => "Hello", :user => @current_user)
+        @account = FactoryGirl.build(:account, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@account)
-        @users = [ Factory(:user) ]
+        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :account => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
@@ -321,9 +321,9 @@ describe AccountsController do
 
     describe "with invalid params" do
       it "should expose a newly created but unsaved account as @account and still render [create] template" do
-        @account = Factory.build(:account, :name => nil, :user => nil)
+        @account = FactoryGirl.build(:account, :name => nil, :user => nil)
         Account.stub!(:new).and_return(@account)
-        @users = [ Factory(:user) ]
+        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :account => {}, :users => []
         assigns(:account).should == @account
@@ -341,7 +341,7 @@ describe AccountsController do
 
     describe "with valid params" do
       it "should update the requested account, expose the requested account as @account, and render [update] template" do
-        @account = Factory(:account, :id => 42, :name => "Hello people")
+        @account = FactoryGirl.create(:account, :id => 42, :name => "Hello people")
 
         xhr :put, :update, :id => 42, :account => { :name => "Hello world" }
         @account.reload.name.should == "Hello world"
@@ -350,7 +350,7 @@ describe AccountsController do
       end
 
       it "should get data for accounts sidebar when called from Campaigns index" do
-        @account = Factory(:account, :id => 42)
+        @account = FactoryGirl.create(:account, :id => 42)
         request.env["HTTP_REFERER"] = "http://localhost/accounts"
 
         xhr :put, :update, :id => 42, :account => { :name => "Hello" }, :users => []
@@ -359,9 +359,9 @@ describe AccountsController do
       end
 
       it "should update account permissions when sharing with specific users" do
-        @account = Factory(:account, :id => 42, :access => "Public")
-        he  = Factory(:user, :id => 7)
-        she = Factory(:user, :id => 8)
+        @account = FactoryGirl.create(:account, :id => 42, :access => "Public")
+        he  = FactoryGirl.create(:user, :id => 7)
+        she = FactoryGirl.create(:user, :id => 8)
 
         xhr :put, :update, :id => 42, :account => { :name => "Hello", :access => "Shared" }, :users => %w(7 8)
         @account.reload.access.should == "Shared"
@@ -371,7 +371,7 @@ describe AccountsController do
 
       describe "account got deleted or otherwise unavailable" do
         it "should reload current page is the account got deleted" do
-          @account = Factory(:account, :user => @current_user)
+          @account = FactoryGirl.create(:account, :user => @current_user)
           @account.destroy
 
           xhr :put, :update, :id => @account.id
@@ -380,7 +380,7 @@ describe AccountsController do
         end
 
         it "should reload current page with the flash message if the account is protected" do
-          @private = Factory(:account, :user => Factory(:user), :access => "Private")
+          @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
 
           xhr :put, :update, :id => @private.id
           flash[:warning].should_not == nil
@@ -391,7 +391,7 @@ describe AccountsController do
 
     describe "with invalid params" do
       it "should not update the requested account but still expose the requested account as @account, and render [update] template" do
-        @account = Factory(:account, :id => 42, :name => "Hello people")
+        @account = FactoryGirl.create(:account, :id => 42, :name => "Hello people")
 
         xhr :put, :update, :id => 42, :account => { :name => nil }
         @account.reload.name.should == "Hello people"
@@ -407,12 +407,12 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before do
-      @account = Factory(:account, :user => @current_user)
+      @account = FactoryGirl.create(:account, :user => @current_user)
     end
 
     describe "AJAX request" do
       it "should destroy the requested account and render [destroy] template" do
-        @another_account = Factory(:account, :user => @current_user)
+        @another_account = FactoryGirl.create(:account, :user => @current_user)
         xhr :delete, :destroy, :id => @account.id
 
         lambda { Account.find(@account) }.should raise_error(ActiveRecord::RecordNotFound)
@@ -444,7 +444,7 @@ describe AccountsController do
 
       describe "account got deleted or otherwise unavailable" do
         it "should reload current page is the account got deleted" do
-          @account = Factory(:account, :user => @current_user)
+          @account = FactoryGirl.create(:account, :user => @current_user)
           @account.destroy
 
           xhr :delete, :destroy, :id => @account.id
@@ -453,7 +453,7 @@ describe AccountsController do
         end
 
         it "should reload current page with the flash message if the account is protected" do
-          @private = Factory(:account, :user => Factory(:user), :access => "Private")
+          @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
 
           xhr :delete, :destroy, :id => @private.id
           flash[:warning].should_not == nil
@@ -471,7 +471,7 @@ describe AccountsController do
       end
 
       it "should redirect to account index with the flash message is the account got deleted" do
-        @account = Factory(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => @current_user)
         @account.destroy
 
         delete :destroy, :id => @account.id
@@ -480,7 +480,7 @@ describe AccountsController do
       end
 
       it "should redirect to account index with the flash message if the account is protected" do
-        @private = Factory(:account, :user => Factory(:user), :access => "Private")
+        @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
 
         delete :destroy, :id => @private.id
         flash[:warning].should_not == nil
@@ -496,16 +496,16 @@ describe AccountsController do
   describe "responding to PUT attach" do
     describe "tasks" do
       before do
-        @model = Factory(:account)
-        @attachment = Factory(:task, :asset => nil)
+        @model = FactoryGirl.create(:account)
+        @attachment = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "contacts" do
       before do
-        @model = Factory(:account)
-        @attachment = Factory(:contact, :account => nil)
+        @model = FactoryGirl.create(:account)
+        @attachment = FactoryGirl.create(:contact, :account => nil)
       end
       it_should_behave_like("attach")
     end
@@ -517,16 +517,16 @@ describe AccountsController do
   describe "responding to POST discard" do
     describe "tasks" do
       before do
-        @model = Factory(:account)
-        @attachment = Factory(:task, :asset => @model)
+        @model = FactoryGirl.create(:account)
+        @attachment = FactoryGirl.create(:task, :asset => @model)
       end
       it_should_behave_like("discard")
     end
 
     describe "contacts" do
       before do
-        @attachment = Factory(:contact)
-        @model = Factory(:account)
+        @attachment = FactoryGirl.create(:contact)
+        @model = FactoryGirl.create(:account)
         @model.contacts << @attachment
       end
       it_should_behave_like("discard")
@@ -534,8 +534,8 @@ describe AccountsController do
 
     describe "opportunities" do
       before do
-        @attachment = Factory(:opportunity)
-        @model = Factory(:account)
+        @attachment = FactoryGirl.create(:opportunity)
+        @model = FactoryGirl.create(:account)
         @model.opportunities << @attachment
       end
       # 'super from singleton method that is defined to multiple classes is not supported;'
@@ -548,7 +548,7 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before do
-      @auto_complete_matches = [ Factory(:account, :name => "Hello World", :user => @current_user) ]
+      @auto_complete_matches = [ FactoryGirl.create(:account, :name => "Hello World", :user => @current_user) ]
     end
 
     it_should_behave_like("auto complete")
@@ -558,9 +558,9 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to GET options" do
     it "should set current user preferences when showing options" do
-      @per_page = Factory(:preference, :user => @current_user, :name => "accounts_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = Factory(:preference, :user => @current_user, :name => "accounts_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
-      @sort_by  = Factory(:preference, :user => @current_user, :name => "accounts_sort_by",  :value => Base64.encode64(Marshal.dump("accounts.name ASC")))
+      @per_page = FactoryGirl.create(:preference, :user => @current_user, :name => "accounts_per_page", :value => Base64.encode64(Marshal.dump(42)))
+      @outline  = FactoryGirl.create(:preference, :user => @current_user, :name => "accounts_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
+      @sort_by  = FactoryGirl.create(:preference, :user => @current_user, :name => "accounts_sort_by",  :value => Base64.encode64(Marshal.dump("accounts.name ASC")))
 
       xhr :get, :options
       assigns[:per_page].should == 42
@@ -593,8 +593,8 @@ describe AccountsController do
 
     it "should select @accounts and render [index] template" do
       @accounts = [
-        Factory(:account, :name => "A", :user => @current_user),
-        Factory(:account, :name => "B", :user => @current_user)
+        FactoryGirl.create(:account, :name => "A", :user => @current_user),
+        FactoryGirl.create(:account, :name => "B", :user => @current_user)
       ]
 
       xhr :post, :redraw, :per_page => 1, :sort_by => "name"
@@ -608,7 +608,7 @@ describe AccountsController do
   describe "responding to POST filter" do
     it "should expose filtered accounts as @accounts and render [index] template" do
       session[:filter_by_account_category] = "customer,vendor"
-      @accounts = [ Factory(:account, :category => "partner", :user => @current_user) ]
+      @accounts = [ FactoryGirl.create(:account, :category => "partner", :user => @current_user) ]
 
       xhr :post, :filter, :category => "partner"
       assigns(:accounts).should == @accounts
