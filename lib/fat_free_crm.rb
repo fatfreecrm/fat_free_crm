@@ -17,6 +17,7 @@
 
 require "fat_free_crm/gem_dependencies"
 require "fat_free_crm/gem_ext"
+require "fat_free_crm/plugin_dependencies"
 
 # Load Fat Free CRM as a Rails Engine, unless running as a Rails Application
 unless defined?(FatFreeCRM::Application)
