@@ -24,6 +24,7 @@ gem 'chosen-rails',        :git => "git://github.com/fatfreecrm/chosen-rails.git
 gem 'ransack',             :git => "git://github.com/ndbroadbent/ransack.git"
 gem 'jquery-rails'
 gem 'capistrano'
+gem 'airbrake'
 
 group :heroku do
   gem 'unicorn', :platform => :ruby
@@ -76,7 +77,6 @@ group :test do
   gem 'fuubar'
   gem 'database_cleaner'
 end
-
 
 # Rails3 plugins that we use and their source repositories:
 #---------------------------------------------------------------------

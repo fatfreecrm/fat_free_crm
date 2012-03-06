@@ -52,6 +52,9 @@ GEM
     acts_as_commentable (3.0.1)
     acts_as_list (0.1.4)
     addressable (2.2.7)
+    airbrake (3.0.9)
+      activesupport
+      builder
     ajax-chosen-rails (0.1.5)
       chosen-rails
       railties (~> 3.0)
@@ -283,6 +286,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 2.2.1)
   acts_as_commentable (~> 3.0.1)
   acts_as_list (~> 0.1.4)
+  airbrake
   ajax-chosen-rails (>= 0.1.5)
   annotate (~> 2.4.1.beta)
   authlogic (~> 3.1.0)
