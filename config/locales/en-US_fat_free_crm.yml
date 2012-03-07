@@ -261,6 +261,9 @@ en-US:
   user: User
   username: Username
   yahoo: Yahoo IM
+  born_on: Born on
+  reports_to: Reports to
+  access: Access
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------

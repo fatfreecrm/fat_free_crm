@@ -11,6 +11,7 @@ de:
   about_thank_you: "Danke, dass Sie Fat Free CRM benutzen! Wir schätzen Ihre Hilfe und hoffen, Sie finden Gefallen an der Software."
   about_twitter: "Twitter updates"
   about_user_group: "Diskussionsgruppe für Benutzer"
+  access: Zugang
   account: Firma
   account_name: Firmenname
   account_permissions_intro: "Standardmäßig haben nur Sie Zugriff auf die Firma. Sie können den Zugriff später ändern."
@@ -126,6 +127,7 @@ de:
   before: "vor"
   billing_address: "Rechnungsadresse"
   blog: "Website/Blog"
+  born_on: "Geboren am"
   brief: "kurz"
   budget: "Budget"
   budget_label: "Budget (€)"
@@ -478,6 +480,7 @@ de:
   related: "re:"
   remember_me: "Erinnere mich"
   reset_password: "Passwort zurücksetzen"
+  reports_to: Berichtet an
   revenue: "Umsatz"
   revenue_label: "Umsatz (€)"
   revenue_number: "%{value} Umsatz"
