@@ -6,10 +6,10 @@ xml.Workbook 'xmlns:x'    => 'urn:schemas-microsoft-com:office:excel',
              'xmlns:o'    => 'urn:schemas-microsoft-com:office:office' do
   xml.Worksheet 'ss:Name' => "Contacts" do
     xml.Table do
-      unless @contacts.empty?
+      unless @leads.empty?
         # Header.
         xml.Row do
-          columns = %w{lead job_title name email alt_email phone mobile fax born_on background_info blog linked_in facebook twitter skype date_created date_updated assigned_to access department source do_not_call
+          columns = %w{user campaign job_title name email alt_email phone mobile company background_info blog linked_in facebook twitter skype date_created date_updated assigned_to access source status rating do_not_call
                        street1 street2 city state zipcode country address}
           
           for column in columns
@@ -20,10 +20,10 @@ xml.Workbook 'xmlns:x'    => 'urn:schemas-microsoft-com:office:excel',
         end
         
         # Contact rows.
-        for c in @contacts
+        for l in @leads
           xml.Row do
-            a = c.business_address
-            values = [c.lead.try(:name), c.title, c.name, c.email, c.alt_email, c.phone, c.mobile, c.fax, c.born_on, c.background_info, c.blog, c.linkedin, c.facebook, c.twitter, c.skype, c.created_at, c.updated_at, c.assignee.try(:name), c.access, c.department, c.source, c.do_not_call]
+            a = l.business_address
+            values = [l.user.try(:name), l.campaign.try(:name), l.title, l.name, l.email, l.alt_email, l.phone, l.mobile, l.company, l.background_info, l.blog, l.linkedin, l.facebook, l.twitter, l.skype, l.created_at, l.updated_at, l.assignee.try(:name), l.access, l.source, l.status, l.rating, l.do_not_call]
             
             unless a.nil?
               values.concat [a.street1, a.street2, a.city, a.state, a.zipcode, a.country, a.full_address]
