@@ -31,6 +31,7 @@ describe CustomField do
     c = FactoryGirl.create(:custom_field,
                        :as => "string",
                        :name => "cf_test_field",
+                       :label => "Test Field",
                        :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
   end
 
