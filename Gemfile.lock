@@ -239,7 +239,7 @@ DEPENDENCIES
   paperclip (~> 2.5.2)
   pg (~> 0.12.2)
   prototype-rails
-  rails (~> 3.2.1)
+  rails (~> 3.2.2)
   ransack!
   rspec
   rspec-rails (~> 2.8.1)
