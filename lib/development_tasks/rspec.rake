@@ -8,7 +8,7 @@ if defined?(RSpec)
     task :prepare do
       tmp_env = Rails.env
       Rails.env = "test"
-      Rake::Task["config:copy_database_yml"].invoke
+      Rake::Task["ffcrm:config:copy_database_yml"].invoke
       puts "Preparing test database..."
       Rake::Task["db:schema:load"].invoke
       Rails.env = tmp_env

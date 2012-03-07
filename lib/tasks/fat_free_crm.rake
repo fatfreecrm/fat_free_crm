@@ -15,17 +15,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require 'fileutils'
+require 'fileutils' 
 require "fat_free_crm/gem_ext/rake"
 
 namespace :ffcrm do
   namespace :config do
     desc "Setup database.yml"
     task :copy_database_yml do
-      filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"
-      puts "Copying #{filename} to config/database.yml ..."
+      filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"      
       orig, dest = FatFreeCRM.root.join(filename), Rails.root.join('config/database.yml')
-      FileUtils.cp(orig, dest) unless File.exists?(dest)
+      unless File.exists?(dest)
+        puts "Copying #{filename} to config/database.yml ..."
+        FileUtils.cp orig, dest
+      end
     end
   end
 
