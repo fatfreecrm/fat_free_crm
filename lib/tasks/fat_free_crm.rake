@@ -18,158 +18,112 @@
 require 'fileutils'
 require "fat_free_crm/gem_ext/rake"
 
-namespace :config do
-  desc "Setup database.yml"
-  task :copy_database_yml do
-    filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"
-    puts "Copying #{filename} to config/database.yml ..."
-    FileUtils.cp filename, 'config/database.yml' unless File.exists?("config/database.yml")
-  end
-end
-
-namespace :settings do
-  desc "Clear settings from database (reset to default)"
-  task :clear => :environment do
-    puts "== Clearing settings table..."
-
-    # Truncate settings table
-    ActiveRecord::Base.establish_connection(Rails.env)
-    if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
-      ActiveRecord::Base.connection.execute("DELETE FROM settings")
-    else # mysql and postgres
-      ActiveRecord::Base.connection.execute("TRUNCATE settings")
-    end
-
-    puts "===== Settings table has been cleared."
-  end
-
-  desc "Show current settings in the database"
-  task :show => :environment do
-    ActiveRecord::Base.establish_connection(Rails.env)
-    names = ActiveRecord::Base.connection.select_values("SELECT name FROM settings ORDER BY name")
-    names.each do |name|
-      puts "\n#{name}:\n  #{Setting.send(name).inspect}"
+namespace :ffcrm do
+  namespace :config do
+    desc "Setup database.yml"
+    task :copy_database_yml do
+      filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"
+      puts "Copying #{filename} to config/database.yml ..."
+      orig, dest = FatFreeCRM.root.join(filename), Rails.root.join('config/database.yml')
+      FileUtils.cp(orig, dest) unless File.exists?(dest)
     end
   end
-end
 
-desc "Prepare the database"
-task :setup => :environment do
-  if ENV["PROCEED"] != 'true' and ActiveRecord::Migrator.current_version > 0
-    puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
-    proceed = false
-    loop do
-      print "Continue [yes/no]: "
-      proceed = STDIN.gets.strip
-      break unless proceed.blank?
+  namespace :settings do
+    desc "Clear settings from database (reset to default)"
+    task :clear => :environment do
+      puts "== Clearing settings table..."
+
+      # Truncate settings table
+      ActiveRecord::Base.establish_connection(Rails.env)
+      if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
+        ActiveRecord::Base.connection.execute("DELETE FROM settings")
+      else # mysql and postgres
+        ActiveRecord::Base.connection.execute("TRUNCATE settings")
+      end
+
+      puts "===== Settings table has been cleared."
     end
-    return unless proceed =~ /y(?:es)*/i # Don't continue unless user typed y(es)
-  end
-  Rake::Task["db:migrate:reset"].invoke
-  # Migrating plugins is not part of Rails 3 yet, but it is coming. See
-  # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
-  Rake::Task["db:migrate:plugins"].invoke rescue nil
-  Rake::Task["setup:admin"].invoke
-end
 
-namespace :setup do
-  desc "Create admin user"
-  task :admin => :environment do
-    username, password, email = ENV["USERNAME"], ENV["PASSWORD"], ENV["EMAIL"]
-    unless username && password && email
-      puts "\nTo create the admin user you will be prompted to enter username, password,"
-      puts "and email address. You might also specify the username of existing user.\n"
+    desc "Show current settings in the database"
+    task :show => :environment do
+      ActiveRecord::Base.establish_connection(Rails.env)
+      names = ActiveRecord::Base.connection.select_values("SELECT name FROM settings ORDER BY name")
+      names.each do |name|
+        puts "\n#{name}:\n  #{Setting.send(name).inspect}"
+      end
+    end
+  end
+
+  desc "Prepare the database"
+  task :setup => :environment do
+    if ENV["PROCEED"] != 'true' and ActiveRecord::Migrator.current_version > 0
+      puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
+      proceed = false
       loop do
-        username ||= "system"
-        print "\nUsername [#{username}]: "
-        reply = STDIN.gets.strip
-        username = reply unless reply.blank?
-
-        password ||= "manager"
-        print "Password [#{password}]: "
-        echo = lambda { |toggle| return if RUBY_PLATFORM =~ /mswin/; system(toggle ? "stty echo && echo" : "stty -echo") }
-        begin
-          echo.call(false)
-          reply = STDIN.gets.strip
-          password = reply unless reply.blank?
-        ensure
-          echo.call(true)
-        end
-
-        loop do
-          print "Email: "
-          email = STDIN.gets.strip
-          break unless email.blank?
-        end
-
-        puts "\nThe admin user will be created with the following credentials:\n\n"
-        puts "  Username: #{username}"
-        puts "  Password: #{'*' * password.length}"
-        puts "     Email: #{email}\n\n"
-        loop do
-          print "Continue [yes/no/exit]: "
-          reply = STDIN.gets.strip
-          break unless reply.blank?
-        end
-        break if reply =~ /y(?:es)*/i
-        redo if reply =~ /no*/i
-        puts "No admin user was created."
-        exit
+        print "Continue [yes/no]: "
+        proceed = STDIN.gets.strip
+        break unless proceed.blank?
       end
+      return unless proceed =~ /y(?:es)*/i # Don't continue unless user typed y(es)
     end
-    User.reset_column_information # Reload the class since we've added new fields in migrations.
-    user = User.find_by_username(username) || User.new
-    user.update_attributes(:username => username, :password => password, :email => email)
-    user.update_attribute(:admin, true) # Mass assignments don't work for :admin because of the attr_protected
-    puts "Admin user has been created."
-  end
-end
-
-namespace :demo do
-  desc "Load demo data"
-  task :load => :environment do
-    Rake::Task["spec:db:fixtures:load"].invoke      # loading fixtures truncates settings!
-
-    # Simulate random user activities.
-    $stdout.sync = true
-    puts "Generating user activities..."
-    %w(Account Campaign Contact Lead Opportunity Task).map do |model|
-      model.constantize.send(:find, :all)
-    end.flatten.shuffle.each do |subject|
-      info = subject.respond_to?(:full_name) ? subject.full_name : subject.name
-      Activity.create(:action => "created", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
-      Activity.create(:action => "updated", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
-      unless subject.is_a?(Task)
-        time = subject.updated_at + rand(12 * 60).minutes
-        Activity.create(:action => "viewed", :created_at => time, :user => subject.user, :subject => subject, :info => info)
-        comments = Comment.where(:commentable_id => subject.id, :commentable_type => subject.class.name)
-        comments.each_with_index do |comment, i|
-          time = subject.created_at + rand(12 * 60 * i).minutes
-          if time > Time.now
-            time = subject.created_at + rand(600).minutes
-          end
-          comment.update_attribute(:created_at, time)
-          Activity.create(:action => "commented", :created_at => time, :user => comment.user, :subject => subject, :info => info)
-        end
-        emails = Email.where(:mediator_id => subject.id, :mediator_type => subject.class.name)
-        emails.each do |email|
-          time = subject.created_at + rand(24 * 60).minutes
-          if time > Time.now
-            time = subject.created_at + rand(600).minutes
-          end
-          sent_at = time - rand(600).minutes
-          received_at = sent_at + rand(600).seconds
-          email.update_attributes(:created_at => time, :sent_at => sent_at, :received_at => received_at)
-        end
-      end
-      print "." if subject.id % 10 == 0
-    end
-    puts
-  end
-
-  desc "Reset the database and reload demo data along with default application settings"
-  task :reload => :environment do
     Rake::Task["db:migrate:reset"].invoke
-    Rake::Task["crm:demo:load"].invoke
+    # Migrating plugins is not part of Rails 3 yet, but it is coming. See
+    # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
+    Rake::Task["db:migrate:plugins"].invoke rescue nil
+    Rake::Task["setup:admin"].invoke
+  end
+
+  namespace :setup do
+    desc "Create admin user"
+    task :admin => :environment do
+      username, password, email = ENV["USERNAME"], ENV["PASSWORD"], ENV["EMAIL"]
+      unless username && password && email
+        puts "\nTo create the admin user you will be prompted to enter username, password,"
+        puts "and email address. You might also specify the username of existing user.\n"
+        loop do
+          username ||= "system"
+          print "\nUsername [#{username}]: "
+          reply = STDIN.gets.strip
+          username = reply unless reply.blank?
+
+          password ||= "manager"
+          print "Password [#{password}]: "
+          echo = lambda { |toggle| return if RUBY_PLATFORM =~ /mswin/; system(toggle ? "stty echo && echo" : "stty -echo") }
+          begin
+            echo.call(false)
+            reply = STDIN.gets.strip
+            password = reply unless reply.blank?
+          ensure
+            echo.call(true)
+          end
+
+          loop do
+            print "Email: "
+            email = STDIN.gets.strip
+            break unless email.blank?
+          end
+
+          puts "\nThe admin user will be created with the following credentials:\n\n"
+          puts "  Username: #{username}"
+          puts "  Password: #{'*' * password.length}"
+          puts "     Email: #{email}\n\n"
+          loop do
+            print "Continue [yes/no/exit]: "
+            reply = STDIN.gets.strip
+            break unless reply.blank?
+          end
+          break if reply =~ /y(?:es)*/i
+          redo if reply =~ /no*/i
+          puts "No admin user was created."
+          exit
+        end
+      end
+      User.reset_column_information # Reload the class since we've added new fields in migrations.
+      user = User.find_by_username(username) || User.new
+      user.update_attributes(:username => username, :password => password, :email => email)
+      user.update_attribute(:admin, true) # Mass assignments don't work for :admin because of the attr_protected
+      puts "Admin user has been created."
+    end
   end
 end

@@ -22,12 +22,17 @@ module FatFreeCRM
     # Models are organized in sub-directories
     config.autoload_paths += Dir[Rails.root.join("app/models/**")]
 
+    # Activate observers that should always be running.
+    config.active_record.observers = :activity_observer unless ARGV.join.include?('assets:precompile')
+
+    # Load development rake tasks (RSpec, Gem packaging, etc.)
+    rake_tasks do
+      Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each {|t| load t }
+    end
+
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
-    # Activate observers that should always be running.
-    config.active_record.observers = :activity_observer unless ARGV.join.include?('assets:precompile')
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
