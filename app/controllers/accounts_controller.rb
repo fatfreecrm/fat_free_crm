@@ -21,7 +21,7 @@ class AccountsController < BaseController
   # GET /accounts
   #----------------------------------------------------------------------------
   def index
-    @accounts = get_accounts(:page => params[:page]).includes :user, :assignee
+    @accounts = get_accounts(:page => params[:page])
     respond_with(@accounts)
   end
 

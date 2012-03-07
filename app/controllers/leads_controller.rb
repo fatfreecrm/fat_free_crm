@@ -21,7 +21,7 @@ class LeadsController < BaseController
   # GET /leads
   #----------------------------------------------------------------------------
   def index
-    @leads = get_leads(:page => params[:page]).includes :business_address, :campaign, :assignee, :user
+    @leads = get_leads(:page => params[:page])
     respond_with(@leads)
   end
 
