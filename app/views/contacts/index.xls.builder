@@ -9,7 +9,7 @@ xml.Workbook 'xmlns:x'    => 'urn:schemas-microsoft-com:office:excel',
       unless @contacts.empty?
         # Header.
         xml.Row do
-          columns = %w{job_title name email alt_email phone mobile
+          columns = %w{lead job_title name email alt_email phone mobile
                        fax born_on background_info blog linked_in
                        facebook twitter skype date_created date_updated
                        assigned_to access department source do_not_call
@@ -27,7 +27,7 @@ xml.Workbook 'xmlns:x'    => 'urn:schemas-microsoft-com:office:excel',
         for c in @contacts
           xml.Row do
             a = c.business_address
-            values = [c.title, c.name, c.email, c.alt_email, c.phone, c.mobile,
+            values = [c.lead.try(:name), c.title, c.name, c.email, c.alt_email, c.phone, c.mobile,
                       c.fax, c.born_on, c.background_info, c.blog, c.linkedin,
                       c.facebook, c.twitter, c.skype, c.created_at, c.updated_at,
                       c.assignee.try(:name), c.access, c.department, c.source, c.do_not_call]

@@ -22,7 +22,7 @@ class ContactsController < BaseController
   # GET /contacts
   #----------------------------------------------------------------------------
   def index
-    @contacts = get_contacts(:page => params[:page])
+    @contacts = get_contacts(:page => params[:page]).includes :business_address
     respond_with(@contacts)
   end
 
