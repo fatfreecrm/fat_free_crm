@@ -22,7 +22,7 @@ namespace :ffcrm do
       # Load fixtures from s
       require 'active_record/fixtures'
       ActiveRecord::Base.establish_connection(Rails.env.to_sym)
-      Dir.glob(FatFreeCRM.root.join('db', 'demo', '*.{yml,csv}'))).each do |fixture_file|
+      Dir.glob(FatFreeCRM.root.join('db', 'demo', '*.{yml,csv}')).each do |fixture_file|
         ActiveRecord::Fixtures.create_fixtures(FatFreeCRM.root.join('db/demo'), File.basename(fixture_file, '.*'))
       end
 
