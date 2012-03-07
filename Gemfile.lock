@@ -245,6 +245,7 @@ DEPENDENCIES
   rspec-rails (~> 2.8.1)
   ruby-debug
   ruby-debug19
+  sass (~> 3.1.15)
   sass-rails
   simple_form (~> 1.5.2)
   spork
