@@ -20,13 +20,9 @@ module LeadsHelper
 
   #----------------------------------------------------------------------------
   def stars_for(lead)
-    if lead.rating == RATING_STARS
-      "&#9733;".html_safe * RATING_STARS
-    elsif lead.rating.nil? || lead.rating == 0
-      %(<font color="gainsboro">#{"&#9733;" * RATING_STARS}</font>).html_safe
-    else
-      "&#9733;".html_safe * lead.rating + %(<font color="gainsboro">#{"&#9733;" * (RATING_STARS - lead.rating)}</font>).html_safe
-    end
+    star = '&#9733;'
+    rating = lead.rating || 0
+    (star * rating).html_safe + content_tag(:font, (star * (RATING_STARS - rating)).html_safe, :color => 'gainsboro')
   end
 
   #----------------------------------------------------------------------------
