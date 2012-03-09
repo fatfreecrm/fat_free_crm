@@ -66,7 +66,7 @@ namespace :ffcrm do
     desc "Reset the database and reload demo data along with default application settings"
     task :reload => :environment do
       Rake::Task["db:migrate:reset"].invoke
-      Rake::Task["crm:demo:load"].invoke
+      Rake::Task["ffcrm:demo:load"].invoke
     end
   end
 end
