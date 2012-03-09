@@ -16,9 +16,9 @@
 #------------------------------------------------------------------------------
 
 namespace :db do
-  namespace :upgrade do
-    desc "Upgrade your database from the Rails 2.x schema to Rails 3"
-    task :schema => :environment do
+  namespace :schema do
+    desc "Upgrade your database schema from ids to timestamps"
+    task :upgrade => :environment do
       timestamps = Dir.glob("db/migrate/*.rb").map{|f| File.basename(f)[/(\d+)/,1] }.sort
       timestamps[0..30].each_with_index do |timestamp, i|
         puts "== #{i+1} => #{timestamp}"
