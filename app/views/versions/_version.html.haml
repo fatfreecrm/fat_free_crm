@@ -8,11 +8,20 @@
     = t('version.' + version.event, :by => user_name, :when => time_ago_in_words(version.created_at))
     %tt
       - version.changeset.each do |attr_name, change|
-        - attr = t(attr_name)
-        %br
-        - if change.first.blank?
-          = t('version.set', :attr => attr, :to => change.second)
-        - elsif change.second.blank?
-          = t('version.unset', :attr => attr, :from => change.first)
+        - if attr_name =~ /^cf_/
+          - field = CustomField.where(:name => attr_name).first
+          - label = field.label
+          - first = field.render change.first
+          - second = field.render change.second
         - else
-          = t('version.change', :attr => attr, :from => change.first, :to => change.second)
+          - label = t(attr_name)
+          - first = change.first
+          - second = change.second
+        - if [first, second].any?(&:present?)
+          %br
+        - if first.blank? and second.present?
+          = t('version.set', :attr => label, :to => second)
+        - elsif first.present? and second.present?
+          = t('version.change', :attr => label, :from => first, :to => second)
+        - elsif first.present? and second.blank?
+          = t('version.unset', :attr => label, :from => first)

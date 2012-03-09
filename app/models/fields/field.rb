@@ -101,10 +101,11 @@ class Field < ActiveRecord::Base
     collection.try(:join, "|")
   end
 
-
   def render_value(object)
-    value = object.send(name)
+    render object.send(name)
+  end
 
+  def render(value)
     case as
     when 'checkbox'
       value.to_s == '0' ? "no" : "yes"
