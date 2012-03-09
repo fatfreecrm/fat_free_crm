@@ -1,0 +1,688 @@
+// Fat Free CRM
+// Copyright (C) 2008-2011 by Michael Dvorkin
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//------------------------------------------------------------------------------
+
+$color_title: #342d7e;
+$color_subtitle: darkslateblue;
+$sidebar_width: 210px;
+
+// Common page elements.
+//------------------------------------------------------------------------------
+.title {
+  border-bottom: 1px gray solid;
+  color: $color_title;
+  font: {
+    size: 17px;
+    weight: bold; };
+  padding-bottom: 2px;
+  img {
+    position: relative;
+    top: 2px; } }
+
+.title_tools {
+  font-size: 12px;
+  float: right;
+  margin: 4px 0px 0px 0px; }
+
+.subtitle {
+  border-bottom: 1px silver solid;
+  color: #2f2f2f;
+  font: {
+    size: 14px;
+    weight: bold; };
+  small {
+    font-weight: normal;
+    font-size: 11px;
+    padding-left: 5px; }
+  a:link, a:visited {
+    color: $color_subtitle;
+    text-decoration: none; }
+  ahover: {
+    background: none; }; }
+
+.subtitle_tools {
+  font-size: 11px;
+  float: right; }
+
+.radio_box {
+  line-height: 20px;
+  input {
+    position: relative;
+    top: -2px; } }
+
+.check_box {
+  line-height: 20px;
+  input {
+    position: relative;
+    top: -3px; }
+  label {
+    font-size: 11px; } }
+
+// Main area (page and form).
+//------------------------------------------------------------------------------
+.tabless {
+  margin: auto;
+  width: 480px; }
+
+.standalone {
+  background: whitesmoke;
+  border: 20px lightsteelblue solid;
+  margin: 75px auto 6px auto;
+  padding: 20px;
+  width: 400px;
+  -moz-border-radius: 6px;
+  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
+  -webkit-border-radius: 6px;
+  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
+  input[type="text"], input[type="password"] {
+    font-size: 16px;
+    padding: 2px;
+    width: 355px; }
+  input[type="submit"] {
+    font-size: 14px; } }
+
+.tabbed {
+  padding: 12px 12px 12px 16px; }
+
+.main {
+  background: white;
+  padding: 8px 15px 15px 15px;
+  -moz-border-radius: 4px;
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  -webkit-border-radius: 4px;
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
+
+.info {
+  padding-top: 12px;
+  width: 700px; }
+
+.sidebar {
+  color: #3f3f3f;
+  font-size: 11px;
+  padding: 0px 12px 0px 0px;
+  width: $sidebar_width; }
+
+.form {
+  background: white;
+  h4 {
+    font-size: 18px;
+    height: 30px; } }
+
+.tools {
+  font-size: 10px;
+  float: right;
+  padding: 0px 0px 0px 4px;
+  &#comment_new_tools {
+    margin: 8px 0px 0px 0px; } }
+
+.label {
+  color: #3f3f3f;
+  font-size: 12px;
+  margin: 8px 0px 0px 0px;
+  padding: 0px 8px 0px 0px; }
+
+.top {
+  margin: 5px 0px 0px 0px; }
+
+.req {
+  background: url("/assets/asterisk.gif") no-repeat scroll center right transparent;
+  color: navy;
+  display: inline-block; }
+
+.intro {
+  color: dimgray;
+  font-size: 12px;
+  padding-top: 5px; }
+
+.section {
+  background: whitesmoke;
+  color: #3f3f3f;
+  margin: 0px 0px 2px 0px;
+  padding: 4px 15px 8px 15px;
+  table {
+    width: 500px;
+    &.address {
+      width: 240px; }
+    border-spacing: 0px;
+    border-collapse: collapse;
+    td {
+      vertical-align: top;
+      padding: 0px;
+      div.input {
+        display: inline;
+        padding: 3px; }
+      img.tooltip-icon {
+        display: inline;
+        vertical-align: bottom; }
+      input, select, textarea {
+        width: 240px;
+        display: block; }
+      input[type="checkbox"], input[type="radio"] {
+        display: inline;
+        width: auto; }
+      label {
+        vertical-align: bottom; }
+      div.input.check_boxes > span {
+        display: block;
+        padding-top: 2px;
+        input {
+          margin-right: 5px; } } } } }
+
+.remote {
+  border: 5px lightblue solid;
+  background: whitesmoke;
+  margin: 0px;
+  padding: 0px 10px 0px 10px;
+  position: relative;
+  a.close {
+    display: block;
+    background: lightblue;
+    border: {
+      top: 1px gainsboro solid;
+      left: 1px gainsboro solid;
+      bottom: 1px grey solid;
+      right: 1px grey solid; };
+    color: navy;
+    cursor: pointer;
+    height: 16px;
+    margin: 3px;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    top: 0px;
+    width: 17px;
+    &:hover {
+      background: #1e4262;
+      color: white; } } }
+
+.buttonbar {
+  border-top: 1px gray solid;
+  margin: 8px auto;
+  padding-top: 8px; }
+
+.section input, .sidebar input, .inline input,
+.section select, .sidebar select, .inline select,
+.section textarea, .sidebar textarea, .inline textarea {
+  margin: 3px 0px 0px 0px;
+  vertical-align: middle; }
+
+.cool {
+  color: darkgreen; }
+
+.warn {
+  color: crimson; }
+
+.urgent {
+  color: darkred; }
+
+.black {
+  color: black; }
+
+.white {
+  color: white !important; }
+
+.grayed {
+  color: silver !important; }
+
+.amount {
+  background: palegreen;
+  color: black;
+  font-size: 11px;
+  text-align: center;
+  padding: 0px 3px 0px 3px;
+  -moz-border-radius: {
+    topleft: 3px;
+    topright: 3px;
+    bottomleft: 3px;
+    bottomright: 3px; };
+  -webkit-border: {
+    top-left-radius: 3px;
+    top-right-radius: 3px;
+    bottom-left-radius: 3px;
+    bottom-right-radius: 3px; }; }
+
+.strip {
+  background: gainsboro;
+  color: black;
+  float: left;
+  font-size: 11px;
+  margin: 0px 6px 0px 0px;
+  padding: 1px 4px 1px 3px;
+  text-align: right;
+  width: 75px;
+  -moz-border-radius: {
+    topleft: 7px;
+    bottomleft: 7px; };
+  -webkit-border: {
+    top-left-radius: 7px;
+    bottom-left-radius: 7px; }; }
+
+// Indentation classes:
+//   - indent: for use with strip (regular indentation).
+//   - indentslim: for use with avatar and no strip (Contacts).
+//   - indentwide: for use with strip + checkbox (Tasks).
+//   - indentfull: for use with strip + avatar (Admin/Users).
+.indent {
+  margin-left: 88px; }
+
+.indentslim {
+  margin-left: 38px; }
+
+.indentwide {
+  margin-left: 106px; }
+
+.indentfull {
+  margin-left: 126px; }
+
+.bucket {
+  margin: 0px 0px 10px 0px; }
+
+.prefix {
+  width: 30px;
+  font-size: 10px; }
+
+.comment {
+  background: #f2f2f2;
+  border-bottom: 1px gainsboro solid;
+  margin: 2px 0px 0px 0px;
+  overflow: hidden;
+  padding: 4px;
+  list-style: none;
+  //  -moz-border-radius:
+  //    bottomleft: 8px
+  //    bottomright: 8px
+  //  -webkit-border-radius:
+  //    bottom-left-radius: 8px
+  //    bottom-right-radius: 8px
+  &#comment_new {
+    margin: 3px 0px 0px 0px; }
+  input[type=text] {
+    border: 1px #cfcfcf solid;
+    color: grey;
+    font-size: 11px;
+    margin: 3px 0px 0px 0px;
+    padding: 3px;
+    width: 500px; }
+  textarea {
+    font-size: 11px;
+    height: 110px;
+    margin: 3px 0px 0px 0px;
+    padding: 3px;
+    width: 500px; }
+  .gravatar {
+    float: left;
+    margin: 3px 10px 3px 3px; }
+  .body {
+    display: inline;
+    font-size: 11px; }
+  tt {
+    font-size: 10px;
+    color: #666666; }
+  dt {
+    padding: 0px;
+    margin: -10px 0px 0px 36px;
+    p {
+      margin: 10px 0px 0px 0px; } } }
+
+// Avoid collision with .email CSS class which is used to display Task category strip.
+.mail {
+  background: #f2f2f2;
+  border-bottom: 1px gainsboro solid;
+  margin: 2px 0px 0px 0px;
+  overflow: hidden;
+  padding: 4px;
+  list-style: none;
+  .gravatar {
+    float: left;
+    margin: 3px 10px 3px 3px; }
+  .subject {
+    color: black; }
+  .body {
+    display: inline;
+    font-size: 11px; }
+  tt {
+    font-size: 10px;
+    color: #666666; }
+  dt {
+    padding: 0px;
+    margin: -10px 0px 0px 36px;
+    p {
+      margin: 10px 0px 0px 0px; } } }
+
+.toggle {
+  font-weight: normal; }
+
+#export {
+  font-size: 9px;
+  margin: 12px 0px 0px 0px; }
+
+#paginate {
+  float: right;
+  font-size: 10px;
+  margin: 4px 0px 0px 0px; }
+
+#paging {
+  float: right;
+  margin: 7px 5px 0px 0px; }
+
+.confirm {
+  background: #cdfecd;
+  border-left: 10px palegreen solid;
+  font-size: 11px;
+  margin: 0px 0px 6px 0px;
+  padding: 6px; }
+
+// Single-row lists.
+//------------------------------------------------------------------------------
+.log {
+  padding: 8px 0px 0px 0px;
+  h3 {
+    border-bottom: 1px #2f2f2f dotted;
+    color: #2f2f2f;
+    margin: 0px 0px 4px 0px;
+    padding: 2px 0px 2px 86px;
+    &.overdue {
+      color: crimson;
+      border-bottom: 1px crimson dotted; }
+    &.due_asap {
+      color: darkred;
+      border-bottom: 1px darkred dotted; }
+    &.due_today {
+      color: darkgreen;
+      border-bottom: 1px darkgreen dotted; } }
+  li {
+    color: #3f3f3f;
+    font-size: 12px;
+    list-style: none;
+    padding: 3px 0px 3px 0px;
+    tt {
+      color: dimgray;
+      font-size: 11px; } }
+  input[type=checkbox] {
+    float: left;
+    margin: 0px 4px 0px 0px; } }
+
+// Two-row lists.
+//------------------------------------------------------------------------------
+.list {
+  padding: 8px 0px 0px 0px;
+  li {
+    border-bottom: 1px silver dotted;
+    clear: both;
+    color: #3f3f3f;
+    font-size: 12px;
+    list-style: none;
+    padding: 6px 0px 6px 0px;
+    .gravatar {
+      float: left;
+      padding: 0px 8px 0px 0px; }
+    tt {
+      color: dimgray;
+      font-size: 11px; }
+    dt {
+      color: #3f3f3f;
+      font-size: 11px;
+      padding: 2px 0px 0px 0px; }
+    dt a:link, dt a:visited {
+      color: #3f3f3f;
+      font-weight: bold;
+      text-decoration: none; }
+    dt a:hover {
+      background: dimgray;
+      color: white;
+      font-weight: bold;
+      text-decoration: none; } } }
+
+// Sidebar, filters, and selectors.
+//------------------------------------------------------------------------------
+.filters, .panel {
+  background: snow;
+  margin: 0px 0px 12px 0px;
+  padding: 6px 8px 6px 8px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
+
+.filters {
+  h4 {
+    color: navy;
+    font-size: 12px;
+    font-weight: bold; }
+  input[type=text] {
+    margin-bottom: 4px; } }
+
+.panel {
+  div {
+    margin: 0px 0px 10px 0px; }
+  h4 {
+    font-size: 13px;
+    font-weight: bold; }
+  li {
+    border-bottom: 1px silver dotted;
+    font-size: 12px;
+    list-style: none;
+    padding: 2px 0px 3px 0px;
+    dt {
+      float: right;
+      font-size: 11px;
+      font-weight: bold; }
+    tt {
+      font-size: 11px; }
+    &.last {
+      border-bottom: none; } }
+  .caption {
+    border-bottom: 1px grey solid;
+    color: navy;
+    font: {
+      size: 12px;
+      weight: bold; };
+    margin: 4px 0px 2px 0px;
+    padding: 2px 0px 2px 0px; }
+  &#recently {
+    background: floralwhite; }
+  &#summary {
+    background: oldlace;
+    p {
+      margin: 4px 0px 4px 0px; } } }
+
+.selector {
+  color: black;
+  cursor: pointer;
+  font-size: 10px;
+  text-align: center; }
+
+.on {
+  background: lightgoldenrodyellow;
+  border: 1px silver inset; }
+
+.off {
+  background: lightgrey;
+  border: 1px silver outset; }
+
+.arrow {
+  font-size: 9px;
+  padding: 0px 2px 3px 0px; }
+
+.left {
+  -moz-border-radius: {
+    bottomleft: 9px;
+    topleft: 9px; };
+  -webkit-border: {
+    bottom-left-radius: 9px;
+    top-left-radius: 9px; }; }
+
+.right {
+  -moz-border-radius: {
+    bottomright: 9px;
+    topright: 9px; };
+  -webkit-border: {
+    bottom-right-radius: 9px;
+    top-right-radius: 9px; }; }
+
+// Dropdown menu.
+//------------------------------------------------------------------------------
+.menu {
+  background: #f4f5eb;
+  border: {
+    top: 1px solid #dddddd;
+    left: 1px solid #dddddd;
+    right: 1px solid #666666;
+    bottom: 1px solid #666666; };
+  left: 0px;
+  padding: 2px 0px;
+  position: absolute;
+  top: 0px;
+  width: 12em;
+  -webkit-box-shadow: 10px 10px 15px gainsboro;
+  ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px; }
+  li {
+    list-style-position: outside; }
+  a {
+    color: #555555;
+    cursor: default;
+    display: block;
+    margin: 0px 2px;
+    outline: none;
+    padding: 4px 15px;
+    text-decoration: none; }
+  ahover: {
+    background: mediumblue;
+    color: white; }; }
+
+// Star ratings.
+//------------------------------------------------------------------------------
+// .rating .stars {
+//   width: 125px;
+//   height: 25px;
+//   float: left;
+//   background: transparent url('/assets/stars.gif') repeat-x right top;
+//   margin-right: 5px;
+// }
+//
+// .rating .clearer {
+//   clear: left;
+// }
+//
+// .rating .label {
+//   line-height: 16px;
+//   font-size: 90%;
+// }
+//
+// .rating .stars .star {
+//   width: 25px;
+//   height: 25px;
+//   cursor: pointer;
+//   background: transparent url('/assets/stars.gif') no-repeat 0 0;
+//   float: left;
+// }
+//
+// .rating .stars .star.on {
+//   background-position: 0 -25px;
+// }
+//
+// .rating.selected .stars .star.on {
+//   background-position: 0 -50px;
+// }
+//
+// .rating .stars .star.on.half {
+//   background-position: 0 -25px;
+//   width: 12px;
+//   margin-right: 12px;
+// }
+//
+// .rating.selected .stars .star.on.half {
+//   width: 25px;
+//   margin-right: 0px;
+//   background-position: 0 -50px;
+// }
+
+// Admin Tabs
+
+.inline_tabs ul {
+  margin: 20px 0;
+  li {
+    display: inline;
+    a {
+      display: inline-block;
+      background: #fafafa;
+      padding: 5px;
+      border: 1px solid #bbbbbb;
+      margin-right: 5px;
+      width: 75px;
+      text-align: center;
+      color: black; }
+    &.selected a {
+      background: #1e4262;
+      color: white;
+      font-weight: bold; } } }
+
+.list li.position {
+  cursor: move; }
+
+span.handle img {
+  vertical-align: middle;
+  margin-right: 5px; }
+
+.tags, .list li dt .tags {
+  margin-top: 4px;
+  a:link, a:visited {
+    background-color: #eaeaea;
+    color: #333333;
+    font-weight: normal;
+    padding: 2px 6px 1px 6px;
+    margin: 4px 0 3px 4px;
+    border: 1px solid #bdbdbd;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eaeaea), color-stop(0.7, #f2f2f2));
+    background-image: -webkit-linear-gradient(center bottom, #eaeaea 0%, #f2f2f2 70%);
+    background-image: -moz-linear-gradient(center bottom, #eaeaea 0%, #f2f2f2 70%);
+    background-image: -o-linear-gradient(bottom, #eaeaea 0%, #f2f2f2 70%);
+    background-image: -ms-linear-gradient(top, #eaeaea 0%, #f2f2f2 70%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eaeaea', endColorstr='#f2f2f2',GradientType=0 );
+    background-image: linear-gradient(top, #eaeaea 0%, #f2f2f2 70%);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px; }
+  a:hover {
+    background: #dadada; } }
+
+.field_group .list {
+  padding-bottom: 30px; }
+
+#lists {
+  .show_lists_save_form {
+    text-align: right; }
+  .show_lists_save_form, .save_list {
+    margin: 10px 0 0; }
+  .list_icon {
+    opacity: 0.5;
+    width: 12px; }
+  img.input_info {
+    vertical-align: middle; }
+  input#save_list {
+    margin-top: 6px; } }
+
+.fields .subtitle {
+  cursor: move; }
+
+.fields .title {
+  margin-bottom: 12px; }
+
+.remove_fields img {
+  vertical-align: text-bottom; }
