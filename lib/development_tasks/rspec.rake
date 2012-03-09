@@ -1,6 +1,6 @@
 if defined?(RSpec)
   require 'rspec/core/rake_task'
-  
+
   namespace :spec do
     desc "Preparing test env"
     task :prepare do
@@ -17,7 +17,7 @@ if defined?(RSpec)
   Rake::Task["spec"].prerequisites.push("spec:prepare")
 
   desc 'Run the acceptance specs in ./acceptance'
-  RSpec::Core::RakeTask.new(:acceptance => 'db:test:prepare') do |t|
+  RSpec::Core::RakeTask.new(:acceptance => 'spec:prepare') do |t|
     t.pattern = 'acceptance/**/*_spec.rb'
   end
 end
