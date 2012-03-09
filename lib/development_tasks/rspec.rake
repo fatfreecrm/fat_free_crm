@@ -1,4 +1,6 @@
 if defined?(RSpec)
+  require 'rspec/core/rake_task'
+  
   namespace :spec do
     desc "Preparing test env"
     task :prepare do
