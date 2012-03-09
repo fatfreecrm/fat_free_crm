@@ -1,7 +1,5 @@
 if defined?(RSpec)
   require 'rspec/core/rake_task'
-  Rake::Task.remove("spec")
-  RSpec::Core::RakeTask.new(:spec)
   
   namespace :spec do
     desc "Preparing test env"
