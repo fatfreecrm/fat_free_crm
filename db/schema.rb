@@ -11,39 +11,46 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120224073107) do
+ActiveRecord::Schema.define(:version => 20120309070209) do
+
+  create_table "account_aliases", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "destroyed_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
     t.integer  "contact_id"
     t.datetime "deleted_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "account_opportunities", :force => true do |t|
     t.integer  "account_id"
     t.integer  "opportunity_id"
     t.datetime "deleted_at"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",            :limit => 64, :default => "",       :null => false
-    t.string   "access",          :limit => 8,  :default => "Public"
+    t.string   "name",            :limit => 128, :default => "",       :null => false
+    t.string   "access",          :limit => 8,   :default => "Public"
     t.string   "website",         :limit => 64
     t.string   "toll_free_phone", :limit => 32
     t.string   "phone",           :limit => 32
     t.string   "fax",             :limit => 32
     t.datetime "deleted_at"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "email",           :limit => 64
     t.string   "background_info"
-    t.integer  "rating",                        :default => 0,        :null => false
+    t.integer  "rating",                         :default => 0,        :null => false
     t.string   "category",        :limit => 32
   end
 
@@ -57,8 +64,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.string   "action",       :limit => 32, :default => "created"
     t.string   "info",                       :default => ""
     t.boolean  "private",                    :default => false
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
@@ -75,12 +82,21 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.string   "address_type",     :limit => 16
     t.integer  "addressable_id"
     t.string   "addressable_type"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
+
+  create_table "application_accounts", :force => true do |t|
+    t.string   "name"
+    t.string   "api_key"
+    t.string   "api_secret"
+    t.string   "persistence_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -89,8 +105,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.integer  "image_file_size"
     t.string   "image_file_name"
     t.string   "image_content_type"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "campaigns", :force => true do |t|
@@ -110,8 +126,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.date     "ends_on"
     t.text     "objectives"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                                             :null => false
-    t.datetime "updated_at",                                                                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
   end
 
@@ -125,9 +141,16 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.boolean  "private"
     t.string   "title",                          :default => ""
     t.text     "comment"
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
+  end
+
+  create_table "contact_aliases", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "destroyed_contact_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "contact_opportunities", :force => true do |t|
@@ -135,8 +158,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.integer  "opportunity_id"
     t.string   "role",           :limit => 32
     t.datetime "deleted_at"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "contacts", :force => true do |t|
@@ -144,32 +167,33 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",      :limit => 64,  :default => "",       :null => false
-    t.string   "last_name",       :limit => 64,  :default => "",       :null => false
-    t.string   "access",          :limit => 8,   :default => "Public"
-    t.string   "title",           :limit => 64
-    t.string   "department",      :limit => 64
-    t.string   "source",          :limit => 32
-    t.string   "email",           :limit => 64
-    t.string   "alt_email",       :limit => 64
-    t.string   "phone",           :limit => 32
-    t.string   "mobile",          :limit => 32
-    t.string   "fax",             :limit => 32
-    t.string   "blog",            :limit => 128
-    t.string   "linkedin",        :limit => 128
-    t.string   "facebook",        :limit => 128
-    t.string   "twitter",         :limit => 128
+    t.string   "first_name",                         :default => ""
+    t.string   "last_name",                          :default => ""
+    t.string   "access",              :limit => 8,   :default => "Public"
+    t.string   "title",               :limit => 64
+    t.string   "department",          :limit => 64
+    t.string   "source",              :limit => 32
+    t.string   "email",               :limit => 64
+    t.string   "alt_email",           :limit => 64
+    t.string   "phone",               :limit => 32
+    t.string   "mobile",              :limit => 32
+    t.string   "fax",                 :limit => 32
+    t.string   "blog",                :limit => 128
+    t.string   "linkedin",            :limit => 128
+    t.string   "facebook",            :limit => 128
+    t.string   "twitter",             :limit => 128
     t.date     "born_on"
-    t.boolean  "do_not_call",                    :default => false,    :null => false
+    t.boolean  "do_not_call",                        :default => false,    :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
-    t.string   "skype",           :limit => 128
+    t.string   "email_subscriptions"
+    t.string   "skype",               :limit => 128
   end
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
-  add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "id_last_name_deleted", :unique => true
+  add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "index_contacts_on_user_id_and_last_name_and_deleted_at", :unique => true
 
   create_table "emails", :force => true do |t|
     t.string   "imap_message_id",                                       :null => false
@@ -186,8 +210,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.datetime "sent_at"
     t.datetime "received_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state",           :limit => 16, :default => "Expanded", :null => false
   end
 
@@ -198,8 +222,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.string   "label",      :limit => 128
     t.integer  "position"
     t.string   "hint"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "tag_id"
     t.string   "klass_name", :limit => 32
   end
@@ -217,8 +241,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.boolean  "disabled"
     t.boolean  "required"
     t.integer  "maxlength"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "fields", ["field_group_id"], :name => "index_fields_on_field_group_id"
@@ -247,8 +271,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.integer  "rating",                         :default => 0,        :null => false
     t.boolean  "do_not_call",                    :default => false,    :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
     t.string   "skype",           :limit => 128
   end
@@ -276,20 +300,20 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.decimal  "discount",                      :precision => 12, :scale => 2
     t.date     "closes_on"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                                         :null => false
-    t.datetime "updated_at",                                                                         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
   end
 
   add_index "opportunities", ["assigned_to"], :name => "index_opportunities_on_assigned_to"
-  add_index "opportunities", ["user_id", "name", "deleted_at"], :name => "id_name_deleted", :unique => true
+  add_index "opportunities", ["user_id", "name", "deleted_at"], :name => "index_opportunities_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "permissions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "asset_id"
     t.string   "asset_type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "permissions", ["asset_id", "asset_type"], :name => "index_permissions_on_asset_id_and_asset_type"
@@ -299,8 +323,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.integer  "user_id"
     t.string   "name",       :limit => 32, :default => "", :null => false
     t.text     "value"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "preferences", ["user_id", "name"], :name => "index_preferences_on_user_id_and_name"
@@ -308,8 +332,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
@@ -318,8 +342,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   create_table "settings", :force => true do |t|
     t.string   "name",       :limit => 32, :default => "", :null => false
     t.text     "value"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
@@ -338,7 +362,10 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
-    t.string "name"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "taggable_type"
   end
 
   create_table "tasks", :force => true do |t|
@@ -354,8 +381,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.datetime "due_at"
     t.datetime "completed_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
   end
 
@@ -387,8 +414,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.string   "current_login_ip"
     t.integer  "login_count",                       :default => 0,     :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "admin",                             :default => false, :null => false
     t.datetime "suspended_at"
     t.string   "single_access_token"
@@ -408,6 +435,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
+    t.integer  "related_id"
+    t.string   "related_type"
   end
 
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"

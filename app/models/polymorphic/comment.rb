@@ -34,22 +34,12 @@
 class Comment < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :commentable, :polymorphic => true
-  has_many    :activities, :as => :subject#, :order => 'created_at DESC'
 
-  #~ default_scope order('created_at DESC')
   scope :created_by, lambda { |user| where(:user_id => user.id) }
 
   validates_presence_of :user, :commentable, :comment
-  after_create :log_activity
+  has_paper_trail :meta => { :related => :commentable }
 
   def expanded?;  self.state == "Expanded";  end
   def collapsed?; self.state == "Collapsed"; end
-
-  private
-  def log_activity
-    current_user = User.find(user_id)
-    Activity.log(current_user, commentable, :commented) if current_user
-  end
-
 end
-

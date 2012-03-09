@@ -38,7 +38,7 @@
 class Address < ActiveRecord::Base
   belongs_to :addressable, :polymorphic => true
 
-  has_paper_trail
+  has_paper_trail :meta => { :related => :addressable }
 
   scope :business, :conditions => "address_type='Business'"
   scope :billing,  :conditions => "address_type='Billing'"
@@ -53,6 +53,4 @@ class Address < ActiveRecord::Base
       self.full_address.blank?
     end
   end
-
 end
-

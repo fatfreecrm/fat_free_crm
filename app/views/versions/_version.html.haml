@@ -22,9 +22,9 @@
           - second = change.second
         - if [first, second].any?(&:present?)
           %br
-        - if first.blank? and second.present?
-          = t('version.set', :attr => label, :to => second)
-        - elsif first.present? and second.present?
-          = t('version.change', :attr => label, :from => first, :to => second)
-        - elsif first.present? and second.blank?
-          = t('version.unset', :attr => label, :from => first)
+          - if first.blank? and second.present?
+            = t('version.set', :attr => label, :to => second)
+          - elsif first.present? and second.present?
+            = t('version.change', :attr => label, :from => first, :to => second)
+          - elsif first.present? and second.blank?
+            = t('version.unset', :attr => label, :from => first)

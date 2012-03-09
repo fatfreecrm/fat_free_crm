@@ -46,7 +46,6 @@ class Opportunity < ActiveRecord::Base
   has_many    :contact_opportunities, :dependent => :destroy
   has_many    :contacts, :through => :contact_opportunities, :uniq => true, :order => "contacts.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
-  has_many    :activities, :as => :subject#, :order => 'created_at DESC'
   has_many    :emails, :as => :mediator
 
   scope :state, lambda { |filters|

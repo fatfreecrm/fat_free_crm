@@ -37,6 +37,6 @@
     %br
     = content_tag(:div, t(:versions), :class => :subtitle)
     .list#versions
-      - @versions = @account.versions.except(:order).order('created_at DESC').paginate(:page => 1, :per_page => 20)
+      - @versions = Version.history(@account).paginate(:page => 1, :per_page => 20)
       = render :partial => "versions/version", :collection => @versions
     = will_paginate @versions, :id => true, :params => {:action => :versions}

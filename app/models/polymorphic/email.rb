@@ -43,8 +43,7 @@ class Email < ActiveRecord::Base
   belongs_to :mediator, :polymorphic => true
   belongs_to :user
 
-  has_paper_trail
-  after_create :log_activity
+  has_paper_trail :meta => { :related => :mediator }
 
   def expanded?;  self.state == "Expanded";  end
   def collapsed?; self.state == "Collapsed"; end
@@ -59,11 +58,4 @@ class Email < ActiveRecord::Base
     end
   end
   alias_method_chain :body, :textile
-
-  private
-  def log_activity
-    current_user = User.find(user_id)
-    Activity.log(current_user, mediator, :email) if current_user
-  end
 end
-

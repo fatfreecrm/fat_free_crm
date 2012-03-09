@@ -47,7 +47,6 @@ class Campaign < ActiveRecord::Base
   has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
   has_many    :leads, :dependent => :destroy, :order => "id DESC"
   has_many    :opportunities, :dependent => :destroy, :order => "id DESC"
-  has_many    :activities, :as => :subject#, :order => 'created_at DESC'
   has_many    :emails, :as => :mediator
 
   scope :state, lambda { |filters|
