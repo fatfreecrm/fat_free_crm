@@ -32,8 +32,6 @@ matrix:
     
 bundler_args: --path=vendor/bundle --without heroku
 
-before_install: gem install bundler --pre
-
 before_script:
   - sh -c "cp config/database.$DB.yml config/database.yml"
   - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
