@@ -19,7 +19,7 @@
     %dt{ hidden_if(email.expanded?), :id => dom_id(email, :truncated) }
       %p
         = h(email.subject)
-        %tt= " - " << truncated
+        %tt= " - ".html_safe << truncated
     %dt.textile{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
       .email_content
         %p= h(email.subject)
