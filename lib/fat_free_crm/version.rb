@@ -18,7 +18,7 @@
 module FatFreeCRM
   module VERSION #:nodoc:
     MAJOR = 0
-    MINOR = 2
+    MINOR = 11
     TINY  = 0
     PRE   = nil
 
