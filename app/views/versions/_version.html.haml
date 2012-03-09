@@ -4,7 +4,10 @@
       =# link_to_edit(version) + " | "
       =# link_to_delete(version)
 
-    - user_name = version.whodunnit ? User.find(version.whodunnit).name : t('version.anonymous')
+    - if user = User.find_by_id(version.whodunnit)
+      - user_name = user.name
+    - else
+      - user_name = t('version.anonymous')
     = t('version.' + version.event, :by => user_name, :when => time_ago_in_words(version.created_at))
     %tt
       - version.changeset.each do |attr_name, change|
