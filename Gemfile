@@ -6,9 +6,9 @@ def remove(name)
 end
 
 # Replaces an existing gem dependency (e.g. from gemspec) with an alternate source.
-def gem(*args)
-  remove(args.first)
-  super(*args)
+def gem(name, *args)
+  remove(name)
+  super
 end
 
 # Load development dependencies from gemspec
