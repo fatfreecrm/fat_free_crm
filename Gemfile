@@ -29,9 +29,9 @@ remove 'fat_free_crm'
 
 gem 'pg', '~> 0.12.2'
 
-group :test do
-  gem 'rspec'
-  gem 'steak',        :require => false
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'steak', :require => false
   gem 'headless'
   unless ENV["CI"]
     gem 'ruby-debug',   :platform => :mri_18

@@ -1,10 +1,8 @@
-if defined?(Rake)
-  module Rake
-    Task.class_eval do
-      def self.sanitize_and_execute(sql)
-        sanitized = ActiveRecord::Base.send(:sanitize_sql, sql, nil)
-        ActiveRecord::Base.connection.execute(sanitized)
-      end
+module Rake
+  Task.class_eval do   
+    # Removes a Rake task
+    def self.remove(task_name)
+      Rake.application.instance_variable_get('@tasks').delete(task_name.to_s)
     end
   end
 end

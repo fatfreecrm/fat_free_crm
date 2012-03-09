@@ -16,7 +16,6 @@
 #------------------------------------------------------------------------------
 
 require 'fileutils' 
-require "fat_free_crm/gem_ext/rake"
 
 namespace :ffcrm do
   namespace :config do
