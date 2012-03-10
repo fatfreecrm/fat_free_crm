@@ -134,21 +134,40 @@ Now you are ready to create the database:
 rake db:create
 ```
 
-#### Set Up Application
+#### Configure Application (Optional)
 
-The next step is to load default Fat Free CRM settings, such as menu structures,
-default colors, etc. and create the Admin user.
+You can configure Fat Free CRM settings, such as your host, base URL, language (locale),
+menu structures, default colors, and email authentication.
 
-Using the provided sample, create your <tt>config/settings.yml</tt>:
+Fat Free CRM settings are stored in three places, and are loaded in the following order:
+
+1. config/settings.default.yml
+2. config/settings.yml  (if exists)
+3. 'settings' table in database  (if exists)
+
+Settings loaded last have the highest priority, and override any settings from the previous sources.
+
+To override any settings `config/settings.default.yml`, create a blank file at `config/settings.yml`.
+Copy the settings that you want to override from `config/settings.default.yml`, 
+and configure the values.
+Finally, commit `config/settings.yml` to the git repo with the following commands:
 
 ```bash
-cp config/settings.default.yml config/settings.yml
+git add -f config/settings.yml
+git commit -m "Added config/settings.yml"
 ```
 
-* Edit <tt>config/settings.yml</tt> and configure any required settings, such as your host, base URL and language (locale).
+Example:
 
+If all you want to do is change the language to French, your `config/settings.yml` file only needs to contain the following line:
 
-Next, run the following rake task:
+```
+:locale: "fr"
+```
+
+#### Set Up Admin User
+
+Run the following rake task:
 
 ```bash
 rake crm:setup
