@@ -29,4 +29,5 @@ Design
 .sass-cache
 *~
 *.swp
+*.gem
 
