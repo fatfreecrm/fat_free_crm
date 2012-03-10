@@ -47,6 +47,6 @@ module FatFreeCRM
   # Return the root path of either the Application or the Engine,
   # depending on how Fat Free CRM is loaded
   def self.root
-    (defined?(Application) ? Application : Engine).root
+    (defined?(FatFreeCRM::Engine) ? Engine : Application).root
   end
 end
