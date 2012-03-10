@@ -92,9 +92,6 @@ To set up Fat Free CRM on Heroku, run the following commands:
 
 ```bash
 app_name="{{organization-crm}}" # <- Replace with your desired application name
-cp config/settings.yml.example config/settings.yml
-git add -f config/settings.yml
-git commit -m "Added default settings.yml"
 heroku create $app_name --stack cedar
 git push heroku master
 heroku run rake crm:setup USERNAME=admin PASSWORD=admin EMAIL=admin@example.com
