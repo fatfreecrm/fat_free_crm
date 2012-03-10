@@ -280,7 +280,7 @@ DEPENDENCIES
   coffee-rails (>= 3.1.1)
   database_cleaner
   factory_girl
-  factory_girl_rails (~> 1.6.0)
+  factory_girl_rails (= 1.6.0)
   ffaker (>= 1.12.0)
   fuubar
   guard
