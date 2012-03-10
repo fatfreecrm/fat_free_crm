@@ -1,5 +1,13 @@
 GIT
-  remote: git://github.com/ndbroadbent/ransack.git
+  remote: git://github.com/fatfreecrm/chosen-rails.git
+  revision: 33c92a8554ee14d11b7293eb531371a05c0a0b67
+  specs:
+    chosen-rails (0.9.5)
+      railties (~> 3.0)
+      thor (~> 0.14)
+
+GIT
+  remote: git://github.com/fatfreecrm/ransack.git
   revision: 92f5812d4320e5f1959f844d19d0386bb5654a08
   specs:
     ransack (0.6.0)
@@ -65,9 +73,6 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.3.1)
       ffi (~> 1.0.6)
-    chosen-rails (0.9.7.1)
-      railties (~> 3.0)
-      thor (~> 0.14)
     chronic (0.6.7)
     cocaine (0.2.1)
     coffee-rails (3.2.2)
@@ -228,7 +233,7 @@ DEPENDENCIES
   ajax-chosen-rails (>= 0.1.5)
   authlogic (~> 3.1.0)
   capybara
-  chosen-rails
+  chosen-rails!
   coffee-rails
   database_cleaner
   factory_girl (~> 2.6.1)
