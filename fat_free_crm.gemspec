@@ -6,7 +6,9 @@ Gem::Specification.new do |gem|
   gem.name = 'fat_free_crm'
   gem.authors = ['Michael Dvorkin', 'Ben Tillman', 'Nathan Broadbent', 'Stephen Kenworthy']
   gem.summary = 'Fat Free CRM'
-  gem.description = 'Fat Free CRM'
+  gem.description = 'An open source, Ruby on Rails customer relationship management platform'
+  gem.homepage = 'http://fatfreecrm.com'
+  gem.email = ['mike@fatfreecrm.com', 'nathan@fatfreecrm.com']
   gem.files = `git ls-files`.split("\n")
   gem.version = FatFreeCRM::VERSION::STRING
 
