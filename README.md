@@ -145,7 +145,7 @@ default colors, etc. and create the Admin user.
 Using the provided sample, create your <tt>config/settings.yml</tt>:
 
 ```bash
-cp config/settings.yml.example config/settings.yml
+cp config/settings.default.yml config/settings.yml
 ```
 
 * Edit <tt>config/settings.yml</tt> and configure any required settings, such as your host, base URL and language (locale).
