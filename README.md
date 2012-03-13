@@ -87,6 +87,11 @@ Installing Fat Free CRM on Microsoft Windows
 
 Run this bash script to quickly setup a Ubuntu server
 
+### [Running Fat Free CRM as a Rails Engine](http://guides.fatfreecrm.com/Running-as-a-Rails-Engine.html)
+
+Run the Fat Free CRM gem within a separate Rails application.
+This is the best way to deploy Fat Free CRM if you need to add plugins or make any customizations.
+
 
 ## Upgrading from previous versions of Fat Free CRM
 
