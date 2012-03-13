@@ -58,13 +58,34 @@ Pull requests and bug reports are always welcome!
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
 * ImageMagick (optional, only needed if you would like to use avatars)
 
-(Ruby on Rails v3 and other gem dependencies will be installed automatically by Bundler.)
+(Ruby on Rails and other gem dependencies will be installed automatically by Bundler.)
 
 
 ### Downloads
 
 * Git source code repository: git://github.com/fatfreecrm/fat_free_crm.git
 * .zip or .tgz archives: http://github.com/fatfreecrm/fat_free_crm/downloads
+
+
+## Installation
+
+Please view one of the following installation guides:
+
+### [Setup Linux or MacOS](http://guides.fatfreecrm.com/Setup-Linux-or-MacOS.html)
+
+Installing Fat Free CRM on Linux or Mac OS X
+
+### [Setup Heroku](http://guides.fatfreecrm.com/Setup-Heroku.html)
+
+Setting up a Heroku instance for Fat Free CRM
+
+### [Setup Microsoft Windows](http://guides.fatfreecrm.com/Setup-Microsoft-Windows.html)
+
+Installing Fat Free CRM on Microsoft Windows
+
+### [Ubuntu Server Setup Script](http://guides.fatfreecrm.com/Ubuntu-Server-Setup-Script.html)
+
+Run this bash script to quickly setup a Ubuntu server
 
 
 ### Upgrading from previous versions of Fat Free CRM
@@ -80,150 +101,21 @@ rake ffcrm:upgrade:schema         # Updates your schema to use the new timestamp
 rake db:migrate                   # Runs any new database migrations.
 ```
 
-## Install on Heroku
-
-You will need the heroku gem on your system.
-
-```bash
-gem install heroku
-```
-
-To set up Fat Free CRM on Heroku, run the following commands:
-
-```bash
-app_name="{{organization-crm}}" # <- Replace with your desired application name
-heroku create $app_name --stack cedar
-git push heroku master
-heroku run rake ffcrm:setup USERNAME=admin PASSWORD=admin EMAIL=admin@example.com
-heroku config:add HEROKU=true
-```
-
-## Install locally, or on a server
-
-#### Set Up Configuration (Database & Settings)
-
-Fat Free CRM supports PostGreSQL, MySQL and SQLite databases. The source code comes with
-sample database configuration files, such as: <tt>config/database.mysql.yml</tt>
-for MySQL and <tt>config/database.sqlite.yml</tt> for SQLite.
-
-Based on your choice of database, create <tt>config/database.yml</tt>:
-
-```bash
-cp config/database.mysql.yml config/database.yml
-```
-
-* Edit <tt>config/database.yml</tt> and specify database names and authentication details.
-
-* Then, edit your <tt>Gemfile</tt> and uncomment only your chosen database.
-
-
-#### Install Gem Dependencies
-
-After you have uncommented the right database adapter in your <tt>Gemfile</tt>,
-run the following command from the application's root directory:
-
-```bash
-bundle install --without heroku
-```
-
-#### Create Database
-
-Now you are ready to create the database:
-
-```bash
-rake db:create
-```
-
-#### Configure Application (Optional)
-
-You can configure Fat Free CRM settings, such as your host, base URL, language (locale),
-menu structures, default colors, and email authentication.
-
-Fat Free CRM settings are stored in three places, and are loaded in the following order:
-
-1. config/settings.default.yml
-2. config/settings.yml  (if exists)
-3. 'settings' table in database  (if exists)
-
-Settings loaded last have the highest priority, and override any settings from the previous sources.
-
-To override any settings `config/settings.default.yml`, create a blank file at `config/settings.yml`.
-Copy the settings that you want to override from `config/settings.default.yml`, 
-and configure the values.
-Finally, commit `config/settings.yml` to the git repo with the following commands:
-
-```bash
-git add -f config/settings.yml
-git commit -m "Added config/settings.yml"
-```
-
-Example:
-
-If all you want to do is change the language to French, your `config/settings.yml` file only needs to contain the following line:
-
-```
-:locale: "fr"
-```
-
-#### Set Up Admin User
-
-Run the following rake task:
-
-```bash
-rake ffcrm:setup
-```
-
-The previous command will prompt you for an admin user, password and email.
-If you want to run this task without any user input, you can set the following variables:
-
-```bash
-rake ffcrm:setup USERNAME=admin PASSWORD=password EMAIL=admin@example.com
-```
-
-#### Load Demo Data (Optional)
-
-You can test drive Fat Free CRM by loading sample records that are generated
-on the fly mimic the actual use.
-
-**IMPORTANT**: Loading demo will delete all existing data from your database.
-
-```bash
-rake ffcrm:demo:load
-```
-
-Among other things the demo generator creates 8 sample user records with the
-following usernames: <tt>aaron</tt>, <tt>ben</tt>, <tt>cindy</tt>, <tt>dan</tt>,
-<tt>elizabeth</tt>, <tt>frank</tt>, <tt>george</tt>, and <tt>heather</tt>.
-You can log in with any of these names using the name as password.
-The demo site at http://demo.fatfreecrm.com provides access as a sample user as well.
-
-You can reset the database and reload demo data at any time by using:
-
-```bash
-rake ffcrm:demo:reload
-```
-
-#### Run the App
-
-Now you should be able to launch the Rails server and point your web browser
-to http://localhost:3000
-
-```bash
-rails server
-```
 
 # Resources
 
 |||
 |-----------------------------------:|:--------------------------|
-|                 **Home page**: | http://www.fatfreecrm.com |
-|               **Online demo**: | http://demo.fatfreecrm.com |
-|              **Project page**: | http://github.com/michaeldv/fat_free_crm/tree/master |
-|         **Features and bugs**: | http://fatfreecrm.lighthouseapp.com |
-|    **Twitter commit updates**: | http://twitter.com/fatfreecrm |
-|       **User's Google group**: | http://groups.google.com/group/fat-free-crm-users |
-|  **Developer's Google group**: | http://groups.google.com/group/fat-free-crm-dev |
-|               **IRC channel**: | [#fatfreecrm](http://webchat.freenode.net/) on irc.freenode.net |
+|                 **Home Page**: | http://www.fatfreecrm.com |
+|                    **Guides**: | http://guides.fatfreecrm.com |
+|               **Online Demo**: | http://demo.fatfreecrm.com |
+|       **Github Project Page**: | http://github.com/fatfreecrm/fat_free_crm |
+| **Feature Requests and Bugs**: | http://support.fatfreecrm.com/ |
+|                  **RDoc API**: | http://api.fatfreecrm.com |
+|    **Twitter Commit Updates**: | http://twitter.com/fatfreecrm |
+|       **User's Google Group**: | http://groups.google.com/group/fat-free-crm-users |
+|  **Developer's Google Group**: | http://groups.google.com/group/fat-free-crm-dev |
+|               **IRC Channel**: | [#fatfreecrm](http://webchat.freenode.net/) on irc.freenode.net |
 
 
 # For Developers
