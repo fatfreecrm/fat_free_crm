@@ -71,7 +71,7 @@ Pull requests and bug reports are always welcome!
 
 Please view one of the following installation guides:
 
-### [Setup Linux or MacOS](http://guides.fatfreecrm.com/Setup-Linux-or-MacOS.html)
+### [Setup Linux or Mac OS](http://guides.fatfreecrm.com/Setup-Linux-or-Mac-OS.html)
 
 Installing Fat Free CRM on Linux or Mac OS X
 
