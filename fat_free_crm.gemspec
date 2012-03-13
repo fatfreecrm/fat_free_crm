@@ -15,9 +15,9 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rails',               '~> 3.2.2'
   gem.add_dependency 'prototype-rails'
   gem.add_dependency 'jquery-rails'
-  gem.add_dependency 'simple_form',         '~> 1.5.2'
+  gem.add_dependency 'simple_form',         '~> 2.0.1'
   gem.add_dependency 'will_paginate',       '~> 3.0.2'
-  gem.add_dependency 'paperclip',           '~> 2.5.2'
+  gem.add_dependency 'paperclip',           '~> 2.7.0'
   gem.add_dependency 'paper_trail'
   gem.add_dependency 'authlogic',           '~> 3.1.0'
   gem.add_dependency 'acts_as_commentable', '~> 3.0.1'
@@ -40,6 +40,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'database_cleaner'
   gem.add_development_dependency 'fuubar'
   gem.add_development_dependency 'factory_girl', '~> 2.6.1'
+  gem.add_development_dependency 'factory_girl_rails', '~> 1.7.0'
 end
 
 

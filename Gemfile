@@ -28,7 +28,7 @@ gem 'chosen-rails', :git => "git://github.com/fatfreecrm/chosen-rails.git"
 # Remove fat_free_crm from dependencies, to stop it from being auto-required.
 remove 'fat_free_crm'
 
-gem 'pg', '~> 0.12.2'
+gem 'pg', '~> 0.13.2'
 
 group :development, :test do
   gem 'rspec-rails'
