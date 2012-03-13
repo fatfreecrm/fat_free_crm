@@ -646,9 +646,9 @@ en-US:
   #----------------------------------------------------------------------------
   versions: History
   version:
-    create: Created by %{by} %{when} ago.
-    update: Modified by %{by} %{when} ago.
-    destroy: Destroyed by %{by} %{when} ago.
+    create: %{item} created by %{by} %{when} ago.
+    update: %{item} modified by %{by} %{when} ago.
+    destroy: %{item} destroyed by %{by} %{when} ago.
     set: %{attr} set to %{to}
     unset: %{attr} unset
     change: %{attr} changed from %{from} to %{to}
@@ -776,7 +776,7 @@ en-US:
   tag_with_taggings_confirm_delete: "If this tag is deleted, it will be removed from %{value} records."
   msg_cant_delete_tag: "Couldn't delete '%{value}' since it has associated Field Groups."
 
-  
+
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   views:
