@@ -63,8 +63,8 @@ Pull requests and bug reports are always welcome!
 
 ### Downloads
 
-* Git source code repository: git://github.com/fatfreecrm/fat_free_crm.git
-* .zip or .tgz archives: http://github.com/fatfreecrm/fat_free_crm/downloads
+* Git source code repository: `git clone git://github.com/fatfreecrm/fat_free_crm.git`
+* **.zip** or **.tgz** archives: http://github.com/fatfreecrm/fat_free_crm/downloads
 
 
 ## Installation
