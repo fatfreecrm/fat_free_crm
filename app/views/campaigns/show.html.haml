@@ -23,8 +23,6 @@
     = render :partial => "leads/lead", :collection => @campaign.leads.paginate(:page => 1, :per_page => 20)
   = will_paginate @leads, :id => true, :params => {:action => :leads}
 
-  %br( style="clear:both" )
-
   = section(@campaign, :opportunities)
   .list#opportunities
     - @opportunities = @campaign.opportunities.paginate(:page => 1, :per_page => 20)
@@ -33,12 +31,4 @@
 
   = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
 
-  %br( style="clear:both" )
-
-  - if Setting.paper_trail_ui_enabled
-    %br
-    = content_tag(:div, t(:versions), :class => :subtitle)
-    .list#versions
-      - @versions = Version.history(@campaign).paginate(:page => 1, :per_page => 20)
-      = render :partial => "versions/version", :collection => @versions
-    = will_paginate @versions, :id => true, :params => {:action => :versions}
+  = render :partial => "versions/versions", :locals => {:object => @campaign}

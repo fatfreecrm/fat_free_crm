@@ -17,8 +17,6 @@
   .log#tasks
     = render "shared/tasks"
 
-  %br( style="clear:both" )
-
   = section(@contact, :opportunities)
   .list#opportunities
     - @opportunities = @contact.opportunities.paginate(:page => 1, :per_page => 20)
@@ -27,12 +25,4 @@
 
   = load_select_popups_for(@contact, :tasks, :opportunities)
 
-  %br( style="clear:both" )
-
-  - if Setting.paper_trail_ui_enabled
-    %br
-    = content_tag(:div, t(:versions), :class => :subtitle)
-    .list#versions
-      - @versions = Version.history(@contact).paginate(:page => 1, :per_page => 20)
-      = render :partial => "versions/version", :collection => @versions
-    = will_paginate @versions, :id => true, :params => {:action => :versions}
+  = render :partial => "versions/versions", :locals => {:object => @contact}
