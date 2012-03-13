@@ -10,7 +10,7 @@ module SimpleForm
           options[:html][:novalidate] = !SimpleForm.browser_validations
         end
 
-        with_custom_field_error_proc do
+        with_simple_form_field_error_proc do
           form_for(record, options, &block)
         end
       end
