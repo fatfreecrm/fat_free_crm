@@ -88,7 +88,7 @@ Installing Fat Free CRM on Microsoft Windows
 Run this bash script to quickly setup a Ubuntu server
 
 
-### Upgrading from previous versions of Fat Free CRM
+## Upgrading from previous versions of Fat Free CRM
 
 If you are upgrading from version 0.10.1 or below to the latest Rails 3.x version, your database schema
 needs to be updated.
@@ -102,7 +102,7 @@ rake db:migrate                   # Runs any new database migrations.
 ```
 
 
-# Resources
+## Resources
 
 |||
 |-----------------------------------:|:--------------------------|
@@ -118,7 +118,7 @@ rake db:migrate                   # Runs any new database migrations.
 |               **IRC Channel**: | [#fatfreecrm](http://webchat.freenode.net/) on irc.freenode.net |
 
 
-# For Developers
+## For Developers
 
 Fat Free CRM can be customized by implementing callback hooks and extended by
 creating Rails Engines plugins. Check out these sample repositories demonstrating
