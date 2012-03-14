@@ -1,12 +1,12 @@
 # == Schema Information
 #
-# Table name: activities
+# Table name: versions
 #
 #  id           :integer         not null, primary key
 #  user_id      :integer
-#  subject_id   :integer
-#  subject_type :string(255)
-#  action       :string(32)      default("created")
+#  item_id   :integer
+#  item_type :string(255)
+#  event       :string(32)      default("created")
 #  info         :string(255)     default("")
 #  private      :boolean         default(FALSE)
 #  created_at   :datetime
@@ -15,139 +15,139 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Activity do
+describe Version do
 
   before { login }
 
   it "should create a new instance given valid attributes" do
-    Activity.create!(:user => FactoryGirl.create(:user), :subject => FactoryGirl.create(:lead))
+    Version.create!(:user => FactoryGirl.create(:user), :item => FactoryGirl.create(:lead))
   end
 
-  describe "with multiple activity records" do
+  describe "with multiple version records" do
     before do
       @user = FactoryGirl.create(:user)
-      @actions = %w(created deleted updated viewed).freeze
-      @actions.each_with_index do |action, index|
-        FactoryGirl.create(:activity, :action => action, :user => @user, :subject => FactoryGirl.create(:lead))
-        FactoryGirl.create(:activity, :action => action, :subject => FactoryGirl.create(:lead)) # different user
+      @events = %w(created deleted updated viewed).freeze
+      @events.each_with_index do |event, index|
+        FactoryGirl.create(:version, :event => event, :user => @user, :item => FactoryGirl.create(:lead))
+        FactoryGirl.create(:version, :event => event, :item => FactoryGirl.create(:lead)) # different user
       end
     end
 
-    it "should select all activities except one" do
-      @activities = Activity.for(@user).without_actions(:viewed)
-      @activities.map(&:action).sort.should == %w(created deleted updated)
+    it "should select all versions except one" do
+      @versions = Version.for(@user).without_events(:viewed)
+      @versions.map(&:event).sort.should == %w(created deleted updated)
     end
 
-    it "should select all activities except many" do
-      @activities = Activity.for(@user).without_actions(:created, :updated, :deleted)
-      @activities.map(&:action).should == %w(viewed)
+    it "should select all versions except many" do
+      @versions = Version.for(@user).without_events(:created, :updated, :deleted)
+      @versions.map(&:event).should == %w(viewed)
     end
 
-    it "should select one requested activity" do
-      @activities = Activity.for(@user).with_actions(:deleted)
-      @activities.map(&:action).should == %w(deleted)
+    it "should select one requested version" do
+      @versions = Version.for(@user).with_events(:deleted)
+      @versions.map(&:event).should == %w(deleted)
     end
 
-    it "should select many requested activities" do
-      @activities = Activity.for(@user).with_actions(:created, :updated)
-      @activities.map(&:action).sort.should == %w(created updated)
+    it "should select many requested versions" do
+      @versions = Version.for(@user).with_events(:created, :updated)
+      @versions.map(&:event).sort.should == %w(created updated)
     end
 
-    it "should select activities for given user" do
-      @activities = Activity.for(@user)
-      @activities.map(&:action).sort.should == @actions
+    it "should select versions for given user" do
+      @versions = Version.for(@user)
+      @versions.map(&:event).sort.should == @events
     end
   end
 
-  %w(account campaign contact lead opportunity task).each do |subject|
-    describe "Create, update, and delete (#{subject})" do
+  %w(account campaign contact lead opportunity task).each do |item|
+    describe "Create, update, and delete (#{item})" do
       before :each do
-        @subject = FactoryGirl.create(subject.to_sym, :user => @current_user)
-        @conditions = [ 'user_id = ? AND subject_id = ? AND subject_type = ? AND action = ?', @current_user.id, @subject.id, @subject.class.name ]
+        @item = FactoryGirl.create(item.to_sym, :user => @current_user)
+        @conditions = [ 'user_id = ? AND item_id = ? AND item_type = ? AND event = ?', @current_user.id, @item.id, @item.class.name ]
       end
 
-      it "should add an activity when creating new #{subject}" do
-        @activity = Activity.where(@conditions << 'created').first
-        @activity.should_not == nil
-        @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
+      it "should add an version when creating new #{item}" do
+        @version = Version.where(@conditions << 'created').first
+        @version.should_not == nil
+        @version.info.should == (@item.respond_to?(:full_name) ? @item.full_name : @item.name)
       end
 
-      it "should add an activity when updating existing #{subject}" do
-        if @subject.respond_to?(:full_name)
-          @subject.update_attributes(:first_name => "Billy", :last_name => "Bones")
+      it "should add an version when updating existing #{item}" do
+        if @item.respond_to?(:full_name)
+          @item.update_attributes(:first_name => "Billy", :last_name => "Bones")
         else
-          @subject.update_attributes(:name => "Billy Bones")
+          @item.update_attributes(:name => "Billy Bones")
         end
-        @activity = Activity.where(@conditions << 'updated').first
+        @version = Version.where(@conditions << 'updated').first
 
-        @activity.should_not == nil
-        @activity.info.ends_with?("Billy Bones").should == true
+        @version.should_not == nil
+        @version.info.ends_with?("Billy Bones").should == true
       end
 
-      it "should add an activity when deleting #{subject}" do
-        @subject.destroy
-        @activity = Activity.where(@conditions << 'deleted').first
+      it "should add an version when deleting #{item}" do
+        @item.destroy
+        @version = Version.where(@conditions << 'deleted').first
 
-        @activity.should_not == nil
-        @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
+        @version.should_not == nil
+        @version.info.should == (@item.respond_to?(:full_name) ? @item.full_name : @item.name)
       end
 
-      it "should add an activity when commenting on a #{subject}" do
-        @comment = FactoryGirl.create(:comment, :commentable => @subject, :user => @current_user)
+      it "should add an version when commenting on a #{item}" do
+        @comment = FactoryGirl.create(:comment, :commentable => @item, :user => @current_user)
 
-        @activity = Activity.where(@conditions << 'commented').first
-        @activity.should_not == nil
-        @activity.info.should == (@subject.respond_to?(:full_name) ? @subject.full_name : @subject.name)
+        @version = Version.where(@conditions << 'commented').first
+        @version.should_not == nil
+        @version.info.should == (@item.respond_to?(:full_name) ? @item.full_name : @item.name)
       end
     end
   end
 
-  %w(account campaign contact lead opportunity).each do |subject|
-    describe "Recently viewed items (#{subject})" do
+  %w(account campaign contact lead opportunity).each do |item|
+    describe "Recently viewed items (#{item})" do
       before do
-        @subject = FactoryGirl.create(subject.to_sym, :user => @current_user)
-        @conditions = [ "user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @current_user.id, @subject.id, @subject.class.name ]
+        @item = FactoryGirl.create(item.to_sym, :user => @current_user)
+        @conditions = [ "user_id = ? AND item_id = ? AND item_type = ? AND event = 'viewed'", @current_user.id, @item.id, @item.class.name ]
       end
 
-      it "creating a new #{subject} should also make it a recently viewed item" do
-        @activity = Activity.where(@conditions).first
+      it "creating a new #{item} should also make it a recently viewed item" do
+        @version = Version.where(@conditions).first
 
-        @activity.should_not == nil
+        @version.should_not == nil
       end
 
-      it "updating #{subject} should also mark it as recently viewed" do
-        @before = Activity.where(@conditions).first
-        if @subject.respond_to?(:full_name)
-          @subject.update_attributes(:first_name => "Billy", :last_name => "Bones")
+      it "updating #{item} should also mark it as recently viewed" do
+        @before = Version.where(@conditions).first
+        if @item.respond_to?(:full_name)
+          @item.update_attributes(:first_name => "Billy", :last_name => "Bones")
         else
-          @subject.update_attributes(:name => "Billy Bones")
+          @item.update_attributes(:name => "Billy Bones")
         end
-        @after = Activity.where(@conditions).first
+        @after = Version.where(@conditions).first
 
         @before.should_not == nil
         @after.should_not == nil
         @after.updated_at.should >= @before.updated_at
       end
 
-      it "deleting #{subject} should remove it from recently viewed items" do
-        @subject.destroy
-        @activity = Activity.where(@conditions).first
+      it "deleting #{item} should remove it from recently viewed items" do
+        @item.destroy
+        @version = Version.where(@conditions).first
 
-        @activity.should be_nil
+        @version.should be_nil
       end
 
-      it "deleting #{subject} should remove it from recently viewed items for all other users" do
+      it "deleting #{item} should remove it from recently viewed items for all other users" do
         @somebody = FactoryGirl.create(:user)
-        @subject = FactoryGirl.create(subject.to_sym, :user => @somebody,  :access => "Public")
-        FactoryGirl.create(:activity, :user => @somebody, :subject => @subject, :action => "viewed")
+        @item = FactoryGirl.create(item.to_sym, :user => @somebody,  :access => "Public")
+        FactoryGirl.create(:version, :user => @somebody, :item => @item, :event => "viewed")
 
-        @activity = Activity.where("user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @somebody.id, @subject.id, @subject.class.name).first
-        @activity.should_not == nil
+        @version = Version.where("user_id = ? AND item_id = ? AND item_type = ? AND event = 'viewed'", @somebody.id, @item.id, @item.class.name).first
+        @version.should_not == nil
 
         # Now @current_user destroys somebody's object: somebody should no longer have it :viewed.
-        @subject.destroy
-        @activity = Activity.where("user_id = ? AND subject_id = ? AND subject_type = ? AND action = 'viewed'", @somebody.id, @subject.id, @subject.class.name).first
-        @activity.should be_nil
+        @item.destroy
+        @version = Version.where("user_id = ? AND item_id = ? AND item_type = ? AND event = 'viewed'", @somebody.id, @item.id, @item.class.name).first
+        @version.should be_nil
       end
     end
   end
@@ -155,149 +155,149 @@ describe Activity do
   describe "Recently viewed items (task)" do
     before do
       @task = FactoryGirl.create(:task)
-      @conditions = [ "subject_id = ? AND subject_type = 'Task'", @task.id ]
+      @conditions = [ "item_id = ? AND item_type = 'Task'", @task.id ]
     end
 
     it "creating a new task should not add it to recently viewed items list" do
-      @activities = Activity.where(@conditions)
+      @versions = Version.where(@conditions)
 
-      @activities.map(&:action).should == %w(created) # but not viewed
+      @versions.map(&:event).should == %w(created) # but not viewed
     end
 
     it "updating a new task should not add it to recently viewed items list" do
       @task.update_attribute(:updated_at, 1.second.ago)
-      @activities = Activity.where(@conditions)
+      @versions = Version.where(@conditions)
 
-      @activities.map(&:action).sort.should == %w(created updated) # but not viewed
+      @versions.map(&:event).sort.should == %w(created updated) # but not viewed
     end
   end
 
   describe "Action refinements for task updates" do
     before do
       @task = FactoryGirl.create(:task, :user => @current_user)
-      @conditions = [ "subject_id=? AND subject_type='Task' AND user_id=?", @task.id, @current_user ]
+      @conditions = [ "item_id=? AND item_type='Task' AND user_id=?", @task.id, @current_user ]
     end
 
-    it "should create 'completed' task action" do
+    it "should create 'completed' task event" do
       @task.update_attribute(:completed_at, 1.second.ago)
-      @activities = Activity.where(@conditions)
+      @versions = Version.where(@conditions)
 
-      @activities.map(&:action).sort.should == %w(completed created)
+      @versions.map(&:event).sort.should == %w(completed created)
     end
 
-    it "should create 'reassigned' task action" do
+    it "should create 'reassigned' task event" do
       @task.update_attribute(:assigned_to, @current_user.id + 1)
-      @activities = Activity.where(@conditions)
+      @versions = Version.where(@conditions)
 
-      @activities.map(&:action).sort.should == %w(created reassigned)
+      @versions.map(&:event).sort.should == %w(created reassigned)
     end
 
-    it "should create 'rescheduled' task action" do
+    it "should create 'rescheduled' task event" do
       @task.update_attribute(:bucket, "due_tomorrow") # FactoryGirl creates :due_asap task
-      @activities = Activity.where(@conditions)
+      @versions = Version.where(@conditions)
 
-      @activities.map(&:action).sort.should == %w(created rescheduled)
+      @versions.map(&:event).sort.should == %w(created rescheduled)
     end
   end
 
   describe "Rejecting a lead" do
     before do
       @lead = FactoryGirl.create(:lead, :user => @current_user, :status => "new")
-      @conditions = [ "subject_id = ? AND subject_type = 'Lead' AND user_id = ?", @lead.id, @current_user ]
+      @conditions = [ "item_id = ? AND item_type = 'Lead' AND user_id = ?", @lead.id, @current_user ]
     end
 
-    it "should create 'rejected' lead action" do
+    it "should create 'rejected' lead event" do
       @lead.update_attribute(:status, "rejected")
-      @activities = Activity.where(@conditions)
+      @versions = Version.where(@conditions)
 
-      @activities.map(&:action).sort.should == %w(created rejected viewed)
+      @versions.map(&:event).sort.should == %w(created rejected viewed)
     end
 
     it "should not mark it as recently viewed" do
-      Activity.delete_all                                   # delete :created and :viewed
+      Version.delete_all                                   # delete :created and :viewed
       @lead.update_attribute(:status, "rejected")
-      @activities = Activity.where(@conditions)
+      @versions = Version.where(@conditions)
 
-      @activities.map(&:action).sort.should == %w(rejected) # no :viewed, only :rejected
+      @versions.map(&:event).sort.should == %w(rejected) # no :viewed, only :rejected
     end
   end
 
   describe "Permissions" do
-    it "should not show the created/updated activities if the subject is private" do
-      @subject = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
-      @subject.update_attribute(:updated_at,  1.second.ago)
+    it "should not show the created/updated versions if the item is private" do
+      @item = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
+      @item.update_attribute(:updated_at,  1.second.ago)
 
-      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
-      @activities.map(&:action).sort.should == %w(created updated viewed)
-      @activities = Activity.latest({}).visible_to(@current_user)
-      @activities.should == []
+      @versions = Version.where('item_id = ? AND item_type = ?', @item.id, @item.class.name)
+      @versions.map(&:event).sort.should == %w(created updated viewed)
+      @versions = Version.latest({}).visible_to(@current_user)
+      @versions.should == []
     end
 
-    it "should not show the deleted activity if the subject is private" do
-      @subject = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
-      @subject.destroy
+    it "should not show the deleted version if the item is private" do
+      @item = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
+      @item.destroy
 
-      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
-      @activities.map(&:action).sort.should == %w(created deleted)
-      @activities = Activity.latest({}).visible_to(@current_user)
-      @activities.should == []
+      @versions = Version.where('item_id = ? AND item_type = ?', @item.id, @item.class.name)
+      @versions.map(&:event).sort.should == %w(created deleted)
+      @versions = Version.latest({}).visible_to(@current_user)
+      @versions.should == []
     end
 
-    it "should not show created/updated activities if the subject was not shared with the user" do
+    it "should not show created/updated versions if the item was not shared with the user" do
       @user = FactoryGirl.create(:user)
-      @subject = FactoryGirl.create(:account,
+      @item = FactoryGirl.create(:account,
         :user => @user,
         :access => "Shared",
-        :permissions => [ FactoryGirl.build(:permission, :user => @user, :asset => @subject) ]
+        :permissions => [ FactoryGirl.build(:permission, :user => @user, :asset => @item) ]
       )
-      @subject.update_attribute(:updated_at, 1.second.ago)
+      @item.update_attribute(:updated_at, 1.second.ago)
 
-      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
-      @activities.map(&:action).sort.should == %w(created updated viewed)
-      @activities = Activity.latest({}).visible_to(@current_user)
-      @activities.should == []
+      @versions = Version.where('item_id = ? AND item_type = ?', @item.id, @item.class.name)
+      @versions.map(&:event).sort.should == %w(created updated viewed)
+      @versions = Version.latest({}).visible_to(@current_user)
+      @versions.should == []
     end
 
-    it "should not show the deleted activity if the subject was not shared with the user" do
+    it "should not show the deleted version if the item was not shared with the user" do
       @user = FactoryGirl.create(:user)
-      @subject = FactoryGirl.create(:account,
+      @item = FactoryGirl.create(:account,
         :user => @user,
         :access => "Shared",
-        :permissions => [ FactoryGirl.build(:permission, :user => @user, :asset => @subject) ]
+        :permissions => [ FactoryGirl.build(:permission, :user => @user, :asset => @item) ]
       )
-      @subject.destroy
+      @item.destroy
 
-      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
-      @activities.map(&:action).sort.should == %w(created deleted)
-      @activities = Activity.latest({}).visible_to(@current_user)
-      @activities.should == []
+      @versions = Version.where('item_id = ? AND item_type = ?', @item.id, @item.class.name)
+      @versions.map(&:event).sort.should == %w(created deleted)
+      @versions = Version.latest({}).visible_to(@current_user)
+      @versions.should == []
     end
 
-    it "should show created/updated activities if the subject was shared with the user" do
-      @subject = FactoryGirl.create(:account,
+    it "should show created/updated versions if the item was shared with the user" do
+      @item = FactoryGirl.create(:account,
         :user => FactoryGirl.create(:user),
         :access => "Shared",
-        :permissions => [ FactoryGirl.build(:permission, :user => @current_user, :asset => @subject) ]
+        :permissions => [ FactoryGirl.build(:permission, :user => @current_user, :asset => @item) ]
       )
-      @subject.update_attribute(:updated_at, 1.second.ago)
+      @item.update_attribute(:updated_at, 1.second.ago)
 
-      @activities = Activity.where('subject_id = ? AND subject_type = ?', @subject.id, @subject.class.name)
-      @activities.map(&:action).sort.should == %w(created updated viewed)
+      @versions = Version.where('item_id = ? AND item_type = ?', @item.id, @item.class.name)
+      @versions.map(&:event).sort.should == %w(created updated viewed)
 
-      @activities = Activity.latest({}).visible_to(@current_user)
-      @activities.map(&:action).sort.should == %w(created updated viewed)
+      @versions = Version.latest({}).visible_to(@current_user)
+      @versions.map(&:event).sort.should == %w(created updated viewed)
     end
   end
 
   describe "Exportable" do
     before do
-      Activity.delete_all
-      FactoryGirl.create(:activity, :user => FactoryGirl.create(:user), :subject => FactoryGirl.create(:account))
-      FactoryGirl.create(:activity, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :subject => FactoryGirl.create(:account))
-      Activity.delete_all("action IS NOT NULL") # Delete created and views actions that are created implicitly.
+      Version.delete_all
+      FactoryGirl.create(:version, :user => FactoryGirl.create(:user), :item => FactoryGirl.create(:account))
+      FactoryGirl.create(:version, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :item => FactoryGirl.create(:account))
+      Version.delete_all("event IS NOT NULL") # Delete created and views events that are created implicitly.
     end
     it_should_behave_like("exportable") do
-      let(:exported) { Activity.all }
+      let(:exported) { Version.all }
     end
   end
 end
