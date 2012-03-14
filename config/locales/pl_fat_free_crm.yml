@@ -595,9 +595,9 @@ pl:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - E-mail Dodano - %{subject}
-  dropbox_ack_intro: Pomyślnie dodane e-mail wysłanych do DropBox
-  dropbox_ack_to: Dodano do
+  dropbox_notification_subject: dropbox - E-mail Dodano - %{subject}
+  dropbox_notification_intro: Pomyślnie dodane e-mail wysłanych do DropBox
+  dropbox_notification_to: Dodano do
   subject: Temat
   body: Ciało
 

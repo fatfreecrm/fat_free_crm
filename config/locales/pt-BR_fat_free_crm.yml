@@ -592,9 +592,9 @@ pt-BR:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - E-mail Added - %{subject}
-  dropbox_ack_intro: Adicionado com sucesso o e-mail que você enviou para dropbox
-  dropbox_ack_to: Adicionado a
+  dropbox_notification_subject: dropbox - E-mail Added - %{subject}
+  dropbox_notification_intro: Adicionado com sucesso o e-mail que você enviou para dropbox
+  dropbox_notification_to: Adicionado a
   subject: Assunto
   body: Corpo
 

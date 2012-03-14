@@ -588,9 +588,9 @@ sv-SE:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: Dropbox - e-postadress tillagd - %{subject}
-  dropbox_ack_intro: E-postmeddelandet har lagts till i Dropbox
-  dropbox_ack_to: Lagts till
+  dropbox_notification_subject: Dropbox - e-postadress tillagd - %{subject}
+  dropbox_notification_intro: E-postmeddelandet har lagts till i Dropbox
+  dropbox_notification_to: Lagts till
   subject: Ämne
   body: Text
 

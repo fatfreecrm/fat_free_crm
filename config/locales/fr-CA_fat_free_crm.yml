@@ -588,9 +588,9 @@ fr-CA:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Ajouté email - %{subject}
-  dropbox_ack_intro: D'ajouter l'email que vous avez envoyé à la sélection
-  dropbox_ack_to: Ajoutés aux
+  dropbox_notification_subject: dropbox - Ajouté email - %{subject}
+  dropbox_notification_intro: D'ajouter l'email que vous avez envoyé à la sélection
+  dropbox_notification_to: Ajoutés aux
   subject: Sujet
   body: Corps
   

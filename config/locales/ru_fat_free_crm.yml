@@ -597,9 +597,9 @@ ru:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Добавлено электронной почты - %{subject}
-  dropbox_ack_intro: Успешно добавлена электронной почты, который направлен Dropbox
-  dropbox_ack_to: В дополнение к
+  dropbox_notification_subject: dropbox - Добавлено электронной почты - %{subject}
+  dropbox_notification_intro: Успешно добавлена электронной почты, который направлен Dropbox
+  dropbox_notification_to: В дополнение к
   subject: Тема
   body: Тело
 

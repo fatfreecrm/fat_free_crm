@@ -596,9 +596,9 @@ th:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - อีเมล์ เพิ่ม - %{subject}
-  dropbox_ack_intro: สำเร็จ เพิ่ม อีเมล ที่ คุณ ส่ง ไป dropbox
-  dropbox_ack_to: เพิ่ม ลง ใน
+  dropbox_notification_subject: dropbox - อีเมล์ เพิ่ม - %{subject}
+  dropbox_notification_intro: สำเร็จ เพิ่ม อีเมล ที่ คุณ ส่ง ไป dropbox
+  dropbox_notification_to: เพิ่ม ลง ใน
   subject: สาขา วิชา
   body: ร่างกาย
 

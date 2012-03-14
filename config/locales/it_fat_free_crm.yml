@@ -612,9 +612,9 @@ it:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Aggiunta email - %{subject}
-  dropbox_ack_intro: Email inviata a dropbox aggiunta con successo
-  dropbox_ack_to: Aggiunto a
+  dropbox_notification_subject: dropbox - Aggiunta email - %{subject}
+  dropbox_notification_intro: Email inviata a dropbox aggiunta con successo
+  dropbox_notification_to: Aggiunto a
   subject: Oggetto
   body: Corpo
 
