@@ -111,7 +111,7 @@ class HomeController < ApplicationController
     options[:user]     ||= activity_user
     options[:duration] ||= activity_duration
 
-    Activity.latest(options).without_actions(:viewed).visible_to(@current_user)
+    Version.latest(options).without_events(:view).visible_to(@current_user)
   end
 
   #----------------------------------------------------------------------------

@@ -475,33 +475,33 @@ en-US:
 
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_commented: commented on
   action_completed: completed
-  action_created: created
-  action_deleted: deleted
-  action_email: exchanged emails with
+  action_create: created
+  action_destroy: deleted
   action_reassigned: reassigned
   action_rejected: rejected
   action_rescheduled: rescheduled
-  action_updated: updated
-  action_viewed: viewed
+  action_update: updated
+  action_view: viewed
   action_won: won
   activities: Activities
   no_activity_records: No activity records found.
   recent_activity: Recent Activity
   recent_activity_options: Recent Activity Options
   subject_account: account
+  subject_address: address on
   subject_campaign: campaign
+  subject_comment: comment on
   subject_contact: contact
+  subject_email: email on
   subject_lead: lead
   subject_opportunity: opportunity
   subject_task: task
-  created_past_participle: Record Creations
-  commented_past_participle: Comments
-  viewed_past_participle: Views
-  updated_past_participle: Updates
-  deleted_past_participle: Deletions
-  email_past_participle: Emails
+  subject_user: user
+  create_past_participle: Record Creations
+  view_past_participle: Views
+  update_past_participle: Updates
+  delete_past_participle: Deletions
   all_actions_past_participle: Activities
 
   # Views -> Common.
@@ -603,9 +603,14 @@ en-US:
 
   # Views -> Comments.
   #----------------------------------------------------------------------------
+  comment: Comment
   edit_comment: Editing comment
   show: Show
   update: Update
+
+  # Views -> Emails.
+  #----------------------------------------------------------------------------
+  email: Email
 
   # Views -> Passwords.
   #----------------------------------------------------------------------------

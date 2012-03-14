@@ -131,9 +131,8 @@ private
 
   #----------------------------------------------------------------------------
   def update_recently_viewed
-    subject = instance_variable_get("@#{controller_name.singularize}")
-    if subject
-      Activity.log(current_user, subject, :viewed)
+    if item = instance_variable_get("@#{controller_name.singularize}")
+      Version.log(current_user, item, :view)
     end
   end
 

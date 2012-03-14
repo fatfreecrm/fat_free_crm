@@ -18,7 +18,7 @@
 #  deleted_at       :datetime
 #
 
-<% 
+<%
   require "ffaker"
   puts "Loading addresses..."
 
@@ -29,7 +29,7 @@
 %>
 address_<%= i %>:
   id               : <%= i %>
-  addressable_id   : <%= i %>
+  addressable_id   : <%= i/2 %>
   addressable_type : <%= asset = addressable.sample %>
   address_type     : <%= asset == 'Account' ? type.sample : 'Business' %>
   street1          : <%= street1 = Faker::Address.street_address %>

@@ -17,21 +17,21 @@
 
 module HomeHelper
   def sort_by_assets
-    Activity::ASSETS.map do |asset|
-      %Q[{ name: "#{t(asset).singularize}", on_select: function() { #{redraw(:asset, [ asset, t(asset).singularize.downcase ], url_for(:action => :redraw))} } }]
+    Version::ASSETS.map do |asset|
+      %Q[{ name: "#{t(asset.singularize)}", on_select: function() { #{redraw(:asset, [ asset, t(asset.singularize).downcase ], url_for(:action => :redraw))} } }]
     end
   end
 
   #----------------------------------------------------------------------------
   def sort_by_actions
-    Activity::ACTIONS.map do |action|
+    Version::ACTIONS.map do |action|
       %Q[{ name: "#{t(action + '_past_participle')}", on_select: function() { #{redraw(:action_type, [ action, t(action + '_past_participle').downcase ], url_for(:action => :redraw))} } }]
     end
   end
 
   #----------------------------------------------------------------------------
   def sort_by_duration
-    Activity::DURATION.map do |duration|
+    Version::DURATION.map do |duration|
       %Q[{ name: "#{t(duration)}", on_select: function() { #{redraw(:duration, [ duration, t(duration).downcase ], url_for(:action => :redraw))} } }]
     end
   end
@@ -52,16 +52,14 @@ module HomeHelper
   #----------------------------------------------------------------------------
   def activity_title(activity)
     user    = activity.user.full_name
-    action  = t('action_' + activity.action)
-    type    = t('subject_' + activity.subject_type.downcase)
-    subject = if activity.subject
-      if activity.subject.respond_to?(:full_name)
-        activity.subject.full_name
-      else
-        activity.subject.name
+    action  = t('action_' + activity.event)
+    type    = t('subject_' + activity.item_type.downcase)
+    subject = if item = activity.item
+      if item.respond_to?(:full_name)
+        item.full_name
+      elsif item.respond_to?(:name)
+        item.name
       end
-    else
-      activity.info # Use info if the subject has been deleted.
     end
     t(:activity_text, :user => user, :action => action, :type => type, :subject => subject,
       :default => "#{user} #{action} #{type} #{subject}")

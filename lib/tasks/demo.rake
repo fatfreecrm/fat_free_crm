@@ -26,39 +26,42 @@ namespace :ffcrm do
         ActiveRecord::Fixtures.create_fixtures(FatFreeCRM.root.join('db/demo'), File.basename(fixture_file, '.*'))
       end
 
+      def create_version(options)
+        version = Version.new
+        options.each { |k,v| version.send(k.to_s + '=', v) }
+        version.save!
+      end
+
       # Simulate random user activities.
       $stdout.sync = true
       puts "Generating user activities..."
-      %w(Account Campaign Contact Lead Opportunity Task).map do |model|
-        model.constantize.send(:find, :all)
-      end.flatten.shuffle.each do |subject|
-        info = subject.respond_to?(:full_name) ? subject.full_name : subject.name
-        Activity.create(:action => "created", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
-        Activity.create(:action => "updated", :created_at => subject.updated_at, :user => subject.user, :subject => subject, :info => info)
-        unless subject.is_a?(Task)
-          time = subject.updated_at + rand(12 * 60).minutes
-          Activity.create(:action => "viewed", :created_at => time, :user => subject.user, :subject => subject, :info => info)
-          comments = Comment.where(:commentable_id => subject.id, :commentable_type => subject.class.name)
-          comments.each_with_index do |comment, i|
-            time = subject.created_at + rand(12 * 60 * i).minutes
-            if time > Time.now
-              time = subject.created_at + rand(600).minutes
-            end
-            comment.update_attribute(:created_at, time)
-            Activity.create(:action => "commented", :created_at => time, :user => comment.user, :subject => subject, :info => info)
-          end
-          emails = Email.where(:mediator_id => subject.id, :mediator_type => subject.class.name)
-          emails.each do |email|
-            time = subject.created_at + rand(24 * 60).minutes
-            if time > Time.now
-              time = subject.created_at + rand(600).minutes
-            end
-            sent_at = time - rand(600).minutes
-            received_at = sent_at + rand(600).seconds
-            email.update_attributes(:created_at => time, :sent_at => sent_at, :received_at => received_at)
-          end
+      %w(Account Address Campaign Comment Contact Email Lead Opportunity Task).map do |model|
+        model.constantize.all
+      end.flatten.each do |item|
+        user = if item.respond_to?(:user)
+          item.user
+        elsif item.respond_to?(:addressable)
+          item.addressable.try(:user)
         end
-        print "." if subject.id % 10 == 0
+        related = if item.respond_to?(:addressable)
+          item.addressable
+        elsif item.respond_to?(:commentable)
+          item.commentable
+        elsif item.respond_to?(:mediator)
+          item.mediator
+        end
+        # Backdate within the last 30 days
+        created_at = item.created_at - (rand(30) + 1).days + rand(12 * 60).minutes
+        updated_at = created_at + rand(12 * 60).minutes
+
+        create_version(:event => "create", :created_at => created_at, :user => user, :item => item, :related => related)
+        create_version(:event => "update", :created_at => updated_at, :user => user, :item => item, :related => related)
+
+        if [Account, Campaign, Contact, Lead, Opportunity].include?(item.class)
+          viewed_at = created_at + rand(12 * 60).minutes
+          version = create_version(:event => "view", :created_at => viewed_at, :user => user, :item => item)
+        end
+        print "." if item.id % 10 == 0
       end
       puts
     end

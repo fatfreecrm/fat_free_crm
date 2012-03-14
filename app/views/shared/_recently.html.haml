@@ -1,4 +1,4 @@
-- @recent = Activity.for(@current_user).recent
+- @recent = Version.for(@current_user).recent
 .panel#recently
   .caption #{t :recent_items}
   - unless @recent.empty?
