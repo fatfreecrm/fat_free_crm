@@ -618,9 +618,9 @@ en-GB:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Added email - %{subject}
-  dropbox_ack_intro: Succesfully added the email you sent to dropbox
-  dropbox_ack_to: Added to
+  dropbox_notification_subject: dropbox - Added email - %{subject}
+  dropbox_notification_intro: Succesfully added the email you sent to dropbox
+  dropbox_notification_to: Added to
   subject: Subject
   body: Body
 

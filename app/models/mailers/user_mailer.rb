@@ -15,28 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class Notifier < ActionMailer::Base
+class UserMailer < ActionMailer::Base
 
-  #----------------------------------------------------------------------------
   def password_reset_instructions(user)
     @edit_password_url = edit_password_url(user.perishable_token)
 
     mail(:subject => "Fat Free CRM: " + I18n.t(:password_reset_instruction),
          :to => user.email,
          :from => "Fat Free CRM <noreply@fatfreecrm.com>",
-         :date => Time.now)
-  end
-
-  #----------------------------------------------------------------------------
-  def dropbox_ack_notification(user, from, email, mediator_links)
-    I18n.locale = Setting.locale
-    @mediator_links = mediator_links.join("\n")
-    @subject        = email.subject
-    @body           = email.body_plain
-
-    mail(:subject => I18n.t(:dropbox_ack_subject, :subject => email.subject),
-         :to => user.email,
-         :from => from,
          :date => Time.now)
   end
 

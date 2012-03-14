@@ -622,9 +622,9 @@ cz:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - přidaný email - %{subject}
-  dropbox_ack_intro: Úspěšně přidaný email jste odeslal do dropboxu
-  dropbox_ack_to: Přidáno do
+  dropbox_notification_subject: dropbox - přidaný email - %{subject}
+  dropbox_notification_intro: Úspěšně přidaný email jste odeslal do dropboxu
+  dropbox_notification_to: Přidáno do
   subject: Předmět
   body: Tělo
 

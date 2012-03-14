@@ -615,17 +615,17 @@ de:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Added email - %{subject}
-  dropbox_ack_intro: Er fügte hinzu, dass die E-Mail geschickt Dropbox
-  dropbox_ack_to: Hinzu
+  dropbox_notification_subject: dropbox - Added email - %{subject}
+  dropbox_notification_intro: Er fügte hinzu, dass die E-Mail geschickt Dropbox
+  dropbox_notification_to: Hinzu
   subject: Angelegenheit
   body: Körper
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Added email - %{subject}
-  dropbox_ack_intro: Er fügte hinzu, dass die E-Mail geschickt Dropbox
-  dropbox_ack_to: Hinzu
+  dropbox_notification_subject: dropbox - Added email - %{subject}
+  dropbox_notification_intro: Er fügte hinzu, dass die E-Mail geschickt Dropbox
+  dropbox_notification_to: Hinzu
   subject: Angelegenheit
   body: Körper
 
