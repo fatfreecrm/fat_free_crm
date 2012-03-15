@@ -679,7 +679,7 @@ en-US:
   subscriptions:
     comment_notification:
       subject: |
-        New comment added to %{entity_type} '%{entity_name}'
+        Re: [%{entity_type}] %{entity_name} %{entity_tags}
       intro: |
         A new comment has been added to the %{entity_type} named '%{entity_name}'
       reply_instructions: |
