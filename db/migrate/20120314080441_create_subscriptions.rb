@@ -3,9 +3,7 @@ class CreateSubscriptions < ActiveRecord::Migration
     create_table :subscriptions do |t|
       t.references  :user                           # User who subscribes
       t.references  :entity, :polymorphic => true   # The entity that the user is subscribing to.
-
-      # Event types bit field, using FlagShihTsu gem
-      t.integer     :event_types, :null => false, :default => 0
+      t.string      :event_type, :null => false
       
       t.timestamps
     end

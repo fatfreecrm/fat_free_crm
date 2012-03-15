@@ -19,12 +19,6 @@ class Subscription < ActiveRecord::Base
   belongs_to :user
   belongs_to :entity, :polymorphic => true
   
-  include FlagShihTzu
-
-  has_flags :column => 'event_types',
-            1 => :comments,
-            2 => :emails,
-            3 => :updates,
-            4 => :deletions
-            
+  validates_inclusion_of :event_type, :in => %w( comment email view update deletion )
+  
 end
