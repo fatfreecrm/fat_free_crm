@@ -73,8 +73,20 @@
 :locale: "en-US"
 
 
-# Settings for the Email dropbox
-# - Connection settings for the imap account, server and folders.
+# Settings for outgoing email (SMTP)
+# - Default configuration is for GMail
+#------------------------------------------------------------------------------
+:smtp:
+  :address                    : "smtp.gmail.com"
+  :enable_starttls_auto       : true
+  :port                       : 587
+  :authentication             : :plain
+  :user_name                  : ""
+  :password                   : ""
+
+
+# Settings for the Email dropbox (IMAP)
+# - Connection settings for the IMAP account, server and folders.
 #------------------------------------------------------------------------------
 :email_dropbox:
   :server                     : ""        # IMAP server name.
