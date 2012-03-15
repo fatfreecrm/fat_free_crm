@@ -34,5 +34,5 @@ class SubscriptionMailer < ActionMailer::Base
          :from => from,
          :date => Time.now)
   end
-  
+ 
 end
