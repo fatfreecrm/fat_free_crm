@@ -72,7 +72,7 @@ namespace :ffcrm do
     # Migrating plugins is not part of Rails 3 yet, but it is coming. See
     # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
     Rake::Task["db:migrate:plugins"].invoke rescue nil
-    Rake::Task["setup:admin"].invoke
+    Rake::Task["ffcrm:setup:admin"].invoke
   end
 
   namespace :setup do
