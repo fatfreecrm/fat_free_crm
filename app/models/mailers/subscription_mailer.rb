@@ -22,11 +22,13 @@ class SubscriptionMailer < ActionMailer::Base
     from = "Fat Free CRM <noreply@fatfreecrm.com>"
     
     @entity = subscription.entity
+    @entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : nil
     @comment = comment
     
     mail(:subject => I18n.t('subscription:comment_notification:subject',
                        :entity_type => @entity.class.to_s,
-                       :entity_name => @entity.full_name
+                       :entity_name => @entity.full_name,
+                       :entity_tags => @entity_tags
                      ),
          :to => subscription.user.email,
          :from => from,
