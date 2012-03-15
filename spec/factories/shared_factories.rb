@@ -1,17 +1,14 @@
 FactoryGirl.define do
-  factory :activity do
-    user                
-    subject             { raise "Please specify :subject for the activity" }
-    action              nil
-    info                nil
-    private             false
-    updated_at          { FactoryGirl.generate(:time) }
+  factory :version do
+    whodunnit           ""
+    item                { raise "Please specify :item for the version" }
+    event               "create"
     created_at          { FactoryGirl.generate(:time) }
   end
 
 
   factory :comment do
-    user                
+    user
     commentable         { raise "Please specify :commentable for the comment" }
     title               { FactoryGirl.generate(:title) }
     private             false
@@ -24,7 +21,7 @@ FactoryGirl.define do
 
   factory :email do
     imap_message_id     { "%08x" % rand(0xFFFFFFFF) }
-    user                
+    user
     mediator            { raise "Please specify :mediator for the email" }
     sent_from           { Faker::Internet.email }
     sent_to             { Faker::Internet.email }
@@ -59,7 +56,7 @@ FactoryGirl.define do
 
 
   factory :avatar do
-    user                
+    user
     entity              { raise "Please specify :entity for the avatar" }
     image_file_size     nil
     image_file_name     nil

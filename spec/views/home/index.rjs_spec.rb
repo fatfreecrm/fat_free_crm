@@ -8,12 +8,12 @@ describe "/home/index" do
   end
 
   it "should render [activity] template with @activities collection" do
-    assign(:activities, [ FactoryGirl.create(:activity, :id => 42, :action => "updated", :subject => FactoryGirl.create(:account)) ])
+    assign(:activities, [ FactoryGirl.create(:version, :id => 42, :event => "update", :item => FactoryGirl.create(:account), :whodunnit => @current_user.id.to_s) ])
 
     render :template => 'home/index', :formats => [:js]
-    
+
     rendered.should have_rjs("activities") do |rjs|
-      with_tag("li[id=activity_42]")
+      with_tag("li[id=version_42]")
     end
   end
 
@@ -21,7 +21,7 @@ describe "/home/index" do
     assign(:activities, [])
 
     render :template => 'home/index', :formats => [:js]
-    
+
     rendered.should have_rjs("activities")
     rendered.should include("No activity records found.")
   end

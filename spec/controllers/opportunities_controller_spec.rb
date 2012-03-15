@@ -136,15 +136,16 @@ describe OpportunitiesController do
       end
 
       it "should update an activity when viewing the opportunity" do
-        Activity.should_receive(:log).with(@current_user, @opportunity, :viewed).once
         get :show, :id => @opportunity.id
+        @opportunity.versions.last.event.should == 'view'
       end
     end
 
     describe "with mime type of JSON" do
       it "should render the requested opportunity as JSON" do
-        Opportunity.stub_chain(:my, :find).and_return(opportunity = mock_model(Opportunity, :name => ''))
-        opportunity.should_receive(:to_json).and_return("generated JSON")
+        @opportunity = FactoryGirl.create(:opportunity, :id => 42)
+        Opportunity.stub_chain(:my, :find).and_return(@opportunity)
+        @opportunity.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
@@ -154,8 +155,9 @@ describe OpportunitiesController do
 
     describe "with mime type of XML" do
       it "should render the requested opportunity as xml" do
-        Opportunity.stub_chain(:my, :find).and_return(opportunity = mock_model(Opportunity, :name => ''))
-        opportunity.should_receive(:to_xml).and_return("generated XML")
+        @opportunity = FactoryGirl.create(:opportunity, :id => 42)
+        Opportunity.stub_chain(:my, :find).and_return(@opportunity)
+        @opportunity.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42

@@ -65,7 +65,6 @@ class User < ActiveRecord::Base
   has_many    :leads
   has_many    :contacts
   has_many    :opportunities
-  has_many    :activities,  :dependent => :destroy
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
 
@@ -96,7 +95,7 @@ class User < ActiveRecord::Base
   # observer without extra authentication query.
   cattr_accessor :current_user
 
-  validates_presence_of :email,    :message => :missing_email
+  validates_presence_of :email, :message => :missing_email
 
   #----------------------------------------------------------------------------
   def name
@@ -166,6 +165,4 @@ class User < ActiveRecord::Base
     end
     artifacts == 0
   end
-
 end
-

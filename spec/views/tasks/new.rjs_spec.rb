@@ -18,8 +18,8 @@ describe "/tasks/new" do
   end
 
   describe "new task" do
-    before(:all) { @task_with_time = Setting.task_calendar_with_time }
-    after(:all) { Setting.task_calendar_with_time = @task_with_time }
+    before { @task_with_time = Setting.task_calendar_with_time }
+    after  { Setting.task_calendar_with_time = @task_with_time }
 
     it "create: should render [new] template into :create_task div" do
       params[:cancel] = nil

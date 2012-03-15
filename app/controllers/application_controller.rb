@@ -130,13 +130,6 @@ private
   end
 
   #----------------------------------------------------------------------------
-  def update_recently_viewed
-    if item = instance_variable_get("@#{controller_name.singularize}")
-      Version.log(current_user, item, :view)
-    end
-  end
-
-  #----------------------------------------------------------------------------
   def respond_to_not_found(*types)
     asset = self.controller_name.singularize
     flick = case self.action_name

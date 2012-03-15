@@ -10,7 +10,7 @@ describe HomeController do
     end
 
     it "should get a list of activities" do
-      @activity = FactoryGirl.create(:activity, :subject => FactoryGirl.create(:account, :user => @current_user))
+      @activity = FactoryGirl.create(:version, :item => FactoryGirl.create(:account, :user => @current_user))
       controller.should_receive(:get_activities).once.and_return([ @activity ])
 
       get :index
@@ -69,7 +69,7 @@ describe HomeController do
     end
 
     it "should get a list of activities" do
-      @activity = FactoryGirl.create(:activity, :subject => FactoryGirl.create(:account, :user => @current_user))
+      @activity = FactoryGirl.create(:version, :item => FactoryGirl.create(:account, :user => @current_user))
       controller.should_receive(:get_activities).once.and_return([ @activity ])
 
       get :index

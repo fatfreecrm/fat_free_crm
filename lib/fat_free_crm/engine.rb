@@ -21,7 +21,7 @@ module FatFreeCRM
                              Dir[root.join("app/controllers/entities")]
 
     config.to_prepare do
-      ActiveRecord::Base.observers = :activity_observer
+      ActiveRecord::Base.observers = :lead_observer, :opportunity_observer, :task_observer
     end
   end
 end

@@ -54,6 +54,10 @@ Spork.prefork do
     config.include(SharedControllerSpecs, :type => :controller)
     config.include(SharedModelSpecs,      :type => :model)
 
+    config.before(:each) do
+      PaperTrail.enabled = false
+    end
+
     config.before(:each, :type => :view) do
       I18n.locale = 'en-US'
     end

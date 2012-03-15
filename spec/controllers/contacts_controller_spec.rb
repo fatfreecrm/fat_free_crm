@@ -95,15 +95,16 @@ describe ContactsController do
       end
 
       it "should update an activity when viewing the contact" do
-        Activity.should_receive(:log).with(@current_user, @contact, :viewed).once
         get :show, :id => @contact.id
+        @contact.versions.last.event.should == 'view'
       end
     end
 
     describe "with mime type of JSON" do
       it "should render the requested contact as JSON" do
-        Contact.stub_chain(:my, :find).and_return(contact = mock_model(Contact, :name => ''))
-        contact.should_receive(:to_json).and_return("generated JSON")
+        @contact = FactoryGirl.create(:contact, :id => 42)
+        Contact.stub_chain(:my, :find).and_return(@contact)
+        @contact.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
@@ -113,8 +114,9 @@ describe ContactsController do
 
     describe "with mime type of XML" do
       it "should render the requested contact as xml" do
-        Contact.stub_chain(:my, :find).and_return(contact = mock_model(Contact, :name => ''))
-        contact.should_receive(:to_xml).and_return("generated XML")
+        @contact = FactoryGirl.create(:contact, :id => 42)
+        Contact.stub_chain(:my, :find).and_return(@contact)
+        @contact.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42

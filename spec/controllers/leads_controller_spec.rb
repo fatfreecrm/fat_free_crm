@@ -118,15 +118,16 @@ describe LeadsController do
       end
 
       it "should update an activity when viewing the lead" do
-        Activity.should_receive(:log).with(@current_user, @lead, :viewed).once
         get :show, :id => @lead.id
+        @lead.versions.last.event.should == 'view'
       end
     end
 
     describe "with mime type of JSON" do
       it "should render the requested lead as JSON" do
-        Lead.stub_chain(:my, :find).and_return(lead = mock_model(Lead, :name => ''))
-        lead.should_receive(:to_json).and_return("generated JSON")
+        @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user)
+        Lead.stub_chain(:my, :find).and_return(@lead)
+        @lead.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
@@ -136,8 +137,9 @@ describe LeadsController do
 
     describe "with mime type of XML" do
       it "should render the requested lead as xml" do
-        Lead.stub_chain(:my, :find).and_return(lead = mock_model(Lead, :name => ''))
-        lead.should_receive(:to_xml).and_return("generated XML")
+        @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user)
+        Lead.stub_chain(:my, :find).and_return(@lead)
+        @lead.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42

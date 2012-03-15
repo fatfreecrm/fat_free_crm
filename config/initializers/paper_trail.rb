@@ -14,11 +14,11 @@ class Version < ActiveRecord::Base
   ACTIONS  = %w(all_actions create view update delete)
   DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
 
-  def self.latest(options)
+  def self.latest(options = {})
     includes(:item, :related, :user).
-    where(options[:asset]  ? {:item_type  => options[:asset]}  : nil).
-    where(options[:action] ? {:event      => options[:action]} : nil).
-    where(options[:user]   ? {:whodunnit  => options[:user].to_s} : nil).
+    where(options[:asset]  ? {:item_type => options[:asset]}  : nil).
+    where(options[:action] ? {:event     => options[:action]} : nil).
+    where(options[:user]   ? {:whodunnit => options[:user].to_s} : nil).
     where('versions.created_at >= ?', Time.zone.now - (options[:duration] || 2.days)).
     order('versions.created_at DESC')
   end
@@ -27,7 +27,7 @@ class Version < ActiveRecord::Base
     scoped.delete_if do |version|
       is_private = false
 
-      item = version.item || version.reify
+      item = version.item || version.reify || version.next.reify
       if item.respond_to?(:access) # NOTE: Tasks don't have :access as of yet.
         is_private = item.user_id != user.id && item.assigned_to != user.id &&
           (item.access == "Private" || (item.access == "Shared" && !item.permissions.map(&:user_id).include?(user.id)))

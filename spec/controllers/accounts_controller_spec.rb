@@ -122,15 +122,16 @@ describe AccountsController do
       end
 
       it "should update an activity when viewing the account" do
-        Activity.should_receive(:log).with(@current_user, @account, :viewed).once
         get :show, :id => @account.id
+        @account.versions.last.event.should == 'view'
       end
     end
 
     describe "with mime type of JSON" do
       it "should render the requested account as json" do
-        Account.stub_chain(:my, :find).and_return(account = mock_model(Account, :name => ''))
-        account.should_receive(:to_json).and_return("generated JSON")
+        @account = FactoryGirl.create(:account, :user => @current_user)
+        Account.stub_chain(:my, :find).and_return(@account)
+        @account.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
@@ -140,8 +141,9 @@ describe AccountsController do
 
     describe "with mime type of XML" do
       it "should render the requested account as xml" do
-        Account.stub_chain(:my, :find).and_return(account = mock_model(Account, :name => ''))
-        account.should_receive(:to_xml).and_return("generated XML")
+        @account = FactoryGirl.create(:account, :user => @current_user)
+        Account.stub_chain(:my, :find).and_return(@account)
+        @account.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42

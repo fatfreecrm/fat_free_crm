@@ -89,15 +89,6 @@ describe User do
       @user.destroyed?.should == true
     end
 
-    it "once the user gets deleted all her activity records must be deleted too" do
-      login
-      FactoryGirl.create(:activity, :user => @user, :subject => FactoryGirl.create(:account))
-      FactoryGirl.create(:activity, :user => @user, :subject => FactoryGirl.create(:contact))
-      @user.activities.count.should == 2
-      @user.destroy
-      @user.activities.count.should == 0
-    end
-
     it "once the user gets deleted all her permissions must be deleted too" do
       FactoryGirl.create(:permission, :user => @user, :asset => FactoryGirl.create(:account))
       FactoryGirl.create(:permission, :user => @user, :asset => FactoryGirl.create(:contact))

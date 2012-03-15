@@ -152,4 +152,11 @@ class EntitiesController < ApplicationController
     scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?
     scope
   end
+
+  #----------------------------------------------------------------------------
+  def update_recently_viewed
+    if item = instance_variable_get("@#{controller_name.singularize}")
+      item.send(item.class.versions_association_name).create(:event => :view, :whodunnit => PaperTrail.whodunnit)
+    end
+  end
 end

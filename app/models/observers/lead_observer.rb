@@ -27,13 +27,13 @@ class LeadObserver < ActiveRecord::Observer
   def after_update(item)
     original = @@leads.delete(item.id)
     if original && original.status != "rejected" && item.status == "rejected"
-      return log_activity(item, :rejected)
+      return log_activity(item, :reject)
     end
   end
 
   private
 
   def log_activity(item, event)
-    item.send(self.class.versions_association_name).create {:event => event, :whodunnit => PaperTrail.whodunnit}
+    item.send(item.class.versions_association_name).create(:event => event, :whodunnit => PaperTrail.whodunnit)
   end
 end

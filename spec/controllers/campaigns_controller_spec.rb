@@ -85,8 +85,8 @@ describe CampaignsController do
 
     describe "with mime type of JSON" do
       it "should render all campaigns as JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
-        campaigns.should_receive(:to_json).and_return("generated JSON")
+        @controller.should_receive(:get_list_of_records).and_return(@campaigns = [])
+        @campaigns.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :index
@@ -96,8 +96,8 @@ describe CampaignsController do
 
     describe "with mime type of XML" do
       it "should render all campaigns as xml" do
-        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
-        campaigns.should_receive(:to_xml).and_return("generated XML")
+        @controller.should_receive(:get_list_of_records).and_return(@campaigns = [])
+        @campaigns.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
@@ -127,15 +127,16 @@ describe CampaignsController do
       end
 
       it "should update an activity when viewing the campaign" do
-        Activity.should_receive(:log).with(@current_user, @campaign, :viewed).once
         get :show, :id => @campaign.id
+        @campaign.versions.last.event.should == 'view'
       end
     end
 
     describe "with mime type of JSON" do
       it "should render the requested campaign as JSON" do
-        Campaign.stub_chain(:my, :find).and_return(campaign = mock_model(Campaign, :name => ''))
-        campaign.should_receive(:to_json).and_return("generated JSON")
+        @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
+        Campaign.stub_chain(:my, :find).and_return(@campaign)
+        @campaign.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
@@ -145,8 +146,9 @@ describe CampaignsController do
 
     describe "with mime type of XML" do
       it "should render the requested campaign as XML" do
-        Campaign.stub_chain(:my, :find).and_return(campaign = mock_model(Campaign, :name => ''))
-        campaign.should_receive(:to_xml).and_return("generated XML")
+        @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
+        Campaign.stub_chain(:my, :find).and_return(@campaign)
+        @campaign.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
