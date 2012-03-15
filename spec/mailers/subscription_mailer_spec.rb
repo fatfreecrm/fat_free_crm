@@ -19,7 +19,9 @@ describe SubscriptionMailer do
       FatFreeCRM::Mailman.router.route(mail)
 
       @contact.comments.size.should == 1
-      @contact.comments.first.comment.should include(comment_body)
+      c = @contact.comments.first
+      c.user.should == @user
+      c.comment.should include(comment_body)
     end
   end
 end
