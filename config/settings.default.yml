@@ -85,6 +85,17 @@
   :password                   : ""
 
 
+# Settings for 'Reply via email' inbox (POP3)
+#------------------------------------------------------------------------------
+:mailman_poll_interval: 30     # Seconds between polling inbox
+:mailman_pop3:
+  :username     : ""
+  :password     : ""
+  :server       : ""
+  :port         : ""
+  :ssl          : false
+
+
 # Settings for the Email dropbox (IMAP)
 # - Connection settings for the IMAP account, server and folders.
 #------------------------------------------------------------------------------
