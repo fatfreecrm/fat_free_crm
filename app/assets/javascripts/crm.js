@@ -450,7 +450,7 @@ document.observe("dom:loaded", function() {
 
   if (container) {
     var img = new Image;
-    img.src = '/assets/loading.gif';
+    img.src = crm.base_url + '/assets/loading.gif';
 
     function createSpinner() {
       return new Element('img', { src: img.src, 'class': 'spinner' })

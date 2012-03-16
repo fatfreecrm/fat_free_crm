@@ -19,7 +19,7 @@
 //----------------------------------------------------------------------------
 // AJAX loads the form fields for each field group
 crm.load_field_group = function(controller, tag, asset_id) {
-  new Ajax.Request('/'+ controller +'/field_group', {
+  new Ajax.Request(crm.base_url + '/' + controller +'/field_group', {
     asynchronous: true,
     evalScripts: true,
     method: 'get',
