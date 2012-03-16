@@ -18,7 +18,7 @@ matrix:
       env: DB=postgres
       gemfile: Gemfile.ci
     - rvm: 1.8.7
-      env: DB=mysql
+      env: DB=sqlite
       gemfile: Gemfile.ci
     - rvm: 1.9.2
       env: DB=sqlite
@@ -29,7 +29,7 @@ matrix:
     - rvm: 1.9.3
       env: DB=mysql
       gemfile: Gemfile.ci
-    
+
 bundler_args: --path=vendor/bundle --without heroku
 
 before_script:
