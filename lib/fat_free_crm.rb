@@ -15,17 +15,38 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-# Use the Syck YAML parser
-require 'fat_free_crm/syck_yaml'
+module FatFreeCRM
+  class << self
+    # Return either Application or Engine,
+    # depending on how Fat Free CRM has been loaded
+    def application
+      defined?(FatFreeCRM::Engine) ? Engine : Application
+    end
 
-require "fat_free_crm/gem_dependencies"
-require "fat_free_crm/gem_ext"
-require "fat_free_crm/plugin_dependencies"
+    def root
+      application.root
+    end
+  end
+end
 
 # Load Fat Free CRM as a Rails Engine, unless running as a Rails Application
 unless defined?(FatFreeCRM::Application)
   require 'fat_free_crm/engine'
 end
+
+# Our settings.yml structure requires the Syck YAML parser
+require 'fat_free_crm/syck_yaml'
+
+# Make the Setting model available here (earlier than other Rails models)
+require FatFreeCRM.root.join("app/models/setting")
+
+# Set relative url root for FatFreeCRM::Application, if required
+require "fat_free_crm/relative_url_root"
+
+# Require gem dependencies, monkey patches, and vendored plugins (in lib)
+require "fat_free_crm/gem_dependencies"
+require "fat_free_crm/gem_ext"
+require "fat_free_crm/plugin_dependencies"
 
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"
@@ -41,12 +62,3 @@ require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/dropbox" if defined?(::Rake)
 require "fat_free_crm/plugin"
-
-
-module FatFreeCRM
-  # Return the root path of either the Application or the Engine,
-  # depending on how Fat Free CRM is loaded
-  def self.root
-    (defined?(FatFreeCRM::Engine) ? Engine : Application).root
-  end
-end

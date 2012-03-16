@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+FatFreeCRM.application.routes.draw do
   scope Setting.base_url do
     resources :lists
 
