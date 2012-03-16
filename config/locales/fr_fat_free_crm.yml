@@ -272,9 +272,9 @@ fr:
   #----------------------------------------------------------------------------
   forgot_password: Mot de passe oublié
   login: Se connecter
-  no_account: Vous ne possédez pas de compte?
+  no_account: "Vous n'avez pas de compte?"
   remember_me: Se souvenir de moi
-  sign_up_now: "Créez votre compte maintenant!"
+  sign_up_now: "Créez le maintenant!"
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------
