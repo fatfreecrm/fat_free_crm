@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class OpportunitiesController < BaseController
+class OpportunitiesController < EntitiesController
   before_filter :load_settings
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_params, :only => [:index, :redraw, :filter]

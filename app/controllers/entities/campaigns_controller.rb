@@ -15,26 +15,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class AccountsController < BaseController
+class CampaignsController < EntitiesController
   before_filter :get_data_for_sidebar, :only => :index
 
-  # GET /accounts
+  # GET /campaigns
   #----------------------------------------------------------------------------
   def index
-    @accounts = get_accounts(:page => params[:page])
-    respond_with(@accounts)
+    @campaigns = get_campaigns(:page => params[:page])
+    respond_with(@campaigns)
   end
 
-  # GET /accounts/1
+  # GET /campaigns/1
   #----------------------------------------------------------------------------
   def show
-    @account = Account.my.find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
 
-    respond_with(@account) do |format|
+    respond_with(@campaign) do |format|
       format.html do
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
-        @timeline = timeline(@account)
+        @timeline = timeline(@campaign)
       end
     end
 
@@ -42,60 +42,60 @@ class AccountsController < BaseController
     respond_to_not_found(:html, :json, :xml)
   end
 
-  # GET /accounts/new
+  # GET /campaigns/new
+  # GET /campaigns/new.json
+  # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    @account = Account.new(:user => @current_user, :access => Setting.default_access)
+    @campaign = Campaign.new(:user => @current_user, :access => Setting.default_access)
     @users = User.except(@current_user)
     if params[:related]
       model, id = params[:related].split("_")
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
     end
 
-    respond_with(@account)
+    respond_with(@campaign)
   end
 
-  # GET /accounts/1/edit                                                   AJAX
+  # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
-    @account = Account.my.find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
     @users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Account.my.find($1)
+      @previous = Campaign.my.find($1)
     end
-    respond_with(@account)
+    respond_with(@campaign)
 
   rescue ActiveRecord::RecordNotFound
     @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @account
+    respond_to_not_found(:js) unless @campaign
   end
 
-  # POST /accounts
+  # POST /campaigns
   #----------------------------------------------------------------------------
   def create
-    @account = Account.new(params[:account])
+    @campaign = Campaign.new(params[:campaign])
     @users = User.except(@current_user)
 
-    respond_with(@account) do |format|
-      if @account.save_with_permissions(params[:users])
-        # None: account can only be created from the Accounts index page, so we
-        # don't have to check whether we're on the index page.
-        @accounts = get_accounts
+    respond_with(@campaign) do |format|
+      if @campaign.save_with_permissions(params[:users])
+        @campaigns = get_campaigns
         get_data_for_sidebar
       end
     end
   end
 
-  # PUT /accounts/1
+  # PUT /campaigns/1
   #----------------------------------------------------------------------------
   def update
-    @account = Account.my.find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
 
-    respond_with(@account) do |format|
-      if @account.update_with_permissions(params[:account], params[:users])
-        get_data_for_sidebar
+    respond_with(@campaign) do |format|
+      if @campaign.update_with_permissions(params[:campaign], params[:users])
+        get_data_for_sidebar if called_from_index_page?
       else
-        @users = User.except(@current_user) # Need it to redraw [Edit Account] form.
+        @users = User.except(@current_user) # Need it to redraw [Edit Campaign] form.
       end
     end
 
@@ -103,13 +103,13 @@ class AccountsController < BaseController
     respond_to_not_found(:js, :json, :xml)
   end
 
-  # DELETE /accounts/1
+  # DELETE /campaigns/1
   #----------------------------------------------------------------------------
   def destroy
-    @account = Account.my.find(params[:id])
-    @account.destroy if @account
+    @campaign = Campaign.my.find(params[:id])
+    @campaign.destroy if @campaign
 
-    respond_with(@account) do |format|
+    respond_with(@campaign) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
     end
@@ -118,90 +118,88 @@ class AccountsController < BaseController
     respond_to_not_found(:html, :js, :json, :xml)
   end
 
-  # PUT /accounts/1/attach
+  # PUT /campaigns/1/attach
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :attach
 
-  # PUT /accounts/1/discard
+  # PUT /campaigns/1/discard
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :discard
 
-  # POST /accounts/auto_complete/query                                     AJAX
+  # POST /campaigns/auto_complete/query                                    AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /accounts/options                                                  AJAX
+  # GET /campaigns/options                                                 AJAX
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel].true?
-      @per_page = @current_user.pref[:accounts_per_page] || Account.per_page
-      @outline  = @current_user.pref[:accounts_outline]  || Account.outline
-      @sort_by  = @current_user.pref[:accounts_sort_by]  || Account.sort_by
+      @per_page = @current_user.pref[:campaigns_per_page] || Campaign.per_page
+      @outline  = @current_user.pref[:campaigns_outline]  || Campaign.outline
+      @sort_by  = @current_user.pref[:campaigns_sort_by]  || Campaign.sort_by
     end
   end
 
-  # POST /accounts/redraw                                                  AJAX
+  # GET /accounts/leads                                                    AJAX
   #----------------------------------------------------------------------------
-  def redraw
-    @current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
-    @current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
-    @accounts = get_accounts(:page => 1)
-    render :index
-  end
-
-  # GET /accounts/contacts                                                 AJAX
-  #----------------------------------------------------------------------------
-  def contacts
-    @account = Account.my.find(params[:id])
+  def leads
+    @campaign = Campaign.my.find(params[:id])
   end
 
   # GET /accounts/opportunities                                            AJAX
   #----------------------------------------------------------------------------
   def opportunities
-    @account = Account.my.find(params[:id])
+    @campaign = Campaign.my.find(params[:id])
   end
 
-  # POST /accounts/filter                                                  AJAX
+  # POST /campaigns/redraw                                                 AJAX
+  #----------------------------------------------------------------------------
+  def redraw
+    @current_user.pref[:campaigns_per_page] = params[:per_page] if params[:per_page]
+    @current_user.pref[:campaigns_outline]  = params[:outline]  if params[:outline]
+    @current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
+    @campaigns = get_campaigns(:page => 1)
+    render :index
+  end
+
+  # POST /campaigns/filter                                                 AJAX
   #----------------------------------------------------------------------------
   def filter
-    session[:filter_by_account_category] = params[:category]
-    @accounts = get_accounts(:page => 1)
+    session[:filter_by_campaign_status] = params[:status]
+    @campaigns = get_campaigns(:page => 1)
     render :index
   end
 
   private
   #----------------------------------------------------------------------------
-  def get_accounts(options = {})
-    get_list_of_records(Account, options.merge!(:filter => :filter_by_account_category))
+  def get_campaigns(options = {})
+    get_list_of_records(Campaign, options.merge!(:filter => :filter_by_campaign_status))
   end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
-      @accounts = get_accounts
       get_data_for_sidebar
-      if @accounts.blank?
-        @accounts = get_accounts(:page => current_page - 1) if current_page > 1
+      @campaigns = get_campaigns
+      if @campaigns.blank?
+        @campaigns = get_campaigns(:page => current_page - 1) if current_page > 1
         render :index and return
       end
-      # At this point render default destroy.js.rjs template.
+      # At this point render destroy.js.rjs
     else # :html request
-      self.current_page = 1 # Reset current page to 1 to make sure it stays valid.
-      flash[:notice] = t(:msg_asset_deleted, @account.name)
-      redirect_to accounts_path
+      self.current_page = 1
+      flash[:notice] = t(:msg_asset_deleted, @campaign.name)
+      redirect_to campaigns_path
     end
   end
 
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
-    @account_category_total = Hash[
-      Setting.account_category.map do |key|
-        [ key, Account.my.where(:category => key.to_s).count ]
-      end
-    ]
-    categorized = @account_category_total.values.sum
-    @account_category_total[:all] = Account.my.count
-    @account_category_total[:other] = @account_category_total[:all] - categorized
+    @campaign_status_total = { :all => Campaign.my.count, :other => 0 }
+    Setting.campaign_status.each do |key|
+      @campaign_status_total[key] = Campaign.my.where(:status => key.to_s).count
+      @campaign_status_total[:other] -= @campaign_status_total[key]
+    end
+    @campaign_status_total[:other] += @campaign_status_total[:all]
   end
 end

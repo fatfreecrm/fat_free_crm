@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class LeadsController < BaseController
+class LeadsController < EntitiesController
   before_filter :get_data_for_sidebar, :only => :index
 
   # GET /leads
