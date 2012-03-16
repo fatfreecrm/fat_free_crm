@@ -11,7 +11,7 @@ class Version < ActiveRecord::Base
   scope :without_events, lambda { |*events| where('event NOT IN (?)', events) }
 
   ASSETS   = %w(all tasks campaigns leads accounts contacts opportunities comments emails)
-  ACTIONS  = %w(all_actions create view update delete)
+  ACTIONS  = %w(all_actions create view update destroy)
   DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
 
   def self.latest(options = {})

@@ -2,8 +2,7 @@ class IsParanoidToPaperTrail < ActiveRecord::Migration
   def up
     [Account, Campaign, Contact, Lead, Opportunity, Task].each do |klass|
       klass.where('deleted_at IS NOT NULL').each do |object|
-        object.destroy          # Really destroy the object
-        Activity.last.destroy   # Remove the destroy activity because we should already have one indicating this object is destroyed
+        object.destroy
       end
     end
   end
