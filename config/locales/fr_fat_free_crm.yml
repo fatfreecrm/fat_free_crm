@@ -624,10 +624,17 @@ fr:
 
   time:
     formats:
-      mmddhhss: "%e %b à %l:%M%p"
+      mmddhhss: "%b %e à %l:%M%p"
+      mmddyyyy_hhmm: "%d/%m/%Y à %H:%M"
       
   calendar_date_select:
     ok: OK
     now: Maintenant
     today: "Aujourd'hui"
     clear: Vider
+
+  # If you need custom format look at
+  # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
+  calendar_date_select_format: french
+
+
