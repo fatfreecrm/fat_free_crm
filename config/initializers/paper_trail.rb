@@ -37,7 +37,8 @@ class Version < ActiveRecord::Base
   end
 
   def self.history(object)
-    where("(item_id = :id AND item_type = :type) OR (related_id = :id AND related_type = :type)", :id => object.id, :type => object.class.name).
+    where('(item_id = :id AND item_type = :type) OR (related_id = :id AND related_type = :type)', :id => object.id, :type => object.class.name).
+    without_events(:view).
     order('created_at DESC')
   end
 end
