@@ -42,7 +42,7 @@ module CrmTagsHelper
 
   # Return asset tags to be built manually if the asset failed validation.
   def unsaved_param_tags(asset)
-    params[asset][:tag_list].split(",").map {|x|
+    params[asset][:tag_list].join.split(",").map {|x|
       Tag.find_by_name(x.strip)
     }.compact.uniq
   end
