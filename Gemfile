@@ -24,6 +24,7 @@ end
 
 gem 'ransack',      :git => "git://github.com/fatfreecrm/ransack.git"
 gem 'chosen-rails', :git => "git://github.com/fatfreecrm/chosen-rails.git"
+gem 'responds_to_parent', :git => "https://github.com/LessonPlanet/responds_to_parent.git"
 
 # Remove fat_free_crm from dependencies, to stop it from being auto-required.
 remove 'fat_free_crm'

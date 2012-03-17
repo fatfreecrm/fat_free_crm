@@ -16,6 +16,12 @@ GIT
       chronic (~> 0.6.7)
       polyamorous (~> 0.5.0)
 
+GIT
+  remote: https://github.com/LessonPlanet/responds_to_parent.git
+  revision: 1f0c6d82eda5e7f331a30fc029e7ead2a7dbdebf
+  specs:
+    responds_to_parent (1.0.20091013)
+
 PATH
   remote: .
   specs:
@@ -252,6 +258,7 @@ DEPENDENCIES
   prototype-rails
   rails (~> 3.2.2)
   ransack!
+  responds_to_parent!
   rspec-rails
   ruby-debug
   ruby-debug19

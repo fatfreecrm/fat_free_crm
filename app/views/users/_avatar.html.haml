@@ -1,5 +1,5 @@
 .remote
-  = form_for(@user, :url => upload_avatar_user_path(@user, :format => "js"), :html => { :multipart => true, :target => "uploading", :onsubmit => "$('user_submit').disabled = true" }) do |f|
+  = form_for(@user, :url => upload_avatar_user_path(@user, :format => "js"), :html => { :multipart => true, :target => "uploading", :onsubmit => "$('user_avatar_submit').disabled = true" }) do |f|
     = link_to_close avatar_user_path(@user)
     = error_messages_for :avatar, :object => @user.avatar, :object_name => t('avatar')
 
@@ -12,7 +12,7 @@
 
     .buttonbar
       %small.cool{:style => "float:right"}== #{t :gravatar_help} #{link_to(t(:here), "http://en.gravatar.com", :"data-popup" => true)}.
-      = f.submit t(:upload_picture), :onclick => "this.disabled = true"
+      = f.submit t(:upload_picture), :id => "user_avatar_submit"
       #{t :or}
       = link_to(t(:use_gravatar), upload_avatar_user_path(@user) + '?gravatar=1', :method => :put, :remote => true)
       #{t :or}

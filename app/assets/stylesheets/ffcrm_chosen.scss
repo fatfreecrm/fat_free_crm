@@ -41,7 +41,7 @@ input {
   height: 17px;
   font-size: 13px; }
 
-input[type=submit] {
+input[type=submit], input[type=file] {
   height: auto; }
 
 select {
