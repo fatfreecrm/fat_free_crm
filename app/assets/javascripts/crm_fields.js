@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-
 //----------------------------------------------------------------------------
 // AJAX loads the form fields for each field group
 crm.load_field_group = function(controller, tag, asset_id) {
