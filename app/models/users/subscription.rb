@@ -18,7 +18,10 @@
 class Subscription < ActiveRecord::Base
   belongs_to :user
   belongs_to :entity, :polymorphic => true
-  
+
+  # Each subscription must be unique
+  validates_uniqueness_of :user_id, :scope => [:entity_id, :entity_type, :event_type]
+
   validates_inclusion_of :event_type, :in => %w( comment email view update deletion )
-  
+
 end
