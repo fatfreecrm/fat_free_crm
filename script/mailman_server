@@ -24,4 +24,4 @@ else
 end
 
 require 'fat_free_crm/mailman'
-FatFreeCRM::Mailman.run
+FatFreeCRM::Mailman.new.run
