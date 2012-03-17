@@ -24,7 +24,7 @@ namespace :license do
               "app/helpers/**/*.rb",
               "app/models/**/*.rb",
               "app/controllers/**/*.rb",
-              "lib/tasks/**/*.rake",
+              "lib/**/*.rake",
               "lib/fat_free_crm/**/*.rb",
               "lib/fat_free_crm.rb",
               "config/settings.default.yml",
