@@ -21,9 +21,7 @@
 
 namespace :license do
   FILES = {:ruby => [
-              "app/helpers/**/*.rb",
-              "app/models/**/*.rb",
-              "app/controllers/**/*.rb",
+              "app/**/*.rb",
               "lib/**/*.rake",
               "lib/fat_free_crm/**/*.rb",
               "lib/fat_free_crm.rb",
