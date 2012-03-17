@@ -14,7 +14,7 @@ describe FatFreeCRM::Mailman do
                             "domain" => "example.com"
                        })
 
-    FatFreeCRM::Mailman.router.route(mail)
+    FatFreeCRM::Mailman.new.router.route(mail)
 
   end
 end

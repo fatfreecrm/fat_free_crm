@@ -16,7 +16,7 @@ describe SubscriptionMailer do
                       :subject => 'RE: Test Contact Comment',
                       :body    => comment_body)
 
-      FatFreeCRM::Mailman.router.route(mail)
+      FatFreeCRM::Mailman.new.router.route(mail)
 
       @contact.comments.size.should == 1
       c = @contact.comments.first

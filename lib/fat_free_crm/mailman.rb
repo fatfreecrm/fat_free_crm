@@ -17,12 +17,14 @@
 require 'mailman'
 
 module FatFreeCRM
-  Mailman = ::Mailman::Application.new do
-
-    # Route comment replies to the #new_comment instance method on SubscriptionMailer
-    to 'reply-%entity%-%id%@%domain%' do
-      SubscriptionMailer.new_comment(message, params)
+  class Mailman
+    def self.new
+      ::Mailman::Application.new do
+        # Route comment replies to the #new_comment instance method on SubscriptionMailer
+        to 'reply-%entity%-%id%@%domain%' do
+          SubscriptionMailer.new_comment(message, params)
+        end
+      end
     end
-
   end
 end
