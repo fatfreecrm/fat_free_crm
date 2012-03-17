@@ -237,7 +237,7 @@ DEPENDENCIES
   authlogic (~> 3.1.0)
   capybara
   chosen-rails!
-  coffee-rails
+  coffee-rails (~> 3.2.1)
   database_cleaner
   factory_girl (~> 2.6.1)
   factory_girl_rails (~> 1.7.0)
@@ -256,10 +256,10 @@ DEPENDENCIES
   ruby-debug
   ruby-debug19
   sass (~> 3.1.15)
-  sass-rails
+  sass-rails (~> 3.2.3)
   simple_form (~> 2.0.1)
   spork
   steak
   therubyracer
-  uglifier
+  uglifier (>= 1.0.3)
   will_paginate (~> 3.0.2)
