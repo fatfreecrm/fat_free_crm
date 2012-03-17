@@ -4,7 +4,7 @@
   - if item.respond_to?(:full_name)
     - link_to item.full_name, polymorphic_url(item)
 
-  - elsif ![Address, Comment, Email, Task].include?(item.class)
+  - elsif [Account, Campaign, Contact, Lead, Opportunity].include?(item.class)
     - link_to item.name, polymorphic_url(item)
 
   - elsif item.respond_to?(:name)
