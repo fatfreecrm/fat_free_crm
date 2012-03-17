@@ -1,2 +1,0 @@
-require 'dynamic_form'
-

@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'acts_as_commentable', '~> 3.0.1'
   gem.add_dependency 'acts-as-taggable-on', '~> 2.2.1'
   gem.add_dependency 'responds_to_parent'
+  gem.add_dependency 'dynamic_form'
   gem.add_dependency 'haml',                '~> 3.1.3'
   gem.add_dependency 'sass',                '~> 3.1.15'
   gem.add_dependency 'acts_as_list',        '~> 0.1.4'
