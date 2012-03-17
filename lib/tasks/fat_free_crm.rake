@@ -124,6 +124,7 @@ namespace :ffcrm do
       user = User.find_by_username(username) || User.new
       user.update_attributes(:username => username, :password => password, :email => email)
       user.update_attribute(:admin, true) # Mass assignments don't work for :admin because of the attr_protected
+      user.update_attribute(:suspended_at, nil) # Mass assignments don't work for :suspended_at because of the attr_protected
       puts "Admin user has been created."
     end
   end
