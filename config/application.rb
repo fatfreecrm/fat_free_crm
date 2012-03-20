@@ -20,7 +20,8 @@ module FatFreeCRM
     # -- all .rb files in that directory are automatically loaded.
 
     # Models are organized in sub-directories
-    config.autoload_paths += Dir[Rails.root.join("app/models/**")]
+    config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
+                             Dir[Rails.root.join("app/controllers/entities")]
 
     # Activate observers that should always be running.
     config.active_record.observers = :activity_observer unless ARGV.join.include?('assets:precompile')

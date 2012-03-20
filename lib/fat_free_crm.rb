@@ -37,12 +37,6 @@ end
 # Our settings.yml structure requires the Syck YAML parser
 require 'fat_free_crm/syck_yaml'
 
-# Make the Setting model available here (earlier than other Rails models)
-require FatFreeCRM.root.join("app/models/setting")
-
-# Set relative url root for FatFreeCRM::Application, if required
-require "fat_free_crm/relative_url_root"
-
 # Require gem dependencies, monkey patches, and vendored plugins (in lib)
 require "fat_free_crm/gem_dependencies"
 require "fat_free_crm/gem_ext"
