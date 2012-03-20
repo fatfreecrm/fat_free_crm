@@ -17,7 +17,8 @@
 
 module FatFreeCRM
   class Engine < ::Rails::Engine
-    config.autoload_paths += Dir[root.join("app/models/**")]
+    config.autoload_paths += Dir[root.join("app/models/**")] +
+                             Dir[Rails.root.join("app/controllers/entities")]
 
     config.to_prepare do
       ActiveRecord::Base.observers = :activity_observer
