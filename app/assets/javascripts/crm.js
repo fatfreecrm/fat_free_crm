@@ -169,8 +169,12 @@ var crm = {
     $("account_disabled_title").show();
     $("account_name").hide();
     $("account_name").disable();
+    // Disable chosen account select
     $("account_id").disable();
+    Event.fire($("account_id"), "liszt:updated");
     $("account_id_chzn").show();
+    // Enable hidden account id select so that value is POSTed
+    $("account_id").enable();
   },
 
   //----------------------------------------------------------------------------
