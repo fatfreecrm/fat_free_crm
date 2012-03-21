@@ -1,4 +1,4 @@
-FatFreeCRM.application.routes.draw do
+Rails.application.routes.draw do
   resources :lists
 
   root :to => 'home#index'
