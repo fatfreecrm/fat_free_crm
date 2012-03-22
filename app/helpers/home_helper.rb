@@ -23,9 +23,9 @@ module HomeHelper
   end
 
   #----------------------------------------------------------------------------
-  def sort_by_actions
-    Version::ACTIONS.map do |action|
-      %Q[{ name: "#{t(action + '_past_participle')}", on_select: function() { #{redraw(:action_type, [ action, t(action + '_past_participle').downcase ], url_for(:action => :redraw))} } }]
+  def sort_by_events
+    Version::EVENTS.map do |event|
+      %Q[{ name: "#{t(event + '_past_participle')}", on_select: function() { #{redraw(:event, [ event, t(event + '_past_participle').downcase ], url_for(:action => :redraw))} } }]
     end
   end
 

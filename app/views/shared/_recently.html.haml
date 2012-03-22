@@ -1,7 +1,7 @@
 - @recent = Version.for(@current_user).recent
 .panel#recently
   .caption #{t :recent_items}
-  - unless @recent.empty?
+  - if @recent.present?
     = render :partial => "shared/recent", :collection => @recent
   - else
     %div #{t :no_recent_items}

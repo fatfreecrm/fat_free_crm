@@ -23,7 +23,7 @@ fr:
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Tableau de bord
-  tab_tasks: Tâches 
+  tab_tasks: Tâches
   tab_campaigns: Campagnes
   tab_leads: Pistes
   tab_accounts: Comptes
@@ -172,7 +172,7 @@ fr:
 
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: "Votre compte a été créé, il est en attente d'approbation par l'administrateur"  
+  msg_account_created: "Votre compte a été créé, il est en attente d'approbation par l'administrateur"
   msg_account_not_approved: "Votre compte n'à pas encore été approuvé"
   msg_asset_deleted: "%{value} à été supprimé"
   msg_asset_not_available: "Ce %{value} n'est plus disponible."
@@ -195,7 +195,7 @@ fr:
   msg_password_not_changed: "Votre mot de passe n'a pas été modifié"
   msg_password_updated: Modification de mot de passe réussie.
   msg_pwd_instructions_sent: "Les instruction de modification de mot de passe vous on été envoyées. Vérifiez vos e-mails"
-  msg_require_admin: Vous devez être administrateur pour accéder a cette page 
+  msg_require_admin: Vous devez être administrateur pour accéder a cette page
   msg_successful_signup: Enregistrement réussi. Bienvenu dans Fat Free CRM
   msg_welcome:  Bienvenue dans Fat Free CRM
 
@@ -226,9 +226,9 @@ fr:
   option_target_leads: pistes cibles
   option_target_revenue: revenus cibles
   option_updated_at: date de modification
-  show_per_page: Voir %{number} %{models} par page au format %{fmt}. 
+  show_per_page: Voir %{number} %{models} par page au format %{fmt}.
   sort_by: Trier les %{models} par %{field}.
-  sort_by_displaying: Trier les %{models} par %{field} et afficher le prénom %{position} le nom. 
+  sort_by_displaying: Trier les %{models} par %{field} et afficher le prénom %{position} le nom.
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
@@ -323,7 +323,7 @@ fr:
   campaigns_small: campagnes
   conversion: Conversion
   conversion_label: Conversion (%)
-  conversion_number: "%{value} de conversion" 
+  conversion_number: "%{value} de conversion"
   create_campaign: Créer une Campagne
   end_date: Date de fin
   finished_on: terminée le %{value}
@@ -346,7 +346,7 @@ fr:
   was_supposed_to_finish: présumée se terminer le %{value}
   was_supposed_to_start: était supposée démarrer il y a %{time_ago} le %{start_date}
   #was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date} # Not in use in the project
-    
+
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Autre
@@ -373,8 +373,8 @@ fr:
   save_contact: Enregistrer le contact
   skype: Skype
   twitter: Twitter
-  web_presence: Présence Web 
-  web_presence_small:  présence web 
+  web_presence: Présence Web
+  web_presence_small:  présence web
   works_at: "%{job_title} chez %{company}"
 
   # Views -> Leads.
@@ -508,7 +508,7 @@ fr:
   updated_past_participle: Modifications
   deleted_past_participle: Supressions
   email_past_participle: Emails
-  all_actions_past_participle: Activités
+  all_events_past_participle: Activités
 
   # Views -> Common.
   #----------------------------------------------------------------------------
@@ -517,12 +517,12 @@ fr:
   add_note_help: Ajouter une nouvelle note...
   edit_note: Modifier la note
   added_ago: ajoutée il y à %{value}
-  added_by: ajoutée il y à %{time_ago} par %{user} 
+  added_by: ajoutée il y à %{time_ago} par %{user}
   back: Retour
   cancel: Annuler
   close_form: Fermer le formulaire
   confirm_delete: "Êtes-vous certain de vouloir supprimer ceci : %{value}?"
-  copy_permissions: Copier les permissions de %{value} 
+  copy_permissions: Copier les permissions de %{value}
   could_not_find: "Aucun(e) %{value} n'a été trouvé(e). N'hésitez pas à "
   could_not_find_matching: "Aucun(e) %{value} n'a été trouvé(e) correspondant à"
   create_new: créer un(e)
@@ -674,7 +674,7 @@ fr:
   dropbox_ack_to: ajoutés aux
   subject: Sujet
   body: Corps
-  
+
   # Lists
   #----------------------------------------------------------------------------
   lists: Listes
@@ -689,7 +689,7 @@ fr:
     comment:
       one: '1 commentaire'
       other: '%{count} commentaires'
-    contact: 
+    contact:
       one: '1 contact'
       other: '%{count} contacts'
     opportunity:
@@ -717,7 +717,7 @@ fr:
     formats:
       mmddhhss: "%b %e à %H:%M%"
       mmddyyyy_hhmm: "%d/%m/%Y à %H:%M"
-      
+
   calendar_date_select:
     ok: OK
     now: Maintenant
@@ -782,7 +782,7 @@ fr:
   tag_with_taggings_confirm_delete: "En supprimant ce tag, il sera supprimé de %{value} enregistrements."
   msg_cant_delete_tag: "Impossible de supprimer '%{value}' car il est associé à au moins une section."
 
-  
+
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   views:

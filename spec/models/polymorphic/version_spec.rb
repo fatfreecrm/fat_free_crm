@@ -37,22 +37,22 @@ describe Version do
     end
 
     it "should select all versions except one" do
-      @versions = Version.for(@current_user).without_events(:view)
+      @versions = Version.for(@current_user).exclude_events(:view)
       @versions.map(&:event).should == %w(create destroy update)
     end
 
     it "should select all versions except many" do
-      @versions = Version.for(@current_user).without_events(:create, :update, :destroy)
+      @versions = Version.for(@current_user).exclude_events(:create, :update, :destroy)
       @versions.map(&:event).should == %w(view)
     end
 
     it "should select one requested version" do
-      @versions = Version.for(@current_user).with_events(:destroy)
+      @versions = Version.for(@current_user).include_events(:destroy)
       @versions.map(&:event).should == %w(destroy)
     end
 
     it "should select many requested versions" do
-      @versions = Version.for(@current_user).with_events(:create, :update)
+      @versions = Version.for(@current_user).include_events(:create, :update)
       @versions.map(&:event).sort.should == %w(create update)
     end
 

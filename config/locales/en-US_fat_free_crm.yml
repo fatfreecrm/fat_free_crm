@@ -501,8 +501,8 @@ en-US:
   create_past_participle: Record Creations
   view_past_participle: Views
   update_past_participle: Updates
-  delete_past_participle: Deletions
-  all_actions_past_participle: Activities
+  destroy_past_participle: Deletions
+  all_events_past_participle: Activities
 
   # Views -> Common.
   #----------------------------------------------------------------------------

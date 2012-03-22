@@ -43,7 +43,7 @@ class HomeController < ApplicationController
   def options
     unless params[:cancel].true?
       @asset = @current_user.pref[:activity_asset] || "all"
-      @action = @current_user.pref[:activity_action_type] || "all_actions"
+      @action = @current_user.pref[:activity_event] || "all_events"
       @user = @current_user.pref[:activity_user] || "all_users"
       @duration = @current_user.pref[:activity_duration] || "two_days"
       @all_users = User.order("first_name, last_name")
@@ -54,7 +54,7 @@ class HomeController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     @current_user.pref[:activity_asset] = params[:asset] if params[:asset]
-    @current_user.pref[:activity_action_type] = params[:action_type] if params[:action_type]
+    @current_user.pref[:activity_event] = params[:event] if params[:event]
     @current_user.pref[:activity_user] = params[:user] if params[:user]
     @current_user.pref[:activity_duration] = params[:duration] if params[:duration]
 
@@ -107,11 +107,11 @@ class HomeController < ApplicationController
   #----------------------------------------------------------------------------
   def get_activities(options = {})
     options[:asset]    ||= activity_asset
-    options[:action]   ||= activity_action_type
+    options[:event]    ||= activity_event
     options[:user]     ||= activity_user
     options[:duration] ||= activity_duration
 
-    Version.latest(options).without_events(:view).visible_to(@current_user)
+    Version.latest(options).visible_to(@current_user)
   end
 
   #----------------------------------------------------------------------------
@@ -125,12 +125,12 @@ class HomeController < ApplicationController
   end
 
   #----------------------------------------------------------------------------
-  def activity_action_type
-    action_type = @current_user.pref[:activity_action_type]
-    if action_type.nil? || action_type == "all_actions"
-      nil
+  def activity_event
+    event = @current_user.pref[:activity_event]
+    if event == "all_events"
+      %w(create update destroy)
     else
-      action_type
+      event
     end
   end
 
