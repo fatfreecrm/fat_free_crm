@@ -41,6 +41,21 @@ class Comment < ActiveRecord::Base
   has_paper_trail :meta => { :related => :commentable },
                   :ignore => [:state]
 
+  after_create :log_activity, :add_subscribed_user
+
   def expanded?;  self.state == "Expanded";  end
   def collapsed?; self.state == "Collapsed"; end
+
+  private
+  def log_activity
+    current_user = User.find(user_id)
+    Activity.log(current_user, commentable, :commented) if current_user
+  end
+
+  # Add comment's user to subscribed_users field on entity
+  def add_subscribed_user
+    subscribed_users = (commentable.subscribed_users + [user.id]).uniq
+    commentable.update_attribute :subscribed_users, subscribed_users
+  end
+
 end
