@@ -48,7 +48,6 @@ class Account < ActiveRecord::Base
   has_one     :billing_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Billing'"
   has_one     :shipping_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Shipping'"
   has_many    :emails, :as => :mediator
-  has_many    :subscriptions, :as => :entity, :dependent => :destroy
 
   accepts_nested_attributes_for :billing_address, :allow_destroy => true
   accepts_nested_attributes_for :shipping_address, :allow_destroy => true

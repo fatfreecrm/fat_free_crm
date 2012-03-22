@@ -67,7 +67,6 @@ class User < ActiveRecord::Base
   has_many    :opportunities
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
-  has_many    :subscriptions, :dependent => :destroy
 
   has_paper_trail :ignore => [:last_request_at, :perishable_token]
 
