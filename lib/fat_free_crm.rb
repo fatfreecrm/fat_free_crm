@@ -54,5 +54,4 @@ require "fat_free_crm/fields"
 require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
-require "fat_free_crm/dropbox" if defined?(::Rake)
 require "fat_free_crm/plugin"
