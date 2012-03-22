@@ -41,11 +41,10 @@ class SubscriptionMailer < ActionMailer::Base
     if %w(account campaign contact lead opportunity task).include?(entity_name)
       # Find entity from class & id
       if entity = entity_name.capitalize.constantize.find_by_id(entity_id)
-        if user = User.find_by_email(message.from)
-          comment = Comment.new :user        => user,
-                                :commentable => entity,
-                                :comment     => message.body
-          comment.save
+        if user = User.find_by_email(message.from.first)
+          Comment.create :user        => user,
+                         :commentable => entity,
+                         :comment     => message.body
         end
       end
     end

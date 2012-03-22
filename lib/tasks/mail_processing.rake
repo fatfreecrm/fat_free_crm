@@ -19,14 +19,28 @@ namespace :ffcrm do
   namespace :dropbox do
     desc "Run dropbox crawler and process incoming emails"
     task :run => :environment do
-      crawler = FatFreeCRM::Dropbox.new
-      crawler.run
+      require "fat_free_crm/dropbox"
+      FatFreeCRM::Dropbox.new.run
     end
     
     desc "Set up email dropbox based on currently loaded settings"
     task :setup => :environment do
-      crawler = FatFreeCRM::Dropbox.new
-      crawler.setup
+      require "fat_free_crm/dropbox"
+      FatFreeCRM::Dropbox.new.setup
     end
   end
+  
+  namespace :comment_inbox do
+    desc "Run comment inbox crawler and process incoming emails"
+    task :run => :environment do
+      require "fat_free_crm/comment_inbox"
+      FatFreeCRM::CommentInbox.new.run
+    end
+    
+    desc "Set up comment inbox based on currently loaded settings"
+    task :setup => :environment do
+      require "fat_free_crm/comment_inbox"
+      FatFreeCRM::CommentInbox.new.setup
+    end
+  end  
 end
