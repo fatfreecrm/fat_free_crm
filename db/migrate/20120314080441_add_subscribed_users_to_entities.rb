@@ -1,6 +1,6 @@
 class AddSubscribedUsersToEntities < ActiveRecord::Migration
   def change
-    %w(accounts campaigns contacts leads opportunities).each do |table|
+    %w(accounts campaigns contacts leads opportunities tasks).each do |table|
       add_column table.to_sym, :subscribed_users, :text
       # Reset the column information of each model
       table.singularize.capitalize.constantize.reset_column_information
