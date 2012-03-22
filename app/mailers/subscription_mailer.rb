@@ -17,22 +17,19 @@
 
 class SubscriptionMailer < ActionMailer::Base
 
-  def comment_notification(subscription, comment)
-    #TODO Create a hash so that users can reply from their email inbox.
-    from = "Fat Free CRM <noreply@fatfreecrm.com>"
-
-    @entity = subscription.entity
+  def comment_notification(user, comment)
+  
+    @entity = comment.commentable
     @entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : nil
     @comment = comment
 
-    mail(:subject => I18n.t('subscription:comment_notification:subject',
-                       :entity_type => @entity.class.to_s,
-                       :entity_name => @entity.full_name,
-                       :entity_tags => @entity_tags
-                     ),
-         :to => subscription.user.email,
-         :from => from,
-         :date => Time.now)
+    mail :subject => I18n.t('subscription:comment_notification:subject',
+                            :entity_type => @entity.class.to_s,
+                            :entity_name => @entity.full_name,
+                            :entity_tags => @entity_tags),
+         :to => user.email,
+         :from => "FFCRM Comments <#{Setting.email_comment_inbox[:address]}>",
+         :date => Time.now
   end
 
   # Processes received messages and adds comment to the associated entity
