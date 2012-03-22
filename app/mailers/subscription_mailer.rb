@@ -41,7 +41,7 @@ class SubscriptionMailer < ActionMailer::Base
         if user = User.find_by_email(message.from.first)
           Comment.create :user        => user,
                          :commentable => entity,
-                         :comment     => message.body
+                         :comment     => message.body.decoded
         end
       end
     end
