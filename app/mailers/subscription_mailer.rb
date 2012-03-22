@@ -24,7 +24,7 @@ class SubscriptionMailer < ActionMailer::Base
     @comment = comment
 
     mail :subject => I18n.t('comment_notification.subject',
-                            :entity => @entity.class.to_s,
+                            :entity => @entity.class.to_s.downcase,
                             :id     => @entity.id,
                             :name   => @entity.full_name,
                             :tags   => @entity_tags),
