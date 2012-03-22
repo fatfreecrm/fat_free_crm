@@ -23,10 +23,10 @@ class DropboxMailer < ActionMailer::Base
     @subject        = email.subject
     @body           = email.body_plain
 
-    mail(:subject => I18n.t(:dropbox_notification_subject, :subject => email.subject),
+    mail :subject => I18n.t(:dropbox_notification_subject, :subject => email.subject),
          :to => user.email,
          :from => from,
-         :date => Time.now)
+         :date => Time.now
   end
   
 end
