@@ -35,15 +35,12 @@ class SubscriptionMailer < ActionMailer::Base
 
   # Processes received messages and adds comment to the associated entity
   def self.new_comment(message, entity_name, entity_id)
-    # Check that entity is a known model
-    if %w(account campaign contact lead opportunity task).include?(entity_name)
-      # Find entity from class & id
-      if entity = entity_name.capitalize.constantize.find_by_id(entity_id)
-        if user = User.find_by_email(message.from.first)
-          Comment.create :user        => user,
-                         :commentable => entity,
-                         :comment     => message.body.decoded
-        end
+    # Find entity from class & id
+    if entity = entity_name.capitalize.constantize.find_by_id(entity_id)
+      if user = User.find_by_email(message.from.first)
+        Comment.create :user        => user,
+                       :commentable => entity,
+                       :comment     => message.body.decoded
       end
     end
   end
