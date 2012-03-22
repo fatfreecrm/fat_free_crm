@@ -29,7 +29,7 @@ end
 gem 'ransack',      :git => "https://github.com/fatfreecrm/ransack.git"
 gem 'chosen-rails', :git => "https://github.com/fatfreecrm/chosen-rails.git"
 gem 'responds_to_parent', :git => "https://github.com/LessonPlanet/responds_to_parent.git"
-gem 'mailman',      :git => "git://github.com/fatfreecrm/mailman.git", :branch => "imap", :require => false
+gem 'mailman',      :git => "git://github.com/fatfreecrm/mailman.git", :require => false
 
 # Remove fat_free_crm dependency, to stop it from being auto-required too early.
 remove 'fat_free_crm'
