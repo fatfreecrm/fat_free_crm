@@ -12,8 +12,8 @@ describe SubscriptionMailer do
       comment_body = 'This comment should be added to the associated contact'
 
       mail = Mail.new(:from    => @user.email,
-                      :to      => "reply-contact-#{@contact.id}@default.com",
-                      :subject => 'RE: Test Contact Comment',
+                      :to      => "crm-comment@example.com",
+                      :subject => "RE: [contact:#{@contact.id}] John Smith",
                       :body    => comment_body)
 
       FatFreeCRM::Mailman.new.router.route(mail)
