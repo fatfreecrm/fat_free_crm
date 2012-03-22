@@ -16,24 +16,24 @@
 #------------------------------------------------------------------------------
 
 # Fat Free CRM settings are stored in three places, and are loaded in the following order:
-# 
+#
 # 1) config/settings.default.yml
 # 2) config/settings.yml  (if exists)
 # 3) 'settings' table in database  (if exists)
 #
 # Any settings in `config/settings.yml` will override those in
 # `config/settings.default.yml`, and settings in the database table have the highest priority.
-# 
+#
 # This settings arrangement offers a lot of flexibility:
 #
 # * Developers can add new settings to the application with default values,
 #   without requiring the user to manually update setting files or run tasks.
 # * No manual configuration is required to start the application after installation
 # * IT administrators can change the default configuration by adding 'settings.yml'
-#   to their git repo, or by running SQL that updates the 'settings' table in the database. 
+#   to their git repo, or by running SQL that updates the 'settings' table in the database.
 # * Admin users can change settings via the admin interface, without needing to edit YAML files.
 #
-# PLEASE DO NOT EDIT THE SETTINGS IN THIS FILE. 
+# PLEASE DO NOT EDIT THE SETTINGS IN THIS FILE.
 # COPY THE SETTINGS THAT YOU WANT TO OVERRIDE INTO `config/settings.yml`
 #
 #------------------------------------------------------------------------------
@@ -85,16 +85,22 @@
   :password                   : ""
 
 
-# Settings for 'Reply via email' inbox (POP3)
+# Settings for 'Reply via email' inbox (either POP3 or IMAP)
 #------------------------------------------------------------------------------
 :mailman_poll_interval: 30     # Seconds between polling inbox
-:mailman_pop3:
-  :username     : ""
-  :password     : ""
-  :server       : ""
-  :port         : ""
-  :ssl          : false
-
+:mailman
+  :pop3:
+    :username     : ""
+    :password     : ""
+    :server       : ""
+    :port         : ""
+    :ssl          : false
+  :imap:
+    :username     : ""
+    :password     : ""
+    :server       : ""
+    :port         : ""
+    :filter        : 'NEW'  # Process 'NEW' messages
 
 # Settings for the Email dropbox (IMAP)
 # - Connection settings for the IMAP account, server and folders.
@@ -114,9 +120,9 @@
 
 # Individual locales per user
 #------------------------------------------------------------------------------
-# To enable language selection in User/Profile set the following option to true. 
+# To enable language selection in User/Profile set the following option to true.
 # By default, individual users can't pick their own locale and are presented
-# with the default locale. 
+# with the default locale.
 #
 :per_user_locale: false
 
@@ -155,7 +161,7 @@
 # The following setting controls whether to show time in dropdown calendar
 # when scheduling a task for specific date.
 #   true  -- allow selecting date and time.  (default)
-#   false -- allow selecting date only.  
+#   false -- allow selecting date only.
 #
 :task_calendar_with_time: true
 
@@ -181,7 +187,7 @@
 
 # Background information
 #------------------------------------------------------------------------------
-# Specify model names that should have background information displayed. 
+# Specify model names that should have background information displayed.
 # This field can be used when importing records from legacy databases,
 # to display the 'background' of where they came from.
 #
@@ -215,7 +221,7 @@
 :admin_tabs: [
   { :active : true,  :text : :admin_tab_users,    :url : { :controller : "admin/users"    } },
   { :active : false, :text : :admin_tab_fields,   :url : { :controller : "admin/fields"   } },
-  { :active : false, :text : :admin_tab_tags,     :url : { :controller : "admin/tags"     } },  
+  { :active : false, :text : :admin_tab_tags,     :url : { :controller : "admin/tags"     } },
   { :active : false, :text : :admin_tab_settings, :url : { :controller : "admin/settings" } },
   { :active : false, :text : :admin_tab_plugins,  :url : { :controller : "admin/plugins"  } }
 ]
