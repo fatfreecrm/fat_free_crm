@@ -1,7 +1,6 @@
-:plain
-  #{I18n.t('subscription:comment_notification:intro')}:
-
-  #{@comment.comment}
-  
-  ---
-  #{I18n.t('subscription:comment_notification:reply_instructions')}: #{url_for(@entity)}
+#{I18n.t('comment_notification.intro')}:
+<br />
+#{@comment.comment}
+<br />  
+---
+#{I18n.t('comment_notification.reply_instructions')}: #{url_for(@entity)}
