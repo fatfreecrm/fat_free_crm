@@ -20,11 +20,11 @@ class SubscriptionMailer < ActionMailer::Base
   def comment_notification(subscription, comment)
     #TODO Create a hash so that users can reply from their email inbox.
     from = "Fat Free CRM <noreply@fatfreecrm.com>"
-    
+
     @entity = subscription.entity
     @entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : nil
     @comment = comment
-    
+
     mail(:subject => I18n.t('subscription:comment_notification:subject',
                        :entity_type => @entity.class.to_s,
                        :entity_name => @entity.full_name,
@@ -36,11 +36,11 @@ class SubscriptionMailer < ActionMailer::Base
   end
 
   # Processes received messages and adds comment to the associated entity
-  def self.new_comment(message, params)
+  def self.new_comment(message, entity_name, entity_id)
     # Check that entity is a known model
-    if %w(account campaign contact lead opportunity task).include?(params[:entity])
+    if %w(account campaign contact lead opportunity task).include?(entity_name)
       # Find entity from class & id
-      if entity = params[:entity].capitalize.constantize.find_by_id(params[:id])
+      if entity = entity_name.capitalize.constantize.find_by_id(entity_id)
         if user = User.find_by_email(message.from)
           comment = Comment.new :user        => user,
                                 :commentable => entity,
@@ -50,5 +50,5 @@ class SubscriptionMailer < ActionMailer::Base
       end
     end
   end
- 
+
 end

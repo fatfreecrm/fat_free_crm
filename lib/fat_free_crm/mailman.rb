@@ -21,8 +21,8 @@ module FatFreeCRM
     def self.new
       ::Mailman::Application.new do
         # Route comment replies to the #new_comment instance method on SubscriptionMailer
-        to 'reply-%entity%-%id%@%domain%' do
-          SubscriptionMailer.new_comment(message, params)
+        subject /\[([^:]*):([^\]]*)\]/ do |entity_name, entity_id|
+          SubscriptionMailer.new_comment(message, entity_name, entity_id)
         end
       end
     end
