@@ -21,6 +21,17 @@ require "mail"
 module FatFreeCRM
   class CommentInbox
   
+    # Subject line of email can contain full entity, or shortcuts
+    # e.g. [contact:1234] OR [co:1234]
+    ENTITY_SHORTCUTS = {
+      'ac' => 'account',
+      'ca' => 'campaign',
+      'co' => 'contact',
+      'le' => 'lead',
+      'op' => 'opportunity',
+      'ta' => 'task'
+    }
+  
     #--------------------------------------------------------------------------------------
     def initialize
       @settings = Setting.email_comment_inbox.dup
@@ -170,11 +181,17 @@ module FatFreeCRM
       @sender = User.first(:conditions => [ "(lower(email) = ? OR lower(alt_email) = ?) AND suspended_at IS NULL", email_address.downcase, email_address.downcase ])
     end
 
-    # Checks the email to detect keyword on the first line.
+    # Checks the email to detect [entity:id] in the subject.
     #--------------------------------------------------------------------------------------
     def with_subject_line(email)
       if /\[(?<entity_name>[^:]*):(?<entity_id>[^\]]*)\]/ =~ email.subject
-        yield entity_name, entity_id
+        # Check that entity is a known model
+        if ENTITY_SHORTCUTS.values.include?(entity_name)
+          yield entity_name, entity_id
+        # Check if entity is a 2 letter 'shortcut'
+        elsif expanded_entity = ENTITY_SHORTCUTS[entity_name]
+          yield expanded_entity, entity_id
+        end
       end
     end
 
