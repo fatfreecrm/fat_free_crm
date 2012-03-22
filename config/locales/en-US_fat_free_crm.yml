@@ -674,16 +674,15 @@ en-US:
   subject: Subject
   body: Body
 
-  # Subscriptions
+  # Comment Inbox
   #----------------------------------------------------------------------------
-  subscriptions:
-    comment_notification:
-      subject: |
-        Re: [%{entity_type}] %{entity_name} %{entity_tags}
-      intro: |
-        A new comment has been added to the %{entity_type} named '%{entity_name}'
-      reply_instructions: |
-        Reply to this email directly to add a new comment, or view it online
+  comment_notification:
+    subject: |
+      Re: [%{entity_type}] %{entity_name} %{entity_tags}
+    intro: |
+      A new comment has been added to the %{entity_type} named '%{entity_name}'
+    reply_instructions: |
+      Reply to this email directly to add a new comment, or view it online
         
   # Lists
   #----------------------------------------------------------------------------
