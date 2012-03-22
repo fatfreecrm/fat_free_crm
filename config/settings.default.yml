@@ -87,7 +87,7 @@
 
 # Settings for 'Reply via email' inbox (either POP3 or IMAP)
 #------------------------------------------------------------------------------
-:mailman
+:mailman:
   :poll_interval: 30     # Seconds between polling inbox
   :pop3:
     :username     : ""
@@ -100,7 +100,7 @@
     :password     : ""
     :server       : ""
     :port         : ""
-    :filter        : 'NEW'  # Process 'NEW' messages
+    :filter       : 'NEW'  # Process 'NEW' messages
 
 # Settings for the Email dropbox (IMAP)
 # - Connection settings for the IMAP account, server and folders.
