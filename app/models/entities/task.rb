@@ -45,6 +45,8 @@ class Task < ActiveRecord::Base
   belongs_to :completor, :class_name => "User", :foreign_key => :completed_by
   belongs_to :asset, :polymorphic => true
 
+  serialize :subscribed_users, Array
+
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
   scope :my, lambda { |*args|
