@@ -25,7 +25,7 @@ else
   end
 
   Mailman.config.logger = Logger.new(Rails.root.join("log/mailman_#{Rails.env}.log"))
-  Mailman.config.poll_interval = Setting.mailman_poll_interval
+  Mailman.config.poll_interval = Setting.mailman[:poll_interval]
 
   if connection_configured?(:pop3)
     Mailman.config.pop3 = mail_settings[:pop3]
