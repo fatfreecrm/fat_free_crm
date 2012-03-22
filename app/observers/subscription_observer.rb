@@ -18,14 +18,11 @@
 class SubscriptionObserver < ActiveRecord::Observer
   observe :comment
 
-  # Notify users when a comment is added to an entity that they have subscribed to
   def after_create(comment)
-    Subscription.for_entity(comment.entity).
-    where(:event_type => "comment").
-    where(["user_id IS NOT '?'", comment.user.id]).each do |subscription|
+    # Notify subscribed users when a comment is added, unless user created the comment
+    (comment.entity.subscribed_users - [comment.user.id]).each do |subscription|
       SubscriptionMailer.comment_notification(subscription, comment)
     end
   end
 
 end
-
