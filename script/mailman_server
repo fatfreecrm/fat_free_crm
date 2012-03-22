@@ -9,18 +9,29 @@ require File.dirname(__FILE__) + "/../config/environment"
 
 Mailman.config.ignore_stdin = true
 
+def connection_configured?(connection)
+  Setting.mailman && Setting.mailman[connection] && Setting.mailman[connection][:username].present?
+end
+
+
 if Rails.env == 'test'
   Mailman.config.maildir = Rails.root.join("tmp/test_maildir")
   Mailman.config.poll_interval = 0
 else
-  unless Setting.mailman_pop3 && Setting.mailman_pop3[:username].present?
-    puts "Please configure Mailman POP3 settings for 'Reply via email'!"
+  mail_settings = Setting.mailman
+  unless connection_configured?(:pop3) || connection_configured?(:imap)
+    puts "Please configure Mailman POP3 or IMAP settings for 'Reply via email'!"
     exit 1
   end
 
   Mailman.config.logger = Logger.new(Rails.root.join("log/mailman_#{Rails.env}.log"))
   Mailman.config.poll_interval = Setting.mailman_poll_interval
-  Mailman.config.pop3 = Setting.mailman_pop3
+
+  if connection_configured?(:pop3)
+    Mailman.config.pop3 = mail_settings[:pop3]
+  elsif connection_configured?(:imap)
+    Mailman.config.imap = mail_settings[:imap]
+  end
 end
 
 require 'fat_free_crm/mailman'
