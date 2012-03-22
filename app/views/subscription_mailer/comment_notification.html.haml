@@ -1,5 +1,5 @@
 :plain
-  #{I18n.t('comment_notification.intro')}:
+  #{I18n.t('comment_notification.intro', :entity_type => @entity.class.to_s, :entity_name => @entity.full_name)}:
 
   #{@comment.comment}
 
