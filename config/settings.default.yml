@@ -87,8 +87,8 @@
 
 # Settings for 'Reply via email' inbox (either POP3 or IMAP)
 #------------------------------------------------------------------------------
-:mailman_poll_interval: 30     # Seconds between polling inbox
 :mailman
+  :poll_interval: 30     # Seconds between polling inbox
   :pop3:
     :username     : ""
     :password     : ""
