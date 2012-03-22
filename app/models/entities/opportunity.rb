@@ -48,6 +48,8 @@ class Opportunity < ActiveRecord::Base
   has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
   has_many    :emails, :as => :mediator
 
+  serialize :subscribed_users, Array
+
   scope :state, lambda { |filters|
     where('stage IN (?)' + (filters.delete('other') ? ' OR stage IS NULL' : ''), filters)
   }
