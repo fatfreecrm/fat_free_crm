@@ -677,9 +677,9 @@ en-US:
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
-    subject: [%{entity}:%{id}] %{name} %{tags}
-    intro: A new comment has been added to the %{entity_type} named '%{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view it online
+    subject: "[%{entity}:%{id}] %{name} %{tags}"
+    intro: "A new comment has been added to the %{entity_type} named '%{entity_name}'"
+    reply_instructions: "Reply to this email directly to add a new comment, or view it online"
         
   # Lists
   #----------------------------------------------------------------------------
