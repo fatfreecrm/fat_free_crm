@@ -678,7 +678,7 @@ en-US:
   #----------------------------------------------------------------------------
   comment_notification:
     subject: |
-      Re: [%{entity_type}] %{entity_name} %{entity_tags}
+      [%{entity}:%{id}] %{name} %{tags}
     intro: |
       A new comment has been added to the %{entity_type} named '%{entity_name}'
     reply_instructions: |

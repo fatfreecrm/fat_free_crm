@@ -20,13 +20,14 @@ class SubscriptionMailer < ActionMailer::Base
   def comment_notification(user, comment)
   
     @entity = comment.commentable
-    @entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : nil
+    @entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : ""
     @comment = comment
 
-    mail :subject => I18n.t('subscription:comment_notification:subject',
-                            :entity_type => @entity.class.to_s,
-                            :entity_name => @entity.full_name,
-                            :entity_tags => @entity_tags),
+    mail :subject => I18n.t('comment_notification.subject',
+                            :entity => @entity.class.to_s,
+                            :id     => @entity.id,
+                            :name   => @entity.full_name,
+                            :tags   => @entity_tags),
          :to => user.email,
          :from => "FFCRM Comments <#{Setting.email_comment_inbox[:address]}>",
          :date => Time.now
