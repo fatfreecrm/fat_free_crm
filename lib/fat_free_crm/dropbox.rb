@@ -42,6 +42,7 @@ module FatFreeCRM
         process(uid, email)
         archive(uid)
       end
+      expunge!
     ensure
       log "messages processed: #{@archived + @discarded}, archived: #{@archived}, discarded: #{@discarded}."
       disconnect!
@@ -118,6 +119,15 @@ module FatFreeCRM
 
       with_forwarded_recipient(email) do |recipient|
         create_and_attach(email, recipient)
+      end
+    end
+
+    #------------------------------------------------------------------------------
+    def expunge!
+      if @imap
+        # Sends a EXPUNGE command to permanently remove from the currently selected mailbox
+        # all messages that have the Deleted flag set.
+        @imap.expunge
       end
     end
 
@@ -392,7 +402,7 @@ module FatFreeCRM
     # Notify users with the results of the operations (feedback from dropbox)
     #--------------------------------------------------------------------------------------
     def notify(email, mediator_links)
-      ack_email = Notifier.create_dropbox_ack_notification(@sender, @settings[:address], email, mediator_links)
+      ack_email = Notifier.create_dropbox_notification(@sender, @settings[:address], email, mediator_links)
       Notifier.deliver(ack_email)
     end
 
