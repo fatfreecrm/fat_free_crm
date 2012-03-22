@@ -7,9 +7,12 @@ class AddSubscribedUsersToEntities < ActiveRecord::Migration
     end
 
     Comment.all.each do |comment|
-      entity = comment.commentable
-      subscribed_users = (entity.subscribed_users + [comment.user.id]).uniq
-      entity.update_attribute :subscribed_users, subscribed_users
+      if (entity = comment.commentable) && (user = comment.user)
+        subscribed_users = (entity.subscribed_users + [user.id]).uniq
+        unless entity.subscribed_users == subscribed_users
+          entity.update_attribute :subscribed_users, subscribed_users
+        end
+      end
     end
 
   end
