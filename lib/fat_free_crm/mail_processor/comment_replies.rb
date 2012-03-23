@@ -52,7 +52,8 @@ module FatFreeCRM
       # Checks the email to detect [entity:id] in the subject.
       #--------------------------------------------------------------------------------------
       def with_subject_line(email)
-        if /\[(?<entity_name>[^:]*):(?<entity_id>[^\]]*)\]/ =~ email.subject
+        if /\[([^:]*):([^\]]*)\]/ =~ email.subject
+          entity_name, entity_id = $1, $2
           # Check that entity is a known model
           if ENTITY_SHORTCUTS.values.include?(entity_name)
             yield entity_name, entity_id
