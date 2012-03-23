@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-# Set relative url root for assets
+# Set default locale from Settings
 
-if Setting.base_url.present?
-  ActionController::Base.relative_url_root = Setting.base_url
-end
+I18n.default_locale = Setting.locale
