@@ -1,5 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-require File.dirname(__FILE__) + '/sample_emails/comment_replies'
 
 require "fat_free_crm/mail_processor/comment_replies"
 
@@ -15,38 +14,48 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
     @crawler.stub!("expunge!").and_return(true)
   end
 
+  #------------------------------------------------------------------------------
+  describe "Processing new emails" do
+    before(:each) do
+      mock_connect
+      mock_disconnect
+      FactoryGirl.create(:user, :email => "aaron@example.com")
+    end
 
+    it "should attach a new comment to a contact" do
+      @contact = FactoryGirl.create(:contact)
+      comment_reply = "This is a new comment reply via email"
 
-##### MOVE TO CommentInbox Spec
+      mail = Mail.new :from    => "Aaron Assembler <aaron@example.com>",
+                      :to      => "FFCRM Comments <crm-commment@example.com>",
+                      :subject => "[contact:#{@contact.id}] Test Contact",
+                      :body    => comment_reply
+      mock_message mail.to_s
 
-describe "Mailman" do
-  xit "should route comment reply email to SubscriptionMailer#new_comment" do
-    mail = Mail.new(:from => "test@example.com",
-                    :to   => "crm-comment@example.com",
-                    :subject => "RE: [contact:1234] John Smith")
+      @crawler.should_receive(:archive).once
+      @crawler.should_not_receive(:with_recipients)
+      @crawler.run
 
-    # Test that message is routed to SubscriptionMailer
-    SubscriptionMailer.should_receive(:new_comment).
-                       with(mail, "contact", "1234")
+      @contact.comments.size.should == 1
+      @contact.comments.first.comment.should == comment_reply
+    end
 
-    ##### FatFreeCRM::Mailman.new.router.route(mail)
+    it "should attach a new comment to an opportunity, using the 'op' shortcut in subject" do
+      @opportunity = FactoryGirl.create(:opportunity)
+      comment_reply = "This is a new comment reply via email"
 
+      mail = Mail.new :from    => "Aaron Assembler <aaron@example.com>",
+                      :to      => "FFCRM Comments <crm-commment@example.com>",
+                      :subject => "[op:#{@opportunity.id}] Test Opportunity",
+                      :body    => comment_reply
+      mock_message mail.to_s
+
+      @crawler.should_receive(:archive).once
+      @crawler.should_not_receive(:with_recipients)
+      @crawler.run
+
+      @opportunity.comments.size.should == 1
+      @opportunity.comments.first.comment.should == comment_reply
+    end
   end
 end
-
-@user = FactoryGirl.create(:user)
-@contact = FactoryGirl.create(:contact)
-
-comment_body = 'This comment should be added to the associated contact'
-
-mail = Mail.new(:from    => @user.email,
-                :to      => "crm-comment@example.com",
-                :subject => "RE: [contact:#{@contact.id}] John Smith",
-                :body    => comment_body)
-
-##### FatFreeCRM::Mailman.new.router.route(mail)
-
-@contact.comments.size.should == 1
-c = @contact.comments.first
-c.user.should == @user
-c.comment.should include(comment_body)

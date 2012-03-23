@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require 'net/imap'
-require 'mail'
 require 'fat_free_crm/mail_processor/base'
 
 module FatFreeCRM
@@ -46,7 +44,7 @@ module FatFreeCRM
       #--------------------------------------------------------------------------------------
       def process(uid, email)
         with_subject_line(email) do |entity_name, entity_id|
-          create_comment entity_name, entity_id
+          create_comment email, entity_name, entity_id
         end
       end
 
@@ -65,20 +63,20 @@ module FatFreeCRM
         end
       end
 
-      def create_comment(entity_name, entity_id)
+
+      # Creates a new comment on an entity
+      #--------------------------------------------------------------------------------------
+      def create_comment(email, entity_name, entity_id)
         # Find entity from subject params
         if (entity = entity_name.capitalize.constantize.find_by_id(entity_id))
           # Create comment if sender has permissions for entity
           if sender_has_permissions_for?(entity)
+            parsed_reply = EmailReplyParser.parse_reply(email.body.decoded)
             Comment.create :user        => @sender,
                            :commentable => entity,
-                           :comment     => message.body.decoded
+                           :comment     => parsed_reply
           end
         end
-      end
-
-      def strip_signatures_and_replies(email)
-        e.sub(/On.*wrote:.*\Z/m, '').strip
       end
 
     end
