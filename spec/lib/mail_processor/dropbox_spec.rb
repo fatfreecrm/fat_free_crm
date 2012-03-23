@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 require File.dirname(__FILE__) + '/dropbox/email_samples'
 
 require "fat_free_crm/dropbox"
