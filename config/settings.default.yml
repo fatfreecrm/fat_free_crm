@@ -96,7 +96,7 @@
   :user                       : ""        # User to login to the IMAP server.
   :password                   : ""        # Password to login to the IMAP server.
   :scan_folder                : ""        # Folder to scan for dropbox messages.
-  :attach_to_account          : ""        # Attach emails to contact's account, if any.  dgfdgd dfh dfhfd h
+  :attach_to_account          : ""        # Attach emails to contact's account, if any.
                                           # (The same rule above applies to opportunities.)
 #  :move_to_folder            : ""        # Optional: folder to move processed messages to.
 #  :move_invalid_to_folder    : ""        # Optional: folder to move invalid messages to.

@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-require File.dirname(__FILE__) + '/sample_emails/dropbox'
 
-require "fat_free_crm/mail_processor/dropbox"
+require "fat_free_crm/mail_processor/base"
 
 describe FatFreeCRM::MailProcessor::Base do
   include MockIMAP
@@ -12,6 +11,15 @@ describe FatFreeCRM::MailProcessor::Base do
 
   before(:each) do
     @crawler = FatFreeCRM::MailProcessor::Base.new
+    # MailProcessor::Base doesn't load any settings by default
+    @crawler.instance_variable_set "@settings", {
+      :server   => "example.com",
+      :port     => "123",
+      :ssl      => true,
+      :address  => "test@example.com",
+      :user     => "test@example.com",
+      :password => "123"
+    }
     @crawler.stub!("expunge!").and_return(true)
   end
 
