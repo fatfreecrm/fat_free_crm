@@ -34,13 +34,13 @@ namespace :ffcrm do
     desc "Run comment inbox crawler and process incoming emails"
     task :run => :environment do
       require "fat_free_crm/comment_inbox"
-      FatFreeCRM::CommentInbox.new.run
+      FatFreeCRM::MailProcessor::CommentReplies.new.run
     end
     
     desc "Set up comment inbox based on currently loaded settings"
     task :setup => :environment do
       require "fat_free_crm/comment_inbox"
-      FatFreeCRM::CommentInbox.new.setup
+      FatFreeCRM::MailProcessor::CommentReplies.new.setup
     end
   end  
 end
