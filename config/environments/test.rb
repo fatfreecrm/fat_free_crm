@@ -37,6 +37,9 @@ if defined?(FatFreeCRM::Application)
 
     # Print deprecation notices to the stderr
     config.active_support.deprecation = :stderr
+
+    # Set default host for mailer specs
+    config.action_mailer.default_url_options = { :host => "www.example.com" }
   end
 
   # Optionally load 'awesome_print' for debugging in development mode.
