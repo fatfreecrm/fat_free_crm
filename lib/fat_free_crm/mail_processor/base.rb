@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require "net/imap"
-require "mail"
+require 'net/imap'
+require 'mail'
+require 'email_reply_parser'
 
 module FatFreeCRM
   module MailProcessor

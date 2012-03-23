@@ -105,7 +105,7 @@
 
 # Settings for 'Reply via email' inbox (IMAP)
 #------------------------------------------------------------------------------
-:email_comment_inbox:
+:email_comment_replies:
   :server                     : ""        # IMAP server name.
   :port                       : ""        # IMAP server port number.
   :ssl                        : ""        # True for secure IMAP connection, false othewise.

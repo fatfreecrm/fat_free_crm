@@ -18,7 +18,6 @@
 class SubscriptionMailer < ActionMailer::Base
 
   def comment_notification(user, comment)
-
     @entity = comment.commentable
     @entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : ""
     @comment = comment
@@ -29,7 +28,7 @@ class SubscriptionMailer < ActionMailer::Base
                             :name   => @entity.full_name,
                             :tags   => @entity_tags),
          :to => user.email,
-         :from => "FFCRM Comments <#{Setting.email_comment_inbox[:address]}>",
+         :from => "FFCRM Comments <#{Setting.email_comment_replies[:address]}>",
          :date => Time.now
   end
 end
