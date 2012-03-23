@@ -41,7 +41,8 @@ class Comment < ActiveRecord::Base
   has_paper_trail :meta => { :related => :commentable },
                   :ignore => [:state]
 
-  after_create :log_activity, :add_subscribed_user, :notify_subscribers
+  before_create :subscribe_mentioned_users
+  after_create  :log_activity, :subscribe_user_to_entity, :notify_subscribers
 
   def expanded?;  self.state == "Expanded";  end
   def collapsed?; self.state == "Collapsed"; end
@@ -52,14 +53,14 @@ class Comment < ActiveRecord::Base
     Activity.log(current_user, commentable, :commented) if current_user
   end
 
-  # Add comment's user to subscribed_users field on entity
-  def add_subscribed_user
-    subscribed_users = (commentable.subscribed_users + [user.id]).uniq
+  # Add user to subscribed_users field on entity
+  def subscribe_user_to_entity(u = user)
+    subscribed_users = (commentable.subscribed_users + [u.id]).uniq
     commentable.update_attribute :subscribed_users, subscribed_users
   end
 
+  # Notify subscribed users when a comment is added, unless user created this comment
   def notify_subscribers
-    # Notify subscribed users when a comment is added, unless user created this comment
     commentable.subscribed_users.reject{|user_id| user_id == user.id}.each do |subscriber_id|
       if subscriber = User.find_by_id(subscriber_id)
         SubscriptionMailer.comment_notification(subscriber, self).deliver
@@ -67,4 +68,15 @@ class Comment < ActiveRecord::Base
     end
   end
 
+  # If a user is mentioned in the comment body, subscribe them to the entity
+  # before creation, so that they are sent an email notification
+  def subscribe_mentioned_users
+    # Scan for usernames mentioned in the comment,
+    # e.g. "Hi @example_user, take a look at this lead. Please show @another_user"
+    comment.scan(/@([a-zA-Z0-9_-]+)([^a-zA-Z0-9_-]|$)/).map(&:first).each do |username|
+      if (mentioned_user = User.find_by_username(username))
+        subscribe_user_to_entity(mentioned_user)
+      end
+    end
+  end
 end
