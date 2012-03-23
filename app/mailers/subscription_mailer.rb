@@ -18,7 +18,7 @@
 class SubscriptionMailer < ActionMailer::Base
 
   def comment_notification(user, comment)
-  
+
     @entity = comment.commentable
     @entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : ""
     @comment = comment
@@ -32,17 +32,4 @@ class SubscriptionMailer < ActionMailer::Base
          :from => "FFCRM Comments <#{Setting.email_comment_inbox[:address]}>",
          :date => Time.now
   end
-
-  # Processes received messages and adds comment to the associated entity
-  def self.new_comment(message, entity_name, entity_id)
-    # Find entity from class & id
-    if entity = entity_name.capitalize.constantize.find_by_id(entity_id)
-      if user = User.find_by_email(message.from.first)
-        Comment.create :user        => user,
-                       :commentable => entity,
-                       :comment     => message.body.decoded
-      end
-    end
-  end
-
 end
