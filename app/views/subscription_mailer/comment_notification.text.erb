@@ -4,4 +4,4 @@
 
 
 ---
-<%= I18n.t('comment_notification.reply_instructions') %>: <%= url_for(@entity) %>
+<%= I18n.t('comment_notification.reply_instructions') %>: <%= polymorphic_url(@entity) %>
