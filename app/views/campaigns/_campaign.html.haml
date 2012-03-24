@@ -6,8 +6,9 @@
     = link_to_delete(campaign)
 
   .indent
-    = link_to(h(campaign.name), campaign)
+    = link_to(campaign.name, campaign)
     = render "campaigns/status", :campaign => campaign
+
     - unless @current_user.preference[:campaigns_outline] == "brief"
       = render "campaigns/metrics", :campaign => campaign
       - if campaign.tag_list.present?

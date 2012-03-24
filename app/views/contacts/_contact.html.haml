@@ -10,22 +10,31 @@
     = link_to_delete(contact)
 
   .indentslim
-    = link_to(h(contact.full_name(@current_user.preference[:contacts_naming])), contact)
+    = link_to(contact.full_name(@current_user.preference[:contacts_naming]), contact)
     %tt
       - if contact.title? && contact.department?
-        = h(contact.title) << ", " << h(contact.department)
+        = contact.title << ", " << contact.department
       - else
-        = h(contact.title) if contact.title?
+        = contact.title if contact.title?
       - if contact.account && contact.account.name?
-        == #{t :at} #{link_to h(contact.account.name), account_path(contact.account)}
+        == #{t :at} #{link_to contact.account.name, account_path(contact.account)}
       - if contact.lead and contact.lead.referred_by?
         &ndash;
-        = #{t :referred_by_small} #{contact.lead.referred_by}"
+        == #{t :referred_by_small} #{contact.lead.referred_by}
+
     - unless @current_user.preference[:contacts_outline] == "brief"
       %dt{ :style => "padding: 2px 0px 0px 0px" }
-        = link_to_email(contact.email) << " | " if contact.email.present?
-        = "#{t :phone_small}: <b>".html_safe + h(contact.phone) << "</b> | ".html_safe if contact.phone.present?
-        = "#{t :mobile_small}: <b>".html_safe + h(contact.mobile) << "</b> | ".html_safe if contact.mobile.present?
+        - if contact.email.present?
+          = link_to_email(contact.email)
+          |
+        - if contact.phone.present?
+          == #{t :phone_small}:
+          %b= contact.phone
+          |
+        - if contact.mobile.present?
+          == #{t :mobile_small}:
+          %b= contact.mobile
+          |
         = t(:added_ago, time_ago_in_words(contact.created_at))
       - if contact.tag_list.present?
         %dt

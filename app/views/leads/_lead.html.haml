@@ -18,17 +18,17 @@
     = link_to_delete(lead)
 
   .indent
-    = link_to(h(lead.full_name(@current_user.preference[:leads_naming])), lead)
+    = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)
     %tt
       - if lead.company? && lead.title?
         = t(:works_at, :job_title => lead.title, :company => lead.company)
       - else
         = lead.company if lead.company?
         = lead.title if lead.title?
-      -#= link_to(h(lead.campaign.name), lead.campaign) if lead.campaign_id
       - if lead.referred_by?
         &ndash;
-        = "#{t :referred_by_small} #{lead.referred_by}"
+        == #{t :referred_by_small} #{lead.referred_by}
+
     - unless @current_user.preference[:leads_outline] == "brief"
       %dt
         = stars_for(lead) + " | "
