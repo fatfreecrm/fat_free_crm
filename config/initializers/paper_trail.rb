@@ -15,8 +15,8 @@ Version.class_eval do
   scope :include_events, lambda { |*events| where(:event => events) }
   scope :exclude_events, lambda { |*events| where('event NOT IN (?)', events) }
   scope :for,            lambda { |user| where(:whodunnit => user.id.to_s) }
-  scope :group_by_item,  select('MAX(id) AS id').group(:item_id, :item_type).order('MAX(created_at) DESC').limit(100)
-  scope :recent,         where(:id => group_by_item.map(&:id)).where(:item_type => ENTITIES).default_order.limit(10)
+  scope :group_by_item,  lambda { select('MAX(id) AS id').group(:item_id, :item_type).order('MAX(created_at) DESC').limit(100).map(&:id) }
+  scope :recent,         lambda { where(:id => group_by_item).where(:item_type => ENTITIES).default_order.limit(10) }
 
   class << self
 
