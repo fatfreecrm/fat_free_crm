@@ -42,17 +42,12 @@ class Comment < ActiveRecord::Base
                   :ignore => [:state]
 
   before_create :subscribe_mentioned_users
-  after_create  :log_activity, :subscribe_user_to_entity, :notify_subscribers
+  after_create  :subscribe_user_to_entity, :notify_subscribers
 
   def expanded?;  self.state == "Expanded";  end
   def collapsed?; self.state == "Collapsed"; end
 
   private
-  def log_activity
-    current_user = User.find(user_id)
-    Activity.log(current_user, commentable, :commented) if current_user
-  end
-
   # Add user to subscribed_users field on entity
   def subscribe_user_to_entity(u = user)
     subscribed_users = (commentable.subscribed_users + [u.id]).uniq
