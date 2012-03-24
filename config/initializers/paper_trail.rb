@@ -1,6 +1,12 @@
 require 'paper_trail'
 
-class Version < ActiveRecord::Base
+Version.class_eval do
+
+  ASSETS   = %w(all tasks campaigns leads accounts contacts opportunities comments emails)
+  EVENTS   = %w(all_events create view update destroy)
+  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
+  ENTITIES = %w(Account Campaign Contact Lead Opportunity)
+
   attr_accessible :related
   belongs_to :related, :polymorphic => true
   belongs_to :user, :foreign_key => :whodunnit
@@ -10,12 +16,7 @@ class Version < ActiveRecord::Base
   scope :exclude_events, lambda { |*events| where('event NOT IN (?)', events) }
   scope :for,            lambda { |user| where(:whodunnit => user.id.to_s) }
   scope :group_by_item,  select('MAX(id) AS id').group(:item_id, :item_type).order('MAX(created_at) DESC').limit(100)
-  scope :recent,         where(:id => group_by_item.map(&:id)).where(:item_type => %w(Account Campaign Contact Lead Opportunity)).default_order.limit(10)
-
-  ASSETS   = %w(all tasks campaigns leads accounts contacts opportunities comments emails)
-  EVENTS   = %w(all_events create view update destroy)
-  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
-  ENTITIES = %w(Account Campaign Contact Lead Opportunity)
+  scope :recent,         where(:id => group_by_item.map(&:id)).where(:item_type => ENTITIES).default_order.limit(10)
 
   class << self
 
