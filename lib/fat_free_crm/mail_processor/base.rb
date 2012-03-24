@@ -200,14 +200,14 @@ module FatFreeCRM
         if parts.empty?
           parts << email
         end
-        plain_text_part = parts.detect {|p| p.content_type.include?('text/plain')}
+        plain_text_part = parts.detect {|p| p.content_type.to_s.include?('text/plain')}
         if plain_text_part.nil?
           # no text/plain part found, assuming html-only email
           # strip html tags and remove doctype directive
           plain_text_body = email.body.to_s.gsub(/<\/?[^>]*>/, "")
           plain_text_body.gsub! %r{^<!DOCTYPE .*$}, ''
         else
-          plain_text_body = plain_text_part.body.to_s
+          plain_text_body = plain_text_part.body.decoded
         end
         plain_text_body.strip.gsub("\r\n", "\n")
       end
