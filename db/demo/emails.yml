@@ -48,6 +48,6 @@ email_<%= i %>:
                      <%= "\n" %>
                      <%= Faker::Lorem.paragraph(rand(10) + 5) %>
   header          :
-  sent_at         :
-  received_at     :
+  sent_at         : <%= Date.today - rand(15).days %>
+  received_at     : <%= Date.today - rand(15).days %>
 <% end %>
