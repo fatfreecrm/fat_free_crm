@@ -13,22 +13,12 @@
 
 = hook(:show_account_bottom, self) do
 
-  = section(@account, :tasks)
-  .log#tasks
-    = render "shared/tasks"
+  = render :partial => "tasks/tasks", :locals => {:object => @account}
 
-  = section(@account, :contacts)
-  .list#contacts
-    - @contacts = @account.contacts.paginate(:page => 1, :per_page => 20)
-    = render :partial => "contacts/contact", :collection => @contacts
-  = will_paginate @contacts, :id => true, :params => {:action => :contacts}
+  = render :partial => "contacts/contacts", :locals => {:object => @account}
 
-  = section(@account, :opportunities)
-  .list#opportunities
-    - @opportunities = @account.opportunities.paginate(:page => 1, :per_page => 20)
-    = render :partial => "opportunities/opportunity", :collection => @opportunities
-  = will_paginate @opportunities, :id => true, :params => {:action => :opportunities}
-
-  = load_select_popups_for(@account, :tasks, :contacts, :opportunities)
+  = render :partial => "opportunities/opportunities", :locals => {:object => @account}
 
   = render :partial => "versions/versions", :locals => {:object => @account}
+
+  = load_select_popups_for(@account, :tasks, :contacts, :opportunities)

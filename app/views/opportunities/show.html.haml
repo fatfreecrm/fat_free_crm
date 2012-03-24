@@ -13,16 +13,10 @@
 
 = hook(:show_opportunity_bottom, self) do
 
-  = section(@opportunity, :tasks)
-  .log#tasks
-    = render "shared/tasks"
+  = render :partial => "tasks/tasks", :locals => {:object => @opportunity}
 
-  = section(@opportunity, :contacts)
-  .list#contacts
-    - @contacts = @opportunity.contacts.paginate(:page => 1, :per_page => 20)
-    = render :partial => "contacts/contact", :collection => @opportunity.contacts.paginate(:page => 1, :per_page => 20)
-  = will_paginate @contacts, :id => true, :params => {:action => :contacts}
-
-  = load_select_popups_for(@opportunity, :tasks, :contacts)
+  = render :partial => "contacts/contacts", :locals => {:object => @opportunity}
 
   = render :partial => "versions/versions", :locals => {:object => @opportunity}
+
+  = load_select_popups_for(@opportunity, :tasks, :contacts)

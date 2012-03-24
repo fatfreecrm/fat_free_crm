@@ -18,10 +18,8 @@
 
 = hook(:show_lead_bottom, self) do
 
-  = section(@lead, :tasks)
-  .log#tasks
-    = render "shared/tasks"
-
-  = load_select_popups_for(@lead, :tasks)
+  = render :partial => "tasks/tasks", :locals => {:object => @lead}
 
   = render :partial => "versions/versions", :locals => {:object => @lead}
+
+  = load_select_popups_for(@lead, :tasks)
