@@ -40,15 +40,22 @@ Version.class_eval do
 
     def visible_to(user)
       scoped.delete_if do |version|
-        is_private = false
-
-        item = version.item || version.reify || version.next.reify
-        if item.respond_to?(:access) # NOTE: Tasks don't have :access as of yet.
-          is_private = item.user_id != user.id && item.assigned_to != user.id &&
-            (item.access == "Private" || (item.access == "Shared" && !item.permissions.map(&:user_id).include?(user.id)))
+        if item = version.item || version.reify
+          if item.respond_to?(:access) # NOTE: Tasks don't have :access as of yet.
+            # Delete from scope if it shouldn't be visible
+            next item.user_id != user.id &&
+              item.assigned_to != user.id &&
+              (item.access == "Private" ||
+                (item.access == "Shared" &&
+                 !item.permissions.map(&:user_id).include?(user.id)))
+          end
+          # Don't delete any objects that don't have :access method (e.g. tasks)
+          next false
         end
-        is_private
+        # Delete from scope if no object can be found or reified (e.g. from 'show' events)
+        true
       end
+
     end
 
   end
