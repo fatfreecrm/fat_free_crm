@@ -5,36 +5,39 @@
 
   .tools{ invisible, :id => dom_id(contact, :tools) }
     = hook(:contact_tools_before, self, :contact => contact)
-    = link_to_edit(contact) + " | "
+    = link_to_edit(contact)    + " | " if can?(:update, contact)
     = link_to_discard(contact) + " | " if shown_on_landing_page?
-    = link_to_delete(contact)
+    = link_to_delete(contact)          if can?(:destroy, contact)
 
   .indentslim
-    = link_to(contact.full_name(@current_user.preference[:contacts_naming]), contact)
+    = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
     %tt
       - if contact.title? && contact.department?
         = contact.title << ", " << contact.department
       - else
         = contact.title if contact.title?
-      - if contact.account && contact.account.name?
-        == #{t :at} #{link_to contact.account.name, account_path(contact.account)}
-      - if contact.lead and contact.lead.referred_by?
+
+      - if (account = contact.account) and account.name?
+        == #{t :at} #{link_to_if can?(:read, account), account.name, account_path(account)}
+
+      - if (lead = contact.lead) and lead.referred_by?
         &ndash;
-        == #{t :referred_by_small} #{contact.lead.referred_by}
+        == #{t :referred_by_small} #{lead.referred_by}
 
     - unless @current_user.preference[:contacts_outline] == "brief"
       %dt{ :style => "padding: 2px 0px 0px 0px" }
-        - if contact.email.present?
-          = link_to_email(contact.email)
-          |
-        - if contact.phone.present?
-          == #{t :phone_small}:
-          %b= contact.phone
-          |
-        - if contact.mobile.present?
-          == #{t :mobile_small}:
-          %b= contact.mobile
-          |
+        - if can?(:read, contact)
+          - if contact.email.present?
+            = link_to_email(contact.email)
+            |
+          - if contact.phone.present?
+            == #{t :phone_small}:
+            %b= contact.phone
+            |
+          - if contact.mobile.present?
+            == #{t :mobile_small}:
+            %b= contact.mobile
+            |
         = t(:added_ago, time_ago_in_words(contact.created_at))
       - if contact.tag_list.present?
         %dt
