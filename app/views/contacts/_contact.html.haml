@@ -3,11 +3,14 @@
 %li[contact]{ highlightable(dom_id(contact, :tools)) }
   = gravatar_for(contact, :size => gravatar_size)
 
-  .tools{ invisible, :id => dom_id(contact, :tools) }
+  %ul.tools{ invisible, :id => dom_id(contact, :tools) }
     = hook(:contact_tools_before, self, :contact => contact)
-    = link_to_edit(contact)    + " | " if can?(:update, contact)
-    = link_to_discard(contact) + " | " if shown_on_landing_page?
-    = link_to_delete(contact)          if can?(:destroy, contact)
+    - if can?(:update, contact)
+      %li= link_to_edit(contact)
+    - if shown_on_landing_page?
+      %li= link_to_discard(contact)
+    - if can?(:destroy, contact)
+      %li= link_to_delete(contact)
 
   .indentslim
     = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
