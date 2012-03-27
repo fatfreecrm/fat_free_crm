@@ -6,14 +6,19 @@ class AddSubscribedUsersToEntities < ActiveRecord::Migration
       table.singularize.capitalize.constantize.reset_column_information
     end
 
+    entity_subscribers = Hash.new(Set.new)
+
+    # Add comment's user to the entity's Set
     Comment.all.each do |comment|
-      if (entity = comment.commentable) && (user = comment.user)
-        subscribed_users = (entity.subscribed_users + [user.id]).uniq
-        unless entity.subscribed_users == subscribed_users
-          entity.update_attribute :subscribed_users, subscribed_users
-        end
-      end
+      entity_subscribers[[comment.commentable_type, comment.commentable_id]] += [comment.user_id]
     end
 
+    # Generate SQL query to update subscribed_users
+    sql = ""
+    entity_subscribers.each do |entity, user_ids|
+      sql << "UPDATE #{entity[0].tableize} SET subscribed_users = '#{user_ids.to_a.to_yaml}' WHERE id = #{entity[1]}; "
+    end
+
+    connection.execute sql
   end
 end
