@@ -1,25 +1,28 @@
 - truncated = simple_format h(truncate(comment.comment.gsub("\n", " "), :length => 125))
 - formatted = defined?(RedCloth) ? RedCloth.new(h(comment.comment)).to_html.html_safe : simple_format(h(comment.comment)).html_safe
 - collapsable = formatted.size > 150
+- commentable = comment.commentable
 
 %li[comment]{ highlightable(dom_id(comment, :tools), :off => "#f2f2f2") }
   .body
     = link_to avatar_for(comment.user, :size => :small), user_path(comment.user)
-    .tools{ invisible, :id => dom_id(comment, :tools) }
-      = link_to_edit(comment) + " | "
-      = link_to_delete(comment)
+    %ul.tools{ invisible, :id => dom_id(comment, :tools) }
+      - if can?(:update, commentable)
+        %li= link_to_edit(comment)
+      - if can?(:destroy, commentable)
+        %li= link_to_delete(comment)
 
     = link_to(comment.user.full_name, user_path(comment.user)) + ","
     %tt
       added note #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
-      - if collapsable
+      - if collapsable && can?(:read, commentable)
         = " | ".html_safe + link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
 
-    - if collapsable
-      %dt{ hidden_if(comment.expanded?), :id => dom_id(comment, :truncated) }
-        = truncated
-      %dt.textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
-        = auto_link(formatted).html_safe
-    - else
-      %dt.textile= auto_link(formatted).html_safe
-
+    - if can?(:read, commentable)
+      - if collapsable
+        %dt{ hidden_if(comment.expanded?), :id => dom_id(comment, :truncated) }
+          = truncated
+        %dt.textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
+          = auto_link(formatted).html_safe
+      - else
+        %dt.textile= auto_link(formatted).html_safe
