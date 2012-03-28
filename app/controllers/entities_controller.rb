@@ -82,15 +82,32 @@ class EntitiesController < ApplicationController
     respond_to_not_found(:html, :js, :json, :xml)
   end
 
-  def timeline(asset)
-    (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
+  # GET /entities/contacts                                                 AJAX
+  #----------------------------------------------------------------------------
+  def contacts
+    @entity = klass.my.find(params[:id])
   end
 
+  # GET /entities/leads                                                    AJAX
+  #----------------------------------------------------------------------------
+  def leads
+    @entity = klass.my.find(params[:id])
+  end
+
+  # GET /entities/opportunities                                            AJAX
+  #----------------------------------------------------------------------------
+  def opportunities
+    @entity = klass.my.find(params[:id])
+  end
+
+  # GET /entities/versions                                                 AJAX
+  #----------------------------------------------------------------------------
   def versions
     @entity = klass.my.find(params[:id])
+  end
 
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js)
+  def timeline(asset)
+    (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
   end
 
   # Controller instance method that responds to /controlled/tagged/tag request.

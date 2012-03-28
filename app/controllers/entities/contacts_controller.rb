@@ -154,12 +154,6 @@ class ContactsController < EntitiesController
     end
   end
 
-  # GET /contacts/opportunities                                            AJAX
-  #----------------------------------------------------------------------------
-  def opportunities
-    @contact = Contact.my.find(params[:id])
-  end
-
   # POST /contacts/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw

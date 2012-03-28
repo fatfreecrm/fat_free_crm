@@ -140,18 +140,6 @@ class CampaignsController < EntitiesController
     end
   end
 
-  # GET /accounts/leads                                                    AJAX
-  #----------------------------------------------------------------------------
-  def leads
-    @campaign = Campaign.my.find(params[:id])
-  end
-
-  # GET /accounts/opportunities                                            AJAX
-  #----------------------------------------------------------------------------
-  def opportunities
-    @campaign = Campaign.my.find(params[:id])
-  end
-
   # POST /campaigns/redraw                                                 AJAX
   #----------------------------------------------------------------------------
   def redraw

@@ -150,18 +150,6 @@ class AccountsController < EntitiesController
     render :index
   end
 
-  # GET /accounts/contacts                                                 AJAX
-  #----------------------------------------------------------------------------
-  def contacts
-    @account = Account.my.find(params[:id])
-  end
-
-  # GET /accounts/opportunities                                            AJAX
-  #----------------------------------------------------------------------------
-  def opportunities
-    @account = Account.my.find(params[:id])
-  end
-
   # POST /accounts/filter                                                  AJAX
   #----------------------------------------------------------------------------
   def filter
