@@ -38,7 +38,8 @@ class Comment < ActiveRecord::Base
   scope :created_by, lambda { |user| where(:user_id => user.id) }
 
   validates_presence_of :user, :commentable, :comment
-  has_paper_trail :meta => { :related => :commentable }
+  has_paper_trail :meta => { :related => :commentable },
+                  :ignore => [:state]
 
   def expanded?;  self.state == "Expanded";  end
   def collapsed?; self.state == "Collapsed"; end

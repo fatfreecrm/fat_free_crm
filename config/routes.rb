@@ -7,13 +7,16 @@ Rails.application.routes.draw do
   match 'admin'      => 'admin/users#index',       :as => :admin
   match 'login'      => 'authentications#new',     :as => :login
   match 'logout'     => 'authentications#destroy', :as => :logout
-  match 'options'    => 'home#options'
   match 'profile'    => 'users#show',              :as => :profile
   match 'signup'     => 'users#new',               :as => :signup
-  match 'timeline'   => 'home#timeline',           :as => :timeline
-  match 'timezone'   => 'home#timezone',           :as => :timezone
-  match 'redraw'     => 'home#redraw',             :as => :redraw
-  match 'toggle'     => 'home#toggle'
+
+  namespace :home do
+    get :options
+    get :timeline, :as => :timeline
+    get :timezone, :as => :timezone
+    get :redraw,   :as => :redraw
+    get :toggle
+  end
 
   resource  :authentication
   resources :comments
