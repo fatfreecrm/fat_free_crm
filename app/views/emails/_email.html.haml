@@ -9,7 +9,7 @@
       - if can?(:destroy, mediator)
         %li= link_to_delete(email)
 
-    if can?(:read, mediator)
+    - if can?(:read, mediator)
       %tt
         - if email.sent_to.to_s.include?(", ")
           = "To: ".html_safe << email.sent_to
