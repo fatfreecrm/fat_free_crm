@@ -686,3 +686,15 @@ span.handle img {
 
 .remove_fields img {
   vertical-align: text-bottom; }
+
+ul.tools {
+  display: inline;
+  li {
+    border-right: 1px black solid;
+    border-bottom: none;
+    padding: 0 4px;
+    font-size: 10px;
+    float: left;
+    clear: none; }
+  li:last-child {
+    border-right: none; } }

@@ -1,24 +1,33 @@
 %li[lead]{ highlightable(dom_id(lead, :tools)) }
   - if lead.status
-    .strip{:class => lead.status} #{t(lead.status)}
+    .strip{:class => lead.status}= t lead.status
   - else
-    .strip{:style => "color: gray;"} #{t :other}
+    .strip{:style => "color: gray;"}= t :other
 
-  .tools{ invisible, :id => dom_id(lead, :tools) }
-    = link_to_edit(lead) + " | "
-    - unless %w(converted rejected).include?(lead.status)
-      = link_to_convert(lead) + " | "
-    - else
-      = "<font color='silver'>#{t :convert}</font> | ".html_safe
-    - if lead.status != "rejected"
-      = link_to_reject(lead) + " | "
-    - else
-      = "<font color='silver'>#{t :reject}</font> | ".html_safe
-    = link_to_discard(lead) + " | " if shown_on_landing_page?
-    = link_to_delete(lead)
+  %ul.tools{ invisible, :id => dom_id(lead, :tools) }
+    - if can?(:update, lead)
+      %li= link_to_edit(lead)
+
+    - if %w(converted rejected).include?(lead.status)
+      %li
+        %font{ :color => 'silver' }= t :convert
+    - elsif can?(:update, lead)
+      %li= link_to_convert(lead)
+
+    - if lead.status == "rejected"
+      %li
+        %font{ :color => 'silver' }= t :reject
+    - elsif can?(:update, lead)
+      %li= link_to_reject(lead)
+
+    - if shown_on_landing_page?
+      %li= link_to_discard(lead)
+
+    - if can?(:destroy, lead)
+      %li= link_to_delete(lead)
 
   .indent
-    = link_to(lead.full_name(@current_user.preference[:leads_naming]), lead)
+    = link_to_if can?(:read, lead), lead.full_name(@current_user.preference[:leads_naming]), lead
     %tt
       - if lead.company? && lead.title?
         = t(:works_at, :job_title => lead.title, :company => lead.company)
@@ -31,10 +40,20 @@
 
     - unless @current_user.preference[:leads_outline] == "brief"
       %dt
-        = stars_for(lead) + " | "
-        = link_to_email(lead.email) << " | " if lead.email.present?
-        = "#{t :phone_small}: " + lead.phone  << " | " if lead.phone.present?
-        = "#{t :mobile_small}: " + lead.mobile << " | " if lead.mobile.present?
+        = stars_for(lead)
+        |
+        - if can?(:read, lead)
+          - if lead.email.present?
+            = link_to_email(lead.email)
+            |
+          - if lead.phone.present?
+            == #{t :phone_small}:
+            %b= lead.phone
+            |
+          - if lead.mobile.present?
+            == #{t :mobile_small}:
+            %b= lead.mobile
+            |
         = t(:added_ago, time_ago_in_words(lead.created_at))
       - if lead.tag_list.present?
         %dt
