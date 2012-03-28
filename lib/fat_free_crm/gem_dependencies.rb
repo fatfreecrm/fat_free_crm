@@ -34,3 +34,9 @@ require 'ajax-chosen-rails'
 require 'ransack'
 require 'paper_trail'
 require 'cancan'
+
+# Load redcloth if available (for textile markup in emails)
+begin
+  require 'redcloth'
+rescue LoadError
+end
