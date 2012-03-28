@@ -318,8 +318,16 @@ module ApplicationHelper
       Avatar
       image_tag(model.avatar.image.url(args[:size]), args)
     elsif model.email
-      # Gravatar requires '75x75', not :large
-      args[:size] = Avatar::STYLES[args[:size]].sub(/\#$/,'')
+      # Gravatar requires '75x75' format, so convert symbols keys (e.g. :large)
+      if style_size = Avatar::STYLES[args[:size]]
+        args[:size] = style_size.sub(/\#$/,'')
+      end
+      # If we are passing an explicit w*h override (for uploaded avatars),
+      # then use that as the size.
+      if args[:width] && args[:height]
+        args[:size] = [:width, :height].map{|d|args[d]}.join("x")
+      end
+
       gravatar_image_tag(model.email, { :gravatar => { :default => default_avatar_url } }.merge(args))
     else
       image_tag("avatar.jpg", args)
