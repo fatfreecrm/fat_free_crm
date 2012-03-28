@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get  :field_group
       match :auto_complete
       post :redraw
+      get :versions
     end
     member do
       put  :attach
@@ -45,6 +46,7 @@ Rails.application.routes.draw do
       get  :field_group
       post :auto_complete
       post :redraw
+      get :versions
     end
     member do
       put  :attach
@@ -62,6 +64,7 @@ Rails.application.routes.draw do
       get  :field_group
       post :auto_complete
       post :redraw
+      get :versions
     end
     member do
       put  :attach
@@ -78,6 +81,7 @@ Rails.application.routes.draw do
       get  :field_group
       post :auto_complete
       post :redraw
+      get :versions
     end
     member do
       get  :convert
@@ -96,6 +100,7 @@ Rails.application.routes.draw do
       get  :field_group
       post :auto_complete
       post :redraw
+      get :versions
     end
     member do
       put  :attach

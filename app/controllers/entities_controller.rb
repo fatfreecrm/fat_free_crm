@@ -86,6 +86,13 @@ class EntitiesController < ApplicationController
     (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
   end
 
+  def versions
+    @entity = klass.my.find(params[:id])
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js)
+  end
+
   # Controller instance method that responds to /controlled/tagged/tag request.
   # It stores given tag as current query and redirect to index to display all
   # records tagged with the tag.
