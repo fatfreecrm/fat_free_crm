@@ -3,10 +3,10 @@
 - collapsable = formatted.size > 150
 - commentable = comment.commentable
 
-%li[comment]{ highlightable(dom_id(comment, :tools), :off => "#f2f2f2") }
+%li.comment.highlight[comment]
   .body
     = link_to avatar_for(comment.user, :size => :small), user_path(comment.user)
-    %ul.tools{ invisible, :id => dom_id(comment, :tools) }
+    %ul.tools
       - if can?(:update, commentable)
         %li= link_to_edit(comment)
       - if can?(:destroy, commentable)

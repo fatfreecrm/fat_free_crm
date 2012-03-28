@@ -210,12 +210,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def highlightable(id = nil, color = {})
-    color = { :on => "seashell", :off => "white" }.merge(color)
-    show = (id ? "$('#{id}').style.visibility='visible'" : "")
-    hide = (id ? "$('#{id}').style.visibility='hidden'" : "")
-    { :onmouseover => "this.style.background='#{color[:on]}'; #{show}",
-      :onmouseout  => "this.style.background='#{color[:off]}'; #{hide}"
-    }
+    { :class => 'highlight' }
   end
 
   #----------------------------------------------------------------------------

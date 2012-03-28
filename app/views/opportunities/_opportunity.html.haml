@@ -1,10 +1,10 @@
-%li[opportunity]{ highlightable(dom_id(opportunity, :tools)) }
+%li.highlight[opportunity]
   - if opportunity.stage
     .strip{:class => opportunity.stage}= t(opportunity.stage)
   - else
     .strip.white #{t :other}
 
-  %ul.tools{ invisible, :id => dom_id(opportunity, :tools) }
+  %ul.tools
     - if can?(:update, opportunity)
       %li= link_to_edit(opportunity)
 

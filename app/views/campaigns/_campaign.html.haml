@@ -1,7 +1,7 @@
-%li[campaign]{ highlightable(dom_id(campaign, :tools)) }
+%li.highlight[campaign]
   .strip{:class => campaign.status}= t(campaign.status)
 
-  %ul.tools{ invisible, :id => dom_id(campaign, :tools) }
+  %ul.tools
     - if can?(:update, campaign)
       %li= link_to_edit(campaign)
 

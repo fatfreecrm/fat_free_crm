@@ -698,3 +698,17 @@ ul.tools {
     clear: none; }
   li:last-child {
     border-right: none; } }
+
+.highlight {
+  background-color: white;
+  .tools {
+    visibility: hidden; } }
+
+.mail.highlight,
+.comment.highlight {
+  background-color: #f2f2f2; }
+
+.highlight:hover {
+  background-color: seashell;
+  .tools {
+    visibility: visible; } }

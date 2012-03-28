@@ -1,9 +1,5 @@
-%li[version]{ highlightable(dom_id(version, :tools)) }
+%li.highlight[version]
   .body
-    .tools{ invisible, :id => dom_id(version, :tools) }
-      =# link_to_edit(version) + " | "
-      =# link_to_delete(version)
-
     - item_name = t(version.item.class.name)
     - if user = User.find_by_id(version.whodunnit)
       - user_name = user.name

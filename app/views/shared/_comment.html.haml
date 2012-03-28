@@ -1,7 +1,7 @@
-%li[comment]{ highlightable(dom_id(comment, :tools)) }
+%li.highlight[comment]
   = link_to avatar_for(comment.user, :size => :small), user_path(comment.user)
 
-  .tools{ invisible, :id => dom_id(comment, :tools) }
+  .tools
     = link_to_edit(comment) + " | "
     = link_to_delete(comment)
 

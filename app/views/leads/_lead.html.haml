@@ -1,10 +1,10 @@
-%li[lead]{ highlightable(dom_id(lead, :tools)) }
+%li.highlight[lead]
   - if lead.status
     .strip{:class => lead.status}= t lead.status
   - else
     .strip{:style => "color: gray;"}= t :other
 
-  %ul.tools{ invisible, :id => dom_id(lead, :tools) }
+  %ul.tools
     - if can?(:update, lead)
       %li= link_to_edit(lead)
 

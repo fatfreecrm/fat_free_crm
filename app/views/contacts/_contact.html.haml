@@ -1,9 +1,9 @@
 - gravatar_size = @current_user.preference[:contacts_outline] == "brief" ? "16x16" : "30x30"
 
-%li[contact]{ highlightable(dom_id(contact, :tools)) }
+%li.highlight[contact]
   = gravatar_for(contact, :size => gravatar_size)
 
-  %ul.tools{ invisible, :id => dom_id(contact, :tools) }
+  %ul.tools
     = hook(:contact_tools_before, self, :contact => contact)
 
     - if can?(:update, contact)

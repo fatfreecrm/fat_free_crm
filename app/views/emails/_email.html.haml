@@ -2,10 +2,10 @@
 - formatted = email.body
 - mediator = email.mediator
 
-%li.mail{ highlightable(dom_id(email, :tools), :off => "#f2f2f2"), :id => dom_id(email) }
+%li.mail.highlight[email]
   .body
     = link_to avatar_for(email.user, :size => :small), user_path(email.user)
-    %ul.tools{ invisible, :id => dom_id(email, :tools) }
+    %ul.tools
       - if can?(:destroy, mediator)
         %li= link_to_delete(email)
 

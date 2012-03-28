@@ -1,11 +1,11 @@
 - amount = account.opportunities.pipeline.map(&:weighted_amount).sum
-%li[account]{ highlightable(dom_id(account, :tools)) }
+%li.highlight[account]
   - if account.category
     .strip{:class => account.category} #{t(account.category)}
   - else
     .strip{:style => "color: gray;"} #{t :other}
 
-  %ul.tools{ invisible, :id => dom_id(account, :tools) }
+  %ul.tools
     = hook(:account_tools_before, self, :account => account)
 
     - if can?(:update, account)

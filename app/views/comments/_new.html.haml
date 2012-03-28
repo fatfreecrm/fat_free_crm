@@ -1,6 +1,6 @@
 - class_name = commentable.class.name.downcase
 - id_prefix = "#{class_name}_#{commentable.id}"
-.comment.new_comment{ {:id => "#{class_name}_#{commentable.id}_comment_new"}.merge(highlightable("#{class_name}_#{commentable.id}_comment_new_tools", :off => "#f2f2f2")) }
+.comment.highlight.new_comment{ :id => "#{id_prefix}_comment_new" }
 
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].
@@ -8,7 +8,7 @@
   = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}", :id => "#{id_prefix}_shown_emails"
 
   = link_to avatar_for(@current_user, :size => :small), user_path(@current_user)
-  .tools{ {:id => "#{id_prefix}_comment_new_tools"}.merge(invisible) }
+  .tools
     = link_to_function(t(:expand_all), "crm.flip_notes_and_emails('#{t(:expanded)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')") << " | "
     = link_to_function(t(:collapse_all), "crm.flip_notes_and_emails('#{t(:collapsed)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')")
 

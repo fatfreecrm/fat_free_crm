@@ -1,10 +1,10 @@
-%li[assigned]{ highlightable(dom_id(assigned, :tools)) }
+%li.highlight[assigned]
   - unless assigned.category.blank?
     .strip{:class => assigned.category}= t(assigned.category)
   - else
     .strip.white #{t :other}
 
-  .tools{ invisible, :id => dom_id(assigned, :tools) }
+  .tools
     = link_to_task_edit(assigned, bucket) + " | "
     = link_to_discard(assigned) + " | " if shown_on_landing_page?
     = link_to_task_delete(assigned, bucket)
@@ -26,7 +26,7 @@
         - if assigned.at_specific_time?
           - if assigned.due_at < Time.now
             %span.warn= distance_of_time_in_words(assigned.due_at, Time.now)
-            = t(:task_overdue) 
+            = t(:task_overdue)
             = l(assigned.due_at.localtime, :format => :mmddhhss)
           - else
             = t(:task_due_in, distance_of_time_in_words(Time.now, assigned.due_at))
@@ -34,7 +34,7 @@
 
         - else
           - if assigned.due_at < Date.today
-            %span.warn= distance_of_time_in_words(assigned.due_at, Time.now) 
+            %span.warn= distance_of_time_in_words(assigned.due_at, Time.now)
             = t(:task_overdue)
             = l(assigned.due_at.localtime.to_date, :format => :mmdd)
           - elsif assigned.due_at > Date.today
