@@ -313,10 +313,13 @@ module ApplicationHelper
   # gravatar. For leads and contacts we always use gravatars.
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
-    args = { :class => 'gravatar', :size => '75x75' }.merge(args)
+    args = { :class => 'gravatar', :size => :large }.merge(args)
     if model.avatar
-      image_tag(model.avatar.image.url(Avatar.styles[args[:size]]), args)
+      Avatar
+      image_tag(model.avatar.image.url(args[:size]), args)
     elsif model.email
+      # Gravatar requires '75x75', not :large
+      args[:size] = Avatar::STYLES[args[:size]].sub(/\#$/,'')
       gravatar_image_tag(model.email, { :gravatar => { :default => default_avatar_url } }.merge(args))
     else
       image_tag("avatar.jpg", args)

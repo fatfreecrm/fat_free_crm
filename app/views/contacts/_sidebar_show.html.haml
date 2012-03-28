@@ -1,5 +1,5 @@
 .panel#summary
-  %span{:style => "float:right"}= gravatar_for(@contact, :size => "50x50")
+  %span{:style => "float:right"}= gravatar_for(@contact, :size => :medium)
   %h4= h(@contact.full_name)
   - if !@contact.title.blank? && @contact.account
     -# works_at: "{{h(job_title)}} at {{h(company)}}"

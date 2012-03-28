@@ -49,10 +49,5 @@ class Avatar < ActiveRecord::Base
   end
   has_attached_file :image, :styles => STYLES.dup, :url => "/avatars/:entity_type/:id/:style_:filename", :default_url => "/assets/avatar.jpg"
 
-  # Invert STYLES hash removing trailing #.
-  #----------------------------------------------------------------------------
-  def self.styles
-    Hash[STYLES.map{ |key, value| [ value[0..-2], key ] }]
-  end
 end
 

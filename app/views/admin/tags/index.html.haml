@@ -5,7 +5,7 @@
 
 .title
   %span#create_tag_title #{t :tags}
-  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 .remote#create_tag{ hidden }
 
 .list#tags

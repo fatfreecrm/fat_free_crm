@@ -16,7 +16,7 @@
       %small
         = l(activity.created_at, :format => :short)
     %tt
-      = link_to avatar_for(activity.user, :size => "16x16"), user_path(activity.user)
+      = link_to avatar_for(activity.user, :size => :thumb), user_path(activity.user)
 
       - action = t('action_' + activity.event)
       - type = t('subject_' + activity.item_type.downcase)

@@ -4,7 +4,7 @@
   - buckets = Setting.unroll(:task_completed)
   .title
     = t(:completed_tasks)
-    = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+    = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 - else
   - buckets = Setting.unroll(:task_bucket)
   = render "title"

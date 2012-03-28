@@ -7,7 +7,7 @@
   = hidden_field_tag :shown_notes, "#{commentable.comment_ids.join(',')}", :id => "#{id_prefix}_shown_notes"
   = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}", :id => "#{id_prefix}_shown_emails"
 
-  = link_to avatar_for(@current_user, :size => "25x25"), user_path(@current_user)
+  = link_to avatar_for(@current_user, :size => :small), user_path(@current_user)
   .tools{ {:id => "#{id_prefix}_comment_new_tools"}.merge(invisible) }
     = link_to_function(t(:expand_all), "crm.flip_notes_and_emails('#{t(:expanded)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')") << " | "
     = link_to_function(t(:collapse_all), "crm.flip_notes_and_emails('#{t(:collapsed)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')")

@@ -4,7 +4,7 @@
 
 %li[comment]{ highlightable(dom_id(comment, :tools), :off => "#f2f2f2") }
   .body
-    = link_to avatar_for(comment.user, :size => "25x25"), user_path(comment.user)
+    = link_to avatar_for(comment.user, :size => :small), user_path(comment.user)
     .tools{ invisible, :id => dom_id(comment, :tools) }
       = link_to_edit(comment) + " | "
       = link_to_delete(comment)

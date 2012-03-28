@@ -3,7 +3,7 @@
 
 %li.mail{ highlightable(dom_id(email, :tools), :off => "#f2f2f2"), :id => dom_id(email) }
   .body
-    = link_to avatar_for(email.user, :size => "25x25"), user_path(email.user)
+    = link_to avatar_for(email.user, :size => :small), user_path(email.user)
     .tools{ invisible, :id => dom_id(email, :tools) }
       = link_to_delete(email)
 
