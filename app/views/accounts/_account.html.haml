@@ -5,10 +5,14 @@
   - else
     .strip{:style => "color: gray;"} #{t :other}
 
-  .tools{ invisible, :id => dom_id(account, :tools) }
+  %ul.tools{ invisible, :id => dom_id(account, :tools) }
     = hook(:account_tools_before, self, :account => account)
-    = link_to_edit(account) + " | "
-    = link_to_delete(account)
+
+    - if can?(:update, account)
+      %li= link_to_edit(account)
+
+    - if can?(:destroy, account)
+      %li= link_to_delete(account)
 
   .indent
     = link_to(account.name, account)
