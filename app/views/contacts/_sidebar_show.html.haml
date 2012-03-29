@@ -1,5 +1,5 @@
 .panel#summary
-  %span{:style => "float:right"}= gravatar_for(@contact, :size => :medium)
+  %span{:style => "float:right"}= gravatar_for(@contact, :size => "50x50")
   %h4= h(@contact.full_name)
   - if !@contact.title.blank? && @contact.account
     -# works_at: "{{h(job_title)}} at {{h(company)}}"
@@ -36,6 +36,6 @@
 
   - if @contact.tag_list.present?
     %dt
-      .tags= tags_for_index(@contact) 
+      .tags= tags_for_index(@contact)
 
   = hook(:show_contact_sidebar_bottom, self, :contact => @contact)
