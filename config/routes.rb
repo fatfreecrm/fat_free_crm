@@ -10,13 +10,11 @@ Rails.application.routes.draw do
   match 'profile'    => 'users#show',              :as => :profile
   match 'signup'     => 'users#new',               :as => :signup
 
-  namespace :home do
-    get :options
-    get :timeline, :as => :timeline
-    get :timezone, :as => :timezone
-    get :redraw,   :as => :redraw
-    get :toggle
-  end
+  match '/home/options',  :as => :options
+  match '/home/toggle',   :as => :toggle
+  match '/home/timeline', :as => :timeline
+  match '/home/timezone', :as => :timezone
+  match '/home/redraw',   :as => :redraw
 
   resource  :authentication
   resources :comments
