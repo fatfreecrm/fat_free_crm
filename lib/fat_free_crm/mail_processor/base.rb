@@ -80,7 +80,7 @@ module FatFreeCRM
         @imap.select(@settings[:scan_folder]) unless options[:setup]
         @imap
       rescue Exception => e
-        $stderr.puts "Dropbox: could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
+        $stderr.puts "Could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
         nil
       end
 
@@ -173,14 +173,6 @@ module FatFreeCRM
         return true if asset.access == "Shared" && Permission.where('user_id = ? AND asset_id = ? AND asset_type = ?', @sender.id, asset.id, asset.class.to_s).count > 0
 
         false
-      end
-
-      # Notify users with the results of the operations (feedback from dropbox)
-      #--------------------------------------------------------------------------------------
-      def notify(email, mediator_links)
-        DropboxMailer.create_dropbox_notification(
-          @sender, @settings[:address], email, mediator_links
-        ).deliver
       end
 
       # Centralized logging.

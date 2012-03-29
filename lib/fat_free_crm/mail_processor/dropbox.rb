@@ -259,6 +259,14 @@ module FatFreeCRM
       end
 
 
+      # Notify users with the results of the operations
+      #--------------------------------------------------------------------------------------
+      def notify(email, mediator_links)
+        DropboxMailer.create_dropbox_notification(
+          @sender, @settings[:address], email, mediator_links
+        ).deliver
+      end
+
     end
   end
 end
