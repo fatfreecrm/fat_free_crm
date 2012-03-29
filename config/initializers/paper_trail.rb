@@ -24,7 +24,8 @@ Version.class_eval do
       versions = []
       offset = 0
       while versions.size < limit
-        query = where(:whodunnit => user.id.to_s).
+        query = includes(:item).
+                where(:whodunnit => user.id.to_s).
                 where(:item_type => ENTITIES).
                 limit(limit * 2).
                 offset(offset).
@@ -33,6 +34,7 @@ Version.class_eval do
         break if query.size == 0
         versions += query
         versions.uniq! {|v| [v.item_id, v.item_type]}
+        versions.select! {|v| v.item.present? }
         offset += limit * 2
       end
       versions[0...10]
