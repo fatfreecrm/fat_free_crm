@@ -32,9 +32,8 @@ Version.class_eval do
                 default_order
 
         break if query.size == 0
-        versions += query
+        versions += query.select {|v| v.item.present? }
         versions.uniq! {|v| [v.item_id, v.item_type]}
-        versions.select! {|v| v.item.present? }
         offset += limit * 2
       end
       versions[0...10]
