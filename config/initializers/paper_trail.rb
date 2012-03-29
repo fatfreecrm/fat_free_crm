@@ -15,10 +15,28 @@ Version.class_eval do
   scope :include_events, lambda { |*events| where(:event => events) }
   scope :exclude_events, lambda { |*events| where('event NOT IN (?)', events) }
   scope :for,            lambda { |user| where(:whodunnit => user.id.to_s) }
-  scope :group_by_item,  lambda { select('MAX(id) AS id').group(:item_id, :item_type).order('MAX(created_at) DESC').limit(100).map(&:id) }
-  scope :recent,         lambda { where(:id => group_by_item).where(:item_type => ENTITIES).default_order.limit(10) }
 
   class << self
+
+    def recent_for_user(user, limit = 10)
+      # Hybrid SQL/Ruby to build a unique list of the most recent entities that the
+      # user has interacted with
+      versions = []
+      offset = 0
+      while versions.size < limit
+        query = where(:whodunnit => user.id.to_s).
+                where(:item_type => ENTITIES).
+                limit(limit * 2).
+                offset(offset).
+                default_order
+
+        break if query.size == 0
+        versions += query
+        versions.uniq! {|v| [v.item_id, v.item_type]}
+        offset += limit * 2
+      end
+      versions[0...10]
+    end
 
     def latest(options = {})
       includes(:item, :related, :user).
