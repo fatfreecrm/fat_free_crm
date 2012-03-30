@@ -318,7 +318,7 @@ module ApplicationHelper
         args[:size] = [:width, :height].map{|d|args[d]}.join("x")
       end
 
-      gravatar_image_tag(model.email, { :gravatar => { :default => default_avatar_url } }.merge(args))
+      gravatar_for(model, args)
     else
       image_tag("avatar.jpg", args)
     end
@@ -327,7 +327,13 @@ module ApplicationHelper
   # Gravatar helper that adds default CSS class and image URL.
   #----------------------------------------------------------------------------
   def gravatar_for(model, args = {})
-    args = { :class => 'gravatar', :gravatar => { :default => default_avatar_url } }.merge(args)
+    args = {
+      :class => 'gravatar',
+      :gravatar => { :d => '404' },
+      :onerror => "this.src = '#{image_path('avatar.jpg')}';",
+      :onload => "this.style.visibility='visible';",
+      :style => "visibility: hidden;"
+    }.merge(args)
     gravatar_image_tag(model.email, args)
   end
 
