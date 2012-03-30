@@ -19,8 +19,17 @@ namespace :ffcrm do
   namespace :dropbox do
     desc "Run dropbox crawler and process incoming emails"
     task :run => :environment do
+      # Set dry_run to true if Rails ENV is not production
+      dry_run = (Rails.env != "production")
       require "fat_free_crm/mail_processor/dropbox"
-      FatFreeCRM::MailProcessor::Dropbox.new.run
+      FatFreeCRM::MailProcessor::Dropbox.new.run(dry_run)
+    end
+    namespace :run do
+      desc "[Dry run] - Run dropbox crawler and process incoming emails"
+      task :dry => :environment do
+        require "fat_free_crm/mail_processor/dropbox"
+        FatFreeCRM::MailProcessor::Dropbox.new.run(:dry_run)
+      end
     end
 
     desc "Set up email dropbox based on currently loaded settings"
@@ -33,8 +42,17 @@ namespace :ffcrm do
   namespace :comment_replies do
     desc "Run comment inbox crawler and process incoming emails"
     task :run => :environment do
+      # Set dry_run to true if Rails ENV is not production
+      dry_run = (Rails.env != "production")
       require "fat_free_crm/mail_processor/comment_replies"
-      FatFreeCRM::MailProcessor::CommentReplies.new.run
+      FatFreeCRM::MailProcessor::CommentReplies.new.run(dry_run)
+    end
+    namespace :run do
+      desc "[Dry run] - Run comment inbox crawler and process incoming emails"
+      task :dry => :environment do
+        require "fat_free_crm/mail_processor/comment_replies"
+        FatFreeCRM::MailProcessor::CommentReplies.new.run(:dry_run)
+      end
     end
 
     desc "Set up comment inbox based on currently loaded settings"
