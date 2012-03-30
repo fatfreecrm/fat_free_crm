@@ -133,7 +133,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
   end
 
   #------------------------------------------------------------------------------
-  describe "Pipieline: processing recipients (To: recipient, Bcc: dropbox)" do
+  describe "Pipeline: processing recipients (To: recipient, Bcc: dropbox)" do
     before(:each) do
       mock_connect
       mock_disconnect
@@ -159,7 +159,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
   end
 
   #------------------------------------------------------------------------------
-  describe "Pipieline: processing forwarded recipient (To: dropbox)" do
+  describe "Pipeline: processing forwarded recipient (To: dropbox)" do
     before(:each) do
       mock_connect
       mock_disconnect
@@ -204,7 +204,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
   end
 
   #------------------------------------------------------------------------------
-  describe "Pipieline: creating recipient if s/he was not found" do
+  describe "Pipeline: creating recipient if s/he was not found" do
     before(:each) do
       mock_connect
       mock_disconnect
