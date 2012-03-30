@@ -48,8 +48,8 @@ group :test do
   gem 'spork'
   gem 'database_cleaner'
   gem 'fuubar'
-  gem 'factory_girl', '~> 3.0.0'
-  gem 'factory_girl_rails', '~> 3.0.0'
+  gem 'factory_girl', '~> 2.6.1'
+  gem 'factory_girl_rails', '~> 1.7.0'
 end
 
 
