@@ -22,10 +22,6 @@ GIT
       chronic (~> 0.6.7)
       polyamorous (~> 0.5.0)
 
-PATH
-  remote: .
-  specs:
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -265,7 +261,7 @@ DEPENDENCIES
   rails (~> 3.2.2)
   ransack!
   responds_to_parent!
-  rspec-rails
+  rspec-rails (~> 2.9.0)
   ruby-debug
   ruby-debug19
   sass (~> 3.1.10)
