@@ -16,10 +16,13 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
 
   #------------------------------------------------------------------------------
   describe "Processing new emails" do
+    before do
+      FactoryGirl.create(:user, :email => "aaron@example.com")
+    end
+
     before(:each) do
       mock_connect
       mock_disconnect
-      FactoryGirl.create(:user, :email => "aaron@example.com")
     end
 
     it "should attach a new comment to a contact" do

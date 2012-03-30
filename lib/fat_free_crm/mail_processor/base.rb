@@ -55,7 +55,10 @@ module FatFreeCRM
       end
 
       #--------------------------------------------------------------------------------------
-      def run
+      def run(dry_run = false)
+        if @dry_run = dry_run
+          log "[Dry Run]: Not discarding or archiving any new messages..."
+        end
         connect! or return nil
         with_new_emails do |uid, email|
           # Subclasses must define a #process method that takes arguments: uid, email
@@ -120,29 +123,39 @@ module FatFreeCRM
       # Discard message (not valid) action based on settings
       #------------------------------------------------------------------------------
       def discard(uid)
-        if @settings[:move_invalid_to_folder]
-          @imap.uid_copy(uid, @settings[:move_invalid_to_folder])
+        if @dry_run
+          log "[Dry Run]: Not discarding message"
+        else
+          if @settings[:move_invalid_to_folder]
+            @imap.uid_copy(uid, @settings[:move_invalid_to_folder])
+          end
+          @imap.uid_store(uid, "+FLAGS", [:Deleted])
         end
-        @imap.uid_store(uid, "+FLAGS", [:Deleted])
         @discarded += 1
       end
 
       # Archive message (valid) action based on settings
       #------------------------------------------------------------------------------
       def archive(uid)
-        if @settings[:move_to_folder]
-          @imap.uid_copy(uid, @settings[:move_to_folder])
+        if @dry_run
+          log "[Dry Run]: Not archiving message"
+        else
+          if @settings[:move_to_folder]
+            @imap.uid_copy(uid, @settings[:move_to_folder])
+          end
+          @imap.uid_store(uid, "+FLAGS", [:Seen])
         end
-        @imap.uid_store(uid, "+FLAGS", [:Seen])
         @archived += 1
       end
 
       #------------------------------------------------------------------------------
       def expunge!
-        if @imap
+        if @dry_run
+          log "[Dry Run]: Not expunging deleted messages"
+        else
           # Sends a EXPUNGE command to permanently remove from the currently selected mailbox
           # all messages that have the Deleted flag set.
-          @imap.expunge
+          @imap.expunge if @imap
         end
       end
 
