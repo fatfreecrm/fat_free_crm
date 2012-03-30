@@ -116,6 +116,11 @@ module FatFreeCRM
             log "error processing email: #{e.inspect}", email
             discard(uid)
           end
+
+          if @dry_run
+            log "[Dry Run]: Marking message as unread"
+            @imap.uid_store(uid, "-FLAGS", [:Seen])
+          end
         end
       end
 
