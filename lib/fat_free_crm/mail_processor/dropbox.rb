@@ -98,7 +98,11 @@ module FatFreeCRM
         klass = data["Type"].constantize
 
         if data["Email"] && klass.new.respond_to?(:email)
-          conditions = ['email = ?', data["Email"]]
+          conditions = [
+            "(lower(email) = ? OR lower(alt_email) = ?)",
+            data["Email"].downcase,
+            data["Email"].downcase
+          ]
         elsif klass.new.respond_to?(:first_name)
           first_name, *last_name = data["Name"].split
           conditions = if last_name.empty? # Treat single name as last name.
@@ -129,11 +133,11 @@ module FatFreeCRM
       def find_and_attach(email, recipient)
         attached = false
         @@assets.each do |klass|
-          asset = klass.find_by_email(recipient)
+          asset = klass.where(["(lower(email) = ?)", recipient.downcase]).first
 
           # Leads and Contacts have an alt_email: try it if lookup by primary email has failed.
           if !asset && klass.column_names.include?("alt_email")
-            asset = klass.find_by_alt_email(recipient)
+            asset = klass.where(["(lower(alt_email) = ?)", recipient.downcase]).first
           end
 
           if asset && sender_has_permissions_for?(asset)
@@ -239,7 +243,7 @@ module FatFreeCRM
         }
 
         # Search for domain name in Accounts.
-        account = Account.where('email like ?', "%#{recipient_domain}").first
+        account = Account.where('lower(email) like ?', "%#{recipient_domain.downcase}").first
         if account
           log "asociating new contact #{recipient} with the account #{account.name}"
           defaults[:account] = account
