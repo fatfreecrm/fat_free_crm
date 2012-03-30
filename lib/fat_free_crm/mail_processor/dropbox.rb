@@ -77,7 +77,11 @@ module FatFreeCRM
         recipients += email.to_addrs unless email.to.blank?
         recipients += email.cc_addrs unless email.cc.blank?
         recipients -= [ @settings[:address] ]
-        recipients.inject(false) { |attached, recipient| attached ||= yield recipient }
+        # Process each recipient until email has been attached
+        recipients.each do |recipient|
+          return true if yield recipient
+        end
+        false
       end
 
       # Checks the email to detect valid email address in body (first email), detect forwarded emails
