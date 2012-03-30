@@ -1,5 +1,11 @@
 GIT
-  remote: git://github.com/fatfreecrm/chosen-rails.git
+  remote: https://github.com/LessonPlanet/responds_to_parent.git
+  revision: 1f0c6d82eda5e7f331a30fc029e7ead2a7dbdebf
+  specs:
+    responds_to_parent (1.0.20091013)
+
+GIT
+  remote: https://github.com/fatfreecrm/chosen-rails.git
   revision: 33c92a8554ee14d11b7293eb531371a05c0a0b67
   specs:
     chosen-rails (0.9.5)
@@ -7,7 +13,7 @@ GIT
       thor (~> 0.14)
 
 GIT
-  remote: git://github.com/fatfreecrm/ransack.git
+  remote: https://github.com/fatfreecrm/ransack.git
   revision: 92f5812d4320e5f1959f844d19d0386bb5654a08
   specs:
     ransack (0.6.0)
@@ -15,12 +21,6 @@ GIT
       activerecord (~> 3.0)
       chronic (~> 0.6.7)
       polyamorous (~> 0.5.0)
-
-GIT
-  remote: https://github.com/LessonPlanet/responds_to_parent.git
-  revision: 1f0c6d82eda5e7f331a30fc029e7ead2a7dbdebf
-  specs:
-    responds_to_parent (1.0.20091013)
 
 PATH
   remote: .

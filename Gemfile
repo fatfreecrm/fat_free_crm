@@ -22,8 +22,8 @@ spec.runtime_dependencies.each do |dep|
   gem dep.name, *(dep.requirement.as_list)
 end
 
-gem 'ransack',      :git => "git://github.com/fatfreecrm/ransack.git"
-gem 'chosen-rails', :git => "git://github.com/fatfreecrm/chosen-rails.git"
+gem 'ransack',      :git => "https://github.com/fatfreecrm/ransack.git"
+gem 'chosen-rails', :git => "https://github.com/fatfreecrm/chosen-rails.git"
 gem 'responds_to_parent', :git => "https://github.com/LessonPlanet/responds_to_parent.git"
 
 # Remove fat_free_crm from dependencies, to stop it from being auto-required.
