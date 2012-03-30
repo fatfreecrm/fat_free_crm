@@ -163,9 +163,10 @@ module FatFreeCRM
 
       #------------------------------------------------------------------------------
       def find_sender(email_address)
-        @sender = User.first(:conditions => [ "(lower(email) = ? OR lower(alt_email) = ?) AND suspended_at IS NULL", email_address.downcase, email_address.downcase ])
-        # Set the PaperTrail user for versions
-        PaperTrail.whodunnit = @sender.id.to_s
+        if @sender = User.first(:conditions => [ "(lower(email) = ? OR lower(alt_email) = ?) AND suspended_at IS NULL", email_address.downcase, email_address.downcase ])
+          # Set the PaperTrail user for versions (if user is found)
+          PaperTrail.whodunnit = @sender.id.to_s
+        end
       end
 
       #--------------------------------------------------------------------------------------
