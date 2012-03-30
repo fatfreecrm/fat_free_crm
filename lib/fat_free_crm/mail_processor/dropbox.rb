@@ -156,7 +156,8 @@ module FatFreeCRM
 
       #----------------------------------------------------------------------------------------
       def attach(email, asset, strip_first_line=false)
-        to = email.to.blank? ? nil : email.to.join(", ")
+        # If 'sent_to' email cannot be found, default to Dropbox email address
+        to = email.to.blank? ? @settings[:address] : email.to.join(", ")
         cc = email.cc.blank? ? nil : email.cc.join(", ")
 
         email_body = if strip_first_line
