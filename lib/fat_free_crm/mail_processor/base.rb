@@ -18,10 +18,12 @@
 require 'net/imap'
 require 'mail'
 require 'email_reply_parser'
+require 'premailer/html_to_plain_text'
 
 module FatFreeCRM
   module MailProcessor
     class Base
+      include HtmlToPlainText
       KEYWORDS = %w(account campaign contact lead opportunity).freeze
 
       #--------------------------------------------------------------------------------------
@@ -209,20 +211,24 @@ module FatFreeCRM
       # if only html is present.
       #--------------------------------------------------------------------------------------
       def plain_text_body(email)
-        parts = email.parts.collect {|c| (c.respond_to?(:parts) && !c.parts.empty?) ? c.parts : c}.flatten
-        if parts.empty?
-          parts << email
-        end
-        plain_text_part = parts.detect {|p| p.content_type.to_s.include?('text/plain')}
-        if plain_text_part.nil?
-          # no text/plain part found, assuming html-only email
-          # strip html tags and remove doctype directive
-          plain_text_body = email.body.to_s.gsub(/<\/?[^>]*>/, "")
-          plain_text_body.gsub! %r{^<!DOCTYPE .*$}, ''
+
+        # Extract all parts including nested
+        parts = if email.multipart?
+          email.parts.map {|p| p.multipart? ? p.parts : p}.flatten
         else
-          plain_text_body = plain_text_part.body.decoded
+          [email]
         end
-        plain_text_body.strip.gsub("\r\n", "\n")
+
+        if text_part = parts.detect {|p| p.content_type.include?('text/plain')}
+          text_body = text_part.body.to_s
+
+        else
+          html_part = parts.detect {|p| p.content_type.include?('text/html')} || email
+          text_body = convert_to_text(html_part.body.to_s)
+        end
+
+        # Standardize newline
+        text_body.strip.gsub "\r\n", "\n"
       end
 
     end

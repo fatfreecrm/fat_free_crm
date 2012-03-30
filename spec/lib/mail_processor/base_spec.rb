@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require File.dirname(__FILE__) + '/sample_emails/dropbox'
 
 require "fat_free_crm/mail_processor/base"
 
@@ -145,6 +146,20 @@ describe FatFreeCRM::MailProcessor::Base do
       FactoryGirl.create(:user, :email => @from.first, :suspended_at => Time.now)
       @crawler.send(:sent_from_known_user?, @email).should == false
       @crawler.instance_variable_get("@sender").should == nil
+    end
+
+    #------------------------------------------------------------------------------
+    describe "Extracting plain text body" do
+
+      it "should extract text from multipart text/plain" do
+        text = @crawler.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:plain]))
+        text.should be_present
+      end
+
+      it "should extract text and strip tags from multipart text/html" do
+        text = @crawler.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:multipart]))
+        text.should eql('Hello,')
+      end
     end
   end
 end
