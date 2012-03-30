@@ -317,8 +317,7 @@ module ApplicationHelper
       if args[:width] && args[:height]
         args[:size] = [:width, :height].map{|d|args[d]}.join("x")
       end
-
-      gravatar_image_tag(model.email, { :gravatar => { :default => default_avatar_url } }.merge(args))
+      gravatar_for(model, args)
     else
       image_tag("avatar.jpg", args)
     end
@@ -333,7 +332,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def default_avatar_url
-    "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/assets/avatar.jpg"
+    request.protocol + request.host_with_port + image_path('avatar.jpg')
   end
 
   # Returns default permissions intro.
