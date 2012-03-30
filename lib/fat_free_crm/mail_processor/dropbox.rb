@@ -65,7 +65,7 @@ module FatFreeCRM
       #--------------------------------------------------------------------------------------
       def with_explicit_keyword(email)
         first_line = plain_text_body(email).split("\n").first
-        if first_line =~ %r|^[\./]?(#{KEYWORDS.join('|')})\s(.+)$|i
+        if first_line =~ %r|(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$|i
           yield $1.capitalize, $2.strip
         end
       end
