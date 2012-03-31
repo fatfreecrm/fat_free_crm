@@ -127,10 +127,9 @@ GEM
     paper_trail (2.6.3)
       activerecord (~> 3.0)
       railties (~> 3.0)
-    paperclip (3.0.0)
-      activemodel (>= 3.0.0)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
+    paperclip (2.7.0)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
     pg (0.13.2)
@@ -255,7 +254,7 @@ DEPENDENCIES
   headless
   jquery-rails
   paper_trail
-  paperclip (~> 3.0.0)
+  paperclip (~> 2.7.0)
   pg (~> 0.13.2)
   prototype-rails
   rails (~> 3.2.2)
