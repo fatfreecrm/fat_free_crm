@@ -12,7 +12,6 @@ describe FatFreeCRM::MailProcessor::Dropbox do
 
   before(:each) do
     @crawler = FatFreeCRM::MailProcessor::Dropbox.new
-    @crawler.stub!("expunge!").and_return(true)
   end
 
   #------------------------------------------------------------------------------

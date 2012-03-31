@@ -11,7 +11,6 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
 
   before(:each) do
     @crawler = FatFreeCRM::MailProcessor::CommentReplies.new
-    @crawler.stub!("expunge!").and_return(true)
   end
 
   #------------------------------------------------------------------------------

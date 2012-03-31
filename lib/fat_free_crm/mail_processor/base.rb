@@ -67,7 +67,6 @@ module FatFreeCRM
           process(uid, email)
           archive(uid)
         end
-        expunge!
       ensure
         log "messages processed: #{@archived + @discarded}, archived: #{@archived}, discarded: #{@discarded}."
         disconnect!
@@ -153,17 +152,6 @@ module FatFreeCRM
           @imap.uid_store(uid, "+FLAGS", [:Seen])
         end
         @archived += 1
-      end
-
-      #------------------------------------------------------------------------------
-      def expunge!
-        if @dry_run
-          log "[Dry Run]: Not expunging deleted messages"
-        else
-          # Sends a EXPUNGE command to permanently remove from the currently selected mailbox
-          # all messages that have the Deleted flag set.
-          @imap.expunge if @imap
-        end
       end
 
       #------------------------------------------------------------------------------
