@@ -4,4 +4,4 @@
 
 
 --
-<%= I18n.t('comment_notification.reply_instructions') %>: <%= polymorphic_url(@entity) %>
+<%= I18n.t('comment_notification.reply_instructions', :entity => @entity_type.downcase ) %>: <%= polymorphic_url(@entity) %>

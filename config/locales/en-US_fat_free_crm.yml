@@ -685,7 +685,7 @@ en-US:
   #----------------------------------------------------------------------------
   comment_notification:
     intro: "%{user_full_name} commented on %{entity_type}: %{entity_name}"
-    reply_instructions: "Reply to this email directly to add a new comment, or view it online"
+    reply_instructions: "Reply to this email directly to add a new comment, or view the %{entity} online"
 
   # Lists
   #----------------------------------------------------------------------------
