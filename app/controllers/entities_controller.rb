@@ -82,6 +82,38 @@ class EntitiesController < ApplicationController
     respond_to_not_found(:html, :js, :json, :xml)
   end
 
+
+  # Common subscribe handler for all core controllers.
+  #----------------------------------------------------------------------------
+  def subscribe
+    @entity = klass.my.find(params[:id])
+    @entity.subscribed_users += [current_user.id]
+    @entity.save
+
+    respond_to do |format|
+      format.js   { render "shared/subscription_update" }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js)
+  end
+
+  # Common unsubscribe handler for all core controllers.
+  #----------------------------------------------------------------------------
+  def unsubscribe
+    @entity = klass.my.find(params[:id])
+    @entity.subscribed_users -= [current_user.id]
+    @entity.save
+
+    respond_to do |format|
+      format.js   { render "shared/subscription_update" }
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:js)
+  end
+
+
   # GET /entities/contacts                                                 AJAX
   #----------------------------------------------------------------------------
   def contacts

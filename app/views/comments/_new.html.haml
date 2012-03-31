@@ -1,6 +1,10 @@
 - class_name = commentable.class.name.downcase
 - id_prefix = "#{class_name}_#{commentable.id}"
 .comment.highlight.new_comment{ :id => "#{id_prefix}_comment_new" }
+  - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == @current_user.id }.compact
+  - if subscribed_users.any?
+    = t(:following_users_will_be_notified) << ":"
+    = subscribed_user_links(subscribed_users)
 
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].
@@ -25,3 +29,4 @@
   %div{ {:id => "#{id_prefix}_ask"}.merge(hidden_if(false))}
     = text_field_tag :post_new_note, t(:add_note_help), :onclick => remote_function(:url => new_comment_path("#{class_name}_id" => commentable), :method => :get), :id => "#{id_prefix}_post_new_note"
 
+  = render :partial => "comments/subscription", :locals => {:entity => commentable}

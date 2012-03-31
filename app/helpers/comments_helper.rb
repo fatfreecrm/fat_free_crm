@@ -16,5 +16,10 @@
 #------------------------------------------------------------------------------
 
 module CommentsHelper
-end
 
+  # Generates a list of links for the subscribed users
+  def subscribed_user_links(users)
+    links = users.map {|user| link_to(user.full_name, user_path(user)) }
+    links.join(", ").html_safe
+  end
+end
