@@ -6,11 +6,8 @@ require "fat_free_crm/mail_processor/dropbox"
 describe FatFreeCRM::MailProcessor::Dropbox do
   include MockIMAP
 
-  before do
-    @mock_address = "dropbox@example.com"
-  end
-
   before(:each) do
+    @mock_address = "dropbox@example.com"
     @crawler = FatFreeCRM::MailProcessor::Dropbox.new
   end
 
@@ -144,6 +141,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
       @lead = FactoryGirl.create(:lead, :email => "ben@example.com", :access => "Public")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_forwarded_recipient)
+
       @crawler.run
 
       @lead.emails.size.should == 1
@@ -151,8 +149,8 @@ describe FatFreeCRM::MailProcessor::Dropbox do
     end
 
     it "should move on if asset recipients did not match" do
-      @crawler.should_receive(:with_recipients).twice
-      @crawler.should_receive(:with_forwarded_recipient).twice
+      @crawler.should_not_receive(:archive)
+      @crawler.should_receive(:discard).once
       @crawler.run
     end
   end
@@ -199,6 +197,29 @@ describe FatFreeCRM::MailProcessor::Dropbox do
     it "should move on if forwarded recipient did not match" do
       @crawler.should_receive(:with_forwarded_recipient).twice
       @crawler.run
+    end
+  end
+
+  #------------------------------------------------------------------------------
+  describe "Pipeline: processing forwarded recipient from email sent to dropbox alias address" do
+    before(:each) do
+      @mock_address = "dropbox-alias-address@example.com"
+      mock_connect
+      mock_disconnect
+
+      FactoryGirl.create(:user, :email => "aaron@example.com")
+      mock_message(DROPBOX_EMAILS[:forwarded])
+    end
+
+    it "should not match the dropbox email address if routed to an alias" do
+      @lead = FactoryGirl.create(:lead, :email => "ben@example.com", :access => "Public")
+      @lead_dropbox = FactoryGirl.create(:lead, :email => "dropbox@example.com", :access => "Public")
+
+      @crawler.should_receive(:archive).once
+      @crawler.run
+
+      @lead_dropbox.emails.size.should == 0
+      @lead.emails.size.should == 1
     end
   end
 
