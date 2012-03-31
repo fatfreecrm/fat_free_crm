@@ -19,6 +19,7 @@ require 'net/imap'
 require 'mail'
 require 'email_reply_parser'
 require 'premailer'
+require 'nokogiri'
 
 module FatFreeCRM
   module MailProcessor
