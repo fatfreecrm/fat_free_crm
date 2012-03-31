@@ -34,4 +34,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'cancan'
   gem.add_dependency 'email_reply_parser'
   gem.add_dependency 'premailer'
+  gem.add_dependency 'nokogiri'
 end
