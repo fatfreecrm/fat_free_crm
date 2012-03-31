@@ -244,7 +244,7 @@ module FatFreeCRM
         }
 
         # Search for domain name in Accounts.
-        account = Account.where('lower(email) like ?', "%#{recipient_domain.downcase}").first
+        account = Account.where('(lower(email) like ? OR lower(website) like ?)', "%#{recipient_domain.downcase}", "%#{recipient_domain.downcase}%").first
         if account
           log "asociating new contact #{recipient} with the account #{account.name}"
           defaults[:account] = account
