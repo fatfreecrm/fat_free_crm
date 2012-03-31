@@ -21,7 +21,6 @@ describe FatFreeCRM::MailProcessor::Base do
       :user     => "test@example.com",
       :password => "123"
     }
-    @crawler.stub!("expunge!").and_return(true)
   end
 
   #------------------------------------------------------------------------------
