@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary = 'Fat Free CRM'
   gem.description = 'An open source, Ruby on Rails customer relationship management platform'
   gem.homepage = 'http://fatfreecrm.com'
-  gem.email = ['mike@fatfreecrm.com', 'nathan@fatfreecrm.com']
+  gem.email = ['mike@fatfreecrm.com', 'nathan@fatfreecrm.com', 'warp@fatfreecrm.com']
   gem.files = `git ls-files`.split("\n")
   gem.version = FatFreeCRM::VERSION::STRING
 
@@ -25,25 +25,11 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'responds_to_parent'
   gem.add_dependency 'dynamic_form'
   gem.add_dependency 'haml',                '~> 3.1.3'
-  gem.add_dependency 'sass',                '~> 3.1.15'
+  gem.add_dependency 'sass',                '~> 3.1.10'
   gem.add_dependency 'acts_as_list',        '~> 0.1.4'
   gem.add_dependency 'ffaker',              '>= 1.12.0'
-  gem.add_dependency 'uglifier'
   gem.add_dependency 'chosen-rails'
   gem.add_dependency 'ajax-chosen-rails',   '>= 0.1.5'
   gem.add_dependency 'ransack'
   gem.add_dependency 'cancan'
-
-  gem.add_development_dependency 'rspec-rails',  '~> 2.8.1'
-  gem.add_development_dependency 'capybara'
-  gem.add_development_dependency 'sass-rails'
-  gem.add_development_dependency 'coffee-rails'
-  gem.add_development_dependency 'therubyracer'
-  gem.add_development_dependency 'spork'
-  gem.add_development_dependency 'database_cleaner'
-  gem.add_development_dependency 'fuubar'
-  gem.add_development_dependency 'factory_girl', '~> 2.6.1'
-  gem.add_development_dependency 'factory_girl_rails', '~> 1.7.0'
 end
-
-
