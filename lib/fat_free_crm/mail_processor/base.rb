@@ -18,12 +18,11 @@
 require 'net/imap'
 require 'mail'
 require 'email_reply_parser'
-require 'premailer/html_to_plain_text'
+require 'premailer'
 
 module FatFreeCRM
   module MailProcessor
     class Base
-      include HtmlToPlainText
       KEYWORDS = %w(account campaign contact lead opportunity).freeze
 
       #--------------------------------------------------------------------------------------
@@ -224,7 +223,7 @@ module FatFreeCRM
 
         else
           html_part = parts.detect {|p| p.content_type.include?('text/html')} || email
-          text_body = convert_to_text(html_part.body.to_s)
+          text_body = Premailer.new(html_part.body.to_s, :with_html_string => true).to_plain_text
         end
 
         # Standardize newline
