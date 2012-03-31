@@ -335,7 +335,10 @@ $sidebar_width: 210px;
     padding: 0px;
     margin: -10px 0px 0px 36px;
     p {
-      margin: 10px 0px 0px 0px; } } }
+      margin: 10px 0px 0px 0px; } }
+  .comment_subscriptions {
+    margin-top: 7px;
+    margin-left: 4px; } }
 
 // Avoid collision with .email CSS class which is used to display Task category strip.
 .mail {
@@ -435,16 +438,7 @@ $sidebar_width: 210px;
     dt {
       color: #3f3f3f;
       font-size: 11px;
-      padding: 2px 0px 0px 0px; }
-    dt a:link, dt a:visited {
-      color: #3f3f3f;
-      font-weight: bold;
-      text-decoration: none; }
-    dt a:hover {
-      background: dimgray;
-      color: white;
-      font-weight: bold;
-      text-decoration: none; } } }
+      padding: 2px 0px 0px 0px; } } }
 
 // Sidebar, filters, and selectors.
 //------------------------------------------------------------------------------

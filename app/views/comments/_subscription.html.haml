@@ -1,0 +1,11 @@
+- class_name = entity.class.name.downcase
+- id_prefix = "#{class_name}_#{entity.id}"
+
+- subscribed = entity.subscribed_users.include?(current_user.id)
+- state = subscribed ? t(:on) : t(:off)
+- label, action = subscribed ? [t(:disable), "unsubscribe"] : [t(:enable), "subscribe"]
+
+%div{:id => "#{id_prefix}_subscribe", :class => "comment_subscriptions"}
+  = image_tag "notifications.png"
+  = t(:notifications_for_comments, :state => state).html_safe << "."
+  = link_to t(:change_notification_state, :action => label, :entity => class_name), url_for(:controller => class_name.pluralize, :action => action, :id => entity.id), :remote => true, :method => :post

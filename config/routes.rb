@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     member do
       put  :attach
       post :discard
+      post :subscribe
+      post :unsubscribe
       get :contacts
       get :opportunities
     end
@@ -52,6 +54,8 @@ Rails.application.routes.draw do
     member do
       put  :attach
       post :discard
+      post :subscribe
+      post :unsubscribe
       get :leads
       get :opportunities
     end
@@ -70,6 +74,8 @@ Rails.application.routes.draw do
     member do
       put  :attach
       post :discard
+      post :subscribe
+      post :unsubscribe
       get :opportunities
     end
   end
@@ -87,6 +93,8 @@ Rails.application.routes.draw do
     member do
       get  :convert
       post :discard
+      post :subscribe
+      post :unsubscribe
       put  :attach
       put  :promote
       put  :reject
@@ -106,6 +114,8 @@ Rails.application.routes.draw do
     member do
       put  :attach
       post :discard
+      post :subscribe
+      post :unsubscribe
       get :contacts
     end
   end
