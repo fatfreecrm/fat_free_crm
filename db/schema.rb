@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",            :limit => 128, :default => "",       :null => false
-    t.string   "access",          :limit => 8,   :default => "Public"
+    t.string   "name",            :limit => 64, :default => "",        :null => false
+    t.string   "access",          :limit => 8,  :default => "Private"
     t.string   "website",         :limit => 64
     t.string   "toll_free_phone", :limit => 32
     t.string   "phone",           :limit => 32
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
     t.datetime "updated_at"
     t.string   "email",           :limit => 64
     t.string   "background_info"
-    t.integer  "rating",                         :default => 0,        :null => false
+    t.integer  "rating",                        :default => 0,         :null => false
     t.string   "category",        :limit => 32
   end
 
@@ -82,13 +82,6 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
 
-  create_table "application_accounts", :force => true do |t|
-    t.string   "name"
-    t.string   "single_access_token", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
     t.integer  "entity_id"
@@ -103,8 +96,8 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
   create_table "campaigns", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",                :limit => 64,                                :default => "",       :null => false
-    t.string   "access",              :limit => 8,                                 :default => "Public"
+    t.string   "name",                :limit => 64,                                :default => "",        :null => false
+    t.string   "access",              :limit => 8,                                 :default => "Private"
     t.string   "status",              :limit => 64
     t.decimal  "budget",                            :precision => 12, :scale => 2
     t.integer  "target_leads"
@@ -151,9 +144,9 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",                     :default => ""
-    t.string   "last_name",                      :default => ""
-    t.string   "access",          :limit => 8,   :default => "Public"
+    t.string   "first_name",      :limit => 64,  :default => "",        :null => false
+    t.string   "last_name",       :limit => 64,  :default => "",        :null => false
+    t.string   "access",          :limit => 8,   :default => "Private"
     t.string   "title",           :limit => 64
     t.string   "department",      :limit => 64
     t.string   "source",          :limit => 32
@@ -167,7 +160,7 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
     t.string   "facebook",        :limit => 128
     t.string   "twitter",         :limit => 128
     t.date     "born_on"
-    t.boolean  "do_not_call",                    :default => false,    :null => false
+    t.boolean  "do_not_call",                    :default => false,     :null => false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -235,9 +228,9 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
     t.integer  "user_id"
     t.integer  "campaign_id"
     t.integer  "assigned_to"
-    t.string   "first_name",      :limit => 64,  :default => "",       :null => false
-    t.string   "last_name",       :limit => 64,  :default => "",       :null => false
-    t.string   "access",          :limit => 8,   :default => "Public"
+    t.string   "first_name",      :limit => 64,  :default => "",        :null => false
+    t.string   "last_name",       :limit => 64,  :default => "",        :null => false
+    t.string   "access",          :limit => 8,   :default => "Private"
     t.string   "title",           :limit => 64
     t.string   "company",         :limit => 64
     t.string   "source",          :limit => 32
@@ -251,8 +244,8 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
     t.string   "linkedin",        :limit => 128
     t.string   "facebook",        :limit => 128
     t.string   "twitter",         :limit => 128
-    t.integer  "rating",                         :default => 0,        :null => false
-    t.boolean  "do_not_call",                    :default => false,    :null => false
+    t.integer  "rating",                         :default => 0,         :null => false
+    t.boolean  "do_not_call",                    :default => false,     :null => false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -274,8 +267,8 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
     t.integer  "user_id"
     t.integer  "campaign_id"
     t.integer  "assigned_to"
-    t.string   "name",            :limit => 64,                                :default => "",       :null => false
-    t.string   "access",          :limit => 8,                                 :default => "Public"
+    t.string   "name",            :limit => 64,                                :default => "",        :null => false
+    t.string   "access",          :limit => 8,                                 :default => "Private"
     t.string   "source",          :limit => 32
     t.string   "stage",           :limit => 32
     t.integer  "probability"
@@ -345,10 +338,7 @@ ActiveRecord::Schema.define(:version => 20120316045804) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "taggable_type"
+    t.string "name"
   end
 
   create_table "tasks", :force => true do |t|
