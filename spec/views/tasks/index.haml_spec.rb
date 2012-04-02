@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/index.html.haml" do
+describe "/tasks/index" do
   include TasksHelper
 
   before do
@@ -9,10 +9,10 @@ describe "/tasks/index.html.haml" do
 
   TASK_STATUSES.each do |status|
     before do
-      user = Factory(:user)
-      account = Factory(:account)
-      @due  = Factory(:task, :asset => account, :bucket => "due_asap", :assignee => user)
-      @completed = Factory(:task, :asset => account, :bucket => "completed_today", :assignee => user, :completed_at => 1.hour.ago, :completor => user)
+      user = FactoryGirl.create(:user)
+      account = FactoryGirl.create(:account)
+      @due  = FactoryGirl.create(:task, :asset => account, :bucket => "due_asap", :assignee => user)
+      @completed = FactoryGirl.create(:task, :asset => account, :bucket => "completed_today", :assignee => user, :completed_at => 1.hour.ago, :completor => user)
     end
 
     it "should render list of #{status} tasks if list of tasks is not empty" do

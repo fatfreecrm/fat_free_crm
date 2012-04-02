@@ -43,17 +43,17 @@ describe Lead do
 
   describe "Attach" do
     before do
-      @lead = Factory(:lead)
+      @lead = FactoryGirl.create(:lead)
     end
 
     it "should return nil when attaching existing task" do
-      @task = Factory(:task, :asset => @lead, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @lead, :user => @current_user)
 
       @lead.attach!(@task).should == nil
     end
 
     it "should return non-empty list of tasks when attaching new task" do
-      @task = Factory(:task, :user => @current_user)
+      @task = FactoryGirl.create(:task, :user => @current_user)
 
       @lead.attach!(@task).should == [ @task ]
     end
@@ -61,11 +61,11 @@ describe Lead do
 
   describe "Discard" do
     before do
-      @lead = Factory(:lead)
+      @lead = FactoryGirl.create(:lead)
     end
 
     it "should discard a task" do
-      @task = Factory(:task, :asset => @lead, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @lead, :user => @current_user)
       @lead.tasks.count.should == 1
 
       @lead.discard!(@task)
@@ -78,8 +78,8 @@ describe Lead do
     describe "assigned lead" do
       before do
         Lead.delete_all
-        Factory(:lead, :user => Factory(:user), :assignee => Factory(:user))
-        Factory(:lead, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+        FactoryGirl.create(:lead, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
+        FactoryGirl.create(:lead, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
         let(:exported) { Lead.all }
@@ -89,8 +89,8 @@ describe Lead do
     describe "unassigned lead" do
       before do
         Lead.delete_all
-        Factory(:lead, :user => Factory(:user), :assignee => nil)
-        Factory(:lead, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+        FactoryGirl.create(:lead, :user => FactoryGirl.create(:user), :assignee => nil)
+        FactoryGirl.create(:lead, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
         let(:exported) { Lead.all }

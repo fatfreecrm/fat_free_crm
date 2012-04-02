@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/index.html.haml" do
+describe "/campaigns/index" do
   include CampaignsHelper
 
   before do
@@ -8,7 +8,7 @@ describe "/campaigns/index.html.haml" do
   end
 
   it "should render list of accounts if list of campaigns is not empty" do
-    assign(:campaigns, [ Factory(:campaign) ].paginate)
+    assign(:campaigns, [ FactoryGirl.create(:campaign) ].paginate)
 
     render
     view.should render_template(:partial => "_campaign")

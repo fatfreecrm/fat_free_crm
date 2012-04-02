@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/new.js.rjs" do
+describe "/tasks/new" do
   include TasksHelper
 
   before do
     login_and_assign
-    assign(:task, Factory.build(:task))
+    assign(:task, FactoryGirl.build(:task))
     assign(:users, [ @current_user ])
     assign(:bucket, Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ])
     assign(:category, Setting.unroll(:task_category))
@@ -18,10 +18,10 @@ describe "/tasks/new.js.rjs" do
   end
 
   describe "new task" do
-    before(:all) { @task_with_time = Setting.task_calendar_with_time }
-    after(:all) { Setting.task_calendar_with_time = @task_with_time }
+    before { @task_with_time = Setting.task_calendar_with_time }
+    after  { Setting.task_calendar_with_time = @task_with_time }
 
-    it "create: should render [new.html.haml] template into :create_task div" do
+    it "create: should render [new] template into :create_task div" do
       params[:cancel] = nil
       render
 

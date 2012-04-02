@@ -21,7 +21,7 @@ describe CampaignsController do
     end
 
     it "should expose all campaigns as @campaigns and render [index] template" do
-      @campaigns = [ Factory(:campaign, :user => @current_user) ]
+      @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
 
       get :index
       assigns[:campaigns].should == @campaigns
@@ -29,7 +29,7 @@ describe CampaignsController do
     end
 
     it "should collect the data for the opportunities sidebar" do
-      @campaigns = [ Factory(:campaign, :user => @current_user) ]
+      @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
 
       get :index
       (assigns[:campaign_status_total].keys.map(&:to_sym) - (@status << :all << :other)).should == []
@@ -38,12 +38,12 @@ describe CampaignsController do
     it "should filter out campaigns by status" do
       controller.session[:filter_by_campaign_status] = "planned,started"
       @campaigns = [
-        Factory(:campaign, :user => @current_user, :status => "started"),
-        Factory(:campaign, :user => @current_user, :status => "planned")
+        FactoryGirl.create(:campaign, :user => @current_user, :status => "started"),
+        FactoryGirl.create(:campaign, :user => @current_user, :status => "planned")
       ]
 
       # This one should be filtered out.
-      Factory(:campaign, :user => @current_user, :status => "completed")
+      FactoryGirl.create(:campaign, :user => @current_user, :status => "completed")
 
       get :index
       # Note: can't compare campaigns directly because of BigDecimal objects.
@@ -52,8 +52,8 @@ describe CampaignsController do
     end
 
     it "should perform lookup using query string" do
-      @first  = Factory(:campaign, :user => @current_user, :name => "Hello, world!")
-      @second = Factory(:campaign, :user => @current_user, :name => "Hello again")
+      @first  = FactoryGirl.create(:campaign, :user => @current_user, :name => "Hello, world!")
+      @second = FactoryGirl.create(:campaign, :user => @current_user, :name => "Hello again")
 
       get :index, :query => "again"
       assigns[:campaigns].should == [ @second ]
@@ -63,7 +63,7 @@ describe CampaignsController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @campaigns = [ Factory(:campaign, :user => @current_user) ]
+        @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
         xhr :get, :index, :page => 42
 
         assigns[:current_page].to_i.should == 42
@@ -74,7 +74,7 @@ describe CampaignsController do
 
       it "should pick up saved page number from session" do
         session[:campaigns_current_page] = 42
-        @campaigns = [ Factory(:campaign, :user => @current_user) ]
+        @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
         xhr :get, :index
 
         assigns[:current_page].should == 42
@@ -85,8 +85,8 @@ describe CampaignsController do
 
     describe "with mime type of JSON" do
       it "should render all campaigns as JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
-        campaigns.should_receive(:to_json).and_return("generated JSON")
+        @controller.should_receive(:get_list_of_records).and_return(@campaigns = [])
+        @campaigns.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :index
@@ -96,8 +96,8 @@ describe CampaignsController do
 
     describe "with mime type of XML" do
       it "should render all campaigns as xml" do
-        @controller.should_receive(:get_list_of_records).and_return(campaigns = mock("Array of Campaigns"))
-        campaigns.should_receive(:to_xml).and_return("generated XML")
+        @controller.should_receive(:get_list_of_records).and_return(@campaigns = [])
+        @campaigns.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
@@ -113,7 +113,7 @@ describe CampaignsController do
 
     describe "with mime type of HTML" do
       before(:each) do
-        @campaign = Factory(:campaign, :id => 42, :user => @current_user)
+        @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
@@ -127,15 +127,16 @@ describe CampaignsController do
       end
 
       it "should update an activity when viewing the campaign" do
-        Activity.should_receive(:log).with(@current_user, @campaign, :viewed).once
         get :show, :id => @campaign.id
+        @campaign.versions.last.event.should == 'view'
       end
     end
 
     describe "with mime type of JSON" do
       it "should render the requested campaign as JSON" do
-        Campaign.stub_chain(:my, :find).and_return(campaign = mock_model(Campaign, :name => ''))
-        campaign.should_receive(:to_json).and_return("generated JSON")
+        @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
+        Campaign.stub_chain(:my, :find).and_return(@campaign)
+        @campaign.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
@@ -145,8 +146,9 @@ describe CampaignsController do
 
     describe "with mime type of XML" do
       it "should render the requested campaign as XML" do
-        Campaign.stub_chain(:my, :find).and_return(campaign = mock_model(Campaign, :name => ''))
-        campaign.should_receive(:to_xml).and_return("generated XML")
+        @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
+        Campaign.stub_chain(:my, :find).and_return(@campaign)
+        @campaign.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
@@ -156,7 +158,7 @@ describe CampaignsController do
 
     describe "campaign got deleted or otherwise unavailable" do
       it "should redirect to campaign index if the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign = FactoryGirl.create(:campaign, :user => @current_user)
         @campaign.destroy
 
         get :show, :id => @campaign.id
@@ -165,7 +167,7 @@ describe CampaignsController do
       end
 
       it "should redirect to campaign index if the campaign is protected" do
-        @campaign = Factory(:campaign, :user => Factory(:user), :access => "Private")
+        @campaign = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
         get :show, :id => @campaign.id
         flash[:warning].should_not == nil
@@ -173,7 +175,7 @@ describe CampaignsController do
       end
 
       it "should return 404 (Not Found) JSON error" do
-        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign = FactoryGirl.create(:campaign, :user => @current_user)
         @campaign.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
@@ -182,7 +184,7 @@ describe CampaignsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign = FactoryGirl.create(:campaign, :user => @current_user)
         @campaign.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -199,7 +201,7 @@ describe CampaignsController do
 
     it "should expose a new campaign as @campaign" do
       @campaign = Campaign.new(:user => @current_user)
-      @users = [ Factory(:user) ]
+      @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :new
       assigns[:campaign].attributes.should == @campaign.attributes
@@ -208,7 +210,7 @@ describe CampaignsController do
     end
 
     it "should create related object when necessary" do
-      @lead = Factory(:lead, :id => 42)
+      @lead = FactoryGirl.create(:lead, :id => 42)
 
       xhr :get, :new, :related => "lead_42"
       assigns[:lead].should == @lead
@@ -220,8 +222,8 @@ describe CampaignsController do
   describe "responding to GET edit" do
 
     it "should expose the requested campaign as @campaign and render [edit] template" do
-      @campaign = Factory(:campaign, :id => 42, :user => @current_user)
-      @users = [ Factory(:user) ]
+      @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
+      @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :edit, :id => 42
       assigns[:campaign].should == @campaign
@@ -230,8 +232,8 @@ describe CampaignsController do
     end
 
     it "should find previous campaign as necessary" do
-      @campaign = Factory(:campaign, :id => 42)
-      @previous = Factory(:campaign, :id => 99)
+      @campaign = FactoryGirl.create(:campaign, :id => 42)
+      @previous = FactoryGirl.create(:campaign, :id => 99)
 
       xhr :get, :edit, :id => 42, :previous => 99
       assigns[:campaign].should == @campaign
@@ -240,7 +242,7 @@ describe CampaignsController do
 
     describe "(campaign got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign = FactoryGirl.create(:campaign, :user => @current_user)
         @campaign.destroy
 
         xhr :get, :edit, :id => @campaign.id
@@ -249,7 +251,7 @@ describe CampaignsController do
       end
 
       it "should reload current page with the flash message if the campaign is protected" do
-        @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+        @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
         xhr :get, :edit, :id => @private.id
         flash[:warning].should_not == nil
@@ -259,8 +261,8 @@ describe CampaignsController do
 
     describe "(previous campaign got deleted or is otherwise unavailable)" do
       before(:each) do
-        @campaign = Factory(:campaign, :user => @current_user)
-        @previous = Factory(:campaign, :user => Factory(:user))
+        @campaign = FactoryGirl.create(:campaign, :user => @current_user)
+        @previous = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user))
       end
 
       it "should notify the view if previous campaign got deleted" do
@@ -291,9 +293,9 @@ describe CampaignsController do
     describe "with valid params" do
 
       it "should expose a newly created campaign as @campaign and render [create] template" do
-        @campaign = Factory.build(:campaign, :name => "Hello", :user => @current_user)
+        @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
-        @users = [ Factory(:user) ]
+        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns(:campaign).should == @campaign
@@ -302,16 +304,16 @@ describe CampaignsController do
       end
 
       it "should get data to update campaign sidebar" do
-        @campaign = Factory.build(:campaign, :name => "Hello", :user => @current_user)
+        @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
-        @users = [ Factory(:user) ]
+        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload campaigns to update pagination" do
-        @campaign = Factory.build(:campaign, :user => @current_user)
+        @campaign = FactoryGirl.build(:campaign, :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
@@ -322,9 +324,9 @@ describe CampaignsController do
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved campaign as @campaign and still render [create] template" do
-        @campaign = Factory.build(:campaign, :id => nil, :name => nil, :user => @current_user)
+        @campaign = FactoryGirl.build(:campaign, :id => nil, :name => nil, :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
-        @users = [ Factory(:user) ]
+        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :campaign => nil, :users => %w(1 2 3)
         assigns(:campaign).should == @campaign
@@ -342,7 +344,7 @@ describe CampaignsController do
     describe "with valid params" do
 
       it "should update the requested campaign and render [update] template" do
-        @campaign = Factory(:campaign, :id => 42, :name => "Bye")
+        @campaign = FactoryGirl.create(:campaign, :id => 42, :name => "Bye")
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
         @campaign.reload.name.should == "Hello"
@@ -351,7 +353,7 @@ describe CampaignsController do
       end
 
       it "should get data for campaigns sidebar when called from Campaigns index" do
-        @campaign = Factory(:campaign, :id => 42)
+        @campaign = FactoryGirl.create(:campaign, :id => 42)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
@@ -360,9 +362,9 @@ describe CampaignsController do
       end
 
       it "should update campaign permissions when sharing with specific users" do
-        @campaign = Factory(:campaign, :id => 42, :access => "Public")
-        he  = Factory(:user, :id => 7)
-        she = Factory(:user, :id => 8)
+        @campaign = FactoryGirl.create(:campaign, :id => 42, :access => "Public")
+        he  = FactoryGirl.create(:user, :id => 7)
+        she = FactoryGirl.create(:user, :id => 8)
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello", :access => "Shared" }, :users => %w(7 8)
         @campaign.reload.access.should == "Shared"
@@ -372,7 +374,7 @@ describe CampaignsController do
 
       describe "campaign got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the campaign got deleted" do
-          @campaign = Factory(:campaign, :user => @current_user)
+          @campaign = FactoryGirl.create(:campaign, :user => @current_user)
           @campaign.destroy
 
           xhr :put, :update, :id => @campaign.id, :users => []
@@ -381,7 +383,7 @@ describe CampaignsController do
         end
 
         it "should reload current page with the flash message if the campaign is protected" do
-          @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+          @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
           xhr :put, :update, :id => @private.id, :users => []
           flash[:warning].should_not == nil
@@ -393,8 +395,8 @@ describe CampaignsController do
     describe "with invalid params" do
 
       it "should not update the requested campaign, but still expose it as @campaign and still render [update] template" do
-        @campaign = Factory(:campaign, :id => 42, :name => "Hello", :user => @current_user)
-        @users = [ Factory(:user) ]
+        @campaign = FactoryGirl.create(:campaign, :id => 42, :name => "Hello", :user => @current_user)
+        @users = [ FactoryGirl.create(:user) ]
 
         xhr :put, :update, :id => 42, :campaign => { :name => nil }
         @campaign.reload.name.should == "Hello"
@@ -410,12 +412,12 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before(:each) do
-      @campaign = Factory(:campaign, :user => @current_user)
+      @campaign = FactoryGirl.create(:campaign, :user => @current_user)
     end
 
     describe "AJAX request" do
       it "should destroy the requested campaign and render [destroy] template" do
-        @another_campaign = Factory(:campaign, :user => @current_user)
+        @another_campaign = FactoryGirl.create(:campaign, :user => @current_user)
         xhr :delete, :destroy, :id => @campaign.id
 
         assigns[:campaigns].should == [ @another_campaign ]
@@ -447,7 +449,7 @@ describe CampaignsController do
 
       describe "campaign got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the campaign got deleted" do
-          @campaign = Factory(:campaign, :user => @current_user)
+          @campaign = FactoryGirl.create(:campaign, :user => @current_user)
           @campaign.destroy
 
           xhr :delete, :destroy, :id => @campaign.id
@@ -456,7 +458,7 @@ describe CampaignsController do
         end
 
         it "should reload current page with the flash message if the campaign is protected" do
-          @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+          @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
           xhr :delete, :destroy, :id => @private.id
           flash[:warning].should_not == nil
@@ -474,7 +476,7 @@ describe CampaignsController do
       end
 
       it "should redirect to campaign index with the flash message is the campaign got deleted" do
-        @campaign = Factory(:campaign, :user => @current_user)
+        @campaign = FactoryGirl.create(:campaign, :user => @current_user)
         @campaign.destroy
 
         delete :destroy, :id => @campaign.id
@@ -483,7 +485,7 @@ describe CampaignsController do
       end
 
       it "should redirect to campaign index with the flash message if the campaign is protected" do
-        @private = Factory(:campaign, :user => Factory(:user), :access => "Private")
+        @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
         delete :destroy, :id => @private.id
         flash[:warning].should_not == nil
@@ -498,24 +500,24 @@ describe CampaignsController do
   describe "responding to PUT attach" do
     describe "tasks" do
       before do
-        @model = Factory(:campaign)
-        @attachment = Factory(:task, :asset => nil)
+        @model = FactoryGirl.create(:campaign)
+        @attachment = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "leads" do
       before do
-        @model = Factory(:campaign)
-        @attachment = Factory(:lead, :campaign => nil)
+        @model = FactoryGirl.create(:campaign)
+        @attachment = FactoryGirl.create(:lead, :campaign => nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "opportunities" do
       before do
-        @model = Factory(:campaign)
-        @attachment = Factory(:opportunity, :campaign => nil)
+        @model = FactoryGirl.create(:campaign)
+        @attachment = FactoryGirl.create(:opportunity, :campaign => nil)
       end
       it_should_behave_like("attach")
     end
@@ -527,24 +529,24 @@ describe CampaignsController do
   describe "responding to PUT attach" do
     describe "tasks" do
       before do
-        @model = Factory(:campaign)
-        @attachment = Factory(:task, :asset => nil)
+        @model = FactoryGirl.create(:campaign)
+        @attachment = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "leads" do
       before do
-        @model = Factory(:campaign)
-        @attachment = Factory(:lead, :campaign => nil)
+        @model = FactoryGirl.create(:campaign)
+        @attachment = FactoryGirl.create(:lead, :campaign => nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "opportunities" do
       before do
-        @model = Factory(:campaign)
-        @attachment = Factory(:opportunity, :campaign => nil)
+        @model = FactoryGirl.create(:campaign)
+        @attachment = FactoryGirl.create(:opportunity, :campaign => nil)
       end
       it_should_behave_like("attach")
     end
@@ -556,16 +558,16 @@ describe CampaignsController do
   describe "responding to POST discard" do
     describe "tasks" do
       before do
-        @model = Factory(:campaign)
-        @attachment = Factory(:task, :asset => @model)
+        @model = FactoryGirl.create(:campaign)
+        @attachment = FactoryGirl.create(:task, :asset => @model)
       end
       it_should_behave_like("discard")
     end
 
     describe "leads" do
       before do
-        @attachment = Factory(:lead)
-        @model = Factory(:campaign)
+        @attachment = FactoryGirl.create(:lead)
+        @model = FactoryGirl.create(:campaign)
         @model.leads << @attachment
       end
       it_should_behave_like("discard")
@@ -573,8 +575,8 @@ describe CampaignsController do
 
     describe "opportunities" do
       before do
-        @attachment = Factory(:opportunity)
-        @model = Factory(:campaign)
+        @attachment = FactoryGirl.create(:opportunity)
+        @model = FactoryGirl.create(:campaign)
         @model.opportunities << @attachment
       end
       it_should_behave_like("discard")
@@ -585,7 +587,7 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [ Factory(:campaign, :name => "Hello World", :user => @current_user) ]
+      @auto_complete_matches = [ FactoryGirl.create(:campaign, :name => "Hello World", :user => @current_user) ]
     end
 
     it_should_behave_like("auto complete")
@@ -595,9 +597,9 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to GET options" do
     it "should set current user preferences when showing options" do
-      @per_page = Factory(:preference, :user => @current_user, :name => "campaigns_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = Factory(:preference, :user => @current_user, :name => "campaigns_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
-      @sort_by  = Factory(:preference, :user => @current_user, :name => "campaigns_sort_by",  :value => Base64.encode64(Marshal.dump("campaigns.name ASC")))
+      @per_page = FactoryGirl.create(:preference, :user => @current_user, :name => "campaigns_per_page", :value => Base64.encode64(Marshal.dump(42)))
+      @outline  = FactoryGirl.create(:preference, :user => @current_user, :name => "campaigns_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
+      @sort_by  = FactoryGirl.create(:preference, :user => @current_user, :name => "campaigns_sort_by",  :value => Base64.encode64(Marshal.dump("campaigns.name ASC")))
 
       xhr :get, :options
       assigns[:per_page].should == 42
@@ -630,8 +632,8 @@ describe CampaignsController do
 
     it "should select @campaigns and render [index] template" do
       @campaigns = [
-        Factory(:campaign, :name => "A", :user => @current_user),
-        Factory(:campaign, :name => "B", :user => @current_user)
+        FactoryGirl.create(:campaign, :name => "A", :user => @current_user),
+        FactoryGirl.create(:campaign, :name => "B", :user => @current_user)
       ]
 
       xhr :post, :redraw, :per_page => 1, :sort_by => "name"
@@ -646,7 +648,7 @@ describe CampaignsController do
 
     it "should expose filtered campaigns as @campaigns and render [index] template" do
       session[:filter_by_campaign_status] = "planned,started"
-      @campaigns = [ Factory(:campaign, :status => "completed", :user => @current_user) ]
+      @campaigns = [ FactoryGirl.create(:campaign, :status => "completed", :user => @current_user) ]
 
       xhr :post, :filter, :status => "completed"
       assigns(:campaigns).should == @campaigns

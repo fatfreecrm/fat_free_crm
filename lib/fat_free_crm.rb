@@ -15,16 +15,33 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-# Plugin dependencies
-require Rails.root.join('vendor/plugins/is_paranoid/init')
+module FatFreeCRM
+  class << self
+    # Return either Application or Engine,
+    # depending on how Fat Free CRM has been loaded
+    def application
+      defined?(FatFreeCRM::Engine) ? Engine : Application
+    end
 
-# Overrides
-require "overrides/authlogic/session/cookies"
-require "overrides/simple_form/action_view_extensions/form_helper"
-require "overrides/rails/text_helper"
-require "overrides/active_record/schema_dumper"
+    def root
+      application.root
+    end
+  end
+end
 
-# Fat Free CRM
+# Load Fat Free CRM as a Rails Engine, unless running as a Rails Application
+unless defined?(FatFreeCRM::Application)
+  require 'fat_free_crm/engine'
+end
+
+# Our settings.yml structure requires the Syck YAML parser
+require 'fat_free_crm/syck_yaml'
+
+# Require gem dependencies, monkey patches, and vendored plugins (in lib)
+require "fat_free_crm/gem_dependencies"
+require "fat_free_crm/gem_ext"
+require "fat_free_crm/plugin_dependencies"
+
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"
 require "fat_free_crm/exceptions"

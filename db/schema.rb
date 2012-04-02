@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120224073107) do
+ActiveRecord::Schema.define(:version => 20120316045804) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",            :limit => 64, :default => "",       :null => false
-    t.string   "access",          :limit => 8,  :default => "Public"
+    t.string   "name",            :limit => 128, :default => "",       :null => false
+    t.string   "access",          :limit => 8,   :default => "Public"
     t.string   "website",         :limit => 64
     t.string   "toll_free_phone", :limit => 32
     t.string   "phone",           :limit => 32
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.datetime "updated_at"
     t.string   "email",           :limit => 64
     t.string   "background_info"
-    t.integer  "rating",                        :default => 0,        :null => false
+    t.integer  "rating",                         :default => 0,        :null => false
     t.string   "category",        :limit => 32
   end
 
@@ -81,6 +81,13 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
+
+  create_table "application_accounts", :force => true do |t|
+    t.string   "name"
+    t.string   "single_access_token", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -144,8 +151,8 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",      :limit => 64,  :default => "",       :null => false
-    t.string   "last_name",       :limit => 64,  :default => "",       :null => false
+    t.string   "first_name",                     :default => ""
+    t.string   "last_name",                      :default => ""
     t.string   "access",          :limit => 8,   :default => "Public"
     t.string   "title",           :limit => 64
     t.string   "department",      :limit => 64
@@ -338,7 +345,10 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
-    t.string "name"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "taggable_type"
   end
 
   create_table "tasks", :force => true do |t|
@@ -399,5 +409,19 @@ ActiveRecord::Schema.define(:version => 20120224073107) do
   add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
   add_index "users", ["persistence_token"], :name => "index_users_on_remember_token"
   add_index "users", ["username", "deleted_at"], :name => "index_users_on_username_and_deleted_at", :unique => true
+
+  create_table "versions", :force => true do |t|
+    t.string   "item_type",      :null => false
+    t.integer  "item_id",        :null => false
+    t.string   "event",          :null => false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+    t.text     "object_changes"
+    t.integer  "related_id"
+    t.string   "related_type"
+  end
+
+  add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
 
 end

@@ -1,10 +1,10 @@
-%li[completed]{ highlightable(dom_id(completed, :tools)) }
+%li.highlight[completed]
   - unless completed.category.blank?
     .strip{:class => completed.category}= t(completed.category)
   - else
     .strip.white #{t :other}
 
-  .tools{ invisible, :id => dom_id(completed, :tools) }
+  .tools
     - if shown_on_landing_page?
       = link_to_discard(completed) + (@current_user == completed.user ? ' | ' : '')
     = link_to_task_delete(completed, bucket) if @current_user == completed.user

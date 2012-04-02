@@ -64,7 +64,7 @@ module FatFreeCRM
       end
       if Setting.database_and_table_exists?
         tabs = FatFreeCRM::Tabs.send(main_or_admin)
-        if tabs                         # Might be nil when running rake task (ex: rake crm:setup).
+        if tabs                         # Might be nil when running rake task (ex: rake ffcrm:setup).
           if block_given?
             yield tabs
           else

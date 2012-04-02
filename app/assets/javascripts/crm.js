@@ -1,3 +1,20 @@
+// Fat Free CRM
+// Copyright (C) 2008-2011 by Michael Dvorkin
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//------------------------------------------------------------------------------
+
 var crm = {
 
   EXPANDED      : "&#9660;",
@@ -152,8 +169,12 @@ var crm = {
     $("account_disabled_title").show();
     $("account_name").hide();
     $("account_name").disable();
+    // Disable chosen account select
     $("account_id").disable();
+    Event.fire($("account_id"), "liszt:updated");
     $("account_id_chzn").show();
+    // Enable hidden account id select so that value is POSTed
+    $("account_id").enable();
   },
 
   //----------------------------------------------------------------------------
@@ -450,7 +471,7 @@ document.observe("dom:loaded", function() {
 
   if (container) {
     var img = new Image;
-    img.src = '/assets/loading.gif';
+    img.src = crm.base_url + '/assets/loading.gif';
 
     function createSpinner() {
       return new Element('img', { src: img.src, 'class': 'spinner' })

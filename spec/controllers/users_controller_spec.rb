@@ -11,7 +11,7 @@ describe UsersController do
     end
 
     it "should expose the requested user as @user and render [show] template" do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
 
       get :show, :id => @user.id
       assigns[:user].should == @user
@@ -75,7 +75,7 @@ describe UsersController do
     describe "if user is allowed to sign up" do
       it "should expose a new user as @user and render [new] template" do
         controller.should_receive(:can_signup?).and_return(true)
-        @user = Factory.build(:user)
+        @user = FactoryGirl.build(:user)
         User.stub!(:new).and_return(@user)
 
         get :new
@@ -120,7 +120,7 @@ describe UsersController do
         @username = "none"
         @email = @username + "@example.com"
         @password = "secret"
-        @user = Factory.build(:user, :username => @username, :email => @email)
+        @user = FactoryGirl.build(:user, :username => @username, :email => @email)
         User.stub!(:new).and_return(@user)
       end
 
@@ -144,7 +144,7 @@ describe UsersController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and renders [new] template" do
-        @user = Factory.build(:user, :username => "", :email => "")
+        @user = FactoryGirl.build(:user, :username => "", :email => "")
         User.stub!(:new).and_return(@user)
 
         post :create, :user => {}
@@ -231,7 +231,7 @@ describe UsersController do
     end
 
     it "should delete avatar if user chooses to use Gravatar" do
-      @avatar = Factory(:avatar, :user => @user, :entity => @user)
+      @avatar = FactoryGirl.create(:avatar, :user => @user, :entity => @user)
 
       xhr :put, :upload_avatar, :id => @user.id, :gravatar => 1
       @user.avatar.should == nil
@@ -239,7 +239,7 @@ describe UsersController do
     end
 
     it "should do nothing if user hasn't specified the avatar file to upload" do
-      @avatar = Factory(:avatar, :user => @user, :entity => @user)
+      @avatar = FactoryGirl.create(:avatar, :user => @user, :entity => @user)
 
       xhr :put, :upload_avatar, :id => @user.id, :avatar => nil
       @user.avatar.should == @avatar

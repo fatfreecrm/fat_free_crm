@@ -114,8 +114,9 @@ class Setting < ActiveRecord::Base
     # Loads settings from YAML files
     def load_settings_from_yaml
       @@yaml_settings = {}.with_indifferent_access
+      
       setting_files = [
-        Rails.root.join("config", "settings.default.yml"),
+        FatFreeCRM.root.join("config", "settings.default.yml"),
         Rails.root.join("config", "settings.yml")
       ]
 

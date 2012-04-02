@@ -1,10 +1,10 @@
-%li[pending]{ highlightable(dom_id(pending, :tools)) }
+%li.highlight[pending]
   - unless pending.category.blank?
     .strip{:class => pending.category}= t(pending.category)
   - else
     .strip.white #{t :other}
 
-  .tools{ invisible, :id => dom_id(pending, :tools) }
+  .tools
     = link_to_task_edit(pending, bucket) + " | "
     = link_to_discard(pending) + " | " if shown_on_landing_page?
     = link_to_task_delete(pending, bucket)

@@ -17,9 +17,6 @@
 
 class ApplicationController < ActionController::Base
 
-  # TODO: This is a fix for plugin loading under Rails 3.1 otherwise we don't get helpers loaded correctly
-  helper :accounts, :addresses, :application, :authentications, :campaigns, :comments, :contacts, :emails, :fields, :home, :leads, :opportunities, :passwords, :crm_tags, :tasks, :users
-
   helper_method :klass
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
@@ -130,14 +127,6 @@ private
   #----------------------------------------------------------------------------
   def called_from_landing_page?(controller = controller_name)
     request.referer =~ %r(/#{controller}/\w+)
-  end
-
-  #----------------------------------------------------------------------------
-  def update_recently_viewed
-    subject = instance_variable_get("@#{controller_name.singularize}")
-    if subject
-      Activity.log(current_user, subject, :viewed)
-    end
   end
 
   #----------------------------------------------------------------------------

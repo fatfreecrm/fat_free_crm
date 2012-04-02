@@ -1,4 +1,4 @@
-%li[user]{ highlightable(dom_id(user, :tools)) }
+%li.highlight[user]
 
   - if user.awaits_approval?
     .strip.signed_up #{t :user_signed_up}
@@ -9,10 +9,10 @@
   - else
     .strip.active #{t :user_active}
 
-  = avatar_for(user, :size => "30x30")
+  = avatar_for(user, :size => :medium, :width => 30, :height => 30 )
 
   .indentfull
-    .tools{ invisible, :id => dom_id(user, :tools) }
+    .tools
       = link_to_edit(user, :url => edit_admin_user_path(user)) << " | "
 
       - if user.suspended?

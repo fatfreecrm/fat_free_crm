@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/home/index.html.haml" do
+describe "/home/index" do
   include HomeHelper
 
   before do
@@ -8,7 +8,7 @@ describe "/home/index.html.haml" do
   end
 
   it "should render list of activities if it's not empty" do
-    assign(:activities, [ Factory(:activity, :action => "updated", :subject => Factory(:account)) ])
+    assign(:activities, [ FactoryGirl.create(:version, :event => "update", :item => FactoryGirl.create(:account)) ])
 
     render
     view.should render_template(:partial => "_activity")

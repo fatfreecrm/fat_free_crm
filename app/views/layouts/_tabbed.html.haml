@@ -5,7 +5,7 @@
         = link_to(tab[:url], :class => tab[:active] ? "active" : "") do
           - unless request.fullpath.include?("/admin")
             - img_base_path = "tab_icons/#{tab[:text].to_s.downcase.sub(/^tab_/, '')}"
-            - if File.exists?(Rails.root.join("vendor/assets/images/#{img_base_path}.png"))
+            - if Rails.application.assets.find_asset("#{img_base_path}.png")
               = image_tag("#{img_base_path}#{tab[:active] ? "_active" : ""}.png")
           = t(tab[:text])
 

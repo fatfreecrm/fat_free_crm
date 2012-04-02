@@ -1,0 +1,53 @@
+# == Schema Information
+#
+# Table name: emails
+#
+#  id              :integer         not null, primary key
+#  imap_message_id :string(255)     not null
+#  user_id         :integer
+#  mediator_id     :integer
+#  mediator_type   :string(255)
+#  sent_from       :string(255)     not null
+#  sent_to         :string(255)     not null
+#  cc              :string(255)
+#  bcc             :string(255)
+#  subject         :string(255)
+#  body            :text
+#  header          :text
+#  sent_at         :datetime
+#  received_at     :datetime
+#  deleted_at      :datetime
+#  created_at      :datetime
+#  updated_at      :datetime
+#  state           :string(16)      default("Expanded"), not null
+#
+
+<% 
+  require "ffaker"
+  puts "Loading emails..."
+
+  users = %w(aaron bed cindy dan elizabeth frank george heather)
+  mediators = %w(Account Campaign Contact Lead Opportunity)
+
+  for i in (1 .. rand(250) + 500) do
+    user = rand(users.size)
+%>
+email_<%= i %>:
+  id              : <%= i %>
+  imap_message_id : <%= Digest::MD5.hexdigest(i.to_s) << "@" << Faker::Internet.domain_name %>
+  user_id         : <%= user + 1 %>
+  mediator_id     : <%= rand(80) + 1 %>
+  mediator_type   : <%= mediators.sample %>
+  sent_from       : <%= Faker::Internet.email %>
+  sent_to         : <%= users[user] + "@example.com" %>
+  cc              : <%= users.sample + "@example.com" %>
+  bcc             : <%= users.sample + "@example.com" %>
+  subject         : <%= Faker::Lorem.sentence[0..-2] %>
+  body            : |
+                     <%= Faker::Lorem.paragraph(rand(10) + 5) %>
+                     <%= "\n" %>
+                     <%= Faker::Lorem.paragraph(rand(10) + 5) %>
+  header          :
+  sent_at         : <%= Date.today - rand(15).days %>
+  received_at     : <%= Date.today - rand(15).days %>
+<% end %>

@@ -1,15 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/create.js.rjs" do
+describe "/leads/create" do
   before do
     controller.controller_path = 'leads'
     login_and_assign
-    assign(:campaigns, [ Factory(:campaign) ])
+    assign(:campaigns, [ FactoryGirl.create(:campaign) ])
   end
 
   describe "create success" do
     before do
-      assign(:lead, @lead = Factory(:lead))
+      assign(:lead, @lead = FactoryGirl.create(:lead))
       assign(:leads, [ @lead ].paginate)
       assign(:lead_status_total, Hash.new(1))
     end
@@ -42,7 +42,7 @@ describe "/leads/create.js.rjs" do
     end
 
     it "should update related asset sidebar from related asset" do
-      assign(:campaign, campaign = Factory(:campaign))
+      assign(:campaign, campaign = FactoryGirl.create(:campaign))
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
       render
 
@@ -54,9 +54,9 @@ describe "/leads/create.js.rjs" do
   end
 
   describe "create failure" do
-    it "should re-render [create.html.haml] template in :create_lead div" do
-      assign(:lead, Factory.build(:lead, :first_name => nil)) # make it invalid
-      assign(:users, [ Factory(:user) ])
+    it "should re-render [create] template in :create_lead div" do
+      assign(:lead, FactoryGirl.build(:lead, :first_name => nil)) # make it invalid
+      assign(:users, [ FactoryGirl.create(:user) ])
 
       render
 

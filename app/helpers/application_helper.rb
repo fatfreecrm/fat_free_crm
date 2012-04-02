@@ -23,7 +23,7 @@ module ApplicationHelper
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
     else
-      raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake crm:setup</b> command."
+      raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake ffcrm:setup</b> command."
     end
   end
 
@@ -209,16 +209,6 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def highlightable(id = nil, color = {})
-    color = { :on => "seashell", :off => "white" }.merge(color)
-    show = (id ? "$('#{id}').style.visibility='visible'" : "")
-    hide = (id ? "$('#{id}').style.visibility='hidden'" : "")
-    { :onmouseover => "this.style.background='#{color[:on]}'; #{show}",
-      :onmouseout  => "this.style.background='#{color[:off]}'; #{hide}"
-    }
-  end
-
-  #----------------------------------------------------------------------------
   def confirm_delete(model, params = {})
     question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>).html_safe
     yes = link_to(t(:yes_button), params[:url] || model, :method => :delete)
@@ -313,11 +303,21 @@ module ApplicationHelper
   # gravatar. For leads and contacts we always use gravatars.
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
-    args = { :class => 'gravatar', :size => '75x75' }.merge(args)
+    args = { :class => 'gravatar', :size => :large }.merge(args)
     if model.avatar
-      image_tag(model.avatar.image.url(Avatar.styles[args[:size]]), args)
+      Avatar
+      image_tag(model.avatar.image.url(args[:size]), args)
     elsif model.email
-      gravatar_image_tag(model.email, { :gravatar => { :default => default_avatar_url } }.merge(args))
+      # Gravatar requires '75x75' format, so convert symbols keys (e.g. :large)
+      if style_size = Avatar::STYLES[args[:size]]
+        args[:size] = style_size.sub(/\#$/,'')
+      end
+      # If we are passing an explicit w*h override (for uploaded avatars),
+      # then use that as the size.
+      if args[:width] && args[:height]
+        args[:size] = [:width, :height].map{|d|args[d]}.join("x")
+      end
+      gravatar_for(model, args)
     else
       image_tag("avatar.jpg", args)
     end
@@ -332,7 +332,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def default_avatar_url
-    "#{request.protocol + request.host_with_port}" + Setting.base_url.to_s + "/assets/avatar.jpg"
+    request.protocol + request.host_with_port + image_path('avatar.jpg')
   end
 
   # Returns default permissions intro.

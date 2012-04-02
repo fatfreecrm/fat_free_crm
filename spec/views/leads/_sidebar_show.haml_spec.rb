@@ -1,13 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/_sidebar_show.html.haml" do
+describe "/leads/_sidebar_show" do
   include LeadsHelper
 
   before do
     login_and_assign
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
-    assign(:lead, Factory(:lead,
+    assign(:lead, FactoryGirl.create(:lead,
                           :blog => 'http://www.blogger.com/home',
                           :linkedin => 'www.linkedin.com',
                           :twitter => 'twitter.com/account',

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/index.html.haml" do
+describe "/contacts/index" do
   include ContactsHelper
 
   before do
@@ -8,7 +8,7 @@ describe "/contacts/index.html.haml" do
   end
 
   it "should render a list of contacts if it's not empty" do
-    assign(:contacts, [ Factory(:contact) ].paginate)
+    assign(:contacts, [ FactoryGirl.create(:contact) ].paginate)
 
     render
     view.should render_template(:partial => "_contact")

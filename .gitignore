@@ -10,6 +10,8 @@ config/initializers/airbrake.rb
 
 .rspec
 spec/reports
+spec/internal/public/avatars
+spec/internal/public/assets
 coverage/*
 db/*.sql*
 log/*.log
@@ -25,7 +27,9 @@ Design
 .bundle
 .idea/
 .DS_Store
+.rvmrc
 .sass-cache
 *~
 *.swp
-vendor/ruby
+*.gem
+

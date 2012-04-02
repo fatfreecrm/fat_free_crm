@@ -30,7 +30,7 @@ describe ApplicationHelper do
   end
 
   it "link_to_discard" do
-    lead = Factory(:lead)
+    lead = FactoryGirl.create(:lead)
     controller.request.stub!(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
 
     link = helper.link_to_discard(lead)

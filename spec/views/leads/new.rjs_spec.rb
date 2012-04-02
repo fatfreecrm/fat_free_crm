@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/new.js.rjs" do
+describe "/leads/new" do
   include LeadsHelper
 
   before do
     login_and_assign
-    @campaign = Factory(:campaign)
+    @campaign = FactoryGirl.create(:campaign)
     assign(:lead, Lead.new(:user => @current_user))
     assign(:users, [ @current_user ])
     assign(:campaign, @campaign)
@@ -26,7 +26,7 @@ describe "/leads/new.js.rjs" do
   end
 
   describe "new lead" do
-    it "should render [new.html.haml] template into :create_lead div" do
+    it "should render [new] template into :create_lead div" do
       params[:cancel] = nil
       render
 

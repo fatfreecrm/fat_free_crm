@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/options.rjs" do
+describe "/campaigns/options" do
   include CampaignsHelper
 
   before do
@@ -23,7 +23,7 @@ describe "/campaigns/options.rjs" do
   end
 
   describe "campaign options" do
-    it "should render [options.html.haml] template into :options div and show it" do
+    it "should render [options] template into :options div and show it" do
       params[:cancel] = nil
       render
 

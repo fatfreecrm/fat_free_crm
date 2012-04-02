@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/new.js.rjs" do
+describe "/campaigns/new" do
   include CampaignsHelper
 
   before do
@@ -23,7 +23,7 @@ describe "/campaigns/new.js.rjs" do
   end
 
   describe "new campaign" do
-    it "should render [new.html.haml] template into :create_campaign div" do
+    it "should render [new] template into :create_campaign div" do
       params[:cancel] = nil
       render
 

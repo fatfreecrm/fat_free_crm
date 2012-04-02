@@ -1,12 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/update.js.rjs" do
+describe "/accounts/update" do
   include AccountsHelper
 
   before do
     login_and_assign
 
-    assign(:account, @account = Factory(:account, :user => @current_user))
+    assign(:account, @account = FactoryGirl.create(:account, :user => @current_user))
     assign(:users, [ @current_user ])
     assign(:account_category_total, Hash.new(1))
   end

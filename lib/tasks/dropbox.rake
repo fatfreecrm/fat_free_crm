@@ -15,9 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-namespace :crm do
+namespace :ffcrm do
   namespace :dropbox do
-    
     desc "Run dropbox crawler and process incoming emails"
     task :run => :environment do
       crawler = FatFreeCRM::Dropbox.new
@@ -29,6 +28,5 @@ namespace :crm do
       crawler = FatFreeCRM::Dropbox.new
       crawler.setup
     end
-    
   end
 end

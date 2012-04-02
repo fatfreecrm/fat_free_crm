@@ -1,4 +1,5 @@
-Factory.define :tag do |t|
-  t.name { Faker::Internet.user_name }
+FactoryGirl.define do
+  factory :tag do
+    name { Faker::Internet.user_name }
+  end
 end
-

@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/destroy.js.rjs" do
+describe "/contacts/destroy" do
   include ContactsHelper
 
   before do
     login_and_assign
-    assign(:contact, @contact = Factory(:contact))
+    assign(:contact, @contact = FactoryGirl.create(:contact))
     assign(:contacts, [ @contact ].paginate)
   end
 

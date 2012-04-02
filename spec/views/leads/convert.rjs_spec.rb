@@ -1,16 +1,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/convert.js.rjs" do
+describe "/leads/convert" do
   include LeadsHelper
 
   before do
     login_and_assign
 
-    assign(:lead, @lead = Factory(:lead, :user => @current_user))
+    assign(:lead, @lead = FactoryGirl.create(:lead, :user => @current_user))
     assign(:users, [ @current_user ])
-    assign(:account, @account = Factory(:account))
+    assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])
-    assign(:opportunity, Factory(:opportunity))
+    assign(:opportunity, FactoryGirl.create(:opportunity))
   end
 
   it "cancel from lead index page: should replace [Convert Lead] form with lead partial" do
@@ -32,7 +32,7 @@ describe "/leads/convert.js.rjs" do
 
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assign(:previous, previous = Factory(:lead, :user => @current_user))
+    assign(:previous, previous = FactoryGirl.create(:lead, :user => @current_user))
 
     render
     rendered.should have_rjs("lead_#{previous.id}") do |rjs|

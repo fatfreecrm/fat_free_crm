@@ -1,3 +1,0 @@
-@leads = @campaign.leads.paginate(:page => params[:page], :per_page => 20)
-page['leads'].replace_html :partial => 'leads/lead', :collection => @leads
-page['leads_pagination'].replace will_paginate(@leads, :id => true, :params => {:action => :leads})

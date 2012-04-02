@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/home/index.js.rjs" do
+describe "/home/index" do
   include HomeHelper
 
   before do
@@ -8,18 +8,20 @@ describe "/home/index.js.rjs" do
   end
 
   it "should render [activity] template with @activities collection" do
-    assign(:activities, [ Factory(:activity, :id => 42, :action => "updated", :subject => Factory(:account)) ])
+    assign(:activities, [ FactoryGirl.create(:version, :id => 42, :event => "update", :item => FactoryGirl.create(:account), :whodunnit => @current_user.id.to_s) ])
 
-    render
+    render :template => 'home/index', :formats => [:js]
+
     rendered.should have_rjs("activities") do |rjs|
-      with_tag("li[id=activity_42]")
+      with_tag("li[id=version_42]")
     end
   end
 
   it "should render a message if there're no activities" do
     assign(:activities, [])
 
-    render
+    render :template => 'home/index', :formats => [:js]
+
     rendered.should have_rjs("activities")
     rendered.should include("No activity records found.")
   end

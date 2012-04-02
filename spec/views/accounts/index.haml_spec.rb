@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/index.html.haml" do
+describe "/accounts/index" do
   include AccountsHelper
 
   before do
@@ -8,13 +8,13 @@ describe "/accounts/index.html.haml" do
   end
 
   it "should render a proper account website link if an account is provided" do
-    assign(:accounts, [ Factory(:account, :website => 'www.fatfreecrm.com'), Factory(:account) ].paginate)
+    assign(:accounts, [ FactoryGirl.create(:account, :website => 'www.fatfreecrm.com'), FactoryGirl.create(:account) ].paginate)
     render
     rendered.should have_tag("a[href=http://www.fatfreecrm.com]")
   end
 
   it "should render list of accounts if list of accounts is not empty" do
-    assign(:accounts, [ Factory(:account), Factory(:account) ].paginate)
+    assign(:accounts, [ FactoryGirl.create(:account), FactoryGirl.create(:account) ].paginate)
 
     render
     view.should render_template(:partial => "_account")

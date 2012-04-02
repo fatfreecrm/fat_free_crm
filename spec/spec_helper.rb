@@ -1,12 +1,6 @@
 require 'rubygems'
 require 'spork'
 
-# --- Instructions ---
-# - Sort through your spec_helper file. Place as much environment loading
-#   code that you don't normally modify during development in the
-#   Spork.prefork block.
-# - Place the rest under Spork.each_run block
-
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
@@ -16,7 +10,6 @@ Spork.prefork do
     require 'simplecov'
     SimpleCov.start 'rails'
   end
-
 
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] = 'test'
@@ -29,9 +22,6 @@ Spork.prefork do
   require 'factory_girl'
   require 'ffaker'
 
-  # Load factories from plugins (to allow extra validations / etc.)
-  Dir.glob(Rails.root.join("vendor/plugins/**/spec/factories.rb")).each{ |f| require File.expand_path(f) }
-
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each{ |f| require File.expand_path(f) }
@@ -41,9 +31,9 @@ Spork.prefork do
 
   TASK_STATUSES = %w(pending assigned completed).freeze
 
-  Setting.task_calendar_with_time = false
-
   I18n.locale = 'en-US'
+
+  Paperclip.options[:log] = false
 
   RSpec.configure do |config|
     # == Mock Framework
@@ -55,9 +45,7 @@ Spork.prefork do
     # config.mock_with :rr
     config.mock_with :rspec
 
-    config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
-    config.include RSpec::Rails::Matchers
+    config.fixture_path = "#{Rails.root}/spec/fixtures"
 
     # RSpec configuration options for Fat Free CRM.
     config.include RSpec::Rails::Matchers
@@ -65,6 +53,10 @@ Spork.prefork do
     config.include(SharedModelSpecs,      :type => :model)
 
     config.before(:each) do
+      PaperTrail.enabled = false
+    end
+
+    config.before(:each, :type => :view) do
       I18n.locale = 'en-US'
       Setting.locale = 'en-US' unless Setting.locale == 'en-US'
     end

@@ -1,9 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/destroy.js.rjs" do
+describe "/leads/destroy" do
   before do
     login_and_assign
-    assign(:lead, @lead = Factory(:lead))
+    assign(:lead, @lead = FactoryGirl.create(:lead))
     assign(:lead_status_total, Hash.new(1))
   end
 
@@ -32,7 +32,7 @@ describe "/leads/destroy.js.rjs" do
   end
 
   it "should update related asset sidebar when called from related asset" do
-    assign(:campaign, campaign = Factory(:campaign))
+    assign(:campaign, campaign = FactoryGirl.create(:campaign))
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 

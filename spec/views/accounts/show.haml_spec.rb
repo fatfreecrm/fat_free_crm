@@ -1,17 +1,17 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/show.html.haml" do
+describe "/accounts/show" do
   include AccountsHelper
 
   before do
     login_and_assign
-    @account = Factory(:account, :id => 42,
-      :contacts => [ Factory(:contact) ],
-      :opportunities => [ Factory(:opportunity) ])
+    @account = FactoryGirl.create(:account, :id => 42,
+      :contacts => [ FactoryGirl.create(:contact) ],
+      :opportunities => [ FactoryGirl.create(:opportunity) ])
     assign(:account, @account)
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
-    assign(:timeline, [ Factory(:comment, :commentable => @account) ])
+    assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @account) ])
   end
 
   it "should render account landing page" do

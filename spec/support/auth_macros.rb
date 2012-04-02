@@ -11,7 +11,7 @@ end
 # Note: Authentication is NOT ActiveRecord model, so we mock and stub it using RSpec.
 #----------------------------------------------------------------------------
 def login(user_stubs = {}, session_stubs = {})
-  User.current_user = @current_user = Factory(:user, user_stubs)
+  User.current_user = @current_user = FactoryGirl.create(:user, user_stubs)
   @current_user_session = mock(Authentication, {:record => @current_user}.merge(session_stubs))
   Authentication.stub!(:find).and_return(@current_user_session)
   #set_timezone

@@ -5,7 +5,7 @@
 
 .title
   %span#create_user_title #{t :users}
-  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 .remote#create_user{ hidden }
 
 .list#users= render :partial => "admin/users/user", :collection => @users

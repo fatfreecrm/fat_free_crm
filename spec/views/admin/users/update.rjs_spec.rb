@@ -1,9 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
-describe "admin/users/update.js.rjs" do
+describe "admin/users/update" do
   before do
     login_and_assign(:admin => true)
-    assign(:user, @user = Factory(:user))
+    assign(:user, @user = FactoryGirl.create(:user))
   end
 
   describe "no errors:" do

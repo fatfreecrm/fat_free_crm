@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/_edit.html.haml" do
+describe "/accounts/_edit" do
   include AccountsHelper
 
   before do
     login_and_assign
-    assign(:account, @account = Factory(:account))
+    assign(:account, @account = FactoryGirl.create(:account))
     assign(:users, [ @current_user ])
   end
 

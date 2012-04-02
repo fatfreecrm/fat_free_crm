@@ -1,12 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/_new.html.haml" do
+describe "/opportunities/_new" do
   include OpportunitiesHelper
 
   before do
     login_and_assign
-    assign(:opportunity, Factory.build(:opportunity))
-    @account = Factory(:account)
+    assign(:opportunity, FactoryGirl.build(:opportunity))
+    @account = FactoryGirl.create(:account)
     assign(:account, @account)
     assign(:accounts, [ @account ])
     assign(:users, [ @current_user ])

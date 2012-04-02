@@ -23,7 +23,7 @@ describe Comment do
   end
 
   it "should create a new instance given valid attributes" do
-    Comment.create!(:comment => "Hello", :user => Factory(:user), :commentable => Factory(:lead))
+    Comment.create!(:comment => "Hello", :user => FactoryGirl.create(:user), :commentable => FactoryGirl.create(:lead))
   end
 end
 

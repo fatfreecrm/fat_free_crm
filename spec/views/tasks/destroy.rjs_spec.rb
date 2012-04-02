@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/tasks/destroy.js.rjs" do
+describe "/tasks/destroy" do
   include TasksHelper
 
   before do
@@ -10,7 +10,7 @@ describe "/tasks/destroy.js.rjs" do
   TASK_STATUSES.each do |status|
     describe "destroy from Tasks tab (#{status} view)" do
       before do
-        @task = Factory(:task)
+        @task = FactoryGirl.create(:task)
         assign(:task, @task)
         assign(:view, status)
         assign(:empty_bucket, :due_asap)
@@ -40,7 +40,7 @@ describe "/tasks/destroy.js.rjs" do
 
   describe "destroy from related asset" do
     it "should blind up out destroyed task partial" do
-      @task = Factory(:task)
+      @task = FactoryGirl.create(:task)
       assign(:task, @task)
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 

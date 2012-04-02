@@ -27,19 +27,19 @@ describe Opportunity do
   before { login }
 
   it "should create a new instance given valid attributes" do
-    @account = Factory(:account)
+    @account = FactoryGirl.create(:account)
     Opportunity.create!(:name => "Opportunity", :account => @account)
   end
 
   it "should be possible to create opportunity with the same name" do
-    first  = Factory(:opportunity, :name => "Hello", :user => @current_user)
-    lambda { Factory(:opportunity, :name => "Hello", :user => @current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
+    first  = FactoryGirl.create(:opportunity, :name => "Hello", :user => @current_user)
+    lambda { FactoryGirl.create(:opportunity, :name => "Hello", :user => @current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
   end
 
   describe "Update existing opportunity" do
     before(:each) do
-      @account = Factory(:account)
-      @opportunity = Factory(:opportunity, :account => @account)
+      @account = FactoryGirl.create(:account)
+      @opportunity = FactoryGirl.create(:opportunity, :account => @account)
     end
 
     it "should create new account if requested so" do
@@ -52,7 +52,7 @@ describe Opportunity do
     end
 
     it "should update the account another account was selected" do
-      @another_account = Factory(:account)
+      @another_account = FactoryGirl.create(:account)
       lambda { @opportunity.update_with_account_and_permissions({
         :account => { :id => @another_account.id },
         :opportunity => { :name => "Hello" }
@@ -84,12 +84,12 @@ describe Opportunity do
     it "should find non-closed opportunities" do
       Opportunity.delete_all
       @opportunities = [
-        Factory(:opportunity, :stage => nil,        :amount => 1),
-        Factory(:opportunity, :stage => "analysis", :amount => 1),
-        Factory(:opportunity, :stage => "won",      :amount => 2),
-        Factory(:opportunity, :stage => "won",      :amount => 2),
-        Factory(:opportunity, :stage => "lost",     :amount => 3),
-        Factory(:opportunity, :stage => "lost",     :amount => 3)
+        FactoryGirl.create(:opportunity, :stage => nil,        :amount => 1),
+        FactoryGirl.create(:opportunity, :stage => "analysis", :amount => 1),
+        FactoryGirl.create(:opportunity, :stage => "won",      :amount => 2),
+        FactoryGirl.create(:opportunity, :stage => "won",      :amount => 2),
+        FactoryGirl.create(:opportunity, :stage => "lost",     :amount => 3),
+        FactoryGirl.create(:opportunity, :stage => "lost",     :amount => 3)
       ]
       Opportunity.pipeline.sum(:amount).should ==  2
       Opportunity.won.sum(:amount).should      ==  4
@@ -100,12 +100,12 @@ describe Opportunity do
 
   describe "Attach" do
     before do
-      @opportunity = Factory(:opportunity)
+      @opportunity = FactoryGirl.create(:opportunity)
     end
 
     it "should return nil when attaching existing asset" do
-      @task = Factory(:task, :asset => @opportunity, :user => @current_user)
-      @contact = Factory(:contact)
+      @task = FactoryGirl.create(:task, :asset => @opportunity, :user => @current_user)
+      @contact = FactoryGirl.create(:contact)
       @opportunity.contacts << @contact
 
       @opportunity.attach!(@task).should == nil
@@ -113,8 +113,8 @@ describe Opportunity do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = Factory(:task, :user => @current_user)
-      @contact = Factory(:contact)
+      @task = FactoryGirl.create(:task, :user => @current_user)
+      @contact = FactoryGirl.create(:contact)
 
       @opportunity.attach!(@task).should == [ @task ]
       @opportunity.attach!(@contact).should == [ @contact ]
@@ -123,11 +123,11 @@ describe Opportunity do
 
   describe "Discard" do
     before do
-      @opportunity = Factory(:opportunity)
+      @opportunity = FactoryGirl.create(:opportunity)
     end
 
     it "should discard a task" do
-      @task = Factory(:task, :asset => @opportunity, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @opportunity, :user => @current_user)
       @opportunity.tasks.count.should == 1
 
       @opportunity.discard!(@task)
@@ -136,7 +136,7 @@ describe Opportunity do
     end
 
     it "should discard an contact" do
-      @contact = Factory(:contact)
+      @contact = FactoryGirl.create(:contact)
       @opportunity.contacts << @contact
       @opportunity.contacts.count.should == 1
 
@@ -150,8 +150,8 @@ describe Opportunity do
     describe "assigned opportunity" do
       before do
         Opportunity.delete_all
-        Factory(:opportunity, :user => Factory(:user), :assignee => Factory(:user))
-        Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+        FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
+        FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
         let(:exported) { Opportunity.all }
@@ -161,8 +161,8 @@ describe Opportunity do
     describe "unassigned opportunity" do
       before do
         Opportunity.delete_all
-        Factory(:opportunity, :user => Factory(:user), :assignee => nil)
-        Factory(:opportunity, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+        FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => nil)
+        FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
         let(:exported) { Opportunity.all }

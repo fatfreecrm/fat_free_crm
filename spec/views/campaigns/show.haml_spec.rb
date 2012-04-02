@@ -1,17 +1,17 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/show.html.haml" do
+describe "/campaigns/show" do
   include CampaignsHelper
 
   before do
     login_and_assign
-    @campaign = Factory(:campaign, :id => 42,
-      :leads => [ Factory(:lead) ],
-      :opportunities => [ Factory(:opportunity) ])
+    @campaign = FactoryGirl.create(:campaign, :id => 42,
+      :leads => [ FactoryGirl.create(:lead) ],
+      :opportunities => [ FactoryGirl.create(:opportunity) ])
     assign(:campaign, @campaign)
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
-    assign(:timeline, [ Factory(:comment, :commentable => @campaign) ])
+    assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @campaign) ])
   end
 
   it "should render campaign landing page" do

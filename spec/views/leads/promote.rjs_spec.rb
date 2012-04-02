@@ -1,19 +1,19 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/promote.js.rjs" do
+describe "/leads/promote" do
   before do
     login_and_assign
     assign(:users, [ @current_user ])
-    assign(:account, @account = Factory(:account))
+    assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])
-    assign(:contact, Factory(:contact))
-    assign(:opportunity, Factory(:opportunity))
+    assign(:contact, FactoryGirl.create(:contact))
+    assign(:opportunity, FactoryGirl.create(:opportunity))
     assign(:lead_status_total, Hash.new(1))
   end
 
   describe "no errors :" do
     before do
-      assign(:lead, @lead = Factory(:lead, :status => "converted", :user => @current_user, :assignee => @current_user))
+      assign(:lead, @lead = FactoryGirl.create(:lead, :status => "converted", :user => @current_user, :assignee => @current_user))
     end
 
     describe "from lead landing page -" do
@@ -63,9 +63,9 @@ describe "/leads/promote.js.rjs" do
     describe "from related campaign page -" do
       before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
-        assign(:campaign, Factory(:campaign))
+        assign(:campaign, FactoryGirl.create(:campaign))
         assign(:stage, Setting.unroll(:opportunity_stage))
-        assign(:opportunity, @opportunity = Factory(:opportunity))
+        assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity))
       end
 
       it "should replace [Convert Lead] with lead partial and highligh it" do
@@ -79,7 +79,7 @@ describe "/leads/promote.js.rjs" do
       it "should update campaign sidebar" do
         render
 
-        assert_select_rjs("sidebar") do |rjs|
+        rendered.should have_rjs("sidebar") do |rjs|
           with_tag("div[class=panel][id=summary]")
           with_tag("div[class=panel][id=recently]")
         end
@@ -98,7 +98,7 @@ describe "/leads/promote.js.rjs" do
 
   describe "validation errors:" do
     before do
-      assign(:lead, @lead = Factory(:lead, :status => "new", :user => @current_user, :assignee => @current_user))
+      assign(:lead, @lead = FactoryGirl.create(:lead, :status => "new", :user => @current_user, :assignee => @current_user))
     end
 
     describe "from lead landing page -" do

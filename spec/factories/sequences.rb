@@ -1,24 +1,26 @@
-Factory.sequence :address do |x|
-  Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
-  Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code
-end
+FactoryGirl.define do
+  sequence :address do |n|
+    Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
+    Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code
+  end
 
-Factory.sequence :username do |x|
-  Faker::Internet.user_name + x.to_s  # make sure it's unique by appending sequence number
-end
+  sequence :username do |n|
+    Faker::Internet.user_name + n.to_s  # make sure it's unique by appending sequence number
+  end
 
-Factory.sequence :website do |x|
-  "http://www." + Faker::Internet.domain_name
-end
+  sequence :website do |n|
+    "http://www." + Faker::Internet.domain_name
+  end
 
-Factory.sequence :title do |x|
-  [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ].sample
-end
+  sequence :title do |n|
+    [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ].sample
+  end
 
-Factory.sequence :time do |x|
-  Time.now - x.hours
-end
+  sequence :time do |n|
+    Time.now - n.hours
+  end
 
-Factory.sequence :date do |x|
-  Date.today - x.days
+  sequence :date do |n|
+    Date.today - n.days
+  end
 end

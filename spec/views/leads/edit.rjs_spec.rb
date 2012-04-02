@@ -1,13 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/edit.js.rjs" do
+describe "/leads/edit" do
   include LeadsHelper
 
   before do
     login_and_assign
-    assign(:lead, @lead = Factory(:lead, :status => "new", :user => @current_user))
+    assign(:lead, @lead = FactoryGirl.create(:lead, :status => "new", :user => @current_user))
     assign(:users, [ @current_user ])
-    assign(:campaigns, [ Factory(:campaign) ])
+    assign(:campaigns, [ FactoryGirl.create(:campaign) ])
   end
 
   it "cancel from lead index page: should replace [Edit Lead] form with lead partial" do
@@ -29,7 +29,7 @@ describe "/leads/edit.js.rjs" do
 
   it "edit: should hide previously open [Edit Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assign(:previous, previous = Factory(:lead, :user => @current_user))
+    assign(:previous, previous = FactoryGirl.create(:lead, :user => @current_user))
 
     render
     rendered.should have_rjs("lead_#{previous.id}") do |rjs|
@@ -69,7 +69,7 @@ describe "/leads/edit.js.rjs" do
 
   it "edit from lead landing page: should not attempt to hide [Convert Lead] if the lead is already converted" do
     params[:cancel] = "false"
-    assign(:lead, Factory(:lead, :status => "converted", :user => @current_user))
+    assign(:lead, FactoryGirl.create(:lead, :status => "converted", :user => @current_user))
 
     render
     rendered.should_not include('crm.hide_form("convert_lead"')

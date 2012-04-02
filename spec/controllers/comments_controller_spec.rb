@@ -15,7 +15,7 @@ describe CommentsController do
     COMMENTABLE.each do |asset|
       describe "(HTML)" do
         before(:each) do
-          @asset = Factory(asset)
+          @asset = FactoryGirl.create(asset)
         end
 
         it "should redirect to the asset landing page if the asset is found" do
@@ -32,8 +32,8 @@ describe CommentsController do
 
       describe "(JSON)" do
         before(:each) do
-          @asset = Factory(asset)
-          @asset.comments = [ Factory(:comment, :commentable => @asset) ]
+          @asset = FactoryGirl.create(asset)
+          @asset.comments = [ FactoryGirl.create(:comment, :commentable => @asset) ]
           request.env["HTTP_ACCEPT"] = "application/json"
         end
 
@@ -51,8 +51,8 @@ describe CommentsController do
 
       describe "(XML)" do
         before(:each) do
-          @asset = Factory(asset)
-          @asset.comments = [ Factory(:comment, :commentable => @asset) ]
+          @asset = FactoryGirl.create(asset)
+          @asset.comments = [ FactoryGirl.create(:comment, :commentable => @asset) ]
           request.env["HTTP_ACCEPT"] = "application/xml"
         end
 
@@ -101,7 +101,7 @@ describe CommentsController do
 
     COMMENTABLE.each do |asset|
       it "should expose a new comment as @comment for #{asset}" do
-        @asset = Factory(asset)
+        @asset = FactoryGirl.create(asset)
         @comment = Comment.new
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id
@@ -111,7 +111,7 @@ describe CommentsController do
       end
 
       it "should save the fact that a comment gets added to #{asset}" do
-        @asset = Factory(asset)
+        @asset = FactoryGirl.create(asset)
         @comment = Comment.new
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id
@@ -119,7 +119,7 @@ describe CommentsController do
       end
 
       it "should clear the session if user cancels a comment for #{asset}" do
-        @asset = Factory(asset)
+        @asset = FactoryGirl.create(asset)
         @comment = Comment.new
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id, :cancel => "true"
@@ -127,7 +127,7 @@ describe CommentsController do
       end
 
       it "should redirect to #{asset}'s index page with the message if the #{asset} got deleted" do
-        @asset = Factory(asset)
+        @asset = FactoryGirl.create(asset)
         @asset.destroy
         @comment = Comment.new
 
@@ -138,7 +138,7 @@ describe CommentsController do
       end
 
       it "should redirect to #{asset}'s index page with the message if the #{asset} got protected" do
-        @asset = Factory(asset, :access => "Private")
+        @asset = FactoryGirl.create(asset, :access => "Private")
         @comment = Comment.new
 
         xhr :get, :new, "#{asset}_id".to_sym => @asset.id
@@ -155,8 +155,8 @@ describe CommentsController do
 
     COMMENTABLE.each do |asset|
       it "should expose the requested comment as @commment and render [edit] template" do
-        @asset = Factory(asset)
-        @comment = Factory(:comment, :id => 42, :commentable => @asset, :user => @current_user)
+        @asset = FactoryGirl.create(asset)
+        @comment = FactoryGirl.create(:comment, :id => 42, :commentable => @asset, :user => @current_user)
         Comment.stub!(:new).and_return(@comment)
 
         xhr :get, :edit, :id => 42
@@ -175,8 +175,8 @@ describe CommentsController do
     describe "with valid params" do
       COMMENTABLE.each do |asset|
         it "should expose a newly created comment as @comment for the #{asset}" do
-          @asset = Factory(asset)
-          @comment = Factory.build(:comment, :commentable => @asset, :user => @current_user)
+          @asset = FactoryGirl.create(asset)
+          @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => @current_user)
           Comment.stub!(:new).and_return(@comment)
 
           xhr :post, :create, :comment => { :commentable_type => asset.to_s.classify, :commentable_id => @asset.id, :user_id => @current_user.id, :comment => "Hello" }
@@ -189,8 +189,8 @@ describe CommentsController do
     describe "with invalid params" do
       COMMENTABLE.each do |asset|
         it "should expose a newly created but unsaved comment as @comment for #{asset}" do
-          @asset = Factory(asset)
-          @comment = Factory.build(:comment, :commentable => @asset, :user => @current_user)
+          @asset = FactoryGirl.create(asset)
+          @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => @current_user)
           Comment.stub!(:new).and_return(@comment)
 
           xhr :post, :create, :comment => {}
@@ -257,8 +257,8 @@ describe CommentsController do
       describe "with valid params" do
         COMMENTABLE.each do |asset|
           it "should destroy the requested comment and render [destroy] template" do
-            @asset = Factory(asset)
-            @comment = Factory.create(:comment, :commentable => @asset, :user => @current_user)
+            @asset = FactoryGirl.create(asset)
+            @comment = FactoryGirl.create(:comment, :commentable => @asset, :user => @current_user)
             Comment.stub!(:new).and_return(@comment)
 
             xhr :delete, :destroy, :id => @comment.id

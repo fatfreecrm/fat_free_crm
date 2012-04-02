@@ -1,16 +1,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/show.html.haml" do
+describe "/opportunities/show" do
   include OpportunitiesHelper
 
   before do
     login_and_assign
-    @opportunity = Factory(:opportunity, :id => 42,
-      :contacts => [ Factory(:contact) ])
+    @opportunity = FactoryGirl.create(:opportunity, :id => 42,
+      :contacts => [ FactoryGirl.create(:contact) ])
     assign(:opportunity, @opportunity)
     assign(:users, [ @current_user ])
     assign(:comment, Comment.new)
-    assign(:timeline, [ Factory(:comment, :commentable => @opportunity) ])
+    assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @opportunity) ])
   end
 
   it "should render opportunity landing page" do

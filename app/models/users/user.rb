@@ -65,13 +65,12 @@ class User < ActiveRecord::Base
   has_many    :leads
   has_many    :contacts
   has_many    :opportunities
-  has_many    :activities,  :dependent => :destroy
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
 
-  is_paranoid
+  has_paper_trail :ignore => [:last_request_at, :perishable_token]
 
-  # For some reason this does not play nice with is_paranoid when set as default scope
+  # For some reason this does not play nice with has_paper_trail when set as default scope
   scope :by_id, order('id DESC')
   scope :except, lambda { |user| where('id != ?', user.id).by_name }
   scope :by_name, order('first_name, last_name, email')
@@ -96,7 +95,7 @@ class User < ActiveRecord::Base
   # observer without extra authentication query.
   cattr_accessor :current_user
 
-  validates_presence_of :email,    :message => :missing_email
+  validates_presence_of :email, :message => :missing_email
 
   #----------------------------------------------------------------------------
   def name
@@ -166,6 +165,4 @@ class User < ActiveRecord::Base
     end
     artifacts == 0
   end
-
 end
-

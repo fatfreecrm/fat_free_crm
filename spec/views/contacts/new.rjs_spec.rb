@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/new.js.rjs" do
+describe "/contacts/new" do
   include ContactsHelper
 
   before do
     login_and_assign
-    @account = Factory(:account)
+    @account = FactoryGirl.create(:account)
     assign(:contact, Contact.new(:user => @current_user))
     assign(:users, [ @current_user ])
     assign(:account, @account)
@@ -26,7 +26,7 @@ describe "/contacts/new.js.rjs" do
   end
 
   describe "new contact" do
-    it "should render [new.html.haml] template into :create_contact div" do
+    it "should render [new] template into :create_contact div" do
       params[:cancel] = nil
       render
 

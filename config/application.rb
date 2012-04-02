@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'fat_free_crm/syck_yaml'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -9,23 +10,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-# Override engine views so that plugin views have higher priority.
-Rails::Engine.initializers.detect{|i| i.name == :add_view_paths }.
-  instance_variable_set("@block", Proc.new {
-    views = paths["app/views"].to_a
-    unless views.empty?
-      ActiveSupport.on_load(:action_controller){ append_view_path(views) }
-      ActiveSupport.on_load(:action_mailer){ append_view_path(views) }
-    end
-  }
-)
-
-# Override I18n load paths so that plugin locales have higher priority.
-Rails::Engine.initializers.detect{|i| i.name == :add_locales }.
-  instance_variable_set("@block", Proc.new {
-    config.i18n.railties_load_path.concat( paths["config/locales"].to_a ).reverse!
-  }
-)
+# Override Rails Engines so that plugins have higher priority than the Application
+require 'fat_free_crm/gem_ext/rails/engine'
 
 module FatFreeCRM
   class Application < Rails::Application
@@ -34,44 +20,57 @@ module FatFreeCRM
     # -- all .rb files in that directory are automatically loaded.
 
     # Models are organized in sub-directories
-    config.autoload_paths += Dir[Rails.root.join("app/models/**")]
+    config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
+                             Dir[Rails.root.join("app/controllers/entities")]
+
+    # Activate observers that should always be running.
+    config.active_record.observers = :lead_observer, :opportunity_observer, :task_observer unless ARGV.join.include?('assets:precompile')
+
+    # Load development rake tasks (RSpec, Gem packaging, etc.)
+    rake_tasks do
+      Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each {|t| load t }
+    end
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
-    # Activate observers that should always be running.
-    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-
-    # Don't load observers when running rake assets:precompile
-    config.active_record.observers = :activity_observer unless ARGV.join.include?('assets:precompile')
-
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    config.time_zone = 'UTC'
+    # config.time_zone = 'Central Time (US & Canada)'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = 'en-US'
+    # config.i18n.default_locale = :de
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password, :password_confirmation]
+    config.filter_parameters += [:password]
+
+    # Use SQL instead of Active Record's schema dumper when creating the database.
+    # This is necessary if your schema can't be completely dumped by the schema dumper,
+    # like if you have constraints or database-specific column types
+    # config.active_record.schema_format = :sql
+
+    # Enforce whitelist mode for mass assignment.
+    # This will create an empty whitelist of attributes available for mass-assignment for all models
+    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
+    # parameters by using an attr_accessible or attr_protected declaration.
+    # config.active_record.whitelist_attributes = true
 
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Don't initialize Rails environment
+    config.assets.initialize_on_precompile = false
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-
-    # ActionMailer configuration.
-    config.action_mailer.default :content_type => "text/plain"
-    config.action_mailer.delivery_method = :sendmail
-    config.action_mailer.sendmail_settings = { :location  => "/usr/sbin/sendmail", :arguments => "-i -t" }
-
-    config.action_controller.allow_forgery_protection = false
   end
 end
 
+# Require fat_free_crm after FatFreeCRM::Application class is defined,
+# so that FatFreeCRM::Engine is skipped.
+require 'fat_free_crm'

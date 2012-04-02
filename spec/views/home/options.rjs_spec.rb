@@ -1,18 +1,18 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/home/options.rjs" do
+describe "/home/options" do
   before do
     login_and_assign
   end
 
-  it "should render [options.html.haml] template into :options div and show it" do
+  it "should render [options] template into :options div and show it" do
     params[:cancel] = nil
 
     assign(:asset, "all")
     assign(:user, "all_users")
     assign(:action, "all_actions")
     assign(:duration, "two_days")
-    assign(:all_users, [ Factory(:user) ])
+    assign(:all_users, [ FactoryGirl.create(:user) ])
 
     render
 
@@ -33,7 +33,7 @@ describe "/home/options.rjs" do
     assign(:action, "all_actions")
     assign(:user, "all_users")
     assign(:duration, "two_days")
-    assign(:all_users, [ Factory(:user) ])
+    assign(:all_users, [ FactoryGirl.create(:user) ])
 
     render
 

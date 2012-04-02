@@ -43,8 +43,8 @@ describe Contact do
 
   describe "Update existing contact" do
     before(:each) do
-      @account = Factory(:account)
-      @contact = Factory(:contact, :account => @account)
+      @account = FactoryGirl.create(:account)
+      @contact = FactoryGirl.create(:contact, :account => @account)
     end
 
     it "should create new account if requested so" do
@@ -57,7 +57,7 @@ describe Contact do
     end
 
     it "should change account if another account was selected" do
-      @another_account = Factory(:account)
+      @another_account = FactoryGirl.create(:account)
       lambda { @contact.update_with_account_and_permissions({
         :account => { :id => @another_account.id },
         :contact => { :first_name => "Billy" }
@@ -87,12 +87,12 @@ describe Contact do
 
   describe "Attach" do
     before do
-      @contact = Factory(:contact)
+      @contact = FactoryGirl.create(:contact)
     end
 
     it "should return nil when attaching existing asset" do
-      @task = Factory(:task, :asset => @contact, :user => @current_user)
-      @opportunity = Factory(:opportunity)
+      @task = FactoryGirl.create(:task, :asset => @contact, :user => @current_user)
+      @opportunity = FactoryGirl.create(:opportunity)
       @contact.opportunities << @opportunity
 
       @contact.attach!(@task).should == nil
@@ -100,8 +100,8 @@ describe Contact do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = Factory(:task, :user => @current_user)
-      @opportunity = Factory(:opportunity)
+      @task = FactoryGirl.create(:task, :user => @current_user)
+      @opportunity = FactoryGirl.create(:opportunity)
 
       @contact.attach!(@task).should == [ @task ]
       @contact.attach!(@opportunity).should == [ @opportunity ]
@@ -110,11 +110,11 @@ describe Contact do
 
   describe "Discard" do
     before do
-      @contact = Factory(:contact)
+      @contact = FactoryGirl.create(:contact)
     end
 
     it "should discard a task" do
-      @task = Factory(:task, :asset => @contact, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @contact, :user => @current_user)
       @contact.tasks.count.should == 1
 
       @contact.discard!(@task)
@@ -123,7 +123,7 @@ describe Contact do
     end
 
     it "should discard an opportunity" do
-      @opportunity = Factory(:opportunity)
+      @opportunity = FactoryGirl.create(:opportunity)
       @contact.opportunities << @opportunity
       @contact.opportunities.count.should == 1
 
@@ -137,8 +137,8 @@ describe Contact do
     describe "assigned contact" do
       before do
         Contact.delete_all
-        Factory(:contact, :user => Factory(:user), :assignee => Factory(:user))
-        Factory(:contact, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => Factory(:user, :first_name => nil, :last_name => nil))
+        FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
+        FactoryGirl.create(:contact, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
       end
       it_should_behave_like("exportable") do
         let(:exported) { Contact.all }
@@ -148,8 +148,8 @@ describe Contact do
     describe "unassigned contact" do
       before do
         Contact.delete_all
-        Factory(:contact, :user => Factory(:user), :assignee => nil)
-        Factory(:contact, :user => Factory(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+        FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :assignee => nil)
+        FactoryGirl.create(:contact, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
       end
       it_should_behave_like("exportable") do
         let(:exported) { Contact.all }
