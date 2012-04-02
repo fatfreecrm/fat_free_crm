@@ -54,9 +54,6 @@ Spork.prefork do
 
     config.before(:each) do
       PaperTrail.enabled = false
-    end
-
-    config.before(:each, :type => :view) do
       I18n.locale = 'en-US'
       Setting.locale = 'en-US' unless Setting.locale == 'en-US'
     end

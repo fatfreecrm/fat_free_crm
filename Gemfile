@@ -41,6 +41,7 @@ group :development, :test do
     gem 'ruby-debug',   :platform => :mri_18
     gem 'ruby-debug19', :platform => :mri_19
   end
+  gem 'pry-rails'
 end
 
 group :test do
@@ -66,3 +67,5 @@ group :assets do
   gem 'uglifier',     '>= 1.0.3'
 end
 
+gem 'capistrano'
+gem 'airbrake'
