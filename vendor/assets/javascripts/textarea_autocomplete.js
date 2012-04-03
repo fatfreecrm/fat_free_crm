@@ -472,9 +472,9 @@
     if(data.on && data.on.selected)
       var retText = data.on.selected(selectedText, $(li).data());
     if(retText) selectedText = retText;
-    data.ta.value = a + selectedText + c;
+    data.ta.value = a + selectedText + ' ' + c;
     data.ta.scrollTop = scrollTop;
-    data.ta.selectionEnd = pos + 1 + selectedText.length;
+    data.ta.selectionEnd = pos + 2 + selectedText.length;
     hideList(data);
     $(data.ta).focus();
   }
@@ -549,7 +549,6 @@
       } else {
         switch(e.keyCode){
           // Ignore arrow key / delete / end / home events
-          case 8:
           case 13:
           case 35:
           case 36:
