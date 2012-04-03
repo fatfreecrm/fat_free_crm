@@ -333,7 +333,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def default_avatar_url
     url = image_path('avatar.jpg')
-    if ActionController::Base.config.asset_path.present?
+    if ActionController::Base.config.asset_host.present?
       url
     else
       request.protocol + request.host_with_port + url
