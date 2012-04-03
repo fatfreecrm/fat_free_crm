@@ -68,7 +68,7 @@ class Comment < ActiveRecord::Base
   def subscribe_mentioned_users
     # Scan for usernames mentioned in the comment,
     # e.g. "Hi @example_user, take a look at this lead. Please show @another_user"
-    comment.scan(/@([a-zA-Z0-9_-]+)([^a-zA-Z0-9_-]|$)/).map(&:first).each do |username|
+    comment.scan(/@([a-zA-Z0-9_-]+)/).map(&:first).each do |username|
       if (mentioned_user = User.find_by_username(username))
         subscribe_user_to_entity(mentioned_user)
       end

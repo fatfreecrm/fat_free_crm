@@ -15,30 +15,28 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-//= require jquery
-//= require jquery-noconflict
-//= require prototype
-//= require effects
-//= require controls
-//= require dragdrop
-//= require prototype_ujs
-//= require modalbox
-//= require crm
-//= require crm_classes
-//= require crm_loginout
-//= require crm_fields
-//= require textarea_autocomplete
-//= require crm_textarea_autocomplete
-//= require calendar_date_select/calendar_date_select
-//= require event.simulate
-//= require ajax-chosen-prototype
-//= require crm_chosen
-//= require search
-//= require lists
-//= require_self
+crm.textarea_user_autocomplete = function(el_id) {
+  jQuery(el_id).areacomplete({
+    wordCount: 1,
+    mode: "outter",
+    on: {
+      query: function(text,cb) {
+        // Only autocomplete if search term starts with '@'
+        if (text.indexOf("@") != 0) { return []; }
 
-<%
-Gem.loaded_specs.keys.grep(/^ffcrm_/).each do |plugin|
-  require_asset(plugin) rescue Sprockets::FileNotFound
-end
-%>
+        var words = [];
+        for( var i=0; i < _ffcrm_users.length; i++ ) {
+          var name_query = text.replace("@",'').toLowerCase();
+          if (_ffcrm_users[i].toLowerCase().indexOf(name_query) != -1 ) {
+            words.push(_ffcrm_users[i]);
+          }
+        }
+        cb(words, text.replace("@",''));
+      },
+      selected: function(text, data) {
+        var username_regEx = new RegExp("\\((@[^)]+)\\)");
+        return text.match(username_regEx)[1];
+      }
+    }
+  });
+}
