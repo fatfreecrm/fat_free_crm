@@ -11,4 +11,4 @@ else
 end
 
 
-page.call "crm.textarea_user_autocomplete", "##{id_prefix}_comment_comment"
+page.call "crm.textarea_user_autocomplete", "#{id_prefix}_comment_comment"

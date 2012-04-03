@@ -171,7 +171,8 @@
     setCharSize(_data[_count]);
     //_data[_count].lineHeight = $(ta).css("font-size");
 
-    $(ta).after("<div class='areacomplete-dropdown'><ul class='auto-list chzn-results'></ul></div>");
+    var ta_id = $(ta).attr('id')
+    $(ta).after("<div class='areacomplete-dropdown' id='areacomplete_"+ta_id+"'><ul class='auto-list chzn-results'></ul></div>");
     _data[_count].list = $('.auto-list').first()
 
     registerEvents(_data[_count]);
