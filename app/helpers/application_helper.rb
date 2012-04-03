@@ -332,7 +332,12 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def default_avatar_url
-    request.protocol + request.host_with_port + image_path('avatar.jpg')
+    url = image_path('avatar.jpg')
+    if ActionController::Base.config.asset_path.present?
+      url
+    else
+      request.protocol + request.host_with_port + url
+    end
   end
 
   # Returns default permissions intro.
