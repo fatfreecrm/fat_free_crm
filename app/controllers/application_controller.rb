@@ -17,7 +17,6 @@
 
 class ApplicationController < ActionController::Base
 
-  helper_method :klass
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
 
@@ -29,10 +28,6 @@ class ApplicationController < ActionController::Base
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   # protect_from_forgery # :secret => '165eb65bfdacf95923dad9aea10cc64a'
-
-  def klass
-    @klass ||= controller_name.classify.constantize
-  end
 
 private
   #----------------------------------------------------------------------------
@@ -92,11 +87,6 @@ private
       flash[:notice] = t(:msg_logout_needed)
       redirect_to profile_url
     end
-  end
-
-  #----------------------------------------------------------------------------
-  def get_users
-    @users ||= User.except(current_user)
   end
 
   #----------------------------------------------------------------------------
@@ -190,22 +180,5 @@ private
   #----------------------------------------------------------------------------
   def current_query
     @current_query = params[:query] || session["#{controller_name}_current_query".to_sym] || ""
-  end
-
-  # Somewhat simplistic parser that extracts query and hash-prefixed tags from
-  # the search string and returns them as two element array, for example:
-  #
-  # "#real Billy Bones #pirate" => [ "Billy Bones", "real, pirate" ]
-  #----------------------------------------------------------------------------
-  def parse_query_and_tags(search_string)
-    query, tags = [], []
-    search_string.scan(/[\w@\-\.#]+/).each do |token|
-      if token.starts_with?("#")
-        tags << token[1 .. -1]
-      else
-        query << token
-      end
-    end
-    [ query.join(" "), tags.join(", ") ]
   end
 end

@@ -19,13 +19,14 @@ class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
   after_filter  :update_recently_viewed, :only => :show
+  #~ load_resource
 
   respond_to :html, :only => [ :index, :show, :auto_complete ]
   respond_to :js
   respond_to :json, :xml, :except => :edit
   respond_to :atom, :csv, :rss, :xls, :only => :index
 
-  helper_method :search
+  helper_method :klass, :search
 
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
@@ -138,31 +139,19 @@ class EntitiesController < ApplicationController
     @entity = klass.my.find(params[:id])
   end
 
-  def timeline(asset)
-    (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
-  end
-
-  # Controller instance method that responds to /controlled/tagged/tag request.
-  # It stores given tag as current query and redirect to index to display all
-  # records tagged with the tag.
-  #----------------------------------------------------------------------------
-  def tagged
-    self.send(:current_query=, "#" << params[:id]) unless params[:id].blank?
-    redirect_to :action => "index"
-  end
-
-  def field_group
-    if @tag = Tag.find_by_name(params[:tag].strip)
-      if @field_group = FieldGroup.find_by_tag_id_and_klass_name(@tag.id, klass.to_s)
-        @asset = klass.find_by_id(params[:asset_id]) || klass.new
-        render 'fields/group' and return
-      end
-    end
-    render :text => ''
-  end
-
   private
 
+  #----------------------------------------------------------------------------
+  def klass
+    @klass ||= controller_name.classify.constantize
+  end
+
+  #----------------------------------------------------------------------------
+  def get_users
+    @users ||= User.except(current_user)
+  end
+
+  #----------------------------------------------------------------------------
   def search
     @search ||= begin
       search = klass.search(params[:q])
@@ -214,5 +203,38 @@ class EntitiesController < ApplicationController
     if item = instance_variable_get("@#{controller_name.singularize}")
       item.send(item.class.versions_association_name).create(:event => :view, :whodunnit => PaperTrail.whodunnit)
     end
+  end
+
+  #----------------------------------------------------------------------------
+  def field_group
+    if @tag = Tag.find_by_name(params[:tag].strip)
+      if @field_group = FieldGroup.find_by_tag_id_and_klass_name(@tag.id, klass.to_s)
+        @asset = klass.find_by_id(params[:asset_id]) || klass.new
+        render 'fields/group' and return
+      end
+    end
+    render :text => ''
+  end
+
+  # Somewhat simplistic parser that extracts query and hash-prefixed tags from
+  # the search string and returns them as two element array, for example:
+  #
+  # "#real Billy Bones #pirate" => [ "Billy Bones", "real, pirate" ]
+  #----------------------------------------------------------------------------
+  def parse_query_and_tags(search_string)
+    query, tags = [], []
+    search_string.scan(/[\w@\-\.#]+/).each do |token|
+      if token.starts_with?("#")
+        tags << token[1 .. -1]
+      else
+        query << token
+      end
+    end
+    [ query.join(" "), tags.join(", ") ]
+  end
+
+  #----------------------------------------------------------------------------
+  def timeline(asset)
+    (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
   end
 end
