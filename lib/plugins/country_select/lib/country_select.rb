@@ -21,8 +21,8 @@ module ActionView
         country_options += options_for_select(priority_countries, selected)
         country_options += "<option value=\"\" disabled=\"disabled\">-------------</option>\n"
 
-        other_countries = COUNTRIES.select{|c| !priority_countries.include?(c[0]) } 
-        return country_options + options_for_select(other_countries, selected)
+        other_countries = COUNTRIES.select{|c| !priority_countries.include?(c[0]) }
+        return (country_options + options_for_select(other_countries, selected)).html_safe
       end
       # All the countries included in the country_options output.
 

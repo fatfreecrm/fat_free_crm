@@ -52,6 +52,10 @@ group :test do
   gem 'factory_girl_rails', '~> 1.7.0'
 end
 
+group :heroku do
+  gem 'unicorn', :platform => :ruby
+end
+
 
 # Gems used only for assets and not required
 # in production environments by default.
