@@ -383,7 +383,24 @@ describe "IMAP Dropbox" do
   end
 
   #------------------------------------------------------------------------------
+  describe "Extracting body" do
+    before do
+      @dropbox = FatFreeCRM::Dropbox.new
+    end
 
+    it "should extract text from multipart text/plain" do
+      text = @dropbox.send(:plain_text_body, Mail.new(EMAIL[:plain]))
+      text.should be_present
+    end
+
+    it "should extract text and strip tags from multipart text/html" do
+      text = @dropbox.send(:plain_text_body, Mail.new(EMAIL[:html]))
+      text.should be_present
+      text.should_not match(/<\/?[^>]*>/)
+    end
+  end
+
+  #------------------------------------------------------------------------------
   describe "Default values" do
 
     describe "'access'" do
@@ -404,8 +421,6 @@ describe "IMAP Dropbox" do
       end
 
     end
-
   end
-
 end
 

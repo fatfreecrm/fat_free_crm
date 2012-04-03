@@ -418,20 +418,26 @@ module FatFreeCRM
     # if only html is present.
     #--------------------------------------------------------------------------------------
     def plain_text_body(email)
-      parts = email.parts.collect {|c| (c.respond_to?(:parts) && !c.parts.empty?) ? c.parts : c}.flatten
-      if parts.empty?
-        parts << email
+      if email.multipart?
+        # Extract all parts including nested
+        parts = email.parts.collect {|c| (c.respond_to?(:parts) && c.parts.present?) ? c.parts : c}.flatten
+
+        text_part = parts.detect {|p| p.content_type.include?('text/plain')}
+        html_part = parts.detect {|p| p.content_type.include?('text/html')} if text_part.nil?
       end
-      plain_text_part = parts.detect {|p| p.content_type.include?('text/plain')}
-      if plain_text_part.nil?
-        # no text/plain part found, assuming html-only email
-        # strip html tags and remove doctype directive
-        plain_text_body = email.body.to_s.gsub(/<\/?[^>]*>/, "")
-        plain_text_body.gsub! %r{^<!DOCTYPE .*$}, ''
+
+      if text_part
+        text_body = text_part.body.to_s
       else
-        plain_text_body = plain_text_part.body.to_s
+        # Assume text/html email if we can't find anything better
+        html_part ||= email
+        # TODO: We could generate markdown rather than strip html at this point
+        text_body = html_part.body.to_s.gsub(/<\/?[^>]*>/, '')
+        text_body.gsub! %r{^<!DOCTYPE .*$}, ''
       end
-      plain_text_body.strip.gsub("\r\n", "\n")
+
+      # Standardize newline
+      text_body.strip.gsub "\r\n", "\n"
     end
 
   end # class Dropbox

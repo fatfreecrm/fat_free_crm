@@ -12,6 +12,23 @@ Content-Type: text/plain
 Aaron
 END
 
+  :html => <<-END,
+From: Aaron Assembler <aaron@example.com>
+To: Ben Bootloader <ben@example.com>
+Subject: Hi there
+Date: Mon, 26 May 2003 11:22:33 -0600
+Message-ID: <1234@local.machine.example>
+Content-Type: text/html
+
+<html>
+  <head></head>
+  <body>
+    <p>#{Faker::Lorem.paragraph}</p>
+    <p>Aaron</p>
+  </body>
+</html>
+END
+
   :first_line => <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
