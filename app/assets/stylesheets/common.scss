@@ -338,7 +338,9 @@ $sidebar_width: 210px;
       margin: 10px 0px 0px 0px; } }
   .comment_subscriptions {
     margin-top: 7px;
-    margin-left: 4px; } }
+    margin-left: 4px;
+    a {
+      font-size: 11px; } } }
 
 // Avoid collision with .email CSS class which is used to display Task category strip.
 .mail {

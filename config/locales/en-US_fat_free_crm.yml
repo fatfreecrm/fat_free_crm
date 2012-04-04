@@ -608,12 +608,9 @@ en-US:
   show: Show
   update: Update
   following_users_will_be_notified: The following users will be notified by email
-  notifications_for_comments: Notifications for new comments are <strong>%{state}</strong>
-  on: On
-  off: Off
-  change_notification_state: %{action} notifications for this %{entity}
-  enable: Enable
-  disable: Disable
+  notifications_tooltip: Subscribers will receive new comments via email
+  subscribe_via_email: Subscribe via email
+  disable_email_subscriptions: Disable email subscription
 
   # Views -> Emails.
   #----------------------------------------------------------------------------
