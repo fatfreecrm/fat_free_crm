@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: tasks
@@ -256,6 +257,60 @@ describe Task do
       end
       it_should_behave_like("exportable") do
         let(:exported) { Task.all }
+      end
+    end
+  end
+  
+  describe "#parse_calendar_date" do
+    before :each do
+      I18n.locale = "de"
+      @task = Task.new
+      @task.bucket = "specific_time"
+    end
+    
+    after :each do
+      I18n.locale = "en-Us"
+    end
+    
+    context "german" do
+      it "should parse a January date without exception" do
+        @task.calendar = "20 Jänner 2012"
+        lambda { @task.send(:parse_calendar_date) }.should_not raise_error(ArgumentError)
+      end
+      
+      it "should parse a February date without exception" do
+        @task.calendar = "20 Februar 2012"
+        lambda { @task.send(:parse_calendar_date) }.should_not raise_error(ArgumentError)
+      end
+      
+      it "should parse a March date without exception" do
+        @task.calendar = "20 März 2012"
+        lambda { @task.send(:parse_calendar_date) }.should_not raise_error(ArgumentError)
+      end
+      
+      it "should parse a May date without exception" do
+        @task.calendar = "20 Mai 2012"
+        lambda { @task.send(:parse_calendar_date) }.should_not raise_error(ArgumentError)
+      end
+      
+      it "should parse a June date without exception" do
+        @task.calendar = "20 Juni 2012"
+        lambda { @task.send(:parse_calendar_date) }.should_not raise_error(ArgumentError)
+      end
+      
+      it "should parse a July date without exception" do
+        @task.calendar = "20 Juli 2012"
+        lambda { @task.send(:parse_calendar_date) }.should_not raise_error(ArgumentError)
+      end
+      
+      it "should parse an October date without exception" do
+        @task.calendar = "20 Oktober 2012"
+        lambda { @task.send(:parse_calendar_date) }.should_not raise_error(ArgumentError)
+      end
+      
+      it "should parse a December date without exception" do
+        @task.calendar = "20 Dezember 2012"
+        lambda { @task.send(:parse_calendar_date) }.should_not raise_error(ArgumentError)
       end
     end
   end

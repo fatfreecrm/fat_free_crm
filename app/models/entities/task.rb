@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Fat Free CRM
 # Copyright (C) 2008-2011 by Michael Dvorkin
 #
@@ -234,7 +235,28 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def parse_calendar_date
-    DateTime.strptime(self.calendar, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
+    # Add mapping for other locales.
+    date_string = case I18n.locale.to_s
+      when "de"
+        german_to_english_date self.calendar
+      else
+        self.calendar
+    end
+    
+    DateTime.strptime(date_string, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
+  end
+  
+  # Make german dates generated via calendar_date parseable by DateTime strptime method.
+  def german_to_english_date(date_string)
+    months = { "Jänner"   => "January",
+               "Februar"  => "February",
+               "März"     => "March",
+               "Mai"      => "May",
+               "Juni"     => "June",
+               "Juli"     => "July",
+               "Oktober"  => "October",
+               "Dezember" => "December" }
+    date_string.gsub(/Jänner|Februar|März|Mai|Juni|Juli|Oktober|Dezember/) { |match| months[match] }
   end
 end
 
