@@ -83,7 +83,7 @@ class TasksController < EntitiesController
   def create
     @view = params[:view] || "pending"
     @task = Task.new(params[:task]) # NOTE: we don't display validation messages for tasks.
-
+    
     respond_with(@task) do |format|
       if @task.save
         update_sidebar if called_from_index_page?

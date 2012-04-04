@@ -104,7 +104,7 @@ module TasksHelper
     else # completed
       summary << "#{t(:related)} #{task.asset.name} (#{task.asset_type.downcase})" if task.asset_id?
       summary << t(:task_completed_by,
-                   :time_ago => distance_of_time_in_words(task.completed_at, Time.now),
+                   :time_ago => distance_of_time_in_words_to_now(task.completed_at),
                    :date     => l(task.completed_at.localtime, :format => :mmddhhss),
                    :user     => task.completor.full_name)
     end
