@@ -12,13 +12,12 @@ class AddSubscribedUsersToEntities < ActiveRecord::Migration
     Comment.all.each do |comment|
       entity_subscribers[[comment.commentable_type, comment.commentable_id]] += [comment.user_id]
     end
-
-    # Generate SQL query to update subscribed_users
-    sql = ""
-    entity_subscribers.each do |entity, user_ids|
-      sql << "UPDATE #{entity[0].tableize} SET subscribed_users = '#{user_ids.to_a.to_yaml}' WHERE id = #{entity[1]}; "
+    
+    # Run as one atomic action.
+    ActiveRecord::Base.transaction do
+      entity_subscribers.each do |entity, user_ids|
+        connection.execute "UPDATE #{entity[0].tableize} SET subscribed_users = '#{user_ids.to_a.to_yaml}' WHERE id = #{entity[1]}"
+      end
     end
-
-    connection.execute sql
   end
 end
