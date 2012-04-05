@@ -10,3 +10,5 @@ else
   page["#{id_prefix}_ask"].show
 end
 
+
+page.call "crm.textarea_user_autocomplete", "#{id_prefix}_comment_comment"

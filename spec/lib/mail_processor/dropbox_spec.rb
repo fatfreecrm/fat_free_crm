@@ -1,166 +1,17 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-require File.dirname(__FILE__) + '/dropbox/email_samples'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require File.dirname(__FILE__) + '/sample_emails/dropbox'
 
-require "fat_free_crm/dropbox"
+require "fat_free_crm/mail_processor/dropbox"
 
-describe "IMAP Dropbox" do
+describe FatFreeCRM::MailProcessor::Dropbox do
+  include MockIMAP
+
+  before do
+    @mock_address = "dropbox@example.com"
+  end
+
   before(:each) do
-    @crawler = FatFreeCRM::Dropbox.new
-    @crawler.stub!("expunge!").and_return(true)
-  end
-
-  def mock_imap
-    @imap = mock
-    @settings = @crawler.instance_variable_get("@settings")
-    @settings[:address] = "dropbox@example.com"
-    Net::IMAP.stub!(:new).with(@settings[:server], @settings[:port], @settings[:ssl]).and_return(@imap)
-  end
-
-  def mock_connect
-    mock_imap
-    @imap.stub!(:login).and_return(true)
-    @imap.stub!(:select).and_return(true)
-  end
-
-  def mock_disconnect
-    @imap.stub!(:disconnected?).and_return(false)
-    @imap.stub!(:logout).and_return(true)
-    @imap.stub!(:disconnect).and_return(true)
-  end
-
-  def mock_message(body = EMAIL[:plain])
-    @fetch_data = mock
-    @fetch_data.stub!(:attr).and_return("RFC822" => body)
-    @imap.stub!(:uid_search).and_return([ :uid ])
-    @imap.stub!(:uid_fetch).and_return([ @fetch_data ])
-    @imap.stub!(:uid_copy).and_return(true)
-    @imap.stub!(:uid_store).and_return(true)
-    body
-  end
-
-  #------------------------------------------------------------------------------
-  describe "Connecting to the IMAP server" do
-    it "should connect to the IMAP server and login as user, and select folder" do
-      mock_imap
-      @imap.should_receive(:login).once.with(@settings[:user], @settings[:password])
-      @imap.should_receive(:select).once.with(@settings[:scan_folder])
-      @crawler.send(:connect!)
-    end
-
-    it "should connect to the IMAP server, login as user, but not select folder when requested so" do
-      mock_imap
-      @imap.should_receive(:login).once.with(@settings[:user], @settings[:password])
-      @imap.should_not_receive(:select).with(@settings[:scan_folder])
-      @crawler.send(:connect!, :setup => true)
-    end
-
-    it "should raise the error if connection fails" do
-      Net::IMAP.should_receive(:new).and_raise(SocketError) # No mocks this time! :-)
-      @crawler.send(:connect!).should == nil
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  describe "Disconnecting from the IMAP server" do
-    it "should logout and diconnect" do
-      mock_connect
-      mock_disconnect
-      @imap.should_receive(:logout).once
-      @imap.should_receive(:disconnect).once
-
-      @crawler.send(:connect!)
-      @crawler.send(:disconnect!)
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  describe "Discarding a message" do
-    before(:each) do
-      mock_connect
-      @uid = mock
-      @crawler.send(:connect!)
-    end
-
-    it "should copy message to invalid folder if it's set and flag the message as deleted" do
-      @settings[:move_invalid_to_folder] = "invalid"
-      @imap.should_receive(:uid_copy).once.with(@uid, @settings[:move_invalid_to_folder])
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])
-      @crawler.send(:discard, @uid)
-    end
-
-    it "should not copy message to invalid folder if it's not set and flag the message as deleted" do
-      @settings[:move_invalid_to_folder] = nil
-      @imap.should_not_receive(:uid_copy)
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])
-      @crawler.send(:discard, @uid)
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  describe "Archiving a message" do
-    before(:each) do
-      mock_connect
-      @uid = mock
-      @crawler.send(:connect!)
-    end
-
-    it "should copy message to archive folder if it's set and flag the message as seen" do
-      @settings[:move_to_folder] = "processed"
-      @imap.should_receive(:uid_copy).once.with(@uid, @settings[:move_to_folder])
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Seen])
-      @crawler.send(:archive, @uid)
-    end
-
-    it "should not copy message to archive folder if it's not set and flag the message as seen" do
-      @settings[:move_to_folder] = nil
-      @imap.should_not_receive(:uid_copy)
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Seen])
-      @crawler.send(:archive, @uid)
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  describe "Validating email" do
-    before(:each) do
-      @email = mock
-    end
-
-    it "should be valid email if its contents type is text/plain" do
-      @email.stub!(:content_type).and_return("text/plain")
-      @crawler.send(:is_valid?, @email).should == true
-    end
-
-    it "should be invalid email if its contents type is not text/plain" do
-      @email.stub!(:content_type).and_return("text/html")
-      @crawler.send(:is_valid?, @email).should == false
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  describe "Finding email sender among users" do
-    before(:each) do
-      @from = [ "Aaron@Example.Com", "Ben@Example.com" ]
-      @email = mock
-      @email.stub!(:from).and_return(@from)
-    end
-
-    it "should find non-suspended user that matches From: field" do
-      @user = FactoryGirl.create(:user, :email => @from.first, :suspended_at => nil)
-      @crawler.send(:sent_from_known_user?, @email).should == true
-      @crawler.instance_variable_get("@sender").should == @user
-    end
-
-    it "should not find user if his email doesn't match From: field" do
-      FactoryGirl.create(:user, :email => "nobody@example.com")
-      @crawler.send(:sent_from_known_user?, @email).should == false
-      @crawler.instance_variable_get("@sender").should == nil
-    end
-
-    it "should not find user if his email matches From: field but is suspended" do
-      FactoryGirl.create(:user, :email => @from.first, :suspended_at => Time.now)
-      @crawler.send(:sent_from_known_user?, @email).should == false
-      @crawler.instance_variable_get("@sender").should == nil
-    end
+    @crawler = FatFreeCRM::MailProcessor::Dropbox.new
   end
 
   #------------------------------------------------------------------------------
@@ -168,7 +19,7 @@ describe "IMAP Dropbox" do
     before(:each) do
       mock_connect
       mock_disconnect
-      mock_message
+      mock_message(DROPBOX_EMAILS[:plain])
     end
 
     it "should discard a message if it's invalid" do
@@ -203,7 +54,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should find the named asset and attach the email message" do
-      mock_message(EMAIL[:first_line])
+      mock_message(DROPBOX_EMAILS[:first_line])
       @campaign = FactoryGirl.create(:campaign, :name => "Got milk!?")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
@@ -214,7 +65,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create the named asset and attach the email message" do
-      mock_message(EMAIL[:first_line])
+      mock_message(DROPBOX_EMAILS[:first_line])
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -226,7 +77,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should find the lead and attach the email message" do
-      mock_message(EMAIL[:first_line_lead])
+      mock_message(DROPBOX_EMAILS[:first_line_lead])
       @lead = FactoryGirl.create(:lead, :first_name => "Cindy", :last_name => "Cluster")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
@@ -237,7 +88,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create the lead and attach the email message" do
-      mock_message(EMAIL[:first_line_lead])
+      mock_message(DROPBOX_EMAILS[:first_line_lead])
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -250,7 +101,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should find the contact and attach the email message" do
-      mock_message(EMAIL[:first_line_contact])
+      mock_message(DROPBOX_EMAILS[:first_line_contact])
       @contact = FactoryGirl.create(:contact, :first_name => "Cindy", :last_name => "Cluster")
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
@@ -261,7 +112,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create the contact and attach the email message" do
-      mock_message(EMAIL[:first_line_contact])
+      mock_message(DROPBOX_EMAILS[:first_line_contact])
       @crawler.should_receive(:archive).once
       @crawler.should_not_receive(:with_recipients)
       @crawler.run
@@ -273,7 +124,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should move on if first line has no keyword" do
-      mock_message(EMAIL[:plain])
+      mock_message(DROPBOX_EMAILS[:plain])
       @crawler.should_receive(:with_recipients).twice
       @crawler.should_receive(:with_forwarded_recipient).twice
       @crawler.run
@@ -281,11 +132,11 @@ describe "IMAP Dropbox" do
   end
 
   #------------------------------------------------------------------------------
-  describe "Pipieline: processing recipients (To: recipient, Bcc: dropbox)" do
+  describe "Pipeline: processing recipients (To: recipient, Bcc: dropbox)" do
     before(:each) do
       mock_connect
       mock_disconnect
-      mock_message(EMAIL[:plain])
+      mock_message(DROPBOX_EMAILS[:plain])
       FactoryGirl.create(:user, :email => "aaron@example.com")
     end
 
@@ -307,12 +158,12 @@ describe "IMAP Dropbox" do
   end
 
   #------------------------------------------------------------------------------
-  describe "Pipieline: processing forwarded recipient (To: dropbox)" do
+  describe "Pipeline: processing forwarded recipient (To: dropbox)" do
     before(:each) do
       mock_connect
       mock_disconnect
       FactoryGirl.create(:user, :email => "aaron@example.com")
-      mock_message(EMAIL[:forwarded])
+      mock_message(DROPBOX_EMAILS[:forwarded])
     end
 
     it "should find the asset and attach the email message" do
@@ -352,7 +203,7 @@ describe "IMAP Dropbox" do
   end
 
   #------------------------------------------------------------------------------
-  describe "Pipieline: creating recipient if s/he was not found" do
+  describe "Pipeline: creating recipient if s/he was not found" do
     before(:each) do
       mock_connect
       mock_disconnect
@@ -360,7 +211,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create a contact from the email recipient (To: recipient, Bcc: dropbox)" do
-      mock_message(EMAIL[:plain])
+      mock_message(DROPBOX_EMAILS[:plain])
       @crawler.should_receive(:archive).once
       @crawler.run
 
@@ -371,7 +222,7 @@ describe "IMAP Dropbox" do
     end
 
     it "should create a contact from the forwarded email (To: dropbox)" do
-      mock_message(EMAIL[:forwarded])
+      mock_message(DROPBOX_EMAILS[:forwarded])
       @crawler.should_receive(:archive).once
       @crawler.run
 
@@ -385,16 +236,16 @@ describe "IMAP Dropbox" do
   #------------------------------------------------------------------------------
   describe "Extracting body" do
     before do
-      @dropbox = FatFreeCRM::Dropbox.new
+      @dropbox = FatFreeCRM::MailProcessor::Dropbox.new
     end
 
     it "should extract text from multipart text/plain" do
-      text = @dropbox.send(:plain_text_body, Mail.new(EMAIL[:plain]))
+      text = @dropbox.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:plain]))
       text.should be_present
     end
 
     it "should extract text and strip tags from multipart text/html" do
-      text = @dropbox.send(:plain_text_body, Mail.new(EMAIL[:html]))
+      text = @dropbox.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:html]))
       text.should be_present
       text.should_not match(/<\/?[^>]*>/)
     end

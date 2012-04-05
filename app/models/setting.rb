@@ -27,7 +27,7 @@
 #
 
 # Fat Free CRM settings are stored in three places, and are loaded in the following order:
-# 
+#
 # 1) config/settings.default.yml
 # 2) config/settings.yml  (if exists)
 # 3) 'settings' table in database  (if exists)
@@ -44,12 +44,12 @@ class Setting < ActiveRecord::Base
   @@cache = @@yaml_settings = {}.with_indifferent_access
 
   class << self
-  
+
     # Cache should be cleared before each request.
     def clear_cache!
       @@cache = {}.with_indifferent_access
     end
-  
+
     #-------------------------------------------------------------------
     def method_missing(method, *args)
       begin
@@ -70,19 +70,19 @@ class Setting < ActiveRecord::Base
       # Return value if cached
       return cache[name] if cache.has_key?(name)
       # Check database
-      if database_and_table_exists? 
+      if database_and_table_exists?
         if setting = self.find_by_name(name)
           unless setting.value.nil?
             return cache[name] = setting.value
           end
         end
       end
-      # Check YAML settings 
+      # Check YAML settings
       if yaml_settings.has_key?(name)
         return cache[name] = yaml_settings[name]
       end
     end
-      
+
 
     # Set setting value
     #-------------------------------------------------------------------
@@ -93,7 +93,7 @@ class Setting < ActiveRecord::Base
       setting.save
       cache[name] = value
     end
-       
+
 
     # Unrolls [ :one, :two ] settings array into [[ "One", :one ], [ "Two", :two ]]
     # picking symbol translations from locale. If setting is not a symbol but
@@ -109,12 +109,12 @@ class Setting < ActiveRecord::Base
       # instead of crashing the entire application.
       table_exists? rescue false
     end
-    
-    
+
+
     # Loads settings from YAML files
     def load_settings_from_yaml
       @@yaml_settings = {}.with_indifferent_access
-      
+
       setting_files = [
         FatFreeCRM.root.join("config", "settings.default.yml"),
         Rails.root.join("config", "settings.yml")
@@ -125,8 +125,8 @@ class Setting < ActiveRecord::Base
         if File.exist?(file)
           begin
             settings = YAML.load_file(file)
-            # Merge settings into current settings hash
-            @@yaml_settings.merge!(settings)
+            # Merge settings into current settings hash (recursively)
+            @@yaml_settings.deep_merge!(settings)
           rescue Exception => ex
             puts "Settings couldn't be loaded from #{file}: #{ex.message}"
           end

@@ -610,6 +610,10 @@ en-US:
   edit_comment: Editing comment
   show: Show
   update: Update
+  following_users_will_be_notified: The following users will be notified by email
+  notifications_tooltip: Subscribers will receive new comments via email
+  subscribe_via_email: Subscribe via email
+  disable_email_subscriptions: Disable email subscription
 
   # Views -> Emails.
   #----------------------------------------------------------------------------
@@ -671,11 +675,17 @@ en-US:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Added email - %{subject}
-  dropbox_ack_intro: Succesfully added the email you sent to dropbox
-  dropbox_ack_to: Added to
+  dropbox_notification_subject: dropbox - Added email - %{subject}
+  dropbox_notification_intro: Succesfully added the email you sent to dropbox
+  dropbox_notification_to: Added to
   subject: Subject
   body: Body
+
+  # Comment Inbox
+  #----------------------------------------------------------------------------
+  comment_notification:
+    intro: "%{user_full_name} commented on %{entity_type}: %{entity_name}"
+    reply_instructions: "Reply to this email directly to add a new comment, or view the %{entity} online"
 
   # Lists
   #----------------------------------------------------------------------------

@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-#
 # Set relative url root for assets
 
 if Setting.base_url.present?

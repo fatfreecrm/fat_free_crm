@@ -15,18 +15,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-namespace :ffcrm do
-  namespace :dropbox do
-    desc "Run dropbox crawler and process incoming emails"
-    task :run => :environment do
-      crawler = FatFreeCRM::Dropbox.new
-      crawler.run
-    end
-    
-    desc "Set up email dropbox based on currently loaded settings"
-    task :setup => :environment do
-      crawler = FatFreeCRM::Dropbox.new
-      crawler.setup
-    end
+class SubscriptionMailer < ActionMailer::Base
+
+  def comment_notification(user, comment)
+    @entity = comment.commentable
+    @entity_type = @entity.class.to_s
+
+    @comment = comment
+    @user = comment.user
+
+    # If entity has tags, join them and wrap in parantheses
+    entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : ""
+    subject = "RE: [#{@entity_type.downcase}:#{@entity.id}] #{@entity.full_name} #{@entity_tags}"
+
+    mail :subject => subject,
+         :to => user.email,
+         :from => "#{@user.full_name} <#{Setting.email_comment_replies[:address]}>",
+         :date => Time.now
   end
 end

@@ -669,9 +669,9 @@ fr:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_ack_subject: dropbox - Email ajouté - %{subject}
-  dropbox_ack_intro: "a ajouté l'email que vous avez envoyé à la dropbox"
-  dropbox_ack_to: ajoutés aux
+  dropbox_notification_subject: dropbox - Email ajouté - %{subject}
+  dropbox_notification_intro: "a ajouté l'email que vous avez envoyé à la dropbox"
+  dropbox_notification_to: ajoutés aux
   subject: Sujet
   body: Corps
 

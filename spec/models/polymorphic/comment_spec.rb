@@ -25,5 +25,20 @@ describe Comment do
   it "should create a new instance given valid attributes" do
     Comment.create!(:comment => "Hello", :user => FactoryGirl.create(:user), :commentable => FactoryGirl.create(:lead))
   end
+
+  it "should subscribe users mentioned in the comment to the entity, and notify them via email" do
+    expected_users = [
+      FactoryGirl.create(:user, :username => "test_user"),
+      FactoryGirl.create(:user, :username => "another_user")
+    ]
+    entity = FactoryGirl.create(:lead)
+    Comment.create!(:comment => "Hey @test_user, take a look at this. Also show @another_user",
+                    :user => FactoryGirl.create(:user),
+                    :commentable => entity)
+
+    expected_users.each do |user|
+      entity.subscribed_users.should include(user.id)
+    end
+  end
 end
 

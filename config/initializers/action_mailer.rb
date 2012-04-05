@@ -1,9 +1,12 @@
-# Configure ActionMailer
+# Configure ActionMailer unless running tests
 
-# Set SMTP settings if present.
-if smtp_settings = Setting.smtp
-  Rails.application.config.action_mailer.delivery_method = :smtp
-  Rails.application.config.action_mailer.smtp_settings = smtp_settings
+unless Rails.env.test?
+  # Set SMTP settings if present.
+  smtp_settings = Setting.smtp || {}
+  if smtp_settings["user_name"].present? && smtp_settings["password"].present?
+    Rails.application.config.action_mailer.delivery_method = :smtp
+    Rails.application.config.action_mailer.smtp_settings = smtp_settings
+  end
 end
 
 # Set default host for outgoing emails
