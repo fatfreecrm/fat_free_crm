@@ -46,7 +46,7 @@ class Task < ActiveRecord::Base
   belongs_to :completor, :class_name => "User", :foreign_key => :completed_by
   belongs_to :asset, :polymorphic => true
 
-  serialize :subscribed_users, Array
+  serialize :subscribed_users, Set
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
@@ -100,7 +100,7 @@ class Task < ActiveRecord::Base
   }
 
   acts_as_commentable
-  has_paper_trail :meta => { :related => :asset }
+  has_paper_trail :meta => { :related => :asset }, :ignore => [ :subscribed_users ]
   has_fields
   exportable
 

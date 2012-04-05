@@ -60,7 +60,7 @@ class Contact < ActiveRecord::Base
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
   has_many    :emails, :as => :mediator
 
-  serialize :subscribed_users, Array
+  serialize :subscribed_users, Set
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true
 
@@ -84,7 +84,7 @@ class Contact < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   acts_as_taggable_on :tags
-  has_paper_trail
+  has_paper_trail :ignore => [ :subscribed_users ]
   has_fields
   exportable
   sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
