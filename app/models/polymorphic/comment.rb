@@ -50,8 +50,8 @@ class Comment < ActiveRecord::Base
   private
   # Add user to subscribed_users field on entity
   def subscribe_user_to_entity(u = user)
-    subscribed_users = (commentable.subscribed_users + [u.id]).uniq
-    commentable.update_attribute :subscribed_users, subscribed_users
+    commentable.subscribed_users << u.id
+    commentable.save
   end
 
   # Notify subscribed users when a comment is added, unless user created this comment
