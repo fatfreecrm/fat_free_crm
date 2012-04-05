@@ -236,16 +236,16 @@ describe FatFreeCRM::MailProcessor::Dropbox do
   #------------------------------------------------------------------------------
   describe "Extracting body" do
     before do
-      @dropbox = FatFreeCRM::Dropbox.new
+      @dropbox = FatFreeCRM::MailProcessor::Dropbox.new
     end
 
     it "should extract text from multipart text/plain" do
-      text = @dropbox.send(:plain_text_body, Mail.new(EMAIL[:plain]))
+      text = @dropbox.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:plain]))
       text.should be_present
     end
 
     it "should extract text and strip tags from multipart text/html" do
-      text = @dropbox.send(:plain_text_body, Mail.new(EMAIL[:html]))
+      text = @dropbox.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:html]))
       text.should be_present
       text.should_not match(/<\/?[^>]*>/)
     end
