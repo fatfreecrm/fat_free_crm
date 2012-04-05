@@ -22,4 +22,9 @@ module CommentsHelper
     links = users.map {|user| link_to(user.full_name, user_path(user)) }
     links.join(", ").html_safe
   end
+
+  def notification_emails_configured?
+    config = Setting.email_comment_replies || {}
+    config[:server].present? && config[:user].present? && config[:password].present?
+  end
 end
