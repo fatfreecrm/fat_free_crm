@@ -19,6 +19,6 @@ class AddSubscribedUsersToEntities < ActiveRecord::Migration
       sql << "UPDATE #{entity[0].tableize} SET subscribed_users = '#{user_ids.to_a.to_yaml}' WHERE id = #{entity[1]}; "
     end
 
-    connection.execute sql
+    connection.execute(sql) unless sql.empty?
   end
 end
