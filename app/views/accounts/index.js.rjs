@@ -1,4 +1,4 @@
-unless @accounts.blank?
+if @accounts.any?
   page[:accounts].replace_html render @accounts
 else
   page[:accounts].replace_html :partial => "shared/empty"

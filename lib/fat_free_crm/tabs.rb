@@ -19,7 +19,7 @@ module FatFreeCRM
   class Tabs
     cattr_accessor :main
     cattr_accessor :admin
-    
+
     # Class methods.
     #----------------------------------------------------------------------------
     class << self

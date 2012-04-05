@@ -127,7 +127,7 @@ class Lead < ActiveRecord::Base
     opportunity = Opportunity.create_for(self, account, params[:opportunity], params[:users])
     contact     = Contact.create_for(self, account, opportunity, params)
 
-    return account, opportunity, contact
+    [account, opportunity, contact]
   end
 
   #----------------------------------------------------------------------------
@@ -164,7 +164,8 @@ class Lead < ActiveRecord::Base
   end
   alias :name :full_name
 
-  private
+private
+
   #----------------------------------------------------------------------------
   def increment_leads_count
     if self.campaign_id
@@ -184,6 +185,4 @@ class Lead < ActiveRecord::Base
   def users_for_shared_access
     errors.add(:access, :share_lead) if self[:access] == "Shared" && !self.permissions.any?
   end
-
 end
-

@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe OpportunitiesController do
 
@@ -35,7 +35,7 @@ describe OpportunitiesController do
     end
 
     it "should filter out opportunities by stage" do
-      controller.session[:filter_by_opportunity_stage] = "prospecting,negotiation"
+      controller.session[:opportunities_filter] = "prospecting,negotiation"
       @opportunities = [
         FactoryGirl.create(:opportunity, :user => @current_user, :stage => "negotiation"),
         FactoryGirl.create(:opportunity, :user => @current_user, :stage => "prospecting")
@@ -83,7 +83,7 @@ describe OpportunitiesController do
 
     describe "with mime type of JSON" do
       it "should render all opportunities as JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
+        @controller.should_receive(:get_opportunities).and_return(opportunities = mock("Array of Opportunities"))
         opportunities.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -94,7 +94,7 @@ describe OpportunitiesController do
 
     describe "with mime type of JSON" do
       it "should render all opportunities as JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
+        @controller.should_receive(:get_opportunities).and_return(opportunities = mock("Array of Opportunities"))
         opportunities.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -105,7 +105,7 @@ describe OpportunitiesController do
 
     describe "with mime type of XML" do
       it "should render all opportunities as xml" do
-        @controller.should_receive(:get_list_of_records).and_return(opportunities = mock("Array of Opportunities"))
+        @controller.should_receive(:get_opportunities).and_return(opportunities = mock("Array of Opportunities"))
         opportunities.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -144,7 +144,7 @@ describe OpportunitiesController do
     describe "with mime type of JSON" do
       it "should render the requested opportunity as JSON" do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42)
-        Opportunity.stub_chain(:my, :find).and_return(@opportunity)
+        Opportunity.should_receive(:find).and_return(@opportunity)
         @opportunity.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -156,7 +156,7 @@ describe OpportunitiesController do
     describe "with mime type of XML" do
       it "should render the requested opportunity as xml" do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42)
-        Opportunity.stub_chain(:my, :find).and_return(@opportunity)
+        Opportunity.should_receive(:find).and_return(@opportunity)
         @opportunity.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -201,7 +201,6 @@ describe OpportunitiesController do
         response.code.should == "404" # :not_found
       end
     end
-
   end
 
   # GET /opportunities/new
@@ -248,7 +247,6 @@ describe OpportunitiesController do
         response.body.should == 'window.location.href = "/accounts";'
       end
     end
-
   end
 
   # GET /opportunities/1/edit                                              AJAX
@@ -678,9 +676,7 @@ describe OpportunitiesController do
         xhr :put, :update, :id => 42, :opportunity => { :name => nil }, :account => { :id => 99 }
         assigns(:account).should == @account
       end
-
     end
-
   end
 
   # DELETE /opportunities/1
@@ -910,7 +906,7 @@ describe OpportunitiesController do
   describe "responding to GET filter" do
 
     it "should expose filtered opportunities as @opportunity and render [filter] template" do
-      session[:filter_by_opportunity_stage] = "negotiation,analysis"
+      session[:opportunities_filter] = "negotiation,analysis"
       @opportunities = [ FactoryGirl.create(:opportunity, :stage => "prospecting", :user => @current_user) ]
       @stage = Setting.unroll(:opportunity_stage)
 
@@ -927,8 +923,5 @@ describe OpportunitiesController do
 
       session[:opportunities_current_page].should == 1
     end
-
   end
-
 end
-

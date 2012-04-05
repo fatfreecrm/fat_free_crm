@@ -15,10 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class TasksController < EntitiesController
-  before_filter :auto_complete, :only => :auto_complete
+class TasksController < ApplicationController
+  before_filter :require_user
+  before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :update_sidebar, :only => :index
-  skip_after_filter :update_recently_viewed
+
+  respond_to :html, :only => [ :index, :show, :auto_complete ]
+  respond_to :js
+  respond_to :json, :xml, :except => :edit
+  respond_to :atom, :csv, :rss, :xls, :only => :index
 
   # GET /tasks
   #----------------------------------------------------------------------------
@@ -36,9 +41,6 @@ class TasksController < EntitiesController
       format.json { @task = Task.tracked_by(@current_user).find(params[:id]);  render :json => @task }
       format.xml  { @task = Task.tracked_by(@current_user).find(params[:id]);  render :xml => @task }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # GET /tasks/new
@@ -49,14 +51,17 @@ class TasksController < EntitiesController
     @users = User.except(@current_user).by_name
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
-    if params[:related]
-      model, id = params[:related].split("_")
-      instance_variable_set("@asset", model.classify.constantize.my.find(id))
-    end
-    respond_with(@task)
 
-  rescue ActiveRecord::RecordNotFound # Kicks in if related asset was not found.
-    respond_to_related_not_found(model, :js) if model
+    if params[:related]
+      model, id = params[:related].split('_')
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@asset", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
+    end
+
+    respond_with(@task)
   end
 
   # GET /tasks/1/edit                                                      AJAX
@@ -68,14 +73,12 @@ class TasksController < EntitiesController
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Task.tracked_by(@current_user).find($1)
-    end
-    respond_with(@task)
 
-  rescue ActiveRecord::RecordNotFound
-    @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @task
+    if params[:previous].to_s =~ /(\d+)\z/
+      @previous = Task.tracked_by(@current_user).find_by_id($1) || $1.to_i
+    end
+
+    respond_with(@task)
   end
 
   # POST /tasks
@@ -115,9 +118,6 @@ class TasksController < EntitiesController
         end
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /tasks/1
@@ -125,7 +125,7 @@ class TasksController < EntitiesController
   def destroy
     @view = params[:view] || "pending"
     @task = Task.tracked_by(@current_user).find(params[:id])
-    @task.destroy if @task
+    @task.destroy
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
     if Task.bucket_empty?(params[:bucket], @current_user, @view)
@@ -134,9 +134,6 @@ class TasksController < EntitiesController
 
     update_sidebar if called_from_index_page?
     respond_with(@task)
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # PUT /tasks/1/complete
@@ -152,14 +149,11 @@ class TasksController < EntitiesController
 
     update_sidebar unless params[:bucket].blank?
     respond_with(@task)
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # POST /tasks/auto_complete/query                                        AJAX
   #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
+  # Handled by ApplicationController :auto_complete
 
   # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------
@@ -175,7 +169,8 @@ class TasksController < EntitiesController
     end
   end
 
-  private
+private
+
   # Yields array of current filters and updates the session using new values.
   #----------------------------------------------------------------------------
   def update_session

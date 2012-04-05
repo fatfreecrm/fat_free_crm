@@ -80,6 +80,11 @@ class User < ActiveRecord::Base
     where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', :s => "#{query}%")
   }
 
+  scope :my, lambda {
+    current_ability = Ability.new(User.current_user)
+    accessible_by(current_ability)
+  }
+
   acts_as_authentic do |c|
     c.session_class = Authentication
     c.validates_uniqueness_of_login_field_options = { :message => :username_taken }

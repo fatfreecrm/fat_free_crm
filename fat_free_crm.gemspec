@@ -35,4 +35,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'email_reply_parser'
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
+  gem.add_dependency 'squeel',              '~> 0.9.3'
 end

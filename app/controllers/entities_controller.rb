@@ -18,69 +18,46 @@
 class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
-  after_filter  :update_recently_viewed, :only => :show
-  #~ load_resource
+
+  load_and_authorize_resource
+
+  after_filter :update_recently_viewed, :only => :show
 
   respond_to :html, :only => [ :index, :show, :auto_complete ]
   respond_to :js
   respond_to :json, :xml, :except => :edit
   respond_to :atom, :csv, :rss, :xls, :only => :index
 
-  helper_method :klass, :search
-
-  # Common auto_complete handler for all core controllers.
-  #----------------------------------------------------------------------------
-  def auto_complete
-    @query = params[:auto_complete_query]
-    @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
-    if @auto_complete.empty?
-      @auto_complete = klass.my.text_search(@query).limit(10)
-    else
-      @auto_complete = @auto_complete.last
-    end
-    session[:auto_complete] = controller_name.to_sym
-    respond_to do |format|
-      format.any(:js, :html)   { render "shared/auto_complete", :layout => nil }
-      format.json { render :json => @auto_complete.inject({}){|h,a| h[a.id] = a.name; h } }
-    end
-  end
+  helper_method :entity, :entities, :search
 
   # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
   def attach
-    model = klass.my.find(params[:id])
     @attachment = params[:assets].classify.constantize.find(params[:asset_id])
-    @attached = model.attach!(@attachment)
-    @account  = model.reload if model.is_a?(Account)
-    @campaign = model.reload if model.is_a?(Campaign)
+    @attached = entity.attach!(@attachment)
+    @account  = entity.reload if entity.is_a?(Account)
+    @campaign = entity.reload if entity.is_a?(Campaign)
 
     respond_to do |format|
-      format.js   { render "shared/attach" }
-      format.json { render :json => model.reload }
-      format.xml  { render :xml => model.reload }
+      format.js   { render 'attach' }
+      format.json { render :json => entity.reload }
+      format.xml  { render :xml => entity.reload }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # Common discard handler for all core controllers.
   #----------------------------------------------------------------------------
   def discard
-    model = klass.my.find(params[:id])
     @attachment = params[:attachment].constantize.find(params[:attachment_id])
-    model.discard!(@attachment)
-    @account  = model.reload if model.is_a?(Account)
-    @campaign = model.reload if model.is_a?(Campaign)
+    entity.discard!(@attachment)
+    @account  = entity.reload if entity.is_a?(Account)
+    @campaign = entity.reload if entity.is_a?(Campaign)
 
     respond_to do |format|
-      format.js   { render "shared/discard" }
-      format.json { render :json => model.reload }
-      format.xml  { render :xml => model.reload }
+      format.js   { render 'discard' }
+      format.json { render :json => entity.reload }
+      format.xml  { render :xml => entity.reload }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 
 
@@ -118,33 +95,46 @@ class EntitiesController < ApplicationController
   # GET /entities/contacts                                                 AJAX
   #----------------------------------------------------------------------------
   def contacts
-    @entity = klass.my.find(params[:id])
   end
 
   # GET /entities/leads                                                    AJAX
   #----------------------------------------------------------------------------
   def leads
-    @entity = klass.my.find(params[:id])
   end
 
   # GET /entities/opportunities                                            AJAX
   #----------------------------------------------------------------------------
   def opportunities
-    @entity = klass.my.find(params[:id])
   end
 
   # GET /entities/versions                                                 AJAX
   #----------------------------------------------------------------------------
   def versions
-    @entity = klass.my.find(params[:id])
   end
 
-  private
+protected
 
   #----------------------------------------------------------------------------
-  def klass
-    @klass ||= controller_name.classify.constantize
+  def entity=(entity)
+    instance_variable_set("@#{controller_name.singularize}", entity)
   end
+
+  #----------------------------------------------------------------------------
+  def entity
+    instance_variable_get("@#{controller_name.singularize}")
+  end
+
+  #----------------------------------------------------------------------------
+  def entities=(entities)
+    instance_variable_set("@#{controller_name}", entities)
+  end
+
+  #----------------------------------------------------------------------------
+  def entities
+    instance_variable_get("@#{controller_name}") || klass.my
+  end
+
+private
 
   #----------------------------------------------------------------------------
   def get_users
@@ -162,37 +152,30 @@ class EntitiesController < ApplicationController
 
   # Get list of records for a given model class.
   #----------------------------------------------------------------------------
-  def get_list_of_records(klass, options = {})
-    items = klass.name.tableize
+  def get_list_of_records(options = {})
     options[:query] ||= params[:query]                        if params[:query]
     self.current_page = options[:page]                        if options[:page]
     query, tags       = parse_query_and_tags(options[:query]) if options[:query]
     self.current_query = query
 
-    records = {
-      :user  => current_user,
-      :order => current_user.pref[:"#{items}_sort_by"] || klass.sort_by
-    }
+    order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
+
     pages = {
       :page     => current_page,
-      :per_page => current_user.pref[:"#{items}_per_page"]
+      :per_page => current_user.pref[:"#{controller_name}_per_page"]
     }
-
-    # Call the hook and return its output if any.
-    assets = hook(:"get_#{items}", self, :records => records, :pages => pages)
-    return assets.last unless assets.empty?
 
     # Use default processing if no hooks are present. Note that comma-delimited
     # export includes deleted records, and the pagination is enabled only for
     # plain HTTP, Ajax and XML API requests.
     wants = request.format
-    filter = session[options[:filter]].to_s.split(',') if options[:filter]
+    filter = session[:"#{controller_name}_filter"].to_s.split(',')
 
-    scope = klass.my(records)
-    scope = scope.merge(search.result)
+    scope = entities.merge(search.result)
     scope = scope.state(filter)                   if filter.present?
     scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
+    scope = scope.order(order)
     scope = scope.unscoped                        if wants.csv?
     scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?
     scope
@@ -200,9 +183,7 @@ class EntitiesController < ApplicationController
 
   #----------------------------------------------------------------------------
   def update_recently_viewed
-    if item = instance_variable_get("@#{controller_name.singularize}")
-      item.send(item.class.versions_association_name).create(:event => :view, :whodunnit => PaperTrail.whodunnit)
-    end
+    entity.versions.create(:event => :view, :whodunnit => PaperTrail.whodunnit)
   end
 
   #----------------------------------------------------------------------------

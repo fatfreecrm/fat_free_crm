@@ -33,25 +33,12 @@ module FatFreeCRM
           # displaying "object deleted..." in the activity log.
           #
           has_many :permissions, :as => :asset, :include => :user
-          #
-          # The :my named scope accepts an optional Hash. For example:
-          #   Account.my(:user => User.first, :order => "updated_at DESC", :limit => 20)
-          #
-          # The defaults are:
-          #   :user  => currenly logged in user
-          #   :order => primary key descending
-          #   :limit => none
-          #
-          scope :my, lambda { |*args|
-            options = args[0] || {}
-            includes(:permissions).
-            where("#{quoted_table_name}.user_id     = :user OR " <<
-                  "#{quoted_table_name}.assigned_to = :user OR " <<
-                  "permissions.user_id              = :user OR " <<
-                  "#{quoted_table_name}.access = 'Public'", :user => options[:user] || User.current_user).
-            order(options[:order] || "#{quoted_table_name}.id DESC").
-            limit(options[:limit]) # nil selects all records
+
+          scope :my, lambda {
+            current_ability = Ability.new(User.current_user)
+            accessible_by(current_ability)
           }
+
           include FatFreeCRM::Permissions::InstanceMethods
           extend  FatFreeCRM::Permissions::SingletonMethods
         end

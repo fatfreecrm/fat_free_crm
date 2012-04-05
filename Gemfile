@@ -41,8 +41,8 @@ group :development, :test do
   gem 'steak', :require => false
   gem 'headless'
   unless ENV["CI"]
-    gem 'ruby-debug',   :platform => :mri_18
-    gem 'ruby-debug19', :platform => :mri_19
+    gem 'ruby-debug', :platform => :mri_18
+    gem 'debugger',   :platform => :mri_19
   end
 end
 

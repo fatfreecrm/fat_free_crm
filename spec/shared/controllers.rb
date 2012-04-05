@@ -21,9 +21,9 @@ module SharedControllerSpecs
       end
     end
 
-    it "should render shared/auto_complete template" do
+    it "should render application/_auto_complete template" do
       post :auto_complete, :auto_complete_query => @query
-      response.should render_template("shared/auto_complete")
+      response.should render_template("application/_auto_complete")
     end
   end
 
@@ -39,7 +39,7 @@ module SharedControllerSpecs
       if @model.is_a?(Account) && @attachment.respond_to?(:account) # Skip Tasks...
         assigns[:account].should == @attachment.reload.account
       end
-      response.should render_template("shared/attach")
+      response.should render_template("entities/attach")
     end
 
     it "should not attach the asset that is already attached" do
@@ -51,7 +51,7 @@ module SharedControllerSpecs
 
       xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
       assigns[:attached].should == nil
-      response.should render_template("shared/attach")
+      response.should render_template("entities/attach")
     end
 
     it "should display flash warning when the model is no longer available" do
@@ -78,7 +78,7 @@ module SharedControllerSpecs
       assigns[:account].should == @model if @model.is_a?(Account)
       assigns[:campaign].should == @model if @model.is_a?(Campaign)
 
-      response.should render_template("shared/discard")
+      response.should render_template("entities/discard")
     end
 
     it "should display flash warning when the model is no longer available" do
@@ -97,6 +97,4 @@ module SharedControllerSpecs
       response.body.should == "window.location.reload();"
     end
   end
-
 end
-

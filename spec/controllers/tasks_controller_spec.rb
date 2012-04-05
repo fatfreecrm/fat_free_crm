@@ -8,7 +8,6 @@ describe TasksController do
   end
 
   def produce_tasks(user, view)
-    #~ Time.zone = 'UTC'
     settings = (view != "completed" ? Setting.task_bucket : Setting.task_completed)
 
     settings.inject({}) do | hash, due |
