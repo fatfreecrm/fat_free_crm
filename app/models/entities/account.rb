@@ -68,7 +68,7 @@ class Account < ActiveRecord::Base
   uses_user_permissions
   acts_as_commentable
   acts_as_taggable_on :tags
-  has_paper_trail
+  has_paper_trail :ignore => [ :subscribed_users ]
   has_fields
   exportable
   sortable :by => [ "name ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
