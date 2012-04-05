@@ -38,6 +38,7 @@
 #
 #------------------------------------------------------------------------------
 
+
 # Host
 #------------------------------------------------------------------------------
 # Host for URLs when action mailer generates emails.
@@ -97,7 +98,9 @@
   :password                   : ""        # Password to login to the IMAP server.
   :scan_folder                : ""        # Folder to scan for dropbox messages.
   :attach_to_account          : ""        # Attach emails to contact's account, if any.
-                                          # (The same rule above applies to opportunities.)
+                                          # (The rule above also applies to opportunities.)
+#  :address_aliases:                      # Optional: List any aliases that you also want to
+#    - example_alias@example.com          #           ignore when scanning recipients
 #  :move_to_folder            : ""        # Optional: folder to move processed messages to.
 #  :move_invalid_to_folder    : ""        # Optional: folder to move invalid messages to.
 

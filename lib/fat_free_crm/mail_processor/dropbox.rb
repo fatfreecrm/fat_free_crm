@@ -76,7 +76,14 @@ module FatFreeCRM
         recipients = []
         recipients += email.to_addrs unless email.to.blank?
         recipients += email.cc_addrs unless email.cc.blank?
-        recipients -= [ @settings[:address] ]
+
+        # Ignore the dropbox email address, and any address aliases
+        ignored_addresses = [ @settings[:address] ]
+        if @settings[:address_aliases].is_a?(Array)
+          ignored_addresses += @settings[:address_aliases]
+        end
+        recipients -= ignored_addresses
+
         # Process each recipient until email has been attached
         recipients.each do |recipient|
           return true if yield recipient
