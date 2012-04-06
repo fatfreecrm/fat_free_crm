@@ -51,9 +51,12 @@ group :test do
   gem 'spork'
   gem 'database_cleaner'
   gem 'fuubar'
-  gem 'factory_girl'
-  gem 'factory_girl_rails', '~> 1.7.0', :platform => :mri_18
-  gem 'factory_girl_rails', '~> 3.0.0', :platform => :mri_19
+
+  if RUBY_VERSION.to_f >= 1.9
+    gem 'factory_girl_rails', '~> 3.0.0'
+  else
+    gem 'factory_girl_rails', '~> 1.7.0'
+  end
 end
 
 group :heroku do

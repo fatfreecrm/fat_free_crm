@@ -152,7 +152,6 @@ describe UsersController do
         response.should render_template("users/new")
       end
     end
-
   end
 
   # PUT /users/1
@@ -173,7 +172,6 @@ describe UsersController do
         assigns[:user].should == @user
         response.should render_template("users/update")
       end
-
     end
 
     describe "with invalid params" do
@@ -184,9 +182,7 @@ describe UsersController do
         assigns[:user].should == @user
         response.should render_template("users/update")
       end
-
     end
-
   end
 
   # DELETE /users/1
@@ -247,7 +243,7 @@ describe UsersController do
     end
 
     it "should save the user avatar if it was successfully uploaded and resized" do
-      @image = fixture_file_upload("/rails.png", "image/png")
+      @image = fixture_file_upload('/rails.png', 'image/png')
 
       xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
       @user.avatar.should_not == nil
