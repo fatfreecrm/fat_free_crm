@@ -218,7 +218,7 @@ de:
     formats: 
       mmdd: " %e. %b"
       mmddyy: " %e. %b %Y"
-      mmddyyyy: "%d.%m.%Y"
+      mmddyyyy: "%d %B %Y"
   date_created: "Erstellungsdatum"
   date_updated: "Änderungsdatum"
   days_late: "Verspätet um"
@@ -558,6 +558,7 @@ de:
   time: 
     formats: 
       mmddhhss: "%e %b %l:%M%p"
+      mmddyyyy_hhmm: "%d %B %Y %H:%M"
   time_ago: "vor %{value}"
   total_campaigns: "Anzahl Kampagnen"
   total_leads: "Anzahl Anfragen"

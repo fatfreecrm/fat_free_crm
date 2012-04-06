@@ -233,10 +233,21 @@ class Task < ActiveRecord::Base
   rescue ArgumentError
     errors.add(:calendar, :invalid_date)
   end
-
+  
   #----------------------------------------------------------------------------
   def parse_calendar_date
-    DateTime.strptime(self.calendar, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
+    translate_month_and_day_names!(self.calendar) unless I18n.locale == :"en-US"
+    
+    DateTime.strptime(self.calendar,
+                      I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
+  end
+  
+  # Translates month and day names of a given datetime string.
+  #----------------------------------------------------------------------------
+  def translate_month_and_day_names!(date_string)
+    translated = I18n.t([:month_names, :abbr_month_names, :day_names, :abbr_day_names], :scope => :date).flatten.compact
+    original   = (Date::MONTHNAMES + Date::ABBR_MONTHNAMES + Date::DAYNAMES + Date::ABBR_DAYNAMES).compact
+    translated.each_with_index { |name, i| date_string.gsub!(name, original[i]) }
   end
 end
 
