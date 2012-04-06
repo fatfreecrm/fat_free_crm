@@ -144,9 +144,10 @@ GEM
     paper_trail (2.6.3)
       activerecord (~> 3.0)
       railties (~> 3.0)
-    paperclip (2.7.0)
-      activerecord (>= 2.3.0)
-      activesupport (>= 2.3.2)
+    paperclip (3.0.1)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
       cocaine (>= 0.0.2)
       mime-types
     pg (0.13.2)
@@ -267,7 +268,6 @@ DEPENDENCIES
   debugger
   dynamic_form
   email_reply_parser!
-  factory_girl (~> 3.0.0)
   factory_girl_rails (~> 3.0.0)
   ffaker (>= 1.12.0)
   fuubar
@@ -276,7 +276,7 @@ DEPENDENCIES
   jquery-rails
   nokogiri
   paper_trail
-  paperclip (~> 2.7.0)
+  paperclip (~> 3.0.1)
   pg (~> 0.13.2)
   premailer
   prototype-rails
