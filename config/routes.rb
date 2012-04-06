@@ -140,6 +140,8 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :groups
+
     resources :users do
       collection do
         post :auto_complete

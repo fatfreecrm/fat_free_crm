@@ -1,0 +1,10 @@
+id = dom_id(@group)
+
+if @group.errors.empty?
+  page[id].replace :partial => "group", :collection => [ @group ]
+  page[id].visual_effect :highlight, :duration => 1.0
+else
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:group_name].focus
+end

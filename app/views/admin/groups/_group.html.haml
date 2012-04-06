@@ -1,0 +1,9 @@
+%li.highlight[group]
+
+  .indent
+    .tools
+      = link_to_edit(group, :url => edit_admin_group_path(group)) << " | "
+      = link_to_confirm(group)
+
+    %span.black #{link_to(group.name, [:admin, group])}
+    %tt
