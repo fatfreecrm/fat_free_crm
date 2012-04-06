@@ -1,0 +1,21 @@
+id = dom_id(@group)
+
+if params[:cancel].true?     # <----------------- Hide [Edit Group]
+  page[id].replace :partial => "group", :collection => [ @group ]
+
+else # <----------------------------------------  Show [Edit Group] form.
+
+  if @previous                                    # Hide open [Edit Group] form if any.
+    if @previous.is_a?(Group)                      # Previous group still exists?
+      page[dom_id(@previous)].replace :partial => "group", :collection => [ @previous ]
+    else
+      page.call "crm.flick", "group_#{@previous}", :remove
+    end
+  end
+
+  page.call "crm.highlight_off", id               # Disable onMouseOver for the list item.
+  page.call "crm.hide_form", :create_group         # Hide [Create Group] form if any.
+  page[id].replace_html :partial => "edit"        # Show [Edit Group] form.
+  page[:group_name].focus
+
+end
