@@ -218,7 +218,7 @@ de:
     formats: 
       mmdd: " %e. %b"
       mmddyy: " %e. %b %Y"
-      mmddyyyy: "%d.%m.%Y"
+      mmddyyyy: "%d %B %Y"
   date_created: "Erstellungsdatum"
   date_updated: "Änderungsdatum"
   days_late: "Verspätet um"
