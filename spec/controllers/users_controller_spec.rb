@@ -74,7 +74,7 @@ describe UsersController do
 
     describe "if user is allowed to sign up" do
       it "should expose a new user as @user and render [new] template" do
-        controller.should_receive(:can_signup?).and_return(true)
+        @controller.should_receive(:can_signup?).and_return(true)
         @user = FactoryGirl.build(:user)
         User.stub!(:new).and_return(@user)
 
@@ -86,7 +86,7 @@ describe UsersController do
 
     describe "if user is not allowed to sign up" do
       it "should redirect to login_path" do
-        controller.should_receive(:can_signup?).and_return(false)
+        @controller.should_receive(:can_signup?).and_return(false)
 
         get :new
         response.should redirect_to(login_path)
@@ -139,7 +139,6 @@ describe UsersController do
         flash[:notice].should =~ /approval/
         response.should redirect_to(login_path)
       end
-
     end
 
     describe "with invalid params" do
@@ -152,7 +151,6 @@ describe UsersController do
         response.should render_template("users/new")
       end
     end
-
   end
 
   # PUT /users/1
@@ -168,12 +166,12 @@ describe UsersController do
 
       it "should update user information and render [update] template" do
         xhr :put, :update, :id => @user.id, :user => { :first_name => "Billy", :last_name => "Bones" }
-        @user.reload.first_name.should == "Billy"
+        @user.reload
+        @user.first_name.should == "Billy"
         @user.last_name.should == "Bones"
         assigns[:user].should == @user
         response.should render_template("users/update")
       end
-
     end
 
     describe "with invalid params" do
@@ -184,9 +182,7 @@ describe UsersController do
         assigns[:user].should == @user
         response.should render_template("users/update")
       end
-
     end
-
   end
 
   # DELETE /users/1
@@ -247,7 +243,7 @@ describe UsersController do
     end
 
     it "should save the user avatar if it was successfully uploaded and resized" do
-      @image = fixture_file_upload("/rails.png", "image/png")
+      @image = fixture_file_upload('/rails.png', 'image/png')
 
       xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
       @user.avatar.should_not == nil

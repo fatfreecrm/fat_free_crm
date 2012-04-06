@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe AccountsController do
   def get_data_for_sidebar
@@ -34,7 +34,7 @@ describe AccountsController do
 
     it "should filter out accounts by category" do
       categories = %w(customer vendor)
-      controller.session[:filter_by_account_category] = categories.join(',')
+      controller.session[:accounts_filter] = categories.join(',')
       @accounts = [
         FactoryGirl.create(:account, :user => @current_user, :category => categories.first),
         FactoryGirl.create(:account, :user => @current_user, :category => categories.last)
@@ -80,7 +80,7 @@ describe AccountsController do
 
     describe "with mime type of JSON" do
       it "should render all accounts as json" do
-        @controller.should_receive(:get_list_of_records).and_return(accounts = mock("Array of Accounts"))
+        @controller.should_receive(:get_accounts).and_return(accounts = mock("Array of Accounts"))
         accounts.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -91,7 +91,7 @@ describe AccountsController do
 
     describe "with mime type of XML" do
       it "should render all accounts as xml" do
-        @controller.should_receive(:get_list_of_records).and_return(accounts = mock("Array of Accounts"))
+        @controller.should_receive(:get_accounts).and_return(accounts = mock("Array of Accounts"))
         accounts.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -130,7 +130,7 @@ describe AccountsController do
     describe "with mime type of JSON" do
       it "should render the requested account as json" do
         @account = FactoryGirl.create(:account, :user => @current_user)
-        Account.stub_chain(:my, :find).and_return(@account)
+        Account.should_receive(:find).and_return(@account)
         @account.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -142,7 +142,7 @@ describe AccountsController do
     describe "with mime type of XML" do
       it "should render the requested account as xml" do
         @account = FactoryGirl.create(:account, :user => @current_user)
-        Account.stub_chain(:my, :find).and_return(@account)
+        Account.should_receive(:find).and_return(@account)
         @account.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -281,7 +281,6 @@ describe AccountsController do
         response.should render_template("accounts/edit")
       end
     end
-
   end
 
   # POST /accounts
@@ -333,7 +332,6 @@ describe AccountsController do
         response.should render_template("accounts/create")
       end
     end
-
   end
 
   # PUT /accounts/1
@@ -609,7 +607,7 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to POST filter" do
     it "should expose filtered accounts as @accounts and render [index] template" do
-      session[:filter_by_account_category] = "customer,vendor"
+      session[:accounts_filter] = "customer,vendor"
       @accounts = [ FactoryGirl.create(:account, :category => "partner", :user => @current_user) ]
 
       xhr :post, :filter, :category => "partner"

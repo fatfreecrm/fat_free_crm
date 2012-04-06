@@ -1,4 +1,4 @@
-unless @opportunities.blank?
+if @opportunities.any?
   page[:opportunities].replace_html render @opportunities
 else
   page[:opportunities].replace_html :partial => "shared/empty"

@@ -18,8 +18,6 @@
 class EmailsController < ApplicationController
   before_filter :require_user
 
-  respond_to :js, :json, :xml
-
   # GET /email
   # GET /email.xml                                              not implemented
   #----------------------------------------------------------------------------
@@ -56,9 +54,7 @@ class EmailsController < ApplicationController
   def destroy
     @email = Email.find(params[:id])
     @email.destroy
-    respond_with(@email)
 
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
+    respond_with(@email)
   end
 end

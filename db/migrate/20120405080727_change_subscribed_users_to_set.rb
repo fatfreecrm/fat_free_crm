@@ -5,14 +5,14 @@ class ChangeSubscribedUsersToSet < ActiveRecord::Migration
       FROM contacts
       WHERE subscribed_users IS NOT NULL
     }
-    
+
     puts "Converting #{contacts.size} subscribed_users arrays into sets..." unless contacts.empty?
-    
+
     # Run as one atomic action.
     ActiveRecord::Base.transaction do
-      for contact in contacts
+      contacts.each do |contact|
         subscribed_users_set = Set.new(YAML.load(contact["subscribed_users"]))
-      
+
         connection.execute %Q{
           UPDATE contacts
           SET subscribed_users = '#{subscribed_users_set.to_yaml}'

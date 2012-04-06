@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe LeadsController do
 
@@ -29,7 +29,7 @@ describe LeadsController do
     end
 
     it "should filter out leads by status" do
-      controller.session[:filter_by_lead_status] = "new,contacted"
+      controller.session[:leads_filter] = "new,contacted"
       @leads = [
         FactoryGirl.create(:lead, :status => "new", :user => @current_user),
         FactoryGirl.create(:lead, :status => "contacted", :user => @current_user)
@@ -78,7 +78,7 @@ describe LeadsController do
 
     describe "with mime type of JSON" do
       it "should render all leads as JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(leads = mock("Array of Leads"))
+        @controller.should_receive(:get_leads).and_return(leads = mock("Array of Leads"))
         leads.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -89,7 +89,7 @@ describe LeadsController do
 
     describe "with mime type of XML" do
       it "should render all leads as xml" do
-        @controller.should_receive(:get_list_of_records).and_return(leads = mock("Array of Leads"))
+        @controller.should_receive(:get_leads).and_return(leads = mock("Array of Leads"))
         leads.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -126,7 +126,7 @@ describe LeadsController do
     describe "with mime type of JSON" do
       it "should render the requested lead as JSON" do
         @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user)
-        Lead.stub_chain(:my, :find).and_return(@lead)
+        Lead.should_receive(:find).and_return(@lead)
         @lead.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -138,7 +138,7 @@ describe LeadsController do
     describe "with mime type of XML" do
       it "should render the requested lead as xml" do
         @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user)
-        Lead.stub_chain(:my, :find).and_return(@lead)
+        Lead.should_receive(:find).and_return(@lead)
         @lead.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -229,7 +229,6 @@ describe LeadsController do
         response.body.should == 'window.location.href = "/campaigns";'
       end
     end
-
   end
 
   # GET /leads/1/edit                                                      AJAX
@@ -299,7 +298,6 @@ describe LeadsController do
         response.should render_template("leads/edit")
       end
     end
-
   end
 
   # POST /leads
@@ -1027,7 +1025,7 @@ describe LeadsController do
   describe "responding to POST filter" do
 
     it "should filter out leads as @leads and render :index action" do
-      session[:filter_by_lead_status] = "contacted,rejected"
+      session[:leads_filter] = "contacted,rejected"
 
       @leads = [ FactoryGirl.create(:lead, :user => @current_user, :status => "new") ]
       xhr :post, :filter, :status => "new"

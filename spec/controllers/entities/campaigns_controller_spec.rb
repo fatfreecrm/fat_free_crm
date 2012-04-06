@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe CampaignsController do
 
@@ -36,7 +36,7 @@ describe CampaignsController do
     end
 
     it "should filter out campaigns by status" do
-      controller.session[:filter_by_campaign_status] = "planned,started"
+      controller.session[:campaigns_filter] = "planned,started"
       @campaigns = [
         FactoryGirl.create(:campaign, :user => @current_user, :status => "started"),
         FactoryGirl.create(:campaign, :user => @current_user, :status => "planned")
@@ -85,7 +85,7 @@ describe CampaignsController do
 
     describe "with mime type of JSON" do
       it "should render all campaigns as JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(@campaigns = [])
+        @controller.should_receive(:get_campaigns).and_return(@campaigns = [])
         @campaigns.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -96,7 +96,7 @@ describe CampaignsController do
 
     describe "with mime type of XML" do
       it "should render all campaigns as xml" do
-        @controller.should_receive(:get_list_of_records).and_return(@campaigns = [])
+        @controller.should_receive(:get_campaigns).and_return(@campaigns = [])
         @campaigns.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -135,7 +135,7 @@ describe CampaignsController do
     describe "with mime type of JSON" do
       it "should render the requested campaign as JSON" do
         @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
-        Campaign.stub_chain(:my, :find).and_return(@campaign)
+        Campaign.should_receive(:find).and_return(@campaign)
         @campaign.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -147,7 +147,7 @@ describe CampaignsController do
     describe "with mime type of XML" do
       it "should render the requested campaign as XML" do
         @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
-        Campaign.stub_chain(:my, :find).and_return(@campaign)
+        Campaign.should_receive(:find).and_return(@campaign)
         @campaign.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -647,7 +647,7 @@ describe CampaignsController do
   describe "responding to POST filter" do
 
     it "should expose filtered campaigns as @campaigns and render [index] template" do
-      session[:filter_by_campaign_status] = "planned,started"
+      session[:campaigns_filter] = "planned,started"
       @campaigns = [ FactoryGirl.create(:campaign, :status => "completed", :user => @current_user) ]
 
       xhr :post, :filter, :status => "completed"

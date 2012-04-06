@@ -20,7 +20,7 @@ module AccountsHelper
   # Sidebar checkbox control for filtering accounts by category.
   #----------------------------------------------------------------------------
   def account_category_checbox(category, count)
-    checked = (session[:filter_by_account_category] ? session[:filter_by_account_category].split(",").include?(category.to_s) : count.to_i > 0)
+    checked = (session[:accounts_filter] ? session[:accounts_filter].split(",").include?(category.to_s) : count.to_i > 0)
     onclick = remote_function(
       :url      => { :action => :filter },
       :with     => h(%Q/"category=" + $$("input[name='category[]']").findAll(function (el) { return el.checked }).pluck("value")/),
@@ -40,12 +40,12 @@ module AccountsHelper
       t('pluralize.comment', account.comments.count)
     ].join(', ')
   end
-  
+
   def account_select(options = {})
     # Generates a select list with the first 25 accounts,
     # and prepends the currently selected account, if available
     options[:selected] = (@account && @account.id) || 0
-    accounts = ([@account] + Account.order("name").my.limit(25)).compact.uniq
+    accounts = ([@account] + Account.my.order(:name).limit(25)).compact.uniq
     collection_select :account, :id, accounts, :id, :name, options,
                       {:"data-placeholder" => t(:select_an_account),
                        :style => "width:330px; display:none;" }

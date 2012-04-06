@@ -15,10 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class Admin::ApplicationController < EntitiesController
-  layout "admin/application"
+class Admin::ApplicationController < ApplicationController
   before_filter :require_admin_user
 
+  layout "admin/application"
   helper "admin/field_groups"
 
   # Autocomplete handler for all admin controllers.
@@ -26,10 +26,11 @@ class Admin::ApplicationController < EntitiesController
   def auto_complete
     @query = params[:auto_complete_query]
     @auto_complete = klass.text_search(@query).limit(10)
-    render "shared/auto_complete", :layout => nil
+    render :partial => 'auto_complete'
   end
 
-  private
+private
+
   #----------------------------------------------------------------------------
   def require_admin_user
     require_user
@@ -39,4 +40,3 @@ class Admin::ApplicationController < EntitiesController
     end
   end
 end
-

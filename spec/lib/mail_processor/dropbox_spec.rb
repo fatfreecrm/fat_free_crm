@@ -147,10 +147,13 @@ describe FatFreeCRM::MailProcessor::Dropbox do
       @lead.emails.first.mediator.should == @lead
     end
 
-    it "should move on if asset recipients did not match" do
-      @crawler.should_not_receive(:archive)
-      @crawler.should_receive(:discard).once
-      @crawler.run
+    it "should create the asset and attach the email message" do
+      @crawler.should_receive(:archive).once
+      lambda { @crawler.run }.should change(Contact, :count).by(1)
+
+      @contact = Contact.last
+      @contact.emails.size.should == 1
+      @contact.emails.first.mediator.should == @contact
     end
   end
 

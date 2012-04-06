@@ -1,4 +1,4 @@
-unless @leads.blank?
+if @leads.any?
   page[:leads].replace_html render @leads
 else
   page[:leads].replace_html :partial => "shared/empty"

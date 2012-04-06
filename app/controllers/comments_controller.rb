@@ -18,9 +18,6 @@
 class CommentsController < ApplicationController
   before_filter :require_user
 
-  respond_to :js
-  respond_to :json, :xml, :except => :edit
-
   COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id).freeze
 
   # GET /comments
@@ -56,13 +53,12 @@ class CommentsController < ApplicationController
 
     if @commentable
       update_commentable_session
-      @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
+      unless @commentable.classify.constantize.my.find_by_id(params[:"#{@commentable}_id"])
+        respond_to_related_not_found(@commentable) and return
+      end
     end
 
     respond_with(@comment)
-
-  rescue ActiveRecord::RecordNotFound # Kicks in if commentable asset was not found.
-    respond_to_related_not_found(@commentable, :js)
   end
 
   # GET /comments/1/edit                                                   AJAX
@@ -70,14 +66,10 @@ class CommentsController < ApplicationController
   def edit
     @comment = Comment.find(params[:id])
 
-    if @comment.commentable
-      @comment.commentable_type.constantize.my.find(@comment.commentable.id)
-    else
-      raise ActiveRecord::RecordNotFound
+    model, id = @comment.commentable_type, @comment.commentable_id
+    unless model.constantize.my.find_by_id(id)
+      respond_to_related_not_found(model.downcase)
     end
-
-  rescue ActiveRecord::RecordNotFound # Kicks in if commentable asset was not found.
-    respond_to_related_not_found(params[:comment][:commentable_type].downcase, :js, :xml)
   end
 
   # POST /comments
@@ -88,17 +80,13 @@ class CommentsController < ApplicationController
     @comment = Comment.new(params[:comment])
 
     # Make sure commentable object exists and is accessible to the current user.
-    if @comment.commentable
-      @comment.commentable_type.constantize.my.find(@comment.commentable.id)
-    else
-      raise ActiveRecord::RecordNotFound
+    model, id = @comment.commentable_type, @comment.commentable_id
+    unless model.constantize.my.find_by_id(id)
+      respond_to_related_not_found(model.downcase)
     end
 
     @comment.save
     respond_with(@comment)
-
-  rescue ActiveRecord::RecordNotFound # Kicks in if commentable asset was not found.
-    respond_to_related_not_found(params[:comment][:commentable_type].downcase, :js, :xml)
   end
 
   # PUT /comments/1
@@ -109,9 +97,6 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.update_attributes(params[:comment])
     respond_with(@comment)
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /comments/1
@@ -122,16 +107,14 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
     respond_with(@comment)
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 
-  private
+private
+
   #----------------------------------------------------------------------------
   def extract_commentable_name(params)
     commentable = (params.keys & COMMENTABLE).first
-    commentable.sub("_id", "") if commentable
+    commentable.sub('_id', '') if commentable
   end
 
   #----------------------------------------------------------------------------
