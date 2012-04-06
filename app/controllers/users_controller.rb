@@ -23,9 +23,9 @@ class UsersController < ApplicationController
   before_filter :require_and_assign_user, :except => [ :new, :create, :show, :avatar, :upload_avatar ]
   before_filter :assign_given_or_current_user, :only => [ :show, :avatar, :upload_avatar ]
 
+  load_resource
+
   respond_to :html, :only => [ :show, :new ]
-  respond_to :js
-  respond_to :json, :xml, :except => :edit
 
   # GET /users/1
   # GET /users/1.json
@@ -41,7 +41,6 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def new
     if can_signup?
-      @user = User.new
       respond_with(@user)
     else
       redirect_to login_path
@@ -58,7 +57,6 @@ class UsersController < ApplicationController
   # POST /users.xml                                                        HTML
   #----------------------------------------------------------------------------
   def create
-    @user = User.new(params[:user])
     if @user.save
       if Setting.user_signup == :needs_approval
         flash[:notice] = t(:msg_account_created)
@@ -78,6 +76,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @user.update_attributes(params[:user])
+
     respond_with(@user)
   end
 
@@ -140,6 +139,7 @@ class UsersController < ApplicationController
     else
       @user.errors.add(:current_password, t(:msg_invalid_password))
     end
+
     respond_with(@user)
   end
 
@@ -150,7 +150,8 @@ class UsersController < ApplicationController
     render(:update) { |page| page.redirect_to user_path(@current_user) }
   end
 
-  private
+private
+
   #----------------------------------------------------------------------------
   def require_and_assign_user
     require_user

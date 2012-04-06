@@ -18,9 +18,6 @@
 class CommentsController < ApplicationController
   before_filter :require_user
 
-  respond_to :js
-  respond_to :json, :xml, :except => :edit
-
   COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id).freeze
 
   # GET /comments
@@ -56,13 +53,12 @@ class CommentsController < ApplicationController
 
     if @commentable
       update_commentable_session
-      @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
+      unless @commentable.classify.constantize.my.find_by_id(params[:"#{@commentable}_id"])
+        respond_to_related_not_found(@commentable) and return
+      end
     end
 
     respond_with(@comment)
-
-  rescue ActiveRecord::RecordNotFound # Kicks in if commentable asset was not found.
-    respond_to_related_not_found(@commentable, :js)
   end
 
   # GET /comments/1/edit                                                   AJAX

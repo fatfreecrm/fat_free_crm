@@ -16,7 +16,6 @@
 #------------------------------------------------------------------------------
 
 class ListsController < ApplicationController
-  respond_to :js
 
   # POST /lists
   #----------------------------------------------------------------------------
@@ -27,6 +26,7 @@ class ListsController < ApplicationController
     else
       @list = List.create(params[:list])
     end
+
     respond_with(@list)
   end
 
@@ -37,8 +37,5 @@ class ListsController < ApplicationController
     @list.destroy
 
     respond_with(@list)
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 end

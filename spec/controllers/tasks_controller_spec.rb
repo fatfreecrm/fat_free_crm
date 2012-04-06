@@ -60,6 +60,7 @@ describe TasksController do
     end
 
     TASK_STATUSES.each do |view|
+
       it "should expose all tasks as @tasks and render [index] template for #{view} view" do
         @tasks = produce_tasks(@current_user, view)
 
@@ -116,10 +117,6 @@ describe TasksController do
   describe "responding to GET show" do
 
     TASK_STATUSES.each do |view|
-      it "should render tasks index for #{view} view (since a task doesn't have landing page)" do
-        get :show, :id => 42, :view => view
-        response.should render_template("tasks/index")
-      end
 
       it "should render the requested task as JSON for #{view} view" do
         Task.stub_chain(:tracked_by, :find).and_return(task = mock("Task"))
