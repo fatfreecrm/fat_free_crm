@@ -1,0 +1,11 @@
+if @group.valid?
+  page[:create_group_arrow].replace_html "&#9658;"
+  page[:create_group_title].replace_html t(:groups)
+  page.visual_effect :toggle_blind, :create_group, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, :groups, :partial => "group", :collection => [ @group ]
+  page[dom_id(@group)].visual_effect :highlight, :duration => 1.5
+else
+  page[:create_group].replace_html :partial => "new"
+  page[:create_group].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:group_name].focus
+end

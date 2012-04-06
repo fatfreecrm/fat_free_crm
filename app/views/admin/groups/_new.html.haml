@@ -1,0 +1,12 @@
+
+= form_for([:admin, @group], :html => one_submit_only(:group).merge({:autocomplete => 'off'}), :remote => true) do |f|
+  = link_to_close new_admin_group_path
+
+  = f.error_messages :object_name => t('group')
+
+  = render "admin/groups/form", :f => f
+
+  .buttonbar
+    = f.submit t(:create_group)
+    #{t :or}
+    = link_to_cancel new_admin_group_path
