@@ -18,6 +18,8 @@
 class Admin::FieldsController < Admin::ApplicationController
   before_filter "set_current_tab('admin/fields')", :only => [ :index ]
 
+  load_resource
+
   # GET /fields
   # GET /fields.xml                                                      HTML
   #----------------------------------------------------------------------------
@@ -28,8 +30,6 @@ class Admin::FieldsController < Admin::ApplicationController
   # GET /fields/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   def show
-    @field = Field.find(params[:id])
-
     respond_with(@field)
   end
 

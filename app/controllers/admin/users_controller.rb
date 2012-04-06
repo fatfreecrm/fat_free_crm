@@ -18,6 +18,8 @@
 class Admin::UsersController < Admin::ApplicationController
   before_filter "set_current_tab('admin/users')", :only => [ :index, :show ]
 
+  load_resource
+
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
   #----------------------------------------------------------------------------
@@ -57,17 +59,10 @@ class Admin::UsersController < Admin::ApplicationController
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.new(params[:user])
     @user.admin = (params[:user][:admin] == "1")
+    @user.save_without_session_maintenance
+    @users = get_users
 
-    respond_to do |format|
-      if @user.save_without_session_maintenance
-        @users = get_users
-        format.js   # create.js.rjs
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
-      else
-        format.js   # create.js.rjs
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
-    end
+    respond_with(@user)
   end
 
   # PUT /admin/users/1
@@ -76,17 +71,10 @@ class Admin::UsersController < Admin::ApplicationController
   def update
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.find(params[:id])
+    @user.update_attributes(params[:user])
     @user.admin = (params[:user][:admin] == "1")
 
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.js   # update.js.rjs
-        format.xml  { head :ok }
-      else
-        format.js   # update.js.rjs
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
-    end
+    respond_with(@user)
   end
 
   # GET /admin/users/1/confirm                                             AJAX

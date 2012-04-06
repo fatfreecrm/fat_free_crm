@@ -18,114 +18,59 @@
 class Admin::TagsController < Admin::ApplicationController
   before_filter "set_current_tab('admin/tags')", :only => [ :index, :show ]
 
+  load_resource
+
   # GET /admin/tags
   # GET /admin/tags.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
-    @tags = Tag.all
-
-    respond_to do |format|
-      format.html # index.html.haml
-      format.js   # index.js.rjs
-      format.xml  { render :xml => Tag.all }
-      format.xls  { send_data @tags.to_xls, :type => :xls }
-      format.csv  { send_data @tags.to_csv, :type => :csv }
-      format.rss  { render "shared/index.rss.builder" }
-      format.atom { render "shared/index.atom.builder" }
-    end
+    respond_with(@tags)
   end
 
   # GET /admin/tags/new
   # GET /admin/tags/new.xml                                               AJAX
   #----------------------------------------------------------------------------
   def new
-    @tag = Tag.new
-
-    respond_to do |format|
-      format.js   # new.js.rjs
-      format.xml  { render :xml => @tag }
-    end
+    respond_with(@tag)
   end
 
   # GET /admin/tags/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   def edit
-    @tag = Tag.find(params[:id])
-
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Tag.find($1)
+      @previous = Tag.find_by_id($1) || $1.to_i
     end
-
-  rescue ActiveRecord::RecordNotFound
-    @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @tag
   end
 
   # POST /admin/tags
   # POST /admin/tags.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
-    @tag = Tag.new(params[:tag])
+    @tag.update_attributes(params[:tag])
 
-    respond_to do |format|
-      if @tag.save
-        @tags = Tag.all
-        format.js   # create.js.rjs
-        format.xml  { render :xml => @tag, :status => :created, :location => @tag }
-      else
-        format.js   # create.js.rjs
-        format.xml  { render :xml => @tag.errors, :status => :unprocessable_entity }
-      end
-    end
+    respond_with(@tag)
   end
 
   # PUT /admin/tags/1
   # PUT /admin/tags/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
-    @tag = Tag.find(params[:id])
+    @tag.update_attributes(params[:tag])
 
-    respond_to do |format|
-      if @tag.update_attributes(params[:tag])
-        format.js   # update.js.rjs
-        format.xml  { head :ok }
-      else
-        format.js   # update.js.rjs
-        format.xml  { render :xml => @tag.errors, :status => :unprocessable_entity }
-      end
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_with(@tag)
   end
-
 
   # DELETE /admin/tags/1
   # DELETE /admin/tags/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @tag = Tag.find(params[:id])
+    @tag.destroy
 
-    respond_to do |format|
-      if @tag.destroy
-        format.js   # destroy.js.rjs
-        format.xml  { head :ok }
-      else
-        flash[:warning] = t(:msg_cant_delete_tag, @tag.name)
-        format.js   # destroy.js.rjs
-        format.xml  { render :xml => @tag.errors, :status => :unprocessable_entity }
-      end
-    end
+    respond_with(@tag)
   end
 
   # GET /admin/tags/1/confirm                                             AJAX
   #----------------------------------------------------------------------------
   def confirm
-    @tag = Tag.find(params[:id])
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
   end
-
 end
-

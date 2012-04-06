@@ -25,17 +25,16 @@ class TasksController < ApplicationController
   def index
     @view = params[:view] || "pending"
     @tasks = Task.find_all_grouped(@current_user, @view)
+
     respond_with(@tasks)
   end
 
   # GET /tasks/1
   #----------------------------------------------------------------------------
   def show
-    respond_to do |format|
-      format.html { render :index }
-      format.json { @task = Task.tracked_by(@current_user).find(params[:id]);  render :json => @task }
-      format.xml  { @task = Task.tracked_by(@current_user).find(params[:id]);  render :xml => @task }
-    end
+    @task = Task.tracked_by(@current_user).find(params[:id])
+
+    respond_with(@task)
   end
 
   # GET /tasks/new

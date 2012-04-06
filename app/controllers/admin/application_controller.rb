@@ -18,8 +18,6 @@
 class Admin::ApplicationController < ApplicationController
   before_filter :require_admin_user
 
-  load_and_authorize_resource
-
   layout "admin/application"
   helper "admin/field_groups"
 

@@ -22,10 +22,6 @@ class Admin::SettingsController < Admin::ApplicationController
   # GET /admin/settings.xml
   #----------------------------------------------------------------------------
   def index
-    respond_to do |format|
-      format.html # index.html.haml
-      format.xml  { render :xml => nil }
-    end
   end
 end
 
