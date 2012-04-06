@@ -20,11 +20,6 @@ class TasksController < ApplicationController
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :update_sidebar, :only => :index
 
-  respond_to :html, :only => [ :index, :show, :auto_complete ]
-  respond_to :js
-  respond_to :json, :xml, :except => :edit
-  respond_to :atom, :csv, :rss, :xls, :only => :index
-
   # GET /tasks
   #----------------------------------------------------------------------------
   def index

@@ -1,12 +1,10 @@
 require 'paper_trail'
 
-Version.class_eval do
+Version.const_set :ASSETS, %w(all tasks campaigns leads accounts contacts opportunities comments emails)
+Version.const_set :EVENTS, %w(all_events create view update destroy)
+Version.const_set :DURATION, %w(one_hour one_day two_days one_week two_weeks one_month)
 
-  class << self::
-    ASSETS   = %w(all tasks campaigns leads accounts contacts opportunities comments emails)
-    EVENTS   = %w(all_events create view update destroy)
-    DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
-  end
+Version.class_eval do
 
   attr_accessible :related
   belongs_to :related, :polymorphic => true
