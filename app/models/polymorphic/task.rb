@@ -233,51 +233,21 @@ class Task < ActiveRecord::Base
   rescue ArgumentError
     errors.add(:calendar, :invalid_date)
   end
-
+  
   #----------------------------------------------------------------------------
   def parse_calendar_date
-    DateTime.strptime(self.calendar, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
+    translate_month_and_day_names!(self.calendar) unless I18n.locale == :"en-US"
+    
+    DateTime.strptime(self.calendar,
+                      I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
   end
   
-  # def parse_calendar_date
-  #     # Add mapping for other locales.
-  #     date_string = case I18n.locale.to_s
-  #       when "de"
-  #         german_to_english_date self.calendar
-  #       else
-  #         self.calendar
-  #     end
-  # 
-  #     DateTime.strptime(date_string, I18n.t(Setting.task_calendar_with_time ? 'time.formats.mmddyyyy_hhmm' : 'date.formats.mmddyyyy')).utc
-  #   end
-  # 
-  #   # Make german dates generated via calendar_date parseable by DateTime strptime method.
-  #   def german_to_english_date(date_string)
-  #     months = { "Jänner"   => "January",
-  #                "Februar"  => "February",
-  #                "März"     => "March",
-  #                "Mai"      => "May",
-  #                "Juni"     => "June",
-  #                "Juli"     => "July",
-  #                "Oktober"  => "October",
-  #                "Dezember" => "December" }
-  #     date_string.gsub(/Jänner|Februar|März|Mai|Juni|Juli|Oktober|Dezember/) { |match| months[match] }
-  #   end
-  
+  # Translates month and day names of a given datetime string.
   #----------------------------------------------------------------------------
-  def translate_date(date_string)
-    # No need to translate if locale is already en-US 
-    return date_string if I18n.locale == :"en-US"
-
-    english_months = I18n.t('date.month_names', :locale => :"en-US").compact
-    locale_months = I18n.t('date.month_names').compact
-    # Create hash of locale month => english month
-    months = Hash[*locale_months.zip(english_months).flatten]
-    # Create regex for locale months   ( /Jänner|Februar|.../ )
-    month_regex = Regexp.new(months.keys.join("|"))
-
-    # Finally, replace locale months with english months
-    date_string.gsub(month_regex) { |match| months[match] }
+  def translate_month_and_day_names!(date_string)
+    translated = I18n.t([:month_names, :abbr_month_names, :day_names, :abbr_day_names], :scope => :date).flatten.compact
+    original   = (Date::MONTHNAMES + Date::ABBR_MONTHNAMES + Date::DAYNAMES + Date::ABBR_DAYNAMES).compact
+    translated.each_with_index { |name, i| date_string.gsub!(name, original[i]) }
   end
 end
 

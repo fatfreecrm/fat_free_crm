@@ -558,6 +558,7 @@ de:
   time: 
     formats: 
       mmddhhss: "%e %b %l:%M%p"
+      mmddyyyy_hhmm: "%d %B %Y %H:%M"
   time_ago: "vor %{value}"
   total_campaigns: "Anzahl Kampagnen"
   total_leads: "Anzahl Anfragen"
