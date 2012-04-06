@@ -41,8 +41,8 @@ group :development, :test do
   gem 'steak', :require => false
   gem 'headless'
   unless ENV["CI"]
-    gem 'ruby-debug',   :platform => :mri_18
-    gem 'ruby-debug19', :platform => :mri_19
+    gem 'ruby-debug', :platform => :mri_18
+    gem 'debugger',   :platform => :mri_19
   end
 end
 
@@ -51,8 +51,12 @@ group :test do
   gem 'spork'
   gem 'database_cleaner'
   gem 'fuubar'
-  gem 'factory_girl', '~> 2.6.1'
-  gem 'factory_girl_rails', '~> 1.7.0'
+
+  if RUBY_VERSION.to_f >= 1.9
+    gem 'factory_girl_rails', '~> 3.0.0'
+  else
+    gem 'factory_girl_rails', '~> 1.7.0'
+  end
 end
 
 group :heroku do

@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe ContactsController do
 
@@ -53,7 +53,7 @@ describe ContactsController do
 
     describe "with mime type of JSON" do
       it "should render all contacts as JSON" do
-        @controller.should_receive(:get_list_of_records).and_return(contacts = mock("Array of Contacts"))
+        @controller.should_receive(:get_contacts).and_return(contacts = mock("Array of Contacts"))
         contacts.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -64,7 +64,7 @@ describe ContactsController do
 
     describe "with mime type of XML" do
       it "should render all contacts as xml" do
-        @controller.should_receive(:get_list_of_records).and_return(contacts = mock("Array of Contacts"))
+        @controller.should_receive(:get_contacts).and_return(contacts = mock("Array of Contacts"))
         contacts.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -103,7 +103,7 @@ describe ContactsController do
     describe "with mime type of JSON" do
       it "should render the requested contact as JSON" do
         @contact = FactoryGirl.create(:contact, :id => 42)
-        Contact.stub_chain(:my, :find).and_return(@contact)
+        Contact.should_receive(:find).and_return(@contact)
         @contact.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -115,7 +115,7 @@ describe ContactsController do
     describe "with mime type of XML" do
       it "should render the requested contact as xml" do
         @contact = FactoryGirl.create(:contact, :id => 42)
-        Contact.stub_chain(:my, :find).and_return(@contact)
+        Contact.should_receive(:find).and_return(@contact)
         @contact.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
@@ -151,7 +151,6 @@ describe ContactsController do
         response.code.should == "404" # :not_found
       end
     end
-
   end
 
   # GET /contacts/new
@@ -279,7 +278,6 @@ describe ContactsController do
         response.should render_template("contacts/edit")
       end
     end
-
   end
 
   # POST /contacts
@@ -372,9 +370,7 @@ describe ContactsController do
         assigns(:opportunity).should == @opportunity
         response.should render_template("contacts/create")
       end
-
     end
-
   end
 
   # PUT /contacts/1

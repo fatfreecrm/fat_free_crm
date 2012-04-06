@@ -18,7 +18,7 @@
 class OpportunitiesController < EntitiesController
   before_filter :load_settings
   before_filter :get_data_for_sidebar, :only => :index
-  before_filter :set_params, :only => [:index, :redraw, :filter]
+  before_filter :set_params, :only => [ :index, :redraw, :filter ]
 
   # GET /opportunities
   #----------------------------------------------------------------------------
@@ -30,58 +30,51 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/1
   #----------------------------------------------------------------------------
   def show
-    @opportunity = Opportunity.my.find(params[:id])
-
     respond_with(@opportunity) do |format|
       format.html do
         @comment = Comment.new
         @timeline = timeline(@opportunity)
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /opportunities/new
   #----------------------------------------------------------------------------
   def new
-    @opportunity = Opportunity.new(:user => @current_user, :stage => "prospecting", :access => Setting.default_access)
+    @opportunity.attributes = {:user => @current_user, :stage => "prospecting", :access => Setting.default_access}
     @users       = User.except(@current_user)
     @account     = Account.new(:user => @current_user)
-    @accounts    = Account.my.order("name")
-    if params[:related]
-      model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
-    end
-    respond_with(@opportunity)
+    @accounts    = Account.my.order('name')
 
-  rescue ActiveRecord::RecordNotFound # Kicks in if related asset was not found.
-    respond_to_related_not_found(model, :js) if model
+    if params[:related]
+      model, id = params[:related].split('_')
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
+    end
+
+    respond_with(@opportunity)
   end
 
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
-    @opportunity = Opportunity.my.find(params[:id])
     @users = User.except(@current_user)
     @account  = @opportunity.account || Account.new(:user => @current_user)
-    @accounts = Account.my.order("name")
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Opportunity.my.find($1)
-    end
-    respond_with(@opportunity)
+    @accounts = Account.my.order('name')
 
-  rescue ActiveRecord::RecordNotFound
-    @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @opportunity
+    if params[:previous].to_s =~ /(\d+)\z/
+      @previous = Opportunity.my.find_by_id($1) || $1.to_i
+    end
+
+    respond_with(@opportunity)
   end
 
   # POST /opportunities
   #----------------------------------------------------------------------------
   def create
-    @opportunity = Opportunity.new(params[:opportunity])
-
     respond_with(@opportunity) do |format|
       if @opportunity.save_with_account_and_permissions(params)
         if called_from_index_page?
@@ -94,7 +87,7 @@ class OpportunitiesController < EntitiesController
         end
       else
         @users = User.except(@current_user)
-        @accounts = Account.my.order("name")
+        @accounts = Account.my.order('name')
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
         else
@@ -113,8 +106,6 @@ class OpportunitiesController < EntitiesController
   # PUT /opportunities/1
   #----------------------------------------------------------------------------
   def update
-    @opportunity = Opportunity.my.find(params[:id])
-
     respond_with(@opportunity) do |format|
       if @opportunity.update_with_account_and_permissions(params)
         if called_from_index_page?
@@ -126,7 +117,7 @@ class OpportunitiesController < EntitiesController
         end
       else
         @users = User.except(@current_user)
-        @accounts = Account.my.order("name")
+        @accounts = Account.my.order('name')
         if @opportunity.account
           @account = Account.find(@opportunity.account.id)
         else
@@ -134,38 +125,31 @@ class OpportunitiesController < EntitiesController
         end
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /opportunities/1
   #----------------------------------------------------------------------------
   def destroy
-    @opportunity = Opportunity.my.find(params[:id])
     if called_from_landing_page?(:accounts)
       @account = @opportunity.account   # Reload related account if any.
     elsif called_from_landing_page?(:campaigns)
       @campaign = @opportunity.campaign # Reload related campaign if any.
     end
-    @opportunity.destroy if @opportunity
+    @opportunity.destroy
 
     respond_with(@opportunity) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # PUT /opportunities/1/attach
   #----------------------------------------------------------------------------
-  # Handled by ApplicationController :attach
+  # Handled by EntitiesController :attach
 
   # POST /opportunities/1/discard
   #----------------------------------------------------------------------------
-  # Handled by ApplicationController :discard
+  # Handled by EntitiesController :discard
 
   # POST /opportunities/auto_complete/query                                AJAX
   #----------------------------------------------------------------------------
@@ -195,11 +179,10 @@ class OpportunitiesController < EntitiesController
     render :index
   end
 
-  private
+private
+
   #----------------------------------------------------------------------------
-  def get_opportunities(options = {})
-    get_list_of_records(Opportunity, options.merge!(:filter => :filter_by_opportunity_stage))
-  end
+  alias :get_opportunities :get_list_of_records
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
@@ -241,10 +224,11 @@ class OpportunitiesController < EntitiesController
     @stage = Setting.unroll(:opportunity_stage)
   end
 
+  #----------------------------------------------------------------------------
   def set_params
     @current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
     @current_user.pref[:opportunities_outline]  = params[:outline]  if params[:outline]
     @current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
-    session[:filter_by_opportunity_stage] = params[:stage] if params[:stage]
+    session[:opportunities_filter] = params[:stage] if params[:stage]
   end
 end

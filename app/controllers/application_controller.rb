@@ -17,24 +17,42 @@
 
 class ApplicationController < ActionController::Base
 
-  helper_method :klass
-  helper_method :current_user_session, :current_user, :can_signup?
-  helper_method :called_from_index_page?, :called_from_landing_page?
-
   before_filter :set_context
   before_filter :clear_setting_cache
   before_filter "hook(:app_before_filter, self)"
   after_filter  "hook(:app_after_filter,  self)"
 
-  # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
-  # protect_from_forgery # :secret => '165eb65bfdacf95923dad9aea10cc64a'
+  helper_method :current_user_session, :current_user, :can_signup?
+  helper_method :called_from_index_page?, :called_from_landing_page?
+  helper_method :klass
 
+  rescue_from ActiveRecord::RecordNotFound, :with => :respond_to_not_found
+  rescue_from CanCan::AccessDenied,         :with => :respond_to_access_denied
+
+  # Common auto_complete handler for all core controllers.
+  #----------------------------------------------------------------------------
+  def auto_complete
+    @query = params[:auto_complete_query]
+    @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
+    if @auto_complete.empty?
+      @auto_complete = klass.my.text_search(@query).limit(10)
+    else
+      @auto_complete = @auto_complete.last
+    end
+    session[:auto_complete] = controller_name.to_sym
+    respond_to do |format|
+      format.any(:js, :html)   { render :partial => 'auto_complete' }
+      format.json { render :json => @auto_complete.inject({}){|h,a| h[a.id] = a.name; h } }
+    end
+  end
+
+private
+
+  #----------------------------------------------------------------------------
   def klass
     @klass ||= controller_name.classify.constantize
   end
 
-private
   #----------------------------------------------------------------------------
   def clear_setting_cache
     Setting.clear_cache!
@@ -95,11 +113,6 @@ private
   end
 
   #----------------------------------------------------------------------------
-  def get_users
-    @users ||= User.except(current_user)
-  end
-
-  #----------------------------------------------------------------------------
   def store_location
     session[:return_to] = request.fullpath
   end
@@ -129,83 +142,79 @@ private
     request.referer =~ %r(/#{controller}/\w+)
   end
 
-  #----------------------------------------------------------------------------
-  def respond_to_not_found(*types)
-    asset = self.controller_name.singularize
-    flick = case self.action_name
-      when "destroy" then "delete"
-      when "promote" then "convert"
-      else self.action_name
-    end
-    if self.action_name == "show"
-      # If asset does exist, but is not viewable to the current user..
-      if asset.capitalize.constantize.exists?(params[:id])
-        flash[:warning] = t(:msg_asset_not_authorized, asset)
-      else
-        flash[:warning] = t(:msg_asset_not_available, asset)
-      end
-    else
-      flash[:warning] = t(:msg_cant_do, :action => flick, :asset => asset)
-    end
-    respond_to do |format|
-      format.html { redirect_to :action => :index }                          if types.include?(:html)
-      format.js   { render(:update) { |page| page.reload } }                 if types.include?(:js)
-      format.json { render :text => flash[:warning], :status => :not_found } if types.include?(:json)
-      format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
-    end
-  end
-
-  #----------------------------------------------------------------------------
-  def respond_to_related_not_found(related, *types)
-    asset = self.controller_name.singularize
-    asset = "note" if asset == "comment"
-    flash[:warning] = t(:msg_cant_create_related, :asset => asset, :related => related)
-    url = send("#{related.pluralize}_path")
-    respond_to do |format|
-      format.html { redirect_to url }                                        if types.include?(:html)
-      format.js   { render(:update) { |page| page.redirect_to url } }        if types.include?(:js)
-      format.json { render :text => flash[:warning], :status => :not_found } if types.include?(:json)
-      format.xml  { render :text => flash[:warning], :status => :not_found } if types.include?(:xml)
-    end
-  end
-
   # Proxy current page for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_page=(page)
-    @current_page = session["#{controller_name}_current_page".to_sym] = page.to_i
+    @current_page = session[:"#{controller_name}_current_page"] = page.to_i
   end
 
   #----------------------------------------------------------------------------
   def current_page
-    page = params[:page] || session["#{controller_name}_current_page".to_sym] || 1
+    page = params[:page] || session[:"#{controller_name}_current_page"] || 1
     @current_page = page.to_i
   end
 
   # Proxy current search query for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_query=(query)
-    @current_query = session["#{controller_name}_current_query".to_sym] = query
+    @current_query = session[:"#{controller_name}_current_query"] = query
   end
 
   #----------------------------------------------------------------------------
   def current_query
-    @current_query = params[:query] || session["#{controller_name}_current_query".to_sym] || ""
+    @current_query = params[:query] || session[:"#{controller_name}_current_query"] || ''
   end
 
-  # Somewhat simplistic parser that extracts query and hash-prefixed tags from
-  # the search string and returns them as two element array, for example:
-  #
-  # "#real Billy Bones #pirate" => [ "Billy Bones", "real, pirate" ]
   #----------------------------------------------------------------------------
-  def parse_query_and_tags(search_string)
-    query, tags = [], []
-    search_string.scan(/[\w@\-\.#]+/).each do |token|
-      if token.starts_with?("#")
-        tags << token[1 .. -1]
-      else
-        query << token
-      end
+  def asset
+    self.controller_name.singularize
+  end
+
+  #----------------------------------------------------------------------------
+  def respond_to_not_found(*types)
+    flash[:warning] = t(:msg_asset_not_available, asset)
+
+    respond_to do |format|
+      format.html { redirect_to :action => :index }
+      format.js   { render(:update) { |page| page.reload } }
+      format.json { render :text => flash[:warning], :status => :not_found }
+      format.xml  { render :text => flash[:warning], :status => :not_found }
     end
-    [ query.join(" "), tags.join(", ") ]
+  end
+
+  #----------------------------------------------------------------------------
+  def respond_to_related_not_found(related, *types)
+    asset = "note" if asset == "comment"
+    flash[:warning] = t(:msg_cant_create_related, :asset => asset, :related => related)
+
+    url = send("#{related.pluralize}_path")
+    respond_to do |format|
+      format.html { redirect_to url }
+      format.js   { render(:update) { |page| page.redirect_to url } }
+      format.json { render :text => flash[:warning], :status => :not_found }
+      format.xml  { render :text => flash[:warning], :status => :not_found }
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  def respond_to_access_denied
+    if self.action_name == "show"
+      flash[:warning] = t(:msg_asset_not_authorized, asset)
+
+    else
+      flick = case self.action_name
+        when "destroy" then "delete"
+        when "promote" then "convert"
+        else self.action_name
+      end
+      flash[:warning] = t(:msg_cant_do, :action => flick, :asset => asset)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :action => :index }
+      format.js   { render(:update) { |page| page.reload } }
+      format.json { render :text => flash[:warning], :status => :not_found }
+      format.xml  { render :text => flash[:warning], :status => :not_found }
+    end
   end
 end

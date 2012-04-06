@@ -28,8 +28,6 @@ class CampaignsController < EntitiesController
   # GET /campaigns/1
   #----------------------------------------------------------------------------
   def show
-    @campaign = Campaign.my.find(params[:id])
-
     respond_with(@campaign) do |format|
       format.html do
         @stage = Setting.unroll(:opportunity_stage)
@@ -37,9 +35,6 @@ class CampaignsController < EntitiesController
         @timeline = timeline(@campaign)
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /campaigns/new
@@ -47,11 +42,16 @@ class CampaignsController < EntitiesController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    @campaign = Campaign.new(:user => @current_user, :access => Setting.default_access)
+    @campaign.attributes = {:user => @current_user, :access => Setting.default_access}
     @users = User.except(@current_user)
+
     if params[:related]
-      model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+      model, id = params[:related].split('_')
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
     end
 
     respond_with(@campaign)
@@ -60,22 +60,17 @@ class CampaignsController < EntitiesController
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
-    @campaign = Campaign.my.find(params[:id])
     @users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Campaign.my.find($1)
+      @previous = Campaign.my.find_by_id($1) || $1.to_i
     end
-    respond_with(@campaign)
 
-  rescue ActiveRecord::RecordNotFound
-    @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @campaign
+    respond_with(@campaign)
   end
 
   # POST /campaigns
   #----------------------------------------------------------------------------
   def create
-    @campaign = Campaign.new(params[:campaign])
     @users = User.except(@current_user)
 
     respond_with(@campaign) do |format|
@@ -89,8 +84,6 @@ class CampaignsController < EntitiesController
   # PUT /campaigns/1
   #----------------------------------------------------------------------------
   def update
-    @campaign = Campaign.my.find(params[:id])
-
     respond_with(@campaign) do |format|
       if @campaign.update_with_permissions(params[:campaign], params[:users])
         get_data_for_sidebar if called_from_index_page?
@@ -98,33 +91,26 @@ class CampaignsController < EntitiesController
         @users = User.except(@current_user) # Need it to redraw [Edit Campaign] form.
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /campaigns/1
   #----------------------------------------------------------------------------
   def destroy
-    @campaign = Campaign.my.find(params[:id])
-    @campaign.destroy if @campaign
+    @campaign.destroy
 
     respond_with(@campaign) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # PUT /campaigns/1/attach
   #----------------------------------------------------------------------------
-  # Handled by ApplicationController :attach
+  # Handled by EntitiesController :attach
 
   # PUT /campaigns/1/discard
   #----------------------------------------------------------------------------
-  # Handled by ApplicationController :discard
+  # Handled by EntitiesController :discard
 
   # POST /campaigns/auto_complete/query                                    AJAX
   #----------------------------------------------------------------------------
@@ -153,16 +139,15 @@ class CampaignsController < EntitiesController
   # POST /campaigns/filter                                                 AJAX
   #----------------------------------------------------------------------------
   def filter
-    session[:filter_by_campaign_status] = params[:status]
+    session[:campaigns_filter] = params[:status]
     @campaigns = get_campaigns(:page => 1)
     render :index
   end
 
-  private
+private
+
   #----------------------------------------------------------------------------
-  def get_campaigns(options = {})
-    get_list_of_records(Campaign, options.merge!(:filter => :filter_by_campaign_status))
-  end
+  alias :get_campaigns :get_list_of_records
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

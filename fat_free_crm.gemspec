@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'jquery-rails'
   gem.add_dependency 'simple_form',         '~> 2.0.1'
   gem.add_dependency 'will_paginate',       '~> 3.0.2'
-  gem.add_dependency 'paperclip',           '~> 2.7.0'
+  gem.add_dependency 'paperclip',           '~> 3.0.1'
   gem.add_dependency 'paper_trail'
   gem.add_dependency 'authlogic',           '~> 3.1.0'
   gem.add_dependency 'acts_as_commentable', '~> 3.0.1'
@@ -35,4 +35,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'email_reply_parser'
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
+  gem.add_dependency 'squeel',              '~> 0.9.3'
 end

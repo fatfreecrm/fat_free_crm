@@ -28,8 +28,6 @@ class AccountsController < EntitiesController
   # GET /accounts/1
   #----------------------------------------------------------------------------
   def show
-    @account = Account.my.find(params[:id])
-
     respond_with(@account) do |format|
       format.html do
         @stage = Setting.unroll(:opportunity_stage)
@@ -37,18 +35,16 @@ class AccountsController < EntitiesController
         @timeline = timeline(@account)
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /accounts/new
   #----------------------------------------------------------------------------
   def new
-    @account = Account.new(:user => @current_user, :access => Setting.default_access)
+    @account.attributes = {:user => @current_user, :access => Setting.default_access}
     @users = User.except(@current_user)
+
     if params[:related]
-      model, id = params[:related].split("_")
+      model, id = params[:related].split('_')
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
     end
 
@@ -58,22 +54,17 @@ class AccountsController < EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @account = Account.my.find(params[:id])
     @users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Account.my.find($1)
+      @previous = Account.my.find_by_id($1) || $1.to_i
     end
-    respond_with(@account)
 
-  rescue ActiveRecord::RecordNotFound
-    @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @account
+    respond_with(@account)
   end
 
   # POST /accounts
   #----------------------------------------------------------------------------
   def create
-    @account = Account.new(params[:account])
     @users = User.except(@current_user)
 
     respond_with(@account) do |format|
@@ -89,8 +80,6 @@ class AccountsController < EntitiesController
   # PUT /accounts/1
   #----------------------------------------------------------------------------
   def update
-    @account = Account.my.find(params[:id])
-
     respond_with(@account) do |format|
       if @account.update_with_permissions(params[:account], params[:users])
         get_data_for_sidebar
@@ -98,33 +87,26 @@ class AccountsController < EntitiesController
         @users = User.except(@current_user) # Need it to redraw [Edit Account] form.
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /accounts/1
   #----------------------------------------------------------------------------
   def destroy
-    @account = Account.my.find(params[:id])
-    @account.destroy if @account
+    @account.destroy
 
     respond_with(@account) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # PUT /accounts/1/attach
   #----------------------------------------------------------------------------
-  # Handled by ApplicationController :attach
+  # Handled by EntitiesController :attach
 
   # PUT /accounts/1/discard
   #----------------------------------------------------------------------------
-  # Handled by ApplicationController :discard
+  # Handled by EntitiesController :discard
 
   # POST /accounts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
@@ -153,23 +135,22 @@ class AccountsController < EntitiesController
   # POST /accounts/filter                                                  AJAX
   #----------------------------------------------------------------------------
   def filter
-    session[:filter_by_account_category] = params[:category]
+    session[:accounts_filter] = params[:category]
     @accounts = get_accounts(:page => 1)
     render :index
   end
 
-  private
+private
+
   #----------------------------------------------------------------------------
-  def get_accounts(options = {})
-    get_list_of_records(Account, options.merge!(:filter => :filter_by_account_category))
-  end
+  alias :get_accounts :get_list_of_records
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
       @accounts = get_accounts
       get_data_for_sidebar
-      if @accounts.blank?
+      if @accounts.empty?
         @accounts = get_accounts(:page => current_page - 1) if current_page > 1
         render :index and return
       end

@@ -23,54 +23,31 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def index
     @users = get_users(:page => params[:page])
-
-    respond_to do |format|
-      format.html # index.html.haml
-      format.js   # index.js.rjs
-      format.xml  { render :xml => User.all }
-      format.xls  { send_data @users.to_xls, :type => :xls }
-      format.csv  { send_data @users.to_csv, :type => :csv }
-      format.rss  { render "shared/index.rss.builder" }
-      format.atom { render "shared/index.atom.builder" }
-    end
+    respond_with(@users)
   end
 
   # GET /admin/users/1
   # GET /admin/users/1.xml
   #----------------------------------------------------------------------------
   def show
-    @user = User.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.haml
-      format.xml  { render :xml => @user }
-    end
+    respond_with(@user)
   end
 
   # GET /admin/users/new
   # GET /admin/users/new.xml                                               AJAX
   #----------------------------------------------------------------------------
   def new
-    @user = User.new
-
-    respond_to do |format|
-      format.js   # new.js.rjs
-      format.xml  { render :xml => @user }
-    end
+    respond_with(@user)
   end
 
   # GET /admin/users/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   def edit
-    @user = User.find(params[:id])
-
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = User.find($1)
+      @previous = User.my.find_by_id($1) || $1.to_i
     end
 
-  rescue ActiveRecord::RecordNotFound
-    @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @user
+    respond_with(@user)
   end
 
   # POST /admin/users
@@ -110,36 +87,23 @@ class Admin::UsersController < Admin::ApplicationController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
   end
 
   # GET /admin/users/1/confirm                                             AJAX
   #----------------------------------------------------------------------------
   def confirm
-    @user = User.find(params[:id])
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_with(@user)
   end
 
   # DELETE /admin/users/1
   # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @user = User.find(params[:id])
-
-    respond_to do |format|
-      if @user.destroy
-        format.js   # destroy.js.rjs
-        format.xml  { head :ok }
-      else
-        flash[:warning] = t(:msg_cant_delete_user, @user.full_name)
-        format.js   # destroy.js.rjs
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
+    unless @user.destroy
+      flash[:warning] = t(:msg_cant_delete_user, @user.full_name)
     end
+
+    respond_with(@user)
   end
 
   # POST /users/auto_complete/query                                        AJAX
@@ -150,36 +114,22 @@ class Admin::UsersController < Admin::ApplicationController
   # PUT /admin/users/1/suspend.xml                                         AJAX
   #----------------------------------------------------------------------------
   def suspend
-    @user = User.find(params[:id])
     @user.update_attribute(:suspended_at, Time.now) if @user != @current_user
 
-    respond_to do |format|
-      format.js   # suspend.js.rjs
-      format.xml  { render :xml => @user }
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_with(@user)
   end
 
   # PUT /admin/users/1/reactivate
   # PUT /admin/users/1/reactivate.xml                                      AJAX
   #----------------------------------------------------------------------------
   def reactivate
-    @user = User.find(params[:id])
     @user.update_attribute(:suspended_at, nil)
 
-    respond_to do |format|
-      format.js   # reactivate.js.rjs
-      format.xml  { render :xml => @user }
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :xml)
+    respond_with(@user)
   end
 
+private
 
-  private
   #----------------------------------------------------------------------------
   def get_users(options = {})
     self.current_page  = options[:page] if options[:page]

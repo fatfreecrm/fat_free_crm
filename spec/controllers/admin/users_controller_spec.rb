@@ -142,7 +142,6 @@ describe Admin::UsersController do
         response.should render_template("admin/users/create")
       end
     end
-
   end
 
   # PUT /admin/users/1
@@ -196,7 +195,6 @@ describe Admin::UsersController do
         response.should render_template("admin/users/update")
       end
     end
-
   end
 
   # GET /admin/users/1/confirm                                             AJAX

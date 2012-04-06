@@ -28,57 +28,51 @@ class LeadsController < EntitiesController
   # GET /leads/1
   #----------------------------------------------------------------------------
   def show
-    @lead = Lead.my.find(params[:id])
-
     respond_with(@lead) do |format|
       format.html do
         @comment = Comment.new
         @timeline = timeline(@lead)
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :json, :xml)
   end
 
   # GET /leads/new
   #----------------------------------------------------------------------------
   def new
-    @lead = Lead.new(:user => @current_user, :access => Setting.default_access)
+    @lead.attributes = {:user => @current_user, :access => Setting.default_access}
     @users = User.except(@current_user)
-    @campaigns = Campaign.my.order("name")
-    if params[:related]
-      model, id = params[:related].split("_")
-      instance_variable_set("@#{model}", model.classify.constantize.my.find(id))
-    end
-    respond_with(@lead)
+    get_campaigns
 
-  rescue ActiveRecord::RecordNotFound # Kicks in if related asset was not found.
-    respond_to_related_not_found(model, :js) if model
+    if params[:related]
+      model, id = params[:related].split('_')
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
+    end
+
+    respond_with(@lead)
   end
 
   # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @lead = Lead.my.find(params[:id])
     @users = User.except(@current_user)
-    @campaigns = Campaign.my.order("name")
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my.find($1)
-    end
-    respond_with(@lead)
+    get_campaigns
 
-  rescue ActiveRecord::RecordNotFound
-    @previous ||= $1.to_i
-    respond_to_not_found(:js) unless @lead
+    if params[:previous].to_s =~ /(\d+)\z/
+      @previous = Lead.my.find_by_id($1) || $1.to_i
+    end
+
+    respond_with(@lead)
   end
 
   # POST /leads
   #----------------------------------------------------------------------------
   def create
-    @lead = Lead.new(params[:lead])
     @users = User.except(@current_user)
-    @campaigns = Campaign.my.order("name")
+    get_campaigns
 
     respond_with(@lead) do |format|
       if @lead.save_with_permissions(params)
@@ -95,61 +89,48 @@ class LeadsController < EntitiesController
   # PUT /leads/1
   #----------------------------------------------------------------------------
   def update
-    @lead = Lead.my.find(params[:id])
-
     respond_with(@lead) do |format|
       if @lead.update_with_permissions(params[:lead], params[:users])
         update_sidebar
       else
         @users = User.except(@current_user)
-        @campaigns = Campaign.my.order("name")
+        @campaigns = Campaign.my.order('name')
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # DELETE /leads/1
   #----------------------------------------------------------------------------
   def destroy
-    @lead = Lead.my.find(params[:id])
-    @lead.destroy if @lead
+    @lead.destroy
 
     respond_with(@lead) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # GET /leads/1/convert
   #----------------------------------------------------------------------------
   def convert
-    @lead = Lead.my.find(params[:id])
     @users = User.except(@current_user)
     @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
-    @accounts = Account.my.order("name")
+    @accounts = Account.my.order('name')
     @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my.find($1)
-    end
-    respond_with(@lead)
 
-  rescue ActiveRecord::RecordNotFound
-    @previous ||= $1.to_i
-    respond_to_not_found(:js, :json, :xml) unless @lead
+    if params[:previous].to_s =~ /(\d+)\z/
+      @previous = Lead.my.find_by_id($1) || $1.to_i
+    end
+
+    respond_with(@lead)
   end
 
   # PUT /leads/1/promote
   #----------------------------------------------------------------------------
   def promote
-    @lead = Lead.my.find(params[:id])
     @users = User.except(@current_user)
     @account, @opportunity, @contact = @lead.promote(params)
-    @accounts = Account.my.order("name")
+    @accounts = Account.my.order('name')
     @stage = Setting.unroll(:opportunity_stage)
 
     respond_with(@lead) do |format|
@@ -161,33 +142,26 @@ class LeadsController < EntitiesController
         format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
       end
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js, :json, :xml)
   end
 
   # PUT /leads/1/reject
   #----------------------------------------------------------------------------
   def reject
-    @lead = Lead.my.find(params[:id])
-    @lead.reject if @lead
+    @lead.reject
     update_sidebar
 
     respond_with(@lead) do |format|
       format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to leads_path }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:html, :js, :json, :xml)
   end
 
   # PUT /leads/1/attach
   #----------------------------------------------------------------------------
-  # Handled by ApplicationController :attach
+  # Handled by EntitiesController :attach
 
   # POST /leads/1/discard
   #----------------------------------------------------------------------------
-  # Handled by ApplicationController :discard
+  # Handled by EntitiesController :discard
 
   # POST /leads/auto_complete/query                                        AJAX
   #----------------------------------------------------------------------------
@@ -229,15 +203,19 @@ class LeadsController < EntitiesController
   # POST /leads/filter                                                     AJAX
   #----------------------------------------------------------------------------
   def filter
-    session[:filter_by_lead_status] = params[:status]
+    session[:leads_filter] = params[:status]
     @leads = get_leads(:page => 1) # Start one the first page.
     render :index
   end
 
-  private
+private
+
   #----------------------------------------------------------------------------
-  def get_leads(options = {})
-    get_list_of_records(Lead, options.merge!(:filter => :filter_by_lead_status))
+  alias :get_leads :get_list_of_records
+
+  #----------------------------------------------------------------------------
+  def get_campaigns
+    @campaigns = Campaign.my.order('name')
   end
 
   #----------------------------------------------------------------------------

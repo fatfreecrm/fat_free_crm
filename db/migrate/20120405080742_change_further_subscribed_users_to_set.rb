@@ -8,18 +8,19 @@ class ChangeFurtherSubscribedUsersToSet < ActiveRecord::Migration
         WHERE subscribed_users IS NOT NULL
       }
 
-      sql = entities.map do |entity|
-        subscribed_users_set = Set.new(YAML.load(entity["subscribed_users"]))
-        %Q{
-          UPDATE #{table}
-          SET subscribed_users = '#{subscribed_users_set.to_yaml}'
-          WHERE id = #{entity["id"]}
-        }
-      end
+      puts "#{table}: Converting #{entities.size} subscribed_users arrays into sets..." unless entities.empty?
 
-      if sql.any?
-        puts "#{table}: Converting #{entities.size} subscribed_users arrays into sets..."
-        connection.execute sql.join(";")
+      # Run as one atomic action.
+      ActiveRecord::Base.transaction do
+        entities.each do |entity|
+          subscribed_users_set = Set.new(YAML.load(entity["subscribed_users"]))
+
+          connection.execute %Q{
+            UPDATE #{table}
+            SET subscribed_users = '#{subscribed_users_set.to_yaml}'
+            WHERE id = #{entity["id"]}
+          }
+        end
       end
     end
   end

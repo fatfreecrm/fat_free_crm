@@ -1,0 +1,4 @@
+class_name = entity.class.name.downcase
+id = "#{class_name}_#{entity.id}_subscribe"
+
+page[id].replace :partial => "comments/subscription_links", :locals => {:entity => entity}

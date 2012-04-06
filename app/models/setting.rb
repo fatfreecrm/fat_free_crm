@@ -53,7 +53,7 @@ class Setting < ActiveRecord::Base
     #-------------------------------------------------------------------
     def method_missing(method, *args)
       begin
-        super(method, *args)
+        super
       rescue NoMethodError
         method_name = method.to_s
         if method_name.last == "="
@@ -71,7 +71,7 @@ class Setting < ActiveRecord::Base
       return cache[name] if cache.has_key?(name)
       # Check database
       if database_and_table_exists?
-        if setting = self.find_by_name(name)
+        if setting = self.find_by_name(name.to_s)
           unless setting.value.nil?
             return cache[name] = setting.value
           end
@@ -88,7 +88,7 @@ class Setting < ActiveRecord::Base
     #-------------------------------------------------------------------
     def []=(name, value)
       return nil unless database_and_table_exists?
-      setting = self.find_by_name(name) || self.new(:name => name)
+      setting = self.find_by_name(name.to_s) || self.new(:name => name)
       setting.value = value
       setting.save
       cache[name] = value

@@ -26,7 +26,7 @@ class Admin::ApplicationController < EntitiesController
   def auto_complete
     @query = params[:auto_complete_query]
     @auto_complete = klass.text_search(@query).limit(10)
-    render "shared/auto_complete", :layout => nil
+    render :partial => 'auto_complete'
   end
 
   private
@@ -39,4 +39,3 @@ class Admin::ApplicationController < EntitiesController
     end
   end
 end
-
