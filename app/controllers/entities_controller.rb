@@ -35,14 +35,9 @@ class EntitiesController < ApplicationController
   def attach
     @attachment = params[:assets].classify.constantize.find(params[:asset_id])
     @attached = entity.attach!(@attachment)
-    @account  = entity.reload if entity.is_a?(Account)
-    @campaign = entity.reload if entity.is_a?(Campaign)
+    entity.reload
 
-    respond_to do |format|
-      format.js   { render 'attach' }
-      format.json { render :json => entity.reload }
-      format.xml  { render :xml => entity.reload }
-    end
+    respond_with(entity)
   end
 
   # Common discard handler for all core controllers.
@@ -50,47 +45,32 @@ class EntitiesController < ApplicationController
   def discard
     @attachment = params[:attachment].constantize.find(params[:attachment_id])
     entity.discard!(@attachment)
-    @account  = entity.reload if entity.is_a?(Account)
-    @campaign = entity.reload if entity.is_a?(Campaign)
+    entity.reload
 
-    respond_to do |format|
-      format.js   { render 'discard' }
-      format.json { render :json => entity.reload }
-      format.xml  { render :xml => entity.reload }
-    end
+    respond_with(entity)
   end
-
 
   # Common subscribe handler for all core controllers.
   #----------------------------------------------------------------------------
   def subscribe
-    @entity = klass.my.find(params[:id])
-    @entity.subscribed_users += [current_user.id]
-    @entity.save
+    entity.subscribed_users += [current_user.id]
+    entity.save
 
-    respond_to do |format|
-      format.js   { render "shared/subscription_update" }
+    respond_with(entity) do |format|
+      format.js { render 'subscription_update' }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js)
   end
 
   # Common unsubscribe handler for all core controllers.
   #----------------------------------------------------------------------------
   def unsubscribe
-    @entity = klass.my.find(params[:id])
-    @entity.subscribed_users -= [current_user.id]
-    @entity.save
+    entity.subscribed_users -= [current_user.id]
+    entity.save
 
-    respond_to do |format|
-      format.js   { render "shared/subscription_update" }
+    respond_with(entity) do |format|
+      format.js { render 'subscription_update' }
     end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:js)
   end
-
 
   # GET /entities/contacts                                                 AJAX
   #----------------------------------------------------------------------------
