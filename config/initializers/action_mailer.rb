@@ -3,7 +3,7 @@
 unless Rails.env.test?
   # Set SMTP settings if present.
   smtp_settings = Setting.smtp || {}
-  if smtp_settings["user_name"].present? && smtp_settings["password"].present?
+  if smtp_settings["address"].present?
     Rails.application.config.action_mailer.delivery_method = :smtp
     Rails.application.config.action_mailer.smtp_settings = smtp_settings
   end
