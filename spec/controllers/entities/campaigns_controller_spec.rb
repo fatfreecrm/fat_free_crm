@@ -201,11 +201,9 @@ describe CampaignsController do
 
     it "should expose a new campaign as @campaign" do
       @campaign = Campaign.new(:user => @current_user)
-      @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :new
       assigns[:campaign].attributes.should == @campaign.attributes
-      assigns[:users].should == @users
       response.should render_template("campaigns/new")
     end
 
@@ -223,11 +221,9 @@ describe CampaignsController do
 
     it "should expose the requested campaign as @campaign and render [edit] template" do
       @campaign = FactoryGirl.create(:campaign, :id => 42, :user => @current_user)
-      @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :edit, :id => 42
       assigns[:campaign].should == @campaign
-      assigns[:users].should == @users
       response.should render_template("campaigns/edit")
     end
 
@@ -295,18 +291,15 @@ describe CampaignsController do
       it "should expose a newly created campaign as @campaign and render [create] template" do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
-        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns(:campaign).should == @campaign
-        assigns(:users).should == @users
         response.should render_template("campaigns/create")
       end
 
       it "should get data to update campaign sidebar" do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
-        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
@@ -326,11 +319,9 @@ describe CampaignsController do
       it "should expose a newly created but unsaved campaign as @campaign and still render [create] template" do
         @campaign = FactoryGirl.build(:campaign, :id => nil, :name => nil, :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
-        @users = [ FactoryGirl.create(:user) ]
 
         xhr :post, :create, :campaign => nil, :users => %w(1 2 3)
         assigns(:campaign).should == @campaign
-        assigns(:users).should == @users
         response.should render_template("campaigns/create")
       end
     end
@@ -396,12 +387,10 @@ describe CampaignsController do
 
       it "should not update the requested campaign, but still expose it as @campaign and still render [update] template" do
         @campaign = FactoryGirl.create(:campaign, :id => 42, :name => "Hello", :user => @current_user)
-        @users = [ FactoryGirl.create(:user) ]
 
         xhr :put, :update, :id => 42, :campaign => { :name => nil }
         @campaign.reload.name.should == "Hello"
         assigns(:campaign).should == @campaign
-        assigns(:users).should == @users
         response.should render_template("campaigns/update")
       end
     end
