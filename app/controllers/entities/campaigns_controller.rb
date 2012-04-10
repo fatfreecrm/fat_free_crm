@@ -43,7 +43,6 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def new
     @campaign.attributes = {:user => @current_user, :access => Setting.default_access}
-    @users = User.except(@current_user)
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -60,7 +59,6 @@ class CampaignsController < EntitiesController
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
-    @users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Campaign.my.find_by_id($1) || $1.to_i
     end
@@ -71,7 +69,6 @@ class CampaignsController < EntitiesController
   # POST /campaigns
   #----------------------------------------------------------------------------
   def create
-    @users = User.except(@current_user)
     @comment_body = params[:comment_body]
 
     respond_with(@campaign) do |format|

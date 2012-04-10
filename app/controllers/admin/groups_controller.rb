@@ -5,7 +5,7 @@ class Admin::GroupsController < Admin::ApplicationController
   # GET /groups
   #----------------------------------------------------------------------------
   def index
-    @groups = @groups.paginate(:page => params[:page])
+    @groups = @groups.unscoped.paginate(:page => params[:page])
   end
 
   # GET /groups/1

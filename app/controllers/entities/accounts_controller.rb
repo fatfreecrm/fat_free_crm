@@ -44,7 +44,6 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def new
     @account.attributes = {:user => @current_user, :access => Setting.default_access}
-    @users = User.except(@current_user)
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -57,7 +56,6 @@ class AccountsController < EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Account.my.find_by_id($1) || $1.to_i
     end
@@ -68,7 +66,6 @@ class AccountsController < EntitiesController
   # POST /accounts
   #----------------------------------------------------------------------------
   def create
-    @users = User.except(@current_user)
     @comment_body = params[:comment_body]
     respond_with(@account) do |format|
       if @account.save_with_permissions(params[:users])

@@ -110,37 +110,39 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def link_to_edit(model, params = {})
-    name = (params[:klass_name] || model.class.name).underscore.downcase
+  def link_to_edit(record, options = {})
+    object = record.is_a?(Array) ? record.last : record
+
+    name = (params[:klass_name] || object.class.name).underscore.downcase
     link_to(t(:edit),
-      params[:url] || send(:"edit_#{name}_path", model),
+      options[:url] || polymorphic_url(record, :action => :edit),
       :remote  => true,
       :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}');"
     )
   end
 
   #----------------------------------------------------------------------------
-  def link_to_delete(model, params = {})
-    name = (params[:klass_name] || model.class.name).underscore.downcase
+  def link_to_delete(record, options = {})
+    object = record.is_a?(Array) ? record.last : record
+
     link_to(t(:delete) + "!",
-      params[:url] || url_for(model),
+      options[:url] || url_for(record),
       :method => :delete,
       :remote => true,
-      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1")
     )
   end
 
   #----------------------------------------------------------------------------
-  def link_to_discard(model)
-    name = model.class.name.downcase
+  def link_to_discard(object)
     current_url = (request.xhr? ? request.referer : request.fullpath)
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
     link_to(t(:discard),
-      url_for(:controller => parent, :action => :discard, :id => parent_id, :attachment => model.class.name, :attachment_id => model.id),
+      url_for(:controller => parent, :action => :discard, :id => parent_id, :attachment => object.class.name, :attachment_id => object.id),
       :method  => :post,
       :remote  => true,
-      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1")
     )
   end
 
@@ -427,5 +429,12 @@ module ApplicationHelper
   def link_to_remove_fields(name, f)
     link_to image_tag('delete.png', :size => '16x16', :alt => name), nil, :class => "remove_fields"
   end
-end
 
+  def user_options
+    User.all.map {|u| [u.full_name, u.id]}
+  end
+
+  def group_options
+    Group.all.map {|g| [g.name, g.id]}
+  end
+end

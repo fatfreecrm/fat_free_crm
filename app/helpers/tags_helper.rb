@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-module CrmTagsHelper
+module TagsHelper
 
   # Generate tag links for use on asset index pages.
   #----------------------------------------------------------------------------
@@ -50,6 +50,7 @@ module CrmTagsHelper
 
   # Return asset tags to be built manually if the asset failed validation.
   def unsaved_param_tags(asset)
+    # TODO: Fix chosen bug that makes the join split necessary
     params[asset][:tag_list].join.split(",").map {|x|
       Tag.find_by_name(x.strip)
     }.compact.uniq
