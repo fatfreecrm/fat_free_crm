@@ -24,6 +24,7 @@ en-US:
   tab_contacts: Contacts
   tab_opportunities: Opportunities
 
+  admin_tab_groups: Groups
   admin_tab_users: Users
   admin_tab_fields: Custom Fields
   admin_tab_tags: Tags
@@ -628,7 +629,15 @@ en-US:
   back_to_crm: Back to Fat Free CRM
   crm_admin_page: Fat Free CRM Administration
 
-  # Views -> Admin -> Users.
+  # Views -> Admin -> Groups
+  #----------------------------------------------------------------------------
+  create_group: Create Group
+  save_group: Save Group
+  group_members: members
+  groups: Groups
+  groups_small: groups
+
+  # Views -> Admin -> Users
   #----------------------------------------------------------------------------
   approve: Approve
   create_user: Create User

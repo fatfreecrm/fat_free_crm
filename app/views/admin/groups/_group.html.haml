@@ -1,9 +1,11 @@
 %li.highlight[group]
 
-  .indent
-    .tools
-      = link_to_edit(group, :url => edit_admin_group_path(group)) << " | "
-      = link_to_confirm(group)
+  %ul.tools
+    %li= link_to_edit [:admin, group]
+    %li= link_to_delete [:admin, group]
 
-    %span.black #{link_to(group.name, [:admin, group])}
-    %tt
+  %span #{link_to group.name, [:admin, group]}
+  %tt
+    - if (users = group.users).present?
+      == #{t('group_members')}:
+      = users.map(&:full_name).join(', ')

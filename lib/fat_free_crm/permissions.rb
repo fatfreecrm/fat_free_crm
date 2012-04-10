@@ -48,6 +48,19 @@ module FatFreeCRM
 
     module InstanceMethods
 
+      %w(group user).each do |model|
+        class_eval %Q{
+          def #{model}_ids=(value)
+            permissions.each {|p| p.destroy if (self.#{model}_ids - value).include?(p.#{model}_id)}
+            (value - self.#{model}_ids).each {|id| permissions.build(:#{model}_id => id)}
+          end
+
+          def #{model}_ids
+            permissions.map(&:#{model}_id)
+          end
+        }
+      end
+
       # Save the model along with its permissions if any.
       #--------------------------------------------------------------------------
       def save_with_permissions(users)
