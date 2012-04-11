@@ -36,7 +36,7 @@ module FatFreeCRM
 
           scope :my, lambda {
             current_ability = Ability.new(User.current_user)
-            accessible_by(current_ability)
+            accessible_by(current_ability).readonly(false)
           }
 
           include FatFreeCRM::Permissions::InstanceMethods
