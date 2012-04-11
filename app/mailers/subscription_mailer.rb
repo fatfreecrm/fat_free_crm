@@ -20,13 +20,14 @@ class SubscriptionMailer < ActionMailer::Base
   def comment_notification(user, comment)
     @entity = comment.commentable
     @entity_type = @entity.class.to_s
+    @entity_name = @entity.respond_to?(:full_name) ? @entity.full_name : @entity.name
 
     @comment = comment
     @user = comment.user
 
     # If entity has tags, join them and wrap in parantheses
-    entity_tags = @entity.tag_list.any? ? "(#{@entity.tag_list.join(', ')})" : ""
-    subject = "RE: [#{@entity_type.downcase}:#{@entity.id}] #{@entity.full_name} #{@entity_tags}"
+    subject = "RE: [#{@entity_type.downcase}:#{@entity.id}] #{@entity_name}"
+    subject << " (#{@entity.tag_list.join(', ')})" if @entity.tag_list.any?
 
     mail :subject => subject,
          :to => user.email,
