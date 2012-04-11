@@ -17,6 +17,10 @@
         %td
           .label #{t :phone}:
           = f.text_field :phone
+      %tr
+        %td
+          .label #{t :gender}:
+          = f.select :gender, Contact.dropdown_list
 
     %table
       = fields_for(@account) do |a|

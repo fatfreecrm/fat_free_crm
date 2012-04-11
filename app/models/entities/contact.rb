@@ -49,6 +49,8 @@
 #
 
 class Contact < ActiveRecord::Base
+  include HasAGender
+  
   belongs_to  :user
   belongs_to  :lead
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to

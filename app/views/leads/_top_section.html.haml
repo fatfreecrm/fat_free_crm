@@ -17,6 +17,10 @@
         %td
           .label #{t :phone}:
           = f.text_field :phone
+      %tr
+        %td
+          .label #{t :gender}:
+          = f.select :gender, Lead.dropdown_list
 
       - if Setting.background_info && Setting.background_info.include?(:lead)
         %tr
