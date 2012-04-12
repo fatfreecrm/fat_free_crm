@@ -10,7 +10,7 @@ module HasAGender
   module ClassMethods
     # Returns an array, which acts as a mapping between gender key and human readable name.
     #----------------------------------------------------------------------------
-    def dropdown_list
+    def gender_select_options
       GENDER.map { |gender| [humanize_gender_for(gender), gender] }
     end
     

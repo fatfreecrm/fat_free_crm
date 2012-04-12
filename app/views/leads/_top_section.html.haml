@@ -20,7 +20,7 @@
       %tr
         %td
           .label #{t :gender}:
-          = f.select :gender, Lead.dropdown_list
+          = f.select :gender, Lead.gender_select_options
 
       - if Setting.background_info && Setting.background_info.include?(:lead)
         %tr

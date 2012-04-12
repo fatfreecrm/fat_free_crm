@@ -20,7 +20,7 @@
       %tr
         %td
           .label #{t :gender}:
-          = f.select :gender, Contact.dropdown_list
+          = f.select :gender, Contact.gender_select_options
 
     %table
       = fields_for(@account) do |a|

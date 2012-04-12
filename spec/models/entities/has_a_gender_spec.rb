@@ -42,9 +42,9 @@ describe Contact do
     end
   end
   
-  describe '#dropdown_list' do
+  describe '#gender_select_options' do
     it 'should return a mapping between gender key and readable name' do
-      Contact.dropdown_list.should == [['Male', 'm'],
+      Contact.gender_select_options.should == [['Male', 'm'],
                                        ['Female', 'f']]
     end
   end
