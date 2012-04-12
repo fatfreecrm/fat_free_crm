@@ -28,11 +28,3 @@ ActionController::Renderers.add :xls do |obj, options|
   send_data str, :type => :xls,
     :disposition => "attachment; filename=#{filename}.xls"
 end
-
-ActionController::Renderers.add :atom do |obj, options|
-  render 'shared/index.atom.builder'
-end
-
-ActionController::Renderers.add :rss do |obj, options|
-  render 'shared/index.rss.builder'
-end
