@@ -41,7 +41,7 @@ class Array
           else
             item.send(column)
           end
-          value = value.to_a if value.is_a?(Set)
+          value = value.to_a.join(',') if [Set, Array].include?(value.class)
           value.to_s.wrap(%Q|<Cell><Data ss:Type="#{value.respond_to?(:abs) ? 'Number' : 'String'}">|, '</Data></Cell>')
         end.join.wrap('<Row>', '</Row>')
       end
