@@ -46,7 +46,7 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = User.my.find_by_id($1) || $1.to_i
+      @previous = User.find_by_id($1) || $1.to_i
     end
 
     respond_with(@user)
@@ -130,7 +130,6 @@ private
     scope = User.by_id
     scope = scope.merge(@search.result)
     scope = scope.text_search(current_query)      if current_query.present?
-    scope = scope.unscoped                        if wants.csv?
     scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
     scope
   end
