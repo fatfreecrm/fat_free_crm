@@ -11,7 +11,7 @@ end
 xml.instruct! :xml, :version => "1.0"
 xml.rss :version => "2.0" do
   xml.channel do
-    xml.generator  "Fat Free CRM v#{FatFreeCRM::Version}"
+    xml.generator  "Fat Free CRM v#{FatFreeCRM::VERSION::STRING}"
     xml.link       send(:"#{items}_url")
     xml.pubDate    Time.now.to_s(:rfc822)
     xml.title      title || t(items.to_sym)

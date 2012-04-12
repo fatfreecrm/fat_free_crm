@@ -151,7 +151,6 @@ private
     scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
     scope = scope.order(order)
-    scope = scope.unscoped                        if wants.csv?
     scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?
     scope
   end
