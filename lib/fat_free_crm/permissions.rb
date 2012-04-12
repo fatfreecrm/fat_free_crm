@@ -32,7 +32,7 @@ module FatFreeCRM
           # to implement Recycle Bin/Restore and 2) to honor permissions when
           # displaying "object deleted..." in the activity log.
           #
-          has_many :permissions, :as => :asset, :include => :user
+          has_many :permissions, :as => :asset
 
           scope :my, lambda {
             current_ability = Ability.new(User.current_user)

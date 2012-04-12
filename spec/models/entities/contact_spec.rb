@@ -156,5 +156,9 @@ describe Contact do
       end
     end
   end
+
+  describe "permissions" do
+    it_should_behave_like Ability, Contact
+  end
 end
 

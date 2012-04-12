@@ -54,7 +54,7 @@ Spork.prefork do
 
     config.before(:each) do
       PaperTrail.enabled = false
-      
+
       # Overwrite locale settings within "config/settings.yml" if necessary.
       # In order to ensure that test still pass if "Setting.locale" is not set to "en-US".
       I18n.locale = 'en-US'

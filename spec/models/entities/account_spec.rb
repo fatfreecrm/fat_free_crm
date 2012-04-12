@@ -132,5 +132,9 @@ describe Account do
       account.category.should == nil
     end
   end
+
+  describe "permissions" do
+    it_should_behave_like Ability, Account
+  end
 end
 

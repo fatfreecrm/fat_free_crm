@@ -97,5 +97,9 @@ describe Lead do
       end
     end
   end
+
+  describe "permissions" do
+    it_should_behave_like Ability, Lead
+  end
 end
 

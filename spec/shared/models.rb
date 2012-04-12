@@ -34,4 +34,50 @@ module SharedModelSpecs
       end
     end
   end
+
+  require "cancan/matchers"
+
+  shared_examples_for Ability do |klass|
+
+    subject { ability }
+    let(:ability){ Ability.new(user) }
+    let(:user){ FactoryGirl.create(:user) }
+    let(:factory){ klass.model_name.underscore }
+
+    context "create" do
+      it{ should be_able_to(:create, klass) }
+    end
+
+    context "when public access" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Public') }
+
+      it{ should be_able_to(:manage, asset) }
+    end
+
+    context "when private access owner" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Private', :user_id => user.id) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
+
+    context "when private access not owner" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Private') }
+
+      it{ should_not be_able_to(:manage, asset) }
+    end
+
+    context "when shared access with permission" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
+      let(:permission){ Permission.new(:user => user) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
+
+    context "when shared access with no permission" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
+      let(:permission){ Permission.new(:user => FactoryGirl.create(:user)) }
+
+      it{ should_not be_able_to(:manage, asset) }
+    end
+  end
 end

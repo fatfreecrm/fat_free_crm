@@ -131,5 +131,9 @@ describe Campaign do
       end
     end
   end
+
+  describe "permissions" do
+    it_should_behave_like Ability, Campaign
+  end
 end
 
