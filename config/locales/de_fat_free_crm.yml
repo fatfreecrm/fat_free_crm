@@ -607,7 +607,9 @@ de:
   yahoo: "Yahoo IM"
   yes_button: "Ja"
   zipcode: "Postleitzahl"
-
+  gender: Geschlecht
+  male: Männlich
+  female: Weiblich
 
   # Views -> Admin
   # TODO

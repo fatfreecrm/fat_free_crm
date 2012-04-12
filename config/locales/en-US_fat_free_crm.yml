@@ -12,6 +12,9 @@ en-US:
   select_none: '-- None --'
   select_blank: '-- Select --'
   yes_button: 'Yes'
+  gender: Gender
+  male: Male
+  female: Female
 
 
   # Settings.
