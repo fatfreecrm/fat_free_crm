@@ -31,7 +31,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'cancan'
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
-  gem.add_dependency 'squeel',              '~> 0.9.3'
   gem.add_dependency 'responds_to_parent',  '>= 1.1.0'
   gem.add_dependency 'rails3-jquery-autocomplete'
 
