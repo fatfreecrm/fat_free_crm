@@ -34,6 +34,7 @@ require 'ajax-chosen-rails'
 require 'ransack'
 require 'paper_trail'
 require 'cancan'
+require 'valium'
 
 # Load redcloth if available (for textile markup in emails)
 begin
