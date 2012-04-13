@@ -33,6 +33,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'responds_to_parent',  '>= 1.1.0'
   gem.add_dependency 'rails3-jquery-autocomplete'
+  gem.add_dependency 'valium'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
