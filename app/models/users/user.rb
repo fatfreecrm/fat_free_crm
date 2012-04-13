@@ -82,8 +82,7 @@ class User < ActiveRecord::Base
   }
 
   scope :my, lambda {
-    current_ability = Ability.new(User.current_user)
-    accessible_by(current_ability)
+    accessible_by(User.current_ability)
   }
 
   acts_as_authentic do |c|
@@ -170,5 +169,9 @@ class User < ActiveRecord::Base
       sum += klass.created_by(self).count
     end
     artifacts == 0
+  end
+
+  def self.current_ability
+    @current_ability ||= Ability.new(User.current_user)
   end
 end

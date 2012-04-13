@@ -35,8 +35,7 @@ module FatFreeCRM
           has_many :permissions, :as => :asset
 
           scope :my, lambda {
-            current_ability = Ability.new(User.current_user)
-            accessible_by(current_ability).readonly(false)
+            accessible_by(User.current_ability)
           }
 
           include FatFreeCRM::Permissions::InstanceMethods
