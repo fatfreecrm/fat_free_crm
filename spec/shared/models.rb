@@ -79,5 +79,21 @@ module SharedModelSpecs
 
       it{ should_not be_able_to(:manage, asset) }
     end
+
+    context "when shared access with group permission" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
+      let(:permission){ Permission.new(:group => group) }
+      let(:group){ FactoryGirl.create(:group, :users => [user]) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
+
+    context "when shared access with no group permission" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
+      let(:permission){ Permission.new(:group => group) }
+      let(:group){ FactoryGirl.create(:group) }
+
+      it{ should_not be_able_to(:manage, asset) }
+    end
   end
 end
