@@ -38,7 +38,7 @@ describe Version do
 
     it "should select all versions except one" do
       @versions = Version.for(@current_user).exclude_events(:view)
-      @versions.map(&:event).should == %w(create destroy update)
+      @versions.map(&:event).sort.should == %w(create destroy update)
     end
 
     it "should select all versions except many" do
