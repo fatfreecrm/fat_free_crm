@@ -30,7 +30,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'cancan'
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
-  gem.add_dependency 'squeel',              '~> 0.9.3'
   gem.add_dependency 'responds_to_parent',  '>= 1.1.0'
 
   # FatFreeCRM has released it's own versions of the following gems:
