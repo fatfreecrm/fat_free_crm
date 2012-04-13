@@ -225,10 +225,6 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    squeel (0.9.5)
-      activerecord (~> 3.0)
-      activesupport (~> 3.0)
-      polyamorous (~> 0.5.0)
     steak (2.0.0)
       capybara (>= 1.0.0)
       rspec-rails (>= 2.5.0)
@@ -289,7 +285,6 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   simple_form (~> 2.0.1)
   spork
-  squeel (~> 0.9.3)
   steak
   therubyracer
   uglifier (>= 1.0.3)
