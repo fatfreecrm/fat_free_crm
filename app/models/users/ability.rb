@@ -12,7 +12,7 @@ class Ability
       can :manage, entities + [Task], :user_id => user.id
 
       entities.each do |klass|
-        can :manage, klass, :id => Permission.where('asset_type = ? AND (user_id = ? OR group_id = ?)', klass.name, user.id, user.group_ids).map(&:asset_id)
+        can :manage, klass, :id => Permission.where('asset_type = ? AND (user_id = ? OR group_id = ?)', klass.name, user.id, user.group_ids).value_of(:asset_id)
       end
     end
   end
