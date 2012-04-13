@@ -40,7 +40,7 @@ FactoryGirl.define do
 
 
   factory :permission do
-    user                
+    user
     asset               { raise "Please specify :asset for the permission" }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
@@ -48,9 +48,16 @@ FactoryGirl.define do
 
 
   factory :preference do
-    user                
+    user
     name                { raise "Please specify :name for the preference" }
     value               { raise "Please specify :value for the preference" }
+    updated_at          { FactoryGirl.generate(:time) }
+    created_at          { FactoryGirl.generate(:time) }
+  end
+
+
+  factory :group do
+    name                { Faker::Company.name }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
   end
