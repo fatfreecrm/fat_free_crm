@@ -11,7 +11,7 @@
   = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 .remote#options{ hidden }
 .remote#advanced_search{ hidden_if(!params[:q]) }
-  - if @search
+  - if params[:q]
     = render :partial => "advanced_search"
 .remote#create_campaign{ hidden }
 
