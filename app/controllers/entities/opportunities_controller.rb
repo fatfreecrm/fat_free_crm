@@ -43,7 +43,7 @@ class OpportunitiesController < EntitiesController
   def new
     @opportunity.attributes = {:user => @current_user, :stage => "prospecting", :access => Setting.default_access}
     @users       = User.except(@current_user)
-    @account     = Account.new(:user => @current_user)
+    @account     = Account.new(:user => @current_user, :access => Setting.default_access)
     @accounts    = Account.my.order('name')
 
     if params[:related]
