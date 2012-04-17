@@ -83,7 +83,7 @@ class ContactsController < EntitiesController
             @account = Account.new(:user => current_user)
           end
         end
-        @opportunity = Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
+        @opportunity = Opportunity.my.find(params[:opportunity]) unless params[:opportunity].blank?
       end
     end
   end
