@@ -35,20 +35,10 @@
       %table
         %tr
           %td
-            .label
-              #{t :account}
-              %span#account_create_title
-                (#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(1); return false;'>#{t :select_existing}</a>):
-              %span#account_select_title
-                (<a href='#' onclick='crm.create_account(1); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):
-              %span#account_disabled_title :
-
-            -# Add [-- None --] account choice when editing existing opportunity that has an account.
-            - options = { :selected => @account.id || 0 }
-            - options[:include_blank] = true #t(:select_none) unless @opportunity.new_record? || @opportunity.account.blank?
-            = account_select(options)
-            
-            = a.text_field :name, :style => "width:324px; display:none;"
+            != account_select_or_create(a) do |options|
+              -# Add [-- None --] account choice when editing existing opportunity that has an account.
+              - options[:selected] = @account.id || 0
+              - options[:include_blank] = true #t(:select_none) unless @opportunity.new_record? || @opportunity.account.blank?
           %td= spacer
           %td
             .label.req #{t :assigned_to}:
