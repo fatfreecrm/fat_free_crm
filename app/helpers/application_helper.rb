@@ -424,6 +424,19 @@ module ApplicationHelper
   def link_to_remove_fields(name, f)
     link_to image_tag('delete.png', :size => '16x16', :alt => name), nil, :class => "remove_fields"
   end
+<<<<<<< HEAD
+=======
+  
+  # Adds autocomplete functionality to an existing text field.
+  #----------------------------------------------------------------------------
+  def autocomplete_text_field(id, values)
+    javascript_tag %Q{
+      var textField = jQuery('##{id}');
+      textField.autocomplete({ source: #{values} });
+    }
+  end
+end
+>>>>>>> Autocomplete "company" field of leads with jQuery ui autocomplete
 
   def user_options
     User.all.map {|u| [u.full_name, u.id]}
