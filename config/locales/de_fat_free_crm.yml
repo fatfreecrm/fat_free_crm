@@ -480,7 +480,7 @@ de:
   expanded: "Erweitert"
   alt_email: "Alternative Email"
   create_past_participle: "Zuletzt erstellte Datensätze"
-  sort_by: "Sortiere %{value} nach"
+  sort_by: "Sortiere %{models} nach %{field}"
   aim: "AOL IM"
   update_past_participle: "Aktualisierungen"
   called_off: "Abgesagt"
