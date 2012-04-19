@@ -44,6 +44,7 @@ group :development, :test do
     gem 'ruby-debug', :platform => :mri_18
     gem 'debugger',   :platform => :mri_19
   end
+  gem 'pry-rails'
 end
 
 group :test do
