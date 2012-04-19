@@ -14,6 +14,7 @@
         %td
           .label.top #{t :company}:
           = f.text_field :company
+          = autocomplete_text_field 'lead_company', Account.order(:name).map(&:name)
       %tr
         %td
           .label #{t :alt_email}:
