@@ -68,7 +68,7 @@ module FatFreeCRM
           archive(uid)
         end
       ensure
-        log "messages processed: #{@archived + @discarded}, archived: #{@archived}, discarded: #{@discarded}."
+        log "messages processed=#{@archived + @discarded} archived=#{@archived} discarded=#{@discarded}"
         disconnect!
       end
 
@@ -189,10 +189,9 @@ module FatFreeCRM
       # Centralized logging.
       #--------------------------------------------------------------------------------------
       def log(message, email = nil)
-        return if Rails.env == "test"
         klass = self.class.to_s.split("::").last
-        puts "#{klass}: #{message}"
-        puts "  From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
+        puts "[#{Time.now.rfc822}] #{klass}: #{message}"
+        puts "[#{Time.now.rfc822}] #{klass}: From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
       end
 
       # Returns the plain-text version of an email, or strips html tags
