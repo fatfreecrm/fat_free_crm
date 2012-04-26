@@ -218,8 +218,8 @@ private
     respond_to do |format|
       format.html { redirect_to :action => :index }
       format.js   { render(:update) { |page| page.reload } }
-      format.json { render :text => flash[:warning], :status => :not_found }
-      format.xml  { render :text => flash[:warning], :status => :not_found }
+      format.json { render :text => flash[:warning], :status => :unauthorized }
+      format.xml  { render :text => flash[:warning], :status => :unauthorized }
     end
   end
 end
