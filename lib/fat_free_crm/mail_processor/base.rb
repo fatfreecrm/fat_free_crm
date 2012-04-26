@@ -28,7 +28,7 @@ module FatFreeCRM
 
       #--------------------------------------------------------------------------------------
       def initialize
-        @archived, @discarded = 0, 0
+        @archived, @discarded, @dry_run = 0, 0, false
       end
 
       # Setup imap folders in settings.
@@ -59,7 +59,7 @@ module FatFreeCRM
       #--------------------------------------------------------------------------------------
       def run(dry_run = false)
         if @dry_run = dry_run
-          log "[Dry Run]: Not discarding or archiving any new messages..."
+          log "Not discarding or archiving any new messages..."
         end
         connect! or return nil
         with_new_emails do |uid, email|
@@ -119,7 +119,7 @@ module FatFreeCRM
           end
 
           if @dry_run
-            log "[Dry Run]: Marking message as unread"
+            log "Marking message as unread"
             @imap.uid_store(uid, "-FLAGS", [:Seen])
           end
         end
@@ -130,7 +130,7 @@ module FatFreeCRM
       #------------------------------------------------------------------------------
       def discard(uid)
         if @dry_run
-          log "[Dry Run]: Not discarding message"
+          log "Not discarding message"
         else
           if @settings[:move_invalid_to_folder]
             @imap.uid_copy(uid, @settings[:move_invalid_to_folder])
@@ -144,7 +144,7 @@ module FatFreeCRM
       #------------------------------------------------------------------------------
       def archive(uid)
         if @dry_run
-          log "[Dry Run]: Not archiving message"
+          log "Not archiving message"
         else
           if @settings[:move_to_folder]
             @imap.uid_copy(uid, @settings[:move_to_folder])
@@ -189,9 +189,12 @@ module FatFreeCRM
       # Centralized logging.
       #--------------------------------------------------------------------------------------
       def log(message, email = nil)
-        klass = self.class.to_s.split("::").last
-        puts "[#{Time.now.rfc822}] #{klass}: #{message}"
-        puts "[#{Time.now.rfc822}] #{klass}: From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
+        unless %w(test cucumber).include?(Rails.env)
+          klass = self.class.to_s.split("::").last
+          klass << " [Dry Run]" if @dry_run
+          puts "[#{Time.now.rfc822}] #{klass}: #{message}"
+          puts "[#{Time.now.rfc822}] #{klass}: From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
+        end
       end
 
       # Returns the plain-text version of an email, or strips html tags
