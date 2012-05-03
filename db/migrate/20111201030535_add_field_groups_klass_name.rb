@@ -4,7 +4,9 @@ class AddFieldGroupsKlassName < ActiveRecord::Migration
 
     # Add a default field group for each model
     Field::KLASSES.each do |klass|
-      field_group = FieldGroup.create!(:label => 'Custom Fields', :klass_name => klass.name)
+      field_group = FieldGroup.new
+      field_group.label, field_group.klass_name = 'Custom Fields', klass.name
+      field_group.save!
       Field.update_all({:field_group_id => field_group.id}, {:field_group_id => nil, :klass_name => klass.name})
     end
     FieldGroup.update_all('klass_name = (SELECT MAX(klass_name) FROM fields WHERE field_group_id = field_groups.id)', {:klass_name => nil})
