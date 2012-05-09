@@ -655,9 +655,9 @@ en-US:
   #----------------------------------------------------------------------------
   versions: History
   version:
-    create: %{item} created by %{by} %{when} ago.
-    update: %{item} modified by %{by} %{when} ago.
-    destroy: %{item} destroyed by %{by} %{when} ago.
+    create: %{item} created by %{by}
+    update: %{item} modified by %{by}
+    destroy: %{item} destroyed by %{by}
     set: %{attr} set to %{to}
     unset: %{attr} unset
     change: %{attr} changed from %{from} to %{to}
