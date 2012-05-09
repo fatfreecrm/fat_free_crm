@@ -173,7 +173,7 @@ GEM
     rbx-require-relative (0.0.9)
     rdoc (3.12)
       json (~> 1.4)
-    responds_to_parent_ffcrm (1.1.0)
+    responds_to_parent (1.1.0)
     rspec (2.9.0)
       rspec-core (~> 2.9.0)
       rspec-expectations (~> 2.9.0)
@@ -273,7 +273,7 @@ DEPENDENCIES
   pry-rails
   rails (~> 3.2.2)
   ransack_ffcrm (~> 0.6.0)
-  responds_to_parent_ffcrm
+  responds_to_parent (>= 1.1.0)
   rspec-rails (~> 2.9.0)
   ruby-debug
   sass (~> 3.1.10)

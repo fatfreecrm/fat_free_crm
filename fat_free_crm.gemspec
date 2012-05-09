@@ -31,13 +31,13 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'squeel',              '~> 0.9.3'
+  gem.add_dependency 'responds_to_parent',  '>= 1.1.0'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
   gem.add_dependency 'ransack_ffcrm',       '~> 0.6.0'
   gem.add_dependency 'chosen-rails_ffcrm'
   gem.add_dependency 'ajax-chosen-rails',   '>= 0.2.0'  # (now depends on chosen-rails_ffcrm)
-  gem.add_dependency 'responds_to_parent_ffcrm'
   gem.add_dependency 'email_reply_parser_ffcrm'
 
 end
