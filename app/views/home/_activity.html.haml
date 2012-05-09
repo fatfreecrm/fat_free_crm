@@ -10,14 +10,23 @@
   - elsif item.respond_to?(:name)
     - content_tag :span, item.name, :style => "color:black;" # Individual tasks have no landing pages where we could link to.
 
-- if user.present? and subject.present?
+- known_event = t('action_' + activity.event, :default => 0) != 0
+
+- if (user.present? && subject.present?) || !known_event
   %li[activity]
     .tools
       %small
         = l(activity.created_at, :format => :short)
     %tt
-      = link_to avatar_for(activity.user, :size => :thumb), user_path(activity.user)
+      - if known_event
+        - action = t('action_' + activity.event)
+        - type = t('subject_' + activity.item_type.downcase)
+        = link_to avatar_for(activity.user, :size => :thumb), user_path(activity.user)
+        = t("activity_text", :user => user, :action => action, :type => type, :subject => subject, :default => "#{user} #{action} #{type} #{subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
+      - else
+        - type = t(activity.item_type.downcase)
+        - if item.respond_to? :email
+          = gravatar_for(item, :size => "16x16")
+        = "#{type} #{subject}:".html_safe
+        = auto_link(activity.event).html_safe
 
-      - action = t('action_' + activity.event)
-      - type = t('subject_' + activity.item_type.downcase)
-      = t("activity_text", :user => user, :action => action, :type => type, :subject => subject, :default => "#{user} #{action} #{type} #{subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
