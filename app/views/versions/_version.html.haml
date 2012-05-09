@@ -5,7 +5,12 @@
       - user_name = user.name
     - else
       - user_name = t('version.anonymous')
-    = t('version.' + version.event, :item => item_name, :by => user_name, :when => time_ago_in_words(version.created_at))
+    -# If translation doesn't exist, just print event message
+    - if t('version.' + version.event, :default => 0) != 0
+      = t('version.' + version.event, :item => item_name, :by => user_name, :default => version.event)
+    - else
+      = auto_link(version.event).html_safe
+    %small= t('time_ago', time_ago_in_words(version.created_at))
     %tt
       - version.changeset.each do |attr_name, change|
         - if attr_name =~ /^cf_/
