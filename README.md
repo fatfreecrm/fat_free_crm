@@ -1,6 +1,6 @@
 # Fat Free CRM
 
-[![TravisCI][travis-img]][travis-ci] [![Dependency Status][gemnasium-img]][gemnasium]
+[![TravisCI][travis-img]][travis-ci]
 
 [travis-img]: https://secure.travis-ci.org/fatfreecrm/fat_free_crm.png?branch=master
 [travis-ci]: http://travis-ci.org/fatfreecrm/fat_free_crm
