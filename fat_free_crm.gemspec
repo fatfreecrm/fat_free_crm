@@ -22,18 +22,22 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'authlogic',           '~> 3.1.0'
   gem.add_dependency 'acts_as_commentable', '~> 3.0.1'
   gem.add_dependency 'acts-as-taggable-on', '~> 2.2.1'
-  gem.add_dependency 'responds_to_parent'
   gem.add_dependency 'dynamic_form'
   gem.add_dependency 'haml',                '~> 3.1.3'
   gem.add_dependency 'sass',                '~> 3.1.10'
   gem.add_dependency 'acts_as_list',        '~> 0.1.4'
   gem.add_dependency 'ffaker',              '>= 1.12.0'
-  gem.add_dependency 'chosen-rails'
-  gem.add_dependency 'ajax-chosen-rails',   '>= 0.1.5'
-  gem.add_dependency 'ransack',             '~> 0.6.0'
   gem.add_dependency 'cancan'
-  gem.add_dependency 'email_reply_parser'
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'squeel',              '~> 0.9.3'
+
+  # FatFreeCRM has released it's own versions of the following gems:
+  #-----------------------------------------------------------------
+  gem.add_dependency 'ransack_ffcrm',       '~> 0.6.0'
+  gem.add_dependency 'chosen-rails_ffcrm'
+  gem.add_dependency 'ajax-chosen-rails',   '>= 0.2.0'  # (now depends on chosen-rails_ffcrm)
+  gem.add_dependency 'responds_to_parent_ffcrm'
+  gem.add_dependency 'email_reply_parser_ffcrm'
+
 end
