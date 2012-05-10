@@ -42,6 +42,8 @@ GEM
       activerecord (>= 3.0.7)
       activerecord (>= 3.0.7)
     builder (3.0.0)
+    bundler_local_development (0.1.0)
+      bundler
     cancan (1.6.7)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -250,6 +252,7 @@ DEPENDENCIES
   acts_as_list (~> 0.1.4)
   ajax-chosen-rails (>= 0.2.0)
   authlogic (~> 3.1.0)
+  bundler_local_development
   cancan
   capybara
   chosen-rails_ffcrm

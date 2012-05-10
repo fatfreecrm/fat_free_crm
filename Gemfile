@@ -6,6 +6,15 @@ source :rubygems
 # gem 'sqlite3'
 gem 'pg', '~> 0.13.2'
 
+# Allows easy switching between locally developed gems, and gems installed from rubygems.org
+# See README for more info at: https://github.com/ndbroadbent/bundler_local_development
+gem 'bundler_local_development', :group => :development, :require => false
+begin
+  require 'bundler_local_development'
+  Bundler.development_gems = [/^ffcrm_/]
+rescue LoadError
+end
+
 # Removes a gem dependency
 def remove(name)
   @dependencies.reject! {|d| d.name == name }
