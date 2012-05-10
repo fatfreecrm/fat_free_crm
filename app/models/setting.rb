@@ -112,25 +112,13 @@ class Setting < ActiveRecord::Base
 
 
     # Loads settings from YAML files
-    def load_settings_from_yaml
-      @@yaml_settings = {}.with_indifferent_access
-
-      setting_files = [
-        FatFreeCRM.root.join("config", "settings.default.yml"),
-        Rails.root.join("config", "settings.yml")
-      ]
-
-      # Load default settings, then override with custom settings
-      setting_files.each do |file|
-        if File.exist?(file)
-          begin
-            settings = YAML.load_file(file)
-            # Merge settings into current settings hash (recursively)
-            @@yaml_settings.deep_merge!(settings)
-          rescue Exception => ex
-            puts "Settings couldn't be loaded from #{file}: #{ex.message}"
-          end
-        end
+    def load_settings_from_yaml(file)
+      begin
+        settings = YAML.load_file(file)
+        # Merge settings into current settings hash (recursively)
+        @@yaml_settings.deep_merge!(settings)
+      rescue Exception => ex
+        puts "Settings couldn't be loaded from #{file}: #{ex.message}"
       end
       yaml_settings
     end
@@ -138,5 +126,11 @@ class Setting < ActiveRecord::Base
 end
 
 
-# Preload YAML settings as soon as class is loaded.
-Setting.load_settings_from_yaml
+# Preload YAML settings.
+# Load default settings, then override with custom settings, if present.
+[
+  FatFreeCRM.root.join("config", "settings.default.yml"),
+  Rails.root.join("config", "settings.yml")
+].each do |settings_file|
+  Setting.load_settings_from_yaml(settings_file) if File.exist?(settings_file)
+end
