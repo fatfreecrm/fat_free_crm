@@ -33,10 +33,6 @@ Spork.prefork do
 
   I18n.locale = 'en-US'
 
-  # Force default settings
-  Setting.yaml_settings = {}.with_indifferent_access
-  Setting.load_settings_from_yaml(FatFreeCRM.root.join("config", "settings.default.yml"))
-
   Paperclip.options[:log] = false
 
   RSpec.configure do |config|

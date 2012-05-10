@@ -126,11 +126,10 @@ class Setting < ActiveRecord::Base
 end
 
 
-# Preload YAML settings.
 # Load default settings, then override with custom settings, if present.
-[
-  FatFreeCRM.root.join("config", "settings.default.yml"),
-  Rails.root.join("config", "settings.yml")
-].each do |settings_file|
+setting_files = [FatFreeCRM.root.join("config", "settings.default.yml")]
+# Don't override default settings in test environment
+setting_files << Rails.root.join("config", "settings.yml") unless Rails.env == 'test'
+setting_files.each do |settings_file|
   Setting.load_settings_from_yaml(settings_file) if File.exist?(settings_file)
 end
