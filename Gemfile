@@ -46,7 +46,7 @@ group :development, :test do
   gem 'headless'
   unless ENV["CI"]
     gem 'ruby-debug', :platform => :mri_18
-    gem 'debugger',   :platform => :mri_19
+    gem RUBY_VERSION == "1.9.2" ? 'ruby-debug19' : 'debugger', :platform => :mri_19
   end
   gem 'pry-rails'
 end
