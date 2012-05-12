@@ -43,7 +43,7 @@ GEM
       activerecord (>= 3.0.7)
       activerecord (>= 3.0.7)
     builder (3.0.0)
-    bundler_local_development (0.1.0)
+    bundler_local_development (0.3.0)
       bundler
     cancan (1.6.7)
     capybara (1.1.2)
