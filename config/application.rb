@@ -33,6 +33,11 @@ module FatFreeCRM
       Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each {|t| load t }
     end
 
+    # Add migrations from all engines
+    Railties.engines.each do |engine|
+      config.paths['db/migrate'] += engine.paths['db/migrate'].existent
+    end
+
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
