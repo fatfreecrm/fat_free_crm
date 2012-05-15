@@ -22,7 +22,10 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def index
     @accounts = get_accounts(:page => params[:page])
-    respond_with(@accounts)
+    
+    respond_with @accounts do |format|
+      format.xls { render :layout => 'header' }
+    end
   end
 
   # GET /accounts/1

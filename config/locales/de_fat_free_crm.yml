@@ -690,3 +690,6 @@ de:
   starts_in: "beginnt in %{value}"
   subject_contact: "Kontakt"
   overdue: "Verspätet, war fällig am"
+  access: "Zugang"
+  born_on: "Geboren am"
+  reports_to: "Berichtet an"
