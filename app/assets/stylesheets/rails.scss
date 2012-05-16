@@ -48,7 +48,7 @@
 
 // Flash messages.
 //------------------------------------------------------------------------------
-p {
+p, div {
   &.flash_warning, &.flash_error {
     background: lightpink;
     color: maroon;
