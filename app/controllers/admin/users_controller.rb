@@ -18,7 +18,7 @@
 class Admin::UsersController < Admin::ApplicationController
   before_filter "set_current_tab('admin/users')", :only => [ :index, :show ]
 
-  load_resource
+  load_resource :except => [:create]
 
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
@@ -57,8 +57,9 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def create
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
+    admin = params[:user].delete(:admin)
     @user = User.new(params[:user])
-    @user.admin = (params[:user][:admin] == "1")
+    @user.admin = (admin == "1")
     @user.save_without_session_maintenance
     @users = get_users
 
@@ -70,9 +71,10 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def update
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
+    admin = params[:user].delete(:admin)
     @user = User.find(params[:id])
     @user.update_attributes(params[:user])
-    @user.admin = (params[:user][:admin] == "1")
+    @user.admin = (admin == "1")
 
     respond_with(@user)
   end
@@ -134,4 +136,3 @@ private
     scope
   end
 end
-
