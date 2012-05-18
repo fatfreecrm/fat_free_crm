@@ -73,8 +73,9 @@ class Admin::UsersController < Admin::ApplicationController
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     admin = params[:user].delete(:admin)
     @user = User.find(params[:id])
-    @user.update_attributes(params[:user])
+    @user.attributes = params[:user]
     @user.admin = (admin == "1")
+    @user.save_without_session_maintenance
 
     respond_with(@user)
   end
