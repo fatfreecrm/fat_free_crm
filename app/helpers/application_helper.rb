@@ -247,7 +247,7 @@ module ApplicationHelper
       url = person.send(site)
       unless url.blank?
         if site == :skype then
-          url = "callto://" << url
+          url = "callto:" << url
         else
           url = "http://" << url unless url.match(/^https?:\/\//)
         end
