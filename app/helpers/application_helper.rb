@@ -246,7 +246,11 @@ module ApplicationHelper
     [ :blog, :linkedin, :facebook, :twitter, :skype ].map do |site|
       url = person.send(site)
       unless url.blank?
-        url = "http://" << url unless url.match(/^https?:\/\//)
+        if site == :skype then
+          url = "callto://" << url
+        else
+          url = "http://" << url unless url.match(/^https?:\/\//)
+        end
         link_to(image_tag("#{site}.gif", :size => "15x15"), url, :"data-popup" => true, :title => t(:open_in_window, url))
       end
     end.compact.join("\n").html_safe
