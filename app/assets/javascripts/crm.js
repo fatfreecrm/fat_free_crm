@@ -19,7 +19,7 @@ var crm = {
 
   EXPANDED      : "&#9660;",
   COLLAPSED     : "&#9658;",
-  request       : null,
+  searchRequest : null,
   autocompleter : null,
   base_url      : "",
 
@@ -398,24 +398,25 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  
   search: function(query, controller) {
-    if (!this.request) {
-      var list = controller;          // ex. "users"
-      if (list.indexOf("/") >= 0) {   // ex. "admin/users"
-        list = list.split("/")[1];
-      }
-      $("loading").show();
-      $(list).setStyle({ opacity: 0.4 });
-      new Ajax.Request(this.base_url + "/" + controller, {
-        method     : "get",
-        parameters : { query : query },
-        onSuccess  : function() {
-          $("loading").hide();
-          $(list).setStyle({ opacity: 1 });
-        },
-        onComplete : (function() { this.request = null; }).bind(this)
-      });
+    var list = controller;          // ex. "users"
+    if (list.indexOf("/") >= 0) {   // ex. "admin/users"
+      list = list.split("/")[1];
     }
+    $("loading").show();
+    $(list).setStyle({ opacity: 0.4 });
+    if (this.searchRequest && this.searchRequest.readyState != -4) { this.searchRequest.abort(); }
+    this.searchRequest = jQuery.ajax({
+      url: this.base_url + "/" + controller + '.js',
+      type: 'GET',
+      data: { query : query },
+      success  : function() {
+        $("loading").hide();
+        $(list).setStyle({ opacity: 1 });
+        this.searchRequest = null;
+      }
+    });
   },
 
   //----------------------------------------------------------------------------
