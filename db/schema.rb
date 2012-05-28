@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510025219) do
+ActiveRecord::Schema.define(:version => 20120528102124) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -407,9 +407,9 @@ ActiveRecord::Schema.define(:version => 20120510025219) do
   add_index "users", ["username", "deleted_at"], :name => "index_users_on_username_and_deleted_at", :unique => true
 
   create_table "versions", :force => true do |t|
-    t.string   "item_type",      :null => false
-    t.integer  "item_id",        :null => false
-    t.string   "event",          :null => false
+    t.string   "item_type",                     :null => false
+    t.integer  "item_id",                       :null => false
+    t.string   "event",          :limit => 512, :null => false
     t.string   "whodunnit"
     t.text     "object"
     t.datetime "created_at"
