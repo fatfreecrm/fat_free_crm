@@ -17,7 +17,7 @@ describe "/leads/_new" do
     view.should render_template(:partial => "leads/_status")
     view.should render_template(:partial => "leads/_contact")
     view.should render_template(:partial => "leads/_web")
-    view.should render_template(:partial => "leads/_permissions")
+    view.should render_template(:partial => "entities/_permissions")
 
     rendered.should have_tag("form[class=new_lead]")
   end
