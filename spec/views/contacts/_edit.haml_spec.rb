@@ -17,7 +17,7 @@ describe "/contacts/_edit" do
     view.should render_template(:partial => "contacts/_top_section")
     view.should render_template(:partial => "contacts/_extra")
     view.should render_template(:partial => "contacts/_web")
-    view.should render_template(:partial => "contacts/_permissions")
+    view.should render_template(:partial => "_permissions")
 
     rendered.should have_tag("form[class=edit_contact]") do
       with_tag "input[type=hidden][id=contact_user_id][value=#{@contact.user_id}]"

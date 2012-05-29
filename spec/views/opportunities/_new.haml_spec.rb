@@ -16,7 +16,7 @@ describe "/opportunities/_new" do
   it "should render [create opportunity] form" do
     render
     view.should render_template(:partial => "opportunities/_top_section")
-    view.should render_template(:partial => "opportunities/_permissions")
+    view.should render_template(:partial => "entities/_permissions")
 
     rendered.should have_tag("form[class=new_opportunity]")
   end
