@@ -10,7 +10,7 @@
   = render "contacts/extra",       :f => f
   = render "contacts/web",         :f => f
   = render "fields/groups",        :f => f
-  = render "contacts/permissions", :f => f
+  = render "entities/permissions", :f => f, :entity => @contacts
 
   .buttonbar
     = f.submit t(:create_contact), :onclick => "crm.create_contact()"
