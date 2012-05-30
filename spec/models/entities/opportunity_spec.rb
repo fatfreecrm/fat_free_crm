@@ -85,6 +85,13 @@ describe Opportunity do
       opportunity.reload
       opportunity.probability.should == 0
     end
+
+    it "should set the probablility to 100% if opportunity has been won" do
+      opportunity = FactoryGirl.create(:opportunity, :stage => "prospecting", :probability => 65)
+      opportunity.update_attributes(:stage => 'won')
+      opportunity.reload
+      opportunity.probability.should == 100
+    end
   end
 
   describe "Named scopes" do
