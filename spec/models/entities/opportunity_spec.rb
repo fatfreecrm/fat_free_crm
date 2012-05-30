@@ -78,6 +78,13 @@ describe Opportunity do
       @opportunity.account.should be_nil
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
+
+    it "should set the probability to 0% if opportunity has been lost" do
+      opportunity = FactoryGirl.create(:opportunity, :stage => "prospecting", :probability => 25)
+      opportunity.update_attributes(:stage => 'lost')
+      opportunity.reload
+      opportunity.probability.should == 0
+    end
   end
 
   describe "Named scopes" do
