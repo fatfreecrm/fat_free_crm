@@ -1,5 +1,4 @@
-Fat Free CRM [![TravisCI][travis-img]][travis-ci]
-============
+# Fat Free CRM [![TravisCI][travis-img-url]][travis-ci-url]
 
 [travis-img-url]: https://secure.travis-ci.org/fatfreecrm/fat_free_crm.png?branch=master
 [travis-ci-url]: http://travis-ci.org/fatfreecrm/fat_free_crm
