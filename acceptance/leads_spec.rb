@@ -7,7 +7,7 @@ feature 'Leads', %q{
 } do
 
   before(:each) do
-   do_login_if_not_already
+   do_login_if_not_already(:first_name => 'Bill', :last_name => 'Murray')
   end
 
   scenario 'should view a list of leads' do
@@ -35,6 +35,9 @@ feature 'Leads', %q{
     page.should have_content('Contacted')
     page.should have_content('mr_lead@example.com')
     page.should have_content('+44 1234 567890')
+
+    click_link "Dashboard"
+    page.should have_content("Bill Murray created lead Mr Lead")
   end
 
   scenario 'should view and edit a lead', :js => true do
@@ -54,6 +57,10 @@ feature 'Leads', %q{
     page.should have_content('Rejected')
     page.should have_content('mr_lead@example.com')
     page.should have_content('+44 0987 654321')
+
+    click_link "Dashboard"
+    page.should have_content("Bill Murray viewed lead Mrs Lead")
+    page.should have_content("Bill Murray updated lead Mrs Lead")
   end
 
   scenario 'should delete a lead', :js => true do

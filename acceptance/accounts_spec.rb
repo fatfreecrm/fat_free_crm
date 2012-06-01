@@ -7,7 +7,7 @@ feature 'Accounts', %q{
 } do
 
   before(:each) do
-   do_login_if_not_already
+   do_login_if_not_already(:first_name => 'Bill', :last_name => 'Murray')
   end
 
   scenario 'should view a list of accounts' do
@@ -31,6 +31,10 @@ feature 'Accounts', %q{
     page.should have_content('My new account')
     page.should have_content('+1 2345 6789')
     page.should have_content('http://www.example.com')
+
+    click_link "Dashboard"
+    page.should have_content("Bill Murray created account My new account")
+    page.should have_content("Bill Murray created address on My new account")
   end
 
   scenario 'should view and edit an account', :js => true do
@@ -42,6 +46,10 @@ feature 'Accounts', %q{
     fill_in 'account_name', :with => 'A new account *editted*'
     click_button 'Save Account'
     page.should have_content('A new account *editted*')
+
+    click_link "Dashboard"
+    page.should have_content("Bill Murray viewed account A new account *editted*")
+    page.should have_content("Bill Murray updated account A new account *editted*")
   end
 
   scenario 'should delete an account', :js => true do

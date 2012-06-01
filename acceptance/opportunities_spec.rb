@@ -7,7 +7,7 @@ feature 'Opportunities', %q{
 } do
 
   before :each do
-    do_login_if_not_already
+    do_login_if_not_already(:first_name => 'Bill', :last_name => 'Murray')
   end
 
   scenario 'should view a list of opportunities' do
@@ -29,6 +29,9 @@ feature 'Opportunities', %q{
     select 'Proposal', :from => 'opportunity_stage'
     click_button 'Create Opportunity'
     page.should have_content('My Awesome Opportunity')
+
+    click_link "Dashboard"
+    page.should have_content("Bill Murray created opportunity My Awesome Opportunity")
   end
 
   scenario 'should view and edit an opportunity', :js => true do
@@ -45,6 +48,10 @@ feature 'Opportunities', %q{
     page.should have_content('An Even Cooler Opportunity')
     click_link 'Opportunities'
     page.should have_content('An Even Cooler Opportunity')
+
+    click_link "Dashboard"
+    page.should have_content("Bill Murray viewed opportunity An Even Cooler Opportunity")
+    page.should have_content("Bill Murray updated opportunity An Even Cooler Opportunity")
   end
 
   scenario 'should delete an opportunity', :js => true do
