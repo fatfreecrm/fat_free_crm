@@ -8,6 +8,10 @@ module NavigationHelpers
   def accounts_page
     accounts_path
   end
+
+  def leads_page
+    leads_path
+  end
 end
 
 RSpec.configuration.include NavigationHelpers, :type => :acceptance
