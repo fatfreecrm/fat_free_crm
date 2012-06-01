@@ -26,5 +26,15 @@ class UserMailer < ActionMailer::Base
          :date => Time.now
   end
 
+  def assigned_entity_notification(entity, assigner)
+    @entity_url = url_for(entity)
+    @entity_name = entity.name
+    @entity_type = entity.class.name
+    @assigner_name = assigner.name
+    mail :subject => "Fat Free CRM: You have been assigned #{@entity_name} #{@entity_type}",
+         :to => entity.assignee.email,
+         :from => "Fat Free CRM <notifications@fatfreecrm.com>"
+  end
+
 end
 
