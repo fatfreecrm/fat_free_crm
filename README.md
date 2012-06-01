@@ -1,17 +1,16 @@
-# Fat Free CRM
+Fat Free CRM [![TravisCI][travis-img]][travis-ci]
+============
 
-[![TravisCI][travis-img]][travis-ci]
-
-[travis-img]: https://secure.travis-ci.org/fatfreecrm/fat_free_crm.png?branch=master
-[travis-ci]: http://travis-ci.org/fatfreecrm/fat_free_crm
-[gemnasium-img]: https://gemnasium.com/fatfreecrm/fat_free_crm.png?travis
-[gemnasium]: https://gemnasium.com/fatfreecrm/fat_free_crm
+[travis-img-url]: https://secure.travis-ci.org/fatfreecrm/fat_free_crm.png?branch=master
+[travis-ci-url]: http://travis-ci.org/fatfreecrm/fat_free_crm
 
 ### An open source, Ruby on Rails [customer relationship management][crm-wiki] platform (CRM).
 
 [crm-wiki]: http://en.wikipedia.org/wiki/Customer_relationship_management
 
-Out of the box it features group collaboration, campaign and lead management, contact lists, and opportunity tracking.
+
+Out of the box it features group collaboration, campaign and lead management,
+contact lists, and opportunity tracking.
 
 <table>
   <tr>
