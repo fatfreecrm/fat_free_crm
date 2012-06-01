@@ -12,7 +12,7 @@ feature 'Accounts', %q{
 
   scenario 'should view a list of accounts' do
     2.times { |i| FactoryGirl.create(:account, :name => "Account #{i}") }
-    visit accounts_path
+    visit accounts_page
     page.should have_content('Account 0')
     page.should have_content('Account 1')
     page.should have_content('Search accounts')
@@ -20,7 +20,7 @@ feature 'Accounts', %q{
   end
 
   scenario 'should create a new account', :js => true do
-    visit accounts_path
+    visit accounts_page
     page.should have_content('Create Account')
     click_link 'Create Account'
     fill_in 'account_name', :with => 'My new account'
@@ -35,7 +35,7 @@ feature 'Accounts', %q{
 
   scenario 'should view and edit an account', :js => true do
     FactoryGirl.create(:account, :name => "A new account")
-    visit accounts_path
+    visit accounts_page
     click_link 'A new account'
     page.should have_content('A new account')
     click_link 'Edit'
@@ -46,7 +46,7 @@ feature 'Accounts', %q{
 
   scenario 'should delete an account', :js => true do
     FactoryGirl.create(:account, :name => "My new account")
-    visit accounts_path
+    visit accounts_page
     click_link 'My new account'
     click_link 'Delete?'
     page.should have_content('Are you sure you want to delete this account?')
@@ -56,7 +56,7 @@ feature 'Accounts', %q{
 
   scenario 'should search for an account', :js => true do
     2.times { |i| FactoryGirl.create(:account, :name => "Account #{i}") }
-    visit accounts_path
+    visit accounts_page
     find('#accounts').should have_content("Account 0")
     find('#accounts').should have_content("Account 1")
     fill_in 'query', :with => "Account 0"

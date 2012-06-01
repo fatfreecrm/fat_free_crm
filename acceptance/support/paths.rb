@@ -4,6 +4,10 @@ module NavigationHelpers
   def homepage
     "/"
   end
+
+  def accounts_page
+    accounts_path
+  end
 end
 
 RSpec.configuration.include NavigationHelpers, :type => :acceptance
