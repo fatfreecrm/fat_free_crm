@@ -251,7 +251,7 @@ DEPENDENCIES
   acts_as_commentable (~> 3.0.1)
   acts_as_list (~> 0.1.4)
   ajax-chosen-rails (>= 0.2.0)
-  authlogic (~> 3.1.0)
+  authlogic (= 3.1.0)
   bundler_local_development
   cancan
   capybara
