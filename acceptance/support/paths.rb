@@ -16,6 +16,10 @@ module NavigationHelpers
   def opportunities_page
     opportunities_path
   end
+
+  def campaigns_page
+    campaigns_path
+  end
 end
 
 RSpec.configuration.include NavigationHelpers, :type => :acceptance
