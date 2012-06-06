@@ -17,7 +17,7 @@
       %td= spacer
       %td
         .label.req #{t :assign_to}:
-        = user_select(:task)
+        = user_select(:task, @users, current_user)
       %td= spacer
       %td
         .label.req #{t :category}:

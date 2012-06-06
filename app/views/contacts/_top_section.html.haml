@@ -31,7 +31,7 @@
           %td= spacer
           %td
             .label #{t :assigned_to}:
-            = user_select(:contact)
+            = user_select(:contact, @users, current_user)
 
         - if Setting.background_info && Setting.background_info.include?(:contact)
           %tr

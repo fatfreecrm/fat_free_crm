@@ -362,6 +362,7 @@ en-GB:
   referred_by_small: referred by
   save_contact: Save Contact
   twitter: Twitter
+  unassigned: Unassigned
   web_presence: Web Presence
   web_presence_small: web presence
   works_at: "%{job_title} at %{company}"
