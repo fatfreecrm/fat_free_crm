@@ -23,6 +23,7 @@ feature 'Accounts', %q{
   scenario 'should create a campaign', :js => true do
     visit campaigns_page
     click_link 'Create Campaign'
+    find("#campaign_name").should be_visible
     fill_in 'campaign_name', :with => 'Cool Campaign'
     select 'On Hold', :from => 'campaign_status'
     click_button 'Create Campaign'
@@ -79,6 +80,6 @@ feature 'Accounts', %q{
     find('#campaigns').should have_content("Campaign 3")
     find('#campaigns').has_selector?('li', :count => 4)
     fill_in 'query', :with => "False campaign"
-    find('#campaigns').has_selector?('li', :count => 0) 
+    find('#campaigns').has_selector?('li', :count => 0)
   end
 end

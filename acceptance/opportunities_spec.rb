@@ -24,6 +24,7 @@ feature 'Opportunities', %q{
     FactoryGirl.create(:account, :name => 'Example Account')
     visit opportunities_page
     click_link 'Create Opportunity'
+    find("#opportunity_name").should be_visible
     fill_in 'opportunity_name', :with => 'My Awesome Opportunity'
     select_from_chosen('account_id', 'Example Account')
     select 'Proposal', :from => 'opportunity_stage'

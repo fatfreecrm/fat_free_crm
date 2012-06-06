@@ -24,6 +24,7 @@ feature 'Leads', %q{
   scenario 'should create a new lead', :js => true do
     visit leads_page
     click_link 'Create Lead'
+    find("#lead_first_name").should be_visible
     fill_in 'lead_first_name', :with => 'Mr'
     fill_in 'lead_last_name', :with => 'Lead'
     fill_in 'lead_email', :with => 'mr_lead@example.com'

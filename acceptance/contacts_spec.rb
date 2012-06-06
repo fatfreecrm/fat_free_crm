@@ -24,6 +24,7 @@ feature 'Accounts', %q{
   scenario 'should create a contact', :js => true do
     visit contacts_page
     click_link 'Create Contact'
+    find("#contact_first_name").should be_visible
     fill_in 'contact_first_name', :with => 'Testy'
     fill_in 'contact_last_name', :with => 'McTest'
     fill_in 'contact_email', :with => "testy.mctest@example.com"
