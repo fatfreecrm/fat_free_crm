@@ -29,12 +29,16 @@ module UsersHelper
       %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw))} } }]
     end
   end
-  
-  def user_select(asset)
-    collection_select asset, :assigned_to, @users, :id, :full_name,
-                      { :include_blank => "" }, 
-                      { :"data-placeholder" => t(:myself),
-                        :style => "width:160px" } 
+
+  def user_select(asset, users, myself)
+    user_options = user_options_for_select(users, myself)
+    select(asset, :assigned_to, user_options,
+           { :include_blank => t(:unassigned) },
+           { :style         => "width:160px"  })
+  end
+
+  def user_options_for_select(users, myself)
+    users.map{|u| [u.full_name, u.id]}.prepend([t(:myself), myself.id])
   end
 end
 

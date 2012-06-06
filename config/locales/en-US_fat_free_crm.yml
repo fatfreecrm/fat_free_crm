@@ -370,6 +370,7 @@ en-US:
   save_contact: Save Contact
   skype: Skype
   twitter: Twitter
+  unassigned: Unassigned
   web_presence: Web Presence
   web_presence_small: web presence
   works_at: "%{job_title} at %{company}"

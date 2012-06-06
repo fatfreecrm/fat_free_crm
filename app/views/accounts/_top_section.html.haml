@@ -8,7 +8,7 @@
       %tr
         %td
           .label #{t :assigned_to}:
-          = user_select(:account)
+          = user_select(:account, @users, current_user)
         %td= spacer
         %td
           .label #{t :category}:

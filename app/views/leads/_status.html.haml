@@ -10,7 +10,7 @@
       %tr
         %td
           .label.top #{t :assigned_to}:
-          = user_select(:lead)
+          = user_select(:lead, @users, current_user)
         %td= spacer
         %td
           .label.top #{t :status}:
