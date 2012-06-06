@@ -44,6 +44,7 @@ require "fat_free_crm/plugin_dependencies"
 
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"
+require "fat_free_crm/comment_extensions"
 require "fat_free_crm/exceptions"
 require "fat_free_crm/errors"
 require "fat_free_crm/i18n"
