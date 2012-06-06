@@ -318,6 +318,14 @@ describe AccountsController do
         xhr :post, :create, :account => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
       end
+
+      it "should add a new comment to the newly created account when specified" do
+        @account = FactoryGirl.build(:account, :name => "Hello world", :user => @current_user)
+        Account.stub!(:new).and_return(@account)
+
+        xhr :post, :create, :account => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
+        @account.reload.comments.map(&:comment).should include("Awesome comment is awesome")
+      end
     end
 
     describe "with invalid params" do
