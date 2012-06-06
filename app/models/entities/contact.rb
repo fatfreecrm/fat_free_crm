@@ -83,6 +83,7 @@ class Contact < ActiveRecord::Base
 
   uses_user_permissions
   acts_as_commentable
+  uses_comment_extensions
   acts_as_taggable_on :tags
   has_paper_trail :ignore => [ :subscribed_users ]
   has_fields
