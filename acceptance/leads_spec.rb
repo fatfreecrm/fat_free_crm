@@ -28,6 +28,8 @@ feature 'Leads', %q{
     fill_in 'lead_last_name', :with => 'Lead'
     fill_in 'lead_email', :with => 'mr_lead@example.com'
     fill_in 'lead_phone', :with => '+44 1234 567890'
+    click_link 'Comment'
+    fill_in 'comment_body', :with => 'This is an important lead.'
     click_link('Status')
     select 'Contacted', :from => 'lead_status'
     click_button 'Create Lead'
@@ -36,8 +38,23 @@ feature 'Leads', %q{
     page.should have_content('mr_lead@example.com')
     page.should have_content('+44 1234 567890')
 
+    click_link 'Mr Lead'
+    page.should have_content('This is an important lead.')
+
     click_link "Dashboard"
     page.should have_content("Bill Murray created lead Mr Lead")
+    page.should have_content("Bill Murray created comment on Mr Lead")
+  end
+
+  scenario "remembers the comment field when the creation was unsuccessful", :js => true do
+    visit leads_page
+    click_link 'Create Lead'
+
+    click_link 'Comment'
+    fill_in 'comment_body', :with => 'This is an important lead.'
+    click_button 'Create Lead'
+
+    page.should have_field('comment_body', :with => 'This is an important lead.')
   end
 
   scenario 'should view and edit a lead', :js => true do

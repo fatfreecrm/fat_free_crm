@@ -365,7 +365,14 @@ describe LeadsController do
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
         assigns[:campaign].should == @campaign
       end
+      
+      it "should add a new comment to the newly created lead when specified" do
+        @lead = FactoryGirl.create(:lead)
+        Lead.stub!(:new).and_return(@lead)
 
+        xhr :post, :create, :lead => { :first_name => "Test", :last_name => "Lead" }, :comment_body => "This is an important lead."
+        @lead.reload.comments.map(&:comment).should include("This is an important lead.")
+      end
     end
 
     describe "with invalid params" do
