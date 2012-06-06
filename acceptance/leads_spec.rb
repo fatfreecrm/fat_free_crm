@@ -76,21 +76,21 @@ feature 'Leads', %q{
     page.should_not have_content('mr_lead@example.com')
   end
 
-  scenario 'should search for a lead' do
-    3.times { |i| FactoryGirl.create(:lead, :first_name => "L", :last_name => "Ead #{i}", :email => "lead#{i}@example.com") }
+  scenario 'should search for a lead', :js => true do
+    3.times { |i| FactoryGirl.create(:lead, :first_name => "Lead", :last_name => "\##{i}", :email => "lead#{i}@example.com") }
     visit leads_page
-    find('#leads').should have_content("L Ead 0")
-    find('#leads').should have_content("L Ead 1")
-    find('#leads').should have_content("L Ead 2")
-    fill_in 'query', :with => "L Ead 0"
-    find('#leads').should have_content("L Ead 0")
+    find('#leads').should have_content('Lead #0')
+    find('#leads').should have_content('Lead #1')
+    find('#leads').should have_content('Lead #2')
+    fill_in 'query', :with => 'Lead #0'
+    find('#leads').should have_content('Lead #0')
     find('#leads').has_selector?('li', :count => 1)
-    fill_in 'query', :with => "L Ead"
-    find('#leads').should have_content("L Ead 0")
-    find('#leads').should have_content("L Ead 1")
-    find('#leads').should have_content("L Ead 2")
+    fill_in 'query', :with => 'Lead'
+    find('#leads').should have_content('Lead #0')
+    find('#leads').should have_content('Lead #1')
+    find('#leads').should have_content('Lead #2')
     find('#leads').has_selector?('li', :count => 3)
-    fill_in 'query', :with => "Non-existant lead"
+    fill_in 'query', :with => 'Non-existant lead'
     find('#leads').has_selector?('li', :count => 0)
   end
 end
