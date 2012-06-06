@@ -17,6 +17,10 @@ module NavigationHelpers
     opportunities_path
   end
 
+  def contacts_page
+    contacts_path
+  end
+
   def campaigns_page
     campaigns_path
   end
