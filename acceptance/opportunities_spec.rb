@@ -27,11 +27,28 @@ feature 'Opportunities', %q{
     fill_in 'opportunity_name', :with => 'My Awesome Opportunity'
     select_from_chosen('account_id', 'Example Account')
     select 'Proposal', :from => 'opportunity_stage'
+    click_link 'Comment'
+    fill_in 'comment_body', :with => 'This is a very important opportunity.'
     click_button 'Create Opportunity'
     page.should have_content('My Awesome Opportunity')
 
+    click_link 'My Awesome Opportunity'
+    page.should have_content('This is a very important opportunity.')
+
     click_link "Dashboard"
     page.should have_content("Bill Murray created opportunity My Awesome Opportunity")
+    page.should have_content("Bill Murray created comment on My Awesome Opportunity")
+  end
+
+  scenario "remembers the comment field when the creation was unsuccessful", :js => true do
+    visit opportunities_page
+    click_link 'Create Opportunity'
+
+    click_link 'Comment'
+    fill_in 'comment_body', :with => 'This is a very important opportunity.'
+    click_button 'Create Opportunity'
+
+    page.should have_field('comment_body', :with => 'This is a very important opportunity.')
   end
 
   scenario 'should view and edit an opportunity', :js => true do
