@@ -76,7 +76,5 @@ feature 'Accounts', %q{
     find('#accounts').has_selector?('li', :count => 2)
     fill_in 'query', :with => "Contact"
     find('#accounts').has_selector?('li', :count => 0)
-
   end
-
 end
