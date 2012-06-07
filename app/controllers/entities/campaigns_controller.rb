@@ -72,9 +72,11 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @users = User.except(@current_user)
+    @comment_body = params[:comment_body]
 
     respond_with(@campaign) do |format|
       if @campaign.save_with_permissions(params[:users])
+        @campaign.add_comment_by_user(@comment_body, current_user)
         @campaigns = get_campaigns
         get_data_for_sidebar
       end

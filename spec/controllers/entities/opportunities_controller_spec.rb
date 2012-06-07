@@ -421,6 +421,14 @@ describe OpportunitiesController do
         @opportunity.campaign.should == @campaign.reload
         @campaign.revenue.to_i.should == 1000 # 1000 - 100 discount.
       end
+
+      it "should add a new comment to the newly created opportunity when specified" do
+        @opportunity = FactoryGirl.build(:opportunity, :user => @current_user)
+        Opportunity.stub!(:new).and_return(@opportunity)
+
+        xhr :post, :create, :opportunity => { :name => "Opportunity Knocks" }, :account => { :name => "My Account" }, :comment_body => "Awesome comment is awesome"
+        @opportunity.reload.comments.map(&:comment).should include("Awesome comment is awesome")
+      end      
     end
 
     describe "with invalid params" do

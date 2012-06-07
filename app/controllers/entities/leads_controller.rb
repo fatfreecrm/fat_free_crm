@@ -76,9 +76,11 @@ class LeadsController < EntitiesController
   def create
     @users = User.except(@current_user)
     get_campaigns
+    @comment_body = params[:comment_body]
 
     respond_with(@lead) do |format|
       if @lead.save_with_permissions(params)
+        @lead.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @leads = get_leads
           get_data_for_sidebar
