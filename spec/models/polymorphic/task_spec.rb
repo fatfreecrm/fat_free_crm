@@ -353,5 +353,34 @@ describe Task do
       end
     end
   end
+
+  describe "scopes" do
+    context "visible_on_dashboard" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+        @t1 = FactoryGirl.create(:task, :user => @user)
+        @t2 = FactoryGirl.create(:task, :user => @user, :assignee => FactoryGirl.create(:user))
+        @t3 = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => @user)
+        @t4 = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
+        @t5 = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => @user)
+      end
+
+      it "should show opportunities which have been created by the user and are unassigned" do
+        Task.visible_on_dashboard(@user).should include(@t1)
+      end
+
+      it "should show opportunities which are assigned to the user" do
+        Task.visible_on_dashboard(@user).should include(@t3, @t5)
+      end
+
+      it "should not show opportunities which are not assigned to the user" do
+        Task.visible_on_dashboard(@user).should_not include(@t4)
+      end
+
+      it "should not show opportunities which are created by the user but assigned" do
+        Task.visible_on_dashboard(@user).should_not include(@t2)
+      end
+    end
+  end
 end
 

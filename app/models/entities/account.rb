@@ -65,6 +65,13 @@ class Account < ActiveRecord::Base
     where('upper(name) LIKE upper(:m) OR upper(email) LIKE upper(:m)', :m => "%#{query}%")
   }
 
+  scope :visible_on_dashboard, lambda { |user|
+    # Show accounts which either belong to the user and are unassigned, or are assigned to the user
+    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id)
+  }
+
+  scope :by_name, order(:name)
+
   uses_user_permissions
   acts_as_commentable
   acts_as_taggable_on :tags

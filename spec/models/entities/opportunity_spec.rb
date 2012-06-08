@@ -187,5 +187,34 @@ describe Opportunity do
   describe "permissions" do
     it_should_behave_like Ability, Opportunity
   end
+
+  describe "scopes" do
+    context "visible_on_dashboard" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+        @o1 = FactoryGirl.create(:opportunity, :user => @user)
+        @o2 = FactoryGirl.create(:opportunity, :user => @user, :assignee => FactoryGirl.create(:user))
+        @o3 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user)
+        @o4 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
+        @o5 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user)
+      end
+
+      it "should show opportunities which have been created by the user and are unassigned" do
+        Opportunity.visible_on_dashboard(@user).should include(@o1)
+      end
+
+      it "should show opportunities which are assigned to the user" do
+        Opportunity.visible_on_dashboard(@user).should include(@o3, @o5)
+      end
+
+      it "should not show opportunities which are not assigned to the user" do
+        Opportunity.visible_on_dashboard(@user).should_not include(@o4)
+      end
+
+      it "should not show opportunities which are created by the user but assigned" do
+        Opportunity.visible_on_dashboard(@user).should_not include(@o2)
+      end
+    end
+  end
 end
 
