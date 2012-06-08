@@ -1,9 +1,9 @@
 - amount = account.opportunities.not_lost.map(&:weighted_amount).sum
 %li.highlight[account]
-  - if amount != 0.0
-    .strip.some= number_to_currency(amount, :precision => 0)
+  - if account.category
+    .strip{:class => account.category} #{t(account.category)}
   - else
-    .strip.none None
+    .strip{:style => "color: gray;"} #{t :other}
 
   .indent
     = link_to(h(account.name), account)
