@@ -216,15 +216,27 @@ describe Opportunity do
       end
     end
 
-    context "by_name" do
-      it "should show opportunities ordered by name" do
-        @o1 = FactoryGirl.create(:opportunity, :name => "Opportunity B")
-        @o2 = FactoryGirl.create(:opportunity, :name => "Opportunity S")
-        @o3 = FactoryGirl.create(:opportunity, :name => "Opportunity X")
-        @o4 = FactoryGirl.create(:opportunity, :name => "Opportunity K")
-        @o5 = FactoryGirl.create(:opportunity, :name => "Opportunity N")
+    context "by_closes_on" do
+      let(:o1) { FactoryGirl.create(:opportunity, :closes_on => 3.days.from_now) }
+      let(:o2) { FactoryGirl.create(:opportunity, :closes_on => 7.days.from_now) }
+      let(:o3) { FactoryGirl.create(:opportunity, :closes_on => 5.days.from_now) }
 
-        Opportunity.by_name.should == [@o1, @o4, @o5, @o2, @o3]
+      it "should show opportunities ordered by closes on" do
+        Opportunity.by_closes_on.should == [o1, o3, o2]
+      end
+    end
+
+    context "not lost" do
+      let(:o1) { FactoryGirl.create(:opportunity, :stage => 'won') }
+      let(:o2) { FactoryGirl.create(:opportunity, :stage => 'lost') }
+      let(:o3) { FactoryGirl.create(:opportunity, :stage => 'analysis') }
+
+      it "should show opportunities which are not lost" do
+        Opportunity.not_lost.should include(o1, o3)
+      end
+
+      it "should not show opportunities which are lost" do
+        Opportunity.not_lost.should_not include(o2)
       end
     end
   end

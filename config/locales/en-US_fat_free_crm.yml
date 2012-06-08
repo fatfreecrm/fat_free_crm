@@ -510,6 +510,8 @@ en-US:
 
   my_tasks: My Tasks
   no_task_records: You have no tasks.
+  my_opportunities: My Opportunities
+  no_opportunity_records: You have no opportunities.
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Add Note

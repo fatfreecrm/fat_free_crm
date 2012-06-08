@@ -6,6 +6,14 @@
   - else
     #{t :no_task_records}
 
+.title
+  %span#title #{t :my_opportunities}
+%ul.list#opportunities
+  - unless @my_opportunities.empty?
+    = render :partial => "home/opportunity", :collection => @my_opportunities
+  - else
+    #{t :no_opportunity_records}
+
 .title_tools
   = link_to_inline(:options, url_for(:action => :options), :text => t(:options))
 
