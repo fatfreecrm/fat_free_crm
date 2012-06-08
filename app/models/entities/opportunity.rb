@@ -57,6 +57,7 @@ class Opportunity < ActiveRecord::Base
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
   scope :won,      where("opportunities.stage = 'won'")
   scope :lost,     where("opportunities.stage = 'lost'")
+  scope :not_lost, where("opportunities.stage <> 'lost'")
   scope :pipeline, where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')")
 
   # Search by name OR id
@@ -69,6 +70,13 @@ class Opportunity < ActiveRecord::Base
       where('upper(name) LIKE upper(:name)', :name => "%#{query}%")
     end
   }
+
+  scope :visible_on_dashboard, lambda { |user|
+    # Show opportunities which either belong to the user and are unassigned, or are assigned to the user
+    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id)
+  }
+
+  scope :by_closes_on, order(:closes_on)
 
   uses_user_permissions
   acts_as_commentable

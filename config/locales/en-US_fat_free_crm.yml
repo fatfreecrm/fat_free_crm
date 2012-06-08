@@ -508,6 +508,13 @@ en-US:
   destroy_past_participle: Deletions
   all_events_past_participle: Activities
 
+  my_tasks: My Tasks
+  no_task_records: You have no tasks.
+  my_opportunities: My Opportunities
+  no_opportunity_records: You have no opportunities.
+  my_accounts: My Accounts
+  no_account_records: You have no accounts
+
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Add Note

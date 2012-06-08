@@ -136,5 +136,46 @@ describe Account do
   describe "permissions" do
     it_should_behave_like Ability, Account
   end
+
+  describe "scopes" do
+    context "visible_on_dashboard" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+        @a1 = FactoryGirl.create(:account, :user => @user)
+        @a2 = FactoryGirl.create(:account, :user => @user, :assignee => FactoryGirl.create(:user))
+        @a3 = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => @user)
+        @a4 = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
+        @a5 = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => @user)
+      end
+
+      it "should show accounts which have been created by the user and are unassigned" do
+        Account.visible_on_dashboard(@user).should include(@a1)
+      end
+
+      it "should show accounts which are assigned to the user" do
+        Account.visible_on_dashboard(@user).should include(@a3, @a5)
+      end
+
+      it "should not show accounts which are not assigned to the user" do
+        Account.visible_on_dashboard(@user).should_not include(@a4)
+      end
+
+      it "should not show accounts which are created by the user but assigned" do
+        Account.visible_on_dashboard(@user).should_not include(@a2)
+      end
+    end
+
+    context "by_name" do
+      it "should show accounts ordered by name" do
+        @a1 = FactoryGirl.create(:account, :name => "Account A")
+        @a2 = FactoryGirl.create(:account, :name => "Account Z")
+        @a3 = FactoryGirl.create(:account, :name => "Account J")
+        @a4 = FactoryGirl.create(:account, :name => "Account X")
+        @a5 = FactoryGirl.create(:account, :name => "Account L")
+
+        Account.by_name.should == [@a1, @a3, @a5, @a4, @a2]
+      end
+    end
+  end
 end
 

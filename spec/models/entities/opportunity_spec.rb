@@ -187,5 +187,58 @@ describe Opportunity do
   describe "permissions" do
     it_should_behave_like Ability, Opportunity
   end
+
+  describe "scopes" do
+    context "visible_on_dashboard" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+        @o1 = FactoryGirl.create(:opportunity, :user => @user)
+        @o2 = FactoryGirl.create(:opportunity, :user => @user, :assignee => FactoryGirl.create(:user))
+        @o3 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user)
+        @o4 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
+        @o5 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user)
+      end
+
+      it "should show opportunities which have been created by the user and are unassigned" do
+        Opportunity.visible_on_dashboard(@user).should include(@o1)
+      end
+
+      it "should show opportunities which are assigned to the user" do
+        Opportunity.visible_on_dashboard(@user).should include(@o3, @o5)
+      end
+
+      it "should not show opportunities which are not assigned to the user" do
+        Opportunity.visible_on_dashboard(@user).should_not include(@o4)
+      end
+
+      it "should not show opportunities which are created by the user but assigned" do
+        Opportunity.visible_on_dashboard(@user).should_not include(@o2)
+      end
+    end
+
+    context "by_closes_on" do
+      let(:o1) { FactoryGirl.create(:opportunity, :closes_on => 3.days.from_now) }
+      let(:o2) { FactoryGirl.create(:opportunity, :closes_on => 7.days.from_now) }
+      let(:o3) { FactoryGirl.create(:opportunity, :closes_on => 5.days.from_now) }
+
+      it "should show opportunities ordered by closes on" do
+        Opportunity.by_closes_on.should == [o1, o3, o2]
+      end
+    end
+
+    context "not lost" do
+      let(:o1) { FactoryGirl.create(:opportunity, :stage => 'won') }
+      let(:o2) { FactoryGirl.create(:opportunity, :stage => 'lost') }
+      let(:o3) { FactoryGirl.create(:opportunity, :stage => 'analysis') }
+
+      it "should show opportunities which are not lost" do
+        Opportunity.not_lost.should include(o1, o3)
+      end
+
+      it "should not show opportunities which are lost" do
+        Opportunity.not_lost.should_not include(o2)
+      end
+    end
+  end
 end
 

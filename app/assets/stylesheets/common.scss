@@ -424,7 +424,7 @@ $sidebar_width: 210px;
 // Two-row lists.
 //------------------------------------------------------------------------------
 .list {
-  padding: 8px 0px 0px 0px;
+  padding: 8px 0px 7px 0px;
   li {
     border-bottom: 1px silver dotted;
     clear: both;
@@ -639,7 +639,7 @@ span.handle img {
 
 .tags, .list li dt .tags {
   margin-top: 4px;
-  a:link, a:visited {
+  a:link, a:visited, li {
     background-color: #eaeaea;
     color: #333333;
     font-weight: normal;
@@ -657,7 +657,11 @@ span.handle img {
     -webkit-border-radius: 3px;
     border-radius: 3px; }
   a:hover {
-    background: #dadada; } }
+    background: #dadada; }
+  li {
+    display:inline;
+  }
+}
 
 .field_group .list {
   padding-bottom: 30px; }
