@@ -381,6 +381,18 @@ describe Task do
         Task.visible_on_dashboard(@user).should_not include(@t2)
       end
     end
+
+    context "by_name" do
+      it "should show opportunities ordered by name" do
+        @t1 = FactoryGirl.create(:task, :name => "Task T")
+        @t2 = FactoryGirl.create(:task, :name => "Task Y")
+        @t3 = FactoryGirl.create(:task, :name => "Task W")
+        @t4 = FactoryGirl.create(:task, :name => "Task V")
+        @t5 = FactoryGirl.create(:task, :name => "Task O")
+
+        Task.by_name.should == [@t5, @t1, @t4, @t3, @t2]
+      end
+    end
   end
 end
 

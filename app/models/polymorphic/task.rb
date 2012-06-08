@@ -76,6 +76,8 @@ class Task < ActiveRecord::Base
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id)
   }
 
+  scope :by_name, order(:name)
+
   # Status based scopes to be combined with the due date and completion time.
   scope :pending,       where('completed_at IS NULL').order('tasks.due_at, tasks.id')
   scope :assigned,      where('completed_at IS NULL AND assigned_to IS NOT NULL').order('tasks.due_at, tasks.id')

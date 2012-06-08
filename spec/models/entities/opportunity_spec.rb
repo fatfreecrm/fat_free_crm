@@ -215,6 +215,18 @@ describe Opportunity do
         Opportunity.visible_on_dashboard(@user).should_not include(@o2)
       end
     end
+
+    context "by_name" do
+      it "should show opportunities ordered by name" do
+        @o1 = FactoryGirl.create(:opportunity, :name => "Opportunity B")
+        @o2 = FactoryGirl.create(:opportunity, :name => "Opportunity S")
+        @o3 = FactoryGirl.create(:opportunity, :name => "Opportunity X")
+        @o4 = FactoryGirl.create(:opportunity, :name => "Opportunity K")
+        @o5 = FactoryGirl.create(:opportunity, :name => "Opportunity N")
+
+        Opportunity.by_name.should == [@o1, @o4, @o5, @o2, @o3]
+      end
+    end
   end
 end
 

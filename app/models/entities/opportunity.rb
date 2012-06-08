@@ -75,6 +75,8 @@ class Opportunity < ActiveRecord::Base
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id)
   }
 
+  scope :by_name, order(:name)
+
   uses_user_permissions
   acts_as_commentable
   acts_as_taggable_on :tags

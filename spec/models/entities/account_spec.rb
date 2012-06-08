@@ -164,6 +164,18 @@ describe Account do
         Account.visible_on_dashboard(@user).should_not include(@a2)
       end
     end
+
+    context "by_name" do
+      it "should show accounts ordered by name" do
+        @a1 = FactoryGirl.create(:account, :name => "Account A")
+        @a2 = FactoryGirl.create(:account, :name => "Account Z")
+        @a3 = FactoryGirl.create(:account, :name => "Account J")
+        @a4 = FactoryGirl.create(:account, :name => "Account X")
+        @a5 = FactoryGirl.create(:account, :name => "Account L")
+
+        Account.by_name.should == [@a1, @a3, @a5, @a4, @a2]
+      end
+    end
   end
 end
 
