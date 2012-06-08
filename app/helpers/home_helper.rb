@@ -65,7 +65,7 @@ module HomeHelper
       :default => "#{user} #{action} #{type} #{subject}")
   end
 
-  # Displays 'not showing' message for a given scope, entity and limit
+  # Displays 'not showing' message for a given count, entity and limit
   def show_hidden_entities_message(count, entity, limit = 10)
     if count > limit
       hidden_count = count - 10
