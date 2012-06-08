@@ -32,6 +32,14 @@ module CrmTagsHelper
     end.join(" ").html_safe
   end
 
+  def tags_for_dashboard(model)
+    content_tag(:ul) do
+      model.tag_list.each do |tag|
+        concat(content_tag(:li, tag))
+      end
+    end.html_safe
+  end
+
   # Generate tag links for the asset landing page (shown on a sidebar).
   #----------------------------------------------------------------------------
   def tags_for_show(model)

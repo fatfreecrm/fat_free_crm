@@ -1,3 +1,29 @@
+= styles_for :task, :opportunity, :account
+
+.title
+  %span#title #{t :my_tasks}
+%ul.list#tasks
+  - unless @my_tasks.empty?
+    = render :partial => "home/task", :collection => @my_tasks
+  - else
+    #{t :no_task_records}
+
+.title
+  %span#title #{t :my_opportunities}
+%ul.list#opportunities
+  - unless @my_opportunities.empty?
+    = render :partial => "home/opportunity", :collection => @my_opportunities
+  - else
+    #{t :no_opportunity_records}
+
+.title
+  %span#title #{t :my_accounts}
+%ul.list#accounts
+  - unless @my_accounts.empty?
+    = render :partial => "home/account", :collection => @my_accounts
+  - else
+    #{t :no_account_records}
+
 .title_tools
   = link_to_inline(:options, url_for(:action => :options), :text => t(:options))
 
@@ -6,11 +32,12 @@
   = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 .remote#options{ hidden }
 
-.list#activities
+%ul.list#activities
   - unless @activities.empty?
     = render :partial => "activity", :collection => @activities
   - else
     #{t :no_activity_records}
+
 
 #export= render "shared/export"
 /
