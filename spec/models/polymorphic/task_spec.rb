@@ -365,32 +365,30 @@ describe Task do
         @t5 = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => @user)
       end
 
-      it "should show opportunities which have been created by the user and are unassigned" do
+      it "should show tasks which have been created by the user and are unassigned" do
         Task.visible_on_dashboard(@user).should include(@t1)
       end
 
-      it "should show opportunities which are assigned to the user" do
+      it "should show tasks which are assigned to the user" do
         Task.visible_on_dashboard(@user).should include(@t3, @t5)
       end
 
-      it "should not show opportunities which are not assigned to the user" do
+      it "should not show tasks which are not assigned to the user" do
         Task.visible_on_dashboard(@user).should_not include(@t4)
       end
 
-      it "should not show opportunities which are created by the user but assigned" do
+      it "should not show tasks which are created by the user but assigned" do
         Task.visible_on_dashboard(@user).should_not include(@t2)
       end
     end
 
-    context "by_name" do
-      it "should show opportunities ordered by name" do
-        @t1 = FactoryGirl.create(:task, :name => "Task T")
-        @t2 = FactoryGirl.create(:task, :name => "Task Y")
-        @t3 = FactoryGirl.create(:task, :name => "Task W")
-        @t4 = FactoryGirl.create(:task, :name => "Task V")
-        @t5 = FactoryGirl.create(:task, :name => "Task O")
-
-        Task.by_name.should == [@t5, @t1, @t4, @t3, @t2]
+    context "by_due_at" do
+      it "should show tasks ordered by due_at" do
+        t1 = FactoryGirl.create(:task, :name => 't1', :bucket => "due_asap")
+        t2 = FactoryGirl.create(:task, :calendar => 5.days.from_now.strftime("%m/%d/%Y %I:%M %p"), :bucket => "specific_time")
+        t3 = FactoryGirl.create(:task, :name => 't3',  :bucket => "due_next_week")
+        t4 = FactoryGirl.create(:task, :calendar => 20.days.from_now.strftime("%m/%d/%Y %I:%M %p"), :bucket => "specific_time")
+        Task.by_due_at.should == [t1, t2, t3, t4]
       end
     end
   end

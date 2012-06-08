@@ -508,6 +508,8 @@ en-US:
   destroy_past_participle: Deletions
   all_events_past_participle: Activities
 
+  my_tasks: My Tasks
+  no_task_records: You have no tasks.
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Add Note

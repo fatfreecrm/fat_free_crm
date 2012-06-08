@@ -491,6 +491,8 @@ en-GB:
   subject_opportunity: opportunity
   subject_task: task
 
+  my_tasks: My Tasks
+  no_task_records: You have no tasks.
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Add Note

@@ -26,6 +26,7 @@ class HomeController < ApplicationController
     hook(:home_controller, self, :params => "it works!")
 
     @activities = get_activities
+    @my_tasks = Task.visible_on_dashboard(@current_user).by_due_at
     respond_with(@activities)
   end
 

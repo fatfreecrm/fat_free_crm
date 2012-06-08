@@ -1,3 +1,11 @@
+.title
+  %span#title #{t :my_tasks}
+%ul.list#tasks
+  - unless @my_tasks.empty?
+    = render :partial => "home/task", :collection => @my_tasks
+  - else
+    #{t :no_task_records}
+
 .title_tools
   = link_to_inline(:options, url_for(:action => :options), :text => t(:options))
 
@@ -6,7 +14,7 @@
   = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 .remote#options{ hidden }
 
-.list#activities
+%ul.list#activities
   - unless @activities.empty?
     = render :partial => "activity", :collection => @activities
   - else
