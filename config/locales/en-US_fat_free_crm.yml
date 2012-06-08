@@ -21,7 +21,7 @@ en-US:
   tab_campaigns: Campaigns
   tab_leads: Leads
   tab_accounts: Accounts
-  tab_contacts: Contacts
+  tab_contacts: Contactsf
   tab_opportunities: Opportunities
 
   admin_tab_users: Users
@@ -514,6 +514,7 @@ en-US:
   no_opportunity_records: You have no opportunities.
   my_accounts: My Accounts
   no_account_records: You have no accounts
+  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
 
   # Views -> Common.
   #----------------------------------------------------------------------------

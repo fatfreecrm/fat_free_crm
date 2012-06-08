@@ -33,4 +33,30 @@ feature 'Dashboard', %q{
       page.should have_content("Dolphin Manufacturer")
     end
   end
+
+  scenario "Only show a maximum of 10 entities" do
+    10.times do
+      FactoryGirl.create(:task, :assignee => @me)
+      FactoryGirl.create(:opportunity, :assignee => @me)
+      FactoryGirl.create(:account, :assignee => @me)
+    end
+
+    visit homepage
+
+    #My Tasks
+    within "#tasks" do
+      page.should have_content("Not showing 1 hidden task.")
+    end
+
+    #My Opportunities
+    within "#opportunities" do
+      page.should have_content("Not showing 1 hidden opportunity.")
+    end
+
+    #My Accounts
+    within "#accounts" do
+      page.should have_content("Not showing 1 hidden account.")
+    end
+
+  end
 end
