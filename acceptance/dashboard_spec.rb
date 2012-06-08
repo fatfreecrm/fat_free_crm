@@ -12,6 +12,7 @@ feature 'Dashboard', %q{
 
     FactoryGirl.create(:task, :name => 'Do your homework!', :assignee => @me)
     FactoryGirl.create(:opportunity, :name => 'Work with the Dolphins', :assignee => @me)
+    FactoryGirl.create(:account, :name => 'Dolphin Manufacturer', :assignee => @me)
   end
 
   scenario "Viewing my dashboard" do
@@ -25,6 +26,11 @@ feature 'Dashboard', %q{
     #My Opportunities
     within "#opportunities" do
       page.should have_content("Work with the Dolphins")
+    end
+
+    #My Accounts
+    within "#accounts" do
+      page.should have_content("Dolphin Manufacturer")
     end
   end
 end

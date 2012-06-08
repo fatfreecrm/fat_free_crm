@@ -42,6 +42,20 @@ describe HomeController do
       get :index
       assigns[:my_opportunities].should == [opportunity_3, opportunity_2, opportunity_1, opportunity_4]
     end
+
+    it "should get a list of my accounts ordered by name" do
+      account_1 = FactoryGirl.create(:account, :name => "Anderson", :assigned_to => @current_user.id)
+      account_2 = FactoryGirl.create(:account, :name => "Wilson", :assigned_to => @current_user.id)
+      account_3 = FactoryGirl.create(:account, :name => "Triple", :assigned_to => @current_user.id)
+      account_4 = FactoryGirl.create(:account, :name => "Double", :assigned_to => nil, :user_id => @current_user.id)
+
+      FactoryGirl.create(:account, :name => "Someone else's Account", :assigned_to => FactoryGirl.create(:user).id)
+      FactoryGirl.create(:account, :name => "Not my account", :assigned_to => FactoryGirl.create(:user).id)
+
+      get :index
+      assigns[:my_accounts].should == [account_1, account_4, account_3, account_2]
+    end
+
     it "should assign @hello and call hook" do
       require_user
       controller.should_receive(:hook).at_least(:once)
