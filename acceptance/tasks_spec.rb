@@ -1,6 +1,6 @@
 require File.expand_path("../acceptance_helper.rb", __FILE__)
 
-feature 'Accounts', %q{
+feature 'Tasks', %q{
   In order to increase keep track of things
   As a user
   I want to manage tasks
