@@ -76,8 +76,10 @@ class Task < ActiveRecord::Base
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id)
   }
 
-  scope :by_due_at, order(ActiveRecord::Base.connection.adapter_name == "SQLite" ?
-    :due_at : "due_at ASC NULLS FIRST")
+  scope :by_due_at, order({
+    "MySQL"      => "due_at NOT NULL, due_at ASC",
+    "PostgreSQL" => "due_at ASC NULLS FIRST"
+  }[ActiveRecord::Base.connection.adapter_name] || :due_at)
 
 
   # Status based scopes to be combined with the due date and completion time.
