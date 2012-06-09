@@ -24,6 +24,10 @@ module NavigationHelpers
   def campaigns_page
     campaigns_path
   end
+
+  def tasks_page
+    tasks_path
+  end
 end
 
 RSpec.configuration.include NavigationHelpers, :type => :acceptance
