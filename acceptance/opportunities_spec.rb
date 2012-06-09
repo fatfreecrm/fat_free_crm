@@ -26,7 +26,7 @@ feature 'Opportunities', %q{
     click_link 'Create Opportunity'
     find("#opportunity_name").should be_visible
     fill_in 'opportunity_name', :with => 'My Awesome Opportunity'
-    select_from_chosen('account_id', 'Example Account')
+    chosen_select('Example Account', :from => 'account_id')
     select 'Proposal', :from => 'opportunity_stage'
     click_button 'Create Opportunity'
     page.should have_content('My Awesome Opportunity')
@@ -43,7 +43,7 @@ feature 'Opportunities', %q{
     click_link 'A Cool Opportunity'
     click_link 'Edit'
     fill_in 'opportunity_name', :with => 'An Even Cooler Opportunity'
-    select_from_chosen('account_id', 'Other Example Account')
+    chosen_select('Other Example Account', :from => 'account_id')
     select 'Analysis', :from => 'opportunity_stage'
     click_button 'Save Opportunity'
     page.should have_content('An Even Cooler Opportunity')
