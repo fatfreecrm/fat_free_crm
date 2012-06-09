@@ -11,6 +11,6 @@ if defined?(ActiveRecord::Base)
   end
 end
 
-RSpec.configuration.before(:each, :type => :acceptance) do
+RSpec.configuration.before(:each, :type => :request) do
   DatabaseCleaner.clean
 end
