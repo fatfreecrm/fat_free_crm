@@ -28,6 +28,10 @@ module NavigationHelpers
   def tasks_page
     tasks_path
   end
+
+  def opportunity_overview_page
+    opportunities_overview_users_path
+  end
 end
 
 RSpec.configuration.include NavigationHelpers, :type => :request

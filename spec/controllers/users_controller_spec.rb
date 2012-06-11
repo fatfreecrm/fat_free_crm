@@ -336,5 +336,50 @@ describe UsersController do
 
   end
 
+  # GET /users/opportunities
+  # GET /users/opportunities.xml                                         HTML
+  #----------------------------------------------------------------------------
+  describe "responding to GET opportunities_overview" do
+    before(:each) do
+      require_user
+      @user = @current_user
+      @user.update_attributes(:first_name => "Apple", :last_name => "Boy")
+    end
+
+    it "should assign @users" do
+      FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => @user)
+      xhr :get, :opportunities_overview
+      assigns[:users_with_opportunities].should == [@current_user]
+    end
+    it "@users should be ordered by name" do
+      FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => @user)
+
+      user1 = FactoryGirl.create(:user, :first_name => "Zebra", :last_name => "Stripes")
+      FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => user1)
+
+      user2 = FactoryGirl.create(:user, :first_name => "Bilbo", :last_name => "Magic")
+      FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => user2)
+
+      xhr :get, :opportunities_overview
+
+      assigns[:users_with_opportunities].should == [@user, user2, user1]
+    end
+
+    it "should not include users who have no assigned opportunities" do
+      xhr :get, :opportunities_overview
+      assigns[:users_with_opportunities].should == []
+    end
+    it "should not include users who have no open assigned opportunities" do
+      FactoryGirl.create(:opportunity, :stage => "won", :assignee => @user)
+
+      xhr :get, :opportunities_overview
+      assigns[:users_with_opportunities].should == []
+    end
+    it "should render opportunities overview" do
+      xhr :get, :opportunities_overview
+      response.should render_template("users/opportunities_overview")
+    end
+  end
+
 end
 
