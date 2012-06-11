@@ -481,6 +481,7 @@ en-US:
   # Views -> Team.
   #----------------------------------------------------------------------------
   unassigned_opportunities: Unassigned Opportunities
+  no_opportunities_found: There are currently no outstanding opportunities.
 
   # Views -> Home.
   #----------------------------------------------------------------------------

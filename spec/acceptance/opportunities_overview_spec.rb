@@ -9,23 +9,10 @@ feature 'Opportunities Overview', %q{
   background do
     @me = FactoryGirl.create(:user)
 
-    @user1 = FactoryGirl.create(:user, :first_name => "Brian", :last_name => 'Doyle-Murray', :id => 64)
-    FactoryGirl.create(:opportunity, :name => "Acting", :stage => 'prospecting', :assignee => @user1)
-    FactoryGirl.create(:opportunity, :name => "Directing", :stage => 'won', :assignee => @user1)
-
-    @user2 = FactoryGirl.create(:user, :first_name => "Dean", :last_name => 'Stockwell', :id => 86)
-    @account1 = FactoryGirl.create(:account, :name => 'Quantum Leap')
-    FactoryGirl.create(:opportunity, :name => "Leaping", :stage => 'prospecting', :account => @account1, :assignee => @user2)
-    FactoryGirl.create(:opportunity, :name => "Return Home", :stage => 'prospecting', :account => @account1, :assignee => @user2)
-
-    @user3 = FactoryGirl.create(:user, :first_name => "Chris", :last_name => 'Jarvis', :id => 16)
-    FactoryGirl.create(:opportunity, :stage => 'won', :assignee => @user3)
-    FactoryGirl.create(:opportunity, :stage => 'lost', :assignee => @user3)
-
     login_as_user(@me)
   end
 
-  scenario "Accessing Opportunity overview via the nav" do
+  scenario "Accessing Opportunity Overview via the nav" do
     visit homepage
     within "#tabs" do
       click_link "Team"
@@ -34,7 +21,20 @@ feature 'Opportunities Overview', %q{
     current_path.should == opportunity_overview_page
   end
 
-  scenario "Viewing opportunity overview" do
+  scenario "Viewing Opportunity Overview when all opportunities have been assigned" do
+    user1 = FactoryGirl.create(:user, :first_name => "Brian", :last_name => 'Doyle-Murray', :id => 64)
+    FactoryGirl.create(:opportunity, :name => "Acting", :stage => 'prospecting', :assignee => user1)
+    FactoryGirl.create(:opportunity, :name => "Directing", :stage => 'won', :assignee => user1)
+
+    user2 = FactoryGirl.create(:user, :first_name => "Dean", :last_name => 'Stockwell', :id => 86)
+    account1 = FactoryGirl.create(:account, :name => 'Quantum Leap')
+    FactoryGirl.create(:opportunity, :name => "Leaping", :stage => 'prospecting', :account => account1, :assignee => user2)
+    FactoryGirl.create(:opportunity, :name => "Return Home", :stage => 'prospecting', :account => account1, :assignee => user2)
+
+    user3 = FactoryGirl.create(:user, :first_name => "Chris", :last_name => 'Jarvis', :id => 16)
+    FactoryGirl.create(:opportunity, :stage => 'won', :assignee => user3)
+    FactoryGirl.create(:opportunity, :stage => 'lost', :assignee => user3)
+
     visit opportunity_overview_page
 
     within "#user_64" do
@@ -50,9 +50,11 @@ feature 'Opportunities Overview', %q{
     end
 
     page.should_not have_selector('#user_16')
+
+    page.should_not have_selector('#unassigned')
   end
 
-  scenario "Viewing unassigned opportunities" do
+  scenario "Viewing Opportunity Overview when all opportunities are unassigned" do
     FactoryGirl.create(:opportunity, :name => "Acting", :stage => 'prospecting', :assignee => nil)
     FactoryGirl.create(:opportunity, :name => "Presenting", :stage => 'won', :assignee => nil)
 
@@ -62,6 +64,19 @@ feature 'Opportunities Overview', %q{
       page.should have_selector('.title', :text => 'Unassigned Opportunities')
       page.should have_content('Acting')
       page.should_not have_content('Presenting')
+    end
+  end
+
+  scenario "Viewing Opportunity Overview when there are no opportunities in the pipeline" do
+    FactoryGirl.create(:opportunity, :name => "Presenting", :stage => 'lost', :assignee => FactoryGirl.create(:user))
+    FactoryGirl.create(:opportunity, :name => "Eating", :stage => 'won', :assignee => nil)
+
+    visit opportunity_overview_page
+
+    page.should have_content('There are currently no outstanding opportunities.')
+    within "#main" do
+      page.should_not have_content("Presenting")
+      page.should_not have_content("Eating")
     end
   end
 end
