@@ -470,6 +470,10 @@ en-GB:
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
 
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Unassigned Opportunities
+
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_commented: commented on
