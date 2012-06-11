@@ -70,7 +70,24 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    config.use_transactional_fixtures = false
+    config.before :suite do
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with(:truncation)
+    end
+    config.before :all, :type => :request do
+      DatabaseCleaner.clean_with(:truncation)
+    end
+    config.around :each, :type => :request do |example|
+      DatabaseCleaner.strategy = :truncation
+      example.run
+      DatabaseCleaner.strategy = :transaction
+    end
+    config.around :each do |example|
+      DatabaseCleaner.start
+      example.run
+      DatabaseCleaner.clean
+    end
 
     # Fuubar formatter doesn't work too well on Travis
     config.formatter = ENV["TRAVIS"] ? :progress : "Fuubar"
