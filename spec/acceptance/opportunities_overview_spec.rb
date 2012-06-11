@@ -51,4 +51,17 @@ feature 'Opportunities Overview', %q{
 
     page.should_not have_selector('#user_16')
   end
+
+  scenario "Viewing unassigned opportunities" do
+    FactoryGirl.create(:opportunity, :name => "Acting", :stage => 'prospecting', :assignee => nil)
+    FactoryGirl.create(:opportunity, :name => "Presenting", :stage => 'won', :assignee => nil)
+
+    visit opportunity_overview_page
+
+    within "#unassigned" do
+      page.should have_selector('.title', :text => 'Unassigned Opportunities')
+      page.should have_content('Acting')
+      page.should_not have_content('Presenting')
+    end
+  end
 end

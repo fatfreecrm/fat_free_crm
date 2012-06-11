@@ -351,6 +351,7 @@ describe UsersController do
       xhr :get, :opportunities_overview
       assigns[:users_with_opportunities].should == [@current_user]
     end
+
     it "@users should be ordered by name" do
       FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => @user)
 
@@ -365,21 +366,43 @@ describe UsersController do
       assigns[:users_with_opportunities].should == [@user, user2, user1]
     end
 
+    it "should assign @unassigned_opportunities with only open unassigned opportunities" do
+      @o1 = FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => nil)
+      @o2 = FactoryGirl.create(:opportunity, :stage => "won", :assignee => nil)
+      @o3 = FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => nil)
+
+      xhr :get, :opportunities_overview
+
+      assigns[:unassigned_opportunities].should include(@o1, @o3)
+      assigns[:unassigned_opportunities].should_not include(@o2)
+    end
+
+    it "@unassigned_opportunities should be ordered by closes_on" do
+      @o1 = FactoryGirl.create(:opportunity, :stage => "prospecting", :closes_on => Time.now + 5.weeks, :assignee => nil)
+      @o2 = FactoryGirl.create(:opportunity, :stage => "prospecting", :closes_on => Time.now + 4.hours, :assignee => nil)
+      @o3 = FactoryGirl.create(:opportunity, :stage => "prospecting", :closes_on => Time.now + 2.days, :assignee => nil)
+
+      xhr :get, :opportunities_overview
+
+      assigns[:unassigned_opportunities].should == [@o2, @o3, @o1]
+    end
+
     it "should not include users who have no assigned opportunities" do
       xhr :get, :opportunities_overview
       assigns[:users_with_opportunities].should == []
     end
+
     it "should not include users who have no open assigned opportunities" do
       FactoryGirl.create(:opportunity, :stage => "won", :assignee => @user)
 
       xhr :get, :opportunities_overview
       assigns[:users_with_opportunities].should == []
     end
+
     it "should render opportunities overview" do
       xhr :get, :opportunities_overview
       response.should render_template("users/opportunities_overview")
     end
   end
-
 end
 
