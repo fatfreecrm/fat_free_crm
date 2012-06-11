@@ -53,12 +53,12 @@ class Opportunity < ActiveRecord::Base
   scope :state, lambda { |filters|
     where('stage IN (?)' + (filters.delete('other') ? ' OR stage IS NULL' : ''), filters)
   }
-  scope :created_by, lambda { |user| where('user_id = ?', user.id) }
+  scope :created_by,  lambda { |user| where('user_id = ?', user.id) }
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
-  scope :won,      where("opportunities.stage = 'won'")
-  scope :lost,     where("opportunities.stage = 'lost'")
-  scope :not_lost, where("opportunities.stage <> 'lost'")
-  scope :pipeline, where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')")
+  scope :won,         where("opportunities.stage = 'won'")
+  scope :lost,        where("opportunities.stage = 'lost'")
+  scope :not_lost,    where("opportunities.stage <> 'lost'")
+  scope :pipeline,    where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')")
   scope :unassigned,  where("opportunities.assigned_to IS NULL")
 
   # Search by name OR id
