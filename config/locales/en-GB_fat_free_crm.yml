@@ -22,6 +22,7 @@ en-GB:
   tab_accounts: Accounts
   tab_contacts: Contacts
   tab_opportunities: Opportunities
+  tab_team: Team
 
   admin_tab_users: Users
   admin_tab_fields: Custom Fields

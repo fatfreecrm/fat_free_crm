@@ -1,0 +1,5 @@
+= styles_for :opportunity
+
+%ul
+  - if @users_with_opportunities.all.any?
+    = render :partial => "user_report", :collection => @users_with_opportunities

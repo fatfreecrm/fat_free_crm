@@ -137,6 +137,9 @@ Rails.application.routes.draw do
       put :upload_avatar
       put :change_password
     end
+    collection do
+      get :opportunities_overview
+    end
   end
 
   namespace :admin do
