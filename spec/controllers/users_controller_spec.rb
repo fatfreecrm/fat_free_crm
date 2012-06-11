@@ -377,14 +377,14 @@ describe UsersController do
       assigns[:unassigned_opportunities].should_not include(@o2)
     end
 
-    it "@unassigned_opportunities should be ordered by closes_on" do
-      @o1 = FactoryGirl.create(:opportunity, :stage => "prospecting", :closes_on => Time.now + 5.weeks, :assignee => nil)
-      @o2 = FactoryGirl.create(:opportunity, :stage => "prospecting", :closes_on => Time.now + 4.hours, :assignee => nil)
-      @o3 = FactoryGirl.create(:opportunity, :stage => "prospecting", :closes_on => Time.now + 2.days, :assignee => nil)
+    it "@unassigned_opportunities should be ordered by stage" do
+      @o1 = FactoryGirl.create(:opportunity, :stage => "proposal", :assignee => nil)
+      @o2 = FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => nil)
+      @o3 = FactoryGirl.create(:opportunity, :stage => "negotiation", :assignee => nil)
 
       xhr :get, :opportunities_overview
 
-      assigns[:unassigned_opportunities].should == [@o2, @o3, @o1]
+      assigns[:unassigned_opportunities].should == [@o3, @o1, @o2]
     end
 
     it "should not include users who have no assigned opportunities" do

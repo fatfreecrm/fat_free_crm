@@ -151,7 +151,7 @@ class UsersController < ApplicationController
 
   def opportunities_overview
     @users_with_opportunities = User.have_assigned_opportunities
-    @unassigned_opportunities = Opportunity.unassigned.pipeline.by_closes_on
+    @unassigned_opportunities = Opportunity.unassigned.pipeline.order(:stage)
   end
 
   private
