@@ -94,6 +94,7 @@ describe Opportunity do
     end
   end
 
+  describe "Scopes" do
     it "should find non-closed opportunities" do
       Opportunity.delete_all
       @opportunities = [
@@ -108,7 +109,8 @@ describe Opportunity do
       Opportunity.won.sum(:amount).should      ==  4
       Opportunity.lost.sum(:amount).should     ==  6
       Opportunity.sum(:amount).should          == 12
-  describe "Scopes" do
+    end
+
     context "unassigned" do
       let(:unassigned_opportunity){ FactoryGirl.create(:opportunity, :assignee => nil)}
       let(:assigned_opportunity){ FactoryGirl.create(:opportunity, :assignee => FactoryGirl.create(:user))}
