@@ -42,7 +42,6 @@ remove 'fat_free_crm'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.9.0'
-  gem 'steak', :require => false
   gem 'headless'
   unless ENV["CI"]
     gem 'ruby-debug', :platform => :mri_18
