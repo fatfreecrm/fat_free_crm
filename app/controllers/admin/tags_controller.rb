@@ -24,6 +24,7 @@ class Admin::TagsController < Admin::ApplicationController
   # GET /admin/tags.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
+    @tags = Tag.all
     respond_with(@tags)
   end
 
