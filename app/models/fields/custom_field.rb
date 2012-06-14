@@ -124,6 +124,7 @@ protected
     self.name = generate_column_name if name.blank?
     connection.add_column(table_name, name, column_type, column_options)
     klass.reset_column_information
+    klass.serialize_custom_fields!
   end
 
   def update_column
@@ -132,7 +133,7 @@ protected
     if self.errors.empty? && db_transition_safety(as_was) == :safe
       connection.change_column(table_name, name, column_type, column_options)
       klass.reset_column_information
+      klass.serialize_custom_fields!
     end
   end
 end
-

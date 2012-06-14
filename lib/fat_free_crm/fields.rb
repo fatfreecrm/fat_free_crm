@@ -27,6 +27,7 @@ module FatFreeCRM
         unless included_modules.include?(InstanceMethods)
           extend SingletonMethods
           include InstanceMethods
+          serialize_custom_fields!
         end
       end
     end
@@ -38,6 +39,14 @@ module FatFreeCRM
 
       def fields
         field_groups.map(&:fields).flatten
+      end
+      
+      def serialize_custom_fields!
+        fields.each do |field|
+          if !serialized_attributes.keys.include?(field.name) and field.as == 'check_boxes'
+            serialize(field.name.to_sym, Array)
+          end
+        end
       end
     end
 
@@ -62,6 +71,8 @@ module FatFreeCRM
           self.class.reset_column_information
           # If new record, create new object from class, else reload class
           object = self.new_record? ? self.class.new : (self.reload && self)
+          # ensure serialization is setup if needed
+          self.class.serialize_custom_fields!
           # Try again if object now responds to method, else return nil
           object.respond_to?(method_id) ? object.send(method_id, *args) : nil
         else
@@ -73,4 +84,3 @@ module FatFreeCRM
 end
 
 ActiveRecord::Base.send(:include, FatFreeCRM::Fields)
-
