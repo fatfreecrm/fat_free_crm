@@ -102,5 +102,24 @@ describe CustomField do
       contact.cf_another_new_field.should == nil
     end
   end
+  
+  describe "checkbox custom field" do
+  
+    before(:each) do
+      @c = FactoryGirl.create(:custom_field,
+            :label => "Checkboxes Test",
+            :name => 'cf_checkboxes_test',
+            :as => "check_boxes",
+            :collection => %w(one two three),
+            :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
+      Contact.reset_column_information
+      Contact.serialize_custom_fields!
+    end
+  
+    it "should be serialized" do
+      Contact.serialized_attributes.keys.should include('cf_checkboxes_test')
+    end
+   
+  end
+  
 end
-
