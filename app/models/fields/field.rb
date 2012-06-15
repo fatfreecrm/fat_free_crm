@@ -45,7 +45,7 @@ class Field < ActiveRecord::Base
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
 
-  KLASSES = [Campaign, Lead, Contact, Account, Opportunity]
+  KLASSES = [Campaign, Lead, Contact, Account, Opportunity, ContactGroup]
 
   FIELD_TYPES = {
     'string'      => :string,

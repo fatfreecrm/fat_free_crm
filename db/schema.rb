@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120528102124) do
+ActiveRecord::Schema.define(:version => 20120615084624) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -131,6 +131,32 @@ ActiveRecord::Schema.define(:version => 20120528102124) do
     t.datetime "updated_at",                                             :null => false
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
   end
+
+  create_table "contact_groups", :force => true do |t|
+    t.string   "uuid",             :limit => 36
+    t.integer  "user_id"
+    t.integer  "assigned_to"
+    t.string   "name",             :limit => 64, :default => "",       :null => false
+    t.string   "access",           :limit => 8,  :default => "Public"
+    t.string   "category",         :limit => 32
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.text     "subscribed_users"
+    t.string   "background_info"
+  end
+
+  add_index "contact_groups", ["assigned_to"], :name => "index_contact_groups_on_assigned_to"
+  add_index "contact_groups", ["user_id", "name", "deleted_at"], :name => "index_contact_groups_on_user_id_and_name_and_deleted_at", :unique => true
+
+  create_table "contact_groups_contacts", :id => false, :force => true do |t|
+    t.integer "contact_id"
+    t.integer "contact_group_id"
+  end
+
+  add_index "contact_groups_contacts", ["contact_group_id"], :name => "index_contact_groups_contacts_on_contact_group_id"
+  add_index "contact_groups_contacts", ["contact_id", "contact_group_id"], :name => "index_contact_groups_contacts_on_contact_id_and_contact_group_id"
+  add_index "contact_groups_contacts", ["contact_id"], :name => "index_contact_groups_contacts_on_contact_id"
 
   create_table "contact_opportunities", :force => true do |t|
     t.integer  "contact_id"

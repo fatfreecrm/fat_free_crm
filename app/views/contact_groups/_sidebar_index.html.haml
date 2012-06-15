@@ -1,0 +1,21 @@
+.filters#filters
+  = render "shared/search"
+  = hook(:index_contact_group_sidebar_bottom, self)
+  - Setting.contact_group_category.each do |key|
+    .check_box{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = @contact_group_category_total[key]
+      = contact_group_category_checbox(key, @contact_group_category_total[key])
+      = label_tag(key, t(key))
+
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @contact_group_category_total[:other]
+    = contact_group_category_checbox("other", @contact_group_category_total[:other])
+    = label_tag(:other, t(:other))
+
+  .check_box
+    %div{:style => "float:right;"}
+      %b= @contact_group_category_total[:all]
+    %b #{t :total_contact_groups}
+  = hook(:index_contact_group_sidebar_bottom, self)

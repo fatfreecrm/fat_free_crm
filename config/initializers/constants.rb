@@ -1,1 +1,1 @@
-ENTITIES = %w(Account Campaign Contact Lead Opportunity).freeze
+ENTITIES = %w(Account Campaign Contact Lead Opportunity ContactGroup).freeze

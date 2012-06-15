@@ -138,6 +138,26 @@ Rails.application.routes.draw do
       put :change_password
     end
   end
+  
+  resources :contact_groups, :id => /\d+/ do
+    collection do
+      get  :advanced_search
+      post :filter
+      get  :options
+      get  :field_group
+      match :auto_complete
+      post :redraw
+      get :versions
+    end
+    member do
+      put  :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      get :contacts
+      get :opportunities
+    end
+  end
 
   namespace :admin do
     resources :users do

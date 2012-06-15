@@ -1,0 +1,17 @@
+id = called_from_landing_page? ? "edit_contact_group" : dom_id(@contact_group)
+
+if @contact_group.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_contact_group
+    page.call "crm.set_title", :edit_contact_group, @contact_group.name
+    page << refresh_sidebar(:show, :summary)
+  else
+    page[id].replace :partial => "contact_group", :collection => [ @contact_group ]
+    page[id].visual_effect :highlight, :duration => 1.0
+    page << refresh_sidebar(:index, :filters)
+  end
+else  
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:contact_group_name].focus
+end

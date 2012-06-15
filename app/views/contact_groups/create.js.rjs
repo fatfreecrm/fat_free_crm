@@ -1,0 +1,15 @@
+if @contact_group.valid?
+  page[:create_contact_group_arrow].replace_html "&#9658;"
+  page[:create_contact_group_title].replace_html t(:contact_groups)
+  page.visual_effect :toggle_blind, :create_contact_group, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, :contact_groups, :partial => "contact_group", :collection => [ @contact_group ]
+  page[dom_id(@contact_group)].visual_effect :highlight, :duration => 1.5
+  page << refresh_sidebar(:index, :filters)
+  page[:paginate].replace_html :partial => "shared/paginate"
+  page.call "crm.flick", :empty, :remove
+else
+  page[:create_contact_group].replace_html :partial => "new"
+  page.call "crm.init_chosen_fields"
+  page[:create_contact_group].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:contact_group_name].focus
+end

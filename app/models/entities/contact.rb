@@ -59,6 +59,7 @@ class Contact < ActiveRecord::Base
   has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
   has_many    :emails, :as => :mediator
+  has_many    :contact_groups, :through => :contacts_contact_groups, :dependent => :destroy
 
   serialize :subscribed_users, Set
 

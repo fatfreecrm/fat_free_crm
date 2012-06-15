@@ -5,7 +5,7 @@ class Ability
 
   def initialize(user)
     if user.present?
-      entities = [Account, Campaign, Contact, Lead, Opportunity]
+      entities = [Account, Campaign, Contact, Lead, Opportunity, ContactGroup]
 
       can :create, :all
       can :manage, entities, :access => 'Public'
