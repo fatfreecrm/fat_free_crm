@@ -2,8 +2,7 @@
 
 .title_tools
   = link_to_inline(:create_lead, new_lead_path, :text => t(:create_lead)) << " | "
-  - if Setting.advanced_search_enabled
-    = link_to_inline(:advanced_search, advanced_search_leads_path, :text => t(:advanced_search)) << " | "
+  = link_to_inline(:advanced_search, advanced_search_leads_path, :text => t(:advanced_search)) << " | "
   = link_to_inline(:options, options_leads_path, :text => t(:options))
 
 .title

@@ -174,17 +174,7 @@
 #
 :require_last_names: true
 
-
-# Beta features
-#------------------------------------------------------------------------------
-# These are features that need to be in the master branch due to extensive codebase changes,
-# but are disabled by default until ready for general use.
-
-# - Ransack advanced search
-:advanced_search_enabled: false
-
-# - PaperTrail history UI
-:paper_trail_ui_enabled: false
+# Show comments on dashboard
 :comments_visible_on_dashboard: false
 
 # Background information
