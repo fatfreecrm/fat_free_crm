@@ -2,10 +2,9 @@ source :rubygems
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-# gem 'mysql2', '0.3.10'
+gem 'mysql2', '0.3.10'
 # gem 'sqlite3'
-gem 'pg', '~> 0.13.2'
-
+# gem 'pg', '~> 0.13.2'
 # Allows easy switching between locally developed gems, and gems installed from rubygems.org
 # See README for more info at: https://github.com/ndbroadbent/bundler_local_development
 gem 'bundler_local_development', :group => :development, :require => false
