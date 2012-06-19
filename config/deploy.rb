@@ -33,5 +33,7 @@ namespace :deploy do
   after "deploy:finalize_update", "deploy:symlink_configs"
   task :symlink_configs, :roles => :app do
     run "ln -fs #{shared_path}/config/database.yml #{latest_release}/config/database.yml"
+    run "ln -fs #{shared_path}/config/ldap.yml #{latest_release}/config/ldap.yml"
+    run "ln -fs #{shared_path}/config/ldap_attributes_map.yml #{latest_release}/config/ldap_attributes_map.yml"
   end
 end
