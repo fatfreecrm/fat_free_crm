@@ -159,7 +159,8 @@ describe ContactsController do
   describe "responding to GET new" do
 
     it "should expose a new contact as @contact and render [new] template" do
-      @contact = Contact.new(:user => @current_user)
+      @contact = Contact.new(:user => @current_user,
+                             :access => Setting.default_access)
       @account = Account.new(:user => @current_user)
       @users = [ FactoryGirl.create(:user) ]
       @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]

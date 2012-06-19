@@ -196,7 +196,8 @@ describe AccountsController do
   describe "responding to GET new" do
 
     it "should expose a new account as @account and render [new] template" do
-      @account = Account.new(:user => @current_user)
+      @account = Account.new(:user => @current_user,
+                             :access => Setting.default_access)
       @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :new

@@ -200,7 +200,8 @@ describe CampaignsController do
   describe "responding to GET new" do
 
     it "should expose a new campaign as @campaign" do
-      @campaign = Campaign.new(:user => @current_user)
+      @campaign = Campaign.new(:user => @current_user,
+                               :access => Setting.default_access)
       @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :new
