@@ -15,6 +15,7 @@ describe ContactsController do
     it "should expose all contacts as @contacts and render [index] template" do
       @contacts = [ FactoryGirl.create(:contact, :user => @current_user) ]
       get :index
+      assigns[:contacts].count.should == @contacts.count
       assigns[:contacts].should == @contacts
       response.should render_template("contacts/index")
     end
@@ -315,6 +316,14 @@ describe ContactsController do
         request.env["HTTP_REFERER"] = "http://localhost/contacts"
         xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}, :users => %w(1 2 3)
         assigns[:contacts].should == [ @contact ]
+      end
+
+      it "should add a new comment to the newly created contact when specified" do
+        @contact = FactoryGirl.build(:contact, :user => @current_user)
+        Contact.stub!(:new).and_return(@contact)
+
+        xhr :post, :create, :contact => { :first_name => "Testy", :last_name => "McTest" }, :account => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
+        @contact.reload.comments.map(&:comment).should include("Awesome comment is awesome")
       end
     end
 

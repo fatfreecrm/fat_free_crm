@@ -1,9 +1,9 @@
 require File.expand_path("../acceptance_helper.rb", __FILE__)
 
-feature 'Accounts', %q{
+feature 'Campaigns', %q{
   In order to increase customer satisfaction
   As a user
-  I want to manage contacts
+  I want to manage campaigns
 } do
 
   before :each do
@@ -26,12 +26,30 @@ feature 'Accounts', %q{
     find("#campaign_name").should be_visible
     fill_in 'campaign_name', :with => 'Cool Campaign'
     select 'On Hold', :from => 'campaign_status'
+    click_link 'Comment'
+    fill_in 'comment_body', :with => 'This campaign is very important'
     click_button 'Create Campaign'
+
     page.should have_content('Cool Campaign')
     page.should have_content('On Hold')
 
+    click_link 'Cool Campaign'
+    page.should have_content('This campaign is very important')
+
     click_link "Dashboard"
     page.should have_content("Bill Murray created campaign Cool Campaign")
+    page.should have_content("Bill Murray created comment on Cool Campaign")
+  end
+
+  scenario "remembers the comment field when the creation was unsuccessful", :js => true do
+    visit campaigns_page
+    click_link 'Create Campaign'
+
+    click_link 'Comment'
+    fill_in 'comment_body', :with => 'This campaign is very important'
+    click_button 'Create Campaign'
+
+    page.should have_field("comment_body", :with => 'This campaign is very important')
   end
 
   scenario 'should view and edit a campaign', :js => true do

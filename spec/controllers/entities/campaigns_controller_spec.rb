@@ -320,6 +320,14 @@ describe CampaignsController do
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:campaigns].should == [ @campaign ]
       end
+
+      it "should add a new comment to the newly created campaign when specified" do
+        @campaign = FactoryGirl.build(:campaign, :name => "Hello world", :user => @current_user)
+        Campaign.stub!(:new).and_return(@campaign)
+
+        xhr :post, :create, :campaign => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
+        @campaign.reload.comments.map(&:comment).should include("Awesome comment is awesome")
+      end
     end
 
     describe "with invalid params" do

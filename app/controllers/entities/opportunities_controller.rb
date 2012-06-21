@@ -75,8 +75,10 @@ class OpportunitiesController < EntitiesController
   # POST /opportunities
   #----------------------------------------------------------------------------
   def create
+    @comment_body = params[:comment_body]
     respond_with(@opportunity) do |format|
       if @opportunity.save_with_account_and_permissions(params)
+        @opportunity.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @opportunities = get_opportunities
           get_data_for_sidebar

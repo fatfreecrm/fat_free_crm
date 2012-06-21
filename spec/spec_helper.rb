@@ -18,6 +18,7 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'fuubar'
 
+  require 'acts_as_fu'
   # Load factories
   require 'factory_girl'
   require 'ffaker'

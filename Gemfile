@@ -55,6 +55,7 @@ group :test do
   gem 'spork'
   gem 'database_cleaner'
   gem 'fuubar'
+  gem "acts_as_fu", "~> 0.0.8"
 
   if RUBY_VERSION.to_f >= 1.9
     gem 'factory_girl_rails', '~> 3.0.0'
