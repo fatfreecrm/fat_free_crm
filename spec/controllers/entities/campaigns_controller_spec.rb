@@ -81,6 +81,17 @@ describe CampaignsController do
         assigns[:campaigns].should == []
         response.should render_template("campaigns/index")
       end
+      
+      it "should reset current_page when query is altered" do
+        session[:campaigns_current_page] = 42
+        session[:campaigns_current_query] = "bill"
+        @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:campaigns].should == @campaigns
+        response.should render_template("campaigns/index")
+      end
     end
 
     describe "with mime type of JSON" do
@@ -200,7 +211,8 @@ describe CampaignsController do
   describe "responding to GET new" do
 
     it "should expose a new campaign as @campaign" do
-      @campaign = Campaign.new(:user => @current_user)
+      @campaign = Campaign.new(:user => @current_user,
+                               :access => Setting.default_access)
       @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :new
@@ -318,6 +330,14 @@ describe CampaignsController do
 
         xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:campaigns].should == [ @campaign ]
+      end
+
+      it "should add a new comment to the newly created campaign when specified" do
+        @campaign = FactoryGirl.build(:campaign, :name => "Hello world", :user => @current_user)
+        Campaign.stub!(:new).and_return(@campaign)
+
+        xhr :post, :create, :campaign => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
+        @campaign.reload.comments.map(&:comment).should include("Awesome comment is awesome")
       end
     end
 
@@ -665,4 +685,3 @@ describe CampaignsController do
   end
 
 end
-

@@ -55,7 +55,7 @@ class Email < ActiveRecord::Base
     if defined?(RedCloth)
       RedCloth.new(body_without_textile).to_html.html_safe
     else
-      body_without_textile
+      body_without_textile.to_s.gsub("\n", "<br/>").html_safe
     end
   end
   alias_method_chain :body, :textile

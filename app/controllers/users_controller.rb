@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   before_filter :require_user, :only => [ :show, :redraw ]
   before_filter :set_current_tab, :only => [ :show ] # Don't hightlight any tabs.
   before_filter :require_and_assign_user, :except => [ :new, :create, :show, :avatar, :upload_avatar ]
-  before_filter :assign_given_or_current_user, :only => [ :show, :avatar, :upload_avatar ]
+  before_filter :assign_given_or_current_user, :only => [ :show, :avatar, :upload_avatar, :edit, :update ]
 
   load_resource
 
@@ -76,7 +76,6 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @user.update_attributes(params[:user])
-
     respond_with(@user)
   end
 

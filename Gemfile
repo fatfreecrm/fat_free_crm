@@ -40,6 +40,10 @@ gem 'ffcrm_ldap', '~> 0.1.1'
 remove 'fat_free_crm'
 
 group :development, :test do
+  # Uncomment the following two gems to deploy via Capistrano
+  gem 'capistrano'
+  gem 'capistrano_colors'
+
   gem 'rspec-rails', '~> 2.9.0'
   gem 'headless'
   unless ENV["CI"]
@@ -51,9 +55,11 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'selenium-webdriver', '2.20.0' # If the version is higher, the error: "no such file to load -- { "frozen": { ..." is thrown.
   gem 'spork'
   gem 'database_cleaner'
   gem 'fuubar'
+  gem "acts_as_fu", "~> 0.0.8"
 
   if RUBY_VERSION.to_f >= 1.9
     gem 'factory_girl_rails', '~> 3.0.0'

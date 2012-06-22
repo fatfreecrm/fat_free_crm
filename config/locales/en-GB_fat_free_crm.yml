@@ -509,6 +509,7 @@ en-GB:
   back: Back
   cancel: Cancel
   close_form: Close form
+  comment_intro: You can add comments later.
   confirm_delete: Are you sure you want to delete this %{value}?
   copy_permissions: Copy %{value} permissions
   could_not_find: "Couldn't find %{value}. Feel free to"

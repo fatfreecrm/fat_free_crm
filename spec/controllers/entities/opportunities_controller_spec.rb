@@ -79,6 +79,17 @@ describe OpportunitiesController do
         assigns[:opportunities].should == []
         response.should render_template("opportunities/index")
       end
+      
+      it "should reset current_page when query is altered" do
+        session[:opportunities_current_page] = 42
+        session[:opportunities_current_query] = "bill"
+        @opportunities = [ FactoryGirl.create(:opportunity, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:opportunities].should == @opportunities
+        response.should render_template("opportunities/index")
+      end
     end
 
     describe "with mime type of JSON" do
@@ -421,6 +432,14 @@ describe OpportunitiesController do
         @opportunity.campaign.should == @campaign.reload
         @campaign.revenue.to_i.should == 1000 # 1000 - 100 discount.
       end
+
+      it "should add a new comment to the newly created opportunity when specified" do
+        @opportunity = FactoryGirl.build(:opportunity, :user => @current_user)
+        Opportunity.stub!(:new).and_return(@opportunity)
+
+        xhr :post, :create, :opportunity => { :name => "Opportunity Knocks" }, :account => { :name => "My Account" }, :comment_body => "Awesome comment is awesome"
+        @opportunity.reload.comments.map(&:comment).should include("Awesome comment is awesome")
+      end      
     end
 
     describe "with invalid params" do

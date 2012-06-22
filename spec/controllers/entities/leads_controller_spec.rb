@@ -67,11 +67,23 @@ describe LeadsController do
 
       it "should pick up saved page number from session" do
         session[:leads_current_page] = 42
+        session[:leads_current_query] = "bill"
         @leads = [ FactoryGirl.create(:lead, :user => @current_user) ]
-        xhr :get, :index
+        xhr :get, :index, :query => "bill"
 
         assigns[:current_page].should == 42
         assigns[:leads].should == []
+        response.should render_template("leads/index")
+      end
+
+      it "should reset current_page when query is altered" do
+        session[:leads_current_page] = 42
+        session[:leads_current_query] = "bill"
+        @leads = [ FactoryGirl.create(:lead, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:leads].should == @leads
         response.should render_template("leads/index")
       end
     end
@@ -365,7 +377,14 @@ describe LeadsController do
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
         assigns[:campaign].should == @campaign
       end
+      
+      it "should add a new comment to the newly created lead when specified" do
+        @lead = FactoryGirl.create(:lead)
+        Lead.stub!(:new).and_return(@lead)
 
+        xhr :post, :create, :lead => { :first_name => "Test", :last_name => "Lead" }, :comment_body => "This is an important lead."
+        @lead.reload.comments.map(&:comment).should include("This is an important lead.")
+      end
     end
 
     describe "with invalid params" do
@@ -1044,4 +1063,3 @@ describe LeadsController do
   end
 
 end
-

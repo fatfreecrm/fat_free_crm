@@ -73,8 +73,10 @@ class ContactsController < EntitiesController
   # POST /contacts
   #----------------------------------------------------------------------------
   def create
+    @comment_body = params[:comment_body]
     respond_with(@contact) do |format|
       if @contact.save_with_account_and_permissions(params)
+        @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
       else
         unless params[:account][:id].blank?
@@ -158,7 +160,7 @@ class ContactsController < EntitiesController
       current_user.pref[:leads_naming] ||= params[:naming]
     end
 
-    @contacts = get_contacts(:page => 1) # Start one the first page.
+    @contacts = get_contacts(:page => 1) # Start on the first page.
     render :index
   end
 

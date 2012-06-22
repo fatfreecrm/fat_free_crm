@@ -76,6 +76,17 @@ describe AccountsController do
         assigns[:accounts].should == []
         response.should render_template("accounts/index")
       end
+      
+      it "should reset current_page when query is altered" do
+        session[:accounts_current_page] = 42
+        session[:accounts_current_query] = "bill"
+        @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:accounts].should == @accounts
+        response.should render_template("accounts/index")
+      end
     end
 
     describe "with mime type of JSON" do
@@ -196,7 +207,8 @@ describe AccountsController do
   describe "responding to GET new" do
 
     it "should expose a new account as @account and render [new] template" do
-      @account = Account.new(:user => @current_user)
+      @account = Account.new(:user => @current_user,
+                             :access => Setting.default_access)
       @users = [ FactoryGirl.create(:user) ]
 
       xhr :get, :new
@@ -317,6 +329,14 @@ describe AccountsController do
 
         xhr :post, :create, :account => { :name => "Hello" }, :users => %w(1 2 3)
         assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
+      end
+
+      it "should add a new comment to the newly created account when specified" do
+        @account = FactoryGirl.build(:account, :name => "Hello world", :user => @current_user)
+        Account.stub!(:new).and_return(@account)
+
+        xhr :post, :create, :account => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
+        @account.reload.comments.map(&:comment).should include("Awesome comment is awesome")
       end
     end
 
@@ -623,4 +643,3 @@ describe AccountsController do
     end
   end
 end
-

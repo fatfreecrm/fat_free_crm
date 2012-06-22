@@ -31,6 +31,9 @@ GEM
     acts-as-taggable-on (2.2.2)
       rails (~> 3.0)
     acts_as_commentable (3.0.1)
+    acts_as_fu (0.0.8)
+      activerecord
+      sqlite3
     acts_as_list (0.1.6)
     addressable (2.2.8)
     ajax-chosen-rails (0.2.0)
@@ -45,6 +48,13 @@ GEM
     bundler_local_development (0.3.0)
       bundler
     cancan (1.6.7)
+    capistrano (2.12.0)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+    capistrano_colors (0.5.5)
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -116,7 +126,7 @@ GEM
       squeel (~> 0.9.3)
       will_paginate (~> 3.0.2)
     ffaker (1.14.0)
-    ffcrm_ldap (0.1.1)
+    ffcrm_ldap (0.1.2)
       fat_free_crm (~> 0.11.3)
       net-ldap (~> 0.3.1)
     ffi (1.0.11)
@@ -126,6 +136,7 @@ GEM
       ruby-progressbar (~> 0.0.10)
     haml (3.1.4)
     headless (0.3.1)
+    highline (1.6.13)
     hike (1.2.1)
     htmlentities (4.3.1)
     i18n (0.6.0)
@@ -136,8 +147,6 @@ GEM
     json (1.7.0)
     kgio (2.7.4)
     libv8 (3.3.10.4)
-    libwebsocket (0.1.3)
-      addressable
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
     mail (2.4.4)
@@ -146,9 +155,16 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.7.1)
     mime-types (1.18)
-    multi_json (1.3.4)
+    multi_json (1.3.6)
     mysql2 (0.3.10)
     net-ldap (0.3.1)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.5.2)
+    net-ssh-gateway (1.1.0)
+      net-ssh (>= 1.99.1)
     nokogiri (1.5.2)
     paper_trail (2.6.3)
       activerecord (~> 3.0)
@@ -226,16 +242,15 @@ GEM
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
     ruby-progressbar (0.0.10)
-    rubyzip (0.9.8)
+    rubyzip (0.9.9)
     sass (3.1.16)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.21.2)
+    selenium-webdriver (2.20.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
-      libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
     simple_form (2.0.2)
@@ -247,6 +262,7 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sqlite3 (1.3.6)
     squeel (0.9.5)
       activerecord (~> 3.0)
       activesupport (~> 3.0)
@@ -276,12 +292,16 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 2.2.1)
   acts_as_commentable (~> 3.0.1)
+  acts_as_fu (~> 0.0.8)
   acts_as_list (~> 0.1.4)
   ajax-chosen-rails (>= 0.2.0)
   authlogic (= 3.1.0)
   bundler_local_development
   cancan
+  capistrano
+  capistrano_colors
   capybara
+  cocaine
   coffee-rails (~> 3.2.1)
   database_cleaner
   debugger
@@ -309,6 +329,7 @@ DEPENDENCIES
   ruby-debug
   sass (~> 3.1.10)
   sass-rails (~> 3.2.3)
+  selenium-webdriver (= 2.20.0)
   simple_form (~> 2.0.1)
   spork
   squeel (~> 0.9.3)
