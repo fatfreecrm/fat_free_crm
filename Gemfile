@@ -56,6 +56,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'selenium-webdriver', '2.20.0' # If the version is higher, the error: "no such file to load -- { "frozen": { ..." is thrown.
   gem 'spork'
   gem 'database_cleaner'
   gem 'fuubar'
