@@ -150,7 +150,7 @@ class UsersController < ApplicationController
   end
 
   def opportunities_overview
-    @users_with_opportunities = User.have_assigned_opportunities
+    @users_with_opportunities = User.have_assigned_opportunities.order(:first_name)
     @unassigned_opportunities = Opportunity.unassigned.pipeline.order(:stage)
   end
 
