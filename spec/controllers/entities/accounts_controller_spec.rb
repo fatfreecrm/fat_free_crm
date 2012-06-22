@@ -76,6 +76,17 @@ describe AccountsController do
         assigns[:accounts].should == []
         response.should render_template("accounts/index")
       end
+      
+      it "should reset current_page when query is altered" do
+        session[:accounts_current_page] = 42
+        session[:accounts_current_query] = "bill"
+        @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:accounts].should == @accounts
+        response.should render_template("accounts/index")
+      end
     end
 
     describe "with mime type of JSON" do
@@ -632,4 +643,3 @@ describe AccountsController do
     end
   end
 end
-

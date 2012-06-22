@@ -150,7 +150,8 @@ private
   # Proxy current page for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_page=(page)
-    @current_page = session[:"#{controller_name}_current_page"] = page.to_i
+    p = page.to_i
+    @current_page = session[:"#{controller_name}_current_page"] = (p.zero? ? 1 : p)
   end
 
   #----------------------------------------------------------------------------
@@ -162,6 +163,9 @@ private
   # Proxy current search query for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_query=(query)
+    if session[:"#{controller_name}_current_query"].to_s != query.to_s # nil.to_s == ""
+      self.current_page = params[:page] # reset paging otherwise results might be hidden, defaults to 1 if nil
+    end
     @current_query = session[:"#{controller_name}_current_query"] = query
   end
 

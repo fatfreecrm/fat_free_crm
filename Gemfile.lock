@@ -140,6 +140,10 @@ GEM
       activerecord (~> 3.0)
       railties (~> 3.0)
     paperclip (2.7.0)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     pg (0.13.2)
     polyamorous (0.5.0)
       activerecord (~> 3.0)

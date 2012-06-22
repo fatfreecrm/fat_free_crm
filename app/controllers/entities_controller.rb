@@ -128,9 +128,9 @@ private
   # Get list of records for a given model class.
   #----------------------------------------------------------------------------
   def get_list_of_records(options = {})
-    options[:query] ||= params[:query]                        if params[:query]
-    self.current_page = options[:page]                        if options[:page]
-    query, tags       = parse_query_and_tags(options[:query]) if options[:query]
+    options[:query]  ||= params[:query]                        if params[:query]
+    self.current_page  = options[:page]                        if options[:page]
+    query, tags        = parse_query_and_tags(options[:query])
     self.current_query = query
 
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
@@ -178,6 +178,7 @@ private
   #----------------------------------------------------------------------------
   def parse_query_and_tags(search_string)
     query, tags = [], []
+    return ['', ''] if search_string.blank?
     search_string.scan(/[\w@\-\.#]+/).each do |token|
       if token.starts_with?("#")
         tags << token[1 .. -1]
