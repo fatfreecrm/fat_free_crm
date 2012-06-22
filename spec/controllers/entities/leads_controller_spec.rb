@@ -67,11 +67,23 @@ describe LeadsController do
 
       it "should pick up saved page number from session" do
         session[:leads_current_page] = 42
+        session[:leads_current_query] = "bill"
         @leads = [ FactoryGirl.create(:lead, :user => @current_user) ]
-        xhr :get, :index
+        xhr :get, :index, :query => "bill"
 
         assigns[:current_page].should == 42
         assigns[:leads].should == []
+        response.should render_template("leads/index")
+      end
+
+      it "should reset current_page when query is altered" do
+        session[:leads_current_page] = 42
+        session[:leads_current_query] = "bill"
+        @leads = [ FactoryGirl.create(:lead, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:leads].should == @leads
         response.should render_template("leads/index")
       end
     end
@@ -1051,4 +1063,3 @@ describe LeadsController do
   end
 
 end
-

@@ -79,6 +79,17 @@ describe OpportunitiesController do
         assigns[:opportunities].should == []
         response.should render_template("opportunities/index")
       end
+      
+      it "should reset current_page when query is altered" do
+        session[:opportunities_current_page] = 42
+        session[:opportunities_current_query] = "bill"
+        @opportunities = [ FactoryGirl.create(:opportunity, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:opportunities].should == @opportunities
+        response.should render_template("opportunities/index")
+      end
     end
 
     describe "with mime type of JSON" do

@@ -81,6 +81,17 @@ describe CampaignsController do
         assigns[:campaigns].should == []
         response.should render_template("campaigns/index")
       end
+      
+      it "should reset current_page when query is altered" do
+        session[:campaigns_current_page] = 42
+        session[:campaigns_current_query] = "bill"
+        @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:campaigns].should == @campaigns
+        response.should render_template("campaigns/index")
+      end
     end
 
     describe "with mime type of JSON" do
@@ -674,4 +685,3 @@ describe CampaignsController do
   end
 
 end
-

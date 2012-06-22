@@ -50,6 +50,17 @@ describe ContactsController do
         assigns[:contacts].should == []
         response.should render_template("contacts/index")
       end
+      
+      it "should reset current_page when query is altered" do
+        session[:contacts_current_page] = 42
+        session[:contacts_current_query] = "bill"
+        @contacts = [ FactoryGirl.create(:contact, :user => @current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:contacts].should == @contacts
+        response.should render_template("contacts/index")
+      end
     end
 
     describe "with mime type of JSON" do
@@ -704,4 +715,3 @@ describe ContactsController do
   end
 
 end
-
