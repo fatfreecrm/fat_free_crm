@@ -3,4 +3,4 @@
     %span#title
       = user_report.full_name
   %ul.list#opportunities
-    = render :partial => "opportunities/opportunity", :collection => user_report.assigned_opportunities.pipeline
+    = render :partial => "opportunities/opportunity", :collection => user_report.assigned_opportunities.pipeline.order("opportunities.amount DESC")
