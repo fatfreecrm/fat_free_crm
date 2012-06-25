@@ -680,7 +680,6 @@ en-GB:
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: iso_date
 
-   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:
     previous_label: "&#8592; Previous"
@@ -694,7 +693,6 @@ en-GB:
         other: "Displaying all %{count} %{plural}"
 
       multi_page: "Displaying %{plural} %{from} - %{to} of %{total} in total"
-
 
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
