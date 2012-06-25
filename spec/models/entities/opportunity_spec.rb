@@ -226,6 +226,16 @@ describe Opportunity do
       end
     end
 
+    context "by_amount" do
+      let(:o1) { FactoryGirl.create(:opportunity, :amount =>  50000) }
+      let(:o2) { FactoryGirl.create(:opportunity, :amount =>  10000) }
+      let(:o3) { FactoryGirl.create(:opportunity, :amount => 750000) }
+
+      it "should show opportunities ordered by amount" do
+        Opportunity.by_amount.should == [o3, o1, o2]
+      end
+    end
+
     context "not lost" do
       let(:o1) { FactoryGirl.create(:opportunity, :stage => 'won') }
       let(:o2) { FactoryGirl.create(:opportunity, :stage => 'lost') }

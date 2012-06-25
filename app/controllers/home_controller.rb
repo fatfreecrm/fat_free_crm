@@ -27,7 +27,7 @@ class HomeController < ApplicationController
 
     @activities = get_activities
     @my_tasks = Task.visible_on_dashboard(@current_user).by_due_at
-    @my_opportunities = Opportunity.visible_on_dashboard(@current_user).by_closes_on
+    @my_opportunities = Opportunity.visible_on_dashboard(@current_user).by_closes_on.by_amount
     @my_accounts = Account.visible_on_dashboard(@current_user).by_name
     respond_with(@activities)
   end
