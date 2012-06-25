@@ -24,6 +24,8 @@ en-GB:
   tab_opportunities: Opportunities
 
   admin_tab_users: Users
+  admin_tab_fields: Custom Fields
+  admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
 
@@ -677,3 +679,86 @@ en-GB:
   # If you need custom format look at
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
   calendar_date_select_format: iso_date
+
+   # will_paginate translations copied for 'en-US'
+  #----------------------------------------------------------------------------
+  will_paginate:
+    previous_label: "&#8592; Previous"
+    next_label: "Next &#8594;"
+    page_gap: "&hellip;"
+
+    page_entries_info:
+      single_page:
+        zero: "No %{plural} found"
+        one: "Displaying 1 %{name}"
+        other: "Displaying all %{count} %{plural}"
+
+      multi_page: "Displaying %{plural} %{from} - %{to} of %{total} in total"
+
+
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
+  label: Label
+  custom_fields: Custom Fields
+  custom_field_options: Custom Field Options
+  create_field: Create field
+  save_field: Save field
+  create_field_group: Create field group
+  edit_field_group: Edit field group
+  save_field_group: Save field group
+
+  field_group_empty: There are no fields in this group.
+
+  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
+
+  restrict_by_tag: Restrict by Tag
+  restrict_by_tag_info: Only show fields for %{assets} that are tagged with
+  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
+  field_group_unrestricted: This field group applies to all %{assets}
+  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
+  msg_cant_delete_field_group: Field Group could not be deleted.
+
+  admin_fields_info: |
+    Custom fields are displayed in groups.
+    Create a new field group, or add fields to one of the groups below.<br />
+    You can drag and drop fields to change their display order or move them between field groups.
+
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  tags: Tags
+  tag_small: tag
+  tagged: Tagged
+  create_tag: Create Tag
+  save_tag: Save Tag
+  field_group_tags: Field Groups shown for this Tag
+  tag_with_taggings_confirm_delete: "If this tag is deleted, it will be removed from %{value} records."
+  msg_cant_delete_tag: "Couldn't delete '%{value}' since it has associated Field Groups."
+
+
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
+  views:
+    admin:
+      plugins:
+        author: Author
+        version: Version
+        description: Description
+
+  # Form field types
+  #----------------------------------------------------------------------------
+  field_types:
+    string:      Short Answer
+    text:        Long Answer
+    select:      Select List
+    multiselect: Multi Select
+    radio:       Radio Buttons
+    boolean:     Checkbox
+    check_boxes: Checkbox List
+    date:        Date
+    datetime:    Date & Time
+    email:       Email Address
+    url:         URL
+    tel:         Phone Number
+    decimal:     Number (Decimal)
+    integer:     Number (Integer)
+    float:       Number (Floating Point)
