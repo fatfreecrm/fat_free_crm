@@ -17,4 +17,8 @@ FactoryGirl.define do
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
   end
+
+  factory :opportunity_in_pipeline, :parent => :opportunity do
+    stage { %w(prospecting analysis presentation proposal negotiation final_review).sample }
+  end
 end
