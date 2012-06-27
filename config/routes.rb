@@ -99,6 +99,8 @@ Rails.application.routes.draw do
       put  :promote
       put  :reject
     end
+    
+    get :autocomplete_account_name, :on => :collection
   end
 
   resources :opportunities, :id => /\d+/ do
