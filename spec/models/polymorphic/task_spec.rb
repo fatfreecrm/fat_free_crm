@@ -363,6 +363,7 @@ describe Task do
         @t3 = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => @user)
         @t4 = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
         @t5 = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => @user)
+        @t6 = FactoryGirl.create(:completed_task, :assignee => @user)
       end
 
       it "should show tasks which have been created by the user and are unassigned" do
@@ -379,6 +380,10 @@ describe Task do
 
       it "should not show tasks which are created by the user but assigned" do
         Task.visible_on_dashboard(@user).should_not include(@t2)
+      end
+
+      it "should not include completed tasks" do
+        Task.visible_on_dashboard(@user).should_not include(@t6)
       end
     end
 
