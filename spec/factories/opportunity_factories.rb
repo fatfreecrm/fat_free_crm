@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :opportunity do
-    user                
-    campaign            
+    user
+    campaign
     account             { FactoryGirl.create(:account) }
     assigned_to         nil
     name                { Faker::Lorem.sentence[0,64] }
@@ -20,5 +20,9 @@ FactoryGirl.define do
 
   factory :opportunity_in_pipeline, :parent => :opportunity do
     stage { %w(prospecting analysis presentation proposal negotiation final_review).sample }
+  end
+
+  factory :open_opportunity, :parent => :opportunity do
+    stage               { %w(prospecting analysis presentation proposal negotiation final_review).sample }
   end
 end

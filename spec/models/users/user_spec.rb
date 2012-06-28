@@ -122,7 +122,7 @@ describe User do
     describe "have_assigned_opportunities" do
       before :each do
         @user1 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, :assignee => @user1)
+        FactoryGirl.create(:open_opportunity, :assignee => @user1)
 
         @user2 = FactoryGirl.create(:user)
 
