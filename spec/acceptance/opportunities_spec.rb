@@ -68,7 +68,6 @@ feature 'Opportunities', %q{
     page.should have_content('An Even Cooler Opportunity')
 
     click_link "Dashboard"
-    page.should have_content("Bill Murray viewed opportunity An Even Cooler Opportunity")
     page.should have_content("Bill Murray updated opportunity An Even Cooler Opportunity")
   end
 

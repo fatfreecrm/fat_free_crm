@@ -65,7 +65,6 @@ feature 'Campaigns', %q{
     page.should have_content('My Even Cooler Campaign')
 
     click_link 'Dashboard'
-    page.should have_content("Bill Murray viewed campaign My Even Cooler Campaign")
     page.should have_content("Bill Murray updated campaign My Even Cooler Campaign")
   end
 

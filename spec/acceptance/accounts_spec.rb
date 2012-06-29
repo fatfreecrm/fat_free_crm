@@ -72,7 +72,6 @@ feature 'Accounts', %q{
     page.should have_content('A new account *editted*')
 
     click_link "Dashboard"
-    page.should have_content("Bill Murray viewed account A new account *editted*")
     page.should have_content("Bill Murray updated account A new account *editted*")
   end
 

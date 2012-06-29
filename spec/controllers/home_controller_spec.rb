@@ -10,11 +10,19 @@ describe HomeController do
     end
 
     it "should get a list of activities" do
-      @activity = FactoryGirl.create(:version, :item => FactoryGirl.create(:account, :user => @current_user))
-      controller.should_receive(:get_activities).once.and_return([ @activity ])
+      activity = FactoryGirl.create(:version, :item => FactoryGirl.create(:account, :user => @current_user))
+      controller.should_receive(:get_activities).once.and_return([ activity ])
 
       get :index
-      assigns[:activities].should == [ @activity ]
+      assigns[:activities].should == [ activity ]
+    end
+
+    it "should not include views in the list of activities" do
+      activity = FactoryGirl.create(:version, :item => FactoryGirl.create(:account, :user => @current_user), :event => "view")
+      controller.should_receive(:get_activities).once.and_return([])
+
+      get :index
+      assigns[:activities].should == []
     end
 
     it "should get a list of my tasks ordered by due_at" do

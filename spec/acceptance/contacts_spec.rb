@@ -68,7 +68,6 @@ feature 'Contacts', %q{
     page.should have_content('Test Subject')
 
     click_link 'Dashboard'
-    page.should have_content("Bill Murray viewed contact Test Subject")
     page.should have_content("Bill Murray updated contact Test Subject")
   end
 
