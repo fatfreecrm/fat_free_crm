@@ -6,6 +6,7 @@ describe EntityObserver do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
       let!(:entity)  { FactoryGirl.build(entity_type, :user => assigner, :assignee => assignee) }
+      let(:mail) { mock('mail', :deliver => true) }
 
       before :each do
         PaperTrail.stub(:whodunnit).and_return(assigner)
@@ -16,7 +17,7 @@ describe EntityObserver do
       end
 
       it "sends notification to the assigned user for entity" do
-        UserMailer.should_receive(:assigned_entity_notification).with(entity, assigner)
+        UserMailer.should_receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
       end
 
       it "does not notify anyone if the entity is created and assigned to no-one" do
@@ -34,13 +35,14 @@ describe EntityObserver do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
       let!(:entity)  { FactoryGirl.create(entity_type, :user => FactoryGirl.create(:user)) }
+      let(:mail) { mock('mail', :deliver => true) }
 
       before :each do
         PaperTrail.stub(:whodunnit).and_return(assigner)
       end
 
       it "notifies the new owner if the entity is re-assigned" do
-        UserMailer.should_receive(:assigned_entity_notification).with(entity, assigner)
+        UserMailer.should_receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
         entity.update_attributes(:assignee => assignee)
       end
 
