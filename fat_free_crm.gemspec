@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.files = `git ls-files`.split("\n")
   gem.version = FatFreeCRM::VERSION::STRING
 
-  gem.add_dependency 'rails',               '~> 3.2.2'
+  gem.add_dependency 'rails',               '~> 3.2.6'
   gem.add_dependency 'prototype-rails'
   gem.add_dependency 'jquery-rails'
   gem.add_dependency 'simple_form',         '~> 2.0.1'
