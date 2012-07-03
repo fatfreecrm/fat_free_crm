@@ -35,6 +35,14 @@
           value_el.val("")
           value_el.show()
 
+    # show spinner and disable the form when the search is underway
+    $("#advanced_search form input:submit").live "click", ->
+      $("#loading").show();
+      $("#advanced_search").css({ opacity: 0.4 });
+      $('div.list').html('')
+      true
+
     # Fire change event for existing search form.
     $("select.predicate").change()
+    
 ) jQuery
