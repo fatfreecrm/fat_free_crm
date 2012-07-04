@@ -50,12 +50,13 @@ module FatFreeCRM
       %w(group user).each do |model|
         class_eval %Q{
           def #{model}_ids=(value)
+            value = value.map{|c| c.split(',')}.flatten.uniq # chosen bug gives us ["", "1,2,3"] but this will automatically work if it is fixed
             permissions.each {|p| p.destroy if (self.#{model}_ids - value).include?(p.#{model}_id)}
             (value - self.#{model}_ids).each {|id| permissions.build(:#{model}_id => id)}
           end
 
           def #{model}_ids
-            permissions.map(&:#{model}_id)
+            permissions.map(&:#{model}_id).compact
           end
         }
       end
@@ -107,4 +108,3 @@ module FatFreeCRM
 end # FatFreeCRM
 
 ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
-
