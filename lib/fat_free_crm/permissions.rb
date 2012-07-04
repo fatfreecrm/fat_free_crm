@@ -75,6 +75,7 @@ module FatFreeCRM
       def update_with_permissions(attributes, users)
         if attributes[:access] != "Shared"
           self.permissions.delete_all
+          attributes[:user_ids] = attributes[:group_ids] = []
         elsif !users.blank? # Check if we have the same users this time around.
           existing_users = self.permissions.map(&:user_id)
           if (existing_users.size != users.size) || (existing_users - users != [])
