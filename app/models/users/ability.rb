@@ -10,6 +10,8 @@ class Ability
       can :create, :all
       can :manage, entities, :access => 'Public'
       can :manage, entities + [Task], :user_id => user.id
+      
+      can :manage, :all if user.admin?
 
       # Group or User permissions
       t = Permission.arel_table
