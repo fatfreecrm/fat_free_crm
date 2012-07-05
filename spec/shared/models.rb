@@ -59,6 +59,13 @@ module SharedModelSpecs
 
       it{ should be_able_to(:manage, asset) }
     end
+    
+    context "when private access administrator" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Private') }
+      let(:user) { FactoryGirl.create(:user, :admin => true) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
 
     context "when private access not owner" do
       let(:asset){ FactoryGirl.create(factory, :access => 'Private') }
@@ -79,6 +86,14 @@ module SharedModelSpecs
 
       it{ should_not be_able_to(:manage, asset) }
     end
+    
+    context "when shared access with no permission but administrator" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
+      let(:permission){ Permission.new(:user => FactoryGirl.create(:user)) }
+      let(:user) { FactoryGirl.create(:user, :admin => true) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
 
     context "when shared access with group permission" do
       let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
@@ -95,5 +110,6 @@ module SharedModelSpecs
 
       it{ should_not be_able_to(:manage, asset) }
     end
+    
   end
 end
