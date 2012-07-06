@@ -134,7 +134,7 @@ class Opportunity < ActiveRecord::Base
       end
     end
     self.reload
-    self.update_with_permissions(params[:opportunity], params[:users])
+    self.update_attributes(params[:opportunity])
   end
 
   # Attach given attachment to the opportunity if it hasn't been attached already.

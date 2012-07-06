@@ -72,7 +72,7 @@ class CampaignsController < EntitiesController
     @comment_body = params[:comment_body]
 
     respond_with(@campaign) do |format|
-      if @campaign.save_with_permissions(params[:users])
+      if @campaign.save
         @campaign.add_comment_by_user(@comment_body, current_user)
         @campaigns = get_campaigns
         get_data_for_sidebar
@@ -84,7 +84,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@campaign) do |format|
-      if @campaign.update_with_permissions(params[:campaign], params[:users])
+      if @campaign.update_attributes(params[:campaign])
         get_data_for_sidebar if called_from_index_page?
       else
         @users = User.except(@current_user) # Need it to redraw [Edit Campaign] form.

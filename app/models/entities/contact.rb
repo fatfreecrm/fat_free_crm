@@ -135,7 +135,7 @@ class Contact < ActiveRecord::Base
       
     end
     self.reload
-    self.update_with_permissions(params[:contact], params[:users])
+    self.update_attributes(params[:contact])
   end
 
   # Attach given attachment to the contact if it hasn't been attached already.

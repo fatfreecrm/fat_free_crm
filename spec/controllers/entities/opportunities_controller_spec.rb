@@ -352,7 +352,7 @@ describe OpportunitiesController do
       end
 
       it "should expose a newly created opportunity as @opportunity and render [create] template" do
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }
         assigns(:opportunity).should == @opportunity
         assigns(:stage).should == @stage
         assigns(:opportunity_stage_total).should be_nil
@@ -361,7 +361,7 @@ describe OpportunitiesController do
 
       it "should get sidebar data if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }
         assigns(:opportunity_stage_total).should be_an_instance_of(HashWithIndifferentAccess)
       end
 
@@ -369,7 +369,7 @@ describe OpportunitiesController do
         @account = FactoryGirl.create(:account, :user => @current_user)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :id => @account.id }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :id => @account.id }
         assigns(:account).should == @account
       end
 
@@ -377,13 +377,13 @@ describe OpportunitiesController do
         @campaign = FactoryGirl.create(:campaign, :user => @current_user)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Hello again" }
         assigns(:campaign).should == @campaign
       end
 
       it "should reload opportunities to update pagination if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }
         assigns[:opportunities].should == [ @opportunity ]
       end
 
@@ -391,7 +391,7 @@ describe OpportunitiesController do
         @campaign = FactoryGirl.create(:campaign)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Test Account" }, :users => []
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Test Account" }
         assigns(:opportunity).should == @opportunity
         assigns(:campaign).should == @campaign
         @opportunity.campaign.should == @campaign
@@ -401,7 +401,7 @@ describe OpportunitiesController do
         @contact = FactoryGirl.create(:contact, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts/42"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :contact => 42, :account => { :name => "Hello again" }, :users => []
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :contact => 42, :account => { :name => "Hello again" }
         assigns(:opportunity).should == @opportunity
         @opportunity.contacts.should include(@contact)
         @contact.opportunities.should include(@opportunity)
@@ -416,7 +416,7 @@ describe OpportunitiesController do
       it "should associate opportunity with the existing account" do
         @account = FactoryGirl.create(:account, :id => 42)
 
-        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => { :id => 42 }, :users => []
+        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => { :id => 42 }
         assigns(:opportunity).should == @opportunity
         @opportunity.account.should == @account
         @account.opportunities.should include(@opportunity)
@@ -483,7 +483,7 @@ describe OpportunitiesController do
         @campaign = FactoryGirl.create(:campaign, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/42"
-        xhr :post, :create, :opportunity => { :name => nil }, :campaign => 42, :account => { :name => "Test Account" }, :users => []
+        xhr :post, :create, :opportunity => { :name => nil }, :campaign => 42, :account => { :name => "Test Account" }
         assigns(:campaign).should == @campaign
         response.should render_template("opportunities/create")
       end
@@ -492,7 +492,7 @@ describe OpportunitiesController do
         @contact = FactoryGirl.create(:contact, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts/42"
-        xhr :post, :create, :opportunity => { :name => nil }, :contact => 42, :account => { :name => "Test Account" }, :users => []
+        xhr :post, :create, :opportunity => { :name => nil }, :contact => 42, :account => { :name => "Test Account" }
         assigns(:contact).should == @contact
         response.should render_template("opportunities/create")
       end
@@ -512,7 +512,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42)
         @stage = Setting.unroll(:opportunity_stage)
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => { :name => "Test Account" }, :users => %w(1 2 3)
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => { :name => "Test Account" }
         @opportunity.reload.name.should == "Hello world"
         assigns(:opportunity).should == @opportunity
         assigns(:stage).should == @stage
@@ -582,9 +582,9 @@ describe OpportunitiesController do
         he  = FactoryGirl.create(:user, :id => 7)
         she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello", :access => "Shared" }, :users => %w(7 8), :account => { :name => "Test Account" }
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello", :access => "Shared", :user_ids => %w(7 8) }, :account => { :name => "Test Account" }
         @opportunity.reload.access.should == "Shared"
-        @opportunity.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        @opportunity.user_ids.sort.should == [ 7, 8 ]
         assigns[:opportunity].should == @opportunity
       end
 

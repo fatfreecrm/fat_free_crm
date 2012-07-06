@@ -100,21 +100,29 @@ class Lead < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def save_with_permissions(params)
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
-    if self.access == "Campaign" && self.campaign # Copy campaign permissions.
+    if params[:lead][:access] == "Campaign" && self.campaign # Copy campaign permissions.
       save_with_model_permissions(Campaign.find(self.campaign_id))
     else
-      super(params[:users]) # invoke :save_with_permissions in plugin.
+      self.attributes = params[:leads]
+      save
     end
   end
 
+  # Deprecated: see update_with_lead_counters
+  #----------------------------------------------------------------------------
+  def update_with_permissions(attributes, users = nil)
+    ActiveSupport::Deprecation.warn "lead.update_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead and call lead.update_with_lead_counters"
+    update_with_lead_counters(attributes)
+  end
+  
   # Update lead attributes taking care of campaign lead counters when necessary.
   #----------------------------------------------------------------------------
-  def update_with_permissions(attributes, users)
+  def update_with_lead_counters(attributes)
     if self.campaign_id == attributes[:campaign_id] # Same campaign (if any).
-      super(attributes, users)                      # See lib/fat_free_crm/permissions.rb
+      update_attributes(attributes)                 # See lib/fat_free_crm/permissions.rb
     else                                            # Campaign has been changed -- update lead counters...
       decrement_leads_count                         # ..for the old campaign...
-      lead = super(attributes, users)               # Assign new campaign.
+      lead = update_attributes(attributes)          # Assign new campaign.
       increment_leads_count                         # ...and now for the new campaign.
       lead
     end

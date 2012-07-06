@@ -304,7 +304,7 @@ describe ContactsController do
         @contact = FactoryGirl.build(:contact, :first_name => "Billy", :last_name => "Bones")
         Contact.stub!(:new).and_return(@contact)
 
-        xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => { :name => "Hello world" }, :users => %w(1 2 3)
+        xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => { :name => "Hello world" }
         assigns(:contact).should == @contact
         assigns(:contact).account.name.should == "Hello world"
         response.should render_template("contacts/create")
@@ -325,7 +325,7 @@ describe ContactsController do
         Contact.stub!(:new).and_return(@contact)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts"
-        xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}, :users => %w(1 2 3)
+        xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => {}
         assigns[:contacts].should == [ @contact ]
       end
 
@@ -432,9 +432,9 @@ describe ContactsController do
         he  = FactoryGirl.create(:user, :id => 7)
         she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => 42, :contact => { :first_name => "Hello", :access => "Shared" }, :users => %w(7 8), :account => {}
+        xhr :put, :update, :id => 42, :contact => { :first_name => "Hello", :access => "Shared", :user_ids => %w(7 8) }, :account => {}
         @contact.reload.access.should == "Shared"
-        @contact.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        @contact.user_ids.sort.should == [ 7, 8 ]
         assigns[:contact].should == @contact
       end
 

@@ -96,7 +96,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@lead) do |format|
-      if @lead.update_with_permissions(params[:lead], params[:users])
+      if @lead.update_with_lead_counters(params[:lead])
         update_sidebar
       else
         @users = User.except(@current_user)

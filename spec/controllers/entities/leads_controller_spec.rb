@@ -325,7 +325,7 @@ describe LeadsController do
         @users = [ FactoryGirl.create(:user) ]
         @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
 
-        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
         assigns(:lead).should == @lead
         assigns(:users).should == @users
         assigns(:campaigns).should == @campaigns
@@ -344,19 +344,20 @@ describe LeadsController do
         @lead = FactoryGirl.build(:lead, :campaign => @campaign, :user => @current_user, :access => "Shared")
         Lead.stub!(:new).and_return(@lead)
 
-        xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :access => "Campaign" }, :campaign => @campaign.id, :users => %w(7 8)
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :access => "Campaign", :user_ids => %w(7 8) }, :campaign => @campaign.id
+        assigns(:lead).should == @lead
         @lead.reload.access.should == "Shared"
         @lead.permissions.map(&:user_id).sort.should == [ 7, 8 ]
         @lead.permissions.map(&:asset_id).should == [ @lead.id, @lead.id ]
         @lead.permissions.map(&:asset_type).should == %w(Lead Lead)
       end
-
+      
       it "should get the data to update leads sidebar if called from leads index" do
         @lead = FactoryGirl.build(:lead, :user => @current_user, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
-        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
         assigns[:lead_status_total].should be_an_instance_of(HashWithIndifferentAccess)
       end
 
@@ -365,7 +366,7 @@ describe LeadsController do
         Lead.stub!(:new).and_return(@lead)
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
-        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
         assigns[:leads].should == [ @lead ]
       end
 
@@ -395,7 +396,7 @@ describe LeadsController do
         @users = [ FactoryGirl.create(:user) ]
         @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
 
-        xhr :post, :create, :lead => { :first_name => nil }, :users => nil
+        xhr :post, :create, :lead => { :first_name => nil }
         assigns(:lead).should == @lead
         assigns(:users).should == @users
         assigns(:campaigns).should == @campaigns
@@ -477,13 +478,14 @@ describe LeadsController do
         @campaigns[:new].reload.leads_count.should == @counts[:new] + 1
       end
 
-      it "should update shared permissions for the campaign" do
+      it "should update shared permissions for the lead" do
         @lead = FactoryGirl.create(:lead, :user => @current_user)
         he  = FactoryGirl.create(:user, :id => 7)
         she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => @lead.id, :lead => { :access => "Shared" }, :users => %w(7 8)
-        @lead.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        xhr :put, :update, :id => @lead.id, :lead => { :access => "Shared", :user_ids => %w(7 8) }
+        @lead.reload
+        @lead.user_ids =~ [ 7, 8 ]
       end
 
       it "should get the data for leads sidebar when called from leads index" do

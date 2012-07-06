@@ -303,7 +303,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
 
-        xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
+        xhr :post, :create, :campaign => { :name => "Hello" }
         assigns(:campaign).should == @campaign
         response.should render_template("campaigns/create")
       end
@@ -312,7 +312,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
 
-        xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
+        xhr :post, :create, :campaign => { :name => "Hello" }
         assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
@@ -320,7 +320,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
 
-        xhr :post, :create, :campaign => { :name => "Hello" }, :users => %w(1 2 3)
+        xhr :post, :create, :campaign => { :name => "Hello" }
         assigns[:campaigns].should == [ @campaign ]
       end
 
@@ -339,7 +339,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, :id => nil, :name => nil, :user => @current_user)
         Campaign.stub!(:new).and_return(@campaign)
 
-        xhr :post, :create, :campaign => nil, :users => %w(1 2 3)
+        xhr :post, :create, :campaign => nil
         assigns(:campaign).should == @campaign
         response.should render_template("campaigns/create")
       end
@@ -356,7 +356,7 @@ describe CampaignsController do
       it "should update the requested campaign and render [update] template" do
         @campaign = FactoryGirl.create(:campaign, :id => 42, :name => "Bye")
 
-        xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
+        xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }
         @campaign.reload.name.should == "Hello"
         assigns(:campaign).should == @campaign
         response.should render_template("campaigns/update")
@@ -366,7 +366,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.create(:campaign, :id => 42)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
 
-        xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }, :users => []
+        xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }
         assigns(:campaign).should == @campaign
         assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
       end
@@ -376,9 +376,9 @@ describe CampaignsController do
         he  = FactoryGirl.create(:user, :id => 7)
         she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => 42, :campaign => { :name => "Hello", :access => "Shared" }, :users => %w(7 8)
+        xhr :put, :update, :id => 42, :campaign => { :name => "Hello", :access => "Shared", :user_ids => %w(7 8) }
         @campaign.reload.access.should == "Shared"
-        @campaign.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        @campaign.user_ids.sort.should == [ 7, 8 ]
         assigns[:campaign].should == @campaign
       end
 
@@ -387,7 +387,7 @@ describe CampaignsController do
           @campaign = FactoryGirl.create(:campaign, :user => @current_user)
           @campaign.destroy
 
-          xhr :put, :update, :id => @campaign.id, :users => []
+          xhr :put, :update, :id => @campaign.id
           flash[:warning].should_not == nil
           response.body.should == "window.location.reload();"
         end
@@ -395,7 +395,7 @@ describe CampaignsController do
         it "should reload current page with the flash message if the campaign is protected" do
           @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
-          xhr :put, :update, :id => @private.id, :users => []
+          xhr :put, :update, :id => @private.id
           flash[:warning].should_not == nil
           response.body.should == "window.location.reload();"
         end

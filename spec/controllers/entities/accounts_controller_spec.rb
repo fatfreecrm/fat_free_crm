@@ -301,7 +301,7 @@ describe AccountsController do
         @account = FactoryGirl.build(:account, :name => "Hello world", :user => @current_user)
         Account.stub!(:new).and_return(@account)
 
-        xhr :post, :create, :account => { :name => "Hello world" }, :users => %w(1 2 3)
+        xhr :post, :create, :account => { :name => "Hello world" }
         assigns(:account).should == @account
         response.should render_template("accounts/create")
       end
@@ -311,7 +311,7 @@ describe AccountsController do
         @account = FactoryGirl.build(:account, :user => @current_user)
         Account.stub!(:new).and_return(@account)
 
-        xhr :post, :create, :account => { :name => "Hello" }, :users => %w(1 2 3)
+        xhr :post, :create, :account => { :name => "Hello" }
         assigns[:accounts].should == [ @account ]
       end
 
@@ -319,7 +319,7 @@ describe AccountsController do
         @account = FactoryGirl.build(:account, :name => "Hello", :user => @current_user)
         Campaign.stub!(:new).and_return(@account)
 
-        xhr :post, :create, :account => { :name => "Hello" }, :users => %w(1 2 3)
+        xhr :post, :create, :account => { :name => "Hello" }
         assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
       end
 
@@ -337,7 +337,7 @@ describe AccountsController do
         @account = FactoryGirl.build(:account, :name => nil, :user => nil)
         Account.stub!(:new).and_return(@account)
 
-        xhr :post, :create, :account => {}, :users => []
+        xhr :post, :create, :account => {}
         assigns(:account).should == @account
         response.should render_template("accounts/create")
       end
@@ -363,7 +363,7 @@ describe AccountsController do
         @account = FactoryGirl.create(:account, :id => 42)
         request.env["HTTP_REFERER"] = "http://localhost/accounts"
 
-        xhr :put, :update, :id => 42, :account => { :name => "Hello" }, :users => []
+        xhr :put, :update, :id => 42, :account => { :name => "Hello" }
         assigns(:account).should == @account
         assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
       end
@@ -373,9 +373,9 @@ describe AccountsController do
         he  = FactoryGirl.create(:user, :id => 7)
         she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => 42, :account => { :name => "Hello", :access => "Shared" }, :users => %w(7 8)
+        xhr :put, :update, :id => 42, :account => { :name => "Hello", :access => "Shared", :user_ids => %w(7 8) }
         @account.reload.access.should == "Shared"
-        @account.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        @account.user_ids.sort.should == [ 7, 8 ]
         assigns[:account].should == @account
       end
 
