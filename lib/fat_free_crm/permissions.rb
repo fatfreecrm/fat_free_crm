@@ -51,12 +51,13 @@ module FatFreeCRM
       #--------------------------------------------------------------------------
       %w(group user).each do |model|
         class_eval %Q{
+
           def #{model}_ids=(value)
             if access != "Shared"
               remove_permissions
             else
               value.map!{|c| c.split(',')} if value.map{|v| v.to_s.include?(',')}.any? # fix for a bug in "Chosen" which gives values like ["", "1,2,3"] 
-              value = value.flatten.uniq.map(&:to_i)
+              value = value.flatten.reject(&:blank?).uniq.map(&:to_i)
               permissions_to_remove = Permission.find_all_by_#{model}_id_and_asset_id(self.#{model}_ids - value, self.id)
               permissions_to_remove.each {|p| (permissions.delete(p); p.destroy)}
               (value - self.#{model}_ids).each {|id| permissions.build(:#{model}_id => id)}

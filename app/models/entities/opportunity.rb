@@ -114,12 +114,12 @@ class Opportunity < ActiveRecord::Base
   def save_with_account_and_permissions(params)
     # Quick sanitization, makes sure Account will not search for blank id.
     params[:account].delete(:id) if params[:account][:id].blank?
-    account = Account.create_or_select_for(self, params[:account], params[:users])
+    account = Account.create_or_select_for(self, params[:account])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
     self.account = account
     self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
-    self.save_with_permissions(params[:users])
+    self.save
   end
 
   # Backend handler for [Update Opportunity] form (see opportunity/update).
@@ -128,7 +128,7 @@ class Opportunity < ActiveRecord::Base
     if params[:account] && (params[:account][:id] == "" || params[:account][:name] == "")
       self.account = nil # Opportunity is not associated with the account anymore.
     elsif params[:account]
-      account = Account.create_or_select_for(self, params[:account], params[:users])
+      account = Account.create_or_select_for(self, params[:account])
       if self.account != account and account.id.present?
         self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self)
       end
@@ -157,7 +157,7 @@ class Opportunity < ActiveRecord::Base
 
   # Class methods.
   #----------------------------------------------------------------------------
-  def self.create_for(model, account, params, users)
+  def self.create_for(model, account, params)
     opportunity = Opportunity.new(params)
 
     # Save the opportunity if its name was specified and account has no errors.
@@ -165,7 +165,7 @@ class Opportunity < ActiveRecord::Base
       # Note: opportunity.account = account doesn't seem to work here.
       opportunity.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => opportunity) unless account.id.blank?
       if opportunity.access != "Lead" || model.nil?
-        opportunity.save_with_permissions(users)
+        opportunity.save
       else
         opportunity.save_with_model_permissions(model)
       end

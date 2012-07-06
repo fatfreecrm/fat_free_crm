@@ -114,10 +114,10 @@ class Contact < ActiveRecord::Base
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
   def save_with_account_and_permissions(params)
-    account = Account.create_or_select_for(self, params[:account], params[:users])
+    account = Account.create_or_select_for(self, params[:account])
     self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
-    self.save_with_permissions(params[:users])
+    self.save
   end
 
   # Backend handler for [Update Contact] form (see contact/update).
@@ -127,7 +127,7 @@ class Contact < ActiveRecord::Base
       notify_account_change(:from => self.account, :to => nil)
       self.account = nil # Contact is not associated with the account anymore.
     else
-      account = Account.create_or_select_for(self, params[:account], params[:users])
+      account = Account.create_or_select_for(self, params[:account])
       if self.account != account and account.id.present?
         notify_account_change(:from => self.account, :to => account)
         self.account_contact = AccountContact.new(:account => account, :contact => self)
@@ -178,7 +178,7 @@ class Contact < ActiveRecord::Base
       contact.account_contact = AccountContact.new(:account => account, :contact => contact) unless account.id.blank?
       contact.opportunities << opportunity unless opportunity.id.blank?
       if contact.access != "Lead" || model.nil?
-        contact.save_with_permissions(params[:users])
+        contact.save
       else
         contact.save_with_model_permissions(model)
       end
