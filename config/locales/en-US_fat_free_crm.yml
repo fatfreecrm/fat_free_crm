@@ -651,6 +651,7 @@ en-US:
   groups: Groups
   groups_small: groups
   group_small: group
+  confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
 
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------

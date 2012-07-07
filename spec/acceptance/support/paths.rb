@@ -28,6 +28,10 @@ module NavigationHelpers
   def tasks_page
     tasks_path
   end
+  
+  def groups_page
+    admin_groups_path
+  end
 end
 
 RSpec.configuration.include NavigationHelpers, :type => :request

@@ -124,12 +124,14 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_delete(record, options = {})
     object = record.is_a?(Array) ? record.last : record
-
+    confirm = options[:confirm] || nil
+    
     link_to(t(:delete) + "!",
       options[:url] || url_for(record),
       :method => :delete,
       :remote => true,
-      :onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1")
+      :onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1"),
+      :confirm => confirm
     )
   end
 
