@@ -92,13 +92,13 @@ describe FatFreeCRM::Permissions do
     it "should delete all permissions if access is set to Public" do
       perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
       perm.should_receive(:destroy)
-      Permission.should_receive(:find_all_by_asset_id).with(@entity.id).and_return([perm])
+      Permission.should_receive(:find_all_by_asset_id_and_asset_type).with(@entity.id, @entity.class).and_return([perm])
       @entity.update_attribute(:access, 'Public')
     end
     it "should delete all permissions if access is set to Private" do
       perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
       perm.should_receive(:destroy)
-      Permission.should_receive(:find_all_by_asset_id).with(@entity.id).and_return([perm])
+      Permission.should_receive(:find_all_by_asset_id_and_asset_type).with(@entity.id, @entity.class).and_return([perm])
       @entity.update_attribute(:access, 'Private')
     end
     it "should not remove permissions if access is set to Shared" do

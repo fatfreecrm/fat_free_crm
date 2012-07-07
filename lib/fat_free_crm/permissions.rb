@@ -58,7 +58,7 @@ module FatFreeCRM
             else
               value.map!{|c| c.split(',')} if value.map{|v| v.to_s.include?(',')}.any? # fix for a bug in "Chosen" which gives values like ["", "1,2,3"] 
               value = value.flatten.reject(&:blank?).uniq.map(&:to_i)
-              permissions_to_remove = Permission.find_all_by_#{model}_id_and_asset_id(self.#{model}_ids - value, self.id)
+              permissions_to_remove = Permission.find_all_by_#{model}_id_and_asset_id_and_asset_type(self.#{model}_ids - value, self.id, self.class)
               permissions_to_remove.each {|p| (permissions.delete(p); p.destroy)}
               (value - self.#{model}_ids).each {|id| permissions.build(:#{model}_id => id)}
             end
@@ -81,7 +81,7 @@ module FatFreeCRM
       #--------------------------------------------------------------------------
       def remove_permissions
         # we don't use dependent => :destroy so must manually remove
-        permissions_to_remove = Permission.find_all_by_asset_id(self.id)
+        permissions_to_remove = Permission.find_all_by_asset_id_and_asset_type(self.id, self.class)
         permissions_to_remove.each {|p| (permissions.delete(p); p.destroy)}
       end
 
