@@ -146,6 +146,13 @@ class User < ActiveRecord::Base
     self.single_access_token ||= update_attribute(:single_access_token, Authlogic::Random.friendly_token)
   end
 
+  # Massage value when using Chosen select box which gives values like ["", "1,2,3"] 
+  #----------------------------------------------------------------------------
+  def group_ids=(value)
+    value = value.join.split(',').map(&:to_i) if value.map{|v| v.to_s.include?(',')}.any?
+    super(value)
+  end
+
   private
 
   # Suspend newly created user if signup requires an approval.
@@ -174,4 +181,5 @@ class User < ActiveRecord::Base
   def self.current_ability
     @current_ability ||= Ability.new(User.current_user)
   end
+
 end

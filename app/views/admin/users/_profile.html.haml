@@ -43,3 +43,13 @@
       %td
         .label #{t :company}:
         = f.text_field :company
+        
+.subtitle #{t :group_memberships}
+.section
+  %table
+    %tr
+      %td
+        .label #{t :groups}:
+        = f.select :group_ids, Group.all.map {|g| [g.name, g.id]}, {}, :multiple => true
+        :javascript
+          new Chosen($('user_group_ids'));

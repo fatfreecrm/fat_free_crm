@@ -659,6 +659,7 @@ en-US:
   create_user: Create User
   last_seen: last seen %{value} ago
   personal_information: Personal Information
+  group_memberships: Group Memberships
   reactivate: Reactivate
   save_user: Save User
   suspend: Suspend
