@@ -102,6 +102,15 @@ module SharedModelSpecs
 
       it{ should be_able_to(:manage, asset) }
     end
+    
+    context "when shared access with several group permissions" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => permissions) }
+      let(:permissions){ [Permission.new(:group => group1), Permission.new(:group => group2)] }
+      let(:group1){ FactoryGirl.create(:group, :users => [user]) }
+      let(:group2){ FactoryGirl.create(:group, :users => [user]) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
 
     context "when shared access with no group permission" do
       let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }

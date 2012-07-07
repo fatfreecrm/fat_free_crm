@@ -18,7 +18,7 @@ class Ability
       scope = t[:user_id].eq(user.id)
 
       if (group_ids = user.group_ids).any?
-        scope = scope.or(t[:group_id].eq(group_ids))
+        scope = scope.or(t[:group_id].eq_any(group_ids))
       end
 
       entities.each do |klass|

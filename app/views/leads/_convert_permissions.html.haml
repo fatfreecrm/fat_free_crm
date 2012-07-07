@@ -17,7 +17,7 @@
       = radio_button_tag "access", "Shared", false, :onclick => "$('people').show(); $('account_access').value = $('opportunity_access').value = 'Shared'"
       = label :access, :Shared, t(:share_with), :style => "cursor:pointer"
 
-    #people{ hidden_if(entity.access != "Shared") }
+    #people{ hidden_if(@lead.access != "Shared") }
       %table
         %tr
           %td
