@@ -1,24 +1,31 @@
 = styles_for :contact
 
-.title
-  %span#create_contact_title #{t :contacts}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+= image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 
-#search_bar
-  #search_tabs
+#buttons
+  = render 'format_buttons'
+  .create_asset
+    = link_to_inline(:create_contact, new_contact_path, :text => t(:create_contact))
+
+#search
+  .tabs
     %ul
       %li
-        = link_to 'Basic Search', '#'
+        = link_to 'Basic Search', '#', :class => (params[:q] ? "" : "active")
       %li
-        = link_to 'Advanced Search', '#'
+        = link_to 'Advanced Search', '#', :class => (params[:q] ? "active" : "")
+
+  .remote#basic_search{ hidden_if(params[:q]) }
+    = render "basic_search"
+
+  .remote#advanced_search{ hidden_if(!params[:q]) }
+    - if params[:q]
+      = render :partial => "advanced_search"
+
 
 .remote#create_contact{ hidden }
 
 .remote#options{ hidden }
-.remote#advanced_search{ hidden_if(!params[:q]) }
-  - if params[:q]
-    = render :partial => "advanced_search"
-
 
 .list#contacts
   - if @contacts.any?
@@ -28,3 +35,5 @@
 
 #paginate= render "shared/paginate"
 #export= render "shared/export"
+
+

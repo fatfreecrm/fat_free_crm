@@ -227,7 +227,7 @@ en-US:
   option_target_revenue: target revenue
   option_updated_at: date updated
   show_per_page: Show %{number} %{models} per page using %{fmt} format.
-  sort_by: Sort %{models} by %{field}.
+  sort_by: Sort by %{field}
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
 
   # Views -> Profile.

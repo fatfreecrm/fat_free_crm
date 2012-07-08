@@ -1,0 +1,25 @@
+- path = controller.controller_name
+- path = "admin/#{path}" if controller.class.to_s.starts_with?("Admin::")
+- current_sort_by = t("option_" + Contact.sort_by_map.invert[@sort_by])
+- current_naming  = t("option_#{@naming}")
+
+%div{ :style => "margin: 0px 0px 6px 0px" }
+  = text_field_tag('query', @current_query, :size => 23, :onfocus => "if (this.value == 'Search #{path}') { this.value = ''; jQuery(this).removeClass('defaultTextActive'); }", :onblur => "if (this.value == '' ) { this.value = 'Search #{path}'; jQuery(this).addClass('defaultTextActive'); }")
+
+  .sorting.options
+    -# sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name.
+    = t(:sort_by, :models => t(:contacts_small), :field => link_to(current_sort_by, "#", :id => :sort_by)).html_safe
+
+%script
+  = render "shared/sort_by"
+
+
+:javascript
+  var defaultText = 'Search #{path}';
+  previous_#{path}_search_value = defaultText;
+  new Form.Element.Observer('query', 1.5, function(element, value) {
+  	if (value != defaultText && previous_#{path}_search_value != '') {
+  		crm.search(value, '#{path}');
+  	}
+  	previous_#{path}_search_value = value;
+  });
