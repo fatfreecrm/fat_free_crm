@@ -11,16 +11,15 @@
   .tabs
     %ul
       %li
-        = link_to 'Basic Search', '#', :class => (params[:q] ? "" : "active")
+        = link_to 'Basic Search', '#',    :"data-search-form" => "basic_search",    :class => (params[:q]  ? "" : " active")
       %li
-        = link_to 'Advanced Search', '#', :class => (params[:q] ? "active" : "")
+        = link_to 'Advanced Search', '#', :"data-search-form" => "advanced_search", :class => (!params[:q] ? "" : " active")
 
-  .remote#basic_search{ hidden_if(params[:q]) }
+  .search_form#basic_search{ hidden_if(params[:q]) }
     = render "basic_search"
 
-  .remote#advanced_search{ hidden_if(!params[:q]) }
-    - if params[:q]
-      = render :partial => "advanced_search"
+  .search_form#advanced_search{ hidden_if(!params[:q]) }
+    = render :partial => "advanced_search"
 
 
 .remote#create_contact{ hidden }
@@ -36,4 +35,14 @@
 #paginate= render "shared/paginate"
 #export= render "shared/export"
 
+:javascript
+  var activate_search_form = function(search_form){
+    // Hide all
+    jQuery('#search .search_form').hide();
+    jQuery('#search .tabs li a').removeClass('active');   
+    // Show selected
+    jQuery('#' + search_form).show();
+    jQuery('a[data-search-form=' + search_form + ']').addClass('active');
+  }
 
+  jQuery("#search .tabs a").click(function(){ activate_search_form(jQuery(this).data('search-form')); });

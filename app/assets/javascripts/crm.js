@@ -45,14 +45,14 @@ var crm = {
   hide_form: function(id) {
     if($('facebook-list')) $('facebook-list').remove();
     var arrow = $(id + "_arrow") || $("arrow");
-    arrow.update(this.COLLAPSED);
+    if (arrow) arrow.update(this.COLLAPSED);
     $(id).hide().update("").setStyle({height: 'auto'});
   },
 
   //----------------------------------------------------------------------------
   show_form: function(id) {
     var arrow = $(id + "_arrow") || $("arrow");
-    arrow.update(this.EXPANDED);
+    if (arrow) arrow.update(this.EXPANDED);
     Effect.BlindDown(id, { duration: 0.25, afterFinish: function() {
         var input = $(id).down("input[type=text]");
         if (input) input.focus();

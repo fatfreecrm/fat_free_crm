@@ -15,10 +15,6 @@
 			a:hover {
 				background-color: #ccc;
 			}
-			a:active {
-				background-color: #aaa;
-				color: white;
-			}
 			a.active {
 				background-color: #eee;
         color: black;
@@ -26,7 +22,7 @@
 		}
 	}
 	
-	.remote {
+	.search_form {
 		border: none;
 		background-color: #eee;
 		padding: 10px;
