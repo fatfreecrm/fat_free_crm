@@ -14,6 +14,7 @@ feature 'Users tab', %q{
     FactoryGirl.create(:group, :name => "Superheroes")
     visit admin_users_path
     click_link 'Create User'
+    wait_until { find_field('user[username]') } # wait for AJAX to load
     fill_in 'user_username', :with => 'captainthunder'
     fill_in 'user_email', :with => 'lightning@example.com'
     fill_in 'user_first_name', :with => 'Captain'
