@@ -264,6 +264,7 @@ en-US:
   born_on: Born on
   reports_to: Reports to
   access: Access
+  contacts_account: Contact's account
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
@@ -671,9 +672,9 @@ en-US:
     create: %{item} created by %{by}
     update: %{item} modified by %{by}
     destroy: %{item} destroyed by %{by}
-    set: %{attr} set to %{to}
-    unset: %{attr} unset
-    change: %{attr} changed from %{from} to %{to}
+    set_html: %{attr} set to %{to}
+    unset_html: %{attr} unset
+    change_html: %{attr} changed from %{from} to %{to}
     anonymous: anonymous
 
   # Export.

@@ -86,6 +86,7 @@ class Contact < ActiveRecord::Base
   uses_comment_extensions
   acts_as_taggable_on :tags
   has_paper_trail :ignore => [ :subscribed_users ]
+  
   has_fields
   exportable
   sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
@@ -123,12 +124,15 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def update_with_account_and_permissions(params)
     if params[:account][:id] == "" || params[:account][:name] == ""
+      notify_account_change(:from => self.account, :to => nil)
       self.account = nil # Contact is not associated with the account anymore.
     else
       account = Account.create_or_select_for(self, params[:account], params[:users])
       if self.account != account and account.id.present?
+        notify_account_change(:from => self.account, :to => account)
         self.account_contact = AccountContact.new(:account => account, :contact => self)
       end
+      
     end
     self.reload
     self.update_with_permissions(params[:contact], params[:users])
@@ -180,6 +184,25 @@ class Contact < ActiveRecord::Base
       end
     end
     contact
+  end
+
+  # Create a version record when account is changed
+  #----------------------------------------------------------------------------
+  def notify_account_change(options)  
+    from_id = !options[:from].nil? ? options[:from].id : nil
+    from_name = !options[:from].nil? ? options[:from].name : nil
+    to_id = !options[:to].nil? ? options[:to].id : nil
+    to_name = !options[:to].nil? ? options[:to].name : nil
+    if from_id != to_id
+      Version.create(:item_type => 'AccountContact', :item_id => 1,
+        :event => 'update', :whodunnit => User.current_user, :object => nil,
+        :object_changes => 
+          {:account_contact_id => [from_id, to_id],
+           :account_contact_name => [from_name, to_name]
+           }.to_yaml,
+        :related => self
+       )
+    end
   end
 
   private
