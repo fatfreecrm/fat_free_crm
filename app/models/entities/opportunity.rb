@@ -134,7 +134,8 @@ class Opportunity < ActiveRecord::Base
       end
     end
     self.reload
-    self.update_attributes(params[:opportunity])
+    self.attributes = params[:opportunity]
+    self.save
   end
 
   # Attach given attachment to the opportunity if it hasn't been attached already.

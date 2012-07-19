@@ -135,7 +135,8 @@ class Contact < ActiveRecord::Base
       
     end
     self.reload
-    self.update_attributes(params[:contact])
+    self.attributes = params[:contact]
+    self.save
   end
 
   # Attach given attachment to the contact if it hasn't been attached already.

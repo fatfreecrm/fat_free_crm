@@ -119,10 +119,12 @@ class Lead < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def update_with_lead_counters(attributes)
     if self.campaign_id == attributes[:campaign_id] # Same campaign (if any).
-      update_attributes(attributes)                 # See lib/fat_free_crm/permissions.rb
+      self.attributes = attributes
+      self.save
     else                                            # Campaign has been changed -- update lead counters...
       decrement_leads_count                         # ..for the old campaign...
-      lead = update_attributes(attributes)          # Assign new campaign.
+      self.attributes = attributes                  # Assign new campaign.
+      lead = self.save
       increment_leads_count                         # ...and now for the new campaign.
       lead
     end
