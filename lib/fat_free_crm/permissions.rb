@@ -53,6 +53,10 @@ module FatFreeCRM
       def save_with_permissions(users)
         if users && self[:access] == "Shared"
           users.each { |id| self.permissions << Permission.new(:user_id => id, :asset => self) }
+        elsif self[:access] == "Private"
+          [self.user_id, self.assigned_to].each do |user|
+            self.permissions << Permission.new(:user_id => user, :asset => self )
+          end
         end
         save
       end
@@ -60,8 +64,14 @@ module FatFreeCRM
       # Update the model along with its permissions if any.
       #--------------------------------------------------------------------------
       def update_with_permissions(attributes, users)
-        if attributes[:access] != "Shared"
+        if attributes[:access] == "Public"
           self.permissions.delete_all
+        elsif attributes[:access] == "Private"
+          self.permissions.delete_all
+          # If the accessibility is set to Private, it should only be seen by its creator and who it's assigned to
+          [attributes[:user_id], attributes[:assigned_to]].each do |user|
+            self.permissions << Permission.new(:user_id => user, :asset => self)
+          end
         elsif !users.blank? # Check if we have the same users this time around.
           existing_users = self.permissions.map(&:user_id)
           if (existing_users.size != users.size) || (existing_users - users != [])
