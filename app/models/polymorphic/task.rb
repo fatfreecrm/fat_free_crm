@@ -73,7 +73,7 @@ class Task < ActiveRecord::Base
 
   scope :visible_on_dashboard, lambda { |user|
     # Show opportunities which either belong to the user and are unassigned, or are assigned to the user
-    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id).pending
+    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id).where('completed_at IS NULL')
   }
 
   scope :by_due_at, order({
@@ -261,4 +261,3 @@ class Task < ActiveRecord::Base
     translated.each_with_index { |name, i| date_string.gsub!(name, original[i]) }
   end
 end
-

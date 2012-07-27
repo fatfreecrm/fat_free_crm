@@ -31,13 +31,13 @@ describe HomeController do
     end
 
     it "should get a list of my opportunities ordered by closes_on" do
-      opportunity_1 = FactoryGirl.create(:opportunity, :name => "Your first opportunity", :closes_on => 15.days.from_now, :assigned_to => @current_user.id)
-      opportunity_2 = FactoryGirl.create(:opportunity, :name => "Another opportunity for you", :closes_on => 10.days.from_now, :assigned_to => @current_user.id)
-      opportunity_3 = FactoryGirl.create(:opportunity, :name => "Third Opportunity", :closes_on => 5.days.from_now, :assigned_to => @current_user.id)
-      opportunity_4 = FactoryGirl.create(:opportunity, :name => "Fourth Opportunity", :closes_on => 50.days.from_now, :assigned_to => nil, :user_id => @current_user.id)
+      opportunity_1 = FactoryGirl.create(:opportunity, :name => "Your first opportunity", :closes_on => 15.days.from_now, :assigned_to => @current_user.id, :stage => 'proposal')
+      opportunity_2 = FactoryGirl.create(:opportunity, :name => "Another opportunity for you", :closes_on => 10.days.from_now, :assigned_to => @current_user.id, :stage => 'proposal')
+      opportunity_3 = FactoryGirl.create(:opportunity, :name => "Third Opportunity", :closes_on => 5.days.from_now, :assigned_to => @current_user.id, :stage => 'proposal')
+      opportunity_4 = FactoryGirl.create(:opportunity, :name => "Fourth Opportunity", :closes_on => 50.days.from_now, :assigned_to => nil, :user_id => @current_user.id, :stage => 'proposal')
 
-      FactoryGirl.create(:opportunity, :name => "Someone else's Opportunity", :assigned_to => FactoryGirl.create(:user).id)
-      FactoryGirl.create(:opportunity, :name => "Not my opportunity", :assigned_to => FactoryGirl.create(:user).id)
+      FactoryGirl.create(:opportunity, :name => "Someone else's Opportunity", :assigned_to => FactoryGirl.create(:user).id, :stage => 'proposal')
+      FactoryGirl.create(:opportunity, :name => "Not my opportunity", :assigned_to => FactoryGirl.create(:user).id, :stage => 'proposal')
 
       get :index
       assigns[:my_opportunities].should == [opportunity_3, opportunity_2, opportunity_1, opportunity_4]
