@@ -65,6 +65,7 @@ class User < ActiveRecord::Base
   has_many    :leads
   has_many    :contacts
   has_many    :opportunities
+  has_many    :assigned_opportunities, :class_name => 'Opportunity', :foreign_key => 'assigned_to'
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
 
@@ -84,6 +85,9 @@ class User < ActiveRecord::Base
     current_ability = Ability.new(User.current_user)
     accessible_by(current_ability)
   }
+
+  scope :have_assigned_opportunities, joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to").
+                                      where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
 
   acts_as_authentic do |c|
     c.session_class = Authentication

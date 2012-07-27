@@ -140,6 +140,9 @@ Rails.application.routes.draw do
       put :change_password
       post :redraw
     end
+    collection do
+      get :opportunities_overview
+    end
   end
 
   namespace :admin do
