@@ -192,11 +192,11 @@ describe Opportunity do
     context "visible_on_dashboard" do
       before :each do
         @user = FactoryGirl.create(:user)
-        @o1 = FactoryGirl.create(:opportunity, :user => @user)
-        @o2 = FactoryGirl.create(:opportunity, :user => @user, :assignee => FactoryGirl.create(:user))
-        @o3 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user)
-        @o4 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
-        @o5 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user)
+        @o1 = FactoryGirl.create(:opportunity, :user => @user, :stage => 'analysis')
+        @o2 = FactoryGirl.create(:opportunity, :user => @user, :assignee => FactoryGirl.create(:user), :stage => 'analysis')
+        @o3 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'analysis')
+        @o4 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user), :stage => 'analysis')
+        @o5 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'analysis')
         @o6 = FactoryGirl.create(:opportunity, :user => @user, :stage => 'lost')
         @o7 = FactoryGirl.create(:opportunity, :user => @user, :stage => 'won')
       end
