@@ -42,7 +42,7 @@ class CampaignsController < EntitiesController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    @campaign.attributes = {:user => @current_user, :access => Setting.default_access}
+    @campaign.attributes = {:user => @current_user, :access => Setting.default_access, :assigned_to => nil}
 
     if params[:related]
       model, id = params[:related].split('_')
