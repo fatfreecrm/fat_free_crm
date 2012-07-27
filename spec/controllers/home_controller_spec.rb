@@ -30,6 +30,14 @@ describe HomeController do
       assigns[:my_tasks].should == [task_1, task_2, task_3, task_4]
     end
 
+		it "should not display completed tasks" do
+			task_1 = FactoryGirl.create(:task, :user_id => @current_user.id, :name => "Your first task", :bucket => "due_asap", :assigned_to => @current_user.id)
+			task_2 = FactoryGirl.create(:task, :user_id => @current_user.id, :name => "Completed task", :bucket => "due_asap", :completed_at => 1.days.ago, :completed_by => @current_user.id, :assigned_to => @current_user.id)
+
+			get :index
+			assigns[:my_tasks].should == [task_1]
+		end
+
     it "should get a list of my opportunities ordered by closes_on" do
       opportunity_1 = FactoryGirl.create(:opportunity, :name => "Your first opportunity", :closes_on => 15.days.from_now, :assigned_to => @current_user.id, :stage => 'proposal')
       opportunity_2 = FactoryGirl.create(:opportunity, :name => "Another opportunity for you", :closes_on => 10.days.from_now, :assigned_to => @current_user.id, :stage => 'proposal')
