@@ -10,6 +10,7 @@ class Ability
       can :create, :all
       can :manage, entities, :access => 'Public'
       can :manage, entities + [Task], :user_id => user.id
+      can :manage, entities + [Task], :assigned_to => user.id
       
       can :manage, :all if user.admin?
 
