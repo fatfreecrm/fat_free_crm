@@ -138,6 +138,7 @@ Rails.application.routes.draw do
       get :password
       put :upload_avatar
       put :change_password
+      post :redraw
     end
   end
 
