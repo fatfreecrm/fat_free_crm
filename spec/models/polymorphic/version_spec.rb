@@ -32,7 +32,7 @@ describe Version do
 
       %w(create destroy update view).each do |event|
         FactoryGirl.create(:version, :event => event, :item => @lead, :whodunnit => PaperTrail.whodunnit)
-        FactoryGirl.create(:version, :event => event, :item => @lead, :whodunnit => "1")
+        FactoryGirl.create(:version, :event => event, :item => @lead, :whodunnit => (@current_user.id + 1).to_s)
       end
     end
 
