@@ -185,7 +185,7 @@
 
 # - PaperTrail history UI
 :paper_trail_ui_enabled: false
-
+:comments_visible_on_dashboard: false
 
 # Background information
 #------------------------------------------------------------------------------

@@ -509,6 +509,7 @@ en-US:
   update_past_participle: Updates
   destroy_past_participle: Deletions
   all_events_past_participle: Activities
+  action_create_comment: "- &quot;%{comment}&quot;"
 
   my_tasks: My Tasks
   no_task_records: You have no tasks.
