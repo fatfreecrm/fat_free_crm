@@ -695,6 +695,7 @@ en-US:
   to_csv: Export to comma-delimited file format (including deleted records)
   to_rss: RSS feed
   to_atom: Atom feed
+  to_perm: Permalink
 
   # Dropbox.
   #----------------------------------------------------------------------------

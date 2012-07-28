@@ -19,14 +19,17 @@ class TasksController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :update_sidebar, :only => :index
-
+  
   # GET /tasks
   #----------------------------------------------------------------------------
   def index
     @view = params[:view] || "pending"
     @tasks = Task.find_all_grouped(@current_user, @view)
 
-    respond_with(@tasks)
+    respond_with @tasks do |format|
+      format.xls { render :layout => 'header' }
+      format.csv { render :csv => @tasks.map(&:second).flatten }
+    end
   end
 
   # GET /tasks/1

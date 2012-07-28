@@ -4,3 +4,4 @@ else
   page[:contacts].replace_html render(:partial => "shared/empty")
 end
 page[:paginate].replace_html render(:partial => "shared/paginate")
+page[:export].replace_html render(:partial => "shared/export")

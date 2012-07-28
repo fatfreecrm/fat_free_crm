@@ -395,23 +395,24 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def links_to_export
     token = @current_user.single_access_token
-    path = if controller.controller_name == 'home'
-      activities_path
-    elsif controller.class.to_s.starts_with?("Admin::")
-      send("admin_#{controller.controller_name}_path")
-    else
-      send("#{controller.controller_name}_path")
-    end
-
+    url_params = {:action => :index}
+    url_params.merge!(:query => params[:query]) unless params[:query].blank?
+    url_params.merge!(:q => params[:q]) unless params[:q].blank?
+    url_params.merge!(:view => @view) unless @view.blank? # tasks
+    
     exports = %w(xls csv).map do |format|
-      link_to(format.upcase, "#{path}.#{format}", :title => I18n.t(:"to_#{format}"))
+      link_to(format.upcase, url_params.merge(:format => format), :title => I18n.t(:"to_#{format}"))
     end
 
     feeds = %w(rss atom).map do |format|
-      link_to(format.upcase, "#{path}.#{format}?authentication_credentials=#{token}", :title => I18n.t(:"to_#{format}"))
+      link_to(format.upcase, url_params.merge(:format => format, :authentication_credentials => token), :title => I18n.t(:"to_#{format}"))
+    end
+    
+    links = %W(perm).map do |format|
+      link_to(format.upcase, url_params, :title => I18n.t(:"to_#{format}"))
     end
 
-    (exports + feeds).join(' | ')
+    (exports + feeds + links).join(' | ')
   end
 
   def template_fields(f, type)
