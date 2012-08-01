@@ -222,6 +222,7 @@ ActiveRecord::Schema.define(:version => 20120528102124) do
     t.integer  "maxlength"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+    t.integer  "pair_id"
   end
 
   add_index "fields", ["field_group_id"], :name => "index_fields_on_field_group_id"

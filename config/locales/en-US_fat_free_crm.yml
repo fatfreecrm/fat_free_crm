@@ -857,10 +857,16 @@ en-US:
     boolean:     Checkbox
     check_boxes: Checkbox List
     date:        Date
+    datepair:    Date Pair
     datetime:    Date & Time
+    datetimepair: Date & Time Pair
     email:       Email Address
     url:         URL
     tel:         Phone Number
     decimal:     Number (Decimal)
     integer:     Number (Integer)
     float:       Number (Floating Point)
+
+  pair:
+    start: Start
+    end:   End  

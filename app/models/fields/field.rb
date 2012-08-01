@@ -42,6 +42,7 @@ class Field < ActiveRecord::Base
   serialize :collection, Array
 
   belongs_to :field_group
+  has_one :pair, :class_name => Field, :foreign_key => 'pair_id', :dependent => :destroy
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
 
@@ -58,7 +59,9 @@ class Field < ActiveRecord::Base
     'check_boxes' => :text,
     'boolean'     => :boolean,
     'date'        => :date,
+    'datepair'    => :date,
     'datetime'    => :timestamp,
+    'datetimepair' => :timestamp,
     'decimal'     => [:decimal, {:precision => 15, :scale => 2}],
     'integer'     => :integer,
     'float'       => :float
@@ -72,6 +75,8 @@ class Field < ActiveRecord::Base
   validates_presence_of :as, :message => "^Please specify a Field type."
   validates_inclusion_of :as, :in => FIELD_TYPES.keys, :message => "Invalid Field Type."
 
+  # for datepair and datetimepair, ensures 'end' is greater than 'start'
+  #validates_numericality_of :value, :greater_than_or_equal_to => Proc.new { |field| field.pair.value } :if => Proc.new{|field| %w(datepair datetimepair).include?(field.as) and field.pair.present?}
 
   def self.field_types
     # Expands concise FIELD_TYPES into a more usable hash
@@ -84,6 +89,11 @@ class Field < ActiveRecord::Base
 
   def column_type(field_type = self.as)
     (opts = Field.field_types[field_type]) ? opts[:type] : raise("Unknown field_type: #{field_type}")
+  end
+
+  # returns the field that this field is paired with
+  def paired_with
+    pair || Field.where(:pair_id => id).first
   end
 
   def input_options
@@ -110,9 +120,9 @@ class Field < ActiveRecord::Base
     case as
     when 'checkbox'
       value.to_s == '0' ? "no" : "yes"
-    when 'date'
+    when 'date', 'datepair'
       value && value.strftime(I18n.t("date.formats.mmddyy"))
-    when 'datetime'
+    when 'datetime', 'datetimepair'
       value && value.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
     when 'check_boxes'
       value.select(&:present?).in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value

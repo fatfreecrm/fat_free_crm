@@ -12,6 +12,8 @@
         %td
           .label.top.req Field type:
           = f.select :as, field_edit_as_options(f.object)
+
+  %table{:id => 'customfields'}
     %tr
       %td
         .label.top.req Select Options (pipe separated):
@@ -32,23 +34,53 @@
       %td
         .label.top Placeholder:
         = f.text_area :placeholder, :rows => 5
+        
+  -# date/time pair repeats
+  = render :partial => 'pairs', :locals => {:f => f}
 
-    = hook(:customfield_top_section_bottom, self, :f => f)
+  = hook(:customfield_top_section_bottom, self, :f => f)
 
-    :javascript
-      var toggleCollection = function(){
-        var select_el = $('field_collection_string');
-        switch($('field_as').value){
-          case "select":
-          case "multiselect":
-          case "check_boxes":
-            select_el.show().previous().show().innerHTML = "Select Options (pipe separated):";
-            break;
-          default:
-            select_el.hide().previous().hide();
-        }
-      };
+  :javascript
+    var toggleFields = function(){
+      switch($('field_as').value){
+        case "select":
+        case "multiselect":
+        case "check_boxes":
+          toggleCollection(true);
+          toggleDatePair(false);
+          break;
+        case "datepair":
+        case "datetimepair":
+          toggleDatePair(true);
+          toggleCollection(false);
+          break;
+        default:
+          toggleCollection(false);
+          toggleDatePair(false);
+      }
+    };
+    
+    var toggleCollection = function(val){
+      if (val) {
+        $('field_collection_string').show().previous().show().innerHTML = "Select Options (pipe separated):";
+      } else {
+        $('field_collection_string').hide().previous().hide();
+      }
+    }
+    
+    var toggleDatePair = function(val){
+      if (val) {
+        $('pairs').show();
+        $('customfields').hide();
+        
+      } else {
+        $('customfields').show();
+        $('pairs').hide();
+      }
+    }
 
-      toggleCollection();
+    toggleCollection(false);
+    toggleDatePair(false);
+    toggleFields();
 
-      Event.observe($('field_as'), 'change', toggleCollection);
+    Event.observe($('field_as'), 'change', toggleFields);
