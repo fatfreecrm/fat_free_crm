@@ -17,7 +17,7 @@
 
 class AccountsController < EntitiesController
   before_filter :get_data_for_sidebar, :only => :index
-
+  
   # GET /accounts
   #----------------------------------------------------------------------------
   def index

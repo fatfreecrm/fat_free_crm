@@ -87,6 +87,17 @@ class EntitiesController < ApplicationController
   def versions
   end
 
+  #----------------------------------------------------------------------------
+  def field_group
+    if @tag = Tag.find_by_name(params[:tag].strip)
+      if @field_group = FieldGroup.find_by_tag_id_and_klass_name(@tag.id, klass.to_s)
+        @asset = klass.find_by_id(params[:asset_id]) || klass.new
+        render 'fields/group' and return
+      end
+    end
+    render :text => ''
+  end
+
 protected
 
   #----------------------------------------------------------------------------
@@ -108,7 +119,7 @@ protected
   def entities
     instance_variable_get("@#{controller_name}") || klass.my
   end
-
+  
 private
 
   #----------------------------------------------------------------------------
@@ -158,17 +169,6 @@ private
   #----------------------------------------------------------------------------
   def update_recently_viewed
     entity.versions.create(:event => :view, :whodunnit => PaperTrail.whodunnit)
-  end
-
-  #----------------------------------------------------------------------------
-  def field_group
-    if @tag = Tag.find_by_name(params[:tag].strip)
-      if @field_group = FieldGroup.find_by_tag_id_and_klass_name(@tag.id, klass.to_s)
-        @asset = klass.find_by_id(params[:asset_id]) || klass.new
-        render 'fields/group' and return
-      end
-    end
-    render :text => ''
   end
 
   # Somewhat simplistic parser that extracts query and hash-prefixed tags from
