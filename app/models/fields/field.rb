@@ -43,6 +43,7 @@ class Field < ActiveRecord::Base
 
   belongs_to :field_group
   has_one :pair, :class_name => Field, :foreign_key => 'pair_id', :dependent => :destroy
+  scope :without_pairs, where('pair_id IS NULL')
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
 
@@ -76,7 +77,8 @@ class Field < ActiveRecord::Base
   validates_inclusion_of :as, :in => FIELD_TYPES.keys, :message => "Invalid Field Type."
 
   # for datepair and datetimepair, ensures 'end' is greater than 'start'
-  #validates_numericality_of :value, :greater_than_or_equal_to => Proc.new { |field| field.pair.value } :if => Proc.new{|field| %w(datepair datetimepair).include?(field.as) and field.pair.present?}
+  # how does this go on custom fields?
+  #validates_numericality_of :value, :greater_than_or_equal_to => Proc.new { |field| field.paired_with.try(:value) }, :if => Proc.new{|field| %w(datepair datetimepair).include?(field.as) and field.pair_id.present?}
 
   def self.field_types
     # Expands concise FIELD_TYPES into a more usable hash
@@ -113,7 +115,13 @@ class Field < ActiveRecord::Base
   end
 
   def render_value(object)
-    render object.send(name)
+    if %w(datepair datetimepair).include?(as) and paired_with.present?
+      from = render object.send(name)
+      to = render object.send(paired_with.name)
+      I18n.t('pair.from_to', :from => from, :to => to)
+    else
+      render object.send(name)
+    end
   end
 
   def render(value)

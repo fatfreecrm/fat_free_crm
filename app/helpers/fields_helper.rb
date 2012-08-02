@@ -16,10 +16,4 @@
 #------------------------------------------------------------------------------
 
 module FieldsHelper
-
-  # only list one field per pair.
-  def without_pairs(fields)
-    fields.reject{|field| field.pair_id.present?}
-  end
-  
 end

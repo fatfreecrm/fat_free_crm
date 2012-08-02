@@ -78,4 +78,3 @@ class FieldGroup < ActiveRecord::Base
     self.reload
   end
 end
-

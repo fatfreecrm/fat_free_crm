@@ -869,4 +869,5 @@ en-US:
 
   pair:
     start: Start
-    end:   End  
+    end:   End
+    from_to: From %{from} to %{to}
