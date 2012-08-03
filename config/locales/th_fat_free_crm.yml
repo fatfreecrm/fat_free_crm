@@ -635,9 +635,3 @@ th:
   time:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
-      
-  calendar_date_select:
-    ok: OK
-    now: Now
-    today: Today
-    clear: Clear

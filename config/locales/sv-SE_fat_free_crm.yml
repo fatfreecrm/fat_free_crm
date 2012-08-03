@@ -626,13 +626,3 @@ sv-SE:
     formats:
       mmddhhss: "%b %e, kl %H:%M"
       mmddyyyy_hhmm: "%m/%d/%Y %l:%M %p"
-
-  calendar_date_select:
-    ok: OK
-    now: Nu
-    today: Idag
-    clear: Rensa
-
-  # If you need custom format look at
-  # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: american

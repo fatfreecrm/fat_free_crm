@@ -24,32 +24,6 @@ var crm = {
   base_url      : "",
 
   //----------------------------------------------------------------------------
-  date_select_popup: function(id, dropdown_id, show_time) {
-    $(id).observe("focus", function() {
-      if (!$(id).calendar_was_shown) {    // The field recieved initial focus, show the calendar.
-        var calendar = new CalendarDateSelect(this, { month_year: "label",  year_range: 10, time: show_time, before_close: function() { this.calendar_was_shown = true } });
-        if (dropdown_id) {
-          calendar.buttons_div.build("span", { innerHTML: " | ", className: "button_seperator" });
-          calendar.buttons_div.build("a", { innerHTML: "Back to List", href: "#", onclick: function() {
-            calendar.close();                   // Hide calendar popup.
-            $(id).hide();                       // Hide date edit field.
-            $(dropdown_id).show();              // Show dropdown.
-            $(dropdown_id).selectedIndex = 0;   // Select first dopdown item.
-            $(id).update("");                   // Reset date field value.
-            return false;
-          }.bindAsEventListener(this) });
-        }
-      } else {
-        $(id).calendar_was_shown = null;  // Focus is back from the closed calendar, make it show up again.
-      }
-    });
-
-    $(id).observe("blur", function() {
-      $(id).calendar_was_shown = null;    // Get the calendar ready if we loose focus.
-    });
-  },
-
-  //----------------------------------------------------------------------------
   find_form: function(class_name) {
     var forms = $$('form.' + class_name);
     return (forms.length > 0 ? forms[0].id : null);

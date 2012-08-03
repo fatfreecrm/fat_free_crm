@@ -47,10 +47,10 @@ describe Task do
       end
   
       it "should create a task with due date selected from the calendar within #{offset ? 'different' : 'current'} timezone" do
-        task = FactoryGirl.create(:task, :bucket => "specific_time", :calendar => "5/5/2020 12:00 AM")
+        task = FactoryGirl.create(:task, :bucket => "specific_time", :calendar => "2020-03-20")
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == DateTime.parse("2020-05-05")
+        task.due_at.to_i.should == Time.parse("2020-03-20").to_i
       end
     end
   end
@@ -104,10 +104,10 @@ describe Task do
   
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
         task = FactoryGirl.create(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
-        task.update_attributes( { :bucket => "specific_time", :calendar => "05/05/2020 12:00 AM" } )
+        task.update_attributes( { :bucket => "specific_time", :calendar => "2020-03-20" } )
         task.errors.should be_empty
         task.bucket.should == "specific_time"
-        task.due_at.should == DateTime.parse("2020-05-05")
+        task.due_at.to_i.should == Time.parse("2020-03-20").to_i
       end
     end
   
@@ -149,16 +149,12 @@ describe Task do
     end
   
     it "completion should preserve original due date" do
-      due_at = 42.days.ago
-      time_format = I18n.t(Setting.task_calendar_with_time ? 
-                           'time.formats.mmddyyyy_hhmm' :
-                           'date.formats.mmddyyyy')
+      due_at = Time.now - 42.days
       task = FactoryGirl.create(:task, :due_at => due_at, :bucket => "specific_time",
-                            :calendar => due_at.strftime(time_format))
+                            :calendar => due_at.strftime('%Y-%m-%d %H:%M'))
       task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id, :calendar => '')
       task.completed?.should == true
-      parsed_time = DateTime.strptime(due_at.strftime(time_format), time_format).utc
-      task.due_at.to_i.should == parsed_time.to_i
+      task.due_at.should == due_at.utc.strftime('%Y-%m-%d %H:%M')
     end
   end
   
@@ -262,96 +258,13 @@ describe Task do
   end
   
   describe "#parse_calendar_date" do
-    before :each do
-      I18n.locale = "de"
-      @task = Task.new
-      @task.bucket = "specific_time"
-      @backup_with_time = Setting.task_calendar_with_time
+
+    it "should parse the date" do
+      @task = Task.new(:calendar => '2020-12-23')
+      Time.should_receive(:parse).with('2020-12-23')
+      @task.send(:parse_calendar_date)
     end
-    
-    after :each do
-      I18n.locale = "en-Us"
-      Setting.task_calendar_with_time = @backup_with_time
-    end
-    
-    context "german" do
-      context "date" do
-        before :each do
-          Setting.task_calendar_with_time = false
-        end
-        
-        it "should translate: \"20 Jänner 2012\" to \"20 January 2012\"" do
-          @task.calendar = "20 Jänner 2012"
-          @task.send(:parse_calendar_date).should == "20 January 2012"
-        end
 
-        it "should translate: \"20 Februar 2012\" to \"20 February 2012\"" do
-          @task.calendar = "20 Februar 2012"
-          @task.send(:parse_calendar_date).should == "20 February 2012"
-        end
-
-        it "should translate: \"20 März 2012\" to \"20 March 2012\"" do
-          @task.calendar = "20 März 2012"
-          @task.send(:parse_calendar_date).should == "20 March 2012"
-        end
-
-        it "should translate: \"20 April 2012\" to \"20 April 2012\"" do
-          @task.calendar = "20 April 2012"
-          @task.send(:parse_calendar_date).should == "20 April 2012"
-        end
-
-        it "should translate: \"20 Mai 2012\" to \"20 May 2012\"" do
-          @task.calendar = "20 Mai 2012"
-          @task.send(:parse_calendar_date).should == "20 May 2012"
-        end
-
-        it "should translate: \"20 Juni 2012\" to \"20 June 2012\"" do
-          @task.calendar = "20 Juni 2012"
-          @task.send(:parse_calendar_date).should == "20 June 2012"
-        end
-
-        it "should translate: \"20 Juli 2012\" to \"20 July 2012\"" do
-          @task.calendar = "20 Juli 2012"
-          @task.send(:parse_calendar_date).should == "20 July 2012"
-        end
-
-        it "should translate: \"20 August 2012\" to \"20 August 2012\"" do
-          @task.calendar = "20 August 2012"
-          @task.send(:parse_calendar_date).should == "20 August 2012"
-        end
-
-        it "should translate: \"20 September 2012\" to \"20 September 2012\"" do
-          @task.calendar = "20 September 2012"
-          @task.send(:parse_calendar_date).should == "20 September 2012"
-        end
-
-        it "should translate: \"20 Oktober 2012\" to \"20 October 2012\"" do
-          @task.calendar = "20 Oktober 2012"
-          @task.send(:parse_calendar_date).should == "20 October 2012"
-        end
-
-        it "should translate: \"20 November 2012\" to \"20 November 2012\"" do
-          @task.calendar = "20 November 2012"
-          @task.send(:parse_calendar_date).should == "20 November 2012"
-        end
-
-        it "should translate: \"20 Dezember 2012\" to \"20 December 2012\"" do
-          @task.calendar = "20 Dezember 2012"
-          @task.send(:parse_calendar_date).should == "20 December 2012"
-        end
-      end
-      
-      context 'datetime' do
-        before :each do
-          Setting.task_calendar_with_time = true
-        end
-        
-        it "should translate: \"20 Jänner 2012 12:27\" to \"20 January 2012 12:27\"" do
-          @task.calendar = "20 Jänner 2012 12:27"
-          @task.send(:parse_calendar_date).should == "20 January 2012 12:27"
-        end
-      end
-    end
   end
 
   describe "scopes" do
@@ -390,12 +303,11 @@ describe Task do
     context "by_due_at" do
       it "should show tasks ordered by due_at" do
         t1 = FactoryGirl.create(:task, :name => 't1', :bucket => "due_asap")
-        t2 = FactoryGirl.create(:task, :calendar => 5.days.from_now.strftime("%m/%d/%Y %I:%M %p"), :bucket => "specific_time")
+        t2 = FactoryGirl.create(:task, :calendar => 5.days.from_now.strftime("%Y-%m-%d %H:%M"), :bucket => "specific_time")
         t3 = FactoryGirl.create(:task, :name => 't3',  :bucket => "due_next_week")
-        t4 = FactoryGirl.create(:task, :calendar => 20.days.from_now.strftime("%m/%d/%Y %I:%M %p"), :bucket => "specific_time")
+        t4 = FactoryGirl.create(:task, :calendar => 20.days.from_now.strftime("%Y-%m-%d %H:%M"), :bucket => "specific_time")
         Task.by_due_at.should == [t1, t2, t3, t4]
       end
     end
   end
 end
-

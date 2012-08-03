@@ -12,8 +12,6 @@ if @campaign.errors.empty?
   end
 else
   page[id].replace_html :partial => "edit"
-  page.call "crm.date_select_popup", :campaign_starts_on
-  page.call "crm.date_select_popup", :campaign_ends_on
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
   if @campaign.errors[:name].blank? and @campaign.errors[:ends_on].present?
     page[:campaign_ends_on].focus

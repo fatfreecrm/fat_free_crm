@@ -299,15 +299,6 @@ module ApplicationHelper
     end
   end
 
-  #----------------------------------------------------------------------------
-  def localize_calendar_date_select
-    update_page_tag do |page|
-      page.assign '_translations', { 'OK' => t('calendar_date_select.ok'), 'Now' => t('calendar_date_select.now'), 'Today' => t('calendar_date_select.today'), 'Clear' => t('calendar_date_select.clear') }
-      page.assign 'Date.weekdays', t('date.abbr_day_names')
-      page.assign 'Date.months', t('date.month_names')[1..-1]
-    end
-  end
-
   # Users can upload their avatar, and if it's missing we're going to use
   # gravatar. For leads and contacts we always use gravatars.
   #----------------------------------------------------------------------------

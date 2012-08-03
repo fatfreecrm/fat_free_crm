@@ -634,9 +634,3 @@
   time:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
-
-  calendar_date_select:
-    ok: Cancelar
-    now: Ahora
-    today: Hoy
-    clear: Limpiar

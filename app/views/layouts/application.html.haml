@@ -6,14 +6,13 @@
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag :application
     = stylesheet_link_tag :print, :media => 'print'
-    - unless tabless_layout?
-      = stylesheet_link_tag 'calendar_date_select/default'
     %style= yield :styles
 
     = javascript_include_tag :application
 
-    - unless tabless_layout?
-      = javascript_include_tag "calendar_date_select/format_#{t(:calendar_date_select_format, :default => 'american')}"
+    - unless tabless_layout? || %w(en-US en-GB).include?(I18n.locale.to_s)
+      = javascript_include_tag "jquery_ui_datepicker/jquery.ui.datepicker-#{I18n.locale}"
+      = javascript_include_tag "jquery_ui_datepicker/jquery-ui-timepicker-#{I18n.locale}"
 
     = csrf_meta_tag
     = hook(:javascript_includes, self)
@@ -35,12 +34,8 @@
       = render "layouts/tabbed"
       = render "layouts/footer"
 
-    - unless tabless_layout? || I18n.locale == "en-US"
-      = localize_calendar_date_select
-
     %script{:type => "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
       = content_for :javascript_epilogue
       = hook(:javascript_epilogue, self)
-

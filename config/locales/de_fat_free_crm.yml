@@ -304,11 +304,6 @@ de:
   completed: "Erledigt"
   rejected: "Abgelehnt"
   msg_password_changed: "Ihr Passwort wurde geändert."
-  calendar_date_select:
-    clear: "Zurücksetzen"
-    now: "Jetzt"
-    ok: "OK"
-    today: "Heute"
   pluralize:
     comment:
       other: "%{count} Kommentare"
@@ -608,7 +603,6 @@ de:
   lead_permissions_intro_private: "Standardmäßig werden die Zugriffsregeln aus der Kampagne kopiert oder auf privat gesetzt. Dies kann auch später durchgeführt werden."
   remember_me: "Erinnere mich"
   edit_comment: "Kommentar bearbeiten"
-  calendar_date_select_format: "euro_24hr"
   no_tasks_pending: "wartend"
   lead_summary: "Anfrage-Zusammenfassung"
   task_small: "Aufgabe"

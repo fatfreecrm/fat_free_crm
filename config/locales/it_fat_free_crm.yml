@@ -652,14 +652,3 @@ it:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
       mmddyyyy_hhmm: "%d/%m/%Y %H:%M"
-
-  calendar_date_select:
-    ok: OK
-    now: Ora
-    today: Oggi
-    clear: Pulisci
-
-  # If you need custom format look at
-  # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: italian
-
