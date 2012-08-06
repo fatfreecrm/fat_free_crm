@@ -3,23 +3,40 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_tasks) do
     unless @tasks.empty?
       # Header.
       xml.Row do
-        columns = %w{name due date_created date_updated completed user assigned_to category background_info}
+        heads = %w{name
+                   due
+                   date_created
+                   date_updated
+                   completed
+                   user
+                   assigned_to
+                   category
+                   background_info}
         
-        for column in columns
+        heads.each do |head|
           xml.Cell do
-            xml.Data I18n.t(column), 'ss:Type' => 'String'
+            xml.Data I18n.t(head),
+                     'ss:Type' => 'String'
           end
         end
       end
       
       # Rows.
-      for t in @tasks.map(&:second).flatten
+      @tasks.map(&:second).flatten.each do |task|
         xml.Row do
-          values = [t.name, I18n.t(t.computed_bucket), t.created_at, t.updated_at, t.completed_at, t.user.try(:name), t.assignee.try(:name), t.category, t.background_info]
-                    
-          for value in values
+          data = [task.name,
+                  I18n.t(task.computed_bucket),
+                  task.created_at,
+                  task.updated_at,
+                  task.completed_at,
+                  task.user.try(:name),
+                  task.assignee.try(:name),
+                  task.category,
+                  task.background_info]
+        
+          data.each do |value|
             xml.Cell do
-              xml.Data value, 'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
+              xml.Data value, 'ss:Type' => 'String'
             end
           end
         end
