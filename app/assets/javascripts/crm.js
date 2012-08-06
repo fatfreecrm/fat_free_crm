@@ -317,7 +317,7 @@ var crm = {
   //----------------------------------------------------------------------------
   reschedule_task: function(id, bucket) {
     $("task_bucket").value = bucket;
-    $("edit_task_" + id).onsubmit();
+    $$('#edit_task_' + id + ' input[type="submit"]')[0].click();
   },
 
   //----------------------------------------------------------------------------
