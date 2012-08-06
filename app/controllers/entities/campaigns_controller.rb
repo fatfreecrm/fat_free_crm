@@ -22,7 +22,10 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def index
     @campaigns = get_campaigns(:page => params[:page])
-    respond_with(@campaigns)
+    
+    respond_with @campaigns do |format|
+      format.xls { render :layout => 'header' }
+    end
   end
 
   # GET /campaigns/1

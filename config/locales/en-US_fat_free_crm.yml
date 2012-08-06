@@ -323,6 +323,7 @@ en-US:
   conversion: Conversion
   conversion_label: Conversion (%)
   conversion_number: "%{value} conversion"
+  target_conversion: Targe conversion
   create_campaign: Create Campaign
   end_date: End date
   finished_on: completed on %{value}

@@ -14,7 +14,6 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
                  I18n.t('amount'),
                  I18n.t('discount'),
                  I18n.t('weighted_amount'),
-                 I18n.t('subscribed_users'),
                  I18n.t('option_closes_on'),
                  I18n.t('date_created'),
                  I18n.t('date_updated')]
@@ -32,7 +31,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
         end
       end
       
-      # Contact rows.
+      # Opportunity rows.
       @opportunities.each do |opportunity|
         xml.Row do
           data = [opportunity.user.try(:name),
@@ -46,7 +45,6 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
                   opportunity.amount,
                   opportunity.discount,
                   opportunity.weighted_amount,
-                  opportunity.subscribed_users,
                   opportunity.closes_on,
                   opportunity.created_at,
                   opportunity.updated_at]
