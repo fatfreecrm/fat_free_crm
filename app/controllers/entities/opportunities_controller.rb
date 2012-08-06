@@ -24,7 +24,10 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   def index
     @opportunities = get_opportunities(:page => params[:page])
-    respond_with(@opportunities)
+    
+    respond_with @opportunities do |format|
+      format.xls { render :layout => 'header' }
+    end
   end
 
   # GET /opportunities/1
