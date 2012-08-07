@@ -88,7 +88,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_contacts) do
           data.each do |value|
             xml.Cell do
               xml.Data value,
-                       'ss:Type' => 'String'
+                       'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
             end
           end
         end
