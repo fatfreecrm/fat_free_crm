@@ -169,8 +169,18 @@ class Contact < ActiveRecord::Base
     %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
       attributes[name] = model.send(name.intern)
     end
-
+    
     contact = Contact.new(attributes)
+    
+    # Set custom fields.
+    if model.class.respond_to?(:fields)
+      model.class.fields.each do |field|
+        if contact.respond_to?(field.name)
+          contact.send "#{field.name}=", model.send(field.name)
+        end
+      end
+    end
+    
     contact.business_address = Address.new(:street1 => model.business_address.street1, :street2 => model.business_address.street2, :city => model.business_address.city, :state => model.business_address.state, :zipcode => model.business_address.zipcode, :country => model.business_address.country, :full_address => model.business_address.full_address, :address_type => "Business") unless model.business_address.nil?
 
     # Save the contact only if the account and the opportunity have no errors.
