@@ -33,7 +33,7 @@
             = t(:task_overdue)
             = l(pending.due_at.localtime, :format => :mmddhhss)
           - else
-            = t(:task_due_in, distance_of_time_in_words(Time.now, pending.due_at))
+            = t(:task_due_in, distance_of_time_in_words(Time.now, pending.due_at.localtime))
             = '(' << l(pending.due_at.localtime, :format => :mmddhhss) << ')'
 
         - else
