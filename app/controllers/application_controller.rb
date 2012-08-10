@@ -66,7 +66,7 @@ private
   #----------------------------------------------------------------------------
   def set_context
     Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
-    if (locale = current_user.preference[:locale]).present?
+    if current_user.present? and (locale = current_user.preference[:locale]).present?
       I18n.locale = locale
     elsif Setting.locale.present?
       I18n.locale = Setting.locale
