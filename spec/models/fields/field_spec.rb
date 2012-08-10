@@ -53,7 +53,7 @@ describe Field do
     [["check_boxes", [1, 2, 3],               "1, 2<br />3"],
      ["checkbox",    "0",                     "no"],
      ["checkbox",    1,                       "yes"],
-     ["date",        DateTime.new(2011,4,19), "2011-04-19"]].each do |as, value, expected|
+     ["date",        DateTime.new(2011,4,19), DateTime.new(2011,4,19).strftime(I18n.t("date.formats.mmddyy")) ]].each do |as, value, expected|
       field.as = as
       object.stub!(field.name).and_return(value)
       field.render_value(object).should == expected
