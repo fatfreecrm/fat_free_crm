@@ -22,7 +22,7 @@
       %tr
         %td
           .label #{t :close_date}:
-          = o.text_field :closes_on, :style => "width:110px;", :autocomplete => :off
+          = o.text_field :closes_on, :style => "width:110px;", :autocomplete => :off, :class => 'date'
         %td= spacer
         %td
           .label #{t :probability} (%):
