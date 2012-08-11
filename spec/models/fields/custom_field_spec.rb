@@ -27,8 +27,10 @@ describe CustomField do
   it "should add a column to the database" do
     CustomField.connection.should_receive(:add_column).
                 with("contacts", "cf_test_field", :string, {})
+    Contact.should_receive(:reset_column_information)
+    Contact.should_receive(:serialize_custom_fields!)
 
-    c = FactoryGirl.create(:custom_field,
+    FactoryGirl.create(:custom_field,
                        :as => "string",
                        :name => "cf_test_field",
                        :label => "Test Field",
@@ -36,16 +38,15 @@ describe CustomField do
   end
 
   it "should generate a unique column name for a custom field" do
-    c = FactoryGirl.build(:custom_field, :label => "Test Field", :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
+    field_group = FactoryGirl.build(:field_group, :klass_name => "Contact")
+    c = FactoryGirl.build(:custom_field, :label => "Test Field", :field_group => field_group)
 
-    # Overwrite :klass_column_names with instance variable accessors
-    c.class_eval { attr_accessor :klass_column_names }
-    c.klass_column_names = []
-
-    %w(cf_test_field cf_test_field_2 cf_test_field_3).each do |expected|
-      c.send(:generate_column_name).should == expected
-      c.klass_column_names << expected
+    columns = []
+    %w(cf_test_field cf_test_field_2 cf_test_field_3 cf_test_field_4).each do |field|
+      c.send(:generate_column_name).should == field
+      c.stub!(:klass_column_names).and_return( columns << field )
     end
+
   end
 
   it "should evaluate the safety of database transitions" do
@@ -68,22 +69,20 @@ describe CustomField do
     end
   end
 
-  # Find ActiveRecord column by name
-  def ar_column(custom_field, column)
-    custom_field.klass.columns.detect{|c| c.name == column }
-  end
-
   it "should change a column's type for safe transitions" do
     CustomField.connection.should_receive(:add_column).
                 with("contacts", "cf_test_field", :string, {})
     CustomField.connection.should_receive(:change_column).
                 with("contacts", "cf_test_field", :text, {})
-
+    Contact.should_receive(:reset_column_information).twice
+    Contact.should_receive(:serialize_custom_fields!).twice
+    
+    field_group = FactoryGirl.create(:field_group, :klass_name => "Contact")
     c = FactoryGirl.create(:custom_field,
-                       :label => "Test Field",
-                       :name => nil,
-                       :as => "email",
-                       :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
+                           :label => "Test Field",
+                           :name => nil,
+                           :as => "email",
+                           :field_group => field_group)
     c.as = "text"
     c.save
   end
@@ -97,29 +96,11 @@ describe CustomField do
 
     it "should refresh column info and retry on attribute error" do
       Contact.should_receive(:reset_column_information)
+      Contact.should_receive(:serialize_custom_fields!)
 
       contact = FactoryGirl.build(:contact)
       contact.cf_another_new_field.should == nil
     end
   end
-  
-  describe "checkbox custom field" do
-  
-    before(:each) do
-      @c = FactoryGirl.create(:custom_field,
-            :label => "Checkboxes Test",
-            :name => 'cf_checkboxes_test',
-            :as => "check_boxes",
-            :collection => %w(one two three),
-            :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
-      Contact.reset_column_information
-      Contact.serialize_custom_fields!
-    end
-  
-    it "should be serialized" do
-      Contact.serialized_attributes.keys.should include('cf_checkboxes_test')
-    end
-   
-  end
-  
+
 end
