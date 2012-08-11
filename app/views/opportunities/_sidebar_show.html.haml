@@ -8,7 +8,7 @@
     %tt #{t :close_date}:
   - if @opportunity.closes_on && @opportunity.stage !~ /lost|won/
     %li
-      - days_left = @opportunity.closes_on - Date.today
+      - days_left = (@opportunity.closes_on - Date.today).to_i
       - if days_left >= 0
         %dt= days_left
         %tt #{t :days_left}:
