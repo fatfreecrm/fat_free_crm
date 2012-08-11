@@ -69,10 +69,7 @@ describe "/campaigns/edit" do
     params[:cancel] = nil
 
     render
-    rendered.should include('crm.date_select_popup("campaign_starts_on")')
-    rendered.should include('crm.date_select_popup("campaign_ends_on")')
     rendered.should include('$("campaign_name").focus()')
   end
 
 end
-

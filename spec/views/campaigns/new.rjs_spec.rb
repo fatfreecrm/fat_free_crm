@@ -37,8 +37,6 @@ describe "/campaigns/new" do
       render
 
       rendered.should include('crm.flip_form("create_campaign")')
-      rendered.should include('crm.date_select_popup("campaign_starts_on")')
-      rendered.should include('crm.date_select_popup("campaign_ends_on")')
     end
   end
 
@@ -53,5 +51,3 @@ describe "/campaigns/new" do
   end
 
 end
-
-

@@ -58,8 +58,6 @@ describe "/campaigns/update" do
         rendered.should have_rjs("edit_campaign") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
-        rendered.should include('crm.date_select_popup("campaign_starts_on")')
-        rendered.should include('crm.date_select_popup("campaign_ends_on")')
         rendered.should include('$("edit_campaign").visualEffect("shake"')
         rendered.should include('focus()')
       end
@@ -76,12 +74,9 @@ describe "/campaigns/update" do
         rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
-        rendered.should include('crm.date_select_popup("campaign_starts_on")')
-        rendered.should include('crm.date_select_popup("campaign_ends_on")')
         rendered.should include(%Q/$("campaign_#{@campaign.id}").visualEffect("shake"/)
         rendered.should include('focus()')
       end
     end
   end # errors
 end
-
