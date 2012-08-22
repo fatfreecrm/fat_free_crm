@@ -46,7 +46,7 @@ $color_footer: grey;
       color: lightyellow;
       padding: 1px 4px 2px 4px;
       text-decoration: none;
-      &hover {
+      &:hover {
         background: $color_header_background;
         color: yellow; } }
     a.selected {
@@ -75,7 +75,7 @@ $color_footer: grey;
         padding: 0px 0px 4px 0px;
         &.selected {
           color: navy; }
-        &hover {
+        &:hover {
           background: steelblue; } } }
     #jumpbox_label {
       color: white; }
