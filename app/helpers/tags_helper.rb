@@ -48,12 +48,4 @@ module TagsHelper
     end.join(" ").html_safe
   end
 
-  # Return asset tags to be built manually if the asset failed validation.
-  def unsaved_param_tags(asset)
-    # TODO: Fix chosen bug that makes the join split necessary
-    params[asset][:tag_list].join.split(",").map {|x|
-      Tag.find_by_name(x.strip)
-    }.compact.uniq
-  end
 end
-

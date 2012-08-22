@@ -17,16 +17,15 @@
         %td= spacer
       %tr
         %td
-          .label.top Maxlength:
-          = f.text_field :maxlength
-        %td= spacer
-        %td
           .label.top
             %span Required:
             = f.check_box :required
-            %br
+        %td= spacer
+        %td
+          .label.top
             %span Disabled:
             = f.check_box :disabled
+
       %tr
         %td
           .label.top Hint:

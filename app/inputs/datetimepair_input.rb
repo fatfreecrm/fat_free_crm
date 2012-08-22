@@ -20,7 +20,9 @@ class DatetimepairInput < DatepairInput
   private
   
   def input_html_classes
-    super.map{|x| 'datetime' if x == 'date'}
+    classes = super.dup
+    classes.delete('date')
+    classes.push('datetime')
   end
 
 end

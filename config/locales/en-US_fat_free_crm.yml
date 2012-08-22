@@ -161,6 +161,11 @@ en-US:
             email:
               missing_email: "^Please specify email address."
               email_in_use: "^There is another user with the same email."
+        custom_field:
+          required: "^%{field} is required."
+          maxlength: "^%{field} is too long."
+          endbeforestart: "^%{field} cannot end before it begins."
+
 
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions

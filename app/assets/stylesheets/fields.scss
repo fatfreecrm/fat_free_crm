@@ -7,8 +7,13 @@
 .fields .title {
   margin-bottom: 12px; }
 
-.datepair, .datetimepair {
-  width: auto!important;
+.datepair {
+  width: 80px!important;
+  display: inline!important;
+}
+
+.datetimepair {
+  width: 120px!important;
   display: inline!important;
 }
 

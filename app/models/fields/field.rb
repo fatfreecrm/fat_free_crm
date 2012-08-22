@@ -42,7 +42,7 @@ class Field < ActiveRecord::Base
   serialize :collection, Array
 
   belongs_to :field_group
-  has_one :pair, :class_name => Field, :foreign_key => 'pair_id', :dependent => :destroy
+  has_one :pair, :class_name => Field, :foreign_key => 'pair_id', :dependent => :destroy # points to 'start'
   scope :without_pairs, where('pair_id IS NULL')
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
@@ -119,7 +119,7 @@ class Field < ActiveRecord::Base
       render object.send(name)
     end
   end
-  
+
   # For rendering paired values
   # Handle case where both pairs are blank
   #------------------------------------------------------------------------------

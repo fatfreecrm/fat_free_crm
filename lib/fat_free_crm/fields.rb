@@ -28,6 +28,7 @@ module FatFreeCRM
           extend SingletonMethods
           include InstanceMethods
           serialize_custom_fields!
+          validate :custom_fields_validator
         end
       end
     end
@@ -52,12 +53,34 @@ module FatFreeCRM
           end
         end
       end
+
     end
 
     module InstanceMethods
       def field_groups
         field_groups = self.class.field_groups
         respond_to?(:tag_ids) ? field_groups.with_tags(tag_ids) : field_groups
+      end
+      
+      # add custom fields validations to model
+      def custom_fields_validator
+        self.field_groups.map(&:fields).flatten.each do |f|
+          attr = f.name.to_sym
+          errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.required', :field => f.label)) if f.required? and self.send(attr).blank?
+          errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.maxlength', :field => f.label)) if (f.maxlength.to_i > 0) and (self.send(attr).to_s.length > f.maxlength.to_i)
+          validate_pairs(CustomField.find(f.pair_id), f) if f.pair_id.present? # validate when we get to 2nd of the pair
+        end
+      end
+      
+      def validate_pairs(field1, field2)
+        return if field1.nil?
+        validate_date_pairs(field1, field2) if %w(datepair datetimepair).include?(field1.as)
+      end
+
+      def validate_date_pairs(field1, field2)
+        from = self.send(field1.name)
+        to = self.send(field2.name)
+        errors.add(field2.name.to_sym, ::I18n.t('activerecord.errors.models.custom_field.endbeforestart', :field => field1.label)) if from.present? and to.present? and (from > to)
       end
 
       def assign_attributes(new_attributes, options = {})
