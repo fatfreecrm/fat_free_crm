@@ -1,4 +1,4 @@
-.section
+.section.edit_admin_fields
   = f.hidden_field :field_group_id
 
   %table
@@ -11,76 +11,35 @@
         %td= spacer
         %td
           .label.top.req Field type:
-          = f.select :as, field_edit_as_options(f.object)
+          = f.select :as, field_edit_as_options(f.object), {}, :class => 'field_as'
 
-  %table{:id => 'customfields'}
+  %table{:class => 'customfields', :style => ( %w( datepair datetimepair ).include?(f.object.as) ) ? 'display: none;' : nil}
     %tr
       %td
-        .label.top.req Select Options (pipe separated):
-        = f.text_field :collection_string
+        - show_or_hide = ( f.object.as.nil? or !%w( select radio check_boxes ).include?(f.object.as) ) ? 'display: none;' : nil
+        .label.top.req{:style => show_or_hide} Select Options (pipe separated):
+        = f.text_field :collection_string, :style => show_or_hide, :class => 'field_collection_string'
     %tr
       %td
-        .label.top Required:
-        = f.check_box :required
+        .label.top Maxlength:
+        = f.text_field :maxlength
       %td= spacer
       %td
-        .label.top Disabled:
-        = f.check_box :disabled
+        .label.top
+          %span Required:
+          = f.check_box :required
+          %br
+          %span Disabled:
+          = f.check_box :disabled
     %tr
       %td
         .label.top Hint:
-        = f.text_area :hint, :rows => 5
+        = f.text_field :hint
       %td= spacer
       %td
         .label.top Placeholder:
-        = f.text_area :placeholder, :rows => 5
+        = f.text_field :placeholder
         
-  -# date/time pair repeats
   = render :partial => 'pairs', :locals => {:f => f}
 
   = hook(:customfield_top_section_bottom, self, :f => f)
-
-  :javascript
-    var toggleFields = function(){
-      switch($('field_as').value){
-        case "select":
-        case "multiselect":
-        case "check_boxes":
-          toggleCollection(true);
-          toggleDatePair(false);
-          break;
-        case "datepair":
-        case "datetimepair":
-          toggleDatePair(true);
-          toggleCollection(false);
-          break;
-        default:
-          toggleCollection(false);
-          toggleDatePair(false);
-      }
-    };
-    
-    var toggleCollection = function(val){
-      if (val) {
-        $('field_collection_string').show().previous().show().innerHTML = "Select Options (pipe separated):";
-      } else {
-        $('field_collection_string').hide().previous().hide();
-      }
-    }
-    
-    var toggleDatePair = function(val){
-      if (val) {
-        $('pairs').show();
-        $('customfields').hide();
-        
-      } else {
-        $('customfields').show();
-        $('pairs').hide();
-      }
-    }
-
-    toggleCollection(false);
-    toggleDatePair(false);
-    toggleFields();
-
-    Event.observe($('field_as'), 'change', toggleFields);

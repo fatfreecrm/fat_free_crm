@@ -137,10 +137,14 @@ $sidebar_width: 210px;
 .top {
   margin: 5px 0px 0px 0px; }
 
-.req {
+.req, label.required {
   background: url("/assets/asterisk.gif") no-repeat scroll center right transparent;
   color: navy;
   display: inline-block; }
+  
+.required label {
+  padding: 0px 8px 0px 0px;
+}
 
 .intro {
   color: dimgray;

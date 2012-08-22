@@ -19,6 +19,7 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
 
   def input
     add_autocomplete!
+    input_html_options.merge(input_options)
     @builder.text_field(attribute_name, input_html_options)
   end
 
@@ -28,11 +29,11 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
 
   private
 
-    def has_required?
-      options[:required]
-    end
+  def has_required?
+    options[:required]
+  end
 
-    def add_autocomplete!
-      input_html_options[:autocomplete] ||= 'off'
-    end
+  def add_autocomplete!
+    input_html_options[:autocomplete] ||= 'off'
+  end
 end

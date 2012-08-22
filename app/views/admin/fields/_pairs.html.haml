@@ -2,31 +2,36 @@
 - field1 = obj || Field.new
 - field2 = obj.try(:paired_with)
 - pair = [field1, field2]
+- show_or_hide = ( !%w( datepair datetimepair ).include?(f.object.as) ) ? 'display: none;' : nil
 
-%table{:id => :pairs}
+%table{:class => :pairs, :style => show_or_hide}
   - pair.each do |p|
     - first = (p == pair.first)
     = fields_for("pair[#{first ? 0 : 1}]", p) do |f|
       %tr
         %td
-          .label
+          .label.field_title
             = first ? t('pair.start') : t('pair.end')
             = f.hidden_field :id
         %td= spacer
         %td= spacer
       %tr
         %td
-          .label.top Required:
-          = f.check_box :required
+          .label.top Maxlength:
+          = f.text_field :maxlength
         %td= spacer
         %td
-          .label.top Disabled:
-          = f.check_box :disabled
+          .label.top
+            %span Required:
+            = f.check_box :required
+            %br
+            %span Disabled:
+            = f.check_box :disabled
       %tr
         %td
           .label.top Hint:
-          = f.text_area :hint, :rows => 5
+          = f.text_field :hint
         %td= spacer
         %td
           .label.top Placeholder:
-          = f.text_area :placeholder, :rows => 5
+          = f.text_field :placeholder

@@ -6,3 +6,12 @@
 
 .fields .title {
   margin-bottom: 12px; }
+
+.datepair, .datetimepair {
+  width: auto!important;
+  display: inline!important;
+}
+
+.datepair label, .datetimepair label {
+  margin: 0px 5px;
+}

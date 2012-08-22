@@ -15,61 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class DatetimepairInput < SimpleForm::Inputs::DateTimeInput
-  include ActionView::Helpers::TagHelper
-  include ActionView::Helpers::JavaScriptHelper
-
-  # Output two datetime fields: start and end
-  #------------------------------------------------------------------------------
-  def input
-    add_autocomplete!
-    out = "<br />".html_safe
-
-    field1 = CustomField.where(:name => attribute_name).first
-    field2 = field1.try(:paired_with)
-    
-    [field1, field2].compact.each do |field|
-      out << ((field == field1) ? I18n.t('pair.start') : I18n.t('pair.end'))
-      input_options = input_html_options.merge(datetimepair_options(object, field))
-      text = @builder.text_field(field.name, input_options)
-      element_id = text[/id="([a-z0-9_]*)"/, 1]
-      text << javascript_tag(%Q{crm.date_select_popup('#{element_id}', false, #{!!(input_type =~ /time/)});})
-      out << text
-    end
-    
-    out
-  end
-
-  def label_target
-    attribute_name
-  end
+class DatetimepairInput < DatepairInput
 
   private
-
-  def datetimepair_options(obj, field)
-    value = obj.send(field.name)
-    input_options = 
-      if value.present?
-        params = if input_type =~ /time/
-          [value.localtime, {:format => :mmddyyyy_hhmm}]
-        else
-          [value.to_date, {:format => :mmddyyyy}]
-        end
-        { :value => I18n.localize(*params).html_safe }
-      else
-        {}
-      end
-    opts = field.input_options
-    input_options.merge!(:placeholder => opts[:placeholder])
-    input_options.merge!(:maxlength => opts[:input_html][:maxlength])
-  end
-
-  def has_required?
-    options[:required]
-  end
-
-  def add_autocomplete!
-    input_html_options[:autocomplete] ||= 'off'
+  
+  def input_html_classes
+    super.map{|x| 'datetime' if x == 'date'}
   end
 
 end

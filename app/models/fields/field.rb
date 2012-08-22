@@ -78,7 +78,7 @@ class Field < ActiveRecord::Base
 
   # for datepair and datetimepair, ensures 'end' is greater than 'start'
   # how does this go on custom fields?
-  #validates_numericality_of :value, :greater_than_or_equal_to => Proc.new { |field| field.paired_with.try(:value) }, :if => Proc.new{|field| %w(datepair datetimepair).include?(field.as) and field.pair_id.present?}
+  # validates_numericality_of :value, :greater_than_or_equal_to => Proc.new { |field| field.paired_with.try(:value) }, :if => Proc.new{|field| %w(datepair datetimepair).include?(field.as) and field.pair_id.present?}
 
   def self.field_types
     # Expands concise FIELD_TYPES into a more usable hash
@@ -99,12 +99,10 @@ class Field < ActiveRecord::Base
   end
 
   def input_options
-    input_html = attributes['maxlength'].present? ?
-        {:maxlength => attributes['maxlength'], :style => 'width:auto!important'} : {}
-
+    input_html = {}
     attributes.reject { |k,v|
-      !%w(as collection disabled label placeholder required).include?(k) or v.blank?
-    }.symbolize_keys.merge(:input_html => input_html)
+      !%w(as collection disabled label placeholder required maxlength).include?(k) or v.blank?
+    }.symbolize_keys.merge(input_html)
   end
 
   def collection_string=(value)
@@ -115,12 +113,24 @@ class Field < ActiveRecord::Base
   end
 
   def render_value(object)
-    if %w(datepair datetimepair).include?(as) and paired_with.present?
-      from = render object.send(name)
-      to = render object.send(paired_with.name)
-      I18n.t('pair.from_to', :from => from, :to => to)
+    if %w(datepair datetimepair).include?(as)
+      render_paired_value(object)
     else
       render object.send(name)
+    end
+  end
+  
+  # For rendering paired values
+  # Handle case where both pairs are blank
+  #------------------------------------------------------------------------------
+  def render_paired_value(object)
+    return "" unless paired_with.present?
+    from = render(object.send(name))
+    to = render(object.send(paired_with.name))
+    if from.present? or to.present?
+      I18n.t('pair.from_to', :from => from, :to => to)
+    else
+      ""
     end
   end
 
@@ -131,7 +141,7 @@ class Field < ActiveRecord::Base
     when 'date', 'datepair'
       value && value.strftime(I18n.t("date.formats.mmddyy"))
     when 'datetime', 'datetimepair'
-      value && value.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
+      value && value.strftime(I18n.t("time.formats.mmddhhss"))
     when 'check_boxes'
       value.select(&:present?).in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value
     else
