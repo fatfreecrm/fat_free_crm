@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.files = `git ls-files`.split("\n")
   gem.version = FatFreeCRM::VERSION::STRING
 
-  gem.add_dependency 'rails',               '~> 3.2.6'
+  gem.add_dependency 'rails',               '~> 3.2'
   gem.add_dependency 'prototype-rails'
   gem.add_dependency 'jquery-rails'
   gem.add_dependency 'simple_form',         '~> 2.0.1'
@@ -24,8 +24,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'acts_as_commentable', '~> 3.0.1'
   gem.add_dependency 'acts-as-taggable-on', '~> 2.3.3'
   gem.add_dependency 'dynamic_form'
-  gem.add_dependency 'haml',                '~> 3.1.3'
-  gem.add_dependency 'sass',                '~> 3.1.10'
+  gem.add_dependency 'haml',                '~> 3'
+  gem.add_dependency 'sass',                '~> 3'
   gem.add_dependency 'acts_as_list',        '~> 0.1.4'
   gem.add_dependency 'ffaker',              '>= 1.12.0'
   gem.add_dependency 'cancan'
