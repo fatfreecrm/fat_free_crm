@@ -125,7 +125,7 @@ div {
     text-decoration: none;
     color: #105cb6;
     border: 1px solid #9aafe5;
-    &hover, &focus {
+    &.hover, &.focus {
       color: navy;
       background: lightyellow;
       border-color: navy; } }

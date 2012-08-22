@@ -54,9 +54,9 @@ ul li {
 //------------------------------------------------------------------------------
 a {
   text-decoration: none;
-  &link, &visited {
+  &:link, &:visited {
     color: $color_link; }
-  &hover {
+  &:hover {
     background: $color_link_hover_background;
     color: $color_link_hover; }
   img {
@@ -70,7 +70,7 @@ a {
     border-bottom: 1px dotted darkcyan;
     color: darkcyan;
     text-decoration: none;
-    &hover {
+    &:hover {
       background: $color_body;
       border-bottom: 1px dotted darkblue;
       color: darkblue; } } }
