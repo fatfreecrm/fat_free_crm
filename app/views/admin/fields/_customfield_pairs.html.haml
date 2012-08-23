@@ -1,8 +1,7 @@
-- obj = f.object
-- field1 = obj || Field.new
-- field2 = obj.try(:paired_with)
+- field1 = f.object || CustomFieldPair.new
+- field2 = f.object.respond_to?(:paired_with) ? field1.paired_with : CustomFieldPair.new
 - pair = [field1, field2]
-- show_or_hide = ( !%w( datepair datetimepair ).include?(f.object.as) ) ? 'display: none;' : nil
+- show_or_hide = !( f.object.as =~ /pair/ ) ? 'display: none;' : nil
 
 %table{:class => :pairs, :style => show_or_hide}
   - pair.each do |p|

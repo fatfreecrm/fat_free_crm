@@ -62,25 +62,10 @@ module FatFreeCRM
         respond_to?(:tag_ids) ? field_groups.with_tags(tag_ids) : field_groups
       end
       
-      # add custom fields validations to model
+      # run custom field validations on this object
+      #------------------------------------------------------------------------------
       def custom_fields_validator
-        self.field_groups.map(&:fields).flatten.each do |f|
-          attr = f.name.to_sym
-          errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.required', :field => f.label)) if f.required? and self.send(attr).blank?
-          errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.maxlength', :field => f.label)) if (f.maxlength.to_i > 0) and (self.send(attr).to_s.length > f.maxlength.to_i)
-          validate_pairs(CustomField.find(f.pair_id), f) if f.pair_id.present? # validate when we get to 2nd of the pair
-        end
-      end
-      
-      def validate_pairs(field1, field2)
-        return if field1.nil?
-        validate_date_pairs(field1, field2) if %w(datepair datetimepair).include?(field1.as)
-      end
-
-      def validate_date_pairs(field1, field2)
-        from = self.send(field1.name)
-        to = self.send(field2.name)
-        errors.add(field2.name.to_sym, ::I18n.t('activerecord.errors.models.custom_field.endbeforestart', :field => field1.label)) if from.present? and to.present? and (from > to)
+        self.field_groups.map(&:fields).flatten.each{|f| f.custom_validator(self) }
       end
 
       def assign_attributes(new_attributes, options = {})

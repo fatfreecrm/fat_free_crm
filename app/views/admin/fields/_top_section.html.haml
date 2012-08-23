@@ -13,7 +13,7 @@
           .label.top.req Field type:
           = f.select :as, field_edit_as_options(f.object), {}, :class => 'field_as'
 
-  %table{:class => 'customfields', :style => ( %w( datepair datetimepair ).include?(f.object.as) ) ? 'display: none;' : nil}
+  %table{:class => 'customfields', :style => ( f.object.as =~ /pair/ ) ? 'display: none;' : nil}
     %tr
       %td
         - show_or_hide = ( f.object.as.nil? or !%w( select radio check_boxes ).include?(f.object.as) ) ? 'display: none;' : nil
@@ -39,7 +39,7 @@
       %td
         .label.top Placeholder:
         = f.text_field :placeholder
-        
-  = render :partial => 'pairs', :locals => {:f => f}
+
+  = render :partial => 'customfield_pairs', :locals => {:f => f}
 
   = hook(:customfield_top_section_bottom, self, :f => f)

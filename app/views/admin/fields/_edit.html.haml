@@ -1,5 +1,5 @@
 .remote
-  = form_for([:admin, @field], :as => :field, :html => one_submit_only(:field).merge(:class => "edit_field", :id => "edit_field_#{@field.id}"), :remote => true) do |f|
+  = form_for([:admin, @field], :url => admin_field_path, :as => :field, :html => one_submit_only(:field).merge(:class => "edit_field", :id => "edit_field_#{@field.id}"), :remote => true) do |f|
     = link_to_close edit_admin_field_path(@field)
     = f.error_messages
     = render :partial => "top_section", :locals => { :f => f, :edit => true }

@@ -23,6 +23,7 @@
 #  type           :string(255)
 #  field_group_id :integer
 #  position       :integer
+#  pair_id        :integer
 #  name           :string(64)
 #  label          :string(128)
 #  hint           :string(255)
@@ -42,8 +43,10 @@ class Field < ActiveRecord::Base
   serialize :collection, Array
 
   belongs_to :field_group
-  has_one :pair, :class_name => Field, :foreign_key => 'pair_id', :dependent => :destroy # points to 'start'
-  scope :without_pairs, where('pair_id IS NULL')
+
+  scope :core_fields, where(:type => 'CoreField')
+  scope :custom_fields, where("type != 'CoreField'")
+  scope :without_pairs, where(:pair_id => nil)
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
 
@@ -76,10 +79,6 @@ class Field < ActiveRecord::Base
   validates_presence_of :as, :message => "^Please specify a Field type."
   validates_inclusion_of :as, :in => FIELD_TYPES.keys, :message => "Invalid Field Type."
 
-  # for datepair and datetimepair, ensures 'end' is greater than 'start'
-  # how does this go on custom fields?
-  # validates_numericality_of :value, :greater_than_or_equal_to => Proc.new { |field| field.paired_with.try(:value) }, :if => Proc.new{|field| %w(datepair datetimepair).include?(field.as) and field.pair_id.present?}
-
   def self.field_types
     # Expands concise FIELD_TYPES into a more usable hash
     @field_types ||= FIELD_TYPES.inject({}) do |hash, n|
@@ -91,11 +90,6 @@ class Field < ActiveRecord::Base
 
   def column_type(field_type = self.as)
     (opts = Field.field_types[field_type]) ? opts[:type] : raise("Unknown field_type: #{field_type}")
-  end
-
-  # returns the field that this field is paired with
-  def paired_with
-    pair || Field.where(:pair_id => id).first
   end
 
   def input_options
@@ -113,34 +107,16 @@ class Field < ActiveRecord::Base
   end
 
   def render_value(object)
-    if %w(datepair datetimepair).include?(as)
-      render_paired_value(object)
-    else
-      render object.send(name)
-    end
-  end
-
-  # For rendering paired values
-  # Handle case where both pairs are blank
-  #------------------------------------------------------------------------------
-  def render_paired_value(object)
-    return "" unless paired_with.present?
-    from = render(object.send(name))
-    to = render(object.send(paired_with.name))
-    if from.present? or to.present?
-      I18n.t('pair.from_to', :from => from, :to => to)
-    else
-      ""
-    end
+    render object.send(name)
   end
 
   def render(value)
     case as
     when 'checkbox'
       value.to_s == '0' ? "no" : "yes"
-    when 'date', 'datepair'
+    when 'date'
       value && value.strftime(I18n.t("date.formats.mmddyy"))
-    when 'datetime', 'datetimepair'
+    when 'datetime'
       value && value.strftime(I18n.t("time.formats.mmddhhss"))
     when 'check_boxes'
       value.select(&:present?).in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value

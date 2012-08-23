@@ -58,16 +58,12 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    if %w(datepair datetimepair).include?(params[:field][:as])
-      fields = params[:field]
-      pair = params.delete(:pair)
-      base_params = fields.select{|k,v| %w(field_group_id label as).include?(k)}
-      @field = CustomField.create( base_params.merge(pair['0']) )
-      field2 = CustomField.create( base_params.merge(pair['1']).merge(:pair_id => @field.id) )
+    if (params[:field][:as] =~ /pair/)
+      @field = CustomFieldPair.create_pair(params).first
     else
       @field = CustomField.create(params[:field])
     end
-
+    
     respond_with(@field)
   end
 
@@ -75,13 +71,8 @@ class Admin::FieldsController < Admin::ApplicationController
   # PUT /fields/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    if %w(datepair datetimepair).include?(params[:field][:as])
-      fields = params[:field]
-      pair = params.delete(:pair)
-      base_params = fields.select{|k,v| %w(field_group_id label as).include?(k)}
-      @field = Field.find(params[:id])
-      @field.update_attributes( base_params.merge(pair['0']) )
-      @field.paired_with.update_attributes( base_params.merge(pair['1']) )
+    if (params[:field][:as] =~ /pair/)
+      @field = CustomFieldPair.update_pair(params).first
     else
       @field = Field.find(params[:id])
       @field.update_attributes(params[:field])

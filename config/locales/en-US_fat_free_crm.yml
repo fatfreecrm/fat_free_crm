@@ -873,6 +873,8 @@ en-US:
     float:       Number (Floating Point)
 
   pair:
-    start: Start
-    end:   End
-    from_to: From %{from} to %{to}
+    start:       Start
+    end:         End
+    from_to:     From %{from} to %{to}
+    from_only:   From %{from}
+    to_only:     Until %{to}
