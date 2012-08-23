@@ -103,4 +103,24 @@ describe CustomField do
     end
   end
 
+  describe "validation" do
+  
+    it "should have errors if custom field is required" do
+      event = CustomField.new(:name => 'cf_event', :required => true)
+      foo = mock(:cf_event => nil)
+      err = mock(:errors); err.stub(:add)
+      foo.should_receive(:errors).and_return(err)
+      event.custom_validator(foo)
+    end
+    
+    it "should have errors if custom field is longer than maxlength" do
+      event = CustomField.new(:name => 'cf_event', :maxlength => 5)
+      foo = mock(:cf_event => "This is too long")
+      err = mock(:errors); err.stub(:add)
+      foo.should_receive(:errors).and_return(err)
+      event.custom_validator(foo)
+    end
+    
+  end
+  
 end

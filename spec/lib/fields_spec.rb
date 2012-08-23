@@ -4,11 +4,13 @@ describe 'FatFreeCRM::Fields' do
 
   class Foo
     include FatFreeCRM::Fields
+    include ActiveModel::Validations
     has_fields
   end
 
   class Bar
     include FatFreeCRM::Fields
+    include ActiveModel::Validations
   end
 
   it do
@@ -75,6 +77,28 @@ describe 'FatFreeCRM::Fields' do
       Foo.serialize_custom_fields!
     end
   
+  end
+  
+  it "should validate custom fields" do
+    foo = Foo.new
+    foo.should_receive(:custom_fields_validator)
+    foo.should be_valid
+  end
+  
+  describe "custom_fields_validator" do
+  
+    before(:each) do
+      @f1 = mock(Field)
+      @field_groups = [ mock(FieldGroup, :fields => [@f1]) ]
+    end
+  
+    it "should call custom_validator on each custom field" do
+      foo = Foo.new
+      @f1.should_receive(:custom_validator).with(foo)
+      foo.should_receive(:field_groups).and_return(@field_groups)
+      foo.should be_valid
+    end
+
   end
   
 end
