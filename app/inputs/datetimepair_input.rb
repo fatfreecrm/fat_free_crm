@@ -30,7 +30,8 @@ class DatetimepairInput < DatepairInput
   # Return value recognised by datepicker and ensure timezone properly set by AR
   #------------------------------------------------------------------------------
   def value(field)
-    object.send(field.name).strftime('%Y-%m-%d %H:%M')
+    val = object.send(field.name)
+    val.present? ? val.strftime('%Y-%m-%d %H:%M') : nil
   end
 
 end

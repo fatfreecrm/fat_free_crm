@@ -70,7 +70,8 @@ class DatepairInput < SimpleForm::Inputs::Base
   # Serialize into a value recognised by datepicker
   #------------------------------------------------------------------------------
   def value(field)
-    object.send(field.name).strftime('%Y-%m-%d')
+    val = object.send(field.name)
+    val.present? ? val.strftime('%Y-%m-%d') : nil
   end
 
 end
