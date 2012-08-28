@@ -415,6 +415,7 @@ en-US:
   #----------------------------------------------------------------------------
   amount: Amount
   close_date: Close date
+  closes_on: Closes on
   closed_ago_on: closed %{time_ago} ago on %{date}
   closes_today: expected to close today!
   closing_date: closing date is %{value}
