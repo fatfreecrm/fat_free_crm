@@ -334,7 +334,7 @@ describe ContactsController do
         Contact.stub!(:new).and_return(@contact)
 
         xhr :post, :create, :contact => { :first_name => "Testy", :last_name => "McTest" }, :account => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
-        @contact.reload.comments.map(&:comment).should include("Awesome comment is awesome")
+        assigns[:contact].comments.map(&:comment).should include("Awesome comment is awesome")
       end
     end
 
@@ -405,8 +405,8 @@ describe ContactsController do
         @contact = FactoryGirl.create(:contact, :id => 42, :first_name => "Billy")
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => {}
-        @contact.reload.first_name.should == "Bones"
-        assigns(:contact).should == @contact
+        assigns[:contact].first_name.should == "Bones"
+        assigns[:contact].should == @contact
         response.should render_template("contacts/update")
       end
 
@@ -414,8 +414,8 @@ describe ContactsController do
         @contact = FactoryGirl.create(:contact, :id => 42, :first_name => "Billy")
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => { :name => "new account" }
-        @contact.reload.first_name.should == "Bones"
-        @contact.account.name.should == "new account"
+        assigns[:contact].first_name.should == "Bones"
+        assigns[:contact].account.name.should == "new account"
       end
 
       it "should be able to link existing account with the contact" do
@@ -423,18 +423,16 @@ describe ContactsController do
         @contact = FactoryGirl.create(:contact, :id => 42, :first_name => "Billy")
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Bones" }, :account => { :id => 99 }
-        @contact.reload.first_name.should == "Bones"
-        @contact.account.id.should == 99
+        assigns[:contact].first_name.should == "Bones"
+        assigns[:contact].account.id.should == 99
       end
 
       it "should update contact permissions when sharing with specific users" do
         @contact = FactoryGirl.create(:contact, :id => 42, :access => "Public")
-        he  = FactoryGirl.create(:user, :id => 7)
-        she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => 42, :contact => { :first_name => "Hello", :access => "Shared", :user_ids => %w(7 8) }, :account => {}
-        @contact.reload.access.should == "Shared"
-        @contact.user_ids.sort.should == [ 7, 8 ]
+        xhr :put, :update, :id => 42, :contact => { :first_name => "Hello", :access => "Shared", :user_ids => [7, 8] }, :account => {}
+        assigns[:contact].access.should == "Shared"
+        assigns[:contact].reload.user_ids.sort.should == [ 7, 8 ]
         assigns[:contact].should == @contact
       end
 
@@ -467,10 +465,10 @@ describe ContactsController do
         @users = [ FactoryGirl.create(:user) ]
 
         xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => {}
-        @contact.reload.first_name.should == "Billy"
-        assigns(:contact).should == @contact
-        assigns(:account).attributes.should == @account.attributes
-        assigns(:users).should == @users
+        assigns[:contact].reload.first_name.should == "Billy"
+        assigns[:contact].should == @contact
+        assigns[:account].attributes.should == @account.attributes
+        assigns[:users].should == @users
         response.should render_template("contacts/update")
       end
 
@@ -479,7 +477,7 @@ describe ContactsController do
         @contact = FactoryGirl.create(:contact, :id => 42, :account => @account)
 
         xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => { :id => 99 }
-        assigns(:account).should == @account
+        assigns[:account].should == @account
       end
 
     end

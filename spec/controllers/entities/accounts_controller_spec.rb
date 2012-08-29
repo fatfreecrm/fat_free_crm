@@ -328,7 +328,7 @@ describe AccountsController do
         Account.stub!(:new).and_return(@account)
 
         xhr :post, :create, :account => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
-        @account.reload.comments.map(&:comment).should include("Awesome comment is awesome")
+        assigns[:account].comments.map(&:comment).should include("Awesome comment is awesome")
       end
     end
 
@@ -370,13 +370,11 @@ describe AccountsController do
 
       it "should update account permissions when sharing with specific users" do
         @account = FactoryGirl.create(:account, :id => 42, :access => "Public")
-        he  = FactoryGirl.create(:user, :id => 7)
-        she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => 42, :account => { :name => "Hello", :access => "Shared", :user_ids => %w(7 8) }
-        @account.reload.access.should == "Shared"
-        @account.user_ids.sort.should == [ 7, 8 ]
-        assigns[:account].should == @account
+        xhr :put, :update, :id => 42, :account => { :name => "Hello", :access => "Shared", :user_ids => [7, 8] }
+        account = assigns[:account]
+        account.access.should == "Shared"
+        account.user_ids.sort.should == [7, 8]
       end
 
       describe "account got deleted or otherwise unavailable" do
@@ -404,7 +402,7 @@ describe AccountsController do
         @account = FactoryGirl.create(:account, :id => 42, :name => "Hello people")
 
         xhr :put, :update, :id => 42, :account => { :name => nil }
-        @account.reload.name.should == "Hello people"
+        assigns(:account).reload.name.should == "Hello people"
         assigns(:account).should == @account
         response.should render_template("accounts/update")
       end

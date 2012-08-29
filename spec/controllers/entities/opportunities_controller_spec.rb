@@ -572,20 +572,16 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42, :account => @old_account)
 
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello" }, :account => { :id => 999 }
-        @opportunity.reload
         assigns[:opportunity].should == @opportunity
-        @opportunity.account.should == @new_account
+        assigns[:opportunity].account.should == @new_account
       end
 
       it "should update opportunity permissions when sharing with specific users" do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42, :access => "Public")
-        he  = FactoryGirl.create(:user, :id => 7)
-        she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello", :access => "Shared", :user_ids => %w(7 8) }, :account => { :name => "Test Account" }
-        @opportunity.reload.access.should == "Shared"
-        @opportunity.user_ids.sort.should == [ 7, 8 ]
-        assigns[:opportunity].should == @opportunity
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello", :access => "Shared", :user_ids => [7, 8] }, :account => { :name => "Test Account" }
+        assigns[:opportunity].access.should == "Shared"
+        assigns[:opportunity].user_ids.sort.should == [ 7, 8 ]
       end
 
       it "should reload opportunity campaign if called from campaign landing page" do
