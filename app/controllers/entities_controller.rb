@@ -145,10 +145,16 @@ private
     self.current_query = query
 
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
-
+    
+    per_page = if options[:per_page]
+      options[:per_page] == 'all' ? search.result.count : options[:per_page]
+    else
+      current_user.pref[:"#{controller_name}_per_page"]
+    end
+    
     pages = {
       :page     => current_page,
-      :per_page => current_user.pref[:"#{controller_name}_per_page"]
+      :per_page => per_page
     }
 
     # Use default processing if no hooks are present. Note that comma-delimited

@@ -22,7 +22,8 @@ class ContactsController < EntitiesController
   # GET /contacts
   #----------------------------------------------------------------------------
   def index
-    @contacts = get_contacts(:page => params[:page])
+    @contacts = get_contacts(:page     => params[:page],
+                             :per_page => params[:per_page])
     
     respond_with @contacts do |format|
       format.xls { render :layout => 'header' }
