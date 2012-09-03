@@ -17,7 +17,7 @@
 
 class LeadsController < EntitiesController
   before_filter :get_data_for_sidebar, :only => :index
-  autocomplete :account, :name, :full => true
+  #autocomplete :account, :name, :full => true
 
   # GET /leads
   #----------------------------------------------------------------------------
