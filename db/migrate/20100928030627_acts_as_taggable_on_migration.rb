@@ -5,15 +5,15 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
     end
 
     create_table :taggings do |t|
-      t.column :tag_id, :integer
-      t.column :taggable_id, :integer
-      t.column :tagger_id, :integer
-      t.column :tagger_type, :string
+      t.integer :tag_id
+      t.integer :taggable_id
+      t.integer :tagger_id
+      t.string :tagger_type
 
       # You should make sure that the column created is
       # long enough to store the required class names.
-      t.column :taggable_type, :string
-      t.column :context, :string
+      t.string :taggable_type, :limit => 50
+      t.string :context, :limit => 50
 
       t.column :created_at, :datetime
     end
