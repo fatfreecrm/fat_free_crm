@@ -69,13 +69,17 @@ module FatFreeCRM
       end
 
       def assign_attributes(new_attributes, options = {})
-        logger.debug self.class.name
         super
       # If attribute is unknown, a new custom field may have been added.
       # Refresh columns and try again.
       rescue ActiveRecord::UnknownAttributeError
         self.class.reset_column_information
         super
+      rescue Exception => bang
+        logger.fatal bang.message
+        logger.fatal bang.backtrace
+        logger.fatal self.class.name
+        raise Exception, bang.message
       end
 
       def method_missing(method_id, *args, &block)
