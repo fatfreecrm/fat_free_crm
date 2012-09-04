@@ -52,8 +52,7 @@ class Lead < ActiveRecord::Base
   
   attr_accessible :user, :access, :assigned_to, :user_id, :first_name, :last_name, :email, :phone, :tag_list, :status, :rating, :source,
                   :campaign_id, :title, :company, :alt_email, :mobile, :business_address_attributes, :referred_by, :do_not_call, :blog,
-                  :twitter, :linkedin, :facebook, :skype, :user_ids, :group_ids, :address_type, :street1, :street2, :city, :state,
-                  :zipcode, :country
+                  :twitter, :linkedin, :facebook, :skype, :user_ids, :group_ids, :business_address_attributes
   
   belongs_to  :user
   belongs_to  :campaign
