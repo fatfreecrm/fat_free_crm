@@ -39,6 +39,8 @@ class Address < ActiveRecord::Base
   
   belongs_to :addressable, :polymorphic => true
 
+  #attr_accessible :address_type, :street1, :street2, :city, :state, :zipcode, :country
+
   has_paper_trail :meta => { :related => :addressable }
 
   scope :business, :conditions => "address_type='Business'"
