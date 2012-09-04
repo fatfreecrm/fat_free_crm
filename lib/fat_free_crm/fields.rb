@@ -69,6 +69,7 @@ module FatFreeCRM
       end
 
       def assign_attributes(new_attributes, options = {})
+        puts self.class.name
         super
       # If attribute is unknown, a new custom field may have been added.
       # Refresh columns and try again.
