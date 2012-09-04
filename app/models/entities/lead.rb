@@ -50,10 +50,6 @@
 
 class Lead < ActiveRecord::Base
   
-  attr_accessible :user, :access, :assigned_to, :user_id, :first_name, :last_name, :email, :phone, :tag_list, :status, :rating, :source,
-                  :campaign_id, :title, :company, :alt_email, :mobile, :business_address_attributes, :referred_by, :do_not_call, :blog,
-                  :twitter, :linkedin, :facebook, :skype, :user_ids, :group_ids, :business_address_attributes
-  
   belongs_to  :user
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -65,6 +61,10 @@ class Lead < ActiveRecord::Base
   serialize :subscribed_users, Set
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true
+  attr_accessible :user, :access, :assigned_to, :user_id, :first_name, :last_name, :email, :phone, :tag_list, :status, :rating, :source,
+                  :campaign_id, :title, :company, :alt_email, :mobile, :business_address_attributes, :referred_by, :do_not_call, :blog,
+                  :twitter, :linkedin, :facebook, :skype, :user_ids, :group_ids, :business_address_attributes
+  
 
   scope :state, lambda { |filters|
     where([ 'status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters ])
