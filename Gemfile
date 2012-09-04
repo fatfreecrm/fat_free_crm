@@ -2,9 +2,9 @@ source :rubygems
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-# gem 'mysql2', '0.3.10'
+gem 'mysql2', '0.3.10'
 # gem 'sqlite3'
-gem 'pg', '~> 0.13.2'
+# gem 'pg', '~> 0.13.2'
 
 # Allows easy switching between locally developed gems, and gems installed from rubygems.org
 # See README for more info at: https://github.com/ndbroadbent/bundler_local_development
@@ -78,6 +78,7 @@ end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'rails3-jquery-autocomplete'
   gem 'execjs'
   gem 'therubyracer', :platform => :ruby  # C Ruby (MRI) or Rubinius, but NOT Windows
   gem 'uglifier',     '>= 1.0.3'
