@@ -49,6 +49,9 @@
 #
 
 class Lead < ActiveRecord::Base
+  
+  attr_accessible :user, :access, :assigned_to
+  
   belongs_to  :user
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
