@@ -69,10 +69,7 @@ class Lead < ActiveRecord::Base
   scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
   scope :assigned_to, lambda { |user| where('assigned_to = ?' , user.id) }
 
-  scope :text_search, lambda { |query|
-    query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
-    where('upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s) OR upper(company) LIKE upper(:m) OR upper(email) LIKE upper(:m)', :s => "#{query}%", :m => "%#{query}%")
-  }
+  scope :text_search, lambda { |query| search('first_name_or_last_name_or_company_or_email_cont' => query).result }
 
   uses_user_permissions
   acts_as_commentable

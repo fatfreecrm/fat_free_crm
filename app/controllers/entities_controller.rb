@@ -185,7 +185,7 @@ private
   def parse_query_and_tags(search_string)
     query, tags = [], []
     return ['', ''] if search_string.blank?
-    search_string.scan(/[\w@\-\.#]+/).each do |token|
+    search_string.split(/\s+/).each do |token|
       if token.starts_with?("#")
         tags << token[1 .. -1]
       else
