@@ -1,4 +1,3 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 require "fat_free_crm/core_ext/string"
 
 describe "String" do
