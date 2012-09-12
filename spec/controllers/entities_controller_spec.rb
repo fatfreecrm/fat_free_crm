@@ -28,6 +28,11 @@ describe EntitiesController do
       str = "#this is #a test !@$%^~ #parseme"
       controller.send(:parse_query_and_tags, str).should == ['is test !@$%^~', 'this, a, parseme']
     end
+    
+    it "should strip whitespace" do
+      str = "     test    me    "
+      controller.send(:parse_query_and_tags, str).should == ['test me', '']
+    end
 
   end
 

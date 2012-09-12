@@ -183,9 +183,9 @@ private
   # "#real Billy Bones #pirate" => [ "Billy Bones", "real, pirate" ]
   #----------------------------------------------------------------------------
   def parse_query_and_tags(search_string)
-    query, tags = [], []
     return ['', ''] if search_string.blank?
-    search_string.split(/\s+/).each do |token|
+    query, tags = [], []
+    search_string.strip.split(/\s+/).each do |token|
       if token.starts_with?("#")
         tags << token[1 .. -1]
       else
