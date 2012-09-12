@@ -12,7 +12,7 @@
     = link_to(campaign.name, campaign)
     = render "campaigns/status", :campaign => campaign
 
-    - unless @current_user.preference[:campaigns_outline] == "brief"
+    - unless current_user.preference[:campaigns_outline] == "brief"
       = render "campaigns/metrics", :campaign => campaign
       - if campaign.tag_list.present?
         %dt

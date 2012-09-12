@@ -6,7 +6,7 @@ describe "/accounts/_new" do
   before do
     login_and_assign
     assign(:account, Account.new)
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
   end
 
   it "should render [create account] form" do
@@ -34,4 +34,3 @@ describe "/accounts/_new" do
   end
 
 end
-

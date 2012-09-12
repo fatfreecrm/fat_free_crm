@@ -9,7 +9,7 @@ describe "/campaigns/show" do
       :leads => [ FactoryGirl.create(:lead) ],
       :opportunities => [ FactoryGirl.create(:opportunity) ])
     assign(:campaign, @campaign)
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
     assign(:comment, Comment.new)
     assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @campaign) ])
   end
@@ -28,4 +28,3 @@ describe "/campaigns/show" do
   end
 
 end
-

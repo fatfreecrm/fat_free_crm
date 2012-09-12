@@ -28,7 +28,7 @@ describe "admin/users/create" do
   describe "create failure" do
     it "should re-render [create] template in :create_user div" do
       assign(:user, FactoryGirl.build(:user, :username => nil)) # make it invalid
-      assign(:users, [ @current_user ])
+      assign(:users, [ current_user ])
       render
 
       rendered.should have_rjs("create_user") do |rjs|
@@ -39,4 +39,3 @@ describe "admin/users/create" do
   end
 
 end
-

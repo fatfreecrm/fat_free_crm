@@ -9,9 +9,9 @@ describe "/users/upload_avatar" do
 
   describe "no errors:" do
     before do
-      @avatar = FactoryGirl.create(:avatar, :entity => @current_user)
-      @current_user.stub!(:avatar).and_return(@avatar)
-      assign(:user, @user = @current_user)
+      @avatar = FactoryGirl.create(:avatar, :entity => current_user)
+      current_user.stub!(:avatar).and_return(@avatar)
+      assign(:user, @user = current_user)
     end
 
     it "should flip [Upload Avatar] form" do
@@ -24,10 +24,10 @@ describe "/users/upload_avatar" do
 
   describe "validation errors:" do
     before do
-      @avatar = FactoryGirl.create(:avatar, :entity => @current_user)
+      @avatar = FactoryGirl.create(:avatar, :entity => current_user)
       @avatar.errors.add(:image, "error")
-      @current_user.stub!(:avatar).and_return(@avatar)
-      assign(:user, @user = @current_user)
+      current_user.stub!(:avatar).and_return(@avatar)
+      assign(:user, @user = current_user)
     end
 
     it "should redraw the [Upload Avatar] form and shake it" do
@@ -39,4 +39,3 @@ describe "/users/upload_avatar" do
     end
   end # errors
 end
-

@@ -43,8 +43,8 @@ class LeadsController < EntitiesController
   # GET /leads/new
   #----------------------------------------------------------------------------
   def new
-    @lead.attributes = {:user => @current_user, :access => Setting.default_access, :assigned_to => nil}
-    @users = User.except(@current_user)
+    @lead.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
+    @users = User.except(current_user)
     get_campaigns
 
     if params[:related]
@@ -62,7 +62,7 @@ class LeadsController < EntitiesController
   # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @users = User.except(@current_user)
+    @users = User.except(current_user)
     get_campaigns
 
     if params[:previous].to_s =~ /(\d+)\z/
@@ -75,7 +75,7 @@ class LeadsController < EntitiesController
   # POST /leads
   #----------------------------------------------------------------------------
   def create
-    @users = User.except(@current_user)
+    @users = User.except(current_user)
     get_campaigns
     @comment_body = params[:comment_body]
 
@@ -99,7 +99,7 @@ class LeadsController < EntitiesController
       if @lead.update_with_lead_counters(params[:lead])
         update_sidebar
       else
-        @users = User.except(@current_user)
+        @users = User.except(current_user)
         @campaigns = Campaign.my.order('name')
       end
     end
@@ -119,10 +119,10 @@ class LeadsController < EntitiesController
   # GET /leads/1/convert
   #----------------------------------------------------------------------------
   def convert
-    @users = User.except(@current_user)
-    @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
+    @users = User.except(current_user)
+    @account = Account.new(:user => current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my.order('name')
-    @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
+    @opportunity = Opportunity.new(:user => current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
 
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Lead.my.find_by_id($1) || $1.to_i
@@ -134,7 +134,7 @@ class LeadsController < EntitiesController
   # PUT /leads/1/promote
   #----------------------------------------------------------------------------
   def promote
-    @users = User.except(@current_user)
+    @users = User.except(current_user)
     @account, @opportunity, @contact = @lead.promote(params)
     @accounts = Account.my.order('name')
     @stage = Setting.unroll(:opportunity_stage)
@@ -177,29 +177,29 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel].true?
-      @per_page = @current_user.pref[:leads_per_page] || Lead.per_page
-      @outline  = @current_user.pref[:leads_outline]  || Lead.outline
-      @sort_by  = @current_user.pref[:leads_sort_by]  || Lead.sort_by
-      @naming   = @current_user.pref[:leads_naming]   || Lead.first_name_position
+      @per_page = current_user.pref[:leads_per_page] || Lead.per_page
+      @outline  = current_user.pref[:leads_outline]  || Lead.outline
+      @sort_by  = current_user.pref[:leads_sort_by]  || Lead.sort_by
+      @naming   = current_user.pref[:leads_naming]   || Lead.first_name_position
     end
   end
 
   # POST /leads/redraw                                                     AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.pref[:leads_per_page] = params[:per_page] if params[:per_page]
-    @current_user.pref[:leads_outline]  = params[:outline]  if params[:outline]
+    current_user.pref[:leads_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:leads_outline]  = params[:outline]  if params[:outline]
 
     # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
     if params[:sort_by]
-      @current_user.pref[:leads_sort_by] = Lead::sort_by_map[params[:sort_by]]
+      current_user.pref[:leads_sort_by] = Lead::sort_by_map[params[:sort_by]]
       if Contact::sort_by_fields.include?(params[:sort_by])
-        @current_user.pref[:contacts_sort_by] ||= Contact::sort_by_map[params[:sort_by]]
+        current_user.pref[:contacts_sort_by] ||= Contact::sort_by_map[params[:sort_by]]
       end
     end
     if params[:naming]
-      @current_user.pref[:leads_naming] = params[:naming]
-      @current_user.pref[:contacts_naming] ||= params[:naming]
+      current_user.pref[:leads_naming] = params[:naming]
+      current_user.pref[:contacts_naming] ||= params[:naming]
     end
 
     @leads = get_leads(:page => 1) # Start one the first page.

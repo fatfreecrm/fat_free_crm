@@ -1,6 +1,6 @@
 %p
   = link_to_close options_opportunities_path
-  = hidden_field_tag "opportunity[user_id]", @current_user.id
+  = hidden_field_tag "opportunity[user_id]", current_user.id
 
   - current_sort_by = t("option_" + Opportunity.sort_by_map.invert[@sort_by])
   - current_outline = t("option_#{@outline}")

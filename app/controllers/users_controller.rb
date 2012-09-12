@@ -145,8 +145,8 @@ class UsersController < ApplicationController
   # POST /users/1/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.preference[:locale] = params[:locale]
-    render(:update) { |page| page.redirect_to user_path(@current_user) }
+    current_user.preference[:locale] = params[:locale]
+    render(:update) { |page| page.redirect_to user_path(current_user) }
   end
 
 private
@@ -154,10 +154,10 @@ private
   #----------------------------------------------------------------------------
   def require_and_assign_user
     require_user
-    @user = @current_user
+    @user = current_user
   end
 
   def assign_given_or_current_user
-    @user = params[:id] ? User.find(params[:id]) : @current_user
+    @user = params[:id] ? User.find(params[:id]) : current_user
   end
 end

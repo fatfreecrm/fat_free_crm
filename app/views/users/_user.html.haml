@@ -1,6 +1,6 @@
-- if @user == @current_user && Setting.per_user_locale
+- if @user == current_user && Setting.per_user_locale
   %div#options(style="float:right")
-    #{t :profile_language}: #{link_to(language_for(@current_user), "#", :id => :locale)}
+    #{t :profile_language}: #{link_to(language_for(current_user), "#", :id => :locale)}
 
 %table(cellspacing="0" cellpadding="0")
   %tr

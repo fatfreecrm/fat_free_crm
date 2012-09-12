@@ -5,7 +5,7 @@ describe "/users/avatar" do
 
   before do
     login_and_assign
-    assign(:user, @current_user)
+    assign(:user, current_user)
   end
 
   it "cancel: should hide [Upload Avatar] form and restore title" do
@@ -29,4 +29,3 @@ describe "/users/avatar" do
   end
 
 end
-

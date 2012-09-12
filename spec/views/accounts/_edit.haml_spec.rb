@@ -6,7 +6,7 @@ describe "/accounts/_edit" do
   before do
     login_and_assign
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
   end
 
   it "should render [edit account] form" do
@@ -35,4 +35,3 @@ describe "/accounts/_edit" do
     rendered.should_not have_tag("textarea[id=account_background_info]")
   end
 end
-

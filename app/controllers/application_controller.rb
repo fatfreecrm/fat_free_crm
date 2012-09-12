@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query] || ''
-    @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
+    @auto_complete = hook(:auto_complete, self, :query => @query, :user => current_user)
     if @auto_complete.empty?
       @auto_complete = klass.my.text_search(@query).limit(10)
     else

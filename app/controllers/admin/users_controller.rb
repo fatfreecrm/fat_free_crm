@@ -105,7 +105,7 @@ class Admin::UsersController < Admin::ApplicationController
   # PUT /admin/users/1/suspend.xml                                         AJAX
   #----------------------------------------------------------------------------
   def suspend
-    @user.update_attribute(:suspended_at, Time.now) if @user != @current_user
+    @user.update_attribute(:suspended_at, Time.now) if @user != current_user
 
     respond_with(@user)
   end

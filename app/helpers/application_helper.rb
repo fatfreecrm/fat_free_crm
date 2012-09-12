@@ -385,7 +385,7 @@ module ApplicationHelper
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
   def links_to_export
-    token = @current_user.single_access_token
+    token = current_user.single_access_token
     url_params = {:action => :index}
     url_params.merge!(:query => params[:query]) unless params[:query].blank?
     url_params.merge!(:q => params[:q]) unless params[:q].blank?

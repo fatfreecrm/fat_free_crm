@@ -42,7 +42,7 @@ describe "/tasks/complete" do
 
   describe "complete from related asset" do
     it "should replace pending partial with the completed one" do
-      @task = FactoryGirl.create(:task, :completed_at => Time.now, :completor => @current_user)
+      @task = FactoryGirl.create(:task, :completed_at => Time.now, :completor => current_user)
       assign(:task, @task)
 
       render
@@ -53,7 +53,7 @@ describe "/tasks/complete" do
     end
 
     it "should update recently viewed items" do
-      @task = FactoryGirl.create(:task, :completed_at => Time.now, :completor => @current_user)
+      @task = FactoryGirl.create(:task, :completed_at => Time.now, :completor => current_user)
       assign(:task, @task)
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
@@ -65,4 +65,3 @@ describe "/tasks/complete" do
   end
 
 end
-

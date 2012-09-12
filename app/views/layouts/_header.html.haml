@@ -1,14 +1,14 @@
 #header
   #welcome
-    - if @current_user
+    - if current_user
       #{t :welcome},
       -# This span gets updated on the fly if user changes her name.
-      %span#welcome_username= @current_user.name
+      %span#welcome_username= current_user.name
       %span> !&nbsp;&nbsp;
 
       = link_to(t(:quick_find), "#", :id => "jumper") << " |"
       = link_to(t(:profile), profile_path) << " |"
-      - if @current_user.admin?
+      - if current_user.admin?
         = link_to(t(:admin), admin_path) << " |"
       = link_to(t(:logout), logout_path, :method => :delete)
       = render "/layouts/jumpbox"

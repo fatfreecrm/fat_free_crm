@@ -5,7 +5,7 @@ describe "/users/password" do
 
   before do
     login_and_assign
-    assign(:user, @current_user)
+    assign(:user, current_user)
   end
 
   it "cancel: should hide [Change Password] form and restore title" do

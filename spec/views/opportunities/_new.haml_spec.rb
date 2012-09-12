@@ -9,7 +9,7 @@ describe "/opportunities/_new" do
     @account = FactoryGirl.create(:account)
     assign(:account, @account)
     assign(:accounts, [ @account ])
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
@@ -42,5 +42,3 @@ describe "/opportunities/_new" do
     rendered.should_not have_tag("textarea[id=opportunity_background_info]")
   end
 end
-
-

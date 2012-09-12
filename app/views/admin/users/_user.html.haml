@@ -17,12 +17,12 @@
 
       - if user.suspended?
         = link_to_reactivate(user) << " | "
-      - elsif user != @current_user
+      - elsif user != current_user
         = link_to_suspend(user) << " | "
       - else
         = "<font color='silver'>#{t :suspend}!</font> | ".html_safe
 
-      - if user != @current_user
+      - if user != current_user
         = link_to_confirm(user)
       - else
         %span.grayed #{t :delete}?

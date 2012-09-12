@@ -6,8 +6,8 @@
 
   .tools
     - if shown_on_landing_page?
-      = link_to_discard(completed) + (@current_user == completed.user ? ' | ' : '')
-    = link_to_task_delete(completed, bucket) if @current_user == completed.user
+      = link_to_discard(completed) + (current_user == completed.user ? ' | ' : '')
+    = link_to_task_delete(completed, bucket) if current_user == completed.user
 
   .indent
     %strike= auto_link h(completed.name)
@@ -17,7 +17,7 @@
     %tt
       %span.cool
         -# :task_completed_by: "completed {{time_ago}} ago by {{user}}"
-        = t(:task_completed_by, :time_ago => distance_of_time_in_words(completed.completed_at, Time.now), :date => l(completed.completed_at, :format => :long), :user => ((completed.completor.id != @current_user.id) ? link_to(completed.completor.full_name, user_path(completed.completor)) : t(:me))).html_safe
+        = t(:task_completed_by, :time_ago => distance_of_time_in_words(completed.completed_at, Time.now), :date => l(completed.completed_at, :format => :long), :user => ((completed.completor.id != current_user.id) ? link_to(completed.completor.full_name, user_path(completed.completor)) : t(:me))).html_safe
     - unless completed.background_info.blank?
       %div
         %dt= h(completed.background_info)

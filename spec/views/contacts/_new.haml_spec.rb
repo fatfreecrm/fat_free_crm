@@ -7,7 +7,7 @@ describe "/contacts/_new" do
     login_and_assign
     @account = FactoryGirl.create(:account)
     assign(:contact, Contact.new)
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
     assign(:account, @account)
     assign(:accounts, [ @account ])
   end
@@ -44,4 +44,3 @@ describe "/contacts/_new" do
   end
 
 end
-

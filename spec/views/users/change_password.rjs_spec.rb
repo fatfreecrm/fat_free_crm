@@ -5,7 +5,7 @@ describe "/users/change_password" do
 
   before do
     login_and_assign
-    assign(:user, @user = @current_user)
+    assign(:user, @user = current_user)
   end
 
   describe "no errors:" do
@@ -46,4 +46,3 @@ describe "/users/change_password" do
 
   end # errors
 end
-

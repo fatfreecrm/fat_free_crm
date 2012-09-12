@@ -40,7 +40,7 @@ describe Campaign do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @campaign, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @campaign, :user => current_user)
       @lead = FactoryGirl.create(:lead, :campaign => @campaign)
       @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign)
 
@@ -50,7 +50,7 @@ describe Campaign do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => @current_user)
+      @task = FactoryGirl.create(:task, :user => current_user)
       @lead = FactoryGirl.create(:lead)
       @opportunity = FactoryGirl.create(:opportunity)
 
@@ -81,7 +81,7 @@ describe Campaign do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @campaign, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @campaign, :user => current_user)
       @campaign.tasks.count.should == 1
 
       @campaign.discard!(@task)
@@ -136,4 +136,3 @@ describe Campaign do
     it_should_behave_like Ability, Campaign
   end
 end
-

@@ -5,7 +5,7 @@
     .strip.white #{t :other}
   .indent
     %label{ :id => dom_id(task, :name) }
-      - if task.user.id != @current_user.id
+      - if task.user.id != current_user.id
         = t(:task_from, link_to(task.user.full_name, user_path(task.user))).html_safe << ':'
       = link_to(h(task.name), tasks_path)
       - if task.asset_id?

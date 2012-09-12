@@ -29,7 +29,7 @@ describe "/opportunities/options" do
       render
 
       rendered.should have_rjs("options") do |rjs|
-        with_tag("input[type=hidden]") # @current_user
+        with_tag("input[type=hidden]") # current_user
       end
       rendered.should include('crm.flip_form("options")')
       rendered.should include('crm.set_title("create_opportunity", "Opportunities Options")')
@@ -57,4 +57,3 @@ describe "/opportunities/options" do
   end
 
 end
-

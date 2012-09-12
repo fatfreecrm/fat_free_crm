@@ -12,7 +12,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET index" do
     it "assigns all users as @users and renders [index] template" do
-      @users = [ @current_user, FactoryGirl.create(:user) ]
+      @users = [ current_user, FactoryGirl.create(:user) ]
 
       get :index
       assigns[:users].first.should == @users.last # get_users() sorts by id DESC
@@ -264,7 +264,7 @@ describe Admin::UsersController do
     end
 
     it "doesn't suspend current user" do
-      @user = @current_user
+      @user = current_user
 
       xhr :put, :suspend, :id => @user.id
       assigns[:user].suspended?.should == false
@@ -304,4 +304,3 @@ describe Admin::UsersController do
   end
 
 end
-

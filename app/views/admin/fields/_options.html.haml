@@ -1,6 +1,6 @@
 %p
   = link_to_close options_admin_fields_path
-  = hidden_field_tag "field[user_id]", @current_user.id
+  = hidden_field_tag "field[user_id]", current_user.id
   == Sort Custom fields by #{link_to(@sort_by, "#", :id => :sort_by)}.
   == Show #{link_to(@per_page, "#", :id => :per_page)} field records per page
   == using #{link_to(@outline, "#", :id => :outline)} format.

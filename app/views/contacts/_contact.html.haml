@@ -1,4 +1,4 @@
-- gravatar_size = @current_user.preference[:contacts_outline] == "brief" ? "16x16" : "30x30"
+- gravatar_size = current_user.preference[:contacts_outline] == "brief" ? "16x16" : "30x30"
 
 %li.highlight[contact]
   = gravatar_for(contact, :size => gravatar_size)
@@ -16,7 +16,7 @@
       %li= link_to_delete(contact)
 
   .indentslim
-    = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
+    = link_to_if can?(:read, contact), contact.full_name(current_user.preference[:contacts_naming]), contact
     %tt
       - if contact.title? && contact.department?
         == #{contact.title}, #{contact.department}
@@ -30,7 +30,7 @@
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
-    - unless @current_user.preference[:contacts_outline] == "brief"
+    - unless current_user.preference[:contacts_outline] == "brief"
       %dt{ :style => "padding: 2px 0px 0px 0px" }
         - if can?(:read, contact)
           - if contact.email.present?

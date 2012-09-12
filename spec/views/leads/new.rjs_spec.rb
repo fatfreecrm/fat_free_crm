@@ -6,8 +6,8 @@ describe "/leads/new" do
   before do
     login_and_assign
     @campaign = FactoryGirl.create(:campaign)
-    assign(:lead, Lead.new(:user => @current_user))
-    assign(:users, [ @current_user ])
+    assign(:lead, Lead.new(:user => current_user))
+    assign(:users, [ current_user ])
     assign(:campaign, @campaign)
     assign(:campaigns, [ @campaign ])
   end
@@ -48,5 +48,3 @@ describe "/leads/new" do
   end
 
 end
-
-

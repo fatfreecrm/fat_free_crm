@@ -19,7 +19,7 @@ describe Version do
 
   before do
     login
-    PaperTrail.whodunnit = @current_user.id.to_s
+    PaperTrail.whodunnit = current_user.id.to_s
   end
 
   it "should create a new instance given valid attributes" do
@@ -37,27 +37,27 @@ describe Version do
     end
 
     it "should select all versions except one" do
-      @versions = Version.for(@current_user).exclude_events(:view)
+      @versions = Version.for(current_user).exclude_events(:view)
       @versions.map(&:event).sort.should == %w(create destroy update)
     end
 
     it "should select all versions except many" do
-      @versions = Version.for(@current_user).exclude_events(:create, :update, :destroy)
+      @versions = Version.for(current_user).exclude_events(:create, :update, :destroy)
       @versions.map(&:event).should == %w(view)
     end
 
     it "should select one requested version" do
-      @versions = Version.for(@current_user).include_events(:destroy)
+      @versions = Version.for(current_user).include_events(:destroy)
       @versions.map(&:event).should == %w(destroy)
     end
 
     it "should select many requested versions" do
-      @versions = Version.for(@current_user).include_events(:create, :update)
+      @versions = Version.for(current_user).include_events(:create, :update)
       @versions.map(&:event).sort.should == %w(create update)
     end
 
     it "should select versions for given user" do
-      @versions = Version.for(@current_user)
+      @versions = Version.for(current_user)
       @versions.map(&:event).sort.should == %w(create destroy update view)
     end
   end
@@ -66,7 +66,7 @@ describe Version do
     describe "Create, update, and delete (#{item})" do
       before :each do
         PaperTrail.enabled = true
-        @item = FactoryGirl.create(item.to_sym, :user => @current_user)
+        @item = FactoryGirl.create(item.to_sym, :user => current_user)
         @conditions = {:item_id => @item.id, :item_type => @item.class.name, :whodunnit => PaperTrail.whodunnit}
       end
 
@@ -94,7 +94,7 @@ describe Version do
       end
 
       it "should add a version when commenting on a #{item}" do
-        @comment = FactoryGirl.create(:comment, :commentable => @item, :user => @current_user)
+        @comment = FactoryGirl.create(:comment, :commentable => @item, :user => current_user)
 
         @version = Version.where({:related_id => @item.id, :related_type => @item.class.name, :whodunnit => PaperTrail.whodunnit, :event => 'create'}).first
         @version.should_not == nil
@@ -125,7 +125,7 @@ describe Version do
 
   describe "Action refinements for task updates" do
     before do
-      @task = FactoryGirl.create(:task, :user => @current_user)
+      @task = FactoryGirl.create(:task, :user => current_user)
       @conditions = {:item_id => @task.id, :item_type => @task.class.name, :whodunnit => PaperTrail.whodunnit}
     end
 
@@ -137,7 +137,7 @@ describe Version do
     end
 
     it "should create 'reassigned' task event" do
-      @task.update_attribute(:assigned_to, @current_user.id + 1)
+      @task.update_attribute(:assigned_to, current_user.id + 1)
       @versions = Version.where(@conditions)
 
       @versions.map(&:event).sort.should == %w(reassign)
@@ -153,7 +153,7 @@ describe Version do
 
   describe "Rejecting a lead" do
     before do
-      @lead = FactoryGirl.create(:lead, :user => @current_user, :status => "new")
+      @lead = FactoryGirl.create(:lead, :user => current_user, :status => "new")
       @conditions = {:item_id => @lead.id, :item_type => @lead.class.name, :whodunnit => PaperTrail.whodunnit}
     end
 
@@ -173,7 +173,7 @@ describe Version do
     end
 
     it "should not show the create/update versions if the item is private" do
-      @item = FactoryGirl.create(:account, :user => @current_user, :access => "Private")
+      @item = FactoryGirl.create(:account, :user => current_user, :access => "Private")
       @item.update_attribute(:updated_at,  1.second.ago)
 
       @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
@@ -183,7 +183,7 @@ describe Version do
     end
 
     it "should not show the destroy version if the item is private" do
-      @item = FactoryGirl.create(:account, :user => @current_user, :access => "Private")
+      @item = FactoryGirl.create(:account, :user => current_user, :access => "Private")
       @item.destroy
 
       @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
@@ -194,9 +194,9 @@ describe Version do
 
     it "should not show create/update versions if the item was not shared with the user" do
       @item = FactoryGirl.create(:account,
-        :user => @current_user,
+        :user => current_user,
         :access => "Shared",
-        :permissions => [ FactoryGirl.build(:permission, :user => @current_user, :asset => @item) ]
+        :permissions => [ FactoryGirl.build(:permission, :user => current_user, :asset => @item) ]
       )
       @item.update_attribute(:updated_at, 1.second.ago)
 
@@ -208,9 +208,9 @@ describe Version do
 
     it "should not show the destroy version if the item was not shared with the user" do
       @item = FactoryGirl.create(:account,
-        :user => @current_user,
+        :user => current_user,
         :access => "Shared",
-        :permissions => [ FactoryGirl.build(:permission, :user => @current_user, :asset => @item) ]
+        :permissions => [ FactoryGirl.build(:permission, :user => current_user, :asset => @item) ]
       )
       @item.destroy
 
@@ -222,7 +222,7 @@ describe Version do
 
     it "should show create/update versions if the item was shared with the user" do
       @item = FactoryGirl.create(:account,
-        :user => @current_user,
+        :user => current_user,
         :access => "Shared",
         :permissions => [ FactoryGirl.build(:permission, :user => @user, :asset => @item) ]
       )

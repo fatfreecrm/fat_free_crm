@@ -4,8 +4,8 @@ describe "/opportunities/update" do
   before do
     login_and_assign
 
-    assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, :user => @current_user, :assignee => FactoryGirl.create(:user)))
-    assign(:users, [ @current_user ])
+    assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, :user => current_user, :assignee => FactoryGirl.create(:user)))
+    assign(:users, [ current_user ])
     assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])
     assign(:stage, Setting.unroll(:opportunity_stage))
@@ -159,4 +159,3 @@ describe "/opportunities/update" do
     end
   end # errors
 end
-

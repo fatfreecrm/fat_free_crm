@@ -32,8 +32,8 @@ describe Opportunity do
   end
 
   it "should be possible to create opportunity with the same name" do
-    first  = FactoryGirl.create(:opportunity, :name => "Hello", :user => @current_user)
-    lambda { FactoryGirl.create(:opportunity, :name => "Hello", :user => @current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
+    first  = FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user)
+    lambda { FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
   end
 
   describe "Update existing opportunity" do
@@ -118,7 +118,7 @@ describe Opportunity do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @opportunity, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @opportunity, :user => current_user)
       @contact = FactoryGirl.create(:contact)
       @opportunity.contacts << @contact
 
@@ -127,7 +127,7 @@ describe Opportunity do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => @current_user)
+      @task = FactoryGirl.create(:task, :user => current_user)
       @contact = FactoryGirl.create(:contact)
 
       @opportunity.attach!(@task).should == [ @task ]
@@ -141,7 +141,7 @@ describe Opportunity do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @opportunity, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @opportunity, :user => current_user)
       @opportunity.tasks.count.should == 1
 
       @opportunity.discard!(@task)

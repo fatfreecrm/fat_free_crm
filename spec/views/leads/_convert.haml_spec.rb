@@ -7,7 +7,7 @@ describe "/leads/_convert" do
     login_and_assign
     @account = FactoryGirl.create(:account)
     assign(:lead, FactoryGirl.create(:lead))
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
     assign(:account, @account)
     assign(:accounts, [ @account ])
     assign(:opportunity, FactoryGirl.create(:opportunity))
@@ -22,4 +22,3 @@ describe "/leads/_convert" do
   end
 
 end
-

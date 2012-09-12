@@ -43,7 +43,7 @@ class AccountsController < EntitiesController
   # GET /accounts/new
   #----------------------------------------------------------------------------
   def new
-    @account.attributes = {:user => @current_user, :access => Setting.default_access, :assigned_to => nil}
+    @account.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -85,7 +85,7 @@ class AccountsController < EntitiesController
       if @account.update_attributes(params[:account])
         get_data_for_sidebar
       else
-        @users = User.except(@current_user) # Need it to redraw [Edit Account] form.
+        @users = User.except(current_user) # Need it to redraw [Edit Account] form.
       end
     end
   end
@@ -117,18 +117,18 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel].true?
-      @per_page = @current_user.pref[:accounts_per_page] || Account.per_page
-      @outline  = @current_user.pref[:accounts_outline]  || Account.outline
-      @sort_by  = @current_user.pref[:accounts_sort_by]  || Account.sort_by
+      @per_page = current_user.pref[:accounts_per_page] || Account.per_page
+      @outline  = current_user.pref[:accounts_outline]  || Account.outline
+      @sort_by  = current_user.pref[:accounts_sort_by]  || Account.sort_by
     end
   end
 
   # POST /accounts/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
-    @current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
+    current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
+    current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(:page => 1)
     render :index
   end

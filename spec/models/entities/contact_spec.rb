@@ -95,7 +95,7 @@ describe Contact do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @contact, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @contact, :user => current_user)
       @opportunity = FactoryGirl.create(:opportunity)
       @contact.opportunities << @opportunity
 
@@ -104,7 +104,7 @@ describe Contact do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => @current_user)
+      @task = FactoryGirl.create(:task, :user => current_user)
       @opportunity = FactoryGirl.create(:opportunity)
 
       @contact.attach!(@task).should == [ @task ]
@@ -118,7 +118,7 @@ describe Contact do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @contact, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @contact, :user => current_user)
       @contact.tasks.count.should == 1
 
       @contact.discard!(@task)

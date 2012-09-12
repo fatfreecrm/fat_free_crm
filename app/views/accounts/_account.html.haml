@@ -21,11 +21,11 @@
     &ndash;
     %tt
       = account.location << ", " unless account.location.blank?
-      = t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => (account.user.id == @current_user.id ? t(:me) : account.user.full_name)) << " | "
+      = t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => (account.user.id == current_user.id ? t(:me) : account.user.full_name)) << " | "
       = t('pluralize.contact', account.contacts.count) << " | "
       = t('pluralize.opportunity', account.opportunities.count)
 
-    - unless @current_user.preference[:accounts_outline] == "brief"
+    - unless current_user.preference[:accounts_outline] == "brief"
       %dt
         = stars_for(account)
         = " | ".html_safe << link_to(account.website, account.website.to_url) if account.website.present?

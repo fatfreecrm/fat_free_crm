@@ -156,7 +156,7 @@ describe CommentsController do
     COMMENTABLE.each do |asset|
       it "should expose the requested comment as @commment and render [edit] template" do
         @asset = FactoryGirl.create(asset)
-        @comment = FactoryGirl.create(:comment, :id => 42, :commentable => @asset, :user => @current_user)
+        @comment = FactoryGirl.create(:comment, :id => 42, :commentable => @asset, :user => current_user)
         Comment.stub!(:new).and_return(@comment)
 
         xhr :get, :edit, :id => 42
@@ -176,10 +176,10 @@ describe CommentsController do
       COMMENTABLE.each do |asset|
         it "should expose a newly created comment as @comment for the #{asset}" do
           @asset = FactoryGirl.create(asset)
-          @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => @current_user)
+          @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => current_user)
           Comment.stub!(:new).and_return(@comment)
 
-          xhr :post, :create, :comment => { :commentable_type => asset.to_s.classify, :commentable_id => @asset.id, :user_id => @current_user.id, :comment => "Hello" }
+          xhr :post, :create, :comment => { :commentable_type => asset.to_s.classify, :commentable_id => @asset.id, :user_id => current_user.id, :comment => "Hello" }
           assigns[:comment].should == @comment
           response.should render_template("comments/create")
         end
@@ -190,7 +190,7 @@ describe CommentsController do
       COMMENTABLE.each do |asset|
         it "should expose a newly created but unsaved comment as @comment for #{asset}" do
           @asset = FactoryGirl.create(asset)
-          @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => @current_user)
+          @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => current_user)
           Comment.stub!(:new).and_return(@comment)
 
           xhr :post, :create, :comment => {}
@@ -258,7 +258,7 @@ describe CommentsController do
         COMMENTABLE.each do |asset|
           it "should destroy the requested comment and render [destroy] template" do
             @asset = FactoryGirl.create(asset)
-            @comment = FactoryGirl.create(:comment, :commentable => @asset, :user => @current_user)
+            @comment = FactoryGirl.create(:comment, :commentable => @asset, :user => current_user)
             Comment.stub!(:new).and_return(@comment)
 
             xhr :delete, :destroy, :id => @comment.id
@@ -271,4 +271,3 @@ describe CommentsController do
   end
 
 end
-

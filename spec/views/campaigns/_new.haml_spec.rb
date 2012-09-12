@@ -6,7 +6,7 @@ describe "/campaigns/_new" do
   before do
     login_and_assign
     assign(:campaign, Campaign.new)
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
   end
 
   it "should render [create campaign] form" do
@@ -32,4 +32,3 @@ describe "/campaigns/_new" do
     rendered.should_not have_tag("textarea[id=campaign_background_info]")
   end
 end
-
