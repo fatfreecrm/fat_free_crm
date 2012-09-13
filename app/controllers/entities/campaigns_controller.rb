@@ -37,6 +37,25 @@ class CampaignsController < EntitiesController
         @comment = Comment.new
         @timeline = timeline(@campaign)
       end
+      
+      format.xls do
+        @leads = @campaign.leads
+        render '/leads/index', :layout => 'header'
+      end
+      
+      format.csv do
+        render :csv => @campaign.leads
+      end
+      
+      format.rss do
+        @items  = "leads"
+        @assets = @campaign.leads
+      end
+      
+      format.atom do
+        @items  = "leads"
+        @assets = @campaign.leads
+      end
     end
   end
 
