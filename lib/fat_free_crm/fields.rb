@@ -75,6 +75,11 @@ module FatFreeCRM
       rescue ActiveRecord::UnknownAttributeError
         self.class.reset_column_information
         super
+      rescue Exception => bang
+        logger.fatal bang.message
+        logger.fatal bang.backtrace
+        logger.fatal self.class.name
+        raise Exception, bang.message
       end
 
       def method_missing(method_id, *args, &block)
