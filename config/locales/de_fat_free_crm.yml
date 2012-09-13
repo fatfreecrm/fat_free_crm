@@ -285,7 +285,7 @@ de:
   task_completed_ago: "vor %{value} erledigt"
   probability: "Wahrscheinlk."
   revenue: "Umsatz"
-  save_account: "Komto sichern"
+  save_account: "Konto sichern"
   all_users: "alle Benutzer"
   city: "Stadt"
   pending_tab: "Wartend"
