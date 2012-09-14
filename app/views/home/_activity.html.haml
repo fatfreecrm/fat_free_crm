@@ -30,4 +30,4 @@
         - if item.respond_to? :email
           = gravatar_for(item, :size => "16x16")
         = "#{type} #{subject}:".html_safe
-        = auto_link(activity.event).html_safe
+        = auto_link(t(activity.event)).html_safe
