@@ -1,5 +1,5 @@
 (($) ->
-  class @Search
+  class @AdvancedSearch
     constructor: (@templates = {}) ->
 
     add_fields: (button, type, content) ->
@@ -15,14 +15,14 @@
         container.parent().closest('.fields').remove()
 
   $(document).ready ->
-    search = new Search()
+    advanced_search = new AdvancedSearch()
 
     $(".add_fields").live "click", ->
-      search.add_fields this, $(this).data("fieldType"), $(this).data("content")
+      advanced_search.add_fields this, $(this).data("fieldType"), $(this).data("content")
       false
 
     $(".remove_fields").live "click", ->
-      search.remove_fields this
+      advanced_search.remove_fields this
       false
 
     $("select.predicate").live "change", ->
@@ -44,5 +44,5 @@
 
     # Fire change event for existing search form.
     $("select.predicate").change()
-    
+
 ) jQuery
