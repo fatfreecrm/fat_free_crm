@@ -468,7 +468,7 @@ module ApplicationHelper
 
   # Create a column in the 'asset_attributes' table.
   #----------------------------------------------------------------------------
-  def asset_attribute_columns(title, value, last=false, email=false)
+  def asset_attribute_columns(title, value, last = false, email = false)
     # Parse and format urls as links.
     fmt_value = (value.to_s || "").gsub("\n", "<br />")
     fmt_value = if email
@@ -482,14 +482,15 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   # Combines the 'subtitle' helper with the small info text on the same line.
-  def asset_attribute_section(id, hidden = true, text = id.to_s.split("_").last.capitalize, info_text)
+  def asset_attribute_section(id, hidden = true, text = nil, info_text = nil)
+    text = id.to_s.split("_").last.capitalize if text == nil
     content_tag("div", :class => "subtitle show_attributes") do
       content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
         url_for(:controller => :home, :action => :toggle, :id => id),
         :remote  => true,
         :onclick => "crm.flip_subtitle(this)"
       )
-      content << content_tag("small", info_text, {:class => "subtitle_inline_info", :id => "#{id}_intro", :style => hidden ? "" : "display:none;"})
+      content << content_tag("small", info_text.to_s, {:class => "subtitle_inline_info", :id => "#{id}_intro", :style => hidden ? "" : "display:none;"})
     end
   end
 end

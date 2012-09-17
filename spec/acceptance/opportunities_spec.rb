@@ -23,7 +23,7 @@ feature 'Opportunities', %q{
     FactoryGirl.create(:account, :name => 'Example Account')
     visit opportunities_page
     click_link 'Create Opportunity'
-    page.should have_selector('#opportunity_name', visible: true)
+    page.should have_selector('#opportunity_name', :visible => true)
     fill_in 'opportunity_name', :with => 'My Awesome Opportunity'
     chosen_select('Example Account', :from => 'account_id')
     select 'Proposal', :from => 'opportunity_stage'

@@ -23,7 +23,7 @@ feature 'Leads', %q{
   scenario 'should create a new lead', :js => true do
     visit leads_page
     click_link 'Create Lead'
-    page.should have_selector('#lead_first_name', visible: true)
+    page.should have_selector('#lead_first_name', :visible => true)
     fill_in 'lead_first_name', :with => 'Mr'
     fill_in 'lead_last_name', :with => 'Lead'
     fill_in 'lead_email', :with => 'mr_lead@example.com'

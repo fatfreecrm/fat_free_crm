@@ -14,7 +14,7 @@ feature 'Users tab', %q{
     FactoryGirl.create(:group, :name => "Superheroes")
     visit admin_users_path
     click_link 'Create User'
-    page.should have_selector('#user_username', visible: true)
+    page.should have_selector('#user_username', :visible => true)
     fill_in 'user_username', :with => 'captainthunder'
     fill_in 'user_email', :with => 'lightning@example.com'
     fill_in 'user_first_name', :with => 'Captain'

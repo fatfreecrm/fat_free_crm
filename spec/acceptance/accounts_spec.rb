@@ -22,7 +22,7 @@ feature 'Accounts', %q{
     visit accounts_page
     page.should have_content('Create Account')
     click_link 'Create Account'
-    page.should have_selector('#account_name', visible: true)
+    page.should have_selector('#account_name', :visible => true)
     fill_in 'account_name', :with => 'My new account'
     click_link 'Contact Information'
     fill_in 'account_phone', :with => '+1 2345 6789'

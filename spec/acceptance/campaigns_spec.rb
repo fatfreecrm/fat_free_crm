@@ -22,7 +22,7 @@ feature 'Campaigns', %q{
   scenario 'should create a campaign', :js => true do
     visit campaigns_page
     click_link 'Create Campaign'
-    page.should have_selector('#campaign_name', visible: true)
+    page.should have_selector('#campaign_name', :visible => true)
     fill_in 'campaign_name', :with => 'Cool Campaign'
     select 'On Hold', :from => 'campaign_status'
     click_link 'Comment'
