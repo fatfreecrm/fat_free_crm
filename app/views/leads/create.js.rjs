@@ -1,6 +1,5 @@
 if @lead.valid?
   page[:create_lead_arrow].replace_html "&#9658;".html_safe
-  page[:create_lead_title].replace_html t(:leads)
   page.visual_effect :toggle_blind, :create_lead, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
   page.insert_html :top, :leads, :partial => "lead", :collection => [ @lead ]
   page[dom_id(@lead)].visual_effect :highlight, :duration => 1.5

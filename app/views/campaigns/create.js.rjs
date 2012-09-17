@@ -1,6 +1,5 @@
 if @campaign.valid?
   page[:create_campaign_arrow].replace_html "&#9658;"
-  page[:create_campaign_title].replace_html t(:campaigns)
   page.visual_effect :toggle_blind, :create_campaign, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
   page.insert_html :top, :campaigns, :partial => "campaign", :collection => [ @campaign ]
   page[dom_id(@campaign)].visual_effect :highlight, :duration => 1.5

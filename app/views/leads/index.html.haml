@@ -1,18 +1,17 @@
 = styles_for :lead
 
-.title_tools
-  = link_to_inline(:create_lead, new_lead_path, :text => t(:create_lead)) << " | "
-  = link_to_inline(:advanced_search, advanced_search_leads_path, :text => t(:advanced_search)) << " | "
-  = link_to_inline(:options, options_leads_path, :text => t(:options))
+= image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 
-.title
-  %span#create_lead_title #{t :leads}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-.remote#options{ hidden }
-.remote#advanced_search{ hidden_if(!params[:q]) }
-  - if params[:q]
-    = render :partial => "advanced_search"
+#buttons
+  = render 'format_buttons'
+  .create_asset
+    = link_to_inline(:create_lead, new_lead_path, :text => t(:create_lead))
+
+= render 'search'
+
 .remote#create_lead{ hidden }
+
+.remote#options{ hidden }
 
 .list#leads
   - if @leads.any?
