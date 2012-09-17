@@ -282,7 +282,7 @@ module ApplicationHelper
     "{ name: \"#{name.titleize}\", on_select: function() {" +
     remote_function(
       :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "'#{option}=#{key}'",
+      :with      => "'#{option}=#{key}&query=' + $(\"query\").value",
       :condition => "$('#{option}').innerHTML != '#{name}'",
       :loading   => "$('#{option}').update('#{name}'); $('loading').show()",
       :complete  => "$('loading').hide()"
@@ -441,8 +441,7 @@ module ApplicationHelper
   def entity_filter_checkbox(name, value, count)
     checked = (session["#{controller_name}_filter"] ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
     values = %Q{$$("input[name='#{name}[]']").findAll(function (el) { return el.checked }).pluck("value")}
-    query = %Q{$("query").value}
-    params = h(%Q{"#{name}=" + #{values} + "&query=" + #{query}})
+    params = h(%Q{"#{name}=" + #{values} + "&query=" + $("query").value})
 
     onclick = remote_function(
       :url      => { :action => :filter },
