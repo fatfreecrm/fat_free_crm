@@ -144,6 +144,7 @@ class CampaignsController < EntitiesController
     current_user.pref[:campaigns_outline]  = params[:outline]  if params[:outline]
     current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
+    set_options # Refresh options
     render :index
   end
 

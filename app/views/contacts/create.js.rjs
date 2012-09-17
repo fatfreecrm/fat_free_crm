@@ -5,7 +5,7 @@ if @contact.valid?
   page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
   if called_from_index_page?
     page << refresh_sidebar(:index)
-    page[:paginate].replace_html render(:partial => "shared/paginate")
+    page[:paginate].replace_html render(:partial => "shared/paginate_with_per_page")
   else
     page[:recently].replace :partial => "shared/recently"
   end

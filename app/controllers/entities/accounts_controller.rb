@@ -120,6 +120,7 @@ class AccountsController < EntitiesController
     current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
     current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
+    set_options # Refresh options
     render :index
   end
 

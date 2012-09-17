@@ -4,7 +4,7 @@ if @campaign.valid?
   page.insert_html :top, :campaigns, :partial => "campaign", :collection => [ @campaign ]
   page[dom_id(@campaign)].visual_effect :highlight, :duration => 1.5
   page << refresh_sidebar(:index, :filters)
-  page[:paginate].replace_html :partial => "shared/paginate"
+  page[:paginate].replace_html :partial => "shared/paginate_with_per_page"
   page.call "crm.flick", :empty, :remove
 else
   page[:create_campaign].replace_html :partial => "new"

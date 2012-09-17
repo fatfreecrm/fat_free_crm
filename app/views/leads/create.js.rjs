@@ -5,7 +5,7 @@ if @lead.valid?
   page[dom_id(@lead)].visual_effect :highlight, :duration => 1.5
   if called_from_index_page?
     page << refresh_sidebar(:index, :filters)
-    page[:paginate].replace_html :partial => "shared/paginate"
+    page[:paginate].replace_html :partial => "shared/paginate_with_per_page"
   elsif called_from_landing_page?("campaigns")
     @campaign.reload
     page << refresh_sidebar_for(:campaigns, :show, :summary)

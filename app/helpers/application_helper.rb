@@ -276,6 +276,18 @@ module ApplicationHelper
     )
   end
 
+  # Ajax helper to refresh current index page once the user changes pagination per_page.
+  #-------------------------------------------------------------------------------------
+  def redraw_pagination(value)
+    remote_function(
+      :url       => send("redraw_#{controller.controller_name}_path"),
+      :with      => "'per_page=#{value}'",
+      :condition => "jQuery('.per_page_options .current').html() != '#{value}'",
+      :loading   => "$('loading').show()",
+      :complete  => "$('loading').hide()"
+    )
+  end
+
   #----------------------------------------------------------------------------
   def options_menu_item(option, key, url = nil)
     name = t("option_#{key}")

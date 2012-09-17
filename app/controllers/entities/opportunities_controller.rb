@@ -164,6 +164,7 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   def redraw
     @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
+    set_options # Refresh options
     render :index
   end
 

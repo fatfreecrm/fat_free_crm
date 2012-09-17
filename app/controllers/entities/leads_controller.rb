@@ -193,6 +193,7 @@ class LeadsController < EntitiesController
     end
 
     @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
+    set_options # Refresh options
     render :index
   end
 

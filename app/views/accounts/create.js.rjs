@@ -4,7 +4,7 @@ if @account.valid?
   page.insert_html :top, :accounts, :partial => "account", :collection => [ @account ]
   page[dom_id(@account)].visual_effect :highlight, :duration => 1.5
   page << refresh_sidebar(:index, :filters)
-  page[:paginate].replace_html :partial => "shared/paginate"
+  page[:paginate].replace_html :partial => "shared/paginate_with_per_page"
   page.call "crm.flick", :empty, :remove
 else
   page[:create_account].replace_html :partial => "new"
