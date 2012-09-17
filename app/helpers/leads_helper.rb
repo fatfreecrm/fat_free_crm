@@ -52,7 +52,7 @@ module LeadsHelper
 
   # Sidebar checkbox control for filtering leads by status.
   #----------------------------------------------------------------------------
-  def lead_status_checbox(status, count)
+  def lead_status_checkbox(status, count)
     checked = (session[:leads_filter] ? session[:leads_filter].split(",").include?(status.to_s) : count.to_i > 0)
     onclick = remote_function(
       :url      => { :action => :filter },

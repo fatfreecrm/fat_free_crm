@@ -19,7 +19,7 @@ module CampaignsHelper
 
   # Sidebar checkbox control for filtering campaigns by status.
   #----------------------------------------------------------------------------
-  def campaign_status_checbox(status, count)
+  def campaign_status_checkbox(status, count)
     checked = (session[:campaigns_filter] ? session[:campaigns_filter].split(",").include?(status.to_s) : count.to_i > 0)
     onclick = remote_function(
       :url      => { :action => :filter },

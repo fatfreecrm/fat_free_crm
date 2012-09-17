@@ -19,7 +19,7 @@ module AccountsHelper
 
   # Sidebar checkbox control for filtering accounts by category.
   #----------------------------------------------------------------------------
-  def account_category_checbox(category, count)
+  def account_category_checkbox(category, count)
     checked = (session[:accounts_filter] ? session[:accounts_filter].split(",").include?(category.to_s) : count.to_i > 0)
     onclick = remote_function(
       :url      => { :action => :filter },
