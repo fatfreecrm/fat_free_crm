@@ -9,7 +9,13 @@
 :javascript
   jQuery('a[data-outline]').click(function(){
 
-    #{remote_function(:url => send("redraw_#{controller.controller_name}_path"), :with => "'outline=' + jQuery(this).data('outline') + '&query=' + $('query').value",:loading => "$('loading').show()", :complete => "$('loading').hide()")}
+    var rerun_advanced_search = function(){
+      if (jQuery('#search .tabs li a[data-search-form="advanced_search"].active').length == 1){
+        jQuery("#advanced_search form input:submit").click();
+      }
+    }
+
+    #{remote_function(:url => send("redraw_#{controller.controller_name}_path"), :with => "'outline=' + jQuery(this).data('outline') + '&query=' + $('query').value",:loading => "$('loading').show()", :complete => "$('loading').hide(); rerun_advanced_search();")}
 
     jQuery('a[data-outline]').removeClass('active');
     jQuery(this).addClass('active');
