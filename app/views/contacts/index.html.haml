@@ -34,30 +34,3 @@
 
 #paginate= render "shared/paginate"
 #export= render "shared/export"
-
-:javascript
-  var activate_search_form = function(search_form){
-    // Hide all
-    jQuery('#search .search_form').hide();
-    jQuery('#search .tabs li a').removeClass('active');
-    // Show selected
-    jQuery('#' + search_form).show();
-    jQuery('a[data-search-form=' + search_form + ']').addClass('active');
-    // Run search for current query
-    switch(search_form) {
-    case 'basic_search':
-      var query_input = jQuery('#basic_search input#query');
-      if (!query_input.is('.defaultTextActive')) {
-        var value = query_input.val();
-      } else {
-        var value = "";
-      }
-      crm.search(value, '#{controller.controller_name}');
-      break;
-    case 'advanced_search':
-      jQuery("#advanced_search form input:submit").click();
-      break;
-    }
-  }
-
-  jQuery("#search .tabs a").click(function(){ activate_search_form(jQuery(this).data('search-form')); });

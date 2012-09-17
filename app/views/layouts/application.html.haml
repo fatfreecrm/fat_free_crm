@@ -23,6 +23,8 @@
       #{User.all.map{|u| "\"#{u.full_name} (@#{u.username})\"" }.join(",\n")}
       ];
 
+      window.controller = "#{controller.controller_name}"
+
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
