@@ -18,13 +18,6 @@ describe "/contacts/new" do
     rendered.should include('crm.flick("empty", "toggle")')
   end
 
-  it "should hide options form when called from Contacts index" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
-    render
-
-    rendered.should include('crm.hide_form("options")')
-  end
-
   describe "new contact" do
     it "should render [new] template into :create_contact div" do
       params[:cancel] = nil

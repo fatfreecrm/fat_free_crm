@@ -15,13 +15,6 @@ describe "/accounts/new" do
     rendered.should include('crm.flick("empty", "toggle")')
   end
 
-  it "should hide options form when called from Accounts index" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
-    render
-
-    rendered.should include('crm.hide_form("options")')
-  end
-
   describe "new account" do
     it "should render [new] template into :create_account div" do
       params[:cancel] = nil
