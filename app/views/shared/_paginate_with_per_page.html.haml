@@ -1,5 +1,6 @@
 = will_paginate :params => {:action => :index}
 
+- entities = instance_variable_get("@#{controller_name}")
 - if entities.count > @per_page.to_i
   .per_page_options
     %span.per_page_label
