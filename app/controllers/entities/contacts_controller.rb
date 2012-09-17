@@ -160,7 +160,7 @@ class ContactsController < EntitiesController
       current_user.pref[:leads_naming] ||= params[:naming]
     end
 
-    @contacts = get_contacts(:page => 1) # Start on the first page.
+    @contacts = get_contacts(:page => 1, :per_page => params[:per_page]) # Start on the first page.
     render :index
   end
 

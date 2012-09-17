@@ -21,8 +21,8 @@ class CampaignsController < EntitiesController
   # GET /campaigns
   #----------------------------------------------------------------------------
   def index
-    @campaigns = get_campaigns(:page => params[:page])
-    
+    @campaigns = get_campaigns(:page => params[:page], :per_page => params[:per_page])
+
     respond_with @campaigns do |format|
       format.xls { render :layout => 'header' }
     end
@@ -37,21 +37,21 @@ class CampaignsController < EntitiesController
         @comment = Comment.new
         @timeline = timeline(@campaign)
       end
-      
+
       format.xls do
         @leads = @campaign.leads
         render '/leads/index', :layout => 'header'
       end
-      
+
       format.csv do
         render :csv => @campaign.leads
       end
-      
+
       format.rss do
         @items  = "leads"
         @assets = @campaign.leads
       end
-      
+
       format.atom do
         @items  = "leads"
         @assets = @campaign.leads
@@ -153,7 +153,7 @@ class CampaignsController < EntitiesController
     current_user.pref[:campaigns_per_page] = params[:per_page] if params[:per_page]
     current_user.pref[:campaigns_outline]  = params[:outline]  if params[:outline]
     current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
-    @campaigns = get_campaigns(:page => 1)
+    @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
     render :index
   end
 
@@ -161,7 +161,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:campaigns_filter] = params[:status]
-    @campaigns = get_campaigns(:page => 1)
+    @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
     render :index
   end
 

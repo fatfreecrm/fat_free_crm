@@ -23,7 +23,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def index
     @leads = get_leads(:page => params[:page])
-    
+
     respond_with @leads do |format|
        format.xls { render :layout => 'header' }
     end
@@ -202,7 +202,7 @@ class LeadsController < EntitiesController
       current_user.pref[:contacts_naming] ||= params[:naming]
     end
 
-    @leads = get_leads(:page => 1) # Start one the first page.
+    @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
     render :index
   end
 
@@ -210,7 +210,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:leads_filter] = params[:status]
-    @leads = get_leads(:page => 1) # Start one the first page.
+    @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
     render :index
   end
 
