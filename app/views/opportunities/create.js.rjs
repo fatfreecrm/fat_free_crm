@@ -1,13 +1,12 @@
 if @opportunity.valid?
   page[:create_opportunity_arrow].replace_html "&#9658;"
-  page[:create_opportunity_title].replace_html t(:opportunities)
   page.visual_effect :toggle_blind, :create_opportunity, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
   page.insert_html :top, :opportunities, :partial => "opportunity", :collection => [ @opportunity ]
   page[dom_id(@opportunity)].visual_effect :highlight, :duration => 1.5
   if called_from_index_page?
     page << refresh_sidebar(:index, :filters)
     page[:paginate].replace_html :partial => "shared/paginate"
-  
+
   elsif called_from_landing_page?("accounts") # Opportunity created on Account landing page: refresh Account summary.
     @account.reload
     page << refresh_sidebar_for(:accounts, :show, :summary)
@@ -15,8 +14,8 @@ if @opportunity.valid?
   elsif called_from_landing_page?("campaigns") # Opportunity created on Campaign landing page: refresh Campaign summary.
     @campaign.reload
     page << refresh_sidebar_for(:campaigns, :show, :summary)
-  
-  else # Opportunity created on Contact landing page: refresh recent items list.  
+
+  else # Opportunity created on Contact landing page: refresh recent items list.
     page[:recently].replace :partial => "shared/recently"
   end
   page.call "crm.flick", :empty, :remove

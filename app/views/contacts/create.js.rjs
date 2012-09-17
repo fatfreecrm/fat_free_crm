@@ -1,6 +1,5 @@
 if @contact.valid?
   page[:create_contact_arrow].replace_html "&#9658;"
-  page[:create_contact_title].replace_html t(:contacts)
   page.visual_effect :toggle_blind, :create_contact, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
   page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
   page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
