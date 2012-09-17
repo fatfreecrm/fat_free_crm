@@ -1,0 +1,59 @@
+- collapsed = session[:contact_show_general].nil? # && contact.errors.empty?
+= asset_attribute_section :contact_show_general, collapsed, t(:general_info), t('show_general_info_small')
+.section.nostyle
+  #contact_show_general{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = asset_attribute_columns(t(:first_name), contact.first_name)
+        = asset_attribute_columns(t(:last_name), contact.last_name)
+      %tr
+        = asset_attribute_columns(t(:email), contact.email, false, true)
+        = asset_attribute_columns(t(:phone), contact.phone)
+      %tr
+        = asset_attribute_columns(t(:account), contact.account ? link_to(contact.account.name, url_for(contact.account)) : "")
+        - assigned_to_user = User.find_by_id(contact.assigned_to)
+        = asset_attribute_columns(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
+      %tr
+        = asset_attribute_columns(t(:tags), contact.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)
+
+
+- contact.field_groups.each do |field_group|
+  - if (fields = field_group.fields.without_pairs).any?
+    %div[field_group]
+      - collapsed = session[dom_id(field_group, :contact_show)].nil?
+      = asset_attribute_section dom_id(field_group, :contact_show), collapsed, field_group.label_i18n, t('show_tag_info_small', :tag => field_group.label_i18n)
+      .section.nostyle
+        %div{ hidden_if(collapsed).merge(:id => dom_id(field_group, :contact_show)) }
+          %table.asset_attributes
+            - groups = fields.in_groups_of(2, false)
+            - groups.each_with_index do |group, i|
+              %tr
+                - group.each do |field|
+                  = asset_attribute_columns(field.label, field.render_value(contact), (i == groups.size - 1) ? :last : nil)
+
+
+- collapsed = session[:contact_show_extra].nil? # && contact.errors.empty?
+= asset_attribute_section :contact_show_extra, collapsed, t(:extra_info), t('show_extra_info_small')
+.section.nostyle
+  #contact_show_extra{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = asset_attribute_columns(t(:title), contact.title)
+        = asset_attribute_columns(t(:department), contact.department)
+      %tr
+        = asset_attribute_columns(t(:alt_email), contact.alt_email, false, true)
+        = asset_attribute_columns(t(:mobile), contact.mobile)
+      %tr
+        = asset_attribute_columns(t(:fax), contact.fax)
+        = asset_attribute_columns(t(:do_not_call), contact.do_not_call == false ? "no" : "yes")
+      %tr
+        %th=t(:address) + ":"
+        %td
+          %div
+            %strong= render "shared/address_show", :asset => contact, :type => 'business', :title => nil
+        = asset_attribute_columns(t(:background_info), contact.background_info)
+      %tr
+        %th= t(:web_presence)
+        %td= web_presence_icons(contact)
+      %tr
+        = asset_attribute_columns(t(:permissions), (contact.permissions.empty? ? t(:shared_with_everyone) : contact.permissions.join(", ")), :last)

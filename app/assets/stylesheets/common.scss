@@ -141,7 +141,7 @@ $sidebar_width: 210px;
   background: url("/assets/asterisk.gif") no-repeat scroll center right transparent;
   color: navy;
   display: inline-block; }
-  
+
 .required label {
   padding: 0px 8px 0px 0px;
 }
@@ -717,3 +717,27 @@ ul.tools {
   background-color: seashell;
   .tools {
     visibility: visible; } }
+
+
+table.asset_attributes {
+  width: 100%;
+  border-spacing: 4px;
+  td, th {
+    border-bottom: 1px dotted silver;
+    vertical-align: top;
+    text-align: left;
+  }
+  th {
+    font-weight: bold;
+    width: 18%;
+    padding-right: 7px;
+    text-align: right;
+  }
+  td {
+    width: 32%;
+    color: #202020;
+  }
+  td.last, th.last {
+    border-bottom: none;
+  }
+}

@@ -464,4 +464,32 @@ module ApplicationHelper
     )
     check_box_tag("#{name}[]", value, checked, :id => value, :onclick => onclick)
   end
+
+
+  # Create a column in the 'asset_attributes' table.
+  #----------------------------------------------------------------------------
+  def asset_attribute_columns(title, value, last=false, email=false)
+    # Parse and format urls as links.
+    fmt_value = (value.to_s || "").gsub("\n", "<br />")
+    fmt_value = if email
+        link_to_email(fmt_value)
+      else
+        fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
+      end
+    %Q^<th class="#{last ? "last" : ""}">#{title}:</td>
+  <td class="#{last ? "last" : ""}">#{fmt_value}</td>^.html_safe
+  end
+
+  #----------------------------------------------------------------------------
+  # Combines the 'subtitle' helper with the small info text on the same line.
+  def asset_attribute_section(id, hidden = true, text = id.to_s.split("_").last.capitalize, info_text)
+    content_tag("div", :class => "subtitle show_attributes") do
+      content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
+        url_for(:controller => :home, :action => :toggle, :id => id),
+        :remote  => true,
+        :onclick => "crm.flip_subtitle(this)"
+      )
+      content << content_tag("small", info_text, {:class => "subtitle_inline_info", :id => "#{id}_intro", :style => hidden ? "" : "display:none;"})
+    end
+  end
 end
