@@ -161,7 +161,11 @@ private
     # export includes deleted records, and the pagination is enabled only for
     # plain HTTP, Ajax and XML API requests.
     wants = request.format
-    filter = session[:"#{controller_name}_filter"].to_s.split(',')
+
+    # Get filter from session, unless running an advanced search
+    unless params[:q]
+      filter = session[:"#{controller_name}_filter"].to_s.split(',')
+    end
 
     scope = entities.merge(search.result)
     scope = scope.state(filter)                   if filter.present?
