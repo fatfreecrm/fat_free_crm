@@ -50,7 +50,7 @@ describe ContactsController do
         assigns[:contacts].should == []
         response.should render_template("contacts/index")
       end
-      
+
       it "should reset current_page when query is altered" do
         session[:contacts_current_page] = 42
         session[:contacts_current_query] = "bill"
@@ -651,31 +651,6 @@ describe ContactsController do
     end
 
     it_should_behave_like("auto complete")
-  end
-
-  # GET /contacts/options                                                  AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET options" do
-    it "should set current user preferences when showing options" do
-      @per_page = FactoryGirl.create(:preference, :user => current_user, :name => "contacts_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = FactoryGirl.create(:preference, :user => current_user, :name => "contacts_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
-      @sort_by  = FactoryGirl.create(:preference, :user => current_user, :name => "contacts_sort_by",  :value => Base64.encode64(Marshal.dump("contacts.first_name ASC")))
-      @naming   = FactoryGirl.create(:preference, :user => current_user, :name => "contacts_naming",   :value => Base64.encode64(Marshal.dump("option_after")))
-
-      xhr :get, :options
-      assigns[:per_page].should == 42
-      assigns[:outline].should  == "option_long"
-      assigns[:sort_by].should  == "contacts.first_name ASC"
-      assigns[:naming].should   == "option_after"
-    end
-
-    it "should not assign instance variables when hiding options" do
-      xhr :get, :options, :cancel => "true"
-      assigns[:per_page].should == nil
-      assigns[:outline].should  == nil
-      assigns[:sort_by].should  == nil
-      assigns[:naming].should   == nil
-    end
   end
 
   # POST /contacts/redraw                                                  AJAX

@@ -79,7 +79,7 @@ describe OpportunitiesController do
         assigns[:opportunities].should == []
         response.should render_template("opportunities/index")
       end
-      
+
       it "should reset current_page when query is altered" do
         session[:opportunities_current_page] = 42
         session[:opportunities_current_query] = "bill"
@@ -439,7 +439,7 @@ describe OpportunitiesController do
 
         xhr :post, :create, :opportunity => { :name => "Opportunity Knocks" }, :account => { :name => "My Account" }, :comment_body => "Awesome comment is awesome"
         @opportunity.reload.comments.map(&:comment).should include("Awesome comment is awesome")
-      end      
+      end
     end
 
     describe "with invalid params" do
@@ -865,28 +865,6 @@ describe OpportunitiesController do
     end
 
     it_should_behave_like("auto complete")
-  end
-
-  # GET /opportunities/options                                             AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET options" do
-    it "should set current user preferences when showing options" do
-      @per_page = FactoryGirl.create(:preference, :user => current_user, :name => "opportunities_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = FactoryGirl.create(:preference, :user => current_user, :name => "opportunities_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
-      @sort_by  = FactoryGirl.create(:preference, :user => current_user, :name => "opportunities_sort_by",  :value => Base64.encode64(Marshal.dump("opportunities.name ASC")))
-
-      xhr :get, :options
-      assigns[:per_page].should == 42
-      assigns[:outline].should  == "option_long"
-      assigns[:sort_by].should  == "opportunities.name ASC"
-    end
-
-    it "should not assign instance variables when hiding options" do
-      xhr :get, :options, :cancel => "true"
-      assigns[:per_page].should == nil
-      assigns[:outline].should  == nil
-      assigns[:sort_by].should  == nil
-    end
   end
 
   # POST /opportunities/redraw                                             AJAX
