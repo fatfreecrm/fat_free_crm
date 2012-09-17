@@ -214,7 +214,7 @@ private
     @campaigns = Campaign.my.order('name')
   end
 
-  def options
+  def set_options
     unless params[:cancel].true?
       @per_page = current_user.pref[:leads_per_page] || Lead.per_page
       @outline  = current_user.pref[:leads_outline]  || Lead.outline

@@ -136,7 +136,7 @@ private
   #----------------------------------------------------------------------------
   alias :get_accounts :get_list_of_records
 
-  def options
+  def set_options
     unless params[:cancel].true?
       @per_page = current_user.pref[:accounts_per_page] || Account.per_page
       @outline  = current_user.pref[:accounts_outline]  || Account.outline

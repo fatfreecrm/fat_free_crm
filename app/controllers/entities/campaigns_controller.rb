@@ -160,7 +160,7 @@ private
   #----------------------------------------------------------------------------
   alias :get_campaigns :get_list_of_records
 
-  def options
+  def set_options
     unless params[:cancel].true?
       @per_page = current_user.pref[:campaigns_per_page] || Campaign.per_page
       @outline  = current_user.pref[:campaigns_outline]  || Campaign.outline

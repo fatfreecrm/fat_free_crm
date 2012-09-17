@@ -162,7 +162,7 @@ class ContactsController < EntitiesController
     @accounts = Account.my.order('name')
   end
 
-  def options
+  def set_options
     unless params[:cancel].true?
       @per_page = current_user.pref[:contacts_per_page] || Contact.per_page
       @outline  = current_user.pref[:contacts_outline]  || Contact.outline

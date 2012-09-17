@@ -18,7 +18,7 @@
 class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :options, :only => :index
+  before_filter :set_options, :only => :index
 
   load_and_authorize_resource
 
