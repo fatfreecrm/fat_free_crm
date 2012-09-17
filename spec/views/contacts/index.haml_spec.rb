@@ -4,6 +4,10 @@ describe "/contacts/index" do
   include ContactsHelper
 
   before do
+    view.lookup_context.prefixes << 'entities'
+    assign :per_page, Contact.per_page
+    assign :sort_by,  Contact.sort_by
+    view.stub(:search) { Contact.search {} }
     login_and_assign
   end
 
@@ -12,7 +16,7 @@ describe "/contacts/index" do
 
     render
     view.should render_template(:partial => "_contact")
-    view.should render_template(:partial => "shared/_paginate")
+    view.should render_template(:partial => "shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no contacts" do
@@ -21,7 +25,7 @@ describe "/contacts/index" do
     render
     view.should_not render_template(:partial => "_contact")
     view.should render_template(:partial => "shared/_empty")
-    view.should render_template(:partial => "shared/_paginate")
+    view.should render_template(:partial => "shared/_paginate_with_per_page")
   end
 
 end
