@@ -1,6 +1,7 @@
-- path = controller.controller_name
+- path = controller_name
 - path = "admin/#{path}" if controller.class.to_s.starts_with?("Admin::")
-- current_sort_by = t("option_" + Contact.sort_by_map.invert[@sort_by])
+- model_klass = controller_name.singularize.camelcase.constantize
+- current_sort_by = t("option_" + model_klass.sort_by_map.invert[@sort_by])
 - current_naming  = t("option_#{@naming}")
 
 %div{ :style => "margin: 0px 0px 6px 0px" }
@@ -8,14 +9,14 @@
 
   .sorting.options
     -# sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name.
-    = t(:sort_by, :models => t(:contacts_small), :field => link_to(current_sort_by, "#", :id => :sort_by)).html_safe
+    = t(:sort_by, :models => t(:"#{controller_name}_small"), :field => link_to(current_sort_by, "#", :id => :sort_by)).html_safe
 
 %script
   = render "shared/sort_by"
 
 
 :javascript
-  jQuery('#query')[0].onblur(); 
+  jQuery('#query')[0].onblur();
 
   var defaultText = 'Search #{path}';
   previous_#{path}_search_value = defaultText;

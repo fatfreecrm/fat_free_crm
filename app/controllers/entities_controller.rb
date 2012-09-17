@@ -18,6 +18,7 @@
 class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :options, :only => :index
 
   load_and_authorize_resource
 
@@ -119,7 +120,7 @@ protected
   def entities
     instance_variable_get("@#{controller_name}") || klass.my
   end
-  
+
 private
 
   #----------------------------------------------------------------------------
@@ -145,13 +146,13 @@ private
     self.current_query = query
 
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
-    
+
     per_page = if options[:per_page]
       options[:per_page] == 'all' ? search.result.count : options[:per_page]
     else
       current_user.pref[:"#{controller_name}_per_page"]
     end
-    
+
     pages = {
       :page     => current_page,
       :per_page => per_page

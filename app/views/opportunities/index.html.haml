@@ -1,18 +1,17 @@
 = styles_for :opportunity
 
-.title_tools
-  = link_to_inline(:create_opportunity, new_opportunity_path, :text => t(:create_opportunity)) << " | "
-  = link_to_inline(:advanced_search, advanced_search_opportunities_path, :text => t(:advanced_search)) << " | "
-  = link_to_inline(:options, options_opportunities_path, :text => t(:options))
+= image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
 
-.title
-  %span#create_opportunity_title #{t :opportunities}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-.remote#options{ hidden }
-.remote#advanced_search{ hidden_if(!params[:q]) }
-  - if params[:q]
-    = render :partial => "advanced_search"
+#buttons
+  = render 'format_buttons'
+  .create_asset
+    = link_to_inline(:create_opportunity, new_opportunity_path, :text => t(:create_opportunity))
+
+= render 'search'
+
 .remote#create_opportunity{ hidden }
+
+.remote#options{ hidden }
 
 .list#opportunities
   - if @opportunities.any?
@@ -24,4 +23,3 @@
 #export= render "shared/export"
 
 = hook(:opportunity_index_after, self)
-
