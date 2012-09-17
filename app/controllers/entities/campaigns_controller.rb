@@ -137,16 +137,6 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /campaigns/options                                                 AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:campaigns_per_page] || Campaign.per_page
-      @outline  = current_user.pref[:campaigns_outline]  || Campaign.outline
-      @sort_by  = current_user.pref[:campaigns_sort_by]  || Campaign.sort_by
-    end
-  end
-
   # POST /campaigns/redraw                                                 AJAX
   #----------------------------------------------------------------------------
   def redraw
@@ -169,6 +159,14 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_campaigns :get_list_of_records
+
+  def options
+    unless params[:cancel].true?
+      @per_page = current_user.pref[:campaigns_per_page] || Campaign.per_page
+      @outline  = current_user.pref[:campaigns_outline]  || Campaign.outline
+      @sort_by  = current_user.pref[:campaigns_sort_by]  || Campaign.sort_by
+    end
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

@@ -173,16 +173,6 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /leads/options                                                     AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:leads_per_page] || Lead.per_page
-      @outline  = current_user.pref[:leads_outline]  || Lead.outline
-      @sort_by  = current_user.pref[:leads_sort_by]  || Lead.sort_by
-      @naming   = current_user.pref[:leads_naming]   || Lead.first_name_position
-    end
-  end
 
   # POST /leads/redraw                                                     AJAX
   #----------------------------------------------------------------------------
@@ -222,6 +212,15 @@ private
   #----------------------------------------------------------------------------
   def get_campaigns
     @campaigns = Campaign.my.order('name')
+  end
+
+  def options
+    unless params[:cancel].true?
+      @per_page = current_user.pref[:leads_per_page] || Lead.per_page
+      @outline  = current_user.pref[:leads_outline]  || Lead.outline
+      @sort_by  = current_user.pref[:leads_sort_by]  || Lead.sort_by
+      @naming   = current_user.pref[:leads_naming]   || Lead.first_name_position
+    end
   end
 
   #----------------------------------------------------------------------------
