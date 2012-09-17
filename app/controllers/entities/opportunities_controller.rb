@@ -173,14 +173,14 @@ class OpportunitiesController < EntitiesController
   # POST /opportunities/redraw                                             AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @opportunities = get_opportunities(:page => 1)
+    @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
     render :index
   end
 
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
-    @opportunities = get_opportunities(:page => 1)
+    @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
     render :index
   end
 

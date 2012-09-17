@@ -144,7 +144,6 @@ private
     self.current_page  = options[:page]                        if options[:page]
     query, tags        = parse_query_and_tags(options[:query])
     self.current_query = query
-
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
 
     per_page = if options[:per_page]

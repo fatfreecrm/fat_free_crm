@@ -126,7 +126,7 @@ module ApplicationHelper
   def link_to_delete(record, options = {})
     object = record.is_a?(Array) ? record.last : record
     confirm = options[:confirm] || nil
-    
+
     link_to(t(:delete) + "!",
       options[:url] || url_for(record),
       :method => :delete,
@@ -433,9 +433,23 @@ module ApplicationHelper
   def group_options
     Group.all.map {|g| [g.name, g.id]}
   end
-  
+
   def list_of_entities
     ENTITIES
   end
-  
+
+  def entity_filter_checkbox(name, value, count)
+    checked = (session["#{controller_name}_filter"] ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
+    values = %Q{$$("input[name='#{name}[]']").findAll(function (el) { return el.checked }).pluck("value")}
+    query = %Q{$("query").value}
+    params = h(%Q{"#{name}=" + #{values} + "&query=" + #{query}})
+
+    onclick = remote_function(
+      :url      => { :action => :filter },
+      :with     => params,
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    check_box_tag("#{name}[]", value, checked, :id => value, :onclick => onclick)
+  end
 end
