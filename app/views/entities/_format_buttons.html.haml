@@ -9,7 +9,7 @@
 :javascript
   jQuery('a[data-outline]').click(function(){
 
-    #{remote_function(:url => send("redraw_#{controller.controller_name}_path"), :with => "'outline=' + jQuery(this).data('outline')",:loading => "$('loading').show()", :complete => "$('loading').hide()")}
+    #{remote_function(:url => send("redraw_#{controller.controller_name}_path"), :with => "'outline=' + jQuery(this).data('outline') + '&query=' + $('query').value",:loading => "$('loading').show()", :complete => "$('loading').hide()")}
 
     jQuery('a[data-outline]').removeClass('active');
     jQuery(this).addClass('active');
