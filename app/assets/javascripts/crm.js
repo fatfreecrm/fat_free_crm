@@ -414,6 +414,7 @@ var crm = {
     }
     this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", {
       frequency: 0.25,
+      parameters: (related) ? ('related=' + related) : null,
       afterUpdateElement: function(text, el) {
         if (el.id) {      // Autocomplete entry found.
           if (related) {  // Attach to related asset.
