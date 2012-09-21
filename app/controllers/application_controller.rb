@@ -56,12 +56,13 @@ class ApplicationController < ActionController::Base
 private
   
   #
-  # Takes {:related => 'campaigns/7' }
+  # Takes { :related => 'campaigns/7' } or { :related => '5' }
   #   and returns array of object ids that should be excluded from search
   #   assumes controller_name is an method on 'related' class that returns a collection
   #----------------------------------------------------------------------------
   def auto_complete_ids_to_exclude(related)
     return [] if related.blank?
+    return [related.to_i].compact unless related.index('/')
     related_class, id = related.split('/')
     obj = related_class.classify.constantize.find_by_id(id)
     if obj and obj.respond_to?(controller_name)

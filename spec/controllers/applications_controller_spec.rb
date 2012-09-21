@@ -12,6 +12,10 @@ describe ApplicationController do
       controller.send(:auto_complete_ids_to_exclude, '').should == []
     end
     
+    it "should return campaign id 5 when related is '5' and controller is campaigns" do
+      controller.send(:auto_complete_ids_to_exclude, '5').sort.should == [5]
+    end
+    
     it "should return [6, 9] when related is 'campaigns/7'" do
       controller.stub!(:controller_name).and_return('opportunities')
       campaign = mock(Campaign, :opportunities => [mock(:id => 6), mock(:id => 9)])
