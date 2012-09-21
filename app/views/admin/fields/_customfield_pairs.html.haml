@@ -1,35 +1,22 @@
 - field1 = f.object || CustomFieldPair.new
 - field2 = f.object.respond_to?(:paired_with) ? field1.paired_with : CustomFieldPair.new
-- pair = [field1, field2]
 - show_or_hide = !( f.object.as =~ /pair/ ) ? 'display: none;' : nil
 
 %table{:class => :pairs, :style => show_or_hide}
-  - pair.each do |p|
-    - first = (p == pair.first)
-    = fields_for("pair[#{first ? 0 : 1}]", p) do |f|
-      %tr
-        %td
-          .label.field_title
-            = first ? t('pair.start') : t('pair.end')
-            = f.hidden_field :id
-        %td= spacer
-        %td= spacer
-      %tr
-        %td
-          .label.top
-            %span Required:
-            = f.check_box :required
-        %td= spacer
-        %td
-          .label.top
-            %span Disabled:
-            = f.check_box :disabled
-
+  = fields_for("pair[0]", field1) do |first|
+    = fields_for("pair[1]", field2) do |second|
       %tr
         %td
           .label.top Hint:
-          = f.text_field :hint
+          = first.text_field :hint
         %td= spacer
         %td
-          .label.top Placeholder:
-          = f.text_field :placeholder
+          .label.top
+            %span Required:
+            = first.check_box :required
+            %br
+            %span Disabled:
+            = first.check_box :disabled
+            = first.hidden_field :id
+            = second.hidden_field :id
+            %div{:style => 'width: 240px;'}

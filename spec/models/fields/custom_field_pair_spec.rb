@@ -37,9 +37,9 @@ describe CustomFieldPair do
   
     it "should create the pair" do
       params1 = @field.merge(@pair1)
-      foo1 = mock(:id => 3)
+      foo1 = mock(:id => 3, :required => true, :disabled => 'false')
       CustomFieldFooPair.should_receive(:create).with( params1 ).and_return(foo1)
-      params2 = @field.merge(@pair2).merge('pair_id' => 3)
+      params2 = @field.merge(@pair2).merge('pair_id' => 3, 'required' => true, 'disabled' => 'false')
       foo2 = mock(:id => 5)
       CustomFieldFooPair.should_receive(:create).with( params2 ).and_return(foo2)
 
@@ -58,10 +58,10 @@ describe CustomFieldPair do
     end
 
     it "should update the pair" do
-      foo1 = mock
+      foo1 = mock(:required => true, :disabled => 'false')
       foo1.should_receive(:update_attributes).with( @field.merge(@pair1) )
       foo2 = mock
-      foo2.should_receive(:update_attributes).with( @field.merge(@pair2) )
+      foo2.should_receive(:update_attributes).with( @field.merge(@pair2).merge('required' => true, 'disabled' => 'false') )
       foo1.should_receive(:paired_with).and_return(foo2)
       CustomFieldPair.should_receive(:find).with('3').and_return(foo1)
 
