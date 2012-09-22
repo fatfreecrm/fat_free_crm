@@ -4,7 +4,7 @@ container_id = dom_id(@field.field_group, :fields)
 if @field.valid?
   page["#{id}_arrow"].replace_html "&#9658;"
   page.visual_effect :toggle_blind, id, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
-  page.insert_html :top, container_id, :partial => "field", :collection => [ @field ]
+  page.insert_html :bottom, container_id, :partial => "field", :collection => [ @field ]
   page.insert_html :bottom, container_id, sortable_element(container_id, :url => sort_admin_fields_path(:field_group_id => @field.field_group_id))
   page[dom_id(@field)].visual_effect :highlight, :duration => 1.5
   page.call "crm.flick", :empty, :remove
@@ -13,4 +13,3 @@ else
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:field_label].focus
 end
-

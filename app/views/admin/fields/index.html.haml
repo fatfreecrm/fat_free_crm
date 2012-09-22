@@ -23,8 +23,6 @@
     .title
       = t(asset)
 
-    .remote{ hidden.merge(:id => create_form_id) }
-
     - container_id = "#{asset}_field_groups"
     .list{ :id => container_id }
       = render :partial => "admin/field_groups/field_group", :collection => klass.field_groups, :locals => {:asset => asset, :klass => klass}
@@ -34,3 +32,5 @@
       = sortable_element(dom_id(field_group, :fields), :url => sort_admin_fields_path(:field_group_id => field_group.id), :containment => group_list_ids, :dropOnEmpty => true)
 
     = sortable_element(container_id, :url => sort_admin_field_groups_path(:asset => asset), :tag => :div)
+
+    .remote{ hidden.merge(:id => create_form_id) }

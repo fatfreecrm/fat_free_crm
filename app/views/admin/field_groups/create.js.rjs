@@ -6,7 +6,7 @@ container_id = "#{asset}_field_groups"
 if @field_group.valid?
   page["#{id}_arrow"].replace_html "&#9658;"
   page.visual_effect :toggle_blind, id, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
-  page.insert_html :top, container_id, :partial => "field_group", :collection => [ @field_group ]
+  page.insert_html :bottom, container_id, :partial => "field_group", :collection => [ @field_group ]
   group_list_ids = klass.field_groups.map {|field_group| dom_id(field_group, :fields)}
   klass.field_groups.each do |field_group|
     page.insert_html :bottom, container_id, sortable_element(dom_id(field_group, :fields), :url => sort_admin_fields_path(:field_group_id => field_group.id), :containment => group_list_ids, :dropOnEmpty => true)
@@ -18,4 +18,3 @@ else
   page[id].replace_html :partial => "new"
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
 end
-
