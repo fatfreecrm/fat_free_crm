@@ -432,4 +432,9 @@ module ApplicationHelper
   def group_options
     Group.all.map {|g| [g.name, g.id]}
   end
+  
+  def list_of_entities
+    ENTITIES
+  end
+  
 end

@@ -7,13 +7,15 @@
 
 .inline_tabs
   %ul
-    - Field::KLASSES.each do |klass|
-      %li{ "data-tab-class" => klass.name.downcase, :class => ("selected" if klass == Contact) }
-        = link_to t(klass.name.downcase), "#"
+    - list_of_entities.each do |entity|
+      - asset = entity.downcase
+      %li{ "data-tab-class" => asset, :class => ("selected" if entity == 'Contact') }
+        = link_to t(entity), "#"
 
-- Field::KLASSES.each do |klass|
-  - asset = klass.name.downcase
-  .fields{ :id => "#{asset}_section", :style => ("display: none;" if klass != Contact) }
+- list_of_entities.each do |entity|
+  - asset = entity.downcase
+  - klass = asset.classify.constantize
+  .fields{ :id => "#{asset}_section", :style => ("display: none;" if asset != 'contact') }
 
     - create_form_id = "#{asset}_create_field_group"
 
