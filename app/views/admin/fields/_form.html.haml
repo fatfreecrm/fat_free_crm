@@ -1,0 +1,31 @@
+- @field ||= Field.new
+- field_group_id ||= @field.field_group_id
+- html_id = @field.id ? "edit_field_#{@field.id}" : nil
+- url = @field.id ? admin_field_path : admin_fields_path
+
+%div{:class => @field.id ? 'remote edit_field' : nil}
+  = form_for([:admin, @field], :url => url, :as => :field, :html => one_submit_only(:field).merge(:class => nil, :id => html_id), :remote => true) do |f|
+    = link_to( 'x', '#', :class => 'close', :title => t(:close_form) )
+    = f.error_messages
+    
+    = hidden_field_tag 'field[field_group_id]', field_group_id, :id => nil
+
+    .section
+      %table
+        %tr
+          %td
+            .label.top.req Field label:
+            = f.text_field :label, :id => nil
+
+          %td= spacer
+          %td
+            .label.top.req Field type:
+            = select :field, :as, field_edit_as_options, :include_blank => true, :id => nil
+
+      .subform
+        = render(:partial => 'admin/fields/subform') if @field.id
+
+    .buttonbar
+      = f.submit t(:create_field), :id => :field_submit
+      or
+      = link_to( t(:cancel), '#', :class => 'cancel' )

@@ -171,6 +171,7 @@ Rails.application.routes.draw do
         get :options
         post :redraw
         post :sort
+        get :subform
       end
     end
 

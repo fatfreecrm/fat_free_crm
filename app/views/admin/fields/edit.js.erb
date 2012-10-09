@@ -1,0 +1,3 @@
+<% edit_field_id = "edit_field_#{@field.id}" %>
+
+jQuery('#<%=edit_field_id%>').parent().replaceWith( <%= j(render :partial => "admin/fields/edit") %> )

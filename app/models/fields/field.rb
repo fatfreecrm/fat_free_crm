@@ -41,6 +41,7 @@ class Field < ActiveRecord::Base
   acts_as_list
 
   serialize :collection, Array
+  serialize :settings, HashWithIndifferentAccess
 
   belongs_to :field_group
 
@@ -50,41 +51,28 @@ class Field < ActiveRecord::Base
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
 
-  FIELD_TYPES = {
-    'string'      => :string,
-    'text'        => :text,
-    'email'       => :string,
-    'url'         => :string,
-    'tel'         => :string,
-    'select'      => :string,
-    'radio'       => :string,
-    'check_boxes' => :text,
-    'boolean'     => :boolean,
-    'date'        => :date,
-    'datepair'    => :date,
-    'datetime'    => :timestamp,
-    'datetimepair' => :timestamp,
-    'decimal'     => [:decimal, {:precision => 15, :scale => 2}],
-    'integer'     => :integer,
-    'float'       => :float
-  }
+  BASE_FIELD_TYPES = {
+    'string'      => {:klass => 'CustomField', :type => 'string'},
+    'text'        => {:klass => 'CustomField', :type => 'text'},
+    'email'       => {:klass => 'CustomField', :type => 'string'},
+    'url'         => {:klass => 'CustomField', :type => 'string'},
+    'tel'         => {:klass => 'CustomField', :type => 'string'},
+    'select'      => {:klass => 'CustomField', :type => 'string'},
+    'radio'       => {:klass => 'CustomField', :type => 'string'},
+    'check_boxes' => {:klass => 'CustomField', :type => 'text'},
+    'boolean'     => {:klass => 'CustomField', :type => 'boolean'},
+    'date'        => {:klass => 'CustomField', :type => 'date'},
+    'datetime'    => {:klass => 'CustomField', :type => 'timestamp'},
+    'decimal'     => {:klass => 'CustomField', :type => 'decimal', :column_options => {:precision => 15, :scale => 2} },
+    'integer'     => {:klass => 'CustomField', :type => 'integer'},
+    'float'       => {:klass => 'CustomField', :type => 'float'}
+  }.with_indifferent_access
 
-  validates_presence_of :label, :message => "^Please enter a Field label."
-  validates_length_of :label, :maximum => 64, :message => "^The Field name must be less than 64 characters in length."
-
+  validates_presence_of :label, :message => "^Please enter a field label."
+  validates_length_of :label, :maximum => 64, :message => "^The field name must be less than 64 characters in length."
   validates_numericality_of :maxlength, :only_integer => true, :allow_blank => true, :message => "^Max size can only be whole number."
-
-  validates_presence_of :as, :message => "^Please specify a Field type."
-  validates_inclusion_of :as, :in => FIELD_TYPES.keys, :message => "Invalid Field Type."
-
-  def self.field_types
-    # Expands concise FIELD_TYPES into a more usable hash
-    @field_types ||= FIELD_TYPES.inject({}) do |hash, n|
-      arr = [n[1]].flatten
-      hash[n[0]] = {:type => arr[0], :options => arr[1]}
-      hash
-    end
-  end
+  validates_presence_of :as, :message => "^Please specify a field type."
+  validates_inclusion_of :as, :in => Proc.new{self.field_types.keys}, :message => "^Invalid field type.", :allow_blank => true
 
   def column_type(field_type = self.as)
     (opts = Field.field_types[field_type]) ? opts[:type] : raise("Unknown field_type: #{field_type}")
@@ -122,4 +110,34 @@ class Field < ActiveRecord::Base
       value.to_s
     end
   end
+
+  protected
+
+  class << self
+
+    # Provides access to registered field_types
+    #------------------------------------------------------------------------------
+    def field_types
+      @@field_types ||= BASE_FIELD_TYPES
+    end
+
+    # Register custom fields so they are available to the rest of the app
+    # Example options: :as => 'datepair', :type => 'date', :klass => 'CustomFieldDatePair'
+    #------------------------------------------------------------------------------
+    def register(options)
+      opts = options.dup
+      as = options.delete(:as)
+      (@@field_types ||= BASE_FIELD_TYPES).merge!(as => options)
+    end
+
+    # Returns class name given the key 'as'
+    #------------------------------------------------------------------------------
+    def lookup_class(as)
+      (@@field_types ||= BASE_FIELD_TYPES)[as][:klass]
+    end
+
+    #~ Field.descendants.each{|klass| klass.register}
+
+  end
+  
 end

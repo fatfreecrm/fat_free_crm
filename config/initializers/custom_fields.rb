@@ -15,14 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class CustomFieldDatetimePair < CustomFieldDatePair
 
-  # Register this CustomField with the application
-  #------------------------------------------------------------------------------
-  register(:as => 'datetime_pair', :klass => 'CustomFieldDatetimePair', :type => 'timestamp')
-  
-  def render(value)
-    value && value.strftime(I18n.t("time.formats.mmddhhss"))
-  end
 
-end
+# Custom fields need to be loaded so they register their availability
+#------------------------------------------------------------------------------
+custom_field_path = File.join(Rails.root, 'app', 'models', 'fields', 'custom_field_*')
+Dir[custom_field_path].each {|f| require f}

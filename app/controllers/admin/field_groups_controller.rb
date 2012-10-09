@@ -17,6 +17,8 @@
 
 class Admin::FieldGroupsController < Admin::ApplicationController
 
+  helper 'admin/fields'
+
   # GET /admin/field_groups/new
   # GET /admin/field_groups/new.xml                                        AJAX
   #----------------------------------------------------------------------------
