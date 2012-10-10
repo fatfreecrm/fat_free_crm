@@ -20,9 +20,8 @@ crm.ensure_chosen_account = ->
       query_key: "auto_complete_query"
     }
 
-
 # Initialize chosen select lists for certain fields
 crm.init_chosen_fields = ->
-  ['assigned_to', '[country]'].each (field) ->
-    $$("select[name*='"+field+"']").each (el) ->
+  ["select[name*='assigned_to']", "select[name*='[country]']"].each (field) ->
+    $$(field).each (el) ->
       new Chosen el, { allow_single_deselect: true }
