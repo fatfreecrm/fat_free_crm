@@ -244,6 +244,9 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    turbo-sprockets-rails3 (0.1.10)
+      railties (>= 3.1.0)
+      sprockets (>= 2.0.0)
     tzinfo (0.3.33)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
@@ -304,6 +307,7 @@ DEPENDENCIES
   simple_form (~> 2.0.1)
   spork
   therubyracer
+  turbo-sprockets-rails3
   uglifier (>= 1.0.3)
   unicorn
   valium
