@@ -178,8 +178,14 @@ class User < ActiveRecord::Base
     artifacts == 0
   end
 
-  def self.current_ability
-    @current_ability ||= Ability.new(User.current_user)
-  end
+  # Define class methods
+  #----------------------------------------------------------------------------
+  class << self
 
+    def current_ability
+      Ability.new(User.current_user)
+    end
+
+  end
+  
 end
