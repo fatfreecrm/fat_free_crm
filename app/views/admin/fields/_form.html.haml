@@ -1,9 +1,10 @@
 - @field ||= Field.new
 - field_group_id ||= @field.field_group_id
-- html_id = @field.id ? "edit_field_#{@field.id}" : nil
-- url = @field.id ? admin_field_path : admin_fields_path
+- new_field = @field.id.nil?
+- url = new_field ? admin_fields_path : admin_field_path
+- html_id = new_field ? nil : "edit_field_#{@field.id}"
 
-%div{:class => @field.id ? 'remote edit_field' : nil}
+%div{:class => new_field ? nil : 'remote edit_field'}
   = form_for([:admin, @field], :url => url, :as => :field, :html => one_submit_only(:field).merge(:class => nil, :id => html_id), :remote => true) do |f|
     = link_to( 'x', '#', :class => 'close', :title => t(:close_form) )
     = f.error_messages
@@ -23,9 +24,12 @@
             = select :field, :as, field_edit_as_options, :include_blank => true, :id => nil
 
       .subform
-        = render(:partial => 'admin/fields/subform') if @field.id
+        = render(:partial => 'admin/fields/subform') unless new_field
 
     .buttonbar
-      = f.submit t(:create_field), :id => :field_submit
+      - if new_field
+        = f.submit t(:create_field), :id => :field_submit
+      - else
+        = f.submit t(:save_field), :id => :field_submit
       or
       = link_to( t(:cancel), '#', :class => 'cancel' )

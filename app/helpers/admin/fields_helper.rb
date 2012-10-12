@@ -22,7 +22,7 @@ module Admin::FieldsHelper
   def field_edit_as_options(field = nil)
     # Return every available field_type if no restriction
     options = (field.try(:available_as) || Field.field_types).keys
-    options.map{|k| [t("field_types.#{k}"), k] }
+    options.map{|k| [t("field_types.#{k}.title"), k] }
   end
 
   def field_group_options

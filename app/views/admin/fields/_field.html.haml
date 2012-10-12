@@ -1,4 +1,4 @@
-%li.highlight.position[field]
+%li.highlight.position{:class => field.class.name.underscore, :id => "field_#{field.id}"}
   %span.handle
     %img( src="/assets/sortable.gif" )
 
@@ -9,7 +9,7 @@
 
   %tt
     %b= field.label
-    == (#{t('field_types.' + field.as)})
+    == (#{t("field_types.#{field.as}.title")})
 
     == added #{time_ago_in_words(field.created_at)} ago
     = hook(:field_bottom, self, :field => field)

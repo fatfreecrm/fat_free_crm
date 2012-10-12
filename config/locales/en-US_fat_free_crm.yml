@@ -855,23 +855,40 @@ en-US:
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
-    string:      Short Answer
-    text:        Long Answer
-    select:      Select List
-    multiselect: Multi Select
-    radio:       Radio Buttons
-    boolean:     Checkbox
-    check_boxes: Checkbox List
-    date:        Date
-    date_pair:   Date Pair
-    datetime:    Date & Time
-    datetime_pair: Date & Time Pair
-    email:       Email Address
-    url:         URL
-    tel:         Phone Number
-    decimal:     Number (Decimal)
-    integer:     Number (Integer)
-    float:       Number (Floating Point)
+    string:
+      title:     Short Answer
+    text:
+      title:     Long Answer
+    select:
+      title:     Select List
+    multiselect: 
+      title:     Multi Select
+    radio:
+      title:     Radio Buttons
+    boolean:
+      title:     Checkbox
+    check_boxes:
+      title:     Checkbox List
+    date:
+      title:     Date
+    date_pair:
+      title:     Date Pair
+    datetime:
+      title:     Date & Time
+    datetime_pair:
+      title:     Date & Time Pair
+    email:
+      title:     Email Address
+    url:
+      title:     URL
+    tel:
+      title:     Phone Number
+    decimal:
+      title:     Number (Decimal)
+    integer:
+      title:     Number (Integer)
+    float:
+      title:     Number (Floating Point)
 
   pair:
     start:       Start
