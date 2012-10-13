@@ -44,12 +44,18 @@ class Field < ActiveRecord::Base
   serialize :settings, HashWithIndifferentAccess
 
   belongs_to :field_group
-
+  
   scope :core_fields, where(:type => 'CoreField')
   scope :custom_fields, where("type != 'CoreField'")
   scope :without_pairs, where(:pair_id => nil)
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
+  
+  # Subclasses are allowed to have their own list of settings
+  # They must define 'self.settings_keys' in order to access them
+  #------------------------------------------------------------------------------
+  class_attribute :settings_keys
+  self.settings_keys = []
 
   BASE_FIELD_TYPES = {
     'string'      => {:klass => 'CustomField', :type => 'string'},
@@ -110,7 +116,29 @@ class Field < ActiveRecord::Base
       value.to_s
     end
   end
-
+  
+  # Define 'settings' accessors/mutators methods for convenience
+  #------------------------------------------------------------------------------
+  def method_missing(method, *args, &block)
+    if settings_keys.include?(method.to_s)
+      settings[method]
+    elsif settings_keys.map{|s| "#{s}="}.include?(method.to_s)
+      settings[method.to_s - '='] = args.first
+    else
+      super
+    end
+  end
+  
+  # Ensure class tells the truth about what methods it responds to
+  #------------------------------------------------------------------------------
+  def respond_to?(method, include_private=false)
+    if (settings_keys + settings_keys.map{|s| "#{s}="}).include?(method.to_s)
+      true
+    else
+      super
+    end
+  end
+  
   protected
 
   class << self
