@@ -35,7 +35,7 @@ describe Field do
 
 
   it "should return a list of field types" do
-    Field.field_types['string'].should == {:type => :string, :options => nil}
+    Field.field_types['string'].should == {'klass' => 'CustomField', 'type' => 'string'}
   end
 
   it "should return a hash of input options" do

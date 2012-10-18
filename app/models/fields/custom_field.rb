@@ -63,8 +63,8 @@ class CustomField < Field
   before_create    :add_column
 
   SAFE_DB_TRANSITIONS = {
-    :any => [[:date, :time, :timestamp], [:integer, :float]],
-    :one => {:string => :text}
+    :any => [['date', 'time', 'timestamp'], ['integer', 'float']],
+    :one => {'string' => 'text'}
   }
 
   def available_as
@@ -93,13 +93,13 @@ class CustomField < Field
   #   :unsafe => transition is unsafe
   #------------------------------------------------------------------------------
   def db_transition_safety(old_type, new_type = self.as)
-    old_col, new_col = [old_type, new_type].map{|t| column_type(t) }
+    old_col, new_col = [old_type, new_type].map{|t| column_type(t).to_s }
     return :null if old_col == new_col  # no transition needed
     return :safe if SAFE_DB_TRANSITIONS[:one].any? do |start, final|
-      old_col == start && new_col == final  # one-to-one
+      old_col == start.to_s && new_col == final.to_s  # one-to-one
     end
     return :safe if SAFE_DB_TRANSITIONS[:any].any? do |col_set|
-      [old_col, new_col].all?{|c| col_set.include?(c)}  # any-to-any
+      [old_col, new_col].all?{|c| col_set.include?(c.to_s)}  # any-to-any
     end
     :unsafe # Else, unsafe.
   end

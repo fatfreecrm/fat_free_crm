@@ -26,7 +26,7 @@ describe CustomField do
 
   it "should add a column to the database" do
     CustomField.connection.should_receive(:add_column).
-                with("contacts", "cf_test_field", :string, {})
+                with("contacts", "cf_test_field", 'string', {})
     Contact.should_receive(:reset_column_information)
     Contact.should_receive(:serialize_custom_fields!)
 
@@ -71,9 +71,9 @@ describe CustomField do
 
   it "should change a column's type for safe transitions" do
     CustomField.connection.should_receive(:add_column).
-                with("contacts", "cf_test_field", :string, {})
+                with("contacts", "cf_test_field", 'string', {})
     CustomField.connection.should_receive(:change_column).
-                with("contacts", "cf_test_field", :text, {})
+                with("contacts", "cf_test_field", 'text', {})
     Contact.should_receive(:reset_column_information).twice
     Contact.should_receive(:serialize_custom_fields!).twice
     
