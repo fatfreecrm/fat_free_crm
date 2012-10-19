@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120801032706) do
+ActiveRecord::Schema.define(:version => 20121003063155) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -223,6 +223,7 @@ ActiveRecord::Schema.define(:version => 20120801032706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.integer  "pair_id"
+    t.text     "settings"
   end
 
   add_index "fields", ["field_group_id"], :name => "index_fields_on_field_group_id"
