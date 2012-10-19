@@ -63,8 +63,8 @@ class CustomField < Field
   before_create    :add_column
 
   SAFE_DB_TRANSITIONS = {
-    :any => [[:date, :time, :timestamp], [:integer, :float]],
-    :one => {:string => :text}
+    :any => [['date', 'time', 'timestamp'], ['integer', 'float']],
+    :one => {'string' => 'text'}
   }
 
   def available_as
@@ -82,7 +82,7 @@ class CustomField < Field
     obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.maxlength', :field => label)) if (maxlength.to_i > 0) and (obj.send(attr).to_s.length > maxlength.to_i)
   end
   
-protected
+  protected
 
   # When changing a custom field's type, it may be necessary to
   # change the column type in the database. This method returns
@@ -91,14 +91,15 @@ protected
   #   :null   => no transition needed
   #   :safe   => transition is safe
   #   :unsafe => transition is unsafe
+  #------------------------------------------------------------------------------
   def db_transition_safety(old_type, new_type = self.as)
-    old_col, new_col = [old_type, new_type].map{|t| column_type(t) }
+    old_col, new_col = [old_type, new_type].map{|t| column_type(t).to_s }
     return :null if old_col == new_col  # no transition needed
     return :safe if SAFE_DB_TRANSITIONS[:one].any? do |start, final|
-      old_col == start && new_col == final  # one-to-one
+      old_col == start.to_s && new_col == final.to_s  # one-to-one
     end
     return :safe if SAFE_DB_TRANSITIONS[:any].any? do |col_set|
-      [old_col, new_col].all?{|c| col_set.include?(c)}  # any-to-any
+      [old_col, new_col].all?{|c| col_set.include?(c.to_s)}  # any-to-any
     end
     :unsafe # Else, unsafe.
   end
@@ -111,10 +112,11 @@ protected
     klass.columns.map(&:name)
   end
 
+  # Generate column name for custom field.
+  # If column name is already taken, a numeric suffix is appended.
+  # Example column sequence: cf_custom, cf_custom_2, cf_custom_3, ...
+  #------------------------------------------------------------------------------
   def generate_column_name
-    # Generate column name for custom field.
-    # If column name is already taken, a numeric suffix is appended.
-    # Example column sequence: cf_custom, cf_custom_2, cf_custom_3, ...
     suffix = nil
     field_name = 'cf_' + label.downcase.gsub(/[^a-z0-9]+/, '_')
     while (final_name = [field_name, suffix].compact.join('_')) &&
@@ -125,10 +127,13 @@ protected
   end
 
   # Returns options for ActiveRecord operations
+  #------------------------------------------------------------------------------
   def column_options
-    Field.field_types[self.as][:options] || {}
+    Field.field_types[self.as][:column_options] || {}
   end
 
+  # Create a new column to hold the custom field data
+  #------------------------------------------------------------------------------
   def add_column
     self.name = generate_column_name if name.blank?
     connection.add_column(table_name, name, column_type, column_options)
@@ -136,9 +141,10 @@ protected
     klass.serialize_custom_fields!
   end
 
+  # Change database column type only if safe to do so
+  # Note: columns will never be renamed or destroyed
+  #------------------------------------------------------------------------------
   def update_column
-    # Change database column type if appropriate
-    # (NOTE: Columns will never be renamed or destroyed)
     if self.errors.empty? && db_transition_safety(as_was) == :safe
       connection.change_column(table_name, name, column_type, column_options)
       klass.reset_column_information

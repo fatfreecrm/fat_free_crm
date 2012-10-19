@@ -793,8 +793,8 @@ en-US:
 
   select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
 
-  restrict_by_tag: Restrict by Tag
-  restrict_by_tag_info: Only show fields for %{assets} that are tagged with
+  restrict_by_tag: 'Restrict by Tag:'
+  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
   field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
   field_group_unrestricted: This field group applies to all %{assets}
   field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
@@ -855,23 +855,40 @@ en-US:
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
-    string:      Short Answer
-    text:        Long Answer
-    select:      Select List
-    multiselect: Multi Select
-    radio:       Radio Buttons
-    boolean:     Checkbox
-    check_boxes: Checkbox List
-    date:        Date
-    datepair:    Date Pair
-    datetime:    Date & Time
-    datetimepair: Date & Time Pair
-    email:       Email Address
-    url:         URL
-    tel:         Phone Number
-    decimal:     Number (Decimal)
-    integer:     Number (Integer)
-    float:       Number (Floating Point)
+    string:
+      title:     Short Answer
+    text:
+      title:     Long Answer
+    select:
+      title:     Select List
+    multiselect: 
+      title:     Multi Select
+    radio:
+      title:     Radio Buttons
+    boolean:
+      title:     Checkbox
+    check_boxes:
+      title:     Checkbox List
+    date:
+      title:     Date
+    date_pair:
+      title:     Date Pair
+    datetime:
+      title:     Date & Time
+    datetime_pair:
+      title:     Date & Time Pair
+    email:
+      title:     Email Address
+    url:
+      title:     URL
+    tel:
+      title:     Phone Number
+    decimal:
+      title:     Number (Decimal)
+    integer:
+      title:     Number (Integer)
+    float:
+      title:     Number (Floating Point)
 
   pair:
     start:       Start

@@ -1,8 +1,0 @@
-id = dom_id(@field.field_group, :create_field)
-
-page.call "crm.flick", :"empty_#{@field.field_group.klass_name.downcase}_field_group_#{@field.field_group.id}", :toggle
-page.call "crm.flip_form", id
-
-if params[:cancel] != "true"
-  page[id].replace_html :partial => "new"
-end

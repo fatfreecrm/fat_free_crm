@@ -17,6 +17,10 @@
 
 class CustomFieldDatePair < CustomFieldPair
 
+  # Register this CustomField with the application
+  #------------------------------------------------------------------------------
+  register(:as => 'date_pair', :klass => 'CustomFieldDatePair', :type => 'date')
+
   # For rendering paired values
   # Handle case where both pairs are blank
   #------------------------------------------------------------------------------

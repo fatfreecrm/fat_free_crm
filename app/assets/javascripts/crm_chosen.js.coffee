@@ -8,8 +8,6 @@ crm.chosen_taglist = (asset, controller, id)->
       crm.remove_field_group(tag)
   }
 
-
-# Ensures initialization of ajaxChosen account selector
 crm.ensure_chosen_account = ->
   unless $("account_id_chzn")
     new ajaxChosen $("account_id"), {
@@ -20,9 +18,11 @@ crm.ensure_chosen_account = ->
       query_key: "auto_complete_query"
     }
 
+(($j) ->
 
-# Initialize chosen select lists for certain fields
-crm.init_chosen_fields = ->
-  ['assigned_to', '[country]'].each (field) ->
-    $$("select[name*='"+field+"']").each (el) ->
-      new Chosen el, { allow_single_deselect: true }
+  # Initialize chosen select lists for certain fields
+  crm.init_chosen_fields = ->
+    $j("select[name*='assigned_to'], select[name*='[country]'], .chzn-select").each ->
+      new Chosen this, { allow_single_deselect: true }
+
+) (jQuery)

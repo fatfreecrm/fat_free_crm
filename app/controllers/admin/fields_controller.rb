@@ -18,7 +18,7 @@
 class Admin::FieldsController < Admin::ApplicationController
   before_filter "set_current_tab('admin/fields')", :only => [ :index ]
 
-  load_resource :except => :create
+  load_resource :except => [:create, :subform]
 
   # GET /fields
   # GET /fields.xml                                                      HTML
@@ -37,34 +37,34 @@ class Admin::FieldsController < Admin::ApplicationController
   # GET /fields/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def new
-    @field = CustomField.new(:field_group_id => params[:field_group_id])
-
-    respond_with(@custom_field)
+    @field = Field.new
+    respond_with(@field)
   end
 
   # GET /fields/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
     @field = Field.find(params[:id])
-
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Field.find_by_id($1) || $1.to_i
-    end
-
-    respond_with(@field)
+    respond_with(@field)    
   end
 
   # POST /fields
   # POST /fields.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    if (params[:field][:as] =~ /pair/)
-      @field = CustomFieldPair.create_pair(params).first
-    else
-      @field = CustomField.create(params[:field])
-    end
-    
+    as = params[:field][:as]
+    @field = 
+      if as =~ /pair/
+        CustomFieldPair.create_pair(params).first
+      elsif as.present?
+        klass = Field.lookup_class(as).classify.constantize
+        klass.create(params[:field])
+      else
+        Field.new(params[:field]).tap(&:valid?)
+      end
+
     respond_with(@field)
+
   end
 
   # PUT /fields/1
@@ -85,7 +85,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # DELETE /fields/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @field = CustomField.find(params[:id])
+    @field = Field.find(params[:id])
     @field.destroy
 
     respond_with(@field)
@@ -103,9 +103,24 @@ class Admin::FieldsController < Admin::ApplicationController
 
     render :nothing => true
   end
-
-  # POST /fields/auto_complete/query                                     AJAX
+  
+  # GET /fields/subform
   #----------------------------------------------------------------------------
-  # Handled by before_filter :auto_complete, :only => :auto_complete
+  def subform
+    field = params[:field]
+    as = field[:as]
+
+    @field = if (id = field[:id]).present?
+        Field.find(id).tap{|f| f.as = as}
+      else
+        field_group_id = field[:field_group_id]
+        klass = Field.lookup_class(as).classify.constantize
+        klass.new(:field_group_id => field_group_id, :as => as)
+      end
+
+    respond_with(@field) do |format|
+      format.html { render :partial => 'admin/fields/subform' }
+    end  
+  end
   
 end
