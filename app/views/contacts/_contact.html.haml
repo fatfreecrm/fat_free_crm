@@ -2,7 +2,7 @@
 - gravatar_size = contacts_outline == "brief" ? "16x16" : "30x30"
 
 %li.highlight[contact]
-  = gravatar_for(contact, :size => gravatar_size)
+  = avatar_for(contact, :size => gravatar_size)
 
   %ul.tools
     = hook(:contact_tools_before, self, :contact => contact)

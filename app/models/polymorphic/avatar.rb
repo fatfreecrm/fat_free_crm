@@ -49,5 +49,17 @@ class Avatar < ActiveRecord::Base
   end
   has_attached_file :image, :styles => STYLES.dup, :url => "/avatars/:entity_type/:id/:style_:filename", :default_url => "/assets/avatar.jpg"
 
-end
+  # Convert STYLE symbols to 'w x h' format for Gravatar and Rails
+  # e.g. Avatar.size_from_style(:size => :large) -> '75x75'
+  # Allow options to contain :width and :height override keys
+  #----------------------------------------------------------------------------
+  def self.size_from_style!(options)
+    if options[:width] && options[:height]
+      options[:size] = [:width, :height].map{|d| options[d]}.join("x") 
+    elsif Avatar::STYLES.keys.include?(options[:size])
+      options[:size] = Avatar::STYLES[options[:size]].sub(/\#$/,'')
+    end
+    options
+  end
 
+end

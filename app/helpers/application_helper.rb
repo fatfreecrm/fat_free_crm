@@ -312,45 +312,26 @@ module ApplicationHelper
     end
   end
 
-  # Users can upload their avatar, and if it's missing we're going to use
-  # gravatar. For leads and contacts we always use gravatars.
+  # Entities can have associated avatars or gravatars. Only calls Gravatar
+  # in production env. Gravatar won't serve default images if they are not
+  # publically available: http://en.gravatar.com/site/implement/images
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { :class => 'gravatar', :size => :large }.merge(args)
-    if model.avatar
+
+    if model.respond_to?(:avatar) and model.avatar.present?
       Avatar
       image_tag(model.avatar.image.url(args[:size]), args)
-    elsif model.email
-      # Gravatar requires '75x75' format, so convert symbols keys (e.g. :large)
-      if style_size = Avatar::STYLES[args[:size]]
-        args[:size] = style_size.sub(/\#$/,'')
-      end
-      # If we are passing an explicit w*h override (for uploaded avatars),
-      # then use that as the size.
-      if args[:width] && args[:height]
-        args[:size] = [:width, :height].map{|d|args[d]}.join("x")
-      end
-      gravatar_for(model, args)
     else
-      image_tag("avatar.jpg", args)
+      args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
+      if (Rails.env != 'production') and model.respond_to?(:email) and model.email.present?
+        args = { :gravatar => { :default => image_path('avatar.jpg') } }.merge(args)
+        gravatar_image_tag(model.email, args)
+      else
+        image_tag("avatar.jpg", args)
+      end
     end
-  end
-
-  # Gravatar helper that adds default CSS class and image URL.
-  #----------------------------------------------------------------------------
-  def gravatar_for(model, args = {})
-    args = { :class => 'gravatar', :gravatar => { :default => default_avatar_url } }.merge(args)
-    gravatar_image_tag(model.email, args)
-  end
-
-  #----------------------------------------------------------------------------
-  def default_avatar_url
-    url = image_path('avatar.jpg')
-    if ActionController::Base.config.asset_host.present?
-      url
-    else
-      request.protocol + request.host_with_port + url
-    end
+      
   end
 
   # Returns default permissions intro.
