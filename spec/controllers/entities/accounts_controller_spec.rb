@@ -372,9 +372,9 @@ describe AccountsController do
         @account = FactoryGirl.create(:account, :id => 42, :access => "Public")
 
         xhr :put, :update, :id => 42, :account => { :name => "Hello", :access => "Shared", :user_ids => [7, 8] }
-        account = assigns[:account]
-        account.access.should == "Shared"
-        account.user_ids.sort.should == [7, 8]
+        assigns[:account].reload
+        assigns[:account].access.should == "Shared"
+        assigns[:account].user_ids.sort.should == [7, 8]
       end
 
       describe "account got deleted or otherwise unavailable" do

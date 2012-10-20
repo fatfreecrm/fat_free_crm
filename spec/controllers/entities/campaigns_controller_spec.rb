@@ -377,6 +377,7 @@ describe CampaignsController do
         she = FactoryGirl.create(:user, :id => 8)
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello", :access => "Shared", :user_ids => %w(7 8) }
+        assigns[:campaign].reload
         assigns[:campaign].access.should == "Shared"
         assigns[:campaign].user_ids.sort.should == [ 7, 8 ]
       end

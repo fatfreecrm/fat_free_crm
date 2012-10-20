@@ -431,8 +431,9 @@ describe ContactsController do
         @contact = FactoryGirl.create(:contact, :id => 42, :access => "Public")
 
         xhr :put, :update, :id => 42, :contact => { :first_name => "Hello", :access => "Shared", :user_ids => [7, 8] }, :account => {}
+        assigns[:contact].reload
         assigns[:contact].access.should == "Shared"
-        assigns[:contact].reload.user_ids.sort.should == [ 7, 8 ]
+        assigns[:contact].user_ids.sort.should == [ 7, 8 ]
         assigns[:contact].should == @contact
       end
 
