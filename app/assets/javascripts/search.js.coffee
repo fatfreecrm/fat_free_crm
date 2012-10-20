@@ -47,6 +47,13 @@
     $("select.predicate").change()
 
 
+    # For basic search, remove placeholder text on focus, restore on blur
+    $('#query').focusin (e) ->
+      $(this).data('placeholder', $(this).attr('placeholder')).attr('placeholder', '')
+    $('#query').focusout (e) ->
+      $(this).attr('placeholder', $(this).data('placeholder'))
+
+
     # Search tabs
     # -----------------------------------------------------
     activate_search_form = (search_form) ->
