@@ -324,7 +324,7 @@ module ApplicationHelper
       image_tag(model.avatar.image.url(args[:size]), args)
     else
       args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
-      if (Rails.env != 'production') and model.respond_to?(:email) and model.email.present?
+      if (Rails.env == 'production') and model.respond_to?(:email) and model.email.present?
         args = { :gravatar => { :default => image_path('avatar.jpg') } }.merge(args)
         gravatar_image_tag(model.email, args)
       else
