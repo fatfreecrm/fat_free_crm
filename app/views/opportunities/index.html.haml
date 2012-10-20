@@ -1,12 +1,6 @@
 = styles_for :opportunity
 
-= image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-
-#buttons
-  = render 'format_buttons'
-  .create_asset
-    = link_to_inline(:create_opportunity, new_opportunity_path, :text => t(:create_opportunity))
-
+= render 'title_bar'
 = render 'search'
 
 .remote#create_opportunity{ hidden }

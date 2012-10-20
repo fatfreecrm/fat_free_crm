@@ -1,12 +1,6 @@
 = styles_for :lead
 
-= image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-
-#buttons
-  = render 'format_buttons'
-  .create_asset
-    = link_to_inline(:create_lead, new_lead_path, :text => t(:create_lead))
-
+= render 'title_bar'
 = render 'search'
 
 .remote#create_lead{ hidden }

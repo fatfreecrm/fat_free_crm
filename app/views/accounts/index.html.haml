@@ -1,12 +1,6 @@
 = styles_for :account
 
-= image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-
-#buttons
-  = render 'format_buttons'
-  .create_asset
-    = link_to_inline(:create_account, new_account_path, :text => t(:create_account))
-
+= render 'title_bar'
 = render 'search'
 
 .remote#create_account{ hidden }

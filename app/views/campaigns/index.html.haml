@@ -1,12 +1,6 @@
 = styles_for :campaign
 
-= image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-
-#buttons
-  = render 'format_buttons'
-  .create_asset
-    = link_to_inline(:create_campaign, new_campaign_path, :text => t(:create_campaign))
-
+= render 'title_bar'
 = render 'search'
 
 .remote#create_campaign{ hidden }
