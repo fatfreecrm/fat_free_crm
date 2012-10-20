@@ -2,7 +2,7 @@
 
   margin-top: 15px;
 
-	.tabs {  
+	.tabs {
 		background: none;
 
 		li {
@@ -21,7 +21,7 @@
 			}
 		}
 	}
-	
+
 	.search_form {
 		border: none;
 		background-color: #eee;
@@ -42,14 +42,12 @@
   #query {
     margin-top: 6px;
   }
-} 
+}
 
 .defaultTextActive { color: #a1a1a1; }
 
 #buttons {
-  float: right;
-  padding: 7px;
-
+  display: inline-block;
   .create_asset, ul { display: inline; }
   .create_asset {
     margin-left: 24px;
@@ -68,10 +66,10 @@ ul.format-buttons li {
   display: inline;
   margin: 0 5px;
 
-  a { 
+  a {
     display: inline-block;
-    width: 16px; 
-    height: 16px; 
+    width: 16px;
+    height: 16px;
     opacity: 0.3;
   }
   a.active { opacity: 1; }

@@ -1,14 +1,7 @@
-- model_klass = controller_name.singularize.camelcase.constantize
-- current_sort_by = t("option_" + model_klass.sort_by_map.invert[@sort_by])
 - current_naming  = t("option_#{@naming}")
 
 %div{ :style => "margin: 0px 0px 6px 0px" }
-  = text_field_tag('query', @current_query, :size => 23, :placeholder => "Search #{controller_name}")
-
-  .sorting.options
-    -# sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name.
-    = t(:sort_by, :models => t(:"#{controller_name}_small"), :field => link_to(current_sort_by, "#", :id => :sort_by)).html_safe
-
+  = text_field_tag('query', @current_query, :size => 32, :placeholder => "Search #{controller_name}")
 %script
   = render "shared/sort_by"
 

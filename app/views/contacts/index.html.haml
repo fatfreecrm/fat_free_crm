@@ -1,12 +1,6 @@
 = styles_for :contact
 
-= image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-
-#buttons
-  = render 'format_buttons'
-  .create_asset
-    = link_to_inline(:create_contact, new_contact_path, :text => t(:create_contact))
-
+= render 'title_bar'
 = render 'search'
 
 .remote#create_contact{ hidden }
