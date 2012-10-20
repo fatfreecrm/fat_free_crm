@@ -1,4 +1,5 @@
 .filters#filters
+  .caption= t :opportunity_stages
   - @stage.each do |value, key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}

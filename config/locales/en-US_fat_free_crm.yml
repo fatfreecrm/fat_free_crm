@@ -286,6 +286,7 @@ en-US:
   select_an_account: Select an Account
   account_small: account
   account_summary: Account Summary
+  account_categories: Account Categories
   accounts: Accounts
   accounts_options: Accounts Options
   accounts_small: accounts
@@ -322,6 +323,7 @@ en-US:
   campaign_small: campaign
   campaign_summary: Campaign Summary
   campaign_targets: Campaign Targets
+  campaign_statuses: Campaign Statuses
   campaigns: Campaigns
   campaigns_options: Campaigns Options
   campaigns_small: campaigns
@@ -409,6 +411,7 @@ en-US:
   lead_small: lead
   lead_status_small: lead status
   lead_summary: Lead Summary
+  lead_statuses: Lead Statuses
   leads: Leads
   leads_options: Leads Options
   leads_small: leads
@@ -444,6 +447,7 @@ en-US:
   opportunities_small: opportunities
   opportunity: Opportunity
   opportunity_small: opportunity
+  opportunity_stages: Opportunity Stages
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: "%{amount} with %{discount} discount and %{probability} probability"
   past_due: past due, was expected to close %{value} ago
@@ -871,7 +875,7 @@ en-US:
       title:     Long Answer
     select:
       title:     Select List
-    multiselect: 
+    multiselect:
       title:     Multi Select
     radio:
       title:     Radio Buttons
