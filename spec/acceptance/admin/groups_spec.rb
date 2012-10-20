@@ -15,7 +15,7 @@ feature 'Groups tab', %q{
     visit admin_groups_path
     page.should have_content("Couldn't find any Groups.")
     click_link 'create a new group'
-    wait_until { find_field('group[name]') } # wait for AJAX to load
+    page.should have_selector('#group_name', :visible => true)
     fill_in 'group_name', :with => 'The Enterprise Bridge'
     chosen_select('Mr Spock', :from => 'group_user_ids')
     click_button 'Create Group'

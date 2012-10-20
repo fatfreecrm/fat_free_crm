@@ -40,7 +40,7 @@ module ApplicationHelper
       if flash[type]
         html = content_tag(:div, h(flash[type]), :id => "flash")
         flash[type] = nil
-        return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})", :type => "text/javascript")
+        return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})".html_safe, :type => "text/javascript")
       end
     end
     content_tag(:p, nil, :id => "flash", :style => "display:none;")
@@ -100,7 +100,8 @@ module ApplicationHelper
     link_to(text,
       url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
-      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
+      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));",
+      :class => options[:class]
     )
   end
 
@@ -125,7 +126,7 @@ module ApplicationHelper
   def link_to_delete(record, options = {})
     object = record.is_a?(Array) ? record.last : record
     confirm = options[:confirm] || nil
-    
+
     link_to(t(:delete) + "!",
       options[:url] || url_for(record),
       :method => :delete,
@@ -275,13 +276,25 @@ module ApplicationHelper
     )
   end
 
+  # Ajax helper to refresh current index page once the user changes pagination per_page.
+  #-------------------------------------------------------------------------------------
+  def redraw_pagination(value)
+    remote_function(
+      :url       => send("redraw_#{controller.controller_name}_path"),
+      :with      => "'per_page=#{value}'",
+      :condition => "jQuery('.per_page_options .current').html() != '#{value}'",
+      :loading   => "$('loading').show()",
+      :complete  => "$('loading').hide()"
+    )
+  end
+
   #----------------------------------------------------------------------------
   def options_menu_item(option, key, url = nil)
     name = t("option_#{key}")
     "{ name: \"#{name.titleize}\", on_select: function() {" +
     remote_function(
       :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "'#{option}=#{key}'",
+      :with      => "'#{option}=#{key}&query=' + $(\"query\").value",
       :condition => "$('#{option}').innerHTML != '#{name}'",
       :loading   => "$('#{option}').update('#{name}'); $('loading').show()",
       :complete  => "$('loading').hide()"
@@ -391,6 +404,7 @@ module ApplicationHelper
     url_params.merge!(:query => params[:query]) unless params[:query].blank?
     url_params.merge!(:q => params[:q]) unless params[:q].blank?
     url_params.merge!(:view => @view) unless @view.blank? # tasks
+    url_params.merge!(:id => params[:id]) unless params[:id].blank?
 
     exports = %w(xls csv).map do |format|
       link_to(format.upcase, url_params.merge(:format => format), :title => I18n.t(:"to_#{format}")) unless action.to_s == "show"
@@ -432,9 +446,51 @@ module ApplicationHelper
   def group_options
     Group.all.map {|g| [g.name, g.id]}
   end
-  
+
   def list_of_entities
     ENTITIES
   end
-  
+
+  def entity_filter_checkbox(name, value, count)
+    checked = (session["#{controller_name}_filter"] ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
+    values = %Q{$$("input[name='#{name}[]']").findAll(function (el) { return el.checked }).pluck("value")}
+    params = h(%Q{"#{name}=" + #{values} + "&query=" + $("query").value})
+
+    onclick = remote_function(
+      :url      => { :action => :filter },
+      :with     => params,
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    check_box_tag("#{name}[]", value, checked, :id => value, :onclick => onclick)
+  end
+
+
+  # Create a column in the 'asset_attributes' table.
+  #----------------------------------------------------------------------------
+  def asset_attribute_columns(title, value, last = false, email = false)
+    # Parse and format urls as links.
+    fmt_value = (value.to_s || "").gsub("\n", "<br />")
+    fmt_value = if email
+        link_to_email(fmt_value)
+      else
+        fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
+      end
+    %Q^<th class="#{last ? "last" : ""}">#{title}:</td>
+  <td class="#{last ? "last" : ""}">#{fmt_value}</td>^.html_safe
+  end
+
+  #----------------------------------------------------------------------------
+  # Combines the 'subtitle' helper with the small info text on the same line.
+  def asset_attribute_section(id, hidden = true, text = nil, info_text = nil)
+    text = id.to_s.split("_").last.capitalize if text == nil
+    content_tag("div", :class => "subtitle show_attributes") do
+      content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
+        url_for(:controller => :home, :action => :toggle, :id => id),
+        :remote  => true,
+        :onclick => "crm.flip_subtitle(this)"
+      )
+      content << content_tag("small", info_text.to_s, {:class => "subtitle_inline_info", :id => "#{id}_intro", :style => hidden ? "" : "display:none;"})
+    end
+  end
 end

@@ -45,14 +45,14 @@ var crm = {
   hide_form: function(id) {
     if($('facebook-list')) $('facebook-list').remove();
     var arrow = $(id + "_arrow") || $("arrow");
-    arrow.update(this.COLLAPSED);
+    if (arrow) arrow.update(this.COLLAPSED);
     $(id).hide().update("").setStyle({height: 'auto'});
   },
 
   //----------------------------------------------------------------------------
   show_form: function(id) {
     var arrow = $(id + "_arrow") || $("arrow");
-    arrow.update(this.EXPANDED);
+    if (arrow) arrow.update(this.EXPANDED);
     Effect.BlindDown(id, { duration: 0.25, afterFinish: function() {
         var input = $(id).down("input[type=text]");
         if (input) input.focus();
@@ -372,7 +372,7 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  
+
   search: function(query, controller) {
     var list = controller;          // ex. "users"
     if (list.indexOf("/") >= 0) {   // ex. "admin/users"
@@ -481,24 +481,4 @@ document.on("click", "*[data-tab-class]", function(event, element) {
 
   $(klass + "_section").show();
   element.addClassName('selected');
-});
-
-// For advanced search we show a spinner and dim the page when loading results
-// This method undoes that when the results are returned. Ideally, this should
-// be converted to jQuery (using the 'live' method) and put in search.js.coffee
-// but we have to move to jquery-ujs first as all ajax events are current
-// registered with prototype
-document.observe("dom:loaded", function() { 
-  Event.observe(document.body, 'ajax:complete', function(e, el) {
-    if (el = e.findElement('.advanced_search')) {
-      $("loading").hide();
-      $("advanced_search").setStyle({ opacity: 1 });
-    }
-  });
-  Event.observe(document.body, 'ajax:failure', function(e, el) {
-    if (el = e.findElement('.advanced_search')) {
-      $('flash').update('An error occurred whilst trying to search'); // no i18n
-      crm.flash('error');
-    }
-  });
 });

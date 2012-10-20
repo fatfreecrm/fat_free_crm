@@ -23,8 +23,8 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities
   #----------------------------------------------------------------------------
   def index
-    @opportunities = get_opportunities(:page => params[:page])
-    
+    @opportunities = get_opportunities(:page => params[:page], :per_page => params[:per_page])
+
     respond_with @opportunities do |format|
       format.xls { render :layout => 'header' }
     end
@@ -160,27 +160,18 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /opportunities/options                                             AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:opportunities_per_page] || Opportunity.per_page
-      @outline  = current_user.pref[:opportunities_outline]  || Opportunity.outline
-      @sort_by  = current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by
-    end
-  end
-
   # POST /opportunities/redraw                                             AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @opportunities = get_opportunities(:page => 1)
+    @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
+    set_options # Refresh options
     render :index
   end
 
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
-    @opportunities = get_opportunities(:page => 1)
+    @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
     render :index
   end
 
@@ -188,6 +179,14 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_opportunities :get_list_of_records
+
+  def set_options
+    unless params[:cancel].true?
+      @per_page = current_user.pref[:opportunities_per_page] || Opportunity.per_page
+      @outline  = current_user.pref[:opportunities_outline]  || Opportunity.outline
+      @sort_by  = current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by
+    end
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

@@ -1,4 +1,5 @@
-- gravatar_size = current_user.preference[:contacts_outline] == "brief" ? "16x16" : "30x30"
+- contacts_outline = params[:contacts_outline] || @current_user.preference[:contacts_outline]
+- gravatar_size = contacts_outline == "brief" ? "16x16" : "30x30"
 
 %li.highlight[contact]
   = gravatar_for(contact, :size => gravatar_size)
@@ -16,7 +17,7 @@
       %li= link_to_delete(contact)
 
   .indentslim
-    = link_to_if can?(:read, contact), contact.full_name(current_user.preference[:contacts_naming]), contact
+    = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
     %tt
       - if contact.title? && contact.department?
         == #{contact.title}, #{contact.department}
@@ -30,7 +31,7 @@
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
-    - unless current_user.preference[:contacts_outline] == "brief"
+    - if %w(long full).include?(contacts_outline)
       %dt{ :style => "padding: 2px 0px 0px 0px" }
         - if can?(:read, contact)
           - if contact.email.present?
@@ -50,3 +51,11 @@
           .tags= tags_for_index(contact)
 
       = hook(:contact_bottom, self, :contact => contact)
+
+    - if contacts_outline == "full"
+      %dt{ :style => "padding: 2px 0px 0px 0px" }
+        - if can?(:read, contact)
+          = render :partial => "/contacts/show_contact_sections", :locals => {:contact => contact}
+          - @comment = Comment.new
+          = render "comments/new", :commentable => contact
+        = render :partial => "shared/timeline", :collection => (contact.comments + contact.emails).sort { |x, y| y.created_at <=> x.created_at }

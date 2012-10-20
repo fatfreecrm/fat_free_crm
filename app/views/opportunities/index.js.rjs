@@ -3,5 +3,5 @@ if @opportunities.any?
 else
   page[:opportunities].replace_html :partial => "shared/empty"
 end
-page[:paginate].replace_html :partial => "shared/paginate"
+page[:paginate].replace_html :partial => "shared/paginate_with_per_page"
 page[:export].replace_html render(:partial => "shared/export")

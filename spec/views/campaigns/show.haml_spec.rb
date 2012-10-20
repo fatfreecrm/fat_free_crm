@@ -12,7 +12,7 @@ describe "/campaigns/show" do
     assign(:users, [ current_user ])
     assign(:comment, Comment.new)
     assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @campaign) ])
-    view.stub!(:params).and_return({:id => 7})
+    view.stub(:params) { {:id => 123} }
   end
 
   it "should render campaign landing page" do

@@ -17,12 +17,12 @@
 
 class AccountsController < EntitiesController
   before_filter :get_data_for_sidebar, :only => :index
-  
+
   # GET /accounts
   #----------------------------------------------------------------------------
   def index
-    @accounts = get_accounts(:page => params[:page])
-    
+    @accounts = get_accounts(:page => params[:page], :per_page => params[:per_page])
+
     respond_with @accounts do |format|
       format.xls { render :layout => 'header' }
     end
@@ -113,23 +113,14 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /accounts/options                                                  AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:accounts_per_page] || Account.per_page
-      @outline  = current_user.pref[:accounts_outline]  || Account.outline
-      @sort_by  = current_user.pref[:accounts_sort_by]  || Account.sort_by
-    end
-  end
-
   # POST /accounts/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
     current_user.pref[:accounts_outline]  = params[:outline]  if params[:outline]
     current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
-    @accounts = get_accounts(:page => 1)
+    @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
+    set_options # Refresh options
     render :index
   end
 
@@ -137,7 +128,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:accounts_filter] = params[:category]
-    @accounts = get_accounts(:page => 1)
+    @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
     render :index
   end
 
@@ -145,6 +136,14 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_accounts :get_list_of_records
+
+  def set_options
+    unless params[:cancel].true?
+      @per_page = current_user.pref[:accounts_per_page] || Account.per_page
+      @outline  = current_user.pref[:accounts_outline]  || Account.outline
+      @sort_by  = current_user.pref[:accounts_sort_by]  || Account.sort_by
+    end
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

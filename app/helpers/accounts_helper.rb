@@ -19,15 +19,8 @@ module AccountsHelper
 
   # Sidebar checkbox control for filtering accounts by category.
   #----------------------------------------------------------------------------
-  def account_category_checbox(category, count)
-    checked = (session[:accounts_filter] ? session[:accounts_filter].split(",").include?(category.to_s) : count.to_i > 0)
-    onclick = remote_function(
-      :url      => { :action => :filter },
-      :with     => h(%Q/"category=" + $$("input[name='category[]']").findAll(function (el) { return el.checked }).pluck("value")/),
-      :loading  => "$('loading').show()",
-      :complete => "$('loading').hide()"
-    )
-    check_box_tag("category[]", category, checked, :id => category, :onclick => onclick)
+  def account_category_checkbox(category, count)
+    entity_filter_checkbox(:category, category, count)
   end
 
   # Quick account summary for RSS/ATOM feeds.
@@ -40,7 +33,7 @@ module AccountsHelper
       t('pluralize.comment', account.comments.count)
     ].join(', ')
   end
-  
+
   def account_select(options = {})
       # Generates a select list with the first 25 accounts,
       # and prepends the currently selected account, if available
@@ -50,27 +43,27 @@ module AccountsHelper
                         {:"data-placeholder" => t(:select_an_account),
                          :style => "width:330px; display:none;" }
   end
-  
+
   # Select an existing account or create a new one.
   #----------------------------------------------------------------------------
   def account_select_or_create(form, &block)
     options = {}
     yield options if block_given?
-    
+
     content_tag(:div, :class => 'label') do
       t(:account).html_safe +
-    
+
       content_tag(:span, :id => 'account_create_title') do
         "(#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(1); return false;'>#{t :select_existing}</a>):".html_safe
       end.html_safe +
-    
+
       content_tag(:span, :id => 'account_select_title') do
         "(<a href='#' onclick='crm.create_account(1); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):".html_safe
       end.html_safe +
-    
+
       content_tag(:span, ':', :id => 'account_disabled_title').html_safe
     end.html_safe +
-    
+
     account_select(options).html_safe +
     form.text_field(:name, :style => 'width:324px; display:none;')
   end

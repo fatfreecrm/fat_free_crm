@@ -19,9 +19,8 @@ namespace :ffcrm do
   namespace :demo do
     desc "Load demo data"
     task :load => :environment do
-      # Load fixtures from s
+      # Load fixtures
       require 'active_record/fixtures'
-      ActiveRecord::Base.establish_connection(Rails.env.to_sym)
       Dir.glob(FatFreeCRM.root.join('db', 'demo', '*.{yml,csv}')).each do |fixture_file|
         ActiveRecord::Fixtures.create_fixtures(FatFreeCRM.root.join('db/demo'), File.basename(fixture_file, '.*'))
       end

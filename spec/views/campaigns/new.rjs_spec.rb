@@ -15,13 +15,6 @@ describe "/campaigns/new" do
     rendered.should include('crm.flick("empty", "toggle")')
   end
 
-  it "should hide options form when called from Campaigns index" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns"
-    render
-
-    rendered.should include('crm.hide_form("options")')
-  end
-
   describe "new campaign" do
     it "should render [new] template into :create_campaign div" do
       params[:cancel] = nil

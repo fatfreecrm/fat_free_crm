@@ -24,6 +24,7 @@ feature 'Tasks', %q{
     visit tasks_page
     page.should have_content('Create Task')
     click_link 'Create Task'
+    page.should have_selector('#task_name', :visible => true)
     fill_in 'task_name', :with => 'Task I Need To Do'
     chosen_select('Tomorrow', :from => 'task_bucket')
     chosen_select('Myself', :from => 'task_assigned_to')
@@ -39,6 +40,7 @@ feature 'Tasks', %q{
     FactoryGirl.create(:user, :first_name => 'Another', :last_name => 'User')
     visit tasks_page
     click_link 'Create Task'
+    page.should have_selector('#task_name', :visible => true)
     fill_in 'task_name', :with => 'Task For Someone Else'
     chosen_select('Tomorrow', :from => 'task_bucket')
     chosen_select('Another User', :from => 'task_assigned_to')

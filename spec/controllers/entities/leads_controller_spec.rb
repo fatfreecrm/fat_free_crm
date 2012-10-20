@@ -351,7 +351,7 @@ describe LeadsController do
         @lead.permissions.map(&:asset_id).should == [ @lead.id, @lead.id ]
         @lead.permissions.map(&:asset_type).should == %w(Lead Lead)
       end
-      
+
       it "should get the data to update leads sidebar if called from leads index" do
         @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
@@ -378,7 +378,7 @@ describe LeadsController do
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
         assigns[:campaign].should == @campaign
       end
-      
+
       it "should add a new comment to the newly created lead when specified" do
         @lead = FactoryGirl.create(:lead)
         Lead.stub!(:new).and_return(@lead)
@@ -980,31 +980,6 @@ describe LeadsController do
     end
 
     it_should_behave_like("auto complete")
-  end
-
-  # GET /leads/options                                                     AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET options" do
-    it "should set current user preferences when showing options" do
-      @per_page = FactoryGirl.create(:preference, :user => current_user, :name => "leads_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = FactoryGirl.create(:preference, :user => current_user, :name => "leads_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
-      @sort_by  = FactoryGirl.create(:preference, :user => current_user, :name => "leads_sort_by",  :value => Base64.encode64(Marshal.dump("leads.first_name ASC")))
-      @naming   = FactoryGirl.create(:preference, :user => current_user, :name => "leads_naming",   :value => Base64.encode64(Marshal.dump("option_after")))
-
-      xhr :get, :options
-      assigns[:per_page].should == 42
-      assigns[:outline].should  == "option_long"
-      assigns[:sort_by].should  == "leads.first_name ASC"
-      assigns[:naming].should   == "option_after"
-    end
-
-    it "should not assign instance variables when hiding options" do
-      xhr :get, :options, :cancel => "true"
-      assigns[:per_page].should == nil
-      assigns[:outline].should  == nil
-      assigns[:sort_by].should  == nil
-      assigns[:naming].should   == nil
-    end
   end
 
   # POST /leads/redraw                                                     AJAX

@@ -21,8 +21,8 @@ class CampaignsController < EntitiesController
   # GET /campaigns
   #----------------------------------------------------------------------------
   def index
-    @campaigns = get_campaigns(:page => params[:page])
-    
+    @campaigns = get_campaigns(:page => params[:page], :per_page => params[:per_page])
+
     respond_with @campaigns do |format|
       format.xls { render :layout => 'header' }
     end
@@ -37,21 +37,21 @@ class CampaignsController < EntitiesController
         @comment = Comment.new
         @timeline = timeline(@campaign)
       end
-      
+
       format.xls do
         @leads = @campaign.leads
         render '/leads/index', :layout => 'header'
       end
-      
+
       format.csv do
         render :csv => @campaign.leads
       end
-      
+
       format.rss do
         @items  = "leads"
         @assets = @campaign.leads
       end
-      
+
       format.atom do
         @items  = "leads"
         @assets = @campaign.leads
@@ -137,23 +137,14 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /campaigns/options                                                 AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:campaigns_per_page] || Campaign.per_page
-      @outline  = current_user.pref[:campaigns_outline]  || Campaign.outline
-      @sort_by  = current_user.pref[:campaigns_sort_by]  || Campaign.sort_by
-    end
-  end
-
   # POST /campaigns/redraw                                                 AJAX
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:campaigns_per_page] = params[:per_page] if params[:per_page]
     current_user.pref[:campaigns_outline]  = params[:outline]  if params[:outline]
     current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
-    @campaigns = get_campaigns(:page => 1)
+    @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
+    set_options # Refresh options
     render :index
   end
 
@@ -161,7 +152,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:campaigns_filter] = params[:status]
-    @campaigns = get_campaigns(:page => 1)
+    @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
     render :index
   end
 
@@ -169,6 +160,14 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_campaigns :get_list_of_records
+
+  def set_options
+    unless params[:cancel].true?
+      @per_page = current_user.pref[:campaigns_per_page] || Campaign.per_page
+      @outline  = current_user.pref[:campaigns_outline]  || Campaign.outline
+      @sort_by  = current_user.pref[:campaigns_sort_by]  || Campaign.sort_by
+    end
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
