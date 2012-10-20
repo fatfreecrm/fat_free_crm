@@ -40,7 +40,7 @@ module ApplicationHelper
       if flash[type]
         html = content_tag(:div, h(flash[type]), :id => "flash")
         flash[type] = nil
-        return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})", :type => "text/javascript")
+        return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})".html_safe, :type => "text/javascript")
       end
     end
     content_tag(:p, nil, :id => "flash", :style => "display:none;")
