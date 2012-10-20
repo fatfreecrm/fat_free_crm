@@ -135,6 +135,8 @@ class Contact < ActiveRecord::Base
       
     end
     self.reload
+    # Must set access before user_ids, because user_ids= method depends on access value.
+    self.access = params[:contact][:access] if params[:contact][:access]
     self.attributes = params[:contact]
     self.save
   end

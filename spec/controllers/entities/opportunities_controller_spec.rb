@@ -580,7 +580,6 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42, :access => "Public")
 
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello", :access => "Shared", :user_ids => [7, 8] }, :account => { :name => "Test Account" }
-        assigns[:opportunity].reload
         assigns[:opportunity].access.should == "Shared"
         assigns[:opportunity].user_ids.sort.should == [ 7, 8 ]
       end

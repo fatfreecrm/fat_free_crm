@@ -134,6 +134,8 @@ class Opportunity < ActiveRecord::Base
       end
     end
     self.reload
+    # Must set access before user_ids, because user_ids= method depends on access value.
+    self.access = params[:opportunity][:access] if params[:opportunity][:access]
     self.attributes = params[:opportunity]
     self.save
   end

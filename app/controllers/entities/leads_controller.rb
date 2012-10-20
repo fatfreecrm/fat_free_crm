@@ -96,6 +96,8 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@lead) do |format|
+      # Must set access before user_ids, because user_ids= method depends on access value.
+      @lead.access = params[:lead][:access] if params[:lead][:access]
       if @lead.update_with_lead_counters(params[:lead])
         update_sidebar
       else

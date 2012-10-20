@@ -484,8 +484,7 @@ describe LeadsController do
         she = FactoryGirl.create(:user, :id => 8)
 
         xhr :put, :update, :id => @lead.id, :lead => { :access => "Shared", :user_ids => %w(7 8) }
-        @lead.reload
-        @lead.user_ids =~ [ 7, 8 ]
+        @lead.user_ids.should == [ 7, 8 ]
       end
 
       it "should get the data for leads sidebar when called from leads index" do

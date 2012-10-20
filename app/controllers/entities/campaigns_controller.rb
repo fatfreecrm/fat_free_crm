@@ -106,6 +106,8 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@campaign) do |format|
+      # Must set access before user_ids, because user_ids= method depends on access value.
+      @campaign.access = params[:campaign][:access] if params[:campaign][:access]
       if @campaign.update_attributes(params[:campaign])
         get_data_for_sidebar if called_from_index_page?
       else

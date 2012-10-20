@@ -82,6 +82,8 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@account) do |format|
+      # Must set access before user_ids, because user_ids= method depends on access value.
+      @account.access = params[:account][:access] if params[:account][:access]
       if @account.update_attributes(params[:account])
         get_data_for_sidebar
       else
