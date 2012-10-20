@@ -23,7 +23,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def index
     @leads = get_leads(:page => params[:page])
-    
+
     respond_with @leads do |format|
        format.xls { render :layout => 'header' }
     end
@@ -173,16 +173,6 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /leads/options                                                     AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:leads_per_page] || Lead.per_page
-      @outline  = current_user.pref[:leads_outline]  || Lead.outline
-      @sort_by  = current_user.pref[:leads_sort_by]  || Lead.sort_by
-      @naming   = current_user.pref[:leads_naming]   || Lead.first_name_position
-    end
-  end
 
   # POST /leads/redraw                                                     AJAX
   #----------------------------------------------------------------------------
@@ -202,7 +192,8 @@ class LeadsController < EntitiesController
       current_user.pref[:contacts_naming] ||= params[:naming]
     end
 
-    @leads = get_leads(:page => 1) # Start one the first page.
+    @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
+    set_options # Refresh options
     render :index
   end
 
@@ -210,7 +201,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:leads_filter] = params[:status]
-    @leads = get_leads(:page => 1) # Start one the first page.
+    @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
     render :index
   end
 
@@ -222,6 +213,15 @@ private
   #----------------------------------------------------------------------------
   def get_campaigns
     @campaigns = Campaign.my.order('name')
+  end
+
+  def set_options
+    unless params[:cancel].true?
+      @per_page = current_user.pref[:leads_per_page] || Lead.per_page
+      @outline  = current_user.pref[:leads_outline]  || Lead.outline
+      @sort_by  = current_user.pref[:leads_sort_by]  || Lead.sort_by
+      @naming   = current_user.pref[:leads_naming]   || Lead.first_name_position
+    end
   end
 
   #----------------------------------------------------------------------------

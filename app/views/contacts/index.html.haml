@@ -1,20 +1,12 @@
 = styles_for :contact
 
-.title_tools
-  = link_to_inline(:create_contact, new_contact_path, :text=> t(:create_contact)) << " | "
-  - if Setting.advanced_search_enabled
-    = link_to_inline(:advanced_search, advanced_search_contacts_path, :text => t(:advanced_search)) << " | "
-  = link_to_inline(:options, options_contacts_path, :text=> t(:options))
-
-.title
-  %span#create_contact_title #{t :contacts}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-.remote#options{ hidden }
-.remote#advanced_search{ hidden_if(!params[:q]) }
-  - if params[:q]
-    = render :partial => "advanced_search"
+= render 'title_bar'
 
 .remote#create_contact{ hidden }
+
+= render 'search'
+
+.remote#options{ hidden }
 
 .list#contacts
   - if @contacts.any?
@@ -22,5 +14,5 @@
   - else
     = render "shared/empty"
 
-#paginate= render "shared/paginate"
+#paginate= render "shared/paginate_with_per_page"
 #export= render "shared/export"

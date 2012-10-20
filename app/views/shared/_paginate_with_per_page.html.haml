@@ -1,0 +1,14 @@
+= will_paginate :params => {:action => :index}
+
+- entities = instance_variable_get("@#{controller_name}")
+- if entities.count > @per_page.to_i
+  .per_page_options
+    %span.per_page_label
+      = t(controller_name)
+      per page:
+
+    - [ 10, 20, 30, 50 ].each do |count|
+      - if count == @per_page.to_i
+        %em.current= count
+      - else
+        = link_to count, '#', :onclick => redraw_pagination(count) << 'return false;', :"data-count" => count

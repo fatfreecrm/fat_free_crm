@@ -20,8 +20,8 @@ $color_header_background: #1e4262;
 $color_logo: greenyellow;
 $color_tab: white;
 $color_tab_background: #466bb1;
-$color_active_tab: navy;
-$color_active_tab_background: azure;
+$color_active_tab: black;
+$color_active_tab_background: #E5E5E5;
 $color_hover_tab: navy;
 $color_hover_tab_background: #97baff;
 $size_tab_height: 26px;
@@ -82,7 +82,7 @@ $color_footer: grey;
     input {
       margin: 2px 0px 0px 0px; } } }
 
-#tabs {
+.tabs {
   background: $color_header_background;
   height: $size_tab_height;
   padding: 0px;

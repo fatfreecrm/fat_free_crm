@@ -1,16 +1,16 @@
 .filters#filters
-  = render "shared/search"
+  .caption= t :campaign_statuses
   - Setting.campaign_status.each do |key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @campaign_status_total[key]
-      = campaign_status_checbox(key, @campaign_status_total[key])
+      = campaign_status_checkbox(key, @campaign_status_total[key])
       = label_tag(key, t(key))
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}
       = @campaign_status_total[:other]
-    = campaign_status_checbox("other", @campaign_status_total[:other])
+    = campaign_status_checkbox("other", @campaign_status_total[:other])
     = label_tag(:other, t(:other))
 
   .check_box

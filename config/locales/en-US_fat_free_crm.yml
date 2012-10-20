@@ -34,7 +34,7 @@ en-US:
   affiliate: Affiliate
   competitor: Competitor
   customer: Customer
-  partner: Partneradm
+  partner: Partner
   reseller: Reseller
   vendor: Vendor
 
@@ -227,7 +227,7 @@ en-US:
   option_target_revenue: target revenue
   option_updated_at: date updated
   show_per_page: Show %{number} %{models} per page using %{fmt} format.
-  sort_by: Sort %{models} by %{field}.
+  sort_by: Sort by %{field}
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
 
   # Views -> Profile.
@@ -286,6 +286,7 @@ en-US:
   select_an_account: Select an Account
   account_small: account
   account_summary: Account Summary
+  account_categories: Account Categories
   accounts: Accounts
   accounts_options: Accounts Options
   accounts_small: accounts
@@ -322,6 +323,7 @@ en-US:
   campaign_small: campaign
   campaign_summary: Campaign Summary
   campaign_targets: Campaign Targets
+  campaign_statuses: Campaign Statuses
   campaigns: Campaigns
   campaigns_options: Campaigns Options
   campaigns_small: campaigns
@@ -382,6 +384,16 @@ en-US:
   web_presence: Web Presence
   web_presence_small: web presence
   works_at: "%{job_title} at %{company}"
+  general_info: General Information
+  show_general_info_small: Show general information for this contact.
+  show_extra_info_small: Show extra information for this contact.
+  tag_details: %{tag} Details
+  show_tag_info_small: Show %{tag} information for this contact.
+  shared_with_everyone: Shared with everyone
+  title: Title
+  subscriptions: Subscriptions
+  # contact 'full' view outline
+  option_full: full
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
@@ -399,6 +411,7 @@ en-US:
   lead_small: lead
   lead_status_small: lead status
   lead_summary: Lead Summary
+  lead_statuses: Lead Statuses
   leads: Leads
   leads_options: Leads Options
   leads_small: leads
@@ -434,6 +447,7 @@ en-US:
   opportunities_small: opportunities
   opportunity: Opportunity
   opportunity_small: opportunity
+  opportunity_stages: Opportunity Stages
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: "%{amount} with %{discount} discount and %{probability} probability"
   past_due: past due, was expected to close %{value} ago
@@ -861,7 +875,7 @@ en-US:
       title:     Long Answer
     select:
       title:     Select List
-    multiselect: 
+    multiselect:
       title:     Multi Select
     radio:
       title:     Radio Buttons

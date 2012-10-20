@@ -19,15 +19,8 @@ module OpportunitiesHelper
 
   # Sidebar checkbox control for filtering opportunities by stage.
   #----------------------------------------------------------------------------
-  def opportunity_stage_checbox(stage, count)
-    checked = (session[:opportunities_filter] ? session[:opportunities_filter].split(",").include?(stage.to_s) : count.to_i > 0)
-    onclick = remote_function(
-      :url      => { :action => :filter },
-      :with     => h(%Q/"stage=" + $$("input[name='stage[]']").findAll(function (el) { return el.checked }).pluck("value")/),
-      :loading  => "$('loading').show()",
-      :complete => "$('loading').hide()"
-    )
-    check_box_tag("stage[]", stage, checked, :id => stage, :onclick => onclick)
+  def opportunity_stage_checkbox(stage, count)
+    entity_filter_checkbox(:stage, stage, count)
   end
 
   # Opportunity summary for RSS/ATOM feeds.

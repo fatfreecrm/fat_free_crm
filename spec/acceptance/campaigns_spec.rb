@@ -16,13 +16,13 @@ feature 'Campaigns', %q{
     page.should have_content('Campaign 0')
     page.should have_content('Campaign 1')
     page.should have_content('Campaign 2')
-    page.should have_content('Search campaigns')
     page.should have_content('Create Campaign')
   end
 
   scenario 'should create a campaign', :js => true do
     visit campaigns_page
     click_link 'Create Campaign'
+    page.should have_selector('#campaign_name', :visible => true)
     fill_in 'campaign_name', :with => 'Cool Campaign'
     select 'On Hold', :from => 'campaign_status'
     click_link 'Comment'

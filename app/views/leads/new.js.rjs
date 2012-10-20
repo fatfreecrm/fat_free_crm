@@ -1,5 +1,4 @@
 page.call "crm.flick", :empty, :toggle
-page.call "crm.hide_form", :options if called_from_index_page?
 page.call "crm.flip_form", :create_lead
 
 unless params[:cancel].true?

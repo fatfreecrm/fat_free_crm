@@ -18,6 +18,7 @@
 class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :set_options, :only => :index
 
   load_and_authorize_resource
 
@@ -119,7 +120,7 @@ protected
   def entities
     instance_variable_get("@#{controller_name}") || klass.my
   end
-  
+
 private
 
   #----------------------------------------------------------------------------
@@ -143,15 +144,14 @@ private
     self.current_page  = options[:page]                        if options[:page]
     query, tags        = parse_query_and_tags(options[:query])
     self.current_query = query
-
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
-    
+
     per_page = if options[:per_page]
       options[:per_page] == 'all' ? search.result.count : options[:per_page]
     else
       current_user.pref[:"#{controller_name}_per_page"]
     end
-    
+
     pages = {
       :page     => current_page,
       :per_page => per_page
@@ -161,7 +161,11 @@ private
     # export includes deleted records, and the pagination is enabled only for
     # plain HTTP, Ajax and XML API requests.
     wants = request.format
-    filter = session[:"#{controller_name}_filter"].to_s.split(',')
+
+    # Get filter from session, unless running an advanced search
+    unless params[:q]
+      filter = session[:"#{controller_name}_filter"].to_s.split(',')
+    end
 
     scope = entities.merge(search.result)
     scope = scope.state(filter)                   if filter.present?

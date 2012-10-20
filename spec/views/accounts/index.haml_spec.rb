@@ -4,6 +4,10 @@ describe "/accounts/index" do
   include AccountsHelper
 
   before do
+    view.lookup_context.prefixes << 'entities'
+    assign :per_page, Account.per_page
+    assign :sort_by,  Account.sort_by
+    view.stub(:search) { Account.search {} }
     login_and_assign
   end
 
@@ -18,7 +22,7 @@ describe "/accounts/index" do
 
     render
     view.should render_template(:partial => "_account")
-    view.should render_template(:partial => "shared/_paginate")
+    view.should render_template(:partial => "shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no accounts" do
@@ -27,7 +31,7 @@ describe "/accounts/index" do
     render
     view.should_not render_template(:partial => "_account")
     view.should render_template(:partial => "shared/_empty")
-    view.should render_template(:partial => "shared/_paginate")
+    view.should render_template(:partial => "shared/_paginate_with_per_page")
   end
 end
 

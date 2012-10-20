@@ -22,9 +22,8 @@ class ContactsController < EntitiesController
   # GET /contacts
   #----------------------------------------------------------------------------
   def index
-    @contacts = get_contacts(:page     => params[:page],
-                             :per_page => params[:per_page])
-    
+    @contacts = get_contacts(:page => params[:page], :per_page => params[:per_page])
+
     respond_with @contacts do |format|
       format.xls { render :layout => 'header' }
     end
@@ -132,17 +131,6 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /contacts/options                                                  AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:contacts_per_page] || Contact.per_page
-      @outline  = current_user.pref[:contacts_outline]  || Contact.outline
-      @sort_by  = current_user.pref[:contacts_sort_by]  || Contact.sort_by
-      @naming   = current_user.pref[:contacts_naming]   || Contact.first_name_position
-    end
-  end
-
   # POST /contacts/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
@@ -161,7 +149,8 @@ class ContactsController < EntitiesController
       current_user.pref[:leads_naming] ||= params[:naming]
     end
 
-    @contacts = get_contacts(:page => 1) # Start on the first page.
+    @contacts = get_contacts(:page => 1, :per_page => params[:per_page]) # Start on the first page.
+    set_options # Refresh options
     render :index
   end
 
@@ -172,6 +161,15 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def get_accounts
     @accounts = Account.my.order('name')
+  end
+
+  def set_options
+    unless params[:cancel].true?
+      @per_page = current_user.pref[:contacts_per_page] || Contact.per_page
+      @outline  = current_user.pref[:contacts_outline]  || Contact.outline
+      @sort_by  = current_user.pref[:contacts_sort_by]  || Contact.sort_by
+      @naming   = current_user.pref[:contacts_naming]   || Contact.first_name_position
+    end
   end
 
   #----------------------------------------------------------------------------

@@ -1,19 +1,12 @@
 = styles_for :campaign
 
-.title_tools
-  = link_to_inline(:create_campaign, new_campaign_path, :text => t(:create_campaign)) << " | "
-  - if Setting.advanced_search_enabled
-    = link_to_inline(:advanced_search, advanced_search_campaigns_path, :text => t(:advanced_search)) << " | "
-  = link_to_inline(:options, options_campaigns_path, :text => t(:options))
+= render 'title_bar'
 
-.title
-  %span#create_campaign_title #{t :campaigns}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-.remote#options{ hidden }
-.remote#advanced_search{ hidden_if(!params[:q]) }
-  - if params[:q]
-    = render :partial => "advanced_search"
 .remote#create_campaign{ hidden }
+
+= render 'search'
+
+.remote#options{ hidden }
 
 .list#campaigns
   - if @campaigns.any?
@@ -21,5 +14,5 @@
   - else
     = render "shared/empty"
 
-#paginate= render "shared/paginate"
+#paginate= render "shared/paginate_with_per_page"
 #export= render "shared/export"

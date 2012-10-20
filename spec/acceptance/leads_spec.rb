@@ -17,13 +17,13 @@ feature 'Leads', %q{
     page.should have_content('L Ead 1')
     page.should have_content('L Ead 2')
     page.should have_content('L Ead 3')
-    page.should have_content('Search leads')
     page.should have_content('Create Lead')
   end
 
   scenario 'should create a new lead', :js => true do
     visit leads_page
     click_link 'Create Lead'
+    page.should have_selector('#lead_first_name', :visible => true)
     fill_in 'lead_first_name', :with => 'Mr'
     fill_in 'lead_last_name', :with => 'Lead'
     fill_in 'lead_email', :with => 'mr_lead@example.com'
