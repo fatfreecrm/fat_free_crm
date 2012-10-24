@@ -25,4 +25,3 @@ module AddressesHelper
   end
 
 end
-
