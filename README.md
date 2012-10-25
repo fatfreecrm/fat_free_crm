@@ -138,6 +138,8 @@ the concepts:
 * [Ben Tillman (@warp)](https://github.com/warp)
 * [Steve Kenworthy (@steveyken)](https://github.com/steveyken)
 
+See the [contributors graph](https://github.com/fatfreecrm/fat_free_crm/graphs/contributors) for further details.
+
 ## License
 
 Copyright (c) 2008-2011 by Michael Dvorkin. All rights reserved.
