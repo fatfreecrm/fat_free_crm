@@ -132,6 +132,11 @@ the concepts:
 * http://github.com/michaeldv/crm_web_to_lead/tree/master
 * http://github.com/michaeldv/crm_tags/tree/master
 
+## Contributors
+
+* [Nathan Broadbent (@ndbroadbent)](https://github.com/ndbroadbent)
+* [Ben Tillman (@warp)](https://github.com/warp)
+* [Steve Kenworthy (@steveyken)](https://github.com/steveyken)
 
 ## License
 
