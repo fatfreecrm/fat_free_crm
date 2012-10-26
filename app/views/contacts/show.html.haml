@@ -1,3 +1,4 @@
+
 = styles_for :task, :opportunity
 
 #confirm{ hidden }
@@ -8,8 +9,12 @@
 
 %div#edit_contact{ hidden }
 
-= render "comments/new", :commentable => @contact
-= render :partial => "shared/timeline", :collection => @timeline
+.section.show_fields
+
+  = render :partial => "show_contact_sections", :locals => { :contact => @contact }
+
+  = render "comments/new", :commentable => @contact
+  = render :partial => "shared/timeline", :collection => @timeline
 
 = hook(:show_contact_bottom, self) do
 

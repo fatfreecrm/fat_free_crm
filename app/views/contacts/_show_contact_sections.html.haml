@@ -1,6 +1,6 @@
 - collapsed = session[:contact_show_general].nil? # && contact.errors.empty?
 = asset_attribute_section :contact_show_general, collapsed, t(:general_info), t('show_general_info_small')
-.section.nostyle
+.show_fields
   #contact_show_general{ hidden_if(collapsed) }
     %table.asset_attributes
       %tr
@@ -22,7 +22,7 @@
     %div[field_group]
       - collapsed = session[dom_id(field_group, :contact_show)].nil?
       = asset_attribute_section dom_id(field_group, :contact_show), collapsed, field_group.label_i18n, t('show_tag_info_small', :tag => field_group.label_i18n)
-      .section.nostyle
+      .show_fields
         %div{ hidden_if(collapsed).merge(:id => dom_id(field_group, :contact_show)) }
           %table.asset_attributes
             - groups = fields.in_groups_of(2, false)

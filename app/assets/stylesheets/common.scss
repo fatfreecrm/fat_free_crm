@@ -60,7 +60,9 @@ $sidebar_width: 210px;
     color: $color_subtitle;
     text-decoration: none; }
   a:hover {
-    background: none; }; }
+    background: none; };
+  &.show_attributes {
+    margin-top: 6px; } }
 
 .subtitle_tools {
   font-size: 11px;
@@ -161,7 +163,7 @@ $sidebar_width: 210px;
   padding-top: 5px; }
 
 .section {
-  background: whitesmoke;
+  background-color: whitesmoke;
   color: #3f3f3f;
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px;
@@ -192,7 +194,14 @@ $sidebar_width: 210px;
         display: block;
         padding-top: 2px;
         input {
-          margin-right: 5px; } } } } }
+          margin-right: 5px; } } } }
+  &.show_fields {
+    background-color: transparent;
+    padding: 0;
+    color: black;
+    table {
+      border-spacing: 4px;
+      border-collapse: separate; } } }
 
 .remote {
   border: 5px lightblue solid;
