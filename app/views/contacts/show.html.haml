@@ -9,11 +9,12 @@
 
 %div#edit_contact{ hidden }
 
-- if Setting.show_entity_details == true
-  = render "contacts/sections", :contact => @contact
+.section.show_fields
 
-= render "comments/new", :commentable => @contact
-= render :partial => "shared/timeline", :collection => @timeline
+  = render :partial => "show_contact_sections", :locals => { :contact => @contact }
+
+  = render "comments/new", :commentable => @contact
+  = render :partial => "shared/timeline", :collection => @timeline
 
 = hook(:show_contact_bottom, self) do
 
