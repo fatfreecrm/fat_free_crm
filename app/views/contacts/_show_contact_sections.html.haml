@@ -31,4 +31,4 @@
                 - group.each do |field|
                   = asset_attribute_columns(field.label, field.render_value(contact), (i == groups.size - 1) ? :last : nil)
 
-= render :partial => 'extra_section', :locals => {:contact => contact}
+= render :partial => 'contacts/extra_section', :locals => {:contact => contact}
