@@ -9,12 +9,10 @@
 
 %div#edit_contact{ hidden }
 
-.section.show_fields
+= render :partial => "show_contact_sections", :locals => { :contact => @contact }
 
-  = render :partial => "show_contact_sections", :locals => { :contact => @contact }
-
-  = render "comments/new", :commentable => @contact
-  = render :partial => "shared/timeline", :collection => @timeline
+= render "comments/new", :commentable => @contact
+= render :partial => "shared/timeline", :collection => @timeline
 
 = hook(:show_contact_bottom, self) do
 
