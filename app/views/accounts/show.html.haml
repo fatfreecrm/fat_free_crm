@@ -9,6 +9,8 @@
 
 %div#edit_account{ hidden }
 
+= render :partial => "accounts/sections", :locals => { :account => @account }
+
 = render "comments/new", :commentable => @account
 = render :partial => "shared/timeline", :collection => @timeline
 

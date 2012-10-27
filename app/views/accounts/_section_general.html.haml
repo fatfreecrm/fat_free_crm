@@ -1,0 +1,15 @@
+- collapsed = session[:account_show_general].nil? # && account.errors.empty?
+= section_title :account_show_general, collapsed, t(:general_info), t('show_general_info_small')
+.show_fields
+  #account_show_general{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = col(t(:name), account.name)
+        = col(t(:phone), account.phone)
+      %tr
+        = col(t(:website), account.website)
+        = col(t(:email), account.email, false, true)
+      %tr
+        = col(t(:tags), account.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)
+        - assigned_to_user = User.find_by_id(account.assigned_to)
+        = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "", :last)

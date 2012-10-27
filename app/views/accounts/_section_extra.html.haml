@@ -1,0 +1,26 @@
+- collapsed = session[:account_show_extra].nil? # && account.errors.empty?
+= section_title :account_show_extra, collapsed, t(:extra_info), t('show_extra_info_small')
+.show_fields
+  #account_show_extra{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = col(t(:phone_toll_free), account.toll_free_phone)
+        = col(t(:fax), account.fax)
+      %tr
+        = col(t(:rating), account.rating)
+        = col(t(:category), account.category)
+      %tr
+        %th=t(:billing_address) + ":"
+        %td
+          %div
+            %strong= render "shared/address_show", :asset => account, :type => 'billing', :title => nil
+        %th=t(:shipping_address) + ":"
+        %td
+          %div
+            %strong= render "shared/address_show", :asset => account, :type => 'shipping', :title => nil
+
+      - if Setting.background_info && Setting.background_info.include?(:account)
+        %tr
+          = col(t(:background_info), account.background_info)
+      %tr
+        = col(t(:permissions), (account.permissions.empty? ? t(:shared_with_everyone) : account.permissions.join(", ")), :last)

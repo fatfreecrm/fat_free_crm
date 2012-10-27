@@ -1,5 +1,5 @@
 - collapsed = session[:contact_show_extra].nil? # && contact.errors.empty?
-= section :contact_show_extra, collapsed, t(:extra_info), t('show_extra_info_small')
+= section_title :contact_show_extra, collapsed, t(:extra_info), t('show_extra_info_small')
 .show_fields
   #contact_show_extra{ hidden_if(collapsed) }
     %table.asset_attributes
