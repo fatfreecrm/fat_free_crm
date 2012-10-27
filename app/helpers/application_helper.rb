@@ -439,8 +439,8 @@ module ApplicationHelper
       else
         fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
       end
-    %Q^<th class="#{last ? "last" : ""}">#{title}:</td>
-  <td class="#{last ? "last" : ""}">#{fmt_value}</td>^.html_safe
+    %Q^<th#{last ? " class=\"last\"" : ""}>#{title}:</th>
+  <td#{last ? " class=\"last\"" : ""}>#{fmt_value}</td>^.html_safe
   end
 
   #----------------------------------------------------------------------------
