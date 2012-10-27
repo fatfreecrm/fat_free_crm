@@ -431,7 +431,7 @@ module ApplicationHelper
 
   # Create a column in the 'asset_attributes' table.
   #----------------------------------------------------------------------------
-  def asset_attribute_columns(title, value, last = false, email = false)
+  def col(title, value, last = false, email = false)
     # Parse and format urls as links.
     fmt_value = (value.to_s || "").gsub("\n", "<br />")
     fmt_value = if email
@@ -445,7 +445,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   # Combines the 'subtitle' helper with the small info text on the same line.
-  def asset_attribute_section(id, hidden = true, text = nil, info_text = nil)
+  def section(id, hidden = true, text = nil, info_text = nil)
     text = id.to_s.split("_").last.capitalize if text == nil
     content_tag("div", :class => "subtitle show_attributes") do
       content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,

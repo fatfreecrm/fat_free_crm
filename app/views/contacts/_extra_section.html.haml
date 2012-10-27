@@ -1,17 +1,17 @@
 - collapsed = session[:contact_show_extra].nil? # && contact.errors.empty?
-= asset_attribute_section :contact_show_extra, collapsed, t(:extra_info), t('show_extra_info_small')
+= section :contact_show_extra, collapsed, t(:extra_info), t('show_extra_info_small')
 .show_fields
   #contact_show_extra{ hidden_if(collapsed) }
     %table.asset_attributes
       %tr
-        = asset_attribute_columns(t(:title), contact.title)
-        = asset_attribute_columns(t(:department), contact.department)
+        = col(t(:title), contact.title)
+        = col(t(:department), contact.department)
       %tr
-        = asset_attribute_columns(t(:alt_email), contact.alt_email, false, true)
-        = asset_attribute_columns(t(:mobile), contact.mobile)
+        = col(t(:alt_email), contact.alt_email, false, true)
+        = col(t(:mobile), contact.mobile)
       %tr
-        = asset_attribute_columns(t(:fax), contact.fax)
-        = asset_attribute_columns(t(:do_not_call), contact.do_not_call == false ? "no" : "yes")
+        = col(t(:fax), contact.fax)
+        = col(t(:do_not_call), contact.do_not_call == false ? "no" : "yes")
       %tr
         %th=t(:address) + ":"
         %td
@@ -21,6 +21,6 @@
         %th= t(:web_presence)
         %td= web_presence_icons(contact)
         - if Setting.background_info && Setting.background_info.include?(:contact)
-          = asset_attribute_columns(t(:background_info), contact.background_info)
+          = col(t(:background_info), contact.background_info)
       %tr
-        = asset_attribute_columns(t(:permissions), (contact.permissions.empty? ? t(:shared_with_everyone) : contact.permissions.join(", ")), :last)
+        = col(t(:permissions), (contact.permissions.empty? ? t(:shared_with_everyone) : contact.permissions.join(", ")), :last)
