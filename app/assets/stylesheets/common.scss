@@ -64,6 +64,9 @@ $sidebar_width: 210px;
   &.show_attributes {
     margin-top: 6px; } }
 
+.subtitle_inline_info {
+  margin-left: 5px }
+
 .subtitle_tools {
   font-size: 11px;
   float: right; }
@@ -194,14 +197,7 @@ $sidebar_width: 210px;
         display: block;
         padding-top: 2px;
         input {
-          margin-right: 5px; } } } }
-  &.show_fields {
-    background-color: transparent;
-    padding: 0;
-    color: black;
-    table {
-      border-spacing: 4px;
-      border-collapse: separate; } } }
+          margin-right: 5px; } } } } }
 
 .remote {
   border: 5px lightblue solid;
