@@ -15,20 +15,3 @@
         = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
       %tr
         = col(t(:tags), contact.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)
-
-
-- contact.field_groups.each do |field_group|
-  - if (fields = field_group.fields.without_pairs).any?
-    %div[field_group]
-      - collapsed = session[dom_id(field_group, :contact_show)].nil?
-      = section dom_id(field_group, :contact_show), collapsed, field_group.label_i18n, t('show_tag_info_small', :tag => field_group.label_i18n)
-      .show_fields
-        %div{ hidden_if(collapsed).merge(:id => dom_id(field_group, :contact_show)) }
-          %table.asset_attributes
-            - groups = fields.in_groups_of(2, false)
-            - groups.each_with_index do |group, i|
-              %tr
-                - group.each do |field|
-                  = col(field.label, field.render_value(contact), (i == groups.size - 1) ? :last : nil)
-
-= render :partial => 'contacts/extra_section', :locals => {:contact => contact}

@@ -9,7 +9,7 @@
 
 %div#edit_contact{ hidden }
 
-= render :partial => "show_contact_sections", :locals => { :contact => @contact }
+= render :partial => "contacts/sections", :locals => { :contact => @contact }
 
 = render "comments/new", :commentable => @contact
 = render :partial => "shared/timeline", :collection => @timeline
