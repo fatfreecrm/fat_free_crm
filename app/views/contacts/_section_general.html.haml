@@ -1,5 +1,5 @@
 - collapsed = session[:contact_show_general].nil? # && contact.errors.empty?
-= section_title :contact_show_general, collapsed, t(:general_info), t('show_general_info_small')
+= section :contact_show_general, collapsed, t(:general_info), t('show_general_info_small')
 .show_fields
   #contact_show_general{ hidden_if(collapsed) }
     %table.asset_attributes
@@ -14,4 +14,4 @@
         - assigned_to_user = User.find_by_id(contact.assigned_to)
         = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
       %tr
-        = col(t(:tags), contact.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '))
+        = col(t(:tags), contact.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)
