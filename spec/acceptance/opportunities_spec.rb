@@ -16,7 +16,6 @@ feature 'Opportunities', %q{
     page.should have_content('Opportunity 0')
     page.should have_content('Opportunity 1')
     page.should have_content('Opportunity 2')
-    page.should have_content('Search opportunities')
     page.should have_content('Create Opportunity')
   end
 
@@ -24,15 +23,32 @@ feature 'Opportunities', %q{
     FactoryGirl.create(:account, :name => 'Example Account')
     visit opportunities_page
     click_link 'Create Opportunity'
-    find("#opportunity_name").should be_visible
+    page.should have_selector('#opportunity_name', :visible => true)
     fill_in 'opportunity_name', :with => 'My Awesome Opportunity'
     chosen_select('Example Account', :from => 'account_id')
     select 'Proposal', :from => 'opportunity_stage'
+    click_link 'Comment'
+    fill_in 'comment_body', :with => 'This is a very important opportunity.'
     click_button 'Create Opportunity'
     page.should have_content('My Awesome Opportunity')
 
+    click_link 'My Awesome Opportunity'
+    page.should have_content('This is a very important opportunity.')
+
     click_link "Dashboard"
     page.should have_content("Bill Murray created opportunity My Awesome Opportunity")
+    page.should have_content("Bill Murray created comment on My Awesome Opportunity")
+  end
+
+  scenario "remembers the comment field when the creation was unsuccessful", :js => true do
+    visit opportunities_page
+    click_link 'Create Opportunity'
+
+    click_link 'Comment'
+    fill_in 'comment_body', :with => 'This is a very important opportunity.'
+    click_button 'Create Opportunity'
+
+    page.should have_field('comment_body', :with => 'This is a very important opportunity.')
   end
 
   scenario 'should view and edit an opportunity', :js => true do

@@ -6,10 +6,11 @@
   = f.error_messages :object_name => t('contact')
 
   = render "contacts/top_section", :f => f
+  = render "shared/add_comment",   :f => f
   = render "contacts/extra",       :f => f
   = render "contacts/web",         :f => f
-  = render "fields/groups", :f => f
-  = render "contacts/permissions", :f => f
+  = render "fields/groups",        :f => f
+  = render "entities/permissions", :f => f, :entity => @contact
 
   .buttonbar
     = f.submit t(:create_contact), :onclick => "crm.create_contact()"

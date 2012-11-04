@@ -31,8 +31,6 @@ else # <----------------------------------------  Show [Edit Campaign] form.
     page.call "crm.set_title", :edit_campaign, "#{t :edit} #{@campaign.name}"
   end
 
-  page.call "crm.date_select_popup", :campaign_starts_on
-  page.call "crm.date_select_popup", :campaign_ends_on
   page[:campaign_name].focus
 
 end

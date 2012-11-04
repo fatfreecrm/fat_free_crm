@@ -59,11 +59,24 @@ module SharedModelSpecs
 
       it{ should be_able_to(:manage, asset) }
     end
+    
+    context "when private access administrator" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Private') }
+      let(:user) { FactoryGirl.create(:user, :admin => true) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
 
     context "when private access not owner" do
       let(:asset){ FactoryGirl.create(factory, :access => 'Private') }
 
       it{ should_not be_able_to(:manage, asset) }
+    end
+    
+    context "when private access not owner but is assigned" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Private', :assigned_to => user.id) }
+
+      it{ should be_able_to(:manage, asset) }
     end
 
     context "when shared access with permission" do
@@ -79,5 +92,46 @@ module SharedModelSpecs
 
       it{ should_not be_able_to(:manage, asset) }
     end
+    
+    context "when shared access with no permission but administrator" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
+      let(:permission){ Permission.new(:user => FactoryGirl.create(:user)) }
+      let(:user) { FactoryGirl.create(:user, :admin => true) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
+    
+    context "when shared access with no permission but assigned" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission], :assigned_to => user.id) }
+      let(:permission){ Permission.new(:user => FactoryGirl.create(:user)) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
+
+    context "when shared access with group permission" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
+      let(:permission){ Permission.new(:group => group) }
+      let(:group){ FactoryGirl.create(:group, :users => [user]) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
+    
+    context "when shared access with several group permissions" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => permissions) }
+      let(:permissions){ [Permission.new(:group => group1), Permission.new(:group => group2)] }
+      let(:group1){ FactoryGirl.create(:group, :users => [user]) }
+      let(:group2){ FactoryGirl.create(:group, :users => [user]) }
+
+      it{ should be_able_to(:manage, asset) }
+    end
+
+    context "when shared access with no group permission" do
+      let(:asset){ FactoryGirl.create(factory, :access => 'Shared', :permissions => [permission]) }
+      let(:permission){ Permission.new(:group => group) }
+      let(:group){ FactoryGirl.create(:group) }
+
+      it{ should_not be_able_to(:manage, asset) }
+    end
+    
   end
 end

@@ -638,9 +638,3 @@ pl:
   time:
     formats:
       mmddhhss: "%e %b o %H:%M"
-
-  calendar_date_select:
-    ok: OK
-    now: Teraz
-    today: Dziś
-    clear: Wyczyść

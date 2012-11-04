@@ -43,10 +43,7 @@ describe "/campaigns/create" do
         with_tag("form[class=new_campaign]")
       end
       rendered.should include('$("create_campaign").visualEffect("shake"')
-      rendered.should include('crm.date_select_popup("campaign_starts_on")')
-      rendered.should include('crm.date_select_popup("campaign_ends_on")')
     end
   end
 
 end
-

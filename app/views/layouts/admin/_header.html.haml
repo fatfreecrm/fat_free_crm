@@ -2,7 +2,7 @@
   #welcome
     %span 
       #{t :welcome},
-      = @current_user.name
+      = current_user.name
     %span> !&nbsp;&nbsp;
 
     = link_to(t(:quick_find), "#", :id => "jumper") << " |"

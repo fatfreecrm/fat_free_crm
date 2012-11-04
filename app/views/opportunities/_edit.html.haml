@@ -7,8 +7,8 @@
     = f.error_messages :object_name => t('opportunity')
 
     = render "opportunities/top_section", :f => f, :edit => true
-    = render "fields/groups",      :f => f, :edit => true
-    = render "opportunities/permissions", :f => f, :edit => true
+    = render "fields/groups",             :f => f, :edit => true
+    = render "entities/permissions",      :f => f, :edit => true, :entity => @opportunity
 
     .buttonbar
       = f.submit t(:save_opportunity), :onclick => %/$("account_assigned_to").value = $F("opportunity_assigned_to");/

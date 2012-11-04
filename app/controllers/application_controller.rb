@@ -38,12 +38,14 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query] || ''
-    @auto_complete = hook(:auto_complete, self, :query => @query, :user => @current_user)
+    @auto_complete = hook(:auto_complete, self, :query => @query, :user => current_user)
     if @auto_complete.empty?
-      @auto_complete = klass.my.text_search(@query).limit(10)
+      exclude_ids = auto_complete_ids_to_exclude(params[:related])
+      @auto_complete = klass.my.text_search(@query).search(:id_not_in => exclude_ids).result.limit(10)
     else
       @auto_complete = @auto_complete.last
     end
+
     session[:auto_complete] = controller_name.to_sym
     respond_to do |format|
       format.any(:js, :html)   { render :partial => 'auto_complete' }
@@ -52,6 +54,23 @@ class ApplicationController < ActionController::Base
   end
 
 private
+  
+  #
+  # Takes { :related => 'campaigns/7' } or { :related => '5' }
+  #   and returns array of object ids that should be excluded from search
+  #   assumes controller_name is an method on 'related' class that returns a collection
+  #----------------------------------------------------------------------------
+  def auto_complete_ids_to_exclude(related)
+    return [] if related.blank?
+    return [related.to_i].compact unless related.index('/')
+    related_class, id = related.split('/')
+    obj = related_class.classify.constantize.find_by_id(id)
+    if obj and obj.respond_to?(controller_name)
+      obj.send(controller_name).map(&:id)
+    else
+      []
+    end
+  end
 
   #----------------------------------------------------------------------------
   def klass
@@ -66,7 +85,11 @@ private
   #----------------------------------------------------------------------------
   def set_context
     Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
-    I18n.locale = Setting.locale if Setting.locale
+    if current_user.present? and (locale = current_user.preference[:locale]).present?
+      I18n.locale = locale
+    elsif Setting.locale.present?
+      I18n.locale = Setting.locale
+    end
   end
 
   #----------------------------------------------------------------------------
@@ -150,7 +173,8 @@ private
   # Proxy current page for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_page=(page)
-    @current_page = session[:"#{controller_name}_current_page"] = page.to_i
+    p = page.to_i
+    @current_page = session[:"#{controller_name}_current_page"] = (p.zero? ? 1 : p)
   end
 
   #----------------------------------------------------------------------------
@@ -162,6 +186,9 @@ private
   # Proxy current search query for any of the controllers by storing it in a session.
   #----------------------------------------------------------------------------
   def current_query=(query)
+    if session[:"#{controller_name}_current_query"].to_s != query.to_s # nil.to_s == ""
+      self.current_page = params[:page] # reset paging otherwise results might be hidden, defaults to 1 if nil
+    end
     @current_query = session[:"#{controller_name}_current_query"] = query
   end
 

@@ -4,7 +4,7 @@ describe "admin/users/_new" do
   before do
     login_and_assign(:admin => true)
     assign(:user, User.new)
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
   end
 
   it "renders [Create User] form" do
@@ -14,4 +14,3 @@ describe "admin/users/_new" do
     rendered.should have_tag("form[class=new_user]")
   end
 end
-

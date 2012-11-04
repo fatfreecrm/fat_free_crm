@@ -1,4 +1,4 @@
-#tabs
+.tabs
   %ul
     - tabs.each do |tab|
       %li
@@ -16,4 +16,3 @@
       = render "layouts/sidebar"
     %td{ :class => :main, :id => :main, :valign => :top }
       = yield
-

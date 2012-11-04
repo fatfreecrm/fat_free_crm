@@ -21,7 +21,7 @@ describe OpportunitiesController do
     end
 
     it "should expose all opportunities as @opportunities and render [index] template" do
-      @opportunities = [ FactoryGirl.create(:opportunity, :user => @current_user) ]
+      @opportunities = [ FactoryGirl.create(:opportunity, :user => current_user) ]
 
       get :index
       assigns[:opportunities].should == @opportunities
@@ -37,11 +37,11 @@ describe OpportunitiesController do
     it "should filter out opportunities by stage" do
       controller.session[:opportunities_filter] = "prospecting,negotiation"
       @opportunities = [
-        FactoryGirl.create(:opportunity, :user => @current_user, :stage => "negotiation"),
-        FactoryGirl.create(:opportunity, :user => @current_user, :stage => "prospecting")
+        FactoryGirl.create(:opportunity, :user => current_user, :stage => "negotiation"),
+        FactoryGirl.create(:opportunity, :user => current_user, :stage => "prospecting")
       ]
       # This one should be filtered out.
-      FactoryGirl.create(:opportunity, :user => @current_user, :stage => "analysis")
+      FactoryGirl.create(:opportunity, :user => current_user, :stage => "analysis")
 
       get :index
       # Note: can't compare opportunities directly because of BigDecimal objects.
@@ -50,8 +50,8 @@ describe OpportunitiesController do
     end
 
     it "should perform lookup using query string" do
-      @first  = FactoryGirl.create(:opportunity, :user => @current_user, :name => "The first one")
-      @second = FactoryGirl.create(:opportunity, :user => @current_user, :name => "The second one")
+      @first  = FactoryGirl.create(:opportunity, :user => current_user, :name => "The first one")
+      @second = FactoryGirl.create(:opportunity, :user => current_user, :name => "The second one")
 
       get :index, :query => "second"
       assigns[:opportunities].should == [ @second ]
@@ -61,7 +61,7 @@ describe OpportunitiesController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @opportunities = [ FactoryGirl.create(:opportunity, :user => @current_user) ]
+        @opportunities = [ FactoryGirl.create(:opportunity, :user => current_user) ]
         xhr :get, :index, :page => 42
 
         assigns[:current_page].to_i.should == 42
@@ -72,11 +72,22 @@ describe OpportunitiesController do
 
       it "should pick up saved page number from session" do
         session[:opportunities_current_page] = 42
-        @opportunities = [ FactoryGirl.create(:opportunity, :user => @current_user) ]
+        @opportunities = [ FactoryGirl.create(:opportunity, :user => current_user) ]
         xhr :get, :index
 
         assigns[:current_page].should == 42
         assigns[:opportunities].should == []
+        response.should render_template("opportunities/index")
+      end
+
+      it "should reset current_page when query is altered" do
+        session[:opportunities_current_page] = 42
+        session[:opportunities_current_query] = "bill"
+        @opportunities = [ FactoryGirl.create(:opportunity, :user => current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:opportunities].should == @opportunities
         response.should render_template("opportunities/index")
       end
     end
@@ -167,7 +178,7 @@ describe OpportunitiesController do
 
     describe "opportunity got deleted or otherwise unavailable" do
       it "should redirect to opportunity index if the opportunity got deleted" do
-        @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+        @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
         @opportunity.destroy
 
         get :show, :id => @opportunity.id
@@ -184,7 +195,7 @@ describe OpportunitiesController do
       end
 
       it "should return 404 (Not Found) JSON error" do
-        @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+        @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
         @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
@@ -193,7 +204,7 @@ describe OpportunitiesController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+        @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
         @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -209,10 +220,10 @@ describe OpportunitiesController do
   describe "responding to GET new" do
 
     it "should expose a new opportunity as @opportunity and render [new] template" do
-      @opportunity = Opportunity.new(:user => @current_user, :access => Setting.default_access, :stage => "prospecting")
-      @account = Account.new(:user => @current_user, :access => Setting.default_access)
+      @opportunity = Opportunity.new(:user => current_user, :access => Setting.default_access, :stage => "prospecting")
+      @account = Account.new(:user => current_user, :access => Setting.default_access)
       @users = [ FactoryGirl.create(:user) ]
-      @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
+      @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
 
       xhr :get, :new
       assigns[:opportunity].attributes.should == @opportunity.attributes
@@ -256,8 +267,8 @@ describe OpportunitiesController do
     it "should expose the requested opportunity as @opportunity and render [edit] template" do
       # Note: campaign => nil makes sure campaign factory is not invoked which has a side
       # effect of creating an extra (campaign) user.
-      @account = FactoryGirl.create(:account, :user => @current_user)
-      @opportunity = FactoryGirl.create(:opportunity, :id => 42, :user => @current_user, :campaign => nil,
+      @account = FactoryGirl.create(:account, :user => current_user)
+      @opportunity = FactoryGirl.create(:opportunity, :id => 42, :user => current_user, :campaign => nil,
                              :account => @account)
       @users = [ FactoryGirl.create(:user) ]
       @stage = Setting.unroll(:opportunity_stage)
@@ -284,7 +295,7 @@ describe OpportunitiesController do
 
     describe "opportunity got deleted or is otherwise unavailable" do
       it "should reload current page with the flash message if the opportunity got deleted" do
-        @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+        @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
         @opportunity.destroy
 
         xhr :get, :edit, :id => @opportunity.id
@@ -303,7 +314,7 @@ describe OpportunitiesController do
 
     describe "(previous opportunity got deleted or is otherwise unavailable)" do
       before do
-        @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+        @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
         @previous = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user))
       end
 
@@ -335,13 +346,13 @@ describe OpportunitiesController do
     describe "with valid params" do
 
       before do
-        @opportunity = FactoryGirl.build(:opportunity, :user => @current_user)
+        @opportunity = FactoryGirl.build(:opportunity, :user => current_user)
         Opportunity.stub!(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
       end
 
       it "should expose a newly created opportunity as @opportunity and render [create] template" do
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }
         assigns(:opportunity).should == @opportunity
         assigns(:stage).should == @stage
         assigns(:opportunity_stage_total).should be_nil
@@ -350,29 +361,29 @@ describe OpportunitiesController do
 
       it "should get sidebar data if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }
         assigns(:opportunity_stage_total).should be_an_instance_of(HashWithIndifferentAccess)
       end
 
       it "should find related account if called from account landing page" do
-        @account = FactoryGirl.create(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => current_user)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :id => @account.id }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :id => @account.id }
         assigns(:account).should == @account
       end
 
       it "should find related campaign if called from campaign landing page" do
-        @campaign = FactoryGirl.create(:campaign, :user => @current_user)
+        @campaign = FactoryGirl.create(:campaign, :user => current_user)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Hello again" }
         assigns(:campaign).should == @campaign
       end
 
       it "should reload opportunities to update pagination if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }, :users => %w(1 2 3)
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :account => { :name => "Hello again" }
         assigns[:opportunities].should == [ @opportunity ]
       end
 
@@ -380,7 +391,7 @@ describe OpportunitiesController do
         @campaign = FactoryGirl.create(:campaign)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Test Account" }, :users => []
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :campaign => @campaign.id, :account => { :name => "Test Account" }
         assigns(:opportunity).should == @opportunity
         assigns(:campaign).should == @campaign
         @opportunity.campaign.should == @campaign
@@ -390,7 +401,7 @@ describe OpportunitiesController do
         @contact = FactoryGirl.create(:contact, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts/42"
-        xhr :post, :create, :opportunity => { :name => "Hello" }, :contact => 42, :account => { :name => "Hello again" }, :users => []
+        xhr :post, :create, :opportunity => { :name => "Hello" }, :contact => 42, :account => { :name => "Hello again" }
         assigns(:opportunity).should == @opportunity
         @opportunity.contacts.should include(@contact)
         @contact.opportunities.should include(@opportunity)
@@ -405,7 +416,7 @@ describe OpportunitiesController do
       it "should associate opportunity with the existing account" do
         @account = FactoryGirl.create(:account, :id => 42)
 
-        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => { :id => 42 }, :users => []
+        xhr :post, :create, :opportunity => { :name => "Hello world" }, :account => { :id => 42 }
         assigns(:opportunity).should == @opportunity
         @opportunity.account.should == @account
         @account.opportunities.should include(@opportunity)
@@ -413,7 +424,7 @@ describe OpportunitiesController do
 
       it "should update related campaign revenue if won" do
         @campaign = FactoryGirl.create(:campaign, :revenue => 0)
-        @opportunity = FactoryGirl.build(:opportunity, :user => @current_user, :stage => "won", :amount => 1100, :discount => 100)
+        @opportunity = FactoryGirl.build(:opportunity, :user => current_user, :stage => "won", :amount => 1100, :discount => 100)
         Opportunity.stub!(:new).and_return(@opportunity)
 
         xhr :post, :create, :opportunity => { :name => "Hello world" }, :campaign => @campaign.id, :account => { :name => "Test Account" }
@@ -421,21 +432,29 @@ describe OpportunitiesController do
         @opportunity.campaign.should == @campaign.reload
         @campaign.revenue.to_i.should == 1000 # 1000 - 100 discount.
       end
+
+      it "should add a new comment to the newly created opportunity when specified" do
+        @opportunity = FactoryGirl.build(:opportunity, :user => current_user)
+        Opportunity.stub!(:new).and_return(@opportunity)
+
+        xhr :post, :create, :opportunity => { :name => "Opportunity Knocks" }, :account => { :name => "My Account" }, :comment_body => "Awesome comment is awesome"
+        @opportunity.reload.comments.map(&:comment).should include("Awesome comment is awesome")
+      end
     end
 
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved opportunity as @opportunity with blank @account and render [create] template" do
-        @account = Account.new(:user => @current_user)
-        @opportunity = FactoryGirl.build(:opportunity, :name => nil, :campaign => nil, :user => @current_user,
+        @account = Account.new(:user => current_user)
+        @opportunity = FactoryGirl.build(:opportunity, :name => nil, :campaign => nil, :user => current_user,
                                      :account => @account)
         Opportunity.stub!(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
         @users = [ FactoryGirl.create(:user) ]
-        @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
+        @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
 
         # Expect to redraw [create] form with blank account.
-        xhr :post, :create, :opportunity => {}, :account => { :user_id => @current_user.id }
+        xhr :post, :create, :opportunity => {}, :account => { :user_id => current_user.id }
         assigns(:opportunity).should == @opportunity
         assigns(:users).should == @users
         assigns(:account).attributes.should == @account.attributes
@@ -444,15 +463,15 @@ describe OpportunitiesController do
       end
 
       it "should expose a newly created but unsaved opportunity as @opportunity with existing @account and render [create] template" do
-        @account = FactoryGirl.create(:account, :id => 42, :user => @current_user)
-        @opportunity = FactoryGirl.build(:opportunity, :name => nil, :campaign => nil, :user => @current_user,
+        @account = FactoryGirl.create(:account, :id => 42, :user => current_user)
+        @opportunity = FactoryGirl.build(:opportunity, :name => nil, :campaign => nil, :user => current_user,
                                      :account => @account)
         Opportunity.stub!(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
         @users = [ FactoryGirl.create(:user) ]
 
         # Expect to redraw [create] form with selected account.
-        xhr :post, :create, :opportunity => {}, :account => { :id => 42, :user_id => @current_user.id }
+        xhr :post, :create, :opportunity => {}, :account => { :id => 42, :user_id => current_user.id }
         assigns(:opportunity).should == @opportunity
         assigns(:users).should == @users
         assigns(:account).should == @account
@@ -464,7 +483,7 @@ describe OpportunitiesController do
         @campaign = FactoryGirl.create(:campaign, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/42"
-        xhr :post, :create, :opportunity => { :name => nil }, :campaign => 42, :account => { :name => "Test Account" }, :users => []
+        xhr :post, :create, :opportunity => { :name => nil }, :campaign => 42, :account => { :name => "Test Account" }
         assigns(:campaign).should == @campaign
         response.should render_template("opportunities/create")
       end
@@ -473,7 +492,7 @@ describe OpportunitiesController do
         @contact = FactoryGirl.create(:contact, :id => 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts/42"
-        xhr :post, :create, :opportunity => { :name => nil }, :contact => 42, :account => { :name => "Test Account" }, :users => []
+        xhr :post, :create, :opportunity => { :name => nil }, :contact => 42, :account => { :name => "Test Account" }
         assigns(:contact).should == @contact
         response.should render_template("opportunities/create")
       end
@@ -493,7 +512,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42)
         @stage = Setting.unroll(:opportunity_stage)
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => { :name => "Test Account" }, :users => %w(1 2 3)
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello world" }, :account => { :name => "Test Account" }
         @opportunity.reload.name.should == "Hello world"
         assigns(:opportunity).should == @opportunity
         assigns(:stage).should == @stage
@@ -510,7 +529,7 @@ describe OpportunitiesController do
       end
 
       it "should find related account if called from account landing page" do
-        @account = FactoryGirl.create(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => current_user)
         @opportunity = FactoryGirl.create(:opportunity, :id => 42, :account => @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
@@ -519,7 +538,7 @@ describe OpportunitiesController do
       end
 
       it "should remove related account if blank :account param is given" do
-        @account = FactoryGirl.create(:account, :user => @current_user)
+        @account = FactoryGirl.create(:account, :user => current_user)
         @opportunity = FactoryGirl.create(:opportunity, :id => 42, :account => @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
@@ -528,8 +547,8 @@ describe OpportunitiesController do
       end
 
       it "should find related campaign if called from campaign landing page" do
-        @campaign = FactoryGirl.create(:campaign, :user => @current_user)
-        @opportunity = FactoryGirl.create(:opportunity, :id => 42, :user => @current_user)
+        @campaign = FactoryGirl.create(:campaign, :user => current_user)
+        @opportunity = FactoryGirl.create(:opportunity, :id => 42, :user => current_user)
         @campaign.opportunities << @opportunity
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
@@ -553,20 +572,16 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42, :account => @old_account)
 
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello" }, :account => { :id => 999 }
-        @opportunity.reload
         assigns[:opportunity].should == @opportunity
-        @opportunity.account.should == @new_account
+        assigns[:opportunity].account.should == @new_account
       end
 
       it "should update opportunity permissions when sharing with specific users" do
         @opportunity = FactoryGirl.create(:opportunity, :id => 42, :access => "Public")
-        he  = FactoryGirl.create(:user, :id => 7)
-        she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello", :access => "Shared" }, :users => %w(7 8), :account => { :name => "Test Account" }
-        @opportunity.reload.access.should == "Shared"
-        @opportunity.permissions.map(&:user_id).sort.should == [ 7, 8 ]
-        assigns[:opportunity].should == @opportunity
+        xhr :put, :update, :id => 42, :opportunity => { :name => "Hello", :access => "Shared", :user_ids => [7, 8] }, :account => { :name => "Test Account" }
+        assigns[:opportunity].access.should == "Shared"
+        assigns[:opportunity].user_ids.sort.should == [ 7, 8 ]
       end
 
       it "should reload opportunity campaign if called from campaign landing page" do
@@ -638,7 +653,7 @@ describe OpportunitiesController do
 
       describe "opportunity got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the opportunity got deleted" do
-          @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+          @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
           @opportunity.destroy
 
           xhr :put, :update, :id => @opportunity.id
@@ -684,7 +699,7 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before do
-      @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+      @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
     end
 
     describe "AJAX request" do
@@ -734,7 +749,7 @@ describe OpportunitiesController do
 
         it "should reload campaiign to be able to refresh its summary" do
           @account = FactoryGirl.create(:account)
-          @opportunity = FactoryGirl.create(:opportunity, :user => @current_user, :account => @account)
+          @opportunity = FactoryGirl.create(:opportunity, :user => current_user, :account => @account)
           request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
           xhr :delete, :destroy, :id => @opportunity.id
@@ -744,7 +759,7 @@ describe OpportunitiesController do
 
         it "should reload campaiign to be able to refresh its summary" do
           @campaign = FactoryGirl.create(:campaign)
-          @opportunity = FactoryGirl.create(:opportunity, :user => @current_user, :campaign => @campaign)
+          @opportunity = FactoryGirl.create(:opportunity, :user => current_user, :campaign => @campaign)
           request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
           xhr :delete, :destroy, :id => @opportunity.id
@@ -755,7 +770,7 @@ describe OpportunitiesController do
 
       describe "opportunity got deleted or otherwise unavailable" do
         it "should reload current page is the opportunity got deleted" do
-          @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+          @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
           @opportunity.destroy
 
           xhr :delete, :destroy, :id => @opportunity.id
@@ -781,7 +796,7 @@ describe OpportunitiesController do
       end
 
       it "should redirect to opportunity index with the flash message is the opportunity got deleted" do
-        @opportunity = FactoryGirl.create(:opportunity, :user => @current_user)
+        @opportunity = FactoryGirl.create(:opportunity, :user => current_user)
         @opportunity.destroy
 
         delete :destroy, :id => @opportunity.id
@@ -846,32 +861,10 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before do
-      @auto_complete_matches = [ FactoryGirl.create(:opportunity, :name => "Hello World", :user => @current_user) ]
+      @auto_complete_matches = [ FactoryGirl.create(:opportunity, :name => "Hello World", :user => current_user) ]
     end
 
     it_should_behave_like("auto complete")
-  end
-
-  # GET /opportunities/options                                             AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET options" do
-    it "should set current user preferences when showing options" do
-      @per_page = FactoryGirl.create(:preference, :user => @current_user, :name => "opportunities_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = FactoryGirl.create(:preference, :user => @current_user, :name => "opportunities_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
-      @sort_by  = FactoryGirl.create(:preference, :user => @current_user, :name => "opportunities_sort_by",  :value => Base64.encode64(Marshal.dump("opportunities.name ASC")))
-
-      xhr :get, :options
-      assigns[:per_page].should == 42
-      assigns[:outline].should  == "option_long"
-      assigns[:sort_by].should  == "opportunities.name ASC"
-    end
-
-    it "should not assign instance variables when hiding options" do
-      xhr :get, :options, :cancel => "true"
-      assigns[:per_page].should == nil
-      assigns[:outline].should  == nil
-      assigns[:sort_by].should  == nil
-    end
   end
 
   # POST /opportunities/redraw                                             AJAX
@@ -879,9 +872,9 @@ describe OpportunitiesController do
   describe "responding to POST redraw" do
     it "should save user selected opportunity preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
-      @current_user.preference[:opportunities_per_page].should == "42"
-      @current_user.preference[:opportunities_outline].should  == "brief"
-      @current_user.preference[:opportunities_sort_by].should  == "opportunities.name ASC"
+      current_user.preference[:opportunities_per_page].should == "42"
+      current_user.preference[:opportunities_outline].should  == "brief"
+      current_user.preference[:opportunities_sort_by].should  == "opportunities.name ASC"
     end
 
     it "should reset current page to 1" do
@@ -891,8 +884,8 @@ describe OpportunitiesController do
 
     it "should select @opportunities and render [index] template" do
       @opportunities = [
-        FactoryGirl.create(:opportunity, :name => "A", :user => @current_user),
-        FactoryGirl.create(:opportunity, :name => "B", :user => @current_user)
+        FactoryGirl.create(:opportunity, :name => "A", :user => current_user),
+        FactoryGirl.create(:opportunity, :name => "B", :user => current_user)
       ]
 
       xhr :post, :redraw, :per_page => 1, :sort_by => "name"
@@ -907,7 +900,7 @@ describe OpportunitiesController do
 
     it "should expose filtered opportunities as @opportunity and render [filter] template" do
       session[:opportunities_filter] = "negotiation,analysis"
-      @opportunities = [ FactoryGirl.create(:opportunity, :stage => "prospecting", :user => @current_user) ]
+      @opportunities = [ FactoryGirl.create(:opportunity, :stage => "prospecting", :user => current_user) ]
       @stage = Setting.unroll(:opportunity_stage)
 
       xhr :get, :filter, :stage => "prospecting"

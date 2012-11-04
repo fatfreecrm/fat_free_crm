@@ -6,7 +6,7 @@
     %small{ hidden_if(!collapsed).merge(:id => "#{field_group.key}_intro") }
     %div[field_group]{ hidden_if(collapsed) }
       %table
-        - field_group.custom_fields.in_groups_of(2, false) do |group|
+        - field_group.fields.without_pairs.in_groups_of(2, false) do |group|
           %tr
             - group.each_with_index do |field, i|
               %td

@@ -58,6 +58,7 @@ class Contact < ActiveRecord::Base
   has_many    :opportunities, :through => :contact_opportunities, :uniq => true, :order => "opportunities.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
+  has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
   has_many    :emails, :as => :mediator
   has_many    :contact_groups, :through => :contacts_contact_groups, :dependent => :destroy
 
@@ -84,8 +85,10 @@ class Contact < ActiveRecord::Base
 
   uses_user_permissions
   acts_as_commentable
+  uses_comment_extensions
   acts_as_taggable_on :tags
   has_paper_trail :ignore => [ :subscribed_users ]
+  
   has_fields
   exportable
   sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
@@ -113,25 +116,31 @@ class Contact < ActiveRecord::Base
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
   def save_with_account_and_permissions(params)
-    account = Account.create_or_select_for(self, params[:account], params[:users])
+    account = Account.create_or_select_for(self, params[:account])
     self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
-    self.save_with_permissions(params[:users])
+    self.save
   end
 
   # Backend handler for [Update Contact] form (see contact/update).
   #----------------------------------------------------------------------------
   def update_with_account_and_permissions(params)
     if params[:account][:id] == "" || params[:account][:name] == ""
+      notify_account_change(:from => self.account, :to => nil)
       self.account = nil # Contact is not associated with the account anymore.
     else
-      account = Account.create_or_select_for(self, params[:account], params[:users])
+      account = Account.create_or_select_for(self, params[:account])
       if self.account != account and account.id.present?
+        notify_account_change(:from => self.account, :to => account)
         self.account_contact = AccountContact.new(:account => account, :contact => self)
       end
+      
     end
     self.reload
-    self.update_with_permissions(params[:contact], params[:users])
+    # Must set access before user_ids, because user_ids= method depends on access value.
+    self.access = params[:contact][:access] if params[:contact][:access]
+    self.attributes = params[:contact]
+    self.save
   end
 
   # Attach given attachment to the contact if it hasn't been attached already.
@@ -164,8 +173,18 @@ class Contact < ActiveRecord::Base
     %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
       attributes[name] = model.send(name.intern)
     end
-
+    
     contact = Contact.new(attributes)
+    
+    # Set custom fields.
+    if model.class.respond_to?(:fields)
+      model.class.fields.each do |field|
+        if contact.respond_to?(field.name)
+          contact.send "#{field.name}=", model.send(field.name)
+        end
+      end
+    end
+    
     contact.business_address = Address.new(:street1 => model.business_address.street1, :street2 => model.business_address.street2, :city => model.business_address.city, :state => model.business_address.state, :zipcode => model.business_address.zipcode, :country => model.business_address.country, :full_address => model.business_address.full_address, :address_type => "Business") unless model.business_address.nil?
 
     # Save the contact only if the account and the opportunity have no errors.
@@ -174,12 +193,31 @@ class Contact < ActiveRecord::Base
       contact.account_contact = AccountContact.new(:account => account, :contact => contact) unless account.id.blank?
       contact.opportunities << opportunity unless opportunity.id.blank?
       if contact.access != "Lead" || model.nil?
-        contact.save_with_permissions(params[:users])
+        contact.save
       else
         contact.save_with_model_permissions(model)
       end
     end
     contact
+  end
+
+  # Create a version record when account is changed
+  #----------------------------------------------------------------------------
+  def notify_account_change(options)  
+    from_id = !options[:from].nil? ? options[:from].id : nil
+    from_name = !options[:from].nil? ? options[:from].name : nil
+    to_id = !options[:to].nil? ? options[:to].id : nil
+    to_name = !options[:to].nil? ? options[:to].name : nil
+    if from_id != to_id
+      Version.create(:item_type => 'AccountContact', :item_id => 1,
+        :event => 'update', :whodunnit => User.current_user, :object => nil,
+        :object_changes => 
+          {:account_contact_id => [from_id, to_id],
+           :account_contact_name => [from_name, to_name]
+           }.to_yaml,
+        :related => self
+       )
+    end
   end
 
   private
@@ -190,4 +228,3 @@ class Contact < ActiveRecord::Base
   end
 
 end
-

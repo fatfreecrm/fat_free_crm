@@ -6,7 +6,7 @@ describe "/leads/show" do
   before do
     login_and_assign
     assign(:lead, @lead = FactoryGirl.create(:lead, :id => 42))
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
     assign(:comment, Comment.new)
     assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @lead) ])
   end
@@ -21,4 +21,3 @@ describe "/leads/show" do
   end
 
 end
-

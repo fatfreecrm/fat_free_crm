@@ -49,14 +49,6 @@ class FieldGroup < ActiveRecord::Base
     klass_name.constantize
   end
 
-  def core_fields
-    fields.where(:type => 'CoreField')
-  end
-
-  def custom_fields
-    fields.where(:type => 'CustomField')
-  end
-
   def self.with_tags(tag_ids)
     where 'tag_id IS NULL OR tag_id IN (?)', tag_ids
   end
@@ -78,4 +70,3 @@ class FieldGroup < ActiveRecord::Base
     self.reload
   end
 end
-

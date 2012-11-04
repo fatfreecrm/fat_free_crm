@@ -3,8 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/campaigns/update" do
   before do
     login_and_assign
-    assign(:campaign, @campaign = FactoryGirl.create(:campaign, :user => @current_user))
-    assign(:users, [ @current_user ])
+    assign(:campaign, @campaign = FactoryGirl.create(:campaign, :user => current_user))
+    assign(:users, [ current_user ])
     assign(:status, Setting.campaign_status)
     assign(:campaign_status_total, Hash.new(1))
   end
@@ -58,8 +58,6 @@ describe "/campaigns/update" do
         rendered.should have_rjs("edit_campaign") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
-        rendered.should include('crm.date_select_popup("campaign_starts_on")')
-        rendered.should include('crm.date_select_popup("campaign_ends_on")')
         rendered.should include('$("edit_campaign").visualEffect("shake"')
         rendered.should include('focus()')
       end
@@ -76,12 +74,9 @@ describe "/campaigns/update" do
         rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("form[class=edit_campaign]")
         end
-        rendered.should include('crm.date_select_popup("campaign_starts_on")')
-        rendered.should include('crm.date_select_popup("campaign_ends_on")')
         rendered.should include(%Q/$("campaign_#{@campaign.id}").visualEffect("shake"/)
         rendered.should include('focus()')
       end
     end
   end # errors
 end
-

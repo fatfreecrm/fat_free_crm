@@ -9,7 +9,7 @@ describe "/accounts/show" do
       :contacts => [ FactoryGirl.create(:contact) ],
       :opportunities => [ FactoryGirl.create(:opportunity) ])
     assign(:account, @account)
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
     assign(:comment, Comment.new)
     assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @account) ])
   end
@@ -27,4 +27,3 @@ describe "/accounts/show" do
   end
 
 end
-

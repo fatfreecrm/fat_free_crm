@@ -8,9 +8,10 @@
   = render "leads/top_section",    :f => f
   = render "leads/status",         :f => f
   = render "leads/contact",        :f => f
+  = render "shared/add_comment",   :f => f
   = render "leads/web",            :f => f
-  = render "fields/groups", :f => f
-  = render "leads/permissions",    :f => f
+  = render "fields/groups",        :f => f
+  = render "entities/permissions", :f => f, :entity => @lead
 
   .buttonbar
     - if Setting.compound_address

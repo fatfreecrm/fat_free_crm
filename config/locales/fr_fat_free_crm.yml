@@ -652,9 +652,9 @@ fr:
   #----------------------------------------------------------------------------
   versions: Historique
   version:
-    create: Créé par %{by} il y a %{when}.
-    update: Modifié par %{by} il y a %{when}.
-    destroy: Détruit par %{by} il y a %{when}.
+    create: Créé par %{by} il y a %{item}.
+    update: Modifié par %{by} il y a %{item}.
+    destroy: Détruit par %{by} il y a %{item}.
     set: %{attr} renseigné %{to}
     unset: %{attr} supprimé
     change: %{attr} changé de %{from} à %{to}
@@ -717,16 +717,6 @@ fr:
     formats:
       mmddhhss: "%b %e à %H:%M%"
       mmddyyyy_hhmm: "%d/%m/%Y à %H:%M"
-
-  calendar_date_select:
-    ok: OK
-    now: Maintenant
-    today: "Aujourd'hui"
-    clear: Vider
-
-  # If you need custom format look at
-  # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: french
 
   # will_paginate translations copied for 'fr'
   #----------------------------------------------------------------------------
@@ -845,4 +835,3 @@ fr:
         one:   "Impossible d'enregistrer ce %{model} : 1 erreur"
         other: "Impossible d'enregistrer ce %{model} : %{count} erreurs"
       body: "Veuillez vérifier les champs suivants : "
-

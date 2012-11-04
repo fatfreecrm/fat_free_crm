@@ -17,7 +17,7 @@ describe "/home/options" do
     render
 
     rendered.should have_rjs("options") do |rjs|
-      with_tag("input[type=hidden]") # @current_user
+      with_tag("input[type=hidden]") # current_user
 
       user_menu = "onLoading:function(request){$('user').update('all users'); " +
                   "$('loading').show()}, parameters:'user=all_users'}); } } }"
@@ -49,4 +49,3 @@ describe "/home/options" do
     rendered.should include('crm.set_title("title", "Recent Activity")')
   end
 end
-

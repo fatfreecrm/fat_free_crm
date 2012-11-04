@@ -619,13 +619,3 @@ zh-CN:
   time:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
-      
-  calendar_date_select:
-    ok: OK
-    now: 现在
-    today: 今天
-    clear: 清除
-
-  # If you need custom format look at 
-  # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: hyphen_ampm

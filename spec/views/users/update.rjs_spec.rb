@@ -5,7 +5,7 @@ describe "/users/update" do
 
   before do
     login_and_assign
-    assign(:user, @user = @current_user)
+    assign(:user, @user = current_user)
   end
 
   describe "no errors:" do
@@ -47,4 +47,3 @@ describe "/users/update" do
 
   end # errors
 end
-

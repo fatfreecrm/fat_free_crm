@@ -5,9 +5,10 @@
   = f.error_messages :object_name => t('campaign')
 
   = render "campaigns/top_section", :f => f
+  = render "shared/add_comment", :f => f
   = render "campaigns/objectives",  :f => f
-  = render "fields/groups",  :f => f
-  = render "campaigns/permissions", :f => f
+  = render "fields/groups",         :f => f
+  = render "entities/permissions",  :f => f, :entity => @campaign
 
   .buttonbar
     = f.submit t(:create_campaign)

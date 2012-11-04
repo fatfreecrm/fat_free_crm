@@ -19,7 +19,7 @@ xml.rss :version => "2.0" do
     assets.each do |asset|
       xml.item do
         url = send(:"#{item}_url", asset)
-        xml.author      !asset.is_a?(User) ? asset.user.full_name : asset.full_name
+        xml.author      !asset.is_a?(User) ? asset.try(:user).try(:full_name) : asset.full_name
         xml.description send(:"#{item}_summary", asset) if respond_to?(:"#{item}_summary")
         xml.guid        url
         xml.link        url

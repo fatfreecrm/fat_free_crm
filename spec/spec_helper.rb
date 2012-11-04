@@ -18,6 +18,7 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'fuubar'
 
+  require 'acts_as_fu'
   # Load factories
   require 'factory_girl'
   require 'ffaker'
@@ -61,12 +62,6 @@ Spork.prefork do
       Setting.locale = 'en-US' unless Setting.locale == 'en-US'
     end
 
-    config.after(:each, :type => :view) do
-      # detect html-quoted entities in all rendered responses
-      rendered.should_not match(/&amp;[A-Za-z]{1,6};/) if rendered
-    end
-
-
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
@@ -88,6 +83,11 @@ Spork.prefork do
       example.run
       DatabaseCleaner.clean
     end
+
+
+    # config.before :all, :type => :view do
+    #   view.lookup_context.prefixes << 'entities'
+    # end
 
     # Fuubar formatter doesn't work too well on Travis
     config.formatter = ENV["TRAVIS"] ? :progress : "Fuubar"

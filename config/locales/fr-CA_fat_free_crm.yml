@@ -627,9 +627,3 @@ fr-CA:
   time:
     formats:
       mmddhhss: "%e %b à %l:%M%p"
-      
-  calendar_date_select:
-    ok: OK
-    now: Maintenant
-    today: "Aujourd'hui"
-    clear: Vider

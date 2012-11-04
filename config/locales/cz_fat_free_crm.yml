@@ -663,16 +663,6 @@ cz:
       mmddhhss: "%e %b v %H:%M"
       mmddyyyy_hhmm: "%Y-%m-%d %H:%M"
 
-  calendar_date_select:
-    ok: OK
-    now: Nyní
-    today: Dnes
-    clear: Smazat
-
-  # If you need custom format look at
-  # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: iso_date
-
   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:

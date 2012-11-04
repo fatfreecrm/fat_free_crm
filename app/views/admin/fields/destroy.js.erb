@@ -1,0 +1,9 @@
+<% id = "field_#{@field.id}" %>
+<% if @field.destroyed? %>
+  jQuery('li#<%=id%>').slideUp(250);
+<% else %>
+  jQuery('li#<%=id%>').effect("shake", { duration:250, distance: 6});
+  jQuery('#flash').html('<%=flash[:warning]%>')
+  jQuery(crm.flash('warning'))
+  <% flash[:warning] = nil %>
+<% end %>

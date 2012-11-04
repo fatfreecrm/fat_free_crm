@@ -5,8 +5,8 @@ describe "/campaigns/edit" do
 
   before do
     login_and_assign
-    assign(:campaign, @campaign = FactoryGirl.create(:campaign, :user => @current_user))
-    assign(:users, [ @current_user ])
+    assign(:campaign, @campaign = FactoryGirl.create(:campaign, :user => current_user))
+    assign(:users, [ current_user ])
   end
 
   it "cancel from campaign index page: should replace [Edit Campaign] form with campaign partial" do
@@ -28,7 +28,7 @@ describe "/campaigns/edit" do
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
     params[:cancel] = nil
-    assign(:previous, previous = FactoryGirl.create(:campaign, :user => @current_user))
+    assign(:previous, previous = FactoryGirl.create(:campaign, :user => current_user))
 
     render
     rendered.should have_rjs("campaign_#{previous.id}") do |rjs|
@@ -69,10 +69,7 @@ describe "/campaigns/edit" do
     params[:cancel] = nil
 
     render
-    rendered.should include('crm.date_select_popup("campaign_starts_on")')
-    rendered.should include('crm.date_select_popup("campaign_ends_on")')
     rendered.should include('$("campaign_name").focus()')
   end
 
 end
-

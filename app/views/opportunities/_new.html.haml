@@ -7,8 +7,9 @@
   = f.error_messages :object_name => t('opportunity')
 
   = render "opportunities/top_section", :f => f
-  = render "fields/groups",      :f => f
-  = render "opportunities/permissions", :f => f
+  = render "shared/add_comment",        :f => f
+  = render "fields/groups",             :f => f
+  = render "entities/permissions",      :f => f, :entity => @opportunity
 
   .buttonbar
     = f.submit t(:create_opportunity), :onclick => %/$("account_assigned_to").value = $F("opportunity_assigned_to"); if ($("account_id").visible()) { $("account_id").enable(); }/

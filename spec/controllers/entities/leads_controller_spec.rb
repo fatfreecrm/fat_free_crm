@@ -13,7 +13,7 @@ describe LeadsController do
   describe "responding to GET index" do
 
     it "should expose all leads as @leads and render [index] template" do
-      @leads = [ FactoryGirl.create(:lead, :user => @current_user) ]
+      @leads = [ FactoryGirl.create(:lead, :user => current_user) ]
 
       get :index
       assigns[:leads].should == @leads
@@ -21,7 +21,7 @@ describe LeadsController do
     end
 
     it "should collect the data for the leads sidebar" do
-      @leads = [ FactoryGirl.create(:lead, :user => @current_user) ]
+      @leads = [ FactoryGirl.create(:lead, :user => current_user) ]
       @status = Setting.lead_status.dup
 
       get :index
@@ -31,12 +31,12 @@ describe LeadsController do
     it "should filter out leads by status" do
       controller.session[:leads_filter] = "new,contacted"
       @leads = [
-        FactoryGirl.create(:lead, :status => "new", :user => @current_user),
-        FactoryGirl.create(:lead, :status => "contacted", :user => @current_user)
+        FactoryGirl.create(:lead, :status => "new", :user => current_user),
+        FactoryGirl.create(:lead, :status => "contacted", :user => current_user)
       ]
 
       # This one should be filtered out.
-      FactoryGirl.create(:lead, :status => "rejected", :user => @current_user)
+      FactoryGirl.create(:lead, :status => "rejected", :user => current_user)
 
       get :index
       # Note: can't compare campaigns directly because of BigDecimals.
@@ -45,8 +45,8 @@ describe LeadsController do
     end
 
     it "should perform lookup using query string" do
-      @billy_bones   = FactoryGirl.create(:lead, :user => @current_user, :first_name => "Billy",   :last_name => "Bones")
-      @captain_flint = FactoryGirl.create(:lead, :user => @current_user, :first_name => "Captain", :last_name => "Flint")
+      @billy_bones   = FactoryGirl.create(:lead, :user => current_user, :first_name => "Billy",   :last_name => "Bones")
+      @captain_flint = FactoryGirl.create(:lead, :user => current_user, :first_name => "Captain", :last_name => "Flint")
 
       get :index, :query => "bill"
       assigns[:leads].should == [ @billy_bones ]
@@ -56,7 +56,7 @@ describe LeadsController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @leads = [ FactoryGirl.create(:lead, :user => @current_user) ]
+        @leads = [ FactoryGirl.create(:lead, :user => current_user) ]
         xhr :get, :index, :page => 42
 
         assigns[:current_page].to_i.should == 42
@@ -67,11 +67,23 @@ describe LeadsController do
 
       it "should pick up saved page number from session" do
         session[:leads_current_page] = 42
-        @leads = [ FactoryGirl.create(:lead, :user => @current_user) ]
-        xhr :get, :index
+        session[:leads_current_query] = "bill"
+        @leads = [ FactoryGirl.create(:lead, :user => current_user) ]
+        xhr :get, :index, :query => "bill"
 
         assigns[:current_page].should == 42
         assigns[:leads].should == []
+        response.should render_template("leads/index")
+      end
+
+      it "should reset current_page when query is altered" do
+        session[:leads_current_page] = 42
+        session[:leads_current_query] = "bill"
+        @leads = [ FactoryGirl.create(:lead, :user => current_user) ]
+        xhr :get, :index
+
+        assigns[:current_page].should == 1
+        assigns[:leads].should == @leads
         response.should render_template("leads/index")
       end
     end
@@ -106,7 +118,7 @@ describe LeadsController do
 
     describe "with mime type of HTML" do
       before(:each) do
-        @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :id => 42, :user => current_user)
         @comment = Comment.new
       end
 
@@ -125,7 +137,7 @@ describe LeadsController do
 
     describe "with mime type of JSON" do
       it "should render the requested lead as JSON" do
-        @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :id => 42, :user => current_user)
         Lead.should_receive(:find).and_return(@lead)
         @lead.should_receive(:to_json).and_return("generated JSON")
 
@@ -137,7 +149,7 @@ describe LeadsController do
 
     describe "with mime type of XML" do
       it "should render the requested lead as xml" do
-        @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :id => 42, :user => current_user)
         Lead.should_receive(:find).and_return(@lead)
         @lead.should_receive(:to_xml).and_return("generated XML")
 
@@ -149,7 +161,7 @@ describe LeadsController do
 
     describe "lead got deleted or otherwise unavailable" do
       it "should redirect to lead index if the lead got deleted" do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @lead.destroy
 
         get :show, :id => @lead.id
@@ -166,7 +178,7 @@ describe LeadsController do
       end
 
       it "should return 404 (Not Found) JSON error" do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @lead.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
@@ -175,7 +187,7 @@ describe LeadsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @lead.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -192,10 +204,10 @@ describe LeadsController do
   describe "responding to GET new" do
 
     it "should expose a new lead as @lead and render [new] template" do
-      @lead = FactoryGirl.build(:lead, :user => @current_user, :campaign => nil)
+      @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
       Lead.stub!(:new).and_return(@lead)
       @users = [ FactoryGirl.create(:user) ]
-      @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
+      @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
       xhr :get, :new
       assigns[:lead].attributes.should == @lead.attributes
@@ -236,9 +248,9 @@ describe LeadsController do
   describe "responding to GET edit" do
 
     it "should expose the requested lead as @lead and render [edit] template" do
-      @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user, :campaign => nil)
+      @lead = FactoryGirl.create(:lead, :id => 42, :user => current_user, :campaign => nil)
       @users = [ FactoryGirl.create(:user) ]
-      @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
+      @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
       xhr :get, :edit, :id => 42
       assigns[:lead].should == @lead
@@ -257,7 +269,7 @@ describe LeadsController do
 
     describe "lead got deleted or is otherwise unavailable" do
       it "should reload current page with the flash message if the lead got deleted" do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @lead.destroy
 
         xhr :get, :edit, :id => @lead.id
@@ -276,7 +288,7 @@ describe LeadsController do
 
     describe "(previous lead got deleted or is otherwise unavailable)" do
       before(:each) do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @previous = FactoryGirl.create(:lead, :user => FactoryGirl.create(:user))
       end
 
@@ -308,12 +320,12 @@ describe LeadsController do
     describe "with valid params" do
 
       it "should expose a newly created lead as @lead and render [create] template" do
-        @lead = FactoryGirl.build(:lead, :user => @current_user, :campaign => nil)
+        @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
         @users = [ FactoryGirl.create(:user) ]
-        @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
+        @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
-        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
         assigns(:lead).should == @lead
         assigns(:users).should == @users
         assigns(:campaigns).should == @campaigns
@@ -329,10 +341,11 @@ describe LeadsController do
         @campaign.permissions << FactoryGirl.build(:permission, :user => she, :asset => @campaign)
         @campaign.save
 
-        @lead = FactoryGirl.build(:lead, :campaign => @campaign, :user => @current_user, :access => "Shared")
+        @lead = FactoryGirl.build(:lead, :campaign => @campaign, :user => current_user, :access => "Shared")
         Lead.stub!(:new).and_return(@lead)
 
-        xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :access => "Campaign" }, :campaign => @campaign.id, :users => %w(7 8)
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :access => "Campaign", :user_ids => %w(7 8) }, :campaign => @campaign.id
+        assigns(:lead).should == @lead
         @lead.reload.access.should == "Shared"
         @lead.permissions.map(&:user_id).sort.should == [ 7, 8 ]
         @lead.permissions.map(&:asset_id).should == [ @lead.id, @lead.id ]
@@ -340,43 +353,50 @@ describe LeadsController do
       end
 
       it "should get the data to update leads sidebar if called from leads index" do
-        @lead = FactoryGirl.build(:lead, :user => @current_user, :campaign => nil)
+        @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
-        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
         assigns[:lead_status_total].should be_an_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload leads to update pagination if called from leads index" do
-        @lead = FactoryGirl.build(:lead, :user => @current_user, :campaign => nil)
+        @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
-        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }, :users => %w(1 2 3)
+        xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
         assigns[:leads].should == [ @lead ]
       end
 
       it "should reload lead campaign if called from campaign landing page" do
         @campaign = FactoryGirl.create(:campaign)
-        @lead = FactoryGirl.build(:lead, :user => @current_user, :campaign => @campaign)
+        @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => @campaign)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
         assigns[:campaign].should == @campaign
       end
 
+      it "should add a new comment to the newly created lead when specified" do
+        @lead = FactoryGirl.create(:lead)
+        Lead.stub!(:new).and_return(@lead)
+
+        xhr :post, :create, :lead => { :first_name => "Test", :last_name => "Lead" }, :comment_body => "This is an important lead."
+        @lead.reload.comments.map(&:comment).should include("This is an important lead.")
+      end
     end
 
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved lead as @lead and still render [create] template" do
-        @lead = FactoryGirl.build(:lead, :user => @current_user, :first_name => nil, :campaign => nil)
+        @lead = FactoryGirl.build(:lead, :user => current_user, :first_name => nil, :campaign => nil)
         Lead.stub!(:new).and_return(@lead)
         @users = [ FactoryGirl.create(:user) ]
-        @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
+        @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
-        xhr :post, :create, :lead => { :first_name => nil }, :users => nil
+        xhr :post, :create, :lead => { :first_name => nil }
         assigns(:lead).should == @lead
         assigns(:users).should == @users
         assigns(:campaigns).should == @campaigns
@@ -396,7 +416,7 @@ describe LeadsController do
     describe "with valid params" do
 
       it "should update the requested lead, expose it as @lead, and render [update] template" do
-        @lead = FactoryGirl.create(:lead, :first_name => "Billy", :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :first_name => "Billy", :user => current_user)
 
         xhr :put, :update, :id => @lead.id, :lead => { :first_name => "Bones" }
         @lead.reload.first_name.should == "Bones"
@@ -406,14 +426,14 @@ describe LeadsController do
       end
 
       it "should update lead status" do
-        @lead = FactoryGirl.create(:lead, :status => "new", :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :status => "new", :user => current_user)
 
         xhr :put, :update, :id => @lead.id, :lead => { :status => "rejected" }
         @lead.reload.status.should == "rejected"
       end
 
       it "should update lead source" do
-        @lead = FactoryGirl.create(:lead, :source => "campaign", :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :source => "campaign", :user => current_user)
 
         xhr :put, :update, :id => @lead.id, :lead => { :source => "cald_call" }
         @lead.reload.source.should == "cald_call"
@@ -458,13 +478,13 @@ describe LeadsController do
         @campaigns[:new].reload.leads_count.should == @counts[:new] + 1
       end
 
-      it "should update shared permissions for the campaign" do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+      it "should update shared permissions for the lead" do
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         he  = FactoryGirl.create(:user, :id => 7)
         she = FactoryGirl.create(:user, :id => 8)
 
-        xhr :put, :update, :id => @lead.id, :lead => { :access => "Shared" }, :users => %w(7 8)
-        @lead.permissions.map(&:user_id).sort.should == [ 7, 8 ]
+        xhr :put, :update, :id => @lead.id, :lead => { :access => "Shared", :user_ids => %w(7 8) }
+        @lead.user_ids.should == [ 7, 8 ]
       end
 
       it "should get the data for leads sidebar when called from leads index" do
@@ -487,7 +507,7 @@ describe LeadsController do
 
       describe "lead got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the lead got deleted" do
-          @lead = FactoryGirl.create(:lead, :user => @current_user)
+          @lead = FactoryGirl.create(:lead, :user => current_user)
           @lead.destroy
 
           xhr :put, :update, :id => @lead.id
@@ -508,9 +528,9 @@ describe LeadsController do
     describe "with invalid params" do
 
       it "should not update the lead, but still expose it as @lead and render [update] template" do
-        @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user, :campaign => nil)
+        @lead = FactoryGirl.create(:lead, :id => 42, :user => current_user, :campaign => nil)
         @users = [ FactoryGirl.create(:user) ]
-        @campaigns = [ FactoryGirl.create(:campaign, :user => @current_user) ]
+        @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
         xhr :put, :update, :id => 42, :lead => { :first_name => nil }
         assigns[:lead].should == @lead
@@ -529,7 +549,7 @@ describe LeadsController do
   describe "responding to DELETE destroy" do
 
     before(:each) do
-      @lead = FactoryGirl.create(:lead, :user => @current_user)
+      @lead = FactoryGirl.create(:lead, :user => current_user)
     end
 
     describe "AJAX request" do
@@ -547,7 +567,7 @@ describe LeadsController do
         end
 
         it "should get data for the sidebar" do
-          @another_lead = FactoryGirl.create(:lead, :user => @current_user)
+          @another_lead = FactoryGirl.create(:lead, :user => current_user)
 
           xhr :delete, :destroy, :id => @lead.id
           assigns[:leads].should == [ @another_lead ] # @lead got deleted
@@ -576,7 +596,7 @@ describe LeadsController do
       describe "when called from campaign landing page" do
         before(:each) do
           @campaign = FactoryGirl.create(:campaign)
-          @lead = FactoryGirl.create(:lead, :user => @current_user, :campaign => @campaign)
+          @lead = FactoryGirl.create(:lead, :user => current_user, :campaign => @campaign)
           request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
         end
 
@@ -595,7 +615,7 @@ describe LeadsController do
 
       describe "lead got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the lead got deleted" do
-          @lead = FactoryGirl.create(:lead, :user => @current_user)
+          @lead = FactoryGirl.create(:lead, :user => current_user)
           @lead.destroy
 
           xhr :delete, :destroy, :id => @lead.id
@@ -622,7 +642,7 @@ describe LeadsController do
       end
 
       it "should redirect to lead index with the flash message is the lead got deleted" do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @lead.destroy
 
         delete :destroy, :id => @lead.id
@@ -646,12 +666,12 @@ describe LeadsController do
   describe "responding to GET convert" do
 
     it "should should collect necessary data and render [convert] template" do
-      @campaign = FactoryGirl.create(:campaign, :user => @current_user)
-      @lead = FactoryGirl.create(:lead, :user => @current_user, :campaign => @campaign, :source => "cold_call")
+      @campaign = FactoryGirl.create(:campaign, :user => current_user)
+      @lead = FactoryGirl.create(:lead, :user => current_user, :campaign => @campaign, :source => "cold_call")
       @users = [ FactoryGirl.create(:user) ]
-      @accounts = [ FactoryGirl.create(:account, :user => @current_user) ]
-      @account = Account.new(:user => @current_user, :name => @lead.company, :access => "Lead")
-      @opportunity = Opportunity.new(:user => @current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
+      @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
+      @account = Account.new(:user => current_user, :name => @lead.company, :access => "Lead")
+      @opportunity = Opportunity.new(:user => current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
 
       xhr :get, :convert, :id => @lead.id
       assigns[:lead].should == @lead
@@ -665,7 +685,7 @@ describe LeadsController do
 
     describe "(lead got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the lead got deleted" do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @lead.destroy
 
         xhr :get, :convert, :id => @lead.id
@@ -684,7 +704,7 @@ describe LeadsController do
 
     describe "(previous lead got deleted or is otherwise unavailable)" do
       before(:each) do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @previous = FactoryGirl.create(:lead, :user => FactoryGirl.create(:user))
       end
 
@@ -714,13 +734,13 @@ describe LeadsController do
   describe "responding to PUT promote" do
 
     it "on success: should change lead's status to [converted] and render [promote] template" do
-      @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user, :campaign => nil)
+      @lead = FactoryGirl.create(:lead, :id => 42, :user => current_user, :campaign => nil)
       @users = [ FactoryGirl.create(:user) ]
-      @account = FactoryGirl.create(:account, :id => 123, :user => @current_user)
-      @opportunity = FactoryGirl.build(:opportunity, :user => @current_user, :campaign => @lead.campaign,
+      @account = FactoryGirl.create(:account, :id => 123, :user => current_user)
+      @opportunity = FactoryGirl.build(:opportunity, :user => current_user, :campaign => @lead.campaign,
                                    :account => @account)
       Opportunity.stub!(:new).and_return(@opportunity)
-      @contact = FactoryGirl.build(:contact, :user => @current_user, :lead => @lead)
+      @contact = FactoryGirl.build(:contact, :user => current_user, :lead => @lead)
       Contact.stub!(:new).and_return(@contact)
 
       xhr :put, :promote, :id => 42, :account => { :id => 123 }, :opportunity => { :name => "Hello" }
@@ -742,16 +762,16 @@ describe LeadsController do
       @lead.permissions << FactoryGirl.build(:permission, :user => he,  :asset => @lead)
       @lead.permissions << FactoryGirl.build(:permission, :user => she, :asset => @lead)
       @lead.save
-      @account = FactoryGirl.build(:account, :user => @current_user, :access => "Shared")
+      @account = FactoryGirl.build(:account, :user => current_user, :access => "Shared")
       @account.permissions << FactoryGirl.create(:permission, :user => he,  :asset => @account)
       @account.permissions << FactoryGirl.create(:permission, :user => she, :asset => @account)
       @account.stub!(:new).and_return(@account)
-      @opportunity = FactoryGirl.build(:opportunity, :user => @current_user, :access => "Shared")
+      @opportunity = FactoryGirl.build(:opportunity, :user => current_user, :access => "Shared")
       @opportunity.permissions << FactoryGirl.create(:permission, :user => he,  :asset => @opportunity)
       @opportunity.permissions << FactoryGirl.create(:permission, :user => she, :asset => @opportunity)
       @opportunity.stub!(:new).and_return(@opportunity)
 
-      xhr :put, :promote, :id => @lead.id, :access => "Lead", :account => { :name => "Hello", :access => "Lead", :user_id => @current_user.id }, :opportunity => { :name => "World", :access => "Lead", :user_id => @current_user.id }
+      xhr :put, :promote, :id => @lead.id, :access => "Lead", :account => { :name => "Hello", :access => "Lead", :user_id => current_user.id }, :opportunity => { :name => "World", :access => "Lead", :user_id => current_user.id }
       @account.access.should == "Shared"
       @account.permissions.map(&:user_id).sort.should == [ 7, 8 ]
       @account.permissions.map(&:asset_id).should == [ @account.id, @account.id ]
@@ -764,14 +784,14 @@ describe LeadsController do
 
     it "should assign lead's campaign to the newly created opportunity" do
       @campaign = FactoryGirl.create(:campaign)
-      @lead = FactoryGirl.create(:lead, :user => @current_user, :campaign => @campaign)
+      @lead = FactoryGirl.create(:lead, :user => current_user, :campaign => @campaign)
 
       xhr :put, :promote, :id => @lead.id, :account => { :name => "Hello" }, :opportunity => { :name => "Hello", :campaign_id => @campaign.id }
       assigns[:opportunity].campaign.should == @campaign
     end
 
     it "should assign lead's source to the newly created opportunity" do
-      @lead = FactoryGirl.create(:lead, :user => @current_user, :source => "cold_call")
+      @lead = FactoryGirl.create(:lead, :user => current_user, :source => "cold_call")
 
       xhr :put, :promote, :id => @lead.id, :account => { :name => "Hello" }, :opportunity => { :name => "Hello", :source => @lead.source }
       assigns[:opportunity].source.should == @lead.source
@@ -796,9 +816,9 @@ describe LeadsController do
     end
 
     it "on failure: should not change lead's status and still render [promote] template" do
-      @lead = FactoryGirl.create(:lead, :id => 42, :user => @current_user, :status => "new")
+      @lead = FactoryGirl.create(:lead, :id => 42, :user => current_user, :status => "new")
       @users = [ FactoryGirl.create(:user) ]
-      @account = FactoryGirl.create(:account, :id => 123, :user => @current_user)
+      @account = FactoryGirl.create(:account, :id => 123, :user => current_user)
       @contact = FactoryGirl.build(:contact, :first_name => nil) # make it fail
       Contact.stub!(:new).and_return(@contact)
 
@@ -809,7 +829,7 @@ describe LeadsController do
 
     describe "lead got deleted or otherwise unavailable" do
       it "should reload current page with the flash message if the lead got deleted" do
-        @lead = FactoryGirl.create(:lead, :user => @current_user)
+        @lead = FactoryGirl.create(:lead, :user => current_user)
         @lead.destroy
 
         xhr :put, :promote, :id => @lead.id
@@ -833,7 +853,7 @@ describe LeadsController do
   describe "responding to PUT reject" do
 
     before(:each) do
-      @lead = FactoryGirl.create(:lead, :user => @current_user, :status => "new")
+      @lead = FactoryGirl.create(:lead, :user => current_user, :status => "new")
     end
 
     describe "AJAX request" do
@@ -863,7 +883,7 @@ describe LeadsController do
 
       describe "lead got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the lead got deleted" do
-          @lead = FactoryGirl.create(:lead, :user => @current_user)
+          @lead = FactoryGirl.create(:lead, :user => current_user)
           @lead.destroy
 
           xhr :put, :reject, :id => @lead.id
@@ -893,7 +913,7 @@ describe LeadsController do
 
       describe "lead got deleted or otherwise unavailable" do
         it "should redirect to lead index if the lead got deleted" do
-          @lead = FactoryGirl.create(:lead, :user => @current_user)
+          @lead = FactoryGirl.create(:lead, :user => current_user)
           @lead.destroy
 
           put :reject, :id => @lead.id
@@ -943,7 +963,7 @@ describe LeadsController do
   #----------------------------------------------------------------------------
   describe "responding to POST discard" do
     before(:each) do
-      @attachment = FactoryGirl.create(:task, :assigned_to => @current_user)
+      @attachment = FactoryGirl.create(:task, :assigned_to => current_user)
       @model = FactoryGirl.create(:lead)
       @model.tasks << @attachment
     end
@@ -955,35 +975,10 @@ describe LeadsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [ FactoryGirl.create(:lead, :first_name => "Hello", :last_name => "World", :user => @current_user) ]
+      @auto_complete_matches = [ FactoryGirl.create(:lead, :first_name => "Hello", :last_name => "World", :user => current_user) ]
     end
 
     it_should_behave_like("auto complete")
-  end
-
-  # GET /leads/options                                                     AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to GET options" do
-    it "should set current user preferences when showing options" do
-      @per_page = FactoryGirl.create(:preference, :user => @current_user, :name => "leads_per_page", :value => Base64.encode64(Marshal.dump(42)))
-      @outline  = FactoryGirl.create(:preference, :user => @current_user, :name => "leads_outline",  :value => Base64.encode64(Marshal.dump("option_long")))
-      @sort_by  = FactoryGirl.create(:preference, :user => @current_user, :name => "leads_sort_by",  :value => Base64.encode64(Marshal.dump("leads.first_name ASC")))
-      @naming   = FactoryGirl.create(:preference, :user => @current_user, :name => "leads_naming",   :value => Base64.encode64(Marshal.dump("option_after")))
-
-      xhr :get, :options
-      assigns[:per_page].should == 42
-      assigns[:outline].should  == "option_long"
-      assigns[:sort_by].should  == "leads.first_name ASC"
-      assigns[:naming].should   == "option_after"
-    end
-
-    it "should not assign instance variables when hiding options" do
-      xhr :get, :options, :cancel => "true"
-      assigns[:per_page].should == nil
-      assigns[:outline].should  == nil
-      assigns[:sort_by].should  == nil
-      assigns[:naming].should   == nil
-    end
   end
 
   # POST /leads/redraw                                                     AJAX
@@ -991,16 +986,16 @@ describe LeadsController do
   describe "responding to POST redraw" do
     it "should save user selected lead preference" do
       xhr :post, :redraw, :per_page => 42, :outline => "long", :sort_by => "first_name", :naming => "after"
-      @current_user.preference[:leads_per_page].should == "42"
-      @current_user.preference[:leads_outline].should  == "long"
-      @current_user.preference[:leads_sort_by].should  == "leads.first_name ASC"
-      @current_user.preference[:leads_naming].should   == "after"
+      current_user.preference[:leads_per_page].should == "42"
+      current_user.preference[:leads_outline].should  == "long"
+      current_user.preference[:leads_sort_by].should  == "leads.first_name ASC"
+      current_user.preference[:leads_naming].should   == "after"
     end
 
     it "should set similar options for Contacts" do
       xhr :post, :redraw, :sort_by => "first_name", :naming => "after"
-      @current_user.pref[:contacts_sort_by].should == "contacts.first_name ASC"
-      @current_user.pref[:contacts_naming].should == "after"
+      current_user.pref[:contacts_sort_by].should == "contacts.first_name ASC"
+      current_user.pref[:contacts_naming].should == "after"
     end
 
     it "should reset current page to 1" do
@@ -1010,8 +1005,8 @@ describe LeadsController do
 
     it "should select @leads and render [index] template" do
       @leads = [
-        FactoryGirl.create(:lead, :first_name => "Alice", :user => @current_user),
-        FactoryGirl.create(:lead, :first_name => "Bobby", :user => @current_user)
+        FactoryGirl.create(:lead, :first_name => "Alice", :user => current_user),
+        FactoryGirl.create(:lead, :first_name => "Bobby", :user => current_user)
       ]
 
       xhr :post, :redraw, :per_page => 1, :sort_by => "first_name"
@@ -1027,7 +1022,7 @@ describe LeadsController do
     it "should filter out leads as @leads and render :index action" do
       session[:leads_filter] = "contacted,rejected"
 
-      @leads = [ FactoryGirl.create(:lead, :user => @current_user, :status => "new") ]
+      @leads = [ FactoryGirl.create(:lead, :user => current_user, :status => "new") ]
       xhr :post, :filter, :status => "new"
       assigns[:leads].should == @leads
       response.should be_a_success
@@ -1044,4 +1039,3 @@ describe LeadsController do
   end
 
 end
-

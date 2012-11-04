@@ -47,13 +47,13 @@ describe Lead do
     end
 
     it "should return nil when attaching existing task" do
-      @task = FactoryGirl.create(:task, :asset => @lead, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @lead, :user => current_user)
 
       @lead.attach!(@task).should == nil
     end
 
     it "should return non-empty list of tasks when attaching new task" do
-      @task = FactoryGirl.create(:task, :user => @current_user)
+      @task = FactoryGirl.create(:task, :user => current_user)
 
       @lead.attach!(@task).should == [ @task ]
     end
@@ -65,7 +65,7 @@ describe Lead do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @lead, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @lead, :user => current_user)
       @lead.tasks.count.should == 1
 
       @lead.discard!(@task)
@@ -102,4 +102,3 @@ describe Lead do
     it_should_behave_like Ability, Lead
   end
 end
-

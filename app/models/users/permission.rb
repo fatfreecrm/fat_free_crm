@@ -29,8 +29,10 @@
 
 class Permission < ActiveRecord::Base
   belongs_to :user
+  belongs_to :group
   belongs_to :asset, :polymorphic => true
 
-  validates_presence_of :user_id
+  validates_presence_of :user_id, :unless => :group_id?
+  validates_presence_of :group_id, :unless => :user_id?
 end
 

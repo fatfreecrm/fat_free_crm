@@ -1,32 +1,21 @@
 %li.highlight[version]
   .body
-    - item_name = t(version.item.class.name)
+    - item_type = version.item_type.underscore.humanize
     - if user = User.find_by_id(version.whodunnit)
       - user_name = user.name
     - else
       - user_name = t('version.anonymous')
     -# If translation doesn't exist, just print event message
     - if t('version.' + version.event, :default => 0) != 0
-      = t('version.' + version.event, :item => item_name, :by => user_name, :default => version.event)
+      = t('version.' + version.event, :item => item_type, :by => user_name, :default => version.event)
     - else
       = auto_link(version.event).html_safe
     %small= t('time_ago', time_ago_in_words(version.created_at))
     %tt
-      - version.changeset.each do |attr_name, change|
-        - if attr_name =~ /^cf_/
-          - field = CustomField.where(:name => attr_name).first
-          - label = field.label
-          - first = field.render change.first
-          - second = field.render change.second
-        - else
-          - label = t(attr_name)
-          - first = change.first
-          - second = change.second
-        - if [first, second].any?(&:present?)
-          %br
-          - if first.blank? and second.present?
-            = t('version.set', :attr => label, :to => second)
-          - elsif first.present? and second.present?
-            = t('version.change', :attr => label, :from => first, :to => second)
-          - elsif first.present? and second.blank?
-            = t('version.unset', :attr => label, :from => first)
+      - if version.item_type == 'AccountContact'
+        - label, first, second = parse_account_contact_version(version)
+        = render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second}
+      - else
+        - version.changeset.each do |attr_name, change|
+          - label, first, second = parse_version(attr_name, change)
+          = render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second}

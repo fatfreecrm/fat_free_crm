@@ -17,12 +17,12 @@
 
       - if user.suspended?
         = link_to_reactivate(user) << " | "
-      - elsif user != @current_user
+      - elsif user != current_user
         = link_to_suspend(user) << " | "
       - else
         = "<font color='silver'>#{t :suspend}!</font> | ".html_safe
 
-      - if user != @current_user
+      - if user != current_user
         = link_to_confirm(user)
       - else
         %span.grayed #{t :delete}?
@@ -54,3 +54,8 @@
         %b.cool #{t(:user_signed_up_on, l(user.created_at, :format => :mmddhhss))}
       - else
         %span.warn #{t(:user_suspended_on, l(user.created_at.to_date, :format => :mmddyy))}
+    - groups = user.groups
+    - unless groups.count.zero?
+      %dt{ :style => "padding: 2px 0px 0px 0px" }
+        = t(:groups) << ":"
+        = groups.map(&:name).join(', ')

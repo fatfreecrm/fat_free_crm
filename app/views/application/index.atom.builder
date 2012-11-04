@@ -23,7 +23,7 @@ atom_feed do |feed|
       entry.summary send(:"#{item}_summary", asset) if respond_to?(:"#{item}_summary")
 
       entry.author do |author|
-        author.name !asset.is_a?(User) ? asset.user.full_name : asset.full_name
+        author.name !asset.is_a?(User) ? asset.try(:user).try(:full_name) : asset.full_name
       end
 
       entry.contributor do |contributor|

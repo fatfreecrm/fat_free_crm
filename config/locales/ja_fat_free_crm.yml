@@ -624,13 +624,3 @@ ja:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
       mmddyyyy_hhmm: "%m/%d/%Y %l:%M %p"
-
-  calendar_date_select:
-    ok: OK
-    now: Now
-    today: Today
-    clear: Clear
-
-  # If you need custom format look at
-  # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
-  calendar_date_select_format: american

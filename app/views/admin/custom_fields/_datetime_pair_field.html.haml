@@ -1,0 +1,21 @@
+- field1 = f.object || CustomFieldPair.new
+- field2 = f.object.respond_to?(:paired_with) ? field1.paired_with : CustomFieldPair.new
+
+%table{:class => :pairs}
+  = fields_for("pair[0]", field1) do |first|
+    = fields_for("pair[1]", field2) do |second|
+      %tr
+        %td
+          .label.top Hint:
+          = first.text_field :hint
+        %td= spacer
+        %td
+          .label.top
+            %span Required:
+            = first.check_box :required
+            %br
+            %span Disabled:
+            = first.check_box :disabled
+            = first.hidden_field :id
+            = second.hidden_field :id
+            %div{:style => 'width: 240px;'}

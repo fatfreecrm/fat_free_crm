@@ -27,7 +27,7 @@
       %li= link_to_delete(lead)
 
   .indent
-    = link_to_if can?(:read, lead), lead.full_name(@current_user.preference[:leads_naming]), lead
+    = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
     %tt
       - if lead.company? && lead.title?
         = t(:works_at, :job_title => lead.title, :company => lead.company)
@@ -38,7 +38,7 @@
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
-    - unless @current_user.preference[:leads_outline] == "brief"
+    - unless current_user.preference[:leads_outline] == "brief"
       %dt
         = stars_for(lead)
         |

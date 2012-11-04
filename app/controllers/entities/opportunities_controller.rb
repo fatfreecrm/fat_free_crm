@@ -23,8 +23,11 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities
   #----------------------------------------------------------------------------
   def index
-    @opportunities = get_opportunities(:page => params[:page])
-    respond_with(@opportunities)
+    @opportunities = get_opportunities(:page => params[:page], :per_page => params[:per_page])
+
+    respond_with @opportunities do |format|
+      format.xls { render :layout => 'header' }
+    end
   end
 
   # GET /opportunities/1
@@ -41,9 +44,9 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/new
   #----------------------------------------------------------------------------
   def new
-    @opportunity.attributes = {:user => @current_user, :stage => "prospecting", :access => Setting.default_access}
-    @users       = User.except(@current_user)
-    @account     = Account.new(:user => @current_user, :access => Setting.default_access)
+    @opportunity.attributes = {:user => current_user, :stage => "prospecting", :access => Setting.default_access, :assigned_to => nil}
+    @users       = User.except(current_user)
+    @account     = Account.new(:user => current_user, :access => Setting.default_access)
     @accounts    = Account.my.order('name')
 
     if params[:related]
@@ -61,8 +64,8 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
-    @users = User.except(@current_user)
-    @account  = @opportunity.account || Account.new(:user => @current_user)
+    @users = User.except(current_user)
+    @account  = @opportunity.account || Account.new(:user => current_user)
     @accounts = Account.my.order('name')
 
     if params[:previous].to_s =~ /(\d+)\z/
@@ -75,8 +78,10 @@ class OpportunitiesController < EntitiesController
   # POST /opportunities
   #----------------------------------------------------------------------------
   def create
+    @comment_body = params[:comment_body]
     respond_with(@opportunity) do |format|
       if @opportunity.save_with_account_and_permissions(params)
+        @opportunity.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @opportunities = get_opportunities
           get_data_for_sidebar
@@ -86,7 +91,7 @@ class OpportunitiesController < EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-        @users = User.except(@current_user)
+        @users = User.except(current_user)
         @accounts = Account.my.order('name')
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
@@ -94,7 +99,7 @@ class OpportunitiesController < EntitiesController
           if request.referer =~ /\/accounts\/(.+)$/
             @account = Account.find($1) # related account
           else
-            @account = Account.new(:user => @current_user)
+            @account = Account.new(:user => current_user)
           end
         end
         @contact = Contact.find(params[:contact]) unless params[:contact].blank?
@@ -116,12 +121,12 @@ class OpportunitiesController < EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-        @users = User.except(@current_user)
+        @users = User.except(current_user)
         @accounts = Account.my.order('name')
         if @opportunity.account
           @account = Account.find(@opportunity.account.id)
         else
-          @account = Account.new(:user => @current_user)
+          @account = Account.new(:user => current_user)
         end
       end
     end
@@ -155,27 +160,18 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /opportunities/options                                             AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = @current_user.pref[:opportunities_per_page] || Opportunity.per_page
-      @outline  = @current_user.pref[:opportunities_outline]  || Opportunity.outline
-      @sort_by  = @current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by
-    end
-  end
-
   # POST /opportunities/redraw                                             AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @opportunities = get_opportunities(:page => 1)
+    @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
+    set_options # Refresh options
     render :index
   end
 
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
-    @opportunities = get_opportunities(:page => 1)
+    @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
     render :index
   end
 
@@ -183,6 +179,14 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_opportunities :get_list_of_records
+
+  def set_options
+    unless params[:cancel].true?
+      @per_page = current_user.pref[:opportunities_per_page] || Opportunity.per_page
+      @outline  = current_user.pref[:opportunities_outline]  || Opportunity.outline
+      @sort_by  = current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by
+    end
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
@@ -226,9 +230,9 @@ private
 
   #----------------------------------------------------------------------------
   def set_params
-    @current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
-    @current_user.pref[:opportunities_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
+    current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:opportunities_outline]  = params[:outline]  if params[:outline]
+    current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:opportunities_filter] = params[:stage] if params[:stage]
   end
 end

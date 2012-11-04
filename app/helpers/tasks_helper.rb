@@ -20,7 +20,7 @@ module TasksHelper
   # Sidebar checkbox control for filtering tasks by due date -- used for
   # pending and assigned views only.
   #----------------------------------------------------------------------------
-  def task_filter_checbox(view, filter, count)
+  def task_filter_checkbox(view, filter, count)
     name = "filter_by_task_#{view}"
     checked = (session[name] ? session[name].split(",").include?(filter.to_s) : count > 0)
     onclick = remote_function(
@@ -68,27 +68,12 @@ module TasksHelper
     onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "'bucket=#{bucket}'")
   end
 
-  # Helper to display XLS, CSV, RSS, and ATOM links for tasks.
-  #----------------------------------------------------------------------------
-  def links_to_task_export(view)
-    token = @current_user.single_access_token
-
-    exports = %w(xls csv).map do |format|
-      link_to(format.upcase, "#{tasks_path}.#{format}?view=#{view}", :title => I18n.t(:"to_#{format}"))
-    end
-    feeds = %w(rss atom).map do |format|
-      link_to(format.upcase, "#{tasks_path}.#{format}?view=#{view}&authentication_credentials=#{token}", :title => I18n.t(:"to_#{format}"))
-    end
-
-    (exports + feeds).join(' | ')
-  end
-
   # Task summary for RSS/ATOM feed.
   #----------------------------------------------------------------------------
   def task_summary(task)
     summary = [ task.category.blank? ? t(:other) : t(task.category) ]
     if @view != "completed"
-      if @view == "pending" && task.user != @current_user
+      if @view == "pending" && task.user != current_user
         summary << t(:task_from, task.user.full_name)
       elsif @view == "assigned"
         summary << t(:task_from, task.assignee.full_name)
@@ -116,7 +101,7 @@ module TasksHelper
     update_page do |page|
       page[id].replace ""
 
-      if Task.bucket_empty?(bucket, @current_user, @view)
+      if Task.bucket_empty?(bucket, current_user, @view)
         page["list_#{bucket}"].visual_effect :fade, :duration => 0.5
       end
     end
@@ -124,7 +109,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def replace_content(task, bucket = nil)
-    partial = (task.assigned_to && task.assigned_to != @current_user.id) ? "assigned" : "pending"
+    partial = (task.assigned_to && task.assigned_to != current_user.id) ? "assigned" : "pending"
     update_page do |page|
       page[dom_id(task)].replace_html :partial => "tasks/#{partial}", :collection => [ task ], :locals => { :bucket => bucket }
     end
@@ -150,7 +135,7 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def reassign(id)
     update_page do |page|
-      if @view == "pending" && @task.assigned_to != @current_user.id
+      if @view == "pending" && @task.assigned_to != current_user.id
         page << hide_task_and_possibly_bucket(id, @task_before_update.bucket)
         page << tasks_flash("#{t(:task_assigned, @task.assignee.full_name)} (" << link_to(t(:view_assigned_tasks), url_for(:controller => :tasks, :view => :assigned)) << ").")
       elsif @view == "assigned" && @task.assigned_to.blank?
@@ -173,4 +158,3 @@ module TasksHelper
   end
 
 end
-

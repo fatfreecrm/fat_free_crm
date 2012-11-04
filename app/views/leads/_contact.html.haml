@@ -13,8 +13,7 @@
         %td= spacer
         %td
           .label.top #{t :company}:
-          = f.text_field :company
-          = autocomplete_text_field 'lead_company', Account.order(:name).map(&:name)
+          = f.autocomplete_field :company, autocomplete_account_name_leads_path
       %tr
         %td
           .label #{t :alt_email}:

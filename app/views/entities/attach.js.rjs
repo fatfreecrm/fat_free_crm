@@ -4,7 +4,7 @@ if @attached
   if partial == "task"
     view = if @attachment.completed?
       "completed"
-    elsif @attachment.my?(@current_user)
+    elsif @attachment.my?(current_user)
       "pending"
     else
       "assigned"

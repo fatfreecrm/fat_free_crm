@@ -22,3 +22,5 @@
   = render :partial => "versions/versions", :locals => {:object => @campaign}
 
   = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
+
+#export= render "shared/export", :action => :show

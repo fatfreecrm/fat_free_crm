@@ -26,7 +26,7 @@ module UsersHelper
 
   def sort_by_language
     languages.sort.map do |locale, language|
-      %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw))} } }]
+      %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw, :id => current_user))} } }]
     end
   end
 
@@ -41,4 +41,3 @@ module UsersHelper
     users.map{|u| [u.full_name, u.id]}.prepend([t(:myself), myself.id])
   end
 end
-

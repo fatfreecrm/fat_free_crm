@@ -57,13 +57,11 @@ class Campaign < ActiveRecord::Base
   scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
   scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
 
-  scope :text_search, lambda { |query|
-    query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
-    where('upper(name) LIKE upper(?)', "%#{query}%")
-  }
+  scope :text_search, lambda { |query| search('name_cont' => query).result }
 
   uses_user_permissions
   acts_as_commentable
+  uses_comment_extensions
   acts_as_taggable_on :tags
   has_paper_trail :ignore => [ :subscribed_users ]
   has_fields
@@ -121,4 +119,3 @@ class Campaign < ActiveRecord::Base
   end
 
 end
-

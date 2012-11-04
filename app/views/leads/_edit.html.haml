@@ -9,8 +9,8 @@
     = render "leads/status",         :f => f, :edit => true
     = render "leads/contact",        :f => f, :edit => true
     = render "leads/web",            :f => f, :edit => true
-    = render "fields/groups", :f => f, :edit => true
-    = render "leads/permissions",    :f => f, :edit => true
+    = render "fields/groups",        :f => f, :edit => true
+    = render "entities/permissions", :f => f, :edit => true, :entity => @lead
 
     .buttonbar
       - if Setting.compound_address

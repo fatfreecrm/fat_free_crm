@@ -42,6 +42,11 @@ describe Preference do
       @preference = FactoryGirl.create(:preference, :user => FactoryGirl.create(:user), :name => "thingymabob", :value => @magoody)
       @user.preference[:thingymabob].should == nil
     end
+    
+    it "should not fail is user is nil" do
+      @preference = FactoryGirl.create(:preference, :user => nil, :name => "thingymabob", :value => @magoody)
+      @preference[:thingymabob].should == nil
+    end
   end
 
   describe "set user preference" do
@@ -57,4 +62,3 @@ describe Preference do
     end
   end
 end
-

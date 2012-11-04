@@ -11,7 +11,7 @@ feature 'Dashboard', %q{
     login_as_user(@me)
 
     FactoryGirl.create(:task, :name => 'Do your homework!', :assignee => @me)
-    FactoryGirl.create(:opportunity, :name => 'Work with the Dolphins', :assignee => @me)
+    FactoryGirl.create(:opportunity, :name => 'Work with the Dolphins', :assignee => @me, :stage => 'proposal')
     FactoryGirl.create(:account, :name => 'Dolphin Manufacturer', :assignee => @me)
   end
 
@@ -37,7 +37,7 @@ feature 'Dashboard', %q{
   scenario "Only show a maximum of 10 entities" do
     10.times do
       FactoryGirl.create(:task, :assignee => @me)
-      FactoryGirl.create(:opportunity, :assignee => @me)
+      FactoryGirl.create(:opportunity, :assignee => @me, :stage => 'proposal')
       FactoryGirl.create(:account, :assignee => @me)
     end
 

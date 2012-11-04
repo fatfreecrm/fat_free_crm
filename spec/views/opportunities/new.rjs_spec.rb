@@ -6,8 +6,8 @@ describe "/opportunities/new" do
   before do
     login_and_assign
     @account = FactoryGirl.create(:account)
-    assign(:opportunity, Opportunity.new(:user => @current_user))
-    assign(:users, [ @current_user ])
+    assign(:opportunity, Opportunity.new(:user => current_user))
+    assign(:users, [ current_user ])
     assign(:account, @account)
     assign(:accounts, [ @account ])
     assign(:stage, Setting.unroll(:opportunity_stage))
@@ -17,13 +17,6 @@ describe "/opportunities/new" do
     render
 
     rendered.should include('crm.flick("empty", "toggle")')
-  end
-
-  it "should hide options form when called from Opportunities index" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-    render
-
-    rendered.should include('crm.hide_form("options")')
   end
 
   describe "new opportunity" do
@@ -56,5 +49,3 @@ describe "/opportunities/new" do
   end
 
 end
-
-

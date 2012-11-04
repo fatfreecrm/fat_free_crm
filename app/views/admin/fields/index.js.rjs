@@ -1,6 +1,0 @@
-unless @fields.blank?
-  page[:fields].replace_html render(:partial => "super_tag", :collection => @fields)
-else
-  page[:fields].replace_html render(:partial => "shared/empty")
-end
-page[:paginate].replace_html render(:partial => "shared/paginate")

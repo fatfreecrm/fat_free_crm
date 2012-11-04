@@ -24,32 +24,6 @@ var crm = {
   base_url      : "",
 
   //----------------------------------------------------------------------------
-  date_select_popup: function(id, dropdown_id, show_time) {
-    $(id).observe("focus", function() {
-      if (!$(id).calendar_was_shown) {    // The field recieved initial focus, show the calendar.
-        var calendar = new CalendarDateSelect(this, { month_year: "label",  year_range: 10, time: show_time, before_close: function() { this.calendar_was_shown = true } });
-        if (dropdown_id) {
-          calendar.buttons_div.build("span", { innerHTML: " | ", className: "button_seperator" });
-          calendar.buttons_div.build("a", { innerHTML: "Back to List", href: "#", onclick: function() {
-            calendar.close();                   // Hide calendar popup.
-            $(id).hide();                       // Hide date edit field.
-            $(dropdown_id).show();              // Show dropdown.
-            $(dropdown_id).selectedIndex = 0;   // Select first dopdown item.
-            $(id).update("");                   // Reset date field value.
-            return false;
-          }.bindAsEventListener(this) });
-        }
-      } else {
-        $(id).calendar_was_shown = null;  // Focus is back from the closed calendar, make it show up again.
-      }
-    });
-
-    $(id).observe("blur", function() {
-      $(id).calendar_was_shown = null;    // Get the calendar ready if we loose focus.
-    });
-  },
-
-  //----------------------------------------------------------------------------
   find_form: function(class_name) {
     var forms = $$('form.' + class_name);
     return (forms.length > 0 ? forms[0].id : null);
@@ -71,14 +45,14 @@ var crm = {
   hide_form: function(id) {
     if($('facebook-list')) $('facebook-list').remove();
     var arrow = $(id + "_arrow") || $("arrow");
-    arrow.update(this.COLLAPSED);
+    if (arrow) arrow.update(this.COLLAPSED);
     $(id).hide().update("").setStyle({height: 'auto'});
   },
 
   //----------------------------------------------------------------------------
   show_form: function(id) {
     var arrow = $(id + "_arrow") || $("arrow");
-    arrow.update(this.EXPANDED);
+    if (arrow) arrow.update(this.EXPANDED);
     Effect.BlindDown(id, { duration: 0.25, afterFinish: function() {
         var input = $(id).down("input[type=text]");
         if (input) input.focus();
@@ -317,7 +291,7 @@ var crm = {
   //----------------------------------------------------------------------------
   reschedule_task: function(id, bucket) {
     $("task_bucket").value = bucket;
-    $("edit_task_" + id).onsubmit();
+    $$('#edit_task_' + id + ' input[type="submit"]')[0].click();
   },
 
   //----------------------------------------------------------------------------
@@ -398,7 +372,7 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
-  
+
   search: function(query, controller) {
     var list = controller;          // ex. "users"
     if (list.indexOf("/") >= 0) {   // ex. "admin/users"
@@ -440,6 +414,7 @@ var crm = {
     }
     this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", {
       frequency: 0.25,
+      parameters: (related) ? ('related=' + related) : null,
       afterUpdateElement: function(text, el) {
         if (el.id) {      // Autocomplete entry found.
           if (related) {  // Attach to related asset.

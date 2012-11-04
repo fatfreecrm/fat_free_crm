@@ -103,7 +103,7 @@ div {
 
 // Pagination.
 //------------------------------------------------------------------------------
-.pagination {
+.pagination, .per_page_options {
   background: white;
   float: right;
   font-size: 11px;
@@ -125,7 +125,7 @@ div {
     text-decoration: none;
     color: #105cb6;
     border: 1px solid #9aafe5;
-    &hover, &focus {
+    &.hover, &.focus {
       color: navy;
       background: lightyellow;
       border-color: navy; } }
@@ -134,3 +134,12 @@ div {
     border: 1px solid #bbbbbb;
     font-style: normal;
     font-weight: bold; } }
+
+.per_page_options {
+  margin-top: 15px;
+  clear: both;
+
+  span.per_page_label {
+    color: #6A6A6A;
+  }
+}

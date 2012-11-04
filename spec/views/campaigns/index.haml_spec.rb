@@ -4,6 +4,10 @@ describe "/campaigns/index" do
   include CampaignsHelper
 
   before do
+    view.lookup_context.prefixes << 'entities'
+    assign :per_page, Campaign.per_page
+    assign :sort_by,  Campaign.sort_by
+    view.stub(:search) { Campaign.search {} }
     login_and_assign
   end
 
@@ -12,7 +16,7 @@ describe "/campaigns/index" do
 
     render
     view.should render_template(:partial => "_campaign")
-    view.should render_template(:partial => "shared/_paginate")
+    view.should render_template(:partial => "shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no campaigns" do
@@ -21,7 +25,7 @@ describe "/campaigns/index" do
     render
     view.should_not render_template(:partial => "_campaigns")
     view.should render_template(:partial => "shared/_empty")
-    view.should render_template(:partial => "shared/_paginate")
+    view.should render_template(:partial => "shared/_paginate_with_per_page")
   end
 
 end

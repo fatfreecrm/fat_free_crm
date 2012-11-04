@@ -1,7 +1,7 @@
 if @user.errors.empty?
   page.call "crm.flip_form", :edit_profile
   page.call "crm.set_title", :edit_profile, t(:my_profile)
-  page[:welcome_username].replace_html @user.name
+  page[:welcome_username].replace_html current_user.name
   page[:profile].replace_html :partial => "user"
 else  
   page[:edit_profile].replace_html :partial => "profile"

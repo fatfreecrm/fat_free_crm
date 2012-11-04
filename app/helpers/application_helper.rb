@@ -40,7 +40,7 @@ module ApplicationHelper
       if flash[type]
         html = content_tag(:div, h(flash[type]), :id => "flash")
         flash[type] = nil
-        return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})", :type => "text/javascript")
+        return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})".html_safe, :type => "text/javascript")
       end
     end
     content_tag(:p, nil, :id => "flash", :style => "display:none;")
@@ -100,7 +100,8 @@ module ApplicationHelper
     link_to(text,
       url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
-      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));"
+      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));",
+      :class => options[:class]
     )
   end
 
@@ -110,37 +111,41 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def link_to_edit(model, params = {})
-    name = (params[:klass_name] || model.class.name).underscore.downcase
+  def link_to_edit(record, options = {})
+    object = record.is_a?(Array) ? record.last : record
+
+    name = (params[:klass_name] || object.class.name).underscore.downcase
     link_to(t(:edit),
-      params[:url] || send(:"edit_#{name}_path", model),
+      options[:url] || polymorphic_url(record, :action => :edit),
       :remote  => true,
       :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}');"
     )
   end
 
   #----------------------------------------------------------------------------
-  def link_to_delete(model, params = {})
-    name = (params[:klass_name] || model.class.name).underscore.downcase
+  def link_to_delete(record, options = {})
+    object = record.is_a?(Array) ? record.last : record
+    confirm = options[:confirm] || nil
+
     link_to(t(:delete) + "!",
-      params[:url] || url_for(model),
+      options[:url] || url_for(record),
       :method => :delete,
       :remote => true,
-      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1"),
+      :confirm => confirm
     )
   end
 
   #----------------------------------------------------------------------------
-  def link_to_discard(model)
-    name = model.class.name.downcase
+  def link_to_discard(object)
     current_url = (request.xhr? ? request.referer : request.fullpath)
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
     link_to(t(:discard),
-      url_for(:controller => parent, :action => :discard, :id => parent_id, :attachment => model.class.name, :attachment_id => model.id),
+      url_for(:controller => parent, :action => :discard, :id => parent_id, :attachment => object.class.name, :attachment_id => object.id),
       :method  => :post,
       :remote  => true,
-      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1")
     )
   end
 
@@ -271,13 +276,25 @@ module ApplicationHelper
     )
   end
 
+  # Ajax helper to refresh current index page once the user changes pagination per_page.
+  #-------------------------------------------------------------------------------------
+  def redraw_pagination(value)
+    remote_function(
+      :url       => send("redraw_#{controller.controller_name}_path"),
+      :with      => "'per_page=#{value}'",
+      :condition => "jQuery('.per_page_options .current').html() != '#{value}'",
+      :loading   => "$('loading').show()",
+      :complete  => "$('loading').hide()"
+    )
+  end
+
   #----------------------------------------------------------------------------
   def options_menu_item(option, key, url = nil)
     name = t("option_#{key}")
     "{ name: \"#{name.titleize}\", on_select: function() {" +
     remote_function(
       :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "'#{option}=#{key}'",
+      :with      => "'#{option}=#{key}&query=' + $(\"query\").value",
       :condition => "$('#{option}').innerHTML != '#{name}'",
       :loading   => "$('#{option}').update('#{name}'); $('loading').show()",
       :complete  => "$('loading').hide()"
@@ -295,54 +312,26 @@ module ApplicationHelper
     end
   end
 
-  #----------------------------------------------------------------------------
-  def localize_calendar_date_select
-    update_page_tag do |page|
-      page.assign '_translations', { 'OK' => t('calendar_date_select.ok'), 'Now' => t('calendar_date_select.now'), 'Today' => t('calendar_date_select.today'), 'Clear' => t('calendar_date_select.clear') }
-      page.assign 'Date.weekdays', t('date.abbr_day_names')
-      page.assign 'Date.months', t('date.month_names')[1..-1]
-    end
-  end
-
-  # Users can upload their avatar, and if it's missing we're going to use
-  # gravatar. For leads and contacts we always use gravatars.
+  # Entities can have associated avatars or gravatars. Only calls Gravatar
+  # in production env. Gravatar won't serve default images if they are not
+  # publically available: http://en.gravatar.com/site/implement/images
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { :class => 'gravatar', :size => :large }.merge(args)
-    if model.avatar
+
+    if model.respond_to?(:avatar) and model.avatar.present?
       Avatar
       image_tag(model.avatar.image.url(args[:size]), args)
-    elsif model.email
-      # Gravatar requires '75x75' format, so convert symbols keys (e.g. :large)
-      if style_size = Avatar::STYLES[args[:size]]
-        args[:size] = style_size.sub(/\#$/,'')
-      end
-      # If we are passing an explicit w*h override (for uploaded avatars),
-      # then use that as the size.
-      if args[:width] && args[:height]
-        args[:size] = [:width, :height].map{|d|args[d]}.join("x")
-      end
-      gravatar_for(model, args)
     else
-      image_tag("avatar.jpg", args)
+      args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
+      if (Rails.env == 'production') and model.respond_to?(:email) and model.email.present?
+        args = { :gravatar => { :default => image_path('avatar.jpg') } }.merge(args)
+        gravatar_image_tag(model.email, args)
+      else
+        image_tag("avatar.jpg", args)
+      end
     end
-  end
-
-  # Gravatar helper that adds default CSS class and image URL.
-  #----------------------------------------------------------------------------
-  def gravatar_for(model, args = {})
-    args = { :class => 'gravatar', :gravatar => { :default => default_avatar_url } }.merge(args)
-    gravatar_image_tag(model.email, args)
-  end
-
-  #----------------------------------------------------------------------------
-  def default_avatar_url
-    url = image_path('avatar.jpg')
-    if ActionController::Base.config.asset_host.present?
-      url
-    else
-      request.protocol + request.host_with_port + url
-    end
+      
   end
 
   # Returns default permissions intro.
@@ -389,25 +378,28 @@ module ApplicationHelper
 
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
-  def links_to_export
-    token = @current_user.single_access_token
-    path = if controller.controller_name == 'home'
-      activities_path
-    elsif controller.class.to_s.starts_with?("Admin::")
-      send("admin_#{controller.controller_name}_path")
-    else
-      send("#{controller.controller_name}_path")
-    end
+  def links_to_export(action=:index)
+    token = current_user.single_access_token
+    url_params = {:action => action}
+    url_params.merge!(:id => params[:id]) unless params[:id].blank?
+    url_params.merge!(:query => params[:query]) unless params[:query].blank?
+    url_params.merge!(:q => params[:q]) unless params[:q].blank?
+    url_params.merge!(:view => @view) unless @view.blank? # tasks
+    url_params.merge!(:id => params[:id]) unless params[:id].blank?
 
     exports = %w(xls csv).map do |format|
-      link_to(format.upcase, "#{path}.#{format}", :title => I18n.t(:"to_#{format}"))
+      link_to(format.upcase, url_params.merge(:format => format), :title => I18n.t(:"to_#{format}")) unless action.to_s == "show"
     end
 
     feeds = %w(rss atom).map do |format|
-      link_to(format.upcase, "#{path}.#{format}?authentication_credentials=#{token}", :title => I18n.t(:"to_#{format}"))
+      link_to(format.upcase, url_params.merge(:format => format, :authentication_credentials => token), :title => I18n.t(:"to_#{format}"))
     end
 
-    (exports + feeds).join(' | ')
+    links = %W(perm).map do |format|
+      link_to(format.upcase, url_params, :title => I18n.t(:"to_#{format}"))
+    end
+
+    (exports + feeds + links).compact.join(' | ')
   end
 
   def template_fields(f, type)
@@ -428,13 +420,58 @@ module ApplicationHelper
     link_to image_tag('delete.png', :size => '16x16', :alt => name), nil, :class => "remove_fields"
   end
 
-  # Adds autocomplete functionality to an existing text field.
+  def user_options
+    User.all.map {|u| [u.full_name, u.id]}
+  end
+
+  def group_options
+    Group.all.map {|g| [g.name, g.id]}
+  end
+
+  def list_of_entities
+    ENTITIES
+  end
+
+  def entity_filter_checkbox(name, value, count)
+    checked = (session["#{controller_name}_filter"] ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
+    values = %Q{$$("input[name='#{name}[]']").findAll(function (el) { return el.checked }).pluck("value")}
+    params = h(%Q{"#{name}=" + #{values} + "&query=" + $("query").value})
+
+    onclick = remote_function(
+      :url      => { :action => :filter },
+      :with     => params,
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    check_box_tag("#{name}[]", value, checked, :id => value, :onclick => onclick)
+  end
+
+
+  # Create a column in the 'asset_attributes' table.
   #----------------------------------------------------------------------------
-  def autocomplete_text_field(id, values)
-    javascript_tag %Q{
-      var textField = jQuery('##{id}');
-      textField.autocomplete({ source: #{values} });
-    }
+  def asset_attribute_columns(title, value, last = false, email = false)
+    # Parse and format urls as links.
+    fmt_value = (value.to_s || "").gsub("\n", "<br />")
+    fmt_value = if email
+        link_to_email(fmt_value)
+      else
+        fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
+      end
+    %Q^<th class="#{last ? "last" : ""}">#{title}:</td>
+  <td class="#{last ? "last" : ""}">#{fmt_value}</td>^.html_safe
+  end
+
+  #----------------------------------------------------------------------------
+  # Combines the 'subtitle' helper with the small info text on the same line.
+  def asset_attribute_section(id, hidden = true, text = nil, info_text = nil)
+    text = id.to_s.split("_").last.capitalize if text == nil
+    content_tag("div", :class => "subtitle show_attributes") do
+      content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
+        url_for(:controller => :home, :action => :toggle, :id => id),
+        :remote  => true,
+        :onclick => "crm.flip_subtitle(this)"
+      )
+      content << content_tag("small", info_text.to_s, {:class => "subtitle_inline_info", :id => "#{id}_intro", :style => hidden ? "" : "display:none;"})
+    end
   end
 end
-

@@ -6,7 +6,7 @@ describe "/tasks/_edit" do
   before do
     login_and_assign
     assign(:task, FactoryGirl.create(:task, :asset => FactoryGirl.create(:account), :bucket => "due_asap"))
-    assign(:users, [ @current_user ])
+    assign(:users, [ current_user ])
     assign(:bucket, %w(due_asap due_today))
     assign(:category, %w(meeting money))
   end
@@ -41,5 +41,3 @@ describe "/tasks/_edit" do
     rendered.should_not have_tag("textarea[id=task_background_info]")
   end
 end
-
-

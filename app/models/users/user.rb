@@ -67,6 +67,7 @@ class User < ActiveRecord::Base
   has_many    :opportunities
   has_many    :permissions, :dependent => :destroy
   has_many    :preferences, :dependent => :destroy
+  has_and_belongs_to_many :groups
 
   has_paper_trail :ignore => [:last_request_at, :perishable_token]
 
@@ -81,8 +82,7 @@ class User < ActiveRecord::Base
   }
 
   scope :my, lambda {
-    current_ability = Ability.new(User.current_user)
-    accessible_by(current_ability)
+    accessible_by(User.current_ability)
   }
 
   acts_as_authentic do |c|
@@ -146,6 +146,13 @@ class User < ActiveRecord::Base
     self.single_access_token ||= update_attribute(:single_access_token, Authlogic::Random.friendly_token)
   end
 
+  # Massage value when using Chosen select box which gives values like ["", "1,2,3"] 
+  #----------------------------------------------------------------------------
+  def group_ids=(value)
+    value = value.join.split(',').map(&:to_i) if value.map{|v| v.to_s.include?(',')}.any?
+    super(value)
+  end
+
   private
 
   # Suspend newly created user if signup requires an approval.
@@ -170,4 +177,15 @@ class User < ActiveRecord::Base
     end
     artifacts == 0
   end
+
+  # Define class methods
+  #----------------------------------------------------------------------------
+  class << self
+
+    def current_ability
+      Ability.new(User.current_user)
+    end
+
+  end
+  
 end

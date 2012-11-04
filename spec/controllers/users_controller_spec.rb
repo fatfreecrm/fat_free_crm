@@ -20,7 +20,7 @@ describe UsersController do
 
     it "should expose current user as @user if no specific user was requested" do
       get :show
-      assigns[:user].should == @current_user
+      assigns[:user].should == current_user
       response.should render_template("users/show")
     end
 
@@ -38,7 +38,7 @@ describe UsersController do
       end
 
       it "should render current user as JSON if no specific user was requested" do
-        @current_user.should_receive(:to_json).and_return("generated JSON")
+        current_user.should_receive(:to_json).and_return("generated JSON")
 
         get :show
         response.body.should == "generated JSON"
@@ -59,7 +59,7 @@ describe UsersController do
       end
 
       it "should render current user as XML if no specific user was requested" do
-        @current_user.should_receive(:to_xml).and_return("generated XML")
+        current_user.should_receive(:to_xml).and_return("generated XML")
 
         get :show
         response.body.should == "generated XML"
@@ -99,12 +99,12 @@ describe UsersController do
   describe "responding to GET edit" do
     before(:each) do
       require_user
-      @user = @current_user
+      @user = current_user
     end
 
     it "should expose current user as @user and render [edit] template" do
       xhr :get, :edit, :id => @user.id
-      assigns[:user].should == @current_user
+      assigns[:user].should == current_user
       response.should render_template("users/edit")
     end
 
@@ -159,7 +159,7 @@ describe UsersController do
   describe "responding to PUT update" do
     before(:each) do
       require_user
-      @user = @current_user
+      @user = current_user
     end
 
     describe "with valid params" do
@@ -178,7 +178,7 @@ describe UsersController do
 
       it "should not update the user information and redraw [update] template" do
         xhr :put, :update, :id => @user.id, :user => { :first_name => nil }
-        @user.reload.first_name.should == @current_user.first_name
+        @user.reload.first_name.should == current_user.first_name
         assigns[:user].should == @user
         response.should render_template("users/update")
       end
@@ -207,12 +207,12 @@ describe UsersController do
   describe "responding to GET avatar" do
     before(:each) do
       require_user
-      @user = @current_user
+      @user = current_user
     end
 
     it "should expose current user as @user and render [avatar] template" do
       xhr :get, :avatar, :id => @user.id
-      assigns[:user].should == @current_user
+      assigns[:user].should == current_user
       response.should render_template("users/avatar")
     end
   end
@@ -223,7 +223,7 @@ describe UsersController do
   describe "responding to PUT update_avatar" do
     before(:each) do
       require_user
-      @user = @current_user
+      @user = current_user
     end
 
     it "should delete avatar if user chooses to use Gravatar" do
@@ -271,12 +271,12 @@ describe UsersController do
   describe "responding to GET avatar" do
     before(:each) do
       require_user
-      @user = @current_user
+      @user = current_user
     end
 
     it "should expose current user as @user and render [pssword] template" do
       xhr :get, :password, :id => @user.id
-      assigns[:user].should == @current_user
+      assigns[:user].should == current_user
       response.should render_template("users/password")
     end
   end
@@ -287,17 +287,17 @@ describe UsersController do
   describe "responding to PUT change_password" do
     before(:each) do
       require_user
-      @current_user_session.stub!(:unauthorized_record=).and_return(@current_user)
-      @current_user_session.stub!(:save).and_return(@current_user)
-      @user = @current_user
+      @current_user_session.stub!(:unauthorized_record=).and_return(current_user)
+      @current_user_session.stub!(:save).and_return(current_user)
+      @user = current_user
       @new_password = "secret?!"
     end
 
     it "should set new user password" do
       xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => @new_password }
-      assigns[:user].should == @current_user
-      @current_user.password.should == @new_password
-      @current_user.errors.should be_empty
+      assigns[:user].should == current_user
+      current_user.password.should == @new_password
+      current_user.errors.should be_empty
       flash[:notice].should_not == nil
       response.should render_template("users/change_password")
     end
@@ -305,36 +305,35 @@ describe UsersController do
     it "should allow to change password if current password is blank" do
       @user.password_hash = nil
       xhr :put, :change_password, :id => @user.id, :current_password => "", :user => { :password => @new_password, :password_confirmation => @new_password }
-      @current_user.password.should == @new_password
-      @current_user.errors.should be_empty
+      current_user.password.should == @new_password
+      current_user.errors.should be_empty
       flash[:notice].should_not == nil
       response.should render_template("users/change_password")
     end
 
     it "should not change user password if password field is blank" do
       xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => "", :password_confirmation => "" }
-      assigns[:user].should == @current_user
-      @current_user.password.should == @user.password # password stays the same
-      @current_user.errors.should be_empty # no errors
+      assigns[:user].should == current_user
+      current_user.password.should == @user.password # password stays the same
+      current_user.errors.should be_empty # no errors
       flash[:notice].should_not == nil
       response.should render_template("users/change_password")
     end
 
     it "should require valid current password" do
       xhr :put, :change_password, :id => @user.id, :current_password => "what?!", :user => { :password => @new_password, :password_confirmation => @new_password }
-      @current_user.password.should == @user.password # password stays the same
-      @current_user.should have(1).error # .error_on(:current_password)
+      current_user.password.should == @user.password # password stays the same
+      current_user.should have(1).error # .error_on(:current_password)
       response.should render_template("users/change_password")
     end
 
     it "should require new password and password confirmation to match" do
       xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => "none" }
-      @current_user.password.should == @user.password # password stays the same
-      @current_user.should have(1).error # .error_on(:current_password)
+      current_user.password.should == @user.password # password stays the same
+      current_user.should have(1).error # .error_on(:current_password)
       response.should render_template("users/change_password")
     end
 
   end
 
 end
-

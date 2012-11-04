@@ -1,0 +1,13 @@
+<% custom_field_id = "field_#{@field.id}";
+   container_id = "#{@field.klass_name.downcase}_field_groups"
+%>
+
+<% if @field.errors.empty? %>
+  jQuery('#<%=custom_field_id%>').replaceWith('<%= j (render :partial => "field", :collection => [@field]) %>')
+  jQuery('#<%=custom_field_id%>').effect("highlight", { duration:1000 });
+  jQuery('#<%=container_id%>').after('<%= j (sortable_element(container_id, :url => sort_admin_fields_path(:field_group_id => @field.field_group_id))) %>')
+<% else %>
+  jQuery('#<%=custom_field_id%>').find('.edit_field').replaceWith('<%= j(render :partial => "form") %>')
+  jQuery('#<%=custom_field_id%>').effect("shake", { duration:250, distance: 6 });
+  jQuery('#<%=custom_field_id%>').find('input[type="text"]').first().focus()
+<% end %>

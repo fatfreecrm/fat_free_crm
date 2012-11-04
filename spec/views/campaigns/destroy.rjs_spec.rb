@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/campaigns/destroy" do
   before do
     login_and_assign
-    assign(:campaign, @campaign = FactoryGirl.create(:campaign, :user => @current_user))
+    assign(:campaign, @campaign = FactoryGirl.create(:campaign, :user => current_user))
     assign(:campaigns, [ @campaign ].paginate)
     assign(:campaign_status_total, Hash.new(1))
     render
@@ -25,4 +25,3 @@ describe "/campaigns/destroy" do
   end
 
 end
-

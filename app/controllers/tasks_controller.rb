@@ -19,20 +19,23 @@ class TasksController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :update_sidebar, :only => :index
-
+  
   # GET /tasks
   #----------------------------------------------------------------------------
   def index
     @view = params[:view] || "pending"
-    @tasks = Task.find_all_grouped(@current_user, @view)
+    @tasks = Task.find_all_grouped(current_user, @view)
 
-    respond_with(@tasks)
+    respond_with @tasks do |format|
+      format.xls { render :layout => 'header' }
+      format.csv { render :csv => @tasks.map(&:second).flatten }
+    end
   end
 
   # GET /tasks/1
   #----------------------------------------------------------------------------
   def show
-    @task = Task.tracked_by(@current_user).find(params[:id])
+    @task = Task.tracked_by(current_user).find(params[:id])
 
     respond_with(@task)
   end
@@ -42,7 +45,7 @@ class TasksController < ApplicationController
   def new
     @view = params[:view] || "pending"
     @task = Task.new
-    @users = User.except(@current_user).by_name
+    @users = User.except(current_user).by_name
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
 
@@ -62,14 +65,14 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @view = params[:view] || "pending"
-    @task = Task.tracked_by(@current_user).find(params[:id])
-    @users = User.except(@current_user).by_name
+    @task = Task.tracked_by(current_user).find(params[:id])
+    @users = User.except(current_user).by_name
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Task.tracked_by(@current_user).find_by_id($1) || $1.to_i
+      @previous = Task.tracked_by(current_user).find_by_id($1) || $1.to_i
     end
 
     respond_with(@task)
@@ -92,7 +95,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @view = params[:view] || "pending"
-    @task = Task.tracked_by(@current_user).find(params[:id])
+    @task = Task.tracked_by(current_user).find(params[:id])
     @task_before_update = @task.clone
 
     if @task.due_at && (@task.due_at < Date.today.to_time)
@@ -105,7 +108,7 @@ class TasksController < ApplicationController
       if @task.update_attributes(params[:task])
         @task.bucket = @task.computed_bucket
         if called_from_index_page?
-          if Task.bucket_empty?(@task_before_update.bucket, @current_user, @view)
+          if Task.bucket_empty?(@task_before_update.bucket, current_user, @view)
             @empty_bucket = @task_before_update.bucket
           end
           update_sidebar
@@ -118,11 +121,11 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @view = params[:view] || "pending"
-    @task = Task.tracked_by(@current_user).find(params[:id])
+    @task = Task.tracked_by(current_user).find(params[:id])
     @task.destroy
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    if Task.bucket_empty?(params[:bucket], @current_user, @view)
+    if Task.bucket_empty?(params[:bucket], current_user, @view)
       @empty_bucket = params[:bucket]
     end
 
@@ -133,11 +136,11 @@ class TasksController < ApplicationController
   # PUT /tasks/1/complete
   #----------------------------------------------------------------------------
   def complete
-    @task = Task.tracked_by(@current_user).find(params[:id])
-    @task.update_attributes(:completed_at => Time.now, :completed_by => @current_user.id) if @task
+    @task = Task.tracked_by(current_user).find(params[:id])
+    @task.update_attributes(:completed_at => Time.now, :completed_by => current_user.id) if @task
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
-    if Task.bucket_empty?(params[:bucket], @current_user)
+    if Task.bucket_empty?(params[:bucket], current_user)
       @empty_bucket = params[:bucket]
     end
 
@@ -179,7 +182,7 @@ private
   def update_sidebar
     @view = params[:view]
     @view = "pending" unless %w(pending assigned completed).include?(@view)
-    @task_total = Task.totals(@current_user, @view)
+    @task_total = Task.totals(current_user, @view)
 
     # Update filters session if we added, deleted, or completed a task.
     if @task

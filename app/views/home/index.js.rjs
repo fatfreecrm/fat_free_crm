@@ -4,3 +4,4 @@ else
   page[:activities].replace_html t(:no_activity_records)
 end
 # page[:paginate].replace_html render(:partial => "shared/paginate")
+page[:export].replace_html render(:partial => "shared/export")

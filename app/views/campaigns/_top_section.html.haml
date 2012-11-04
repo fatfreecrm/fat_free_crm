@@ -8,11 +8,11 @@
       %tr
         %td
           .label #{t :start_date}:
-          = f.text_field :starts_on, :value => f.object.starts_on ? l(f.object.starts_on, :format => :mmddyyyy) : "", :style => "width:110px", :autocomplete => :off
+          = f.text_field :starts_on, :value => f.object.starts_on, :style => "width:110px", :autocomplete => :off, :class => 'date'
         %td= spacer
         %td
           .label #{t :end_date}:
-          = f.text_field :ends_on, :value => f.object.ends_on ? l(f.object.ends_on, :format => :mmddyyyy) : "", :style => "width:110px", :autocomplete => :off
+          = f.text_field :ends_on, :value => f.object.ends_on, :style => "width:110px", :autocomplete => :off, :class => 'date'
         %td= spacer
         %td
           .label #{t :status}:

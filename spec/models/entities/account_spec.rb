@@ -36,7 +36,7 @@ describe Account do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @account, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @account, :user => current_user)
       @contact = FactoryGirl.create(:contact)
       @account.contacts << @contact
       @opportunity = FactoryGirl.create(:opportunity)
@@ -48,7 +48,7 @@ describe Account do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => @current_user)
+      @task = FactoryGirl.create(:task, :user => current_user)
       @contact = FactoryGirl.create(:contact)
       @opportunity = FactoryGirl.create(:opportunity)
 
@@ -64,7 +64,7 @@ describe Account do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @account, :user => @current_user)
+      @task = FactoryGirl.create(:task, :asset => @account, :user => current_user)
       @account.tasks.count.should == 1
 
       @account.discard!(@task)
@@ -178,4 +178,3 @@ describe Account do
     end
   end
 end
-

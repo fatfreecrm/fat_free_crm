@@ -650,12 +650,3 @@ ru:
   time:
     formats:
       mmddhhss: "%d %B в %H:%M"
-
-  calendar_date_select:
-    ok: OK
-    now: Сейчас
-    today: Сегодня
-    clear: Очистить
-
-  # Default is Finnish (31.12.2009 17:00)
-  calendar_date_select_format: finnish

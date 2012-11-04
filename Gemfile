@@ -41,11 +41,15 @@ gem 'premailer', :require => false
 remove 'fat_free_crm'
 
 group :development, :test do
+  # Uncomment the following two gems to deploy via Capistrano
+  gem 'capistrano'
+  gem 'capistrano_colors'
+
   gem 'rspec-rails', '~> 2.9.0'
   gem 'headless'
   unless ENV["CI"]
     gem 'ruby-debug', :platform => :mri_18
-    gem (RUBY_VERSION == "1.9.2" ? 'ruby-debug19' : 'debugger'), :platform => :mri_19
+    gem 'debugger', :platform => :mri_19
   end
   gem 'pry-rails'
 end
@@ -55,6 +59,7 @@ group :test do
   gem 'spork'
   gem 'database_cleaner'
   gem 'fuubar'
+  gem "acts_as_fu", "~> 0.0.8"
 
   if RUBY_VERSION.to_f >= 1.9
     gem 'factory_girl_rails', '~> 3.0.0'
@@ -78,3 +83,4 @@ group :assets do
   gem 'uglifier',     '>= 1.0.3'
 end
 
+gem 'turbo-sprockets-rails3'
