@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120615084624) do
+ActiveRecord::Schema.define(:version => 20120616082258) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -82,6 +82,15 @@ ActiveRecord::Schema.define(:version => 20120615084624) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
+
+  create_table "attendances", :id => false, :force => true do |t|
+    t.integer "contact_id"
+    t.integer "event_instance_id"
+  end
+
+  add_index "attendances", ["contact_id", "event_instance_id"], :name => "index_attendances_on_contact_id_and_event_instance_id"
+  add_index "attendances", ["contact_id"], :name => "index_attendances_on_contact_id"
+  add_index "attendances", ["event_instance_id"], :name => "index_attendances_on_event_instance_id"
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -221,6 +230,31 @@ ActiveRecord::Schema.define(:version => 20120615084624) do
   end
 
   add_index "emails", ["mediator_id", "mediator_type"], :name => "index_emails_on_mediator_id_and_mediator_type"
+
+  create_table "event_instances", :force => true do |t|
+    t.integer  "event_id"
+    t.string   "name"
+    t.datetime "deleted_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "uuid",             :limit => 36
+    t.integer  "user_id"
+    t.integer  "contact_group_id"
+    t.integer  "assigned_to"
+    t.string   "name",             :limit => 64, :default => "",       :null => false
+    t.text     "subscribed_users"
+    t.string   "access",           :limit => 8,  :default => "Public"
+    t.string   "category",         :limit => 32
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+  end
+
+  add_index "events", ["assigned_to"], :name => "index_events_on_assigned_to"
+  add_index "events", ["user_id", "name", "deleted_at"], :name => "index_events_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "field_groups", :force => true do |t|
     t.string   "name",       :limit => 64

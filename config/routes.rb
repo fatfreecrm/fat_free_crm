@@ -158,6 +158,25 @@ Rails.application.routes.draw do
       get :opportunities
     end
   end
+  
+  resources :events, :id => /\d+/ do
+    collection do
+      get  :advanced_search
+      post :filter
+      get  :options
+      get  :field_group
+      match :auto_complete
+      post :redraw
+      get :versions
+    end
+    member do
+      put  :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      get :event_instances
+    end
+  end
 
   namespace :admin do
     resources :users do
