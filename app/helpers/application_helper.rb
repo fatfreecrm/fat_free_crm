@@ -331,7 +331,7 @@ module ApplicationHelper
         image_tag("avatar.jpg", args)
       end
     end
-      
+
   end
 
   # Returns default permissions intro.
@@ -400,24 +400,6 @@ module ApplicationHelper
     end
 
     (exports + feeds + links).compact.join(' | ')
-  end
-
-  def template_fields(f, type)
-    f.grouping_fields f.object.new_grouping, :object_name => "new_object_name", :child_index => "new_grouping" do |builder|
-      render('grouping_fields', :f => builder)
-    end
-  end
-
-  def link_to_add_fields(name, f, type)
-    new_object = f.object.send "build_#{type}"
-    fields = f.send("#{type}_fields", new_object, :child_index => "new_#{type}") do |builder|
-      render(type.to_s + "_fields", :f => builder)
-    end
-    link_to name, nil, :class => "add_fields", "data-field-type" => type, "data-content" => "#{fields}"
-  end
-
-  def link_to_remove_fields(name, f)
-    link_to image_tag('delete.png', :size => '16x16', :alt => name), nil, :class => "remove_fields"
   end
 
   def user_options

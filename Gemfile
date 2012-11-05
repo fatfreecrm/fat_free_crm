@@ -84,3 +84,5 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
+
+#gem 'ransack_ui', :path => '~/code/gems/ransack_ui'
