@@ -5,11 +5,10 @@
     %table.asset_attributes
       %tr
         = col(t(:name), account.name)
-        = col(t(:phone), account.phone)
+        - assigned_to_user = User.find_by_id(account.assigned_to)
+        = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
       %tr
-        = col(t(:website), account.website)
-        = col(t(:email), account.email, false, true)
+        = col(t(:category), account.category)
+        = col(t(:rating), stars_for(account))
       %tr
         = col(t(:tags), account.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)
-        - assigned_to_user = User.find_by_id(account.assigned_to)
-        = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "", :last)
