@@ -2,7 +2,7 @@
   %h4= h(@contact_group.name)
   
   %li
-    %dt= @contact_group.category ? t(@contact_group.category) : t(:other)
+    %dt= @contact_group.category.blank? ? t(:other) : t(@contact_group.category)
     %tt #{t :category}:
   %li.last
     %dt= truncate((@contact_group.assigned_to ? @contact_group.assignee.full_name : @contact_group.user.full_name), :length => 16)

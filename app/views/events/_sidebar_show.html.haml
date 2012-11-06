@@ -1,0 +1,17 @@
+.panel#summary
+  %h4= h(@event.name)
+  
+  %li
+    %dt= @event.category.blank? ? t(:other) : t(@event.category)
+    %tt #{t :category}:
+  %li.last
+    %dt= truncate((@event.assigned_to ? @event.assignee.full_name : @event.user.full_name), :length => 16)
+    %tt #{t :assigned_to}:
+
+  = render "fields/sidebar_show", :asset => @event
+
+  - if @event.tag_list.present?
+    %dt
+      .tags= tags_for_index(@event)
+
+  = hook(:show_event_sidebar_bottom, self, :event => @event)

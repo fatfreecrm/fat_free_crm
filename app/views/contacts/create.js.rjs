@@ -1,8 +1,15 @@
 if @contact.valid?
   page[:create_contact_arrow].replace_html "&#9658;"
-  page[:create_contact_title].replace_html t(:contacts)
+  
   page.visual_effect :toggle_blind, :create_contact, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
-  page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
+  if called_from_landing_page?(:event_instances)
+    #debugger
+    page[:create_contact_title].replace_html "Attendees"
+    page.insert_html :top, :contacts, :partial => "event_instances/contact", :collection => [ @contact ], :locals => {:object => @event_instance}
+  else
+    page[:create_contact_title].replace_html t(:contacts)
+    page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
+  end
   page[dom_id(@contact)].visual_effect :highlight, :duration => 1.5
   if called_from_index_page?
     page << refresh_sidebar(:index)

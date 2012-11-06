@@ -1,0 +1,19 @@
+.remote
+  = simple_form_for(@event, :html => one_submit_only(:event), :remote => true) do |f|
+    = link_to_close edit_event_path(@event)
+    = f.hidden_field :user_id
+
+    = f.error_messages :object_name => t('event')
+
+    = render "events/top_section",  :f => f, :edit => true
+    -#= render "events/contact_info", :f => f, :edit => true
+    = render "fields/groups",  :f => f, :edit => true
+    = render "entities/permissions",  :f => f, :edit => true
+
+    .buttonbar
+      - if Setting.compound_address
+        = f.submit t(:save_event), :onclick => "crm.clear_all_hints()"
+      - else
+        = f.submit t(:save_event)
+      #{t :or}
+      = link_to_cancel edit_event_path(@event)

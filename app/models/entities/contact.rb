@@ -146,7 +146,7 @@ class Contact < ActiveRecord::Base
   # Attach given attachment to the contact if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+    unless self.send("#{attachment.class.name.underscore.downcase}_ids").include?(attachment.id)
       self.send(attachment.class.name.tableize) << attachment
     end
   end

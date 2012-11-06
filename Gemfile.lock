@@ -28,12 +28,15 @@ GEM
     activesupport (3.2.3)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    acts-as-taggable-on (2.2.2)
+    acts-as-taggable-on (2.3.3)
       rails (~> 3.0)
     acts_as_commentable (3.0.1)
+    acts_as_fu (0.0.8)
+      activerecord
+      sqlite3
     acts_as_list (0.1.6)
     addressable (2.2.8)
-    ajax-chosen-rails (0.2.0)
+    ajax-chosen-rails (0.2.1)
       chosen-rails_ffcrm
       railties (~> 3.0)
       thor (~> 0.14)
@@ -45,6 +48,13 @@ GEM
     bundler_local_development (0.3.0)
       bundler
     cancan (1.6.7)
+    capistrano (2.13.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+    capistrano_colors (0.5.5)
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -98,6 +108,7 @@ GEM
       ruby-progressbar (~> 0.0.10)
     haml (3.1.4)
     headless (0.3.1)
+    highline (1.6.15)
     hike (1.2.1)
     htmlentities (4.3.1)
     i18n (0.6.0)
@@ -120,11 +131,18 @@ GEM
     mime-types (1.18)
     multi_json (1.3.4)
     mysql2 (0.3.10)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.6.1)
+    net-ssh-gateway (1.1.0)
+      net-ssh (>= 1.99.1)
     nokogiri (1.5.2)
     paper_trail (2.6.3)
       activerecord (~> 3.0)
       railties (~> 3.0)
-    paperclip (2.7.0)
+    paperclip (2.8.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
@@ -158,6 +176,8 @@ GEM
       activesupport (= 3.2.3)
       bundler (~> 1.0)
       railties (= 3.2.3)
+    rails3-jquery-autocomplete (1.0.10)
+      rails (~> 3.0)
     railties (3.2.3)
       actionpack (= 3.2.3)
       activesupport (= 3.2.3)
@@ -217,10 +237,7 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    squeel (0.9.5)
-      activerecord (~> 3.0)
-      activesupport (~> 3.0)
-      polyamorous (~> 0.5.0)
+    sqlite3 (1.3.6)
     therubyracer (0.10.1)
       libv8 (~> 3.3.10)
     thor (0.14.6)
@@ -228,6 +245,9 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    turbo-sprockets-rails3 (0.2.12)
+      railties (>= 3.1.0, < 3.2.9)
+      sprockets (>= 2.0.0)
     tzinfo (0.3.33)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
@@ -236,6 +256,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    valium (0.5.0)
+      activerecord (>= 3.0.2)
     will_paginate (3.0.3)
     xpath (0.1.4)
       nokogiri (~> 1.3)
@@ -244,14 +266,18 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts-as-taggable-on (~> 2.2.1)
+  acts-as-taggable-on (~> 2.3.3)
   acts_as_commentable (~> 3.0.1)
+  acts_as_fu (~> 0.0.8)
   acts_as_list (~> 0.1.4)
-  ajax-chosen-rails (>= 0.2.0)
+  ajax-chosen-rails (>= 0.2.1)
   authlogic (= 3.1.0)
   bundler_local_development
   cancan
+  capistrano
+  capistrano_colors
   capybara
+  cocaine
   coffee-rails (~> 3.2.1)
   database_cleaner
   debugger
@@ -261,27 +287,29 @@ DEPENDENCIES
   factory_girl_rails (~> 3.0.0)
   ffaker (>= 1.12.0)
   fuubar
-  haml (~> 3.1.3)
+  haml (~> 3)
   headless
   jquery-rails
   mysql2 (= 0.3.10)
   nokogiri
   paper_trail
-  paperclip (~> 2.7.0)
+  paperclip (~> 2.8.0)
   premailer
   prototype-rails
   pry-rails
-  rails (~> 3.2.2)
+  rails (~> 3.2)
+  rails3-jquery-autocomplete
   ransack_ffcrm (~> 0.6.0)
   responds_to_parent (>= 1.1.0)
   rspec-rails (~> 2.9.0)
   ruby-debug
-  sass (~> 3.1.10)
+  sass (~> 3)
   sass-rails (~> 3.2.3)
   simple_form (~> 2.0.1)
   spork
-  squeel (~> 0.9.3)
   therubyracer
+  turbo-sprockets-rails3
   uglifier (>= 1.0.3)
   unicorn
+  valium
   will_paginate (~> 3.0.2)

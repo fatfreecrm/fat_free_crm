@@ -1,0 +1,6 @@
+= section(object, :contact_groups)
+.list#contact_groups
+  - contact_groups = object.contact_groups.paginate(:page => 1, :per_page => 20)
+  = render :partial => "contact_groups/contact_group", :collection => contact_groups
+
+= will_paginate contact_groups, :id => 'contact_groups_pagination', :params => {:action => :contact_groups}

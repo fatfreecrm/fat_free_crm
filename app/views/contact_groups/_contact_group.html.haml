@@ -1,20 +1,23 @@
 %li.highlight[contact_group]
-  - if contact_group.category
-    .strip{:class => contact_group.category} #{t(contact_group.category)}
+  - unless contact_group.category.blank?
+    .strip{:class => contact_group.category}= t(contact_group.category)
   - else
-    .strip{:style => "color: gray;"} #{t :other}
+    .strip.grey #{t :other}
 
   %ul.tools
     = hook(:contact_group_tools_before, self, :contact_group => contact_group)
 
     - if can?(:update, contact_group)
       %li= link_to_edit(contact_group)
+    
+    - if shown_on_landing_page?
+      %li= link_to_discard(contact_group)
 
     - if can?(:destroy, contact_group)
       %li= link_to_delete(contact_group)
 
   .indent
-    = link_to(contact_group.name, contact_group)
+    = link_to_if can?(:read, contact_group), contact_group.name, contact_group
     &ndash;
     %tt
       -#= contact_group.location << ", " unless contact_group.location.blank?

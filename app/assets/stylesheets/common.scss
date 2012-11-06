@@ -454,7 +454,10 @@ $sidebar_width: 210px;
     dt {
       color: #3f3f3f;
       font-size: 11px;
-      padding: 2px 0px 0px 0px; } } }
+      padding: 2px 0px 0px 0px; } } 
+  input[type=checkbox] {
+    float: left;
+    margin: 0px 4px 0px 0px; } }
 
 // Sidebar, filters, and selectors.
 //------------------------------------------------------------------------------

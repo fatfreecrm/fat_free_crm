@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-
+require 'ruby-debug'
 class ApplicationController < ActionController::Base
 
   before_filter :set_context
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   after_filter  "hook(:app_after_filter,  self)"
 
   helper_method :current_user_session, :current_user, :can_signup?
-  helper_method :called_from_index_page?, :called_from_landing_page?
+  helper_method :called_from_index_page?, :called_from_landing_page?, :called_from_event_instance_page?
   helper_method :klass
 
   respond_to :html, :only => [ :index, :show, :auto_complete ]

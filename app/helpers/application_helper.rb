@@ -96,9 +96,10 @@ module ApplicationHelper
     text = options[:text] || t(id, :default => id.to_s.titleize)
     text = (arrow_for(id) + text) unless options[:plain]
     related = (options[:related] ? "&related=#{options[:related]}" : '')
-
+    event_instance = (options[:event_instance_id] ? "&event_instance_id=#{options[:event_instance_id]}" : '')
+    
     link_to(text,
-      url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
+      url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related + event_instance,
       :remote => true,
       :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));",
       :class => options[:class]

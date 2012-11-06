@@ -19,4 +19,6 @@
 
   = render :partial => "versions/versions", :locals => {:object => @contact}
 
-  = load_select_popups_for(@contact, :tasks, :opportunities)
+  = render :partial => "contact_groups/contact_groups", :locals => {:object => @contact}
+  
+  = load_select_popups_for(@contact, :tasks, :opportunities, :contact_groups)

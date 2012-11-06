@@ -28,7 +28,7 @@
 #
 
 class AccountContact < ActiveRecord::Base
-  belongs_to :account
   belongs_to :contact
-  validates_presence_of :account_id, :contact_id
+  belongs_to :account
+  validates_presence_of :contact_id, :account_id
 end

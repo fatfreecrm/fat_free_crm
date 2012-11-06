@@ -1,0 +1,6 @@
+if @events.any?
+  page[:events].replace_html render @events
+else
+  page[:events].replace_html :partial => "shared/empty"
+end
+page[:paginate].replace_html :partial => "shared/paginate"

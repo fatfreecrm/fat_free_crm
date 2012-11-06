@@ -37,6 +37,7 @@ class ContactsController < EntitiesController
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
         @timeline = timeline(@contact)
+        @contact_groups = @contact.contact_groups
       end
     end
   end
@@ -46,7 +47,7 @@ class ContactsController < EntitiesController
   def new
     @contact.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
     @account = Account.new(:user => current_user)
-
+    @event_instance = EventInstance.find(params[:event_instance_id])
     if params[:related]
       model, id = params[:related].split('_')
       if related = model.classify.constantize.my.find_by_id(id)
@@ -74,6 +75,7 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
+    @event_instance = EventInstance.find(params[:event_instance])
     respond_with(@contact) do |format|
       if @contact.save_with_account_and_permissions(params)
         @contact.add_comment_by_user(@comment_body, current_user)

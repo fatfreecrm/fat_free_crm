@@ -12,7 +12,11 @@ if @attached
     page.insert_html :top, :tasks, :partial => "tasks/#{view}", :collection => [ @attachment ], :locals => { :bucket => @attachment.computed_bucket }
 
   else
-    page.insert_html :top, params[:assets], :partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]
+    if called_from_landing_page?(:event_instances)
+      page.insert_html :top, params[:assets], :partial => "event_instances/#{partial}", :collection => [ @attachment ], :locals => {:object => @event_instance}
+    else
+      page.insert_html :top, params[:assets], :partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]
+    end
     if called_from_landing_page?(:accounts)
       page << refresh_sidebar_for(:accounts, :show, :summary)
     elsif called_from_landing_page?(:campaigns)

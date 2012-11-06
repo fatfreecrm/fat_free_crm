@@ -1,0 +1,15 @@
+= hook(:event_instance_top_section, self, :f => f) do
+  .section
+    %table
+      %tr
+        %td(colspan="5")
+          .label.top.req #{t :name}:
+          = f.text_field :name, :style => "width:500px"
+      %tr
+        %td
+          .label #{t :assigned_to}:
+          = user_select(:contact, @users, current_user)
+          
+      = render :partial => "/shared/tags", :locals => {:f => f, :span => 3}
+
+      = hook(:event_instance_top_section_bottom, self, :f => f)

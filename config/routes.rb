@@ -77,6 +77,7 @@ Rails.application.routes.draw do
       post :subscribe
       post :unsubscribe
       get :opportunities
+      get :contact_groups
     end
   end
 
@@ -174,6 +175,27 @@ Rails.application.routes.draw do
     end
     member do
       put  :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      get :event_instances
+    end
+  end
+  
+  resources :event_instances, :id => /\d+/ do
+    collection do
+      #get  :advanced_search
+      post :filter
+      get  :options
+      get  :field_group
+      match :auto_complete
+      post :redraw
+      get :versions
+    end
+    member do
+      put  :attach
+      put :mark
+      put :unmark
       post :discard
       post :subscribe
       post :unsubscribe

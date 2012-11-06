@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120616082258) do
+ActiveRecord::Schema.define(:version => 20121106044118) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(:version => 20120616082258) do
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
 
-  create_table "attendances", :id => false, :force => true do |t|
+  create_table "attendances", :force => true do |t|
     t.integer "contact_id"
     t.integer "event_instance_id"
   end
@@ -140,6 +140,15 @@ ActiveRecord::Schema.define(:version => 20120616082258) do
     t.datetime "updated_at",                                             :null => false
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
   end
+
+  create_table "contact_group_events", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "contact_group_id"
+  end
+
+  add_index "contact_group_events", ["contact_group_id"], :name => "index_contact_group_events_on_contact_group_id"
+  add_index "contact_group_events", ["event_id", "contact_group_id"], :name => "index_contact_group_events_on_event_id_and_contact_group_id"
+  add_index "contact_group_events", ["event_id"], :name => "index_contact_group_events_on_event_id"
 
   create_table "contact_groups", :force => true do |t|
     t.string   "uuid",             :limit => 36
@@ -233,10 +242,14 @@ ActiveRecord::Schema.define(:version => 20120616082258) do
 
   create_table "event_instances", :force => true do |t|
     t.integer  "event_id"
-    t.string   "name"
+    t.string   "name",             :limit => 64, :default => "",       :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.integer  "user_id"
+    t.integer  "assigned_to"
+    t.text     "subscribed_users"
+    t.string   "access",           :limit => 8,  :default => "Public"
   end
 
   create_table "events", :force => true do |t|

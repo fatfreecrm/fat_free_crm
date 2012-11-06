@@ -5,7 +5,9 @@ class ContactGroup < ActiveRecord::Base
   has_and_belongs_to_many :contacts
   has_many :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
   has_many    :emails, :as => :mediator
+  has_many :events
 
+  accepts_nested_attributes_for :contacts, :allow_destroy => true
   serialize :subscribed_users, Set
 
   scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
@@ -18,6 +20,7 @@ class ContactGroup < ActiveRecord::Base
 
   uses_user_permissions
   acts_as_commentable
+  uses_comment_extensions
   acts_as_taggable_on :tags
   has_paper_trail :ignore => [ :subscribed_users ]
   has_fields
@@ -31,6 +34,36 @@ class ContactGroup < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.per_page ; 20 ; end
   def self.outline ; "long" ; end
+  
+    # Backend handler for [Create New Contact] form (see contact/create).
+  #----------------------------------------------------------------------------
+  def save_with_contact_and_permissions(params)
+    self.contacts << Contact.find(params[:related_contact][:contact])
+    #self.contact_group = ContactGroup.new(:contacts => contact, :contact_group => self) unless contact.id.blank?
+    #self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
+    self.save
+  end
+
+  # Backend handler for [Update Contact] form (see contact/update).
+  #----------------------------------------------------------------------------
+  def update_with_contact_and_permissions(params)
+    if params[:account][:id] == "" || params[:account][:name] == ""
+      notify_account_change(:from => self.account, :to => nil)
+      self.account = nil # Contact is not associated with the account anymore.
+    else
+      account = Account.create_or_select_for(self, params[:account])
+      if self.account != account and account.id.present?
+        notify_account_change(:from => self.account, :to => account)
+        self.account_contact = AccountContact.new(:account => account, :contact => self)
+      end
+      
+    end
+    self.reload
+    # Must set access before user_ids, because user_ids= method depends on access value.
+    self.access = params[:contact][:access] if params[:contact][:access]
+    self.attributes = params[:contact]
+    self.save
+  end
 
   # Attach given attachment to the account if it hasn't been attached already.
   #----------------------------------------------------------------------------

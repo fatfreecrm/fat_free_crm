@@ -1,0 +1,17 @@
+= simple_form_for(@event_instance, :html => one_submit_only(:event_instance), :remote => true) do |f|
+  = link_to_close new_event_instance_path
+  = f.hidden_field :user_id
+  = hidden_field_tag "related_event[event]", "#{@event.id if @event}"
+
+  = f.error_messages :object_name => t('event_instance')
+
+  = render "event_instances/top_section",  :f => f
+  -#= render "events/contact_info", :f => f
+  = render "fields/groups",  :f => f
+  = render "entities/permissions",  :f => f, :entity => @event_instance
+
+  .buttonbar
+    = f.submit t(:create_event_instance)
+    #{t :or}
+    = link_to_cancel new_event_instance_path
+

@@ -1,0 +1,24 @@
+%li.highlight[contact]
+  
+  -#.strip.white #{t :other}
+
+  .tools
+    = hook(:contact_tools_before, self, :contact => contact)
+
+    - if can?(:update, contact)
+      = link_to_edit(contact) + " | "
+
+    - if can?(:destroy, contact)
+      = link_to_delete(contact)
+
+  - if @event_instance.attendances.where(:contact_id => contact.id).empty?
+    = check_box_tag dom_id(contact, :mark), 1, false, :onclick => link_to_event_instance_mark(contact, object)
+  - else
+    = check_box_tag dom_id(contact, :mark), 1, true, :onclick => link_to_event_instance_unmark(contact, object)
+  
+  .thing= avatar_for(contact, :size => "16x16")
+  
+  .indenslim
+    = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
+    %tt
+      

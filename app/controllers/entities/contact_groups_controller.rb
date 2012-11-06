@@ -43,12 +43,16 @@ class ContactGroupsController < EntitiesController
   # GET /accounts/new
   #----------------------------------------------------------------------------
   def new
-    @contact_group.attributes = {:user => @current_user, :access => Setting.default_access}
-    @users = User.except(@current_user)
-
+    @contact_group.attributes = {:user => @current_user, :access => Setting.default_access, :assigned_to => nil}
+    @category = Setting.unroll(:contact_group_category)
+    
     if params[:related]
       model, id = params[:related].split('_')
-      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
     end
 
     respond_with(@contact_group)
@@ -57,7 +61,8 @@ class ContactGroupsController < EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @users = User.except(@current_user)
+    @category = Setting.unroll(:task_category)
+    
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = ContactGroup.my.find_by_id($1) || $1.to_i
     end
@@ -68,10 +73,12 @@ class ContactGroupsController < EntitiesController
   # POST /accounts
   #----------------------------------------------------------------------------
   def create
-    @users = User.except(@current_user)
-
+    @comment_body = params[:comment_body]
+    @contact_group = ContactGroup.new(params[:contact_group])
+    
     respond_with(@contact_group) do |format|
-      if @contact_group.save_with_permissions(params[:users])
+      if @contact_group.save_with_contact_and_permissions(params)
+        @contact_group.add_comment_by_user(@comment_body, current_user)
         # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
         @contact_groups = get_contact_groups
@@ -84,10 +91,12 @@ class ContactGroupsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@contact_group) do |format|
-      if @contact_group.update_with_permissions(params[:contact_group], params[:users])
+      # Must set access before user_ids, because user_ids= method depends on access value.
+      @contact_group.access = params[:contact_group][:access] if params[:contact_group][:access]
+      if @contact_group.update_attributes(params[:contact_group])
         get_data_for_sidebar
       else
-        @users = User.except(@current_user) # Need it to redraw [Edit Account] form.
+        @users = User.except(current_user) # Need it to redraw [Edit Account] form.
       end
     end
   end
@@ -115,15 +124,7 @@ class ContactGroupsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # GET /accounts/options                                                  AJAX
-  #----------------------------------------------------------------------------
-  def options
-    unless params[:cancel].true?
-      @per_page = @current_user.pref[:contact_groups_per_page] || ContactGroup.per_page
-      @outline  = @current_user.pref[:contact_groups_outline]  || ContactGroup.outline
-      @sort_by  = @current_user.pref[:contact_groups_sort_by]  || ContactGroup.sort_by
-    end
-  end
+  
 
   # POST /accounts/redraw                                                  AJAX
   #----------------------------------------------------------------------------
@@ -147,6 +148,16 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_contact_groups :get_list_of_records
+
+  # GET /accounts/options                                                  AJAX
+  #----------------------------------------------------------------------------
+  def set_options
+    unless params[:cancel].true?
+      @per_page = @current_user.pref[:contact_groups_per_page] || ContactGroup.per_page
+      @outline  = @current_user.pref[:contact_groups_outline]  || ContactGroup.outline
+      @sort_by  = @current_user.pref[:contact_groups_sort_by]  || ContactGroup.sort_by
+    end
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

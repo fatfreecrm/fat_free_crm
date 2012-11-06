@@ -1,0 +1,24 @@
+= styles_for :task, :contact, :opportunity
+
+#confirm{ hidden }
+.title_tools#menu
+  = link_to_inline(:edit_event, edit_event_path(@event), :text => t(:edit)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@event))
+.title#edit_event_title= h(@event.name)
+
+%div#edit_event{ hidden }
+
+= render "comments/new", :commentable => @event
+= render :partial => "shared/timeline", :collection => @timeline
+
+= hook(:show_event_bottom, self) do
+
+  = render :partial => "tasks/tasks", :locals => {:object => @event}
+
+  = render :partial => "event_instances/event_instances", :locals => {:object => @event}
+
+  -#= render :partial => "opportunities/opportunities", :locals => {:object => @event}
+
+  -#= render :partial => "versions/versions", :locals => {:object => @event}
+
+  = load_select_popups_for(@event, :tasks)
