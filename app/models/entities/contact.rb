@@ -61,6 +61,8 @@ class Contact < ActiveRecord::Base
   has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
   has_many    :emails, :as => :mediator
 
+  has_ransackable_associations %w(account tags activities emails addresses)
+
   serialize :subscribed_users, Set
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true
