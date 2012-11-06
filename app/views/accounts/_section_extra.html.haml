@@ -5,10 +5,12 @@
     %table.asset_attributes
       %tr
         = col(t(:phone_toll_free), account.toll_free_phone)
-        = col(t(:fax), account.fax)
+        = col(t(:phone), account.phone)
       %tr
-        = col(t(:rating), account.rating)
-        = col(t(:category), account.category)
+        = col(t(:fax), account.fax)
+        = col(t(:website), account.website)
+      %tr
+        = col(t(:email), account.email, false, :last)
       %tr
         %th=t(:billing_address) + ":"
         %td
