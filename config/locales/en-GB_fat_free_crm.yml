@@ -23,6 +23,7 @@ en-GB:
   tab_contacts: Contacts
   tab_opportunities: Opportunities
 
+  admin_tab_groups: Groups
   admin_tab_users: Users
   admin_tab_fields: Custom Fields
   admin_tab_tags: Tags
@@ -640,6 +641,16 @@ en-GB:
   #----------------------------------------------------------------------------
   back_to_crm: Back to Fat Free CRM
   crm_admin_page: Fat Free CRM Administration
+
+  # Views -> Admin -> Groups
+  #----------------------------------------------------------------------------
+  create_group: Create Group
+  save_group: Save Group
+  group_members: members
+  groups: Groups
+  groups_small: groups
+  group_small: group
+  confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
 
   # Views -> Admin -> Users.
   #----------------------------------------------------------------------------
