@@ -9,7 +9,8 @@
 
 %div#edit_account{ hidden }
 
-= render :partial => "accounts/sections", :locals => { :account => @account }
+- if Setting.show_entity_details == true
+  = render :partial => "accounts/sections", :locals => { :account => @account }
 
 = render "comments/new", :commentable => @account
 = render :partial => "shared/timeline", :collection => @timeline

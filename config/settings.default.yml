@@ -197,6 +197,11 @@
 #
 :background_info: []
 
+# Show entity details
+#------------------------------------------------------------------------------
+# Show more detail when viewing each entity. Not just on the sidebar.
+# Includes general information section, custom fields and extra information.
+:show_entity_details: false
 
 # Main and Admin Tabs
 #------------------------------------------------------------------------------
