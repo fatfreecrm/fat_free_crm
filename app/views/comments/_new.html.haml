@@ -1,4 +1,4 @@
-- class_name = commentable.class.name.downcase
+- class_name = commentable.class.name.underscore
 - id_prefix = "#{class_name}_#{commentable.id}"
 .comment.highlight.new_comment{ :id => "#{id_prefix}_comment_new" }
   - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == current_user.id }.compact
