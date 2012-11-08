@@ -1,4 +1,4 @@
-- class_name = commentable.class.name.downcase
+- class_name = commentable.class.name.underscore
 - id_prefix = "#{class_name}_#{commentable.id}"
 .comment.highlight.new_comment{ :id => "#{id_prefix}_comment_new" }
   - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == current_user.id }.compact
@@ -20,7 +20,7 @@
     = form_for(@comment, :remote => true, :html => {:id => "#{id_prefix}_new_comment"}) do |f|
       = hidden_field_tag "comment[user_id]", current_user.id, :id => "#{id_prefix}_comment_user_id"
       = hidden_field_tag "comment[commentable_id]", commentable.id, :id => "#{id_prefix}_comment_commentable_id"
-      = hidden_field_tag "comment[commentable_type]", class_name.capitalize, :id => "#{id_prefix}_comment_commentable_type"
+      = hidden_field_tag "comment[commentable_type]", class_name.classify, :id => "#{id_prefix}_comment_commentable_type"
       = f.text_area :comment, :id => "#{id_prefix}_comment_comment"
       %div{:style => "padding:6px 0px 0px 40px;"}
         = f.submit t(:add_note), :id => "#{id_prefix}_comment_submit"
