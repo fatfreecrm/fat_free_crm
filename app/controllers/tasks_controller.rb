@@ -49,7 +49,7 @@ class TasksController < ApplicationController
     @category = Setting.unroll(:task_category)
 
     if params[:related]
-      model, id = params[:related].split('_')
+      model, id = params[:related].split(/_(\d+)/)
       if related = model.classify.constantize.my.find_by_id(id)
         instance_variable_set("@asset", related)
       else
