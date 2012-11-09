@@ -1,4 +1,4 @@
 
-= render :partial => "contacts/section_general", :locals => {:contact => contact}
-= render :partial => "entities/section_custom_fields", :locals => {:entity => contact}
-= render :partial => "contacts/section_extra", :locals => {:contact => contact}
+= render "contacts/section_general", :contact => contact
+= render "entities/section_custom_fields", :entity => contact
+= render "contacts/section_extra", :contact => contact
