@@ -81,6 +81,7 @@ GEM
     css_parser (1.2.6)
       addressable
       rdoc
+    daemon_controller (1.1.0)
     database_cleaner (0.7.2)
     debugger (1.1.3)
       columnize (>= 0.3.1)
@@ -100,6 +101,7 @@ GEM
     factory_girl_rails (3.0.0)
       factory_girl (~> 3.0.0)
       railties (>= 3.0.0)
+    fastthread (1.0.7)
     ffaker (1.14.0)
     ffi (1.0.11)
     fuubar (1.0.0)
@@ -147,6 +149,11 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    passenger (3.0.18)
+      daemon_controller (>= 1.0.0)
+      fastthread (>= 1.0.1)
+      rack
+      rake (>= 0.8.1)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
@@ -294,6 +301,7 @@ DEPENDENCIES
   nokogiri
   paper_trail
   paperclip (~> 2.8.0)
+  passenger
   premailer
   prototype-rails
   pry-rails
