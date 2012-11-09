@@ -16,10 +16,10 @@
 //------------------------------------------------------------------------------
 
 $color_header: skyblue;
-$color_header_background: #1e4262;
-$color_logo: greenyellow;
+$color_header_background: #327ccb;
+$color_logo: white;
 $color_tab: white;
-$color_tab_background: #466bb1;
+$color_tab_background: #22558b;
 $color_active_tab: black;
 $color_active_tab_background: #E5E5E5;
 $color_hover_tab: navy;
@@ -37,7 +37,7 @@ $color_footer: grey;
   h3 a {
     background: $color_header_background;
     color: $color_logo;
-    font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
+    font: bold 15px "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
   #welcome {
     float: right;

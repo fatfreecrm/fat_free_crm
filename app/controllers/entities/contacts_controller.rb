@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-
+require 'ruby-debug'
 class ContactsController < EntitiesController
   before_filter :get_users, :only => [ :new, :create, :edit, :update ]
   before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
@@ -47,9 +47,12 @@ class ContactsController < EntitiesController
   def new
     @contact.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
     @account = Account.new(:user => current_user)
-    @event_instance = EventInstance.find(params[:event_instance_id])
+    if called_from_landing_page?(:event_instances)
+      @event_instance = EventInstance.find(params[:event_instance_id])
+    end
     if params[:related]
-      model, id = params[:related].split('_')
+      model = params[:related].sub(/_\d+/, "")
+      id = params[:related].split('_').last #change required for models with _ in name e.g. contact_group
       if related = model.classify.constantize.my.find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
@@ -75,7 +78,9 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
-    @event_instance = EventInstance.find(params[:event_instance])
+    if called_from_landing_page?(:event_instances)
+      @event_instance = EventInstance.find(params[:event_instance])
+    end
     respond_with(@contact) do |format|
       if @contact.save_with_account_and_permissions(params)
         @contact.add_comment_by_user(@comment_body, current_user)

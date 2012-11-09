@@ -20,10 +20,11 @@ en-US:
   tab_tasks: Tasks
   tab_campaigns: Campaigns
   tab_leads: Leads
-  tab_accounts: Accounts
+  tab_accounts: Org. Units
   tab_contacts: Contacts
   tab_opportunities: Opportunities
   tab_groups: Groups
+  tab_events: Events
 
   admin_tab_groups: Groups
   admin_tab_users: Users
@@ -38,6 +39,9 @@ en-US:
   partner: Partner
   reseller: Reseller
   vendor: Vendor
+  
+  campus: Campus
+  supporter: Supporter
 
   planned: Planned
   started: Started
@@ -280,20 +284,49 @@ en-US:
   no_account: Do not have an account?
   remember_me: Remember Me
   sign_up_now: Sign Up Now!
+  
+  # Views -> ContactGroups.
+  #----------------------------------------------------------------------------
+  create_contact_group: Create Group
+  select_contact_group: Select Group
+  contact_group: Group
+  select_a_group: group
+  contact_group_small: group
+  contact_groups: Groups
+  contact_groups_small: groups
+  total_contact_groups: Total Groups
+  bible_talk: Bible Talk
+  bsg: BSG
+  team: Team
+  staff: Staff
+  contactgroup: Group
+  
+  # Views -> Events.
+  #----------------------------------------------------------------------------
+  create_event: Create Event
+  select_event: Select Event
+  event: Event
+  select_an_event: event
+  event_small: event
+  events: Events
+  events_small: events
+  total_events: Total Events
+  faculty: Faculty
+  social: Social
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Org. Unit
-  select_an_account: Select an Account
-  account_small: account
-  account_summary: Account Summary
-  account_categories: Account Categories
-  accounts: Accounts
-  accounts_options: Accounts Options
-  accounts_small: accounts
+  select_an_account: Select an Org. Unit
+  account_small: org. unit
+  account_summary: Org. Unit Summary
+  account_categories: Org. Unit Categories
+  accounts: Org. Units
+  accounts_options: Org. Units Options
+  accounts_small: org. units
   assigned_to: Assigned to
   billing_address: Billing address
-  create_account: Create Account
+  create_account: Create Org. Unit
   date_created: Date Created
   date_updated: Date Updated
   fax: Fax
@@ -307,10 +340,10 @@ en-US:
   phone_toll_free: Toll-free
   pipeline: Pipeline
   same_as_billing: same as billing
-  save_account: Save Account
+  save_account: Save Org. Unit
   share_with: Share it with the following people
   shipping_address: Shipping address
-  total_accounts: Total Accounts
+  total_accounts: Total Org. Units
   website: Website
 
   # Views -> Campaigns.

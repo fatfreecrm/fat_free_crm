@@ -3,10 +3,10 @@ if @contact.valid?
   
   page.visual_effect :toggle_blind, :create_contact, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
   if called_from_landing_page?(:event_instances)
-    #debugger
     page[:create_contact_title].replace_html "Attendees"
     page.insert_html :top, :contacts, :partial => "event_instances/contact", :collection => [ @contact ], :locals => {:object => @event_instance}
   else
+    debugger
     page[:create_contact_title].replace_html t(:contacts)
     page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
   end

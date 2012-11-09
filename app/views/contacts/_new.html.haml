@@ -2,7 +2,8 @@
   = link_to_close new_contact_path
   = f.hidden_field :user_id
   = hidden_field_tag "opportunity", "#{@opportunity.id if @opportunity}"
-  = hidden_field_tag "event_instance", "#{@event_instance.id if @event_instance}"
+  - if called_from_landing_page?(:event_instances)
+    = hidden_field_tag "event_instance", "#{@event_instance.id if @event_instance}"
 
 
   = f.error_messages :object_name => t('contact')
