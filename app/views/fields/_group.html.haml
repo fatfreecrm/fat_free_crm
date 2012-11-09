@@ -1,20 +1,11 @@
-- collapsed = session[field_group.key].nil?
-
-%div{ :id => "#{field_group.key}_container", :"data-tag" => field_group.tag.try(:name) }
-  = subtitle field_group.key, collapsed, t(field_group.name, :default => field_group.label)
-  .section
-    %small{ hidden_if(!collapsed).merge(:id => "#{field_group.key}_intro") }
-    %div[field_group]{ hidden_if(collapsed) }
-      %table
-        - field_group.fields.without_pairs.in_groups_of(2, false) do |group|
-          %tr
-            - group.each_with_index do |field, i|
-              %td
-                - if field.hint.present?
-                  = image_tag "info_tiny.png", :title => field.hint, :class => "tooltip-icon"
-                - if field.as == 'check_boxes'
-                  - value = f.object.send(field.name)
-                  - checked = YAML.load(value.to_s)
-                = f.input field.name, field.input_options.merge(:checked => checked)
-              - if i == 0
-                %td= spacer
+- if field_group.name != 'custom_fields'
+  -# start a new section
+  - collapsed = session[field_group.key].nil?
+  %div{ :id => "#{field_group.key}_container", :"data-tag" => field_group.tag.try(:name) }
+    = subtitle field_group.key, collapsed, t(field_group.name, :default => field_group.label)
+    .section
+      %small{ hidden_if(!collapsed).merge(:id => "#{field_group.key}_intro") }
+      %div[field_group]{ hidden_if(collapsed) }
+        = render :partial => 'fields/group_table', :locals => {:f => f, :field_group => field_group}
+- else
+  .section= render :partial => 'fields/group_table', :locals => {:f => f, :field_group => field_group}

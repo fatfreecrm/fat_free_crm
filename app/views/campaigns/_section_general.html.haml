@@ -9,4 +9,4 @@
       %tr
         = col(t(:status), campaign.status ? t(campaign.status) : t(:n_a))
       %tr
-        = col(t(:tags), campaign.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)
+        = col(t(:tags), campaign.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '))

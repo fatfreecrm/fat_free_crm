@@ -4,7 +4,5 @@
 #field_groups
   - f.object.field_groups.each do |field_group|
     - if field_group.fields.present?
-
       - field_groups[field_group.tag.name.downcase] = "#{field_group.key}_container" if field_group.tag
-
       = render :partial => 'fields/group', :locals => {:f => f, :field_group => field_group}

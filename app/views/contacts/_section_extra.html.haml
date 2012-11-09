@@ -20,7 +20,7 @@
       %tr
         %th= t(:web_presence)
         %td= web_presence_icons(contact)
-        - if Setting.background_info && Setting.background_info.include?(:contact)
+        = col(t(:permissions), (contact.permissions.empty? ? t(:shared_with_everyone) : contact.permissions.join(", ")))
+      - if Setting.background_info && Setting.background_info.include?(:contact)
+        %tr
           = col(t(:background_info), contact.background_info)
-      %tr
-        = col(t(:permissions), (contact.permissions.empty? ? t(:shared_with_everyone) : contact.permissions.join(", ")), :last)

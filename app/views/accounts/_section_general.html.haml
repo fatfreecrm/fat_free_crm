@@ -11,4 +11,4 @@
         = col(t(:category), account.category)
         = col(t(:rating), stars_for(account))
       %tr
-        = col(t(:tags), account.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)
+        = col(t(:tags), account.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '))

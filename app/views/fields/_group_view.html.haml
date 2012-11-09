@@ -1,0 +1,7 @@
+%table.asset_attributes
+  - groups = fields.in_groups_of(2, false)
+  - groups.each_with_index do |group, i|
+    %tr
+      - group.each do |field|
+        = col(field.label, field.render_value(entity), (i == groups.size - 1) ? :last : nil)
+        = "<th class='last'></th><td class='last'></td>".html_safe if group.size == 1
