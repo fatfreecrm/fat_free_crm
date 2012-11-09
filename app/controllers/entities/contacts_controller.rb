@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-require 'ruby-debug'
 class ContactsController < EntitiesController
   before_filter :get_users, :only => [ :new, :create, :edit, :update ]
   before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
