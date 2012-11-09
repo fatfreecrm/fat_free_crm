@@ -55,7 +55,7 @@
     - if contacts_outline == "full"
       %dt{ :style => "padding: 2px 0px 0px 0px" }
         - if can?(:read, contact)
-          = render :partial => "contacts/sections", :locals => {:contact => contact}
+          = render "contacts/sections", :contact => contact
           - @comment = Comment.new
           = render "comments/new", :commentable => contact
         = render :partial => "shared/timeline", :collection => (contact.comments + contact.emails).sort { |x, y| y.created_at <=> x.created_at }

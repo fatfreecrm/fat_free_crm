@@ -10,7 +10,7 @@
 %div#edit_account{ hidden }
 
 - if Setting.show_entity_details == true
-  = render :partial => "accounts/sections", :locals => { :account => @account }
+  = render "accounts/sections", :account => @account
 
 = render "comments/new", :commentable => @account
 = render :partial => "shared/timeline", :collection => @timeline
@@ -19,10 +19,10 @@
 
   = render :partial => "tasks/tasks", :locals => {:object => @account}
 
-  = render :partial => "contacts/contacts", :locals => {:object => @account}
+  = render "contacts/contacts", :object => @account
 
-  = render :partial => "opportunities/opportunities", :locals => {:object => @account}
+  = render "opportunities/opportunities", :object => @account
 
-  = render :partial => "versions/versions", :locals => {:object => @account}
+  = render "versions/versions", :object => @account
 
   = load_select_popups_for(@account, :tasks, :contacts, :opportunities)

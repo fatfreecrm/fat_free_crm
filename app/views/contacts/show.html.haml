@@ -10,7 +10,7 @@
 %div#edit_contact{ hidden }
 
 - if Setting.show_entity_details == true
-  = render :partial => "contacts/sections", :locals => { :contact => @contact }
+  = render "contacts/sections", :contact => @contact
 
 = render "comments/new", :commentable => @contact
 = render :partial => "shared/timeline", :collection => @timeline

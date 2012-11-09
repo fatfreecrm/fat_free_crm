@@ -1,0 +1,19 @@
+- collapsed = session[:opportunity_show_general].nil? # && opportunity.errors.empty?
+= section_title :opportunity_show_general, collapsed, t(:general_info), t('show_general_info_small')
+.show_fields
+  #opportunity_show_general{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = col(t(:stage), opportunity.stage ? t(opportunity.stage) : t(:other))
+        = col(t(:close_date), l(opportunity.closes_on, :format => :mmddyy))
+      %tr
+        = col(t(:probability), opportunity.probability ? opportunity.probability.to_s + "%"  : t(:n_a))
+        = col(t(:amount), opportunity.amount ? number_to_currency(opportunity.amount || 0, :precision => 0) : t(:n_a))
+      %tr
+        = col(t(:discount), opportunity.discount ? number_to_currency(opportunity.discount || 0, :precision => 0) : t(:n_a))
+      %tr
+        = col(t(:account), opportunity.account ? link_to(opportunity.account.name, url_for(opportunity.account)) : "")
+        - assigned_to_user = User.find_by_id(opportunity.assigned_to)
+        = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
+      %tr
+        = col(t(:tags), opportunity.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)

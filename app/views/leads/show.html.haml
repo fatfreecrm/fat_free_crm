@@ -1,3 +1,4 @@
+
 = styles_for :task
 
 #confirm{ hidden }
@@ -9,6 +10,9 @@
     = link_to_function(t(:reject) + '?', confirm_reject(@lead)) + " | "
   = link_to_function(t(:delete) + '?', confirm_delete(@lead))
 .title#title= h(@lead.full_name)
+
+- if Setting.show_entity_details == true
+  = render "leads/sections", :lead => @lead
 
 %div#convert_lead{ hidden }
 %div#edit_lead{ hidden }

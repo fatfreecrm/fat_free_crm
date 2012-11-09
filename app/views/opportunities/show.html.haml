@@ -1,3 +1,4 @@
+
 = styles_for :task, :contact
 
 #confirm{ hidden }
@@ -8,15 +9,18 @@
 
 %div#edit_opportunity{ hidden }
 
+- if Setting.show_entity_details == true
+  = render "opportunities/sections", :opportunity => @opportunity
+
 = render "comments/new", :commentable => @opportunity
 = render :partial => "shared/timeline", :collection => @timeline
 
 = hook(:show_opportunity_bottom, self) do
 
-  = render :partial => "tasks/tasks", :locals => {:object => @opportunity}
+  = render "tasks/tasks", :object => @opportunity
 
-  = render :partial => "contacts/contacts", :locals => {:object => @opportunity}
+  = render "contacts/contacts", :object => @opportunity
 
-  = render :partial => "versions/versions", :locals => {:object => @opportunity}
+  = render "versions/versions", :object => @opportunity
 
   = load_select_popups_for(@opportunity, :tasks, :contacts)

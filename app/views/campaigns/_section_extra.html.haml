@@ -1,0 +1,19 @@
+- collapsed = session[:campaign_show_extra].nil? # && campaign.errors.empty?
+= section_title :campaign_show_extra, collapsed, t(:objectives), t('show_extra_info_small')
+.show_fields
+  #campaign_show_extra{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = col(t(:leads), campaign.target_leads || t(:n_a))
+        = col(t(:conversion), number_to_percentage(campaign.target_conversion, :precision => 1) || t(:n_a))
+      %tr
+        = col(t(:revenue), number_to_currency(campaign.target_revenue, :precision => 0) || t(:n_a))
+        = col(t(:budget), number_to_currency(campaign.budget, :precision => 0) || t(:n_a))
+      %tr
+        = col(t(:objectives), campaign.objectives)
+
+      - if Setting.background_info && Setting.background_info.include?(:campaign)
+        %tr
+          = col(t(:background_info), campaign.background_info)
+      %tr
+        = col(t(:permissions), (campaign.permissions.empty? ? t(:shared_with_everyone) : campaign.permissions.join(", ")), :last)

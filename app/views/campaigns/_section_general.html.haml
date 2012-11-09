@@ -1,0 +1,12 @@
+- collapsed = session[:campaign_show_general].nil? # && campaign.errors.empty?
+= section_title :campaign_show_general, collapsed, t(:general_info), t('show_general_info_small')
+.show_fields
+  #campaign_show_general{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = col(t(:start_date), campaign.starts_on ? l(campaign.starts_on, :format => :mmddyy) : t(:n_a))
+        = col(t(:end_date), campaign.ends_on ? l(campaign.ends_on, :format => :mmddyy) : t(:n_a))
+      %tr
+        = col(t(:status), campaign.status ? t(campaign.status) : t(:n_a))
+      %tr
+        = col(t(:tags), campaign.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)

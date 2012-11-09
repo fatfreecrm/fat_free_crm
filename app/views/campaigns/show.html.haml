@@ -1,3 +1,4 @@
+
 = styles_for :task, :lead, :opportunity
 
 #confirm{ hidden }
@@ -8,18 +9,22 @@
 
 %div#edit_campaign{ hidden }
 
+- if Setting.show_entity_details == true
+  = render "campaigns/sections", :campaign => @campaign
+
+
 = render "comments/new", :commentable => @campaign
 = render :partial => "shared/timeline", :collection => @timeline
 
 = hook(:show_campaign_bottom, self) do
 
-  = render :partial => "tasks/tasks", :locals => {:object => @campaign}
+  = render "tasks/tasks", :object => @campaign
 
-  = render :partial => "leads/leads", :locals => {:object => @campaign}
+  = render "leads/leads", :object => @campaign
 
-  = render :partial => "opportunities/opportunities", :locals => {:object => @campaign}
+  = render "opportunities/opportunities", :object => @campaign
 
-  = render :partial => "versions/versions", :locals => {:object => @campaign}
+  = render "versions/versions", :object => @campaign
 
   = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
 

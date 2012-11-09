@@ -1,0 +1,47 @@
+- collapsed = session[:lead_show_general].nil? # && lead.errors.empty?
+= section_title :lead_show_general, collapsed, t(:general_info), t('show_general_info_small')
+.show_fields
+  #lead_show_general{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = col(t(:first_name), lead.first_name)
+        = col(t(:first_name), lead.last_name)
+      %tr
+        = col(t(:email), lead.email)
+        = col(t(:phone), lead.do_not_call ? content_tag(:strike, lead.phone) : lead.phone)
+      %tr
+        = col(t(:tags), lead.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '), :last)
+        %th{:class => :last}= t(:web_presence)
+        %td{:class => :last}= web_presence_icons(lead)
+
+- collapsed = session[:lead_show_status].nil? # && lead.errors.empty?
+= section_title :lead_show_status, collapsed, t(:status), t('show_status_info_small')
+.show_fields
+  #lead_show_status{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        - assigned_to_user = User.find_by_id(lead.assigned_to)
+        = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
+        = col(t(:status), t(lead.status, :default => :n_a))
+      %tr
+        = col(t(:rating), stars_for(lead))
+        = col(t(:source), t(lead.source, :default => :n_a))
+      %tr
+        - if lead.campaign
+          = col(t(:campaign), link_to(truncate(lead.campaign.name, :length => 70), lead.campaign, :title => lead.campaign.name), :last)
+
+- collapsed = session[:lead_show_contact_info].nil? # && lead.errors.empty?
+= section_title :lead_show_contact_info, collapsed, t(:contact_info), t('show_contact_info_small')
+.show_fields
+  #lead_show_contact_info{ hidden_if(collapsed) }
+    %table.asset_attributes
+      %tr
+        = col(t(:title), lead.title)
+        = col(t(:company), lead.company)
+      %tr
+        = col(t(:alt_email), lead.alt_email)
+        = col(t(:mobile), lead.do_not_call ? content_tag(:strike, lead.mobile) : lead.mobile)
+      %tr
+        %th= t(:address) + ':'
+        %td= render("shared/address_show", :asset => lead, :type => 'business')
+        = col(t(:referred_by), lead.referred_by ? truncate(lead.referred_by, :length => 60) : t(:n_a))
