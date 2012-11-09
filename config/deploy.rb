@@ -1,19 +1,19 @@
-$:.unshift File.expand_path('./lib', ENV['rvm_path'])
+#$:.unshift File.expand_path('./lib', ENV['rvm_path'])
 
 require 'rvm/capistrano'
 require 'bundler/capistrano'
 load    'deploy/assets'
 
-set :application,     'fat_free_crm'
-set :repository,      'git://github.com/fatfreecrm/fat_free_crm.git'
+set :application,     'esCRM'
+set :repository,      'git://github.com/reubenjs/fat_free_crm.git'
 set :branch,          'master'
 set :scm,             :git
-set :deploy_to,       ''
-set :user,            ''
+set :deploy_to,       "/var/www/#{application}"
+set :user,            'deploy'
 set :use_sudo,        false
-set :rvm_type,        :user
+set :rvm_type,        :system
 set :rvm_ruby_string, '1.9.3'
-server                '', :app, :web, :db, primary: true
+server                '192.168.1.77', :app, :web, :db, primary: true
 
 # Use local key instead of key installed on the server.
 # If not working run "ssh-add ~/.ssh/id_rsa" on your local machine.
