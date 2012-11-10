@@ -1,0 +1,13 @@
+= search_form_for search, :url => url_for(:action => :index), :html => {:method => :get, :class => "advanced_search"}, :remote => true do |f|
+
+  = f.grouping_fields do |g|
+    = render 'grouping_fields', :f => g
+
+  %p
+    = link_to_add_fields t(:advanced_search_add_group), f, :grouping
+
+  %p
+    = hidden_field_tag :distinct, '1'
+    = hidden_field_tag :page, '1'
+    = hidden_field_tag :outline, @outline || 'brief'
+    = f.submit t(:advanced_search_submit)
