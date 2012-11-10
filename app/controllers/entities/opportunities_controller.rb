@@ -180,14 +180,6 @@ private
   #----------------------------------------------------------------------------
   alias :get_opportunities :get_list_of_records
 
-  def set_options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:opportunities_per_page] || Opportunity.per_page
-      @outline  = current_user.pref[:opportunities_outline]  || Opportunity.outline
-      @sort_by  = current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by
-    end
-  end
-
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax

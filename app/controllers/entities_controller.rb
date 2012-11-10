@@ -18,6 +18,8 @@
 class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :set_outline, :only => [ :index, :show, :redraw ]
+  
   before_filter :set_options, :only => :index
   before_filter :load_ransack_search, :only => :index
 
@@ -121,6 +123,15 @@ protected
   def entities
     instance_variable_get("@#{controller_name}") || klass.my
   end
+  
+  def set_options
+    unless params[:cancel].true?
+      klass = controller_name.classify.constantize
+      @per_page = current_user.pref[:"#{controller_name}_per_page"] || klass.per_page
+      @outline  = current_user.pref[:"#{controller_name}_outline"]  || klass.outline
+      @sort_by  = current_user.pref[:"#{controller_name}_sort_by"]  || klass.sort_by
+    end
+  end
 
 private
 
@@ -198,5 +209,14 @@ private
   #----------------------------------------------------------------------------
   def timeline(asset)
     (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
+  end
+  
+  # Sets the current outline for viewing objects in this context
+  #----------------------------------------------------------------------------
+  def set_outline
+    controller = params['controller']
+    outline = params['outline']
+    current_user.pref[:"#{controller}_outline"] = outline if outline.present? and controller.present?
+    @outline ||= outline
   end
 end

@@ -4,7 +4,7 @@
 
 .title_tools
   #buttons
-    = render 'format_buttons'
+    = generate_view_buttons
   .sorting_options
     -# sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name.
     = t(:sort_by, :models => t(:"#{controller_name}_small"), :field => link_to(current_sort_by, "#", :id => :sort_by)).html_safe

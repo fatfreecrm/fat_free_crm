@@ -456,4 +456,25 @@ module ApplicationHelper
       content << content_tag("small", info_text.to_s, {:class => "subtitle_inline_info", :id => "#{id}_intro", :style => hidden ? "" : "display:none;"})
     end
   end
+  
+  #----------------------------------------------------------------------------
+  def get_outline
+    @outline ||= (current_user.pref[:"#{params['controller']}_outline"] || controller_name.classify.constantize.outline )
+  end
+  
+  def generate_view_buttons
+    views = FatFreeCRM::ViewFactory.views_for(:controller => params['controller'], :action => params[:action])
+    return nil if views.empty?
+    content_tag :ul, :class => 'format-buttons' do
+      views.collect do |view|
+        classes = (get_outline == view.name) ? "#{view.name}-button active" : "#{view.name}-button"
+        content_tag(:li) do
+          link_to('#', :title => view.title, :"data-outline" => view.name, :"data-url" => send("redraw_#{params['controller']}_path"), :class => classes) do
+            image_tag(view.icon || 'brief.png')
+          end
+        end
+      end.join('').html_safe
+    end
+  end
+  
 end

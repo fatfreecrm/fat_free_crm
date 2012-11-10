@@ -135,7 +135,6 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:contacts_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:contacts_outline]  = params[:outline]  if params[:outline]
 
     # Sorting and naming only: set the same option for Leads if the hasn't been set yet.
     if params[:sort_by]
@@ -164,12 +163,8 @@ class ContactsController < EntitiesController
   end
 
   def set_options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:contacts_per_page] || Contact.per_page
-      @outline  = current_user.pref[:contacts_outline]  || Contact.outline
-      @sort_by  = current_user.pref[:contacts_sort_by]  || Contact.sort_by
-      @naming   = current_user.pref[:contacts_naming]   || Contact.first_name_position
-    end
+    super
+    @naming = (current_user.pref[:contacts_naming]   || Contact.first_name_position) unless params[:cancel].true?
   end
 
   #----------------------------------------------------------------------------
