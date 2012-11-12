@@ -49,12 +49,14 @@ class ApplicationController < ActionController::Base
     session[:auto_complete] = controller_name.to_sym
     respond_to do |format|
       format.any(:js, :html)   { render :partial => 'auto_complete' }
-      format.json { render :json => @auto_complete.inject({}){|h,a| h[a.id] = a.name; h } }
+      format.json { render :json => @auto_complete.inject({}){|h,a|
+        h[a.id] = a.respond_to?(:full_name) ? a.full_name : a.name; h
+      }}
     end
   end
 
 private
-  
+
   #
   # Takes { :related => 'campaigns/7' } or { :related => '5' }
   #   and returns array of object ids that should be excluded from search
