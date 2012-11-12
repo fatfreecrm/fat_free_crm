@@ -20,6 +20,7 @@ en-US:
   tab_tasks: Tasks
   tab_campaigns: Campaigns
   tab_leads: Leads
+
   tab_accounts: Accounts
   tab_contacts: Contacts
   tab_opportunities: Opportunities
@@ -621,22 +622,6 @@ en-US:
   advanced_search_group_rest: ...and where %{combinator} of the following match
   advanced_search_add_condition: Add a filter
   advanced_search_remove_condition: Remove filter
-
-  ransack:
-    predicates:
-      eq: is
-      not_eq: is not
-      lt: is less than
-      gt: is greater than
-      matches: matches
-      does_not_match: doesn't match
-      cont: contains
-      not_cont: doesn't contain
-      blank: is blank
-      present: is present
-      "null": is null
-      not_null: is not null
-
 
   # Views -> Comments.
   #----------------------------------------------------------------------------

@@ -180,3 +180,20 @@
 
       full_messages:
         format: "%{attribute} %{message}"
+
+  ransack:
+    predicates:
+      eq: is
+      not_eq: is not
+      lt: is less than
+      gt: is greater than
+      matches: matches
+      does_not_match: doesn't match
+      cont: contains
+      not_cont: doesn't contain
+      blank: is blank
+      present: is present
+      "null": is null
+      not_null: is not null
+      "true": is true
+      "false": is false
