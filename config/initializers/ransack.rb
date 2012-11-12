@@ -2,8 +2,8 @@ Ransack.configure do |config|
   config.default_predicates = {
     :compounds => false,
     :only => [
-      :cont, :not_cont, :blank, :present, :true, :false, :null, :not_null,
-      :matches, :does_not_match, :eq, :not_eq, :lt, :gt
+      :cont, :not_cont, :blank, :present, :true, :false, :eq, :not_eq,
+      :lt, :gt, :null, :not_null, :matches, :does_not_match
     ]
   }
 
