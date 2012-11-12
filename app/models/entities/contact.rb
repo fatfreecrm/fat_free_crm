@@ -62,6 +62,7 @@ class Contact < ActiveRecord::Base
   has_many    :emails, :as => :mediator
 
   has_ransackable_associations %w(account tags activities emails addresses)
+  ransack_can_autocomplete
 
   serialize :subscribed_users, Set
 
