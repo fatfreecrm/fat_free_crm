@@ -700,8 +700,17 @@ span.handle img {
 .fields .title {
   margin-bottom: 12px; }
 
-.remove_fields img {
-  vertical-align: text-bottom; }
+.remove_fields {
+  margin-right: 4px;
+  &:hover { background: none; }
+  img {
+    vertical-align: middle;
+  }
+}
+
+.select2-container {
+  vertical-align: middle;
+}
 
 ul.tools {
   display: inline;
