@@ -99,7 +99,7 @@ Rails.application.routes.draw do
       put  :promote
       put  :reject
     end
-    
+
     get :autocomplete_account_name, :on => :collection
   end
 
@@ -139,6 +139,10 @@ Rails.application.routes.draw do
       put :upload_avatar
       put :change_password
       post :redraw
+    end
+
+    collection do
+      match :auto_complete
     end
   end
 
