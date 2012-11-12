@@ -45,7 +45,7 @@ GEM
       activerecord (>= 3.0.7)
       activerecord (>= 3.0.7)
     builder (3.0.4)
-    bundler_local_development (0.3.0)
+    bundler_local_development (0.4.1)
       bundler
     cancan (1.6.7)
     capistrano (2.11.2)
@@ -192,7 +192,7 @@ GEM
       activerecord (~> 3.0)
       chronic (~> 0.6.7)
       polyamorous (~> 0.5.0)
-    ransack_ui (0.0.3)
+    ransack_ui (0.0.4)
     rbx-require-relative (0.0.9)
     rdoc (3.12)
       json (~> 1.4)
