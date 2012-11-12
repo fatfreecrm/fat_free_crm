@@ -81,6 +81,9 @@ class Lead < ActiveRecord::Base
   exportable
   sortable :by => [ "first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
+  has_ransackable_associations %w(contact tags activities emails addresses)
+  ransack_can_autocomplete
+
   validates_presence_of :first_name, :message => :missing_first_name
   validates_presence_of :last_name, :message => :missing_last_name if Setting.require_last_names
   validate :users_for_shared_access
@@ -112,7 +115,7 @@ class Lead < ActiveRecord::Base
     ActiveSupport::Deprecation.warn "lead.update_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead and call lead.update_with_lead_counters"
     update_with_lead_counters(attributes)
   end
-  
+
   # Update lead attributes taking care of campaign lead counters when necessary.
   #----------------------------------------------------------------------------
   def update_with_lead_counters(attributes)
