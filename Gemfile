@@ -11,7 +11,7 @@ gem 'pg', '~> 0.13.2'
 gem 'bundler_local_development', :group => :development, :require => false
 begin
   require 'bundler_local_development'
-  Bundler.development_gems = [/^ffcrm_/]
+  Bundler.development_gems = [/^ffcrm_/, /ransack/]
 rescue LoadError
 end
 
@@ -84,5 +84,4 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
-
-#gem 'ransack_ui', :path => '~/code/gems/ransack_ui'
+gem 'ransack_ui'
