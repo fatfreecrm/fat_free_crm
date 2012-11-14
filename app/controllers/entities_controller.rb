@@ -129,6 +129,10 @@ private
     @users ||= User.except(current_user)
   end
 
+  def ransack_search
+    @ransack_search ||= load_ransack_search
+  end
+
   # Get list of records for a given model class.
   #----------------------------------------------------------------------------
   def get_list_of_records(options = {})
@@ -139,7 +143,7 @@ private
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
 
     per_page = if options[:per_page]
-      options[:per_page] == 'all' ? @ransack_search.result.count : options[:per_page]
+      options[:per_page] == 'all' ? ransack_search.result.count : options[:per_page]
     else
       current_user.pref[:"#{controller_name}_per_page"]
     end
@@ -159,7 +163,7 @@ private
       filter = session[:"#{controller_name}_filter"].to_s.split(',')
     end
 
-    scope = entities.merge(@ransack_search.result)
+    scope = entities.merge(ransack_search.result)
     scope = scope.state(filter)                   if filter.present?
     scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
