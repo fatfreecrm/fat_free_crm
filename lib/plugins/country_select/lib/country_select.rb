@@ -18,7 +18,15 @@ module ActionView
           priority_countries = ["United States", "Argentina", "Australia", "Brasil", "Canada", "Finland", "France", "Germany", "Italy", "Japan", "Mexico", "Norway", "Poland", "Portugal", "Spain", "Sweden", "Russia", "United Kingdom"]
         end
 
-        country_options += options_for_select(priority_countries, selected)
+        # Add iso code for priority countries 
+        priority_countries_iso = COUNTRIES.select{|c| priority_countries.include?(c[0]) }
+
+        # Add iso code for selected countries if not nil
+        unless selected.nil?
+            selected = COUNTRIES.select{|c| selected.include?(c[1]) }.flatten
+        end
+
+        country_options += options_for_select(priority_countries_iso, selected)
         country_options += "<option value=\"\" disabled=\"disabled\">-------------</option>\n"
 
         other_countries = COUNTRIES.select{|c| !priority_countries.include?(c[0]) }
