@@ -38,6 +38,10 @@ require 'paper_trail'
 require 'cancan'
 require 'rails3-jquery-autocomplete'
 require 'valium'
+require 'ffaker'
+require 'premailer'
+require 'nokogiri'
+require 'email_reply_parser_ffcrm'
 
 # Load redcloth if available (for textile markup in emails)
 begin
