@@ -41,7 +41,6 @@ require 'valium'
 require 'ffaker'
 require 'premailer'
 require 'nokogiri'
-require 'email_reply_parser_ffcrm'
 
 # Load redcloth if available (for textile markup in emails)
 begin
