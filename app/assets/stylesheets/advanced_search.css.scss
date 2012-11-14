@@ -81,3 +81,22 @@ ul.format-buttons li {
   a.full-button { background: url('full.png'); }
 
 }
+
+.remove_fields {
+  margin-right: 4px;
+  &:hover { background: none; }
+  img {
+    vertical-align: middle;
+  }
+}
+
+.select2-container, input.ransack_query {
+  vertical-align: middle;
+}
+
+.ui-datepicker-trigger {
+  vertical-align: middle;
+  margin-left: 4px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
