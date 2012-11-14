@@ -36,6 +36,7 @@ require 'ransack'
 require 'ransack_ui'
 require 'paper_trail'
 require 'cancan'
+require 'rails3-jquery-autocomplete'
 require 'valium'
 
 # Load redcloth if available (for textile markup in emails)
