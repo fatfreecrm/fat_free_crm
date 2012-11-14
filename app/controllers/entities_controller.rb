@@ -19,12 +19,13 @@ class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :set_options, :only => :index
+  before_filter :load_ransack_search, :only => :index
 
   load_and_authorize_resource
 
   after_filter :update_recently_viewed, :only => :show
 
-  helper_method :entity, :entities, :search
+  helper_method :entity, :entities
 
   # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
@@ -128,15 +129,6 @@ private
     @users ||= User.except(current_user)
   end
 
-  #----------------------------------------------------------------------------
-  def search
-    @search ||= begin
-      search = klass.search(params[:q])
-      search.build_grouping unless search.groupings.any?
-      search
-    end
-  end
-
   # Get list of records for a given model class.
   #----------------------------------------------------------------------------
   def get_list_of_records(options = {})
@@ -147,7 +139,7 @@ private
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
 
     per_page = if options[:per_page]
-      options[:per_page] == 'all' ? search.result.count : options[:per_page]
+      options[:per_page] == 'all' ? @ransack_search.result.count : options[:per_page]
     else
       current_user.pref[:"#{controller_name}_per_page"]
     end
@@ -167,7 +159,7 @@ private
       filter = session[:"#{controller_name}_filter"].to_s.split(',')
     end
 
-    scope = entities.merge(search.result)
+    scope = entities.merge(@ransack_search.result)
     scope = scope.state(filter)                   if filter.present?
     scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?

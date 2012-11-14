@@ -1,0 +1,13 @@
+#search
+  .tabs
+    %ul
+      %li
+        = link_to 'Basic Search', '#',    :"data-search-form" => "basic_search",    :class => (params[:q]  ? "" : " active")
+      %li
+        = link_to 'Advanced Search', '#', :"data-search-form" => "advanced_search", :class => (!params[:q] ? "" : " active")
+
+  .search_form#basic_search{ :style => (params[:q] ? 'display: none;' : '') }
+    = render "basic_search"
+
+  .search_form#advanced_search{ :style => (!params[:q] ? 'display: none;' : '') }
+    = ransack_ui_search

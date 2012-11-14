@@ -9,12 +9,12 @@
     # but we have to move to jquery-ujs first as all ajax events are current
     # registered with prototype
     Event.observe document.body, 'ajax:complete', (e, el) ->
-      if e.findElement('.advanced_search')
+      if e.findElement('.ransack_search')
         $("#loading").hide()
         $("#advanced_search").css('opacity', 1)
 
     Event.observe document.body, 'ajax:failure', (e, el) ->
-      if e.findElement('.advanced_search')
+      if e.findElement('.ransack_search')
         $('#flash').html('An error occurred whilst trying to search') # no i18n
         crm.flash('error')
 
