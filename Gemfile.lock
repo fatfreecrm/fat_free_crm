@@ -192,7 +192,8 @@ GEM
       activerecord (~> 3.0)
       chronic (~> 0.6.7)
       polyamorous (~> 0.5.0)
-    ransack_ui (0.0.6)
+    ransack_ui (0.1.0)
+      chronic (>= 0.6.7)
     rbx-require-relative (0.0.9)
     rdoc (3.12)
       json (~> 1.4)
@@ -302,7 +303,7 @@ DEPENDENCIES
   rails (~> 3.2)
   rails3-jquery-autocomplete
   ransack_ffcrm (~> 0.7.1)
-  ransack_ui
+  ransack_ui (>= 0.1.0)
   responds_to_parent (>= 1.1.0)
   rspec-rails (~> 2.9.0)
   ruby-debug
