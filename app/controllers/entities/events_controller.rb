@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-
 class EventsController < EntitiesController
   before_filter :get_data_for_sidebar, :only => :index
 
@@ -22,7 +21,6 @@ class EventsController < EntitiesController
   #----------------------------------------------------------------------------
   def index
     @events = get_events(:page => params[:page])
-    
     respond_with @events do |format|
       format.xls { render :layout => 'header' }
     end
@@ -31,6 +29,12 @@ class EventsController < EntitiesController
   # GET /accounts/1
   #----------------------------------------------------------------------------
   def show
+    @contacts = @event.contact_group.nil? ? [] : @event.contact_group.contacts
+    @event.attendances.each do |a|
+      unless @contacts.member?(a.contact)
+        @contacts << a.contact
+      end  
+    end  
     respond_with(@event) do |format|
       format.html do
         #@stage = Setting.unroll(:opportunity_stage)
@@ -47,7 +51,8 @@ class EventsController < EntitiesController
     @users = User.except(@current_user)
 
     if params[:related]
-      model, id = params[:related].split('_')
+      model = params[:related].sub(/_\d+/, "")
+      id = params[:related].split('_').last #change required for models with _ in name e.g. contact_group
       instance_variable_set("@#{model}", model.classify.constantize.find(id))
     end
 
@@ -57,6 +62,7 @@ class EventsController < EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
+    @contact_group = @event.contact_group
     @users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Event.my.find_by_id($1) || $1.to_i
@@ -105,6 +111,41 @@ class EventsController < EntitiesController
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
     end
+  end
+  
+  # PUT /tasks/1/complete
+  #----------------------------------------------------------------------------
+  def mark
+    #debugger
+    @contact = Contact.find(params[:contact_id])
+    #@event_instance = EventInstance.find(event_instance)
+    #check if already marked
+    if @event.attendances.where(:contact_id => @contact.id).empty?
+    
+      @attendance = Attendance.new(:contact => @contact)
+      @event.attendances << @attendance
+    end
+    #@attendance.save
+
+    #update_sidebar unless params[:bucket].blank?
+    respond_with(@contact)
+  end
+  
+  # PUT /tasks/1/complete
+  #----------------------------------------------------------------------------
+  def unmark
+    #debugger
+    @contact = Contact.find(params[:contact_id])
+    #@event_instance = EventInstance.find(event_instance)
+    @attendances = @event.attendances.where(:contact_id => @contact.id)
+    
+    @attendances.each do |a|
+      @event.attendances.delete(a)
+    end
+    #@attendance.save
+
+    #update_sidebar unless params[:bucket].blank?
+    respond_with(@contact)
   end
 
   # PUT /accounts/1/attach

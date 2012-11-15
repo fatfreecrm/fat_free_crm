@@ -2,6 +2,7 @@
 
 #confirm{ hidden }
 .title_tools#menu
+  = mail_to(@contact_group.email_addresses, "Email group") + " | "
   = link_to_inline(:edit_contact_group, edit_contact_group_path(@contact_group), :text => t(:edit)) + " | "
   = link_to_function(t(:delete) + '?', confirm_delete(@contact_group))
 .title#edit_contact_group_title= h(@contact_group.name)
@@ -23,4 +24,4 @@
 
   -#= render :partial => "versions/versions", :locals => {:object => @contact_group}
 
-  = load_select_popups_for(@contact_group, :tasks, :contacts)
+  = load_select_popups_for(@contact_group, :tasks, :contacts, :events)

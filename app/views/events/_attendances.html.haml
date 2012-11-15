@@ -2,6 +2,6 @@
 .list#contacts
   %div{:style => "display:block;"}
     - contacts = @contacts.paginate(:page => 1, :per_page => 20)
-    .bucket= render :partial => "event_instances/contact", :locals => {:object => object}, :collection => contacts
+    .bucket= render :partial => "events/contact", :locals => {:object => object}, :collection => contacts
 
 = will_paginate contacts, :id => 'contacts_pagination', :params => {:action => :contacts}

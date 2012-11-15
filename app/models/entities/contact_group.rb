@@ -12,7 +12,9 @@ class ContactGroup < ActiveRecord::Base
 
   scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
   scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
-
+  scope :state, lambda { |filters|
+    where('category IN (?)' + (filters.delete('other') ? ' OR category IS NULL ' : ''), filters)
+  }
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(?)', "%#{query}%")
@@ -29,7 +31,8 @@ class ContactGroup < ActiveRecord::Base
 
   validates_presence_of :name, :message => :missing_name
   validate :users_for_shared_access
-
+  before_save :nullify_blank_category
+  
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
   def self.per_page ; 20 ; end
@@ -38,7 +41,7 @@ class ContactGroup < ActiveRecord::Base
     # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
   def save_with_contact_and_permissions(params)
-    self.contacts << Contact.find(params[:related_contact][:contact])
+    self.contacts << Contact.find(params[:related_contact][:contact]) unless params[:related_contact][:contact].blank?
     #self.contact_group = ContactGroup.new(:contacts => contact, :contact_group => self) unless contact.id.blank?
     #self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
     self.save
@@ -82,6 +85,10 @@ class ContactGroup < ActiveRecord::Base
       self.send(attachment.class.name.tableize).delete(attachment)
     end
   end
+  
+  def email_addresses
+    self.contacts.map(&:email).to_sentence(:last_word_connector => ", ")
+  end
 
   private
 
@@ -89,6 +96,10 @@ class ContactGroup < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, :share_campaign) if self[:access] == "Shared" && !self.permissions.any?
+  end
+  
+  def nullify_blank_category
+    self.category = nil if self.category.blank?
   end
 
 end

@@ -45,12 +45,13 @@ group :development, :test do
   gem 'capistrano'
   gem 'capistrano_colors'
   gem 'passenger'
+  gem 'webrick', '1.3.1'
   
   gem 'rspec-rails', '~> 2.9.0'
   gem 'headless'
   unless ENV["CI"]
-    gem 'ruby-debug', :platform => :mri_18
-    gem 'debugger', :platform => :mri_19
+    #gem 'ruby-debug', :platform => :mri_18
+    #gem 'debugger', :platform => :mri_19
   end
   gem 'pry-rails'
 end
@@ -85,3 +86,4 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
+gem "combined_time_select", "~> 0.0.1"

@@ -124,7 +124,11 @@ class ContactGroupsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  
+  def mandrill
+    respond_with(@contact_group) do |format|
+      format.html
+    end
+  end
 
   # POST /accounts/redraw                                                  AJAX
   #----------------------------------------------------------------------------

@@ -11,10 +11,10 @@
     - if can?(:destroy, contact)
       = link_to_delete(contact)
 
-  - if @event_instance.attendances.where(:contact_id => contact.id).empty?
-    = check_box_tag dom_id(contact, :mark), 1, false, :onclick => link_to_event_instance_mark(contact, object)
+  - if @event.attendances.where(:contact_id => contact.id).empty?
+    = check_box_tag dom_id(contact, :mark), 1, false, :onclick => link_to_mark(contact, object)
   - else
-    = check_box_tag dom_id(contact, :mark), 1, true, :onclick => link_to_event_instance_unmark(contact, object)
+    = check_box_tag dom_id(contact, :mark), 1, true, :onclick => link_to_unmark(contact, object)
   
   .thing= avatar_for(contact, :size => "16x16")
   

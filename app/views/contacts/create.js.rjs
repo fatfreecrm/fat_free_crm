@@ -6,7 +6,6 @@ if @contact.valid?
     page[:create_contact_title].replace_html "Attendees"
     page.insert_html :top, :contacts, :partial => "event_instances/contact", :collection => [ @contact ], :locals => {:object => @event_instance}
   else
-    debugger
     page[:create_contact_title].replace_html t(:contacts)
     page.insert_html :top, :contacts, :partial => "contact", :collection => [ @contact ]
   end
