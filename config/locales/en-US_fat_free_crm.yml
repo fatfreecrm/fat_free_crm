@@ -313,6 +313,7 @@ en-US:
   total_events: Total Events
   faculty: Faculty
   social: Social
+  location: Location
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------

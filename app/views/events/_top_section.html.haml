@@ -6,18 +6,22 @@
           .label.top.req #{t :name}:
           = f.text_field :name, :style => "width:500px"
       %tr
+        %td(colspan="5")
+          .label #{t :location}:
+          = f.text_field :location, :style => "width:500px"
+      %tr
         - dfmt = '%d/%m/%Y' 
         - tfmt = '%I:%M%p'
-        %td
+        %td(colspan="5")
           .datetime
             %p.datepair
               = f.text_field :calendar_start_date, :value => (f.object.starts_at.nil? ? nil : f.object.starts_at.strftime(dfmt)), :style => "width:90px;", :autocomplete => :off, :class => 'date2 start'
               -#= f.text_field :calendar_time_start, :value => (f.object.starts_at.nil? ? nil : f.object.starts_at.strftime(tfmt)), :style => "width:90px;", :autocomplete => :off, :class => 'time start'
-              = f.time_select :calendar_start_time, :combined => true, :default => Time.now.change(:hour => 11, :min => 30), :minute_interval => 15, :time_separator => "", :start_hour => 9, :end_hour => 19 
+              = f.time_select :calendar_start_time, :combined => true, :default => Time.now.change(:hour => 9, :min => 0), :minute_interval => 15, :time_separator => "", :start_hour => 9, :end_hour => 19 
               = ' to '
-              = f.time_select :calendar_end_time, :combined => true, :default => Time.now.change(:hour => 11, :min => 30), :style =>"width:500px", :minute_interval => 15, :time_separator => "", :start_hour => 9, :end_hour => 19
+              = f.time_select :calendar_end_time, :combined => true, :default => Time.now.change(:hour => 9, :min => 0), :style =>"width:500px", :minute_interval => 15, :time_separator => "", :start_hour => 9, :end_hour => 19
               = f.text_field :calendar_end_date, :value => (f.object.starts_at.nil? ? nil : f.object.starts_at.strftime(dfmt)), :style => "width:90px;", :autocomplete => :off, :class => 'date2 end'
-    %table
+
       %tr
         %td
           .label #{t :assigned_to}:

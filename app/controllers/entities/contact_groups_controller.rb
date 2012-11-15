@@ -125,9 +125,36 @@ class ContactGroupsController < EntitiesController
   # Handled by ApplicationController :auto_complete
 
   def mandrill
+    mandrill = Mailchimp::Mandrill.new(Setting.mandrill[:api_key])
+    list = mandrill.templates_list.map{|a| a.slice("name")}
+    
+    @templates_list = list.map{|a| [a["name"],a["name"]]}
     respond_with(@contact_group) do |format|
       format.html
     end
+  end
+  
+  def mandrill_send
+    mandrill = Mailchimp::Mandrill.new(Setting.mandrill[:api_key])
+    
+    recipients = @contact_group.contacts.collect{ |c| 
+      [:email => c.email, :name => c.first_name] unless c.email.blank?
+    }
+    
+    response = mandrill.messages_send_template({
+     :template_name => params[:template_name],
+     :template_content => [:name => "body_content", :content => params[:message_body]],
+     :message => {
+       :subject => params[:message_subject],
+       :from_email => params[:message_sender],
+       :to => recipients
+     }
+    })
+    if response.is_a?(Hash) && response["status"] == "error"
+          raise "Error from MailChimp API: #{response["message"]} (code #{response["code"]})"
+    end
+    @contact_groups = get_contact_groups(:page => params[:page])
+    render :index
   end
 
   # POST /accounts/redraw                                                  AJAX

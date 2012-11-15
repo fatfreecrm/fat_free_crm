@@ -32,3 +32,4 @@ Design
 *.swp
 *.gem
 
+config/settings.yml

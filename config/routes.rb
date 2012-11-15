@@ -161,7 +161,7 @@ Rails.application.routes.draw do
       get :contacts
       get :opportunities
       get :mandrill
-      put :mandrill_send
+      post :mandrill_send
     end
   end
   

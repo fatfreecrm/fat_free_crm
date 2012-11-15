@@ -5,6 +5,25 @@
 
 %div#mandrill_contact_group{ hidden }
 
-
-
-
+= simple_form_for(@contact_group, :html => {:onsubmit => "$$('#'+this.id+' input[type=\"submit\"]')[0].disabled = true", :method => :post}, :url => mandrill_send_contact_group_path( @contact_group ) ) do |f|
+  %table
+    %tr
+      %td
+        .label Template:
+        =select_tag :template_name, options_for_select(@templates_list)
+        
+    %tr
+      %td
+        .label From:
+        = text_field_tag :message_sender
+    %tr
+      %td
+        .label Subject:
+        = text_field_tag :message_subject
+    %tr
+      %td
+        .label Message:
+        = text_area_tag :message_body
+  
+  .buttonbar
+    = f.submit "Send via Mandrill", :method => :mandrill_send

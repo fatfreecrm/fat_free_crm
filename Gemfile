@@ -47,6 +47,7 @@ group :development, :test do
   gem 'passenger'
   gem 'webrick', '1.3.1'
   
+  
   gem 'rspec-rails', '~> 2.9.0'
   gem 'headless'
   unless ENV["CI"]
@@ -86,4 +87,4 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
-gem "combined_time_select", "~> 0.0.1"
+

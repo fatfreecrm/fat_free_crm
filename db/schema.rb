@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121110013300) do
+ActiveRecord::Schema.define(:version => 20121115102600) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(:version => 20121110013300) do
     t.datetime "updated_at",                                           :null => false
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.string   "location"
   end
 
   add_index "events", ["assigned_to"], :name => "index_events_on_assigned_to"
