@@ -3,6 +3,12 @@
   $ ->
     $("#advanced_search").search_form()
 
+    # For basic search, remove placeholder text on focus, restore on blur
+    $('#query').focusin (e) ->
+      $(this).data('placeholder', $(this).attr('placeholder')).attr('placeholder', '')
+    $('#query').focusout (e) ->
+      $(this).attr('placeholder', $(this).data('placeholder'))
+
     # For advanced search we show a spinner and dim the page when loading results
     # This method undoes that when the results are returned. Ideally, this should
     # be converted to jQuery (using the 'live' method)
