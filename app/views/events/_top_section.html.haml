@@ -1,4 +1,5 @@
 = hook(:event_top_section, self, :f => f) do
+  - repeats = false
   .section
     %table
       %tr
@@ -11,17 +12,26 @@
           = f.text_field :location, :style => "width:500px"
       %tr
         - dfmt = '%d/%m/%Y' 
-        - tfmt = '%I:%M%p'
+        - tfmt = '%I:%M%P'
         %td(colspan="5")
           .datetime
             %p.datepair
-              = f.text_field :calendar_start_date, :value => (f.object.starts_at.nil? ? nil : f.object.starts_at.strftime(dfmt)), :style => "width:90px;", :autocomplete => :off, :class => 'date2 start'
-              -#= f.text_field :calendar_time_start, :value => (f.object.starts_at.nil? ? nil : f.object.starts_at.strftime(tfmt)), :style => "width:90px;", :autocomplete => :off, :class => 'time start'
-              = f.time_select :calendar_start_time, :combined => true, :default => Time.now.change(:hour => 9, :min => 0), :minute_interval => 15, :time_separator => "", :start_hour => 9, :end_hour => 19 
-              = ' to '
-              = f.time_select :calendar_end_time, :combined => true, :default => Time.now.change(:hour => 9, :min => 0), :style =>"width:500px", :minute_interval => 15, :time_separator => "", :start_hour => 9, :end_hour => 19
-              = f.text_field :calendar_end_date, :value => (f.object.starts_at.nil? ? nil : f.object.starts_at.strftime(dfmt)), :style => "width:90px;", :autocomplete => :off, :class => 'date2 end'
-
+              = f.text_field :calendar_start_date, :style => "width:90px;", :autocomplete => :off, :class => 'date2 start'
+              = f.text_field :calendar_start_time, :style => "width:90px;", :autocomplete => :off, :class => 'time2 start'
+              = "&nbsp;&nbsp;".html_safe + 'to' +"&nbsp;&nbsp;".html_safe
+              = f.text_field :calendar_end_time, :style => "width:90px;", :autocomplete => :off, :class => 'time2 end'
+              = f.text_field :calendar_end_date, :style => "width:90px;", :autocomplete => :off, :class => 'date2 end'
+      %tr{ :style => "padding-top:10px;"}
+        %td(colspan="5")
+          .label
+          = check_box_tag :repeating_event, true, false, {:onclick => "crm.show_repeats(this.value);"}
+          Repeats...
+      %tr#repeats{ hidden_if(!repeats) }
+        %td
+          .label
+          = "Each week during "
+          = f.select :semester, options_for_select([["Semester 1","S1"],["Semester 2","S2"]]), :style => "width:90px;display:inline;"
+          
       %tr
         %td
           .label #{t :assigned_to}:
@@ -34,11 +44,7 @@
         %td
           .label #{t :contact_group}:
           -#debugger
-          -if @contact_group.nil?
-            = f.select :contact_group_id, ContactGroup.all.map{ |cg| [cg.name, cg.id]}, { :selected => ("none".to_sym), :include_blank => t(:none) }, { :style => "width:160px" }
-          -else
-            = f.select :contact_group_id, ContactGroup.all.map{ |cg| [cg.name, cg.id]}, { :selected => @contact_group.id, :include_blank => t(:none) }, { :style => "width:160px" }
-    
+          = f.select :contact_group_id, ContactGroup.all.map{ |cg| [cg.name, cg.id]}, { :include_blank => t(:none) }, { :style => "width:160px", :class => 'chzn-select' }    
       - if Setting.background_info && Setting.background_info.include?(:event)
         %tr
           %td(colspan="5")

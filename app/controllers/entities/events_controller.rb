@@ -17,6 +17,11 @@
 class EventsController < EntitiesController
   before_filter :get_data_for_sidebar, :only => :index
 
+  TERM1_START = Time.parse("4/3/2013")
+  TERM1_END = Time.parse("12/4/2013")
+  TERM2_START = Time.parse("29/4/2013")
+  TERM2_END = Time.parse("7/6/2013")
+
   # GET /accounts
   #----------------------------------------------------------------------------
   def index
@@ -77,15 +82,33 @@ class EventsController < EntitiesController
     @users = User.except(@current_user)
     @comment_body = params[:comment_body]
     
-    respond_with(@event) do |format|
-      if @event.save
-        @event.add_comment_by_user(@comment_body, current_user)
+    
+    schedule = IceCube::Schedule.new(TERM1_START)
+    schedule.add_recurrence_rule IceCube::Rule.weekly(1).day(Time.parse(@event.calendar_start_date).strftime("%A").downcase.to_sym)
+    ((DateTime.parse(TERM1_END.to_s) + 1)..DateTime.parse(TERM2_START.to_s)).each{ |date| schedule.add_exception_time(date) }
+    list_of_dates = schedule.occurrences(TERM2_END)
+    list_of_events = create_range_of_events(list_of_dates)
+     
+    respond_with(@event = list_of_events.first) do |format|
+      if Event.transaction{ list_of_events.each(&:save) }
+        #event_list.each.add_comment_by_user(@comment_body, current_user)
         # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
         @events = get_events
         get_data_for_sidebar
       end
     end
+  end
+  
+  def create_range_of_events(list_of_dates)
+    event_list = []
+    list_of_dates.each do |d|
+      new_event = @event.dup
+      new_event.calendar_start_date = d.strftime('%d/%m/%Y')
+      new_event.calendar_end_date = d.strftime('%d/%m/%Y')
+      event_list << new_event
+    end
+    event_list
   end
 
   # PUT /accounts/1

@@ -38,6 +38,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "combined_time_select", "~> 0.0.1"
   gem.add_dependency 'mandrill-rails'
   gem.add_dependency 'mailchimp'
+  gem.add_dependency 'ice_cube'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------

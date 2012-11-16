@@ -189,6 +189,11 @@ var crm = {
       $("task_calendar").focus();     // Focus to invoke calendar popup.
     }
   },
+  
+  //----------------------------------------------------------------------------
+  show_repeats: function(value) {
+      $("repeats").toggle(); // Hide dropdown.
+  },
 
   //----------------------------------------------------------------------------
   flip_campaign_permissions: function(value) {

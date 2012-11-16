@@ -1,4 +1,5 @@
-= simple_form_for(@event, :html => one_submit_only(:event), :remote => true) do |f|
+-#= simple_form_for(@event, :html => one_submit_only(:event), :remote => true) do |f|
+= simple_form_for(@event, :remote => true) do |f|
   = link_to_close new_event_path
   = f.hidden_field :user_id
 
@@ -6,7 +7,7 @@
 
   = render "events/top_section",  :f => f
   -#= render "events/contact_info", :f => f
-  = render "fields/groups",  :f => f
+  -#= render "fields/groups",  :f => f
   = render "entities/permissions",  :f => f, :entity => @event
 
   .buttonbar

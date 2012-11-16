@@ -1,5 +1,8 @@
 class Event < ActiveRecord::Base
-  attr_accessor :calendar_start_date, :calendar_end_date, :calendar_start_time, :calendar_end_time
+  attr_accessor :calendar_start_date, :calendar_end_date, 
+    :calendar_start_time, :calendar_end_time,
+    :repeating_event,
+    :semester
   
   belongs_to :user
   belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -26,15 +29,15 @@ class Event < ActiveRecord::Base
   uses_comment_extensions
   acts_as_taggable_on :tags
   has_paper_trail :ignore => [ :subscribed_users ]
-  has_fields
+  #has_fields
   exportable
   sortable :by => [ "name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_name
-  validates_presence_of :calendar_start, :calendar_end, :unless => lambda { self.calendar_start.nil? & self.calendar_end.nil?}
+  validates_presence_of :calendar_start_date, :calendar_end_date
   validate :users_for_shared_access
-  validate :specific_time_start, :unless => lambda { !self.calendar_start.nil? }
-  validate :specific_time_end,  :unless => lambda { !self.calendar_end.nil? }
+  #validate :specific_time_start
+  #validate :specific_time_end
   
   before_save :nullify_blank_category
   before_create :set_datetime
@@ -64,11 +67,11 @@ class Event < ActiveRecord::Base
   end
   
   def starts_at_time
-    self.starts_at.strftime('%I:%m%p') unless self.starts_at.blank?
+    self.starts_at.strftime('%I:%m %p') unless self.starts_at.blank?
   end
 
   def ends_at_time
-    self.ends_at.strftime('%I:%m%p') unless self.ends_at.blank?
+    self.ends_at.strftime('%I:%m %p') unless self.ends_at.blank?
   end
   
   def starts_at_date
@@ -83,35 +86,34 @@ class Event < ActiveRecord::Base
   
   #----------------------------------------------------------------------------
   def set_datetime
-    self.starts_at = self.calendar_start.blank? ? nil : parse_calendar_date_start
-    self.ends_at = self.calendar_end.blank? ? nil : parse_calendar_date_end
-
+    self.starts_at = parse_calendar_date_start
+    self.ends_at = parse_calendar_date_end
   end
 
   #----------------------------------------------------------------------------
-  def specific_time_start
+  def valid_time_start
     parse_calendar_date_start
   rescue ArgumentError
-    errors.add(:calendar_start, :invalid_date)
+    errors.add(:calendar_start_date, :invalid_date)
   end
   
   #----------------------------------------------------------------------------
-  def specific_time_end
+  def valid_time_end
     parse_calendar_date_end
   rescue ArgumentError
-    errors.add(:calendar_end, :invalid_date)
+    errors.add(:calendar_end_date, :invalid_date)
   end
   
   #----------------------------------------------------------------------------
   def parse_calendar_date_start
     # always in 2012-10-28 06:28 format regardless of language
-    Time.parse(self.calendar_start)
+    Time.parse(self.calendar_start_date + " " + self.calendar_start_time)
   end
   
   #----------------------------------------------------------------------------
   def parse_calendar_date_end
     # always in 2012-10-28 06:28 format regardless of language
-    Time.parse(self.calendar_end)
+    Time.parse(self.calendar_end_date + " " + self.calendar_end_time)
   end
   
   # Make sure at least one user has been selected if the campaign is being shared.

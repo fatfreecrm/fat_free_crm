@@ -12,7 +12,7 @@
 
 	});
 
-	$('.datepair input.time').live("click focus", function() {
+	$('.datepair input.time2').live("click focus", function() {
 		var $this = $(this);
 		var opts = { 'showDuration': true, 'timeFormat': 'g:ia', 'scrollDefaultNow': true };
 
@@ -20,7 +20,7 @@
 			$this.on('changeTime change', doDatepair);
 		}
 
-		$this.timepicker(opts);
+		$this.timepicker2(opts);
 	});
 
 	$('.datepair input.date2').live("click", function(){
@@ -44,8 +44,8 @@
 			container.data('dateDelta', dateDelta);
 		}
 
-		var startTimeInput = container.find('input.start.time');
-		var endTimeInput = container.find('input.end.time');
+		var startTimeInput = container.find('input.start.time2');
+		var endTimeInput = container.find('input.end.time2');
 
 		if (startTimeInput.length && endTimeInput.length) {
 			var startInt = startTimeInput.timepicker('getSecondsFromMidnight');
@@ -71,7 +71,7 @@
 		if (target.hasClass('date2')) {
 			updateDatePair(target, container);
 
-		} else if (target.hasClass('time')) {
+		} else if (target.hasClass('time2')) {
 			updateTimePair(target, container);
 		}
 	}
@@ -112,13 +112,13 @@
 			}
 
 			if (newDelta < 86400000) {
-				var startTimeVal = container.find('input.start.time').val();
+				var startTimeVal = container.find('input.start.time2').val();
 
 				if (startTimeVal) {
-					container.find('input.end.time').timepicker('option', {'minTime': startTimeVal});
+					container.find('input.end.time2').timepicker2('option', {'minTime': startTimeVal});
 				}
 			} else {
-				container.find('input.end.time').timepicker('option', {'minTime': null});
+				container.find('input.end.time2').timepicker2('option', {'minTime': null});
 			}
 
 			container.data('dateDelta', newDelta);
@@ -127,15 +127,15 @@
 
 	function updateTimePair(target, container)
 	{
-		var start = container.find('input.start.time');
-		var end = container.find('input.end.time');
+		var start = container.find('input.start.time2');
+		var end = container.find('input.end.time2');
 
 		if (!start.length || !end.length) {
 			return;
 		}
 
-		var startInt = start.timepicker('getSecondsFromMidnight');
-		var endInt = end.timepicker('getSecondsFromMidnight');
+		var startInt = start.timepicker2('getSecondsFromMidnight');
+		var endInt = end.timepicker2('getSecondsFromMidnight');
 
 		var oldDelta = container.data('timeDelta');
 		var dateDelta = container.data('dateDelta');
@@ -156,7 +156,7 @@
 				newEnd += 86400;
 			}
 
-			end.timepicker('setTime', newEnd);
+			end.timepicker2('setTime', newEnd);
 			newDelta = newEnd - startInt;
 		} else if (startInt !== null && endInt !== null) {
 			newDelta = endInt - startInt;

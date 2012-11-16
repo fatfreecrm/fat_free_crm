@@ -8,7 +8,7 @@
     %dt= truncate((@event.assigned_to ? @event.assignee.full_name : @event.user.full_name), :length => 16)
     %tt #{t :assigned_to}:
 
-  = render "fields/sidebar_show", :asset => @event
+  -#= render "fields/sidebar_show", :asset => @event
 
   - if @event.tag_list.present?
     %dt
