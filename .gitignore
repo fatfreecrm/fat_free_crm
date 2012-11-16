@@ -33,3 +33,4 @@ Design
 *.gem
 
 config/settings.yml
+.powrc

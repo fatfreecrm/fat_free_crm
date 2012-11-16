@@ -78,9 +78,9 @@ requires jQuery 1.7+
 
 				self.data('timepicker-settings', settings);
 				self.attr('autocomplete', 'off');
-				self.on('click.timepicker focus.timepicker', methods.show);
-				self.on('blur.timepicker', _formatValue);
-				self.on('keydown.timepicker', _keyhandler);
+				self.on('click.timepicker2 focus.timepicker2', methods.show);
+				self.on('blur.timepicker2', _formatValue);
+				self.on('keydown.timepicker2', _keyhandler);
 				self.addClass('ui-timepicker-input');
 
 				_formatValue.call(self.get(0));
@@ -627,7 +627,7 @@ requires jQuery 1.7+
 	};
 
 	// Plugin entry
-	$.fn.timepicker = function(method)
+	$.fn.timepicker2 = function(method)
 	{
 		if(methods[method]) { return methods[method].apply(this, Array.prototype.slice.call(arguments, 1)); }
 		else if(typeof method === "object" || !method) { return methods.init.apply(this, arguments); }
