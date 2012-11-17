@@ -36,6 +36,7 @@
       # Run search for current query
       switch search_form
         when 'basic_search'
+          $('#lists .show_lists_save_form').hide()
           query_input = $('#basic_search input#query')
           if !query_input.is('.defaultTextActive')
             value = query_input.val()
@@ -45,6 +46,7 @@
           $('#filters').enable() # Enable filters panel (if present)
 
         when 'advanced_search'
+          $('#lists .show_lists_save_form').show()
           $("#advanced_search form input:submit").click()
           $('#filters').disable() # Disable filters panel (if present)
 

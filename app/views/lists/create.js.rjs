@@ -1,5 +1,5 @@
 if @list.valid?
-  page[:lists].replace :partial => "shared/lists"
+  page[:lists].replace :partial => "lists/sidebar"
   page.call "jQuery('.show_lists_save_form').show"
 
 else # Couldn't create the saved list -- validation failed.
