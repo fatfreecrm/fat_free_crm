@@ -197,6 +197,12 @@
 #
 :background_info: []
 
+# Priority countries
+#------------------------------------------------------------------------------
+# Specify which countries (if any) should appear at the top of country pickers
+# priority_countries:
+#  - Burkina Faso
+
 # Main and Admin Tabs
 #------------------------------------------------------------------------------
 :tabs: [
