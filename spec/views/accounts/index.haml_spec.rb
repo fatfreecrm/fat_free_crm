@@ -7,7 +7,7 @@ describe "/accounts/index" do
     view.lookup_context.prefixes << 'entities'
     assign :per_page, Account.per_page
     assign :sort_by,  Account.sort_by
-    view.stub(:search) { Account.search {} }
+    assign :ransack_search, Account.search
     login_and_assign
   end
 
@@ -34,4 +34,3 @@ describe "/accounts/index" do
     view.should render_template(:partial => "shared/_paginate_with_per_page")
   end
 end
-

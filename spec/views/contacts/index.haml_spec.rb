@@ -7,7 +7,7 @@ describe "/contacts/index" do
     view.lookup_context.prefixes << 'entities'
     assign :per_page, Contact.per_page
     assign :sort_by,  Contact.sort_by
-    view.stub(:search) { Contact.search {} }
+    assign :ransack_search, Contact.search
     login_and_assign
   end
 
@@ -29,4 +29,3 @@ describe "/contacts/index" do
   end
 
 end
-

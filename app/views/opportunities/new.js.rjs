@@ -6,10 +6,9 @@ unless params[:cancel].true?
   page.call "crm.init_chosen_fields"
   page.call "crm.set_title", :create_opportunity, t(:create_opportunity)
   # Opportunity 'create' form defaults to select account instead of create new account
-  page.call "crm.select_account", true
+  page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
   page.call "crm.date_select_popup", "opportunity_closes_on"
   hook(:new_opportunity_rjs, self, :page => page)
 else
   page.call "crm.set_title", :create_opportunity, t(:opportunities)
 end
-
