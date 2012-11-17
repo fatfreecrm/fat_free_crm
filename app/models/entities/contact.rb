@@ -118,8 +118,7 @@ class Contact < ActiveRecord::Base
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
   def save_with_account_and_permissions(params)
-    account = Account.create_or_select_for(self, params[:account])
-    self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
+    save_account(params)
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
     self.save
   end
@@ -127,18 +126,7 @@ class Contact < ActiveRecord::Base
   # Backend handler for [Update Contact] form (see contact/update).
   #----------------------------------------------------------------------------
   def update_with_account_and_permissions(params)
-    if params[:account][:id] == "" || params[:account][:name] == ""
-      notify_account_change(:from => self.account, :to => nil)
-      self.account = nil # Contact is not associated with the account anymore.
-    else
-      account = Account.create_or_select_for(self, params[:account])
-      if self.account != account and account.id.present?
-        notify_account_change(:from => self.account, :to => account)
-        self.account_contact = AccountContact.new(:account => account, :contact => self)
-      end
-      
-    end
-    self.reload
+    save_account(params)
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:contact][:access] if params[:contact][:access]
     self.attributes = params[:contact]
@@ -227,6 +215,22 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, :share_contact) if self[:access] == "Shared" && !self.permissions.any?
+  end
+  
+  # Handles the saving of related accounts
+  #----------------------------------------------------------------------------
+  def save_account(params)
+    if params[:account][:id] == "" || params[:account][:name] == ""
+      notify_account_change(:from => self.account, :to => nil)
+      self.account = nil
+    else
+      account = Account.create_or_select_for(self, params[:account])
+      if self.account != account and account.id.present?
+        notify_account_change(:from => self.account, :to => account)
+        self.account_contact = AccountContact.new(:account => account, :contact => self)
+      end
+    end
+    self.reload unless self.new_record? # ensure the account association is updated
   end
 
 end
