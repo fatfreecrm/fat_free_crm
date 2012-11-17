@@ -154,6 +154,7 @@ module ActionView
         ['Kiribati', 'KI'],
         ['Korea, Democratic People\'s Republic of', 'KP'],
         ['Korea, Republic of', 'KR'],
+        ['Kosovo', 'XK'],
         ['Kuwait', 'KW'],
         ['Kyrgyzstan', 'KG'],
         ['Lao People\'s Democratic Republic', 'LA'],
@@ -406,6 +407,7 @@ module ActionView
         :KI => 'Kiribati',
         :KP => 'Korea, Democratic People\'s Republic of',
         :KR => 'Korea, Republic of',
+        :XK => 'Kosovo',
         :KW => 'Kuwait',
         :KG => 'Kyrgyzstan',
         :LA => 'Lao People\'s Democratic Republic',
@@ -566,4 +568,3 @@ module ActionView
     end
   end
 end
-
