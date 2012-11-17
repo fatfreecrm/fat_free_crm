@@ -1,2 +1,7 @@
 %div{ :style => "margin: 0px 0px 6px 0px" }
   = text_field_tag('query', @current_query, :size => 32, :placeholder => "Search #{controller_name}")
+
+  :javascript
+    new Form.Element.Observer('query', 1.5, function(element, value) {
+      crm.search(value, '#{controller_name}');
+    });
