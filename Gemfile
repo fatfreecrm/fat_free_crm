@@ -55,7 +55,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara'
+  gem 'capybara', '~> 1.1' # v2 and up is not r1.8 compatible.
   gem 'spork'
   gem 'database_cleaner'
   gem 'fuubar'
