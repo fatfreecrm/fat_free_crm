@@ -42,7 +42,7 @@ remove 'fat_free_crm'
 
 group :development, :test do
   # Uncomment the following two gems to deploy via Capistrano
-  gem 'capistrano'
+  gem 'rvm-capistrano'
   gem 'capistrano_colors'
   gem 'passenger'
   gem 'webrick', '1.3.1'
