@@ -20,7 +20,7 @@ en-US:
   tab_tasks: Tasks
   tab_campaigns: Campaigns
   tab_leads: Leads
-  tab_accounts: Org. Units
+  tab_accounts: Folders
   tab_contacts: Contacts
   tab_opportunities: Opportunities
   tab_groups: Groups
@@ -119,9 +119,9 @@ en-US:
         account:
           attributes:
             name:
-              missing_account_name: "^Please specify account name."
+              missing_account_name: "^Please specify folder name."
             access:
-              share_account: "^Please specify users to share the account with."
+              share_account: "^Please specify users to share the folder with."
         campaign:
           attributes:
             name:
@@ -314,20 +314,21 @@ en-US:
   faculty: Faculty
   social: Social
   location: Location
+  event_instances: occurrences
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Org. Unit
-  select_an_account: Select an Org. Unit
-  account_small: org. unit
-  account_summary: Org. Unit Summary
-  account_categories: Org. Unit Categories
-  accounts: Org. Units
-  accounts_options: Org. Units Options
-  accounts_small: org. units
+  account: Folder
+  select_an_account: Select a folder
+  account_small: folder
+  account_summary: Folder Summary
+  account_categories: Folder Categories
+  accounts: Folders
+  accounts_options: Folders Options
+  accounts_small: folders
   assigned_to: Assigned to
   billing_address: Billing address
-  create_account: Create Org. Unit
+  create_account: Create Folder
   date_created: Date Created
   date_updated: Date Updated
   fax: Fax
@@ -341,10 +342,10 @@ en-US:
   phone_toll_free: Toll-free
   pipeline: Pipeline
   same_as_billing: same as billing
-  save_account: Save Org. Unit
+  save_account: Save Folder
   share_with: Share it with the following people
   shipping_address: Shipping address
-  total_accounts: Total Org. Units
+  total_accounts: Total Folders
   website: Website
 
   # Views -> Campaigns.

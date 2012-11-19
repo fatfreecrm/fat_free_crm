@@ -33,4 +33,4 @@ Design
 *.gem
 
 config/settings.yml
-.powrc
+db/data-import/adelaide-contacts.csv

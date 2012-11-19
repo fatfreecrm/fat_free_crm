@@ -50,7 +50,8 @@ class TasksController < ApplicationController
     @category = Setting.unroll(:task_category)
 
     if params[:related]
-      model, id = params[:related].split('_')
+      model = params[:related].sub(/_\d+/, "")
+      id = params[:related].split('_').last #change required for models with _ in name e.g. contact_group
       if related = model.classify.constantize.my.find_by_id(id)
         instance_variable_set("@asset", related)
       else

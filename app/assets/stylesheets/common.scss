@@ -130,7 +130,7 @@ $sidebar_width: 210px;
     font-size: 18px;
     height: 30px; } }
 
-.tools {
+.tools, .sub_tools {
   font-size: 10px;
   float: right;
   padding: 0px 0px 0px 4px;
@@ -295,16 +295,36 @@ $sidebar_width: 210px;
 //   - indentwide: for use with strip + checkbox (Tasks).
 //   - indentfull: for use with strip + avatar (Admin/Users).
 .indent {
-  margin-left: 88px; }
+  margin-left: 88px; 
+  }
+
+.indentnone {
+  margin-left: 15px;
+}
 
 .indentslim {
-  margin-left: 38px; }
+  margin-left: 38px;
+}
 
 .indentwide {
   margin-left: 106px; }
 
 .indentfull {
   margin-left: 126px; }
+
+.indent, .indentnone, .indentslim {
+  .subtitle {
+    border-bottom: 0px silver solid;
+    color: #2f2f2f;
+    font: {
+      size: 11px;
+      weight: bold; } 
+  }
+  .section {
+    padding: 0px;
+    
+  }
+}
 
 .bucket {
   margin: 0px 0px 10px 0px; }
@@ -453,7 +473,7 @@ $sidebar_width: 210px;
     padding: 6px 0px 6px 0px;
     .gravatar {
       float: left;
-      padding: 0px 8px 0px 0px; }
+      padding: 0px 0px 0px 0px; }
     tt {
       color: dimgray;
       font-size: 11px; }
@@ -712,7 +732,7 @@ span.handle img {
 .remove_fields img {
   vertical-align: text-bottom; }
 
-ul.tools {
+ul.tools, ul.sub_tools {
   display: inline;
   li {
     border-right: 1px black solid;
@@ -724,9 +744,9 @@ ul.tools {
   li:last-child {
     border-right: none; } }
 
-.highlight {
+.highlight, .sub_highlight{
   background-color: white;
-  .tools {
+  .tools, .sub_tools {
     visibility: hidden; } }
 
 .mail.highlight,
@@ -736,6 +756,11 @@ ul.tools {
 .highlight:hover {
   background-color: seashell;
   .tools {
+    visibility: visible; } }
+
+.sub_highlight:hover {
+  background-color: seashell;
+  .sub_tools {
     visibility: visible; } }
 
 

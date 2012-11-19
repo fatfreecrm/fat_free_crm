@@ -20,13 +20,13 @@ module EventsHelper
   #----------------------------------------------------------------------------
   def link_to_mark(contact, event)
     onclick = %Q/$("#{dom_id(contact, :mark)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => mark_event_path(event), :method => :put, :with => "'contact_id=#{contact.id}'")
+    onclick << remote_function(:url => mark_event_instance_path(event), :method => :put, :with => "'contact_id=#{contact.id}'")
   end
 
   #----------------------------------------------------------------------------
   def link_to_unmark(contact, event)
     onclick = %Q/$("#{dom_id(contact, :mark)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => unmark_event_path(event), :method => :put, :with => "'contact_id=#{contact.id}'")
+    onclick << remote_function(:url => unmark_event_instance_path(event), :method => :put, :with => "'contact_id=#{contact.id}'")
   end
 
   def attendance_section(related, assets)
@@ -38,7 +38,7 @@ module EventsHelper
     html = tag(:br)
     html << content_tag(:div, link_to(t(select_id), "#", :id => select_id), :class => "subtitle_tools")
     html << content_tag(:div, "&nbsp;|&nbsp;".html_safe, :class => "subtitle_tools")
-    html << content_tag(:div, link_to_inline(create_id, create_url, :text => t(create_id), :event_id => @event.id), :class => "subtitle_tools")
+    html << content_tag(:div, link_to_inline(create_id, create_url, :related => (related ? dom_id(related) : nil), :text => t(create_id), :event_instance_id => @event_instance.id), :class => "subtitle_tools")
     html << content_tag(:div, "Attendees", :class => :subtitle, :id => "create_#{asset}_title")
     html << content_tag(:div, "", :class => :remote, :id => create_id, :style => "display:none;")
   end

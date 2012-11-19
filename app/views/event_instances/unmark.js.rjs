@@ -1,0 +1,5 @@
+page[dom_id(@contact)].hide
+page[dom_id(@contact)].replace :partial => "event_instances/contact", :collection => [ @contact ], :locals => {:object => @event_instance}
+page[dom_id(@contact)].visual_effect :highlight, :duration => 0.5
+page[:recently].replace :partial => "shared/recently"
+

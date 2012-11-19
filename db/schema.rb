@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115102600) do
+ActiveRecord::Schema.define(:version => 20121116035906) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -85,12 +85,12 @@ ActiveRecord::Schema.define(:version => 20121115102600) do
 
   create_table "attendances", :force => true do |t|
     t.integer "contact_id"
-    t.integer "event_id"
+    t.integer "event_instance_id"
   end
 
-  add_index "attendances", ["contact_id", "event_id"], :name => "index_attendances_on_contact_id_and_event_id"
+  add_index "attendances", ["contact_id", "event_instance_id"], :name => "index_attendances_on_contact_id_and_event_instance_id"
   add_index "attendances", ["contact_id"], :name => "index_attendances_on_contact_id"
-  add_index "attendances", ["event_id"], :name => "index_attendances_on_event_id"
+  add_index "attendances", ["event_instance_id"], :name => "index_attendances_on_event_instance_id"
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
@@ -241,6 +241,9 @@ ActiveRecord::Schema.define(:version => 20121115102600) do
     t.integer  "assigned_to"
     t.text     "subscribed_users"
     t.string   "access",           :limit => 8,  :default => "Public"
+    t.string   "location"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
   end
 
   create_table "events", :force => true do |t|
@@ -255,9 +258,6 @@ ActiveRecord::Schema.define(:version => 20121115102600) do
     t.datetime "deleted_at"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.string   "location"
   end
 
   add_index "events", ["assigned_to"], :name => "index_events_on_assigned_to"

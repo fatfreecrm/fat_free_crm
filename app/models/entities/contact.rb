@@ -60,8 +60,13 @@ class Contact < ActiveRecord::Base
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
   has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
   has_many    :emails, :as => :mediator
-  has_many    :contact_groups, :through => :contacts_contact_groups, :dependent => :destroy
-
+  has_many    :contact_groups, :dependent => :destroy
+  
+  ##what about when you delete a contact? do you want to lose all attendance records?
+  #might be better to have an archive system for contacts so that deletion is only for
+  #contacts we really don't want to keep any trace of...
+  has_many    :attendances, :dependent => :destroy 
+  
   serialize :subscribed_users, Set
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true
@@ -119,6 +124,7 @@ class Contact < ActiveRecord::Base
     account = Account.create_or_select_for(self, params[:account])
     self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
+    self.contact_groups << ContactGroup.find(params[:contact_group]) unless params[:contact_group].blank?
     self.save
   end
 

@@ -17,7 +17,7 @@
     = link_to(event.name, event)
     &ndash;
     %tt
-      -#= event.location << ", " unless event.location.blank?
+      = event.event_instances.first.location << ", " unless event.event_instances.first.nil? || event.event_instances.first.location.blank?
       = t(:added_by, :time_ago => time_ago_in_words(event.created_at), :user => (event.user.id == @current_user.id ? t(:me) : event.user.full_name)) << " | "
       -#= t('pluralize.contact', event.contacts.count) << " | "
       -#= t('pluralize.opportunity', event.opportunities.count)
@@ -25,5 +25,7 @@
       - if event.tag_list.present?
         %dt
           .tags= tags_for_index(event)
-
+    %dt
+      - if event.event_instances.count > 1
+        = render :partial => '/events/show_event_sections', :locals => {:event => event}
       = hook(:event_bottom, self, :event => event)
