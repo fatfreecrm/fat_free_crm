@@ -1,2 +1,2 @@
-- contacts_outline = params[:contacts_outline] || @current_user.preference[:contacts_outline]
+- contacts_outline = params[:contacts_outline] || @current_user.preference[:contacts_outline] || 'brief'
 = render "contact_#{contacts_outline}", :contact => contact

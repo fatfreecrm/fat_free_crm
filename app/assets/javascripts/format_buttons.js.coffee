@@ -4,7 +4,8 @@
 
     if $j('#search .tabs li a[data-search-form="advanced_search"].active').length == 1
       # handle outline change via advanced search form by setting the hidden 'outline' field
-      $j('#outline').val($j(this).data('outline'))
+      $j('#advanced_search_outline').remove()
+      $j("#advanced_search form input:submit").before('<input id="advanced_search_outline" name="outline" type="hidden" value="' + $j(this).data('outline') + '">')
       $j("#advanced_search form input:submit").click()
     else
       # basic search
