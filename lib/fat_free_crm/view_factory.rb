@@ -23,7 +23,7 @@ module FatFreeCRM
   # The context that a view is available for is defined by 'controllers' and 'actions'
   #   controllers => ['contacts'] means that the view is available when the contacts controller is used
   #   actions => [:index, show] means that the view is available for search listings AND individual records
-  #
+  #   template => 'contacts/index_full' is the partial that is rendered for this view
   # Icon is optional. If specified, it will be passed to asset_path.
   #
   class ViewFactory
@@ -31,7 +31,7 @@ module FatFreeCRM
     include Comparable
 
     @@views = []
-    attr_accessor :id, :name, :icon, :title, :controllers, :actions
+    attr_accessor :id, :name, :icon, :title, :controllers, :actions, :template
 
     # Class methods
     #----------------------------------------------------------------------------
@@ -46,11 +46,20 @@ module FatFreeCRM
       # Return views that are available based on context
       #----------------------------------------------------------------------------
       def views_for(options = {})
-        controller = options.delete(:controller)
-        action = options.delete(:action)
+        controller = options[:controller]
+        action = options[:action]
+        name = options[:name] #optional
         @@views.select do |view|
-          view.controllers.include?(controller) and view.actions.include?(action)
+          view.controllers.include?(controller) and view.actions.include?(action) and (name.present? ? view.name == name : true)
         end
+      end
+      
+      # Return template name of the current view
+      # pass in options[:name] to specify view name
+      #----------------------------------------------------------------------------
+      def template_for_current_view(options = {})
+        view = views_for(options).first
+        view && view.template
       end
 
     end
@@ -63,6 +72,7 @@ module FatFreeCRM
       self.icon = options[:icon] # optional
       self.controllers = options[:controllers] || []
       self.actions = options[:actions] || []
+      self.template = options[:template]
       self.id = generate_id
       self.class.register(self)
     end

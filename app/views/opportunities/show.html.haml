@@ -1,26 +1,28 @@
+- if (template = template_for_current_view)
+  = render(template, :opportunity => @opportunity)
+- else
 
-= styles_for :task, :contact
+  -# default view
 
-#confirm{ hidden }
-.title_tools#menu
-  = link_to_inline(:edit_opportunity, edit_opportunity_path(@opportunity), :text => t(:edit)) + " | "
-  = link_to_function(t(:delete) + '?', confirm_delete(@opportunity))
-.title#edit_opportunity_title= h(@opportunity.name)
+  = styles_for :task, :contact
 
-%div#edit_opportunity{ hidden }
+  #confirm{ hidden }
+  .title_tools#menu
+    = link_to_inline(:edit_opportunity, edit_opportunity_path(@opportunity), :text => t(:edit)) + " | "
+    = link_to_function(t(:delete) + '?', confirm_delete(@opportunity))
+  .title#edit_opportunity_title= h(@opportunity.name)
 
-- if Setting.show_entity_details == true
-  = render "opportunities/sections", :opportunity => @opportunity
+  %div#edit_opportunity{ hidden }
 
-= render "comments/new", :commentable => @opportunity
-= render :partial => "shared/timeline", :collection => @timeline
+  = render "comments/new", :commentable => @opportunity
+  = render :partial => "shared/timeline", :collection => @timeline
 
-= hook(:show_opportunity_bottom, self) do
+  = hook(:show_opportunity_bottom, self) do
 
-  = render "tasks/tasks", :object => @opportunity
+    = render "tasks/tasks", :object => @opportunity
 
-  = render "contacts/contacts", :object => @opportunity
+    = render "contacts/contacts", :object => @opportunity
 
-  = render "versions/versions", :object => @opportunity
+    = render "versions/versions", :object => @opportunity
 
-  = load_select_popups_for(@opportunity, :tasks, :contacts)
+    = load_select_popups_for(@opportunity, :tasks, :contacts)

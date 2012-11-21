@@ -1,11 +1,11 @@
 (($j) ->
 
-  $j('a[data-outline]').live 'click', ->
+  $j('a[data-view]').live 'click', ->
 
     if $j('#search .tabs li a[data-search-form="advanced_search"].active').length == 1
-      # handle outline change via advanced search form by setting the hidden 'outline' field
-      $j('#advanced_search_outline').remove()
-      $j("#advanced_search form input:submit").before('<input id="advanced_search_outline" name="outline" type="hidden" value="' + $j(this).data('outline') + '">')
+      # handle view change via advanced search form by setting the hidden 'view' field
+      $j('#advanced_search_view').remove()
+      $j("#advanced_search form input:submit").before('<input id="advanced_search_view" name="view" type="hidden" value="' + $j(this).data('view') + '">')
       $j("#advanced_search form input:submit").click()
     else
       # basic search
@@ -14,14 +14,17 @@
         type: "POST",
         dataType: "script"
         data:
-          outline: $j(this).data('outline')
+          view: $j(this).data('view')
           query:   $('query').value
         loading:  "$('loading').show()",
         complete: ->
           $('loading').hide();
       )
 
-    $j('a[data-outline]').removeClass('active');
+    # TODO: code for when viewing a single contact, not just index
+    # need to refresh the page or just the segment
+
+    $j('a[data-view]').removeClass('active');
     $j(this).addClass('active');
 
 ) jQuery

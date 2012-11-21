@@ -63,5 +63,25 @@ describe ApplicationHelper do
       helper.shown_on_landing_page?.should == false
     end
   end
+  
+  describe "get_outline" do
+  
+    before(:each) do
+      @user = mock_model(User)
+      helper.stub!(:current_user).and_return(@user)
+      controller.stub!(:params).and_return({'action' => 'show', 'controller' => 'contacts'})
+    end
+  
+    it "should return the contact 'show' outline stored in the user preferences" do
+      @user.should_receive(:pref).and_return({:contacts_show_outline => 'long'})
+      helper.get_outline.should == 'long'
+    end
+    
+    it "should return the default contact 'show' outline" do
+      @user.should_receive(:pref).and_return({})
+      Contact.should_receive(:show_outline).and_return('long')
+      helper.get_outline.should == 'long'
+    end
+  
+  end
 end
-

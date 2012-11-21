@@ -1,31 +1,32 @@
+- if (template = template_for_current_view)
+  = render(template, :campaign => @campaign)
+- else
 
-= styles_for :task, :lead, :opportunity
+  -# default view
 
-#confirm{ hidden }
-.title_tools#menu
-  = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), :text => t(:edit)) + " | "
-  = link_to_function(t(:delete) + '?', confirm_delete(@campaign))
-.title#edit_campaign_title= h(@campaign.name)
+  = styles_for :task, :lead, :opportunity
 
-%div#edit_campaign{ hidden }
+  #confirm{ hidden }
+  .title_tools#menu
+    = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), :text => t(:edit)) + " | "
+    = link_to_function(t(:delete) + '?', confirm_delete(@campaign))
+  .title#edit_campaign_title= h(@campaign.name)
 
-- if Setting.show_entity_details == true
-  = render "campaigns/sections", :campaign => @campaign
+  %div#edit_campaign{ hidden }
 
+  = render "comments/new", :commentable => @campaign
+  = render :partial => "shared/timeline", :collection => @timeline
 
-= render "comments/new", :commentable => @campaign
-= render :partial => "shared/timeline", :collection => @timeline
+  = hook(:show_campaign_bottom, self) do
 
-= hook(:show_campaign_bottom, self) do
+    = render "tasks/tasks", :object => @campaign
 
-  = render "tasks/tasks", :object => @campaign
+    = render "leads/leads", :object => @campaign
 
-  = render "leads/leads", :object => @campaign
+    = render "opportunities/opportunities", :object => @campaign
 
-  = render "opportunities/opportunities", :object => @campaign
+    = render "versions/versions", :object => @campaign
 
-  = render "versions/versions", :object => @campaign
+    = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
 
-  = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
-
-#export= render "shared/export", :action => :show
+  #export= render "shared/export", :action => :show

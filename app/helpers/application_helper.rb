@@ -456,25 +456,45 @@ module ApplicationHelper
       content << content_tag("small", info_text.to_s, {:class => "subtitle_inline_info", :id => "#{id}_intro", :style => hidden ? "" : "display:none;"})
     end
   end
-  
+
   #----------------------------------------------------------------------------
-  def get_outline
-    @outline ||= (current_user.pref[:"#{params['controller']}_outline"] || controller_name.classify.constantize.outline )
+  # Return name of current view
+  def current_view_name
+    controller = params['controller']
+    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    current_user.pref[:"#{controller}_#{action}_view"]
   end
-  
-  def generate_view_buttons
-    views = FatFreeCRM::ViewFactory.views_for(:controller => params['controller'], :action => params[:action])
-    return nil if views.empty?
+
+  #----------------------------------------------------------------------------
+  # Get template in current context with current view name
+  def template_for_current_view
+    controller = params['controller']
+    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    template = FatFreeCRM::ViewFactory.template_for_current_view(:controller => controller, :action => action, :name => current_view_name)
+    template
+  end
+
+  #----------------------------------------------------------------------------
+  # Generate buttons for available views given the current context
+  def view_buttons
+    controller = params['controller']
+    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    views = FatFreeCRM::ViewFactory.views_for(:controller => controller, :action => action)
+    return nil unless views.size > 1
     content_tag :ul, :class => 'format-buttons' do
       views.collect do |view|
-        classes = (get_outline == view.name) ? "#{view.name}-button active" : "#{view.name}-button"
+        classes = if (current_view_name == view.name) or (current_view_name == nil and view.template == nil) # nil indicates default template.
+            "#{view.name}-button active"
+          else
+            "#{view.name}-button"
+          end
         content_tag(:li) do
-          link_to('#', :title => view.title, :"data-outline" => view.name, :"data-url" => send("redraw_#{params['controller']}_path"), :class => classes) do
+          link_to('#', :title => t(view.name, :default => view.title), :"data-view" => view.name, :"data-url" => send("redraw_#{controller}_path"), :class => classes) do
             image_tag(view.icon || 'brief.png')
           end
         end
       end.join('').html_safe
     end
   end
-  
+
 end

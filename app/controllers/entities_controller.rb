@@ -18,7 +18,7 @@
 class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :set_outline, :only => [ :index, :show, :redraw ]
+  before_filter :set_view, :only => [ :index, :show, :redraw ]
   
   before_filter :set_options, :only => :index
   before_filter :load_ransack_search, :only => :index
@@ -127,8 +127,8 @@ protected
   def set_options
     unless params[:cancel].true?
       klass = controller_name.classify.constantize
+      action = params['action']
       @per_page = current_user.pref[:"#{controller_name}_per_page"] || klass.per_page
-      @outline  = current_user.pref[:"#{controller_name}_outline"]  || klass.outline
       @sort_by  = current_user.pref[:"#{controller_name}_sort_by"]  || klass.sort_by
     end
   end
@@ -213,10 +213,11 @@ private
   
   # Sets the current outline for viewing objects in this context
   #----------------------------------------------------------------------------
-  def set_outline
-    controller = params['controller']
-    outline = params['outline']
-    current_user.pref[:"#{controller}_outline"] = outline if outline.present? and controller.present?
-    @outline ||= outline
+  def set_view
+    if params['view']
+      controller = params['controller']
+      action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+      current_user.pref[:"#{controller}_#{action}_view"] = params['view']
+    end
   end
 end
