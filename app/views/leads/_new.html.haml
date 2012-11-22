@@ -6,6 +6,7 @@
   = f.error_messages :object_name => t('lead')
 
   = render "leads/top_section",    :f => f
+  = render "fields/edit_custom_field_group", :f => f
   = render "leads/status",         :f => f
   = render "leads/contact",        :f => f
   = render "shared/add_comment",   :f => f

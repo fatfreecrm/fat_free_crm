@@ -15,3 +15,8 @@
         = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
       %tr
         = col(t(:tags), contact.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '))
+        
+    -# Show custom fields that are in the default field group
+    - custom_field_group = contact.field_groups.select{|f| f.name == 'custom_fields'}
+    - fields = custom_field_group.first.fields.without_pairs
+    = render("fields/group_view", :fields => fields, :entity => contact) if fields.any?

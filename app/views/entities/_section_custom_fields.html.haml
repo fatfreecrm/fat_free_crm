@@ -1,9 +1,7 @@
 - entity_show = "#{entity.class.to_s.downcase}_show"
 - entity.field_groups.each do |field_group|
   - if (fields = field_group.fields.without_pairs).any?
-    - if field_group.name == 'custom_fields'
-      = render "fields/group_view", :fields => fields, :entity => entity
-    - else
+    - unless field_group.name == 'custom_fields'
       -# add a new section
       %div[field_group]
         - collapsed = session[dom_id(field_group, entity_show)].nil?
