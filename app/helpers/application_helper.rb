@@ -73,13 +73,16 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def load_select_popups_for(related, *assets)
-    js = assets.map do |asset|
-      render(:partial => "shared/select_popup", :locals => { :related => related, :popup => asset })
-    end.join
-
+    js = generate_js_for_popups(related, *assets)
     content_for(:javascript_epilogue) do
       raw "document.observe('dom:loaded', function() { #{js} });"
     end
+  end
+  
+  def generate_js_for_popups(related, *assets)
+    assets.map do |asset|
+      render(:partial => "shared/select_popup", :locals => { :related => related, :popup => asset })
+    end.join
   end
 
   # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
