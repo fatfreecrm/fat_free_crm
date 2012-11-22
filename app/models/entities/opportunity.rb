@@ -119,9 +119,10 @@ class Opportunity < ActiveRecord::Base
     account = Account.create_or_select_for(self, params[:account])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
     self.account = account
-    self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
-    self.save
+    result = self.save
+    self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
+    result
   end
 
   # Backend handler for [Update Opportunity] form (see opportunity/update).
