@@ -29,15 +29,12 @@ class AccountsController < EntitiesController
   end
 
   # GET /accounts/1
+  # AJAX /accounts/1
   #----------------------------------------------------------------------------
   def show
-    respond_with(@account) do |format|
-      format.html do
-        @stage = Setting.unroll(:opportunity_stage)
-        @comment = Comment.new
-        @timeline = timeline(@account)
-      end
-    end
+    @stage = Setting.unroll(:opportunity_stage)
+    @comment = Comment.new
+    @timeline = timeline(@account)
   end
 
   # GET /accounts/new

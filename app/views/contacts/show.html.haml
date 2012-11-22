@@ -5,17 +5,8 @@
   -# default view
 
   = styles_for :task, :opportunity
-
-  #confirm{ hidden }
-  .title_tools#menu
-    = link_to_inline(:edit_contact, edit_contact_path(@contact), :text => t(:edit)) + " | "
-    = link_to_function(t(:delete) + '?', confirm_delete(@contact))
-  .title_tools
-    #buttons
-      = view_buttons  
-  .title#edit_contact_title= h(@contact.full_name)
-
-  %div#edit_contact{ hidden }
+  
+  = render 'contacts/title_bar', :contact => @contact
 
   = render "comments/new", :commentable => @contact
   = render :partial => "shared/timeline", :collection => @timeline

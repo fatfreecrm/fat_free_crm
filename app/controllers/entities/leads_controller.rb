@@ -30,14 +30,11 @@ class LeadsController < EntitiesController
   end
 
   # GET /leads/1
+  # AJAX /leads/1
   #----------------------------------------------------------------------------
   def show
-    respond_with(@lead) do |format|
-      format.html do
-        @comment = Comment.new
-        @timeline = timeline(@lead)
-      end
-    end
+    @comment = Comment.new
+    @timeline = timeline(@lead)
   end
 
   # GET /leads/new

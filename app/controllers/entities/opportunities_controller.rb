@@ -31,14 +31,11 @@ class OpportunitiesController < EntitiesController
   end
 
   # GET /opportunities/1
+  # AJAX /opportunities/1
   #----------------------------------------------------------------------------
   def show
-    respond_with(@opportunity) do |format|
-      format.html do
-        @comment = Comment.new
-        @timeline = timeline(@opportunity)
-      end
-    end
+    @comment = Comment.new
+    @timeline = timeline(@opportunity)
   end
 
   # GET /opportunities/new

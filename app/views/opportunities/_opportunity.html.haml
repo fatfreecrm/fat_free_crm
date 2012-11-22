@@ -1,4 +1,4 @@
-- if (template = template_for_current_view)
+- if (params['controller'] == 'opportunities') and (template = template_for_current_view).present?
   = render(template, :opportunity => opportunity)
 - else
 

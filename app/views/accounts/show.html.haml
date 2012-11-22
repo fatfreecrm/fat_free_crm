@@ -6,11 +6,7 @@
 
   = styles_for :task, :contact, :opportunity
 
-  #confirm{ hidden }
-  .title_tools#menu
-    = link_to_inline(:edit_account, edit_account_path(@account), :text => t(:edit)) + " | "
-    = link_to_function(t(:delete) + '?', confirm_delete(@account))
-  .title#edit_account_title= h(@account.name)
+  = render 'accounts/title_bar', :account => @account
 
   %div#edit_account{ hidden }
 

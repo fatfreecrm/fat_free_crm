@@ -30,15 +30,12 @@ class ContactsController < EntitiesController
   end
 
   # GET /contacts/1
+  # AJAX /contacts/1
   #----------------------------------------------------------------------------
   def show
-    respond_with(@contact) do |format|
-      format.html do
-        @stage = Setting.unroll(:opportunity_stage)
-        @comment = Comment.new
-        @timeline = timeline(@contact)
-      end
-    end
+    @stage = Setting.unroll(:opportunity_stage)
+    @comment = Comment.new
+    @timeline = timeline(@contact)
   end
 
   # GET /contacts/new

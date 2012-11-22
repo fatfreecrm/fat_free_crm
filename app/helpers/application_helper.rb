@@ -489,7 +489,8 @@ module ApplicationHelper
             "#{view.name}-button"
           end
         content_tag(:li) do
-          link_to('#', :title => t(view.name, :default => view.title), :"data-view" => view.name, :"data-url" => send("redraw_#{controller}_path"), :class => classes) do
+          url = (action == "index") ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
+          link_to('#', :title => t(view.name, :default => view.title), :"data-view" => view.name, :"data-url" => url, :"data-context" => action, :class => classes) do
             image_tag(view.icon || 'brief.png')
           end
         end

@@ -29,10 +29,22 @@ class CampaignsController < EntitiesController
   end
 
   # GET /campaigns/1
+  # AJAX /campaigns/1
+  # XLS /campaigns/1
+  # XLS /campaigns/1
+  # CSV /campaigns/1
+  # RSS /campaigns/1
+  # ATOM /campaigns/1
   #----------------------------------------------------------------------------
   def show
     respond_with(@campaign) do |format|
       format.html do
+        @stage = Setting.unroll(:opportunity_stage)
+        @comment = Comment.new
+        @timeline = timeline(@campaign)
+      end
+      
+      format.js do
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
         @timeline = timeline(@campaign)
