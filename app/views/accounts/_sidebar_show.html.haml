@@ -40,8 +40,8 @@
   %li
     %span{:style => "float:right;"}= stars_for(@account)
     %tt #{t :rating}:
-  %li.last
-    %dt= truncate((@account.assigned_to ? @account.assignee.full_name : @account.user.full_name), :length => 16)
+  %li
+    %dt= @account.assigned_to ? truncate(@account.assignee.full_name, :length => 16) : nil
     %tt #{t :assigned_to}:
 
   - unless @account.background_info.blank?

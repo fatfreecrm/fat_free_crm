@@ -35,9 +35,9 @@
     %dt= @lead.referred_by ? truncate(@lead.referred_by, :length => 16) : t(:n_a)
     %tt #{t :referred_by}:
   %li
-    %dt= truncate((@lead.assigned_to ? @lead.assignee.full_name : @lead.user.full_name), :length => 16)
+    %dt= @lead.assigned_to ? truncate(@lead.assignee.full_name, :length => 16) : nil
     %tt #{t :assigned_to}:
-  %li.last
+  %li
     %dt
       - if @lead.campaign
         = link_to(truncate(@lead.campaign.name, :length => 16), @lead.campaign, :title => @lead.campaign.name)
