@@ -871,14 +871,14 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to POST redraw" do
     it "should save user selected opportunity preference" do
-      xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
+      xhr :post, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
       current_user.preference[:opportunities_per_page].should == "42"
-      current_user.preference[:opportunities_outline].should  == "brief"
+      current_user.preference[:opportunities_index_view].should  == "brief"
       current_user.preference[:opportunities_sort_by].should  == "opportunities.name ASC"
     end
 
     it "should reset current page to 1" do
-      xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
+      xhr :post, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
       session[:opportunities_current_page].should == 1
     end
 

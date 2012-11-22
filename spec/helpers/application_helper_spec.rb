@@ -64,7 +64,7 @@ describe ApplicationHelper do
     end
   end
   
-  describe "get_outline" do
+  describe "current_view_name" do
   
     before(:each) do
       @user = mock_model(User)
@@ -73,14 +73,8 @@ describe ApplicationHelper do
     end
   
     it "should return the contact 'show' outline stored in the user preferences" do
-      @user.should_receive(:pref).and_return({:contacts_show_outline => 'long'})
-      helper.get_outline.should == 'long'
-    end
-    
-    it "should return the default contact 'show' outline" do
-      @user.should_receive(:pref).and_return({})
-      Contact.should_receive(:show_outline).and_return('long')
-      helper.get_outline.should == 'long'
+      @user.should_receive(:pref).and_return({:contacts_show_view => 'long'})
+      helper.current_view_name.should == 'long'
     end
   
   end

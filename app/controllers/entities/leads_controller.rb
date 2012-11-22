@@ -35,6 +35,7 @@ class LeadsController < EntitiesController
   def show
     @comment = Comment.new
     @timeline = timeline(@lead)
+    respond_with(@lead)
   end
 
   # GET /leads/new

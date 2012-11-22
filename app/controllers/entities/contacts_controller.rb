@@ -36,6 +36,7 @@ class ContactsController < EntitiesController
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
     @timeline = timeline(@contact)
+    respond_with(@contact)
   end
 
   # GET /contacts/new

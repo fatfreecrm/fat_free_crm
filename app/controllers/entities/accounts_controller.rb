@@ -35,6 +35,7 @@ class AccountsController < EntitiesController
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
     @timeline = timeline(@account)
+    respond_with(@account)
   end
 
   # GET /accounts/new

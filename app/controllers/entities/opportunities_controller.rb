@@ -36,6 +36,7 @@ class OpportunitiesController < EntitiesController
   def show
     @comment = Comment.new
     @timeline = timeline(@opportunity)
+    respond_with(@opportunity)
   end
 
   # GET /opportunities/new
