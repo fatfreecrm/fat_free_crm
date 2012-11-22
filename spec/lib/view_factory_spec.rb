@@ -4,7 +4,7 @@ require "fat_free_crm/view_factory"
 describe FatFreeCRM::ViewFactory do
 
   before(:each) do
-    FatFreeCRM::ViewFactory.class_variable_set('@@views', [])
+    FatFreeCRM::ViewFactory.send(:class_variable_set, '@@views', [])
   end
   
   describe "initialization" do
@@ -23,15 +23,15 @@ describe FatFreeCRM::ViewFactory do
     end
     
     it "should register view with ViewFactory" do
-      FatFreeCRM::ViewFactory.class_variable_get('@@views').size.should == 0
+      FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views').size.should == 0
       FatFreeCRM::ViewFactory.new @view_params
-      FatFreeCRM::ViewFactory.class_variable_get('@@views').size.should == 1
+      FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views').size.should == 1
     end
     
     it "should not register the same view twice" do
       FatFreeCRM::ViewFactory.new @view_params
       FatFreeCRM::ViewFactory.new @view_params
-      views = FatFreeCRM::ViewFactory.class_variable_get('@@views')
+      views = FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views')
       views.size.should == 1
     end
     
