@@ -18,8 +18,10 @@
  {:name => 'opportunities_show_normal', :title => 'Normal format', :icon => 'long.png',
    :controllers => ['opportunities'], :actions => ['show'], :template => nil}, # default show view
    
- {:name => 'accounts_index_normal', :title => 'Normal format', :icon => 'long.png',
-  :controllers => ['accounts'], :actions => ['index'], :template => nil}, # default
+ {:name => 'accounts_index_brief', :title => 'Brief format', :icon => 'brief.png',
+  :controllers => ['accounts'], :actions => ['index'], :template => 'accounts/index_brief'}, # default
+ {:name => 'accounts_index_long', :title => 'Long format', :icon => 'long.png',
+  :controllers => ['accounts'], :actions => ['index'], :template => 'accounts/index_long'}, # default
  {:name => 'accounts_show_normal', :title => 'Normal format', :icon => 'long.png',
    :controllers => ['accounts'], :actions => ['show'], :template => nil}, # default show view
  

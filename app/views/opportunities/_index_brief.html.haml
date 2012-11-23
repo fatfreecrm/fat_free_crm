@@ -23,8 +23,4 @@
       - user_name = opportunity.user_id == current_user.id ? t(:me) : opportunity.user.full_name
       = t(:added_by, :time_ago => time_ago_in_words(opportunity.created_at), :user => user_name)
 
-      - if opportunity.tag_list.present?
-        %dt
-          .tags= tags_for_index(opportunity)
-
-      = hook(:opportunity_bottom, self, :opportunity => opportunity)
+= hook(:opportunity_bottom, self, :opportunity => opportunity)
