@@ -25,8 +25,10 @@
  {:name => 'accounts_show_normal', :title => 'Normal format', :icon => 'long.png',
    :controllers => ['accounts'], :actions => ['show'], :template => nil}, # default show view
  
- {:name => 'leads_index_normal', :title => 'Normal format', :icon => 'long.png',
-  :controllers => ['leads'], :actions => ['index'], :template => nil}, # default
+ {:name => 'leads_index_brief', :title => 'Brief format', :icon => 'brief.png',
+  :controllers => ['leads'], :actions => ['index'], :template => 'leads/index_brief'}, # default
+ {:name => 'leads_index_long', :title => 'Long format', :icon => 'long.png',
+  :controllers => ['leads'], :actions => ['index'], :template => 'leads/index_long'},
  {:name => 'leads_show_normal', :title => 'Normal format', :icon => 'long.png',
    :controllers => ['leads'], :actions => ['show'], :template => nil}, # default show view
   

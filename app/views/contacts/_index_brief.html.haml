@@ -27,3 +27,5 @@
       - if (lead = contact.lead) and lead.referred_by?
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
+
+    = hook(:contact_bottom, self, :contact => contact)

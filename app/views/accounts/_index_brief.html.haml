@@ -25,4 +25,4 @@
       = t('pluralize.contact', account.contacts.count) << " | "
       = t('pluralize.opportunity', account.opportunities.count)
 
-= hook(:account_bottom, self, :account => account)
+    = hook(:account_bottom, self, :account => account)
