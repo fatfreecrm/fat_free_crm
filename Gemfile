@@ -58,7 +58,6 @@ group :test do
   gem 'capybara', '~> 1.1' # v2 and up is not r1.8 compatible.
   gem 'spork'
   gem 'database_cleaner'
-  gem 'fuubar'
   gem "acts_as_fu", "~> 0.0.8"
 
   if RUBY_VERSION.to_f >= 1.9

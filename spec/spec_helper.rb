@@ -16,7 +16,6 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
-  require 'fuubar'
 
   require 'acts_as_fu'
   # Load factories
@@ -88,9 +87,6 @@ Spork.prefork do
     # config.before :all, :type => :view do
     #   view.lookup_context.prefixes << 'entities'
     # end
-
-    # Fuubar formatter doesn't work too well on Travis
-    config.formatter = ENV["TRAVIS"] ? :progress : "Fuubar"
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
