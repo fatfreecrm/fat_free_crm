@@ -38,7 +38,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
           data = [opportunity.user.try(:name),
                   opportunity.campaign.try(:name),
                   opportunity.assignee.try(:name),
-                  opportunity.account.name,
+                  opportunity.account.try(:name),
                   opportunity.name,
                   opportunity.access,
                   opportunity.source,
