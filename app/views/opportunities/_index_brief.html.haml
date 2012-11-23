@@ -1,0 +1,30 @@
+%li.highlight[opportunity]
+  - if opportunity.stage
+    .strip{:class => opportunity.stage}= t(opportunity.stage)
+  - else
+    .strip.white #{t :other}
+
+  %ul.tools
+    - if can?(:update, opportunity)
+      %li= link_to_edit(opportunity)
+
+    - if shown_on_landing_page?
+      %li= link_to_discard(opportunity)
+
+    - if can?(:destroy, opportunity)
+      %li= link_to_delete(opportunity)
+
+  .indent
+    = link_to_if can?(:read, opportunity), opportunity.name, opportunity
+    - if (account = opportunity.account) && account.id
+      == #{t :from} #{link_to_if can?(:read, account), account.name, account_path(account)}
+    %tt
+      &ndash;
+      - user_name = opportunity.user_id == current_user.id ? t(:me) : opportunity.user.full_name
+      = t(:added_by, :time_ago => time_ago_in_words(opportunity.created_at), :user => user_name)
+
+      - if opportunity.tag_list.present?
+        %dt
+          .tags= tags_for_index(opportunity)
+
+      = hook(:opportunity_bottom, self, :opportunity => opportunity)

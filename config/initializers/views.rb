@@ -5,14 +5,16 @@
 [ {:name => 'contacts_index_brief', :title => 'Brief format', :icon => 'brief.png',
    :controllers => ['contacts'], :actions => ['index'], :template => 'contacts/index_brief'},
   {:name => 'contacts_index_long', :title => 'Long format', :icon => 'long.png',
-   :controllers => ['contacts'], :actions => ['index'], :template => nil}, # default index view
+   :controllers => ['contacts'], :actions => ['index'], :template => 'contacts/index_long'}, # default index view
   {:name => 'contacts_index_full', :title => 'Full format', :icon => 'full.png',
    :controllers => ['contacts'], :actions => ['index'], :template => 'contacts/index_full'},
   {:name => 'contacts_show_normal', :title => 'Normal format', :icon => 'long.png',
    :controllers => ['contacts'], :actions => ['show'], :template => nil}, # default show view
 
- {:name => 'opportunities_index_normal', :title => 'Normal format', :icon => 'long.png',
-  :controllers => ['opportunities'], :actions => ['index'], :template => nil}, # default
+ {:name => 'opportunities_index_brief', :title => 'Brief format', :icon => 'brief.png',
+  :controllers => ['opportunities'], :actions => ['index'], :template => 'opportunities/index_brief'},
+ {:name => 'opportunities_index_long', :title => 'Long format', :icon => 'long.png',
+   :controllers => ['opportunities'], :actions => ['index'], :template => 'opportunities/index_long'}, # default
  {:name => 'opportunities_show_normal', :title => 'Normal format', :icon => 'long.png',
    :controllers => ['opportunities'], :actions => ['show'], :template => nil}, # default show view
    
