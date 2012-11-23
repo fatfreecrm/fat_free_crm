@@ -32,8 +32,10 @@
  {:name => 'leads_show_normal', :title => 'Normal format', :icon => 'long.png',
    :controllers => ['leads'], :actions => ['show'], :template => nil}, # default show view
   
- {:name => 'campaigns_index_normal', :title => 'Normal format', :icon => 'long.png',
-  :controllers => ['campaigns'], :actions => ['index'], :template => nil}, # default
+ {:name => 'campaigns_index_brief', :title => 'Brief format', :icon => 'brief.png',
+  :controllers => ['campaigns'], :actions => ['index'], :template => 'campaigns/index_brief'}, # default
+ {:name => 'campaigns_index_long', :title => 'Long format', :icon => 'long.png',
+  :controllers => ['campaigns'], :actions => ['index'], :template => 'campaigns/index_long'},
  {:name => 'campaigns_show_normal', :title => 'Normal format', :icon => 'long.png',
    :controllers => ['campaigns'], :actions => ['show'], :template => nil}, # default show view
  

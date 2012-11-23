@@ -1,0 +1,15 @@
+%li.highlight[campaign]
+  .strip{:class => campaign.status}= t(campaign.status)
+
+  %ul.tools
+    - if can?(:update, campaign)
+      %li= link_to_edit(campaign)
+
+    - if can?(:destroy, campaign)
+      %li= link_to_delete(campaign)
+
+  .indent
+    = link_to(campaign.name, campaign)
+    = render "campaigns/status", :campaign => campaign
+
+    = hook(:campaign_bottom, self, :campaign => campaign)
