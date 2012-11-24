@@ -29,15 +29,13 @@ class AccountsController < EntitiesController
   end
 
   # GET /accounts/1
+  # AJAX /accounts/1
   #----------------------------------------------------------------------------
   def show
-    respond_with(@account) do |format|
-      format.html do
-        @stage = Setting.unroll(:opportunity_stage)
-        @comment = Comment.new
-        @timeline = timeline(@account)
-      end
-    end
+    @stage = Setting.unroll(:opportunity_stage)
+    @comment = Comment.new
+    @timeline = timeline(@account)
+    respond_with(@account)
   end
 
   # GET /accounts/new
@@ -138,14 +136,6 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_accounts :get_list_of_records
-
-  def set_options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:accounts_per_page] || Account.per_page
-      @outline  = current_user.pref[:accounts_outline]  || Account.outline
-      @sort_by  = current_user.pref[:accounts_sort_by]  || Account.sort_by
-    end
-  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

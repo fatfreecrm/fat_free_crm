@@ -30,14 +30,12 @@ class LeadsController < EntitiesController
   end
 
   # GET /leads/1
+  # AJAX /leads/1
   #----------------------------------------------------------------------------
   def show
-    respond_with(@lead) do |format|
-      format.html do
-        @comment = Comment.new
-        @timeline = timeline(@lead)
-      end
-    end
+    @comment = Comment.new
+    @timeline = timeline(@lead)
+    respond_with(@lead)
   end
 
   # GET /leads/new
@@ -218,12 +216,8 @@ private
   end
 
   def set_options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:leads_per_page] || Lead.per_page
-      @outline  = current_user.pref[:leads_outline]  || Lead.outline
-      @sort_by  = current_user.pref[:leads_sort_by]  || Lead.sort_by
-      @naming   = current_user.pref[:leads_naming]   || Lead.first_name_position
-    end
+    super
+    @naming = (current_user.pref[:leads_naming] || Lead.first_name_position) unless params[:cancel].true?
   end
 
   #----------------------------------------------------------------------------

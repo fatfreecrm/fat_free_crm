@@ -89,16 +89,14 @@ class ContactsController < EntitiesController
   end
 
   # GET /contacts/1
+  # AJAX /contacts/1
   #----------------------------------------------------------------------------
   def show
-    respond_with(@contact) do |format|
-      format.html do
-        @stage = Setting.unroll(:opportunity_stage)
-        @comment = Comment.new
-        @timeline = timeline(@contact)
-        @contact_groups = @contact.contact_groups
-      end
-    end
+    @stage = Setting.unroll(:opportunity_stage)
+    @comment = Comment.new
+    @timeline = timeline(@contact)
+    @contact_groups = @contact.contact_groups
+    respond_with(@contact)
   end
 
   # GET /contacts/new
@@ -202,7 +200,6 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:contacts_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:contacts_outline]  = params[:outline]  if params[:outline]
 
     # Sorting and naming only: set the same option for Leads if the hasn't been set yet.
     if params[:sort_by]
@@ -231,12 +228,8 @@ class ContactsController < EntitiesController
   end
 
   def set_options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:contacts_per_page] || Contact.per_page
-      @outline  = current_user.pref[:contacts_outline]  || Contact.outline
-      @sort_by  = current_user.pref[:contacts_sort_by]  || Contact.sort_by
-      @naming   = current_user.pref[:contacts_naming]   || Contact.first_name_position
-    end
+    super
+    @naming = (current_user.pref[:contacts_naming]   || Contact.first_name_position) unless params[:cancel].true?
   end
 
   #----------------------------------------------------------------------------

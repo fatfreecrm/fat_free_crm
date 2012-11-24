@@ -1,5 +1,5 @@
-- collapsed = session[:eventt_show_instances].nil? # && contact.errors.empty?
-= asset_attribute_section :event_show_instances, collapsed, t(:event_instances)
+- collapsed = session[:event_show_instances].nil? # && contact.errors.empty?
+= section_title :event_show_instances, collapsed, t(:event_instances)
 .section.nostyle
   #event_show_instances{ hidden_if(collapsed) }
     =render :partial => 'event_instances/event_instance', :collection => event.event_instances

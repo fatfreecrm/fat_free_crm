@@ -9,7 +9,7 @@ describe "/opportunities/index" do
     assign :stage, Setting.unroll(:opportunity_stage)
     assign :per_page, Opportunity.per_page
     assign :sort_by,  Opportunity.sort_by
-    view.stub(:search) { Opportunity.search {} }
+    assign :ransack_search, Opportunity.search
   end
 
   it "should render list of accounts if list of opportunities is not empty" do
@@ -30,4 +30,3 @@ describe "/opportunities/index" do
   end
 
 end
-

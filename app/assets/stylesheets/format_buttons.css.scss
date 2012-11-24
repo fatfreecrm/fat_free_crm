@@ -1,0 +1,30 @@
+#buttons {
+  display: inline-block;
+  .create_asset, ul { display: inline; }
+  .create_asset {
+    margin-left: 24px;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 1px;
+    span.arrow {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+ul.format-buttons li {
+  display: inline;
+  margin: 0 3px;
+
+  a {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    opacity: 0.3;
+  }
+  a.active { opacity: 1; }
+  a:hover { opacity: 0.6; }
+  a:active { opacity: 1; }
+
+}

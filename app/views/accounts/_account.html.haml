@@ -1,39 +1,5 @@
-- amount = account.opportunities.pipeline.map(&:weighted_amount).sum
-%li.highlight[account]
-  - if account.category
-    .strip{:class => account.category} #{t(account.category)}
-  - else
-    .strip{:style => "color: gray;"} #{t :other}
-
-  %ul.tools
-    = hook(:account_tools_before, self, :account => account)
-
-    - if can?(:update, account)
-      %li= link_to_edit(account)
-
-    - if can?(:destroy, account)
-      %li= link_to_delete(account)
-
-  .indent
-    = link_to(account.name, account)
-    - if amount != 0.0
-      %span.amount= number_to_currency(amount, :precision => 0)
-    &ndash;
-    %tt
-      = account.location << ", " unless account.location.blank?
-      = t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => (account.user.id == current_user.id ? t(:me) : account.user.full_name)) << " | "
-      = t('pluralize.contact', account.contacts.count) << " | "
-      = t('pluralize.opportunity', account.opportunities.count)
-
-    - unless current_user.preference[:accounts_outline] == "brief"
-      %dt
-        = stars_for(account)
-        = " | ".html_safe << link_to(account.website, account.website.to_url) if account.website.present?
-        = " | ".html_safe << link_to_email(account.email) if account.email.present?
-        = " | ".html_safe << t(:phone_small) << ": " << (account.toll_free_phone? ? account.toll_free_phone : account.phone) if account.toll_free_phone? || account.phone?
-
-      - if account.tag_list.present?
-        %dt
-          .tags= tags_for_index(account)
-
-      = hook(:account_bottom, self, :account => account)
+- if (params['controller'] == 'accounts') and (template = template_for_current_view).present?
+  = render(template, :account => account)
+- else
+  -# default view
+  = render 'accounts/index_brief', :account => account

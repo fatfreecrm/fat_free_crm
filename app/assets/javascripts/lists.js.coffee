@@ -23,7 +23,7 @@
 
     $("input#save_list").live "click", ->
       # Set value of hidden list_url field to serialized search form
-      $("#list_url").val(window.location.pathname + '?' + $('form.advanced_search').serialize())
+      $("#list_url").val(window.location.pathname + '?' + $('form.ransack_search').serialize())
       true
 
     # When mouseover on li, change asset icons to delete buttons

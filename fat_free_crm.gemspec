@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rails',               '3.2.9'
   gem.add_dependency 'prototype-rails'
   gem.add_dependency 'jquery-rails'
+  gem.add_dependency 'select2-rails'
   gem.add_dependency 'simple_form',         '~> 2.0.1'
   gem.add_dependency 'will_paginate',       '~> 3.0.2'
   gem.add_dependency 'paperclip',           '~> 2.8.0'
@@ -42,8 +43,8 @@ Gem::Specification.new do |gem|
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
-  gem.add_dependency 'ransack_ffcrm',       '~> 0.6.0'
+  gem.add_dependency 'ransack_ffcrm',       '~> 0.7.1'
+  gem.add_dependency 'ransack_ui',          '>= 0.1.7'
   gem.add_dependency 'ajax-chosen-rails',   '>= 0.2.1'  # (now depends on chosen-rails_ffcrm)
   gem.add_dependency 'email_reply_parser_ffcrm'
-
 end

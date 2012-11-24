@@ -6,6 +6,7 @@
     = f.error_messages :object_name => t('contact')
 
     = render "contacts/top_section", :f => f, :edit => true
+    = render "fields/edit_custom_field_group", :f => f, :edit => true
     = render "contacts/extra",       :f => f, :edit => true
     = render "contacts/web",         :f => f, :edit => true
     = render "fields/groups",        :f => f, :edit => true

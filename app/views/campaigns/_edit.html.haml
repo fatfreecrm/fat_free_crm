@@ -6,6 +6,7 @@
     = f.error_messages :object_name => t('campaign')
 
     = render "campaigns/top_section", :f => f, :edit => true
+    = render "fields/edit_custom_field_group", :f => f, :edit => true
     = render "campaigns/objectives",  :f => f, :edit => true
     = render "fields/groups",         :f => f, :edit => true
     = render "entities/permissions",  :f => f, :edit => true, :entity => @campaign

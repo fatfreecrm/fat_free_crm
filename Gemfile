@@ -11,7 +11,7 @@ source :rubygems
 gem 'bundler_local_development', :group => :development, :require => false
 begin
   require 'bundler_local_development'
-  Bundler.development_gems = [/^ffcrm_/]
+  Bundler.development_gems = [/^ffcrm_/, /ransack/]
 rescue LoadError
 end
 
@@ -58,10 +58,9 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara'
+  gem 'capybara', '~> 1.1' # v2 and up is not r1.8 compatible.
   gem 'spork'
   gem 'database_cleaner'
-  gem 'fuubar'
   gem "acts_as_fu", "~> 0.0.8"
 
   if RUBY_VERSION.to_f >= 1.9

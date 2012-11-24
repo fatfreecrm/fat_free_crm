@@ -79,6 +79,9 @@ class Account < ActiveRecord::Base
   exportable
   sortable :by => [ "name ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
+  has_ransackable_associations %w(contacts opportunities tags activities emails addresses comments)
+  ransack_can_autocomplete
+
   validates_presence_of :name, :message => :missing_account_name
   validates_uniqueness_of :name, :scope => :deleted_at
   validate :users_for_shared_access
@@ -86,9 +89,8 @@ class Account < ActiveRecord::Base
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ; 20     ; end
-  def self.outline  ; "long" ; end
-
+  def self.per_page ; 20 ; end
+  
   # Extract last line of billing address and get rid of numeric zipcode.
   #----------------------------------------------------------------------------
   def location

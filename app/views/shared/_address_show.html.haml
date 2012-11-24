@@ -1,5 +1,6 @@
 - address_attr = "#{type}_address"
 - address = get_address(asset, address_attr)
+- title ||= nil
 
 - unless address.blank?
   - if Setting.compound_address
@@ -21,4 +22,3 @@
       %b #{t title}
       %br
       = h(address.full_address).n2br
-

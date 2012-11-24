@@ -1,21 +1,5 @@
-%li.highlight[campaign]
-  .strip{:class => campaign.status}= t(campaign.status)
-
-  %ul.tools
-    - if can?(:update, campaign)
-      %li= link_to_edit(campaign)
-
-    - if can?(:destroy, campaign)
-      %li= link_to_delete(campaign)
-
-  .indent
-    = link_to(campaign.name, campaign)
-    = render "campaigns/status", :campaign => campaign
-
-    - unless current_user.preference[:campaigns_outline] == "brief"
-      = render "campaigns/metrics", :campaign => campaign
-      - if campaign.tag_list.present?
-        %dt
-          .tags= tags_for_index(campaign)
-
-      = hook(:campaign_bottom, self, :campaign => campaign)
+- if (params['controller'] == 'campaigns') and (template = template_for_current_view).present?
+  = render(template, :campaign => campaign)
+- else
+  -# default view
+  = render 'campaigns/index_brief', :campaign => campaign

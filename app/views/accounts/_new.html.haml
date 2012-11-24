@@ -5,6 +5,7 @@
   = f.error_messages :object_name => t('account')
 
   = render "accounts/top_section",  :f => f
+  = render "fields/edit_custom_field_group", :f => f
   = render "shared/add_comment", :f => f
   = render "accounts/contact_info", :f => f
   = render "fields/groups",  :f => f
@@ -17,4 +18,3 @@
       = f.submit t(:create_account)
     #{t :or}
     = link_to_cancel new_account_path
-

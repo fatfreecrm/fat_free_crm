@@ -29,10 +29,22 @@ class CampaignsController < EntitiesController
   end
 
   # GET /campaigns/1
+  # AJAX /campaigns/1
+  # XLS /campaigns/1
+  # XLS /campaigns/1
+  # CSV /campaigns/1
+  # RSS /campaigns/1
+  # ATOM /campaigns/1
   #----------------------------------------------------------------------------
   def show
     respond_with(@campaign) do |format|
       format.html do
+        @stage = Setting.unroll(:opportunity_stage)
+        @comment = Comment.new
+        @timeline = timeline(@campaign)
+      end
+      
+      format.js do
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
         @timeline = timeline(@campaign)
@@ -162,14 +174,6 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_campaigns :get_list_of_records
-
-  def set_options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:campaigns_per_page] || Campaign.per_page
-      @outline  = current_user.pref[:campaigns_outline]  || Campaign.outline
-      @sort_by  = current_user.pref[:campaigns_sort_by]  || Campaign.sort_by
-    end
-  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

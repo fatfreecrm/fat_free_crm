@@ -234,6 +234,15 @@ en-US:
   show_per_page: Show %{number} %{models} per page using %{fmt} format.
   sort_by: Sort by %{field}
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
+  
+  # Views -> Switcher
+  contacts_index_long: Long format
+  contacts_index_brief: Brief format
+  contacts_index_full: Full format
+  opportunities_index_normal: Normal format
+  accounts_index_normal: Normal format
+  leads_index_normal: Normal format
+  campaigns_index_normal: Normal format
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
@@ -428,8 +437,6 @@ en-US:
   shared_with_everyone: Shared with everyone
   title: Title
   subscriptions: Subscriptions
-  # contact 'full' view outline
-  option_full: full
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
@@ -459,6 +466,8 @@ en-US:
   source: Source
   status: Status
   total_leads: Total Leads
+  show_status_info_small: Show status information for this lead.
+  show_contact_info_small: Show contact information for this lead.
 
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
@@ -657,22 +666,6 @@ en-US:
   advanced_search_group_rest: ...and where %{combinator} of the following match
   advanced_search_add_condition: Add a filter
   advanced_search_remove_condition: Remove filter
-
-  ransack:
-    predicates:
-      eq: is
-      not_eq: is not
-      lt: is less than
-      gt: is greater than
-      matches: matches
-      does_not_match: doesn't match
-      cont: contains
-      not_cont: doesn't contain
-      blank: is blank
-      present: is present
-      "null": is null
-      not_null: is not null
-
 
   # Views -> Comments.
   #----------------------------------------------------------------------------

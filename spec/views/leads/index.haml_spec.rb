@@ -7,7 +7,7 @@ describe "/leads/index" do
     view.lookup_context.prefixes << 'entities'
     assign :per_page, Lead.per_page
     assign :sort_by,  Lead.sort_by
-    view.stub(:search) { Lead.search {} }
+    assign :ransack_search, Lead.search
     login_and_assign
   end
 
@@ -29,4 +29,3 @@ describe "/leads/index" do
   end
 
 end
-

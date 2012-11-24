@@ -1,0 +1,2 @@
+jQuery('#main').html('<%= j (render :template => "leads/show.html", :lead => @lead) %>')
+<%= raw generate_js_for_popups(@lead, :tasks) %>

@@ -31,14 +31,12 @@ class OpportunitiesController < EntitiesController
   end
 
   # GET /opportunities/1
+  # AJAX /opportunities/1
   #----------------------------------------------------------------------------
   def show
-    respond_with(@opportunity) do |format|
-      format.html do
-        @comment = Comment.new
-        @timeline = timeline(@opportunity)
-      end
-    end
+    @comment = Comment.new
+    @timeline = timeline(@opportunity)
+    respond_with(@opportunity)
   end
 
   # GET /opportunities/new
@@ -179,14 +177,6 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_opportunities :get_list_of_records
-
-  def set_options
-    unless params[:cancel].true?
-      @per_page = current_user.pref[:opportunities_per_page] || Opportunity.per_page
-      @outline  = current_user.pref[:opportunities_outline]  || Opportunity.outline
-      @sort_by  = current_user.pref[:opportunities_sort_by]  || Opportunity.sort_by
-    end
-  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

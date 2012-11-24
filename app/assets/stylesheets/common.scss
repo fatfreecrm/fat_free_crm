@@ -60,7 +60,12 @@ $sidebar_width: 210px;
     color: $color_subtitle;
     text-decoration: none; }
   a:hover {
-    background: none; }; }
+    background: none; };
+  &.show_attributes {
+    margin-top: 6px; } }
+
+.subtitle_inline_info {
+  margin-left: 5px }
 
 .subtitle_tools {
   font-size: 11px;
@@ -161,7 +166,7 @@ $sidebar_width: 210px;
   padding-top: 5px; }
 
 .section {
-  background: whitesmoke;
+  background-color: whitesmoke;
   color: #3f3f3f;
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px;
@@ -729,8 +734,6 @@ span.handle img {
 .fields .title {
   margin-bottom: 12px; }
 
-.remove_fields img {
-  vertical-align: text-bottom; }
 
 ul.tools, ul.sub_tools {
   display: inline;

@@ -1,24 +1,26 @@
-= styles_for :task, :contact, :opportunity
+- if (template = template_for_current_view)
+  = render(template, :account => @account)
+- else
+  
+  -# default view
 
-#confirm{ hidden }
-.title_tools#menu
-  = link_to_inline(:edit_account, edit_account_path(@account), :text => t(:edit)) + " | "
-  = link_to_function(t(:delete) + '?', confirm_delete(@account))
-.title#edit_account_title= h(@account.name)
+  = styles_for :task, :contact, :opportunity
 
-%div#edit_account{ hidden }
+  = render 'accounts/title_bar', :account => @account
 
-= render "comments/new", :commentable => @account
-= render :partial => "shared/timeline", :collection => @timeline
+  %div#edit_account{ hidden }
 
-= hook(:show_account_bottom, self) do
+  = render "comments/new", :commentable => @account
+  = render :partial => "shared/timeline", :collection => @timeline
 
-  = render :partial => "tasks/tasks", :locals => {:object => @account}
+  = hook(:show_account_bottom, self) do
 
-  = render :partial => "contacts/contacts", :locals => {:object => @account}
+    = render :partial => "tasks/tasks", :locals => {:object => @account}
 
-  = render :partial => "opportunities/opportunities", :locals => {:object => @account}
+    = render "contacts/contacts", :object => @account
 
-  = render :partial => "versions/versions", :locals => {:object => @account}
+    = render "opportunities/opportunities", :object => @account
 
-  = load_select_popups_for(@account, :tasks, :contacts, :opportunities)
+    = render "versions/versions", :object => @account
+
+    = load_select_popups_for(@account, :tasks, :contacts, :opportunities)

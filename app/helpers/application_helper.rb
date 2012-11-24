@@ -73,13 +73,16 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def load_select_popups_for(related, *assets)
-    js = assets.map do |asset|
-      render(:partial => "shared/select_popup", :locals => { :related => related, :popup => asset })
-    end.join
-
+    js = generate_js_for_popups(related, *assets)
     content_for(:javascript_epilogue) do
       raw "document.observe('dom:loaded', function() { #{js} });"
     end
+  end
+  
+  def generate_js_for_popups(related, *assets)
+    assets.map do |asset|
+      render(:partial => "shared/select_popup", :locals => { :related => related, :popup => asset })
+    end.join
   end
 
   # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
@@ -332,7 +335,7 @@ module ApplicationHelper
         image_tag("avatar.jpg", args)
       end
     end
-      
+
   end
 
   # Returns default permissions intro.
@@ -403,24 +406,6 @@ module ApplicationHelper
     (exports + feeds + links).compact.join(' | ')
   end
 
-  def template_fields(f, type)
-    f.grouping_fields f.object.new_grouping, :object_name => "new_object_name", :child_index => "new_grouping" do |builder|
-      render('grouping_fields', :f => builder)
-    end
-  end
-
-  def link_to_add_fields(name, f, type)
-    new_object = f.object.send "build_#{type}"
-    fields = f.send("#{type}_fields", new_object, :child_index => "new_#{type}") do |builder|
-      render(type.to_s + "_fields", :f => builder)
-    end
-    link_to name, nil, :class => "add_fields", "data-field-type" => type, "data-content" => "#{fields}"
-  end
-
-  def link_to_remove_fields(name, f)
-    link_to image_tag('delete.png', :size => '16x16', :alt => name), nil, :class => "remove_fields"
-  end
-
   def user_options
     User.all.map {|u| [u.full_name, u.id]}
   end
@@ -450,7 +435,7 @@ module ApplicationHelper
 
   # Create a column in the 'asset_attributes' table.
   #----------------------------------------------------------------------------
-  def asset_attribute_columns(title, value, last = false, email = false)
+  def col(title, value, last = false, email = false)
     # Parse and format urls as links.
     fmt_value = (value.to_s || "").gsub("\n", "<br />")
     fmt_value = if email
@@ -458,13 +443,13 @@ module ApplicationHelper
       else
         fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
       end
-    %Q^<th class="#{last ? "last" : ""}">#{title}:</td>
-  <td class="#{last ? "last" : ""}">#{fmt_value}</td>^.html_safe
+    %Q^<th#{last ? " class=\"last\"" : ""}>#{title}:</th>
+  <td#{last ? " class=\"last\"" : ""}>#{fmt_value}</td>^.html_safe
   end
 
   #----------------------------------------------------------------------------
   # Combines the 'subtitle' helper with the small info text on the same line.
-  def asset_attribute_section(id, hidden = true, text = nil, info_text = nil)
+  def section_title(id, hidden = true, text = nil, info_text = nil)
     text = id.to_s.split("_").last.capitalize if text == nil
     content_tag("div", :class => "subtitle show_attributes") do
       content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
@@ -475,4 +460,46 @@ module ApplicationHelper
       content << content_tag("small", info_text.to_s, {:class => "subtitle_inline_info", :id => "#{id}_intro", :style => hidden ? "" : "display:none;"})
     end
   end
+
+  #----------------------------------------------------------------------------
+  # Return name of current view
+  def current_view_name
+    controller = params['controller']
+    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    current_user.pref[:"#{controller}_#{action}_view"]
+  end
+
+  #----------------------------------------------------------------------------
+  # Get template in current context with current view name
+  def template_for_current_view
+    controller = params['controller']
+    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    template = FatFreeCRM::ViewFactory.template_for_current_view(:controller => controller, :action => action, :name => current_view_name)
+    template
+  end
+
+  #----------------------------------------------------------------------------
+  # Generate buttons for available views given the current context
+  def view_buttons
+    controller = params['controller']
+    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    views = FatFreeCRM::ViewFactory.views_for(:controller => controller, :action => action)
+    return nil unless views.size > 1
+    content_tag :ul, :class => 'format-buttons' do
+      views.collect do |view|
+        classes = if (current_view_name == view.name) or (current_view_name == nil and view.template == nil) # nil indicates default template.
+            "#{view.name}-button active"
+          else
+            "#{view.name}-button"
+          end
+        content_tag(:li) do
+          url = (action == "index") ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
+          link_to('#', :title => t(view.name, :default => view.title), :"data-view" => view.name, :"data-url" => url, :"data-context" => action, :class => classes) do
+            image_tag(view.icon || 'brief.png')
+          end
+        end
+      end.join('').html_safe
+    end
+  end
+
 end

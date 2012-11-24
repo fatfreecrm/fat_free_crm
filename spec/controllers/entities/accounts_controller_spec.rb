@@ -565,14 +565,14 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to POST redraw" do
     it "should save user selected account preference" do
-      xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
+      xhr :post, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
       current_user.preference[:accounts_per_page].should == "42"
-      current_user.preference[:accounts_outline].should  == "brief"
+      current_user.preference[:accounts_index_view].should  == "brief"
       current_user.preference[:accounts_sort_by].should  == "accounts.name ASC"
     end
 
     it "should reset current page to 1" do
-      xhr :post, :redraw, :per_page => 42, :outline => "brief", :sort_by => "name"
+      xhr :post, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
       session[:accounts_current_page].should == 1
     end
 

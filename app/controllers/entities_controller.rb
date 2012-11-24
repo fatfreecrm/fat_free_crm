@@ -18,13 +18,16 @@
 class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
+  before_filter :set_view, :only => [ :index, :show, :redraw ]
+  
   before_filter :set_options, :only => :index
+  before_filter :load_ransack_search, :only => :index
 
   load_and_authorize_resource
 
   after_filter :update_recently_viewed, :only => :show
 
-  helper_method :entity, :entities, :search
+  helper_method :entity, :entities
 
   # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
@@ -120,6 +123,15 @@ protected
   def entities
     instance_variable_get("@#{controller_name}") || klass.my
   end
+  
+  def set_options
+    unless params[:cancel].true?
+      klass = controller_name.classify.constantize
+      action = params['action']
+      @per_page = current_user.pref[:"#{controller_name}_per_page"] || klass.per_page
+      @sort_by  = current_user.pref[:"#{controller_name}_sort_by"]  || klass.sort_by
+    end
+  end
 
 private
 
@@ -128,13 +140,8 @@ private
     @users ||= User.except(current_user)
   end
 
-  #----------------------------------------------------------------------------
-  def search
-    @search ||= begin
-      search = klass.search(params[:q])
-      search.build_grouping unless search.groupings.any?
-      search
-    end
+  def ransack_search
+    @ransack_search ||= load_ransack_search
   end
 
   # Get list of records for a given model class.
@@ -147,7 +154,7 @@ private
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
 
     per_page = if options[:per_page]
-      options[:per_page] == 'all' ? search.result.count : options[:per_page]
+      options[:per_page] == 'all' ? ransack_search.result(:distinct => true).count : options[:per_page]
     else
       current_user.pref[:"#{controller_name}_per_page"]
     end
@@ -167,7 +174,7 @@ private
       filter = session[:"#{controller_name}_filter"].to_s.split(',')
     end
 
-    scope = entities.merge(search.result)
+    scope = entities.merge(ransack_search.result(:distinct => true))
     scope = scope.state(filter)                   if filter.present?
     scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
@@ -202,5 +209,15 @@ private
   #----------------------------------------------------------------------------
   def timeline(asset)
     (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
+  end
+  
+  # Sets the current outline for viewing objects in this context
+  #----------------------------------------------------------------------------
+  def set_view
+    if params['view']
+      controller = params['controller']
+      action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+      current_user.pref[:"#{controller}_#{action}_view"] = params['view']
+    end
   end
 end

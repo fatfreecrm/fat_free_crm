@@ -17,6 +17,7 @@
 
 require 'rails/all'
 require 'jquery-rails'
+require 'select2-rails'
 require 'prototype-rails'
 require 'haml'
 require 'sass'
@@ -32,9 +33,14 @@ require 'authlogic'
 require 'chosen-rails'
 require 'ajax-chosen-rails'
 require 'ransack'
+require 'ransack_ui'
 require 'paper_trail'
 require 'cancan'
+require 'rails3-jquery-autocomplete'
 require 'valium'
+require 'ffaker'
+require 'premailer'
+require 'nokogiri'
 
 # Load redcloth if available (for textile markup in emails)
 begin

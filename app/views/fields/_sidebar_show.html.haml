@@ -1,7 +1,9 @@
 - asset.field_groups.each do |field_group|
-  - if field_group.fields.select{|f| asset.send(f.name).present? }.any?
+  - fg = field_group.fields.without_pairs
+  - if fg.select{|f| asset.send(f.name).present? }.any?
     %div
-      .caption #{field_group.label_i18n}
-      - field_group.fields.without_pairs.each do |field|
+      - unless field_group.name == 'custom_fields'
+        .caption #{field_group.label_i18n}
+      - fg.each do |field|
         - if (value = field.render_value(asset)).present?
           == #{field.label}:<br /> <b>#{truncate(value, :length => 35)}</b><br />

@@ -87,6 +87,9 @@ class Opportunity < ActiveRecord::Base
   exportable
   sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
+  has_ransackable_associations %w(account contacts tags activities emails comments)
+  ransack_can_autocomplete
+
   validates_presence_of :name, :message => :missing_opportunity_name
   validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
   validate :users_for_shared_access
@@ -101,8 +104,7 @@ class Opportunity < ActiveRecord::Base
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ; 20     ; end
-  def self.outline  ; "long" ; end
+  def self.per_page ; 20 ; end
 
   #----------------------------------------------------------------------------
   def weighted_amount
@@ -117,9 +119,10 @@ class Opportunity < ActiveRecord::Base
     account = Account.create_or_select_for(self, params[:account])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
     self.account = account
-    self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
-    self.save
+    result = self.save
+    self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
+    result
   end
 
   # Backend handler for [Update Opportunity] form (see opportunity/update).
