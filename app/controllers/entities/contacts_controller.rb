@@ -17,7 +17,67 @@
 class ContactsController < EntitiesController
   before_filter :get_users, :only => [ :new, :create, :edit, :update ]
   before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
-
+  
+  def single_access_allowed?
+    (action_name == "mailchimp_webhooks")
+  end
+  
+  def mailchimp_webhooks
+    if request.post?
+      list_id = params[:data][:list_id]
+      #if list_id.nil? raise some error
+      list_name = Setting.mailchimp.find{|k,v| v == list_id}[0] # "eg. city_west_list_id"
+      list_name = list_name.split("_list_id")[0] # eg "city_west" NOPE!!
+      list_name = list_name.humanize.titleize # eg " City West"
+      
+      case params[:type]
+      when "subscribe"
+        logger.info("Subscribe request received")
+        if contact = Contact.find_or_create_by_email(params[:data][:email])
+          #not generating the right list name
+          #TODO - check if changed in the last few minutes and ignore - webhook fired when we do subcribes from here
+          contact.cf_weekly_emails << list_name unless (contact.cf_weekly_emails.include?(list_name) || list_name == "Supporters")
+          contact.cf_supporters_emails = [params[:data]["merges"]["GROUPINGS"]["0"]["groups"]] if list_name == "Supporters"
+          contact.first_name = params[:data]["merges"]["FNAME"]
+          contact.last_name = params[:data]["merges"]["LNAME"]
+          contact.user = @current_user if contact.user.nil?
+          #get gender, campus, assign task to user accordingly
+          contact.tasks << Task.new(:name => "New signup to #{list_name} - send welcome email", :category => :email, :bucket => "due_this_week", :user => @current_user)
+        end
+      when "unsubscribe"
+        logger.info("Unsubscribe request received")
+        if contact = Contact.find_by_email(params[:data][:email])
+          if list_name == "Supporters"
+            contact.cf_supporters_emails = []
+          else
+            contact.cf_weekly_emails = contact.cf_weekly_emails - [list_name]
+          end
+          contact.tasks << Task.new(:name => "followup unsubscribe from mailchimp list #{list_name}", :category => :follow_up, :bucket => "due_this_week", :user => @current_user)
+        end
+      when "upemail"
+        if contact = Contact.find_by_email(params[:data][:old_email])
+          contact.email = params[:data][:new_email]
+        end
+      when "profile" 
+        if contact = Contact.find_by_email(params[:data][:email])
+          contact.first_name = params[:data]["merges"]["FNAME"]
+          contact.last_name = params[:data]["merges"]["LNAME"]
+        end
+      when "cleaned"
+        if contact = Contact.find_by_email(params[:data][:email])
+          reason = params[:data][:reason] == "hard" ? "the email bounced" : "the email was reported as spam"
+          contact.cf_weekly_emails = contact.cf_weekly_emails - [list_name]
+          contact.tasks << Task.new(:name => "unsubscribed from #{list_name} becuase #{reason}", :category => :follow_up, :bucket => "due_this_week", :user => @current_user)
+        end
+      end
+      contact.save
+    else # GET
+      respond_with @contacts do |format|
+        format.html
+      end
+    end  
+  end
+  
   # GET /contacts
   #----------------------------------------------------------------------------
   def index
@@ -117,6 +177,7 @@ class ContactsController < EntitiesController
   # DELETE /contacts/1
   #----------------------------------------------------------------------------
   def destroy
+    @contact.delete_chimp_all
     @contact.destroy
 
     respond_with(@contact) do |format|

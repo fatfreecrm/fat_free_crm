@@ -31,4 +31,5 @@ class Attendance < ActiveRecord::Base
   belongs_to :event_instance
   belongs_to :contact
   validates_presence_of :event_instance_id, :contact_id
+  has_one :event, :through => :event_instance
 end

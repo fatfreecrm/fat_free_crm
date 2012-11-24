@@ -117,6 +117,17 @@ class Contact < ActiveRecord::Base
     end
   end
   alias :name :full_name
+  
+  def has_mailchimp_subscription?
+    !self.cf_weekly_emails.blank? || self.cf_supporter_emails.include?("TT Email") || self.cf_supporter_emails.include?("Prayer Points") 
+    #TODO: This seems to not validate correctly - all new users are added to the chimp, should be just ones with a subscription
+  end
+  
+  def last_attendance_at_event_category(event_type)
+    events = Event.find_all_by_category(event_type)
+    last_attendance = self.attendances.where('events.id IN (?)', events.each.map(&:id)).order('event_instances.starts_at DESC').includes(:event, :event_instance).first
+    last_time = last_attendance.event_instance.starts_at unless last_attendance.nil?
+  end
 
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
@@ -125,6 +136,10 @@ class Contact < ActiveRecord::Base
     self.account_contact = AccountContact.new(:account => account, :contact => self) unless account.id.blank?
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
     self.contact_groups << ContactGroup.find(params[:contact_group]) unless params[:contact_group].blank?
+    if has_mailchimp_subscription?
+      mailchimp_lists unless self.invalid?
+    end
+    
     self.save
   end
 
@@ -146,7 +161,90 @@ class Contact < ActiveRecord::Base
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:contact][:access] if params[:contact][:access]
     self.attributes = params[:contact]
+    mailchimp_lists unless self.invalid?
     self.save
+  end
+  
+  def mailchimp_lists
+    if self.cf_weekly_emails_changed? || self.email_changed? || self.first_name_changed? || self.last_name_changed?
+      unsubscribed_weekly = self.cf_weekly_emails_was - self.cf_weekly_emails # ["Adelaide", "City East"] - ["Adelaide"] => ["City East"]
+      if self.email_changed? || self.first_name_changed? || self.last_name_changed?
+        subscribed_weekly = self.cf_weekly_emails #add/update all
+      else
+        subscribed_weekly = self.cf_weekly_emails - self.cf_weekly_emails_was #just add to new lists
+      end
+      
+      unsubscribed_weekly.reject(&:blank?).each do |list|
+        delete_chimp(list.gsub(/\s+/, "").underscore)
+      end
+      subscribed_weekly.reject(&:blank?).each do |list|
+        add_or_update_chimp(list.gsub(/\s+/, "").underscore) #:city_east, :adelaide ...
+      end
+    end
+    
+    if self.cf_supporter_emails_changed? || self.email_changed? || self.first_name_changed? || self.last_name_changed?
+      add_or_update_chimp(:supporters, self.cf_supporter_emails.reject(&:empty?))
+    end
+  end
+  
+  def add_or_update_chimp(list, grouping=[])
+    list_id = Setting.mailchimp["#{list}_list_id"]
+    list_key = Setting.mailchimp["#{list}_api_key"]
+    original_email = self.new_record? ? self.email : self.email_was
+    
+    api = Mailchimp::API.new(list_key, :throws_exceptions => true)
+    member_search = api.list_member_info({:id => list_id, :email_address => original_email})
+    new_chimp_contact = (member_search["success"] == 0)
+
+    c_hash = {
+      :id => list_id,
+      :email_address => original_email,
+      :merge_vars => 
+        Hash.new.tap do |merge_hash|
+          #merge_hash["EMAIL"] = original_email
+          merge_hash["EMAIL"] = self.email
+          merge_hash["GROUPINGS"] = [{:name => "Interested in...", :groups => grouping.to_sentence(:words_connector => ",", :two_words_connector => ",", :last_word_connector => ",")}] unless (grouping == [])
+          merge_hash["OPTIN_IP"] = "114.30.109.159" if new_chimp_contact
+          merge_hash["OPTIN_TIME"] = Time.now if new_chimp_contact
+          merge_hash["FNAME"] = self.first_name
+          merge_hash["LNAME"] = self.last_name
+        end 
+    }
+    
+    
+    if new_chimp_contact
+      c_hash[:double_optin] = false
+      r = api.list_subscribe(c_hash)
+    else
+      c_hash[:email_address] = member_search["data"][0]["id"]
+      r = api.list_update_member(c_hash)
+    end
+    logger.info(r)
+  end
+  
+  def delete_chimp(list)
+    list_id = Setting.mailchimp["#{list}_list_id"]
+    list_key = Setting.mailchimp["#{list}_api_key"]
+    original_email = self.new_record? ? self.email : self.email_was
+    
+    api = Mailchimp::API.new(list_key, :throws_exceptions => true)
+    
+    r = api.list_unsubscribe({
+      :id => list_id,
+      :email_address => original_email,
+      :delete_member => true,
+      :send_goodbye => false
+    })
+    logger.info(r)
+  end
+  
+  def delete_chimp_all
+    self.cf_weekly_emails.reject(&:blank?).each do |e|
+      delete_chimp(e.gsub(/\s+/, "").underscore)
+    end
+    unless self.cf_supporter_emails.blank?
+      delete_chimp(:supporters)
+    end
   end
 
   # Attach given attachment to the contact if it hasn't been attached already.

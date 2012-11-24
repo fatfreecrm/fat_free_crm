@@ -70,6 +70,8 @@ Rails.application.routes.draw do
       post :auto_complete
       post :redraw
       get :versions
+      get :mailchimp_webhooks
+      post :mailchimp_webhooks
     end
     member do
       put  :attach

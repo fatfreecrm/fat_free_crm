@@ -4,7 +4,7 @@
 
   %ul.sub_tools
     = hook(:event_instance_tools_before, self, :event_instance => event_instance)
-
+	
     - if can?(:update, event_instance)
       %li= link_to_edit(event_instance)
 

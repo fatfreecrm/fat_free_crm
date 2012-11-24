@@ -122,7 +122,10 @@ class EventsController < EntitiesController
         start_week = (Date.parse(semester_start_date)..list_of_dates.first.to_date).step(7).count
         list_of_event_instances = create_event_instances(list_of_dates, start_week)
       end
-  
+    else
+      @event.event_instances.first.name = @event.name
+      @event.event_instances.first.user = params[:user] ? User.find(params[:user]) : @current_user
+      @event.event_instances.first.assigned_to = params[:assigned_to]
     end
     
     

@@ -5,7 +5,7 @@
 
     = f.error_messages :object_name => t('event_instance')
 
-    = render "event_instances/top_section",  :f => f, :edit => true
+    = render "event_instances/top_section_single",  :f => f, :edit => true
     -#= render "events/contact_info", :f => f, :edit => true
     = render "fields/groups",  :f => f, :edit => true
     = render "entities/permissions",  :f => f, :edit => true

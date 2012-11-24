@@ -1,0 +1,19 @@
+%tr
+  %td(colspan="5")
+    .label #{t :name}:
+    = f.text_field :name, :style => "width:500px"
+%tr
+  %td(colspan="5")
+    .label #{t :location}:
+    = f.text_field :location, :style => "width:500px"
+%tr
+  - dfmt = '%d/%m/%Y' 
+  - tfmt = '%I:%M%P'
+  %td(colspan="5")
+    .datetime
+      %p.datepair
+        = f.text_field :calendar_start_date, :style => "width:90px;", :autocomplete => :off, :class => 'date start'
+        = f.text_field :calendar_start_time, :style => "width:90px;", :autocomplete => :off, :class => 'time start'
+        = "&nbsp;&nbsp;".html_safe + 'to' +"&nbsp;&nbsp;".html_safe
+        = f.text_field :calendar_end_time, :style => "width:90px;", :autocomplete => :off, :class => 'time end'
+        = f.text_field :calendar_end_date, :style => "width:90px;", :autocomplete => :off, :class => 'date end'
