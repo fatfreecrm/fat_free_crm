@@ -72,17 +72,23 @@ class Contact < ActiveRecord::Base
   scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
 
   scope :text_search, lambda { |query|
-    query = query.gsub(/[^@\w\s\-\.'\p{L}]/u, '').strip
+    t = Contact.arel_table
     # We can't always be sure that names are entered in the right order, so we must
     # split the query into all possible first/last name permutations.
     name_query = if query.include?(" ")
-      query.name_permutations.map{ |first, last|
-        "(upper(first_name) LIKE upper('%#{first}%') AND upper(last_name) LIKE upper('%#{last}%'))"
-      }.join(" OR ")
+      scope, *rest = query.name_permutations.map{ |first, last|
+        t[:first_name].matches("%#{first}%").and(t[:last_name].matches("%#{last}%"))
+      }
+      rest.map{|r| scope = scope.or(r)} if scope
+      scope
     else
-      "upper(first_name) LIKE upper('%#{query}%') OR upper(last_name) LIKE upper('%#{query}%')"
+      t[:first_name].matches("%#{query}%").or(t[:last_name].matches("%#{query}%"))
     end
-    where("#{name_query} OR upper(email) LIKE upper(:m) OR upper(alt_email) LIKE upper(:m) OR phone LIKE :m OR mobile LIKE :m", :m => "%#{query}%")
+
+    other = t[:email].matches("%#{query}%").or(t[:alt_email].matches("%#{query}%"))
+    other = other.or(t[:phone].matches("%#{query}%")).or(t[:mobile].matches("%#{query}%"))
+    
+    where( name_query.nil? ? other : name_query.or(other) )
   }
 
   uses_user_permissions
