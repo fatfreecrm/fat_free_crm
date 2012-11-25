@@ -30,7 +30,7 @@
       %tr
         %td
           .label #{t :contact_group}:
-          = f.select :contact_group_id, ContactGroup.all.map{ |cg| [cg.name, cg.id]}, { :include_blank => t(:none) }, { :style => "width:160px", :class => 'chzn-select' }    
+          = f.select :contact_group_id, ContactGroup.all.map{ |cg| [cg.name, cg.id]}, { :selected => (@contact_group ? @contact_group.id : "None"), :include_blank => t(:none) }, { :style => "width:160px", :class => 'chzn-select' }    
       - if Setting.background_info && Setting.background_info.include?(:event)
         %tr
           %td(colspan="5")

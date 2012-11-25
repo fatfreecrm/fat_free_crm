@@ -18,7 +18,7 @@
 class CommentsController < ApplicationController
   before_filter :require_user
 
-  COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id contact_group_id event_id event_instance_id).freeze
+  COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id contact_group_id event_id event_instance_id attendance_id).freeze
 
   # GET /comments
   # GET /comments.json

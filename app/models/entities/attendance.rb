@@ -32,4 +32,17 @@ class Attendance < ActiveRecord::Base
   belongs_to :contact
   validates_presence_of :event_instance_id, :contact_id
   has_one :event, :through => :event_instance
+  has_many    :emails, :as => :mediator
+  
+  acts_as_commentable
+  uses_comment_extensions
+  has_paper_trail
+  
+  serialize :subscribed_users, Set
+  
+  scope :my, lambda {
+    #accessible_by(User.current_ability)
+    #self.all
+  }
+  
 end

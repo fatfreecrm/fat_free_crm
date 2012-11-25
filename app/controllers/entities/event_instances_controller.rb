@@ -121,9 +121,28 @@ class EventInstancesController < EntitiesController
     #@event_instance = EventInstance.find(event_instance)
     #check if already marked
     if @event_instance.attendances.where(:contact_id => @contact.id).empty?
-    
-      @attendance = Attendance.new(:contact => @contact)
-      @event_instance.attendances << @attendance
+      previously_deleted_versions = Version.destroys.where(
+            'item_type = ? AND object LIKE (?)', 
+                "Attendance", 
+                "%contact_id: #{@contact.id}%event_instance_id: #{@event_instance.id}\n%")
+      if !previously_deleted_versions.empty?
+        previously_deleted = previously_deleted_versions.last.reify
+        previously_deleted.save
+        #restore comments, if any
+        previously_deleted_comments = Version.destroys.where(
+            'related_type = ? AND related_id = ? AND object LIKE (?)', 
+                  "Attendance", 
+                  previously_deleted.id,
+                  "%commentable_id: #{previously_deleted.id}%commentable_type: Attendance%")
+        
+        previously_deleted_comments.each do |comment|
+            resurrected_comment = comment.reify
+            resurrected_comment.save
+        end
+      else
+        @attendance = Attendance.new(:contact => @contact)
+        @event_instance.attendances << @attendance
+      end
     end
     #@attendance.save
 
@@ -139,6 +158,7 @@ class EventInstancesController < EntitiesController
     #@event_instance = EventInstance.find(event_instance)
     @attendances = @event_instance.attendances.where(:contact_id => @contact.id)
     
+    #possible to resurrect after delete? so that comments remain?
     @attendances.each do |a|
       @event_instance.attendances.delete(a)
     end

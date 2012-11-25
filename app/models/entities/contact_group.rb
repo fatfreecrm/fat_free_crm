@@ -87,7 +87,7 @@ class ContactGroup < ActiveRecord::Base
   end
   
   def email_addresses
-    self.contacts.map(&:email).to_sentence(:last_word_connector => ", ")
+    self.contacts.map(&:email).reject!(&:blank?).to_sentence(:last_word_connector => ", ", :two_words_connector => ", ")
   end
 
   private

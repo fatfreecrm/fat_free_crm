@@ -230,13 +230,13 @@ var crm = {
     var body, state;
 
     if (link.innerHTML == more) {
-      body = Element.next(Element.up(link));
+      body = Element.previous(Element.previous(link));
       body.hide();
       $(body.id.replace('truncated', 'formatted')).show();  // expand
       link.innerHTML = less;
       state = "Expanded";
     } else {
-      body = Element.next(Element.next(Element.up(link)));
+      body = Element.previous(link);
       body.hide();
       $(body.id.replace('formatted', 'truncated')).show();  // collapse
       link.innerHTML = more;

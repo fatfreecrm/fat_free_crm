@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121116035906) do
+ActiveRecord::Schema.define(:version => 20121124132407) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -84,8 +84,14 @@ ActiveRecord::Schema.define(:version => 20121116035906) do
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
 
   create_table "attendances", :force => true do |t|
-    t.integer "contact_id"
-    t.integer "event_instance_id"
+    t.integer  "contact_id"
+    t.integer  "event_instance_id"
+    t.text     "subscribed_users"
+    t.boolean  "rsvp"
+    t.boolean  "attended"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "attendances", ["contact_id", "event_instance_id"], :name => "index_attendances_on_contact_id_and_event_instance_id"

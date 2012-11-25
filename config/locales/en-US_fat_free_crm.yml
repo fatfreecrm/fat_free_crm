@@ -608,9 +608,9 @@ en-US:
   discard: Discard
   edit: Edit
   items_total: '%{count} total.'
-  less: Less...
+  less: Show Less
   me: me
-  more: More...
+  more: Show More
   n_a: N/A
   name: Name
   no_match: No %{value} match

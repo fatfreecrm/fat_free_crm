@@ -1,6 +1,6 @@
-#require 'ruby-debug'
+require 'ruby-debug'
 #Debugger.wait_connection = true
-#Debugger.start_remote
+Debugger.start_remote
 if defined?(FatFreeCRM::Application)
   FatFreeCRM::Application.configure do
     # Settings specified here will take precedence over those in config/application.rb

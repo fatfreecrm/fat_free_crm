@@ -331,8 +331,13 @@ $sidebar_width: 210px;
   }
 }
 
-.bucket {
-  margin: 0px 0px 10px 0px; }
+.attendance {
+  margin: 0px 0px 10px 0px; 
+  .comment {
+    margin-left: 38px;	}
+  .new_comment {
+    margin: 3px 0px 0px 0px; }
+}
 
 .prefix {
   width: 30px;
@@ -340,10 +345,10 @@ $sidebar_width: 210px;
 
 .comment {
   background: #f2f2f2;
-  border-bottom: 1px gainsboro solid;
+  //border-bottom: 1px gainsboro solid;
   margin: 2px 0px 0px 0px;
   overflow: hidden;
-  padding: 4px;
+  padding: 1px;
   list-style: none;
   //  -moz-border-radius:
   //    bottomleft: 8px
@@ -351,14 +356,21 @@ $sidebar_width: 210px;
   //  -webkit-border-radius:
   //    bottom-left-radius: 8px
   //    bottom-right-radius: 8px
+	a {
+		font-weight: bold;
+	}
+	a.toggle {
+		font-weight: normal;
+		font-size: 9px;
+	}
   &#comment_new {
     margin: 3px 0px 0px 0px; }
   input[type=text] {
-    border: 1px #cfcfcf solid;
+    //border: 1px #cfcfcf solid;
     color: grey;
     font-size: 11px;
     margin: 3px 0px 0px 0px;
-    padding: 3px;
+    padding: 1px;
     width: 500px; }
   .gravatar {
     float: left;
@@ -366,14 +378,6 @@ $sidebar_width: 210px;
   .body {
     display: inline;
     font-size: 11px; }
-  tt {
-    font-size: 10px;
-    color: #666666; }
-  dt {
-    padding: 0px;
-    margin: -10px 0px 0px 36px;
-    p {
-      margin: 10px 0px 0px 0px; } }
   .comment_subscriptions {
     margin-top: 7px;
     margin-left: 4px;
@@ -384,7 +388,7 @@ $sidebar_width: 210px;
   font-size: 11px;
   height: 110px;
   margin: 3px 0px 0px 0px;
-  padding: 3px;
+  //padding: 3px;
   width: 500px; }
 
 // Avoid collision with .email CSS class which is used to display Task category strip.
@@ -458,12 +462,33 @@ $sidebar_width: 210px;
     font-size: 12px;
     list-style: none;
     padding: 3px 0px 3px 0px;
+	.gravatar {
+      float: left;
+      padding: 0px 0px 0px 0px; }
     tt {
       color: dimgray;
       font-size: 11px; } }
   input[type=checkbox] {
     float: left;
     margin: 0px 4px 0px 0px; } }
+
+.attendance {
+	li {
+		font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+		padding: 1px;
+		a {
+			font-weight: bold;
+		}
+		tt {
+	    color: #333333; }
+		dt {
+			font-size: 10px;
+			color: gray;
+		}
+	}
+}
+
+
 
 // Two-row lists.
 //------------------------------------------------------------------------------
@@ -475,7 +500,7 @@ $sidebar_width: 210px;
     color: #3f3f3f;
     font-size: 12px;
     list-style: none;
-    padding: 6px 0px 6px 0px;
+    padding: 5px 0px 5px 0px;
     .gravatar {
       float: left;
       padding: 0px 0px 0px 0px; }
@@ -488,7 +513,21 @@ $sidebar_width: 210px;
       padding: 2px 0px 0px 0px; } } 
   input[type=checkbox] {
     float: left;
-    margin: 0px 4px 0px 0px; } }
+    margin: 0px 4px 0px 0px; } 
+	.comment {
+		tt {
+			display: inline;
+   		font-size: 11px;
+   		color: #333333; }
+ 		dt {
+   		padding: 0px;
+   		margin: 0px 0px 0px 29px;
+			color: #666666;
+   			p {
+     			margin: 10px 0px 0px 0px; } }
+		border-bottom: none;
+	}
+}
 
 // Sidebar, filters, and selectors.
 //------------------------------------------------------------------------------

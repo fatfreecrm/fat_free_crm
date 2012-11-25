@@ -69,11 +69,11 @@ class EventInstance < ActiveRecord::Base
   end
   
   def starts_at_time
-    self.starts_at.strftime('%I:%m %p') unless self.starts_at.blank?
+    self.starts_at.strftime('%I:%M %p') unless self.starts_at.blank?
   end
 
   def ends_at_time
-    self.ends_at.strftime('%I:%m %p') unless self.ends_at.blank?
+    self.ends_at.strftime('%I:%M %p') unless self.ends_at.blank?
   end
   
   def starts_at_date
@@ -109,6 +109,7 @@ class EventInstance < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def parse_calendar_date_start
     # always in 2012-10-28 06:28 format regardless of language
+    debugger
     Time.parse(self.calendar_start_date + " " + self.calendar_start_time)
   end
   
