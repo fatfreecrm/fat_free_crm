@@ -208,4 +208,45 @@ describe Contact do
   describe "permissions" do
     it_should_behave_like Ability, Contact
   end
+  
+  describe "text_search" do
+  
+    before(:each) do
+      @contact = FactoryGirl.create(:contact, :first_name => "Bob", :last_name => "Dillion", :email => 'bob_dillion@example.com', :phone => '+1 123 456 789')
+    end
+    
+    it "should search first_name" do
+      Contact.text_search('Bob').should == [@contact]
+    end
+
+    it "should search last_name" do
+      Contact.text_search('Dillion').should == [@contact]
+    end
+    
+    it "should search whole name" do
+      Contact.text_search('Bob Dillion').should == [@contact]
+    end
+    
+    it "should search whole name reversed" do
+      Contact.text_search('Dillion Bob').should == [@contact]
+    end
+
+    it "should search email" do
+      Contact.text_search('example').should == [@contact]
+    end
+    
+    it "should search phone" do
+      Contact.text_search('123').should == [@contact]
+    end
+    
+    it "should not break with a single quote" do
+      contact2 = FactoryGirl.create(:contact, :first_name => "Shamus", :last_name => "O'Connell", :email => 'bob_dillion@example.com', :phone => '+1 123 456 789')
+      Contact.text_search("O'Connell").should == [contact2]
+    end
+    
+    it "should not break on special characters" do
+      Contact.text_search('@$%#^@!').should == []
+    end
+  
+  end
 end
