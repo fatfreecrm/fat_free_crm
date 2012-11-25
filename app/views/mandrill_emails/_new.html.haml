@@ -1,0 +1,17 @@
+= simple_form_for(@mandrill_email, :html => one_submit_only(:mandrill_email), :remote => true) do |f|
+  = link_to_close new_mandrill_email_path
+  = f.hidden_field :user_id
+  
+  = f.error_messages :object_name => t('mandrill_email')
+
+  = render "mandrill_emails/top_section",  :f => f
+  -#= render "shared/add_comment", :f => f
+  -#= render "contact_groups/contact_info", :f => f
+  -#= render "fields/groups",  :f => f
+  = render "entities/permissions",  :f => f, :entity => @mandrill_email
+
+  .buttonbar
+    = f.submit t(:create_mandrill_email)
+    #{t :or}
+    = link_to_cancel new_mandrill_email_path
+

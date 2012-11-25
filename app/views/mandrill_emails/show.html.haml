@@ -1,0 +1,38 @@
+#confirm{ hidden }
+.title_tools#menu
+  = link_to_inline(:edit_mandrill_email, edit_mandrill_email_path(@mandrill_email), :text => t(:edit)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@mandrill_email))
+.title#edit_mandrill_email_title= h(@mandrill_email.name)
+
+%div#edit_mandrill_email{ hidden }
+
+= simple_form_for(@mandrill_email, :html => {:multipart => true, :onsubmit => "$$('#'+this.id+' input[type=\"submit\"]')[0].disabled = true", :method => :post}, :url => mandrill_send_mandrill_email_path( @mandrill_email)) do |f|
+  = f.error_messages :object_name => t('mandrill_email')
+  %table
+    %tr
+      %td
+        .label Template:
+        =f.select :template, options_for_select(@templates_list)
+      %td= spacer
+      %td
+        .label Mailing List:
+        =f.select :mailing_list, options_for_select([["TT Email", "TT Email"],["Prayer Points","Prayer Points"]])
+    %tr
+      %td{:colspan => 3}
+        .label From:
+        = f.text_field :from_address, :style => 'width:360px'
+    %tr
+      %td{:colspan => 3}
+        .label Subject:
+        = f.text_field :message_subject, :style => 'width:360px'
+    %tr
+      %td{:colspan => 3}
+        .label Attachment:
+        = f.file_field :attached_file, :style => 'width:360px'
+    %tr
+      %td{:colspan => 3}
+        .label Message:
+        = f.text_area :message_body, :style => 'width:360px'
+  
+  .buttonbar
+    = f.submit "Send via Mandrill", :method => :mandrill_send

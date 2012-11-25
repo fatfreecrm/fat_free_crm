@@ -1,0 +1,25 @@
+= styles_for :mandrill_email
+
+.title_tools
+  = link_to_inline(:create_mandrill_email, new_mandrill_email_path, :text => t(:create_mandrill_email)) << " | "
+  -# - if Setting.advanced_search_enabled
+  -#     = link_to_inline(:advanced_search, advanced_search_mandrill_emails_path, :text => t(:advanced_search)) << " | "
+  = link_to_inline(:options, options_mandrill_emails_path, :text=> t(:options))
+
+.title
+  %span#create_mandrill_email_title #{t :mandrill_emails}
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+.remote#options{ hidden }
+.remote#advanced_search{ hidden_if(!params[:q]) }
+  - if params[:q]
+    = render :partial => "advanced_search"
+.remote#create_mandrill_email{ hidden }
+
+.list#mandrill_emails
+  - if @mandrill_emails.any?
+    = render @mandrill_emails
+  - else
+    = render "shared/empty"
+
+#paginate= render "shared/paginate"
+#export= render "shared/export"

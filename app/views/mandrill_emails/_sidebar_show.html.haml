@@ -1,0 +1,17 @@
+.panel#summary
+  %h4= h(@mandrill_email.name)
+  
+  %li
+    %dt= @mandrill_email.category.blank? ? t(:other) : t(@mandrill_email.category)
+    %tt #{t :category}:
+  %li.last
+    %dt= truncate((@mandrill_email.assigned_to ? @mandrill_email.assignee.full_name : @mandrill_email.user.full_name), :length => 16)
+    %tt #{t :assigned_to}:
+
+  -#= render "fields/sidebar_show", :asset => @mandrill_email
+
+  - if @mandrill_email.tag_list.present?
+    %dt
+      .tags= tags_for_index(@mandrill_email)
+
+  = hook(:show_mandrill_email_sidebar_bottom, self, :mandrill_email => @mandrill_email)

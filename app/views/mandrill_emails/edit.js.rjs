@@ -1,0 +1,35 @@
+id = dom_id(@mandrill_email)
+
+if params[:cancel].true? # <--------------------- Hide [Edit contact_group]
+
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_mandrill_email
+    page.call "crm.set_title", :edit_mandrill_email, @mandrill_email.name
+  else                                            # Called from contact_groups list item...
+    page[id].replace :partial => "mandrill_email", :collection => [ @mandrill_email ]
+  end
+
+else # <----------------------------------------  Show [Edit contact_group] form.
+
+  if params[:cancel].blank?                       # Called from contact_groups list item...
+    if @previous                                  # Hide open [Edit contact_group] form if any.
+      if @previous.is_a?(MandrillEmail)
+        page[dom_id(@previous)].replace :partial => "mandrill_email", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "mandrill_email_#{@previous}", :remove
+      end
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_mandrill_email    # Hide [Create contact_group] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit contact_group] form.
+    page.call "crm.init_chosen_fields"
+
+  elsif params[:cancel].false?                    # Called from title of the contact_group landing page...
+    page[:edit_mandrill_email].replace_html :partial => "edit"
+    page.call "crm.init_chosen_fields"
+    page.call "crm.flip_form", :edit_mandrill_email
+    page.call "crm.set_title", :edit_mandrill_email, "#{t :edit} #{@mandrill_email.name}"
+  end
+  page[:mandrill_email_name].focus
+
+end

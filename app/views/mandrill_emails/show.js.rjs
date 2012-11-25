@@ -1,0 +1,6 @@
+id = called_from_landing_page? ? "edit_mandrill_email_title" : dom_id(@mandrill_email)
+
+if !@mandrill_email.errors.empty? 
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:mandrill_email_name].focus
+end

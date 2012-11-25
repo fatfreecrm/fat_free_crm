@@ -171,6 +171,26 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :mandrill_emails, :id => /\d+/ do
+    collection do
+      get  :advanced_search
+      post :filter
+      get  :options
+      get  :field_group
+      match :auto_complete
+      post :redraw
+      get :versions
+      get :compose
+    end
+    member do
+      put  :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      post :mandrill_send
+    end
+  end
+  
   resources :events, :id => /\d+/ do
     collection do
       get  :advanced_search

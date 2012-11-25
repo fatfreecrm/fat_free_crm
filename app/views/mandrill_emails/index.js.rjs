@@ -1,0 +1,6 @@
+if @mandrill_emails.any?
+  page[:mandrill_emails].replace_html render @mandrill_emails
+else
+  page[:mandrill_emails].replace_html :partial => "shared/empty"
+end
+page[:paginate].replace_html :partial => "shared/paginate"

@@ -1,0 +1,25 @@
+= hook(:mandrill_email_top_section, self, :f => f) do
+  .section
+    %table
+      %tr
+        %td(colspan="5")
+          .label.top.req #{t :name}:
+          = f.text_field :name, :style => "width:500px"
+      %tr
+        %td
+          .label #{t :assigned_to}:
+          = user_select(:contact, User.except(current_user), current_user)
+        %td= spacer
+        %td
+          .label #{t :category}:
+          = f.select :category, Setting.unroll(:mandrill_email_category), { :selected => (@mandrill_email.category || "other").to_sym, :include_blank => t(:other) }, { :style => "width:160px" }
+
+      - if Setting.background_info && Setting.background_info.include?(:mandrill_email)
+        %tr
+          %td(colspan="5")
+            .label= t(:background_info) << ':'
+            = f.text_area :background_info, :style =>"width:500px", :rows => 3
+
+      = render :partial => "/shared/tags", :locals => {:f => f, :span => 3}
+
+      = hook(:mandrill_email_top_section_bottom, self, :f => f)

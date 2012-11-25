@@ -61,7 +61,7 @@ class ContactGroupsController < EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @category = Setting.unroll(:task_category)
+    @category = Setting.unroll(:contact_group_category)
     
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = ContactGroup.my.find_by_id($1) || $1.to_i
