@@ -179,7 +179,7 @@ private
     scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
     scope = scope.order(order)
-    scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?
+    scope = scope.paginate(pages)                 unless (wants.xls? || wants.csv?)
     scope
   end
 
