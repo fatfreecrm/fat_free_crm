@@ -200,6 +200,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def hidden;    { :style => "display:none;"       }; end
   def exposed;   { :style => "display:block;"      }; end
+  def exposed_inline;   { :style => "display:inline;"      }; end
   def invisible; { :style => "visibility:hidden;"  }; end
   def visible;   { :style => "visibility:visible;" }; end
 
@@ -211,6 +212,11 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def hidden_if(you_ask)
     you_ask ? hidden : exposed
+  end
+  
+  #----------------------------------------------------------------------------
+  def hidden_inline_if(you_ask)
+    you_ask ? hidden : exposed_inline
   end
 
   #----------------------------------------------------------------------------

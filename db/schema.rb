@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121125121938) do
+ActiveRecord::Schema.define(:version => 20121127111621) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -82,6 +82,17 @@ ActiveRecord::Schema.define(:version => 20121125121938) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
+
+  create_table "attached_files", :force => true do |t|
+    t.integer  "mandrill_email_id"
+    t.string   "attached_file_file_name"
+    t.string   "attached_file_content_type"
+    t.string   "attached_file_file_size"
+    t.string   "attached_file_updated_at"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "deleted_at"
+  end
 
   create_table "attendances", :force => true do |t|
     t.integer  "contact_id"
@@ -214,6 +225,22 @@ ActiveRecord::Schema.define(:version => 20121125121938) do
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
   add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "id_last_name_deleted", :unique => true
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "emails", :force => true do |t|
     t.string   "imap_message_id",                                       :null => false
@@ -358,7 +385,7 @@ ActiveRecord::Schema.define(:version => 20121125121938) do
   end
 
   create_table "mandrill_emails", :force => true do |t|
-    t.string   "uuid",                       :limit => 36
+    t.string   "uuid",             :limit => 36
     t.integer  "user_id"
     t.string   "mailing_list"
     t.string   "template"
@@ -367,17 +394,17 @@ ActiveRecord::Schema.define(:version => 20121125121938) do
     t.datetime "sent_at"
     t.text     "message_body"
     t.integer  "assigned_to"
-    t.string   "name",                       :limit => 64, :default => "",        :null => false
+    t.string   "name",             :limit => 64, :default => "",        :null => false
     t.text     "subscribed_users"
-    t.string   "category",                   :limit => 32
-    t.string   "access",                     :limit => 8,  :default => "Private"
+    t.string   "category",         :limit => 32
+    t.string   "access",           :limit => 8,  :default => "Private"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                      :null => false
-    t.datetime "updated_at",                                                      :null => false
-    t.string   "attached_file_file_name"
-    t.string   "attached_file_content_type"
-    t.integer  "attached_file_file_size"
-    t.datetime "attached_file_updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.boolean  "scheduled",                      :default => false
+    t.datetime "scheduled_at"
+    t.string   "delayed_job_id"
+    t.string   "response"
   end
 
   create_table "opportunities", :force => true do |t|

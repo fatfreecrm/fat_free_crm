@@ -25,6 +25,7 @@ en-US:
   tab_opportunities: Opportunities
   tab_groups: Groups
   tab_events: Events
+  tab_mandrill: Mandrill Emails
 
   admin_tab_groups: Groups
   admin_tab_users: Users
@@ -110,6 +111,12 @@ en-US:
   activerecord:
     errors:
       models:
+        mandrill_email:
+          attributes:
+            message_subject:
+              missing_subject: "^You need to provide a subject for this message"
+            from_address:
+              missing_sender: "^You need to provide a from address for this message"
         authentication:
           attributes:
             login_field:
@@ -399,6 +406,20 @@ en-US:
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
   was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
 
+  # Views -> MandrillEmails.
+  #----------------------------------------------------------------------------
+
+  mandrill_email: Mandrill Email
+  mandrill_email_small: mandrill email
+  mandrill_emails: Mandrill Emails
+  mandrill_emails_options: Mandrill Options
+  mandrill_emails_small: mandrill emails
+  create_mandrill_email: Create Mandrill Email
+  save_mandrill_email: Save Mandrill Email
+  prayer_points: Prayer Points
+  terrace_times: Terrace Times
+  total_mandrill_emails: Total Mandrill Emails
+  
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Other
@@ -581,7 +602,7 @@ en-US:
   no_task_records: You have no tasks.
   my_opportunities: My Opportunities
   no_opportunity_records: You have no opportunities.
-  my_accounts: My Accounts
+  my_accounts: My Folders
   no_account_records: You have no accounts
   not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
 

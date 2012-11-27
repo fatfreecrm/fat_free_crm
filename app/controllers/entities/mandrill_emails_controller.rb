@@ -14,9 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-
+require 'mandrill_email_job'
 class MandrillEmailsController < EntitiesController
-
+  before_filter :get_users, :only => [ :new, :create, :edit, :update, :save ]
   before_filter :get_data_for_sidebar, :only => :index
 
   # GET /accounts
@@ -38,61 +38,20 @@ class MandrillEmailsController < EntitiesController
     @templates_list = list.map{|a| [a["name"],a["name"]]}
     respond_with(@mandrill_email) do |format|
       @mandrill_email.from_address = @current_user.email
+      if !@mandrill_email.attached_files.exists?
+        @mandrill_email.attached_files.build
+      else
+        @attached_file = @mandrill_email.attached_files.first #just dealing with one attachement for now
+      end
       format.html do
       end
-    end
-  end
-  
-  def mandrill_send
-    @mandrill_email = MandrillEmail.find(params[:id])
-    @mandrill_email.update_attributes(params[:mandrill_email])
-    mandrill = Mailchimp::Mandrill.new(Setting.mandrill[:api_key])
-    
-    # recipients = @contact_group.contacts.collect{ |c| 
-    #         [:email => c.email, :name => c.first_name] unless c.email.blank?
-    #       }
-    if params[:mandrill_email][:mailing_list] == "TT Email"
-      recipients = Contact.where('cf_supporter_emails LIKE (?)', "%TT Email%")
-    elsif params[:mandrill_email][:mailing_list] == "Prayer Points"
-      recipients = Contact.where('cf_supporter_emails LIKE (?)', "%Prayer Points%")
-    end
-    recipients_list = recipients.collect{|r| {:email => r.email, :name => r.full_name}}
-    recipients = [:email => "reuben.salagaras@gmail.com", :name => "Reuben Salagaras"]
-    # response = mandrill.messages_send_template({
-    #      :template_name => params[:mandrill_email][:template],
-    #      :template_content => [:name => "body_content", :content => params[:mandrill_email][:message_body]],
-    #      :message => {
-    #        :subject => params[:mandrill_email][:message_subject],
-    #        :from_email => params[:mandrill_email][:from_address],
-    #        :to => recipients,
-    #        :attachments => [{
-    #          :type => 'application/pdf', 
-    #          :name => @mandrill_email.attached_file_file_name, 
-    #          :content => Base64.encode64(open(@mandrill_email.attached_file.path, &:read))}]
-    #      }
-    #     })
-    #     logger.info(response)
-    #     if response.is_a?(Hash) && response["status"] == "error"
-    #           @mandrill_email.errors.add(:from_address, "Error from MailChimp API: #{response["message"]} (code #{response["code"]})")
-    #     end
-
-    if @mandrill_email.errors.empty?
-      @mandrill_emails = get_mandrill_emails(:page => params[:page])
-      get_data_for_sidebar
-      render :index
-    else
-      mandrill = Mailchimp::Mandrill.new(Setting.mandrill[:api_key])
-      list = mandrill.templates_list.map{|a| a.slice("name")}
-
-      @templates_list = list.map{|a| [a["name"],a["name"]]}
-      render :show
     end
   end
   
   # GET /accounts/new
   #----------------------------------------------------------------------------
   def new
-    @mandrill_email.attributes = {:user => @current_user, :access => Setting.default_access, :assigned_to => nil}
+    @mandrill_email.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
     @category = Setting.unroll(:mandrill_email_category)
     # if params[:related]
     #       model, id = params[:related].split('_')
@@ -145,6 +104,33 @@ class MandrillEmailsController < EntitiesController
       end
     end
   end
+  
+  def save
+    if @mandrill_email.update_attributes(params[:mandrill_email])
+      if params[:send]
+        #remove any previously enqueued jobs
+        delayed_job = @mandrill_email.delayed_job_id
+        if Delayed::Job.exists?(delayed_job)
+          Delayed::Job.find(delayed_job).destroy
+        end
+        mandrill_send
+      end
+      @mandrill_emails = get_mandrill_emails(:page => params[:page])
+      respond_with(@mandrill_emails) do |format|
+        get_data_for_sidebar
+        format.html {redirect_to(:mandrill_emails, :notice => "Mandrill email was saved")}
+      end
+    else
+      respond_with(@mandrill_email) do |format|
+        mandrill = Mailchimp::Mandrill.new(Setting.mandrill[:api_key])
+        list = mandrill.templates_list.map{|a| a.slice("name")}
+        @attached_file = AttachedFile.new
+        @templates_list = list.map{|a| [a["name"],a["name"]]}
+        get_data_for_sidebar
+        format.html {render :action => "show"}
+      end
+    end
+  end
 
   # DELETE /accounts/1
   #----------------------------------------------------------------------------
@@ -179,6 +165,17 @@ private
 
   #----------------------------------------------------------------------------
   alias :get_mandrill_emails :get_list_of_records
+
+  def mandrill_send
+    # logger.info(response)
+    #     if response.is_a?(Hash) && response["status"] == "error"
+    #           @mandrill_email.errors.add(:from_address, "Error from MailChimp API: #{response["message"]} (code #{response["code"]})")
+    #     end
+    
+    @mandrill_email.update_attribute(:delayed_job_id, Delayed::Job.enqueue(MandrillEmailJob.new(params[:id]), 3, @mandrill_email.scheduled_at) )
+    
+    #@mandrill_email.save
+  end
 
   # GET /accounts/options                                                  AJAX
   #----------------------------------------------------------------------------

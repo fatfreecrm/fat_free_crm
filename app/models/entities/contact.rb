@@ -171,15 +171,15 @@ class Contact < ActiveRecord::Base
       end
       
       unsubscribed_weekly.reject(&:blank?).each do |list|
-        delete_chimp(list.gsub(/\s+/, "").underscore)
+        self.delay.delete_chimp(list.gsub(/\s+/, "").underscore)
       end
       subscribed_weekly.reject(&:blank?).each do |list|
-        add_or_update_chimp(list.gsub(/\s+/, "").underscore) #:city_east, :adelaide ...
+        self.delay.add_or_update_chimp(list.gsub(/\s+/, "").underscore) #:city_east, :adelaide ...
       end
     end
     
     if self.cf_supporter_emails_changed? || self.email_changed? || self.first_name_changed? || self.last_name_changed?
-      add_or_update_chimp(:supporters, self.cf_supporter_emails.reject(&:empty?))
+      self.delay.add_or_update_chimp(:supporters, self.cf_supporter_emails.reject(&:empty?))
     end
   end
   
@@ -215,7 +215,7 @@ class Contact < ActiveRecord::Base
       c_hash[:email_address] = member_search["data"][0]["id"]
       r = api.list_update_member(c_hash)
     end
-    logger.info(r)
+    #logger.info(r)
   end
   
   def delete_chimp(list)

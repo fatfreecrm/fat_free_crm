@@ -195,6 +195,11 @@ var crm = {
       $("repeats").toggle(); // Hide dropdown.
   },
 
+	//----------------------------------------------------------------------------
+  show_scheduled: function(value) {
+      $("scheduled").toggle(); // Hide dropdown.
+  },
+
   //----------------------------------------------------------------------------
   flip_campaign_permissions: function(value) {
     if (value) {

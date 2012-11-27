@@ -9,9 +9,6 @@
     
     - if can?(:update, mandrill_email)
       %li= link_to_edit(mandrill_email)
-    
-    - if shown_on_landing_page?
-      %li= link_to_discard(mandrill_email)
 
     - if can?(:destroy, mandrill_email)
       %li= link_to_delete(mandrill_email)
@@ -20,9 +17,16 @@
     = link_to_if can?(:read, mandrill_email), mandrill_email.name, mandrill_email
     &ndash;
     %tt
-      -#= contact_group.location << ", " unless contact_group.location.blank?
-      = t(:added_by, :time_ago => time_ago_in_words(mandrill_email.created_at), :user => (mandrill_email.user.id == @current_user.id ? t(:me) : mandrill_email.user.full_name)) #<< " | "
-
+      - if mandrill_email.sent_at
+        = "sent at #{mandrill_email.sent_at.strftime("%I:%M %p %a %d %b")}"
+      - if mandrill_email.scheduled && !mandrill_email.sent_at
+        = "scheduled to send at #{mandrill_email.sent_at.strftime("%I:%M %p %a %d %b")}"
+      - if !mandrill_email.scheduled && !mandrill_email.sent_at
+        = "message not sent yet"
+      = " | ".html_safe
+    %tt
+      = t(:added_by, :time_ago => time_ago_in_words(mandrill_email.created_at), :user => (mandrill_email.user.id == current_user.id ? t(:me) : mandrill_email.user.full_name)) #<< " | "
+      
       - if mandrill_email.tag_list.present?
         %dt
           .tags= tags_for_index(mandrill_email)

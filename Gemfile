@@ -52,9 +52,12 @@ group :development, :test do
   gem 'headless'
   unless ENV["CI"]
     #gem 'ruby-debug', :platform => :mri_18
-    gem 'debugger', :platform => :mri_19
+    #gem 'debugger', :platform => :mri_19
   end
   gem 'pry-rails'
+  gem 'pry-nav'
+  gem 'pry-stack_explorer'
+  gem 'awesome_print'
 end
 
 group :test do

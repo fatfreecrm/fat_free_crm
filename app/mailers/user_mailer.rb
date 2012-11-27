@@ -20,9 +20,9 @@ class UserMailer < ActionMailer::Base
   def password_reset_instructions(user)
     @edit_password_url = edit_password_url(user.perishable_token)
 
-    mail :subject => "esCRM: " + I18n.t(:password_reset_instruction),
+    mail :subject => "Mojo: " + I18n.t(:password_reset_instruction),
          :to => user.email,
-         :from => "esCRM <crm@nt.es.org.au>",
+         :from => "Mojo <mojo@nt.es.org.au>",
          :date => Time.now
   end
 
@@ -31,9 +31,9 @@ class UserMailer < ActionMailer::Base
     @entity_name = entity.name
     @entity_type = entity.class.name
     @assigner_name = assigner.name
-    mail :subject => "esCRM: You have been assigned #{@entity_name} #{@entity_type}",
+    mail :subject => "Mojo: You have been assigned #{@entity_name} #{@entity_type}",
          :to => entity.assignee.email,
-         :from => "esCRM <crm@nt.es.org.au>"
+         :from => "Mojo <mojo@nt.es.org.au>"
   end
 
 end

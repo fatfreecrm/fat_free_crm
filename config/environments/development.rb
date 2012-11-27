@@ -1,6 +1,9 @@
-require 'ruby-debug'
+#require 'ruby-debug'
 #Debugger.wait_connection = true
-Debugger.start_remote
+#Debugger.start_remote
+require 'pry-nav'
+require 'pry-stack_explorer'
+require 'awesome_print'
 if defined?(FatFreeCRM::Application)
   FatFreeCRM::Application.configure do
     # Settings specified here will take precedence over those in config/application.rb
@@ -38,5 +41,8 @@ if defined?(FatFreeCRM::Application)
 
     # Expands the lines which load the assets
     config.assets.debug = true
+    
+    Paperclip.options[:command_path] = "/usr/local/bin/"
+    Mime::Type.register "application/pdf", :pdf
   end
 end

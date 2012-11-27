@@ -183,6 +183,7 @@ Rails.application.routes.draw do
       get :compose
     end
     member do
+      put :save
       put  :attach
       post :discard
       post :subscribe

@@ -50,8 +50,10 @@ $color_footer: grey;
         background: $color_header_background;
         color: yellow; } }
     a.selected {
-      background: steelblue;
+      background: dimgray;
       color: lightyellow;
+			border-top-left-radius: 2px;
+			border-top-right-radius: 2px; 
       -moz-border-radius: {
         topleft: 2px;
         topright: 2px; };
@@ -59,10 +61,12 @@ $color_footer: grey;
         top-left-radius: 2px;
         top-right-radius: 2px; }; } }
   #jumpbox {
-    background: steelblue;
+    background: dimgray;
     margin: 2px 0px 0px 0px;
     padding: 12px;
     position: absolute;
+		border-radius: 6px; 
+		//border-bottom-right-radius: 6px; 
     -moz-border-radius: {
       bottomleft: 6px;
       bottomright: 6px; };
@@ -109,6 +113,8 @@ $color_footer: grey;
     padding: 4px 15px 6px;
     text-align: center;
     text-decoration: none;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
     -moz-border-radius: {
       topleft: 3px;
       topright: 3px; };
