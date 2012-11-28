@@ -185,7 +185,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def jumpbox(current)
-    tabs = [ :campaigns, :accounts, :leads, :contacts, :opportunities ]
+    tabs = [ :accounts, :contacts, :contact_groups, :events ]
     current = tabs.first unless tabs.include?(current)
     tabs.map do |tab|
       link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", :class => (tab == current ? 'selected' : ''))

@@ -4,7 +4,7 @@
   
   -# default view
 
-  = styles_for :task, :contact, :opportunity
+  = styles_for :task, :contact
 
   = render 'accounts/title_bar', :account => @account
 
@@ -19,7 +19,7 @@
 
     = render "contacts/contacts", :object => @account
 
-    = render "opportunities/opportunities", :object => @account
+    -#= render "opportunities/opportunities", :object => @account
 
     = render "versions/versions", :object => @account
 

@@ -26,6 +26,7 @@ en-US:
   tab_groups: Groups
   tab_events: Events
   tab_mandrill: Mandrill Emails
+  tab_contact_groups: Groups
 
   admin_tab_groups: Groups
   admin_tab_users: Users
