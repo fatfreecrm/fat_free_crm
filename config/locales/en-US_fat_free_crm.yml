@@ -760,6 +760,9 @@ en-US:
     unset_html: %{attr} unset
     change_html: %{attr} changed from %{from} to %{to}
     anonymous: anonymous
+  
+  # Contact -> Attendance History
+  attendances: Attendance History
 
   # Export.
   #----------------------------------------------------------------------------

@@ -200,6 +200,12 @@ var crm = {
       $("scheduled").toggle(); // Hide dropdown.
   },
 
+	//----------------------------------------------------------------------------
+  show_comments: function(value) {
+      $("com_contact_" + value ).toggle(); // show/hide comments section for attendances
+  },
+
+
   //----------------------------------------------------------------------------
   flip_campaign_permissions: function(value) {
     if (value) {
@@ -235,13 +241,13 @@ var crm = {
     var body, state;
 
     if (link.innerHTML == more) {
-      body = Element.previous(Element.previous(link));
+      body = Element.previous(Element.previous(Element.up(link)));
       body.hide();
       $(body.id.replace('truncated', 'formatted')).show();  // expand
       link.innerHTML = less;
       state = "Expanded";
     } else {
-      body = Element.previous(link);
+      body = Element.previous(Element.up(link));
       body.hide();
       $(body.id.replace('formatted', 'truncated')).show();  // collapse
       link.innerHTML = more;
@@ -277,8 +283,8 @@ var crm = {
         parameters : { type : "", id : notes + "+" + emails, state : state },
         onComplete : function() {
           $(comment_new_field).adjacent("li").each( function(li) {
-            var a = li.select("tt a.toggle")[0];
-            var dt = li.select("dt");
+            var a = li.select("dt a.toggle")[0];
+            var dt = li.select("tt");
             if (typeof(a) != "undefined") {
               if (state == "Expanded") {
                 dt[0].hide();  dt[1].show();

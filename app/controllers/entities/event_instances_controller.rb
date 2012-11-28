@@ -113,6 +113,12 @@ class EventInstancesController < EntitiesController
     end
   end
   
+  def report_attendance
+    respond_with(@event_instance) do |format|
+      format.xls { render  :layout => 'header' }
+    end
+  end
+  
   # PUT /tasks/1/complete
   #----------------------------------------------------------------------------
   def mark

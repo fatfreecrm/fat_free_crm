@@ -4,25 +4,25 @@
 - commentable = comment.commentable
 
 %li.comment.highlight[comment]
-  .body
-    = link_to avatar_for(comment.user, :size => :thumb), user_path(comment.user)
-    %ul.tools
-      - if can?(:update, commentable)
-        %li= link_to_edit(comment)
-      - if can?(:destroy, commentable)
-        %li= link_to_delete(comment)
+  -#.body
+  = link_to avatar_for(comment.user, :size => :thumb), user_path(comment.user)
+  %ul.tools
+    - if can?(:update, commentable)
+      %li= link_to_edit(comment)
+    - if can?(:destroy, commentable)
+      %li= link_to_delete(comment)
 
-    = link_to(comment.user.full_name, user_path(comment.user))
-    - if can?(:read, commentable)
-      - if collapsable
-        %tt{ hidden_if(comment.expanded?), {:id => dom_id(comment, :truncated), :style => 'display:inline;' }}
-          = truncated
-        %tt.textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
-          = auto_link(formatted).html_safe
-      - else
-        %tt.textile= auto_link(formatted[3..-3]).html_safe
-      - if collapsable
-        = " ".html_safe + link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
+  = link_to(comment.user.full_name, user_path(comment.user))
+  - if can?(:read, commentable)
+    - if collapsable
+      %tt{ hidden_if(comment.expanded?), {:id => dom_id(comment, :truncated) }}
+        = truncated
+      %tt.textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
+        = auto_link(formatted).html_safe
+    - else
+      %tt.textile= auto_link(formatted).html_safe
     
     %dt
       #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
+      - if collapsable
+        = " ".html_safe + link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")

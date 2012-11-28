@@ -314,11 +314,11 @@ $sidebar_width: 210px;
   //width: 75px;
 	border-radius: 4px;
   -moz-border-radius: {
-    topleft: 7px;
-    bottomleft: 7px; };
+    topleft: 4px;
+    bottomleft: 4px; };
   -webkit-border: {
-    top-left-radius: 7px;
-    bottom-left-radius: 7px; }; }
+    top-left-radius: 4px;
+    bottom-left-radius: 4px; }; }
 
 // Indentation classes:
 //   - indent: for use with strip (regular indentation).
@@ -362,7 +362,9 @@ $sidebar_width: 210px;
 }
 
 .attendance {
-  margin: 0px 0px 10px 0px; 
+  margin: 0px 0px 2px 0px; 
+	padding-top: 2px;
+	padding-bottom: 2px;
   .comment {
     margin-left: 38px;	}
   .new_comment {
@@ -380,6 +382,7 @@ $sidebar_width: 210px;
   overflow: hidden;
   padding: 1px;
   list-style: none;
+	font-size: 11px;
   //  -moz-border-radius:
   //    bottomleft: 8px
   //    bottomright: 8px
@@ -394,9 +397,13 @@ $sidebar_width: 210px;
 		font-size: 9px;
 	}
 	tt {
-		display: inline;
+		display: block;
+		margin-left: 29px;
  		font-size: 11px;
- 		color: #333333; }
+ 		color: #333333;
+		p { 
+			display: inline;}
+ 	}
 	dt {
  		padding: 0px;
  		margin: 0px 0px 0px 29px;
@@ -515,12 +522,16 @@ $sidebar_width: 210px;
 .attendance {
 	li {
 		font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+		font-size: 11px;
 		padding: 1px;
 		a {
 			font-weight: bold;
 		}
 		tt {
+			display: block;
+			margin-left: 29px;
 	    color: #333333; }
+		
 		dt {
 			font-size: 10px;
 			color: gray;

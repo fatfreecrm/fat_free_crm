@@ -70,6 +70,7 @@ Rails.application.routes.draw do
       post :auto_complete
       post :redraw
       get :versions
+      get :attendances
       get :mailchimp_webhooks
       post :mailchimp_webhooks
     end
@@ -201,6 +202,7 @@ Rails.application.routes.draw do
       match :auto_complete
       post :redraw
       get :versions
+      get :toggle_comments
     end
     member do
       put  :attach
@@ -225,7 +227,7 @@ Rails.application.routes.draw do
       post :discard
       post :subscribe
       post :unsubscribe
-      get :event_instances
+      get :report_attendance
     end
   end
   

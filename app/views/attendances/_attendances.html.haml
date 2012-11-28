@@ -1,0 +1,12 @@
+- collapsed = session[:attendance_history].nil?
+%br
+= subtitle(:attendances, collapsed, t(:attendances))
+%div
+  %div{ hidden_if(collapsed) }
+    .log#attendances
+      - attendances = @bsg_attendances.paginate(:page => 1, :per_page => 10)
+      = render :partial => "attendances/attendance", :collection => tbt_attendances
+      = render :partial => "attendances/attendance", :collection => bsg_attendances
+      = render :partial => "attendances/attendance", :collection => other_attendances
+
+    = will_paginate attendances, :id => 'attendances_pagination', :params => {:action => :attendances}

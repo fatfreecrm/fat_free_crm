@@ -230,6 +230,10 @@ class EventsController < EntitiesController
     @events = get_events(:page => 1)
     render :index
   end
+  
+  def toggle_comments
+    
+  end
 
 private
 

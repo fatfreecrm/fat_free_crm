@@ -8,7 +8,7 @@
     = hook(:contact_group_tools_before, self, :contact_group => contact_group)
     
     %li= mail_to(contact_group.email_addresses, "Email group")
-    %li= link_to "Mandrill email", mandrill_contact_group_path(contact_group) 
+    
     - if can?(:update, contact_group)
       %li= link_to_edit(contact_group)
     
