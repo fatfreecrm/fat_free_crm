@@ -41,7 +41,7 @@ class ContactsController < EntitiesController
           contact.first_name = params[:data]["merges"]["FNAME"]
           contact.last_name = params[:data]["merges"]["LNAME"]
           contact.user = @current_user if contact.user.nil?
-          #get gender, campus, assign task to user accordingly
+          #TODO:get gender, campus, assign task to user accordingly
           contact.tasks << Task.new(:name => "New signup to #{list_name} - send welcome email", :category => :email, :bucket => "due_this_week", :user => @current_user)
         end
       when "unsubscribe"
