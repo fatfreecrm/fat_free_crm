@@ -304,6 +304,10 @@ var crm = {
     }
   },
 
+	copyToClipboard: function(text) {
+	  window.prompt ("Copy to clipboard: Ctrl+C, Enter", text);
+	},
+
   //----------------------------------------------------------------------------
   reschedule_task: function(id, bucket) {
     $("task_bucket").value = bucket;

@@ -119,5 +119,36 @@ namespace :ffcrm do
       
       puts
     end
+    
+    desc "add people to mailing lists"
+    task :chimp_setup => :environment do
+      
+      # Load fixtures
+      require 'active_record/fixtures'
+      
+      a = Account.find_by_name("Adelaide Uni")
+      a.contacts.each do |c|
+        c.cf_weekly_emails << "Adelaide" unless c.cf_weekly_emails.include?("Adelaide")
+        c.delay.add_or_update_chimp(:adelaide)
+        c.save
+        puts "added #{c.full_name} to Adelaide weekly emails"
+      end
+      
+      a = Account.find_by_name("City East")
+      a.contacts.each do |c|
+        c.cf_weekly_emails << "City East" unless c.cf_weekly_emails.include?("City East")
+        c.delay.add_or_update_chimp(:city_east)
+        c.save
+        puts "added #{c.full_name} to Adelaide weekly emails"
+      end
+      
+      a = Account.find_by_name("City West")
+      a.contacts.each do |c|
+        c.cf_weekly_emails << "City West" unless c.cf_weekly_emails.include?("City West")
+        c.delay.add_or_update_chimp(:city_west)
+        c.save
+        puts "added #{c.full_name} to Adelaide weekly emails"
+      end
+    end
   end
 end

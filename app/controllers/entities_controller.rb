@@ -147,12 +147,12 @@ private
   # Get list of records for a given model class.
   #----------------------------------------------------------------------------
   def get_list_of_records(options = {})
-    options[:query]  ||= params[:query]                        if params[:query]
+    options[:query] = params[:query] ? params[:query] : session[:"#{controller_name}_current_query"]
     self.current_page  = options[:page]                        if options[:page]
     query, tags        = parse_query_and_tags(options[:query])
     self.current_query = query
+    @current_query = options[:query]
     order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
-
     per_page = if options[:per_page]
       options[:per_page] == 'all' ? ransack_search.result(:distinct => true).count : options[:per_page]
     else

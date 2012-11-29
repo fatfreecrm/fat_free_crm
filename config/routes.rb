@@ -159,6 +159,7 @@ Rails.application.routes.draw do
       match :auto_complete
       post :redraw
       get :versions
+      get :email
     end
     member do
       put  :attach

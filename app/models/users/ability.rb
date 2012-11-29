@@ -5,7 +5,7 @@ class Ability
 
   def initialize(user)
     if user.present?
-      entities = [Account, Campaign, Contact, Lead, Opportunity, ContactGroup, Event]
+      entities = [Account, Campaign, Contact, Lead, Opportunity, ContactGroup, Event, MandrillEmail, Event, EventInstance]
 
       can :create, :all
       can :read, [User] # for search autocomplete

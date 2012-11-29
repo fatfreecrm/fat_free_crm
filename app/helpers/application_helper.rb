@@ -335,7 +335,7 @@ module ApplicationHelper
     else
       args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
       if (Rails.env == 'production') and model.respond_to?(:email) and model.email.present?
-        args = { :gravatar => { :default => image_path('avatar.jpg') } }.merge(args)
+        args = { :gravatar => { :default => "#{Setting.host}#{image_path('avatar.jpg')}" } }.merge(args)
         gravatar_image_tag(model.email, args)
       else
         image_tag("avatar.jpg", args)
@@ -390,9 +390,10 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def links_to_export(action=:index)
     token = current_user.single_access_token
+    query = params[:query] ? params[:query] : session[:"#{params[:controller]}_current_query"]
     url_params = {:action => action}
     url_params.merge!(:id => params[:id]) unless params[:id].blank?
-    url_params.merge!(:query => params[:query]) unless params[:query].blank?
+    url_params.merge!(:query => query) unless query.blank?
     url_params.merge!(:q => params[:q]) unless params[:q].blank?
     url_params.merge!(:view => @view) unless @view.blank? # tasks
     url_params.merge!(:id => params[:id]) unless params[:id].blank?
@@ -408,8 +409,12 @@ module ApplicationHelper
     links = %W(perm).map do |format|
       link_to(format.upcase, url_params, :title => I18n.t(:"to_#{format}"))
     end
-
-    (exports + feeds + links).compact.join(' | ')
+   
+    emails = %W(email).map do |format|
+      link_to(format.upcase, url_params.merge(:format => :js, :action => :email, :query => @current_query), :remote => true) if params[:controller] == "contact_groups"
+    end
+    
+    (exports + feeds + links + emails).compact.join(' | ')
   end
 
   def user_options

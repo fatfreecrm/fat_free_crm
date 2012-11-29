@@ -23,10 +23,14 @@ class ContactGroupsController < EntitiesController
   def index
     @contact_groups = get_contact_groups(:page => params[:page])
     
+    #binding.pry
+    session[:contact_groups_current_query] = params[:query]
     respond_with @contact_groups do |format|
       format.xls { render :layout => 'header' }
     end
   end
+  
+  alias :email :index
 
   # GET /accounts/1
   #----------------------------------------------------------------------------
@@ -160,10 +164,11 @@ class ContactGroupsController < EntitiesController
   # POST /accounts/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @current_user.pref[:contact_groups_per_page] = params[:per_page] if params[:per_page]
-    @current_user.pref[:contact_groups_outline]  = params[:outline]  if params[:outline]
-    @current_user.pref[:contact_groups_sort_by]  = ContactGroup::sort_by_map[params[:sort_by]] if params[:sort_by]
-    @contact_groups = get_contact_groups(:page => 1)
+    current_user.pref[:contact_groups_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:contact_groups_outline]  = params[:outline]  if params[:outline]
+    current_user.pref[:contact_groups_sort_by]  = ContactGroup::sort_by_map[params[:sort_by]] if params[:sort_by]
+    contact_groups = get_contact_groups(:page => 1)
+    set_options # Refresh options
     render :index
   end
 
@@ -188,6 +193,7 @@ private
       @outline  = @current_user.pref[:contact_groups_outline]  || ContactGroup.outline
       @sort_by  = @current_user.pref[:contact_groups_sort_by]  || ContactGroup.sort_by
     end
+    @query = @current_user.pref[:contact_groups_query]
   end
 
   #----------------------------------------------------------------------------

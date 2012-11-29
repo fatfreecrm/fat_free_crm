@@ -1,6 +1,8 @@
 = styles_for :contact_group
 
 .title_tools
+  - group_emails = @contact_groups.collect{|cg| cg.email_addresses}.to_sentence(:last_word_connector => ", ", :two_words_connector => ", ") if @contact_groups.any?
+  = mail_to(group_emails, "Email all groups shown") << " | "
   = link_to_inline(:create_contact_group, new_contact_group_path, :text => t(:create_contact_group)) << " | "
   - if Setting.advanced_search_enabled
     = link_to_inline(:advanced_search, advanced_search_contact_groups_path, :text => t(:advanced_search)) << " | "
