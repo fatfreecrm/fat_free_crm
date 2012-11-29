@@ -4,6 +4,7 @@
 require 'pry-nav'
 require 'pry-stack_explorer'
 require 'awesome_print'
+
 if defined?(FatFreeCRM::Application)
   FatFreeCRM::Application.configure do
     # Settings specified here will take precedence over those in config/application.rb

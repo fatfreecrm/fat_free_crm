@@ -21,6 +21,9 @@ class Event < ActiveRecord::Base
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(?)', "%#{query}%")
   }
+  
+  has_ransackable_associations %w(contacts tags comments tasks)
+  ransack_can_autocomplete
 
   uses_user_permissions
   acts_as_commentable

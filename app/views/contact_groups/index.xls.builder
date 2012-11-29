@@ -1,9 +1,9 @@
-xml.Worksheet 'ss:Name' => I18n.t(:tab_accounts) do
+xml.Worksheet 'ss:Name' => I18n.t(:tab_groups) do
   xml.Table do
-    unless @accounts.empty?
+    unless @contact_groups.empty?
       # Header.
       xml.Row do
-        columns = %w{user assigned_to name email phone fax website background_info access phone_toll_free rating category date_created date_updated
+        columns = %w{contact_group name email phone mobile background_info 
                      street1 street2 city state zipcode country address}
         
         for column in columns
@@ -14,18 +14,20 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_accounts) do
       end
       
       # Contact rows.
-      for a in @accounts
-        xml.Row do
-          ba = a.billing_address
-          values = [a.user.try(:name), a.assignee.try(:name), a.name, a.email, a.phone, a.fax, a.website, a.background_info, a.access, a.toll_free_phone, a.rating, a.category, a.created_at, a.updated_at]
+      for cg in @contact_groups
+        for c in cg.contacts
+          xml.Row do
+              a = c.addresses.first
+              values = [cg.name, c.full_name, c.email, c.phone, c.mobile, c.background_info]
           
-          unless ba.nil?
-            values.concat [ba.street1, ba.street2, ba.city, ba.state, ba.zipcode, ba.country, ba.full_address]
-          end
+            unless a.nil?
+              values.concat [a.street1, a.street2, a.city, a.state, a.zipcode, a.country, a.full_address]
+            end
           
-          for value in values
-            xml.Cell do
-              xml.Data value, 'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
+            for value in values
+              xml.Cell do
+                xml.Data value, 'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
+              end
             end
           end
         end

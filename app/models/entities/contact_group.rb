@@ -27,7 +27,7 @@ class ContactGroup < ActiveRecord::Base
   has_paper_trail :ignore => [ :subscribed_users ]
   has_fields
   exportable
-  sortable :by => [ "name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable :by => [ "name ASC", "category ASC", "created_at DESC", "updated_at DESC" ], :default => "name ASC"
 
   validates_presence_of :name, :message => :missing_name
   validate :users_for_shared_access

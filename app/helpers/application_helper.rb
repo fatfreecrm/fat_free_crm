@@ -410,11 +410,20 @@ module ApplicationHelper
       link_to(format.upcase, url_params, :title => I18n.t(:"to_#{format}"))
     end
    
-    emails = %W(email).map do |format|
-      link_to(format.upcase, url_params.merge(:format => :js, :action => :email, :query => @current_query), :remote => true) if params[:controller] == "contact_groups"
+    emails_to_clipboard = %W(email_clip).map do |format|
+      if params[:controller] == "contact_groups"
+        link_to("EMAIL &#8250; CLIPBOARD".html_safe, url_params.merge(:format => :js, :action => :email, :query => @current_query), :remote => true) 
+      end
     end
     
-    (exports + feeds + links + emails).compact.join(' | ')
+    emails = %W(email).map do |format|
+      if params[:controller] == "contact_groups"
+        group_emails = @contact_groups.collect{|cg| cg.email_addresses}.join(", ") if @contact_groups.any?
+        mail_to(group_emails, format.upcase)
+      end
+    end
+    
+    (exports + feeds + links + emails + emails_to_clipboard).compact.join(' | ')
   end
 
   def user_options

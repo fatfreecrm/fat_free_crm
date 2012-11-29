@@ -1,5 +1,5 @@
 .filters#filters
-  = render "shared/search"
+  -#= render "shared/search"
   = hook(:index_contact_group_sidebar_bottom, self)
   - Setting.contact_group_category.each do |key|
     .check_box{:style => "border-bottom: 1px silver dotted;"}

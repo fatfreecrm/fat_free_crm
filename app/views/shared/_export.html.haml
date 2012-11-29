@@ -1,2 +1,5 @@
 - action = nil unless defined?(action)
 = raw links_to_export(action)
+- if controller == "contact_groups"
+  - group_emails = @contact_groups.collect{|cg| cg.email_addresses}.join(", ") if @contact_groups.any?
+  = mail_to(group_emails, "Email all groups shown") << " | "

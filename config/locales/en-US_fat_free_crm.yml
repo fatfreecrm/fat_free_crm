@@ -332,6 +332,7 @@ en-US:
   social: Social
   location: Location
   event_instances: occurrences
+  munchies: Munchies
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------

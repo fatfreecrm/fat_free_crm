@@ -1,21 +1,12 @@
 = styles_for :contact_group
 
-.title_tools
-  - group_emails = @contact_groups.collect{|cg| cg.email_addresses}.to_sentence(:last_word_connector => ", ", :two_words_connector => ", ") if @contact_groups.any?
-  = mail_to(group_emails, "Email all groups shown") << " | "
-  = link_to_inline(:create_contact_group, new_contact_group_path, :text => t(:create_contact_group)) << " | "
-  - if Setting.advanced_search_enabled
-    = link_to_inline(:advanced_search, advanced_search_contact_groups_path, :text => t(:advanced_search)) << " | "
-  = link_to_inline(:options, options_contact_groups_path, :text=> t(:options))
+= render 'entities/title_bar'
 
-.title
-  %span#create_contact_group_title #{t :contact_groups}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
-.remote#options{ hidden }
-.remote#advanced_search{ hidden_if(!params[:q]) }
-  - if params[:q]
-    = render :partial => "advanced_search"
 .remote#create_contact_group{ hidden }
+
+= render "search"
+
+.remote#options{ hidden }
 
 .list#contact_groups
   - if @contact_groups.any?

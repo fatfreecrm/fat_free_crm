@@ -168,8 +168,9 @@ class ContactGroupsController < EntitiesController
     current_user.pref[:contact_groups_outline]  = params[:outline]  if params[:outline]
     current_user.pref[:contact_groups_sort_by]  = ContactGroup::sort_by_map[params[:sort_by]] if params[:sort_by]
     contact_groups = get_contact_groups(:page => 1)
+    @contact_groups = get_contact_groups(:page => 1, :per_page => params[:per_page]) # Start on the first page.
     set_options # Refresh options
-    render :index
+    render :index    
   end
 
   # POST /accounts/filter                                                  AJAX
@@ -188,12 +189,10 @@ private
   # GET /accounts/options                                                  AJAX
   #----------------------------------------------------------------------------
   def set_options
+    super
     unless params[:cancel].true?
-      @per_page = @current_user.pref[:contact_groups_per_page] || ContactGroup.per_page
       @outline  = @current_user.pref[:contact_groups_outline]  || ContactGroup.outline
-      @sort_by  = @current_user.pref[:contact_groups_sort_by]  || ContactGroup.sort_by
     end
-    @query = @current_user.pref[:contact_groups_query]
   end
 
   #----------------------------------------------------------------------------
