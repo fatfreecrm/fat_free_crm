@@ -1,6 +1,6 @@
 - class_name = commentable.class.name.underscore
 - id_prefix = "#{class_name}_#{commentable.id}"
-.comment.mobile.highlight.new_comment{ :id => "#{id_prefix}_comment_new" }
+.comment.mobile.new_comment{ :id => "#{id_prefix}_comment_new" }
   - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == current_user.id }.compact
   - if notification_emails_configured? && subscribed_users.any?
     = t(:following_users_will_be_notified) << ":"
@@ -12,10 +12,10 @@
   = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}", :id => "#{id_prefix}_shown_emails"
 
   = link_to avatar_for(current_user, :size => :small), user_path(current_user)
-  .tools
-    = link_to_function(t(:expand_all), "crm.flip_notes_and_emails('#{t(:expanded)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')") << " | "
-    = link_to_function(t(:collapse_all), "crm.flip_notes_and_emails('#{t(:collapsed)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')")
-
+  -# .tools
+  -#     = link_to_function(t(:expand_all), "crm.flip_notes_and_emails('#{t(:expanded)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')") << " | "
+  -#     = link_to_function(t(:collapse_all), "crm.flip_notes_and_emails('#{t(:collapsed)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')")
+  
   %div{ {:id => "#{id_prefix}_post"}.merge(hidden_if(true))}
     = form_for(@comment, :remote => true, :html => {:id => "#{id_prefix}_new_comment"}) do |f|
       = hidden_field_tag "comment[user_id]", current_user.id, :id => "#{id_prefix}_comment_user_id"

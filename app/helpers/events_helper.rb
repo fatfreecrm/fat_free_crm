@@ -19,14 +19,14 @@ module EventsHelper
 
   #----------------------------------------------------------------------------
   def link_to_mark(contact, event)
-    onclick = %Q/$("#{dom_id(contact, :mark)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => mark_event_instance_path(event), :method => :put, :with => "'contact_id=#{contact.id}'")
+    #onclick = %Q/$("#{dom_id(contact, :mark)}").style.textDecoration="line-through";/
+    onclick = remote_function(:url => mark_event_instance_path(event), :method => :put, :with => "'contact_id=#{contact.id}'")
   end
 
   #----------------------------------------------------------------------------
   def link_to_unmark(contact, event)
-    onclick = %Q/$("#{dom_id(contact, :mark)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => unmark_event_instance_path(event), :method => :put, :with => "'contact_id=#{contact.id}'")
+    #onclick = %Q/$("#{dom_id(contact, :mark)}").style.textDecoration="line-through";/
+    onclick = remote_function(:url => unmark_event_instance_path(event), :method => :put, :with => "'contact_id=#{contact.id}'")
   end
 
   def attendance_section(related, assets)

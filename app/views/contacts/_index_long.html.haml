@@ -36,7 +36,7 @@
         - if contact.phone.present?
           == #{t :phone_small}:
           %b= link_to contact.phone, "tel:#{contact.phone}"
-        |
+          |
         - if contact.mobile.present?
           == #{t :mobile_small}:
           %b= link_to contact.mobile, "tel:#{contact.mobile}"

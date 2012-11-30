@@ -1,17 +1,17 @@
 - is_marked = !@event_instance.attendances.where(:contact_id => contact.id).empty?
 - add_comment = false
-%li.attendance.mobile.highlight[contact]{:style => "#{is_marked ? 'background:honeydew;' : 'background:white;'}"}
+%li.attendance.mobile[contact]{:style => "#{is_marked ? 'background:honeydew;' : 'background:white;'}"}
   
   -#.strip.white #{t :other}
 
-  %ul.tools
-    = hook(:contact_tools_before, self, :contact => contact)
+  -#%ul.tools
+  -#= hook(:contact_tools_before, self, :contact => contact)
 
-    - if can?(:update, contact)
-      = link_to_edit(contact)
+  -# if can?(:update, contact)
+  -#  = link_to_edit(contact)
 
-    -# - if can?(:destroy, contact)
-    -#       = link_to_delete(contact)
+  -# - if can?(:destroy, contact)
+  -#       = link_to_delete(contact)
     
 
   - if is_marked
@@ -21,7 +21,7 @@
 
   .thing= avatar_for(contact, :size => "16x16")
 
-  .indentslim
+  .indentslim{:style => 'margin-left:40px;'}
     = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
     - if is_marked
       %tt.small
