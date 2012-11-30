@@ -4,7 +4,7 @@
 
   %ul.sub_tools
     = hook(:event_instance_tools_before, self, :event_instance => event_instance)
-    %li= link_to("Attendance Report", report_attendance_event_instance_path(event_instance, :format => :xls), :title => I18n.t(:"to_xls"))
+    %li= link_to("Report", report_attendance_event_instance_path(event_instance, :format => :xls), :title => I18n.t(:"to_xls"))
     - if can?(:update, event_instance)
       %li= link_to_edit(event_instance)
 

@@ -87,7 +87,7 @@ class ContactGroup < ActiveRecord::Base
   end
   
   def email_addresses
-    self.contacts.map(&:email).reject(&:blank?).to_sentence(:last_word_connector => ", ", :two_words_connector => ", ") unless self.contacts.empty?
+    self.contacts.map(&:email).reject(&:blank?).join(", ") unless self.contacts.empty?
   end
 
   private

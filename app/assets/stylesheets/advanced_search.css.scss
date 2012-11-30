@@ -1,7 +1,6 @@
 #search {
 
   margin-top: 15px;
-
 	.tabs {
 		background: none;
 
@@ -27,6 +26,10 @@
 		background-color: #eee;
 		padding: 10px;
 	}
+	
+	.search_form.mobile {
+			padding: 3px;
+	}
 
   .options {
     float: right;
@@ -42,6 +45,10 @@
   #query {
     margin-top: 6px;
   }
+}
+
+#search.mobile {
+	margin-top: 5px;
 }
 
 .defaultTextActive { color: #a1a1a1; }

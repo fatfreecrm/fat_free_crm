@@ -199,7 +199,7 @@ class Contact < ActiveRecord::Base
         Hash.new.tap do |merge_hash|
           #merge_hash["EMAIL"] = original_email
           merge_hash["EMAIL"] = self.email
-          merge_hash["GROUPINGS"] = [{:name => "Interested in...", :groups => grouping.to_sentence(:words_connector => ",", :two_words_connector => ",", :last_word_connector => ",")}] unless (grouping == [])
+          merge_hash["GROUPINGS"] = [{:name => "Interested in...", :groups => grouping.join(", ")}] unless (grouping == [])
           merge_hash["OPTIN_IP"] = "114.30.109.159" if new_chimp_contact
           merge_hash["OPTIN_TIME"] = Time.now if new_chimp_contact
           merge_hash["FNAME"] = self.first_name

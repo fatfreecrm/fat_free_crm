@@ -17,6 +17,7 @@
 class ContactsController < EntitiesController
   before_filter :get_users, :only => [ :new, :create, :edit, :update ]
   before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
+  before_filter :check_for_mobile
   
   def single_access_allowed?
     (action_name == "mailchimp_webhooks")

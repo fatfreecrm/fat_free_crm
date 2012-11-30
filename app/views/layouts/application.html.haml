@@ -2,6 +2,8 @@
 %html
   %head
     %meta{ "http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
+    - if mobile_device?
+      %meta{ "name" => "viewport", :content => "width=320,user-scalable=false"}
     %title Mojo : North Terrace ES Contact Relationship Manager
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag :application
@@ -30,8 +32,10 @@
 
   %body
     = render "layouts/header"
-    - if tabless_layout?
+    - if tabless_layout? 
       = render "layouts/tabless"
+    - elsif mobile_device?
+      = render 'layouts/mobile'
     - else
       = render "layouts/tabbed"
       = render "layouts/footer"

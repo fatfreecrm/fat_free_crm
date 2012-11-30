@@ -18,7 +18,7 @@
     &ndash;
     %tt
       = event.event_instances.first.location << ", " unless event.event_instances.first.nil? || event.event_instances.first.location.blank?
-      = t(:added_by, :time_ago => time_ago_in_words(event.created_at), :user => (event.user.id == @current_user.id ? t(:me) : event.user.full_name)) << " | "
+      -#= t(:added_by, :time_ago => time_ago_in_words(event.created_at), :user => (event.user.id == @current_user.id ? t(:me) : event.user.full_name))
       -#= t('pluralize.contact', event.contacts.count) << " | "
       -#= t('pluralize.opportunity', event.opportunities.count)
 

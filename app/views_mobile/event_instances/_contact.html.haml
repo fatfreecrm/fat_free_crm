@@ -1,0 +1,33 @@
+- is_marked = !@event_instance.attendances.where(:contact_id => contact.id).empty?
+- add_comment = false
+%li.attendance.mobile.highlight[contact]{:style => "#{is_marked ? 'background:honeydew;' : 'background:white;'}"}
+  
+  -#.strip.white #{t :other}
+
+  %ul.tools
+    = hook(:contact_tools_before, self, :contact => contact)
+
+    - if can?(:update, contact)
+      = link_to_edit(contact)
+
+    -# - if can?(:destroy, contact)
+    -#       = link_to_delete(contact)
+    
+
+  - if is_marked
+    = check_box_tag dom_id(contact, :mark), 1, true, :onclick => link_to_unmark(contact, object)
+  - else
+    = check_box_tag dom_id(contact, :mark), 1, false, :onclick => link_to_mark(contact, object)
+
+  .thing= avatar_for(contact, :size => "16x16")
+
+  .indentslim
+    = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
+    - if is_marked
+      %tt.small
+        = link_to("+comment [#{@event_instance.attendances.where(:contact_id => contact.id).first.comments.count}]", toggle_comments_events_path, :onclick => "crm.show_comments('#{contact.id}')", :remote => true)
+    %dt#com[contact]{hidden_if(!add_comment)}
+      - @comment = Comment.new
+      - if is_marked
+        = render "comments/new", :commentable => @event_instance.attendances.where(:contact_id => contact.id).first
+        = render :partial => "shared/timeline", :collection => (@event_instance.attendances.where(:contact_id => contact.id).first.comments + @event_instance.attendances.where(:contact_id => contact.id).first.emails).sort { |x, y| y.created_at <=> x.created_at }

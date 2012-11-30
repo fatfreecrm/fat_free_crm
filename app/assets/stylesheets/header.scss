@@ -129,6 +129,16 @@ $color_footer: grey;
     color: $color_active_tab;
     text-decoration: none; } }
 
+.tabs.mobile {
+	a:link, a:visited {
+		img {
+			margin-right: 5px;
+			margin-left: 5px;
+		}
+		padding: 4px 5px 6px;
+	}
+}
+
 #footer {
   color: $color_footer;
   font-size: 10px;

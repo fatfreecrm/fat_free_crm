@@ -32,7 +32,7 @@ xml.Worksheet 'ss:Name' => @event_instance.event.name do
       # Attendance (Contact) rows.
       for a in @event_instance.attendances
         xml.Row do
-          comments = a.comments.map{|c| "#{c.user.first_name}: #{c.comment}"}.to_sentence(:words_connector => " | ", :two_words_connector => " | ", :last_word_connector => " | ")
+          comments = a.comments.map{|c| "#{c.user.first_name}: #{c.comment}"}.join(" | ")
           values = [a.contact.try(:first_name), 
                     a.contact.try(:last_name), 
                     time_ago_in_words(a.contact.last_attendance_at_event_category(@event_instance.event.category))]

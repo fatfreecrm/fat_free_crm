@@ -113,6 +113,10 @@ $sidebar_width: 210px;
 .tabbed {
   padding: 12px 12px 12px 16px; }
 
+.tabbed.mobile {
+	padding: 0px;
+}
+
 .float_left {
 	width: 49%;
 	float:left;
@@ -136,6 +140,14 @@ $sidebar_width: 210px;
   -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
   -webkit-border-radius: 4px;
   -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
+
+.main_mobile{
+	background: white;
+  padding: 8px 5px 15px 5px;
+	div.sorting_options, div.create_asset {
+		margin-left: 3px;
+	}
+}
 
 .info {
   padding-top: 12px;
@@ -256,6 +268,18 @@ $sidebar_width: 210px;
       background: #1e4262;
       color: white; } } }
 
+.section.mobile {
+	padding: 4px 5px 8px 5px;
+	table {
+    width: 250px;}
+}
+
+.main_mobile {
+	div.remote {
+		border: 2px lightblue solid;
+		padding: 0px;}
+}
+
 .buttonbar {
   border-top: 1px gray solid;
   margin: 8px auto;
@@ -341,6 +365,15 @@ $sidebar_width: 210px;
   margin-left: 38px;
 }
 
+li.mobile {
+	.indentslim {
+		margin-left: 20px;
+		a {
+			font-size: 13px;
+		}
+	}
+}
+
 .indentwide {
   margin-left: 106px; }
 
@@ -366,7 +399,8 @@ $sidebar_width: 210px;
 	padding-top: 2px;
 	padding-bottom: 2px;
   .comment {
-    margin-left: 38px;	}
+    //margin-left: 38px;	
+	}
   .new_comment {
     margin: 3px 0px 0px 0px; }
 }
@@ -431,12 +465,29 @@ $sidebar_width: 210px;
     a {
       font-size: 11px; } } }
 
+.comment.mobile {
+	input[type=text] {
+    //border: 1px #cfcfcf solid;
+    color: grey;
+    font-size: 11px;
+    margin: 3px 0px 0px 0px;
+    padding: 1px;
+    width: 260px; }
+}
+
 .comment textarea, textarea#comment_body {
   font-size: 11px;
   height: 110px;
   margin: 3px 0px 0px 0px;
   //padding: 3px;
   width: 500px; }
+
+.comment.mobile textarea, textarea#comment_body {
+  font-size: 11px;
+  height: 110px;
+  margin: 3px 0px 0px 0px;
+  //padding: 3px;
+  width: 260px; }
 
 // Avoid collision with .email CSS class which is used to display Task category strip.
 .mail {
@@ -517,7 +568,23 @@ $sidebar_width: 210px;
       font-size: 11px; } }
   input[type=checkbox] {
     float: left;
-    margin: 0px 4px 0px 0px; } }
+    margin: 0px 4px 0px 0px; } 
+	li.mobile {
+		font-size: 14px;
+		padding: 6px 0px 6px 0px;
+		input[type="checkbox"] {
+			margin: 4px 4px 0px 0px;
+		}
+	}
+	li.attendance {
+		//font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+		//font-size: 11px;
+		//padding: 1px;
+		a {
+			font-weight: bold;
+		}
+	}
+}
 
 .attendance {
 	li {

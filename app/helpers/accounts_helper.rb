@@ -41,13 +41,14 @@ module AccountsHelper
       accounts = ([@account] + Account.my.order(:name).limit(25)).compact.uniq
       collection_select :account, :id, accounts, :id, :name, options,
                         {:"data-placeholder" => t(:select_an_account),
-                         :style => "width:330px; display:none;" }
+                         :style => "width:#{mobile_device? ? "245" : "324"}px; display:none;" }
   end
 
   # Select an existing account or create a new one.
   #----------------------------------------------------------------------------
   def account_select_or_create(form, &block)
     options = {}
+    width = mobile_device? ? "245" : "324"
     yield options if block_given?
 
     content_tag(:div, :class => 'label') do
@@ -63,8 +64,8 @@ module AccountsHelper
 
       content_tag(:span, ':', :id => 'account_disabled_title').html_safe
     end.html_safe +
-
+    
     account_select(options).html_safe +
-    form.text_field(:name, :style => 'width:324px; display:none;')
+    form.text_field(:name, :style => "width:#{width}px; display:none;")
   end
 end
