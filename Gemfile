@@ -44,9 +44,8 @@ group :development, :test do
   # Uncomment the following two gems to deploy via Capistrano
   gem 'rvm-capistrano'
   gem 'capistrano_colors'
-  gem 'passenger'
-  gem 'webrick', '1.3.1'
-  
+  #gem 'passenger'
+  gem 'webrick', '~>1.3.1'
   
   gem 'rspec-rails', '~> 2.9.0'
   gem 'headless'

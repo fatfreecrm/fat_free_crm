@@ -19,7 +19,6 @@ class UserMailer < ActionMailer::Base
 
   def password_reset_instructions(user)
     @edit_password_url = edit_password_url(user.perishable_token)
-
     mail :subject => "Mojo: " + I18n.t(:password_reset_instruction),
          :to => user.email,
          :from => "Mojo <mojo@nt.es.org.au>",
