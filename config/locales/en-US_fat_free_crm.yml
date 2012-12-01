@@ -198,7 +198,7 @@ en-US:
   msg_cant_do: "Can't %{action} the %{asset} since it's no longer available."
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
+  msg_goodbye: You have been logged out. Thank you for using Mojo!
   msg_invalid_password: "^Please specify valid current password"
   msg_invalig_login: Invalid username or password.
   msg_last_login: Your last login was on %{value}.
@@ -210,7 +210,7 @@ en-US:
   msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
   msg_require_admin: You must be Administrator to access this page.
   msg_successful_signup: Successful signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
+  msg_welcome: Welcome to Mojo!
 
   # Options.
   #----------------------------------------------------------------------------
@@ -331,7 +331,9 @@ en-US:
   faculty: Faculty
   social: Social
   location: Location
-  event_instances: occurrences
+  event_instances: Occurrences
+  save_event_instance: Save Occurrence
+  create_event_instance: Create Occurrence
   munchies: Munchies
 
   # Views -> Accounts.
@@ -678,7 +680,7 @@ en-US:
   admin: Admin
   logout: Logout
   quick_find: Quick find
-  welcome: Welcome
+  welcome: Hi
 
   # Views -> Advanced Search.
   accounts_advanced_search: Accounts Advanced search
@@ -714,8 +716,8 @@ en-US:
 
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: Back to Mojo
+  crm_admin_page: Mojo Administration
 
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------

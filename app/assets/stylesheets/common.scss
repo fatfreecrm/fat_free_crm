@@ -108,7 +108,19 @@ $sidebar_width: 210px;
     padding: 2px;
     width: 355px; }
   input[type="submit"] {
-    font-size: 14px; } }
+    font-size: 14px; } 
+}
+
+.standalone.mobile {
+	width: 240px;
+	padding: 10px;
+	margin-top: 20px;
+	input[type="text"], input[type="password"] {
+    font-size: 16px;
+		height: 30px;
+    padding: 2px;
+    width: 220px; }
+}
 
 .tabbed {
   padding: 12px 12px 12px 16px; }
@@ -146,6 +158,9 @@ $sidebar_width: 210px;
   padding: 8px 5px 15px 5px;
 	div.sorting_options, div.create_asset {
 		margin-left: 3px;
+	}
+	div.title, div.subtitle {
+		font-size: 15px;
 	}
 }
 
@@ -472,7 +487,7 @@ li.mobile {
     font-size: 11px;
     margin: 3px 0px 0px 0px;
     padding: 1px;
-    width: 260px; }
+    width: 220px; }
 }
 
 .comment textarea, textarea#comment_body {

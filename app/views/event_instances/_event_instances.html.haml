@@ -1,4 +1,4 @@
-= section(object, :event_instances)
+= section(object, :event_instances, true)
 .list#event_instances
   - event_instances = object.event_instances.paginate(:page => 1, :per_page => 20)
   = render :partial => "event_instances/event_instance", :collection => event_instances
