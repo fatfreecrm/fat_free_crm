@@ -12,7 +12,7 @@ set :deploy_to,       "/var/www/#{application}"
 set :user,            'deploy'
 set :use_sudo,        false
 set :rvm_type,        :system
-set :rvm_ruby_string, '1.9.3-p194'
+set :rvm_ruby_string, '1.9.3'
 server                '192.168.1.77', :app, :web, :db, primary: true
 
 # Use local key instead of key installed on the server.
