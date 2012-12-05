@@ -216,7 +216,7 @@ private
   def set_view
     if params['view']
       controller = params['controller']
-      action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+      action = (%w(redraw filter index).include?(params['action'].to_s)) ? 'index' : 'show' # hack until we refactor redraw and filter methods
       current_user.pref[:"#{controller}_#{action}_view"] = params['view']
     end
   end
