@@ -211,7 +211,7 @@ private
     (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
   end
   
-  # Sets the current outline for viewing objects in this context
+  # Sets the current template view for entities in this context
   #----------------------------------------------------------------------------
   def set_view
     if params['view']

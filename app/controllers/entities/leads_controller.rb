@@ -178,7 +178,6 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:leads_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:leads_outline]  = params[:outline]  if params[:outline]
 
     # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
     if params[:sort_by]

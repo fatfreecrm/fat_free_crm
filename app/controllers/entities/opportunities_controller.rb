@@ -226,7 +226,6 @@ private
   #----------------------------------------------------------------------------
   def set_params
     current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:opportunities_outline]  = params[:outline]  if params[:outline]
     current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:opportunities_filter] = params[:stage] if params[:stage]
   end
