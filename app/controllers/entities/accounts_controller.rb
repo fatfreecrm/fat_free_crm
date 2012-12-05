@@ -121,7 +121,10 @@ class AccountsController < EntitiesController
     current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
     set_options # Refresh options
-    render :index
+    
+    respond_with(@accounts) do |format|
+      format.js { render :index }
+    end
   end
 
   # POST /accounts/filter                                                  AJAX
@@ -129,7 +132,10 @@ class AccountsController < EntitiesController
   def filter
     session[:accounts_filter] = params[:category]
     @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
-    render :index
+    
+    respond_with(@accounts) do |format|
+      format.js { render :index }
+    end
   end
 
 private

@@ -159,7 +159,10 @@ class CampaignsController < EntitiesController
     current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
     set_options # Refresh options
-    render :index
+    
+    respond_with(@campaigns) do |format|
+      format.js { render :index }
+    end
   end
 
   # POST /campaigns/filter                                                 AJAX
@@ -167,7 +170,10 @@ class CampaignsController < EntitiesController
   def filter
     session[:campaigns_filter] = params[:status]
     @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
-    render :index
+    
+    respond_with(@campaigns) do |format|
+      format.js { render :index }
+    end
   end
 
 private
