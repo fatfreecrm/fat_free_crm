@@ -455,7 +455,7 @@ module ApplicationHelper
   # Return name of current view
   def current_view_name
     controller = params['controller']
-    action = (%w(redraw filter index).include?(params['action'].to_s)) ? 'index' : 'show' # hack until we refactor redraw and filter methods
+    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     current_user.pref[:"#{controller}_#{action}_view"]
   end
 
@@ -463,7 +463,7 @@ module ApplicationHelper
   # Get template in current context with current view name
   def template_for_current_view
     controller = params['controller']
-    action = (%w(redraw filter index).include?(params['action'].to_s)) ? 'index' : 'show' # hack until we refactor redraw and filter methods
+    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     template = FatFreeCRM::ViewFactory.template_for_current_view(:controller => controller, :action => action, :name => current_view_name)
     template
   end
@@ -472,7 +472,7 @@ module ApplicationHelper
   # Generate buttons for available views given the current context
   def view_buttons
     controller = params['controller']
-    action = (%w(redraw filter index).include?(params['action'].to_s)) ? 'index' : 'show' # hack until we refactor redraw and filter methods
+    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     views = FatFreeCRM::ViewFactory.views_for(:controller => controller, :action => action)
     return nil unless views.size > 1
     content_tag :ul, :class => 'format-buttons' do

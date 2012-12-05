@@ -210,13 +210,13 @@ private
   def timeline(asset)
     (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
   end
-  
+
   # Sets the current template view for entities in this context
   #----------------------------------------------------------------------------
   def set_view
     if params['view']
       controller = params['controller']
-      action = (%w(redraw filter index).include?(params['action'].to_s)) ? 'index' : 'show' # hack until we refactor redraw and filter methods
+      action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
       current_user.pref[:"#{controller}_#{action}_view"] = params['view']
     end
   end
