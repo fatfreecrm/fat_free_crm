@@ -322,6 +322,7 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  // Will be deprecated soon: html5 placeholder replaced it on address fields
   show_hint: function(el, hint) {
     if (el.value == '') {
       el.value = hint;
@@ -331,6 +332,7 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  // Will be deprecated soon: html5 placeholder replaced it on address fields
   hide_hint: function(el, value) {
     if (arguments.length == 2) {
       el.value = value;
@@ -344,6 +346,7 @@ var crm = {
   },
 
   //----------------------------------------------------------------------------
+  // Will be deprecated soon: html5 placeholder replaced it on address fields
   clear_all_hints: function() {
     $$("input[hint=true]").each( function(field) {
       field.value = '';
