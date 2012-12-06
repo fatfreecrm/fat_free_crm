@@ -463,6 +463,11 @@ document.observe("dom:loaded", function() {
         new Ajax.Request(el.href, { method: 'get' });
         e.stop();
       }
+      if (el.match('.per_page_options a')) {
+        el.up('.per_page_options').update(createSpinner());
+        new Ajax.Request(el.href, { method: 'post' });
+        e.stop();
+      }
     });
   }
 });
