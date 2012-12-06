@@ -20,7 +20,10 @@
       == #{t :from} #{link_to_if can?(:read, account), account.name, account_path(account)}
     %tt
       &ndash;
-      - user_name = opportunity.user_id == current_user.id ? t(:me) : opportunity.user.full_name
-      = t(:added_by, :time_ago => time_ago_in_words(opportunity.created_at), :user => user_name)
+      - user_name = opportunity.user_id == current_user.id ? t(:me) : opportunity.user.try(:full_name)
+      - if user_name
+        = t(:added_by, :time_ago => time_ago_in_words(opportunity.created_at), :user => user_name)
+      - else
+        = t(:added_ago, :value => time_ago_in_words(opportunity.created_at))
 
     = hook(:opportunity_bottom, self, :opportunity => opportunity)
