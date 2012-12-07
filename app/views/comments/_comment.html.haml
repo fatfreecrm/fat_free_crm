@@ -1,5 +1,5 @@
-- truncated = simple_format h(truncate(comment.comment.gsub("\n", " "), :length => 125))
-- formatted = defined?(RedCloth) ? RedCloth.new(h(comment.comment)).to_html.html_safe : simple_format(h(comment.comment)).html_safe
+- truncated = simple_format(truncate(comment.comment.gsub("\n", " "), :length => 125))
+- formatted = defined?(RedCloth) ? RedCloth.new(comment.comment).to_html : simple_format(comment.comment)
 - collapsable = formatted.size > 150
 - commentable = comment.commentable
 
@@ -16,13 +16,14 @@
     %tt
       added note #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
       - if collapsable && can?(:read, commentable)
-        = " | ".html_safe + link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
+        = " | "
+        = link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
 
     - if can?(:read, commentable)
       - if collapsable
         %dt{ hidden_if(comment.expanded?), :id => dom_id(comment, :truncated) }
           = truncated
         %dt.textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
-          = auto_link(formatted).html_safe
+          = sanitize auto_link(formatted)
       - else
-        %dt.textile= auto_link(formatted).html_safe
+        %dt.textile= sanitize auto_link(formatted)
