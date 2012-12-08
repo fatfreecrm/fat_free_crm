@@ -42,9 +42,9 @@ tt {
   font-size: 13px;
   display: inline; }
 
-td#sidebar, div#header, div#tabs, div#footer, div.title_tools, div.subtitle_tools, div.new_comment, a.toggle {
-  display: none; }
-
+td#sidebar, div#header, div.tabs, div#footer, div.title_tools, div.tools, ul.tools, div.subtitle_tools, div.new_comment, a.toggle {
+  display: none !important; }
+  
 div.section.nostyle div {
   display: block !important; }
 
@@ -78,3 +78,12 @@ table {
   td {
     strong {
       font-weight: normal; } } }
+
+.comment .body {
+  display: block; }
+
+.comment.highlight {
+  background-color: transparent; }
+  
+.task input {
+  display: none !important; }
