@@ -52,8 +52,8 @@ class Account < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  accepts_nested_attributes_for :billing_address, :allow_destroy => true
-  accepts_nested_attributes_for :shipping_address, :allow_destroy => true
+  accepts_nested_attributes_for :billing_address,  :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
+  accepts_nested_attributes_for :shipping_address, :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
 
   scope :state, lambda { |filters|
     where('category IN (?)' + (filters.delete('other') ? ' OR category IS NULL' : ''), filters)
