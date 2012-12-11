@@ -15,7 +15,6 @@ if @task.errors.empty?
   end
 
 else # Errors
-  page.call "crm.date_select_popup", :task_calendar, :task_bucket, Setting.task_calendar_with_time
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:task_name].focus
   page[:task_submit].enable

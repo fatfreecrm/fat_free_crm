@@ -22,7 +22,6 @@ if @lead.status == "converted"
 else  
   page[id].replace_html :partial => "convert"
   page.call "crm.create_or_select_account", request.referer =~ /\/accounts\// || @account.id.blank?
-  page.call "crm.date_select_popup", "opportunity_closes_on"
   page[id].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:account_name].focus
 end

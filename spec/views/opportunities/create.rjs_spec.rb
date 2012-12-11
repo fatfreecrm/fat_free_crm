@@ -86,9 +86,7 @@ describe "/opportunities/create" do
       end
       rendered.should include('$("create_opportunity").visualEffect("shake"')
       rendered.should include("crm.create_or_select_account")
-      rendered.should include("crm.date_select_popup")
     end
   end
 
 end
-
