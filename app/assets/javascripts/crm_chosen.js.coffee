@@ -20,9 +20,12 @@ crm.ensure_chosen_account = ->
 
 (($j) ->
 
-  # Initialize chosen select lists for certain fields
-  crm.init_chosen_fields = ->
-    $j("select[name*='assigned_to'], select[name*='[country]'], .chzn-select").each ->
-      new Chosen this, { allow_single_deselect: true }
+  # Initialize any chosen select lists after every Ajax response
+  Ajax.Responders.register({
+    onComplete: ->
+      $j("select[name*='assigned_to'], select[name*='[country]'], .chzn-select").each ->
+        unless $j(this).hasClass('chzn-done')
+          new Chosen this, { allow_single_deselect: true }
+  })
 
 ) (jQuery)
