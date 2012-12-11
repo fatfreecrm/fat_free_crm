@@ -208,3 +208,7 @@ zh-CN:
       create: "新增%{model}"
       update: "更新%{model}"
       submit: "储存%{model}"
+      
+  will_paginate:
+    previous_label: 前页
+    next_label: 后页

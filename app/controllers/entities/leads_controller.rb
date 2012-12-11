@@ -178,7 +178,6 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:leads_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:leads_outline]  = params[:outline]  if params[:outline]
 
     # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
     if params[:sort_by]
@@ -194,7 +193,10 @@ class LeadsController < EntitiesController
 
     @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
     set_options # Refresh options
-    render :index
+    
+    respond_with(@leads) do |format|
+      format.js { render :index }
+    end
   end
 
   # POST /leads/filter                                                     AJAX
@@ -202,7 +204,10 @@ class LeadsController < EntitiesController
   def filter
     session[:leads_filter] = params[:status]
     @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
-    render :index
+    
+    respond_with(@leads) do |format|
+      format.js { render :index }
+    end
   end
 
 private

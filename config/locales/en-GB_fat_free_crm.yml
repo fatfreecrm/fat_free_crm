@@ -749,7 +749,7 @@ en-GB:
   time:
     formats:
       mmddhhss: "%e %b at %l:%M%p"
-      mmddyyyy_hhmm: "%Y-%m-%d %H:%M"
+      mmddyyyy_hhmm: "%e %b %Y at %l:%M%p"
 
   # will_paginate translations copied from 'en-US'
   #----------------------------------------------------------------------------

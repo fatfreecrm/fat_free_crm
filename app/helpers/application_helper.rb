@@ -286,18 +286,6 @@ module ApplicationHelper
     )
   end
 
-  # Ajax helper to refresh current index page once the user changes pagination per_page.
-  #-------------------------------------------------------------------------------------
-  def redraw_pagination(value)
-    remote_function(
-      :url       => send("redraw_#{controller.controller_name}_path"),
-      :with      => "'per_page=#{value}'",
-      :condition => "jQuery('.per_page_options .current').html() != '#{value}'",
-      :loading   => "$('loading').show()",
-      :complete  => "$('loading').hide()"
-    )
-  end
-
   #----------------------------------------------------------------------------
   def options_menu_item(option, key, url = nil)
     name = t("option_#{key}")
@@ -334,12 +322,7 @@ module ApplicationHelper
       image_tag(model.avatar.image.url(args[:size]), args)
     else
       args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
-      if (Rails.env == 'production') and model.respond_to?(:email) and model.email.present?
-        args = { :gravatar => { :default => "#{Setting.host}#{image_path('avatar.jpg')}" } }.merge(args)
-        gravatar_image_tag(model.email, args)
-      else
-        image_tag("avatar.jpg", args)
-      end
+      gravatar_image_tag(model.email, args)
     end
 
   end
@@ -359,19 +342,14 @@ module ApplicationHelper
   def address_field(form, object, attribute, extra_styles)
     hint = "#{t(attribute)}..."
     if object.send(attribute).blank?
-      object.send("#{attribute}=", hint)
       form.text_field(attribute,
-        :hint    => true,
-        :style   => "margin-top: 6px; color:silver; #{extra_styles}",
-        :onfocus => "crm.hide_hint(this)",
-        :onblur  => "crm.show_hint(this, '#{hint}')"
+        :style   => "margin-top: 6px; #{extra_styles}",
+        :placeholder => hint
       )
     else
       form.text_field(attribute,
-        :hint    => false,
         :style   => "margin-top: 6px; #{extra_styles}",
-        :onfocus => "crm.hide_hint(this, '#{escape_javascript(object.send(attribute))}')",
-        :onblur  => "crm.show_hint(this, '#{hint}')"
+        :placeholder => hint
       )
     end
   end
@@ -439,7 +417,7 @@ module ApplicationHelper
   end
 
   def entity_filter_checkbox(name, value, count)
-    checked = (session["#{controller_name}_filter"] ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
+    checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
     values = %Q{$$("input[name='#{name}[]']").findAll(function (el) { return el.checked }).pluck("value")}
     params = h(%Q{"#{name}=" + #{values} + "&query=" + $("query").value})
 
@@ -485,7 +463,7 @@ module ApplicationHelper
   # Return name of current view
   def current_view_name
     controller = params['controller']
-    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     current_user.pref[:"#{controller}_#{action}_view"]
   end
 
@@ -493,7 +471,7 @@ module ApplicationHelper
   # Get template in current context with current view name
   def template_for_current_view
     controller = params['controller']
-    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     template = FatFreeCRM::ViewFactory.template_for_current_view(:controller => controller, :action => action, :name => current_view_name)
     template
   end
@@ -502,7 +480,7 @@ module ApplicationHelper
   # Generate buttons for available views given the current context
   def view_buttons
     controller = params['controller']
-    action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     views = FatFreeCRM::ViewFactory.views_for(:controller => controller, :action => action)
     return nil unless views.size > 1
     content_tag :ul, :class => 'format-buttons' do

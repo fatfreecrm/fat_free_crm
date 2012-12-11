@@ -163,14 +163,19 @@ class OpportunitiesController < EntitiesController
   def redraw
     @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
     set_options # Refresh options
-    render :index
+    
+    respond_with(@opportunities) do |format|
+      format.js { render :index }
+    end
   end
 
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
     @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
-    render :index
+    respond_with(@opportunities) do |format|
+      format.js { render :index }
+    end
   end
 
 private
@@ -221,7 +226,6 @@ private
   #----------------------------------------------------------------------------
   def set_params
     current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:opportunities_outline]  = params[:outline]  if params[:outline]
     current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:opportunities_filter] = params[:stage] if params[:stage]
   end

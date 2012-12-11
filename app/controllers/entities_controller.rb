@@ -180,7 +180,7 @@ private
     scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
     scope = scope.order(order)
-    scope = scope.paginate(pages)                 if wants.html? || wants.js? || wants.xml?
+    scope = scope.paginate(pages)                 unless (wants.xls? || wants.csv?)
     scope
   end
 
@@ -211,13 +211,13 @@ private
   def timeline(asset)
     (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
   end
-  
-  # Sets the current outline for viewing objects in this context
+
+  # Sets the current template view for entities in this context
   #----------------------------------------------------------------------------
   def set_view
     if params['view']
       controller = params['controller']
-      action = (params['action'] == 'redraw') ? 'index' : params['action'] # hack until we remove redraw method
+      action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
       current_user.pref[:"#{controller}_#{action}_view"] = params['view']
     end
   end

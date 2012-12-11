@@ -242,6 +242,7 @@ en-US:
   show_per_page: Show %{number} %{models} per page using %{fmt} format.
   sort_by: Sort by %{field}
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
+  entities_per_page: "%{entity} per page:"
   
   # Views -> Switcher
   contacts_index_long: Long format
@@ -831,7 +832,7 @@ en-US:
   time:
     formats:
       mmddhhss: "%b %e at %l:%M%p"
-      mmddyyyy_hhmm: "%m/%d/%Y %l:%M %p"
+      mmddyyyy_hhmm: "%e %b %Y at %l:%M%p"
 
   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------

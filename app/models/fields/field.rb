@@ -103,7 +103,7 @@ class Field < ActiveRecord::Base
     when 'date'
       value && value.strftime(I18n.t("date.formats.mmddyy"))
     when 'datetime'
-      value && value.strftime(I18n.t("time.formats.mmddhhss"))
+      value && value.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
     when 'check_boxes'
       value.select(&:present?).in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value
     else
