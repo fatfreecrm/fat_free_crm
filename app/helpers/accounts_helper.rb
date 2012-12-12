@@ -67,4 +67,51 @@ module AccountsHelper
     account_select(options).html_safe +
     form.text_field(:name, :style => 'width:324px; display:none;')
   end
+
+  # Output account url for a given contact
+  # - a helper so it is easy to override in plugins that allow for several accounts
+  #----------------------------------------------------------------------------
+  def account_with_url_for(contact)
+    contact.account ? link_to(h(contact.account.name), account_path(contact.account)) : ""
+  end
+
+  # Output account with title and department
+  # - a helper so it is easy to override in plugins that allow for several accounts
+  #----------------------------------------------------------------------------
+  def account_with_title_and_department(contact)
+    text = if !contact.title.blank? && contact.account
+        # works_at: "{{h(job_title)}} at {{h(company)}}"
+        content_tag :div, t(:works_at, :job_title => h(contact.title), :company => account_with_url_for(contact)).html_safe
+      elsif !contact.title.blank?
+        content_tag :div, h(contact.title)
+      elsif contact.account
+        content_tag :div, account_with_url_for(contact)
+      end
+    text << t(:department_small, h(contact.department)) unless contact.department.blank?
+    text
+  end
+  
+  # "title, department at Account name" used in index_brief and index_long
+  # - a helper so it is easy to override in plugins that allow for several accounts
+  #----------------------------------------------------------------------------
+  def brief_account_info(contact)
+    text = ""
+    title = contact.title
+    department = contact.department
+    account = contact.account
+    account_text = ""
+    account_text = link_to_if(can?(:read, account), h(account.name), account_path(account)) if account.present?
+
+    text << if title.present? && department.present?
+          t(:account_with_title_department, :title => h(title), :department => h(department), :account => account_text)
+        elsif title.present?
+          t(:account_with_title, :title => h(title), :account => account_text)
+        elsif department.present?
+          t(:account_with_title, :title => h(department), :account => account_text)
+        else
+          ""
+        end
+    text.html_safe
+  end
+  
 end

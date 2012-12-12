@@ -16,13 +16,7 @@
   .indentslim
     = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
     %tt
-      - if contact.title? && contact.department?
-        == #{contact.title}, #{contact.department}
-      - else
-        = contact.title if contact.title?
-
-      - if (account = contact.account) and account.name?
-        == #{t :at} #{link_to_if can?(:read, account), account.name, account_path(account)}
+      = brief_account_info(contact)
 
       - if (lead = contact.lead) and lead.referred_by?
         &ndash;
