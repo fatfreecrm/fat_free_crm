@@ -1,5 +1,6 @@
 - class_name = commentable.class.name.underscore
 - id_prefix = "#{class_name}_#{commentable.id}"
+- @comment = @comment || Comment.new
 .comment.highlight.new_comment{ :id => "#{id_prefix}_comment_new" }
   - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == current_user.id }.compact
   - if notification_emails_configured? && subscribed_users.any?
