@@ -44,6 +44,7 @@ Version.class_eval do
       where(({:event     => options[:event]} if options[:event])).
       where(({:whodunnit => options[:user].to_s}  if options[:user])).
       where('versions.created_at >= ?', Time.zone.now - (options[:duration] || 2.days)).
+      limit(options[:max]).
       default_order
     end
 

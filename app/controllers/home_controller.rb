@@ -104,6 +104,7 @@ class HomeController < ApplicationController
     options[:event]    ||= activity_event
     options[:user]     ||= activity_user
     options[:duration] ||= activity_duration
+    options[:max]      ||= 500
 
     Version.latest(options).visible_to(current_user)
   end
