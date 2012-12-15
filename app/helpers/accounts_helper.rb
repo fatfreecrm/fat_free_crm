@@ -108,6 +108,8 @@ module AccountsHelper
           t(:account_with_title, :title => h(title), :account => account_text)
         elsif department.present?
           t(:account_with_title, :title => h(department), :account => account_text)
+        elsif account_text.present?
+          t(:works_at, :job_title => "", :company => account_text)
         else
           ""
         end
