@@ -13,6 +13,14 @@ en-US:
     sort: "sort"
     asc: "ascending"
     desc: "descending"
+
+    submit: Search
+    add_group: Add a group of filters
+    group_first: Show results where %{combinator} of the following match
+    group_rest: ...and where %{combinator} of the following match
+    add_condition: Add a filter
+    remove_condition: Remove filter
+
     predicates:
       eq: "is"
       eq_any: "is any"

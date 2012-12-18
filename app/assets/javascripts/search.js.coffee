@@ -1,7 +1,7 @@
 (($) ->
 
   $ ->
-    $("#advanced_search").search_form()
+    $("#advanced_search").ransack_search_form()
 
     # For basic search, remove placeholder text on focus, restore on blur
     $('#query').focusin (e) ->
