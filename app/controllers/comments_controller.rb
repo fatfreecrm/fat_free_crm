@@ -112,10 +112,9 @@ class CommentsController < ApplicationController
 private
 
   #----------------------------------------------------------------------------
-    def extract_commentable_name(params)
-      commentable = params.keys.select{|x| /_id/ =~ x}.first
-      commentable.sub('_id', '') if commentable
-    end
+  def extract_commentable_name(params)
+    params.keys.detect {|x| x =~ /_id$/ }.try(:sub, /_id$/, '')
+  end
 
   #----------------------------------------------------------------------------
   def update_commentable_session

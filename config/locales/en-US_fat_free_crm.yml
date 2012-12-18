@@ -626,15 +626,9 @@ en-US:
   quick_find: Quick find
   welcome: Welcome
 
-  # Views -> Advanced Search.
+  # Advanced search
   accounts_advanced_search: Accounts Advanced search
   advanced_search: Advanced search
-  advanced_search_submit: Search
-  advanced_search_add_group: Add a group of filters
-  advanced_search_group_first: Show results where %{combinator} of the following match
-  advanced_search_group_rest: ...and where %{combinator} of the following match
-  advanced_search_add_condition: Add a filter
-  advanced_search_remove_condition: Remove filter
 
   # Views -> Comments.
   #----------------------------------------------------------------------------
