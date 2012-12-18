@@ -18,7 +18,7 @@
 class CommentsController < ApplicationController
   before_filter :require_user
 
-  COMMENTABLE = %w(account_id campaign_id contact_id lead_id opportunity_id task_id).freeze
+
 
   # GET /comments
   # GET /comments.json
@@ -112,10 +112,10 @@ class CommentsController < ApplicationController
 private
 
   #----------------------------------------------------------------------------
-  def extract_commentable_name(params)
-    commentable = (params.keys & COMMENTABLE).first
-    commentable.sub('_id', '') if commentable
-  end
+    def extract_commentable_name(params)
+      commentable = params.keys.select{|x| /_id/ =~ x}.first
+      commentable.sub('_id', '') if commentable
+    end
 
   #----------------------------------------------------------------------------
   def update_commentable_session
