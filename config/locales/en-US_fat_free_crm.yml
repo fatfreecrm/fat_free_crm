@@ -167,6 +167,17 @@ en-US:
           maxlength: "^%{field} is too long."
           endbeforestart: "^%{field} cannot end before it begins."
 
+    attribute_options:
+      opportunity:
+        stage:
+          prospecting: Prospecting
+          analysis: Analysis
+          presentation: Presentation
+          proposal: Proposal
+          negotiation: Negotiation
+          final_review: Final Review
+          won: Closed/Won
+          lost: Closed/Lost
 
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions
@@ -231,7 +242,7 @@ en-US:
   sort_by: Sort by %{field}
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
   entities_per_page: "%{entity} per page:"
-  
+
   # Views -> Switcher
   contacts_index_long: Long format
   contacts_index_brief: Brief format
