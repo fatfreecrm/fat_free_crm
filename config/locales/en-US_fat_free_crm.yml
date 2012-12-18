@@ -281,7 +281,6 @@ en-US:
   born_on: Born on
   reports_to: Reports to
   access: Access
-  contacts_account: Contact's account
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
@@ -294,6 +293,7 @@ en-US:
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Account
+  account_id: Account
   select_an_account: Select an Account
   account_small: account
   account_summary: Account Summary
@@ -538,6 +538,7 @@ en-US:
   subject_opportunity: opportunity
   subject_task: task
   subject_user: user
+  tag_list: Tags
   create_past_participle: Record Creations
   view_past_participle: Views
   update_past_participle: Updates
@@ -707,6 +708,11 @@ en-US:
     unset_html: %{attr} unset
     change_html: %{attr} changed from %{from} to %{to}
     anonymous: anonymous
+  account_contact_id: Account id
+  account_contact_name: Account name
+  user_id: User id
+  created_at: Created at
+  updated_at: Updated at
 
   # Export.
   #----------------------------------------------------------------------------
