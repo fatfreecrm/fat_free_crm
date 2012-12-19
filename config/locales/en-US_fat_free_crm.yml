@@ -640,6 +640,9 @@ en-US:
   # Advanced search
   accounts_advanced_search: Accounts Advanced search
   advanced_search: Advanced search
+  search_results_count:
+    one: Search found %{count} result.
+    other: Search found %{count} results.
 
   # Views -> Comments.
   #----------------------------------------------------------------------------

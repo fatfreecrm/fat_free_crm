@@ -47,6 +47,9 @@
     margin-bottom: 7px;
     margin-top: 3px;
   }
+  
+  #advanced_search .fields.sort { float:right; }
+
 }
 
 .defaultTextActive { color: #a1a1a1; }
@@ -68,4 +71,9 @@
   margin-left: 4px;
   margin-bottom: 5px;
   cursor: pointer;
+}
+
+#search_results_count {
+  text-align: left;
+  padding-top: 4px;
 }

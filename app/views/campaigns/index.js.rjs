@@ -5,3 +5,4 @@ else
 end
 page[:paginate].replace_html :partial => "shared/paginate_with_per_page"
 page[:export].replace_html render(:partial => "shared/export")
+page[:search_results_count].replace_html t('search_results_count', :count => @search_results_count)

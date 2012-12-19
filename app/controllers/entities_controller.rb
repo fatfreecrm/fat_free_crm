@@ -142,6 +142,8 @@ private
 
   def ransack_search
     @ransack_search ||= load_ransack_search
+    @ransack_search.build_sort
+    @ransack_search
   end
 
   # Get list of records for a given model class.
@@ -151,35 +153,38 @@ private
     self.current_page  = options[:page]                        if options[:page]
     query, tags        = parse_query_and_tags(options[:query])
     self.current_query = query
-    order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
-
-    per_page = if options[:per_page]
-      options[:per_page] == 'all' ? ransack_search.result(:distinct => true).count : options[:per_page]
-    else
-      current_user.pref[:"#{controller_name}_per_page"]
-    end
-
-    pages = {
-      :page     => current_page,
-      :per_page => per_page
-    }
-
-    # Use default processing if no hooks are present. Note that comma-delimited
-    # export includes deleted records, and the pagination is enabled only for
-    # plain HTTP, Ajax and XML API requests.
+    advanced_search = params[:q].present?
     wants = request.format
 
+    scope = entities.merge(ransack_search.result(:distinct => true))
+
     # Get filter from session, unless running an advanced search
-    unless params[:q]
+    unless advanced_search
       filter = session[:"#{controller_name}_filter"].to_s.split(',')
+      scope = scope.state(filter) if filter.present?
     end
 
-    scope = entities.merge(ransack_search.result(:distinct => true))
-    scope = scope.state(filter)                   if filter.present?
     scope = scope.text_search(query)              if query.present?
     scope = scope.tagged_with(tags, :on => :tags) if tags.present?
-    scope = scope.order(order)
-    scope = scope.paginate(pages)                 unless (wants.xls? || wants.csv?)
+
+    # Ignore this order when doing advanced search
+    unless advanced_search
+      order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
+      scope = scope.order(order)
+    end
+
+    @search_results_count = scope.count
+
+    # Pagination is disabled for xls and csv requests
+    unless (wants.xls? || wants.csv?)
+      per_page = if options[:per_page]
+        options[:per_page] == 'all' ? @search_results_count : options[:per_page]
+      else
+        current_user.pref[:"#{controller_name}_per_page"]
+      end
+      scope = scope.paginate(:page => current_page, :per_page => per_page)
+    end
+    
     scope
   end
 
