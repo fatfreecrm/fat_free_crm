@@ -418,6 +418,20 @@ var crm = {
     this.autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", this.base_url + "/" + controller + "/auto_complete", {
       frequency: 0.25,
       parameters: (related) ? ('related=' + related) : null,
+      onShow: function(element, update) {
+        // overridding onShow to include a fix for IE browsers
+        // see https://prototype.lighthouseapp.com/projects/8887/tickets/263-displayinline-fixes-positioning-of-autocomplete-results-div-in-ie8
+        update.style.display = (Prototype.Browser.IE) ? 'inline':'absolute';
+        // below is default onShow from controls.js
+        if(!update.style.position || update.style.position=='absolute') {
+          update.style.position = 'absolute';
+          Position.clone(element, update, {
+            setHeight: false,
+            offsetTop: element.offsetHeight
+          });
+        }
+        Effect.Appear(update,{duration:0.15});
+      },
       afterUpdateElement: function(text, el) {
         if (el.id) {      // Autocomplete entry found.
           if (related) {  // Attach to related asset.
