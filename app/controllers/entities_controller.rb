@@ -142,7 +142,7 @@ private
 
   def ransack_search
     @ransack_search ||= load_ransack_search
-    @ransack_search.build_sort
+    @ransack_search.build_sort if @ransack_search.sorts.empty?
     @ransack_search
   end
 
