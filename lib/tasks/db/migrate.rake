@@ -19,6 +19,7 @@ Rake::Task.remove("db:migrate:status") # (Clears task so that it can be extended
 
 namespace :db do
   namespace :migrate do
+  
     desc "Display status of migrations, including plugins"
     task :status => :environment do
       def find_migrations(path)
@@ -75,4 +76,3 @@ namespace :db do
 
   end
 end
-

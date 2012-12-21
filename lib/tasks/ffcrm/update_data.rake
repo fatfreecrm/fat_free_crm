@@ -15,123 +15,62 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require 'fileutils' 
-
 namespace :ffcrm do
-  namespace :config do
-    desc "Setup database.yml"
-    task :copy_database_yml do
-      filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"      
-      orig, dest = FatFreeCRM.root.join(filename), Rails.root.join('config/database.yml')
-      unless File.exists?(dest)
-        puts "Copying #{filename} to config/database.yml ..."
-        FileUtils.cp orig, dest
-      end
-    end
-  end
-
-  namespace :settings do
-    desc "Clear settings from database (reset to default)"
-    task :clear => :environment do
-      puts "== Clearing settings table..."
-
-      # Truncate settings table
-      ActiveRecord::Base.establish_connection(Rails.env)
-      if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
-        ActiveRecord::Base.connection.execute("DELETE FROM settings")
-      else # mysql and postgres
-        ActiveRecord::Base.connection.execute("TRUNCATE settings")
-      end
-
-      puts "===== Settings table has been cleared."
-    end
-
-    desc "Show current settings in the database"
-    task :show => :environment do
-      ActiveRecord::Base.establish_connection(Rails.env)
-      names = ActiveRecord::Base.connection.select_values("SELECT name FROM settings ORDER BY name")
-      names.each do |name|
-        puts "\n#{name}:\n  #{Setting.send(name).inspect}"
-      end
-    end
-  end
-
-  desc "Prepare the database"
-  task :setup => :environment do
-    if ENV["PROCEED"] != 'true' and ActiveRecord::Migrator.current_version > 0
-      puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
-      proceed = false
-      loop do
-        print "Continue [yes/no]: "
-        proceed = STDIN.gets.strip
-        break unless proceed.blank?
-      end
-      return unless proceed =~ /y(?:es)*/i # Don't continue unless user typed y(es)
-    end
-    Rake::Task["db:migrate:reset"].invoke
-    # Migrating plugins is not part of Rails 3 yet, but it is coming. See
-    # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
-    Rake::Task["db:migrate:plugins"].invoke rescue nil
-    Rake::Task["ffcrm:setup:admin"].invoke
-  end
-
-  namespace :setup do
-    desc "Create admin user"
-    task :admin => :environment do
-      username, password, email = ENV["USERNAME"], ENV["PASSWORD"], ENV["EMAIL"]
-      unless username && password && email
-        puts "\nTo create the admin user you will be prompted to enter username, password,"
-        puts "and email address. You might also specify the username of existing user.\n"
-        loop do
-          username ||= "system"
-          print "\nUsername [#{username}]: "
-          reply = STDIN.gets.strip
-          username = reply unless reply.blank?
-
-          password ||= "manager"
-          print "Password [#{password}]: "
-          echo = lambda { |toggle| return if RUBY_PLATFORM =~ /mswin/; system(toggle ? "stty echo && echo" : "stty -echo") }
-          begin
-            echo.call(false)
-            reply = STDIN.gets.strip
-            password = reply unless reply.blank?
-          ensure
-            echo.call(true)
-          end
-
-          loop do
-            print "Email: "
-            email = STDIN.gets.strip
-            break unless email.blank?
-          end
-
-          puts "\nThe admin user will be created with the following credentials:\n\n"
-          puts "  Username: #{username}"
-          puts "  Password: #{'*' * password.length}"
-          puts "     Email: #{email}\n\n"
-          loop do
-            print "Continue [yes/no/exit]: "
-            reply = STDIN.gets.strip
-            break unless reply.blank?
-          end
-          break if reply =~ /y(?:es)*/i
-          redo if reply =~ /no*/i
-          puts "No admin user was created."
-          exit
-        end
-      end
-      User.reset_column_information # Reload the class since we've added new fields in migrations.
-      user = User.find_by_username(username) || User.new
-      user.update_attributes(:username => username, :password => password, :email => email)
-      user.update_attribute(:admin, true) # Mass assignments don't work for :admin because of the attr_protected
-      user.update_attribute(:suspended_at, nil) # Mass assignments don't work for :suspended_at because of the attr_protected
-      puts "Admin user has been created."
-    end
-  end
-
-  desc "Update country codes to ISO 3166-1"
   namespace :update_data do
-    task :update_country_codes_to_iso3166_1 => :environment do
+
+    #
+    # Important note about countries. Please read carefully!
+    #
+    # The country mapping in lib/plugins/country_select/lib/country_select.rb
+    # was found to be wrong. E.g. Australia was originally mapped to AS, which is
+    # officially the ISO code for American Samoa. (This is just one example!)
+    # From this point on, it will be mapped to AU, the correct ISO code for Australia.
+    # It is critical that you run 'rake ffcrm:update_data:fix_countries' to fix your address data.
+    #
+    # However, please note, this task should only ever be run ONCE!
+    #
+    # If you run it multiple times on the same database then you will mess up your existing
+    # address data. E.g. running once will map AS -> AU (Australia) and AU -> AT (Austria). If you run
+    # that again, it will map all Australian countries to Austria!! (...and so on for all the
+    # other mappings that have changed.)
+    #
+    # This message is also included in a migration and checks whether it has run before.
+    # i.e. if Setting.have_run_country_migration has been set.
+    # If not, it asks you to run this rake task.
+    #
+    desc "Update country codes to ISO 3166-1"
+    task :fix_countries => :environment do
+    
+      message = """This task is only designed to run once and we think you've run this before!!!
+
+Please read the following carefully!
+
+The country mapping in lib/plugins/country_select/lib/country_select.rb
+was found to be wrong. E.g. Australia was originally mapped to AS, which is
+officially the ISO code for American Samoa. (This is just one example!)
+From this point on, it will be mapped to AU, the correct ISO code for Australia.
+It is critical that you run 'rake ffcrm:update_data:fix_countries' to fix your address data.
+
+However, please note, this task should only ever be run ONCE!
+
+If you run it multiple times on the same database then you will mess up your existing
+address data. E.g. running once will map AS -> AU (Australia) and AU -> AT (Austria). If you run
+that again, it will map all Australian countries to Austria!! (...and so on for all the
+other mappings that have changed.)
+
+This message is also included in a migration and checks whether it has run before.
+i.e. if Setting.have_run_country_migration has been set. If not, it asks you to run this rake task.
+
+If you really want to run it again, you will have to set Setting.have_run_country_migration = false
+in a console and continue. This is strongly discouraged. You have been warned!
+
+"""
+      
+      if Setting.have_run_country_migration == true
+        puts message
+        exit
+      end
+    
       convert_table = [
         ["Aland Islands", "FI", "AX"],
         ["Algeria", "AG", "DZ"],
@@ -277,30 +216,19 @@ namespace :ffcrm do
         ["Zambia", "ZA", "ZM"],
         ["Zimbabwe", "ZI", "ZW"],
         ["United States", "USA", "US"],
-        ["United States", "United States", "US"],
-        ["Argentina", "Argentina", "AR"],
-        ["Australia", "Australia", "AU"],
-        ["Brasil", "Brasil", "BR"],
-        ["Canada", "Canada", "CA"],
-        ["Finland", "Finland", "FI"],
-        ["France", "France", "FR"],
-        ["Germany", "Germany", "DE"],
-        ["Italy", "Italy", "IT"],
-        ["Japan", "Japan", "JP"],
-        ["Mexico", "Mexico", "MX"],
-        ["Norway", "Norway", "NO"],
-        ["Poland", "Poland", "PL"],
-        ["Portugal", "Portugal", "PT"],
-        ["Spain", "Spain", "ES"],
-        ["Sweden", "Sweden", "SE"],
-        ["Russia", "Russia", "RU"],
-        ["United Kingdom", "United Kingdom", "GB"]
       ]
 
       addresses_to_update = []
 
+      # e.g. convert AS -> AU and Australia -> AU
+      # SELECT "addresses".* FROM "addresses" 
+      #    WHERE (("addresses"."country" = 'AU' OR "addresses"."country" = 'Australia'))
       convert_table.each { |ct|
-        tmp = Address.where(:country => ct[1])
+        t=Address.arel_table
+        scope = t[:country].eq(ct[0]) # Australia
+        scope = scope.or(t[:country].eq(ct[1])) # AU
+
+        tmp = Address.where(scope)
         tmp.map{ |t| t.country=ct[2] }
         
         unless tmp.blank?
@@ -308,17 +236,21 @@ namespace :ffcrm do
         end
       }
 
-      begin
-        addresses_to_update.each { |address_arr|
-          address_arr.each { |address|
-            address.save!
+      Address.transaction do
+        begin
+          addresses_to_update.each { |address_arr|
+            address_arr.each { |address|
+              address.save!
+            }
           }
-        }  
-      rescue Exception => e
-        ActiveRecord::Rollback
-        puts e
+          Setting.have_run_country_migration = true
+        rescue Exception => e
+          ActiveRecord::Rollback
+          puts e
+        end
       end
 
     end
   end
+
 end
