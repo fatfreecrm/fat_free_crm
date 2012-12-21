@@ -72,7 +72,7 @@ in a console and continue. This is strongly discouraged. You have been warned!
       end
     
       convert_table = [
-        ["Aland Islands", "FI", "AX"],
+        #["Aland Islands", "FI", "AX"], # this clashed with FI for Finland. We'll prefer Finland.
         ["Algeria", "AG", "DZ"],
         ["American Samoa", "AQ", "AS"],
         ["Andorra", "AN", "AD"],
