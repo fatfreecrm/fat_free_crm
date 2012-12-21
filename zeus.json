@@ -1,0 +1,21 @@
+{
+  "command": "ruby -rubygems -rzeus/rails -eZeus.go",
+
+  "plan": {
+    "boot": {
+      "default_bundle": {
+        "development_environment": {
+          "prerake": {"rake": []},
+          "runner": ["r"],
+          "console": ["c"],
+          "server": ["s"],
+          "generate": ["g"],
+          "dbconsole": []
+        },
+        "test_environment": {
+          "test_helper": {"test": ["rspec", "testrb"]}
+        }
+      }
+    }
+  }
+}
