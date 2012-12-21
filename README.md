@@ -93,6 +93,8 @@ This is the best way to deploy Fat Free CRM if you need to add plugins or make a
 
 ## Upgrading from previous versions of Fat Free CRM
 
+If you are upgrading from version 0.11.3 (Dec 21st 2012) or below, please see an [important fix for country data](https://github.com/fatfreecrm/fat_free_crm/wiki/The-Countries-Problem-and-How-to-Fix-It)
+
 If you are upgrading from version 0.10.1 or below to the latest Rails 3.x version, your database schema
 needs to be updated.
 
