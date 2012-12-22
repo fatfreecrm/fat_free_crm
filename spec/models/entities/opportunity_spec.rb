@@ -28,7 +28,7 @@ describe Opportunity do
 
   it "should create a new instance given valid attributes" do
     @account = FactoryGirl.create(:account)
-    Opportunity.create!(:name => "Opportunity", :account => @account)
+    Opportunity.create!(:name => "Opportunity", :account => @account, :stage => OPPORTUNITY_STATUSES.first)
   end
 
   it "should be possible to create opportunity with the same name" do
@@ -98,7 +98,7 @@ describe Opportunity do
     it "should find non-closed opportunities" do
       Opportunity.delete_all
       @opportunities = [
-        FactoryGirl.create(:opportunity, :stage => nil,        :amount => 1),
+        FactoryGirl.create(:opportunity, :stage => "prospecting", :amount => 1),
         FactoryGirl.create(:opportunity, :stage => "analysis", :amount => 1),
         FactoryGirl.create(:opportunity, :stage => "won",      :amount => 2),
         FactoryGirl.create(:opportunity, :stage => "won",      :amount => 2),
@@ -205,11 +205,11 @@ describe Opportunity do
     context "visible_on_dashboard" do
       before :each do
         @user = FactoryGirl.create(:user)
-        @o1 = FactoryGirl.create(:opportunity_in_pipeline, :user => @user)
-        @o2 = FactoryGirl.create(:opportunity_in_pipeline, :user => @user, :assignee => FactoryGirl.create(:user))
-        @o3 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => @user)
-        @o4 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
-        @o5 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => @user)
+        @o1 = FactoryGirl.create(:opportunity_in_pipeline, :user => @user, :stage => 'prospecting')
+        @o2 = FactoryGirl.create(:opportunity_in_pipeline, :user => @user, :assignee => FactoryGirl.create(:user), :stage => 'prospecting')
+        @o3 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'prospecting')
+        @o4 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user), :stage => 'prospecting')
+        @o5 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'prospecting')
         @o6 = FactoryGirl.create(:opportunity, :assignee => @user, :stage => 'won')
         @o7 = FactoryGirl.create(:opportunity, :assignee => @user, :stage => 'lost')
       end
