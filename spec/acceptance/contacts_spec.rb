@@ -38,7 +38,6 @@ feature 'Contacts', %q{
 
     click_link "Dashboard"
     page.should have_content('Bill Murray created contact Testy McTest')
-    page.should have_content('Bill Murray created address on Testy McTest')
     page.should have_content('Bill Murray created comment on Testy McTest')
   end
 
