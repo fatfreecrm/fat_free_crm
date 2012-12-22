@@ -118,6 +118,54 @@ describe User do
     @user.should_not be_suspended
   end
 
+  context "scopes" do
+    describe "have_assigned_opportunities" do
+      before :each do
+        @user1 = FactoryGirl.create(:user)
+        FactoryGirl.create(:open_opportunity, :assignee => @user1)
+
+        @user2 = FactoryGirl.create(:user)
+
+        @user3 = FactoryGirl.create(:user)
+        FactoryGirl.create(:opportunity, :assignee => @user3, :stage => 'won')
+
+        @user4 = FactoryGirl.create(:user)
+        FactoryGirl.create(:opportunity, :assignee => @user4, :stage => 'lost')
+      end
+
+      it "includes users with assigned opportunities" do
+        User.have_assigned_opportunities.should include(@user1)
+      end
+
+      it "excludes users without any assigned opportunities" do
+        User.have_assigned_opportunities.should_not include(@user2)
+      end
+
+      it "excludes users with opportunities that have been won or lost" do
+        User.have_assigned_opportunities.should_not include(@user3)
+        User.have_assigned_opportunities.should_not include(@user4)
+      end
+    end
+  end
+
+  context "instance methods" do
+    describe "assigned_opportunities" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+        @opportunity1 = FactoryGirl.create(:opportunity, :assignee => @user)
+        @opportunity2 = FactoryGirl.create(:opportunity, :assignee => FactoryGirl.create(:user))
+      end
+
+      it "includes opportunities assigned to user" do
+        @user.assigned_opportunities.should include(@opportunity1)
+      end
+
+      it "does not include opportunities assigned to another user" do
+        @user.assigned_opportunities.should_not include(@opportunity2)
+      end
+    end
+  end
+
   describe "Setting I18n.locale" do
     before do
       @user = FactoryGirl.create(:user)

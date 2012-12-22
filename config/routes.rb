@@ -144,6 +144,9 @@ Rails.application.routes.draw do
     collection do
       match :auto_complete
     end
+    collection do
+      get :opportunities_overview
+    end
   end
 
   namespace :admin do

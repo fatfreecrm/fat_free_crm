@@ -76,7 +76,6 @@ feature 'Leads', %q{
     page.should have_content('+44 0987 654321')
 
     click_link "Dashboard"
-    page.should have_content("Bill Murray viewed lead Mrs Lead")
     page.should have_content("Bill Murray updated lead Mrs Lead")
   end
 

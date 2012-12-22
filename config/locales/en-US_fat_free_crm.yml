@@ -24,6 +24,7 @@ en-US:
   tab_accounts: Accounts
   tab_contacts: Contacts
   tab_opportunities: Opportunities
+  tab_team: Team
 
   admin_tab_groups: Groups
   admin_tab_users: Users
@@ -523,6 +524,11 @@ en-US:
   total_tasks: Total %{value}
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
+
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Unassigned Opportunities
+  no_opportunities_found: There are currently no outstanding opportunities.
 
   # Views -> Home.
   #----------------------------------------------------------------------------

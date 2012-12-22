@@ -10,11 +10,18 @@ describe HomeController do
     end
 
     it "should get a list of activities" do
-      @activity = FactoryGirl.create(:version, :item => FactoryGirl.create(:account, :user => current_user))
-      controller.should_receive(:get_activities).once.and_return([ @activity ])
+      activity = FactoryGirl.create(:version, :item => FactoryGirl.create(:account, :user => current_user))
+      controller.should_receive(:get_activities).once.and_return([ activity ])
+      get :index
+      assigns[:activities].should == [ activity ]
+    end
+
+    it "should not include views in the list of activities" do
+      activity = FactoryGirl.create(:version, :item => FactoryGirl.create(:account, :user => @current_user), :event => "view")
+      controller.should_receive(:get_activities).once.and_return([])
 
       get :index
-      assigns[:activities].should == [ @activity ]
+      assigns[:activities].should == []
     end
 
     it "should get a list of my tasks ordered by due_at" do
@@ -44,8 +51,8 @@ describe HomeController do
       opportunity_3 = FactoryGirl.create(:opportunity, :name => "Third Opportunity", :closes_on => 5.days.from_now, :assigned_to => current_user.id, :stage => 'proposal')
       opportunity_4 = FactoryGirl.create(:opportunity, :name => "Fourth Opportunity", :closes_on => 50.days.from_now, :assigned_to => nil, :user_id => current_user.id, :stage => 'proposal')
 
-      FactoryGirl.create(:opportunity, :name => "Someone else's Opportunity", :assigned_to => FactoryGirl.create(:user).id, :stage => 'proposal')
-      FactoryGirl.create(:opportunity, :name => "Not my opportunity", :assigned_to => FactoryGirl.create(:user).id, :stage => 'proposal')
+      FactoryGirl.create(:opportunity_in_pipeline, :name => "Someone else's Opportunity", :assigned_to => FactoryGirl.create(:user).id, :stage => 'proposal')
+      FactoryGirl.create(:opportunity_in_pipeline, :name => "Not my opportunity", :assigned_to => FactoryGirl.create(:user).id, :stage => 'proposal')
 
       get :index
       assigns[:my_opportunities].should == [opportunity_3, opportunity_2, opportunity_1, opportunity_4]

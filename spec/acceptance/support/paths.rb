@@ -31,6 +31,9 @@ module NavigationHelpers
   
   def groups_page
     admin_groups_path
+
+  def opportunity_overview_page
+    opportunities_overview_users_path
   end
 end
 

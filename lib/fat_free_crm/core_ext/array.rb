@@ -58,11 +58,17 @@ class Array
 
     klass = first.class
     columns = klass.columns.map(&:name).reject { |column| column =~ /password|token/ }
-
+    columns << 'tags'
     CSV.generate do |csv|
       csv << columns.map { |column| klass.human_attribute_name(column) }
       each do |item|
-        csv << columns.map { |column| item.send(column) }
+        csv << columns.map do |column|
+          if column == 'tags'
+            item.tag_list.join(' ')
+          else
+            item.send(column)
+          end
+        end
       end
     end
   end
