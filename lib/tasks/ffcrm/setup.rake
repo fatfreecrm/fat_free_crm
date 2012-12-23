@@ -15,46 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-require 'fileutils' 
-
 namespace :ffcrm do
-  namespace :config do
-    desc "Setup database.yml"
-    task :copy_database_yml do
-      filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"      
-      orig, dest = FatFreeCRM.root.join(filename), Rails.root.join('config/database.yml')
-      unless File.exists?(dest)
-        puts "Copying #{filename} to config/database.yml ..."
-        FileUtils.cp orig, dest
-      end
-    end
-  end
-
-  namespace :settings do
-    desc "Clear settings from database (reset to default)"
-    task :clear => :environment do
-      puts "== Clearing settings table..."
-
-      # Truncate settings table
-      ActiveRecord::Base.establish_connection(Rails.env)
-      if ActiveRecord::Base.connection.adapter_name.downcase == "sqlite"
-        ActiveRecord::Base.connection.execute("DELETE FROM settings")
-      else # mysql and postgres
-        ActiveRecord::Base.connection.execute("TRUNCATE settings")
-      end
-
-      puts "===== Settings table has been cleared."
-    end
-
-    desc "Show current settings in the database"
-    task :show => :environment do
-      ActiveRecord::Base.establish_connection(Rails.env)
-      names = ActiveRecord::Base.connection.select_values("SELECT name FROM settings ORDER BY name")
-      names.each do |name|
-        puts "\n#{name}:\n  #{Setting.send(name).inspect}"
-      end
-    end
-  end
 
   desc "Prepare the database"
   task :setup => :environment do
@@ -128,4 +89,5 @@ namespace :ffcrm do
       puts "Admin user has been created."
     end
   end
+  
 end

@@ -12,7 +12,7 @@ describe "/accounts/index" do
   end
 
   it "should render a proper account website link if an account is provided" do
-    assign(:accounts, [ FactoryGirl.create(:account, :website => 'www.fatfreecrm.com'), FactoryGirl.create(:account) ].paginate)
+    assign(:accounts, [ FactoryGirl.create(:account, :website => 'http://www.fatfreecrm.com'), FactoryGirl.create(:account) ].paginate)
     render
     rendered.should have_tag("a[href=http://www.fatfreecrm.com]")
   end

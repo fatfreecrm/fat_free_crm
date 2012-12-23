@@ -28,7 +28,7 @@ describe Opportunity do
 
   it "should create a new instance given valid attributes" do
     @account = FactoryGirl.create(:account)
-    Opportunity.create!(:name => "Opportunity", :account => @account)
+    Opportunity.create!(:name => "Opportunity", :account => @account, :stage => OPPORTUNITY_STATUSES.first)
   end
 
   it "should be possible to create opportunity with the same name" do
@@ -94,11 +94,11 @@ describe Opportunity do
     end
   end
 
-  describe "Named scopes" do
+  describe "Scopes" do
     it "should find non-closed opportunities" do
       Opportunity.delete_all
       @opportunities = [
-        FactoryGirl.create(:opportunity, :stage => nil,        :amount => 1),
+        FactoryGirl.create(:opportunity, :stage => "prospecting", :amount => 1),
         FactoryGirl.create(:opportunity, :stage => "analysis", :amount => 1),
         FactoryGirl.create(:opportunity, :stage => "won",      :amount => 2),
         FactoryGirl.create(:opportunity, :stage => "won",      :amount => 2),
@@ -109,6 +109,19 @@ describe Opportunity do
       Opportunity.won.sum(:amount).should      ==  4
       Opportunity.lost.sum(:amount).should     ==  6
       Opportunity.sum(:amount).should          == 12
+    end
+
+    context "unassigned" do
+      let(:unassigned_opportunity){ FactoryGirl.create(:opportunity, :assignee => nil)}
+      let(:assigned_opportunity){ FactoryGirl.create(:opportunity, :assignee => FactoryGirl.create(:user))}
+
+      it "includes unassigned opportunities" do
+        Opportunity.unassigned.should include(unassigned_opportunity)
+      end
+
+      it "does not include opportunities assigned to a user" do
+        Opportunity.unassigned.should_not include(assigned_opportunity)
+      end
     end
   end
 
@@ -192,13 +205,13 @@ describe Opportunity do
     context "visible_on_dashboard" do
       before :each do
         @user = FactoryGirl.create(:user)
-        @o1 = FactoryGirl.create(:opportunity, :user => @user, :stage => 'analysis')
-        @o2 = FactoryGirl.create(:opportunity, :user => @user, :assignee => FactoryGirl.create(:user), :stage => 'analysis')
-        @o3 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'analysis')
-        @o4 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user), :stage => 'analysis')
-        @o5 = FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'analysis')
-        @o6 = FactoryGirl.create(:opportunity, :user => @user, :stage => 'lost')
-        @o7 = FactoryGirl.create(:opportunity, :user => @user, :stage => 'won')
+        @o1 = FactoryGirl.create(:opportunity_in_pipeline, :user => @user, :stage => 'prospecting')
+        @o2 = FactoryGirl.create(:opportunity_in_pipeline, :user => @user, :assignee => FactoryGirl.create(:user), :stage => 'prospecting')
+        @o3 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'prospecting')
+        @o4 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user), :stage => 'prospecting')
+        @o5 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'prospecting')
+        @o6 = FactoryGirl.create(:opportunity, :assignee => @user, :stage => 'won')
+        @o7 = FactoryGirl.create(:opportunity, :assignee => @user, :stage => 'lost')
       end
 
       it "should show opportunities which have been created by the user and are unassigned" do
@@ -216,12 +229,9 @@ describe Opportunity do
       it "should not show opportunities which are created by the user but assigned" do
         Opportunity.visible_on_dashboard(@user).should_not include(@o2)
       end
-      
-      it "should not show opportunities which have been lost" do
+
+      it "does not include won or lost opportunities" do
         Opportunity.visible_on_dashboard(@user).should_not include(@o6)
-      end
-      
-      it "should not show opportunities which have been won" do
         Opportunity.visible_on_dashboard(@user).should_not include(@o7)
       end
     end
@@ -233,6 +243,16 @@ describe Opportunity do
 
       it "should show opportunities ordered by closes on" do
         Opportunity.by_closes_on.should == [o1, o3, o2]
+      end
+    end
+
+    context "by_amount" do
+      let(:o1) { FactoryGirl.create(:opportunity, :amount =>  50000) }
+      let(:o2) { FactoryGirl.create(:opportunity, :amount =>  10000) }
+      let(:o3) { FactoryGirl.create(:opportunity, :amount => 750000) }
+
+      it "should show opportunities ordered by amount" do
+        Opportunity.by_amount.should == [o3, o1, o2]
       end
     end
 

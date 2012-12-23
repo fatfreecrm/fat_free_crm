@@ -103,12 +103,7 @@ class Account < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def attach!(attachment)
     unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      attachment.notify_account_change(:from => nil, :to => self) if attachment.class == Contact
-      if attachment.class == Contact
-        attachment.account = self
-      else
-        self.send(attachment.class.name.tableize) << attachment
-      end
+      self.send(attachment.class.name.tableize) << attachment
     end
   end
 
@@ -118,7 +113,6 @@ class Account < ActiveRecord::Base
     if attachment.is_a?(Task)
       attachment.update_attribute(:asset, nil)
     else # Contacts, Opportunities
-      attachment.notify_account_change(:from => self, :to => nil) if attachment.class == Contact
       self.send(attachment.class.name.tableize).delete(attachment)
     end
   end

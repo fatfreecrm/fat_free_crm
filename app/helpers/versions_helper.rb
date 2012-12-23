@@ -29,17 +29,17 @@ module VersionsHelper
       first = change.first
       second = change.second
     end
-    [label, first, second]
-  end
 
-  # Parse the version record for when a contact's account has changed.
-  #----------------------------------------------------------------------------
-  def parse_account_contact_version(version)
-    label = t('contacts_account')
-    old_id, new_id = version.changeset[:account_contact_id]
-    old_name, new_name = version.changeset[:account_contact_name]
-    first  = old_id.nil? ? nil : link_to(h(old_name), account_path(:id => old_id))
-    second = new_id.nil? ? nil : link_to(h(new_name), account_path(:id => new_id))
+    # Find account and link to it.
+    if attr_name == 'account_id'
+      if first.present? and (account = Account.find_by_id(first))
+        first = link_to(h(account.name), account_path(account))
+      end
+      if second.present? and (account = Account.find_by_id(second))
+        second  = link_to(h(account.name), account_path(account))
+      end
+    end
+
     [label, first, second]
   end
 

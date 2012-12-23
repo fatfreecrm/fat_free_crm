@@ -28,8 +28,11 @@
 #
 
 class AccountContact < ActiveRecord::Base
-  belongs_to :contact
   belongs_to :account
-  validates_presence_of :contact_id, :account_id
-  validates_uniqueness_of :contact_id
+  belongs_to :contact
+  
+  has_paper_trail :meta => { :related => :contact }, :ignore => [ :id, :created_at, :updated_at, :contact_id ]
+  
+  validates :account_id, :presence => true
+
 end

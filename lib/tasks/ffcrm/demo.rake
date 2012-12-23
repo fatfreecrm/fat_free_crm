@@ -17,6 +17,7 @@
 
 namespace :ffcrm do
   namespace :demo do
+
     desc "Load demo data"
     task :load => :environment do
       # Load fixtures
@@ -70,5 +71,6 @@ namespace :ffcrm do
       Rake::Task["db:migrate:reset"].invoke
       Rake::Task["ffcrm:demo:load"].invoke
     end
+
   end
 end

@@ -30,6 +30,8 @@ Spork.prefork do
   Dir[File.dirname(__FILE__) + "/shared/*.rb"].each{ |f| require File.expand_path(f) }
 
   TASK_STATUSES = %w(pending assigned completed).freeze
+  OPPORTUNITY_STATUSES = %w(prospecting analysis presentation proposal negotiation final_review won lost).freeze
+  Setting[:opportunity_stage] = OPPORTUNITY_STATUSES
 
   I18n.locale = 'en-US'
 

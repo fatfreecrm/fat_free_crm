@@ -37,10 +37,10 @@ address_<%= i %>:
   city             : <%= city    = Faker::Address.city %>
   state            : <%= state   = Faker::Address.us_state_abbr %>
   zipcode          : <%= zipcode = Faker::Address.zip_code %>
-  country          : USA
+  country          : US
   full_address     : |
                       <%= street1 %>
                       <%= street2 %>
                       <%= "#{city}, #{state} #{zipcode}" %>
-                      USA
+                      US
 <% end %>

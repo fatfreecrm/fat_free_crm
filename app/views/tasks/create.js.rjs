@@ -35,8 +35,7 @@ if @task.valid?
   end
 
 else # Couldn't create the task -- validation failed.
-  page.call "crm.date_select_popup", :task_calendar, :task_bucket, Setting.task_calendar_with_time
   page[:create_task].visual_effect :shake, :duration => 0.25, :distance => 6
   page[:task_name].focus
-  page[:task_submit].enable
+  page << "$$('#new_task input[type=submit]').invoke('enable')"
 end

@@ -23,5 +23,9 @@ module AddressesHelper
     asset.send("build_#{type}".to_sym) if asset.send(type.to_sym).nil?
     asset.send(type.to_sym)
   end
+  
+  def priority_countries
+    Setting[:priority_countries]
+  end
 
 end

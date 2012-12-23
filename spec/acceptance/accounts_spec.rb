@@ -32,15 +32,13 @@ feature 'Accounts', %q{
     click_button 'Create Account'
 
     page.should have_content('My new account')
+    click_link 'My new account'
     page.should have_content('+1 2345 6789')
     page.should have_content('http://www.example.com')
-
-    click_link 'My new account'
     page.should have_content('This account is very important')
 
     click_link "Dashboard"
     page.should have_content("Bill Murray created account My new account")
-    page.should have_content("Bill Murray created address on My new account")
     page.should have_content("Bill Murray created comment on My new account")
   end
 
@@ -71,7 +69,6 @@ feature 'Accounts', %q{
     page.should have_content('A new account *editted*')
 
     click_link "Dashboard"
-    page.should have_content("Bill Murray viewed account A new account *editted*")
     page.should have_content("Bill Murray updated account A new account *editted*")
   end
 

@@ -22,6 +22,7 @@ en-GB:
   tab_accounts: Accounts
   tab_contacts: Contacts
   tab_opportunities: Opportunities
+  tab_team: Team
 
   admin_tab_groups: Groups
   admin_tab_users: Users
@@ -479,6 +480,11 @@ en-GB:
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
 
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Unassigned Opportunities
+  no_opportunities_found: There are currently no outstanding opportunities.
+
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: completed
@@ -757,7 +763,6 @@ en-GB:
     previous_label: "&#8592; Previous"
     next_label: "Next &#8594;"
     page_gap: "&hellip;"
-
     page_entries_info:
       single_page:
         zero: "No %{plural} found"

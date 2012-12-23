@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [ :new, :create ]
   before_filter :require_user, :only => [ :show, :redraw ]
-  before_filter :set_current_tab, :only => [ :show ] # Don't hightlight any tabs.
+  before_filter :set_current_tab, :only => [ :show, :opportunities_overview ] # Don't hightlight any tabs.
   before_filter :require_and_assign_user, :except => [ :new, :create, :show, :avatar, :upload_avatar ]
   before_filter :assign_given_or_current_user, :only => [ :show, :avatar, :upload_avatar, :edit, :update ]
 
@@ -149,7 +149,12 @@ class UsersController < ApplicationController
     render(:update) { |page| page.redirect_to user_path(current_user) }
   end
 
-private
+  def opportunities_overview
+    @users_with_opportunities = User.have_assigned_opportunities.order(:first_name)
+    @unassigned_opportunities = Opportunity.unassigned.pipeline.order(:stage)
+  end
+
+  private
 
   #----------------------------------------------------------------------------
   def require_and_assign_user

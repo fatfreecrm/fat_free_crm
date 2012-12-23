@@ -40,13 +40,15 @@ gem 'premailer', :require => false
 # Remove fat_free_crm dependency, to stop it from being auto-required too early.
 remove 'fat_free_crm'
 
-group :development, :test do
+group :development do
+  gem 'thin'
+  gem 'quiet_assets'
   # Uncomment the following two gems to deploy via Capistrano
   gem 'rvm-capistrano'
   gem 'capistrano_colors'
-  #gem 'passenger'
-  gem 'webrick', '~>1.3.1'
-  
+end
+
+group :development, :test do
   gem 'rspec-rails', '~> 2.9.0'
   gem 'headless'
   unless ENV["CI"]
@@ -82,9 +84,11 @@ end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'execjs'
-  gem 'therubyracer', :platform => :ruby  # C Ruby (MRI) or Rubinius, but NOT Windows
   gem 'uglifier',     '>= 1.0.3'
+  gem 'execjs'
+  unless ENV["CI"]
+    gem 'therubyracer', :platform => :ruby
+  end
 end
 
 gem 'turbo-sprockets-rails3'

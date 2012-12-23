@@ -148,6 +148,9 @@ Rails.application.routes.draw do
     collection do
       match :auto_complete
     end
+    collection do
+      get :opportunities_overview
+    end
   end
   
   resources :contact_groups, :id => /\d+/ do

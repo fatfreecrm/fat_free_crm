@@ -12,10 +12,6 @@
       = auto_link(version.event).html_safe
     %small= t('time_ago', time_ago_in_words(version.created_at))
     %tt
-      - if version.item_type == 'AccountContact'
-        - label, first, second = parse_account_contact_version(version)
+      - version.changeset.each do |attr_name, change|
+        - label, first, second = parse_version(attr_name, change)
         = render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second}
-      - else
-        - version.changeset.each do |attr_name, change|
-          - label, first, second = parse_version(attr_name, change)
-          = render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second}

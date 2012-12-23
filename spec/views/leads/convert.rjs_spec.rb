@@ -75,7 +75,6 @@ describe "/leads/convert" do
 
     render
     rendered.should include("crm.create_or_select_account")
-    rendered.should include('crm.date_select_popup("opportunity_closes_on")')
     rendered.should include('$("account_name").focus()')
   end
 

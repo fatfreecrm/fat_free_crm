@@ -596,7 +596,7 @@ describe OpportunitiesController do
       describe "updating campaign revenue (same campaign)" do
         it "should add to actual revenue when opportunity is closed/won" do
           @campaign = FactoryGirl.create(:campaign, :revenue => 1000)
-          @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign, :stage => nil, :amount => 1100, :discount => 100)
+          @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign, :stage => 'prospecting', :amount => 1100, :discount => 100)
 
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "won" }, :account => { :name => "Test Account" }
           @campaign.reload.revenue.to_i.should == 2000 # 1000 -> 2000
@@ -607,13 +607,13 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign, :stage => "won", :amount => 1100, :discount => 100)
           # @campaign.revenue is now $2000 since we created winning opportunity.
 
-          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => nil }, :account => { :name => "Test Account" }
+          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => 'prospecting' }, :account => { :name => "Test Account" }
           @campaign.reload.revenue.to_i.should == 1000 # Should be adjusted back to $1000.
         end
 
         it "should not update actual revenue when opportunity is not closed/won" do
           @campaign = FactoryGirl.create(:campaign, :revenue => 1000)
-          @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign, :stage => nil, :amount => 1100, :discount => 100)
+          @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign, :stage => 'prospecting', :amount => 1100, :discount => 100)
 
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "lost" }, :account => { :name => "Test Account" }
           @campaign.reload.revenue.to_i.should == 1000 # Stays the same.
@@ -623,7 +623,7 @@ describe OpportunitiesController do
       describe "updating campaign revenue (diferent campaigns)" do
         it "should update newly assigned campaign when opportunity is closed/won" do
           @campaigns = { :old => FactoryGirl.create(:campaign, :revenue => 1000), :new => FactoryGirl.create(:campaign, :revenue => 1000) }
-          @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaigns[:old], :stage => nil, :amount => 1100, :discount => 100)
+          @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaigns[:old], :stage => 'prospecting', :amount => 1100, :discount => 100)
 
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "won", :campaign_id => @campaigns[:new].id }, :account => { :name => "Test Account" }
 
@@ -636,14 +636,14 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaigns[:old], :stage => "won", :amount => 1100, :discount => 100)
           # @campaign.revenue is now $2000 since we created winning opportunity.
 
-          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => nil, :campaign_id => @campaigns[:new].id }, :account => { :name => "Test Account" }
+          xhr :put, :update, :id => @opportunity, :opportunity => { :stage => 'prospecting', :campaign_id => @campaigns[:new].id }, :account => { :name => "Test Account" }
           @campaigns[:old].reload.revenue.to_i.should == 1000 # Should be adjusted back to $1000.
           @campaigns[:new].reload.revenue.to_i.should == 1000 # Stays the same.
         end
 
         it "should not update campaigns when opportunity is not closed/won" do
           @campaigns = { :old => FactoryGirl.create(:campaign, :revenue => 1000), :new => FactoryGirl.create(:campaign, :revenue => 1000) }
-          @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaigns[:old], :stage => nil, :amount => 1100, :discount => 100)
+          @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaigns[:old], :stage => 'prospecting', :amount => 1100, :discount => 100)
 
           xhr :put, :update, :id => @opportunity, :opportunity => { :stage => "lost", :campaign_id => @campaigns[:new].id }, :account => { :name => "Test Account" }
           @campaigns[:old].reload.revenue.to_i.should == 1000 # Stays the same.

@@ -179,6 +179,17 @@ en-US:
           maxlength: "^%{field} is too long."
           endbeforestart: "^%{field} cannot end before it begins."
 
+    attribute_options:
+      opportunity:
+        stage:
+          prospecting: Prospecting
+          analysis: Analysis
+          presentation: Presentation
+          proposal: Proposal
+          negotiation: Negotiation
+          final_review: Final Review
+          won: Closed/Won
+          lost: Closed/Lost
 
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions
@@ -243,7 +254,7 @@ en-US:
   sort_by: Sort by %{field}
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
   entities_per_page: "%{entity} per page:"
-  
+
   # Views -> Switcher
   contacts_index_long: Long format
   contacts_index_brief: Brief format
@@ -368,6 +379,8 @@ en-US:
   shipping_address: Shipping address
   total_accounts: Total Folders
   website: Website
+  account_with_title_department: %{title}, %{department} at %{account}
+  account_with_title: %{title} at %{account}
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
@@ -571,6 +584,11 @@ en-US:
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
 
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Unassigned Opportunities
+  no_opportunities_found: There are currently no outstanding opportunities.
+
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: completed
@@ -596,6 +614,7 @@ en-US:
   subject_opportunity: opportunity
   subject_task: task
   subject_user: user
+  tag_list: Tags
   create_past_participle: Record Creations
   view_past_participle: Views
   update_past_participle: Updates
@@ -683,15 +702,12 @@ en-US:
   quick_find: Quick find
   welcome: Hi
 
-  # Views -> Advanced Search.
+  # Advanced search
   accounts_advanced_search: Accounts Advanced search
   advanced_search: Advanced search
-  advanced_search_submit: Search
-  advanced_search_add_group: Add a group of filters
-  advanced_search_group_first: Show results where %{combinator} of the following match
-  advanced_search_group_rest: ...and where %{combinator} of the following match
-  advanced_search_add_condition: Add a filter
-  advanced_search_remove_condition: Remove filter
+  search_results_count:
+    one: Search found %{count} result.
+    other: Search found %{count} results.
 
   # Views -> Comments.
   #----------------------------------------------------------------------------
@@ -768,6 +784,11 @@ en-US:
   
   # Contact -> Attendance History
   attendances: Attendance History
+  account_contact_id: Account id
+  account_contact_name: Account name
+  user_id: User id
+  created_at: Created at
+  updated_at: Updated at
 
   # Export.
   #----------------------------------------------------------------------------

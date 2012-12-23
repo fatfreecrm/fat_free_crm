@@ -10,7 +10,7 @@
         = col(t(:email), contact.email, false, true)
         = col(t(:phone), contact.phone)
       %tr
-        = col(t(:account), contact.account ? link_to(contact.account.name, url_for(contact.account)) : "")
+        = col(t(:account), account_with_url_for(contact))
         - assigned_to_user = User.find_by_id(contact.assigned_to)
         = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
       %tr

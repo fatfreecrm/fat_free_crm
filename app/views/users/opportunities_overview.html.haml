@@ -1,0 +1,16 @@
+= styles_for :opportunity
+
+#create_opportunity{ hidden }
+
+- if @users_with_opportunities.all.any? || @unassigned_opportunities.all.any?
+  %ul
+    = render :partial => "user_report", :collection => @users_with_opportunities
+    - if @unassigned_opportunities.all.any?
+      #unassigned
+        .title
+          %span#title
+            = t(:unassigned_opportunities)
+        %ul.list#opportunities
+          = render :partial => "opportunities/opportunity", :collection => @unassigned_opportunities
+- else
+  = t(:no_opportunities_found)

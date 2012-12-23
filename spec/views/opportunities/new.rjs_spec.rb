@@ -34,7 +34,6 @@ describe "/opportunities/new" do
       render
 
       rendered.should include('crm.flip_form("create_opportunity")')
-      rendered.should include('crm.date_select_popup("opportunity_closes_on")')
     end
   end
 
