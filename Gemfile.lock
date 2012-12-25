@@ -122,7 +122,6 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.7.5)
     kgio (2.7.4)
-    libv8 (3.11.8.4)
     libwebsocket (0.1.7.1)
       addressable
       websocket
@@ -315,7 +314,6 @@ DEPENDENCIES
   headless
   ice_cube
   jquery-rails
-  libv8
   mailchimp
   mandrill-rails
   mysql2 (= 0.3.10)

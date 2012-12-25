@@ -131,6 +131,15 @@ class ContactsController < EntitiesController
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Contact.my.find_by_id($1) || $1.to_i
     end
+    if params[:related]
+      model = params[:related].sub(/_\d+/, "")
+      id = params[:related].split('_').last #change required for models with _ in name e.g. contact_group
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
+    end
 
     respond_with(@contact)
   end
@@ -164,6 +173,16 @@ class ContactsController < EntitiesController
   # PUT /contacts/1
   #----------------------------------------------------------------------------
   def update
+    if params[:related]
+      model = params[:related].sub(/_\d+/, "")
+      id = params[:related].split('_').last #change required for models with _ in name e.g. contact_group
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
+    end
+    
     respond_with(@contact) do |format|
       unless @contact.update_with_account_and_permissions(params)
         @users = User.except(current_user)

@@ -1,25 +1,23 @@
 - is_marked = !@event_instance.attendances.where(:contact_id => contact.id).empty?
 - add_comment = false
-%li.attendance.highlight[contact]{:style => "#{is_marked ? 'background:honeydew;' : 'background:white;'}"}
-  
+%li[contact]{:class => (ipad? ? "attendance" : "attendance highlight"), :style => "#{is_marked ? 'background:honeydew;' : 'background:white;'}"}
   -#.strip.white #{t :other}
 
   %ul.tools
     = hook(:contact_tools_before, self, :contact => contact)
 
     - if can?(:update, contact)
-      = link_to_edit(contact)
+      = link_to_edit(contact, :related => "event_instance_#{@event_instance.id}")
 
     -# - if can?(:destroy, contact)
     -#       = link_to_delete(contact)
-    
 
-  - if is_marked
-    = check_box_tag dom_id(contact, :mark), 1, true, :onclick => link_to_unmark(contact, object)
-  - else
-    = check_box_tag dom_id(contact, :mark), 1, false, :onclick => link_to_mark(contact, object)
-
-  .thing= avatar_for(contact, :size => "16x16")
+  .thing
+    - if is_marked
+      = check_box_tag dom_id(contact, :mark), 1, true, :onclick => link_to_unmark(contact, @event_instance)
+    - else
+      = check_box_tag dom_id(contact, :mark), 1, false, :onclick => link_to_mark(contact, @event_instance)
+    = avatar_for(contact, :size => "16x16")
 
   .indentslim
     = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact

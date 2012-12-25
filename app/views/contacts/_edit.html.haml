@@ -1,7 +1,9 @@
 .remote
   = simple_form_for(@contact, :html => one_submit_only(:contact), :remote => true) do |f|
-    = link_to_close edit_contact_path(@contact)
+    = link_to_close edit_contact_path(@contact, :related => (@event_instance ? "event_instance_#{@event_instance.id.to_s}" : nil))
     = f.hidden_field :user_id
+    - if called_from_landing_page?(:event_instances)
+      = hidden_field_tag "related", (@event_instance ? "event_instance_#{@event_instance.id.to_s}" : nil)
 
     = f.error_messages :object_name => t('contact')
 
@@ -15,4 +17,4 @@
     .buttonbar
       = f.submit t(:save_contact), :onclick => "crm.save_contact()"
       #{t :or}
-      = link_to_cancel edit_contact_path(@contact)
+      = link_to_cancel edit_contact_path(@contact, :related => (@event_instance ? "event_instance_#{@event_instance.id.to_s}" : nil))

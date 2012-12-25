@@ -15,9 +15,9 @@
     
 
   - if is_marked
-    = check_box_tag dom_id(contact, :mark), 1, true, :onclick => link_to_unmark(contact, object)
+    = check_box_tag dom_id(contact, :mark), 1, true, :onclick => link_to_unmark(contact, @event_instance)
   - else
-    = check_box_tag dom_id(contact, :mark), 1, false, :onclick => link_to_mark(contact, object)
+    = check_box_tag dom_id(contact, :mark), 1, false, :onclick => link_to_mark(contact, @event_instance)
 
   .thing= avatar_for(contact, :size => "16x16")
 

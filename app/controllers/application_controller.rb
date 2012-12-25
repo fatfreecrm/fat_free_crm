@@ -70,6 +70,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :mobile_device?
   
+  def ipad?
+    request.user_agent =~/iPad/
+  end
+  helper_method :ipad?
+  
   def prepare_for_mobile
     prepend_view_path Rails.root + 'app' + 'views_mobile'
     @tabless_layout = true
