@@ -45,7 +45,6 @@ class TasksController < ApplicationController
   def new
     @view = params[:view] || "pending"
     @task = Task.new
-    @users = User.except(current_user).by_name
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
 
@@ -66,7 +65,6 @@ class TasksController < ApplicationController
   def edit
     @view = params[:view] || "pending"
     @task = Task.tracked_by(current_user).find(params[:id])
-    @users = User.except(current_user).by_name
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?

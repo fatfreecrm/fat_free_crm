@@ -120,11 +120,7 @@ class CampaignsController < EntitiesController
     respond_with(@campaign) do |format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @campaign.access = params[:campaign][:access] if params[:campaign][:access]
-      if @campaign.update_attributes(params[:campaign])
-        get_data_for_sidebar if called_from_index_page?
-      else
-        @users = User.except(current_user) # Need it to redraw [Edit Campaign] form.
-      end
+      get_data_for_sidebar if @campaign.update_attributes(params[:campaign]) and called_from_index_page?
     end
   end
 

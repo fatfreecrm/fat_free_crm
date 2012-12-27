@@ -42,7 +42,6 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def new
     @lead.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
-    @users = User.except(current_user)
     get_campaigns
 
     if params[:related]
@@ -60,7 +59,6 @@ class LeadsController < EntitiesController
   # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @users = User.except(current_user)
     get_campaigns
 
     if params[:previous].to_s =~ /(\d+)\z/
@@ -73,7 +71,6 @@ class LeadsController < EntitiesController
   # POST /leads
   #----------------------------------------------------------------------------
   def create
-    @users = User.except(current_user)
     get_campaigns
     @comment_body = params[:comment_body]
 
@@ -99,7 +96,6 @@ class LeadsController < EntitiesController
       if @lead.update_with_lead_counters(params[:lead])
         update_sidebar
       else
-        @users = User.except(current_user)
         @campaigns = Campaign.my.order('name')
       end
     end
@@ -119,7 +115,6 @@ class LeadsController < EntitiesController
   # GET /leads/1/convert
   #----------------------------------------------------------------------------
   def convert
-    @users = User.except(current_user)
     @account = Account.new(:user => current_user, :name => @lead.company, :access => "Lead")
     @accounts = Account.my.order('name')
     @opportunity = Opportunity.new(:user => current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
@@ -134,7 +129,6 @@ class LeadsController < EntitiesController
   # PUT /leads/1/promote
   #----------------------------------------------------------------------------
   def promote
-    @users = User.except(current_user)
     @account, @opportunity, @contact = @lead.promote(params)
     @accounts = Account.my.order('name')
     @stage = Setting.unroll(:opportunity_stage)

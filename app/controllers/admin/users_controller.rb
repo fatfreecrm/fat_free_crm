@@ -61,7 +61,6 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.new(params[:user])
     @user.admin = (admin == "1") unless admin.nil?
     @user.save_without_session_maintenance
-    @users = get_users
 
     respond_with(@user)
   end

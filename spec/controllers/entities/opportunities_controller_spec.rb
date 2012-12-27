@@ -222,13 +222,11 @@ describe OpportunitiesController do
     it "should expose a new opportunity as @opportunity and render [new] template" do
       @opportunity = Opportunity.new(:user => current_user, :access => Setting.default_access, :stage => "prospecting")
       @account = Account.new(:user => current_user, :access => Setting.default_access)
-      @users = [ FactoryGirl.create(:user) ]
       @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
 
       xhr :get, :new
       assigns[:opportunity].attributes.should == @opportunity.attributes
       assigns[:account].attributes.should == @account.attributes
-      assigns[:users].should == @users
       assigns[:accounts].should == @accounts
       response.should render_template("opportunities/new")
     end
@@ -270,7 +268,6 @@ describe OpportunitiesController do
       @account = FactoryGirl.create(:account, :user => current_user)
       @opportunity = FactoryGirl.create(:opportunity, :id => 42, :user => current_user, :campaign => nil,
                              :account => @account)
-      @users = [ FactoryGirl.create(:user) ]
       @stage = Setting.unroll(:opportunity_stage)
       @accounts = [ @account ]
 
@@ -279,7 +276,6 @@ describe OpportunitiesController do
       assigns[:opportunity].should == @opportunity
       assigns[:account].attributes.should == @opportunity.account.attributes
       assigns[:accounts].should == @accounts
-      assigns[:users].should == @users
       assigns[:stage].should == @stage
       assigns[:previous].should == nil
       response.should render_template("opportunities/edit")
@@ -450,13 +446,11 @@ describe OpportunitiesController do
                                      :account => @account)
         Opportunity.stub!(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
-        @users = [ FactoryGirl.create(:user) ]
         @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
 
         # Expect to redraw [create] form with blank account.
         xhr :post, :create, :opportunity => {}, :account => { :user_id => current_user.id }
         assigns(:opportunity).should == @opportunity
-        assigns(:users).should == @users
         assigns(:account).attributes.should == @account.attributes
         assigns(:accounts).should == @accounts
         response.should render_template("opportunities/create")
@@ -468,12 +462,10 @@ describe OpportunitiesController do
                                      :account => @account)
         Opportunity.stub!(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
-        @users = [ FactoryGirl.create(:user) ]
 
         # Expect to redraw [create] form with selected account.
         xhr :post, :create, :opportunity => {}, :account => { :id => 42, :user_id => current_user.id }
         assigns(:opportunity).should == @opportunity
-        assigns(:users).should == @users
         assigns(:account).should == @account
         assigns(:accounts).should == [ @account ]
         response.should render_template("opportunities/create")

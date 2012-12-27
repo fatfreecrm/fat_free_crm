@@ -16,7 +16,6 @@
 #------------------------------------------------------------------------------
 
 class ContactsController < EntitiesController
-  before_filter :get_users, :only => [ :new, :create, :edit, :update ]
   before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
 
   # GET /contacts
@@ -96,7 +95,6 @@ class ContactsController < EntitiesController
   def update
     respond_with(@contact) do |format|
       unless @contact.update_with_account_and_permissions(params)
-        @users = User.except(current_user)
         if @contact.account
           @account = Account.find(@contact.account.id)
         else

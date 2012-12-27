@@ -26,11 +26,10 @@
             %td= spacer
             %td
               .label.req #{t :assigned_to}:
-              = user_select(:account, @users, current_user)
+              = user_select(:account, all_users, current_user)
     = render "leads/opportunity"
     = render "leads/convert_permissions"
     .buttonbar
       = f.submit t(:convert_lead)
       #{t :or}
       = link_to_cancel convert_lead_path(@lead)
-

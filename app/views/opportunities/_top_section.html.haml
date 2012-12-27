@@ -42,7 +42,7 @@
           %td= spacer
           %td
             .label.req #{t :assigned_to}:
-            = user_select(:opportunity, @users, current_user)
+            = user_select(:opportunity, all_users, current_user)
 
         - if Setting.background_info && Setting.background_info.include?(:opportunity)
           %tr

@@ -174,13 +174,11 @@ describe ContactsController do
       @contact = Contact.new(:user => current_user,
                              :access => Setting.default_access)
       @account = Account.new(:user => current_user)
-      @users = [ FactoryGirl.create(:user) ]
       @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
 
       xhr :get, :new
       assigns[:contact].attributes.should == @contact.attributes
       assigns[:account].attributes.should == @account.attributes
-      assigns[:users].should == @users
       assigns[:accounts].should == @accounts
       assigns[:opportunity].should == nil
       response.should render_template("contacts/new")
@@ -219,12 +217,10 @@ describe ContactsController do
 
     it "should expose the requested contact as @contact and render [edit] template" do
       @contact = FactoryGirl.create(:contact, :id => 42, :user => current_user, :lead => nil)
-      @users = [ FactoryGirl.create(:user) ]
       @account = Account.new(:user => current_user)
 
       xhr :get, :edit, :id => 42
       assigns[:contact].should == @contact
-      assigns[:users].should == @users
       assigns[:account].attributes.should == @account.attributes
       assigns[:previous].should == nil
       response.should render_template("contacts/edit")
@@ -343,7 +339,6 @@ describe ContactsController do
       before(:each) do
         @contact = FactoryGirl.build(:contact, :first_name => nil, :user => current_user, :lead => nil)
         Contact.stub!(:new).and_return(@contact)
-        @users = [ FactoryGirl.create(:user) ]
       end
 
       # Redraw [create] form with selected account.
@@ -353,7 +348,6 @@ describe ContactsController do
         # This redraws [create] form with blank account.
         xhr :post, :create, :contact => {}, :account => { :id => 42, :user_id => current_user.id }
         assigns(:contact).should == @contact
-        assigns(:users).should == @users
         assigns(:account).should == @account
         assigns(:accounts).should == [ @account ]
         response.should render_template("contacts/create")
@@ -366,7 +360,6 @@ describe ContactsController do
         request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
         xhr :post, :create, :contact => { :first_name => nil }, :account => { :name => nil, :user_id => current_user.id }
         assigns(:contact).should == @contact
-        assigns(:users).should == @users
         assigns(:account).should == @account
         assigns(:accounts).should == [ @account ]
         response.should render_template("contacts/create")
@@ -378,7 +371,6 @@ describe ContactsController do
 
         xhr :post, :create, :contact => { :first_name => nil }, :account => { :name => nil, :user_id => current_user.id }
         assigns(:contact).should == @contact
-        assigns(:users).should == @users
         assigns(:account).attributes.should == @account.attributes
         assigns(:accounts).should == @accounts
         response.should render_template("contacts/create")
@@ -462,13 +454,11 @@ describe ContactsController do
       it "should not update the contact, but still expose it as @contact and render [update] template" do
         @contact = FactoryGirl.create(:contact, :id => 42, :user => current_user, :first_name => "Billy", :lead => nil)
         @account = Account.new(:user => current_user)
-        @users = [ FactoryGirl.create(:user) ]
 
         xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => {}
         assigns[:contact].reload.first_name.should == "Billy"
         assigns[:contact].should == @contact
         assigns[:account].attributes.should == @account.attributes
-        assigns[:users].should == @users
         response.should render_template("contacts/update")
       end
 

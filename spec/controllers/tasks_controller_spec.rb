@@ -147,13 +147,11 @@ describe TasksController do
       account = FactoryGirl.create(:account, :user => current_user)
       @task = FactoryGirl.build(:task, :user => current_user, :asset => account)
       Task.stub!(:new).and_return(@task)
-      @users = [ FactoryGirl.create(:user) ]
       @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.unroll(:task_category)
 
       xhr :get, :new
       assigns[:task].should == @task
-      assigns[:users].should == @users
       assigns[:bucket].should == @bucket
       assigns[:category].should == @category
       response.should render_template("tasks/new")
@@ -194,13 +192,11 @@ describe TasksController do
     it "should expose the requested task as @task and render [edit] template" do
       @asset = FactoryGirl.create(:account, :user => current_user)
       @task = FactoryGirl.create(:task, :user => current_user, :asset => @asset)
-      @users = [ FactoryGirl.create(:user) ]
       @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.unroll(:task_category)
 
       xhr :get, :edit, :id => @task.id
       assigns[:task].should == @task
-      assigns[:users].should == @users
       assigns[:bucket].should == @bucket
       assigns[:category].should == @category
       assigns[:asset].should == @asset
