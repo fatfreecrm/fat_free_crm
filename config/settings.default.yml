@@ -49,7 +49,7 @@
 # incoming request, so you’ll need to provide all of the details needed to
 # generate a URL.
 #
-# :host: "http://www.example.com"
+# :host: "www.example.com"
 #
 :host: ""
 
@@ -84,6 +84,7 @@
   :authentication             : :plain
   :user_name                  : ""
   :password                   : ""
+#  :delivery_method            : :smtp   # This is the default. Can be :smtp, :sendmail, :test, :file
 
 
 # Settings for the Email dropbox (IMAP)
