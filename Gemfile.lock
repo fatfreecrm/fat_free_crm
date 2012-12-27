@@ -187,15 +187,20 @@ GEM
       thor (>= 0.14.6, < 2.0)
     raindrops (0.8.0)
     rake (0.9.2.2)
-    ransack_chronic (1.0.0)
+    ransack (0.7.2)
+      actionpack (~> 3.0)
+      activerecord (~> 3.0)
+      polyamorous (~> 0.5.0)
+    ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
     ransack_ffcrm (0.7.1)
       actionpack (~> 3.0)
       activerecord (~> 3.0)
       chronic (~> 0.6.7)
       polyamorous (~> 0.5.0)
-    ransack_ui (1.0.1)
-      ransack_chronic
+    ransack_ui (1.0.2)
+      ransack
+      ransack_chronic (>= 1.1.0)
     rbx-require-relative (0.0.9)
     rdoc (3.12)
       json (~> 1.4)
@@ -307,7 +312,7 @@ DEPENDENCIES
   rails (~> 3.2)
   rails3-jquery-autocomplete
   ransack_ffcrm (~> 0.7.1)
-  ransack_ui (>= 1.0.1)
+  ransack_ui (>= 1.0.2)
   responds_to_parent (>= 1.1.0)
   rspec-rails (~> 2.9.0)
   ruby-debug
