@@ -11,10 +11,10 @@ describe "/accounts/index" do
     login_and_assign
   end
 
-  it "should render a proper account website link if an account is provided" do
-    assign(:accounts, [ FactoryGirl.create(:account, :website => 'http://www.fatfreecrm.com'), FactoryGirl.create(:account) ].paginate)
+  it "should render account name" do
+    assign(:accounts, [ FactoryGirl.create(:account, :name => 'New Media Inc'), FactoryGirl.create(:account) ].paginate)
     render
-    rendered.should have_tag("a[href=http://www.fatfreecrm.com]")
+    rendered.should have_tag('a', :text => "New Media Inc")
   end
 
   it "should render list of accounts if list of accounts is not empty" do
