@@ -60,7 +60,6 @@ end
 
 group :test do
   gem 'capybara', '~> 1.1' # v2 and up is not r1.8 compatible.
-  gem 'spork'
   gem 'database_cleaner'
   gem "acts_as_fu", "~> 0.0.8"
 
