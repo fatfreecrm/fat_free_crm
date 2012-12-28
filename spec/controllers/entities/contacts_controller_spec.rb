@@ -302,7 +302,7 @@ describe ContactsController do
 
         xhr :post, :create, :contact => { :first_name => "Billy", :last_name => "Bones" }, :account => { :name => "Hello world" }
         assigns(:contact).should == @contact
-        assigns(:contact).account.name.should == "Hello world"
+        assigns(:contact).reload.account.name.should == "Hello world"
         response.should render_template("contacts/create")
       end
 
