@@ -10,17 +10,14 @@ env:
 
 gemfile: Gemfile.ci
 
-# Only run a cross-section of 4 builds.
+# Only run a cross-section of 4 builds majoring on r1.9.3
 matrix:
   exclude:
     - rvm: 1.9.2
       env: DB=sqlite
       gemfile: Gemfile.ci
-    - rvm: 1.9.3
-      env: DB=sqlite
-      gemfile: Gemfile.ci
-    - rvm: 1.9.3
-      env: DB=mysql
+    - rvm: 1.9.2
+      env: DB=postgres
       gemfile: Gemfile.ci
 
 bundler_args: --path=vendor/bundle --without heroku
