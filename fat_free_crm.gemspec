@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.email = ['mike@fatfreecrm.com', 'nathan@fatfreecrm.com', 'warp@fatfreecrm.com', 'steveyken@gmail.com']
   gem.files = `git ls-files`.split("\n")
   gem.version = FatFreeCRM::VERSION::STRING
+  gem.required_ruby_version = '>= 1.9'
 
   gem.add_dependency 'rails',               '~> 3.2'
   gem.add_dependency 'prototype-rails'

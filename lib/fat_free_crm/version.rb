@@ -1,5 +1,5 @@
 # Fat Free CRM
-# Copyright (C) 2008-2011 by Michael Dvorkin
+# Copyright (C) 2008-2013 by Michael Dvorkin
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -18,8 +18,8 @@
 module FatFreeCRM
   module VERSION #:nodoc:
     MAJOR = 0
-    MINOR = 11
-    TINY  = 4
+    MINOR = 12
+    TINY  = 0
     PRE   = nil
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
