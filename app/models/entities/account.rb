@@ -103,7 +103,11 @@ class Account < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def attach!(attachment)
     unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      self.send(attachment.class.name.tableize) << attachment
+      if attachment.class == Contact
+        attachment.account = self
+      else
+        self.send(attachment.class.name.tableize) << attachment
+      end
     end
   end
 
