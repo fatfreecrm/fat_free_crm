@@ -127,8 +127,10 @@ class Contact < ActiveRecord::Base
   alias :name :full_name
   
   def has_mailchimp_subscription?
-    !self.cf_weekly_emails.blank? || self.cf_supporter_emails.include?("TT Email") || self.cf_supporter_emails.include?("Prayer Points") 
-    #TODO: This seems to not validate correctly - all new users are added to the chimp, should be just ones with a subscription
+    !self.cf_weekly_emails[0].blank? || 
+      self.cf_supporter_emails.include?("TT Email") || 
+      self.cf_supporter_emails.include?("Prayer Points") || 
+      !self.email.blank?
   end
   
   def last_attendance_at_event_category(event_type)
@@ -143,11 +145,12 @@ class Contact < ActiveRecord::Base
     save_account(params)
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
     self.contact_groups << ContactGroup.find(params[:contact_group]) unless params[:contact_group].blank?
+    result = self.save
     if has_mailchimp_subscription?
       mailchimp_lists unless self.invalid?
     end
+    result
     
-    self.save
   end
 
   # Backend handler for [Update Contact] form (see contact/update).
