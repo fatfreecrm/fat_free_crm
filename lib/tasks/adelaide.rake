@@ -35,7 +35,7 @@ namespace :ffcrm do
           :cf_member => !row[:member].blank?,
           :cf_year_commenced => row[:year_commenced],
           :phone => row[:phone],
-          :mobile => row[:mobile],
+          :mobile => row[:mobile].gsub(/[\(\) ]/, ""),
           #address?
           :email => row[:email_1],
           :alt_email => row[:email_2],
@@ -93,7 +93,7 @@ namespace :ffcrm do
           :cf_member => !row[:cf_member].blank?,
           :cf_year_commenced => row[:cf_year_commenced],
           :phone => row[:phone],
-          :mobile => row[:mobile],
+          :mobile => row[:mobile].gsub(/[\(\) ]/, ""),
           #address?
           :cf_campus => row[:campus],
           :cf_course_1 => row[:course],
