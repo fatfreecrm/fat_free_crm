@@ -5,6 +5,9 @@
 .title_tools
   #buttons
     = view_buttons
+  -if model_name == "contact"
+    .create_asset
+      = link_to_inline(:active_folders, send("options_#{model_name}s_path"), :text => "Active Folders")
   .create_asset
     = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), :text => t("create_#{model_name}".to_sym))
 

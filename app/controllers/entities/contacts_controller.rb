@@ -18,6 +18,7 @@ class ContactsController < EntitiesController
   before_filter :get_users, :only => [ :new, :create, :edit, :update ]
   before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
   before_filter :check_for_mobile
+  before_filter :get_data_for_sidebar, :only => :index
   
   def single_access_allowed?
     (action_name == "mailchimp_webhooks")
@@ -155,6 +156,7 @@ class ContactsController < EntitiesController
       if @contact.save_with_account_and_permissions(params)
         @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
+        get_data_for_sidebar
       else
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
@@ -191,6 +193,8 @@ class ContactsController < EntitiesController
         else
           @account = Account.new(:user => current_user)
         end
+      else
+        get_data_for_sidebar
       end
     end
   end
@@ -246,6 +250,19 @@ class ContactsController < EntitiesController
       format.js { render :index }
     end
   end
+  
+  # POST /contacts/filter                                                  AJAX
+  #----------------------------------------------------------------------------
+  def filter
+    session[:contacts_filter] = params[:folder]
+    @contacts = get_contacts(:page => 1)
+    render :index
+  end
+  
+  def options
+    get_data_for_sidebar
+    render :options
+  end
 
   private
   #----------------------------------------------------------------------------
@@ -259,6 +276,18 @@ class ContactsController < EntitiesController
   def set_options
     super
     @naming = (current_user.pref[:contacts_naming]   || Contact.first_name_position) unless params[:cancel].true?
+  end
+  
+  #----------------------------------------------------------------------------
+  def get_data_for_sidebar
+    @folder_total = Hash[
+      Account.my.map do |key|
+        [ key, key.contacts.count ]
+      end
+    ]
+    organized = @folder_total.values.sum
+    @folder_total[:all] = Contact.my.count
+    @folder_total[:other] = @folder_total[:all] - organized
   end
 
   #----------------------------------------------------------------------------

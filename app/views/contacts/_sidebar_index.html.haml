@@ -1,0 +1,22 @@
+.filters#filters
+  -#= render "shared/search"
+  .caption Active Folders
+  = hook(:index_contact_sidebar_bottom, self)
+  - Account.my.each do |key|
+    .check_box{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = @folder_total[key]
+      = contact_folder_checbox(key, @folder_total[key])
+      = label_tag(key, t(key.name))
+
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @folder_total[:other]
+    = contact_folder_checbox("other", @folder_total[:other])
+    = label_tag(:other, t(:other))
+
+  .check_box
+    %div{:style => "float:right;"}
+      %b= @folder_total[:all]
+    %b total contacts
+  = hook(:index_contact_sidebar_bottom, self)

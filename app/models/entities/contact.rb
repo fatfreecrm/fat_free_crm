@@ -47,7 +47,7 @@
 #  background_info :string(255)
 #  skype           :string(128)
 #
-
+include NetworkHelper
 class Contact < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :lead
@@ -96,7 +96,11 @@ class Contact < ActiveRecord::Base
     
     where( name_query.nil? ? other : name_query.or(other) )
   }
-
+  
+  scope :state, lambda { |filters|
+    joins(:account).where('accounts.id IN (?)' + (filters.delete('other') ? ' OR accounts.id IS NULL ' : ''), filters)
+  }
+  
   uses_user_permissions
   acts_as_commentable
   uses_comment_extensions
@@ -203,7 +207,7 @@ class Contact < ActiveRecord::Base
           #merge_hash["EMAIL"] = original_email
           merge_hash["EMAIL"] = self.email
           merge_hash["GROUPINGS"] = [{:name => "Interested in...", :groups => grouping.join(", ")}] unless (grouping == [])
-          merge_hash["OPTIN_IP"] = "114.30.109.159" if new_chimp_contact
+          merge_hash["OPTIN_IP"] = public_ip if new_chimp_contact #public_ip => see network_helper.rb
           merge_hash["OPTIN_TIME"] = Time.now if new_chimp_contact
           merge_hash["FNAME"] = self.first_name
           merge_hash["LNAME"] = self.last_name

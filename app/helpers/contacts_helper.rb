@@ -16,6 +16,22 @@
 #------------------------------------------------------------------------------
 
 module ContactsHelper
+  
+  # Sidebar checkbox control for filtering contacts by folder.
+  #----------------------------------------------------------------------------
+  def contact_folder_checbox(folder, count)
+    id = (folder == "other") ? "other" : folder.id
+    checked = (session[:contacts_filter] ? session[:contacts_filter].split(",").include?(id.to_s) : count.to_i > 0)
+    onclick = remote_function(
+      :url      => { :action => :filter },
+      :with     => h(%Q/"folder=" + $$("input[name='folder[]']").findAll(function (el) { return el.checked }).pluck("value")/),
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    
+    check_box_tag("folder[]", id, checked, :id => id, :onclick => onclick)
+  end
+  
   # Contact summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def contact_summary(contact)
