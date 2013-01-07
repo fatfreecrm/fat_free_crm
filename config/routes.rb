@@ -82,6 +82,7 @@ Rails.application.routes.draw do
       get :opportunities
       get :contact_groups
       get :confirm
+      post :graduate
     end
   end
 

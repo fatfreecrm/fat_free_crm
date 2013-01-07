@@ -33,6 +33,20 @@ module ContactsHelper
   end
   
   #----------------------------------------------------------------------------
+  def link_to_graduate(record, options = {})
+    object = record.is_a?(Array) ? record.last : record
+    confirm = options[:confirm] || nil
+
+    link_to("Gradutate",
+      options[:url] || graduate_contact_path(record),
+      :method => :post,
+      :remote => true,
+      #:onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1"),
+      :confirm => confirm
+    )
+  end
+  
+  #----------------------------------------------------------------------------
   def link_to_confirm(contact)
     link_to(t(:delete) + "?", confirm_contact_path(contact), :method => :get, :remote => true)
   end

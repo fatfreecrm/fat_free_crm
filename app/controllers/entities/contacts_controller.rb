@@ -215,6 +215,17 @@ class ContactsController < EntitiesController
       format.js   { respond_to_destroy(:ajax) }
     end
   end
+  
+  def graduate
+    @contact.cf_weekly_emails = [""]
+    @contact.cf_year_graduated = Setting.graduate[:year]
+    @contact.account = Account.find_by_name(Setting.graduate[:account])
+    @contact.save
+    
+    respond_with(@contact) do |format|
+      get_data_for_sidebar
+    end
+  end
 
   def attendances
     
