@@ -81,6 +81,7 @@ Rails.application.routes.draw do
       post :unsubscribe
       get :opportunities
       get :contact_groups
+      get :confirm
     end
   end
 
@@ -237,7 +238,13 @@ Rails.application.routes.draw do
   
   namespace :admin do
     resources :groups
-
+    
+    resources :imports do
+      collection do
+        post :import
+      end
+    end
+    
     resources :users do
       collection do
         post :auto_complete

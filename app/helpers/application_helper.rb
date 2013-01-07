@@ -500,5 +500,14 @@ module ApplicationHelper
       end.join('').html_safe
     end
   end
+  
+  def link_to_confirm_delete(model)
+    link_to(t(:yes_button),
+      url_for(model),
+      :method  => :delete,
+      :remote  => true,
+      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+    )
+  end
 
 end

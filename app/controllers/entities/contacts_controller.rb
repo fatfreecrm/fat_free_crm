@@ -24,6 +24,10 @@ class ContactsController < EntitiesController
     (action_name == "mailchimp_webhooks")
   end
   
+  def confirm
+    respond_with(@contact)
+  end
+  
   def mailchimp_webhooks
     if request.post?
       list_id = params[:data][:list_id]
@@ -206,6 +210,7 @@ class ContactsController < EntitiesController
     @contact.destroy
 
     respond_with(@contact) do |format|
+      get_data_for_sidebar
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
     end

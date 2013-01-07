@@ -32,6 +32,11 @@ module ContactsHelper
     check_box_tag("folder[]", id, checked, :id => id, :onclick => onclick)
   end
   
+  #----------------------------------------------------------------------------
+  def link_to_confirm(contact)
+    link_to(t(:delete) + "?", confirm_contact_path(contact), :method => :get, :remote => true)
+  end
+  
   # Contact summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def contact_summary(contact)

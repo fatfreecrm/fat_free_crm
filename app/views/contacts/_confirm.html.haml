@@ -1,0 +1,5 @@
+.confirm[@contact, :confirm]
+  #{t :contact_confirm_delete}
+  #{t :delete} <b>#{@contact.full_name}</b>?
+  = link_to_confirm_delete(@contact) << " : "
+  = link_to_function(t(:no_button), "crm.flick('#{dom_id(@contact, :confirm)}', 'remove')")
