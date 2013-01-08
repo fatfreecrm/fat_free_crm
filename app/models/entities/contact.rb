@@ -137,6 +137,10 @@ class Contact < ActiveRecord::Base
       !self.email.blank?
   end
   
+  def has_subscription?
+    !self.cf_weekly_emails[0].blank? || !self.cf_supporter_emails[0].blank?
+  end
+  
   def last_attendance_at_event_category(event_type)
     events = Event.find_all_by_category(event_type)
     last_attendance = self.attendances.where('events.id IN (?)', events.each.map(&:id)).order('event_instances.starts_at DESC').includes(:event, :event_instance).first
@@ -155,6 +159,26 @@ class Contact < ActiveRecord::Base
     end
     result
     
+  end
+  
+  def subscriptions_in_words
+    if has_subscription?
+      subs = "subscriptions: "
+      items = [""]
+      if !self.cf_weekly_emails[0].blank?
+        items << "Adl" if self.cf_weekly_emails.include? "Adelaide"
+        items << "CE" if self.cf_weekly_emails.include? "City East"
+        items << "CW" if self.cf_weekly_emails.include? "City West"
+      end
+      if !self.cf_supporter_emails[0].blank?
+        items << "TT" if self.cf_supporter_emails.include? "TT Email"
+        items << "TT (mail)" if self.cf_supporter_emails.include? "TT Mail"
+        items << "PP" if self.cf_supporter_emails.include? "Prayer Points"
+      end
+      subs += items.length > 1 ? items.reject(&:blank?).join(", ") : items[0]
+    else
+      subs = ""
+    end
   end
 
   # Backend handler for [Update Contact] form (see contact/update).

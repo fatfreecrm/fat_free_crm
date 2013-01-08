@@ -43,6 +43,13 @@
           == #{t :mobile_small}:
           %b= contact.mobile
           |
+        - if contact.has_subscription?
+          = image_tag "/assets/sub-ad.png", :size => "14x11" if contact.cf_weekly_emails.include? "Adelaide"
+          = image_tag "/assets/sub-cw.png", :size => "14x11" if contact.cf_weekly_emails.include? "City West"
+          = image_tag "/assets/sub-ce.png", :size => "14x11" if contact.cf_weekly_emails.include? "City East"
+          = image_tag "/assets/sub-tt.png", :size => "14x11" if contact.cf_supporter_emails.include? "TT Email"
+          = image_tag "/assets/sub-pp.png", :size => "14x11" if contact.cf_supporter_emails.include? "Prayer Points"
+          |
       = t(:added_ago, time_ago_in_words(contact.created_at))
     - if contact.tag_list.present?
       %dt
