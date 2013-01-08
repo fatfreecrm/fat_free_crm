@@ -243,6 +243,7 @@ Rails.application.routes.draw do
     resources :imports do
       collection do
         post :import
+        post :import_supporters
       end
     end
     
