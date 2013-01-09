@@ -50,7 +50,7 @@ class EventInstancesController < EntitiesController
   #----------------------------------------------------------------------------
   def new
     @event_instance.attributes = {:user => @current_user, :access => Setting.default_access}
-    @users = User.except(@current_user)
+    #@users = User.except(@current_user)
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -63,7 +63,7 @@ class EventInstancesController < EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @users = User.except(@current_user)
+    #@users = User.except(@current_user)
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Event.my.find_by_id($1) || $1.to_i
     end
@@ -74,7 +74,7 @@ class EventInstancesController < EntitiesController
   # POST /accounts
   #----------------------------------------------------------------------------
   def create
-    @users = User.except(@current_user)
+    #@users = User.except(@current_user)
     #@comment_body = params[:comment_body]
     
     respond_with(@event_instance) do |format|
@@ -97,7 +97,7 @@ class EventInstancesController < EntitiesController
       if @event_instance.update_attributes(params[:event_instance])
         get_data_for_sidebar
       else
-        @users = User.except(current_user) # Need it to redraw [Edit Account] form.
+        #@users = User.except(current_user) # Need it to redraw [Edit Account] form.
       end
     end
   end

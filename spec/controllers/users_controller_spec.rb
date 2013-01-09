@@ -346,13 +346,13 @@ describe UsersController do
       @user.update_attributes(:first_name => "Apple", :last_name => "Boy")
     end
 
-    it "should assign @users" do
+    it "should assign @users_with_opportunities" do
       FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => @user)
       xhr :get, :opportunities_overview
       assigns[:users_with_opportunities].should == [@current_user]
     end
 
-    it "@users should be ordered by name" do
+    it "@users_with_opportunities should be ordered by name" do
       FactoryGirl.create(:opportunity, :stage => "prospecting", :assignee => @user)
 
       user1 = FactoryGirl.create(:user, :first_name => "Zebra", :last_name => "Stripes")

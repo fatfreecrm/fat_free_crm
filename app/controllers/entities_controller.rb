@@ -135,11 +135,6 @@ protected
 
 private
 
-  #----------------------------------------------------------------------------
-  def get_users
-    @users ||= User.except(current_user)
-  end
-
   def ransack_search
     @ransack_search ||= load_ransack_search
     @ransack_search.build_sort if @ransack_search.sorts.empty?

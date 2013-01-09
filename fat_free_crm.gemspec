@@ -8,9 +8,10 @@ Gem::Specification.new do |gem|
   gem.summary = 'Fat Free CRM'
   gem.description = 'An open source, Ruby on Rails customer relationship management platform'
   gem.homepage = 'http://fatfreecrm.com'
-  gem.email = ['mike@fatfreecrm.com', 'nathan@fatfreecrm.com', 'warp@fatfreecrm.com']
+  gem.email = ['mike@fatfreecrm.com', 'nathan@fatfreecrm.com', 'warp@fatfreecrm.com', 'steveyken@gmail.com']
   gem.files = `git ls-files`.split("\n")
   gem.version = FatFreeCRM::VERSION::STRING
+  gem.required_ruby_version = '>= 1.9'
 
   gem.add_dependency 'rails',               '~> 3.2.8'
   gem.add_dependency 'prototype-rails'
@@ -45,7 +46,7 @@ Gem::Specification.new do |gem|
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
   gem.add_dependency 'ransack_ffcrm',       '~> 0.7.1'
-  gem.add_dependency 'ransack_ui',          '>= 1.0.1'
+  gem.add_dependency 'ransack_ui',          '>= 1.0.2'
   gem.add_dependency 'ajax-chosen-rails',   '>= 0.2.1'  # (now depends on chosen-rails_ffcrm)
   gem.add_dependency 'email_reply_parser_ffcrm'
 end

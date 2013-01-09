@@ -100,7 +100,7 @@ class ContactGroupsController < EntitiesController
       if @contact_group.update_attributes(params[:contact_group])
         get_data_for_sidebar
       else
-        @users = User.except(current_user) # Need it to redraw [Edit Account] form.
+        #@users = User.except(current_user) # Need it to redraw [Edit Account] form.
       end
     end
   end

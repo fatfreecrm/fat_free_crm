@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 class ContactsController < EntitiesController
-  before_filter :get_users, :only => [ :new, :create, :edit, :update ]
   before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
   before_filter :check_for_mobile
   before_filter :get_data_for_sidebar, :only => :index
@@ -191,7 +190,6 @@ class ContactsController < EntitiesController
     
     respond_with(@contact) do |format|
       unless @contact.update_with_account_and_permissions(params)
-        @users = User.except(current_user)
         if @contact.account
           @account = Account.find(@contact.account.id)
         else

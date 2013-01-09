@@ -29,6 +29,10 @@ module UsersHelper
       %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw, :id => current_user))} } }]
     end
   end
+  
+  def all_users
+    User.by_name
+  end
 
   def user_select(asset, users, myself)
     user_options = user_options_for_select(users, myself)
@@ -38,6 +42,6 @@ module UsersHelper
   end
 
   def user_options_for_select(users, myself)
-    users.map{|u| [u.full_name, u.id]}.prepend([t(:myself), myself.id])
+    (users - [myself]).map{|u| [u.full_name, u.id]}.prepend([t(:myself), myself.id])
   end
 end

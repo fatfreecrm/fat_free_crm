@@ -43,7 +43,6 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   def new
     @opportunity.attributes = {:user => current_user, :stage => "prospecting", :access => Setting.default_access, :assigned_to => nil}
-    @users       = User.except(current_user)
     @account     = Account.new(:user => current_user, :access => Setting.default_access)
     @accounts    = Account.my.order('name')
 
@@ -62,7 +61,6 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
-    @users = User.except(current_user)
     @account  = @opportunity.account || Account.new(:user => current_user)
     @accounts = Account.my.order('name')
 
@@ -89,7 +87,6 @@ class OpportunitiesController < EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-        @users = User.except(current_user)
         @accounts = Account.my.order('name')
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
@@ -119,7 +116,6 @@ class OpportunitiesController < EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-        @users = User.except(current_user)
         @accounts = Account.my.order('name')
         if @opportunity.account
           @account = Account.find(@opportunity.account.id)
