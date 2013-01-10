@@ -57,30 +57,30 @@ class ContactsController < EntitiesController
       #if list_id.nil? raise some error
       list_name = Setting.mailchimp.find{|k,v| v == list_id}[0] # "eg. city_west_list_id"
       list_name = list_name.split("_list_id")[0] # eg "city_west" NOPE!!
+      assigned_to_key = list_name + "_" + params[:data]["merges"]["GENDER"].downcase
       list_name = list_name.humanize.titleize # eg " City West"
       
       case params[:type]
       when "subscribe"
-        logger.info("Subscribe request received")
         if contact = Contact.find_or_create_by_email(params[:data][:email])
-          #not generating the right list name
-          #TODO - check if changed in the last few minutes and ignore - webhook fired when we do subcribes from here
-          contact.cf_weekly_emails << list_name unless (contact.cf_weekly_emails.include?(list_name) || list_name == "Supporters")
-          contact.cf_supporters_emails = [params[:data]["merges"]["GROUPINGS"]["0"]["groups"]] if list_name == "Supporters"
+          contact.cf_weekly_emails << list_name unless contact.cf_weekly_emails.include?(list_name)
           contact.first_name = params[:data]["merges"]["FNAME"]
           contact.last_name = params[:data]["merges"]["LNAME"]
+          contact.cf_gender = params[:data]["merges"]["GENDER"]
           contact.user = @current_user if contact.user.nil?
-          #TODO:get gender, campus, assign task to user accordingly
-          contact.tasks << Task.new(:name => "New signup to #{list_name} - send welcome email", :category => :email, :bucket => "due_this_week", :user => @current_user)
+          contact.assigned_to = User.find_by_first_name(Setting.mailchimp[assigned_to_key.to_sym]).id
+          contact.account = Account.find_by_name(list_name)
+          contact.tasks << Task.new(
+                  :name => "New signup to #{list_name} - send welcome email", 
+                  :category => :email, 
+                  :bucket => "due_this_week", 
+                  :user => @current_user,
+                  :assigned_to => User.find_by_first_name(Setting.mailchimp[assigned_to_key.to_sym]).id
+                  )
         end
       when "unsubscribe"
-        logger.info("Unsubscribe request received")
         if contact = Contact.find_by_email(params[:data][:email])
-          if list_name == "Supporters"
-            contact.cf_supporters_emails = []
-          else
-            contact.cf_weekly_emails = contact.cf_weekly_emails - [list_name]
-          end
+          contact.cf_weekly_emails = contact.cf_weekly_emails - [list_name]
           contact.tasks << Task.new(:name => "followup unsubscribe from mailchimp list #{list_name}", :category => :follow_up, :bucket => "due_this_week", :user => @current_user)
         end
       when "upemail"
@@ -239,10 +239,14 @@ class ContactsController < EntitiesController
   end
   
   def graduate
-    @contact.cf_weekly_emails = [""]
-    @contact.cf_year_graduated = Setting.graduate[:year]
-    @contact.account = Account.find_by_name(Setting.graduate[:account])
-    @contact.save
+    params.merge!({"contact" => {
+        #"id" => params[:id], 
+        "cf_year_graduated" => Setting.graduate[:year],
+        "cf_weekly_emails" => [""]
+        }})
+    params.merge!({"account" => {"id" => Account.find_by_name(Setting.graduate[:account]).id }})
+    
+    @contact.update_with_account_and_permissions(params)
     
     respond_with(@contact) do |format|
       get_data_for_sidebar

@@ -98,7 +98,7 @@ class Contact < ActiveRecord::Base
   }
   
   scope :state, lambda { |filters|
-    joins(:account).where('accounts.id IN (?)' + (filters.delete('other') ? ' OR accounts.id IS NULL ' : ''), filters)
+    includes(:account).where('accounts.id IN (?)' + (filters.delete('other') ? ' OR accounts.id IS NULL ' : ''), filters)
   }
   
   uses_user_permissions
@@ -135,14 +135,11 @@ class Contact < ActiveRecord::Base
   alias :name :full_name
   
   def has_mailchimp_subscription?
-    !self.cf_weekly_emails[0].blank? || 
-      self.cf_supporter_emails.include?("TT Email") || 
-      self.cf_supporter_emails.include?("Prayer Points") || 
-      !self.email.blank?
+    !self.cf_weekly_emails[0].blank? && !self.email.blank?
   end
   
   def has_subscription?
-    !self.cf_weekly_emails[0].blank? || !self.cf_supporter_emails[0].blank?
+    has_mailchimp_subscription? || !self.cf_supporter_emails.blank?
   end
   
   def last_attendance_at_event_category(event_type)
@@ -157,12 +154,10 @@ class Contact < ActiveRecord::Base
     save_account(params)
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
     self.contact_groups << ContactGroup.find(params[:contact_group]) unless params[:contact_group].blank?
-    result = self.save
     if has_mailchimp_subscription?
       mailchimp_lists unless self.invalid?
     end
-    result
-    
+    self.save
   end
   
   def subscriptions_in_words
@@ -205,23 +200,23 @@ class Contact < ActiveRecord::Base
         subscribed_weekly = self.cf_weekly_emails - self.cf_weekly_emails_was #just add to new lists
       end
       
+      email_was = self.email_changed? ? self.email_was : nil
+      
+      self.save #can't delay if dirty
+      
       unsubscribed_weekly.reject(&:blank?).each do |list|
-        self.delay.delete_chimp(list.gsub(/\s+/, "").underscore)
+        self.delay.delete_chimp(list.gsub(/\s+/, "").underscore, email_was)
       end
       subscribed_weekly.reject(&:blank?).each do |list|
-        self.delay.add_or_update_chimp(list.gsub(/\s+/, "").underscore) #:city_east, :adelaide ...
+        self.delay.add_or_update_chimp(list.gsub(/\s+/, "").underscore, email_was) #:city_east, :adelaide ...
       end
-    end
-    
-    if self.cf_supporter_emails_changed? || self.email_changed? || self.first_name_changed? || self.last_name_changed?
-      self.delay.add_or_update_chimp(:supporters, self.cf_supporter_emails.reject(&:empty?))
     end
   end
   
-  def add_or_update_chimp(list, grouping=[])
+  def add_or_update_chimp(list, email_was = nil)
     list_id = Setting.mailchimp["#{list}_list_id"]
     list_key = Setting.mailchimp["#{list}_api_key"]
-    original_email = self.new_record? ? self.email : self.email_was
+    original_email = email_was.nil? ? self.email : email_was
     
     api = Mailchimp::API.new(list_key, :throws_exceptions => true)
     member_search = api.list_member_info({:id => list_id, :email_address => original_email})
@@ -234,14 +229,14 @@ class Contact < ActiveRecord::Base
         Hash.new.tap do |merge_hash|
           #merge_hash["EMAIL"] = original_email
           merge_hash["EMAIL"] = self.email
-          merge_hash["GROUPINGS"] = [{:name => "Interested in...", :groups => grouping.join(", ")}] unless (grouping == [])
+          #merge_hash["GROUPINGS"] = [{:name => "Interested in...", :groups => grouping.join(", ")}] unless (grouping == [])
           merge_hash["OPTIN_IP"] = public_ip if new_chimp_contact #public_ip => see network_helper.rb
           merge_hash["OPTIN_TIME"] = Time.now if new_chimp_contact
           merge_hash["FNAME"] = self.first_name
           merge_hash["LNAME"] = self.last_name
+          merge_hash["GENDER"] = self.cf_gender
         end 
     }
-    
     
     if new_chimp_contact
       c_hash[:double_optin] = false
@@ -250,13 +245,12 @@ class Contact < ActiveRecord::Base
       c_hash[:email_address] = member_search["data"][0]["id"]
       r = api.list_update_member(c_hash)
     end
-    #logger.info(r)
   end
   
-  def delete_chimp(list)
+  def delete_chimp(list, email_was = nil)
     list_id = Setting.mailchimp["#{list}_list_id"]
     list_key = Setting.mailchimp["#{list}_api_key"]
-    original_email = self.new_record? ? self.email : self.email_was
+    original_email = email_was.nil? ? self.email : email_was
     
     api = Mailchimp::API.new(list_key, :throws_exceptions => true)
     
@@ -266,15 +260,11 @@ class Contact < ActiveRecord::Base
       :delete_member => true,
       :send_goodbye => false
     })
-    logger.info(r)
   end
   
   def delete_chimp_all
     self.cf_weekly_emails.reject(&:blank?).each do |e|
       delete_chimp(e.gsub(/\s+/, "").underscore)
-    end
-    unless self.cf_supporter_emails.blank?
-      delete_chimp(:supporters)
     end
   end
 

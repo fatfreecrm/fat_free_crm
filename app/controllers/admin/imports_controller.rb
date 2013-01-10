@@ -127,7 +127,7 @@ class Admin::ImportsController < Admin::ApplicationController
         h[:email] = row[:email_address]
         h[:cf_church_affiliation] = row[:church]
         h[:cf_mailing_first_name] = row[:mailing_first_name]
-        
+        h[:cf_gender] = "n/a"
         
       end
       contact = Contact.find_or_initialize_by_email_and_last_name(row[:email_address], row[:last_name])
