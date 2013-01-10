@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121221033947) do
+ActiveRecord::Schema.define(:version => 20130110042846) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -540,6 +540,7 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
     t.boolean  "admin",                             :default => false, :null => false
     t.datetime "suspended_at"
     t.string   "single_access_token"
+    t.boolean  "mandrill"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

@@ -16,7 +16,6 @@
 #------------------------------------------------------------------------------
 require 'mandrill_email_job'
 class MandrillEmailsController < EntitiesController
-  before_filter :get_users, :only => [ :new, :create, :edit, :update, :save ]
   before_filter :get_data_for_sidebar, :only => :index
 
   # GET /accounts
@@ -100,25 +99,27 @@ class MandrillEmailsController < EntitiesController
       if @mandrill_email.update_attributes(params[:mandrill_email])
         get_data_for_sidebar
       else
-        @users = User.except(current_user) # Need it to redraw [Edit Account] form.
+        #@users = User.except(current_user) # Need it to redraw [Edit Account] form.
       end
     end
   end
   
   def save
+    @mandrill_email.editing = true
     if @mandrill_email.update_attributes(params[:mandrill_email])
       if params[:send]
-        #remove any previously enqueued jobs
+        #remove any previously enqueued jobs e.g scheduled email
         delayed_job = @mandrill_email.delayed_job_id
         if Delayed::Job.exists?(delayed_job)
           Delayed::Job.find(delayed_job).destroy
         end
         mandrill_send
+        sent = true
       end
       @mandrill_emails = get_mandrill_emails(:page => params[:page])
       respond_with(@mandrill_emails) do |format|
         get_data_for_sidebar
-        format.html {redirect_to(:mandrill_emails, :notice => "Mandrill email was saved")}
+        format.html {redirect_to(:mandrill_emails, :notice => "Mandrill email was #{sent ? "sent" : "saved"}")}
       end
     else
       respond_with(@mandrill_email) do |format|
@@ -135,6 +136,12 @@ class MandrillEmailsController < EntitiesController
   # DELETE /accounts/1
   #----------------------------------------------------------------------------
   def destroy
+    # find any enqueued jobs e.g. scheduled email
+    delayed_job = @mandrill_email.delayed_job_id
+    if !delayed_job.nil? && Delayed::Job.exists?(delayed_job)
+      Delayed::Job.find(delayed_job).destroy
+    end
+    
     @mandrill_email.destroy
 
     respond_with(@mandrill_email) do |format|

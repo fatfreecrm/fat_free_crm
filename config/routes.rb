@@ -73,6 +73,8 @@ Rails.application.routes.draw do
       get :attendances
       get :mailchimp_webhooks
       post :mailchimp_webhooks
+      get :mandrill_webhooks
+      post :mandrill_webhooks
     end
     member do
       put  :attach

@@ -20,11 +20,35 @@ class ContactsController < EntitiesController
   before_filter :get_data_for_sidebar, :only => :index
   
   def single_access_allowed?
-    (action_name == "mailchimp_webhooks")
+    (action_name == "mailchimp_webhooks" || action_name == "mandrill_webhooks")
   end
   
   def confirm
     respond_with(@contact)
+  end
+  
+  def mandrill_webhooks
+    if request.post?
+      data = JSON.parse(params['mandrill_events'])
+      case data[0]['event']
+      #just implementing hard bounce for now
+      when "hard_bounce"
+        contact = Contact.find_by_email(data[0]['msg']['email'])
+        if contact.present?
+          contact.tasks << Task.new(
+                    :name => "Email bounced!", 
+                    :category => :email, 
+                    :bucket => "due_this_week", 
+                    :user => @current_user , 
+                    :assigned_to => User.find_by_first_name("geoff").id
+                    )
+          contact.comments << Comment.new(
+                    :user_id => 1,
+                    :comment => "Email bounced\nDescription: #{data[0]['msg']['bounce_description']}\nServer said: #{data[0]['msg']['diag']}"
+                    )
+        end
+      end
+    end
   end
   
   def mailchimp_webhooks

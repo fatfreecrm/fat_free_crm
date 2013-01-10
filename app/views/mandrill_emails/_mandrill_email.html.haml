@@ -26,9 +26,5 @@
       = " | ".html_safe
     %tt
       = t(:added_by, :time_ago => time_ago_in_words(mandrill_email.created_at), :user => (mandrill_email.user.id == current_user.id ? t(:me) : mandrill_email.user.full_name)) #<< " | "
-      
-      - if mandrill_email.tag_list.present?
-        %dt
-          .tags= tags_for_index(mandrill_email)
 
       = hook(:mandrill_email_bottom, self, :mandrill_email => mandrill_email)

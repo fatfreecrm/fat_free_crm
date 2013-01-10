@@ -5,8 +5,9 @@ class Ability
 
   def initialize(user)
     if user.present?
-      entities = [Account, Campaign, Contact, Lead, Opportunity, ContactGroup, Event, MandrillEmail, Event, EventInstance]
-
+      entities = [Account, Campaign, Contact, Lead, Opportunity, ContactGroup, Event, EventInstance]
+      entities << MandrillEmail if user.mandrill?
+      
       can :create, :all
       can :read, [User] # for search autocomplete
       can :manage, entities, :access => 'Public'

@@ -8,7 +8,7 @@ class MandrillEmail < ActiveRecord::Base
   accepts_nested_attributes_for :attached_files
   serialize :subscribed_users, Set
   
-  attr_accessor :scheduled_date, :scheduled_time
+  attr_accessor :scheduled_date, :scheduled_time, :editing
   
   scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
   scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
@@ -23,15 +23,15 @@ class MandrillEmail < ActiveRecord::Base
   uses_user_permissions
   #acts_as_commentable
   #uses_comment_extensions
-  acts_as_taggable_on :tags
+  #acts_as_taggable_on :tags
   has_paper_trail :ignore => [ :subscribed_users ]
   has_fields
   exportable
   sortable :by => [ "name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
   validates_presence_of :name, :message => :missing_name
-  #validates_presence_of :message_subject, :message => :missing_subject
-  #validates_presence_of :from_address, :message => :missing_sender
+  validates_presence_of :message_subject, :message => :missing_subject, :if => :editing?
+  validates_presence_of :from_address, :message => :missing_sender, :if => :editing?
   
   validate :users_for_shared_access
   #validate :valid_time_start
@@ -42,6 +42,10 @@ class MandrillEmail < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.per_page ; 20 ; end
   def self.outline ; "long" ; end
+  
+  def editing?
+    self.editing
+  end
   
     # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
@@ -92,7 +96,7 @@ class MandrillEmail < ActiveRecord::Base
   
   #----------------------------------------------------------------------------
   def set_datetime
-    self.scheduled_at = parse_scheduled_date_start unless self.scheduled_date.nil? or self.scheduled_time.nil?
+    self.scheduled_at = parse_scheduled_date_start unless self.scheduled_date.blank? or self.scheduled_time.blank?
   end
 
   #----------------------------------------------------------------------------

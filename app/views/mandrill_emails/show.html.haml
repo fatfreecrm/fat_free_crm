@@ -1,3 +1,6 @@
+- scheduled = @mandrill_email.scheduled
+- sent = @mandrill_email.sent_at
+- not_sent_or_scheduled = !sent && !scheduled
 #confirm{ hidden }
 .title_tools#menu
   = link_to_inline(:edit_mandrill_email, edit_mandrill_email_path(@mandrill_email), :text => t(:edit)) + " | "
@@ -6,15 +9,25 @@
 
 %div#edit_mandrill_email{ hidden }
 
-= simple_form_for(@mandrill_email, :html => {:multipart => true, :onsubmit => "$$('#'+this.id+' input[type=\"submit\"]')[0].disabled = true"}, :url => {:action => "save"}) do |f|
-  - scheduled = @mandrill_email.scheduled
+%div#sent_or_scheduled_details{ hidden_if(not_sent_or_scheduled) }
+  %ul
+    - if sent
+      %li
+        %b="Email has already been sent at #{@mandrill_email.sent_at.strftime("%I:%M %p %a %d %b")}".html_safe
+      %li
+        = "Response from mandrill: #{@mandrill_email.response}"
+    - if scheduled && !sent
+      %li
+        %b= "Email is scheduled to be sent at #{@mandrill_email.scheduled_at.strftime("%I:%M %p %a %d %b")}".html_safe
+    
+= simple_form_for(@mandrill_email, :html => {:multipart => true}, :url => {:action => "save"}) do |f|
   = f.error_messages :object_name => t('mandrill_email')
   %table{:style => 'border-spacing: 5px 15px;width:400px;'}
     %tr
       %td
         .label.mid Template:
       %td
-        =f.select :template, options_for_select(@templates_list), {} , :style => 'width:200px;'
+        =f.select :template, options_for_select(@templates_list, @mandrill_email.template), {} , :style => 'width:200px;'
     %tr
       %td
         .label.mid To:
@@ -55,7 +68,7 @@
         = f.text_area :message_body, :style => 'width:550px;'
   
   .buttonbar
-    = f.submit "Save for later"
-    = f.submit "Send!", :name => "send"
-    #{t :or}
+    = f.submit "Save for later" unless sent
+    = f.submit "Send!", :onclick => 'return confirm("Email is about to be added to the send queue. Are you sure?")', :name => "send" unless sent
+    = "#{t :or}" unless sent 
     = link_to "Cancel", mandrill_emails_path

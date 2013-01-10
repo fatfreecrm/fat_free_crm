@@ -10,8 +10,4 @@
 
   -#= render "fields/sidebar_show", :asset => @mandrill_email
 
-  - if @mandrill_email.tag_list.present?
-    %dt
-      .tags= tags_for_index(@mandrill_email)
-
   = hook(:show_mandrill_email_sidebar_bottom, self, :mandrill_email => @mandrill_email)

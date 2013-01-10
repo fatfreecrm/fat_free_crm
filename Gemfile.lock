@@ -255,6 +255,7 @@ GEM
       actionpack (~> 3.0)
       activemodel (~> 3.0)
     slop (3.3.3)
+    spork (0.9.2)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -343,6 +344,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   select2-rails
   simple_form (~> 2.0.1)
+  spork
   therubyracer
   thin
   turbo-sprockets-rails3
