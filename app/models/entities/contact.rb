@@ -124,8 +124,9 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def save_with_account_and_permissions(params)
     save_account(params)
+    result = self.save
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
-    self.save
+    result
   end
 
   # Backend handler for [Update Contact] form (see contact/update).
