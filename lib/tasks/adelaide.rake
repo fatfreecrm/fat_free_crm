@@ -26,12 +26,14 @@ namespace :ffcrm do
       campuses.each do |campus|
         a = Account.find_by_name(campus)
         a.contacts.each do |c|
-          current_string = c.cf_weekly_emails[0]
-          new_string = current_string.blank? ? campus : current_string + ", #{campus}"
-          c.cf_weekly_emails[0] = new_string unless c.cf_weekly_emails.include?(campus) || c.email.blank?
-          c.delay.add_or_update_chimp(campus.parameterize.underscore.to_sym)
-          c.save
-          puts "added #{c.full_name} to #{campus} weekly emails"
+          unless c.cf_weekly_emails.include?(campus) || c.email.blank?
+            c.cf_weekly_emails << campus 
+            c.cf_weekly_emails.reject!(&:blank?)
+            c.cf_weekly_emails.uniq!
+            c.delay.add_or_update_chimp(campus.parameterize.underscore.to_sym)
+            c.save
+            puts "added #{c.full_name} to #{campus} weekly emails"
+          end
         end
       end
     end

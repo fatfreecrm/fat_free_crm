@@ -13,7 +13,7 @@ set :user,            'deploy'
 set :use_sudo,        false
 set :rvm_type,        :system
 set :rvm_ruby_string, '1.9.3'
-server                '192.168.1.77', :app, :web, :db, primary: true
+server                '192.168.1.23', :app, :web, :db, primary: true
 
 # Use local key instead of key installed on the server.
 # If not working run "ssh-add ~/.ssh/id_rsa" on your local machine.
@@ -31,8 +31,8 @@ namespace :deploy do
   desc 'Tell Passenger to restart the app.'
   task :restart, roles: :app, except: { no_release: true } do
     run "touch #{current_release}/tmp/restart.txt"
-    run "cd #{current_release} && passenger stop -p 3001"
-    run "cd #{current_release} && passenger start -a 127.0.0.1 -p 3001 -d -e production"
+    #run "cd #{current_release} && passenger stop -p 3001"
+    #run "cd #{current_release} && passenger start -a 127.0.0.1 -p 3001 -d -e production"
   end
   
   desc 'Symlink shared configs and folders on each release.'

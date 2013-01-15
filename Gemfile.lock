@@ -1,3 +1,8 @@
+PATH
+  remote: /Users/reuben/Development/Rails/ffcrm_merge
+  specs:
+    ffcrm_merge (1.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -49,8 +54,10 @@ GEM
     builder (3.0.4)
     bundler_local_development (0.4.1)
       bundler
+    cache_digests (0.2.0)
+      actionpack (>= 3.2)
     cancan (1.6.8)
-    capistrano (2.13.5)
+    capistrano (2.14.1)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -70,7 +77,10 @@ GEM
       railties (~> 3.0)
       thor (~> 0.14)
     chronic (0.6.7)
-    cocaine (0.4.2)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.1)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -103,13 +113,13 @@ GEM
       factory_girl (~> 3.0.0)
       railties (>= 3.0.0)
     ffaker (1.15.0)
-    ffi (1.3.0)
+    ffi (1.3.1)
     haml (3.1.7)
     headless (0.3.1)
     highline (1.6.15)
     hike (1.2.1)
     htmlentities (4.3.1)
-    httparty (0.9.0)
+    httparty (0.10.0)
       multi_json (~> 1.0)
       multi_xml
     httpi (2.0.0)
@@ -122,7 +132,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.7.6)
     kgio (2.7.4)
-    libv8 (3.11.8.11)
+    libv8 (3.11.8.13)
     libwebsocket (0.1.7.1)
       addressable
       websocket
@@ -141,13 +151,13 @@ GEM
     method_source (0.8.1)
     mime-types (1.19)
     multi_json (1.5.0)
-    multi_xml (0.5.1)
+    multi_xml (0.5.2)
     mysql2 (0.3.10)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
       net-ssh (>= 2.0.9)
-    net-ssh (2.6.2)
+    net-ssh (2.6.3)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.6)
@@ -179,7 +189,7 @@ GEM
       binding_of_caller (~> 0.6.8)
     quiet_assets (1.0.1)
       railties (~> 3.1)
-    rack (1.4.3)
+    rack (1.4.4)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-ssl (1.3.2)
@@ -240,7 +250,7 @@ GEM
     rvm-capistrano (1.2.7)
       capistrano (>= 2.0.0)
     sass (3.2.5)
-    sass-rails (3.2.5)
+    sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
@@ -261,9 +271,9 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.6)
-    therubyracer (0.11.1)
-      libv8 (~> 3.11.8.7)
+    sqlite3 (1.3.7)
+    therubyracer (0.11.2)
+      libv8 (~> 3.11.8.12)
       ref
     thin (1.5.0)
       daemons (>= 1.0.9)
@@ -274,7 +284,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    turbo-sprockets-rails3 (0.3.5)
+    turbo-sprockets-rails3 (0.3.6)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
     tzinfo (0.3.35)
@@ -288,7 +298,7 @@ GEM
     valium (0.5.0)
       activerecord (>= 3.0.2)
     websocket (1.0.6)
-    will_paginate (3.0.3)
+    will_paginate (3.0.4)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
@@ -304,6 +314,7 @@ DEPENDENCIES
   authlogic (= 3.1.0)
   awesome_print
   bundler_local_development
+  cache_digests
   cancan
   capistrano_colors
   capybara (~> 1.1)
@@ -311,12 +322,14 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   combined_time_select (~> 0.0.1)
   database_cleaner
+  delayed_job
   delayed_job_active_record
   dynamic_form
   email_reply_parser_ffcrm
   execjs
   factory_girl_rails (~> 3.0.0)
   ffaker (>= 1.12.0)
+  ffcrm_merge!
   haml (~> 3)
   headless
   ice_cube

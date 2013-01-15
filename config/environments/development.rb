@@ -1,9 +1,9 @@
 #require 'ruby-debug'
 #Debugger.wait_connection = true
 #Debugger.start_remote
-require 'pry-nav'
-require 'pry-stack_explorer'
-require 'awesome_print'
+#require 'pry-nav'
+#require 'pry-stack_explorer'
+#require 'awesome_print'
 
 if defined?(FatFreeCRM::Application)
   FatFreeCRM::Application.configure do
@@ -21,8 +21,8 @@ if defined?(FatFreeCRM::Application)
 
     # Show full error reports and disable caching
     config.consider_all_requests_local       = true
-    config.action_controller.perform_caching = false
-
+    config.action_controller.perform_caching = true
+    CacheDigests::TemplateDigestor.cache = ActiveSupport::Cache::NullStore.new
     # Don't care if the mailer can't send
     config.action_mailer.raise_delivery_errors = true
 
@@ -44,6 +44,10 @@ if defined?(FatFreeCRM::Application)
 
     # Expands the lines which load the assets
     config.assets.debug = true
+    
+    #config.force_ssl = true
+    
+    #config.middleware.use Rails::Rack::LogTailer
 
   end
 end

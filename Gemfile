@@ -39,6 +39,7 @@ gem 'premailer', :require => false
 
 # Remove fat_free_crm dependency, to stop it from being auto-required too early.
 remove 'fat_free_crm'
+remove 'ffcrm_merge'
 
 group :development do
   gem 'thin'
@@ -92,4 +93,7 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
+gem 'ffcrm_merge', :path => "/Users/reuben/Development/Rails/ffcrm_merge"
+
+
 

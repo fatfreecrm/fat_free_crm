@@ -48,6 +48,8 @@
 #  skype           :string(128)
 #
 include NetworkHelper
+require 'mailchimp'
+
 class Contact < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :lead
@@ -60,7 +62,7 @@ class Contact < ActiveRecord::Base
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
   has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
   has_many    :emails, :as => :mediator
-  has_many    :contact_groups, :dependent => :destroy
+  has_and_belongs_to_many   :contact_groups
   
   ##what about when you delete a contact? do you want to lose all attendance records?
   #might be better to have an archive system for contacts so that deletion is only for

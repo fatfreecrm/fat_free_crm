@@ -56,6 +56,6 @@ require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/plugin"
-require "esCRM.rb"
 require "fat_free_crm/view_factory"
 require "mandrill_email_job"
+require 'ffcrm_merge/merge_view_hooks'

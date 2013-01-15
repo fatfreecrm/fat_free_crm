@@ -127,7 +127,7 @@ class ContactsController < EntitiesController
     @contact_groups = @contact.contact_groups
     @bsg_attendances = @contact.attendances.where('events.category = ?', "bsg").order('event_instances.starts_at DESC').includes(:event, :event_instance)
     @tbt_attendances = @contact.attendances.where('events.category = ?', "bible_talk").order('event_instances.starts_at DESC').includes(:event, :event_instance)
-    @other_attendances = @contact.attendances.where('events.category NOT IN (?)', ["bsg", "bible_talk"]).order('event_instances.starts_at DESC').includes(:event, :event_instance)
+    @other_attendances = @contact.attendances.where('events.category NOT IN (?) OR events.category IS NULL', ["bsg", "bible_talk"]).order('event_instances.starts_at DESC').includes(:event, :event_instance)
     respond_with(@contact)
   end
 

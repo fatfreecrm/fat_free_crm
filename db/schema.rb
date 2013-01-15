@@ -13,6 +13,13 @@
 
 ActiveRecord::Schema.define(:version => 20130110042846) do
 
+  create_table "account_aliases", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "destroyed_account_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
     t.integer  "contact_id"
@@ -156,6 +163,13 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.datetime "created_at",                                             :null => false
     t.datetime "updated_at",                                             :null => false
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
+  end
+
+  create_table "contact_aliases", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "destroyed_contact_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "contact_groups", :force => true do |t|
@@ -476,8 +490,8 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.integer  "taggable_id"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "taggable_type"
-    t.string   "context"
+    t.string   "taggable_type", :limit => 50
+    t.string   "context",       :limit => 50
     t.datetime "created_at"
   end
 

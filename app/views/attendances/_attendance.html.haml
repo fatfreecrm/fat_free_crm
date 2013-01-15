@@ -1,5 +1,5 @@
 %li.highlight[attendance]
-  - item_type = attendance.event.category.humanize
+  - item_type = attendance.event.category.present? ? attendance.event.category.humanize : "other"
   .strip{:class => attendance.event.category} #{t(item_type)}
   %tt
     %small
