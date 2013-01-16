@@ -56,7 +56,6 @@ namespace :ffcrm do
     desc "sync registrants from website registration data"
     task :sync => :environment do
       
-      require 'active_record/fixtures'
       require 'open-uri'
       
       url = Setting.registration_api[:ccamp_link]
@@ -73,22 +72,50 @@ namespace :ffcrm do
       
       csv = CSV.parse(url_data, {:col_sep => ',', :headers => :first_row, :header_converters => :symbol}) 
       csv.each do |row|
-        
         unless group.contacts.find_by_email(row[:_email])
         #sync has already brought this contact in and placed it in the group, skip...
-        
           contact = Contact.find_by_email(row[:_email])
           if contact.nil?
             contact = Contact.find_or_initialize_by_mobile(row[:_mobile].gsub(/[\(\) ]/, ""))
             contact.update_attributes(:alt_email => contact.email) if contact.persisted? #email must have changed
             log_string = "Contact found by mobile. updated: "
           end
+           
+          if row[:_course_year_in_2013] == "1"
+            contact.cf_year_commenced = "2013"
+          end
+          
+          contact.business_address = Address.new
+          contact.business_address.street1 = row[:_address]
+          contact.business_address.street2 = row[:_address2]
+          contact.business_address.city = row[:_suburb]
+          contact.business_address.state = row[:_state]
+          contact.business_address.zipcode = row[:_post_code]
+          contact.business_address.country = "Australia"
+          contact.business_address.address_type = "Business"   
+          
+          unless contact.assigned_to.present?
+            if (row[:_campus] == "City East" || row[:_campus] == "City West")
+              contact.cf_weekly_emails << row[:_campus] unless contact.cf_weekly_emails.include?(row[:_campus])
+              user = User.find_by_first_name("dave")
+            elsif (row[:_campus] == "Adelaide")
+              contact.cf_weekly_emails << row[:_campus] unless contact.cf_weekly_emails.include?(row[:_campus])
+              user = (row[:_gender] == "Male") ? User.find_by_first_name("reuben") : User.find_by_first_name("laura")
+            else
+              user = User.find_by_first_name("geoff")
+            end
+            contact.assigned_to = user.id#reuben or laura
+          end
+          
+          unless contact.account.present?
+            contact.account = Account.find_or_create_by_name(row[:_campus]) 
+            contact.account.user = User.find(1)
+          end
           
           if !contact.persisted?
-            contact.update_attributes(
-            :user_id => 1,
-            :access => Setting.default_access
-            )
+            contact.user_id = 1
+            contact.access = Setting.default_access
+
             log_string = "Created new contact: "
           else
             log_string = "Contact found by email. updated: " if log_string.nil?
@@ -107,32 +134,6 @@ namespace :ffcrm do
             :cf_church_affiliation => row[:_church_if_you_attend_one],
             :cf_expected_grad_year => row[:_year_i_expect_to_graduate]
            )
-           
-          if row[:_course_year_in_2013] == "1"
-            contact.cf_year_commenced = "2013"
-          end
-          
-          contact.business_address = Address.new
-          contact.business_address.street1 = row[:_address]
-          contact.business_address.street2 = row[:_address2]
-          
-          contact.business_address.city = row[:_suburb]
-          contact.business_address.state = row[:_state]
-          contact.business_address.zipcode = row[:_post_code]
-          contact.business_address.country = "Australia"
-          contact.business_address.address_type = "Business"   
-          
-          if (contact.cf_campus == "City East" || contact.cf_campus == "City West")
-            user = User.find_by_first_name("dave")
-          elsif (contact.cf_campus == "Adelaide")
-            user = (contact.cf_gender == "Male") ? User.find_by_first_name("reuben") : User.find_by_first_name("laura")
-          else
-            user = User.find_by_first_name("geoff")
-          end
-          
-          contact.assigned_to = user.id #reuben or laura
-          contact.account = Account.find_or_create_by_name(contact.cf_campus)
-          contact.account.user = User.find(1)
           
           puts (log_string + contact.first_name + " " + contact.last_name)
           

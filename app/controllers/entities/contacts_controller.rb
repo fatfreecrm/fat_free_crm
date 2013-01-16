@@ -228,7 +228,6 @@ class ContactsController < EntitiesController
   # DELETE /contacts/1
   #----------------------------------------------------------------------------
   def destroy
-    @contact.delete_chimp_all
     @contact.destroy
 
     respond_with(@contact) do |format|
