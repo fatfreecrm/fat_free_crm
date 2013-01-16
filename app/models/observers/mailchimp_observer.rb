@@ -16,7 +16,9 @@ class MailchimpObserver < ActiveRecord::Observer
   end
   
   def after_destroy(contact)
-    self.delay.delete_chimp_all(contact) if contact.has_mailchimp_subscription?
+    contact.cf_weekly_emails.reject(&:blank?).each do |e|
+      self.delay.delete_chimp(contact, e.gsub(/\s+/, "").underscore)
+    end
   end
 
   private
@@ -57,7 +59,7 @@ class MailchimpObserver < ActiveRecord::Observer
           #merge_hash["EMAIL"] = original_email
           merge_hash["EMAIL"] = contact.email
           #merge_hash["GROUPINGS"] = [{:name => "Interested in...", :groups => grouping.join(", ")}] unless (grouping == [])
-          merge_hash["OPTIN_IP"] = public_ip if new_chimp_contact #public_ip => see network_helper.rb
+          merge_hash["OPTIN_IP"] = Setting.network[:public_ip] if new_chimp_contact # or public_ip... => see network_helper.rb
           merge_hash["OPTIN_TIME"] = Time.now if new_chimp_contact
           merge_hash["FNAME"] = contact.first_name
           merge_hash["LNAME"] = contact.last_name
@@ -89,9 +91,4 @@ class MailchimpObserver < ActiveRecord::Observer
     })
   end
   
-  def delete_chimp_all(contact)
-    contact.cf_weekly_emails.reject(&:blank?).each do |e|
-      delete_chimp(e.gsub(/\s+/, "").underscore)
-    end
-  end
 end
