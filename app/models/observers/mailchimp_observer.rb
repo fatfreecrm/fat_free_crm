@@ -70,10 +70,13 @@ class MailchimpObserver < ActiveRecord::Observer
     if new_chimp_contact
       c_hash[:double_optin] = false
       r = api.list_subscribe(c_hash)
+      t = "Added"
     else
       c_hash[:email_address] = member_search["data"][0]["id"]
       r = api.list_update_member(c_hash)
+      t = "Updated"
     end
+    Delayed::Worker.logger.add(Logger::INFO, "#{Time.now}: #{t} #{contact.first_name} #{contact.last_name} to list #{list}. Mailchimp responded: #{r}")
   end
   
   def delete_chimp(contact, list, email_was = nil)
@@ -89,6 +92,8 @@ class MailchimpObserver < ActiveRecord::Observer
       :delete_member => true,
       :send_goodbye => false
     })
+    Delayed::Worker.logger.add(Logger::INFO, "#{Time.now}: Deleted #{contact.first_name} #{contact.last_name} from list #{list}. Mailchimp responded: #{r}")
+    
   end
   
 end
