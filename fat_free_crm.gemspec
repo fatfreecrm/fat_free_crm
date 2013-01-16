@@ -44,6 +44,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'delayed_job_active_record'
   gem.add_dependency 'ice_cube'
   gem.add_dependency 'cache_digests'
+  gem.add_dependency 'whenever'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------

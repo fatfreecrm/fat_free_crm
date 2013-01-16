@@ -23,7 +23,6 @@ class ContactGroupsController < EntitiesController
   def index
     @contact_groups = get_contact_groups(:page => params[:page])
     
-    #binding.pry
     session[:contact_groups_current_query] = params[:query]
     respond_with @contact_groups do |format|
       format.xls { render :layout => 'header' }

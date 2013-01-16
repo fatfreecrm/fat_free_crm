@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/reuben/Development/Rails/ffcrm_merge
+GIT
+  remote: git://github.com/reubenjs/ffcrm_merge.git
+  revision: df0f5372e25cb5da00a4c73edbdc3a859b392a4a
   specs:
     ffcrm_merge (1.2)
 
@@ -298,6 +299,9 @@ GEM
     valium (0.5.0)
       activerecord (>= 3.0.2)
     websocket (1.0.6)
+    whenever (0.8.2)
+      activesupport (>= 2.3.4)
+      chronic (>= 0.6.3)
     will_paginate (3.0.4)
     xpath (0.1.4)
       nokogiri (~> 1.3)
@@ -364,4 +368,5 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   valium
+  whenever
   will_paginate (~> 3.0.2)

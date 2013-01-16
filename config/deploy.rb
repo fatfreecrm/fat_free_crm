@@ -2,6 +2,7 @@
 
 require 'rvm/capistrano'
 require 'bundler/capistrano'
+require 'whenever/capistrano'
 load    'deploy/assets'
 
 set :application,     'esCRM'
@@ -13,6 +14,7 @@ set :user,            'deploy'
 set :use_sudo,        false
 set :rvm_type,        :system
 set :rvm_ruby_string, '1.9.3'
+set :whenever_command, "bundle exec whenever"
 server                '192.168.1.23', :app, :web, :db, primary: true
 
 # Use local key instead of key installed on the server.
