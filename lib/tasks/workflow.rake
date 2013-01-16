@@ -15,6 +15,48 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 namespace :ffcrm do
+  namespace :mailchimp do
+    desc "check mailchimp lists for consistency"
+    task :check => :environment do
+      lists = ["adelaide", "city_west", "city_east"]
+      
+      lists.each do |list|
+        list_id = Setting.mailchimp["#{list}_list_id"]
+        list_key = Setting.mailchimp["#{list}_api_key"]
+
+        api = Mailchimp::API.new(list_key, :throws_exceptions => true)
+        r = api.list_members(:id => list_id, :limit => "1000")
+        emails_at_mailchimp = r["data"].collect.each { |lm| lm["email"].gsub(/\s+/, "").downcase }
+        
+        list_contacts = Contact.where("cf_weekly_emails LIKE ?", "%#{list.titleize}%")
+        emails_in_crm = list_contacts.collect.each { |c| c.email.to_s.gsub(/\s+/, "").downcase }
+        emails_in_crm.reject!(&:blank?)
+        
+        subscribed_with_no_email = Contact.where("cf_weekly_emails LIKE ? AND email IS NULL", "%#{list.titleize}%")
+        invalids = subscribed_with_no_email.collect.each { |c| c.first_name + " " + c.last_name}
+        
+        puts "*******************************"
+        puts "*** LIST: #{list.titleize} ****"
+        puts "*******************************"
+        puts "\n"
+        puts "emails at mailchimp, but not in crm:"
+        puts "____________________________________"
+        puts (emails_at_mailchimp - emails_in_crm).join("\n")
+        puts "\n"
+        puts "emails in crm, but not at mailchimp:"
+        puts "____________________________________"
+        puts (emails_in_crm - emails_at_mailchimp).join("\n")
+        puts "\n"
+        puts "subscribed to list in CRM, but no email address (invalid):"
+        puts "____________________________________"
+        puts (invalids).join("\n")
+        puts "\n"
+        
+      end
+      
+    end
+  end
+  
   namespace :gonecold do
     desc "Scan for contacts that have gone cold"
     task :find => :environment do
