@@ -3,6 +3,7 @@
 require 'rvm/capistrano'
 require 'bundler/capistrano'
 require 'whenever/capistrano'
+require 'delayed/recipes'
 load    'deploy/assets'
 
 set :application,     'esCRM'
@@ -15,6 +16,7 @@ set :use_sudo,        false
 set :rvm_type,        :system
 set :rvm_ruby_string, '1.9.3'
 set :whenever_command, "bundle exec whenever"
+set :rails_env, "production" #added for delayed job 
 server                '192.168.1.23', :app, :web, :db, primary: true
 
 # Use local key instead of key installed on the server.
@@ -46,4 +48,7 @@ namespace :deploy do
   end
 end
 
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"
 after 'deploy:finalize_update', 'deploy:symlink_shared'
