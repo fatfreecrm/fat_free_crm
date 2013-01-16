@@ -325,6 +325,7 @@ DEPENDENCIES
   cocaine
   coffee-rails (~> 3.2.1)
   combined_time_select (~> 0.0.1)
+  daemons
   database_cleaner
   delayed_job
   delayed_job_active_record

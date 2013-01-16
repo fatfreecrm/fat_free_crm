@@ -45,6 +45,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'ice_cube'
   gem.add_dependency 'cache_digests'
   gem.add_dependency 'whenever'
+  gem.add_dependency 'daemons'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
