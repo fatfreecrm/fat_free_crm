@@ -57,7 +57,7 @@ class ContactsController < EntitiesController
       #if list_id.nil? raise some error
       list_name = Setting.mailchimp.find{|k,v| v == list_id}[0] # "eg. city_west_list_id"
       list_name = list_name.split("_list_id")[0] # eg "city_west" NOPE!!
-      assigned_to_key = list_name + "_" + params[:data]["merges"]["GENDER"].downcase
+      assigned_to_key = params[:data]["merges"].nil? ? nil : (list_name + "_" + params[:data]["merges"]["GENDER"].downcase)
       list_name = list_name.humanize.titleize # eg " City West"
       
       case params[:type]

@@ -138,17 +138,18 @@ class Admin::ImportsController < Admin::ApplicationController
         end
         contact = Contact.find_or_initialize_by_email_and_last_name(row[:email_address], row[:last_name])
         contact.attributes = contact_hash
-      
+
         #Mailchimp address format is one field with double-space separating addr/suburb/state/pcode
         address = row[:address].split("  ") if !row[:address].blank?
       
         unless address.nil?
           contact.business_address = Address.new
           contact.business_address.street1 = address[0]
-          contact.business_address.city = address[1]
-          contact.business_address.state = address[2]
-          contact.business_address.zipcode = address[3]
-          contact.business_address.country = "Australia"
+          contact.business_address.street2 = address[1]
+          contact.business_address.city = address[2]
+          contact.business_address.state = address[3]
+          contact.business_address.zipcode = address[4]
+          contact.business_address.country = address[5]
           contact.business_address.address_type = "Business"
         end   
       
@@ -170,7 +171,6 @@ class Admin::ImportsController < Admin::ApplicationController
         end
         
         raise ActiveRecord::Rollback unless @imports.errors.empty?
-
       end
     end #transaction
 
