@@ -1,3 +1,5 @@
+#include NetworkHelper
+require 'mailchimp'
 class MailchimpObserver < ActiveRecord::Observer
   observe :contact
 
@@ -15,7 +17,7 @@ class MailchimpObserver < ActiveRecord::Observer
     end
   end
   
-  def after_destroy(contact)
+  def before_destroy(contact)
     contact.cf_weekly_emails.reject(&:blank?).each do |e|
       self.delay.delete_chimp(contact, e.gsub(/\s+/, "").underscore)
     end
@@ -33,6 +35,7 @@ class MailchimpObserver < ActiveRecord::Observer
     end
     
     email_was = contact.email_changed? ? contact.email_was : nil
+    email_was = nil if contact.email_was.blank?
     
     unsubscribed_weekly.reject(&:blank?).each do |list|
       self.delay.delete_chimp(contact, list.gsub(/\s+/, "").underscore, email_was)

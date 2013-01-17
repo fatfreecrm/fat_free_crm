@@ -47,8 +47,6 @@
 #  background_info :string(255)
 #  skype           :string(128)
 #
-include NetworkHelper
-require 'mailchimp'
 
 class Contact < ActiveRecord::Base
   belongs_to  :user
