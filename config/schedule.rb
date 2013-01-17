@@ -21,11 +21,11 @@ every 1.day, :at => '9:00 am' do
   rake "ffcrm:registrations:sync"
 end
 
-every 10.minutes
+every 10.minutes do
   rake "ffcrm:dropbox:run"
 end
 
-every 10.minutes
+every 10.minutes do
   rake "ffcrm:comment_replies:run"
 end
 
