@@ -21,5 +21,12 @@ every 1.day, :at => '9:00 am' do
   rake "ffcrm:registrations:sync"
 end
 
+every 10.minutes
+  rake "ffcrm:dropbox:run"
+end
+
+every 10.minutes
+  rake "ffcrm:comment_replies:run"
+end
 
 # Learn more: http://github.com/javan/whenever

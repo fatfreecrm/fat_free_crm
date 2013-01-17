@@ -31,7 +31,8 @@ class SubscriptionMailer < ActionMailer::Base
 
     mail :subject => subject,
          :to => user.email,
-         :from => "#{@user.full_name} <#{Setting.email_comment_replies[:address]}>",
+         :from => "#{@user.full_name} <#{@user.email}>",
+         :reply_to => "#{@user.full_name} <#{Setting.email_comment_replies[:address]}>",
          :date => Time.now
   end
 end

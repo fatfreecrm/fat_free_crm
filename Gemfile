@@ -97,4 +97,3 @@ gem 'turbo-sprockets-rails3'
 gem 'ffcrm_merge', :git => "git://github.com/reubenjs/ffcrm_merge.git"
 
 
-

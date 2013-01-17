@@ -509,5 +509,9 @@ module ApplicationHelper
       :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
     )
   end
+  
+  def indefinite_article(params_word)
+      %w(a e i o u).include?(params_word[0].downcase) ? "an" : "a"
+  end
 
 end
