@@ -8,7 +8,7 @@
     = hook(:contact_group_tools_before, self, :contact_group => contact_group)
     
     %li= link_to ("Emails &#8250; clipboard".html_safe), '#', :onclick => "crm.copyToClipboard('#{contact_group.email_addresses}')"
-    %li= mail_to(contact_group.email_addresses, "Email group")
+    %li= mail_to("", "Email group", :bcc => contact_group.email_addresses)
     
     - if can?(:update, contact_group)
       %li= link_to_edit(contact_group)

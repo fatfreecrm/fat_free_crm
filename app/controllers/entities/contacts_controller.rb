@@ -332,9 +332,11 @@ class ContactsController < EntitiesController
         [ key, key.contacts.count ]
       end
     ]
+    
     organized = @folder_total.values.sum
-    @folder_total[:all] = Contact.my.count
-    @folder_total[:other] = @folder_total[:all] - organized
+    @folder_total[:other] = Contact.includes(:account).where("accounts.id IS NULL").count
+    @folder_total[:all] = @folder_total[:other] + organized
+    
   end
 
   #----------------------------------------------------------------------------

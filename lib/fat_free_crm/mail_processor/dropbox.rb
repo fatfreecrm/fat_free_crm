@@ -247,7 +247,7 @@ module FatFreeCRM
           :first_name => recipient_local.capitalize,
           :last_name  => "(unknown)",
           :email      => recipient,
-          :access     => default_access
+          :access     => default_access,
           :gender     => "n/a"
         }
 

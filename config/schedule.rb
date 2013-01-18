@@ -32,6 +32,7 @@ end
 
 every 6.hours do
   command "backup perform -t my_backup"
+  set :output, '/var/www/esCRM/current/log/backup.log'
 end
 
 # Learn more: http://github.com/javan/whenever
