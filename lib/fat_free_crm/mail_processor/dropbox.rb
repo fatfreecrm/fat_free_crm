@@ -248,6 +248,7 @@ module FatFreeCRM
           :last_name  => "(unknown)",
           :email      => recipient,
           :access     => default_access
+          :gender     => "n/a"
         }
 
         # Search for domain name in Accounts.

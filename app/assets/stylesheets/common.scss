@@ -432,7 +432,7 @@ li.mobile {
   //border-bottom: 1px gainsboro solid;
   margin: 2px 0px 0px 0px;
   overflow: hidden;
-  padding: 1px;
+  padding: 4px;
   list-style: none;
 	font-size: 11px;
   //  -moz-border-radius:
@@ -449,19 +449,25 @@ li.mobile {
 		font-size: 9px;
 	}
 	tt {
-		display: block;
-		margin-left: 29px;
+		//display: block;
+		//margin-left: 29px;
  		font-size: 11px;
  		color: #333333;
-		p { 
-			display: inline;}
+		//p { 
+		//	display: inline;}
  	}
 	dt {
  		padding: 0px;
- 		margin: 0px 0px 0px 29px;
+ 		margin: -10px 0px 0px 38px;
 		color: #666666;
  			p {
    			margin: 10px 0px 0px 0px; } }
+	.comment_subscriptions {
+	    margin-top: 7px;
+	    margin-left: 4px;
+	    a {
+	      font-size: 11px; } }
+	
   &#comment_new {
     margin: 3px 0px 0px 0px; }
   input[type=text] {

@@ -241,18 +241,18 @@ var crm = {
     var body, state;
 
     if (link.innerHTML == more) {
-      body = Element.previous(Element.previous(Element.up(link)));
-      body.hide();
-      $(body.id.replace('truncated', 'formatted')).show();  // expand
-      link.innerHTML = less;
-      state = "Expanded";
-    } else {
-      body = Element.previous(Element.up(link));
-      body.hide();
-      $(body.id.replace('formatted', 'truncated')).show();  // collapse
-      link.innerHTML = more;
-      state = "Collapsed";
-    }
+		      body = Element.next(Element.up(link));
+		      body.hide();
+		      $(body.id.replace('truncated', 'formatted')).show();  // expand
+		      link.innerHTML = less;
+		      state = "Expanded";
+		    } else {
+		      body = Element.next(Element.next(Element.up(link)));
+		      body.hide();
+		      $(body.id.replace('formatted', 'truncated')).show();  // collapse
+		      link.innerHTML = more;
+		      state = "Collapsed";
+		    }
     // Ex: "formatted_email_42" => [ "formatted", "email", "42" ]
     var arr = body.id.split("_");
 
@@ -283,8 +283,8 @@ var crm = {
         parameters : { type : "", id : notes + "+" + emails, state : state },
         onComplete : function() {
           $(comment_new_field).adjacent("li").each( function(li) {
-            var a = li.select("dt a.toggle")[0];
-            var dt = li.select("tt");
+            var a = li.select("tt a.toggle")[0];
+            var dt = li.select("dt");
             if (typeof(a) != "undefined") {
               if (state == "Expanded") {
                 dt[0].hide();  dt[1].show();

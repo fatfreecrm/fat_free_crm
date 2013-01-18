@@ -16,6 +16,7 @@
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
+set :output, 'log/rake_tasks.log'
 
 every 1.day, :at => '9:00 am' do
   rake "ffcrm:registrations:sync"

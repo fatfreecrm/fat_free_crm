@@ -75,13 +75,19 @@ class ContactsController < EntitiesController
                   :category => :email, 
                   :bucket => "due_this_week", 
                   :user => @current_user,
-                  :assigned_to => User.find_by_first_name(Setting.mailchimp[assigned_to_key.to_sym]).id
+                  :assigned_to => contact.assigned_to
                   )
         end
       when "unsubscribe"
         if contact = Contact.find_by_email(params[:data][:email])
           contact.cf_weekly_emails = contact.cf_weekly_emails - [list_name]
-          contact.tasks << Task.new(:name => "followup unsubscribe from mailchimp list #{list_name}", :category => :follow_up, :bucket => "due_this_week", :user => @current_user)
+          contact.tasks << Task.new(
+                  :name => "followup unsubscribe from mailchimp list #{list_name}", 
+                  :category => :follow_up, 
+                  :bucket => "due_this_week", 
+                  :user => @current_user,
+                  :assigned_to => contact.assigned_to
+                  )
         end
       when "upemail"
         if contact = Contact.find_by_email(params[:data][:old_email])

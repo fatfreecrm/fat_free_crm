@@ -1,28 +1,30 @@
-- truncated = sanitize(truncate(comment.comment.gsub("\n", " "), :length => 125))
-- formatted = defined?(RedCloth) ? RedCloth.new(h(comment.comment)).to_html.html_safe : simple_format(h(comment.comment)).html_safe
+- truncated = simple_format(truncate(comment.comment.gsub("\n", " "), :length => 125))
+- formatted = defined?(RedCloth) ? RedCloth.new(comment.comment).to_html : simple_format(comment.comment)
 - collapsable = formatted.size > 150
 - commentable = comment.commentable
 
-%li.comment[comment]
-  -#.body
-  = link_to avatar_for(comment.user, :size => :thumb), user_path(comment.user)
-  %ul.tools.mobile
-    - if can?(:update, commentable)
-      %li= link_to_edit(comment)
-    - if can?(:destroy, commentable)
-      %li= link_to_delete(comment)
+%li.comment.highlight[comment]
+  .body
+    = link_to avatar_for(comment.user, :size => :small), user_path(comment.user)
+    %ul.tools.mobile
+      - if can?(:update, commentable)
+        %li= link_to_edit(comment)
+      - if can?(:destroy, commentable)
+        %li= link_to_delete(comment)
 
-  = link_to(comment.user.full_name, user_path(comment.user))
-  - if can?(:read, commentable)
-    - if collapsable
-      %tt{ hidden_if(comment.expanded?), {:id => dom_id(comment, :truncated) }}
-        = truncated
-      %tt.textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
-        = auto_link(formatted).html_safe
-    - else
-      %tt.textile= auto_link(formatted).html_safe
-    
-    %dt
-      #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
+
+    %tt
+      = link_to(comment.user.full_name, user_path(comment.user))
+      added note #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
+      - if collapsable && can?(:read, commentable)
+        = " | "
+        = link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
+
+    - if can?(:read, commentable)
       - if collapsable
-        = " ".html_safe + link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
+        %dt{ hidden_if(comment.expanded?), :id => dom_id(comment, :truncated) }
+          = truncated
+        %dt.textile{ hidden_if(comment.collapsed?), :id => dom_id(comment, :formatted) }
+          = sanitize auto_link(formatted)
+      - else
+        %dt.textile= sanitize auto_link(formatted)
