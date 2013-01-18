@@ -297,6 +297,7 @@ lead_source:
 
 # Opportunity Stage.
 #------------------------------------------------------------------------------
+opportunity_default_stage: :prospecting
 opportunity_stage:
   - :prospecting
   - :analysis
