@@ -19,7 +19,7 @@
     %tr
       %td
         .label.req #{t :assign_to}:
-        = user_select(:task, @users, current_user)
+        = user_select(:task, all_users, current_user)
     %tr
       %td
         .label.req #{t :category}:

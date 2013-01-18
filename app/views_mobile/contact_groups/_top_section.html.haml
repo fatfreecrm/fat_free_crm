@@ -8,7 +8,7 @@
       %tr
         %td
           .label #{t :assigned_to}:
-          = user_select(:contact, User.except(current_user), current_user)
+          = user_select(:contact, all_users, current_user)
       %tr
         %td
           .label #{t :category}:
