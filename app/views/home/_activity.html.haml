@@ -18,6 +18,7 @@
       %small
         = l(activity.created_at, :format => :short)
     %tt
+      &nbsp;
       - if known_event
         - action = t('action_' + activity.event)
         - type = t('subject_' + activity.item_type.downcase)

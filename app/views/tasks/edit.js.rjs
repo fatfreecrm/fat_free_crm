@@ -1,9 +1,9 @@
 id = dom_id(@task)
 
 if params[:cancel].true?     # <----------------- Hide [Edit Task]
-
-  partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
-  page[id].replace_html :partial => partial, :collection => [ @task ], :locals => { :bucket => @task.bucket }
+  
+  page << replace_content(@task)  # partial with the new task, and update recent items.
+  #page[id].replace_html :partial => partial, :collection => [ @task ], :locals => { :bucket => @task.bucket }
 
 else # <----------------------------------------  Show [Edit Task] form.
 

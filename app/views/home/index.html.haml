@@ -4,9 +4,18 @@
 .float_left
   .title
     %span#title #{t :my_tasks}
-  %ul.list#tasks
+  %ul.log#tasks
     - unless @my_tasks.empty?
       = render :partial => "home/task", :collection => @my_tasks.limit(10)
+      = show_hidden_entities_message(@my_tasks.count, 'task', 10)
+    - else
+      #{t :no_task_records}
+  
+  .title{:style => 'padding-top: 20px;'}
+    %span#title Open Tasks
+  %ul.log#tasks
+    - unless @open_tasks.empty?
+      = render :partial => "home/task", :collection => @open_tasks.limit(10)
       = show_hidden_entities_message(@my_tasks.count, 'task', 10)
     - else
       #{t :no_task_records}
@@ -22,7 +31,7 @@
 .float_right
   .title
     %span#title #{t :my_accounts}
-  %ul.list#accounts
+  %ul.log#accounts
     - unless @my_accounts.empty?
       = render :partial => "home/account", :collection => @my_accounts.limit(10)
       = show_hidden_entities_message(@my_accounts.count, 'account', 10)
