@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110042846) do
+ActiveRecord::Schema.define(:version => 20130120042043) do
 
   create_table "account_aliases", :force => true do |t|
     t.integer  "account_id"
@@ -189,15 +189,6 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
   add_index "contact_groups", ["assigned_to"], :name => "index_contact_groups_on_assigned_to"
   add_index "contact_groups", ["user_id", "name", "deleted_at"], :name => "index_contact_groups_on_user_id_and_name_and_deleted_at", :unique => true
 
-  create_table "contact_groups_contacts", :id => false, :force => true do |t|
-    t.integer "contact_id"
-    t.integer "contact_group_id"
-  end
-
-  add_index "contact_groups_contacts", ["contact_group_id"], :name => "index_contact_groups_contacts_on_contact_group_id"
-  add_index "contact_groups_contacts", ["contact_id", "contact_group_id"], :name => "index_contact_groups_contacts_on_contact_id_and_contact_group_id"
-  add_index "contact_groups_contacts", ["contact_id"], :name => "index_contact_groups_contacts_on_contact_id"
-
   create_table "contact_opportunities", :force => true do |t|
     t.integer  "contact_id"
     t.integer  "opportunity_id"
@@ -213,7 +204,7 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.integer  "assigned_to"
     t.integer  "reports_to"
     t.string   "first_name",       :limit => 64,  :default => "",       :null => false
-    t.string   "last_name",        :limit => 64,  :default => "",       :null => false
+    t.string   "last_name",        :limit => 64,  :default => ""
     t.string   "access",           :limit => 8,   :default => "Public"
     t.string   "title",            :limit => 64
     t.string   "department",       :limit => 64
@@ -235,6 +226,7 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.string   "background_info"
     t.string   "skype",            :limit => 128
     t.text     "subscribed_users"
+    t.integer  "saasu_uid"
   end
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
@@ -421,6 +413,18 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.string   "response"
   end
 
+  create_table "memberships", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "contact_group_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "memberships", ["contact_group_id"], :name => "index_contact_groups_contacts_on_contact_group_id"
+  add_index "memberships", ["contact_id", "contact_group_id"], :name => "index_contact_groups_contacts_on_contact_id_and_contact_group_id"
+  add_index "memberships", ["contact_id"], :name => "index_contact_groups_contacts_on_contact_id"
+
   create_table "opportunities", :force => true do |t|
     t.integer  "user_id"
     t.integer  "campaign_id"
@@ -490,8 +494,8 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.integer  "taggable_id"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "taggable_type", :limit => 50
-    t.string   "context",       :limit => 50
+    t.string   "taggable_type"
+    t.string   "context"
     t.datetime "created_at"
   end
 

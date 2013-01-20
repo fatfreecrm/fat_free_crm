@@ -2,7 +2,8 @@ class ContactGroup < ActiveRecord::Base
   belongs_to :user
   belongs_to :lead
   belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_and_belongs_to_many :contacts, :uniq => true
+  has_many :contacts, :through => :memberships, :uniq => true
+  has_many :memberships, :uniq => true
   has_many :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
   has_many    :emails, :as => :mediator
   has_many :events

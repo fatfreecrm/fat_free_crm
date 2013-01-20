@@ -100,6 +100,7 @@ namespace :ffcrm do
       
       require 'open-uri'
       
+      PaperTrail.whodunnit = 1
       url = Setting.registration_api[:ccamp_link]
       url_data = open(url).read()
       

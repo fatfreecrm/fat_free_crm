@@ -60,7 +60,8 @@ class Contact < ActiveRecord::Base
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
   has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
   has_many    :emails, :as => :mediator
-  has_and_belongs_to_many   :contact_groups
+  has_many    :contact_groups, :through => :memberships
+  has_many    :memberships
   
   ##what about when you delete a contact? do you want to lose all attendance records?
   #might be better to have an archive system for contacts so that deletion is only for

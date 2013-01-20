@@ -4,7 +4,7 @@
   -#.strip.white #{t :other}
 
   %ul.tools
-    = hook(:contact_tools_before, self, :contact => contact)
+    -#= hook(:contact_tools_before, self, :contact => contact)
 
     - if can?(:update, contact)
       = link_to_edit(contact, :related => "event_instance_#{@event_instance.id}")

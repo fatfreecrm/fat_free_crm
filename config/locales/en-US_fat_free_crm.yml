@@ -320,6 +320,7 @@ en-US:
   #----------------------------------------------------------------------------
   create_contact_group: Create Group
   select_contact_group: Select Group
+  save_contact_group: Save Group
   contact_group: Group
   select_a_group: group
   contact_group_small: group
@@ -331,6 +332,7 @@ en-US:
   team: Team
   staff: Staff
   contactgroup: Group
+  camp: Camp
   
   # Views -> Events.
   #----------------------------------------------------------------------------
@@ -595,7 +597,7 @@ en-US:
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: completed
-  action_create: created
+  action_create: added
   action_destroy: deleted
   action_reassigned: reassigned
   action_rejected: rejected
@@ -617,6 +619,11 @@ en-US:
   subject_opportunity: opportunity
   subject_task: task
   subject_user: user
+  subject_membership: member
+  subject_contactgroup: group
+  subject_accountcontact: contact
+  subject_eventinstance: event occurrence
+  subject_event: event
   tag_list: Tags
   create_past_participle: Record Creations
   view_past_participle: Views

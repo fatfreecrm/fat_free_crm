@@ -4,7 +4,7 @@
   - if item.respond_to?(:full_name)
     - link_to item.full_name, polymorphic_url(item)
 
-  - elsif [Account, Campaign, Contact, Lead, Opportunity].include?(item.class)
+  - elsif [Account, Campaign, Contact, Lead, Opportunity, ContactGroup, Event, EventInstance].include?(item.class)
     - link_to item.name, polymorphic_url(item)
 
   - elsif item.respond_to?(:name)
@@ -24,6 +24,10 @@
         - type = t('subject_' + activity.item_type.downcase)
         = link_to avatar_for(activity.user, :size => :thumb), user_path(activity.user)
         = t("activity_text", :user => user, :action => action, :type => type, :subject => subject, :default => "#{user} #{action} #{type} #{subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
+        - if activity.item.class == Membership
+          = "to #{link_to activity.item.contact_group.name, polymorphic_url(activity.item.contact_group)}".html_safe
+        - if activity.item.class == AccountContact
+          = "to #{link_to activity.item.account.name, polymorphic_url(activity.item.account)}".html_safe
         - if ((item = activity.item).class == Comment) and Setting.comments_visible_on_dashboard
           = t('action_create_comment', :comment => truncate(h(item.comment), :length => 90)).html_safe
       - else
