@@ -3,14 +3,15 @@
 
   %ul.tools
     = hook(:contact_tools_before, self, :contact => contact)
-
+    
+    - if !shown_on_landing_page?
+      %li= link_to_graduate(contact)
+    
     - if can?(:update, contact)
       %li= link_to_edit(contact)
 
     - if shown_on_landing_page?
       %li= link_to_discard(contact)
-    
-    %li= link_to_graduate(contact)
 
     - if can?(:destroy, contact)
       %li= link_to_confirm(contact)
