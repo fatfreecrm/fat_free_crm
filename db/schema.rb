@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110042846) do
+ActiveRecord::Schema.define(:version => 20130119111853) do
 
   create_table "account_aliases", :force => true do |t|
     t.integer  "account_id"
@@ -213,7 +213,7 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.integer  "assigned_to"
     t.integer  "reports_to"
     t.string   "first_name",       :limit => 64,  :default => "",       :null => false
-    t.string   "last_name",        :limit => 64,  :default => "",       :null => false
+    t.string   "last_name",        :limit => 64,  :default => ""
     t.string   "access",           :limit => 8,   :default => "Public"
     t.string   "title",            :limit => 64
     t.string   "department",       :limit => 64
@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.string   "background_info"
     t.string   "skype",            :limit => 128
     t.text     "subscribed_users"
+    t.integer  "saasu_uid"
   end
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
@@ -490,8 +491,8 @@ ActiveRecord::Schema.define(:version => 20130110042846) do
     t.integer  "taggable_id"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "taggable_type", :limit => 50
-    t.string   "context",       :limit => 50
+    t.string   "taggable_type"
+    t.string   "context"
     t.datetime "created_at"
   end
 
