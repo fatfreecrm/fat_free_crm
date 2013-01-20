@@ -7,11 +7,11 @@ class SaasuObserver < ActiveRecord::Observer
   
   def after_update(contact)
 
-    if contact.saasu_uid.present? && contact.account.present? && excluded_accounts.include?(contact.account.id)
+    if contact.saasu_uid.present? && contact.account.present? && !not_excluded(contact)
       # moved into an excluded account - time to delete from saasu
       self.delay.delete_saasu(contact.saasu_uid)
-      self.saasu_uid = nil
-      self.save!
+      contact.saasu_uid = nil
+      contact.save!
       
     elsif not_excluded?(contact)
       if (contact.email_changed? || 
