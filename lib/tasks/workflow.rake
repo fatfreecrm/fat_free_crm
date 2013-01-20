@@ -15,6 +15,49 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 namespace :ffcrm do
+  namespace :saasu do
+    desc "sync contacts with saasu."
+    task :sync => :environment do
+      # This doesn't delete records from saasu, but will push any contacts in
+      # mojo that are missing
+      Saasu::Base.api_key = Setting.saasu[:access_key]
+      Saasu::Base.file_uid = Setting.saasu[:file_id]
+      
+      puts "#{Time.now} Getting contacts from Saasu"
+      saasu_contacts = Saasu::Contact.all
+      
+      excluded = ["Supporters", "2012 Graduates"]
+      excluded_accounts = Account.where('name IN (?)', excluded).collect{|a| a.id}
+      crm_contacts = Contact.includes(:account).where('accounts.id NOT IN (?)', excluded_accounts)
+      
+      puts "#{Time.now} Calculating changes"
+      saasu_contacts.each do |c|
+        crm_contacts.delete_if{|item| item.saasu_uid == c.uid}
+      end
+      
+      crm_contacts.each do |c|
+        sc = Saasu::Contact.new
+        sc.given_name = c.first_name
+        sc.family_name = c.last_name
+        sc.email_address = c.email
+        sc.email = c.email
+        sc.mobile_phone = c.mobile
+        sc.main_phone = c.mobile
+        sc.home_phone = c.phone
+        result = Saasu::Contact.insert(sc)
+        if result.errors.nil?
+          puts "#{Time.now} Added contact #{c.full_name} to saasu"
+        else
+          puts "#{Time.now} Error adding contact #{c.full_name} to saasu. #{result.errors}"
+        end
+        
+        c.saasu_uid = result.inserted_entity_uid
+        c.save!
+      end
+      
+    end
+  end
+  
   namespace :mailchimp do
     desc "check mailchimp lists for consistency"
     task :check => :environment do
@@ -99,7 +142,6 @@ namespace :ffcrm do
     task :sync => :environment do
       
       require 'open-uri'
-      
       PaperTrail.whodunnit = 1
       url = Setting.registration_api[:ccamp_link]
       url_data = open(url).read()

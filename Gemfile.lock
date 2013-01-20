@@ -4,6 +4,14 @@ GIT
   specs:
     ffcrm_merge (1.2)
 
+GIT
+  remote: git://github.com/reubenjs/saasu.git
+  revision: 5cdf3fa637bc6f2e21168cadb0d4bf07d7b9d8e5
+  specs:
+    saasu (0.0.15)
+      activesupport (>= 2.3.2)
+      nokogiri
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -358,6 +366,7 @@ DEPENDENCIES
   responds_to_parent (>= 1.1.0)
   rspec-rails (~> 2.9.0)
   rvm-capistrano
+  saasu!
   sass (~> 3)
   sass-rails (~> 3.2.3)
   select2-rails
