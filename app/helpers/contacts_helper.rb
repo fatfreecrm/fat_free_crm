@@ -37,7 +37,7 @@ module ContactsHelper
     object = record.is_a?(Array) ? record.last : record
     confirm = options[:confirm] || nil
 
-    link_to("Gradutate",
+    link_to("Graduate",
       options[:url] || graduate_contact_path(record),
       :method => :post,
       :remote => true,

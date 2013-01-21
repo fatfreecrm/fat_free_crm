@@ -2,18 +2,18 @@ class SaasuObserver < ActiveRecord::Observer
   observe :contact
   
   def after_create(contact) 
-    self.delay.add_saasu(contact) if not_excluded?(contact)
+    self.delay.add_saasu(contact) if !in_excluded_account?(contact)
   end
   
   def after_update(contact)
 
-    if contact.saasu_uid.present? && contact.account.present? && !not_excluded(contact)
+    if contact.saasu_uid.present? && contact.account.present? && in_excluded_account?(contact)
       # moved into an excluded account - time to delete from saasu
       self.delay.delete_saasu(contact.saasu_uid)
       contact.saasu_uid = nil
       contact.save!
       
-    elsif not_excluded?(contact)
+    elsif !in_excluded_account?(contact)
       if (contact.email_changed? || 
           contact.first_name_changed? || 
           contact.last_name_changed? || 
@@ -39,11 +39,11 @@ class SaasuObserver < ActiveRecord::Observer
 
   private
   
-  def not_excluded?(contact)
+  def in_excluded_account?(contact)
     excluded = ["Supporters", "2012 Graduates"]
     excluded_accounts = Account.where('name IN (?)', excluded).collect{|a| a.id}
     
-    Contact.includes(:account).where('contacts.id = ? AND accounts.id IN (?)', contact.id, excluded_accounts).empty?
+    !Contact.includes(:account).where('contacts.id = ? AND accounts.id IN (?)', contact.id, excluded_accounts).empty?
   end
 
   def add_saasu(c)

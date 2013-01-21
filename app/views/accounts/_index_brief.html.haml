@@ -7,6 +7,9 @@
 
   %ul.tools
     = hook(:account_tools_before, self, :account => account)
+    
+    %li= link_to ("Emails &#8250; clipboard".html_safe), '#', :onclick => "crm.copyToClipboard('#{account.email_addresses}')"
+    %li= mail_to("", "Email folder", :bcc => account.email_addresses)
 
     - if can?(:update, account)
       %li= link_to_edit(account)
@@ -26,7 +29,7 @@
         = t(:added_by, :time_ago => time_ago_in_words(account.created_at), :user => user_name) << " | "
       - else
         = t(:added_ago, :value => time_ago_in_words(account.created_at)) << " | "
-      = t('pluralize.contact', account.contacts.count) << " | "
-      = t('pluralize.opportunity', account.opportunities.count)
+      = t('pluralize.contact', account.contacts.count) #<< " | "
+      -#= t('pluralize.opportunity', account.opportunities.count)
 
     = hook(:account_bottom, self, :account => account)

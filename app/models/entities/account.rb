@@ -98,6 +98,10 @@ class Account < ActiveRecord::Base
     location = self[:billing_address].strip.split("\n").last
     location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ").strip if location
   end
+  
+  def email_addresses
+    self.contacts.map(&:email).reject(&:blank?).join(", ") unless self.contacts.empty?
+  end
 
   # Attach given attachment to the account if it hasn't been attached already.
   #----------------------------------------------------------------------------
