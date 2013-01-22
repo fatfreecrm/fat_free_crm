@@ -120,7 +120,7 @@ class ContactsController < EntitiesController
     #overwrite with nil if params "q" (advanced search)
     query = nil if params.include?("q")
     @contacts = get_contacts(:page => params[:page], :per_page => params[:per_page], :query => query)
-
+    
     respond_with @contacts do |format|
       format.xls { render :layout => 'header' }
     end
@@ -234,6 +234,10 @@ class ContactsController < EntitiesController
     end
   end
 
+  def move_contact
+    
+  end
+
   # DELETE /contacts/1
   #----------------------------------------------------------------------------
   def destroy
@@ -305,6 +309,7 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:contacts_filter] = params[:folder]
+    session[:contacts_user_filter] = params[:user]
     @contacts = get_contacts(:page => 1)
     render :index
   end
@@ -339,6 +344,16 @@ class ContactsController < EntitiesController
     organized = @folder_total.values.sum
     @folder_total[:other] = Contact.includes(:account).where("accounts.id IS NULL").count
     @folder_total[:all] = @folder_total[:other] + organized
+    
+    # Assigned to each user
+    @user_total = Hash[
+      User.all.map do |key|
+        [ key, Contact.where('assigned_to = ?', key).count ]
+      end
+    ]
+    organized = @user_total.values.sum
+    @user_total[:other] = Contact.where("assigned_to IS NULL").count
+    @user_total[:all] = organized + @user_total[:other]
     
   end
 

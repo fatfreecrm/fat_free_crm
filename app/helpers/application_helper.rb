@@ -463,7 +463,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   # Return name of current view
   def current_view_name
-    controller = params['controller']
+    controller = (params['action'] == "move_contact" || params['action'] == "assign_contact") ? "contacts" : params['controller']
     action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     current_user.pref[:"#{controller}_#{action}_view"]
   end
@@ -471,7 +471,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   # Get template in current context with current view name
   def template_for_current_view
-    controller = params['controller']
+    controller = (params['action'] == "move_contact" || params['action'] == "assign_contact") ? "contacts" : params['controller']
     action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     template = FatFreeCRM::ViewFactory.template_for_current_view(:controller => controller, :action => action, :name => current_view_name)
     template

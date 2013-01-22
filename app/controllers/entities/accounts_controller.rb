@@ -85,6 +85,39 @@ class AccountsController < EntitiesController
       get_data_for_sidebar if @account.update_attributes(params[:account])
     end
   end
+  
+  #----------------------------------------------------------------------------
+  def move_contact
+    @contact = Contact.find(params[:contact_id])
+    @contact.account = @account # confusing, but it's as good as I could figure out with the dropable helper
+    @contact.save
+
+    #data for sidebar...
+    @folder_total = Hash[
+      Account.my.map do |key|
+        [ key, key.contacts.count ]
+      end
+    ]
+    
+    organized = @folder_total.values.sum
+    @folder_total[:other] = Contact.includes(:account).where("accounts.id IS NULL").count
+    @folder_total[:all] = @folder_total[:other] + organized
+    
+    # Assigned to each user
+    @user_total = Hash[
+      User.all.map do |key|
+        [ key, Contact.where('assigned_to = ?', key).count ]
+      end
+    ]
+    organized = @user_total.values.sum
+    @user_total[:other] = Contact.where("assigned_to IS NULL").count
+    @user_total[:all] = organized + @user_total[:other]
+    
+    # respond_with (@contact) do |format|
+    #       redirect_to :contacts, :action => :move_contact and return
+    #     end
+    
+  end
 
   # DELETE /accounts/1
   #----------------------------------------------------------------------------

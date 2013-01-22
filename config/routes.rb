@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get :versions
     end
     member do
+      post :move_contact
       put  :attach
       post :discard
       post :subscribe
@@ -77,6 +78,7 @@ Rails.application.routes.draw do
       post :mandrill_webhooks
     end
     member do
+      post :move_contact
       put  :attach
       post :discard
       post :subscribe
@@ -142,6 +144,7 @@ Rails.application.routes.draw do
 
   resources :users, :id => /\d+/ do
     member do
+      post :assign_contact
       get :avatar
       get :password
       put :upload_avatar

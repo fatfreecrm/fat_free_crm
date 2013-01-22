@@ -23,13 +23,28 @@ module ContactsHelper
     id = (folder == "other") ? "other" : folder.id
     checked = (session[:contacts_filter] ? session[:contacts_filter].split(",").include?(id.to_s) : count.to_i > 0)
     onclick = remote_function(
-      :url      => { :action => :filter },
+      :url      => { :controller => :contacts, :action => :filter },
       :with     => h(%Q/"folder=" + $$("input[name='folder[]']").findAll(function (el) { return el.checked }).pluck("value")/),
       :loading  => "$('loading').show()",
       :complete => "$('loading').hide()"
     )
     
     check_box_tag("folder[]", id, checked, :id => id, :onclick => onclick)
+  end
+  
+  # Sidebar checkbox control for filtering contacts by folder.
+  #----------------------------------------------------------------------------
+  def user_contact_checbox(user, count)
+    id = (user == "other") ? "other" : user.id
+    checked = (session[:contacts_user_filter] ? session[:contacts_user_filter].split(",").include?(id.to_s) : count.to_i > 0)
+    onclick = remote_function(
+      :url      => { :controller => :contacts, :action => :filter },
+      :with     => h(%Q/"user=" + $$("input[name='user[]']").findAll(function (el) { return el.checked }).pluck("value")/),
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    
+    check_box_tag("user[]", id, checked, :id => id, :onclick => onclick)
   end
   
   #----------------------------------------------------------------------------

@@ -3,11 +3,13 @@
   .caption Active Folders
   = hook(:index_contact_sidebar_bottom, self)
   - Account.my.each do |key|
-    .check_box{:style => "border-bottom: 1px silver dotted;"}
+    .check_box[key]{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @folder_total[key]
       = contact_folder_checbox(key, @folder_total[key])
       = label_tag(key, t(key.name))
+      -#= drop_receiving_element(dom_id(key), :hoverclass => "dropover", :onDrop => "function(drag, drop, event) { crm.move_contact_to_account(drag, drop); }")
+      = drop_receiving_element(dom_id(key), :hoverclass => "dropover", :accept => "contact", :url => {:controller => :accounts, :action => "move_contact", :id => key.id}, :with => "'contact_id=' + (element.id.split('_').last())")
 
   .check_box{:style => "border-bottom: 1px silver dotted;"}
     %div{:style => "float:right;"}
@@ -20,3 +22,20 @@
       %b= @folder_total[:all]
     %b total contacts
   = hook(:index_contact_sidebar_bottom, self)
+  
+  -#= render "shared/search"
+  .caption Assigned To
+  - User.all.each do |key|
+    .check_box[key]{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = @user_total[key]
+      = user_contact_checbox(key, @user_total[key])
+      = label_tag(key, t(key.name))
+      -#= drop_receiving_element(dom_id(key), :hoverclass => "dropover", :onDrop => "function(drag, drop, event) { crm.move_contact_to_account(drag, drop); }")
+      = drop_receiving_element(dom_id(key), :hoverclass => "dropover", :accept => "contact", :url => {:controller => :users, :action => "assign_contact", :id => key.id}, :with => "'contact_id=' + (element.id.split('_').last())")
+
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @user_total[:other]
+    = user_contact_checbox("other", @user_total[:other])
+    = label_tag(:other, "Unassigned")

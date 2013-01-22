@@ -66,3 +66,4 @@
         = render "entities/section_custom_fields", :entity => contact
         = render "comments/new", :commentable => contact
       = render :partial => "shared/timeline", :collection => (contact.comments + contact.emails).sort { |x, y| y.created_at <=> x.created_at }
+= draggable_element(dom_id(contact), :revert => true, :handle => "'gravatar'", :scroll => "window")

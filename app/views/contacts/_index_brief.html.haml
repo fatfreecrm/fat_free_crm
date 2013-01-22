@@ -20,9 +20,19 @@
     = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
     %tt
       = brief_account_info(contact)
-
+      
+      - if contact.has_subscription?
+        |
+        = image_tag "/assets/sub-ad.png", :size => "14x11" if contact.cf_weekly_emails.include? "Adelaide"
+        = image_tag "/assets/sub-cw.png", :size => "14x11" if contact.cf_weekly_emails.include? "City West"
+        = image_tag "/assets/sub-ce.png", :size => "14x11" if contact.cf_weekly_emails.include? "City East"
+        = image_tag "/assets/sub-tt.png", :size => "14x11" if contact.cf_supporter_emails.include? "TT Email"
+        = image_tag "/assets/sub-ttm.png", :size => "14x11" if contact.cf_supporter_emails.include? "TT Mail"
+        = image_tag "/assets/sub-pp.png", :size => "14x11" if contact.cf_supporter_emails.include? "Prayer Points"
+      
       - if (lead = contact.lead) and lead.referred_by?
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
     = hook(:contact_bottom, self, :contact => contact)
+= draggable_element(dom_id(contact), :revert => true, :handle => "'gravatar'", :scroll => "window")
