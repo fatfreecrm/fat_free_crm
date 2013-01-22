@@ -102,6 +102,10 @@ var crm = {
     } else if ($("query")) {
       $("query").focus();
     }
+		var basic_search_input = $("query")
+		if (basic_search_input.value != "") {
+			basic_search_input.focus();
+		}
   },
 
   // Hide accounts dropdown and show create new account edit field instead.

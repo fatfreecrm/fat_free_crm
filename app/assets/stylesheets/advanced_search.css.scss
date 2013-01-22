@@ -43,8 +43,62 @@
   }
 
   #query {
-    margin-top: 6px;
-  }
+      margin-top: 6px;
+    }
+
+	div.clearable-input {
+		width: 300px;
+		-webkit-box-shadow: inset 0px 1px 4px rgba(0,0,0,.2);
+		box-shadow: inset 0px 1px 4px rgba(0,0,0,.2);
+		position: relative;
+		border: 1px solid #CCC;
+		color: #333;
+		text-shadow: 0 1px 0 white;
+		background: white;
+		border-radius:7px;
+		background-clip: padding-box;
+		margin-bottom:10px;
+		
+		input.clear-ui {
+			  width:86%;
+			  padding: 5px 0 5px 5px;
+			  line-height: 1.2;
+			  font-size: 13px;
+			  border:none;
+			  outline: 0 !important;
+			  margin-left:5px;
+				background: transparent;
+		}
+		input.clear-ui#query {
+				margin-top:0px;
+				//margin-bottom:2px;
+		}
+		
+		.ui-focus{
+		   -webkit-box-shadow:  0px 0px 3px 2px rgba(0, 25, 255, 0.3);
+		   box-shadow:  0px 0px 3px 2px rgba(0, 93, 255, 0.3);
+		}
+		.ui-icon-delete{
+		   padding: 0;
+		   margin: 0;
+		   background: rgba(0, 0, 0, 0.398438) url(icons-18-white.png) -74px 50%;
+		   background-position: -71px 50%;
+		   background-size: 745px 16px;
+		   display:none;
+		   float:right;
+		   border:solid #fff 2px;
+		   width:14px;
+		   height:14px;
+		   position:relative;
+		   top:4px;
+		   right:6px;
+		   border-radius:20px;
+		   box-shadow:  0px 0px 3px 2px rgba(000, 000, 000, 0.2);
+		   cursor:pointer;
+		}
+		
+		
+	}
 
   .combinator {
     margin-bottom: 7px;

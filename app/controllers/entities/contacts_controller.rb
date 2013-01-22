@@ -116,7 +116,10 @@ class ContactsController < EntitiesController
   # GET /contacts
   #----------------------------------------------------------------------------
   def index
-    @contacts = get_contacts(:page => params[:page], :per_page => params[:per_page])
+    query = params.include?("query") ? session[:contacts_query] = params[:query] : session[:contacts_query]
+    #overwrite with nil if params "q" (advanced search)
+    query = nil if params.include?("q")
+    @contacts = get_contacts(:page => params[:page], :per_page => params[:per_page], :query => query)
 
     respond_with @contacts do |format|
       format.xls { render :layout => 'header' }
