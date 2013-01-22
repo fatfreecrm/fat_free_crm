@@ -35,6 +35,15 @@ describe Opportunity do
     first  = FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user)
     lambda { FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
   end
+  
+  it "have a default stage" do
+    Setting.should_receive(:[]).with(:opportunity_default_stage).and_return('default')
+    Opportunity.default_stage.should eql('default')
+  end
+  
+  it "have a fallback default stage" do
+    Opportunity.default_stage.should eql('prospecting')
+  end
 
   describe "Update existing opportunity" do
     before(:each) do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130120042043) do
+ActiveRecord::Schema.define(:version => 20130122134250) do
 
   create_table "account_aliases", :force => true do |t|
     t.integer  "account_id"
@@ -110,6 +110,9 @@ ActiveRecord::Schema.define(:version => 20130120042043) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "assigned_to"
+    t.integer  "user_id"
+    t.string   "access",            :default => "Public"
   end
 
   add_index "attendances", ["contact_id", "event_instance_id"], :name => "index_attendances_on_contact_id_and_event_instance_id"

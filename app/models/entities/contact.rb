@@ -157,12 +157,13 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def save_with_account_and_permissions(params)
     save_account(params)
+    result = self.save
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
     self.contact_groups << ContactGroup.find(params[:contact_group]) unless params[:contact_group].blank?
     #if has_mailchimp_subscription?
     #  mailchimp_lists unless self.invalid?
     #end
-    self.save
+    result
   end
   
   def subscriptions_in_words

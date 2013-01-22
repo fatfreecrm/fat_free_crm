@@ -221,7 +221,7 @@ module FatFreeCRM
         case keyword
         when "Account", "Campaign", "Opportunity"
           defaults[:status] = "planned" if keyword == "Campaign"      # TODO: I18n
-          defaults[:stage] = "prospecting" if keyword == "Opportunity" # TODO: I18n
+          defaults[:stage] = Opportunity.default_stage if keyword == "Opportunity" # TODO: I18n
 
         when "Contact", "Lead"
           first_name, *last_name = data.delete("Name").split(' ')

@@ -235,7 +235,7 @@ GEM
       activerecord (~> 3.0)
       chronic (~> 0.6.7)
       polyamorous (~> 0.5.0)
-    ransack_ui (1.0.2)
+    ransack_ui (1.1.0)
       ransack
       ransack_chronic (>= 1.1.0)
     rdoc (3.12)
@@ -346,7 +346,7 @@ DEPENDENCIES
   haml (~> 3)
   headless
   ice_cube
-  jquery-rails
+  jquery-rails (~> 2.1.4)
   mailchimp
   mandrill-rails
   mysql2 (= 0.3.10)
@@ -362,7 +362,7 @@ DEPENDENCIES
   rails (~> 3.2.11)
   rails3-jquery-autocomplete
   ransack_ffcrm (~> 0.7.1)
-  ransack_ui (>= 1.0.2)
+  ransack_ui (>= 1.1.0)
   responds_to_parent (>= 1.1.0)
   rspec-rails (~> 2.9.0)
   rvm-capistrano

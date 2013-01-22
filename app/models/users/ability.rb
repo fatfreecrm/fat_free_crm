@@ -5,7 +5,7 @@ class Ability
 
   def initialize(user)
     if user.present?
-      entities = [Account, Campaign, Contact, Lead, Opportunity, ContactGroup, Event, EventInstance]
+      entities = [Account, Campaign, Contact, Lead, Opportunity, ContactGroup, Event, EventInstance, Attendance]
       entities << MandrillEmail if user.mandrill?
       
       can :create, :all

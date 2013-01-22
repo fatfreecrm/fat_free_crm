@@ -77,7 +77,9 @@ class CommentsController < ApplicationController
   # POST /comments.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    @comment = Comment.new(params[:comment])
+    attributes = params[:comment] || {}
+    attributes.merge!(:user_id => current_user.id)
+    @comment = Comment.new(attributes)
 
     # Make sure commentable object exists and is accessible to the current user.
     model, id = @comment.commentable_type, @comment.commentable_id

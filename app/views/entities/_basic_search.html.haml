@@ -4,7 +4,7 @@
 
 
 %div.clearable-input{ :style => "margin: 4px 0px 4px 0px; display:inline-block;" }  
-  = text_field_tag('query', @current_query, :size => 32, :placeholder => "Search #{controller_name}", :class => "clear-ui")
+  = text_field_tag('query', @current_query, :size => 32, :placeholder => "Search #{t(controller_name)}", :class => "clear-ui")
   %span.ui-icon-delete
 %div{:style => "display:inline;padding-left:10px;"}
   %span.sorting_options

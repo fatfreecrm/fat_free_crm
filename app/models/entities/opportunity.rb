@@ -109,6 +109,7 @@ class Opportunity < ActiveRecord::Base
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
   def self.per_page ; 20 ; end
+  def self.default_stage; Setting[:opportunity_default_stage].try(:to_s) || 'prospecting'; end
 
   #----------------------------------------------------------------------------
   def weighted_amount
