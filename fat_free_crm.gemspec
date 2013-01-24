@@ -46,6 +46,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'cache_digests'
   gem.add_dependency 'whenever'
   gem.add_dependency 'daemons'
+  gem.add_dependency 'dalli'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------

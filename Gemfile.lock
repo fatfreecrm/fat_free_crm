@@ -103,6 +103,7 @@ GEM
       addressable
       rdoc
     daemons (1.1.9)
+    dalli (2.6.0)
     database_cleaner (0.9.1)
     delayed_job (3.0.4)
       activesupport (~> 3.0)
@@ -334,6 +335,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   combined_time_select (~> 0.0.1)
   daemons
+  dalli
   database_cleaner
   delayed_job
   delayed_job_active_record

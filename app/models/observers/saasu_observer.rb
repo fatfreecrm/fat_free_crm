@@ -26,7 +26,7 @@ class SaasuObserver < ActiveRecord::Observer
           #Saasu::Contact.find errors out if not found...rescue is easier than rewriting the gem :)
           self.delay.add_saasu(contact)
         end
-        if !result.last_updated_uid.nil?
+        if result.present? && result.last_updated_uid
           self.delay.update_saasu(contact, result.last_updated_uid)
         end
       end
