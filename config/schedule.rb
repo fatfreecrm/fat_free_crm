@@ -18,7 +18,7 @@
 # end
 set :output, 'log/rake_tasks.log'
 
-every 1.day, :at => '9:00 am' do
+every "0 9-18 * * *" do
   rake "ffcrm:registrations:sync"
 end
 

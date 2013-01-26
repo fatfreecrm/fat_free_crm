@@ -1,13 +1,16 @@
 .filters#filters
   -#= render "shared/search"
-  .caption Active Folders
+  .caption 
+    Active Folders
+    %div{ :style => "display:inline; font-size: 9px;"}
+      = contact_folder_checbox_select("[all]", Account.my.all.collect{|a| a.id.to_s} + ["other"]) + " " + contact_folder_checbox_select("[mine]", Account.find_all_by_assigned_to(current_user.id).collect{|a| a.id.to_s})
   = hook(:index_contact_sidebar_bottom, self)
   - Account.my.each do |key|
     .check_box[key]{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @folder_total[key]
       = contact_folder_checbox(key, @folder_total[key])
-      = label_tag(key, t(key.name))
+      = label_folder_select(key, t(key.name))
       -#= drop_receiving_element(dom_id(key), :hoverclass => "dropover", :onDrop => "function(drag, drop, event) { crm.move_contact_to_account(drag, drop); }")
       = drop_receiving_element(dom_id(key), :hoverclass => "dropover", :accept => "contact", :url => {:controller => :accounts, :action => "move_contact", :id => key.id}, :with => "'contact_id=' + (element.id.split('_').last())")
 
@@ -15,7 +18,7 @@
     %div{:style => "float:right;"}
       = @folder_total[:other]
     = contact_folder_checbox("other", @folder_total[:other])
-    = label_tag(:other, "No Folder")
+    = label_folder_select(:other, "No Folder")
 
   .check_box
     %div{:style => "float:right;"}
@@ -24,13 +27,16 @@
   = hook(:index_contact_sidebar_bottom, self)
   
   -#= render "shared/search"
-  .caption Assigned To
+  .caption 
+    Assigned To
+    %div{ :style => "display:inline; font-size: 9px;"}
+      = contact_user_checbox_select("[all]", User.all.collect{|u| u.id.to_s} + ["other"]) + " " + contact_user_checbox_select("[me]", [current_user.id.to_s])
   - User.all.each do |key|
     .check_box[key]{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}
         = @user_total[key]
       = user_contact_checbox(key, @user_total[key])
-      = label_tag(key, t(key.name))
+      = label_user_select(key, t(key.name))
       -#= drop_receiving_element(dom_id(key), :hoverclass => "dropover", :onDrop => "function(drag, drop, event) { crm.move_contact_to_account(drag, drop); }")
       = drop_receiving_element(dom_id(key), :hoverclass => "dropover", :accept => "contact", :url => {:controller => :users, :action => "assign_contact", :id => key.id}, :with => "'contact_id=' + (element.id.split('_').last())")
 
@@ -38,4 +44,4 @@
     %div{:style => "float:right;"}
       = @user_total[:other]
     = user_contact_checbox("other", @user_total[:other])
-    = label_tag(:other, "Unassigned")
+    = label_user_select(:other, "Unassigned")

@@ -308,8 +308,8 @@ class ContactsController < EntitiesController
   # POST /contacts/filter                                                  AJAX
   #----------------------------------------------------------------------------
   def filter
-    session[:contacts_filter] = params[:folder]
-    session[:contacts_user_filter] = params[:user]
+    session[:contacts_filter] = params[:folder] if params[:folder].present?
+    session[:contacts_user_filter] = params[:user] if params[:user].present?
     @contacts = get_contacts(:page => 1)
     render :index
   end

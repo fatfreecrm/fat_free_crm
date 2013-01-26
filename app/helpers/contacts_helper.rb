@@ -47,6 +47,39 @@ module ContactsHelper
     check_box_tag("user[]", id, checked, :id => id, :onclick => onclick)
   end
   
+  def label_folder_select(folder, text)
+    ids = folder.class == Account ? [folder.id.to_s] : [folder.to_s]
+    contact_folder_checbox_select(text, ids)
+  end
+  
+  def label_user_select(user, text)
+    ids = user.class == User ? [user.id.to_s] : [user.to_s]
+    contact_user_checbox_select(text, ids)
+  end
+  
+  def contact_user_checbox_select(text, ids = [])
+    onclick = remote_function(
+      :url      => { :controller => :contacts, :action => :filter },
+      :with     => h(%Q/"user=" + $$("input[name='user[]']").findAll(function (el) { el.checked = ((#{ids}.indexOf(el.value) >= 0) ? true : false); return el.checked; }).pluck("value")/),
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    
+    link_to(text, "#", :remote => true, :onclick => onclick)
+  end
+  
+  
+  def contact_folder_checbox_select(text, ids = [])
+    onclick = remote_function(
+      :url      => { :controller => :contacts, :action => :filter },
+      :with     => h(%Q/"folder=" + $$("input[name='folder[]']").findAll(function (el) { el.checked = ((#{ids}.indexOf(el.value) >= 0) ? true : false); return el.checked; }).pluck("value")/),
+      :loading  => "$('loading').show()",
+      :complete => "$('loading').hide()"
+    )
+    
+    link_to(text, "#", :remote => true, :onclick => onclick)
+  end
+  
   #----------------------------------------------------------------------------
   def link_to_graduate(record, options = {})
     object = record.is_a?(Array) ? record.last : record

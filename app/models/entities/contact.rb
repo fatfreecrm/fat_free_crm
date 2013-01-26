@@ -68,7 +68,7 @@ class Contact < ActiveRecord::Base
   #contacts we really don't want to keep any trace of...
   has_many    :attendances, :dependent => :destroy 
 
-  has_ransackable_associations %w(account opportunities tags activities emails addresses comments tasks)
+  has_ransackable_associations %w(account opportunities tags activities emails addresses comments tasks contact_groups)
   ransack_can_autocomplete
   
   serialize :subscribed_users, Set
@@ -103,7 +103,7 @@ class Contact < ActiveRecord::Base
   }
   
   scope :user_state, lambda { |filters|
-    where('assigned_to IN (?)' + (filters.delete('other') ? ' OR assigned_to IS NULL ' : ''), filters)
+    where('contacts.assigned_to IN (?)' + (filters.delete('other') ? ' OR contacts.assigned_to IS NULL ' : ''), filters)
   }
   
   uses_user_permissions
