@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class DatepairInput < SimpleForm::Inputs::Base
+class DatePairInput < SimpleForm::Inputs::Base
 
   # Output two date fields: start and end
   #------------------------------------------------------------------------------
