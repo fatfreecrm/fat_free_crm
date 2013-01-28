@@ -40,7 +40,7 @@ class SaasuObserver < ActiveRecord::Observer
   private
   
   def in_excluded_account?(contact)
-    excluded = ["Supporters", "2012 Graduates"]
+    excluded = Setting.excluded_folders
     excluded_accounts = Account.where('name IN (?)', excluded).collect{|a| a.id}
     
     !Contact.includes(:account).where('contacts.id = ? AND accounts.id IN (?)', contact.id, excluded_accounts).empty?
