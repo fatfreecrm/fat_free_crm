@@ -85,6 +85,7 @@ Rails.application.routes.draw do
       post :unsubscribe
       get :opportunities
       get :contact_groups
+      get :mailing_lists
       get :confirm
       post :graduate
     end

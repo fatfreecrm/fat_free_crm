@@ -99,6 +99,14 @@ module ContactsHelper
     link_to(t(:delete) + "?", confirm_contact_path(contact), :method => :get, :remote => true)
   end
   
+  #----------------------------------------------------------------------------
+  def link_to_mailing_lists(contact)
+    link_to(image_tag("/assets/mail_edit.png", :size => "16x12"), 
+            mailing_lists_contact_path(contact), 
+            :method => :get, 
+            :remote => true)
+  end
+  
   # Contact summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def contact_summary(contact)

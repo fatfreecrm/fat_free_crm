@@ -144,7 +144,7 @@ class Contact < ActiveRecord::Base
   end
   
   def has_subscription?
-    has_mailchimp_subscription? || !self.cf_supporter_emails.blank?
+    has_mailchimp_subscription? || !self.cf_supporter_emails[0].blank?
   end
   
   def last_attendance_at_event_category(event_type)

@@ -38,13 +38,16 @@
           %b= link_to contact.mobile, "tel:#{contact.mobile}"
           |
         - if contact.has_subscription?
-          = image_tag "/assets/sub-ad.png", :size => "14x11" if contact.cf_weekly_emails.include? "Adelaide"
-          = image_tag "/assets/sub-cw.png", :size => "14x11" if contact.cf_weekly_emails.include? "City West"
-          = image_tag "/assets/sub-ce.png", :size => "14x11" if contact.cf_weekly_emails.include? "City East"
-          = image_tag "/assets/sub-tt.png", :size => "14x11" if contact.cf_supporter_emails.include? "TT Email"
-          = image_tag "/assets/sub-ttm.png", :size => "14x11" if contact.cf_supporter_emails.include? "TT Mail"
-          = image_tag "/assets/sub-pp.png", :size => "14x11" if contact.cf_supporter_emails.include? "Prayer Points"
+          = image_tag "/assets/sub-ad.png", :size => "16x12" if contact.cf_weekly_emails.include? "Adelaide"
+          = image_tag "/assets/sub-cw.png", :size => "16x12" if contact.cf_weekly_emails.include? "City West"
+          = image_tag "/assets/sub-ce.png", :size => "16x12" if contact.cf_weekly_emails.include? "City East"
+          = image_tag "/assets/sub-tt.png", :size => "16x12" if contact.cf_supporter_emails.include? "TT Email"
+          = image_tag "/assets/sub-ttm.png", :size => "16x12" if contact.cf_supporter_emails.include? "TT Mail"
+          = image_tag "/assets/sub-pp.png", :size => "16x12" if contact.cf_supporter_emails.include? "Prayer Points"
+          .mail_tools= link_to_mailing_lists(contact)
           |
+        - elsif !contact.has_subscription? && contact.email.present?
+          .mail_tools= link_to_mailing_lists(contact)
         - assigned = User.find(contact.assigned_to) unless contact.assigned_to.blank?
         - if assigned.present?
           = "[#{link_to assigned.first_name, assigned}] |".html_safe

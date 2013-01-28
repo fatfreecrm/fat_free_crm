@@ -27,6 +27,11 @@ class ContactsController < EntitiesController
     respond_with(@contact)
   end
   
+  def mailing_lists
+    @account = @contact.account || Account.new(:user => current_user)
+    respond_with(@contact)
+  end
+  
   def mandrill_webhooks
     if request.post?
       data = JSON.parse(params['mandrill_events'])

@@ -262,6 +262,42 @@ $sidebar_width: 210px;
         input {
           margin-right: 5px; } } } } }
 
+.mailing_section {
+  table {
+    td {
+      vertical-align: top;
+      padding: 0px;
+      div.input {
+        display: inline; }
+      input[type="checkbox"], input[type="radio"] {
+        display: inline;
+        width: auto; }
+      label {
+        margin-right: 15px;
+ 				font-size: 11px; }
+			label.check_boxes.optional {
+					font-weight: bold;
+					display: block;
+					padding-bottom: 3px;
+				}
+      div.input.check_boxes > span {
+        display: inline-block;
+        padding-top: 2px;
+        input {
+          margin-right: 5px; } } } } }
+
+.buttonbar.mailing {
+  border-top: 1px darkgray dotted;
+  margin: 0px auto;
+  padding-top: 3px; }
+
+.confirm.mailing {
+  background: #ffdb99;
+  border-left: 10px orange solid;
+  font-size: 11px;
+  margin: 0px 0px 6px 0px;
+  padding: 3px; }
+
 .remote {
   border: 3px lightblue solid;
   background: whitesmoke;
@@ -944,7 +980,15 @@ ul.tools, ul.sub_tools {
 .highlight, .sub_highlight{
   background-color: white;
   .tools, .sub_tools {
-    visibility: hidden; } }
+    visibility: hidden; }
+	.mail_tools {
+		visibility: hidden;
+		display: none; 
+		a {
+			&:hover {
+		    background: aliceblue; }
+		}}
+ 	}
 
 .mail.highlight,
 .comment.highlight {
@@ -953,7 +997,11 @@ ul.tools, ul.sub_tools {
 .highlight:hover {
   background-color: aliceblue;
   .tools {
-    visibility: visible; } }
+    visibility: visible; }
+	.mail_tools {
+		visibility: visible;
+		display: inline; }
+ }
 
 .sub_highlight:hover {
   background-color: seashell;
