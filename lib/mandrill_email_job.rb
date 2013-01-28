@@ -21,10 +21,10 @@ class MandrillEmailJob < Struct.new(:mandrill_email_id)
           attached_file_name = nil
           attached_file = nil
         end
-    
+        
         response = mandrill.messages_send_template({
                              :template_name => mandrill_mail.template,
-                             :template_content => [:name => "body_content", :content => mandrill_mail.message_body],
+                             :template_content => [:name => "body_content", :content => mandrill_mail.message_body.gsub(/(?:\n\r?|\r\n?)/, '<br>')],
                              :message => {
                                :subject => mandrill_mail.message_subject,
                                :from_email => mandrill_mail.from_address,
