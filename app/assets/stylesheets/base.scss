@@ -53,7 +53,7 @@ ul li {
 
 // Links.
 //------------------------------------------------------------------------------
-a {
+a, .filter_label {
   text-decoration: none;
   &:link, &:visited {
     color: $color_link; }
@@ -65,6 +65,14 @@ a {
     border: none;
     color: $color_link_image;
     text-decoration: none; } }
+
+.filter_label {
+	cursor: pointer;
+}
+
+.head_link {
+	font-size: 10px;
+}
 
 #options {
   a {

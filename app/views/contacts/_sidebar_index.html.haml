@@ -3,7 +3,7 @@
   .caption 
     Active Folders
     %div{ :style => "display:inline; font-size: 9px;"}
-      = contact_folder_checbox_select("[all]", Account.my.all.collect{|a| a.id.to_s} + ["other"]) + " " + contact_folder_checbox_select("[mine]", Account.find_all_by_assigned_to(current_user.id).collect{|a| a.id.to_s})
+      = contact_folder_checbox_select("[all]", Account.my.all.collect{|a| a.id.to_s} + ["other"], "filter_label head_link") + " " + contact_folder_checbox_select("[mine]", Account.find_all_by_assigned_to(current_user.id).collect{|a| a.id.to_s}, "filter_label head_link")
   = hook(:index_contact_sidebar_bottom, self)
   - Account.my.each do |key|
     .check_box[key]{:style => "border-bottom: 1px silver dotted;"}
@@ -30,7 +30,7 @@
   .caption 
     Assigned To
     %div{ :style => "display:inline; font-size: 9px;"}
-      = contact_user_checbox_select("[all]", User.all.collect{|u| u.id.to_s} + ["other"]) + " " + contact_user_checbox_select("[me]", [current_user.id.to_s])
+      = contact_user_checbox_select("[all]", User.all.collect{|u| u.id.to_s} + ["other"], "filter_label head_link") + " " + contact_user_checbox_select("[me]", [current_user.id.to_s], "filter_label head_link")
   - User.all.each do |key|
     .check_box[key]{:style => "border-bottom: 1px silver dotted;"}
       %div{:style => "float:right;"}

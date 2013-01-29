@@ -99,7 +99,7 @@ class Contact < ActiveRecord::Base
   }
   
   scope :state, lambda { |filters|
-    includes(:account).where('accounts.id IN (?)' + (filters.delete('other') ? ' OR accounts.id IS NULL ' : ''), filters)
+    includes(:account_contact).where('account_contacts.account_id IN (?)' + (filters.delete('other') ? ' OR account_contacts.account_id IS NULL ' : ''), filters)
   }
   
   scope :user_state, lambda { |filters|

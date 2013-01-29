@@ -57,7 +57,7 @@ module ContactsHelper
     contact_user_checbox_select(text, ids)
   end
   
-  def contact_user_checbox_select(text, ids = [])
+  def contact_user_checbox_select(text, ids = [], html_class = "filter_label")
     onclick = remote_function(
       :url      => { :controller => :contacts, :action => :filter },
       :with     => h(%Q/"user=" + $$("input[name='user[]']").findAll(function (el) { el.checked = ((#{ids}.indexOf(el.value) >= 0) ? true : false); return el.checked; }).pluck("value")/),
@@ -65,11 +65,11 @@ module ContactsHelper
       :complete => "$('loading').hide()"
     )
     
-    link_to(text, "#", :remote => true, :onclick => onclick)
+    label_tag(text.to_sym, text, :onclick => onclick, :class => html_class)
   end
   
   
-  def contact_folder_checbox_select(text, ids = [])
+  def contact_folder_checbox_select(text, ids = [], html_class = "filter_label")
     onclick = remote_function(
       :url      => { :controller => :contacts, :action => :filter },
       :with     => h(%Q/"folder=" + $$("input[name='folder[]']").findAll(function (el) { el.checked = ((#{ids}.indexOf(el.value) >= 0) ? true : false); return el.checked; }).pluck("value")/),
@@ -77,7 +77,7 @@ module ContactsHelper
       :complete => "$('loading').hide()"
     )
     
-    link_to(text, "#", :remote => true, :onclick => onclick)
+    label_tag(text.to_sym, text, :onclick => onclick, :class => html_class)
   end
   
   #----------------------------------------------------------------------------

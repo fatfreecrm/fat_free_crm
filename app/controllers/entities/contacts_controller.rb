@@ -315,8 +315,10 @@ class ContactsController < EntitiesController
   def filter
     session[:contacts_filter] = params[:folder] if params[:folder].present?
     session[:contacts_user_filter] = params[:user] if params[:user].present?
-    @contacts = get_contacts(:page => 1)
-    render :index and return
+    
+    respond_with(@contacts = get_contacts(:page => 1, :per_page => params[:per_page])) do |format|
+      format.js { render :index }
+    end
   end
   
   def options
