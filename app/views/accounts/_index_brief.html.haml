@@ -14,7 +14,7 @@
     - if can?(:update, account)
       %li= link_to_edit(account)
 
-    - if can?(:destroy, account)
+    - if can?(:destroy, account) && !mobile_device?
       %li= link_to_delete(account)
 
   .indent

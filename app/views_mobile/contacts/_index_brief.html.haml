@@ -10,7 +10,7 @@
     - if shown_on_landing_page?
       %li= link_to_discard(contact)
 
-    - if can?(:destroy, contact)
+    - if can?(:destroy, contact) && !mobile_device?
       %li= link_to_delete(contact)
 
   .indentslim

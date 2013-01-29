@@ -1,6 +1,6 @@
 - if (params['controller'] == 'contacts' || params['action'] == 'move_contact' || params['action'] == 'assign_contact') and (template = template_for_current_view).present?
   - account_updated = contact.account.present? ? contact.account.updated_at : 0
-  - cache ["contact-#{contact.id}", template, contact.updated_at.to_i, account_updated.to_i] do
+  - cache ["contact-#{contact.id}", template, contact.updated_at.to_i, account_updated.to_i, mobile_device? ? "mob" : "dt"] do
     = render(template, :contact => contact)
 - else
   -# default view
