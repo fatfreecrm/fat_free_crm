@@ -2,7 +2,10 @@
 %html
   %head
     %meta{ "http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
-    %title Fat Free CRM
+    - if mobile_device?
+      %meta{ "name" => "viewport", :content => "width=320"}
+    <link href='//fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    %title Mojo : North Terrace ES Contact Relationship Manager
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag :application
     = stylesheet_link_tag :print, :media => 'print'
@@ -26,14 +29,16 @@
       ];
 
       window.controller = "#{controller.controller_name}"
-
+    
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
   %body
     = render "layouts/header"
-    - if tabless_layout?
+    - if tabless_layout? 
       = render "layouts/tabless"
+    - elsif mobile_device?
+      = render 'layouts/mobile'
     - else
       = render "layouts/tabbed"
       = render "layouts/footer"

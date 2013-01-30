@@ -1,0 +1,20 @@
+%tr
+  %td
+    .label #{t :name}:
+    = f.text_field :name, :style => "width:240px"
+%tr
+  %td
+    .label #{t :location}:
+    = f.text_field :location, :style => "width:240px"
+%tr
+  - dfmt = '%d/%m/%Y' 
+  - tfmt = '%I:%M%P'
+  %td
+    .label When?
+    .datetime
+      %p.datepair
+        = f.text_field :calendar_start_date, :style => "width:90px;", :autocomplete => :off, :class => 'date start', :value => @event_instance.starts_at_date
+        = f.text_field :calendar_start_time, :style => "width:90px;", :autocomplete => :off, :class => 'time start', :value => @event_instance.starts_at_time
+        = "<br/>".html_safe + 'to' +"<br/>".html_safe
+        = f.text_field :calendar_end_time, :style => "width:90px;", :autocomplete => :off, :class => 'time end', :value => @event_instance.ends_at_time
+        = f.text_field :calendar_end_date, :style => "width:90px;", :autocomplete => :off, :class => 'date end', :value => @event_instance.ends_at_date

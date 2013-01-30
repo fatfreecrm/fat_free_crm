@@ -1,0 +1,18 @@
+= styles_for :contact_group
+
+= render 'entities/title_bar'
+
+.remote#create_contact_group{ hidden }
+
+= render "search"
+
+.remote#options{ hidden }
+
+.list#contact_groups
+  - if @contact_groups.any?
+    = render @contact_groups
+  - else
+    = render "shared/empty"
+
+#paginate= render "shared/paginate"
+#export= render "shared/export"

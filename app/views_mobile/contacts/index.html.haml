@@ -1,0 +1,19 @@
+= styles_for :contact
+
+= render 'entities/title_bar'
+
+.div#active_folders{ hidden }
+.remote#create_contact{ hidden }
+
+= render "search"
+
+.remote#options{ hidden }
+
+.list#contacts
+  - if @contacts.any?
+    = render @contacts
+  - else
+    = render "shared/empty"
+
+#paginate= render "shared/paginate_with_per_page"
+#export= render "shared/export"

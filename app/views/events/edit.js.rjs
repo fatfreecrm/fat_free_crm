@@ -1,0 +1,35 @@
+id = dom_id(@event)
+
+if params[:cancel].true? # <--------------------- Hide [Edit event]
+
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_event
+    page.call "crm.set_title", :edit_event, @event.name
+  else                                            # Called from events list item...
+    page[id].replace :partial => "event", :collection => [ @event ]
+  end
+
+else # <----------------------------------------  Show [Edit event] form.
+
+  if params[:cancel].blank?                       # Called from events list item...
+    if @previous                                  # Hide open [Edit event] form if any.
+      if @previous.is_a?(Event)
+        page[dom_id(@previous)].replace :partial => "event", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "event_#{@previous}", :remove
+      end
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_event    # Hide [Create event] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit event] form.
+    #page.call "crm.init_chosen_fields"
+
+  elsif params[:cancel].false?                    # Called from title of the event landing page...
+    page[:edit_event].replace_html :partial => "edit"
+    #page.call "crm.init_chosen_fields"
+    page.call "crm.flip_form", :edit_event
+    page.call "crm.set_title", :edit_event, "#{t :edit} #{@event.name}"
+  end
+  page[:event_name].focus
+
+end

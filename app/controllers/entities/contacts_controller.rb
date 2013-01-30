@@ -14,15 +14,118 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-
 class ContactsController < EntitiesController
   before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
-
+  before_filter :check_for_mobile
+  before_filter :get_data_for_sidebar, :only => :index
+  
+  def single_access_allowed?
+    (action_name == "mailchimp_webhooks" || action_name == "mandrill_webhooks")
+  end
+  
+  def confirm
+    respond_with(@contact)
+  end
+  
+  def mailing_lists
+    @account = @contact.account || Account.new(:user => current_user)
+    respond_with(@contact)
+  end
+  
+  def mandrill_webhooks
+    if request.post?
+      data = JSON.parse(params['mandrill_events'])
+      case data[0]['event']
+      #just implementing hard bounce for now
+      when "hard_bounce"
+        contact = Contact.find_by_email(data[0]['msg']['email'])
+        if contact.present?
+          contact.tasks << Task.new(
+                    :name => "Email bounced!", 
+                    :category => :email, 
+                    :bucket => "due_this_week", 
+                    :user => @current_user , 
+                    :assigned_to => User.find_by_first_name("geoff").id
+                    )
+          contact.comments << Comment.new(
+                    :user_id => 1,
+                    :comment => "Email bounced\nDescription: #{data[0]['msg']['bounce_description']}\nServer said: #{data[0]['msg']['diag']}"
+                    )
+        end
+      end
+    end
+  end
+  
+  def mailchimp_webhooks
+    if request.post?
+      list_id = params[:data][:list_id]
+      #if list_id.nil? raise some error
+      list_name = Setting.mailchimp.find{|k,v| v == list_id}[0] # "eg. city_west_list_id"
+      list_name = list_name.split("_list_id")[0] # eg "city_west" NOPE!!
+      assigned_to_key = params[:data]["merges"].nil? ? nil : (list_name + "_" + params[:data]["merges"]["GENDER"].downcase)
+      list_name = list_name.humanize.titleize # eg " City West"
+      
+      case params[:type]
+      when "subscribe"
+        if contact = Contact.find_or_create_by_email(params[:data][:email])
+          contact.cf_weekly_emails << list_name unless contact.cf_weekly_emails.include?(list_name)
+          contact.first_name = params[:data]["merges"]["FNAME"]
+          contact.last_name = params[:data]["merges"]["LNAME"]
+          contact.cf_gender = params[:data]["merges"]["GENDER"]
+          contact.user = @current_user if contact.user.nil?
+          contact.assigned_to = User.find_by_first_name(Setting.mailchimp[assigned_to_key.to_sym]).id
+          contact.account = Account.find_by_name(list_name)
+          contact.tasks << Task.new(
+                  :name => "New signup to #{list_name} - send welcome email", 
+                  :category => :email, 
+                  :bucket => "due_this_week", 
+                  :user => @current_user,
+                  :assigned_to => contact.assigned_to
+                  )
+        end
+      when "unsubscribe"
+        if contact = Contact.find_by_email(params[:data][:email])
+          contact.cf_weekly_emails = contact.cf_weekly_emails - [list_name]
+          contact.tasks << Task.new(
+                  :name => "followup unsubscribe from mailchimp list #{list_name}", 
+                  :category => :follow_up, 
+                  :bucket => "due_this_week", 
+                  :user => @current_user,
+                  :assigned_to => contact.assigned_to
+                  )
+        end
+      when "upemail"
+        if contact = Contact.find_by_email(params[:data][:old_email])
+          contact.email = params[:data][:new_email]
+        end
+      when "profile" 
+        if contact = Contact.find_by_email(params[:data][:email])
+          contact.first_name = params[:data]["merges"]["FNAME"]
+          contact.last_name = params[:data]["merges"]["LNAME"]
+        end
+      when "cleaned"
+        if contact = Contact.find_by_email(params[:data][:email])
+          reason = params[:data][:reason] == "hard" ? "the email bounced" : "the email was reported as spam"
+          contact.cf_weekly_emails = contact.cf_weekly_emails - [list_name]
+          contact.tasks << Task.new(:name => "unsubscribed from #{list_name} becuase #{reason}", :category => :follow_up, :bucket => "due_this_week", :user => @current_user)
+        end
+      end
+      contact.save
+    else # GET
+      respond_with @contacts do |format|
+        format.html
+      end
+    end  
+  end
+  
   # GET /contacts
   #----------------------------------------------------------------------------
   def index
-    @contacts = get_contacts(:page => params[:page], :per_page => params[:per_page])
-
+    query = params.include?("query") ? session[:contacts_query] = params[:query] : session[:contacts_query]
+    #overwrite with nil if params "q" (advanced search)
+    query = nil if params.include?("q")
+    @contacts = get_contacts(:page => params[:page], :per_page => params[:per_page], :query => query)
+    
     respond_with @contacts do |format|
       format.xls { render :layout => 'header' }
     end
@@ -35,6 +138,10 @@ class ContactsController < EntitiesController
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
     @timeline = timeline(@contact)
+    @contact_groups = @contact.contact_groups
+    @bsg_attendances = @contact.attendances.where('events.category = ?', "bsg").order('event_instances.starts_at DESC').includes(:event, :event_instance)
+    @tbt_attendances = @contact.attendances.where('events.category = ?', "bible_talk").order('event_instances.starts_at DESC').includes(:event, :event_instance)
+    @other_attendances = @contact.attendances.where('events.category NOT IN (?) OR events.category IS NULL', ["bsg", "bible_talk"]).order('event_instances.starts_at DESC').includes(:event, :event_instance)
     respond_with(@contact)
   end
 
@@ -43,9 +150,12 @@ class ContactsController < EntitiesController
   def new
     @contact.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
     @account = Account.new(:user => current_user)
-
+    if called_from_landing_page?(:event_instances)
+      @event_instance = EventInstance.find(params[:event_instance_id])
+    end
     if params[:related]
-      model, id = params[:related].split('_')
+      model = params[:related].sub(/_\d+/, "")
+      id = params[:related].split('_').last #change required for models with _ in name e.g. contact_group
       if related = model.classify.constantize.my.find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
@@ -63,6 +173,15 @@ class ContactsController < EntitiesController
     if params[:previous].to_s =~ /(\d+)\z/
       @previous = Contact.my.find_by_id($1) || $1.to_i
     end
+    if params[:related]
+      model = params[:related].sub(/_\d+/, "")
+      id = params[:related].split('_').last #change required for models with _ in name e.g. contact_group
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
+    end
 
     respond_with(@contact)
   end
@@ -71,10 +190,14 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
+    if called_from_landing_page?(:event_instances)
+      @event_instance = EventInstance.find(params[:event_instance])
+    end
     respond_with(@contact) do |format|
       if @contact.save_with_account_and_permissions(params)
         @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
+        get_data_for_sidebar
       else
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
@@ -93,6 +216,16 @@ class ContactsController < EntitiesController
   # PUT /contacts/1
   #----------------------------------------------------------------------------
   def update
+    if params[:related]
+      model = params[:related].sub(/_\d+/, "")
+      id = params[:related].split('_').last #change required for models with _ in name e.g. contact_group
+      if related = model.classify.constantize.my.find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) and return
+      end
+    end
+    
     respond_with(@contact) do |format|
       unless @contact.update_with_account_and_permissions(params)
         if @contact.account
@@ -100,8 +233,14 @@ class ContactsController < EntitiesController
         else
           @account = Account.new(:user => current_user)
         end
+      else
+        get_data_for_sidebar
       end
     end
+  end
+
+  def move_contact
+    
   end
 
   # DELETE /contacts/1
@@ -110,11 +249,30 @@ class ContactsController < EntitiesController
     @contact.destroy
 
     respond_with(@contact) do |format|
+      get_data_for_sidebar
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
     end
   end
+  
+  def graduate
+    params.merge!({"contact" => {
+        #"id" => params[:id], 
+        "cf_year_graduated" => Setting.graduate[:year],
+        "cf_weekly_emails" => [""]
+        }})
+    params.merge!({"account" => {"id" => Account.find_by_name(Setting.graduate[:account]).id }})
+    
+    @contact.update_with_account_and_permissions(params)
+    
+    respond_with(@contact) do |format|
+      get_data_for_sidebar
+    end
+  end
 
+  def attendances
+    
+  end
   # PUT /contacts/1/attach
   #----------------------------------------------------------------------------
   # Handled by EntitiesController :attach
@@ -151,6 +309,22 @@ class ContactsController < EntitiesController
       format.js { render :index }
     end
   end
+  
+  # POST /contacts/filter                                                  AJAX
+  #----------------------------------------------------------------------------
+  def filter
+    session[:contacts_filter] = params[:folder] if params[:folder].present?
+    session[:contacts_user_filter] = params[:user] if params[:user].present?
+    
+    respond_with(@contacts = get_contacts(:page => 1, :per_page => params[:per_page])) do |format|
+      format.js { render :index }
+    end
+  end
+  
+  def options
+    get_data_for_sidebar
+    render :options
+  end
 
   private
   #----------------------------------------------------------------------------
@@ -164,6 +338,30 @@ class ContactsController < EntitiesController
   def set_options
     super
     @naming = (current_user.pref[:contacts_naming]   || Contact.first_name_position) unless params[:cancel].true?
+  end
+  
+  #----------------------------------------------------------------------------
+  def get_data_for_sidebar
+    @folder_total = Hash[
+      Account.my.map do |key|
+        [ key, key.contacts.count ]
+      end
+    ]
+    
+    organized = @folder_total.values.sum
+    @folder_total[:other] = Contact.includes(:account).where("accounts.id IS NULL").count
+    @folder_total[:all] = @folder_total[:other] + organized
+    
+    # Assigned to each user
+    @user_total = Hash[
+      User.all.map do |key|
+        [ key, Contact.where('assigned_to = ?', key).count ]
+      end
+    ]
+    organized = @user_total.values.sum
+    @user_total[:other] = Contact.where("assigned_to IS NULL").count
+    @user_total[:all] = organized + @user_total[:other]
+    
   end
 
   #----------------------------------------------------------------------------

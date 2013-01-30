@@ -1,0 +1,35 @@
+%li.highlight[contact_group]
+  - unless contact_group.category.blank?
+    .strip{:class => contact_group.category}= t(contact_group.category)
+  - else
+    .strip.grey #{t :other}
+
+  %ul.tools
+    = hook(:contact_group_tools_before, self, :contact_group => contact_group)
+    
+    %li= link_to ("Emails &#8250; clipboard".html_safe), '#', :onclick => "crm.copyToClipboard('#{contact_group.email_addresses}')"
+    %li= mail_to("", "Email group", :bcc => contact_group.email_addresses)
+    
+    - if can?(:update, contact_group)
+      %li= link_to_edit(contact_group)
+    
+    - if shown_on_landing_page?
+      %li= link_to_discard(contact_group)
+
+    - if can?(:destroy, contact_group)
+      %li= link_to_delete(contact_group)
+
+  .indent
+    = link_to_if can?(:read, contact_group), contact_group.name, contact_group
+    &ndash;
+    %tt
+      -#= contact_group.location << ", " unless contact_group.location.blank?
+      = t(:added_by, :time_ago => time_ago_in_words(contact_group.created_at), :user => (contact_group.user.id == @current_user.id ? t(:me) : contact_group.user.full_name)) << " | "
+      = t('pluralize.contact', contact_group.contacts.count) << " | "
+      -#= t('pluralize.opportunity', contact_group.opportunities.count)
+
+      - if contact_group.tag_list.present?
+        %dt
+          .tags= tags_for_index(contact_group)
+
+      = hook(:contact_group_bottom, self, :contact_group => contact_group)

@@ -1,0 +1,15 @@
+id = dom_id(@contact)
+
+if @contact.errors.empty?
+  if called_from_index_page?
+    page << refresh_sidebar(:index)
+    page[id].replace :partial => "contact", :collection => [ @contact ]
+    page[id].visual_effect :highlight, :duration => 1.0
+  else
+    page << refresh_sidebar(:show)
+    page[id].replace :partial => "contact", :collection => [ @contact ]
+    page[id].visual_effect :highlight, :duration => 1.0
+  end
+else  
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+end

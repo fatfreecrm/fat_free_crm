@@ -53,7 +53,7 @@ class Task < ActiveRecord::Base
     options = args[0] || {}
     user_option = options[:user] || User.current_user
     includes(:assignee).
-    where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user_option, user_option).
+    where('((user_id = ? OR user_id = 2) AND assigned_to IS NULL) OR assigned_to = ?', user_option, user_option).
     order(options[:order] || 'name ASC').
     limit(options[:limit]) # nil selects all records
   }
@@ -68,12 +68,17 @@ class Task < ActiveRecord::Base
   # scopes above. That's the tasks the user is allowed to see and track.
   scope :tracked_by, lambda { |user|
     includes(:assignee).
-    where('user_id = ? OR assigned_to = ?', user.id, user.id)
+    where('user_id = ? OR user_id = 2 OR assigned_to = ?', user.id, user.id)
   }
 
   scope :visible_on_dashboard, lambda { |user|
-    # Show opportunities which either belong to the user and are unassigned, or are assigned to the user
+    # Show tasks which either belong to the user and are unassigned, or are assigned to the user
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id).where('completed_at IS NULL')
+  }
+  
+  scope :dashboard_open, lambda { |user|
+    # Show tasks which belong to mailchimp and are unassigned
+    where('user_id = 2 AND assigned_to IS NULL', :user_id => user.id).where('completed_at IS NULL')
   }
 
   scope :by_due_at, order({

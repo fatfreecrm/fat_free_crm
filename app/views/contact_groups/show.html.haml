@@ -1,0 +1,27 @@
+= styles_for :task, :contact, :event
+
+#confirm{ hidden }
+.title_tools#menu
+  = mail_to("", "Email group", :bcc => @contact_group.email_addresses) + " | "
+  = link_to_inline(:edit_contact_group, edit_contact_group_path(@contact_group), :text => t(:edit)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@contact_group))
+.title#edit_contact_group_title= h(@contact_group.name)
+
+%div#edit_contact_group{ hidden }
+
+= render "comments/new", :commentable => @contact_group
+= render :partial => "shared/timeline", :collection => @timeline
+
+= hook(:show_contact_group_bottom, self) do
+
+  = render :partial => "tasks/tasks", :locals => {:object => @contact_group}
+  
+  = render :partial => "events/events", :locals => {:object => @contact_group}
+
+  = render :partial => "contacts/contacts", :locals => {:object => @contact_group}
+  
+  -#= render :partial => "opportunities/opportunities", :locals => {:object => @contact_group}
+
+  -#= render :partial => "versions/versions", :locals => {:object => @contact_group}
+
+  = load_select_popups_for(@contact_group, :tasks, :contacts, :events)

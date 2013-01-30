@@ -1,0 +1,30 @@
+.confirm.mailing[@contact, :confirm]
+  = simple_form_for(@contact, :html => one_submit_only(:contact), :remote => true) do |f|
+    = f.hidden_field :user_id
+    = fields_for(@account) do |a|
+      = a.hidden_field :user_id
+      = a.hidden_field :assigned_to
+      = a.hidden_field :access, :value => Setting.default_access
+      = a.hidden_field :id
+    - f.object.field_groups.each do |field_group|
+      - if field_group.fields.present? and field_group.name == 'subscriptions'
+        -# field_groups[field_group.tag.name.downcase] = "#{field_group.key}_container" if field_group.tag
+        .mailing_section
+          %table
+            - field_group.fields.without_pairs.in_groups_of(1, false) do |group|
+              %tr
+                - group.each_with_index do |field, i|
+                  %td
+                    - if field.as == 'check_boxes'
+                      - value = f.object.send(field.name)
+                      - checked = YAML.load(value.to_s)
+                    = f.input field.name, field.input_options.merge(:checked => checked)
+                  - if i == 0
+                    %td= spacer
+  
+    .buttonbar.mailing
+      = f.submit "Save", :onclick => "crm.save_contact()"
+      #{t :or}
+      = link_to_function("Cancel", "crm.flick('#{dom_id(@contact, :confirm)}', 'remove')")
+  
+  -#= link_to_confirm_delete(@contact) << " : "

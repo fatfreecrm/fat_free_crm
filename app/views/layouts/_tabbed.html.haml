@@ -1,13 +1,14 @@
 .tabs
   %ul
     - tabs.each do |tab|
-      %li
-        = link_to(tab[:url], :class => tab[:active] ? "active" : nil) do
-          - unless request.fullpath.include?("/admin")
-            - img_base_path = "tab_icons/#{tab[:text].to_s.downcase.sub(/^tab_/, '')}"
-            - if Rails.application.assets.find_asset("#{img_base_path}.png")
-              = image_tag("#{img_base_path}#{tab[:active] ? "_active" : ""}.png")
-          = t(tab[:text])
+      -unless (tab[:text] == :tab_mandrill && !@current_user.mandrill?)
+        %li
+          = link_to(tab[:url], :class => tab[:active] ? "active" : nil) do
+            - unless request.fullpath.include?("/admin")
+              - img_base_path = "tab_icons/#{tab[:text].to_s.downcase.sub(/^tab_/, '')}"
+              - if Rails.application.assets.find_asset("#{img_base_path}.png")
+                = image_tag("#{img_base_path}#{tab[:active] ? "_active" : ""}.png")
+            = t(tab[:text])
 
 = show_flash
 %table{ :width => "100%", :height => "100%", :cellpadding => 0, :cellspacing => 0, :class => :tabbed }

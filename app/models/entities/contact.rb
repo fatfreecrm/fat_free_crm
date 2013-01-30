@@ -60,10 +60,17 @@ class Contact < ActiveRecord::Base
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
   has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
   has_many    :emails, :as => :mediator
+  has_many    :contact_groups, :through => :memberships
+  has_many    :memberships
+  
+  ##what about when you delete a contact? do you want to lose all attendance records?
+  #might be better to have an archive system for contacts so that deletion is only for
+  #contacts we really don't want to keep any trace of...
+  has_many    :attendances, :dependent => :destroy 
 
-  has_ransackable_associations %w(account opportunities tags activities emails addresses comments tasks)
+  has_ransackable_associations %w(account opportunities tags activities emails addresses comments tasks contact_groups)
   ransack_can_autocomplete
-
+  
   serialize :subscribed_users, Set
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
@@ -90,7 +97,15 @@ class Contact < ActiveRecord::Base
     
     where( name_query.nil? ? other : name_query.or(other) )
   }
-
+  
+  scope :state, lambda { |filters|
+    includes(:account_contact).where('account_contacts.account_id IN (?)' + (filters.delete('other') ? ' OR account_contacts.account_id IS NULL ' : ''), filters)
+  }
+  
+  scope :user_state, lambda { |filters|
+    where('contacts.assigned_to IN (?)' + (filters.delete('other') ? ' OR contacts.assigned_to IS NULL ' : ''), filters)
+  }
+  
   uses_user_permissions
   acts_as_commentable
   uses_comment_extensions
@@ -113,12 +128,30 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def full_name(format = nil)
     if format.nil? || format == "before"
-      "#{self.first_name} #{self.last_name}"
+      if !self.cf_mailing_first_name.blank? && self.cf_mailing_first_name != self.first_name
+        "#{self.first_name} #{self.last_name} (#{self.cf_mailing_first_name})"
+      else
+        "#{self.first_name} #{self.last_name}"
+      end
     else
       "#{self.last_name}, #{self.first_name}"
     end
   end
   alias :name :full_name
+  
+  def has_mailchimp_subscription?
+    !self.cf_weekly_emails[0].blank? && !self.email.blank?
+  end
+  
+  def has_subscription?
+    has_mailchimp_subscription? || !self.cf_supporter_emails[0].blank?
+  end
+  
+  def last_attendance_at_event_category(event_type)
+    events = Event.find_all_by_category(event_type)
+    last_attendance = self.attendances.where('events.id IN (?)', events.each.map(&:id)).order('event_instances.starts_at DESC').includes(:event, :event_instance).first
+    last_time = last_attendance.event_instance.starts_at unless last_attendance.nil?
+  end
 
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
@@ -126,7 +159,31 @@ class Contact < ActiveRecord::Base
     save_account(params)
     result = self.save
     self.opportunities << Opportunity.find(params[:opportunity]) unless params[:opportunity].blank?
+    self.contact_groups << ContactGroup.find(params[:contact_group]) unless params[:contact_group].blank?
+    #if has_mailchimp_subscription?
+    #  mailchimp_lists unless self.invalid?
+    #end
     result
+  end
+  
+  def subscriptions_in_words
+    if has_subscription?
+      subs = "subscriptions: "
+      items = [""]
+      if !self.cf_weekly_emails[0].blank?
+        items << "Adl" if self.cf_weekly_emails.include? "Adelaide"
+        items << "CE" if self.cf_weekly_emails.include? "City East"
+        items << "CW" if self.cf_weekly_emails.include? "City West"
+      end
+      if !self.cf_supporter_emails[0].blank?
+        items << "TT" if self.cf_supporter_emails.include? "TT Email"
+        items << "TT (mail)" if self.cf_supporter_emails.include? "TT Mail"
+        items << "PP" if self.cf_supporter_emails.include? "Prayer Points"
+      end
+      subs += items.length > 1 ? items.reject(&:blank?).join(", ") : items[0]
+    else
+      subs = ""
+    end
   end
 
   # Backend handler for [Update Contact] form (see contact/update).
@@ -136,13 +193,14 @@ class Contact < ActiveRecord::Base
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:contact][:access] if params[:contact][:access]
     self.attributes = params[:contact]
+    #mailchimp_lists unless self.invalid?
     self.save
   end
 
   # Attach given attachment to the contact if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+    unless self.send("#{attachment.class.name.underscore.downcase}_ids").include?(attachment.id)
       self.send(attachment.class.name.tableize) << attachment
     end
   end

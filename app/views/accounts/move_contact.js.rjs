@@ -1,0 +1,6 @@
+id = dom_id(@contact)
+
+page[id].replace :partial => "contacts/contact", :collection => [ @contact ]
+page[id].visual_effect :highlight, :duration => 1.0
+page << refresh_sidebar_for(:contacts, :index, :filters)
+  

@@ -157,6 +157,10 @@ private
     unless advanced_search
       filter = session[:"#{controller_name}_filter"].to_s.split(',')
       scope = scope.state(filter) if filter.present?
+      if controller_name == "contacts"
+        filter_users = session[:contacts_user_filter].to_s.split(',')
+        scope = scope.user_state(filter_users) if filter_users.present?
+      end
     end
 
     scope = scope.text_search(query)              if query.present?

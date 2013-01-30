@@ -1,0 +1,16 @@
+=f.simple_fields_for(:event_instances, :remote => true) do |e|    
+  %tr
+    %td(colspan="5")
+      .label #{t :location}:
+      = e.text_field :location, :style => "width:500px"
+  %tr
+    - dfmt = '%d/%m/%Y' 
+    - tfmt = '%I:%M%P'
+    %td(colspan="5")
+      .datetime
+        %p.datepair
+          = e.text_field :calendar_start_date, :style => "width:90px;", :autocomplete => :off, :class => 'date start'
+          = e.text_field :calendar_start_time, :style => "width:90px;", :autocomplete => :off, :class => 'time start'
+          = "&nbsp;&nbsp;".html_safe + 'to' +"&nbsp;&nbsp;".html_safe
+          = e.text_field :calendar_end_time, :style => "width:90px;", :autocomplete => :off, :class => 'time end'
+          = e.text_field :calendar_end_date, :style => "width:90px;", :autocomplete => :off, :class => 'date end'

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get :versions
     end
     member do
+      post :move_contact
       put  :attach
       post :discard
       post :subscribe
@@ -70,13 +71,23 @@ Rails.application.routes.draw do
       post :auto_complete
       post :redraw
       get :versions
+      get :attendances
+      get :mailchimp_webhooks
+      post :mailchimp_webhooks
+      get :mandrill_webhooks
+      post :mandrill_webhooks
     end
     member do
+      post :move_contact
       put  :attach
       post :discard
       post :subscribe
       post :unsubscribe
       get :opportunities
+      get :contact_groups
+      get :mailing_lists
+      get :confirm
+      post :graduate
     end
   end
 
@@ -134,6 +145,7 @@ Rails.application.routes.draw do
 
   resources :users, :id => /\d+/ do
     member do
+      post :assign_contact
       get :avatar
       get :password
       put :upload_avatar
@@ -148,10 +160,99 @@ Rails.application.routes.draw do
       get :opportunities_overview
     end
   end
-
+  
+  resources :contact_groups, :id => /\d+/ do
+    collection do
+      get  :advanced_search
+      post :filter
+      get  :options
+      get  :field_group
+      match :auto_complete
+      post :redraw
+      get :versions
+      get :email
+    end
+    member do
+      put  :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      get :contacts
+      get :opportunities
+      get :mandrill
+      post :mandrill_send
+    end
+  end
+  
+  resources :mandrill_emails, :id => /\d+/ do
+    collection do
+      get  :advanced_search
+      post :filter
+      get  :options
+      get  :field_group
+      match :auto_complete
+      post :redraw
+      get :versions
+      get :compose
+    end
+    member do
+      put :save
+      put  :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      post :mandrill_send
+    end
+  end
+  
+  resources :events, :id => /\d+/ do
+    collection do
+      get  :advanced_search
+      post :filter
+      get  :options
+      get  :field_group
+      match :auto_complete
+      post :redraw
+      get :versions
+      get :toggle_comments
+    end
+    member do
+      put  :attach
+      #put :mark
+      #put :unmark
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      get :event_instances
+    end
+  end
+  
+  resources :event_instances, :id => /\d+/ do
+    collection do
+      post :redraw
+      get :versions
+    end
+    member do
+      put  :attach
+      put :mark
+      put :unmark
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      get :report_attendance
+    end
+  end
+  
   namespace :admin do
     resources :groups
-
+    
+    resources :imports do
+      collection do
+        post :import
+        post :import_supporters
+      end
+    end
+    
     resources :users do
       collection do
         post :auto_complete

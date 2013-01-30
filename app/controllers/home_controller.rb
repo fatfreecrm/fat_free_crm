@@ -19,7 +19,8 @@ class HomeController < ApplicationController
   before_filter :require_user, :except => [ :toggle, :timezone ]
   before_filter :set_current_tab, :only => :index
   before_filter "hook(:home_before_filter, self, :amazing => true)"
-
+  before_filter :check_for_mobile
+  
   #----------------------------------------------------------------------------
   def index
     @hello = "Hello world" # The hook below can access controller's instance variables.
@@ -27,6 +28,7 @@ class HomeController < ApplicationController
 
     @activities = get_activities
     @my_tasks = Task.visible_on_dashboard(current_user).by_due_at
+    @open_tasks = Task.dashboard_open(current_user).by_due_at
     @my_opportunities = Opportunity.visible_on_dashboard(current_user).by_closes_on.by_amount
     @my_accounts = Account.visible_on_dashboard(current_user).by_name
     respond_with(@activities)

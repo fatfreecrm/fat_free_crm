@@ -56,11 +56,15 @@ class Comment < ActiveRecord::Base
 
   # Notify subscribed users when a comment is added, unless user created this comment
   def notify_subscribers
-    commentable.subscribed_users.reject{|user_id| user_id == user.id}.each do |subscriber_id|
+    subscribed_and_assigned_to = commentable.subscribed_users
+    subscribed_and_assigned_to += [commentable.assigned_to] if commentable.respond_to?(:assigned_to)
+    subscribed_and_assigned_to.reject{|user_id| user_id == user.id}.each do |subscriber_id|
       if subscriber = User.find_by_id(subscriber_id)
         # Only send email if SMTP settings are configured
-        if Rails.application.config.action_mailer.smtp_settings.present?
-          SubscriptionMailer.comment_notification(subscriber, self).deliver
+        #if Rails.application.config.action_mailer.smtp_settings.present?
+        if ActionMailer::Base.smtp_settings.present?
+          #SubscriptionMailer.comment_notification(subscriber, self).deliver
+          SubscriptionMailer.delay.comment_notification(subscriber, self)
         end
       end
     end

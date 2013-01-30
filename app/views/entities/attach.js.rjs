@@ -12,7 +12,18 @@ if @attached
     page.insert_html :top, :tasks, :partial => "tasks/#{view}", :collection => [ @attachment ], :locals => { :bucket => @attachment.computed_bucket }
 
   else
-    page.insert_html :top, params[:assets], :partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]
+    if called_from_landing_page?(:event_instances)
+      # we want selecting attendees on this page to act like you've marked them as attended.
+      # If they're already on the page, replace, checked and green background
+      # otherwise, add to the top of the list, checked and green background
+      page << "if ($('#{dom_id(@attachment)}')) {" 
+        page[dom_id(@attachment)].replace :partial => "event_instances/#{partial}", :collection => [ @attachment ], :locals => {:object => @event_instance}
+      page << "} else {"
+        page.insert_html :top, params[:assets], :partial => "event_instances/#{partial}", :collection => [ @attachment ], :locals => {:object => @event_instance}
+      page << "}"
+    else
+      page.insert_html :top, params[:assets], :partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]
+    end
     if called_from_landing_page?(:accounts)
       page << refresh_sidebar_for(:accounts, :show, :summary)
     elsif called_from_landing_page?(:campaigns)

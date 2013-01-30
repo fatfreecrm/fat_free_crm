@@ -1,0 +1,42 @@
+= hook(:event_top_section, self, :f => f) do
+  - repeats = false
+  .section.mobile
+    %table
+      %tr
+        %td
+          .label.top.req #{t :name}:
+          = f.text_field :name, :style => "width:240px"
+      - unless defined?edit
+        = render :partial => "/event_instances/top_section", :locals => {:f => f}  
+
+        %tr{ :style => "padding-top:10px;"}
+          %td
+            .label
+              = check_box_tag :repeating_event, true, false, {:onclick => "crm.show_repeats(this.value);"}
+              Repeats...
+        %tr#repeats{ hidden_if(!repeats) }
+          %td
+            .label
+            = "Each week during "
+            = select_tag :repeat_pattern, options_for_select([["Semester 1 (Adelaide)","S1-adl"],["Semester 2 (Adelaide)","S2-adl"],["Semester 1 (UniSa)","S1-usa"],["Semester 2 (UniSA)","S2-usa"]]), :style => "width:90px;display:inline;"
+      %tr
+        %td
+          .label #{t :assigned_to}:
+          = user_select(:contact, all_users, current_user)
+      %tr
+        %td
+          .label #{t :category}:
+          = f.select :category, Setting.unroll(:event_category), { :selected => (@event.category || "other").to_sym, :include_blank => t(:other) }, { :style => "width:160px" }
+      %tr
+        %td
+          .label #{t :contact_group}:
+          = f.select :contact_group_id, ContactGroup.all.map{ |cg| [cg.name, cg.id]}, { :selected => (@contact_group ? @contact_group.id : "None"), :include_blank => t(:none) }, { :style => "width:160px", :class => 'chzn-select' }    
+      - if Setting.background_info && Setting.background_info.include?(:event)
+        %tr
+          %td
+            .label= t(:background_info) << ':'
+            = f.text_area :background_info, :style =>"width:240px", :rows => 3
+
+      = render :partial => "/shared/tags", :locals => {:f => f, :span => 3}
+
+      = hook(:event_top_section_bottom, self, :f => f)

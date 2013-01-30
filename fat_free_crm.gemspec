@@ -37,6 +37,16 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'responds_to_parent',  '>= 1.1.0'
   gem.add_dependency 'rails3-jquery-autocomplete'
   gem.add_dependency 'valium'
+  gem.add_dependency "combined_time_select", "~> 0.0.1"
+  gem.add_dependency 'mandrill-rails'
+  gem.add_dependency 'mailchimp'
+  gem.add_dependency 'delayed_job'
+  gem.add_dependency 'delayed_job_active_record'
+  gem.add_dependency 'ice_cube'
+  gem.add_dependency 'cache_digests'
+  gem.add_dependency 'whenever'
+  gem.add_dependency 'daemons'
+  gem.add_dependency 'dalli'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------

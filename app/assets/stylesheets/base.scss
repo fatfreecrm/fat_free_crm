@@ -38,6 +38,7 @@ html, body {
 body, ol, ul, li, dt, tt, label, input, select, textarea {
   font: {
     size: 12px;
+    //family: helvetica, arial, sans-serif;}; }
     family: "Lucida Grande", Geneva, Arial, Helvetica, sans-serif; }; }
 
 body, h1, h2, h3, h4, h5, h6, ol, ul, li {
@@ -52,7 +53,7 @@ ul li {
 
 // Links.
 //------------------------------------------------------------------------------
-a {
+a, .filter_label {
   text-decoration: none;
   &:link, &:visited {
     color: $color_link; }
@@ -64,6 +65,14 @@ a {
     border: none;
     color: $color_link_image;
     text-decoration: none; } }
+
+.filter_label {
+	cursor: pointer;
+}
+
+.head_link {
+	font-size: 10px;
+}
 
 #options {
   a {

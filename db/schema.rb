@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121221033947) do
+ActiveRecord::Schema.define(:version => 20130122134250) do
+
+  create_table "account_aliases", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "destroyed_account_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -83,6 +90,35 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
 
+  create_table "attached_files", :force => true do |t|
+    t.integer  "mandrill_email_id"
+    t.string   "attached_file_file_name"
+    t.string   "attached_file_content_type"
+    t.string   "attached_file_file_size"
+    t.string   "attached_file_updated_at"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "deleted_at"
+  end
+
+  create_table "attendances", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "event_instance_id"
+    t.text     "subscribed_users"
+    t.boolean  "rsvp"
+    t.boolean  "attended"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "assigned_to"
+    t.integer  "user_id"
+    t.string   "access",            :default => "Public"
+  end
+
+  add_index "attendances", ["contact_id", "event_instance_id"], :name => "index_attendances_on_contact_id_and_event_instance_id"
+  add_index "attendances", ["contact_id"], :name => "index_attendances_on_contact_id"
+  add_index "attendances", ["event_instance_id"], :name => "index_attendances_on_event_instance_id"
+
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"
     t.integer  "entity_id"
@@ -132,6 +168,30 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
   end
 
+  create_table "contact_aliases", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "destroyed_contact_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  create_table "contact_groups", :force => true do |t|
+    t.string   "uuid",             :limit => 36
+    t.integer  "user_id"
+    t.integer  "assigned_to"
+    t.string   "name",             :limit => 64, :default => "",       :null => false
+    t.string   "access",           :limit => 8,  :default => "Public"
+    t.string   "category",         :limit => 32
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.text     "subscribed_users"
+    t.string   "background_info"
+  end
+
+  add_index "contact_groups", ["assigned_to"], :name => "index_contact_groups_on_assigned_to"
+  add_index "contact_groups", ["user_id", "name", "deleted_at"], :name => "index_contact_groups_on_user_id_and_name_and_deleted_at", :unique => true
+
   create_table "contact_opportunities", :force => true do |t|
     t.integer  "contact_id"
     t.integer  "opportunity_id"
@@ -147,7 +207,7 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
     t.integer  "assigned_to"
     t.integer  "reports_to"
     t.string   "first_name",       :limit => 64,  :default => "",       :null => false
-    t.string   "last_name",        :limit => 64,  :default => "",       :null => false
+    t.string   "last_name",        :limit => 64,  :default => ""
     t.string   "access",           :limit => 8,   :default => "Public"
     t.string   "title",            :limit => 64
     t.string   "department",       :limit => 64
@@ -169,10 +229,27 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
     t.string   "background_info"
     t.string   "skype",            :limit => 128
     t.text     "subscribed_users"
+    t.integer  "saasu_uid"
   end
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
   add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "id_last_name_deleted", :unique => true
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "emails", :force => true do |t|
     t.string   "imap_message_id",                                       :null => false
@@ -195,6 +272,38 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
   end
 
   add_index "emails", ["mediator_id", "mediator_type"], :name => "index_emails_on_mediator_id_and_mediator_type"
+
+  create_table "event_instances", :force => true do |t|
+    t.integer  "event_id"
+    t.string   "name",             :limit => 64, :default => "",       :null => false
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.integer  "user_id"
+    t.integer  "assigned_to"
+    t.text     "subscribed_users"
+    t.string   "access",           :limit => 8,  :default => "Public"
+    t.string   "location"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "uuid",             :limit => 36
+    t.integer  "user_id"
+    t.integer  "contact_group_id"
+    t.integer  "assigned_to"
+    t.string   "name",             :limit => 64, :default => "",       :null => false
+    t.text     "subscribed_users"
+    t.string   "access",           :limit => 8,  :default => "Public"
+    t.string   "category",         :limit => 32
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+  end
+
+  add_index "events", ["assigned_to"], :name => "index_events_on_assigned_to"
+  add_index "events", ["user_id", "name", "deleted_at"], :name => "index_events_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "field_groups", :force => true do |t|
     t.string   "name",       :limit => 64
@@ -284,6 +393,41 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "mandrill_emails", :force => true do |t|
+    t.string   "uuid",             :limit => 36
+    t.integer  "user_id"
+    t.string   "mailing_list"
+    t.string   "template"
+    t.string   "from_address"
+    t.string   "message_subject"
+    t.datetime "sent_at"
+    t.text     "message_body"
+    t.integer  "assigned_to"
+    t.string   "name",             :limit => 64, :default => "",        :null => false
+    t.text     "subscribed_users"
+    t.string   "category",         :limit => 32
+    t.string   "access",           :limit => 8,  :default => "Private"
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.boolean  "scheduled",                      :default => false
+    t.datetime "scheduled_at"
+    t.string   "delayed_job_id"
+    t.string   "response"
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "contact_group_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "memberships", ["contact_group_id"], :name => "index_contact_groups_contacts_on_contact_group_id"
+  add_index "memberships", ["contact_id", "contact_group_id"], :name => "index_contact_groups_contacts_on_contact_id_and_contact_group_id"
+  add_index "memberships", ["contact_id"], :name => "index_contact_groups_contacts_on_contact_id"
+
   create_table "opportunities", :force => true do |t|
     t.integer  "user_id"
     t.integer  "campaign_id"
@@ -353,8 +497,8 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
     t.integer  "taggable_id"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "taggable_type", :limit => 50
-    t.string   "context",       :limit => 50
+    t.string   "taggable_type"
+    t.string   "context"
     t.datetime "created_at"
   end
 
@@ -417,6 +561,7 @@ ActiveRecord::Schema.define(:version => 20121221033947) do
     t.boolean  "admin",                             :default => false, :null => false
     t.datetime "suspended_at"
     t.string   "single_access_token"
+    t.boolean  "mandrill"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

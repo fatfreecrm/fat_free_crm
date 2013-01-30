@@ -1,0 +1,7 @@
+if @events.any?
+  page[:events].replace_html render(:partial => "event", :collection => @events)
+else
+  page[:events].replace_html render(:partial => "shared/empty")
+end
+page[:paginate].replace_html render(:partial => "shared/paginate_with_per_page")
+page[:export].replace_html render(:partial => "shared/export")

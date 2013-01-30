@@ -6,8 +6,13 @@ if @contact.errors.empty?
     page.call "crm.set_title", :edit_contact, @contact.full_name
     page << refresh_sidebar(:show, :summary)
   else
-    page[id].replace :partial => "contact", :collection => [ @contact ]
-    page[id].visual_effect :highlight, :duration => 1.0
+    if called_from_landing_page? :event_instances
+      page[id].replace :partial => "event_instances/contact", :collection => [ @contact ]
+      page[id].visual_effect :highlight, :duration => 1.0
+    else
+      page[id].replace :partial => "contact", :collection => [ @contact ]
+      page[id].visual_effect :highlight, :duration => 1.0
+    end
     if called_from_index_page?
       page << refresh_sidebar(:index)
     else

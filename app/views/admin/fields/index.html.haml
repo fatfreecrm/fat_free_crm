@@ -14,7 +14,7 @@
         = link_to t(entity), "#"
 
 - list_of_entities.each do |entity|
-  - asset = entity.downcase
+  - asset = entity.underscore
   - klass = asset.classify.constantize
   .fields{ :id => "#{asset}_section", :style => ("display: none;" if asset != 'contact') }
 

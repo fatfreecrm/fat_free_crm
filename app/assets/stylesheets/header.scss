@@ -16,10 +16,10 @@
 //------------------------------------------------------------------------------
 
 $color_header: skyblue;
-$color_header_background: #1e4262;
-$color_logo: greenyellow;
+$color_header_background: #327ccb;
+$color_logo: white;
 $color_tab: white;
-$color_tab_background: #466bb1;
+$color_tab_background: #22558b;
 $color_active_tab: black;
 $color_active_tab_background: #E5E5E5;
 $color_hover_tab: navy;
@@ -37,7 +37,7 @@ $color_footer: grey;
   h3 a {
     background: $color_header_background;
     color: $color_logo;
-    font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
+    font: 35px "Lobster", "Lucida Grande", Arial, Helvetica, sans-serif;
     text-decoration: none; }
   #welcome {
     float: right;
@@ -50,8 +50,10 @@ $color_footer: grey;
         background: $color_header_background;
         color: yellow; } }
     a.selected {
-      background: steelblue;
+      background: dimgray;
       color: lightyellow;
+			border-top-left-radius: 2px;
+			border-top-right-radius: 2px; 
       -moz-border-radius: {
         topleft: 2px;
         topright: 2px; };
@@ -59,10 +61,12 @@ $color_footer: grey;
         top-left-radius: 2px;
         top-right-radius: 2px; }; } }
   #jumpbox {
-    background: steelblue;
+    background: dimgray;
     margin: 2px 0px 0px 0px;
     padding: 12px;
     position: absolute;
+		border-radius: 6px; 
+		//border-bottom-right-radius: 6px; 
     -moz-border-radius: {
       bottomleft: 6px;
       bottomright: 6px; };
@@ -109,6 +113,8 @@ $color_footer: grey;
     padding: 4px 15px 6px;
     text-align: center;
     text-decoration: none;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
     -moz-border-radius: {
       topleft: 3px;
       topright: 3px; };
@@ -122,6 +128,16 @@ $color_footer: grey;
     background: $color_active_tab_background;
     color: $color_active_tab;
     text-decoration: none; } }
+
+.tabs.mobile {
+	a:link, a:visited {
+		img {
+			margin-right: 5px;
+			margin-left: 5px;
+		}
+		padding: 4px 5px 6px;
+	}
+}
 
 #footer {
   color: $color_footer;

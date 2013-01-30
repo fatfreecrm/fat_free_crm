@@ -5,8 +5,12 @@ if params[:cancel].true?     # <----------------- Hide [Edit Contact]
   if called_from_landing_page?
     page.call "crm.flip_form", :edit_contact
     page.call "crm.set_title", :edit_contact, h(@contact.full_name)
-  else                                            # Called from contacts list item...
-    page[id].replace :partial => "contact", :collection => [ @contact ]
+  else                                       # Called from contacts list item...
+    if called_from_landing_page? :event_instances
+      page[id].replace :partial => "event_instances/contact", :collection => [ @contact ]
+    else
+      page[id].replace :partial => "contact", :collection => [ @contact ]
+    end
   end
 
 else # <----------------------------------------- Show [Edit Contact] form.

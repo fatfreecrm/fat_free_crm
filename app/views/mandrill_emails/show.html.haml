@@ -1,0 +1,74 @@
+- scheduled = @mandrill_email.scheduled
+- sent = @mandrill_email.sent_at
+- not_sent_or_scheduled = !sent && !scheduled
+#confirm{ hidden }
+.title_tools#menu
+  = link_to_inline(:edit_mandrill_email, edit_mandrill_email_path(@mandrill_email), :text => t(:edit)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@mandrill_email))
+.title#edit_mandrill_email_title= h(@mandrill_email.name)
+
+%div#edit_mandrill_email{ hidden }
+
+%div#sent_or_scheduled_details{ hidden_if(not_sent_or_scheduled) }
+  %ul
+    - if sent
+      %li
+        %b="Email has already been sent at #{@mandrill_email.sent_at.strftime("%I:%M %p %a %d %b")}".html_safe
+      %li
+        = "Response from mandrill: #{@mandrill_email.response}"
+    - if scheduled && !sent
+      %li
+        %b= "Email is scheduled to be sent at #{@mandrill_email.scheduled_at.strftime("%I:%M %p %a %d %b")}".html_safe
+    
+= simple_form_for(@mandrill_email, :html => {:multipart => true}, :url => {:action => "save"}) do |f|
+  = f.error_messages :object_name => t('mandrill_email')
+  %table{:style => 'border-spacing: 5px 15px;width:400px;'}
+    %tr
+      %td
+        .label.mid Template:
+      %td
+        =f.select :template, options_for_select(@templates_list, @mandrill_email.template), {} , :style => 'width:200px;'
+    %tr
+      %td
+        .label.mid To:
+      %td
+        - selected = @mandrill_email.mailing_list.nil? ? @mandrill_email.category : @mandrill_email.mailing_list
+        = f.select :mailing_list, options_for_select([["TT Email", "terrace_times"],["Prayer Points","prayer_points"]], selected), {}, :style => 'width:200px;'
+    %tr
+      %td
+        .label.mid From:
+      %td
+        = f.text_field :from_address, :style => 'width:460px;'    
+    %tr
+      %td
+        .label.mid Subject:
+      %td
+        = f.text_field :message_subject, :style => 'width:460px;'
+    = f.simple_fields_for(:attached_files) do |a|
+      %tr
+        %td
+          .label.mid Attachment:
+        %td
+          = a.file_field :attached_file
+          = "[you've already attached #{@mandrill_email.attached_files.first.attached_file_file_name}]" if @mandrill_email.attached_files.exists?
+    %tr
+      %td
+      %td
+        .label.mid
+          = f.check_box :scheduled, {:onclick => "crm.show_scheduled(this.value);"}
+          Schedule to send later?
+        %div#scheduled{ hidden_inline_if(!scheduled)}
+          .datetime
+            %p.datepair
+              = f.text_field :scheduled_date, :style => "width:90px;", :autocomplete => :off, :class => 'date start', :value => @mandrill_email.scheduled_at_date
+              = "&nbsp;&nbsp;".html_safe + 'at' +"&nbsp;&nbsp;".html_safe
+              = f.text_field :scheduled_time, :style => "width:90px;", :autocomplete => :off, :class => 'time start', :value => @mandrill_email.scheduled_at_time
+    %tr
+      %td{:colspan => 2}
+        = f.text_area :message_body, :style => 'width:550px;'
+  
+  .buttonbar
+    = f.submit "Save for later" unless sent
+    = f.submit "Send!", :onclick => 'return confirm("Email is about to be added to the send queue. Are you sure?")', :name => "send" unless sent
+    = "#{t :or}" unless sent 
+    = link_to "Cancel", mandrill_emails_path

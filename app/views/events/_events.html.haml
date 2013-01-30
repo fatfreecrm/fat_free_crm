@@ -1,0 +1,6 @@
+= section(object, :events)
+.list#events
+  - events = object.events.paginate(:page => 1, :per_page => 20)
+  = render :partial => "events/event", :collection => events
+
+= will_paginate events, :id => 'events_pagination', :params => {:action => :events}

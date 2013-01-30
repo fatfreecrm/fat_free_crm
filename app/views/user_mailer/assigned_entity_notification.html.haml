@@ -1,3 +1,6 @@
 :plain
-  Your colleague #{@assigner_name} has assigned the #{@entity_name} #{@entity_type} to you.
-  #{@entity_url}
+  #{@assigner_name} has assigned you #{indefinite_article(@entity_type)} #{@entity_type.downcase}:
+  <br><br>
+  #{@entity_name}
+  <br><br>
+  You can view this #{@entity_type} at #{@entity_url}

@@ -1,0 +1,16 @@
+.remote
+  = simple_form_for(@event_instance, :html => one_submit_only(:event_instance), :remote => true) do |f|
+    = link_to_close edit_event_instance_path(@event_instance)
+    = f.hidden_field :user_id
+
+    = f.error_messages :object_name => t('event_instance')
+
+    = render "event_instances/top_section_single",  :f => f, :edit => true
+    -#= render "events/contact_info", :f => f, :edit => true
+    = render "fields/groups",  :f => f, :edit => true
+    = render "entities/permissions",  :f => f, :edit => true
+
+    .buttonbar
+      = f.submit t(:save_event_instance)
+      #{t :or}
+      = link_to_cancel edit_event_instance_path(@event_instance)

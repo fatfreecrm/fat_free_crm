@@ -1,0 +1,40 @@
+.title
+  %span#contacts_import_title Import Contacts
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+
+= simple_form_for(:imports, :html => {:multipart => true, :onsubmit => "$$('#'+this.id+' input[type=\"submit\"]')[0].disabled = true"}, :url => {:action => "import"}) do |f|
+  = f.error_messages :object_name => "contact"
+  <br/>
+  %h4
+    Instructions: 
+  %p
+    = "1. Download this #{link_to "template file", '/templates/contact-import-template.csv'} (right-click, save as...)".html_safe
+  %p
+    2. Fill it in
+  %p
+    = "3. Upload it by clicking "
+    = f.file_field :attached_file
+  %p
+    = "4. " 
+    = f.submit "Import", :name => "send"
+    
+</br>
+</br>
+
+.title
+  %span#supporters_import_title Import Supporters
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+
+= simple_form_for(:imports, :html => {:multipart => true, :onsubmit => "$$('#'+this.id+' input[type=\"submit\"]')[0].disabled = true"}, :url => {:action => "import_supporters"}) do |f|
+  = f.error_messages :object_name => "contact"
+  <br/>
+  %h4
+    Instructions: 
+  %p
+    = "1. Export contacts from the list in mailchimp"
+  %p
+    = "2. Upload it by clicking "
+    = f.file_field :attached_supporters_file
+  %p
+    = "3. "
+    = f.submit "Import", :name => "send"

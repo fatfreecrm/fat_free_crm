@@ -14,16 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
-
 class ApplicationController < ActionController::Base
 
   before_filter :set_context
   before_filter :clear_setting_cache
+  before_filter :check_for_mobile
   before_filter "hook(:app_before_filter, self)"
   after_filter  "hook(:app_after_filter,  self)"
 
   helper_method :current_user_session, :current_user, :can_signup?
-  helper_method :called_from_index_page?, :called_from_landing_page?
+  helper_method :called_from_index_page?, :called_from_landing_page?, :called_from_event_instance_page?
   helper_method :klass
 
   respond_to :html, :only => [ :index, :show, :auto_complete ]
@@ -53,6 +53,31 @@ class ApplicationController < ActionController::Base
         h[a.id] = a.respond_to?(:full_name) ? a.full_name : a.name; h
       }}
     end
+  end
+  
+  def check_for_mobile
+    session[:mobile_override] = params[:mobile] if params[:mobile]
+    prepare_for_mobile if mobile_device?
+  end
+  
+  def mobile_device?
+    if session[:mobile_override]
+      session[:mobile_override] == "1"
+    else
+      # Season this regexp to taste. I prefer to treat iPad as non-mobile.
+      (request.user_agent =~/Mobile|webOS/) && (request.user_agent !~/iPad/)
+    end
+  end
+  helper_method :mobile_device?
+  
+  def ipad?
+    request.user_agent =~/iPad/
+  end
+  helper_method :ipad?
+  
+  def prepare_for_mobile
+    prepend_view_path Rails.root + 'app' + 'views_mobile'
+    @tabless_layout = true
   end
 
 private

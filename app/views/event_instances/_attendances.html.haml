@@ -1,0 +1,6 @@
+= attendance_section(object.event.contact_group, :contacts)
+.log#contacts
+  -# contacts = @contacts.paginate(:page => 1, :per_page => 20)
+  = render :partial => "event_instances/contact", :locals => {:object => object}, :collection => @contacts
+
+-#= will_paginate contacts, :id => 'contacts_pagination', :params => {:action => :contacts}

@@ -1,7 +1,10 @@
 
 = section(object, :contacts)
 .list#contacts
-  - contacts = object.contacts.paginate(:page => 1, :per_page => 20)
+  - if object.class == ContactGroup
+    - contacts = object.contacts.joins(:account).order("account_id DESC").paginate(:page => 1, :per_page => 100)
+  - else
+    - contacts = object.contacts.paginate(:page => 1, :per_page => 100)
   = render :partial => "contacts/contact", :collection => contacts
 
 = will_paginate contacts, :id => 'contacts_pagination', :params => {:action => :contacts}

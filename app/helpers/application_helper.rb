@@ -57,15 +57,15 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def section(related, assets)
+  def section(related, assets, no_select=false)
     asset = assets.to_s.singularize
     create_id  = "create_#{asset}"
     select_id  = "select_#{asset}"
     create_url = controller.send(:"new_#{asset}_path")
 
     html = tag(:br)
-    html << content_tag(:div, link_to(t(select_id), "#", :id => select_id), :class => "subtitle_tools")
-    html << content_tag(:div, "&nbsp;|&nbsp;".html_safe, :class => "subtitle_tools")
+    html << content_tag(:div, link_to(t(select_id), "#", :id => select_id), :class => "subtitle_tools") unless no_select
+    html << content_tag(:div, "&nbsp;|&nbsp;".html_safe, :class => "subtitle_tools") unless no_select
     html << content_tag(:div, link_to_inline(create_id, create_url, :related => dom_id(related), :text => t(create_id)), :class => "subtitle_tools")
     html << content_tag(:div, t(assets), :class => :subtitle, :id => "create_#{asset}_title")
     html << content_tag(:div, "", :class => :remote, :id => create_id, :style => "display:none;")
@@ -99,9 +99,10 @@ module ApplicationHelper
     text = options[:text] || t(id, :default => id.to_s.titleize)
     text = (arrow_for(id) + text) unless options[:plain]
     related = (options[:related] ? "&related=#{options[:related]}" : '')
-
+    event_instance = (options[:event_instance_id] ? "&event_instance_id=#{options[:event_instance_id]}" : '')
+    
     link_to(text,
-      url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
+      url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related + event_instance,
       :remote => true,
       :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));",
       :class => options[:class]
@@ -116,12 +117,13 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_edit(record, options = {})
     object = record.is_a?(Array) ? record.last : record
-
+    related = (options[:related] ? "&related=#{options[:related]}" : '')
+    
     name = (params[:klass_name] || object.class.name).underscore.downcase
     link_to(t(:edit),
       options[:url] || polymorphic_url(record, :action => :edit),
       :remote  => true,
-      :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}');"
+      :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}') + '#{related}';"
     )
   end
 
@@ -184,7 +186,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def jumpbox(current)
-    tabs = [ :campaigns, :accounts, :leads, :contacts, :opportunities ]
+    tabs = [ :contacts, :accounts, :contact_groups, :events ]
     current = tabs.first unless tabs.include?(current)
     tabs.map do |tab|
       link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", :class => (tab == current ? 'selected' : ''))
@@ -199,6 +201,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def hidden;    { :style => "display:none;"       }; end
   def exposed;   { :style => "display:block;"      }; end
+  def exposed_inline;   { :style => "display:inline;"      }; end
   def invisible; { :style => "visibility:hidden;"  }; end
   def visible;   { :style => "visibility:visible;" }; end
 
@@ -210,6 +213,11 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def hidden_if(you_ask)
     you_ask ? hidden : exposed
+  end
+  
+  #----------------------------------------------------------------------------
+  def hidden_inline_if(you_ask)
+    you_ask ? hidden : exposed_inline
   end
 
   #----------------------------------------------------------------------------
@@ -361,9 +369,10 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def links_to_export(action=:index)
     token = current_user.single_access_token
+    query = params[:query] ? params[:query] : session[:"#{params[:controller]}_current_query"]
     url_params = {:action => action}
     url_params.merge!(:id => params[:id]) unless params[:id].blank?
-    url_params.merge!(:query => params[:query]) unless params[:query].blank?
+    url_params.merge!(:query => query) unless query.blank?
     url_params.merge!(:q => params[:q]) unless params[:q].blank?
     url_params.merge!(:view => @view) unless @view.blank? # tasks
     url_params.merge!(:id => params[:id]) unless params[:id].blank?
@@ -379,8 +388,21 @@ module ApplicationHelper
     links = %W(perm).map do |format|
       link_to(format.upcase, url_params, :title => I18n.t(:"to_#{format}"))
     end
-
-    (exports + feeds + links).compact.join(' | ')
+   
+    emails_to_clipboard = %W(email_clip).map do |format|
+      if params[:controller] == "contact_groups"
+        link_to("EMAIL &#8250; CLIPBOARD".html_safe, url_params.merge(:format => :js, :action => :email, :query => @current_query), :remote => true) 
+      end
+    end
+    
+    emails = %W(email).map do |format|
+      if params[:controller] == "contact_groups"
+        group_emails = @contact_groups.collect{|cg| cg.email_addresses}.join(", ") if @contact_groups.any?
+        mail_to(group_emails, format.upcase)
+      end
+    end
+    
+    (exports + feeds + links + emails + emails_to_clipboard).compact.join(' | ')
   end
 
   def user_options
@@ -441,7 +463,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   # Return name of current view
   def current_view_name
-    controller = params['controller']
+    controller = (params['action'] == "move_contact" || params['action'] == "assign_contact") ? "contacts" : params['controller']
     action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     current_user.pref[:"#{controller}_#{action}_view"]
   end
@@ -449,7 +471,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   # Get template in current context with current view name
   def template_for_current_view
-    controller = params['controller']
+    controller = (params['action'] == "move_contact" || params['action'] == "assign_contact") ? "contacts" : params['controller']
     action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     template = FatFreeCRM::ViewFactory.template_for_current_view(:controller => controller, :action => action, :name => current_view_name)
     template
@@ -477,6 +499,19 @@ module ApplicationHelper
         end
       end.join('').html_safe
     end
+  end
+  
+  def link_to_confirm_delete(model)
+    link_to(t(:yes_button),
+      url_for(model),
+      :method  => :delete,
+      :remote  => true,
+      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+    )
+  end
+  
+  def indefinite_article(params_word)
+      %w(a e i o u).include?(params_word[0].downcase) ? "an" : "a"
   end
 
 end

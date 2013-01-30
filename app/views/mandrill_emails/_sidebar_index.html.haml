@@ -1,0 +1,21 @@
+.filters#filters
+  = render "shared/search"
+  = hook(:index_mandrill_email_sidebar_bottom, self)
+  - Setting.mandrill_email_category.each do |key|
+    .check_box{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = @mandrill_email_category_total[key]
+      = mandrill_email_category_checbox(key, @mandrill_email_category_total[key])
+      = label_tag(key, t(key))
+
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @mandrill_email_category_total[:other]
+    = mandrill_email_category_checbox("other", @mandrill_email_category_total[:other])
+    = label_tag(:other, t(:other))
+
+  .check_box
+    %div{:style => "float:right;"}
+      %b= @mandrill_email_category_total[:all]
+    %b #{t :total_mandrill_emails}
+  = hook(:index_mandrill_email_sidebar_bottom, self)

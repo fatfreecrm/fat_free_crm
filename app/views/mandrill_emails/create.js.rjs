@@ -1,0 +1,15 @@
+if @mandrill_email.valid?
+  page[:create_mandrill_email_arrow].replace_html "&#9658;"
+  page[:create_mandrill_email_title].replace_html t(:mandrill_email)
+  page.visual_effect :toggle_blind, :create_mandrill_email, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, :mandrill_emails, :partial => "mandrill_email", :collection => [ @mandrill_email ]
+  page[dom_id(@mandrill_email)].visual_effect :highlight, :duration => 1.5
+  page << refresh_sidebar(:index, :filters)
+  page[:paginate].replace_html :partial => "shared/paginate"
+  page.call "crm.flick", :empty, :remove
+else
+  page[:create_mandrill_email].replace_html :partial => "new"
+  page.call "crm.init_chosen_fields"
+  page[:create_mandrill_email].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:contact_mandrill_email].focus
+end

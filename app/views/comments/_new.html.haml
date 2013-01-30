@@ -3,7 +3,7 @@
 - @comment = @comment || Comment.new
 .comment.highlight.new_comment{ :id => "#{id_prefix}_comment_new" }
   - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == current_user.id }.compact
-  - if notification_emails_configured? && subscribed_users.any?
+  - if notification_emails_configured? && subscribed_users.any? && class_name != "attendance"
     = t(:following_users_will_be_notified) << ":"
     = subscribed_user_links(subscribed_users)
 
@@ -29,5 +29,5 @@
   %div{ {:id => "#{id_prefix}_ask"}.merge(hidden_if(false))}
     = text_field_tag :post_new_note, t(:add_note_help), :onclick => remote_function(:url => new_comment_path("#{class_name}_id" => commentable), :method => :get), :id => "#{id_prefix}_post_new_note"
 
-  - if notification_emails_configured?
+  - if notification_emails_configured? && class_name != "attendance"
     = render :partial => "comments/subscription_links", :locals => {:entity => commentable}

@@ -32,3 +32,5 @@ Design
 *.swp
 *.gem
 
+config/settings.yml
+db/data-import/adelaide-contacts.csv

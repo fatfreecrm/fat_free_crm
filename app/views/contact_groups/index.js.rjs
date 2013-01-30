@@ -1,0 +1,7 @@
+if @contact_groups.any?
+  page[:contact_groups].replace_html render(:partial => "contact_group", :collection => @contact_groups)
+else
+  page[:contact_groups].replace_html render(:partial => "shared/empty")
+end
+page[:paginate].replace_html render(:partial => "shared/paginate_with_per_page")
+page[:export].replace_html render(:partial => "shared/export")

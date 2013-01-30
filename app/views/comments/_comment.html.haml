@@ -12,8 +12,9 @@
       - if can?(:destroy, commentable)
         %li= link_to_delete(comment)
 
-    = link_to(comment.user.full_name, user_path(comment.user)) + ","
+    
     %tt
+      = link_to(comment.user.full_name, user_path(comment.user))
       added note #{t(:time_ago, distance_of_time_in_words(Time.now, comment.created_at))}
       - if collapsable && can?(:read, commentable)
         = " | "

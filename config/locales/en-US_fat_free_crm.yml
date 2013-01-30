@@ -20,11 +20,13 @@ en-US:
   tab_tasks: Tasks
   tab_campaigns: Campaigns
   tab_leads: Leads
-
-  tab_accounts: Accounts
+  tab_accounts: Folders
   tab_contacts: Contacts
   tab_opportunities: Opportunities
-  tab_team: Team
+  tab_groups: Groups
+  tab_events: Events
+  tab_mandrill: Mandrill Emails
+  tab_contact_groups: Groups
 
   admin_tab_groups: Groups
   admin_tab_users: Users
@@ -32,6 +34,7 @@ en-US:
   admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
+  admin_tab_imports: Import
 
   affiliate: Affiliate
   competitor: Competitor
@@ -39,6 +42,10 @@ en-US:
   partner: Partner
   reseller: Reseller
   vendor: Vendor
+  
+  campus: Campus
+  supporter: Supporter
+  graduate: Graduate
 
   planned: Planned
   started: Started
@@ -107,6 +114,12 @@ en-US:
   activerecord:
     errors:
       models:
+        mandrill_email:
+          attributes:
+            message_subject:
+              missing_subject: "^You need to provide a subject for this message"
+            from_address:
+              missing_sender: "^You need to provide a from address for this message"
         authentication:
           attributes:
             login_field:
@@ -116,9 +129,9 @@ en-US:
         account:
           attributes:
             name:
-              missing_account_name: "^Please specify account name."
+              missing_account_name: "^Please specify folder name."
             access:
-              share_account: "^Please specify users to share the account with."
+              share_account: "^Please specify users to share the folder with."
         campaign:
           attributes:
             name:
@@ -198,7 +211,7 @@ en-US:
   msg_cant_do: "Can't %{action} the %{asset} since it's no longer available."
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
+  msg_goodbye: You have been logged out. Thank you for using Mojo!
   msg_invalid_password: "^Please specify valid current password"
   msg_invalig_login: Invalid username or password.
   msg_last_login: Your last login was on %{value}.
@@ -210,7 +223,7 @@ en-US:
   msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
   msg_require_admin: You must be Administrator to access this page.
   msg_successful_signup: Successful signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
+  msg_welcome: Welcome to Mojo!
 
   # Options.
   #----------------------------------------------------------------------------
@@ -293,6 +306,7 @@ en-US:
   born_on: Born on
   reports_to: Reports to
   access: Access
+  contacts_account: Contact's account
 
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
@@ -301,21 +315,56 @@ en-US:
   no_account: Do not have an account?
   remember_me: Remember Me
   sign_up_now: Sign Up Now!
+  
+  # Views -> ContactGroups.
+  #----------------------------------------------------------------------------
+  create_contact_group: Create Group
+  select_contact_group: Select Group
+  save_contact_group: Save Group
+  contact_group: Group
+  select_a_group: group
+  contact_group_small: group
+  contact_groups: Groups
+  contact_groups_small: groups
+  total_contact_groups: Total Groups
+  bible_talk: Bible Talk
+  bsg: BSG
+  team: Team
+  staff: Staff
+  contactgroup: Group
+  camp: Camp
+  
+  # Views -> Events.
+  #----------------------------------------------------------------------------
+  create_event: Create Event
+  select_event: Select Event
+  event: Event
+  select_an_event: event
+  event_small: event
+  events: Events
+  events_small: events
+  total_events: Total Events
+  faculty: Faculty
+  social: Social
+  location: Location
+  event_instances: Occurrences
+  save_event_instance: Save Occurrence
+  create_event_instance: Create Occurrence
+  munchies: Munchies
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Account
-  account_id: Account
-  select_an_account: Select an Account
-  account_small: account
-  account_summary: Account Summary
-  account_categories: Account Categories
-  accounts: Accounts
-  accounts_options: Accounts Options
-  accounts_small: accounts
+  account: Folder
+  select_an_account: Select a folder
+  account_small: folder
+  account_summary: Folder Summary
+  account_categories: Folder Categories
+  accounts: Folders
+  accounts_options: Folders Options
+  accounts_small: folders
   assigned_to: Assigned to
   billing_address: Billing address
-  create_account: Create Account
+  create_account: Create Folder
   date_created: Date Created
   date_updated: Date Updated
   fax: Fax
@@ -329,10 +378,10 @@ en-US:
   phone_toll_free: Toll-free
   pipeline: Pipeline
   same_as_billing: same as billing
-  save_account: Save Account
+  save_account: Save Folder
   share_with: Share it with the following people
   shipping_address: Shipping address
-  total_accounts: Total Accounts
+  total_accounts: Total Folders
   website: Website
   account_with_title_department: %{title}, %{department} at %{account}
   account_with_title: %{title} at %{account}
@@ -379,6 +428,20 @@ en-US:
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
   was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
 
+  # Views -> MandrillEmails.
+  #----------------------------------------------------------------------------
+
+  mandrill_email: Mandrill Email
+  mandrill_email_small: mandrill email
+  mandrill_emails: Mandrill Emails
+  mandrill_emails_options: Mandrill Options
+  mandrill_emails_small: mandrill emails
+  create_mandrill_email: Create Mandrill Email
+  save_mandrill_email: Save Mandrill Email
+  prayer_points: Prayer Points
+  terrace_times: Terrace Times
+  total_mandrill_emails: Total Mandrill Emails
+  
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Other
@@ -417,6 +480,7 @@ en-US:
   shared_with_everyone: Shared with everyone
   title: Title
   subscriptions: Subscriptions
+  contact_confirm_delete: Are you sure?
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
@@ -533,7 +597,7 @@ en-US:
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: completed
-  action_create: created
+  action_create: added
   action_destroy: deleted
   action_reassigned: reassigned
   action_rejected: rejected
@@ -555,6 +619,11 @@ en-US:
   subject_opportunity: opportunity
   subject_task: task
   subject_user: user
+  subject_membership: member
+  subject_contactgroup: group
+  subject_accountcontact: contact
+  subject_eventinstance: event occurrence
+  subject_event: event
   tag_list: Tags
   create_past_participle: Record Creations
   view_past_participle: Views
@@ -567,7 +636,7 @@ en-US:
   no_task_records: You have no tasks.
   my_opportunities: My Opportunities
   no_opportunity_records: You have no opportunities.
-  my_accounts: My Accounts
+  my_accounts: My Folders
   no_account_records: You have no accounts
   not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
 
@@ -594,9 +663,9 @@ en-US:
   discard: Discard
   edit: Edit
   items_total: '%{count} total.'
-  less: Less...
+  less: Show Less
   me: me
-  more: More...
+  more: Show More
   n_a: N/A
   name: Name
   no_match: No %{value} match
@@ -641,7 +710,7 @@ en-US:
   admin: Admin
   logout: Logout
   quick_find: Quick find
-  welcome: Welcome
+  welcome: Hi
 
   # Advanced search
   accounts_advanced_search: Accounts Advanced search
@@ -674,8 +743,8 @@ en-US:
 
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: Back to Mojo
+  crm_admin_page: Mojo Administration
 
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
@@ -722,6 +791,9 @@ en-US:
     unset_html: %{attr} unset
     change_html: %{attr} changed from %{from} to %{to}
     anonymous: anonymous
+  
+  # Contact -> Attendance History
+  attendances: Attendance History
   account_contact_id: Account id
   account_contact_name: Account name
   user_id: User id

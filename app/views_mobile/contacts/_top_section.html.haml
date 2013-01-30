@@ -1,0 +1,48 @@
+= hook(:contact_top_section, self, :f => f) do
+  .section.mobile
+    %table
+      %tr
+        %td
+          .label.top.req #{t :first_name}:
+          = f.text_field :first_name
+      %tr
+        %td
+          .label.top{ :class => "#{Setting.require_last_names ? 'req' : ''}" } #{t :last_name}:
+          = f.text_field :last_name
+      %tr
+        %td
+          .label #{t :email}:
+          = f.text_field :email
+      %tr
+        %td
+          .label #{t :phone}:
+          = f.text_field :phone, :type=>"tel"
+      %tr
+        %td
+          .label #{t :mobile}:
+          = f.text_field :mobile, :type=>"tel"
+
+    %table
+      = fields_for(@account) do |a|
+        = a.hidden_field :user_id
+        = a.hidden_field :assigned_to
+        = a.hidden_field :access, :value => Setting.default_access
+        %tr
+          %td
+            != account_select_or_create(a) do |options|
+              - # Add [-- None --] account choice when editing existing contact that has an account.
+              - options[:include_blank] = "" unless @contact.new_record? || @contact.account.blank?
+        %tr
+          %td
+            .label #{t :assigned_to}:
+            = user_select(:contact, all_users, current_user)
+
+        - if Setting.background_info && Setting.background_info.include?(:contact)
+          %tr
+            %td(colspan="3")
+              .label= t(:background_info) << ':'
+              = f.text_area :background_info, :style =>"width:240px", :rows => 3
+
+        = render :partial => "/shared/tags", :locals => {:f => f, :span => 3}
+
+        = hook(:contact_top_section_bottom, self, :f => f)

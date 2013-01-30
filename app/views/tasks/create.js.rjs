@@ -29,6 +29,7 @@ if @task.valid?
     page[:create_task_title].replace_html(t :tasks)
 
     partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
+    partial = (@task.assigned_to.nil? && @task.user_id != current_user.id) ? "related" : partial
     page.insert_html :top, :tasks, :partial => "tasks/#{partial}", :collection => [@task], :locals => { :bucket => nil }
     page[dom_id(@task)].visual_effect :highlight, :duration => 1.5
     page[:recently].replace :partial => "shared/recently"

@@ -2,12 +2,18 @@
 
   $ ->
     $("#advanced_search").ransack_search_form()
-
+    
     # For basic search, remove placeholder text on focus, restore on blur
     $('#query').focusin (e) ->
       $(this).data('placeholder', $(this).attr('placeholder')).attr('placeholder', '')
+      $(this).parent().addClass("ui-focus");
+      $(this).parent().find(".ui-icon-delete").show();
     $('#query').focusout (e) ->
       $(this).attr('placeholder', $(this).data('placeholder'))
+      $(this).parent().removeClass("ui-focus");
+    $(".ui-icon-delete").live "click", ->
+      $(this).parent().find("input.clear-ui").val("");
+      $(this).hide();
 
     # For advanced search we show a spinner and dim the page when loading results
     # This method undoes that when the results are returned. Ideally, this should
@@ -44,6 +50,8 @@
             value = ""
           crm.search(value, window.controller)
           $('#filters').enable() # Enable filters panel (if present)
+          if query_input.val() != ""
+            query_input.focus()
 
         when 'advanced_search'
           $('#lists .show_lists_save_form').show()

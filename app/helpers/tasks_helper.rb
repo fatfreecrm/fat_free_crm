@@ -110,6 +110,7 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def replace_content(task, bucket = nil)
     partial = (task.assigned_to && task.assigned_to != current_user.id) ? "assigned" : "pending"
+    partial = (!task.tracked_by?(current_user)) ? "related" : partial
     update_page do |page|
       page[dom_id(task)].replace_html :partial => "tasks/#{partial}", :collection => [ task ], :locals => { :bucket => bucket }
     end

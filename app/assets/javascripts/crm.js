@@ -102,6 +102,10 @@ var crm = {
     } else if ($("query")) {
       $("query").focus();
     }
+		var basic_search_input = $("query")
+		if (basic_search_input.value != "") {
+			basic_search_input.focus();
+		}
   },
 
   // Hide accounts dropdown and show create new account edit field instead.
@@ -189,6 +193,22 @@ var crm = {
       $("task_calendar").focus();     // Focus to invoke calendar popup.
     }
   },
+  
+  //----------------------------------------------------------------------------
+  show_repeats: function(value) {
+      $("repeats").toggle(); // Hide dropdown.
+  },
+
+	//----------------------------------------------------------------------------
+  show_scheduled: function(value) {
+      $("scheduled").toggle(); // Hide dropdown.
+  },
+
+	//----------------------------------------------------------------------------
+  show_comments: function(value) {
+      $("com_contact_" + value ).toggle(); // show/hide comments section for attendances
+  },
+
 
   //----------------------------------------------------------------------------
   flip_campaign_permissions: function(value) {
@@ -225,18 +245,18 @@ var crm = {
     var body, state;
 
     if (link.innerHTML == more) {
-      body = Element.next(Element.up(link));
-      body.hide();
-      $(body.id.replace('truncated', 'formatted')).show();  // expand
-      link.innerHTML = less;
-      state = "Expanded";
-    } else {
-      body = Element.next(Element.next(Element.up(link)));
-      body.hide();
-      $(body.id.replace('formatted', 'truncated')).show();  // collapse
-      link.innerHTML = more;
-      state = "Collapsed";
-    }
+		      body = Element.next(Element.up(link));
+		      body.hide();
+		      $(body.id.replace('truncated', 'formatted')).show();  // expand
+		      link.innerHTML = less;
+		      state = "Expanded";
+		    } else {
+		      body = Element.next(Element.next(Element.up(link)));
+		      body.hide();
+		      $(body.id.replace('formatted', 'truncated')).show();  // collapse
+		      link.innerHTML = more;
+		      state = "Collapsed";
+		    }
     // Ex: "formatted_email_42" => [ "formatted", "email", "42" ]
     var arr = body.id.split("_");
 
@@ -287,6 +307,10 @@ var crm = {
       });
     }
   },
+
+	copyToClipboard: function(text) {
+	  window.prompt ("Copy to clipboard: Ctrl+C, Enter", text);
+	},
 
   //----------------------------------------------------------------------------
   reschedule_task: function(id, bucket) {
@@ -438,7 +462,7 @@ var crm = {
             new Ajax.Request(this.base_url + "/" + related + "/attach", {
               method     : "put",
               parameters : { assets : controller, asset_id : escape(el.id) },
-              onComplete : function() { $("jumpbox").hide(); }
+              onComplete : function() { $("auto_complete_query").value = "" ; }//$("jumpbox").hide(); }
             });
           } else {        // Quick Find: redirect to asset#show.
             window.location.href = this.base_url + "/" + controller + "/" + escape(el.id);

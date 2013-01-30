@@ -2,9 +2,9 @@ source :rubygems
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-# gem 'mysql2', '0.3.10'
+ gem 'mysql2', '0.3.10'
 # gem 'sqlite3'
-gem 'pg', '~> 0.13.2'
+#gem 'pg', '~> 0.13.2'
 
 # Allows easy switching between locally developed gems, and gems installed from rubygems.org
 # See README for more info at: https://github.com/ndbroadbent/bundler_local_development
@@ -39,12 +39,13 @@ gem 'premailer', :require => false
 
 # Remove fat_free_crm dependency, to stop it from being auto-required too early.
 remove 'fat_free_crm'
+remove 'ffcrm_merge'
 
 group :development do
   gem 'thin'
   gem 'quiet_assets'
   # Uncomment the following two gems to deploy via Capistrano
-  gem 'capistrano'
+  gem 'rvm-capistrano'
   gem 'capistrano_colors'
 end
 
@@ -52,14 +53,18 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.9.0'
   gem 'headless'
   unless ENV["CI"]
-    gem 'ruby-debug', :platform => :mri_18
-    gem 'debugger', :platform => :mri_19
+    #gem 'ruby-debug', :platform => :mri_18
+    #gem 'debugger', :platform => :mri_19
   end
   gem 'pry-rails'
+  gem 'pry-nav'
+  gem 'pry-stack_explorer'
+  gem 'awesome_print'
 end
 
 group :test do
   gem 'capybara', '~> 1.1' # v2 and up is not r1.8 compatible.
+  gem 'spork'
   gem 'database_cleaner'
   gem "acts_as_fu", "~> 0.0.8"
 
@@ -88,3 +93,7 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
+#gem 'ffcrm_merge', :path => "/Users/reuben/Development/Rails/ffcrm_merge"
+gem 'ffcrm_merge', :git => "git://github.com/reubenjs/ffcrm_merge.git"
+gem 'saasu', :git => 'git://github.com/reubenjs/saasu.git'
+

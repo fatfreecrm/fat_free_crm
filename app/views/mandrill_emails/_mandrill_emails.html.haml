@@ -1,0 +1,6 @@
+= section(object, :mandrill_emails)
+.list#mandrill_emails
+  - mandrill_emails = object.mandrill_emails.paginate(:page => 1, :per_page => 20)
+  = render :partial => "mandrill_emails/mandrill_email", :collection => mandrill_emails
+
+= will_paginate mandrill_emails, :id => 'mandrill_emails_pagination', :params => {:action => :mandrill_emails}

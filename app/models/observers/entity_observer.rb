@@ -1,5 +1,5 @@
 class EntityObserver < ActiveRecord::Observer
-  observe :account, :contact, :lead, :opportunity
+  observe :account, :contact, :lead, :opportunity, :task
 
   def after_create(item)
     send_notification_to_assignee(item) if current_user != item.assignee
@@ -14,7 +14,8 @@ class EntityObserver < ActiveRecord::Observer
   private
 
   def send_notification_to_assignee(item)
-    UserMailer.assigned_entity_notification(item, current_user).deliver if item.assignee.present? && current_user.present?
+    #UserMailer.assigned_entity_notification(item, current_user).deliver if item.assignee.present? && current_user.present?
+    UserMailer.delay.assigned_entity_notification(item, (current_user.present? ? current_user : User.find(1)) ) if item.assignee.present?
   end
 
   def current_user

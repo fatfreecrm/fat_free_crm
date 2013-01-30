@@ -1,0 +1,16 @@
+- model_name = controller_name.singularize
+- model_klass = model_name.camelcase.constantize
+- current_sort_by = t("option_" + model_klass.sort_by_map.invert[@sort_by])
+
+.title_tools
+  #buttons
+    = view_buttons
+  -if model_name == "contact"
+    .create_asset
+      = link_to_inline(:active_folders, send("options_#{model_name}s_path"), :text => "Active Folders")
+  .create_asset
+    = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), :text => t("create_#{model_name}".to_sym))
+
+.title
+  %span{:id => "create_#{model_name}_title"} #{t controller_name.to_sym}
+  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")

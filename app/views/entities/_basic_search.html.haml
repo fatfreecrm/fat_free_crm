@@ -2,8 +2,11 @@
 - sort_by_menu_items = model.sort_by_fields.map { |field| options_menu_item(:sort_by, field) }
 - current_sort_by = t("option_" + model.sort_by_map.invert[@sort_by])
 
-%div{ :style => "margin: 0px 0px 6px 0px" }
-  = text_field_tag('query', @current_query, :size => 32, :placeholder => "Search #{controller_name}")
+
+%div.clearable-input{ :style => "margin: 4px 0px 4px 0px; display:inline-block;" }  
+  = text_field_tag('query', @current_query, :size => 32, :placeholder => "Search #{t(controller_name)}", :class => "clear-ui")
+  %span.ui-icon-delete
+%div{:style => "display:inline;padding-left:10px;"}
   %span.sorting_options
     -# sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name.
     = t(:sort_by, :models => t(:"#{controller_name}_small"), :field => link_to(current_sort_by, "#", :id => :sort_by)).html_safe

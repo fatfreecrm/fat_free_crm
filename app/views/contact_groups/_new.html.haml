@@ -1,0 +1,18 @@
+= simple_form_for(@contact_group, :html => one_submit_only(:contact_group), :remote => true) do |f|
+  = link_to_close new_contact_group_path
+  = f.hidden_field :user_id
+  = hidden_field_tag "related_contact[contact]", "#{@contact.id if @contact}"
+  
+  = f.error_messages :object_name => t('contact_group')
+
+  = render "contact_groups/top_section",  :f => f
+  = render "shared/add_comment", :f => f
+  -#= render "contact_groups/contact_info", :f => f
+  = render "fields/groups",  :f => f
+  = render "entities/permissions",  :f => f, :entity => @contact_group
+
+  .buttonbar
+    = f.submit t(:create_contact_group)
+    #{t :or}
+    = link_to_cancel new_contact_group_path
+

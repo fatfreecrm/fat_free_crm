@@ -1,7 +1,14 @@
+- assigned = User.find(@contact.assigned_to)
 .panel#summary
   %span{:style => "float:right"}= avatar_for(@contact, :size => "50x50")
   %h4= h(@contact.full_name)
   = account_with_title_and_department(@contact)
+  
+  %span{:style => "float:left; padding-right: 5px;"}= avatar_for(assigned, :size => "24x24")
+  %b Assigned to 
+  <br>
+  = assigned.full_name
+  <br><br>
 
   %div= render "shared/address_show", :asset => @contact, :type => 'business', :title => :address
 

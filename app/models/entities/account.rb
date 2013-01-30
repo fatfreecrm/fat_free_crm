@@ -98,12 +98,20 @@ class Account < ActiveRecord::Base
     location = self[:billing_address].strip.split("\n").last
     location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ").strip if location
   end
+  
+  def email_addresses
+    self.contacts.map(&:email).reject(&:blank?).join(", ") unless self.contacts.empty?
+  end
 
   # Attach given attachment to the account if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
     unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      self.send(attachment.class.name.tableize) << attachment
+      if attachment.class == Contact
+        attachment.account = self
+      else
+        self.send(attachment.class.name.tableize) << attachment
+      end
     end
   end
 

@@ -3,6 +3,9 @@
 
   %ul.tools
     = hook(:contact_tools_before, self, :contact => contact)
+    
+    - if !shown_on_landing_page?
+      %li= link_to_graduate(contact)
 
     - if can?(:update, contact)
       %li= link_to_edit(contact)
@@ -11,7 +14,7 @@
       %li= link_to_discard(contact)
 
     - if can?(:destroy, contact)
-      %li= link_to_delete(contact)
+      %li= link_to_confirm(contact)
 
   .indentslim
     = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
@@ -41,6 +44,14 @@
           == #{t :mobile_small}:
           %b= contact.mobile
           |
+        - if contact.has_subscription?
+          = image_tag "/assets/sub-ad.png", :size => "14x11" if contact.cf_weekly_emails.include? "Adelaide"
+          = image_tag "/assets/sub-cw.png", :size => "14x11" if contact.cf_weekly_emails.include? "City West"
+          = image_tag "/assets/sub-ce.png", :size => "14x11" if contact.cf_weekly_emails.include? "City East"
+          = image_tag "/assets/sub-tt.png", :size => "14x11" if contact.cf_supporter_emails.include? "TT Email"
+          = image_tag "/assets/sub-ttm.png", :size => "14x11" if contact.cf_supporter_emails.include? "TT Mail"
+          = image_tag "/assets/sub-pp.png", :size => "14x11" if contact.cf_supporter_emails.include? "Prayer Points"
+          |
       = t(:added_ago, time_ago_in_words(contact.created_at))
     - if contact.tag_list.present?
       %dt
@@ -55,3 +66,4 @@
         = render "entities/section_custom_fields", :entity => contact
         = render "comments/new", :commentable => contact
       = render :partial => "shared/timeline", :collection => (contact.comments + contact.emails).sort { |x, y| y.created_at <=> x.created_at }
+= draggable_element(dom_id(contact), :revert => true, :handle => "'gravatar'", :scroll => "window")

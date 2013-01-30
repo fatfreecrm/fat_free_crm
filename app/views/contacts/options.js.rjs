@@ -1,0 +1,10 @@
+page.call "crm.flick", :empty, :toggle
+#page.call "crm.hide_form", :active_folders
+page.call "crm.flip_form", :active_folders
+
+unless params[:cancel].true?
+  page[:active_folders].replace_html :partial => "sidebar_index"
+  page.call "crm.set_title", :active_folders, t(:active_folders_options)
+else
+  page.call "crm.set_title", :active_folders, t(:active_folders)
+end

@@ -1,0 +1,1 @@
+page.call "crm.copyToClipboard", @contact_groups.each.collect{|cg| cg.email_addresses}.join(", ") if @contact_groups.any?

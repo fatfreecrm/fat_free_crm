@@ -17,6 +17,10 @@
         %td
           .label #{t :phone}:
           = f.text_field :phone
+      %tr
+        %td
+          .label #{t :mobile}:
+          = f.text_field :mobile
 
     %table
       = fields_for(@account) do |a|

@@ -1,0 +1,17 @@
+id = called_from_landing_page? ? "edit_mandrill_email" : dom_id(@mandrill_email)
+
+if @mandrill_email.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_mandrill_email
+    page.call "crm.set_title", :edit_mandrill_email, @mandrill_email.name
+    page << refresh_sidebar(:show, :summary)
+  else
+    page[id].replace :partial => "mandrill_email", :collection => [ @mandrill_email ]
+    page[id].visual_effect :highlight, :duration => 1.0
+    page << refresh_sidebar(:index, :filters)
+  end
+else  
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:mandrill_email_name].focus
+end

@@ -1,0 +1,20 @@
+%li.highlight[attendance]
+  - item_type = attendance.event.category.present? ? attendance.event.category.humanize : "other"
+  .strip{:class => attendance.event.category} #{t(item_type)}
+  %tt
+    %small
+  %dt
+    -# If translation doesn't exist, just print event message
+    = link_to(attendance.event.name, attendance.event)
+    &ndash;
+    = link_to(attendance.event_instance.name, attendance.event_instance)
+    = " (#{attendance.event_instance.starts_at_date})".html_safe
+    -#%small= t('time_ago', time_ago_in_words(version.created_at))
+  -# %tt
+  -#   - if version.item_type == 'AccountContact'
+  -#     - label, first, second = parse_account_contact_version(version)
+  -#     = render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second}
+  -#   - else
+  -#     - version.changeset.each do |attr_name, change|
+  -#       - label, first, second = parse_version(attr_name, change)
+  -#       = render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second}

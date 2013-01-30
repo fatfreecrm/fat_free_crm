@@ -4,7 +4,7 @@
 
   -# default view
 
-  = styles_for :task, :opportunity
+  = styles_for :task, :opportunity, :contact_group, :attendance
   
   = render 'contacts/title_bar', :contact => @contact
 
@@ -15,8 +15,12 @@
 
     = render :partial => "tasks/tasks", :locals => {:object => @contact}
 
-    = render :partial => "opportunities/opportunities", :locals => {:object => @contact}
-    
+    -#= render :partial => "opportunities/opportunities", :locals => {:object => @contact}
+  
+    = render :partial => "contact_groups/contact_groups", :locals => {:object => @contact}
+  
+    = render :partial => "attendances/attendances", :locals => {:object => @contact, :bsg_attendances => @bsg_attendances, :tbt_attendances => @tbt_attendances, :other_attendances => @other_attendances}
+  
     = render :partial => "versions/versions", :locals => {:object => @contact}
-
-    = load_select_popups_for(@contact, :tasks, :opportunities)
+  
+    = load_select_popups_for(@contact, :tasks, :contact_groups)

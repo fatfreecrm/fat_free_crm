@@ -1,0 +1,31 @@
+- edit ||= false
+- collapsed = session[:contact_presence].nil? # && @contact.errors.empty?
+= subtitle :contact_presence, collapsed, t(:web_presence)
+.section.mobile
+  %small#contact_presence_intro{ hidden_if(!collapsed) }
+    = t(:intro, t(:web_presence_small)) unless edit
+  #contact_presence{ hidden_if(collapsed) }
+    %table
+      %tr
+        %td
+          .label.top #{t :blog}:
+          = f.text_field :blog
+      %tr
+        %td
+          .label.top #{t :twitter}:
+          = f.text_field :twitter
+      %tr
+        %td
+          .label #{t :linked_in}:
+          = f.text_field :linkedin
+      %tr
+        %td
+          .label #{t :facebook}:
+          = f.text_field :facebook
+      %tr
+        %td
+          .label #{t :skype}:
+          = f.text_field :skype
+        %td= spacer
+        %td= spacer
+
