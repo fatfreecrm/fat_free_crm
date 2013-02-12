@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.version = FatFreeCRM::VERSION::STRING
   gem.required_ruby_version = '>= 1.9'
 
-  gem.add_dependency 'rails',               '~> 3.2.11'
+  gem.add_dependency 'rails',               '~> 3.2.12'
   gem.add_dependency 'prototype-rails'
   gem.add_dependency 'jquery-rails',        '~> 2.1.4' # pegs us to jQuery 1.8
   gem.add_dependency 'select2-rails'
