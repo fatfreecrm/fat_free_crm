@@ -19,7 +19,9 @@
         = t(:task_due_later)
 
       - else
-        - if task.at_specific_time?
+        - if task.due_at.nil?
+          = t(:task_due_later)
+        - elsif task.at_specific_time?
           - if task.due_at < Time.now
             %span.warn
               = distance_of_time_in_words(task.due_at, Time.now)
