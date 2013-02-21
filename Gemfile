@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
