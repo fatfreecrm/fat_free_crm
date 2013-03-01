@@ -1,13 +1,14 @@
+
 = hook(:lead_top_section, self, :f => f) do
   .section
     %table
       %tr
         %td
-          .label.top.req #{t :first_name}:
+          .label.top{ :class => "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
           = f.text_field :first_name
         %td= spacer
         %td
-          .label.top{ :class => "#{Setting.require_last_names ? 'req' : ''}" } #{t :last_name}:
+          .label.top{ :class => "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
           = f.text_field :last_name
       %tr
         %td

@@ -169,11 +169,11 @@
 :task_calendar_with_time: true
 
 
-# Require last name on Leads and Contacts
+# Enable/disable first/last name validations on Leads and Contacts
 #------------------------------------------------------------------------------
-# If this validation is disabled, records will only require a first name.
 #
-:require_last_names: true
+:require_first_names: true
+:require_last_names:  true
 
 # Show comments on dashboard
 :comments_visible_on_dashboard: false
