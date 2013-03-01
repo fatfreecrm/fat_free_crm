@@ -22,12 +22,14 @@ matrix:
 
 bundler_args: --path=vendor/bundle --without heroku
 
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 before_script:
   - sh -c "cp config/database.$DB.yml config/database.yml"
   - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
   - sh -c "if [ \"$DB\" = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"
-  - "export DISPLAY=:99"
-  - "sh -e /etc/init.d/xvfb start"
 
 # Run specs
 script: "bundle exec rake"

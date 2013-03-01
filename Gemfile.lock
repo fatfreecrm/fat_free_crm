@@ -105,7 +105,7 @@ GEM
     ffaker (1.14.0)
     ffi (1.2.0)
     haml (3.1.7)
-    headless (0.2.2)
+    headless (1.0.1)
     highline (1.6.15)
     hike (1.2.1)
     htmlentities (4.3.1)

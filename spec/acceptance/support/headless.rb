@@ -8,8 +8,5 @@ if ENV['HEADLESS'] == 'true' or ENV["CI"] == "true"
   headless = Headless.new
   headless.start
   HEADLESS_DISPLAY = ":#{headless.display}"
-  at_exit do
-    headless.destroy
-  end
   puts "Running in Headless mode. Display #{HEADLESS_DISPLAY}"
 end
