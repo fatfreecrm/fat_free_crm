@@ -27,13 +27,14 @@ namespace :ffcrm do
         proceed = STDIN.gets.strip
         break unless proceed.blank?
       end
-      return unless proceed =~ /y(?:es)*/i # Don't continue unless user typed y(es)
+      
+      # Don't continue unless user typed y(es)
+      if proceed =~ /y(?:es)*/i
+        Rake::Task["db:migrate:reset"].invoke
+        Rake::Task["ffcrm:setup:admin"].invoke
+      end
     end
-    Rake::Task["db:migrate:reset"].invoke
-    # Migrating plugins is not part of Rails 3 yet, but it is coming. See
-    # https://rails.lighthouseapp.com/projects/8994/tickets/2058 for details.
-    Rake::Task["db:migrate:plugins"].invoke rescue nil
-    Rake::Task["ffcrm:setup:admin"].invoke
+    
   end
 
   namespace :setup do
