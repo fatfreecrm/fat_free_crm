@@ -15,16 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-ActionController::Renderers.add :csv do |obj, options|
-  filename = options[:filename] || 'data'
-  str = obj.respond_to?(:to_csv) ? obj.to_csv : obj.to_s
+ActionController::Renderers.add :csv do |objects, options|
+  filename = options[:filename] || controller_name || 'data'
+  str = FatFreeCRM::ExportCSV.from_array(objects)
   send_data str, :type => :csv,
     :disposition => "attachment; filename=#{filename}.csv"
-end
-
-ActionController::Renderers.add :xls do |obj, options|
-  filename = options[:filename] || 'data'
-  str = obj.respond_to?(:to_xls) ? obj.to_xls : obj.to_s
-  send_data str, :type => :xls,
-    :disposition => "attachment; filename=#{filename}.xls"
 end

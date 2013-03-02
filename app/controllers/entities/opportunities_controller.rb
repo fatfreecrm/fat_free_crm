@@ -27,6 +27,7 @@ class OpportunitiesController < EntitiesController
 
     respond_with @opportunities do |format|
       format.xls { render :layout => 'header' }
+      format.csv { render :csv => @opportunities }
     end
   end
 

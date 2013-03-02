@@ -25,6 +25,7 @@ class CampaignsController < EntitiesController
 
     respond_with @campaigns do |format|
       format.xls { render :layout => 'header' }
+      format.csv { render :csv => @campaigns }
     end
   end
 

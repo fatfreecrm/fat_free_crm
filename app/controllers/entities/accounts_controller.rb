@@ -25,6 +25,7 @@ class AccountsController < EntitiesController
 
     respond_with @accounts do |format|
       format.xls { render :layout => 'header' }
+      format.csv { render :csv => @accounts }
     end
   end
 

@@ -26,6 +26,7 @@ class LeadsController < EntitiesController
 
     respond_with @leads do |format|
        format.xls { render :layout => 'header' }
+       format.csv { render :csv => @leads }
     end
   end
 

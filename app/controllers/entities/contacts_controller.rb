@@ -25,6 +25,7 @@ class ContactsController < EntitiesController
 
     respond_with @contacts do |format|
       format.xls { render :layout => 'header' }
+      format.csv { render :csv => @contacts }
     end
   end
 
