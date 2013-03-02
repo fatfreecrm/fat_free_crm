@@ -187,12 +187,12 @@ class Contact < ActiveRecord::Base
     if account.errors.empty? && opportunity.errors.empty?
       # Note: contact.account = account doesn't seem to work here.
       contact.account_contact = AccountContact.new(:account => account, :contact => contact) unless account.id.blank?
-      contact.opportunities << opportunity unless opportunity.id.blank?
       if contact.access != "Lead" || model.nil?
         contact.save
       else
         contact.save_with_model_permissions(model)
       end
+      contact.opportunities << opportunity unless opportunity.id.blank? # must happen after contact is saved
     end
     contact
   end
