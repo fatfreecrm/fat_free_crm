@@ -19,13 +19,25 @@ crm.ensure_chosen_account = ->
     }
 
 (($j) ->
+  
+  # Prefer standard select2 dropdown for non-Ajaxy selectboxes
+  add_select2_boxes = ->
+    $j("select[name*='assigned_to'], select[name*='[country]'], .chzn-select" ).each ->
+      $j(this).select2()
 
-  # Initialize any chosen select lists after every Ajax response
+  # Apply pop up to merge links when document is loaded
+  $j(document).ready ->
+    add_select2_boxes()
+
+  # Apply pop up to merge links when jquery event (e.g. search) occurs
+  $j(document).ajaxComplete ->
+    add_select2_boxes()
+
+  # Apply pop up to merge links when protoype event (e.g. cancel edit) occurs
   Ajax.Responders.register({
     onComplete: ->
-      $j("select[name*='assigned_to'], select[name*='[country]'], .chzn-select").each ->
-        unless $j(this).hasClass('chzn-done')
-          new Chosen this, { allow_single_deselect: true }
+      add_select2_boxes()
+
   })
 
 ) (jQuery)
