@@ -4,6 +4,7 @@
 
     show_save_form: ->
       $(".save_list").show()
+      $('.save_list #list_name').focus()
 
     hide_save_form: ->
       $(".save_list").hide()
