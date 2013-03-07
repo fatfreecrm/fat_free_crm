@@ -18,7 +18,7 @@
 class DatetimePairInput < DatePairInput
 
   private
-  
+
   # Tell datepicker this is a datetime
   #------------------------------------------------------------------------------
   def input_html_classes
@@ -26,7 +26,7 @@ class DatetimePairInput < DatePairInput
     classes.delete('date')
     classes.push('datetime')
   end
-  
+
   # Return value recognised by datepicker and ensure timezone properly set by AR
   #------------------------------------------------------------------------------
   def value(field)

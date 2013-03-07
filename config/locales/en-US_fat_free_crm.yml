@@ -836,6 +836,9 @@ en-US:
     Create a new field group, or add fields to one of the groups below.<br />
     You can drag and drop fields to change their display order or move them between field groups.
 
+  admin_fields_info2: |
+    It is strongly recommended you restart your server after adding or removing any custom field.
+
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
   tags: Tags

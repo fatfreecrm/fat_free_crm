@@ -67,7 +67,7 @@ class Contact < ActiveRecord::Base
   serialize :subscribed_users, Set
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
-    
+
   scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }
   scope :assigned_to, lambda { |user| { :conditions => ["assigned_to = ?", user.id ] } }
 
@@ -87,7 +87,7 @@ class Contact < ActiveRecord::Base
 
     other = t[:email].matches("%#{query}%").or(t[:alt_email].matches("%#{query}%"))
     other = other.or(t[:phone].matches("%#{query}%")).or(t[:mobile].matches("%#{query}%"))
-    
+
     where( name_query.nil? ? other : name_query.or(other) )
   }
 
@@ -96,7 +96,7 @@ class Contact < ActiveRecord::Base
   uses_comment_extensions
   acts_as_taggable_on :tags
   has_paper_trail :ignore => [ :subscribed_users ]
-  
+
   has_fields
   exportable
   sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
@@ -169,9 +169,9 @@ class Contact < ActiveRecord::Base
     %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
       attributes[name] = model.send(name.intern)
     end
-    
+
     contact = Contact.new(attributes)
-    
+
     # Set custom fields.
     if model.class.respond_to?(:fields)
       model.class.fields.each do |field|
@@ -180,7 +180,7 @@ class Contact < ActiveRecord::Base
         end
       end
     end
-    
+
     contact.business_address = Address.new(:street1 => model.business_address.street1, :street2 => model.business_address.street2, :city => model.business_address.city, :state => model.business_address.state, :zipcode => model.business_address.zipcode, :country => model.business_address.country, :full_address => model.business_address.full_address, :address_type => "Business") unless model.business_address.nil?
 
     # Save the contact only if the account and the opportunity have no errors.
@@ -203,7 +203,7 @@ class Contact < ActiveRecord::Base
   def users_for_shared_access
     errors.add(:access, :share_contact) if self[:access] == "Shared" && !self.permissions.any?
   end
-  
+
   # Handles the saving of related accounts
   #----------------------------------------------------------------------------
   def save_account(params)

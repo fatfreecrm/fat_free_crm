@@ -24,7 +24,7 @@ class DatePairInput < SimpleForm::Inputs::Base
     out = "<br />".html_safe
 
     field1, field2 = get_fields
-    
+
     [field1, field2].compact.each do |field|
       out << '<div>'.html_safe
       label = field==field1 ? I18n.t('pair.start') : I18n.t('pair.end')
@@ -52,21 +52,21 @@ class DatePairInput < SimpleForm::Inputs::Base
   def add_autocomplete!
     input_html_options[:autocomplete] ||= 'off'
   end
-  
+
   # Datepicker latches onto the 'date' class.
   #------------------------------------------------------------------------------
   def input_html_classes
     super.push('date')
   end
-  
+
   # Returns the pair as [field1, field2]
   #------------------------------------------------------------------------------
   def get_fields
-    @field1 ||= CustomField.where(:name => attribute_name).first
+    @field1 ||= Field.where(:name => attribute_name).first
     @field2 ||= @field1.try(:paired_with)
     [@field1, @field2]
   end
-  
+
   # Serialize into a value recognised by datepicker
   #------------------------------------------------------------------------------
   def value(field)

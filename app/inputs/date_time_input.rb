@@ -20,6 +20,7 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
   def input
     add_autocomplete!
     input_html_options.merge(input_options)
+    input_html_options.merge!(:value => value)
     @builder.text_field(attribute_name, input_html_options)
   end
 
@@ -36,4 +37,12 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
   def add_autocomplete!
     input_html_options[:autocomplete] ||= 'off'
   end
+
+  # Serialize into a value recognised by datepicker, also sorts out timezone conversion
+  #------------------------------------------------------------------------------
+  def value
+    val = object.send(attribute_name)
+    val.present? ? val.strftime('%Y-%m-%d %H:%M') : nil
+  end
+
 end

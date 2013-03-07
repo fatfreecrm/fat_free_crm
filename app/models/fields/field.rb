@@ -44,7 +44,7 @@ class Field < ActiveRecord::Base
   serialize :settings, HashWithIndifferentAccess
 
   belongs_to :field_group
-  
+
   scope :core_fields, where(:type => 'CoreField')
   scope :custom_fields, where("type != 'CoreField'")
   scope :without_pairs, where(:pair_id => nil)
@@ -103,7 +103,7 @@ class Field < ActiveRecord::Base
     when 'date'
       value && value.strftime(I18n.t("date.formats.mmddyy"))
     when 'datetime'
-      value && value.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
+      value && value.in_time_zone.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
     when 'check_boxes'
       value.select(&:present?).in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value
     else
