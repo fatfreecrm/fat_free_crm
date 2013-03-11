@@ -40,6 +40,9 @@ if defined?(FatFreeCRM::Application)
 
     # Set default host for mailer specs
     config.action_mailer.default_url_options = { :host => "www.example.com" }
+
+    # Speed up Devise tests
+    config.stretches = 1
   end
 
   # Optionally load 'awesome_print' for debugging in development mode.

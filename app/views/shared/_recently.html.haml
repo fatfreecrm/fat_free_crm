@@ -1,4 +1,4 @@
-- @versions = Version.recent_for_user(current_user)
+- @versions = Version.recent_for_user(current_user) unless current_user.nil?
 .panel#recently
   .caption #{t :recent_items}
   - if @versions.present?

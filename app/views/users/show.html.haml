@@ -2,8 +2,9 @@
   - if @user == current_user || current_user.admin?
     = link_to_inline(:edit_profile, edit_user_path(@user), :text => t(:edit_profile)) + " | "
     = link_to_inline(:upload_avatar, avatar_user_path(@user), :text => t(:upload_picture)) + " | "
-    = link_to_inline(:change_password, password_user_path(@user), :text => t(:change_password))
-.title#title= (@user == current_user ? t(:my_profile) : t(:profile))
+    = link_to_inline(:change_password, new_user_password_path(@user), :text => t(:change_password))
+.title#title= (@user == @current_user ? t(:my_profile) : t(:profile))
+
 %div#edit_profile{ hidden }
 %div#upload_avatar{ hidden }
 %div#change_password{ hidden }

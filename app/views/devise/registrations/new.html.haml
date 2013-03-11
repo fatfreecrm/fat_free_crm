@@ -1,6 +1,6 @@
 .standalone
-  = form_for(@user, :html => one_submit_only(:user)) do |f|
-    .title_tools #{t :already_signed_up} #{link_to t(:login_now_link), login_path}
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+    .title_tools #{t :already_signed_up} #{link_to t(:login_now_link), new_user_session_path}
     .title #{t :sign_up}
 
     = f.error_messages :object_name => t('user')

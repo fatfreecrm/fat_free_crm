@@ -29,7 +29,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def tabless_layout?
-    %w(authentications passwords).include?(controller.controller_name) ||
+    %w(sessions passwords registrations).include?(controller.controller_name) ||
     ((controller.controller_name == "users") && (%w(create new).include?(controller.action_name)))
   end
 
@@ -360,7 +360,7 @@ module ApplicationHelper
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
   def links_to_export(action=:index)
-    token = current_user.single_access_token
+    token = @current_user.authentication_token
     url_params = {:action => action}
     url_params.merge!(:id => params[:id]) unless params[:id].blank?
     url_params.merge!(:query => params[:query]) unless params[:query].blank?

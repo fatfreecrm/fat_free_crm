@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 class EntitiesController < ApplicationController
-  before_filter :require_user
+  before_filter :authenticate_user!
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :set_view, :only => [ :index, :show, :redraw ]
   

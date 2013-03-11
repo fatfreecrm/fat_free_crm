@@ -1,0 +1,22 @@
+= content_for(:javascript_epilogue) do
+  :plain
+    document.observe("dom:loaded", function() {
+      new Effect.Move("standalone", { x:0, y:-16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+        new Effect.Move("standalone", { x:0, y:16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+          new Effect.Move("standalone", { x:0, y:-8, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+            new Effect.Move("standalone", { x:0, y:8, mode:"relative", fps:100, duration:0.15 });
+          }});
+        }});
+      }});
+    });
+
+.standalone
+  = form_for(resource, :as => resource_name, :url => user_password_path, :html => { :method => :post }) do |f|
+    .title #{t :forgot_password}
+    .intro #{t :password_intro}
+    .section
+      .label #{t :email}:
+      = f.email_field :email
+    %br
+    .buttonbar
+      = submit_tag t(:reset_password), :id => "passwords_submit"

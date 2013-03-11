@@ -8,7 +8,7 @@ describe UsersController do
     end
 
     it "recognizes and generates #new as /signup" do
-      { :get => "/signup" }.should route_to(:controller => "users", :action => "new")
+      { :get => "/signup" }.should route_to(:controller => "registrations", :action => "new")
     end
 
     it "recognizes and generates #show as /profile" do
