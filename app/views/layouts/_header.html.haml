@@ -10,11 +10,11 @@
       = link_to(t(:profile), profile_path) << " |"
       - if current_user.admin?
         = link_to(t(:admin), admin_path) << " |"
-      = link_to(t(:logout), logout_path, :method => :delete)
+      = link_to(t(:logout), logout_path)
       = render "/layouts/jumpbox"
     - else
-      = link_to(t(:login), login_path) << " |"
-      = link_to(t(:sign_up), signup_path) << " |" if can_signup?
+      = link_to(t(:login), new_user_session_path) << " |"
+      = link_to(t(:sign_up), new_user_registration_path) << " |"
       = link_to(t(:about), "#", :title => t(:about_ffc), :onclick => "Modalbox.show($('about'), { title: this.title }); return false;")
   %h3
     = link_to("Fat Free CRM", root_path)

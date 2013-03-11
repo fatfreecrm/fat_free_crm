@@ -25,7 +25,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Task do
 
-  before { login }
+  let(:current_user) { FactoryGirl.create(:user) }
 
   describe "Task/Create" do
     it "should create a new task instance given valid attributes" do

@@ -68,6 +68,22 @@ module TasksHelper
     onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "'bucket=#{bucket}'")
   end
 
+  # Helper to display XLS, CSV, RSS, and ATOM links for tasks.
+  #----------------------------------------------------------------------------
+  def links_to_task_export(view)
+    @current_user.ensure_authentication_token!
+    token = @current_user.authentication_token
+
+    exports = %w(xls csv).map do |format|
+      link_to(format.upcase, "#{tasks_path}.#{format}?view=#{view}", :title => I18n.t(:"to_#{format}"))
+    end
+    feeds = %w(rss atom).map do |format|
+      link_to(format.upcase, "#{tasks_path}.#{format}?view=#{view}&authentication_token=#{token}", :title => I18n.t(:"to_#{format}"))
+    end
+
+    (exports + feeds).join(' | ')
+  end
+
   # Task summary for RSS/ATOM feed.
   #----------------------------------------------------------------------------
   def task_summary(task)

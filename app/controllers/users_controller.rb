@@ -18,7 +18,7 @@
 class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [ :new, :create ]
-  before_filter :require_user, :only => [ :show, :redraw ]
+  before_filter :authenticate_user!, :only => [ :show, :redraw ]
   before_filter :set_current_tab, :only => [ :show, :opportunities_overview ] # Don't hightlight any tabs.
   before_filter :require_and_assign_user, :except => [ :new, :create, :show, :avatar, :upload_avatar ]
   before_filter :assign_given_or_current_user, :only => [ :show, :avatar, :upload_avatar, :edit, :update ]
@@ -35,18 +35,6 @@ class UsersController < ApplicationController
     respond_with(@user)
   end
 
-  # GET /users/new
-  # GET /users/new.json
-  # GET /users/new.xml                                                     HTML
-  #----------------------------------------------------------------------------
-  def new
-    if can_signup?
-      respond_with(@user)
-    else
-      redirect_to login_path
-    end
-  end
-
   # GET /users/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
@@ -56,17 +44,18 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml                                                        HTML
   #----------------------------------------------------------------------------
+  # TODO: move into devise/registrations
   def create
     if @user.save
       if Setting.user_signup == :needs_approval
         flash[:notice] = t(:msg_account_created)
-        redirect_to login_url
+        redirect_to new_user_session_url
       else
         flash[:notice] = t(:msg_successful_signup)
         redirect_back_or_default profile_url
       end
     else
-      render :new
+      render "devise/registrations/new"
     end
   end
 
@@ -158,7 +147,7 @@ class UsersController < ApplicationController
 
   #----------------------------------------------------------------------------
   def require_and_assign_user
-    require_user
+    authenticate_user!
     @user = current_user
   end
 

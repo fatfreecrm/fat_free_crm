@@ -4,8 +4,13 @@ describe CommentsController do
 
   COMMENTABLE = [ :account, :campaign, :contact, :lead, :opportunity ].freeze
 
+  let(:user) do
+    FactoryGirl.create(:user)
+  end
+
   before(:each) do
-    require_user
+    @current_user = user
+    sign_in(:user, @current_user)
   end
 
   # GET /comments
@@ -16,6 +21,8 @@ describe CommentsController do
       describe "(HTML)" do
         before(:each) do
           @asset = FactoryGirl.create(asset)
+    @current_user = user
+    sign_in(:user, @current_user)
         end
 
         it "should redirect to the asset landing page if the asset is found" do

@@ -2,23 +2,27 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersController do
 
+  let(:user) do
+    FactoryGirl.create(:user)
+  end
+
   # GET /users/1
   # GET /users/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
     before(:each) do
-      require_user
+      @user = user
+      sign_in(:user, @user)
     end
 
     it "should expose the requested user as @user and render [show] template" do
-      @user = FactoryGirl.create(:user)
-
       get :show, :id => @user.id
       assigns[:user].should == @user
       response.should render_template("users/show")
     end
 
     it "should expose current user as @user if no specific user was requested" do
+      puts @current_user
       get :show
       assigns[:user].should == current_user
       response.should render_template("users/show")
@@ -40,6 +44,10 @@ describe UsersController do
       it "should render current user as JSON if no specific user was requested" do
         current_user.should_receive(:to_json).and_return("generated JSON")
 
+        user = FactoryGirl.create(:user)
+        user.should_receive(:to_json).and_return("generated JSON")
+        @controller.stub!(:current_user).and_return(user)
+
         get :show
         response.body.should == "generated JSON"
       end
@@ -60,36 +68,12 @@ describe UsersController do
 
       it "should render current user as XML if no specific user was requested" do
         current_user.should_receive(:to_xml).and_return("generated XML")
+        user = FactoryGirl.create(:user)
+        user.should_receive(:to_xml).and_return("generated XML")
+        @controller.stub!(:current_user).and_return(user)
 
         get :show
         response.body.should == "generated XML"
-      end
-    end
-  end
-
-  # GET /users/new
-  # GET /users/new.xml                                                     HTML
-  #----------------------------------------------------------------------------
-  describe "responding to GET new" do
-
-    describe "if user is allowed to sign up" do
-      it "should expose a new user as @user and render [new] template" do
-        @controller.should_receive(:can_signup?).and_return(true)
-        @user = FactoryGirl.build(:user)
-        User.stub!(:new).and_return(@user)
-
-        get :new
-        assigns[:user].should == @user
-        response.should render_template("users/new")
-      end
-    end
-
-    describe "if user is not allowed to sign up" do
-      it "should redirect to login_path" do
-        @controller.should_receive(:can_signup?).and_return(false)
-
-        get :new
-        response.should redirect_to(login_path)
       end
     end
   end
@@ -98,13 +82,13 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
     before(:each) do
-      require_user
-      @user = current_user
+      @user = user
+      sign_in(:user, @user)
     end
 
     it "should expose current user as @user and render [edit] template" do
       xhr :get, :edit, :id => @user.id
-      assigns[:user].should == current_user
+      assigns[:user].should == @user
       response.should render_template("users/edit")
     end
 
@@ -137,7 +121,7 @@ describe UsersController do
         post :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
         assigns[:user].should == @user
         flash[:notice].should =~ /approval/
-        response.should redirect_to(login_path)
+        response.should redirect_to(new_user_session_path)
       end
     end
 
@@ -148,7 +132,7 @@ describe UsersController do
 
         post :create, :user => {}
         assigns[:user].should == @user
-        response.should render_template("users/new")
+        response.should render_template("devise/registrations/new")
       end
     end
   end
@@ -158,8 +142,8 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
     before(:each) do
-      require_user
-      @user = current_user
+      @user = user
+      sign_in(:user, @user)
     end
 
     describe "with valid params" do
@@ -178,7 +162,7 @@ describe UsersController do
 
       it "should not update the user information and redraw [update] template" do
         xhr :put, :update, :id => @user.id, :user => { :first_name => nil }
-        @user.reload.first_name.should == current_user.first_name
+        @user.reload.first_name.should == @controller.current_user.first_name
         assigns[:user].should == @user
         response.should render_template("users/update")
       end
@@ -190,7 +174,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before(:each) do
-      require_user
+      sign_in(:user, user)
     end
 
     it "should destroy the requested user" do
@@ -206,13 +190,13 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET avatar" do
     before(:each) do
-      require_user
-      @user = current_user
+      @user = user
+      sign_in(:user, @user)
     end
 
     it "should expose current user as @user and render [avatar] template" do
       xhr :get, :avatar, :id => @user.id
-      assigns[:user].should == current_user
+      assigns[:user].should == @controller.current_user
       response.should render_template("users/avatar")
     end
   end
@@ -222,8 +206,8 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to PUT update_avatar" do
     before(:each) do
-      require_user
-      @user = current_user
+      @user = user
+      sign_in(:user, @user)
     end
 
     it "should delete avatar if user chooses to use Gravatar" do
@@ -270,13 +254,13 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET avatar" do
     before(:each) do
-      require_user
-      @user = current_user
+      @user = user
+      sign_in(:user, @user)
     end
 
     it "should expose current user as @user and render [pssword] template" do
       xhr :get, :password, :id => @user.id
-      assigns[:user].should == current_user
+      assigns[:user].should == @controller.current_user
       response.should render_template("users/password")
     end
   end
@@ -286,18 +270,19 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to PUT change_password" do
     before(:each) do
-      require_user
-      @current_user_session.stub!(:unauthorized_record=).and_return(current_user)
-      @current_user_session.stub!(:save).and_return(current_user)
-      @user = current_user
+      sign_in(:user, user)
+      @controller.current_user.stub!(:unauthorized_record=).and_return(@controller.current_user)
+      @controller.current_user.stub!(:save).and_return(@controller.current_user)
+      @user = @controller.current_user
       @new_password = "secret?!"
     end
 
+    # TODO: Password change is taken care of by Devise
     it "should set new user password" do
       xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => @new_password }
-      assigns[:user].should == current_user
-      current_user.password.should == @new_password
-      current_user.errors.should be_empty
+      assigns[:user].should == @controller.current_user
+      @controller.current_user.password.should == @new_password
+      @controller.current_user.errors.should be_empty
       flash[:notice].should_not == nil
       response.should render_template("users/change_password")
     end
@@ -305,32 +290,32 @@ describe UsersController do
     it "should allow to change password if current password is blank" do
       @user.password_hash = nil
       xhr :put, :change_password, :id => @user.id, :current_password => "", :user => { :password => @new_password, :password_confirmation => @new_password }
-      current_user.password.should == @new_password
-      current_user.errors.should be_empty
+      @controller.current_user.password.should == @new_password
+      @controller.current_user.errors.should be_empty
       flash[:notice].should_not == nil
       response.should render_template("users/change_password")
     end
 
     it "should not change user password if password field is blank" do
       xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => "", :password_confirmation => "" }
-      assigns[:user].should == current_user
-      current_user.password.should == @user.password # password stays the same
-      current_user.errors.should be_empty # no errors
+      assigns[:user].should == @controller.current_user
+      @controller.current_user.password.should == @user.password # password stays the same
+      @controller.current_user.errors.should be_empty # no errors
       flash[:notice].should_not == nil
       response.should render_template("users/change_password")
     end
 
     it "should require valid current password" do
       xhr :put, :change_password, :id => @user.id, :current_password => "what?!", :user => { :password => @new_password, :password_confirmation => @new_password }
-      current_user.password.should == @user.password # password stays the same
-      current_user.should have(1).error # .error_on(:current_password)
+      @controller.current_user.password.should == @user.password # password stays the same
+      @controller.current_user.should have(1).error # .error_on(:current_password)
       response.should render_template("users/change_password")
     end
 
     it "should require new password and password confirmation to match" do
       xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => "none" }
-      current_user.password.should == @user.password # password stays the same
-      current_user.should have(1).error # .error_on(:current_password)
+      @controller.current_user.password.should == @user.password # password stays the same
+      @controller.current_user.should have(1).error # .error_on(:current_password)
       response.should render_template("users/change_password")
     end
 

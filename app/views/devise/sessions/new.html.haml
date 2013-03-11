@@ -11,15 +11,12 @@
     });
 
 .standalone#standalone
-  -# The following form gets submitted to #create when @authentication is nil,
-  -# or to #update when @authentication is not nil (ex. suspended).
-  = form_for @authentication, :url => authentication_path, :html => one_submit_only(:authentication) do |f|
-    - if can_signup?
-      .title_tools #{t :no_account} #{link_to t(:sign_up_now), signup_path}
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    .title_tools #{t :no_account} #{link_to t(:sign_up_now), new_user_registration_path}
     .title= t(:login)
     .section
-      .label= t(:username) + ':'
-      = f.text_field :username
+      .label= t(:login) + ':'
+      = f.text_field :login
       .label= t(:password) + ':'
       = f.password_field :password
 
@@ -28,4 +25,4 @@
     .buttonbar
       = f.submit t(:login)
       #{t :or}
-      = link_to t(:forgot_password) << '?', new_password_path
+      = link_to t(:forgot_password) << '?', new_user_password_path

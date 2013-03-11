@@ -28,7 +28,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Campaign do
 
-  before { login }
+  let(:current_user) { FactoryGirl.create(:user) }
 
   it "should create a new instance given valid attributes" do
     Campaign.create!(:name => "Campaign", :user => FactoryGirl.create(:user))

@@ -15,28 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class Admin::ApplicationController < ApplicationController
-  before_filter :require_admin_user
 
-  layout "admin/application"
-  helper "admin/field_groups"
+class SessionsController < Devise::SessionsController
 
-  # Autocomplete handler for all admin controllers.
-  #----------------------------------------------------------------------------
-  def auto_complete
-    @query = params[:auto_complete_query]
-    @auto_complete = klass.text_search(@query).limit(10)
-    render :partial => 'auto_complete'
-  end
+  respond_to :html
+  append_view_path 'app/views/devise'
 
-private
 
-  #----------------------------------------------------------------------------
-  def require_admin_user
-    authenticate_user!
-    if @current_user && !@current_user.admin?
-      flash[:notice] = t(:msg_require_admin)
-      redirect_to root_path
-    end
-  end
 end

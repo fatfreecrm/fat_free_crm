@@ -24,8 +24,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Account do
 
-  before { login }
-
   it "should create a new instance given valid attributes" do
     Account.create!(:name => "Test Account", :user => FactoryGirl.create(:user))
   end

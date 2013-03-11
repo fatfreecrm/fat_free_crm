@@ -18,7 +18,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Version do
 
   before do
-    login
+    # login
     PaperTrail.whodunnit = current_user.id.to_s
   end
 
