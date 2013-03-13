@@ -78,7 +78,7 @@ module ApplicationHelper
       raw "document.observe('dom:loaded', function() { #{js} });"
     end
   end
-  
+
   def generate_js_for_popups(related, *assets)
     assets.map do |asset|
       render(:partial => "shared/select_popup", :locals => { :related => related, :popup => asset })
@@ -172,14 +172,20 @@ module ApplicationHelper
 
   # Bcc: to dropbox address if the dropbox has been set up.
   #----------------------------------------------------------------------------
-  def link_to_email(email, length = nil)
+  def link_to_email(email, length = nil, &block)
     name = (length ? truncate(email, :length => length) : email)
     if Setting.email_dropbox && Setting.email_dropbox[:address].present?
       mailto = "#{email}?bcc=#{Setting.email_dropbox[:address]}"
     else
       mailto = email
     end
-    link_to(h(name), "mailto:#{mailto}", :title => email)
+    if block_given?
+      link_to("mailto:#{mailto}", :title => email) do
+        yield
+      end
+    else
+      link_to(h(name), "mailto:#{mailto}", :title => email)
+    end
   end
 
   #----------------------------------------------------------------------------
