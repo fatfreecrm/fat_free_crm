@@ -36,6 +36,7 @@ end
 
 # Remove premailer auto-require
 gem 'premailer', :require => false
+gem 'css_parser', '1.2.6' # needs to be pegged as newest version has a bug
 
 # Remove fat_free_crm dependency, to stop it from being auto-required too early.
 remove 'fat_free_crm'
