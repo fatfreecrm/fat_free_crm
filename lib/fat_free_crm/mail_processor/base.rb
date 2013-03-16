@@ -195,18 +195,32 @@ module FatFreeCRM
           email.parts.map {|p| p.multipart? ? p.parts : p}.flatten
         else
           [email]
+          charset = email.charset
         end
 
         if text_part = parts.detect {|p| p.content_type.include?('text/plain')}
           text_body = text_part.body.to_s
-
+          charset = text_part.charset if email.multipart?
         else
           html_part = parts.detect {|p| p.content_type.include?('text/html')} || email
           text_body = Premailer.new(html_part.body.to_s, :with_html_string => true).to_plain_text
+          charset = html_part.charset if email.multipart?
         end
 
-        # Standardize newline
-        text_body.strip.gsub "\r\n", "\n"
+        # Convert to UTF8 and standardize newline
+        clean_invalid_utf8_bytes(text_body.strip.gsub("\r\n", "\n"), charset)
+      end
+
+      # Forces the encoding of the given string to UTF8 and replaces invalid characters. This is
+      # necessary as emails sometimes have invalid characters like MS "Smart Quotes."
+      def clean_invalid_utf8_bytes(text, src_encoding)
+        text.encode(
+          'UTF-8',
+          src_encoding,
+          invalid: :replace,
+          undef: :replace,
+          replace: ''
+        )
       end
 
     end
