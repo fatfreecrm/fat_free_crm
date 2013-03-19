@@ -125,6 +125,17 @@ class Setting < ActiveRecord::Base
   end
 end
 
+#
+# TODO: code smell - refactor loading of settings
+# The following code should be in a lazy load hook or Settings class initializer
+#
+
+#
+# We have fat_free_crm/syck_yaml which loads very early on in the bootstrap process
+# However, something else (possibly bundler) is reverting back to Psych later on so
+# we need to set it again here to ensure the files are read in the correct manner.
+#
+YAML::ENGINE.yamler = 'syck'
 
 # Load default settings, then override with custom settings, if present.
 setting_files = [FatFreeCRM.root.join("config", "settings.default.yml")]

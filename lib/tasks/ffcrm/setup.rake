@@ -19,22 +19,24 @@ namespace :ffcrm do
 
   desc "Prepare the database"
   task :setup => :environment do
-    if ENV["PROCEED"] != 'true' and ActiveRecord::Migrator.current_version > 0
-      puts "\nYour database is about to be reset, so if you choose to proceed all the existing data will be lost.\n\n"
+    if ENV["PROCEED"] != 'true'
+      puts "\nYour database [#{ActiveRecord::Base.connection.current_database}] is about to be reset. If you choose to proceed all the existing data will be lost.\n\n"
       proceed = false
       loop do
         print "Continue [yes/no]: "
         proceed = STDIN.gets.strip
         break unless proceed.blank?
       end
-      
+
       # Don't continue unless user typed y(es)
       if proceed =~ /y(?:es)*/i
         Rake::Task["db:migrate:reset"].invoke
         Rake::Task["ffcrm:setup:admin"].invoke
+      else
+        puts "Aborted setup."
       end
     end
-    
+
   end
 
   namespace :setup do
@@ -90,5 +92,5 @@ namespace :ffcrm do
       puts "Admin user has been created."
     end
   end
-  
+
 end
