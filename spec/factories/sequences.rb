@@ -23,4 +23,5 @@ FactoryGirl.define do
   sequence :date do |n|
     Date.today - n.days
   end
+
 end

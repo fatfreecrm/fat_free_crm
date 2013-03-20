@@ -1,4 +1,13 @@
 FactoryGirl.define do
+
+  sequence :opportunity_status do |s|
+    %w(prospecting analysis presentation proposal negotiation final_review won lost).sample
+  end
+
+  sequence :opportunity_open_status do |s|
+    %w(prospecting analysis presentation proposal negotiation final_review).sample
+  end
+
   factory :opportunity do
     user
     campaign
@@ -7,7 +16,7 @@ FactoryGirl.define do
     name                { Faker::Lorem.sentence[0,64] }
     access              "Public"
     source              { %w(campaign cold_call conference online referral self web word_of_mouth other).sample }
-    stage               { OPPORTUNITY_STATUSES.sample }
+    stage               { FactoryGirl.generate(:opportunity_status) }
     probability         { rand(50) }
     amount              { rand(1000) }
     discount            { rand(100) }
@@ -19,10 +28,7 @@ FactoryGirl.define do
   end
 
   factory :opportunity_in_pipeline, :parent => :opportunity do
-    stage { OPPORTUNITY_STATUSES.sample }
+    stage               { FactoryGirl.generate(:opportunity_open_status) }
   end
 
-  factory :open_opportunity, :parent => :opportunity do
-    stage { OPPORTUNITY_STATUSES.sample }
-  end
 end

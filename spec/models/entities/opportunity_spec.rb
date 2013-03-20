@@ -27,20 +27,19 @@ describe Opportunity do
   before { login }
 
   it "should create a new instance given valid attributes" do
-    @account = FactoryGirl.create(:account)
-    Opportunity.create!(:name => "Opportunity", :account => @account, :stage => OPPORTUNITY_STATUSES.first)
+    Opportunity.create!(:name => "Opportunity", :stage => 'analysis')
   end
 
   it "should be possible to create opportunity with the same name" do
     first  = FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user)
     lambda { FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
   end
-  
+
   it "have a default stage" do
     Setting.should_receive(:[]).with(:opportunity_default_stage).and_return('default')
     Opportunity.default_stage.should eql('default')
   end
-  
+
   it "have a fallback default stage" do
     Opportunity.default_stage.should eql('prospecting')
   end
