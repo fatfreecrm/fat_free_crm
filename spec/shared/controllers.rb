@@ -1,6 +1,6 @@
 module SharedControllerSpecs
 
-  shared_examples_for "auto complete" do
+  shared_examples "auto complete" do
     before(:each) do
       @query = "Hello"
     end
@@ -27,7 +27,7 @@ module SharedControllerSpecs
     end
   end
 
-  shared_examples_for "attach" do
+  shared_examples "attach" do
     it "should attach existing asset to the parent asset of different type" do
       xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
       @model.send(@attachment.class.name.tableize).should include(@attachment)
@@ -70,7 +70,7 @@ module SharedControllerSpecs
     end
   end
 
-  shared_examples_for "discard" do
+  shared_examples "discard" do
     it "should discard the attachment without deleting it" do
       xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
       assigns[:attachment].should == @attachment.reload                     # The attachment should still exist.

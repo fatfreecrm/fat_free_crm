@@ -19,7 +19,7 @@ class TasksController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :update_sidebar, :only => :index
-  
+
   # GET /tasks
   #----------------------------------------------------------------------------
   def index
@@ -29,6 +29,7 @@ class TasksController < ApplicationController
     respond_with @tasks do |format|
       format.xls { render :layout => 'header' }
       format.csv { render :csv => @tasks.map(&:second).flatten }
+      format.xml { render :xml => @tasks, :except => [:subscribed_users] }
     end
   end
 

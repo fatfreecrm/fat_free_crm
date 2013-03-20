@@ -3,7 +3,6 @@ require 'rubygems'
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 
 require 'acts_as_fu'
 require 'factory_girl'
@@ -11,10 +10,10 @@ require 'ffaker'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each{ |f| require File.expand_path(f) }
+Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
 
 # Load shared behavior modules to be included by Runner config.
-Dir[File.dirname(__FILE__) + "/shared/*.rb"].each{ |f| require File.expand_path(f) }
+Dir["./spec/shared/**/*.rb"].sort.each {|f| require f}
 
 TASK_STATUSES = %w(pending assigned completed).freeze
 
@@ -36,8 +35,6 @@ RSpec.configure do |config|
 
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
-  config.include(SharedControllerSpecs, :type => :controller)
-  config.include(SharedModelSpecs,      :type => :model)
 
   config.before(:each) do
     PaperTrail.enabled = false
@@ -83,7 +80,7 @@ end
 
 ActionView::TestCase::TestController.class_eval do
   def controller_name
-    request.path_parameters["controller"].split('/').last
+    HashWithIndifferentAccess.new(request.path_parameters)["controller"].split('/').last
   end
 end
 

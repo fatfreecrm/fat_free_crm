@@ -49,7 +49,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.9.0'
+  gem 'rspec-rails'
   gem 'headless'
   unless ENV["CI"]
     gem 'ruby-debug', :platform => :mri_18

@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/campaigns/_edit" do
   include CampaignsHelper
@@ -11,11 +11,12 @@ describe "/campaigns/_edit" do
 
   it "should render [edit campaign] form" do
     render
+
     view.should render_template(:partial => "campaigns/_top_section")
     view.should render_template(:partial => "campaigns/_objectives")
     view.should render_template(:partial => "_permissions")
 
-    rendered.should have_tag("form[class=edit_campaign]") do
+    view.should have_tag("form[class=edit_campaign]") do
       with_tag "input[type=hidden][id=campaign_user_id][value=#{@campaign.user_id}]"
     end
   end

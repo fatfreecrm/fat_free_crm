@@ -86,11 +86,13 @@ module AccountsHelper
         content_tag :div, h(contact.title)
       elsif contact.account
         content_tag :div, account_with_url_for(contact)
+      else
+        ""
       end
     text << t(:department_small, h(contact.department)) unless contact.department.blank?
     text
   end
-  
+
   # "title, department at Account name" used in index_brief and index_long
   # - a helper so it is easy to override in plugins that allow for several accounts
   #----------------------------------------------------------------------------
@@ -115,5 +117,5 @@ module AccountsHelper
         end
     text.html_safe
   end
-  
+
 end
