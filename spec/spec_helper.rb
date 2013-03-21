@@ -32,8 +32,6 @@ RSpec.configure do |config|
   config.include RSpec::Rails::Matchers
 
   config.before(:each) do
-    PaperTrail.enabled = false
-
     # Overwrite locale settings within "config/settings.yml" if necessary.
     # In order to ensure that test still pass if "Setting.locale" is not set to "en-US".
     I18n.locale = 'en-US'
@@ -60,6 +58,20 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     example.run
     DatabaseCleaner.clean
+  end
+
+  # PaperTrail slows down tests so only turned on when needed.
+  PaperTrail.enabled = false
+  config.around :each, :versioning => true do |example|
+    was_enabled = PaperTrail.enabled?
+    PaperTrail.enabled = true
+    PaperTrail.controller_info = {}
+    PaperTrail.whodunnit = nil
+    begin
+      example.run
+    ensure
+      PaperTrail.enabled = was_enabled
+    end
   end
 
   # If true, the base class of anonymous controllers will be inferred

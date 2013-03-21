@@ -15,7 +15,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Version do
+describe Version, :versioning => true do
 
   before do
     login
@@ -36,36 +36,37 @@ describe Version do
       end
     end
 
-    it "should select all versions except one" do
+    it "should not include view events" do
       @versions = Version.for(current_user).exclude_events(:view)
-      @versions.map(&:event).sort.should == %w(create destroy update)
+      @versions.map(&:event).sort.should_not include('view')
     end
 
-    it "should select all versions except many" do
+    it "should exclude create, update and destroy events" do
       @versions = Version.for(current_user).exclude_events(:create, :update, :destroy)
-      @versions.map(&:event).should == %w(view)
+      @versions.map(&:event).should_not include('create')
+      @versions.map(&:event).should_not include('update')
+      @versions.map(&:event).should_not include('destroy')
     end
 
-    it "should select one requested version" do
+    it "should include only destroy events" do
       @versions = Version.for(current_user).include_events(:destroy)
-      @versions.map(&:event).should == %w(destroy)
+      @versions.map(&:event).uniq.should == %w(destroy)
     end
 
-    it "should select many requested versions" do
+    it "should include create and update events" do
       @versions = Version.for(current_user).include_events(:create, :update)
-      @versions.map(&:event).sort.should == %w(create update)
+      @versions.map(&:event).uniq.sort.should == %w(create update)
     end
 
-    it "should select versions for given user" do
+    it "should select all versions for a given user" do
       @versions = Version.for(current_user)
-      @versions.map(&:event).sort.should == %w(create destroy update view)
+      @versions.map(&:whodunnit).uniq.should == [current_user.id.to_s]
     end
   end
 
   %w(account campaign contact lead opportunity task).each do |item|
     describe "Create, update, and delete (#{item})" do
       before :each do
-        PaperTrail.enabled = true
         @item = FactoryGirl.create(item.to_sym, :user => current_user)
         @conditions = {:item_id => @item.id, :item_type => @item.class.name, :whodunnit => PaperTrail.whodunnit}
       end
@@ -104,7 +105,6 @@ describe Version do
 
   describe "Recently viewed items (task)" do
     before do
-      PaperTrail.enabled = true
       @task = FactoryGirl.create(:task)
       @conditions = {:item_id => @task.id, :item_type => @task.class.name}
     end
@@ -112,7 +112,7 @@ describe Version do
     it "creating a new task should not add it to recently viewed items list" do
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).should == %w(create) # but not view
+      @versions.map(&:event).should include('create') # but not view
     end
 
     it "updating a new task should not add it to recently viewed items list" do
@@ -133,21 +133,21 @@ describe Version do
       @task.update_attribute(:completed_at, 1.second.ago)
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).sort.should == %w(complete)
+      @versions.map(&:event).should include('complete')
     end
 
     it "should create 'reassigned' task event" do
       @task.update_attribute(:assigned_to, current_user.id + 1)
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).sort.should == %w(reassign)
+      @versions.map(&:event).should include('reassign')
     end
 
     it "should create 'rescheduled' task event" do
       @task.update_attribute(:bucket, "due_tomorrow") # FactoryGirl creates :due_asap task
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).sort.should == %w(reschedule)
+      @versions.map(&:event).should include('reschedule')
     end
   end
 
@@ -161,7 +161,7 @@ describe Version do
       @lead.update_attribute(:status, "rejected")
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).sort.should == %w(reject)
+      @versions.map(&:event).should include('reject')
     end
   end
 
@@ -169,7 +169,6 @@ describe Version do
     before do
       @user = FactoryGirl.create(:user)
       Version.delete_all
-      PaperTrail.enabled = true
     end
 
     it "should not show the create/update versions if the item is private" do
@@ -237,11 +236,11 @@ describe Version do
 
   describe "Exportable" do
     before do
-      FactoryGirl.create(:version, :whodunnit => FactoryGirl.create(:user).id, :item => FactoryGirl.create(:account))
-      FactoryGirl.create(:version, :whodunnit => FactoryGirl.create(:user, :first_name => nil, :last_name => nil).id, :item => FactoryGirl.create(:account))
     end
     it_should_behave_like("exportable") do
-      let(:exported) { Version.all }
+      v1 = FactoryGirl.create(:version, :whodunnit => FactoryGirl.create(:user).id, :item => FactoryGirl.create(:account))
+      v2 = FactoryGirl.create(:version, :whodunnit => FactoryGirl.create(:user, :first_name => nil, :last_name => nil).id, :item => FactoryGirl.create(:account))
+      let(:exported) { [v1,v2] }
     end
   end
 end
