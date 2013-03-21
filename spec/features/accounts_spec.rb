@@ -1,4 +1,4 @@
-require File.expand_path("../acceptance_helper.rb", __FILE__)
+require 'features/acceptance_helper'
 
 feature 'Accounts', %q{
   In order to increase customer satisfaction
@@ -32,7 +32,7 @@ feature 'Accounts', %q{
     click_button 'Create Account'
 
     page.should have_content('My new account')
-    click_link 'My new account'
+    find('div#accounts').click_link('My new account') # avoid recent items link
     page.should have_content('+1 2345 6789')
     page.should have_content('http://www.example.com')
     page.should have_content('This account is very important')
@@ -61,7 +61,7 @@ feature 'Accounts', %q{
   scenario 'should view and edit an account', :js => true do
     FactoryGirl.create(:account, :name => "A new account")
     visit accounts_page
-    click_link 'A new account'
+    find('div#accounts').click_link('A new account')
     page.should have_content('A new account')
     click_link 'Edit'
     fill_in 'account_name', :with => 'A new account *editted*'
@@ -75,7 +75,7 @@ feature 'Accounts', %q{
   scenario 'should delete an account', :js => true do
     FactoryGirl.create(:account, :name => "My new account")
     visit accounts_page
-    click_link 'My new account'
+    find('div#accounts').click_link('My new account')
     click_link 'Delete?'
     page.should have_content('Are you sure you want to delete this account?')
     click_link 'Yes'

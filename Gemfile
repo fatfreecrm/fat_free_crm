@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-# gem 'mysql2', '0.3.10'
+# gem 'mysql2'
 # gem 'sqlite3'
-gem 'pg', '~> 0.13.2'
+gem 'pg'
 
 # Allows easy switching between locally developed gems, and gems installed from rubygems.org
 # See README for more info at: https://github.com/ndbroadbent/bundler_local_development
@@ -51,23 +51,15 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'headless'
-  unless ENV["CI"]
-    gem 'ruby-debug', :platform => :mri_18
-    gem 'debugger', :platform => :mri_19
-  end
+  gem 'debugger' unless ENV["CI"]
   gem 'pry-rails'
 end
 
 group :test do
-  gem 'capybara', '~> 1.1' # v2 and up is not r1.8 compatible.
+  gem 'capybara'
   gem 'database_cleaner'
-  gem "acts_as_fu", "~> 0.0.8"
-
-  if RUBY_VERSION.to_f >= 1.9
-    gem 'factory_girl_rails', '~> 3.0.0'
-  else
-    gem 'factory_girl_rails', '~> 1.7.0'
-  end
+  gem "acts_as_fu"
+  gem 'factory_girl_rails'
 end
 
 group :heroku do
@@ -82,9 +74,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier',     '>= 1.0.3'
   gem 'execjs'
-  unless ENV["CI"]
-    gem 'therubyracer', :platform => :ruby
-  end
+  gem 'therubyracer', :platform => :ruby unless ENV["CI"]
 end
 
 gem 'turbo-sprockets-rails3'

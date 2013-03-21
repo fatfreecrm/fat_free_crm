@@ -3,6 +3,7 @@ require 'rubygems'
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rails'
 
 require 'acts_as_fu'
 require 'factory_girl'
@@ -22,13 +23,7 @@ I18n.locale = 'en-US'
 Paperclip.options[:log] = false
 
 RSpec.configure do |config|
-  # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
+
   config.mock_with :rspec
 
   config.fixture_path = "#{Rails.root}/spec/fixtures"
@@ -53,10 +48,10 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
-  config.before :all, :type => :request do
+  config.before :all, :type => :feature do
     DatabaseCleaner.clean_with(:truncation)
   end
-  config.around :each, :type => :request do |example|
+  config.around :each, :type => :feature do |example|
     DatabaseCleaner.strategy = :truncation
     example.run
     DatabaseCleaner.strategy = :transaction
@@ -66,11 +61,6 @@ RSpec.configure do |config|
     example.run
     DatabaseCleaner.clean
   end
-
-
-  # config.before :all, :type => :view do
-  #   view.lookup_context.prefixes << 'entities'
-  # end
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of

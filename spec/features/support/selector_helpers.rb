@@ -28,4 +28,4 @@ module SelectorHelpers
   end
 end
 
-RSpec.configuration.include SelectorHelpers, :type => :request
+RSpec.configuration.include SelectorHelpers, :type => :feature
