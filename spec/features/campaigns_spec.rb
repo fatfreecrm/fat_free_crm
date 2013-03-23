@@ -32,7 +32,7 @@ feature 'Campaigns', %q{
     page.should have_content('Cool Campaign')
     page.should have_content('On Hold')
 
-    click_link 'Cool Campaign'
+    find('div#campaigns').click_link 'Cool Campaign'
     page.should have_content('This campaign is very important')
 
     click_link "Dashboard"
@@ -60,9 +60,7 @@ feature 'Campaigns', %q{
     select 'Started', :from => 'campaign_status'
     click_button 'Save Campaign'
     page.should have_content('My Even Cooler Campaign')
-    click_link 'Campaigns'
-    page.should have_content('My Even Cooler Campaign')
-
+	page.should have_content('My Even Cooler Campaign')
     click_link 'Dashboard'
     page.should have_content("Bill Murray updated campaign My Even Cooler Campaign")
   end
@@ -75,27 +73,22 @@ feature 'Campaigns', %q{
     page.should have_content('Are you sure you want to delete this campaign?')
     click_link 'Yes'
     page.should have_content('Old Campaign has been deleted.')
-    click_link 'Campaigns'
-    page.should_not have_content('Old Campaign')
+    find('div#campaigns').should_not have_content('Old Campaign')
   end
 
   scenario 'should search for a campaign', :js => true do
-    4.times { |i| FactoryGirl.create(:campaign, :name => "Campaign #{i}") }
+    2.times { |i| FactoryGirl.create(:campaign, :name => "Campaign #{i}") }
     visit campaigns_page
     find('#campaigns').should have_content("Campaign 0")
     find('#campaigns').should have_content("Campaign 1")
-    find('#campaigns').should have_content("Campaign 2")
-    find('#campaigns').should have_content("Campaign 3")
     fill_in 'query', :with => "Campaign 0"
     find('#campaigns').should have_content("Campaign 0")
-    find('#campaigns').has_selector?('li', :count => 1)
+    find('#campaigns').should_not have_content("Campaign 1")
     fill_in 'query', :with => "Campaign"
     find('#campaigns').should have_content("Campaign 0")
     find('#campaigns').should have_content("Campaign 1")
-    find('#campaigns').should have_content("Campaign 2")
-    find('#campaigns').should have_content("Campaign 3")
-    find('#campaigns').has_selector?('li', :count => 4)
-    fill_in 'query', :with => "False campaign"
-    find('#campaigns').has_selector?('li', :count => 0)
+    fill_in 'query', :with => "False"
+    find('#campaigns').should_not have_content("Campaign 0")
+    find('#campaigns').should_not have_content("Campaign 1")
   end
 end

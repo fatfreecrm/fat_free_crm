@@ -35,7 +35,7 @@ feature 'Leads', %q{
     click_button 'Create Lead'
     page.should have_content('Mr Lead')
 
-    click_link 'Mr Lead'
+    find('#leads').click_link('Mr Lead')
     page.should have_content('Contacted')
     page.should have_content('mr_lead@example.com')
     page.should have_content('+44 1234 567890')
@@ -69,9 +69,6 @@ feature 'Leads', %q{
     select 'Rejected', :from => 'lead_status'
     click_button 'Save Lead'
     page.should have_content('Mrs Lead')
-    click_link 'Leads'
-    page.should have_content('Mrs Lead')
-
     click_link "Dashboard"
     page.should have_content("Bill Murray updated lead Mrs Lead")
   end
@@ -84,26 +81,23 @@ feature 'Leads', %q{
     page.should have_content('Are you sure you want to delete this lead?')
     click_link 'Yes'
     page.should have_content('Mr Lead has been deleted.')
-    click_link 'Leads'
     page.should_not have_content('Mr Lead')
     page.should_not have_content('mr_lead@example.com')
   end
 
   scenario 'should search for a lead', :js => true do
-    3.times { |i| FactoryGirl.create(:lead, :first_name => "Lead", :last_name => "\##{i}", :email => "lead#{i}@example.com") }
+    2.times { |i| FactoryGirl.create(:lead, :first_name => "Lead", :last_name => "\##{i}", :email => "lead#{i}@example.com") }
     visit leads_page
     find('#leads').should have_content('Lead #0')
     find('#leads').should have_content('Lead #1')
-    find('#leads').should have_content('Lead #2')
     fill_in 'query', :with => 'Lead #0'
     find('#leads').should have_content('Lead #0')
-    find('#leads').has_selector?('li', :count => 1)
+    find('#leads').should_not have_content('Lead #1')
     fill_in 'query', :with => 'Lead'
     find('#leads').should have_content('Lead #0')
     find('#leads').should have_content('Lead #1')
-    find('#leads').should have_content('Lead #2')
-    find('#leads').has_selector?('li', :count => 3)
     fill_in 'query', :with => 'Non-existant lead'
-    find('#leads').has_selector?('li', :count => 0)
+    find('#leads').should_not have_content('Lead #0')
+    find('#leads').should_not have_content('Lead #1')
   end
 end

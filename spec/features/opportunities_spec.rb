@@ -25,14 +25,14 @@ feature 'Opportunities', %q{
     click_link 'Create Opportunity'
     page.should have_selector('#opportunity_name', :visible => true)
     fill_in 'opportunity_name', :with => 'My Awesome Opportunity'
-    chosen_select('Example Account', :from => 'account_id')
-    select 'prospecting', :from => 'opportunity_stage'
+    fill_in 'account_name', :with => 'Example Account'
+    select 'Prospecting', :from => 'opportunity_stage'
     click_link 'Comment'
     fill_in 'comment_body', :with => 'This is a very important opportunity.'
     click_button 'Create Opportunity'
     page.should have_content('My Awesome Opportunity')
 
-    click_link 'My Awesome Opportunity'
+    find('div#opportunities').click_link('My Awesome Opportunity')
     page.should have_content('This is a very important opportunity.')
 
     click_link "Dashboard"
@@ -43,7 +43,7 @@ feature 'Opportunities', %q{
   scenario "remembers the comment field when the creation was unsuccessful", :js => true do
     visit opportunities_page
     click_link 'Create Opportunity'
-    select 'prospecting', :from => 'opportunity_stage'
+    select 'Prospecting', :from => 'opportunity_stage'
 
     click_link 'Comment'
     fill_in 'comment_body', :with => 'This is a very important opportunity.'
@@ -61,12 +61,9 @@ feature 'Opportunities', %q{
     click_link 'Edit'
     fill_in 'opportunity_name', :with => 'An Even Cooler Opportunity'
     chosen_select('Other Example Account', :from => 'account_id')
-    select 'analysis', :from => 'opportunity_stage'
+    select 'Analysis', :from => 'opportunity_stage'
     click_button 'Save Opportunity'
     page.should have_content('An Even Cooler Opportunity')
-    click_link 'Opportunities'
-    page.should have_content('An Even Cooler Opportunity')
-
     click_link "Dashboard"
     page.should have_content("Bill Murray updated opportunity An Even Cooler Opportunity")
   end
@@ -79,25 +76,21 @@ feature 'Opportunities', %q{
     page.should have_content('Are you sure you want to delete this opportunity?')
     click_link 'Yes'
     page.should have_content('Outdated Opportunity has been deleted.')
-    click_link('Opportunities')
-    page.should_not have_content('Outdated Opportunity')
   end
 
   scenario 'should search for an opportunity', :js => true do
-    3.times { |i| FactoryGirl.create(:opportunity, :name => "Opportunity #{i}") }
+    2.times { |i| FactoryGirl.create(:opportunity, :name => "Opportunity #{i}") }
     visit opportunities_page
     find('#opportunities').should have_content("Opportunity 0")
     find('#opportunities').should have_content("Opportunity 1")
-    find('#opportunities').should have_content("Opportunity 2")
     fill_in 'query', :with => "Opportunity 0"
     find('#opportunities').should have_content("Opportunity 0")
-    find('#opportunities').has_selector?('li', :count => 1)
+    find('#opportunities').should_not have_content("Opportunity 1")
     fill_in 'query', :with => "Opportunity"
     find('#opportunities').should have_content("Opportunity 0")
     find('#opportunities').should have_content("Opportunity 1")
-    find('#opportunities').should have_content("Opportunity 2")
-    find('#opportunities').has_selector?('li', :count => 3)
     fill_in 'query', :with => "Non-existant opportunity"
-    find('#opportunities').has_selector?('li', :count => 0)
+    find('#opportunities').should_not have_content("Opportunity 0")
+    find('#opportunities').should_not have_content("Opportunity 1")
   end
 end

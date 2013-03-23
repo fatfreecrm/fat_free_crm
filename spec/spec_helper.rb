@@ -62,6 +62,19 @@ RSpec.configure do |config|
 
   # PaperTrail slows down tests so only turned on when needed.
   PaperTrail.enabled = false
+  
+  config.around :each, :type => :feature do |example|
+    was_enabled = PaperTrail.enabled?
+    PaperTrail.enabled = true
+    PaperTrail.controller_info = {}
+    PaperTrail.whodunnit = nil
+    begin
+      example.run
+    ensure
+      PaperTrail.enabled = was_enabled
+    end
+  end
+  
   config.around :each, :versioning => true do |example|
     was_enabled = PaperTrail.enabled?
     PaperTrail.enabled = true

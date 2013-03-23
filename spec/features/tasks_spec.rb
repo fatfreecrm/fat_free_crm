@@ -68,9 +68,6 @@ feature 'Tasks', %q{
     fill_in 'task_name', :with => 'Updated Task'
     click_button 'Save Task'
     page.should have_content('Updated Task')
-    click_link 'Task'
-    page.should have_content('Updated Task')
-
     click_link 'Dashboard'
     page.should have_content('Bill Murray updated task Updated Task')
   end

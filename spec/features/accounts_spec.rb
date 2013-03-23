@@ -58,7 +58,7 @@ feature 'Accounts', %q{
     page.should have_field("comment_body", :with => 'This account is very important')
   end
 
-  scenario 'should view and edit an account', :js => true do
+  scenario 'should view and edit an account', :js => true, :versioning => true do
     FactoryGirl.create(:account, :name => "A new account")
     visit accounts_page
     find('div#accounts').click_link('A new account')
@@ -89,12 +89,12 @@ feature 'Accounts', %q{
     find('#accounts').should have_content("Account 1")
     fill_in 'query', :with => "Account 0"
     find('#accounts').should have_content("Account 0")
-    find('#accounts').has_selector?('li', :count => 1)
+    find('#accounts').should_not have_content("Account 1")
     fill_in 'query', :with => "Account"
     find('#accounts').should have_content("Account 0")
     find('#accounts').should have_content("Account 1")
-    find('#accounts').has_selector?('li', :count => 2)
     fill_in 'query', :with => "Contact"
-    find('#accounts').has_selector?('li', :count => 0)
+    find('#accounts').should_not have_content("Account 0")
+    find('#accounts').should_not have_content("Account 1")
   end
 end

@@ -31,11 +31,9 @@ feature 'Contacts', %q{
     click_link 'Comment'
     fill_in 'comment_body', :with => 'This is a very important person.'
     click_button 'Create Contact'
-    page.should have_content('Testy McTest')
-
-    click_link 'Testy McTest'
+    find('div#contacts').should have_content('Testy McTest')
+    find('div#contacts').click_link 'Testy McTest'
     page.should have_content('This is a very important person.')
-
     click_link "Dashboard"
     page.should have_content('Bill Murray created contact Testy McTest')
     page.should have_content('Bill Murray created comment on Testy McTest')
@@ -62,9 +60,6 @@ feature 'Contacts', %q{
     fill_in 'contact_email', :with => "test.subject@example.com"
     click_button 'Save Contact'
     page.should have_content('Test Subject')
-    click_link 'Contacts'
-    page.should have_content('Test Subject')
-
     click_link 'Dashboard'
     page.should have_content("Bill Murray updated contact Test Subject")
   end
@@ -77,25 +72,22 @@ feature 'Contacts', %q{
     page.should have_content('Are you sure you want to delete this contact?')
     click_link 'Yes'
     page.should have_content('Test Subject has been deleted.')
-    click_link('Contacts')
     page.should_not have_content('Test Subject')
   end
 
   scenario 'should search for a contact', :js => true do
-    3.times { |i| FactoryGirl.create(:contact, :first_name => "Test", :last_name => "Subject \##{i}") }
+    2.times { |i| FactoryGirl.create(:contact, :first_name => "Test", :last_name => "Subject \##{i}") }
     visit contacts_page
     find('#contacts').should have_content('Test Subject #0')
     find('#contacts').should have_content('Test Subject #1')
-    find('#contacts').should have_content('Test Subject #2')
-    fill_in 'query', :with => 'Test Subject #2'
-    find('#contacts').should have_content('Test Subject #2')
-    find('#contacts').has_selector?('li', :count => 1)
+    fill_in 'query', :with => 'Test Subject #1'
+    find('#contacts').should have_content('Test Subject #1')
+    find('#contacts').should_not have_content('Test Subject #0')
     fill_in 'query', :with => 'Test Subject'
     find('#contacts').should have_content('Test Subject #0')
     find('#contacts').should have_content('Test Subject #1')
-    find('#contacts').should have_content('Test Subject #2')
-    find('#contacts').has_selector?('li', :count => 3)
     fill_in 'query', :with => "Fake contact"
-    find('#contacts').has_selector?('li', :count => 0)
+    find('#contacts').should_not have_content('Test Subject #0')
+    find('#contacts').should_not have_content('Test Subject #1')
   end
 end

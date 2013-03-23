@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
 
   has_one     :avatar, :as => :entity, :dependent => :destroy  # Personal avatar.
   has_many    :avatars                                         # As owner who uploaded it, ex. Contact avatar.
-  has_many    :comments, :as => :commentable                   # As owner who crated a comment.
+  has_many    :comments, :as => :commentable                   # As owner who created a comment.
   has_many    :accounts
   has_many    :campaigns
   has_many    :leads
@@ -87,7 +87,8 @@ class User < ActiveRecord::Base
   }
 
   scope :have_assigned_opportunities, joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to").
-                                      where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
+                                      where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'").
+                                      select('DISTINCT(users.id), users.*')
 
   acts_as_authentic do |c|
     c.session_class = Authentication
@@ -150,7 +151,7 @@ class User < ActiveRecord::Base
     self.single_access_token ||= update_attribute(:single_access_token, Authlogic::Random.friendly_token)
   end
 
-  # Massage value when using Chosen select box which gives values like ["", "1,2,3"] 
+  # Massage value when using Chosen select box which gives values like ["", "1,2,3"]
   #----------------------------------------------------------------------------
   def group_ids=(value)
     value = value.join.split(',').map(&:to_i) if value.map{|v| v.to_s.include?(',')}.any?
@@ -191,5 +192,5 @@ class User < ActiveRecord::Base
     end
 
   end
-  
+
 end
