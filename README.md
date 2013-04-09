@@ -103,7 +103,7 @@ Please run the following commands in this order:
 
 ```bash
 bundle install --without heroku   # Installs gem dependencies
-rake ffcrm:upgrade:schema         # Updates your schema to use the new timestamped migrations
+rake db:schema:upgrade            # Updates your schema to use the new timestamped migrations
 rake db:migrate                   # Runs any new database migrations.
 ```
 
