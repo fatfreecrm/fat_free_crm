@@ -1,7 +1,0 @@
-simple_fields_for(@asset) do |f|
-
-  page[:field_groups].insert render(
-    :partial => 'fields/group',
-    :locals => {:f => f, :field_group => @field_group, :fields => @field_group.fields}
-  )
-end
