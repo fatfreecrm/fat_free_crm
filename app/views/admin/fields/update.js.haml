@@ -1,0 +1,13 @@
+- id = dom_id(@field)
+- container_id = "#{@field.klass_name.downcase}_field_groups"
+
+- if @field.errors.empty?
+  html = jQuery.parseHTML('#{ j (render :partial => "field", :collection => [@field]) }');
+  jQuery('##{id}').replaceWith( html);
+  jQuery('##{id}').effect("highlight", { duration:1000 });
+  jQuery('##{container_id}').after('#{ j (sortable_element(container_id, :url => sort_admin_fields_path(:field_group_id => @field.field_group_id))) }');
+- else
+  html = jQuery.parseHTML('#{ j(render :partial => "form") }');
+  jQuery('##{id}').find('.edit_field').replaceWith( html );
+  jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
+  jQuery('##{id}').find('input[type="text"]').first().focus();
