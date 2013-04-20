@@ -305,6 +305,7 @@ DEPENDENCIES
   sass (~> 3)
   sass-rails (~> 3.2.3)
   select2-rails
+  selenium-webdriver
   simple_form (~> 2.0.1)
   therubyracer
   thin
