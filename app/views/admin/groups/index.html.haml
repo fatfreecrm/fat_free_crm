@@ -9,7 +9,7 @@
 
 .remote#create_group{ hidden }
 
-.list#groups
+%ul.list#groups
   - if @groups.any?
     = render :partial => "group", :collection => @groups
   - else

@@ -1,0 +1,9 @@
+- id = dom_id(@group)
+- if @group.destroyed?
+  jQuery('##{id}').slideUp(250).remove();
+- else
+  crm.flick("#{dom_id(@group, :confirm)}, 'remove')");
+  jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
+  jQuery('#flash').html('#{flash[:warning]}');
+  crm.flash('warning');
+  - flash[:warning] = nil
