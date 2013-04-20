@@ -8,7 +8,7 @@ namespace :ffcrm do
   desc "Prepare the database"
   task :setup => :environment do
     if ENV["PROCEED"] != 'true'
-      puts "\nYour database [#{ActiveRecord::Base.connection.current_database}] is about to be reset. If you choose to proceed all the existing data will be lost.\n\n"
+      puts "\nFatFree CRM is about to run migrations on your database [#{ActiveRecord::Base.connection.current_database}]. Make sure you have a backup before proceeding.\n\n"
       proceed = false
       loop do
         print "Continue [yes/no]: "
@@ -18,7 +18,7 @@ namespace :ffcrm do
 
       # Don't continue unless user typed y(es)
       if proceed =~ /y(?:es)*/i
-        Rake::Task["db:migrate:reset"].invoke
+        Rake::Task["db:migrate"].invoke
         Rake::Task["ffcrm:setup:admin"].invoke
       else
         puts "Aborted setup."
