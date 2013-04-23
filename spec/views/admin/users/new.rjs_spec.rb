@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
+require 'spec_helper'
 
 describe "admin/users/new" do
   before do
@@ -16,9 +16,7 @@ describe "admin/users/new" do
       params[:cancel] = nil
       render
 
-      rendered.should have_rjs("create_user") do |rjs|
-        with_tag("form[class=new_user]")
-      end
+      rendered.should include("jQuery('#create_user').html")
     end
   end
 
@@ -27,8 +25,8 @@ describe "admin/users/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not have_rjs("create_user")
-      rendered.should include('crm.flip_form("create_user");')
+      rendered.should include("crm.set_title('create_user', 'Users');")
+      rendered.should include("crm.flip_form('create_user');")
     end
   end
 

@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
+require 'spec_helper'
 
 describe "admin/users/update" do
   before do
@@ -15,10 +15,8 @@ describe "admin/users/update" do
     it "replaces [Edit User] form with user partial and highlights it" do
       render
 
-      rendered.should have_rjs("user_#{@user.id}") do |rjs|
-        with_tag("li[id=user_#{@user.id}]")
-      end
-      rendered.should include(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
+      rendered.should include("user_#{@user.id}")
+      rendered.should include(%Q/jQuery('#user_#{@user.id}').effect("highlight"/)
     end
   end # no errors
 
@@ -30,11 +28,9 @@ describe "admin/users/update" do
     it "redraws [Edit User] form and shakes it" do
       render
 
-      rendered.should have_rjs("user_#{@user.id}") do |rjs|
-        with_tag("form[class=edit_user]")
-      end
-      rendered.should include(%Q/$("user_#{@user.id}").visualEffect("shake"/)
-      rendered.should include('$("user_username").focus()')
+      rendered.should include("user_#{@user.id}")
+      rendered.should include(%Q/jQuery('#user_#{@user.id}').effect("shake"/)
+      rendered.should include(%Q/jQuery('#user_username').focus()/)
     end
   end # errors
 end

@@ -3,6 +3,6 @@
   jQuery('li##{id}').slideUp(250).remove();
 - else
   jQuery('li##{id}').effect("shake", { duration:250, distance: 6});
-  jQuery('#flash').html('#{ flash[:warning] }')
+  jQuery('#flash').html('#{ j flash[:warning] }')
   jQuery(crm.flash('warning'))
   - flash[:warning] = nil

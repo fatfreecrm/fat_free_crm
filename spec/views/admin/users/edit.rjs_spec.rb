@@ -15,35 +15,29 @@ describe "admin/users/edit" do
     params[:cancel] = "true"
     render
 
-    rendered.should have_rjs("user_#{@user.id}") do |rjs|
-      with_tag("li[id=user_#{@user.id}]")
-    end
+    rendered.should include("jQuery('#user_#{@user.id}').replaceWith")
   end
 
   it "edit hides previously open [Edit User] and replaces it with user partial" do
     assign(:previous, previous = FactoryGirl.create(:user))
     render
 
-    rendered.should have_rjs("user_#{previous.id}") do |rjs|
-      with_tag("li[id=user_#{previous.id}]")
-    end
+    rendered.should include("user_#{previous.id}")
   end
 
   it "edit removes previously open [Edit User] if it's no longer available" do
     assign(:previous, previous = 41)
     render
 
-    rendered.should include(%Q/crm.flick("user_#{previous}", "remove");/)
+    rendered.should include(%Q/crm.flick('user_#{previous}', 'remove');/)
   end
 
   it "edit turns off highlight, hides [Create User] form, and replaces current user with [Edit User] form" do
     render
 
-    rendered.should include(%Q/crm.highlight_off("user_#{@user.id}");/)
-    rendered.should include('crm.hide_form("create_user")')
-    rendered.should have_rjs("user_#{@user.id}") do |rjs|
-      with_tag("form[class=edit_user]")
-    end
+    rendered.should include(%Q/crm.highlight_off('user_#{@user.id}');/)
+    rendered.should include(%Q/crm.hide_form('create_user')/)
+    rendered.should include("user_#{@user.id}")
   end
 
 end

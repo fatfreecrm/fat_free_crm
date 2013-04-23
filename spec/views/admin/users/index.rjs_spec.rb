@@ -17,11 +17,9 @@ describe "admin/users/index" do
 
     render :template => 'admin/users/index', :formats => [:js]
     
-    rendered.should have_rjs("users") do |rjs|
-      with_tag("li[id=user_#{amy.id}]")
-      with_tag("li[id=user_#{bob.id}]")
-    end
-    rendered.should have_rjs("paginate")
+    rendered.should include("id=\\'user_#{amy.id}\\'")
+    rendered.should include("id=\\'user_#{bob.id}\\'")
+    rendered.should include("jQuery('#paginate')")
   end
 
 end

@@ -4,6 +4,6 @@
   jQuery('##{id}').slideUp(250);
 - else
   jQuery('##{id}').effect("shake", { distance:5 }, 250);
-  jQuery('#flash').html('#{t(:msg_cant_delete_field_group)}');
+  jQuery('#flash').html('#{ j t(:msg_cant_delete_field_group) }');
   crm.flash('warning');
   - flash[:warning] = nil

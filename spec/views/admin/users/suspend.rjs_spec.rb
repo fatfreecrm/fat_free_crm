@@ -14,9 +14,7 @@ describe "admin/users/suspend" do
   it "reloads the requested user partial" do
     render
 
-    rendered.should have_rjs("user_#{@user.id}") do |rjs|
-      with_tag("li[id=user_#{@user.id}]")
-    end
-    rendered.should include(%Q/$("user_#{@user.id}").visualEffect("highlight"/)
+    rendered.should include("user_#{@user.id}")
+    rendered.should include(%Q/jQuery('#user_#{@user.id}').effect("highlight"/)
   end
 end

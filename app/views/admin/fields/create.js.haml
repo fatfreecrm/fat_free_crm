@@ -12,6 +12,6 @@
   jQuery("##{create_field_id}").hide();
   jQuery("##{empty_field_id}").hide();
 - else
-  jQuery('##{id}').html('#{ j(render :partial => "admin/fields/form", :locals => {:field_group_id => @field.field_group_id} ) }')
+  jQuery('##{id}').html('#{ j render(:partial => "admin/fields/form", :locals => {:field_group_id => @field.field_group_id}) }')
   jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
   jQuery('##{id}').find('input[type="text"]').first().focus()

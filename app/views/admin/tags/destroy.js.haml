@@ -5,6 +5,6 @@
 - else
   crm.flick("#{dom_id(@tag, :confirm)}, 'remove')");
   jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
-  jQuery('#flash').html('#{flash[:warning]}');
+  jQuery('#flash').html('#{ j flash[:warning] }');
   crm.flash('warning');
   - flash[:warning] = nil

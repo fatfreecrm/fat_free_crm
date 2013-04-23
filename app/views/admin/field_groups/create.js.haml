@@ -16,5 +16,5 @@
   jQuery('##{dom_id(@field_group)}').effect('highlight', { duration:1500 });
 
 - else
-  jQuery('##{id}').html('#{ j(render :partial => "new") }');
+  jQuery('##{id}').html('#{ j render(:partial => "new") }');
   jQuery('##{id}').effect("shake", { duration:250, distance: 6 });

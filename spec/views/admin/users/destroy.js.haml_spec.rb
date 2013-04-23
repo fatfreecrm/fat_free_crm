@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
+require 'spec_helper'
 
 describe "admin/users/destroy" do
   before do
@@ -20,7 +20,7 @@ describe "admin/users/destroy" do
     it "blinds up destroyed user partial" do
       render
 
-      rendered.should include(%Q/$("user_#{@user.id}").visualEffect("blind_up"/)
+      rendered.should include(%Q/jQuery('#user_#{@user.id}').slideUp/)
     end
   end
 
@@ -32,21 +32,20 @@ describe "admin/users/destroy" do
     it "should remove confirmation panel" do
       render
 
-      rendered.should include(%Q/crm.flick("#{dom_id(@user, :confirm)}", "remove");/)
+      rendered.should include(%Q/crm.flick('#{dom_id(@user, :confirm)}', 'remove');/)
     end
 
     it "should shake user partial" do
       render
 
-      rendered.should include(%Q/$("user_#{@user.id}").visualEffect("shake"/)
+      rendered.should include(%Q/jQuery('#user_#{@user.id}').effect('shake'/)
     end
 
     it "should show flash message" do
       render
 
-      rendered.should have_rjs("flash")
-      rendered.should include('crm.flash("warning")')
+      rendered.should include('flash')
+      rendered.should include(%Q/crm.flash('warning')/)
     end
   end
 end
-
