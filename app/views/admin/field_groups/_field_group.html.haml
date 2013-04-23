@@ -11,7 +11,7 @@
     = link_to(arrow_for(create_form_id) + t(:create_field), '#', :class => 'create')
     - unless field_group.name == "custom_fields"
       |
-      = link_to_delete( field_group, {:url => url_for([:admin, field_group]), :confirm => t(:field_group_confirm_delete)} )
+      = link_to_confirm(field_group)
 
   .subtitle{ :id => "#{dom_id(field_group)}_title" }= field_group_subtitle(field_group)
 

@@ -44,17 +44,17 @@ class FieldGroup < ActiveRecord::Base
   def label_i18n
     I18n.t(name, :default => label)
   end
-  
+
   private
   # Can't delete default field group
   def not_default_field_group
     name != "custom_fields"
   end
-  
+
   # When deleted, transfer fields to default field group
   def move_fields_to_default_field_group
     default_group = FieldGroup.find_by_name_and_klass_name("custom_fields", klass_name)
-    default_group.fields << fields
+    default_group.fields << fields if default_group
     self.reload
   end
 end
