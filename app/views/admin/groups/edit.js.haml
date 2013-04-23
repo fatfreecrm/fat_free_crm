@@ -10,5 +10,5 @@
   -# Hide [Create Group] form if any.
   crm.hide_form('create_group');
   -# Show [Edit Group] form.
-  jQuery('##{id}').html('#{ j (render(:partial => "edit")) }');
+  jQuery('##{id}').html('#{ j render(:partial => "edit") }');
   jQuery('#group_name').focus();
