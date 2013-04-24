@@ -1,0 +1,13 @@
+- id_prefix = "#{@commentable}_" + params["#{@commentable}_id"]
+
+
+- if session["#{@commentable}_new_comment"]
+  jQuery('##{id_prefix}_ask').hide();
+  jQuery('##{id_prefix}_post').show();
+  jQuery('##{id_prefix}_comment_comment').focus();
+- else
+  jQuery('##{id_prefix}_post').hide();
+  jQuery('##{id_prefix}_ask').show();
+
+
+crm.textarea_user_autocomplete('#{id_prefix}_comment_comment');
