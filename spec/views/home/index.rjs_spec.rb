@@ -17,9 +17,8 @@ describe "/home/index" do
 
     render :template => 'home/index', :formats => [:js]
 
-    rendered.should have_rjs("activities") do |rjs|
-      with_tag("li[id=version_42]")
-    end
+    rendered.should include("jQuery('#activities').html")
+    rendered.should include("li class=\\'version\\' id=\\'version_42\\'")
   end
 
   it "should render a message if there're no activities" do
@@ -27,7 +26,6 @@ describe "/home/index" do
 
     render :template => 'home/index', :formats => [:js]
 
-    rendered.should have_rjs("activities")
     rendered.should include("No activity records found.")
   end
 

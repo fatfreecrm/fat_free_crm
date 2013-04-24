@@ -21,15 +21,10 @@ describe "/home/options" do
 
     render
 
-    rendered.should have_rjs("options") do |rjs|
-      with_tag("input[type=hidden]") # current_user
-
-      user_menu = "onLoading:function(request){$('user').update('all users'); " +
-                  "$('loading').show()}, parameters:'user=all_users'}); } } }"
-      with_tag("script", /#{Regexp.escape(user_menu)}/)
-    end
-    rendered.should include('crm.flip_form("options")')
-    rendered.should include('crm.set_title("title", "Recent Activity Options")')
+    rendered.should include("jQuery('#options').html")
+    rendered.should include("onLoading:function(request){$(\\'asset\\').update(\\'campaign\\'); $(\\'loading\\').show()}")
+    rendered.should include("crm.flip_form('options')")
+    rendered.should include("crm.set_title('title', 'Recent Activity Options')")
   end
 
   it "should load :options partial with JavaScript code for menus" do
@@ -49,8 +44,8 @@ describe "/home/options" do
     params[:cancel] = "true"
     render
 
-    rendered.should_not have_rjs("options")
-    rendered.should include('crm.flip_form("options")')
-    rendered.should include('crm.set_title("title", "Recent Activity")')
+    rendered.should_not include("jQuery('#options').html")
+    rendered.should include("crm.flip_form('options')")
+    rendered.should include("crm.set_title('title', 'Recent Activity')")
   end
 end
