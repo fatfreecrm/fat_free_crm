@@ -1,6 +1,0 @@
-class_name = @email.mediator.class.name.downcase
-id_prefix = "#{class_name}_#{@email.mediator.id}"
-
-page["#{id_prefix}_shown_emails"].value = @email.mediator.email_ids.join(',')
-page[dom_id(@email)].visual_effect "blind_up", :duration => 0.25
-
