@@ -68,7 +68,10 @@ GEM
       railties (~> 3.0)
       thor (~> 0.14)
     chronic (0.6.7)
-    cocaine (0.2.1)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.1)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.6)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -120,7 +123,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.7.1)
-    mime-types (1.21)
+    mime-types (1.23)
     multi_json (1.7.2)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -133,10 +136,11 @@ GEM
     paper_trail (2.6.3)
       activerecord (~> 3.0)
       railties (~> 3.0)
-    paperclip (2.8.0)
-      activerecord (>= 2.3.0)
-      activesupport (>= 2.3.2)
-      cocaine (>= 0.0.2)
+    paperclip (3.4.1)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.0)
       mime-types
     pg (0.14.1)
     polyamorous (0.5.0)
@@ -290,7 +294,7 @@ DEPENDENCIES
   jquery-rails (~> 2.1.4)
   nokogiri
   paper_trail
-  paperclip (~> 2.8.0)
+  paperclip
   pg
   premailer
   prototype-rails

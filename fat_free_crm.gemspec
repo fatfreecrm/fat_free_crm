@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'select2-rails'
   gem.add_dependency 'simple_form',         '~> 2.0.1'
   gem.add_dependency 'will_paginate',       '~> 3.0.2'
-  gem.add_dependency 'paperclip',           '~> 2.8.0'
+  gem.add_dependency 'paperclip'
   # Manually added paperclip gem dependency "cocaine" in order to fix load error: "no such file to load -- cocaine"
   gem.add_dependency 'cocaine'
   gem.add_dependency 'paper_trail'
