@@ -43,16 +43,26 @@ remove 'fat_free_crm'
 group :development do
   gem 'thin'
   gem 'quiet_assets'
-  # Uncomment the following two gems to deploy via Capistrano
   gem 'capistrano'
   gem 'capistrano_colors'
+
+  # Use zeus and guard gems to speed up development
+  # Run 'zeus start' and 'bundle exec guard' to get going
+  unless ENV["CI"]
+    gem 'guard'
+    gem 'guard-rspec'
+    gem 'guard-rails'
+    gem 'rb-inotify', :require => false
+    gem 'rb-fsevent', :require => false
+    gem 'rb-fchange', :require => false
+  end
 end
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'headless'
   gem 'debugger' unless ENV["CI"]
-  gem 'pry-rails'
+  gem 'pry-rails' unless ENV["CI"]
 end
 
 group :test do
@@ -61,6 +71,7 @@ group :test do
   gem 'database_cleaner'
   gem "acts_as_fu"
   gem 'factory_girl_rails'
+  gem 'zeus' unless ENV["CI"]
 end
 
 group :heroku do
