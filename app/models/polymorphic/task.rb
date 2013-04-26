@@ -76,21 +76,21 @@ class Task < ActiveRecord::Base
   scope :completed,     where('completed_at IS NOT NULL').order('tasks.completed_at DESC')
 
   # Due date scopes.
-  scope :due_asap,      where("due_at IS NULL AND bucket = 'due_asap'").order('tasks.id DESC')
-  scope :overdue,       where('due_at IS NOT NULL AND due_at < ?', Time.zone.now.midnight.utc).order('tasks.id DESC')
-  scope :due_today,     where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc).order('tasks.id DESC')
-  scope :due_tomorrow,  where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc, Time.zone.now.midnight.tomorrow.utc + 1.day).order('tasks.id DESC')
-  scope :due_this_week, where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc + 1.day, Time.zone.now.next_week.utc).order('tasks.id DESC')
-  scope :due_next_week, where('due_at >= ? AND due_at < ?', Time.zone.now.next_week.utc, Time.zone.now.next_week.end_of_week.utc + 1.day).order('tasks.id DESC')
-  scope :due_later,     where("(due_at IS NULL AND bucket = 'due_later') OR due_at >= ?", Time.zone.now.next_week.end_of_week.utc + 1.day).order('tasks.id DESC')
+  scope :due_asap,      lambda { where("due_at IS NULL AND bucket = 'due_asap'").order('tasks.id DESC') }
+  scope :overdue,       lambda { where('due_at IS NOT NULL AND due_at < ?', Time.zone.now.midnight.utc).order('tasks.id DESC') }
+  scope :due_today,     lambda { where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc).order('tasks.id DESC') }
+  scope :due_tomorrow,  lambda { where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc, Time.zone.now.midnight.tomorrow.utc + 1.day).order('tasks.id DESC') }
+  scope :due_this_week, lambda { where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc + 1.day, Time.zone.now.next_week.utc).order('tasks.id DESC') }
+  scope :due_next_week, lambda { where('due_at >= ? AND due_at < ?', Time.zone.now.next_week.utc, Time.zone.now.next_week.end_of_week.utc + 1.day).order('tasks.id DESC') }
+  scope :due_later,     lambda { where("(due_at IS NULL AND bucket = 'due_later') OR due_at >= ?", Time.zone.now.next_week.end_of_week.utc + 1.day).order('tasks.id DESC') }
 
   # Completion time scopes.
-  scope :completed_today,      where('completed_at >= ? AND completed_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc)
-  scope :completed_yesterday,  where('completed_at >= ? AND completed_at < ?', Time.zone.now.midnight.yesterday.utc, Time.zone.now.midnight.utc)
-  scope :completed_this_week,  where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_week.utc , Time.zone.now.midnight.yesterday.utc)
-  scope :completed_last_week,  where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_week.utc - 7.days, Time.zone.now.beginning_of_week.utc)
-  scope :completed_this_month, where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days)
-  scope :completed_last_month, where('completed_at >= ? AND completed_at < ?', (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc)
+  scope :completed_today,      lambda { where('completed_at >= ? AND completed_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc) }
+  scope :completed_yesterday,  lambda { where('completed_at >= ? AND completed_at < ?', Time.zone.now.midnight.yesterday.utc, Time.zone.now.midnight.utc) }
+  scope :completed_this_week,  lambda { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_week.utc , Time.zone.now.midnight.yesterday.utc) }
+  scope :completed_last_week,  lambda { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_week.utc - 7.days, Time.zone.now.beginning_of_week.utc) }
+  scope :completed_this_month, lambda { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days) }
+  scope :completed_last_month, lambda { where('completed_at >= ? AND completed_at < ?', (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc) }
 
   scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
@@ -232,7 +232,7 @@ class Task < ActiveRecord::Base
   rescue ArgumentError
     errors.add(:calendar, :invalid_date)
   end
-  
+
   #----------------------------------------------------------------------------
   def parse_calendar_date
     # always in 2012-10-28 06:28 format regardless of language

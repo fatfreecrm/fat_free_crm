@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/tasks/create" do
   include TasksHelper
@@ -23,26 +23,23 @@ describe "/tasks/create" do
       end
 
       it "should hide [Create Task] form and insert task partial" do
-        rendered.should have_rjs(:insert, :top) do |rjs|
-          with_tag("li[id=task_#{@task.id}]")
-        end
-        rendered.should include(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+        rendered.should include(%Q/jQuery('#due_asap').before('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'>/)
+        rendered.should include(%Q/jQuery('#task_#{@task.id}').effect("highlight"/)
       end
 
       it "should update tasks title" do
         if status == "assigned"
-          rendered.should include('$("title").update("Assigned Tasks")')
+          rendered.should include("jQuery('#title').html('Assigned Tasks');")
         else
-          rendered.should include('$("title").update("Tasks")')
+          rendered.should include("jQuery('#title').html('Tasks');")
         end
       end
 
       it "should update tasks sidebar" do
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=filters]")
-          with_tag("div[id=recently]")
-        end
-        rendered.should include(%Q/$("filters").visualEffect("shake"/)
+        rendered.should include("jQuery('#sidebar').html")
+        rendered.should have_text("Recent Items")
+        rendered.should have_text("Sometime Later")
+        rendered.should include("jQuery('#filters').effect('shake'")
       end
     end
   end
@@ -53,8 +50,8 @@ describe "/tasks/create" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
-    rendered.should include('$("flash").update(')
-    rendered.should include('crm.flash("notice", true)')
+    rendered.should include("jQuery('#flash').html")
+    rendered.should include("crm.flash('notice', true)")
   end
 
   it "should update recent items when assigning a task from pending tasks view" do
@@ -63,9 +60,8 @@ describe "/tasks/create" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
-    rendered.should have_rjs("recently") do |rjs|
-      with_tag("div[class=caption]", :text => "Recent Items")
-    end
+    rendered.should include("#recently")
+    rendered.should have_text("Recent Items")
   end
 
   it "should show flash message when creating a pending task from assigned tasks view" do
@@ -74,8 +70,8 @@ describe "/tasks/create" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
-    rendered.should include('$("flash").update(')
-    rendered.should include('crm.flash("notice", true)')
+    rendered.should include("jQuery('#flash').html")
+    rendered.should include("crm.flash('notice', true)")
   end
 
   it "should update recent items when creating a pending task from assigned tasks view" do
@@ -84,9 +80,8 @@ describe "/tasks/create" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
-    rendered.should have_rjs("recently") do |rjs|
-      with_tag("div[class=caption]", :text => "Recent Items")
-    end
+    rendered.should include("#recently")
+    rendered.should have_text("Recent Items")
   end
 
   (TASK_STATUSES - %w(assigned)).each do |status|
@@ -99,20 +94,17 @@ describe "/tasks/create" do
       end
 
       it "should update tasks title" do
-        rendered.should include('$("create_task_title").update("Tasks")')
+        rendered.should include("jQuery('#create_task_title').html('Tasks')")
       end
 
       it "should insert #{status} partial and highlight it" do
-        rendered.should have_rjs(:insert, :top) do |rjs|
-          with_tag("li[id=task_#{@task.id}]")
-        end
-        rendered.should include(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+        rendered.should include("jQuery('#tasks').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'>")
+        rendered.should include(%Q/jQuery('#task_#{@task.id}').effect("highlight"/)
       end
 
       it "should update recently viewed items" do
-        rendered.should have_rjs("recently") do |rjs|
-          with_tag("div[class=caption]", :text => "Recent Items")
-        end
+        rendered.should include("#recently")
+        rendered.should have_text("Recent Items")
       end
     end
   end
@@ -121,9 +113,9 @@ describe "/tasks/create" do
     assign(:task, FactoryGirl.build(:task, :name => nil)) # make it invalid
     render
 
-    rendered.should include('$("create_task").visualEffect("shake"')
-    rendered.should include(%/$$('#new_task input[type=submit]').invoke('enable')/)
-    
+    rendered.should include(%Q/jQuery('#create_task').effect("shake"/)
+    rendered.should include(%/jQuery('#new_task input[type=submit]').enable()/)
+
   end
 
 end

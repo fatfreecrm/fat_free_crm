@@ -236,10 +236,10 @@ module ApplicationHelper
   # Refresh sidebar using the action view within an arbitrary controller.
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
-    update_page do |page|
-      page[:sidebar].replace_html :partial => "layouts/sidebar", :locals => { :view => view, :action => action }
-      page[shake].visual_effect(:shake, :duration => 0.2, :distance => 3) if shake
-    end
+    text = ""
+    text << "jQuery('#sidebar').html('#{ j render(:partial => "layouts/sidebar", :locals => { :view => view, :action => action }) }');"
+    text << "jQuery('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
+    text.html_safe
   end
 
   # Display web presence mini-icons for Contact or Lead.

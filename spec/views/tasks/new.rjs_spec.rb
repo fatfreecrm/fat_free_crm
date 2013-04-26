@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/tasks/new" do
   include TasksHelper
@@ -19,7 +19,7 @@ describe "/tasks/new" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include('crm.flick("empty", "toggle")')
+    rendered.should include("crm.flick('empty', 'toggle')")
   end
 
   describe "new task" do
@@ -30,10 +30,8 @@ describe "/tasks/new" do
       params[:cancel] = nil
       render
 
-      rendered.should have_rjs("create_task") do |rjs|
-        with_tag("form[class=new_task]")
-      end
-      rendered.should include('crm.flip_form("create_task");')
+      rendered.should include("jQuery('#create_task').html")
+      rendered.should include("crm.flip_form('create_task');")
     end
   end
 
@@ -42,8 +40,8 @@ describe "/tasks/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not have_rjs("create_task")
-      rendered.should include('crm.flip_form("create_task");')
+      rendered.should_not include("jQuery('#create_task').html")
+      rendered.should include("crm.flip_form('create_task');")
     end
   end
 

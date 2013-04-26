@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/tasks/update" do
   include TasksHelper
@@ -24,42 +24,35 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
       render
 
-      rendered.should include(%Q/$("task_#{@task.id}").replace("")/)
-      rendered.should include(%Q/$("list_due_asap").visualEffect("fade"/)
+      rendered.should include(%Q/jQuery('#task_#{@task.id}').remove();/)
+      rendered.should include(%Q/jQuery('#list_due_asap').fadeOut/)
     end
 
     it "from Tasks tab: should show updated task in a new bucket" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
       render
-      rendered.should have_rjs(:insert, :top) do |rjs|
-        with_tag("li[id=task_#{@task.id}]")
-      end
-      rendered.should include(%Q/$("task_#{@task.id}").visualEffect("highlight"/)
+      rendered.should include("jQuery('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      rendered.should include("jQuery('#task_#{@task.id}').effect('highlight'")
     end
 
     it "from Tasks tab: should update tasks sidebar" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
       render
 
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=filters]")
-        with_tag("div[id=recently]")
-      end
-      rendered.should include(%Q/$("filters").visualEffect("shake"/)
+      rendered.should include("jQuery('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      rendered.should have_text("Assigned")
+      rendered.should have_text("Recent Items")
+      rendered.should include("jQuery('#filters').effect('shake'")
     end
 
     it "from asset page: should update task partial in place" do
       render
-      rendered.should have_rjs("task_#{@task.id}") do |rjs|
-        with_tag("li[id=task_#{@task.id}]")
-      end
+      rendered.should include("jQuery('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
     end
 
     it "from asset page: should update recently viewed items" do
       render
-      rendered.should have_rjs("recently") do |rjs|
-        with_tag("div[class=caption]")
-      end
+      rendered.should have_text("Recent Items")
     end
 
   end
@@ -77,9 +70,10 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include(%Q/$("task_#{@task.id}").replace("")/)
-      rendered.should include('("flash").update(')
-      rendered.should include('crm.flash("notice", true)')
+      rendered.should include("jQuery('#task_#{@task.id}').remove();")
+      rendered.should have_text("view assigned tasks")
+      rendered.should include("jQuery('#flash').html")
+      rendered.should include("crm.flash('notice', true)")
     end
 
     it "assigned tasks to me from Tasks tab: should remove the task and show flash message (pending)" do
@@ -90,9 +84,10 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
       render
-      rendered.should include(%Q/$("task_#{@task.id}").replace("")/)
-      rendered.should include('("flash").update(')
-      rendered.should include('crm.flash("notice", true)')
+      rendered.should include("jQuery('#task_#{@task.id}').remove();")
+      rendered.should have_text("view pending tasks")
+      rendered.should include("jQuery('#flash').html")
+      rendered.should include("crm.flash('notice', true)")
     end
 
     it "assigned tasks to somebody else from Tasks tab: should re-render task partial" do
@@ -102,9 +97,7 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
       render
-      rendered.should have_rjs("task_#{@task.id}") do |rjs|
-        with_tag("li[id=task_#{@task.id}]")
-      end
+      rendered.should include("jQuery('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
     end
 
     it "from Tasks tab: should update tasks sidebar" do
@@ -114,11 +107,10 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
       render
 
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=filters]")
-        with_tag("div[id=recently]")
-      end
-      rendered.should include(%Q/$("filters").visualEffect("shake"/)
+      rendered.should include("jQuery('#sidebar').html")
+      rendered.should have_text("Recent Items")
+      rendered.should have_text("Assigned")
+      rendered.should include("jQuery('#filters').effect('shake'")
     end
 
     it "from asset page: should should re-render task partial" do
@@ -126,9 +118,7 @@ describe "/tasks/update" do
       assign(:task, @task       = FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
       render
 
-      rendered.should have_rjs("task_#{@task.id}") do |rjs|
-        with_tag("li[id=task_#{@task.id}]")
-      end
+      rendered.should include("jQuery('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
     end
 
     it "from asset page: should update recently viewed items" do
@@ -136,9 +126,7 @@ describe "/tasks/update" do
       assign(:task, @task       = FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
       render
 
-      rendered.should have_rjs("recently") do |rjs|
-        with_tag("div[class=caption]")
-      end
+      rendered.should have_text("Recent Items")
     end
 
   end
@@ -149,9 +137,8 @@ describe "/tasks/update" do
     @task.errors.add(:name)
 
     render
-    rendered.should include(%/$("task_#{@task.id}").visualEffect("shake"/)
-    rendered.should include(%/$("task_submit").enable()/)
+    rendered.should include(%/jQuery('#task_#{@task.id}').effect("shake"/)
+    rendered.should include("jQuery('#task_submit').enable()")
   end
 
 end
-

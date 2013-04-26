@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/tasks/edit" do
   include TasksHelper
@@ -24,9 +24,7 @@ describe "/tasks/edit" do
       assign(:task, @task)
 
       render
-      rendered.should have_rjs("task_#{@task.id}") do |rjs|
-        with_tag("li[id=task_#{@task.id}]")
-      end
+      rendered.should include("jQuery('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
       if view == "pending"
         rendered.should include('type=\\"checkbox\\"')
       else
@@ -39,7 +37,7 @@ describe "/tasks/edit" do
       assign(:task, stub_task(view))
 
       render
-      rendered.should include('crm.hide_form("create_task"')
+      rendered.should include("crm.hide_form('create_task'")
     end
 
     it "edit: should hide previously open [Edit Task] form" do
@@ -49,9 +47,7 @@ describe "/tasks/edit" do
       assign(:task, stub_task(view))
 
       render
-      rendered.should have_rjs("task_#{@previous.id}") do |rjs|
-        with_tag("li[id=task_#{@previous.id}]")
-      end
+      rendered.should include("jQuery('#task_#{@previous.id}').replaceWith")
     end
 
     it "edit: should remove previous [Edit Task] form if previous task is not available" do
@@ -61,7 +57,7 @@ describe "/tasks/edit" do
       assign(:task, stub_task(view))
 
       render
-      rendered.should include(%Q/crm.flick("task_41", "remove");/)
+      rendered.should include("crm.flick('task_41', 'remove');")
     end
 
     it "edit: should turn off highlight and replace current task with [Edit Task] form" do
@@ -70,11 +66,10 @@ describe "/tasks/edit" do
       assign(:task, @task)
 
       render
-      rendered.should include(%Q/crm.highlight_off("task_#{@task.id}");/)
-      rendered.should have_rjs("task_#{@task.id}") do |rjs|
-        with_tag("form[class=edit_task]")
-      end
-      rendered.should include('$("task_name").focus()')
+      rendered.should include("crm.highlight_off('task_#{@task.id}');")
+      rendered.should include("jQuery('#task_#{@task.id}').html")
+      rendered.should have_text("On Specific Date")
+      rendered.should include("jQuery('#task_name').focus();")
     end
 
   end

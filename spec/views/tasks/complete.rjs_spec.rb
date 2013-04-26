@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/tasks/complete" do
   include TasksHelper
@@ -26,8 +26,8 @@ describe "/tasks/complete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include(%Q/$("task_#{@task.id}").visualEffect("fade"/)
-      rendered.should include(%Q/$("list_due_asap").visualEffect("fade"/)
+      rendered.should include("jQuery('#task_#{@task.id}').fadeOut")
+      rendered.should include("jQuery('#list_due_asap').fadeOut")
     end
 
     it "should update tasks sidebar" do
@@ -37,11 +37,10 @@ describe "/tasks/complete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=filters]")
-        with_tag("div[id=recently]")
-      end
-      rendered.should include(%Q/$("filters").visualEffect("shake"/)
+      rendered.should include("jQuery('#sidebar').html")
+      rendered.should have_text("Assigned")
+      rendered.should have_text("Recent Items")
+      rendered.should include("jQuery('#filters').effect('shake'")
     end
   end
 
@@ -51,9 +50,7 @@ describe "/tasks/complete" do
       assign(:task, @task)
 
       render
-      rendered.should have_rjs("task_#{@task.id}") do |rjs|
-        with_tag("li[id=task_#{@task.id}]")
-      end
+      rendered.should include("jQuery('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
       rendered.should include('<strike>')
     end
 
@@ -63,9 +60,7 @@ describe "/tasks/complete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
       render
-      rendered.should have_rjs("recently") do |rjs|
-        with_tag("div[class=caption]")
-      end
+      rendered.should have_text("Recent Items")
     end
   end
 

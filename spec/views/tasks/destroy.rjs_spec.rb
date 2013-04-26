@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/tasks/destroy" do
   include TasksHelper
@@ -26,19 +26,18 @@ describe "/tasks/destroy" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
         render
-        rendered.should include(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
-        rendered.should include(%Q/$("list_due_asap").visualEffect("fade"/)
+        rendered.should include("jQuery('#task_#{@task.id}').slideUp")
+        rendered.should include("jQuery('#list_due_asap').fadeOut")
       end
 
       it "should update tasks sidebar" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
         render
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=filters]")
-          with_tag("div[id=recently]")
-        end
-        rendered.should include(%Q/$("filters").visualEffect("shake"/)
+        rendered.should include("jQuery('#sidebar').html")
+        rendered.should have_text("Recent Items")
+        rendered.should have_text("Completed")
+        rendered.should include("jQuery('#filters').effect('shake'")
       end
     end
   end
@@ -50,9 +49,8 @@ describe "/tasks/destroy" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
       render
-      rendered.should include(%Q/$("task_#{@task.id}").visualEffect("blind_up"/)
-      rendered.should_not include(%Q/$("list_due_asap").visualEffect("fade"/) # bucket is not empty
+      rendered.should include("jQuery('#task_#{@task.id}').slideUp")
+      rendered.should_not include("fadeOut") # bucket is not empty
     end
   end
 end
-

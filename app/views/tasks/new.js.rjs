@@ -1,9 +1,0 @@
-page.call "crm.flick", :empty, :toggle
-page.call "crm.flip_form", :create_task
-
-unless params[:cancel].true?
-  page[:create_task].replace_html :partial => "new"
-  page.call "crm.set_title", :create_task, t(:create_task)
-else
-  page.call "crm.set_title", :create_task, (@view == "assigned" ? t(:assigned_tasks) : t(:tasks))
-end

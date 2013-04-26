@@ -10,11 +10,6 @@ module SelectorHelpers
     page.execute_script("jQuery('##{field_id}').val('#{option_value}')")
   end
 
-  def check_filter(filter_name)
-    filter_checkbox = find(:xpath, "//input[@type='checkbox'][@value='due_#{filter_name}']")
-    filter_checkbox.click
-  end
-
   def click_filter_tab(filter_name)
     tab = find(:xpath, "//div[@class='filters']//td[contains(text(), '#{filter_name}')]")
     tab.click
