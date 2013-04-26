@@ -77,7 +77,7 @@ class Opportunity < ActiveRecord::Base
   exportable
   sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
 
-  has_ransackable_associations %w(account contacts tags activities emails comments)
+  has_ransackable_associations %w(account contacts tags campaign activities emails comments)
   ransack_can_autocomplete
 
   validates :stage, :inclusion => { :in => Setting.unroll(:opportunity_stage).map{|s| s.last.to_s } }
