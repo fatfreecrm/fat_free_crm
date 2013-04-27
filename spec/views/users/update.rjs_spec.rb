@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/users/update" do
   include UsersHelper
@@ -16,17 +16,17 @@ describe "/users/update" do
   describe "no errors:" do
     it "should flip [Edit Profile] form" do
       render
-      rendered.should include('crm.flip_form("edit_profile")')
+      rendered.should include("crm.flip_form('edit_profile')")
     end
 
     it "should update Welcome, user!" do
       render
-      rendered.should have_rjs("welcome_username")
+      rendered.should include("jQuery('#welcome_username').html('#{@user.first_name}')")
     end
 
     it "should update actual user profile information" do
       render
-      rendered.should have_rjs("profile")
+      rendered.should include("jQuery('#profile').html")
     end
   end # no errors
 
@@ -37,17 +37,9 @@ describe "/users/update" do
 
     it "should redraw the [Edit Profile] form and shake it" do
       render
-      rendered.should have_rjs("edit_profile") do |rjs|
-        with_tag("form[class=edit_user]")
-      end
-      rendered.should include('$("edit_profile").visualEffect("shake"')
-      rendered.should include('$("user_email").focus()')
-    end
-
-    it "should keep welcome or profile information intact" do
-      render
-      rendered.should_not have_rjs("welcome_username")
-      rendered.should_not have_rjs("profile")
+      rendered.should include("jQuery('#edit_profile').html")
+      rendered.should include(%Q/jQuery('#edit_profile').effect("shake"/)
+      rendered.should include("jQuery('#user_email').focus();")
     end
 
   end # errors

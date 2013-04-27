@@ -25,7 +25,7 @@ describe "admin/users/create" do
     end
 
     # it "should update pagination" do
-    #   rendered.should have_rjs("paginate")
+    #   rendered.should include("#paginate")
     # end
   end
 

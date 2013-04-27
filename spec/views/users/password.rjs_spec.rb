@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/users/password" do
   include UsersHelper
@@ -17,21 +17,19 @@ describe "/users/password" do
     params[:cancel] = "true"
 
     render
-    rendered.should include('crm.flip_form("change_password")')
-    rendered.should include('crm.set_title("change_password", "My Profile")')
+    rendered.should include("crm.flip_form('change_password')")
+    rendered.should include("crm.set_title('change_password', 'My Profile')")
   end
 
   it "edit profile: should hide [Edit Profile] and [Upload Avatar] forms and show [Change Password]" do
     render
 
-    rendered.should have_rjs("change_password") do |rjs|
-      with_tag("form[class=edit_user]")
-    end
-    rendered.should include('crm.hide_form("edit_profile")')
-    rendered.should include('crm.hide_form("upload_avatar")')
-    rendered.should include('crm.flip_form("change_password")')
-    rendered.should include('crm.set_title("change_password"')
-    rendered.should include('$("current_password").focus()')
+    rendered.should include("jQuery('#change_password').html")
+    rendered.should include("crm.hide_form('edit_profile');")
+    rendered.should include("crm.hide_form('upload_avatar');")
+    rendered.should include("crm.flip_form('change_password');")
+    rendered.should include("crm.set_title('change_password', 'Change Password');")
+    rendered.should include("jQuery('#current_password').focus();")
   end
 
 end
