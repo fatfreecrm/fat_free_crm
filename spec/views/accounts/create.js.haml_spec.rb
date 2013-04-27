@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/accounts/create" do
   include AccountsHelper
@@ -23,21 +23,18 @@ describe "/accounts/create" do
     end
 
     it "should hide [Create Account] form and insert account partial" do
-      rendered.should have_rjs(:insert, :top) do |rjs|
-        with_tag("li[id=account_#{@account.id}]")
-      end
-      rendered.should include(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
+      rendered.should include("jQuery('#accounts').prepend('<li class=\\'account highlight\\' id=\\'account_#{@account.id}\\'")
+      rendered.should include(%Q/jQuery('#account_#{@account.id}').effect("highlight"/)
     end
 
     it "should update pagination" do
-      rendered.should have_rjs("paginate")
+      rendered.should include("#paginate")
     end
 
     it "should refresh accounts sidebar" do
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=filters]")
-        with_tag("div[id=recently]")
-      end
+      rendered.should include("#sidebar")
+      rendered.should have_text("Account Categories")
+      rendered.should have_text("Recent Items")
     end
   end
 
@@ -47,10 +44,8 @@ describe "/accounts/create" do
       assign(:users, [ current_user ])
       render
 
-      rendered.should have_rjs("create_account") do |rjs|
-        with_tag("form[class=new_account]")
-      end
-      rendered.should include('$("create_account").visualEffect("shake"')
+      rendered.should include("#create_account")
+      rendered.should include(%Q/jQuery('#create_account').effect("shake"/)
     end
   end
 

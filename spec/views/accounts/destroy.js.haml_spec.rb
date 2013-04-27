@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/accounts/destroy" do
   include AccountsHelper
@@ -17,19 +17,17 @@ describe "/accounts/destroy" do
   end
 
   it "should blind up destroyed account partial" do
-    rendered.should include(%Q/$("account_#{@account.id}").visualEffect("blind_up"/)
+    rendered.should include("jQuery('#account_#{@account.id}').slideUp")
   end
 
   it "should update accounts pagination" do
-    rendered.should have_rjs("paginate")
+    rendered.should include("#paginate")
   end
 
   it "should update accounts sidebar" do
-    rendered.should have_rjs("sidebar") do |rjs|
-      with_tag("div[id=filters]")
-      with_tag("div[id=recently]")
-    end
+    rendered.should include("#sidebar")
+    rendered.should have_text("Account Categories")
+    rendered.should have_text("Recent Items")
   end
 
 end
-

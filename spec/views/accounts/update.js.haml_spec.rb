@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/accounts/update" do
   include AccountsHelper
@@ -24,17 +24,15 @@ describe "/accounts/update" do
 
       it "should flip [edit_account] form" do
         render
-        rendered.should_not have_rjs("account_#{@account.id}")
-        rendered.should include('crm.flip_form("edit_account"')
+        rendered.should_not include("account_#{@account.id}")
+        rendered.should include("crm.flip_form('edit_account'")
       end
 
       it "should update sidebar" do
         render
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=summary]")
-          with_tag("div[id=recently]")
-        end
-        rendered.should include('$("summary").visualEffect("shake"')
+        rendered.should include("jQuery('#sidebar').html")
+        rendered.should have_text("Recent Items")
+        rendered.should include("jQuery('#summary').effect('shake'")
       end
     end
 
@@ -45,20 +43,17 @@ describe "/accounts/update" do
 
       it "should update sidebar" do
         render
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=filters]")
-          with_tag("div[id=recently]")
-        end
+        rendered.should include("#sidebar")
+        rendered.should have_text("Account Categories")
+        rendered.should have_text("Recent Items")
       end
 
       it "should replace [edit_account] form with account partial and highligh it" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
         render
 
-        rendered.should have_rjs("account_#{@account.id}") do |rjs|
-          with_tag("li[id=account_#{@account.id}]")
-        end
-        rendered.should include(%Q/$("account_#{@account.id}").visualEffect("highlight"/)
+        rendered.should include("#account_#{@account.id}")
+        rendered.should include(%Q/jQuery('#account_#{@account.id}').effect("highlight"/)
       end
     end
   end # no errors
@@ -76,10 +71,8 @@ describe "/accounts/update" do
       it "should redraw the [edit_account] form and shake it" do
         render
 
-        rendered.should have_rjs("edit_account") do |rjs|
-          with_tag("form[class=edit_account]")
-        end
-        rendered.should include('$("edit_account").visualEffect("shake"')
+        rendered.should include("#edit_account")
+        rendered.should include(%Q/jQuery('#edit_account').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -92,10 +85,8 @@ describe "/accounts/update" do
       it "should redraw the [edit_account] form and shake it" do
         render
 
-        rendered.should have_rjs("account_#{@account.id}") do |rjs|
-          with_tag("form[class=edit_account]")
-        end
-        rendered.should include(%Q/$("account_#{@account.id}").visualEffect("shake"/)
+        rendered.should include("account_#{@account.id}")
+        rendered.should include(%Q/jQuery('#account_#{@account.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end

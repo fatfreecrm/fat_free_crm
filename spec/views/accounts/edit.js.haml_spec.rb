@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/accounts/edit" do
   include AccountsHelper
@@ -18,9 +18,7 @@ describe "/accounts/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should have_rjs("account_#{@account.id}") do |rjs|
-      with_tag("li[id=account_#{@account.id}]")
-    end
+    rendered.should include("account_#{@account.id}")
   end
 
   it "cancel from account landing page: should hide [Edit Account] form" do
@@ -28,7 +26,7 @@ describe "/accounts/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include('crm.flip_form("edit_account"')
+    rendered.should include("crm.flip_form('edit_account'")
   end
 
   it "edit: should hide previously open [Edit Account] for and replace it with account partial" do
@@ -36,9 +34,7 @@ describe "/accounts/edit" do
     assign(:previous, previous = FactoryGirl.create(:account, :user => current_user))
 
     render
-    rendered.should have_rjs("account_#{previous.id}") do |rjs|
-      with_tag("li[id=account_#{previous.id}]")
-    end
+    rendered.should include("account_#{previous.id}")
   end
 
   it "edit: should remove previously open [Edit Account] if it's no longer available" do
@@ -46,28 +42,24 @@ describe "/accounts/edit" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include(%Q/crm.flick("account_#{previous}", "remove");/)
+    rendered.should include("crm.flick('account_#{previous}', 'remove');")
   end
 
   it "edit from accounts index page: should turn off highlight, hide [Create Account] form, and replace current account with [edit account] form" do
     params[:cancel] = nil
 
     render
-    rendered.should include(%Q/crm.highlight_off("account_#{@account.id}");/)
-    rendered.should include('crm.hide_form("create_account")')
-    rendered.should have_rjs("account_#{@account.id}") do |rjs|
-      with_tag("form[class=edit_account]")
-    end
+    rendered.should include("crm.highlight_off('account_#{@account.id}');")
+    rendered.should include("crm.hide_form('create_account')")
+    rendered.should include("account_#{@account.id}")
   end
 
   it "edit from account landing page: should show [edit account] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should have_rjs("edit_account") do |rjs|
-      with_tag("form[class=edit_account]")
-    end
-    rendered.should include('crm.flip_form("edit_account"')
+    rendered.should include("edit_account")
+    rendered.should include("crm.flip_form('edit_account'")
   end
 
 end
