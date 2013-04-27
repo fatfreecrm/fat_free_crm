@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/contacts/update" do
   include ContactsHelper
@@ -25,16 +25,14 @@ describe "/contacts/update" do
 
       it "should flip [edit_contact] form" do
         render
-        rendered.should_not have_rjs("contact_#{@contact.id}")
+        rendered.should_not include("contact_#{@contact.id}")
       end
 
       it "should update sidebar" do
         render
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=summary]")
-          with_tag("div[id=recently]")
-        end
-        rendered.should include('$("summary").visualEffect("shake"')
+        rendered.should include("#sidebar")
+        rendered.should have_text("Recent Items")
+        rendered.should include("jQuery('#summary').effect('shake'")
       end
     end
 
@@ -43,21 +41,18 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
       end
 
-      it "should replace [Edit Contact] with contact partial and highligh it" do
+      it "should replace [Edit Contact] with contact partial and highlight it" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render
-        rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
-          with_tag("li[id=contact_#{@contact.id}]")
-        end
-        rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+        rendered.should include("jQuery('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("highlight"/)
       end
 
       it "should update sidebar" do
         render
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=recently]")
-        end
+        rendered.should include("#sidebar")
+        rendered.should have_text("Recent Items")
       end
     end
 
@@ -70,17 +65,13 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render
-        rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
-          with_tag("li[id=contact_#{@contact.id}]")
-        end
-        rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+        rendered.should include("jQuery('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("highlight"/)
       end
 
       it "should update recently viewed items" do
         render
-        rendered.should have_rjs("recently") do |rjs|
-          with_tag("div[class=caption]")
-        end
+        rendered.should include("#recently")
       end
     end
   end # no errors
@@ -97,11 +88,9 @@ describe "/contacts/update" do
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should have_rjs("edit_contact") do |rjs|
-          with_tag("form[class=edit_contact]")
-        end
+        rendered.should include("jQuery('#edit_contact').html")
         rendered.should include('crm.create_or_select_account(false)')
-        rendered.should include('$("edit_contact").visualEffect("shake"')
+        rendered.should include(%Q/jQuery('#edit_contact').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -113,11 +102,9 @@ describe "/contacts/update" do
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
-          with_tag("form[class=edit_contact]")
-        end
+        rendered.should include("jQuery('#contact_#{@contact.id}').html")
         rendered.should include('crm.create_or_select_account(false)')
-        rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
+        rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -134,10 +121,8 @@ describe "/contacts/update" do
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
-          with_tag("form[class=edit_contact]")
-        end
-        rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("shake"/)
+        rendered.should include("jQuery('#contact_#{@contact.id}').html")
+        rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end

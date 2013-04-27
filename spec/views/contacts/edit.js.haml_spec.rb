@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/contacts/edit" do
   include ContactsHelper
@@ -20,9 +20,7 @@ describe "/contacts/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
-      with_tag("li[id=contact_#{@contact.id}]")
-    end
+    rendered.should include("jQuery('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
   end
 
   it "cancel from contact landing page: should hide [Edit Contact] form" do
@@ -30,7 +28,7 @@ describe "/contacts/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include('crm.flip_form("edit_contact"')
+    rendered.should include("crm.flip_form('edit_contact'")
   end
 
   it "edit: should hide previously open [Edit Contact] for and replace it with contact partial" do
@@ -38,9 +36,7 @@ describe "/contacts/edit" do
     assign(:previous, previous = FactoryGirl.create(:contact, :user => current_user))
 
     render
-    rendered.should have_rjs("contact_#{previous.id}") do |rjs|
-      with_tag("li[id=contact_#{previous.id}]")
-    end
+    rendered.should include("jQuery('#contact_#{previous.id}').html")
   end
 
   it "edit: should hide and remove previously open [Edit Contact] if it's no longer available" do
@@ -48,34 +44,31 @@ describe "/contacts/edit" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include(%Q/crm.flick("contact_#{previous}", "remove");/)
+    rendered.should include("crm.flick('contact_#{previous}', 'remove');")
   end
 
   it "edit from contacts index page: should turn off highlight, hide [Create Contact] form, and replace current contact with [Edit Contact] form" do
     params[:cancel] = nil
 
     render
-    rendered.should include(%Q/crm.highlight_off("contact_#{@contact.id}");/)
-    rendered.should include('crm.hide_form("create_contact")')
-    rendered.should have_rjs("contact_#{@contact.id}") do |rjs|
-      with_tag("form[class=edit_contact]")
-    end
+    rendered.should include("crm.highlight_off('contact_#{@contact.id}');")
+    rendered.should include("crm.hide_form('create_contact')")
+    rendered.should include("jQuery('#contact_#{@contact.id}').html")
+    rendered.should include("crm.create_or_select_account(false)")
   end
 
   it "edit from contact landing page: should show [Edit Contact] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should have_rjs("edit_contact") do |rjs|
-      with_tag("form[class=edit_contact]")
-    end
-    rendered.should include('crm.flip_form("edit_contact"')
+    rendered.should include("jQuery('#edit_contact').html")
+    rendered.should include("crm.flip_form('edit_contact'")
   end
 
   it "should show handle new or existing account for the contact" do
 
     render
-    rendered.should include("crm.create_or_select_account")
+    rendered.should include("crm.create_or_select_account(false)")
   end
 
 end

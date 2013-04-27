@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/contacts/create" do
   include ContactsHelper
@@ -21,34 +21,29 @@ describe "/contacts/create" do
     it "should hide [Create Contact] form and insert contact partial" do
       render
 
-      rendered.should have_rjs(:insert, :top) do |rjs|
-        with_tag("li[id=contact_#{@contact.id}]")
-      end
-      rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("highlight"/)
+      rendered.should include("jQuery('#contacts').prepend('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+      rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("highlight"/)
     end
 
     it "should refresh sidebar when called from contacts index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
       render
 
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=recently]")
-      end
+      rendered.should include("#sidebar")
+      rendered.should have_text("Recent Items")
     end
 
     it "should update pagination when called from contacts index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
       render
 
-      rendered.should have_rjs("paginate")
+      rendered.should include("#paginate")
     end
 
     it "should update recently viewed items when called from related asset" do
       render
 
-      rendered.should have_rjs("recently") do |rjs|
-        with_tag("div[class=caption]")
-      end
+      rendered.should include("#recently")
     end
   end
 
@@ -62,10 +57,8 @@ describe "/contacts/create" do
 
       render
 
-      rendered.should have_rjs("create_contact") do |rjs|
-        with_tag("form[class=new_contact]")
-      end
-      rendered.should include('visualEffect("shake"')
+      rendered.should include("jQuery('#create_contact').html")
+      rendered.should include(%Q/jQuery('#create_contact').effect("shake"/)
     end
   end
 

@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/contacts/index" do
   include ContactsHelper
@@ -16,22 +16,18 @@ describe "/contacts/index" do
     assign(:contacts, [ FactoryGirl.create(:contact, :id => 42) ].paginate)
 
     render :template => 'contacts/index', :formats => [:js]
-    
-    rendered.should have_rjs("contacts") do |rjs|
-      with_tag("li[id=contact_#{42}]")
-    end
-    rendered.should have_rjs("paginate")
+
+    rendered.should include("jQuery('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
+    rendered.should include("#paginate")
   end
 
   it "should render [empty] template if @contacts collection if there are no contacts" do
     assign(:contacts, [].paginate)
 
     render :template => 'contacts/index', :formats => [:js]
-    
-    rendered.should have_rjs("contacts") do |rjs|
-      with_tag("div[id=empty]")
-    end
-    rendered.should have_rjs("paginate")
+
+    rendered.should include("jQuery('#contacts').html('<div id=\\'empty\\'>")
+    rendered.should include("#paginate")
   end
 
 end

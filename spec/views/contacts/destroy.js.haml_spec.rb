@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/contacts/destroy" do
   include ContactsHelper
@@ -16,31 +16,29 @@ describe "/contacts/destroy" do
 
   it "should blind up destroyed contact partial" do
     render
-    rendered.should include(%Q/$("contact_#{@contact.id}").visualEffect("blind_up"/)
+    rendered.should include("jQuery('#contact_#{@contact.id}').slideUp(250);")
   end
 
   it "should update contacts sidebar when called from contacts index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
     render
 
-    rendered.should have_rjs("sidebar") do |rjs|
-      with_tag("div[id=recently]")
-    end
+    rendered.should include("#sidebar")
+    rendered.should have_text("Recent Items")
   end
 
   it "should update pagination when called from contacts index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
     render
 
-    rendered.should have_rjs("paginate")
+    rendered.should include("#paginate")
   end
 
   it "should update recently viewed items when called from related asset" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
     render
 
-    rendered.should have_rjs("recently")
+    rendered.should include("#recently")
   end
 
 end
-
