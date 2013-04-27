@@ -61,7 +61,7 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       end
 
-      it "should replace [Edit Contact] with contact partial and highligh it" do
+      it "should replace [Edit Contact] with contact partial and highlight it" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render

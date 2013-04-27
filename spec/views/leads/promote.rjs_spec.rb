@@ -47,7 +47,7 @@ describe "/leads/promote" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       end
 
-      it "should replace [Convert Lead] with lead partial and highligh it" do
+      it "should replace [Convert Lead] with lead partial and highlight it" do
         render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
@@ -73,7 +73,7 @@ describe "/leads/promote" do
         assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity))
       end
 
-      it "should replace [Convert Lead] with lead partial and highligh it" do
+      it "should replace [Convert Lead] with lead partial and highlight it" do
         render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")

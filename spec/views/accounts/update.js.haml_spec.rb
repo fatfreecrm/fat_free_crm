@@ -48,7 +48,7 @@ describe "/accounts/update" do
         rendered.should have_text("Recent Items")
       end
 
-      it "should replace [edit_account] form with account partial and highligh it" do
+      it "should replace [edit_account] form with account partial and highlight it" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
         render
 

@@ -1,0 +1,25 @@
+- entity_name = controller.controller_name.singularize.underscore #account
+- @entity = instance_variable_get("@#{entity_name}")
+- id = called_from_landing_page? ? "edit_#{entity_name}" : dom_id(@entity)
+
+- if @entity.errors.empty?
+  - if called_from_landing_page?
+    crm.flip_form('edit_#{entity_name}');
+    crm.set_title('edit_#{entity_name}', '#{h @entity.name}');
+    = refresh_sidebar(:show, :summary)
+  - else
+    jQuery('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+    jQuery('##{id}').effect("highlight", { duration:1500 });
+    - if called_from_index_page?
+      = refresh_sidebar(:index, :filters)
+    - elsif called_from_landing_page?(:accounts)
+      = refresh_sidebar_for(:accounts, :show, :summary)
+    - elsif called_from_landing_page?(:campaigns)
+      = refresh_sidebar_for(:campaigns, :show, :summary)
+    - else
+      jQuery('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+- else
+  jQuery('##{id}').html('#{ j render(:partial => "edit") }');
+  crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
+  jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
+  jQuery('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();

@@ -41,7 +41,7 @@ describe "/campaigns/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns"
       end
 
-      it "should replace [Edit Campaign] with campaign partial and highligh it" do
+      it "should replace [Edit Campaign] with campaign partial and highlight it" do
         render
         rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
           with_tag("li[id=campaign_#{@campaign.id}]")

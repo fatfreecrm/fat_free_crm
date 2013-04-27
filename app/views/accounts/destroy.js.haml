@@ -3,4 +3,4 @@
 
 jQuery('##{dom_id(@entity)}').slideUp(250);
 = refresh_sidebar(:index, :filters)
-jQuery('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
+jQuery('#paginate').replaceWith('#{ j render(:partial => "shared/paginate_with_per_page") }');

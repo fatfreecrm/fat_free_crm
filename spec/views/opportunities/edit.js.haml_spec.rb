@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/opportunities/edit" do
   include OpportunitiesHelper
@@ -22,9 +22,7 @@ describe "/opportunities/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
-      with_tag("li[id=opportunity_#{@opportunity.id}]")
-    end
+    rendered.should include("jQuery('#opportunity_#{@opportunity.id}').replaceWith")
   end
 
   it "cancel from opportunity landing page: should hide [Edit Opportunity] form" do
@@ -32,7 +30,7 @@ describe "/opportunities/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include('crm.flip_form("edit_opportunity"')
+    rendered.should include("crm.flip_form('edit_opportunity'")
   end
 
   it "edit: should hide previously open [Edit Opportunity] for and replace it with opportunity partial" do
@@ -40,9 +38,7 @@ describe "/opportunities/edit" do
     assign(:previous, previous = FactoryGirl.create(:opportunity, :user => current_user))
 
     render
-    rendered.should have_rjs("opportunity_#{previous.id}") do |rjs|
-      with_tag("li[id=opportunity_#{previous.id}]")
-    end
+    rendered.should include("jQuery('#opportunity_#{previous.id}').replaceWith")
   end
 
   it "edit: remove previously open [Edit Opportunity] if it's no longer available" do
@@ -50,28 +46,24 @@ describe "/opportunities/edit" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include(%Q/crm.flick("opportunity_#{previous}", "remove");/)
+    rendered.should include("crm.flick('opportunity_#{previous}', 'remove');")
   end
 
   it "edit from opportunities index page: should turn off highlight, hide [Create Opportunity] form, and replace current opportunity with [Edit Opportunity] form" do
     params[:cancel] = nil
 
     render
-    rendered.should include(%Q/crm.highlight_off("opportunity_#{@opportunity.id}");/)
-    rendered.should include('crm.hide_form("create_opportunity")')
-    rendered.should have_rjs("opportunity_#{@opportunity.id}") do |rjs|
-      with_tag("form[class=edit_opportunity]")
-    end
+    rendered.should include("crm.highlight_off('opportunity_#{@opportunity.id}');")
+    rendered.should include("crm.hide_form('create_opportunity')")
+    rendered.should include("jQuery('#opportunity_#{@opportunity.id}').html")
   end
 
   it "edit from opportunity landing page: should show [Edit Opportunity] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should have_rjs("edit_opportunity") do |rjs|
-      with_tag("form[class=edit_opportunity]")
-    end
-    rendered.should include('crm.flip_form("edit_opportunity"')
+    rendered.should include("jQuery('#edit_opportunity').html")
+    rendered.should include("crm.flip_form('edit_opportunity'")
   end
 
   it "edit: should handle new or existing account for the opportunity" do

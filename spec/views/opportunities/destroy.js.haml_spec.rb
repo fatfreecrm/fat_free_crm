@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/opportunities/destroy" do
   before do
@@ -15,7 +15,7 @@ describe "/opportunities/destroy" do
 
   it "should blind up destroyed opportunity partial" do
     render
-    rendered.should include(%Q/$("opportunity_#{@opportunity.id}").visualEffect("blind_up"/)
+    rendered.should include("jQuery('#opportunity_#{@opportunity.id}').slideUp")
   end
 
   it "should update opportunities sidebar when called from opportunities index" do
@@ -23,10 +23,9 @@ describe "/opportunities/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
-    rendered.should have_rjs("sidebar") do |rjs|
-      with_tag("div[id=recently]")
-    end
-    rendered.should include('$("filters").visualEffect("shake"')
+    rendered.should include("#sidebar")
+    rendered.should have_text("Recent Items")
+    rendered.should include("jQuery('#filters').effect('shake'")
   end
 
   it "should update pagination when called from opportunities index" do
@@ -34,7 +33,7 @@ describe "/opportunities/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
-    rendered.should have_rjs("paginate")
+    rendered.should include("#paginate")
   end
 
   it "should update related account sidebar when called from related account" do
@@ -42,10 +41,9 @@ describe "/opportunities/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
     render
 
-    rendered.should have_rjs("sidebar") do |rjs|
-      with_tag("div[class=panel][id=summary]")
-      with_tag("div[class=panel][id=recently]")
-    end
+    rendered.should include("#sidebar")
+    rendered.should have_text("Account Summary")
+    rendered.should have_text("Recent Items")
   end
 
   it "should update related campaign sidebar when called from related campaign" do
@@ -53,17 +51,16 @@ describe "/opportunities/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 
-    rendered.should have_rjs("sidebar") do |rjs|
-      with_tag("div[class=panel][id=summary]")
-      with_tag("div[class=panel][id=recently]")
-    end
+    rendered.should include("#sidebar")
+    rendered.should have_text("Campaign Summary")
+    rendered.should have_text("Recent Items")
   end
 
   it "should update recently viewed items when called from related contact" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
     render
 
-    rendered.should have_rjs("recently")
+    rendered.should include("#recently")
   end
 
 end

@@ -36,7 +36,7 @@ describe "/contacts/edit" do
     assign(:previous, previous = FactoryGirl.create(:contact, :user => current_user))
 
     render
-    rendered.should include("jQuery('#contact_#{previous.id}').html")
+    rendered.should include("jQuery('#contact_#{previous.id}').replaceWith")
   end
 
   it "edit: should hide and remove previously open [Edit Contact] if it's no longer available" do

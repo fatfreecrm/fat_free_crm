@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/opportunities/create" do
   before do
@@ -21,27 +21,24 @@ describe "/opportunities/create" do
     it "should hide [Create Opportunity] form and insert opportunity partial" do
       render
 
-      rendered.should have_rjs(:insert, :top) do |rjs|
-        with_tag("li[id=opportunity_#{@opportunity.id}]")
-      end
-      rendered.should include(%Q/$("opportunity_#{@opportunity.id}").visualEffect("highlight"/)
+      rendered.should include("jQuery('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}\\'")
+      rendered.should include(%Q/jQuery('#opportunity_#{@opportunity.id}').effect("highlight"/)
     end
 
     it "should update sidebar filters and recently viewed items when called from opportunities page" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
       render
 
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=filters]")
-        with_tag("div[id=recently]")
-      end
+      rendered.should include("#sidebar")
+      rendered.should have_text("Opportunity Stages")
+      rendered.should have_text("Recent Items")
     end
 
     it "should update pagination when called from opportunities index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
       render
 
-      rendered.should have_rjs("paginate")
+      rendered.should include("#paginate")
     end
 
     it "should update related account sidebar when called from related account" do
@@ -49,10 +46,8 @@ describe "/opportunities/create" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
       render
 
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[class=panel][id=summary]")
-        with_tag("div[class=panel][id=recently]")
-      end
+      rendered.should include("#sidebar")
+      rendered.should have_text("Recent Items")
     end
 
     it "should update related campaign sidebar when called from related campaign" do
@@ -60,19 +55,16 @@ describe "/opportunities/create" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
       render
 
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[class=panel][id=summary]")
-        with_tag("div[class=panel][id=recently]")
-      end
+      rendered.should include("#sidebar")
+      rendered.should have_text("Campaign Summary")
+      rendered.should have_text("Recent Items")
     end
 
     it "should update sidebar when called from related contact" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
       render
 
-      rendered.should have_rjs("recently") do |rjs|
-        with_tag("div[class=caption]")
-      end
+      rendered.should include("#recently")
     end
   end
 
@@ -86,11 +78,9 @@ describe "/opportunities/create" do
 
       render
 
-      rendered.should have_rjs("create_opportunity") do |rjs|
-        with_tag("form[class=new_opportunity]")
-      end
-      rendered.should include('$("create_opportunity").visualEffect("shake"')
-      rendered.should include("crm.create_or_select_account")
+      rendered.should include("jQuery('#create_opportunity').html")
+      rendered.should include(%Q/jQuery('#create_opportunity').effect("shake"/)
+      rendered.should include("crm.create_or_select_account(false)")
     end
   end
 

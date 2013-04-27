@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/opportunities/new" do
   include OpportunitiesHelper
@@ -21,7 +21,7 @@ describe "/opportunities/new" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include('crm.flick("empty", "toggle")')
+    rendered.should include("crm.flick('empty', 'toggle')")
   end
 
   describe "new opportunity" do
@@ -29,16 +29,14 @@ describe "/opportunities/new" do
       params[:cancel] = nil
       render
 
-      rendered.should have_rjs("create_opportunity") do |rjs|
-        with_tag("form[class=new_opportunity]")
-      end
+      rendered.should include("#create_opportunity")
     end
 
     it "should call JavaScript functions to load Calendar popup" do
       params[:cancel] = nil
       render
 
-      rendered.should include('crm.flip_form("create_opportunity")')
+      rendered.should include("crm.flip_form('create_opportunity')")
     end
   end
 
@@ -47,8 +45,8 @@ describe "/opportunities/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not have_rjs("create_opportunity")
-      rendered.should include('crm.flip_form("create_opportunity")')
+      rendered.should_not include("#create_opportunity")
+      rendered.should include("crm.flip_form('create_opportunity')")
     end
   end
 

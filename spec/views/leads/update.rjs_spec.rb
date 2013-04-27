@@ -40,7 +40,7 @@ describe "/leads/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       end
 
-      it "should replace [Edit Lead] with lead partial and highligh it" do
+      it "should replace [Edit Lead] with lead partial and highlight it" do
         render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
@@ -64,7 +64,7 @@ describe "/leads/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
-      it "should replace [Edit Lead] with lead partial and highligh it" do
+      it "should replace [Edit Lead] with lead partial and highlight it" do
         render
         rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
           with_tag("li[id=lead_#{@lead.id}]")
