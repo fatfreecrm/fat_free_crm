@@ -72,6 +72,7 @@ group :test do
   gem "acts_as_fu"
   gem 'factory_girl_rails'
   gem 'zeus' unless ENV["CI"]
+  gem 'coveralls', :require => false
 end
 
 group :heroku do
