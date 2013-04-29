@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/leads/promote" do
   before do
@@ -28,17 +28,16 @@ describe "/leads/promote" do
 
       it "should flip [Convert Lead] form" do
         render
-        rendered.should_not have_rjs("lead_#{@lead.id}")
-        rendered.should include('crm.flip_form("convert_lead"')
+        rendered.should_not include("lead_#{@lead.id}")
+        rendered.should include("crm.flip_form('convert_lead'")
       end
 
       it "should update sidebar" do
         render
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=summary]")
-          with_tag("div[id=recently]")
-        end
-        rendered.should include('$("summary").visualEffect("shake"')
+        rendered.should include("#sidebar")
+        rendered.should have_text("Lead Summary")
+        rendered.should have_text("Recent Items")
+        rendered.should include("jQuery('#summary').effect('shake'")
       end
     end
 
@@ -49,19 +48,16 @@ describe "/leads/promote" do
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
-        rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
-          with_tag("li[id=lead_#{@lead.id}]")
-        end
-        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should include("jQuery('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        rendered.should include("jQuery('#filters').effect('shake'")
       end
 
       it "should update sidebar" do
         render
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[id=filters]")
-          with_tag("div[id=recently]")
-        end
-        rendered.should include('$("filters").visualEffect("shake"')
+        rendered.should include("#sidebar")
+        rendered.should have_text("Lead Status")
+        rendered.should have_text("Recent Items")
+        rendered.should include("jQuery('#filters').effect('shake'")
       end
     end
 
@@ -75,27 +71,22 @@ describe "/leads/promote" do
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
-        rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
-          with_tag("li[id=lead_#{@lead.id}]")
-        end
-        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+        rendered.should include("jQuery('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("highlight"/)
       end
 
       it "should update campaign sidebar" do
         render
 
-        rendered.should have_rjs("sidebar") do |rjs|
-          with_tag("div[class=panel][id=summary]")
-          with_tag("div[class=panel][id=recently]")
-        end
+        rendered.should include("#sidebar")
+        rendered.should have_text("Summary")
+        rendered.should have_text("Recent Items")
       end
 
       it "should insert new opportunity if any" do
         render
 
-        rendered.should have_rjs(:insert, :top) do |rjs|
-          with_tag("li[id=opportunity_#{@opportunity.id}]")
-        end
+        rendered.should include("jQuery('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
       end
 
     end
@@ -113,10 +104,8 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should have_rjs("convert_lead") do |rjs|
-          with_tag("form[class=edit_lead]")
-        end
-        rendered.should include(%Q/$("convert_lead").visualEffect("shake"/)
+        rendered.should include("jQuery('#convert_lead').html")
+        rendered.should include(%Q/jQuery('#convert_lead').effect("shake"/)
       end
     end
 
@@ -127,10 +116,8 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
-          with_tag("form[class=edit_lead]")
-        end
-        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should include("jQuery('#lead_#{@lead.id}').html")
+        rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 
@@ -141,17 +128,15 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
-          with_tag("form[class=edit_lead]")
-        end
-        rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("shake"/)
+        rendered.should include("jQuery('#lead_#{@lead.id}').html")
+        rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 
     it "should handle new or existing account and set up calendar field" do
       render
       rendered.should include("crm.create_or_select_account")
-      rendered.should include('$("account_name").focus()')
+      rendered.should include('focus()')
     end
   end # errors
 end

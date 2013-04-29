@@ -29,13 +29,12 @@ module LeadsHelper
 
   #----------------------------------------------------------------------------
   def confirm_reject(lead)
-    question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>).html_safe
+    question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>)
     yes = link_to(t(:yes_button), reject_lead_path(lead), :method => :put)
-    no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
-    update_page do |page|
-      page << "$('confirm').update($('menu').innerHTML)"
-      page[:menu].replace_html "#{question} #{yes} : #{no}"
-    end
+    no = link_to_function(t(:no_button), "jQuery('#menu').html(jQuery('#confirm').html());")
+    text = "jQuery('#confirm').html( jQuery('#menu').html() );\n"
+    text << "jQuery('#menu').html('#{question} #{yes} : #{no}');"
+    text.html_safe
   end
 
   # Sidebar checkbox control for filtering leads by status.

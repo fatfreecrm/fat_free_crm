@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/leads/convert" do
   include LeadsHelper
@@ -22,9 +22,7 @@ describe "/leads/convert" do
     params[:cancel] = "true"
 
     render
-    rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
-      with_tag("li[id=lead_#{@lead.id}]")
-    end
+    rendered.should include("jQuery('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
   end
 
   it "cancel from lead landing page: should hide [Convert Lead] form" do
@@ -32,7 +30,7 @@ describe "/leads/convert" do
     params[:cancel] = "true"
 
     render
-    rendered.should include('crm.flip_form("convert_lead"')
+    rendered.should include("crm.flip_form('convert_lead'")
   end
 
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
@@ -40,9 +38,7 @@ describe "/leads/convert" do
     assign(:previous, previous = FactoryGirl.create(:lead, :user => current_user))
 
     render
-    rendered.should have_rjs("lead_#{previous.id}") do |rjs|
-      with_tag("li[id=lead_#{previous.id}]")
-    end
+    rendered.should include("jQuery('#lead_#{previous.id}').replaceWith")
   end
 
   it "convert: should remove previously open [Convert Lead] if it's no longer available" do
@@ -50,29 +46,25 @@ describe "/leads/convert" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include(%Q/crm.flick("lead_#{previous}", "remove");/)
+    rendered.should include("crm.flick('lead_#{previous}', 'remove');")
   end
 
   it "convert from leads index page: should turn off highlight, hide [Create Lead] form, and replace current lead with [Convert Lead] form" do
     params[:cancel] = nil
 
     render
-    rendered.should include(%Q/crm.highlight_off("lead_#{@lead.id}");/)
-    rendered.should include('crm.hide_form("create_lead")')
-    rendered.should have_rjs("lead_#{@lead.id}") do |rjs|
-      with_tag("form[class=edit_lead]")
-    end
+    rendered.should include("crm.highlight_off('lead_#{@lead.id}');")
+    rendered.should include("crm.hide_form('create_lead')")
+    rendered.should include("jQuery('#lead_#{@lead.id}').html")
   end
 
   it "convert from lead landing page: should hide [Edit Lead] and show [Convert Lead] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should have_rjs("convert_lead") do |rjs|
-      with_tag("form[class=edit_lead]")
-    end
-    rendered.should include('crm.hide_form("edit_lead"')
-    rendered.should include('crm.flip_form("convert_lead"')
+    rendered.should include("#convert_lead")
+    rendered.should include("crm.hide_form('edit_lead'")
+    rendered.should include("crm.flip_form('convert_lead'")
   end
 
   it "convert: should handle new or existing account and set up calendar field" do
@@ -80,7 +72,7 @@ describe "/leads/convert" do
 
     render
     rendered.should include("crm.create_or_select_account")
-    rendered.should include('$("account_name").focus()')
+    rendered.should include('focus()')
   end
 
 end

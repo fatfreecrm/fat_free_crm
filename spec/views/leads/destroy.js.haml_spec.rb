@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/leads/destroy" do
   before do
@@ -14,7 +14,7 @@ describe "/leads/destroy" do
 
   it "should blind up destroyed lead partial" do
     render
-    rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("blind_up"/)
+    rendered.should include("jQuery('#lead_#{@lead.id}').slideUp")
   end
 
   it "should update leads sidebar when called from leads index" do
@@ -22,10 +22,9 @@ describe "/leads/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render
 
-    rendered.should have_rjs("sidebar") do |rjs|
-      with_tag("div[id=recently]")
-    end
-    rendered.should include('$("filters").visualEffect("shake"')
+    rendered.should include("#sidebar")
+    rendered.should have_text("Recent Items")
+    rendered.should include("jQuery('#filters').effect('shake'")
   end
 
   it "should update pagination when called from leads index" do
@@ -33,7 +32,7 @@ describe "/leads/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render
 
-    rendered.should have_rjs("paginate")
+    rendered.should include("#paginate")
   end
 
   it "should update related asset sidebar when called from related asset" do
@@ -41,10 +40,9 @@ describe "/leads/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 
-    rendered.should have_rjs("sidebar") do |rjs|
-      with_tag("div[class=panel][id=summary]")
-      with_tag("div[class=panel][id=recently]")
-    end
+    rendered.should include("#sidebar")
+    rendered.should have_text("Campaign Summary")
+    rendered.should have_text("Recent Items")
   end
 
 end

@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/leads/create" do
   before do
@@ -22,28 +22,25 @@ describe "/leads/create" do
     it "should hide [Create Lead] form and insert lead partial" do
       render
 
-      rendered.should have_rjs(:insert, :top) do |rjs|
-        with_tag("li[id=lead_#{@lead.id}]")
-      end
-      rendered.should include(%Q/$("lead_#{@lead.id}").visualEffect("highlight"/)
+      rendered.should include("jQuery('#leads').prepend('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+      rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("highlight"/)
     end
 
     it "should update sidebar when called from leads index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       render
 
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=filters]")
-        with_tag("div[id=recently]")
-      end
-      rendered.should include('$("filters").visualEffect("shake"')
+      rendered.should include("#sidebar")
+      rendered.should have_text("Lead Statuses")
+      rendered.should include("Recent Items")
+      rendered.should include("jQuery('#filters').effect('shake'")
     end
 
     it "should update pagination when called from leads index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       render
 
-      rendered.should have_rjs("paginate")
+      rendered.should include("#paginate")
     end
 
     it "should update related asset sidebar from related asset" do
@@ -51,10 +48,9 @@ describe "/leads/create" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
       render
 
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[class=panel][id=summary]")
-        with_tag("div[class=panel][id=recently]")
-      end
+      rendered.should include("#sidebar")
+      rendered.should have_text("Campaign Summary")
+      rendered.should have_text("Recent Items")
     end
   end
 
@@ -65,10 +61,8 @@ describe "/leads/create" do
 
       render
 
-      rendered.should have_rjs("create_lead") do |rjs|
-        with_tag("form[class=new_lead]")
-      end
-      rendered.should include('$("create_lead").visualEffect("shake"')
+      rendered.should include("jQuery('#create_lead').html")
+      rendered.should include(%Q/jQuery('#create_lead').effect("shake"/)
     end
   end
 end

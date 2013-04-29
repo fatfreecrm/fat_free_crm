@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/leads/index" do
   include LeadsHelper
@@ -17,10 +17,8 @@ describe "/leads/index" do
 
     render :template => 'leads/index', :formats => [:js]
     
-    rendered.should have_rjs("leads") do |rjs|
-      with_tag("li[id=lead_#{42}]")
-    end
-    rendered.should have_rjs("paginate")
+    rendered.should include("jQuery('#leads').html('<li class=\\'highlight lead\\' id=\\'lead_42\\'")
+    rendered.should include("#paginate")
   end
 
   it "should render [empty] template if @leads collection if there are no leads" do
@@ -28,10 +26,8 @@ describe "/leads/index" do
 
     render :template => 'leads/index', :formats => [:js]
     
-    rendered.should have_rjs("leads") do |rjs|
-      with_tag("div[id=empty]")
-    end
-    rendered.should have_rjs("paginate")
+    rendered.should include("jQuery('#leads').html('<div id=\\'empty\\'>")
+    rendered.should include("#paginate")
   end
 
 end
