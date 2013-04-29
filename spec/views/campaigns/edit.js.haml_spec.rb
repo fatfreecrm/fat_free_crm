@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/campaigns/edit" do
   include CampaignsHelper
@@ -18,9 +18,7 @@ describe "/campaigns/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
-      with_tag("li[id=campaign_#{@campaign.id}]")
-    end
+    rendered.should include("jQuery('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
   end
 
   it "cancel from campaign landing page: should hide [Edit Campaign] form" do
@@ -28,7 +26,7 @@ describe "/campaigns/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include('crm.flip_form("edit_campaign"')
+    rendered.should include("crm.flip_form('edit_campaign'")
   end
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
@@ -36,9 +34,7 @@ describe "/campaigns/edit" do
     assign(:previous, previous = FactoryGirl.create(:campaign, :user => current_user))
 
     render
-    rendered.should have_rjs("campaign_#{previous.id}") do |rjs|
-      with_tag("li[id=campaign_#{previous.id}]")
-    end
+    rendered.should include("jQuery('#campaign_#{previous.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{previous.id}\\'")
   end
 
   it "edit: should remove previously open [Edit Campaign] if it's no longer available" do
@@ -46,35 +42,31 @@ describe "/campaigns/edit" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include(%Q/crm.flick("campaign_#{previous}", "remove");/)
+    rendered.should include(%Q/crm.flick('campaign_#{previous}', 'remove');/)
   end
 
   it "edit from campaigns index page: should turn off highlight, hide [Create Campaign], and replace current campaign with [Edit Campaign] form" do
     params[:cancel] = nil
 
     render
-    rendered.should include(%Q/crm.highlight_off("campaign_#{@campaign.id}");/)
-    rendered.should include('crm.hide_form("create_campaign")')
-    rendered.should have_rjs("campaign_#{@campaign.id}") do |rjs|
-      with_tag("form[class=edit_campaign]")
-    end
+    rendered.should include(%Q/crm.highlight_off('campaign_#{@campaign.id}');/)
+    rendered.should include("crm.hide_form('create_campaign')")
+    rendered.should include("jQuery('#campaign_#{@campaign.id}').html")
   end
 
   it "edit from campaign landing page: should show [Edit Campaign] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should have_rjs("edit_campaign") do |rjs|
-      with_tag("form[class=edit_campaign]")
-    end
-    rendered.should include('crm.flip_form("edit_campaign"')
+    rendered.should include("jQuery('#edit_campaign').html")
+    rendered.should include("crm.flip_form('edit_campaign')")
   end
 
   it "should call JavaScript to set up popup Calendar" do
     params[:cancel] = nil
 
     render
-    rendered.should include('$("campaign_name").focus()')
+    rendered.should include('focus()')
   end
 
 end

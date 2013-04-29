@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/campaigns/create" do
   before do
@@ -19,21 +19,18 @@ describe "/campaigns/create" do
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
-      rendered.should have_rjs(:insert, :top) do |rjs|
-        with_tag("li[id=campaign_#{@campaign.id}]")
-      end
-      rendered.should include(%Q/$("campaign_#{@campaign.id}").visualEffect("highlight"/)
+      rendered.should include("jQuery('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+      rendered.should include(%Q/jQuery('#campaign_#{@campaign.id}').effect("highlight"/)
     end
 
     it "should update pagination" do
-      rendered.should have_rjs("paginate")
+      rendered.should include("#paginate")
     end
 
     it "should update Campaigns sidebar filters" do
-      rendered.should have_rjs("sidebar") do |rjs|
-        with_tag("div[id=filters]")
-        with_tag("div[id=recently]")
-      end
+      rendered.should include("#sidebar")
+      rendered.should have_text("Campaign Statuses")
+      rendered.should have_text("Recent Items")
     end
   end
 
@@ -44,10 +41,8 @@ describe "/campaigns/create" do
 
       render
 
-      rendered.should have_rjs("create_campaign") do |rjs|
-        with_tag("form[class=new_campaign]")
-      end
-      rendered.should include('$("create_campaign").visualEffect("shake"')
+      rendered.should include("jQuery('#create_campaign').html")
+      rendered.should include(%Q/jQuery('#create_campaign').effect("shake"/)
     end
   end
 

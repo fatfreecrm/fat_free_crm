@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/campaigns/new" do
   include CampaignsHelper
@@ -17,7 +17,7 @@ describe "/campaigns/new" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include('crm.flick("empty", "toggle")')
+    rendered.should include("crm.flick('empty', 'toggle')")
   end
 
   describe "new campaign" do
@@ -25,16 +25,14 @@ describe "/campaigns/new" do
       params[:cancel] = nil
       render
 
-      rendered.should have_rjs("create_campaign") do |rjs|
-        with_tag("form[class=new_campaign]")
-      end
+      rendered.should include("jQuery('#create_campaign').html")
     end
 
     it "should call JavaScript functions to load Calendar popup" do
       params[:cancel] = nil
       render
 
-      rendered.should include('crm.flip_form("create_campaign")')
+      rendered.should include("crm.flip_form('create_campaign')")
     end
   end
 
@@ -43,8 +41,8 @@ describe "/campaigns/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not have_rjs("create_campaign")
-      rendered.should include('crm.flip_form("create_campaign")')
+      rendered.should_not include("#create_campaignx")
+      rendered.should include("crm.flip_form('create_campaign')")
     end
   end
 
