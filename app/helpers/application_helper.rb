@@ -215,11 +215,10 @@ module ApplicationHelper
   def confirm_delete(model, params = {})
     question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>).html_safe
     yes = link_to(t(:yes_button), params[:url] || model, :method => :delete)
-    no = link_to_function(t(:no_button), "$('menu').update($('confirm').innerHTML)")
-    update_page do |page|
-      page << "$('confirm').update($('menu').innerHTML)"
-      page[:menu].replace_html "#{question} #{yes} : #{no}"
-    end
+    no = link_to_function(t(:no_button), "jQuery('#menu').html(jQuery('#confirm').html());")
+    text = "jQuery('#confirm').html( jQuery('#menu').html() );\n"
+    text << "jQuery('#menu').html('#{question} #{yes} : #{no}');"
+    text.html_safe
   end
 
   #----------------------------------------------------------------------------
