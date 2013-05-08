@@ -33,7 +33,7 @@ module FatFreeCRM
       def fields
         field_groups.map(&:fields).flatten
       end
-      
+
       def serialize_custom_fields!
         fields.each do |field|
           if !serialized_attributes.keys.include?(field.name) and field.as == 'check_boxes'
@@ -49,7 +49,7 @@ module FatFreeCRM
         field_groups = self.class.field_groups
         respond_to?(:tag_ids) ? field_groups.with_tags(tag_ids) : field_groups
       end
-      
+
       # run custom field validations on this object
       #------------------------------------------------------------------------------
       def custom_fields_validator

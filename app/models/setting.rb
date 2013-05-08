@@ -114,24 +114,6 @@ class Setting < ActiveRecord::Base
       yaml_settings
     end
   end
-end
 
-#
-# TODO: code smell - refactor loading of settings
-# The following code should be in a lazy load hook or Settings class initializer
-#
-
-#
-# We have fat_free_crm/syck_yaml which loads very early on in the bootstrap process
-# However, something else (possibly bundler) is reverting back to Psych later on so
-# we need to set it again here to ensure the files are read in the correct manner.
-#
-YAML::ENGINE.yamler = 'syck'
-
-# Load default settings, then override with custom settings, if present.
-setting_files = [FatFreeCRM.root.join("config", "settings.default.yml")]
-# Don't override default settings in test environment
-setting_files << Rails.root.join("config", "settings.yml") unless Rails.env == 'test'
-setting_files.each do |settings_file|
-  Setting.load_settings_from_yaml(settings_file) if File.exist?(settings_file)
+  ActiveSupport.run_load_hooks(:fat_free_crm_setting, self)
 end

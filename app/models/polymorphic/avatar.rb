@@ -43,11 +43,12 @@ class Avatar < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.size_from_style!(options)
     if options[:width] && options[:height]
-      options[:size] = [:width, :height].map{|d| options[d]}.join("x") 
+      options[:size] = [:width, :height].map{|d| options[d]}.join("x")
     elsif Avatar::STYLES.keys.include?(options[:size])
       options[:size] = Avatar::STYLES[options[:size]].sub(/\#$/,'')
     end
     options
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_avatar, self)
 end

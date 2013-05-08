@@ -193,4 +193,5 @@ class Opportunity < ActiveRecord::Base
     end
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_opportunity, self)
 end

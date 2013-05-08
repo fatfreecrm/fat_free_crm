@@ -47,4 +47,6 @@ class Email < ActiveRecord::Base
     end
   end
   alias_method_chain :body, :textile
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_email, self)
 end

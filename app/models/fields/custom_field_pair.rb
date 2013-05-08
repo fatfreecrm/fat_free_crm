@@ -19,7 +19,7 @@ class CustomFieldPair < CustomField
     field2 = klass.create( base_params.merge(pair['1']).merge('pair_id' => field1.id, 'required' => field1.required, 'disabled' => field1.disabled) )
     [field1, field2]
   end
-  
+
   # Helper to update a pair. Used in fields_controller
   #------------------------------------------------------------------------------
   def self.update_pair(params)
@@ -38,5 +38,7 @@ class CustomFieldPair < CustomField
   def paired_with
     pair || CustomFieldPair.where(:pair_id => id).first
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_custom_field_pair, self)
 
 end

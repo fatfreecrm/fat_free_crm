@@ -54,5 +54,6 @@ class Address < ActiveRecord::Base
     attributes.merge!({:_destroy => 1}) if exists and empty
     return (!exists and empty)
   end
-  
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_address, self)
 end

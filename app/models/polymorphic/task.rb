@@ -232,11 +232,13 @@ class Task < ActiveRecord::Base
   rescue ArgumentError
     errors.add(:calendar, :invalid_date)
   end
-  
+
   #----------------------------------------------------------------------------
   def parse_calendar_date
     # always in 2012-10-28 06:28 format regardless of language
     Time.parse(self.calendar)
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_task, self)
 
 end

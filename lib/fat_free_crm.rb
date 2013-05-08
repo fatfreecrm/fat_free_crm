@@ -3,6 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+
 module FatFreeCRM
   class << self
     # Return either Application or Engine,
@@ -22,14 +23,15 @@ unless defined?(FatFreeCRM::Application)
   require 'fat_free_crm/engine'
 end
 
-# Our settings.yml structure requires the Syck YAML parser
-require 'fat_free_crm/syck_yaml'
+require 'fat_free_crm/syck_yaml'     # settings.yml format is Syck
+require 'fat_free_crm/load_settings' # register load hook for Setting
 
 # Require gem dependencies, monkey patches, and vendored plugins (in lib)
 require "fat_free_crm/gem_dependencies"
 require "fat_free_crm/gem_ext"
 require "fat_free_crm/plugin_dependencies"
 
+require "fat_free_crm/custom_fields" # load hooks for Field
 require "fat_free_crm/version"
 require "fat_free_crm/core_ext"
 require "fat_free_crm/comment_extensions"

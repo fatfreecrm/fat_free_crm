@@ -184,4 +184,6 @@ private
   def users_for_shared_access
     errors.add(:access, :share_lead) if self[:access] == "Shared" && !self.permissions.any?
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_lead, self)
 end

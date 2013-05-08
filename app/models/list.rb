@@ -10,4 +10,5 @@ class List < ActiveRecord::Base
   def controller
     (url || "").sub(/^\//,'').split(/\/|\?/).first
   end
+  ActiveSupport.run_load_hooks(:fat_free_crm_list, self)
 end

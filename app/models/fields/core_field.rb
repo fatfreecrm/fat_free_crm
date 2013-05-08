@@ -32,5 +32,6 @@ class CoreField < Field
   def error_on_destroy
     errors.add_to_base "Core fields cannot be deleted."
   end
-end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_core_field, self)
+end
