@@ -5,12 +5,10 @@
 #------------------------------------------------------------------------------
 class CustomFieldDatetimePair < CustomFieldDatePair
 
-  # Register this CustomField with the application
-  #------------------------------------------------------------------------------
-  register(:as => 'datetime_pair', :klass => 'CustomFieldDatetimePair', :type => 'timestamp')
-
   def render(value)
     value && value.strftime(I18n.t("time.formats.mmddhhss"))
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_datetime_pair, self)
 
 end

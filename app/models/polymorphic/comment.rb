@@ -65,4 +65,6 @@ class Comment < ActiveRecord::Base
       end
     end
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_comment, self)
 end

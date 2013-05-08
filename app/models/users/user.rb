@@ -181,4 +181,6 @@ class User < ActiveRecord::Base
 
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_user, self)
+
 end

@@ -126,4 +126,5 @@ class Field < ActiveRecord::Base
 
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_field, self)
 end

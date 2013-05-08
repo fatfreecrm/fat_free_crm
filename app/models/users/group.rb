@@ -15,4 +15,6 @@ class Group < ActiveRecord::Base
   def user_ids=(value)
     super value.join.split(',')
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_group, self)
 end

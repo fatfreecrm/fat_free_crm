@@ -108,4 +108,6 @@ class Campaign < ActiveRecord::Base
     errors.add(:access, :share_campaign) if self[:access] == "Shared" && !self.permissions.any?
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_campaign, self)
+
 end

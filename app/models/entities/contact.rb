@@ -206,4 +206,5 @@ class Contact < ActiveRecord::Base
     self.reload unless self.new_record? # ensure the account association is updated
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_contact, self)
 end

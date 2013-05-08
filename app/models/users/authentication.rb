@@ -48,5 +48,6 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
   def check_if_suspended
     self.errors.add(:base, I18n.t(:msg_account_suspended)) if self.user.suspended?
   end
-end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_authentication, self)
+end

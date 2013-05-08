@@ -239,4 +239,6 @@ class Task < ActiveRecord::Base
     Time.parse(self.calendar)
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_task, self)
+
 end

@@ -5,10 +5,6 @@
 #------------------------------------------------------------------------------
 class CustomFieldDatePair < CustomFieldPair
 
-  # Register this CustomField with the application
-  #------------------------------------------------------------------------------
-  register(:as => 'date_pair', :klass => 'CustomFieldDatePair', :type => 'date')
-
   # For rendering paired values
   # Handle case where both pairs are blank
   #------------------------------------------------------------------------------
@@ -26,11 +22,11 @@ class CustomFieldDatePair < CustomFieldPair
       ""
     end
   end
-  
+
   def render(value)
     value && value.strftime(I18n.t("date.formats.mmddyy"))
   end
-  
+
   def custom_validator(obj)
     super
     # validate when we get to 2nd of the pair
@@ -43,4 +39,5 @@ class CustomFieldDatePair < CustomFieldPair
     end
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_date_pair, self)
 end

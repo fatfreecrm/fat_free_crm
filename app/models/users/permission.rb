@@ -22,5 +22,6 @@ class Permission < ActiveRecord::Base
 
   validates_presence_of :user_id, :unless => :group_id?
   validates_presence_of :group_id, :unless => :user_id?
-end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_permission, self)
+end

@@ -4,4 +4,5 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Tagging < ActsAsTaggableOn::Tagging
+  ActiveSupport.run_load_hooks(:fat_free_crm_tagging, self)
 end

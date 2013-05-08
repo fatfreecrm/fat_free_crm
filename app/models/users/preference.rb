@@ -46,4 +46,5 @@ class Preference < ActiveRecord::Base
     @cached_prefs ||= {}
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_preference, self)
 end

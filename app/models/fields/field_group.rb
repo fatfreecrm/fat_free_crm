@@ -57,4 +57,6 @@ class FieldGroup < ActiveRecord::Base
     default_group.fields << fields if default_group
     self.reload
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_field_group, self)
 end
