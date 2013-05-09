@@ -23,7 +23,6 @@ unless defined?(FatFreeCRM::Application)
   require 'fat_free_crm/engine'
 end
 
-require 'fat_free_crm/syck_yaml'     # settings.yml format is Syck
 require 'fat_free_crm/load_settings' # register load hook for Setting
 
 # Require gem dependencies, monkey patches, and vendored plugins (in lib)
