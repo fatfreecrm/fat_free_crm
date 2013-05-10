@@ -1,5 +1,3 @@
-require 'syck'
-
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -104,8 +102,8 @@ class Setting < ActiveRecord::Base
     # Loads settings from YAML files
     def load_settings_from_yaml(file)
       begin
-        #~ settings = YAML.load_file(file)
-        settings = Syck.load_file(file)
+        YAML::ENGINE.yamler = 'syck' # remove this when files are converted to Psych
+        settings = YAML.load_file(file)
         # Merge settings into current settings hash (recursively)
         @@yaml_settings.deep_merge!(settings)
       rescue Exception => ex
