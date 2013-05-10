@@ -13,13 +13,18 @@ class SubscriptionMailer < ActionMailer::Base
     @comment = comment
     @user = comment.user
 
+    if (reply_to = Setting.email_comment_replies[:address]).blank?
+      email_host = Setting.host.present? ? Setting.host : 'example.com'
+      reply_to = "no-reply@#{email_host}"
+    end
+
     # If entity has tags, join them and wrap in parantheses
     subject = "RE: [#{@entity_type.downcase}:#{@entity.id}] #{@entity_name}"
     subject << " (#{@entity.tag_list.join(', ')})" if @entity.tag_list.any?
 
     mail :subject => subject,
          :to => user.email,
-         :from => "#{@user.full_name} <#{Setting.email_comment_replies[:address]}>",
+         :from => "#{@user.full_name} <#{reply_to}>",
          :date => Time.now
   end
 end
