@@ -1,5 +1,5 @@
 .remote
-  = form_for([:admin, @group], :html => one_submit_only(:group).merge({:autocomplete => 'off'}), :remote => true) do |f|
+  = form_for([:admin, @group], :html => one_submit_only.merge({:autocomplete => 'off'}), :remote => true) do |f|
     = link_to_close edit_admin_group_path(@group)
 
     = f.error_messages :object_name => t('group')

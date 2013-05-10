@@ -1,5 +1,5 @@
 .remote
-  = simple_form_for(@campaign, :html => one_submit_only(:campaign), :remote => true) do |f|
+  = simple_form_for(@campaign, :html => one_submit_only, :remote => true) do |f|
     = link_to_close edit_campaign_path(@campaign)
     = f.hidden_field :user_id
 

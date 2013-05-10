@@ -1,4 +1,4 @@
-= simple_form_for(@campaign, :html => one_submit_only(:campaign), :remote => true) do |f|
+= simple_form_for(@campaign, :html => one_submit_only, :remote => true) do |f|
   = link_to_close new_campaign_path
   = f.hidden_field :user_id
 

@@ -1,5 +1,5 @@
 .standalone
-  = form_for(@user, :url => password_path(params[:id]), :html => one_submit_only(:user), :method => :put) do |f|
+  = form_for(@user, :url => password_path(params[:id]), :html => one_submit_only, :method => :put) do |f|
     .title #{t :reset_password}
 
     = f.error_messages :object_name => t('password')

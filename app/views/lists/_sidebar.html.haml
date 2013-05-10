@@ -15,7 +15,7 @@
     = link_to(t(:make_current_view_list), '#')
 
   .save_list{ hidden }
-    = simple_form_for(@list, :html => one_submit_only(:list), :remote => true) do |f|
+    = simple_form_for(@list, :html => one_submit_only, :remote => true) do |f|
       = f.text_field :name, :size => 25
       = image_tag("/assets/info_tiny.png", :title => t(:list_name_info), :class => "input_info")
       = f.hidden_field :url

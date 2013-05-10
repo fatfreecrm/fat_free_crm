@@ -1,4 +1,4 @@
-= simple_form_for(@account, :html => one_submit_only(:account), :remote => true) do |f|
+= simple_form_for(@account, :html => one_submit_only, :remote => true) do |f|
   = link_to_close new_account_path
   = f.hidden_field :user_id
 

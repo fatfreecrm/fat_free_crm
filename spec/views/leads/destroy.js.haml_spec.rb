@@ -14,7 +14,7 @@ describe "/leads/destroy" do
 
   it "should blind up destroyed lead partial" do
     render
-    rendered.should include("jQuery('#lead_#{@lead.id}').slideUp")
+    rendered.should include("slideUp")
   end
 
   it "should update leads sidebar when called from leads index" do
@@ -46,4 +46,3 @@ describe "/leads/destroy" do
   end
 
 end
-

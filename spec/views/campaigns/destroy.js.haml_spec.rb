@@ -15,7 +15,7 @@ describe "/campaigns/destroy" do
   end
 
   it "should blind up destroyed campaign partial" do
-    rendered.should include("jQuery('#campaign_#{@campaign.id}').slideUp")
+    rendered.should include("slideUp")
   end
 
   it "should update Campaigns sidebar" do

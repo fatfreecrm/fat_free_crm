@@ -26,7 +26,7 @@ describe "/tasks/destroy" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
         render
-        rendered.should include("jQuery('#task_#{@task.id}').slideUp")
+        rendered.should include("slideUp")
         rendered.should include("jQuery('#list_due_asap').fadeOut")
       end
 
@@ -49,7 +49,7 @@ describe "/tasks/destroy" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
       render
-      rendered.should include("jQuery('#task_#{@task.id}').slideUp")
+      rendered.should include("slideUp")
       rendered.should_not include("fadeOut") # bucket is not empty
     end
   end

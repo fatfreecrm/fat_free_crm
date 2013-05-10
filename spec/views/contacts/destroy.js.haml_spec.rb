@@ -16,7 +16,7 @@ describe "/contacts/destroy" do
 
   it "should blind up destroyed contact partial" do
     render
-    rendered.should include("jQuery('#contact_#{@contact.id}').slideUp(250);")
+    rendered.should include("slideUp")
   end
 
   it "should update contacts sidebar when called from contacts index" do

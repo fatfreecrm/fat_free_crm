@@ -109,7 +109,7 @@ module ApplicationHelper
     link_to(t(:edit),
       options[:url] || polymorphic_url(record, :action => :edit),
       :remote  => true,
-      :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}');"
+      :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}');".html_safe
     )
   end
 
@@ -122,7 +122,6 @@ module ApplicationHelper
       options[:url] || url_for(record),
       :method => :delete,
       :remote => true,
-      :onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1"),
       :confirm => confirm
     )
   end
@@ -135,8 +134,7 @@ module ApplicationHelper
     link_to(t(:discard),
       url_for(:controller => parent, :action => :discard, :id => parent_id, :attachment => object.class.name, :attachment_id => object.id),
       :method  => :post,
-      :remote  => true,
-      :onclick => visual_effect(:highlight, dom_id(object), :startcolor => "#ffe4e1")
+      :remote  => true
     )
   end
 
@@ -197,8 +195,8 @@ module ApplicationHelper
   def visible;   { :style => "visibility:visible;" }; end
 
   #----------------------------------------------------------------------------
-  def one_submit_only(form)
-    { :onsubmit => "$$('#'+this.id+' input[type=\"submit\"]')[0].disabled = true".html_safe }
+  def one_submit_only(form='')
+    { :onsubmit => "jQuery('#'+this.id+' input[type=\\'submit\\']').disable()".html_safe }
   end
 
   #----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-jQuery('##{dom_id(@task)}').slideUp(250);
+jQuery('##{dom_id(@task)}').css('background-color', '#ffe4e1').slideUp(250);
 
 - if @empty_bucket
   jQuery('#list_#{@empty_bucket}').fadeOut({ duration:500 });

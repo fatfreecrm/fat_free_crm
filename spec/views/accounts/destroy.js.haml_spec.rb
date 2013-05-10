@@ -17,7 +17,7 @@ describe "/accounts/destroy" do
   end
 
   it "should blind up destroyed account partial" do
-    rendered.should include("jQuery('#account_#{@account.id}').slideUp")
+    rendered.should include("slideUp")
   end
 
   it "should update accounts pagination" do

@@ -20,7 +20,7 @@ describe "admin/users/destroy" do
     it "blinds up destroyed user partial" do
       render
 
-      rendered.should include(%Q/jQuery('#user_#{@user.id}').slideUp/)
+      rendered.should include('slideUp')
     end
   end
 
