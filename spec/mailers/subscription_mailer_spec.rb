@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe SubscriptionMailer do
 
@@ -32,5 +32,18 @@ describe SubscriptionMailer do
     it "includes link to opportunity in body" do
       mail.body.encoded.should match('http://www.example.com/opportunities/47')
     end
+
+    it "should set default reply-to address if email doesn't exist" do
+      Setting.email_comment_replies.stub(:[]).with(:address).and_return("")
+      Setting.stub(:host).and_return("fatfreecrm.com")
+      mail.from.should eql(["no-reply@fatfreecrm.com"])
+    end
+
+    it "should set default reply-to address if email and host don't exist" do
+      Setting.email_comment_replies.stub(:[]).with(:address).and_return("")
+      Setting.stub(:host).and_return("")
+      mail.from.should eql(["no-reply@example.com"])
+    end
+
   end
 end
