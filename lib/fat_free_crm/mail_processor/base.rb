@@ -196,6 +196,7 @@ module FatFreeCRM
         else
           charset = email.charset
           [email]
+          charset = email.charset
         end
 
         if text_part = parts.detect {|p| p.content_type.include?('text/plain')}
