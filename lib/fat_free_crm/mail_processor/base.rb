@@ -194,8 +194,8 @@ module FatFreeCRM
         parts = if email.multipart?
           email.parts.map {|p| p.multipart? ? p.parts : p}.flatten
         else
-          [email]
           charset = email.charset
+          [email]
         end
 
         if text_part = parts.detect {|p| p.content_type.include?('text/plain')}
