@@ -73,7 +73,7 @@ feature 'Leads', %q{
     click_link('Status')
     select 'Rejected', :from => 'lead_status'
     click_button 'Save Lead'
-    page.should have_content('Mrs Lead')
+    find('#title').should have_content('Mrs Lead')
     click_link "Dashboard"
     page.should have_content("Bill Murray updated lead Mrs Lead")
   end

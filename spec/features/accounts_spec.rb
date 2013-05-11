@@ -36,7 +36,7 @@ feature 'Accounts', %q{
     fill_in 'comment_body', :with => 'This account is very important'
     click_button 'Create Account'
 
-    page.should have_content('My new account')
+    find('div#accounts').should have_content('My new account')
     find('div#accounts').click_link('My new account') # avoid recent items link
     page.should have_content('+1 2345 6789')
     page.should have_content('http://www.example.com')
