@@ -49,21 +49,17 @@ New features, enhancements, and updates appear on regular basis.
 
 Pull requests and bug reports are always welcome!
 
+Visit our website at http://www.fatfreecrm.com/
+
 
 ## System Requirements
 
-* Ruby v1.9.3
+* Ruby v1.9.3 recommended (1.9.2 also works, ruby 2.0.0 does NOT)
   * Note that Ruby v1.8.7 was supported until v0.11.4 (see https://github.com/fatfreecrm/fat_free_crm/tree/ruby1.8)
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
 * ImageMagick (optional, only needed if you would like to use avatars)
 
 (Ruby on Rails and other gem dependencies will be installed automatically by Bundler.)
-
-
-### Downloads
-
-* Git source code repository: `git clone git://github.com/fatfreecrm/fat_free_crm.git`
-* **.zip** or **.tgz** archives: http://github.com/fatfreecrm/fat_free_crm/downloads
 
 
 ## Installation
@@ -82,10 +78,6 @@ Setting up a Heroku instance for Fat Free CRM
 
 Installing Fat Free CRM on Microsoft Windows
 
-### [Ubuntu Server Setup Script](http://guides.fatfreecrm.com/Ubuntu-Server-Setup-Script.html)
-
-Run this bash script to quickly setup a Ubuntu server
-
 ### [Running Fat Free CRM as a Rails Engine](http://guides.fatfreecrm.com/Running-as-a-Rails-Engine.html)
 
 Run the Fat Free CRM gem within a separate Rails application.
@@ -94,18 +86,7 @@ This is the best way to deploy Fat Free CRM if you need to add plugins or make a
 
 ## Upgrading from previous versions of Fat Free CRM
 
-If you are upgrading from version 0.11.3 (Dec 21st 2012) or below, please see an [important fix for country data](https://github.com/fatfreecrm/fat_free_crm/wiki/The-Countries-Problem-and-How-to-Fix-It)
-
-If you are upgrading from version 0.10.1 or below to the latest Rails 3.x version, your database schema
-needs to be updated.
-
-Please run the following commands in this order:
-
-```bash
-bundle install --without heroku   # Installs gem dependencies
-rake db:schema:upgrade            # Updates your schema to use the new timestamped migrations
-rake db:migrate                   # Runs any new database migrations.
-```
+Please read the [Release Notes](http://guides.fatfreecrm.com/Release-Notes.html) document for more detailed information on upgrading from previous versions.
 
 
 ## Resources
@@ -118,6 +99,7 @@ rake db:migrate                   # Runs any new database migrations.
 |       **Github Project Page**: | http://github.com/fatfreecrm/fat_free_crm |
 | **Feature Requests and Bugs**: | http://support.fatfreecrm.com/ |
 |                  **RDoc API**: | http://api.fatfreecrm.com |
+|                  **Ruby gem**: | https://rubygems.org/gems/fat_free_crm |
 |    **Twitter Commit Updates**: | http://twitter.com/fatfreecrm |
 |       **User's Google Group**: | http://groups.google.com/group/fat-free-crm-users |
 |  **Developer's Google Group**: | http://groups.google.com/group/fat-free-crm-dev |
@@ -135,11 +117,10 @@ the concepts:
 * http://github.com/michaeldv/crm_web_to_lead/tree/master
 * http://github.com/michaeldv/crm_tags/tree/master
 
-## Contributors
+## Main contributors
 
 * [Michael Dvorkin (@michaeldv)](https://github.com/michaeldv) - Founding creator
 * [Nathan Broadbent (@ndbroadbent)](https://github.com/ndbroadbent)
-* [Ben Tillman (@warp)](https://github.com/warp)
 * [Steve Kenworthy (@steveyken)](https://github.com/steveyken)
 
 See the [contributors graph](https://github.com/fatfreecrm/fat_free_crm/graphs/contributors) and the [contributors file](https://github.com/fatfreecrm/fat_free_crm/blob/master/CONTRIBUTORS) for further details.
