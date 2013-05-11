@@ -8,10 +8,43 @@ Tue, Mar 16, 2013
 ---------------------------------------------------------------------
 - Changed Fat Free CRM license to MIT, see MIT-LICENSE file.
 
-Sat, Dec 29, 2012
+Sat, Dec 29, 2012 (0.11.4)
 ---------------------------------------------------------------------
-- A lot has happened in the last 2 years!
+- Updated countries list
+-   Please see an important fix for country data: https://github.com/fatfreecrm/fat_free_crm/wiki/The-Countries-Problem-and-How-to-Fix-It
 - 0.11.4 will be the last ruby 1.8 release
+- Comments can be added when items are created
+- Dashboard shows assigned accounts and opportunities
+- Now uses Rails 3.2
+- Added Group tab in admin section
+- Added jQuery datepicker
+- Custom fields are now included in XLS export
+- Updated Chinese translations
+- Added Ransack / RansackUI search
+- Added a Team tab to the interface
+- Added ability to add new item views via plugins
+-
+
+Wed, May 9, 2012 (0.11.2)
+---------------------------------------------------------------------
+- Better html email parsing
+- Users can subscribe to contacts/accounts etc
+- Use CanCan for permissions
+- Add jQuery UI
+- German translation updates
+
+Fri, Mar 30, 2012 (0.11.1)
+---------------------------------------------------------------------
+- Added Travis continuous integration service
+- Rails 3 compatibility
+- Added a few view hooks
+- Dropbox now understands alt_email
+- Updated translation file format
+- Export includes full_name where applicable
+- CSS bug fixes
+- Swedish & Italian translations
+- Controllers respond to JSON requests
+- Several hundred other commits...
 
 Tue, Sep 7, 2010
 ---------------------------------------------------------------------
@@ -1092,7 +1125,7 @@ Fri, Apr 24, 2009
 - Happy birthday -- we're 5 month old ;-)
 - Make sure tasks don't get onto recently viewed items list.
 - Added "completed", "reassigned", and "rescheduled" activity logs for tasks (closes LH #17).
- 
+
 Thu, Apr 23, 2009
 ---------------------------------------------------------------------
 - Filter activities based on asset permissions, even for deleted assets.
