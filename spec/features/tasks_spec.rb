@@ -60,7 +60,7 @@ feature 'Tasks', %q{
     click_filter_tab('Assigned')
     check_filter 'tomorrow'
     find('#main').should have_content('Task For Someone Else')
-    page.should have_content('Another User')
+    find('#main').should have_content('Another User')
 
     click_link 'Dashboard'
     page.should have_content('Bill Murray created task Task For Someone Else')

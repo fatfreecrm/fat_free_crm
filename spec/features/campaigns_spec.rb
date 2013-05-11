@@ -53,7 +53,7 @@ feature 'Campaigns', %q{
     fill_in 'comment_body', :with => 'This campaign is very important'
     click_button 'Create Campaign'
 
-    page.should have_field("comment_body", :with => 'This campaign is very important')
+    find('#comment_body').should have_content('This campaign is very important')
   end
 
   scenario 'should view and edit a campaign', :js => true do
@@ -65,7 +65,7 @@ feature 'Campaigns', %q{
     select 'Started', :from => 'campaign_status'
     click_button 'Save Campaign'
     page.should have_content('My Even Cooler Campaign')
-	page.should have_content('My Even Cooler Campaign')
+  page.should have_content('My Even Cooler Campaign')
     click_link 'Dashboard'
     page.should have_content("Bill Murray updated campaign My Even Cooler Campaign")
   end

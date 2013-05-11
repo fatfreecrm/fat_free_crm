@@ -29,10 +29,10 @@ feature 'Users tab', %q{
     chosen_select('Superheroes', :from => 'user_group_ids')
 
     click_button 'Create User'
-    page.should have_content('Captain Thunder')
-    page.should have_content('Weather Inc.')
-    page.should have_content('Superheroes')
-    page.should have_content('lightning@example.com')
+    find('#users').should have_content('Captain Thunder')
+    find('#users').should have_content('Weather Inc.')
+    find('#users').should have_content('Superheroes')
+    find('#users').should have_content('lightning@example.com')
 
   end
 
