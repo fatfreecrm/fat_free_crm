@@ -17,7 +17,7 @@ de:
   presentation: "Präsentation"
   activities: "Aktivitäten"
   fax: "Fax"
-  account: "Account"
+  account: "Firma"
   all_events_past_participle: "Aktivitäten"
   facebook: "Facebook"
   one_month: "Ein Monat"
@@ -354,6 +354,7 @@ de:
   online: "Online Marketing"
   collapsed: "Ausgeblendet"
   advanced_search: "Erweiterte Suche"
+  basic_search: "Einfache Suche"
   msg_password_updated: "Passwort wurde erfolgreich geändert."
   admin_tab_settings: "Settings"
   current_password: "Aktuelles Passwort"
@@ -692,3 +693,12 @@ de:
   no_account_records: "Sie haben keine Firmen"
   target_revenue: Target revenue
   target_conversion: Ziel Konversion
+  account_with_title_department: %{title}, %{department} bei %{account}
+  account_with_title: %{title} bei %{account}
+  lead_statuses: Anfragen Status
+  account_categories: Firmen Kategorien
+  opportunity_stages: Chancen Abschnitte
+  search_results_count:
+    one: Suche ergab %{count} Treffer.
+    other: Suche ergab %{count} Treffer.
+  entities_per_page: "%{entity} pro Seite:"
