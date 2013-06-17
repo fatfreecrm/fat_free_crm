@@ -54,7 +54,7 @@ de:
     set_html: "%{attr} auf %{to} geändert"
     unset_html: "%{attr} nicht definiert"
     change_html: "%{attr} wurde von %{from} zu %{to} geändert"
-    anonymous: "anonymous"
+    anonymous: "Anonym"
   password_reset_instruction: "Anleitung zum Zurücksetzen des Passwortes"
   new: "Neu"
   select_existing: "wähle Vorhandene aus"
