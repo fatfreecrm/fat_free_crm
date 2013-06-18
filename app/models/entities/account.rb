@@ -71,7 +71,7 @@ class Account < ActiveRecord::Base
   ransack_can_autocomplete
 
   validates_presence_of :name, :message => :missing_account_name
-  validates_uniqueness_of :name, :scope => :deleted_at
+  validates_uniqueness_of :name, :scope => :deleted_at if Setting.require_unique_account_names
   validate :users_for_shared_access
   before_save :nullify_blank_category
 
