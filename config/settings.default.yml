@@ -163,6 +163,9 @@
 :require_first_names: true
 :require_last_names:  true
 
+# Enable/disable name validation on Accounts
+:require_unique_account_names: true
+
 # Show comments on dashboard
 :comments_visible_on_dashboard: false
 
