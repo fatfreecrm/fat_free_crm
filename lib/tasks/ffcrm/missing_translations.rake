@@ -8,7 +8,7 @@ require './lib/missing_translation_detector.rb'
 
 namespace :ffcrm do
   namespace :missing_translations do
-    desc 'Detects missing translations for a locale - Takes source language and compares with "en-US".'
+    desc 'Detects missing translations for a locale - Takes a locale and compares with "en-US".'
     task :detect, [:locale] => [:environment] do |t, args|
       base_locale = 'en-US'
       
