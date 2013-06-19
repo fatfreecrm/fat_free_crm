@@ -44,6 +44,13 @@
       - else
         #{t :n_a}
     %tt #{t :campaign}:
+  %li
+    %dt
+      - if @lead.contact
+        = link_to(truncate(@lead.contact.name, :length => 16), @lead.contact, :title => @lead.contact.name)
+      - else
+        #{t :n_a}
+    %tt #{t :contact}:
 
   - unless @lead.background_info.blank?
     .caption #{t :background_info}

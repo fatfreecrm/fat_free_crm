@@ -808,3 +808,5 @@ de:
     from_to:     "Von %{from} bis %{to}"
     from_only:   "Von %{from}"
     to_only:     "Bis %{to}"
+
+  contact_summary: "Kontakt-Zusammenfassung"
