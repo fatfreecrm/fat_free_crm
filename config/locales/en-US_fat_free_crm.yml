@@ -388,6 +388,7 @@ en-US:
   contacts: Contacts
   contacts_options: Contacts Options
   contacts_small: contacts
+  contact_summary: Contact Summary
   create_contact: Create Contact
   department: Department
   department_small: '%{value} department'

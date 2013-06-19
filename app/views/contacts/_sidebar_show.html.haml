@@ -20,6 +20,25 @@
 
   = web_presence_icons(@contact)
 
+  .caption #{t :contact_summary}
+  %li
+    %dt= @contact.assigned_to ? truncate(@contact.assignee.full_name, :length => 16) : nil
+    %tt #{t :assigned_to}:
+  %li
+    %dt
+      - if @contact.lead
+        = link_to(truncate(@contact.lead.name, :length => 16), @contact.lead, :title => @contact.lead.name)
+      - else
+        #{t :n_a}
+    %tt #{t :lead}:
+  %li
+    %dt
+      - if @contact.lead.try(:campaign)
+        = link_to(truncate(@contact.lead.campaign.name, :length => 16), @contact.lead.campaign, :title => @contact.lead.campaign.name)
+      - else
+        #{t :n_a}
+    %tt #{t :campaign}:
+
   - unless @contact.background_info.blank?
     .caption #{t :background_info}
     = auto_link(simple_format @contact.background_info).html_safe
