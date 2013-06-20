@@ -39,6 +39,7 @@ class OpportunitiesController < EntitiesController
       model, id = params[:related].split('_')
       if related = model.classify.constantize.my.find_by_id(id)
         instance_variable_set("@#{model}", related)
+        @account = related.account if related.respond_to?(:account)
       else
         respond_to_related_not_found(model) and return
       end
