@@ -62,4 +62,5 @@ class DatePairInput < SimpleForm::Inputs::Base
     val.present? ? val.strftime('%Y-%m-%d') : nil
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_date_pair_input, self)
 end

@@ -22,4 +22,5 @@ class DatetimePairInput < DatePairInput
     val.present? ? val.strftime('%Y-%m-%d %H:%M') : nil
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_datetime_pair_input, self)
 end
