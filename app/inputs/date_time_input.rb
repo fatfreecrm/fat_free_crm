@@ -33,4 +33,5 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
     val.present? ? val.strftime('%Y-%m-%d %H:%M') : nil
   end
 
+  ActiveSupport.run_load_hooks(:fat_free_crm_date_time_input, self)
 end

@@ -7,4 +7,6 @@ class TextInput < SimpleForm::Inputs::TextInput
   def input
     @builder.text_area(attribute_name, {:rows => 7}.merge(input_html_options))
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_text_input, self)
 end
