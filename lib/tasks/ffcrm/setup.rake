@@ -8,7 +8,12 @@ namespace :ffcrm do
   desc "Prepare the database"
   task :setup => :environment do
     if ENV["PROCEED"] != 'true'
-      puts "\nFatFree CRM is about to run migrations on your database [#{ActiveRecord::Base.connection.current_database}]. Make sure you have a backup before proceeding.\n\n"
+      if ActiveRecord::Base.connection.class == ActiveRecord::ConnectionAdapters::SQLite3Adapter
+        database = ActiveRecord::Base.connection.instance_variable_get(:@config)[:database].split('/').last
+      else
+        database = ActiveRecord::Base.connection.current_database
+      end
+      puts "\nFatFree CRM is about to run migrations on your database [#{database}]. Make sure you have a backup before proceeding.\n\n"
       proceed = false
       loop do
         print "Continue [yes/no]: "
