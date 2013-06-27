@@ -4,25 +4,25 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 
-require './lib/missing_translation_detector.rb'
+require 'missing_translation_detector'
 
 namespace :ffcrm do
   namespace :missing_translations do
     desc 'Detects missing translations for a locale - Takes a locale and compares with "en-US".'
     task :detect, [:locale] => [:environment] do |t, args|
       base_locale = 'en-US'
-      
+
       [[base_locale, args[:locale]],
        ["#{base_locale}_fat_free_crm", "#{args[:locale]}_fat_free_crm"]].each do |locale_file_names|
         detector = MissingTranslationDetector.new locale_file_names.first,
-                                                  locale_file_names.last 
+                                                  locale_file_names.last
         detector.detect
 
         if detector.missing_translations?
           puts
           puts "Detected missing translations within \"config/locales/#{locale_file_names.last}.yml\":"
           puts
-          
+
           detector.missing_translations.each do |missing|
             puts "#{missing.key_path.join(' => ')}: #{missing.value}"
           end
