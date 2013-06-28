@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
   gem.files = `git ls-files`.split("\n")
   gem.version = FatFreeCRM::VERSION::STRING
   gem.required_ruby_version = '>= 1.9'
+  gem.license = 'MIT'
 
   gem.add_dependency 'rails',               '~> 3.2.12'
   gem.add_dependency 'prototype-rails'
