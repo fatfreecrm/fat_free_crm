@@ -4,6 +4,22 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Fri, Jun 28, 2013 (0.12.0)
+---------------------------------------------------------------------
+- Ruby 1.9 support only (no ruby 1.8 and not yet ruby 2)
+- Fixed version pagination bug thanks to reubenjs
+- Can set default stage for opportunities
+- First name can now be optional on leads, contacts and accounts (if desired)
+- Number of search results is now displayed
+- Fixed pagination ordering when displaying entities that belong to a master entity (e.g. opportunities inside a contact)
+- Fixed tests
+- Fixed avatar upload bug (by updating paperclip gem)
+- Can now search for campaigns in opportunities advanced search
+- Added ActiveSupport lazy load hooks for cleaner plugin integration
+- Fixed bug where MS Smartquotes broke the dropbox (Thanks bitgangsta)
+- Updated German translations (thanks Phillip Ullmann)
+- Display relationship between contact and it's corresponding lead in the sidebar (thanks Phillip Ullmann)
+
 Tue, Mar 16, 2013
 ---------------------------------------------------------------------
 - Changed Fat Free CRM license to MIT, see MIT-LICENSE file.
