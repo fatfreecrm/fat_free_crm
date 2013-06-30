@@ -5,19 +5,21 @@ assets = controller.instance_variable_get("@#{items}")
 
 atom_feed do |feed|
   feed.title t(:activities)
-  feed.updated @activities.max { |a, b| a.updated_at <=> b.updated_at }.try(:updated_at)
-  feed.generator  "Fat Free CRM v#{FatFreeCRM::Version}"
+#  feed.updated @activities.max { |a, b| a.updated_at <=> b.updated_at }.try(:updated_at)
+  feed.generator  "Fat Free CRM v#{FatFreeCRM::VERSION::STRING}"
   feed.author do |author|
     author.name  @current_user.full_name
     author.email @current_user.email
   end
 
   @activities.each do |activity|
-    feed.entry(activity, :url => '') do |entry|
-      entry.title activity_title(activity)
+    unless !activity.user.present?
+      feed.entry(activity, :url => '') do |entry|
+        entry.title activity_title(activity)
 
-      entry.author do |author|
-        author.name activity.user.full_name
+        entry.author do |author|
+          author.name activity.user.full_name
+        end
       end
     end
   end
