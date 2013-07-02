@@ -39,7 +39,7 @@ module HomeHelper
   # Activity title for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def activity_title(activity)
-    user    = activity.user.full_name
+    user    = activity.user.try(:full_name) || ''
     action  = t('action_' + activity.event)
     type    = t('subject_' + activity.item_type.downcase)
     subject = if item = activity.item
@@ -64,4 +64,3 @@ module HomeHelper
     end
   end
 end
-

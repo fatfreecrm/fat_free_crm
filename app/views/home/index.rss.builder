@@ -9,7 +9,7 @@ xml.rss :version => "2.0" do
 
     @activities.each do |activity|
       xml.item do
-        xml.author      activity.user.full_name
+        xml.author      activity.user.try(:full_name)
         # xml.guid        activity.id
         # xml.link        nil
         xml.pubDate     activity.created_at.to_s(:rfc822)
