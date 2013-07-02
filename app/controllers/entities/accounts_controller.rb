@@ -105,7 +105,7 @@ class AccountsController < EntitiesController
     current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
     set_options # Refresh options
-    
+
     respond_with(@accounts) do |format|
       format.js { render :index }
     end
@@ -116,7 +116,7 @@ class AccountsController < EntitiesController
   def filter
     session[:accounts_filter] = params[:category]
     @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
-    
+
     respond_with(@accounts) do |format|
       format.js { render :index }
     end
@@ -136,7 +136,7 @@ private
         @accounts = get_accounts(:page => current_page - 1) if current_page > 1
         render :index and return
       end
-      # At this point render default destroy.js.rjs template.
+      # At this point render default destroy.js
     else # :html request
       self.current_page = 1 # Reset current page to 1 to make sure it stays valid.
       flash[:notice] = t(:msg_asset_deleted, @account.name)

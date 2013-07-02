@@ -20,14 +20,14 @@
     $('.edit_field').hide()
     field_group = $(this).closest('.field_group')
     field_group.find('.empty').hide()
-    field_group.find('.arrow').html(crm.EXPANDED)
+    field_group.find('.create .arrow').html(crm.EXPANDED)
     field_group.find('.create_field').slideDown().find('input[name="field[label]"]').focus()
     false
 
   $('.create_field a.close, .create_field a.cancel').live 'click', ->
     $(this).closest('.create_field').hide()
     $(this).closest('.field_group').find('.empty').show()
-    $(this).closest('.field_group').find('.arrow').html(crm.COLLAPSED)
+    $(this).closest('.field_group').find('.create .arrow').html(crm.COLLAPSED)
     false
 
   $('.fields a.edit').live 'click', ->
@@ -39,7 +39,7 @@
           $(this).replaceWith(data).first().focus()
     )
     false
-    
+
   $('.edit_field a.close, .edit_field a.cancel').live 'click', ->
     $(this).closest('.edit_field').hide()
     false

@@ -1,5 +1,5 @@
 .remote
-  = simple_form_for(@task, :html => one_submit_only(:task), :remote => true) do |f|
+  = simple_form_for(@task, :html => one_submit_only, :remote => true) do |f|
     = link_to_close edit_task_path(@task)
     = hidden_field_tag :view, @view
     = hidden_field_tag "task[asset_id]", "#{@asset.id if @asset}"

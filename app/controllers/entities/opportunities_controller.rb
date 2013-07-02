@@ -149,7 +149,7 @@ class OpportunitiesController < EntitiesController
   def redraw
     @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
     set_options # Refresh options
-    
+
     respond_with(@opportunities) do |format|
       format.js { render :index }
     end
@@ -182,7 +182,7 @@ private
       else # Called from related asset.
         self.current_page = 1
       end
-      # At this point render destroy.js.rjs
+      # At this point render destroy.js
     else
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @opportunity.name)

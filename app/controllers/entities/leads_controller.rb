@@ -176,7 +176,7 @@ class LeadsController < EntitiesController
 
     @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
     set_options # Refresh options
-    
+
     respond_with(@leads) do |format|
       format.js { render :index }
     end
@@ -187,7 +187,7 @@ class LeadsController < EntitiesController
   def filter
     session[:leads_filter] = params[:status]
     @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
-    
+
     respond_with(@leads) do |format|
       format.js { render :index }
     end
@@ -221,7 +221,7 @@ private
       else                                        # Called from related asset.
         self.current_page = 1                     # Reset current page to 1 to make sure it stays valid.
         @campaign = @lead.campaign                # Reload lead's campaign if any.
-      end                                         # Render destroy.js.rjs
+      end                                         # Render destroy.js
     else # :html destroy
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @lead.full_name)

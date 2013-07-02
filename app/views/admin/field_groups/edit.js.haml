@@ -1,0 +1,12 @@
+- id = dom_id(@field_group)
+- form_id = dom_id(@field_group, :edit)
+
+- if params[:cancel] == "true" # <----------------- Hide [Edit field_group]
+
+  crm.flip_form('#{form_id}');
+  crm.set_title('#{id}', '#{field_group_subtitle(@field_group)}');
+
+- else # <----------------------------------------- Show [Edit field_group] form.
+
+  crm.show_form('#{form_id}');
+  jQuery('##{form_id}').html('#{ j render(:partial => "edit") }');

@@ -1,0 +1,9 @@
+crm.flip_form('create_user');
+
+- unless params[:cancel].true?
+  jQuery('#create_user').html('#{ j render(:partial => "new") }');
+  jQuery('#empty').html('');
+  crm.set_title('create_user', '#{t(:create_user)}');
+
+- else
+  crm.set_title('create_user', '#{t(:users)}');

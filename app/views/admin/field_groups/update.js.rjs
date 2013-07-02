@@ -1,9 +1,0 @@
-id = dom_id(@field_group, :edit)
-
-if @field_group.errors.empty?
-  page.call "crm.flip_form", id
-  page.call "crm.set_title", dom_id(@field_group), field_group_subtitle(@field_group)
-else
-  page[id].replace_html :partial => "edit"
-  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
-end

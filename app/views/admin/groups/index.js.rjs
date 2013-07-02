@@ -1,2 +1,0 @@
-page[:groups].replace_html render :partial => "admin/groups/group", :collection => @groups
-page[:paginate].replace_html :partial => "shared/paginate"

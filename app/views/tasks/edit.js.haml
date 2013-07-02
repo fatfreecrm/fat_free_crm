@@ -1,0 +1,26 @@
+- id = dom_id(@task)
+
+- if params[:cancel].true?     # <----------------- Hide [Edit Task]
+
+  - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
+  jQuery('##{id}').html('#{ j render(:partial => partial, :collection => [ @task ], :locals => { :bucket => @task.bucket }) }');
+
+- else # <----------------------------------------  Show [Edit Task] form.
+
+  -# Hide [Create Task] form if it's open.
+  crm.hide_form('create_task');
+
+  -# Hide open [Edit Lead] form if any.
+  - if @previous
+    - if @previous.is_a?(Task)
+      - partial = (@previous.assigned_to && @previous.assigned_to != current_user.id) ? "assigned" : "pending"
+      jQuery('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => partial, :collection => [ @previous ], :locals => { :bucket => nil }) }');
+    - else
+      crm.flick('task_#{@previous}', 'remove');
+
+  -# Disable onMouseOver for the list item.
+  crm.highlight_off('#{id}');
+
+  -# Show [Edit Task] form.
+  jQuery('##{id}').html('#{ j render(:partial => "edit") }');
+  jQuery('#task_name').focus();

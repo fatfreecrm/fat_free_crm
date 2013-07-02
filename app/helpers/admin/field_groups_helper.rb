@@ -4,6 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module Admin::FieldGroupsHelper
+
   def field_group_subtitle(field_group)
     asset = field_group.klass_name.downcase
     html = t(field_group.name, :default => field_group.label)
@@ -16,7 +17,7 @@ module Admin::FieldGroupsHelper
     end
     html.html_safe
   end
-  
+
   def link_to_confirm(field_group)
     link_to(t(:delete) + "?", confirm_admin_field_group_path(field_group), :method => :get, :remote => true)
   end

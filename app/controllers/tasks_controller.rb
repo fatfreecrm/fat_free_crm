@@ -83,7 +83,7 @@ class TasksController < ApplicationController
   def update
     @view = params[:view] || "pending"
     @task = Task.tracked_by(current_user).find(params[:id])
-    @task_before_update = @task.clone
+    @task_before_update = @task.dup
 
     if @task.due_at && (@task.due_at < Date.today.to_time)
       @task_before_update.bucket = "overdue"

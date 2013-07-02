@@ -1,0 +1,8 @@
+- if @list.valid?
+  jQuery('#lists').replaceWith('#{ j render(:partial => "lists/sidebar") }');
+  jQuery('.show_lists_save_form').show();
+
+- else # Couldn't create the saved list -- validation failed.
+  jQuery('#new_list').effect("shake", { duration:250, distance: 6 });
+  jQuery('#list_name').focus();
+  jQuery('#save_list').enable();

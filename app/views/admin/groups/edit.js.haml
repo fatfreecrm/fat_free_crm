@@ -1,0 +1,14 @@
+- id = dom_id(@group)
+
+- if params[:cancel].true?     # <----------------- Hide [Edit Group]
+  jQuery('##{id}').replaceWith('#{ j (render(:partial => "group", :collection => [ @group ])) }');
+
+- else # <----------------------------------------  Show [Edit Group] form.
+
+  -# Disable onMouseOver for the list item.
+  crm.highlight_off('#{id}');
+  -# Hide [Create Group] form if any.
+  crm.hide_form('create_group');
+  -# Show [Edit Group] form.
+  jQuery('##{id}').html('#{ j render(:partial => "edit") }');
+  jQuery('#group_name').focus();

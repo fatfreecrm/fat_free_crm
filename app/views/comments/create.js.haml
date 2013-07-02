@@ -1,0 +1,12 @@
+- class_name = @comment.commentable.class.name.underscore
+- id_prefix = "#{class_name}_#{@comment.commentable.id}"
+
+- if @comment.valid?
+  jQuery('##{id_prefix}_comment_new').after('#{ j (render :partial => "comment", :locals => { :comment => @comment }) }');
+  jQuery('##{dom_id(@comment)}').effect("highlight", { duration:1500 });
+  jQuery('##{id_prefix}_post').hide();
+  jQuery('##{id_prefix}_ask').show();
+
+jQuery('##{id_prefix}_shown_notes').val('#{ j @comment.commentable.comment_ids.join(',') }');
+jQuery('##{id_prefix}_comment_comment').val('');
+jQuery('##{id_prefix}_comment_comment').focus();

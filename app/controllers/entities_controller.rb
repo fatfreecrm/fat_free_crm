@@ -7,7 +7,7 @@ class EntitiesController < ApplicationController
   before_filter :require_user
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :set_view, :only => [ :index, :show, :redraw ]
-  
+
   before_filter :set_options, :only => :index
   before_filter :load_ransack_search, :only => :index
 
@@ -43,8 +43,8 @@ class EntitiesController < ApplicationController
     entity.subscribed_users += [current_user.id]
     entity.save
 
-    respond_with(entity) do |format|
-      format.js { render 'subscription_update' }
+    respond_with(@entity) do |format|
+      format.js { render 'subscription_update', :entity => entity }
     end
   end
 
@@ -55,7 +55,7 @@ class EntitiesController < ApplicationController
     entity.save
 
     respond_with(entity) do |format|
-      format.js { render 'subscription_update' }
+      format.js { render 'subscription_update', :entity => entity }
     end
   end
 
@@ -111,7 +111,7 @@ protected
   def entities
     instance_variable_get("@#{controller_name}") || klass.my
   end
-  
+
   def set_options
     unless params[:cancel].true?
       klass = controller_name.classify.constantize
@@ -167,7 +167,7 @@ private
       end
       scope = scope.paginate(:page => current_page, :per_page => per_page)
     end
-    
+
     scope
   end
 

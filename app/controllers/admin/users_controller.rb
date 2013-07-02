@@ -77,9 +77,7 @@ class Admin::UsersController < Admin::ApplicationController
   # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
-    unless @user.destroy
-      flash[:warning] = t(:msg_cant_delete_user, @user.full_name)
-    end
+    flash[:warning] = t(:msg_cant_delete_user, @user.full_name) unless @user.destroy
 
     respond_with(@user)
   end

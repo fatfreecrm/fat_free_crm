@@ -33,7 +33,7 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @field = Field.find(params[:id])
-    respond_with(@field)    
+    respond_with(@field)
   end
 
   # POST /fields
@@ -41,7 +41,7 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def create
     as = params[:field][:as]
-    @field = 
+    @field =
       if as =~ /pair/
         CustomFieldPair.create_pair(params).first
       elsif as.present?
@@ -91,7 +91,7 @@ class Admin::FieldsController < Admin::ApplicationController
 
     render :nothing => true
   end
-  
+
   # GET /fields/subform
   #----------------------------------------------------------------------------
   def subform
@@ -108,7 +108,7 @@ class Admin::FieldsController < Admin::ApplicationController
 
     respond_with(@field) do |format|
       format.html { render :partial => 'admin/fields/subform' }
-    end  
+    end
   end
-  
+
 end

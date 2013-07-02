@@ -9,9 +9,7 @@ module Admin::ApplicationHelper
     link_to(t(:yes_button),
       url_for([:admin, model]),
       :method  => :delete,
-      :remote  => true,
-      :onclick => visual_effect(:highlight, dom_id(model), :startcolor => "#ffe4e1")
+      :remote  => true
     )
   end
 end
-

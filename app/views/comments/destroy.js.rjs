@@ -1,6 +1,0 @@
-class_name = @comment.commentable.class.name.downcase
-id_prefix = "#{class_name}_#{@comment.commentable.id}"
-
-page["#{id_prefix}_shown_notes"].value = @comment.commentable.comment_ids.join(',')
-page[dom_id(@comment)].visual_effect "blind_up", :duration => 0.25
-

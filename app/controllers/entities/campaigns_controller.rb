@@ -32,7 +32,7 @@ class CampaignsController < EntitiesController
         @comment = Comment.new
         @timeline = timeline(@campaign)
       end
-      
+
       format.js do
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
@@ -143,7 +143,7 @@ class CampaignsController < EntitiesController
     current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
     set_options # Refresh options
-    
+
     respond_with(@campaigns) do |format|
       format.js { render :index }
     end
@@ -154,7 +154,7 @@ class CampaignsController < EntitiesController
   def filter
     session[:campaigns_filter] = params[:status]
     @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
-    
+
     respond_with(@campaigns) do |format|
       format.js { render :index }
     end
@@ -174,7 +174,7 @@ private
         @campaigns = get_campaigns(:page => current_page - 1) if current_page > 1
         render :index and return
       end
-      # At this point render destroy.js.rjs
+      # At this point render destroy.js
     else # :html request
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @campaign.name)

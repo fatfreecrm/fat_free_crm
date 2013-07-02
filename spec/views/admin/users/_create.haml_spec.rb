@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
+require 'spec_helper'
 
 describe "admin/users/_new" do
   before do
