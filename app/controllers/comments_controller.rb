@@ -6,8 +6,6 @@
 class CommentsController < ApplicationController
   before_filter :require_user
 
-
-
   # GET /comments
   # GET /comments.json
   # GET /comments.xml
@@ -29,24 +27,6 @@ class CommentsController < ApplicationController
       format.json { render :text => flash[:warning], :status => :not_found }
       format.xml  { render :text => flash[:warning], :status => :not_found }
     end
-  end
-
-  # GET /comments/new
-  # GET /comments/new.json
-  # GET /comments/new.xml                                                  AJAX
-  #----------------------------------------------------------------------------
-  def new
-    @comment = Comment.new
-    @commentable = extract_commentable_name(params)
-
-    if @commentable
-      update_commentable_session
-      unless @commentable.classify.constantize.my.find_by_id(params[:"#{@commentable}_id"])
-        respond_to_related_not_found(@commentable) and return
-      end
-    end
-
-    respond_with(@comment)
   end
 
   # GET /comments/1/edit                                                   AJAX
@@ -106,12 +86,4 @@ private
     params.keys.detect {|x| x =~ /_id$/ }.try(:sub, /_id$/, '')
   end
 
-  #----------------------------------------------------------------------------
-  def update_commentable_session
-    if params[:cancel].true?
-      session.delete("#{@commentable}_new_comment")
-    else
-      session["#{@commentable}_new_comment"] = true
-    end
-  end
 end

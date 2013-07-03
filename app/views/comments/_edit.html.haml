@@ -8,4 +8,4 @@
     %div{:style => "padding:6px 0px 0px 40px;"}
       = f.submit t(:save_note)
       #{t :or}
-      = link_to(t(:cancel), edit_comment_path("#{class_name}_id" => commentable, :cancel => true), :remote => true)
+      = link_to(t(:cancel), edit_comment_path(@comment, "#{class_name}_id" => commentable.id, :cancel => true), :remote => true)

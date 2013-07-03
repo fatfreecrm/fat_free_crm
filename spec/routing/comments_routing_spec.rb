@@ -12,14 +12,6 @@ describe CommentsController do
       { :get => "/comments" }.should route_to(:controller => "comments", :action => "index")
     end
 
-    it "recognizes and generates #new" do
-      { :get => "/comments/new" }.should route_to(:controller => "comments", :action => "new")
-    end
-
-    it "recognizes and generates #show" do
-      { :get => "/comments/1" }.should route_to(:controller => "comments", :action => "show", :id => "1")
-    end
-
     it "recognizes and generates #edit" do
       { :get => "/comments/1/edit" }.should route_to(:controller => "comments", :action => "edit", :id => "1")
     end
@@ -37,4 +29,3 @@ describe CommentsController do
     end
   end
 end
-

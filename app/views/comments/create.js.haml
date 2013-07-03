@@ -10,3 +10,5 @@
 jQuery('##{id_prefix}_shown_notes').val('#{ j @comment.commentable.comment_ids.join(',') }');
 jQuery('##{id_prefix}_comment_comment').val('');
 jQuery('##{id_prefix}_comment_comment').focus();
+jQuery('##{id_prefix}_post').find('form [type=submit]').removeAttr("disabled")
+jQuery('##{id_prefix}_post').find('.spinner').hide()

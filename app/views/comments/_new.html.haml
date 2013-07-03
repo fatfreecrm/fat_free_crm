@@ -23,11 +23,12 @@
       = hidden_field_tag "comment[commentable_type]", class_name.classify, :id => "#{id_prefix}_comment_commentable_type"
       = f.text_area :comment, :id => "#{id_prefix}_comment_comment"
       %div{:style => "padding:6px 0px 0px 40px;"}
+        = image_tag("loading.gif", :size => :thumb, :class => "spinner", :style => "display: none;")
         = f.submit t(:add_note), :id => "#{id_prefix}_comment_submit"
         #{t :or}
-        = link_to(t(:cancel), new_comment_path("#{class_name}_id" => commentable) + '&cancel=true', :remote => true)
+        = link_to(t(:cancel), '#', :class => 'cancel')
   %div{ {:id => "#{id_prefix}_ask"}.merge(hidden_if(false))}
-    = text_field_tag :post_new_note, t(:add_note_help), :onclick => remote_function(:url => new_comment_path("#{class_name}_id" => commentable), :method => :get), :id => "#{id_prefix}_post_new_note"
+    = text_field_tag :post_new_note, t(:add_note_help), :id => "#{id_prefix}_post_new_note"
 
   - if notification_emails_configured?
     = render :partial => "comments/subscription_links", :locals => {:entity => commentable}
