@@ -43,6 +43,10 @@
           %td
             .label.req #{t :assigned_to}:
             = user_select(:opportunity, all_users, current_user)
+        %tr
+          %td
+            .label #{t :campaign}:
+            = f.collection_select "campaign_id", Campaign.all, :id, :name, { :selected => (@campaign.try(:id) || 0), :include_blank => true }
 
         - if Setting.background_info && Setting.background_info.include?(:opportunity)
           %tr

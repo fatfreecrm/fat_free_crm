@@ -2,7 +2,6 @@
   = link_to_close new_opportunity_path
   = f.hidden_field :user_id
   = hidden_field_tag "contact",  "#{@contact.id  if @contact}"
-  = hidden_field_tag "campaign", "#{@campaign.id if @campaign}"
 
   = f.error_messages :object_name => t('opportunity')
 
