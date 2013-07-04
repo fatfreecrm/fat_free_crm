@@ -13,7 +13,8 @@ namespace :ffcrm do
       base_locale = 'en-US'
 
       [[base_locale, args[:locale]],
-       ["#{base_locale}_fat_free_crm", "#{args[:locale]}_fat_free_crm"]].each do |locale_file_names|
+       ["#{base_locale}_fat_free_crm", "#{args[:locale]}_fat_free_crm"],
+       ["#{base_locale}_ransack", "#{args[:locale]}_ransack"]].each do |locale_file_names|
         detector = MissingTranslationDetector.new locale_file_names.first,
                                                   locale_file_names.last
         detector.detect
