@@ -1,6 +1,5 @@
 - edit ||= false
--# model = entity.class.name.downcase
-- model = entity.class.name.underscore # needed for models with underscored names
+- model = entity.class.name.underscore
 - collapsed = session[:entity_permissions].nil?
 = subtitle :entity_permissions, collapsed, t(:permissions)
 .section
