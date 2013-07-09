@@ -3,6 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+
 module FatFreeCRM
 
   # A view factory keeps track of views and the contexts in which they are available.
@@ -15,7 +16,7 @@ module FatFreeCRM
   # Icon is optional. If specified, it will be passed to asset_path.
   #
   class ViewFactory
-  
+
     include Comparable
 
     @@views = []
@@ -24,13 +25,13 @@ module FatFreeCRM
     # Class methods
     #----------------------------------------------------------------------------
     class << self
-    
+
       # Register with the view factory
       #----------------------------------------------------------------------------
       def register(view)
         @@views << view unless @@views.map(&:id).include?(view.id)
       end
-      
+
       # Return views that are available based on context
       #----------------------------------------------------------------------------
       def views_for(options = {})
@@ -41,7 +42,7 @@ module FatFreeCRM
           view.controllers.include?(controller) and view.actions.include?(action) and (name.present? ? view.name == name : true)
         end
       end
-      
+
       # Return template name of the current view
       # pass in options[:name] to specify view name
       #----------------------------------------------------------------------------
@@ -72,12 +73,14 @@ module FatFreeCRM
     end
 
     private
-    
+
     # This defines what it means for one view to be different to another
     #----------------------------------------------------------------------------
     def generate_id
        [name, controllers.sort, actions.sort].flatten.map(&:to_s).map(&:underscore).join('_')
     end
+
+    ActiveSupport.run_load_hooks(:fat_free_crm_view_factory, self)
 
   end
 end
