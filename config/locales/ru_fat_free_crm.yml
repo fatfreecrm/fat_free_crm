@@ -1,20 +1,15 @@
+---
 ru:
   language: Russian (Русский)
-
-  # Generic terms.
-  #----------------------------------------------------------------------------
   all: Все
   at: в
   here: здесь
-  no_button: 'Нет'
+  no_button: Нет
   not_implemented: Пока не поддерживается.
   or: или
   select_blank: -- Выберите --
   select_none: -- Нет --
-  yes_button: 'Да'
-
-  # Settings.
-  #----------------------------------------------------------------------------
+  yes_button: Да
   tab_dashboard: Главная
   tab_tasks: Задания
   tab_campaigns: Маркетинг
@@ -22,22 +17,18 @@ ru:
   tab_accounts: Контрагенты
   tab_contacts: Контакты
   tab_opportunities: Возможности
-
   admin_tab_users: Пользователи
   admin_tab_settings: Установки
   admin_tab_plugins: Плагины
-
   planned: В плане
   started: Начата
   on_hold: Остановлена
   completed: Завершена
   called_off: Прекращена
-
   new: Новый
   contacted: В работе
   converted: Продвинут
   rejected: Закрыт
-
   cold_call: Холодный Звонок
   conference: Конференция
   online: Онлайн Маркетинг
@@ -46,7 +37,6 @@ ru:
   web: Веб-сайт
   word_of_mouth: Понаслышке
   other: Другое
-
   prospecting: Изучение
   analysis: Анализ
   presentation: Презентация
@@ -55,16 +45,13 @@ ru:
   final_review: Утверждение
   won: Выиграли
   lost: Проиграли
-
   call: Звонок
   email: E-mail
   follow_up: Доработка
   lunch: Обед
   meeting: Встреча
   money: Деньги
-  presentation: Презентация
   trip: Поездка
-
   overdue: Задержка
   due_asap: Как можно скорее
   due_today: Сегодня
@@ -73,24 +60,17 @@ ru:
   due_next_week: На следующей неделе
   due_later: Позже
   due_specific_date: Конкретная дата
-
   completed_today: Сегодня
   completed_yesterday: Вчера
   completed_last_week: На прошлой неделе
   completed_this_month: В этом месяце
   completed_last_month: В прошлом месяце
-
-  # Models/Activity.
-  #----------------------------------------------------------------------------
   one_hour: Один Час
   one_day: Один День
   two_days: Два Дня
   one_week: Одна Неделя
   two_weeks: Две Недели
   one_month: Один Месяц
-
-  # Model Validations.
-  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -103,85 +83,85 @@ ru:
         account:
           attributes:
             name:
-              missing_account_name: "^Пожалуйста введите название контрагента."
+              missing_account_name: ^Пожалуйста введите название контрагента.
             access:
-              share_account: "^Пожалуйста укажите пользователей которым разрешен доступ к данному контрагенту."
+              share_account: ^Пожалуйста укажите пользователей которым разрешен доступ
+                к данному контрагенту.
         campaign:
           attributes:
             name:
-              missing_campaign_name: "^Пожалуйста введите название кампании."
+              missing_campaign_name: ^Пожалуйста введите название кампании.
             ends_on:
-              dates_not_in_sequence: "^Пожалуйста укажите дату окончания кампании после ее начала."
+              dates_not_in_sequence: ^Пожалуйста укажите дату окончания кампании после
+                ее начала.
             access:
-              share_campaign: "^Пожалуйста укажите пользователей которым разрешен доступ к данной кампании."
+              share_campaign: ^Пожалуйста укажите пользователей которым разрешен доступ
+                к данной кампании.
         contact:
           attributes:
             first_name:
-              missing_first_name: "^Пожалуйста введите имя."
+              missing_first_name: ^Пожалуйста введите имя.
             last_name:
-              missing_last_name: "^Пожалуйста введите фамилию."
+              missing_last_name: ^Пожалуйста введите фамилию.
             access:
-              share_contact: "^Пожалуйста укажите пользователей которым разрешен доступ к данному контакту."
+              share_contact: ^Пожалуйста укажите пользователей которым разрешен доступ
+                к данному контакту.
         lead:
           attributes:
             first_name:
-              missing_first_name: "^Пожалуйста введите имя."
+              missing_first_name: ^Пожалуйста введите имя.
             last_name:
-              missing_last_name: "^Пожалуйста введите фамилию."
+              missing_last_name: ^Пожалуйста введите фамилию.
             access:
-              share_lead: "^Пожалуйста укажите пользователей которым разрешен доступ к данному потенциальному клиенту."
+              share_lead: ^Пожалуйста укажите пользователей которым разрешен доступ
+                к данному потенциальному клиенту.
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: "^Пожалуйста введите название возможности."
+              missing_opportunity_name: ^Пожалуйста введите название возможности.
             access:
-              share_opportunity: "^Пожалуйста укажите пользователей которым разрешен доступ к данной возможности."
+              share_opportunity: ^Пожалуйста укажите пользователей которым разрешен
+                доступ к данной возможности.
         task:
           attributes:
             name:
-              missing_task_name: "^Пожалуйста введите название для задания."
+              missing_task_name: ^Пожалуйста введите название для задания.
           calendar:
-            invalid_date: "^Пожалуйста укажите правильную дату."
+            invalid_date: ^Пожалуйста укажите правильную дату.
         user:
           attributes:
             username:
-              missing_username: "^Пожалуйста введите имя пользователя."
-              username_taken: "^Данное имя пользователя уже существует."
+              missing_username: ^Пожалуйста введите имя пользователя.
+              username_taken: ^Данное имя пользователя уже существует.
             email:
-              msg_missing_email: "^Пожалуйста введите e-mail адрес."
-              email_in_use: "^Пользователь с данным e-mail адресом уже существует."
-
-  # dynamic_form plugin translations.
-  #----------------------------------------------------------------------------
+              msg_missing_email: ^Пожалуйста введите e-mail адрес.
+              email_in_use: ^Пользователь с данным e-mail адресом уже существует.
   errors:
     template:
       header:
-        one:   "%{model}: сохранение не удалось из-за %{count} ошибки"
-        few:   "%{model}: сохранение не удалось из-за %{count} ошибок"
-        many:  "%{model}: сохранение не удалось из-за %{count} ошибок"
-        other: "%{model}: сохранение не удалось из-за %{count} ошибки"
-      body: "Проблемы возникли со следующими полями:"
-
+        one: ! '%{model}: сохранение не удалось из-за %{count} ошибки'
+        few: ! '%{model}: сохранение не удалось из-за %{count} ошибок'
+        many: ! '%{model}: сохранение не удалось из-за %{count} ошибок'
+        other: ! '%{model}: сохранение не удалось из-за %{count} ошибки'
+      body: ! 'Проблемы возникли со следующими полями:'
   msg_account_suspended: Пользователь заблокирован.
   password_reset_instruction: инструкции по перемене пароля
-
-  # Controllers.
-  #----------------------------------------------------------------------------
   msg_account_created: Ваш аккаунт создан и ожидает активации системным администратором.
   msg_account_not_approved: Ваш аккаунт еще не активирован.
   msg_asset_deleted: Этот %{value} был удален.
   msg_asset_not_available: Этот %{value} более недоступен.
-  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
-  msg_assets_not_available: Эти %{value} более недоступны. 
+  msg_asset_not_authorized: You are not authorized to view this %{value}.
+  msg_assets_not_available: Эти %{value} более недоступны.
   msg_asset_rejected: Этот %{value} отклонен.
   msg_bad_image_file: ^Ошибка при загрузке или изменении размера указанного изображения.
   msg_cant_create_related: Невозвожно создать %{asset} так как %{related} более недоступен.
-  msg_cant_delete_user: "^Невозможно удалить пользователя так как к %{value} привязаны объекты."
+  msg_cant_delete_user: ^Невозможно удалить пользователя так как к %{value} привязаны
+    объекты.
   msg_cant_do: Нельзя %{action} %{asset}, его больше не существует.
   msg_email_not_found: Пользователя с таким адресом не найдено.
   msg_enter_new_password: Пожалуйста введите новый пароль.
   msg_goodbye: Вы вышли. Спасибо за использование Fat Free CRM!
-  msg_invalid_password: "^Введите правильный пароль."
+  msg_invalid_password: ^Введите правильный пароль.
   msg_invalig_login: Неправильный логин или пароль.
   msg_last_login: Последний раз Вы заходили %{value}.
   msg_login_needed: Для доступа к этой странице нужно войти в систему.
@@ -189,15 +169,14 @@ ru:
   msg_password_changed: Пароль изменен.
   msg_password_not_changed: Пароль не был изменен.
   msg_password_updated: Пароль успешно изменен.
-  msg_pwd_instructions_sent: Инструкции по перемене пароля Вам высланы. Пожалуйста проверьте свою электронную почту.
+  msg_pwd_instructions_sent: Инструкции по перемене пароля Вам высланы. Пожалуйста
+    проверьте свою электронную почту.
   msg_require_admin: Для доступа к этой странице нужны права Администратора
   msg_successful_signup: Регистрация прошла успешно, добро пожаловать в Fat Free CRM!
   msg_welcome: Добро пожаловать в Fat Free CRM!
-
-  # Options.
-  #----------------------------------------------------------------------------
-  "option_amount*probability": взвешенной сумме
-  activity_options: "Показывать действия изменившие %{models} и произведенные %{user} за последние %{period}."
+  option_amount*probability: взвешенной сумме
+  activity_options: Показывать действия изменившие %{models} и произведенные %{user}
+    за последние %{period}.
   all_users: Всеми Пользователями
   option_after: после
   option_all: все
@@ -223,10 +202,8 @@ ru:
   option_updated_at: дате обновления
   show_per_page: Показывать %{models} в %{fmt} формате по %{number} записей на странице.
   sort_by: Сортировать %{models} по %{field}.
-  sort_by_displaying: Сортировать %{models} по %{field} показывая имя %{position} фамилии.
-
-  # Views -> Profile.
-  #----------------------------------------------------------------------------
+  sort_by_displaying: Сортировать %{models} по %{field} показывая имя %{position}
+    фамилии.
   aim: AOL IM
   already_signed_up: Уже регистрировались?
   alt_email: Альтернативный E-mail
@@ -236,12 +213,12 @@ ru:
   contact_info: Контактная Информация
   current_password: Текущий пароль
   edit_profile: Изменить Профиль
-  # email: E-mail # <-- Already defined as the task type if Settings.
   first_name: Имя
   google: Google IM
   gravatar_help: Не знаете что такое Gravatar? Почитать про Gravatar
   image_file: Файл с Изображением
-  image_help: "Размер изображения будет автоматически изменен на 75 x 75 пикселей. Поддерживаются форматы: GIF, JPG и PNG."
+  image_help: ! 'Размер изображения будет автоматически изменен на 75 x 75 пикселей.
+    Поддерживаются форматы: GIF, JPG и PNG.'
   job_title: Должность
   last_name: Фамилия
   login_now_link: Войти!
@@ -262,19 +239,14 @@ ru:
   user: Пользователь
   username: Логин
   yahoo: Yahoo IM
-
-  # Views -> Authenticate.
-  #----------------------------------------------------------------------------
   forgot_password: Забыли пароль?
   login: Вход
   no_account: Не зарегистрированы?
   remember_me: Запомнить
   sign_up_now: Зарегистрироваться!
-
-  # Views -> Accounts.
-  #----------------------------------------------------------------------------
   account: Контрагент
-  account_permissions_intro: По умолчанию только Вы будете иметь доступ к этому контрагенту. Права доступа можно будет изменить в любое время.
+  account_permissions_intro: По умолчанию только Вы будете иметь доступ к этому контрагенту.
+    Права доступа можно будет изменить в любое время.
   account_small: контрагент
   accounts: Контрагенты
   accounts_options: Свойства списка контрагентов
@@ -297,9 +269,6 @@ ru:
   share_with: Показывать перечисленным людям
   shipping_address: Адрес получателя
   website: Интернет-страница
-
-  # Views -> Campaigns.
-  #----------------------------------------------------------------------------
   actual: Фактически
   actual_performance: Фактический Результат
   budget: Бюджет
@@ -322,11 +291,14 @@ ru:
   no_start_date: дата начала не указана
   number_of_leads: Количество потенциальных клиентов
   objectives: Цели
-  objectives_help: Пожалуйста, введите ожидаемое количество потенциальных клиентов, планируемый коэффициент конверсии потенциальных клиентов в возможность, планируемый доход и бюджет рекламной кампании. Эти цифры позволят отследить фактическую эффективность кампании.
+  objectives_help: Пожалуйста, введите ожидаемое количество потенциальных клиентов,
+    планируемый коэффициент конверсии потенциальных клиентов в возможность, планируемый
+    доход и бюджет рекламной кампании. Эти цифры позволят отследить фактическую эффективность
+    кампании.
   objectives_small: целях кампании
   revenue: Доход
   revenue_label: Доход (руб.)
-  revenue_number: "%{value} дохода"
+  revenue_number: ! '%{value} дохода'
   save_campaign: Сохранить Изменения
   start_date: Дата начала
   started_ago: начата %{value} назад
@@ -336,9 +308,6 @@ ru:
   total_campaigns: Всего кампаний
   was_supposed_to_finish: должна была закончиться %{value}
   was_supposed_to_start: должна была начаться %{time_ago} назад %{start_date}
-    
-  # Views -> Contacts.
-  #----------------------------------------------------------------------------
   alt_email_small: Доп. e-mail
   blog: Блог/Интернет-страница
   contact: Контакт
@@ -355,37 +324,40 @@ ru:
   facebook: Вконтакте
   linked_in: Одноклассники
   myself: Мне
-
-  # TODO
-  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.  
-  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
-
-  permissions_intro: При создании только Вы получаете доступ к %{value}ам. Права доступа можно изменить в любое время.
+  permissions_intro_private: By default only you will have access to the %{value}.
+    You can change permissions later.
+  permissions_intro_public: By default all users will have access to the %{value}.
+    You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to
+    the %{value}. You can change permissions later.
+  permissions_intro: При создании только Вы получаете доступ к %{value}ам. Права доступа
+    можно изменить в любое время.
   referred_by: По рекомендации
   referred_by_small: по рекомендации
   save_contact: Сохранить Контакт
   twitter: Twitter
   web_presence: Профили в Сети
   web_presence_small: профилях
-  works_at: "%{job_title} в %{company}"
-
-  # Views -> Leads.
-  #----------------------------------------------------------------------------
+  works_at: ! '%{job_title} в %{company}'
   convert: Конверсия
   convert_lead: Конвертировать потенциального клиента
-  convert_lead_permissions_intro: Права доступа к контакту будут скопированы от карточки конвертируемого потенциального клиента. Позже вы сможете изменить права доступа.
-  convert_lead_text: В результате конверсии потенциального клиента &laquo;%{value}&raquo;, будет создан новый контакт привязанный к существующему или вновь созданному клиенту. Статус потенциального клиента автоматически изменится на конвертирован.
+  convert_lead_permissions_intro: Права доступа к контакту будут скопированы от карточки
+    конвертируемого потенциального клиента. Позже вы сможете изменить права доступа.
+  convert_lead_text: В результате конверсии потенциального клиента &laquo;%{value}&raquo;,
+    будет создан новый контакт привязанный к существующему или вновь созданному клиенту.
+    Статус потенциального клиента автоматически изменится на конвертирован.
   create_lead: Создать потенциального клиента
-  create_opp_for_contact: Вы можете создать возможность, привязанную к контакту &laquo;%{value}&raquo;, введя в следующих полях название возможности, стадию, предполагаему дату завершения, вероятность продажи, сумма сделки и предлагаемую скидку.
+  create_opp_for_contact: Вы можете создать возможность, привязанную к контакту &laquo;%{value}&raquo;,
+    введя в следующих полях название возможности, стадию, предполагаему дату завершения,
+    вероятность продажи, сумма сделки и предлагаемую скидку.
   lead: Потенциальный клиент
   lead_info_small: Контактная информация потенциального клиента
-
-  # TODO
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
-
+  lead_permissions_intro_private: By default permissions will be copied from the campaign
+    or set to private. You can change lead permissions later.
+  lead_permissions_intro_public: By default permissions will be copied from the campaign
+    or set to public. You can change lead permissions later.
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign
+    or shared with the specified users. You can change lead permissions later.
   lead_small: потенциальный клиент
   lead_status_small: Статус потенциального клиента
   lead_summary: Информация о потенциальном клиенте
@@ -395,14 +367,12 @@ ru:
   none: Нет
   rating: Оценка
   reject: Закрыть
-  reject_lead_confirm: Вы действительно хотите закрыть эту карточку потенциального клиента?
+  reject_lead_confirm: Вы действительно хотите закрыть эту карточку потенциального
+    клиента?
   save_lead: Сохранить Потенциального клиента
   source: Источник
   status: Статус
   total_leads: Всего потенциальных клиентов
-
-  # Views -> Opportunities.
-  #----------------------------------------------------------------------------
   amount: Сумма
   close_date: Дата завершения
   closed_ago_on: завершена %{time_ago} назад %{date}
@@ -424,7 +394,8 @@ ru:
   opportunity: Возможность
   opportunity_small: возможность
   opportunity_summary: Краткая информация
-  opportunity_summary_text: "%{amount} со скидкой %{discount} и вероятностью %{probability} процентов"
+  opportunity_summary_text: ! '%{amount} со скидкой %{discount} и вероятностью %{probability}
+    процентов'
   past_due: просрочено, должно было завершено %{value} назад
   probability: Вероятность
   probability_number: и вероятностью %{value}
@@ -432,9 +403,6 @@ ru:
   stage: Стадия
   total_opportunities: Всего возможностей
   weighted_amount: Взвешенная сумма
-
-  # Views -> Tasks.
-  #----------------------------------------------------------------------------
   assign_to: Поручить
   assigned_tab: Порученные
   assigned_tasks: Порученные Задания
@@ -460,26 +428,23 @@ ru:
   task_completed_ago: завершено %{value} назад
   task_completed_by: завершил(а) %{user} %{time_ago} назад
   task_created: Задание добавлено
-  task_due_in: "срок: через %{value}"
-  task_due_later: "срок: скоро"
-  task_due_now: "срок: сейчас"
-  task_due_today: "срок: сегодня"
-  task_from: "%{value} поручил(a)"
-  task_overdue: "задержка, срок:" 
+  task_due_in: ! 'срок: через %{value}'
+  task_due_later: ! 'срок: скоро'
+  task_due_now: ! 'срок: сейчас'
+  task_due_today: ! 'срок: сегодня'
+  task_from: ! '%{value} поручил(a)'
+  task_overdue: ! 'задержка, срок:'
   task_pending: Это задание поставлено в очередь на выполнение
   task_small: задание
   tasks: Задания
-  total_tasks: "%{value}, всего:"
+  total_tasks: ! '%{value}, всего:'
   view_assigned_tasks: показать порученные задания
   view_pending_tasks: показать задания на очереди
- 
-  # Views -> Home.
-  #----------------------------------------------------------------------------
   action_commented: прокомментировал(а)
   action_completed: завершил(а)
   action_created: добавил(а)
   action_deleted: удалил(а)
-  action_email: exchanged emails with # TODO
+  action_email: exchanged emails with
   action_reassigned: перепоручил(а)
   action_rejected: закрыл(а)
   action_rescheduled: перенес(ла)
@@ -495,14 +460,11 @@ ru:
   subject_lead: наводку
   subject_opportunity: перспективу
   subject_task: задание
-
-  # Views -> Common.
-  #----------------------------------------------------------------------------
   add_note: Добавить Комментарий
   save_note: Сохранить Комментарий
   add_note_help: Добавить комментарий...
   added_ago: добавлен %{value} назад
-  added_by: "%{user} добавил(а) %{time_ago} назад"
+  added_by: ! '%{user} добавил(а) %{time_ago} назад'
   back: Назад
   cancel: Отменить
   close_form: Закрыть
@@ -516,64 +478,53 @@ ru:
   discard: Сбросить
   edit: Изменить
   items_total: Всего %{count}.
-  less: Less... # TODO
+  less: Less...
   me: я
-  more: More... # TODO
-  n_a: -
+  more: More...
+  n_a:
+  - 
   name: Название
-  no_match: "%{value} не найдены"
+  no_match: ! '%{value} не найдены'
   no_recent_items: Недавно просмотренных объектов не найдено.
   options: Опции
   permissions: Права Доступа
   please_retry: попробуйте поискать что-нибудь другое.
   recent_items: Недавние Объекты
   search_assets: Поиск - %{value}
-  ago: "%{value} назад"
+  ago: ! '%{value} назад'
   background_info: Дополнительная информация
   address: Адрес
   city: деловой центр Лондона
   zipcode: почтовый индекс
   state: режим работы
   country: страна
-  
-  # Views -> Layout.
-  #----------------------------------------------------------------------------
   about: О программе
   about_dev_group: Форум для разработчиков
   about_features: Багтрекер
   about_ffc: О программе Fat Free CRM
-  about_ffc_resources: Полезные ресурсы по Fat Free CRM (ссылки открываются в новом окне)
+  about_ffc_resources: Полезные ресурсы по Fat Free CRM (ссылки открываются в новом
+    окне)
   about_ffc_version: Fat Free CRM версия
   about_home_page: Домашняя страница
   about_project_page: Страница проекта
-  about_thank_you: Спасибо что Вы пользуетесь Fat Free CRM! Мы ценим ваш бизнес и надеемся что Вам нравится наше приложение.
+  about_thank_you: Спасибо что Вы пользуетесь Fat Free CRM! Мы ценим ваш бизнес и
+    надеемся что Вам нравится наше приложение.
   about_twitter: Следите за информацией в Twitter
   about_user_group: Форум для пользователей
   admin: Админ
   logout: Выход
   quick_find: Быстрый поиск
   welcome: Добро пожаловать
-
-  # Views -> Comments.
-  #----------------------------------------------------------------------------
   edit_comment: Изменить комментарий
   show: Показать
   update: Сохранить
-
-  # Views -> Passwords.
-  #----------------------------------------------------------------------------
   confirm_password_intro: Введите новый пароль, и затем подтвердите его.
-  password_intro: Введите адрес электронной почты, на который Вам выслать инструкции по перемене пароля.
+  password_intro: Введите адрес электронной почты, на который Вам выслать инструкции
+    по перемене пароля.
   reset_password: Изменить Пароль
   update_password_and_login: Изменить Пароль и Войти
-
-  # Views -> Admin
-  #----------------------------------------------------------------------------
   back_to_crm: Назад к Fat Free CRM
   crm_admin_page: Администрирование Fat Free CRM
-
-  # Views -> Admin -> Users.
-  #----------------------------------------------------------------------------
   approve: Подтвердить
   create_user: Создать Пользователя
   last_seen: последний визит %{value} назад
@@ -584,7 +535,8 @@ ru:
   user_active: Активен
   user_admin: Админ.
   user_awaits_approval: ждет подтверждения
-  user_confirm_delete: Пользователя можно удалить только в том случае, если к нему не привязаны никакие объекты.
+  user_confirm_delete: Пользователя можно удалить только в том случае, если к нему
+    не привязаны никакие объекты.
   user_is_admin: Дать права Администратора
   user_never_logged_in: еще не заходил(а)
   user_signed_up: Зарегистрирован
@@ -594,59 +546,50 @@ ru:
   user_suspended_on: заблокирован(а) %{value}
   users: Пользователи
   users_small: пользователи
-
-  # Dropbox.
-  #----------------------------------------------------------------------------
   dropbox_notification_subject: dropbox - Добавлено электронной почты - %{subject}
-  dropbox_notification_intro: Успешно добавлена электронной почты, который направлен Dropbox
+  dropbox_notification_intro: Успешно добавлена электронной почты, который направлен
+    Dropbox
   dropbox_notification_to: В дополнение к
   subject: Тема
   body: Тело
-
-  # Pluralizations.
-  #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: '1 comment' # TODO
-      other: '%{count} comments' # TODO
+      one: 1 comment
+      other: ! '%{count} comments'
     contact:
-      zero: '0 контактов'
-      one: '1 контакт'
-      few: '%{count} контакта'
-      many: '%{count} контактов'
-      other: '%{count} контакта'
+      zero: 0 контактов
+      one: 1 контакт
+      few: ! '%{count} контакта'
+      many: ! '%{count} контактов'
+      other: ! '%{count} контакта'
     opportunity:
-      zero: '0 перспектив'
-      one: '1 перспектива'
-      few: '%{count} перспективы'
-      many: '%{count} перспектив'
-      other: '%{count} перспектив'
+      zero: 0 перспектив
+      one: 1 перспектива
+      few: ! '%{count} перспективы'
+      many: ! '%{count} перспектив'
+      other: ! '%{count} перспектив'
     lead:
-      zero: '0 потенциальных клиентов'
-      one: '1 потенциальный клиент'
-      few: '%{count} потенциальных клиентов'
-      many: '%{count} потенциальных клиентов'
-      other: '%{count} потенциальных клиентов'
+      zero: 0 потенциальных клиентов
+      one: 1 потенциальный клиент
+      few: ! '%{count} потенциальных клиентов'
+      many: ! '%{count} потенциальных клиентов'
+      other: ! '%{count} потенциальных клиентов'
     day:
-      zero: '0 дней'
-      one: '%{count} день'
-      few: '%{count} дня'
-      many: '%{count} дней'
-      other: '%{count} дней'
+      zero: 0 дней
+      one: ! '%{count} день'
+      few: ! '%{count} дня'
+      many: ! '%{count} дней'
+      other: ! '%{count} дней'
     login:
-      one: 'заходил(а) %{count} раз'
-      few: 'заходил(а) %{count} раза'
-      many: 'заходил(а) %{count} раз'
-      other: 'заходил(а) %{count} раз'
-
-  # Custom date/time formats.
-  #----------------------------------------------------------------------------
+      one: заходил(а) %{count} раз
+      few: заходил(а) %{count} раза
+      many: заходил(а) %{count} раз
+      other: заходил(а) %{count} раз
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
-      mmdd: "%b %e"
-      mmddyy: "%b %e, %Y"
-
+      mmddyyyy: ! '%m/%d/%Y'
+      mmdd: ! '%b %e'
+      mmddyy: ! '%b %e, %Y'
   time:
     formats:
-      mmddhhss: "%d %B в %H:%M"
+      mmddhhss: ! '%d %B в %H:%M'

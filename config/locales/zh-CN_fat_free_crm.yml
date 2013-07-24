@@ -1,48 +1,39 @@
+---
 zh-CN:
   language: 中文（简体）
-
-  # Generic terms.
-  #----------------------------------------------------------------------------
   all: 所有
   at: 在
   here: 这里
-  no_button: '否'
+  no_button: 否
   not_implemented: 未实现
   or: 或
-  select_none: '-- 无 --'
-  select_blank: '-- 选择 --'
-  yes_button: '是'
-
-  # Settings.
-  #----------------------------------------------------------------------------
+  select_none: -- 无 --
+  select_blank: -- 选择 --
+  yes_button: 是
   tab_dashboard: 摘要
   tab_tasks: 任务
   tab_campaigns: 促销
-  tab_leads: 线索 
+  tab_leads: 线索
   tab_accounts: 账号
   tab_contacts: 联系人
   tab_opportunities: 商机
-
   admin_tab_users: 用户
   admin_tab_settings: 设置
   admin_tab_plugins: 插件
   admin_tab_groups: 分组
   admin_tab_fields: 区域
   admin_tab_tags: 标记
-
   planned: 计划
   started: 已开始
   on_hold: 搁置
   completed: 完成
   called_off: 取消
   groups: 分组
-
   new: 新建
   contacted: 已联系
   converted: 已转换
   rejected: 已拒绝
-
-  cold_call: 冷电话 
+  cold_call: 冷电话
   conference: 会议
   online: 在线营销
   referral: 转来
@@ -50,7 +41,6 @@ zh-CN:
   web: 网站
   word_of_mouth: 口头
   other: 其它
-
   prospecting: 展望
   analysis: 分析
   presentation: 演示
@@ -59,16 +49,13 @@ zh-CN:
   final_review: 最后审查
   won: 结束／赢
   lost: 结束／输
-
   call: 电话
   email: Email
   follow_up: 跟进
   lunch: 午餐
   meeting: 会议
   money: 钱
-  presentation: 演示
   trip: 旅行
-
   overdue: 逾期
   due_asap: 尽快
   due_today: 今天
@@ -77,24 +64,17 @@ zh-CN:
   due_next_week: 下周
   due_later: 以后
   due_specific_date: 特定日期...
-
   completed_today: 今天
   completed_yesterday: 昨天
   completed_last_week: 上周
   completed_this_month: 本月
   completed_last_month: 上月
-
-  # Models/Activity.
-  #----------------------------------------------------------------------------
   one_hour: 1小时
   one_day: 1天
   two_days: 2天
   one_week: 1周
   two_weeks: 2周
   one_month: 1月
-
-  # Model Validations.
-  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -107,83 +87,76 @@ zh-CN:
         account:
           attributes:
             name:
-              missing_account_name: "^请指定用户名"
+              missing_account_name: ^请指定用户名
             access:
-              share_account: "^请指定可以共享账号的用户"
+              share_account: ^请指定可以共享账号的用户
         campaign:
           attributes:
             name:
-              missing_campaign_name: "^请指定促销活动名称"
+              missing_campaign_name: ^请指定促销活动名称
             ends_on:
-              dates_not_in_sequence: "^请确认促销活动开始日期在结束日期之前"
+              dates_not_in_sequence: ^请确认促销活动开始日期在结束日期之前
             access:
-              share_campaign: "^请指定可以共享促销活动的用户"
+              share_campaign: ^请指定可以共享促销活动的用户
         contact:
           attributes:
             first_name:
-              missing_first_name: "^请指定用户的名"
+              missing_first_name: ^请指定用户的名
             last_name:
-              missing_last_name: "^请指定用户的姓"
+              missing_last_name: ^请指定用户的姓
             access:
-              share_contact: "^请指定可以共享联系人的用户"
+              share_contact: ^请指定可以共享联系人的用户
         lead:
           attributes:
             first_name:
-              missing_first_name: "^请指定用户的名"
+              missing_first_name: ^请指定用户的名
             last_name:
-              missing_last_name: "^请指定用户的姓"
+              missing_last_name: ^请指定用户的姓
             access:
-              share_lead: "^请指定可以共享Lead的用户"
+              share_lead: ^请指定可以共享Lead的用户
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: "^请指定商机名称"
+              missing_opportunity_name: ^请指定商机名称
             access:
-              share_opportunity: "^请指定可以共享商机的用户"
+              share_opportunity: ^请指定可以共享商机的用户
         task:
           attributes:
             name:
-              missing_task_name: "^请指定任务名称"
+              missing_task_name: ^请指定任务名称
             calendar:
-              invalid_date: "^请指定合法日期"
+              invalid_date: ^请指定合法日期
         user:
           attributes:
             username:
-              missing_username: "^请指定用户名"
-              username_taken: "^此用户名已有人使用"
+              missing_username: ^请指定用户名
+              username_taken: ^此用户名已有人使用
             email:
-              missing_email: "^请指定邮件地址"
-              email_in_use: "^此邮件地址已经有人使用"
-
-  # dynamic_form plugin translations.
-  #----------------------------------------------------------------------------
+              missing_email: ^请指定邮件地址
+              email_in_use: ^此邮件地址已经有人使用
   errors:
     template:
       header:
-        one: "有 1 个错误发生导致「%{model}」无法被保存。"
-        other: "有 %{count} 个错误发生导致「%{model}」无法被保存。"
-      body: "如下字段出现错误："
-
+        one: 有 1 个错误发生导致「%{model}」无法被保存。
+        other: 有 %{count} 个错误发生导致「%{model}」无法被保存。
+      body: 如下字段出现错误：
   msg_account_suspended: 用户账号已暂停
   password_reset_instruction: 密码重置方法
-
-  # Controllers.
-  #----------------------------------------------------------------------------
   msg_account_created: 你的账号已经创建，正在等待管理员审核
   msg_account_not_approved: 你的账号还未被批准
-  msg_asset_deleted: "%{value} 已经被删除"
+  msg_asset_deleted: ! '%{value} 已经被删除'
   msg_asset_not_available: 这个 %{value} 已不存在
-  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
+  msg_asset_not_authorized: You are not authorized to view this %{value}.
   msg_assets_not_available: 这个 %{value} 不存在
-  msg_asset_rejected: "%{value} 已被拒绝"
-  msg_bad_image_file: "^^不能将此图片上传或改变大小"
-  msg_cant_create_related: "不能创建 %{asset} 因为 %{related} 已不存在"
-  msg_cant_delete_user: "^不能删除用户，因为 %{value} 有相关 assets 存在"
-  msg_cant_do: "不能 %{action} %{asset} 因为它已经不存在"
+  msg_asset_rejected: ! '%{value} 已被拒绝'
+  msg_bad_image_file: ^^不能将此图片上传或改变大小
+  msg_cant_create_related: 不能创建 %{asset} 因为 %{related} 已不存在
+  msg_cant_delete_user: ^不能删除用户，因为 %{value} 有相关 assets 存在
+  msg_cant_do: 不能 %{action} %{asset} 因为它已经不存在
   msg_email_not_found: 未找到用户使用此邮件地址
   msg_enter_new_password: 请输入新密码
   msg_goodbye: 您已退出，感谢您使用 Fat Free CRM!
-  msg_invalid_password: "^^请输入正确密码"
+  msg_invalid_password: ^^请输入正确密码
   msg_invalig_login: 用户名或密码错
   msg_last_login: 您上次登录是在 %{value}.
   msg_login_needed: 必须登录后才可使用本页
@@ -195,10 +168,7 @@ zh-CN:
   msg_require_admin: 必须是管理员才能使用本页
   msg_successful_signup: 成功申请，欢迎您使用 Fat Free CRM!
   msg_welcome: 欢迎使用 Fat Free CRM!
-
-  # Options.
-  #----------------------------------------------------------------------------
-  "option_amount*probability": weighted amount
+  option_amount*probability: weighted amount
   activity_options: 显示 %{models} 行业由 %{user} 在过去 %{period}.
   all_users: 所有用户
   option_after: 之后
@@ -223,12 +193,9 @@ zh-CN:
   option_target_leads: 目标线索
   option_target_revenue: 目标收入
   option_updated_at: 更新日期
-  show_per_page: 显示 %{number} %{models} 每页使用 %{fmt} 格式 
+  show_per_page: 显示 %{number} %{models} 每页使用 %{fmt} 格式
   sort_by: 用 %{field} 排序 %{models}
-  sort_by_displaying: 用 %{field} 排序 %{models}，显示名 %{position} 姓 
-
-  # Views -> Profile.
-  #----------------------------------------------------------------------------
+  sort_by_displaying: 用 %{field} 排序 %{models}，显示名 %{position} 姓
   aim: AOL IM
   already_signed_up: 已申请？
   alt_email: 另一个 email
@@ -238,7 +205,6 @@ zh-CN:
   contact_info: 联系人信息
   current_password: 旧密码
   edit_profile: 编辑个人设置
-  # email: Email # <-- Already defined as the task type if Settings.
   first_name: 名
   google: Google IM
   gravatar_help: 不熟悉 Gravatars? 了解 Gravatars
@@ -264,18 +230,12 @@ zh-CN:
   user: 用户
   username: 用户名
   yahoo: Yahoo IM
-
-  # Views -> Authenticate.
-  #----------------------------------------------------------------------------
   forgot_password: 忘记密码
   login: 登录
   no_account: 没有账号?
   remember_me: 记住我
   sign_up_now: 现在申请!
-
-  # Views -> Accounts.
-  #----------------------------------------------------------------------------
-  account: 账号 
+  account: 账号
   account_small: 短账号
   accounts: 账号
   accounts_options: 账号选项
@@ -286,9 +246,9 @@ zh-CN:
   date_created: 创建日期
   date_updated: 更新日期
   fax: 传真
-  intro: 可稍后添加%{value} 
+  intro: 可稍后添加%{value}
   mobile_small: 手机
-  open_in_window: 在一个新窗口打开%{value} 
+  open_in_window: 在一个新窗口打开%{value}
   mail_to: 发邮件给%{value}
   phone_small: 电话
   phone_toll_free: 免费电话
@@ -302,10 +262,7 @@ zh-CN:
   account_summary: 账号摘要
   pipeline: 渠道
   select_an_account: 选择账号
-
-  # Views -> Campaigns.
-  #----------------------------------------------------------------------------
-  actual: 实际 
+  actual: 实际
   actual_performance: 实际效益
   budget: 预算
   budget_label: 预算(￥)
@@ -319,7 +276,7 @@ zh-CN:
   campaigns_small: 促销
   conversion: 转换
   conversion_label: 转换比率(%)
-  conversion_number: "%{value} 转换" 
+  conversion_number: ! '%{value} 转换'
   create_campaign: 创建促销
   end_date: 结束日期
   finished_on: 完成于 %{value}
@@ -331,7 +288,7 @@ zh-CN:
   objectives_small: 战役目标
   revenue: 收入
   revenue_label: 收入(￥)
-  revenue_number: "收入%{value}"
+  revenue_number: 收入%{value}
   save_campaign: 保存促销
   start_date: 开始日期
   started_ago: 开始于 %{value} 之前
@@ -341,9 +298,6 @@ zh-CN:
   total_campaigns: 促销总数
   was_supposed_to_finish: 预计完成于 %{value}
   was_supposed_to_start: 预计开始于 %{time_ago} 之前，在 %{start_date}
-    
-  # Views -> Contacts.
-  #----------------------------------------------------------------------------
   alt_email_small: 其它
   blog: Website/Blog
   contact: 联系人
@@ -353,14 +307,14 @@ zh-CN:
   contacts_small: 联系人
   create_contact: 创建联系人
   department: 部门
-  department_small: '%{value} 部门'
+  department_small: ! '%{value} 部门'
   do_not_call: 不要打电话
   extra_info: 更多信息
   extra_info_small: 更多信息
   facebook: Facebook
   linked_in: LinkedIn
   myself: 自己
-  permissions_intro_private: 默认只有你对 %{value} 有权限。以后可修改。  
+  permissions_intro_private: 默认只有你对 %{value} 有权限。以后可修改。
   permissions_intro_public: 默认所有用户都对 %{value} 有权限。以后可修改。
   permissions_intro_shared: 默认只有选定用户对 %{value} 有权限。以后可修改。
   referred_by: 引用
@@ -369,7 +323,7 @@ zh-CN:
   twitter: Twitter
   web_presence: web
   web_presence_small: web
-  works_at: "%{job_title} 在 %{company}"
+  works_at: ! '%{job_title} 在 %{company}'
   affiliate: 下属
   competitor: 对手
   customer: 顾客
@@ -380,9 +334,6 @@ zh-CN:
   select_contact: 选择账号
   select_a_country: 选择国家
   comment_intro: 备注或简介
-
-  # Views -> Leads.
-  #----------------------------------------------------------------------------
   convert: 转换
   convert_lead: 转换线索
   convert_lead_permissions_intro: 联系人权限将会从被转换的线索中复制。以后可修改。
@@ -408,9 +359,6 @@ zh-CN:
   source: 源
   status: 状态
   total_leads: 线索总计
-
-  # Views -> Opportunities.
-  #----------------------------------------------------------------------------
   amount: 金额
   close_date: 结束日期
   closed_ago_on: 结束于 %{time_ago} 之前，在 %{date}
@@ -432,7 +380,7 @@ zh-CN:
   opportunity: 商机
   opportunity_small: 商机
   opportunity_summary: 商机摘要
-  opportunity_summary_text: "%{amount} 有 %{discount} 折扣和 %{probability} 可能性" 
+  opportunity_summary_text: ! '%{amount} 有 %{discount} 折扣和 %{probability} 可能性'
   past_due: 超过预计, 预计结束于 %{value} 之前
   probability: 可能性
   probability_number: 有 %{value} 可能性
@@ -442,9 +390,6 @@ zh-CN:
   weighted_amount: 权重数量
   select_opportunity: 选择商机
   Discard: 放弃
-
-  # Views -> Tasks.
-  #----------------------------------------------------------------------------
   assign_to: 分配给
   assigned_tab: 已分配
   assigned_tasks: 已分配任务
@@ -457,13 +402,13 @@ zh-CN:
   due: 期限
   feel_free: 可任意
   move_to: 移动到
-  no_tasks: "你没有任何 %{value} 任务"
+  no_tasks: 你没有任何 %{value} 任务
   no_tasks_pending: 进行中
   no_tasks_assigned: 已分配
   no_tasks_completed: 完成
   pending_tab: 进行中
   pending_tasks: 进行中任务
-  related: '相关:'
+  related: ! '相关:'
   save_task: 保存任务
   task_assigned: 任务已经分配给 %{value}
   task_assigned_to: 并分配给 %{value}
@@ -490,10 +435,6 @@ zh-CN:
   my_accounts: 我的账号
   no_account_records: 暂无账号
   select_task: 选择任务
-  
-
-  # Views -> Home.
-  #----------------------------------------------------------------------------
   action_commented: 评论于
   action_completed: 已完成
   action_created: 已创建
@@ -513,28 +454,25 @@ zh-CN:
   subject_lead: 线索
   subject_opportunity: 商机
   subject_task: 任务
-
-  # Views -> Common.
-  #----------------------------------------------------------------------------
   add_note: 添加注释
   save_note: 保存注释
   add_note_help: 添加一个新注释...
   edit_note: 编辑注释
   added_ago: 添加于 %{value} 之前
-  added_by: 添加于 %{time_ago} 之前，由 %{user} 
+  added_by: 添加于 %{time_ago} 之前，由 %{user}
   back: 返回
   cancel: 取消
   close_form: 关闭，由
   confirm_delete: 确认删除 %{value}?
   copy_permissions: 复制 %{value} 权限
-  could_not_find: "未找到 %{value}. 请"
-  could_not_find_matching: "未找到 %{value} 匹配"
+  could_not_find: 未找到 %{value}. 请
+  could_not_find_matching: 未找到 %{value} 匹配
   create_new: 创建新
   select_existing: 选择已有
   delete: 删除
-  discard: Discard # TODO
+  discard: Discard
   edit: 编辑
-  items_total: '%{count} 总计'
+  items_total: ! '%{count} 总计'
   me: 自己
   n_a: 无
   name: 名字
@@ -545,11 +483,11 @@ zh-CN:
   please_retry: 请再试一次
   recent_items: 最近项目
   search_assets: 查找 %{value}
-  time_ago: "%{value} 以前"
+  time_ago: ! '%{value} 以前'
   background_info: 背景
   address: 地址
-  street1: 街道 1 # NEW
-  street2: 街道 2 # NEW
+  street1: 街道 1
+  street2: 街道 2
   city: 城市
   zipcode: 邮编
   state: 省
@@ -561,14 +499,8 @@ zh-CN:
   destroy: 删除
   expand_all: 展开
   collapse_all: 收起
-  
-  # Views -> Tag.
-  #----------------------------------------------------------------------------
   select_or_create_tags: 选择标签
   tags: 标签
-  
-  # Views -> Layout.
-  #----------------------------------------------------------------------------
   about: 关于
   about_dev_group: 开发者讨论组
   about_features: 特性与bugs
@@ -584,27 +516,14 @@ zh-CN:
   logout: 退出
   quick_find: 快速查找
   welcome: 欢迎
-
-  # Views -> Comments.
-  #----------------------------------------------------------------------------
   edit_comment: 编辑评论
   show: 显示
-  update: 更新
-
-  # Views -> Passwords.
-  #----------------------------------------------------------------------------
   confirm_password_intro: 请输入新密码并确认
   password_intro: 请输入邮件地址，重置密码邮件将发到您的邮箱
   reset_password: 重置密码
   update_password_and_login: 更新密码并登录
-
-  # Views -> Admin
-  #----------------------------------------------------------------------------
   back_to_crm: 返回 Fat Free CRM
   crm_admin_page: Fat Free CRM 管理
-
-  # Views -> Admin -> Users.
-  #----------------------------------------------------------------------------
   approve: 批准
   create_user: 创建用户
   last_seen: 上次 %{value} 之前见到
@@ -617,7 +536,7 @@ zh-CN:
   user_awaits_approval: 等待您的批准
   user_confirm_delete: 只有没有其它相关信息的用户才能被删除
   user_is_admin: 此用户是管理员
-  user_never_logged_in: "尚未登录"
+  user_never_logged_in: 尚未登录
   user_signed_up: 已申请
   user_signed_up_on: 申请于 %{value}
   user_since: 用户自 %{value}
@@ -625,38 +544,30 @@ zh-CN:
   user_suspended_on: 暂停于 %{value}
   users: 用户
   users_small: 用户
-
-  # Pluralizations.
-  #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: '1 comment' # TODO
-      other: '%{count} comments' # TODO
-    contact: 
-      one: '1 个联系人'
-      other: '%{count} 个联系人'
+      one: 1 comment
+      other: ! '%{count} comments'
+    contact:
+      one: 1 个联系人
+      other: ! '%{count} 个联系人'
     opportunity:
-      one: '1 个商机'
-      other: '%{count} 个商机'
+      one: 1 个商机
+      other: ! '%{count} 个商机'
     lead:
-      one: '1 个线索'
-      other: '%{count} 个线索'
+      one: 1 个线索
+      other: ! '%{count} 个线索'
     day:
-      one: '1 天'
-      other: '%{count} 天'
+      one: 1 天
+      other: ! '%{count} 天'
     login:
-      one: '1 个登录'
-      other: '%{count} 个登录'
-
-  # Custom date/time formats.
-  #----------------------------------------------------------------------------
+      one: 1 个登录
+      other: ! '%{count} 个登录'
   date:
     formats:
-      mmddyyyy: "%Y-%m-%d"
-      mmdd: "%b %e"
-      mmddyy: "%b %e, %Y"
-
+      mmddyyyy: ! '%Y-%m-%d'
+      mmdd: ! '%b %e'
+      mmddyy: ! '%b %e, %Y'
   time:
     formats:
-      mmddhhss: "%b %e at %l:%M%p"
-
+      mmddhhss: ! '%b %e at %l:%M%p'

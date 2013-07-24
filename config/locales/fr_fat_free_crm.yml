@@ -4,24 +4,18 @@
 # Updated by David Keita aka ManInGA
 # maninga@gmail.com
 
+---
 fr:
   language: Français
-
-  # Generic terms.
-  #----------------------------------------------------------------------------
   all: Tous
   at: à
   here: ici
-  no_button: 'Non'
+  no_button: Non
   not_implemented: Pas encore implémenté.
   or: ou
-  select_none: '-- Aucun --'
-  select_blank: '-- Sélectionnez --'
-  yes_button: 'Oui'
-
-
-  # Settings.
-  #----------------------------------------------------------------------------
+  select_none: -- Aucun --
+  select_blank: -- Sélectionnez --
+  yes_button: Oui
   tab_dashboard: Tableau de bord
   tab_tasks: Tâches
   tab_campaigns: Campagnes
@@ -29,31 +23,26 @@ fr:
   tab_accounts: Comptes
   tab_contacts: Contacts
   tab_opportunities: Opportunités
-
   admin_tab_users: Utilisateurs
   admin_tab_fields: Champs Personnalisés
   admin_tab_tags: Tags
   admin_tab_settings: Paramètres
   admin_tab_plugins: Plugins
-
   affiliate: Affilié
   competitor: Concurrent
   customer: Client
   partner: Partenaire adm
   reseller: Revendeur
   vendor: Vendeur
-
   planned: Planifié
   started: Démarré
   on_hold: En attente
   completed: Complétée
   called_off: Abandonné
-
   new: Nouvelle
   contacted: Contactée
   converted: Convertie
   rejected: Rejetée
-
   cold_call: Appel entrant
   conference: Conférence
   online: Marketing web
@@ -62,7 +51,6 @@ fr:
   web: Website
   word_of_mouth: Bouche à oreille
   other: Autre
-
   prospecting: Prospection
   analysis: Analyse
   presentation: Présentation
@@ -71,138 +59,127 @@ fr:
   final_review: Examen final
   won: Clôturée/Gagnée
   lost: Clôturée/Perdue
-
   call: Appel
   email: E-mail
   follow_up: Suivi
   lunch: Dîner
   meeting: Réunion
   money: Finance
-  presentation: Présentation
   trip: Voyage
-
   overdue: Délai expiré
   due_asap: Dès que possible
-  due_today: "Aujourd'hui"
+  due_today: Aujourd'hui
   due_tomorrow: Demain
   due_this_week: Cette semaine
   due_next_week: La semaine prochaine
   due_later: Plus tard
   due_specific_date: A la date précise...
-
-  completed_today: "Ajourd'hui"
+  completed_today: Ajourd'hui
   completed_yesterday: Hier
   completed_last_week: La semaine dernière
   completed_this_month: Ce mois
   completed_last_month: Le mois dernier
-
-  # Models/Activity.
-  #----------------------------------------------------------------------------
   one_hour: Une heure
   one_day: Un jour
   two_days: Deux jours
   one_week: Une semaine
   two_weeks: Deux semaines
   one_month: Un mois
-
-  # Model Validations.
-  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
         authentication:
           attributes:
             login_field:
-              is_not_valid: "n'est pas valide"
+              is_not_valid: n'est pas valide
             password_field:
-              is_not_valid: "n'est pas valide"
+              is_not_valid: n'est pas valide
         account:
           attributes:
             name:
-              missing_account_name: "^Vérifiez le nom de compte."
+              missing_account_name: ^Vérifiez le nom de compte.
             access:
-              share_account: "^Spécifiez un utilisateur avec qui partager le compte."
+              share_account: ^Spécifiez un utilisateur avec qui partager le compte.
         campaign:
           attributes:
             name:
-              missing_campaign_name: "^Précisez un nom de campagne."
+              missing_campaign_name: ^Précisez un nom de campagne.
             ends_on:
-              dates_not_in_sequence: "^Vérifiez que la date de fin de campagne soit avant la date de début."
+              dates_not_in_sequence: ^Vérifiez que la date de fin de campagne soit
+                avant la date de début.
             access:
-              share_campaign: "^Préciser un utilisateur avec qui partager la campagne."
+              share_campaign: ^Préciser un utilisateur avec qui partager la campagne.
         contact:
           attributes:
             first_name:
-              missing_first_name: "^Précisez le prénom"
+              missing_first_name: ^Précisez le prénom
             last_name:
-              missing_last_name: "^Précisez le nom."
+              missing_last_name: ^Précisez le nom.
             access:
-              share_contact: "^Précisez avec quel utilisateur partager le contact."
+              share_contact: ^Précisez avec quel utilisateur partager le contact.
         lead:
           attributes:
             first_name:
-              missing_first_name: "^Précisez le prénom"
+              missing_first_name: ^Précisez le prénom
             last_name:
-              missing_last_name: "^Précisez le nom."
+              missing_last_name: ^Précisez le nom.
             access:
-              share_lead: "^Précisez avec quel utilisateur partager la piste."
+              share_lead: ^Précisez avec quel utilisateur partager la piste.
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: "^Spécifiez un nom d'opportunité."
+              missing_opportunity_name: ^Spécifiez un nom d'opportunité.
             access:
-              share_opportunity: "^Précisez avec quel utilisateur partager l'opportunité."
+              share_opportunity: ^Précisez avec quel utilisateur partager l'opportunité.
         task:
           attributes:
             name:
-              missing_task_name: "^Précisez le nom de la tâche."
+              missing_task_name: ^Précisez le nom de la tâche.
             calendar:
-              invalid_date: "^Précisez une date valide"
+              invalid_date: ^Précisez une date valide
         user:
           attributes:
             username:
-              missing_username: "^Précisez un nom d'utilisateur."
-              username_taken: "^Ce nom d'utilisateur est déjà pris"
+              missing_username: ^Précisez un nom d'utilisateur.
+              username_taken: ^Ce nom d'utilisateur est déjà pris
             email:
-              missing_email: "^Précisez une adresse e-mail"
-              email_in_use: "^Un utilisateur existe déjà avec cette adresse."
-
+              missing_email: ^Précisez une adresse e-mail
+              email_in_use: ^Un utilisateur existe déjà avec cette adresse.
   msg_account_suspended: Ce compte utilisateur a été suspendu.
   password_reset_instruction: instructions de réinitialisation du mot de passe
-
-  # Controllers.
-  #----------------------------------------------------------------------------
-  msg_account_created: "Votre compte a été créé, il est en attente d'approbation par l'administrateur"
-  msg_account_not_approved: "Votre compte n'à pas encore été approuvé"
-  msg_asset_deleted: "%{value} à été supprimé"
-  msg_asset_not_available: "Ce %{value} n'est plus disponible."
-  msg_asset_not_authorized: "Vous n'êtes pas autorisé à accéder à ce/cette %{value}."
-  msg_assets_not_available: "Les %{value} ne sont pas disponibles."
-  msg_asset_rejected: "%{value} à été rejetée."
-  msg_bad_image_file: "^Nous n'avons pas pu télécharger ou redimensionner votre image."
-  msg_cant_create_related: "Impossible de crée le %{asset} puisque le %{related} n'est plus disponnible."
-  msg_cant_delete_user: "^Impossible de supprimer l'utilisateur car %{value} a des objets liés encore présents."
-  msg_cant_do: "Impossible de %{action} le %{asset} puisqu'il n'est plus disponible."
-  msg_email_not_found: "Aucun utilisateur ne correspond a cette adresse"
+  msg_account_created: Votre compte a été créé, il est en attente d'approbation par
+    l'administrateur
+  msg_account_not_approved: Votre compte n'à pas encore été approuvé
+  msg_asset_deleted: ! '%{value} à été supprimé'
+  msg_asset_not_available: Ce %{value} n'est plus disponible.
+  msg_asset_not_authorized: Vous n'êtes pas autorisé à accéder à ce/cette %{value}.
+  msg_assets_not_available: Les %{value} ne sont pas disponibles.
+  msg_asset_rejected: ! '%{value} à été rejetée.'
+  msg_bad_image_file: ^Nous n'avons pas pu télécharger ou redimensionner votre image.
+  msg_cant_create_related: Impossible de crée le %{asset} puisque le %{related} n'est
+    plus disponnible.
+  msg_cant_delete_user: ^Impossible de supprimer l'utilisateur car %{value} a des
+    objets liés encore présents.
+  msg_cant_do: Impossible de %{action} le %{asset} puisqu'il n'est plus disponible.
+  msg_email_not_found: Aucun utilisateur ne correspond a cette adresse
   msg_enter_new_password: Saisissez votre nouveau mot de passe.
-  msg_goodbye: "Vous avez été déconnecté, merci d'utiliser Fat Free CRM!"
-  msg_invalid_password: "^Saisissez votre mot de passe actuel"
+  msg_goodbye: Vous avez été déconnecté, merci d'utiliser Fat Free CRM!
+  msg_invalid_password: ^Saisissez votre mot de passe actuel
   msg_invalig_login: Utilisateur ou mot de passe non valide.
-  msg_last_login: "Votre dernière connection était le  %{value}."
+  msg_last_login: Votre dernière connection était le  %{value}.
   msg_login_needed: Vous devez être connecté pour accéder a cette page.
   msg_logout_needed: Vous devez être déconnecté pour accéder a cette page.
-  msg_password_changed: "Votre mot de passe a été modifié"
-  msg_password_not_changed: "Votre mot de passe n'a pas été modifié"
+  msg_password_changed: Votre mot de passe a été modifié
+  msg_password_not_changed: Votre mot de passe n'a pas été modifié
   msg_password_updated: Modification de mot de passe réussie.
-  msg_pwd_instructions_sent: "Les instruction de modification de mot de passe vous on été envoyées. Vérifiez vos e-mails"
+  msg_pwd_instructions_sent: Les instruction de modification de mot de passe vous
+    on été envoyées. Vérifiez vos e-mails
   msg_require_admin: Vous devez être administrateur pour accéder a cette page
   msg_successful_signup: Enregistrement réussi. Bienvenu dans Fat Free CRM
-  msg_welcome:  Bienvenue dans Fat Free CRM
-
-  # Options.
-  #----------------------------------------------------------------------------
-  "option_amount*probability": Montant pondéré
-  activity_options: Voir les %{action_type} %{models} effectuées par %{user} dans les derniers %{period}.
+  msg_welcome: Bienvenue dans Fat Free CRM
+  option_amount*probability: Montant pondéré
+  activity_options: Voir les %{action_type} %{models} effectuées par %{user} dans
+    les derniers %{period}.
   all_users: tous les utilisateurs
   option_after: après
   option_all: tous
@@ -228,10 +205,8 @@ fr:
   option_updated_at: date de modification
   show_per_page: Voir %{number} %{models} par page au format %{fmt}.
   sort_by: Trier les %{models} par %{field}.
-  sort_by_displaying: Trier les %{models} par %{field} et afficher le prénom %{position} le nom.
-
-  # Views -> Profile.
-  #----------------------------------------------------------------------------
+  sort_by_displaying: Trier les %{models} par %{field} et afficher le prénom %{position}
+    le nom.
   aim: AOL IM
   already_signed_up: Déjà inscrit?
   alt_email: e-mail secondaire
@@ -241,12 +216,12 @@ fr:
   contact_info: Informations de contact
   current_password: Mot de passe actuel
   edit_profile: Modifier le profil
-  # email: E-mail # <-- Already defined as the task type if Settings.
   first_name: Prénom
   google: Google IM
   gravatar_help: Vous ne connaissez pas Gravatar? Informations sur Gravatar
   image_file: Fichier image
-  image_help: "L'image que vous envoyez sera redimensionnée à 75 x 75 pixels. Les formats supportés sont GIF, JPEG et PNG."
+  image_help: L'image que vous envoyez sera redimensionnée à 75 x 75 pixels. Les formats
+    supportés sont GIF, JPEG et PNG.
   job_title: Titre/Fonction
   last_name: Nom
   login_now_link: Connectez vous maintenant!
@@ -265,19 +240,13 @@ fr:
   upload_picture: Envoyez une image
   use_gravatar: Utilisez Gravatar
   user: Utilisateur
-  username: "Nom d'utilisateur"
+  username: Nom d'utilisateur
   yahoo: Yahoo IM
-
-  # Views -> Authenticate.
-  #----------------------------------------------------------------------------
   forgot_password: Mot de passe oublié
   login: Se connecter
-  no_account: "Vous n'avez pas de compte?"
+  no_account: Vous n'avez pas de compte?
   remember_me: Se souvenir de moi
-  sign_up_now: "Créez le maintenant!"
-
-  # Views -> Accounts.
-  #----------------------------------------------------------------------------
+  sign_up_now: Créez le maintenant!
   account: Compte
   select_an_account: Sélectionner un compte
   account_small: compte
@@ -306,9 +275,6 @@ fr:
   shipping_address: Adresse de livraison
   total_accounts: Total des comptes
   website: Site web
-
-  # Views -> Campaigns.
-  #----------------------------------------------------------------------------
   actual: Etat actuel
   actual_performance: Performance Actuelle
   budget: Budget
@@ -323,7 +289,7 @@ fr:
   campaigns_small: campagnes
   conversion: Conversion
   conversion_label: Conversion (%)
-  conversion_number: "%{value} de conversion"
+  conversion_number: ! '%{value} de conversion'
   create_campaign: Créer une Campagne
   end_date: Date de fin
   finished_on: terminée le %{value}
@@ -331,24 +297,22 @@ fr:
   no_start_date: pas de date de début spécifiée
   number_of_leads: Nombre de pistes
   objectives: Objectifs
-  objectives_help: "Spécifiez un objectif en nombre de pistes, taux de conversion de pistes/opportunités, revenu espéré et budget. Ces valeurs seront utilisées lors de l'évaluation des performances de la campagne"
+  objectives_help: Spécifiez un objectif en nombre de pistes, taux de conversion de
+    pistes/opportunités, revenu espéré et budget. Ces valeurs seront utilisées lors
+    de l'évaluation des performances de la campagne
   objectives_small: objectifs de la campagne
   revenue: Revenu
   revenue_label: Revenu (€)
-  revenue_number: "%{value} pour revenu"
+  revenue_number: ! '%{value} pour revenu'
   save_campaign: Enregistrer la campagne
   start_date: Date de début
   started_ago: démarré il y a %{value}
   starts_in: démarré dans %{value}
-  starts_today: "démarre aujourd'hui!"
+  starts_today: démarre aujourd'hui!
   target: Prévisionnel
   total_campaigns: Total des Campagnes
   was_supposed_to_finish: présumée se terminer le %{value}
   was_supposed_to_start: était supposée démarrer il y a %{time_ago} le %{start_date}
-  #was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date} # Not in use in the project
-
-  # Views -> Contacts.
-  #----------------------------------------------------------------------------
   alt_email_small: Autre
   blog: Site Web/Blog
   contact: Contact
@@ -358,38 +322,47 @@ fr:
   contacts_small: contacts
   create_contact: Créer un Contact
   department: Département
-  department_small: 'département %{value} '
+  department_small: ! 'département %{value} '
   do_not_call: ne pas appeler
   extra_info: Informations supplémentaires
   extra_info_small: infos supplémentaires
   facebook: Facebook
   linked_in: LinkedIn
   myself: Moi-même
-  permissions_intro_private: Par défaut vous seul aurez accès à %{value}. Vous pouvez modifier les permissions ultérieurement.
-  permissions_intro_public: Par défaut tous les utilisateurs auront accès à %{value}. Vous pouvez modifier les permissions ultérieurement.
-  permissions_intro_shared: Par défaut seul les utilisateurs sélectionnés auront accès à %{value}.  Vous pouvez modifier les permissions ultérieurement.
+  permissions_intro_private: Par défaut vous seul aurez accès à %{value}. Vous pouvez
+    modifier les permissions ultérieurement.
+  permissions_intro_public: Par défaut tous les utilisateurs auront accès à %{value}.
+    Vous pouvez modifier les permissions ultérieurement.
+  permissions_intro_shared: Par défaut seul les utilisateurs sélectionnés auront accès
+    à %{value}.  Vous pouvez modifier les permissions ultérieurement.
   referred_by: Référencé par
   referred_by_small: référence par
   save_contact: Enregistrer le contact
-  skype: Skype
   twitter: Twitter
   web_presence: Présence Web
-  web_presence_small:  présence web
-  works_at: "%{job_title} chez %{company}"
-
-  # Views -> Leads.
-  #----------------------------------------------------------------------------
+  web_presence_small: présence web
+  works_at: ! '%{job_title} chez %{company}'
   convert: Convertir
   convert_lead: Convertir la piste
-  convert_lead_permissions_intro: Les permissions du contact seront dupliquées depuis la piste. Vous pouvez modifier les permissions du contact ultérieurement.
-  convert_lead_text: En convertissant la piste %{value} il/elle deviendra un contact associé à un compte existant ou nouvellement créé. Le statut de la piste sera automatiquement positionné à converti.
+  convert_lead_permissions_intro: Les permissions du contact seront dupliquées depuis
+    la piste. Vous pouvez modifier les permissions du contact ultérieurement.
+  convert_lead_text: En convertissant la piste %{value} il/elle deviendra un contact
+    associé à un compte existant ou nouvellement créé. Le statut de la piste sera
+    automatiquement positionné à converti.
   create_lead: Créer une piste
-  create_opp_for_contact: "Vous pouvez éventuellement créer une opportunité pour le contact %{value} en spécifiant le nom, l'étape courante, la date de clôture estimée, la probabilité de vente, le montant de l'affaire, la remise offerte."
+  create_opp_for_contact: Vous pouvez éventuellement créer une opportunité pour le
+    contact %{value} en spécifiant le nom, l'étape courante, la date de clôture estimée,
+    la probabilité de vente, le montant de l'affaire, la remise offerte.
   lead: Piste
   lead_info_small: contact de la piste
-  lead_permissions_intro_private: Par défaut les permissions seront dupliquée depuis la campagne ou positionnées sur privé. Vous pouvez modifier les permissions ultérieurement.
-  lead_permissions_intro_public: Par défaut les permissions seront dupliquée depuis la campagne ou positionnées sur publique.  Vous pouvez modifier les permissions ultérieurement.
-  lead_permissions_intro_shared: Par défaut les permissions seront dupliquée depuis la campagne ou partagées avec les utilisateurs spécifiés.  Vous pouvez modifier les permissions ultérieurement.
+  lead_permissions_intro_private: Par défaut les permissions seront dupliquée depuis
+    la campagne ou positionnées sur privé. Vous pouvez modifier les permissions ultérieurement.
+  lead_permissions_intro_public: Par défaut les permissions seront dupliquée depuis
+    la campagne ou positionnées sur publique.  Vous pouvez modifier les permissions
+    ultérieurement.
+  lead_permissions_intro_shared: Par défaut les permissions seront dupliquée depuis
+    la campagne ou partagées avec les utilisateurs spécifiés.  Vous pouvez modifier
+    les permissions ultérieurement.
   lead_small: piste
   lead_status_small: statut de la piste
   lead_summary: Résumé de la piste
@@ -404,13 +377,10 @@ fr:
   source: Source
   status: Statut
   total_leads: Total des pistes
-
-  # Views -> Opportunities.
-  #----------------------------------------------------------------------------
   amount: Montant
   close_date: Date de clôture
   closed_ago_on: clôturé il y à %{time_ago} le %{date}
-  closes_today: "doit être clôturé aujourd'hui!"
+  closes_today: doit être clôturé aujourd'hui!
   closing_date: la date de clôture est %{value}
   create_opportunity: Créer une opportunité
   currency: (€)
@@ -427,18 +397,16 @@ fr:
   opportunities_small: opportunités
   opportunity: Opportunité
   opportunity_small: opportunité
-  opportunity_summary: "Coup d'oeil sur l'opportunité"
-  opportunity_summary_text: "%{amount} avec %{discount} de remise et %{probability} de probabilité"
+  opportunity_summary: Coup d'oeil sur l'opportunité
+  opportunity_summary_text: ! '%{amount} avec %{discount} de remise et %{probability}
+    de probabilité'
   past_due: en retard, devait être clôturé il y a %{value}
   probability: Probabilité
   probability_number: et %{value} de probabilité
-  save_opportunity: "Enregistrer l'opportunité"
+  save_opportunity: Enregistrer l'opportunité
   stage: Etape
   total_opportunities: Total des opportunités
   weighted_amount: Montant pondéré
-
-  # Views -> Tasks.
-  #----------------------------------------------------------------------------
   task: Tâche
   task_small: tâche
   tasks: Tâches
@@ -454,13 +422,13 @@ fr:
   due: A faire
   feel_free: N'hésitez pas à
   move_to: aller à
-  no_tasks: "Vous n'avez aucune tâche %{value}"
+  no_tasks: Vous n'avez aucune tâche %{value}
   no_tasks_pending: en attente
   no_tasks_assigned: assignée
   no_tasks_completed: complétée
   pending_tab: En attente
   pending_tasks: Tâches en attente
-  related: 're:'
+  related: ! 're:'
   save_task: Enregistrer la tâche
   task_assigned: La tâche à été assignée à %{value}
   task_assigned_to: et assignée à %{value}
@@ -471,16 +439,13 @@ fr:
   task_due_in: échéance dans %{value}
   task_due_later: à faire bientôt
   task_due_now: à faire maintenant
-  task_due_today: "à faire aujourd'hui"
+  task_due_today: à faire aujourd'hui
   task_from: De %{value}
   task_overdue: en retard, échéance prévue le
   task_pending: La tâche à été mise en attente
   total_tasks: Total des %{value}
   view_assigned_tasks: voir les tâches assignées
   view_pending_tasks: voir les tâches en attente
-
-  # Views -> Home.
-  #----------------------------------------------------------------------------
   action_commented: a commenté le/la
   action_completed: a complété le/la
   action_created: a créé le/la
@@ -502,16 +467,13 @@ fr:
   subject_lead: piste
   subject_opportunity: opportunité
   subject_task: tâche
-  created_past_participle: "Création d'enregistrements"
+  created_past_participle: Création d'enregistrements
   commented_past_participle: Commentaires
   viewed_past_participle: Consultations
   updated_past_participle: Modifications
   deleted_past_participle: Supressions
   email_past_participle: Emails
   all_events_past_participle: Activités
-
-  # Views -> Common.
-  #----------------------------------------------------------------------------
   add_note: Ajouter une note
   save_note: Enregistrer la note
   add_note_help: Ajouter une nouvelle note...
@@ -521,24 +483,24 @@ fr:
   back: Retour
   cancel: Annuler
   close_form: Fermer le formulaire
-  confirm_delete: "Êtes-vous certain de vouloir supprimer ceci : %{value}?"
+  confirm_delete: ! 'Êtes-vous certain de vouloir supprimer ceci : %{value}?'
   copy_permissions: Copier les permissions de %{value}
-  could_not_find: "Aucun(e) %{value} n'a été trouvé(e). N'hésitez pas à "
-  could_not_find_matching: "Aucun(e) %{value} n'a été trouvé(e) correspondant à"
+  could_not_find: ! 'Aucun(e) %{value} n''a été trouvé(e). N''hésitez pas à '
+  could_not_find_matching: Aucun(e) %{value} n'a été trouvé(e) correspondant à
   create_new: créer un(e)
   create_a_new: créer un(e)
   select_existing: sélectionnez un(e)
   delete: Supprimer
   discard: Abandonner
   edit: Modifier
-  items_total: '%{count} total.'
+  items_total: ! '%{count} total.'
   less: Moins...
   me: moi
   more: Plus...
   n_a: N/R
   name: Nom
   no_match: Aucun(e) %{value} ne correspond
-  no_recent_items: "Il n'y rien de récent à afficher pour l'instant."
+  no_recent_items: Il n'y rien de récent à afficher pour l'instant.
   options: Options
   permissions: Permissions
   please_retry: essayez une autre requête.
@@ -548,11 +510,11 @@ fr:
   select_task: Choisir une tâche
   select_opportunity: Choisir une opportunité
   search_assets: Recherche de %{value}
-  time_ago: "il y a %{value}"
+  time_ago: il y a %{value}
   background_info: Informations
   address: Adresse
-  street1: Rue 1 # NEW
-  street2: Rue 2 # NEW
+  street1: Rue 1
+  street2: Rue 2
   city: Ville
   zipcode: Code postal
   state: Région
@@ -562,35 +524,31 @@ fr:
   collapse_all: Tout replier
   expanded: déplier
   collapsed: replier
-
-  # Views -> Layout.
-  #----------------------------------------------------------------------------
   about: A propos
   about_dev_group: Groupe de discussion pour les développeurs
   about_features: Fonctionnalités et bugs
   about_ffc: A propos de Fat Free CRM
   about_ffc_resources: Ressources pour Fat Free CRM (Nouvelle fenêtre)
   about_ffc_version: version de Fat Free CRM
-  about_home_page: "Page d'accueil"
+  about_home_page: Page d'accueil
   about_project_page: Page du projet
-  about_thank_you: "Merci d'utiliser Fat Free CRM!"
+  about_thank_you: Merci d'utiliser Fat Free CRM!
   about_twitter: mises à jours sur Twitter
   about_user_group: Groupe de discussion pour les utilisateurs
   admin: Administration
   logout: Se déconnecter
   quick_find: Recherche rapide
   welcome: Bienvenue
-
- # Views -> Advanced Search.
   accounts_advanced_search: Recherche avancée des comptes
   advanced_search: Recherche avancée
   advanced_search_submit: Rechercher
   advanced_search_add_group: Ajouter un groupe de filtres
-  advanced_search_group_first: Afficher les enregistrement quand %{combinator} du/des critère(s) suivant(s) correspond(ent)
-  advanced_search_group_rest: ...et quand %{combinator} du/des critère(s) suivant(s) correspond(ent)
+  advanced_search_group_first: Afficher les enregistrement quand %{combinator} du/des
+    critère(s) suivant(s) correspond(ent)
+  advanced_search_group_rest: ! '...et quand %{combinator} du/des critère(s) suivant(s)
+    correspond(ent)'
   advanced_search_add_condition: Ajouter un filtre
   advanced_search_remove_condition: Supprimer un filtre
-
   ransack:
     predicates:
       eq: est égal à
@@ -603,139 +561,101 @@ fr:
       not_cont: ne contient pas
       blank: est vide
       present: est présent
-      "null": est nul
+      'null': est nul
       not_null: est non nul
-
-
-  # Views -> Comments.
-  #----------------------------------------------------------------------------
   edit_comment: Edition de commentaire
   show: Voir
   update: Modifier
-
-  # Views -> Passwords.
-  #----------------------------------------------------------------------------
   confirm_password_intro: Saisissez votre nouveau mot de passe et sa confirmation.
-  password_intro: Précisez votre adresse e-mail, et les instructions pour les réinitialiser vous seront communiquées.
+  password_intro: Précisez votre adresse e-mail, et les instructions pour les réinitialiser
+    vous seront communiquées.
   reset_password: Ré-initialisation du mot de passe
-  update_password_and_login: "Modification de l'identifiant et du mot de passe"
-
-  # Views -> Admin
-  #----------------------------------------------------------------------------
+  update_password_and_login: Modification de l'identifiant et du mot de passe
   back_to_crm: Retour à Fat Free CRM
   crm_admin_page: Administration de Fat Free CRM
-
-  # Views -> Admin -> Users.
-  #----------------------------------------------------------------------------
   approve: Approuver
   create_user: Créer un utilisateur
   last_seen: vu pour la dernière fois il y a %{value}
   personal_information: Informations complémentaires
   reactivate: Réactiver
-  save_user: "Enregistrer l'utilisateur"
+  save_user: Enregistrer l'utilisateur
   suspend: Suspendre
   user_active: Actif
   user_admin: Admin
   user_awaits_approval: en attente de votre approbation
-  user_confirm_delete: Un utilisateur ne peut être supprimé que si aucun objet lui appartenant existent toujours.
-  user_is_admin: "L'utilisateur est administrateur"
-  user_never_logged_in: "ne s'est pas encore connecté"
+  user_confirm_delete: Un utilisateur ne peut être supprimé que si aucun objet lui
+    appartenant existent toujours.
+  user_is_admin: L'utilisateur est administrateur
+  user_never_logged_in: ne s'est pas encore connecté
   user_signed_up: est enregistré
-  user_signed_up_on: "s'est enregistré le %{value}"
+  user_signed_up_on: s'est enregistré le %{value}
   user_since: utilisateur depuis le %{value}
   user_suspended: Suspendu
   user_suspended_on: suspendu le %{value}
   users: Utilisateurs
   users_small: utilisateurs
-
-  # Views -> Versions
-  #----------------------------------------------------------------------------
   versions: Historique
   version:
     create: Créé par %{by} il y a %{item}.
     update: Modifié par %{by} il y a %{item}.
     destroy: Détruit par %{by} il y a %{item}.
-    set: %{attr} renseigné %{to}
-    unset: %{attr} supprimé
-    change: %{attr} changé de %{from} à %{to}
+    set: ! '%{attr} renseigné %{to}'
+    unset: ! '%{attr} supprimé'
+    change: ! '%{attr} changé de %{from} à %{to}'
     anonymous: anonyme
-
-  # Export.
-  #----------------------------------------------------------------------------
   to_xls: Exporter au format Excel
   to_csv: Exporter au format CSV (enregistrements supprimés inclus)
   to_rss: fil RSS
   to_atom: fil Atom
-
-  # Dropbox.
-  #----------------------------------------------------------------------------
   dropbox_notification_subject: dropbox - Email ajouté - %{subject}
-  dropbox_notification_intro: "a ajouté l'email que vous avez envoyé à la dropbox"
+  dropbox_notification_intro: a ajouté l'email que vous avez envoyé à la dropbox
   dropbox_notification_to: ajoutés aux
   subject: Sujet
   body: Corps
-
-  # Lists
-  #----------------------------------------------------------------------------
   lists: Listes
   list: Liste
   no_saved_lists: Liste non sauvegardée
   make_current_view_list: Faire de la vue courante une liste
-  list_name_info: Si vous utilisez le nom d'une liste existante vous écraserez cette liste avec vos paramètres courants
-
-  # Pluralizations.
-  #----------------------------------------------------------------------------
+  list_name_info: Si vous utilisez le nom d'une liste existante vous écraserez cette
+    liste avec vos paramètres courants
   pluralize:
     comment:
-      one: '1 commentaire'
-      other: '%{count} commentaires'
+      one: 1 commentaire
+      other: ! '%{count} commentaires'
     contact:
-      one: '1 contact'
-      other: '%{count} contacts'
+      one: 1 contact
+      other: ! '%{count} contacts'
     opportunity:
-      one: '1 opportunité'
-      other: '%{count} opportunités'
+      one: 1 opportunité
+      other: ! '%{count} opportunités'
     lead:
-      one: '1 piste'
-      other: '%{count} pistes'
+      one: 1 piste
+      other: ! '%{count} pistes'
     day:
-      one: '1 jour'
-      other: '%{count} jours'
+      one: 1 jour
+      other: ! '%{count} jours'
     login:
-      one: '1 identifiant'
-      other: '%{count} identifiants'
-
-  # Custom date/time formats.
-  #----------------------------------------------------------------------------
+      one: 1 identifiant
+      other: ! '%{count} identifiants'
   date:
     formats:
-      mmddyyyy: "%d/%m/%Y"
-      mmdd: "%e %b"
-      mmddyy: "%e %b %Y"
-
+      mmddyyyy: ! '%d/%m/%Y'
+      mmdd: ! '%e %b'
+      mmddyy: ! '%e %b %Y'
   time:
     formats:
-      mmddhhss: "%b %e à %H:%M%"
-      mmddyyyy_hhmm: "%d/%m/%Y à %H:%M"
-
-  # will_paginate translations copied for 'fr'
-  #----------------------------------------------------------------------------
+      mmddhhss: ! '%b %e à %H:%M%'
+      mmddyyyy_hhmm: ! '%d/%m/%Y à %H:%M'
   will_paginate:
-    previous_label: "&#8592; Précédent"
-    next_label: "Suivant &#8594;"
-    page_gap: "&hellip;"
-
+    previous_label: ! '&#8592; Précédent'
+    next_label: Suivant &#8594;
+    page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        zero: "Aucun(e) %{name} trouvé"
-        one: "Affichage de 1 %{name}"
-        other: "Affichage de %{count} %{plural}"
-
-      multi_page: "Affichage des %{plural} %{from} à %{to} de %{total} au total"
-
-
-  # Views -> Admin -> Custom Fields
-  #----------------------------------------------------------------------------
+        zero: Aucun(e) %{name} trouvé
+        one: Affichage de 1 %{name}
+        other: Affichage de %{count} %{plural}
+      multi_page: Affichage des %{plural} %{from} à %{to} de %{total} au total
   label: Etiquette
   custom_fields: Champs personnalisés
   custom_field_options: Options des champs personnalisés
@@ -744,94 +664,71 @@ fr:
   create_field_group: Créer une section (groupe de champs)
   edit_field_group: Editer la section
   save_field_group: enregistrer la section
-
-  field_group_empty: "Il n'y a aucun champ dans cette section"
-
-  select_or_create_tags: "Sélectionner un tag ou créez un nouveau tag en validant par la touche entrée."
-
+  field_group_empty: Il n'y a aucun champ dans cette section
+  select_or_create_tags: Sélectionner un tag ou créez un nouveau tag en validant par
+    la touche entrée.
   restrict_by_tag: Restriction par tag
-  restrict_by_tag_info: Cette section ne sera visible que pour les %{assets} qui seront taggé(e)s"
-  field_group_tag_restriction: Cette section est visible pour les %{assets} qui sont taggé(e)s "%{tag}"
-  field_group_unrestricted: "Cette section est visible pour l'ensemble des %{assets}"
-  field_group_confirm_delete: Quand une section est supprimée, tous les champs personnalisés sont déplacés vers la section par défaut.
+  restrict_by_tag_info: Cette section ne sera visible que pour les %{assets} qui seront
+    taggé(e)s"
+  field_group_tag_restriction: Cette section est visible pour les %{assets} qui sont
+    taggé(e)s "%{tag}"
+  field_group_unrestricted: Cette section est visible pour l'ensemble des %{assets}
+  field_group_confirm_delete: Quand une section est supprimée, tous les champs personnalisés
+    sont déplacés vers la section par défaut.
   msg_cant_delete_field_group: Cette section ne peut pas être supprimée.
+  admin_fields_info: ! 'Les champs personnalisés sont affichés dans des sections.
 
-  admin_fields_info: |
-    Les champs personnalisés sont affichés dans des sections.
-    Créez d'abord une nouvelle section, ou ajoutez les champs dans une section existante ci-dessous.<br />
-    Vous pouvez faire glisser les champs pour ordonner leur présentation ou les faire changer de section.
+    Créez d''abord une nouvelle section, ou ajoutez les champs dans une section existante
+    ci-dessous.<br />
 
-  # Views -> Admin -> Tags
-  #----------------------------------------------------------------------------
+    Vous pouvez faire glisser les champs pour ordonner leur présentation ou les faire
+    changer de section.
+
+'
   tags: Tags
   tag_small: tag
   tagged: taggé(es)
   create_tag: Créer un tag
   save_tag: Enregistrer le tag
   field_group_tags: Sections visibles pour ce tag
-  tag_with_taggings_confirm_delete: "En supprimant ce tag, il sera supprimé de %{value} enregistrements."
-  msg_cant_delete_tag: "Impossible de supprimer '%{value}' car il est associé à au moins une section."
-
-
-  # Views -> Admin -> Plugins
-  #----------------------------------------------------------------------------
+  tag_with_taggings_confirm_delete: En supprimant ce tag, il sera supprimé de %{value}
+    enregistrements.
+  msg_cant_delete_tag: Impossible de supprimer '%{value}' car il est associé à au
+    moins une section.
   views:
     admin:
       plugins:
         author: Auteur
         version: Version
         description: Description
-
-  # Simple Form translations
-  #----------------------------------------------------------------------------
   simple_form:
-    "yes": 'Oui'
-    "no": 'Non'
+    'yes': Oui
+    'no': Non
     required:
-      text: 'required'
-      mark: '*'
-      # You can uncomment the line below if you need to overwrite the whole required html.
-      # When using html, text and mark won't be used.
-      # html: '<abbr title="required">*</abbr>'
+      text: required
+      mark: ! '*'
     error_notification:
-      default_message: "Votre demande ne peut aboutir, les erreurs suivantes se sont déclenchées:"
-    # Labels and hints examples
-    # labels:
-    #   password: 'Password'
-    #   user:
-    #     new:
-    #       email: 'E-mail para efetuar o sign in.'
-    #     edit:
-    #       email: 'E-mail.'
-    # hints:
-    #   username: 'User name to sign in.'
-    #   password: 'No special characters, please.'
-
-
-  # Form field types
-  #----------------------------------------------------------------------------
+      default_message: ! 'Votre demande ne peut aboutir, les erreurs suivantes se
+        sont déclenchées:'
   field_types:
-    string:      Texte court
-    text:        Texte long
-    select:      Liste de sélection
+    string: Texte court
+    text: Texte long
+    select: Liste de sélection
     multiselect: Liste de sélection (multiple)
-    radio:       Boutons radios
-    boolean:     Case à cocher
+    radio: Boutons radios
+    boolean: Case à cocher
     check_boxes: Liste de cases à cocher
-    date:        Date
-    datetime:    Date et heure
-    email:       Adresse email
-    url:         URL
-    tel:         Numéro de téléphone
-    decimal:     Nombre décimal
-    integer:     Nombre entier
-    float:       Nombre flottant
-
-  # dynamic_form plugin translations.
-  #----------------------------------------------------------------------------
+    date: Date
+    datetime: Date et heure
+    email: Adresse email
+    url: URL
+    tel: Numéro de téléphone
+    decimal: Nombre décimal
+    integer: Nombre entier
+    float: Nombre flottant
   errors:
     template:
       header:
-        one:   "Impossible d'enregistrer ce %{model} : 1 erreur"
-        other: "Impossible d'enregistrer ce %{model} : %{count} erreurs"
-      body: "Veuillez vérifier les champs suivants : "
+        one: ! 'Impossible d''enregistrer ce %{model} : 1 erreur'
+        other: ! 'Impossible d''enregistrer ce %{model} : %{count} erreurs'
+      body: ! 'Veuillez vérifier les champs suivants : '

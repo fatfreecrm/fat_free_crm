@@ -1,23 +1,15 @@
-# Swedish (Sweden) translation of Fat Free Crm.
-# by Xug Haa (https://github.com/xughaa)
-#
+---
 sv-SE:
   language: Svenska (Sverige)
-
-  # Generic terms.
-  #----------------------------------------------------------------------------
   all: Alla
   at: vid
   here: här
-  no_button: 'Nej'
+  no_button: Nej
   not_implemented: Ej implementerad.
   or: eller
-  select_none: '-- Ingen --'
-  select_blank: '-- Välj --'
-  yes_button: 'Ja'
-
-  # Settings.
-  #----------------------------------------------------------------------------
+  select_none: -- Ingen --
+  select_blank: -- Välj --
+  yes_button: Ja
   tab_dashboard: Kontrollpanel
   tab_tasks: Ärende
   tab_campaigns: Kampanjer
@@ -25,22 +17,18 @@ sv-SE:
   tab_accounts: Konton
   tab_contacts: Kontakter
   tab_opportunities: Affärer
-
   admin_tab_users: Användare
   admin_tab_settings: Inställningar
   admin_tab_plugins: Tilläggsmoduler
-
   planned: Planerad
   started: Påbörjad
   on_hold: På is
   completed: Avslutad
   called_off: Avvisad
-
   new: Ny
   contacted: Kontaktade
   converted: Konverterad
   rejected: Avslag
-
   cold_call: Kallringning
   conference: Konferans
   online: Web-marknadsföring
@@ -49,7 +37,6 @@ sv-SE:
   web: Hemsida
   word_of_mouth: Mun till mun
   other: Övrigt
-
   prospecting: Prospektering
   analysis: Analys
   presentation: Presentation
@@ -58,16 +45,13 @@ sv-SE:
   final_review: Besulttagande
   won: Avslutad positiv
   lost: Avslutad negativ
-
   call: Samtal
   email: E-post
   follow_up: Uppföljning
   lunch: Lunch
   meeting: Möte
   money: Betalning
-  presentation: Presentation
   trip: Resa
-
   overdue: Förfallen
   due_asap: Snarast möjligt
   due_today: Idag
@@ -76,24 +60,17 @@ sv-SE:
   due_next_week: Nästa vecka
   due_later: Senare
   due_specific_date: Fast datum...
-
   completed_today: Idag
   completed_yesterday: Igår
   completed_last_week: Förra veckan
   completed_this_month: Denna månaden
   completed_last_month: Förra månaden
-
-  # Models/Activity.
-  #----------------------------------------------------------------------------
   one_hour: En timma
   one_day: En dag
   two_days: Två dagar
   one_week: En vecka
   two_weeks: Två veckor
   one_month: En månad
-
-  # Model Validations.
-  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -106,89 +83,86 @@ sv-SE:
         account:
           attributes:
             name:
-              missing_account_name: "^Ange ett kontonamn."
+              missing_account_name: ^Ange ett kontonamn.
             access:
-              share_account: "^Ange användarna som du vill dela kontot med."
+              share_account: ^Ange användarna som du vill dela kontot med.
         campaign:
           attributes:
             name:
-              missing_campaign_name: "^Ange namnet på kampanjen."
+              missing_campaign_name: ^Ange namnet på kampanjen.
             ends_on:
-              dates_not_in_sequence: "^Kampanjens slutdatum måste vara senare än startdatumet."
+              dates_not_in_sequence: ^Kampanjens slutdatum måste vara senare än startdatumet.
             access:
-              share_campaign: "^Ange användarna som du vil dela kampanjen med."
+              share_campaign: ^Ange användarna som du vil dela kampanjen med.
         contact:
           attributes:
             first_name:
-              missing_first_name: "^Ange förnamn."
+              missing_first_name: ^Ange förnamn.
             last_name:
-              missing_last_name: "^Ange efternamn."
+              missing_last_name: ^Ange efternamn.
             access:
-              share_contact: "^Ange användarna som du vill dela kontakten med."
+              share_contact: ^Ange användarna som du vill dela kontakten med.
         lead:
           attributes:
             first_name:
-              missing_first_name: "^Ange förnamn."
+              missing_first_name: ^Ange förnamn.
             last_name:
-              missing_last_name: "^Ange efternamn."
+              missing_last_name: ^Ange efternamn.
             access:
-              share_lead: "^Ange användarna som du vill dela leaden med."
+              share_lead: ^Ange användarna som du vill dela leaden med.
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: "^Ange namnet på affären."
+              missing_opportunity_name: ^Ange namnet på affären.
             access:
-              share_opportunity: "^Ange användarna som du vill dela affären med."
+              share_opportunity: ^Ange användarna som du vill dela affären med.
         task:
           attributes:
             name:
-              missing_task_name: "^Ange namnet på ärendet."
+              missing_task_name: ^Ange namnet på ärendet.
             calendar:
-              invalid_date: "^Ange ett giltigt datum."
+              invalid_date: ^Ange ett giltigt datum.
         user:
           attributes:
             username:
-              missing_username: "^Ange användarnamn."
-              username_taken: "^Detta användarnamn är redan taget."
+              missing_username: ^Ange användarnamn.
+              username_taken: ^Detta användarnamn är redan taget.
             email:
-              missing_email: "^Ange e-postadress."
-              email_in_use: "^Det finns redan en användare med samma e-postadress."
-
-  msg_account_suspended: "Användarkontot har spärrats."
-  password_reset_instruction: "Instruktioner för återställandet av lösenordet."
-
-  # Controllers.
-  #----------------------------------------------------------------------------
-  msg_account_created: "Ditt användarkonto har skapats och skall godkännas av systemadministratorn."
-  msg_account_not_approved: "Ditt användarkonto har ej blivit godkännt ännu."
-  msg_asset_deleted: "%{value} har tagits bort."
-  msg_asset_not_available: "%{value} är ej längre tillgänglig/t."
-  msg_assets_not_available: "%{value} är ej tillgängliga."
-  msg_asset_rejected: "%{value} har avvisats."
-  msg_bad_image_file: "^Omöjligt att ladda upp eller ändra storleken på bilden."
-  msg_cant_create_related: "Omöjligt att skapa %{asset} därför att %{related} är ej längre tillgänglig/t."
-  msg_cant_delete_user: "^Omöjligt att ta bort användaren därför att %{value} äger relaterad information."
-  msg_cant_do: "Omöjligt att %{action} %{asset} eftersom den/det ej längre är tillgänglig/t."
-  msg_email_not_found: "Ingen användare hittades med den angivna e-postadressen."
-  msg_enter_new_password: "Ange ditt nya lösenord."
-  msg_goodbye: "Du har loggats ut. Tack för att du använder detta program."
-  msg_invalid_password: "^Ange ett giltigt lösenord."
-  msg_invalig_login: "Ogiltigt användarnamn eller lösenord."
-  msg_last_login: "Din senaste inloggning var den %{value}."
-  msg_login_needed: "Du måste vara inloggad för att ha tillgång till denna sida."
-  msg_logout_needed: "Du måste vara utloggad för att ha tillgång till denna sida."
-  msg_password_changed: "Ditt lösenord har ändrats."
-  msg_password_not_changed: "Ditt lösenord har inte ändrats."
-  msg_password_updated: "Lösenordet har uppdaterats."
-  msg_pwd_instructions_sent: "Instruktioner för att återställa ditt lösenord har skickats till dig. V.g. kontrollera din e-post."
-  msg_require_admin: "Du måste ha administratorrättigheter för att ha tillgång till denna sida."
-  msg_successful_signup: "Du är nu registrerad. Välkommen!"
+              missing_email: ^Ange e-postadress.
+              email_in_use: ^Det finns redan en användare med samma e-postadress.
+  msg_account_suspended: Användarkontot har spärrats.
+  password_reset_instruction: Instruktioner för återställandet av lösenordet.
+  msg_account_created: Ditt användarkonto har skapats och skall godkännas av systemadministratorn.
+  msg_account_not_approved: Ditt användarkonto har ej blivit godkännt ännu.
+  msg_asset_deleted: ! '%{value} har tagits bort.'
+  msg_asset_not_available: ! '%{value} är ej längre tillgänglig/t.'
+  msg_assets_not_available: ! '%{value} är ej tillgängliga.'
+  msg_asset_rejected: ! '%{value} har avvisats.'
+  msg_bad_image_file: ^Omöjligt att ladda upp eller ändra storleken på bilden.
+  msg_cant_create_related: Omöjligt att skapa %{asset} därför att %{related} är ej
+    längre tillgänglig/t.
+  msg_cant_delete_user: ^Omöjligt att ta bort användaren därför att %{value} äger
+    relaterad information.
+  msg_cant_do: Omöjligt att %{action} %{asset} eftersom den/det ej längre är tillgänglig/t.
+  msg_email_not_found: Ingen användare hittades med den angivna e-postadressen.
+  msg_enter_new_password: Ange ditt nya lösenord.
+  msg_goodbye: Du har loggats ut. Tack för att du använder detta program.
+  msg_invalid_password: ^Ange ett giltigt lösenord.
+  msg_invalig_login: Ogiltigt användarnamn eller lösenord.
+  msg_last_login: Din senaste inloggning var den %{value}.
+  msg_login_needed: Du måste vara inloggad för att ha tillgång till denna sida.
+  msg_logout_needed: Du måste vara utloggad för att ha tillgång till denna sida.
+  msg_password_changed: Ditt lösenord har ändrats.
+  msg_password_not_changed: Ditt lösenord har inte ändrats.
+  msg_password_updated: Lösenordet har uppdaterats.
+  msg_pwd_instructions_sent: Instruktioner för att återställa ditt lösenord har skickats
+    till dig. V.g. kontrollera din e-post.
+  msg_require_admin: Du måste ha administratorrättigheter för att ha tillgång till
+    denna sida.
+  msg_successful_signup: Du är nu registrerad. Välkommen!
   msg_welcome: Välkommen!
-
-  # Options.
-  #----------------------------------------------------------------------------
-  "option_amount*probability": beräknat belopp
-  activity_options: "Visa %{models} aktiviteterna utförda av %{user} under %{period}."
+  option_amount*probability: beräknat belopp
+  activity_options: Visa %{models} aktiviteterna utförda av %{user} under %{period}.
   all_users: alla användare
   option_after: efter
   option_all: alla
@@ -214,10 +188,7 @@ sv-SE:
   option_updated_at: datum uppdaterad
   show_per_page: Visa %{number} %{models} per sida med formatet %{format}.
   sort_by: Sortera %{models} på %{field}.
-  sort_by_displaying: "Sortera %{models} på %{field} och visa förnamn %{position} efternamn."
-
-  # Views -> Profile.
-  #----------------------------------------------------------------------------
+  sort_by_displaying: Sortera %{models} på %{field} och visa förnamn %{position} efternamn.
   aim: AOL IM
   already_signed_up: Är du redan registrerad?
   alt_email: Alternativ e-post
@@ -226,12 +197,12 @@ sv-SE:
   contact_info: Kontakt information
   current_password: Aktuellt lösenord
   edit_profile: Ändra profil
-  # email: E-post # <-- Already defined as the task type if Settings.
   first_name: Förnamn
   google: Google IM
   gravatar_help: Känner du inte till Gravatars? Lär dig om Gravatars
   image_file: Bildfil
-  image_help: Bildfilen som du laddar upp kommer automatiskt att ändras till storlek 75 x 75 pixlar. Godkända format är GIF, JPG och PNG.
+  image_help: Bildfilen som du laddar upp kommer automatiskt att ändras till storlek
+    75 x 75 pixlar. Godkända format är GIF, JPG och PNG.
   job_title: Titel
   last_name: Efternamn
   login_now_link: Logga in nu!
@@ -252,17 +223,11 @@ sv-SE:
   user: Användare
   username: Användarnamn
   yahoo: Yahoo IM
-
-  # Views -> Authenticate.
-  #----------------------------------------------------------------------------
   forgot_password: Glömt lösenord
   login: Logga in
   no_account: Har du inget konto?
   remember_me: Kom i håg mig
   sign_up_now: Registrera dig nu!
-
-  # Views -> Accounts.
-  #----------------------------------------------------------------------------
   account: Konto
   account_small: konto
   accounts: konton
@@ -287,9 +252,6 @@ sv-SE:
   share_with: Dela med följande personer
   shipping_address: Leveransadress
   website: Hemsida
-
-  # Views -> Campaigns.
-  #----------------------------------------------------------------------------
   actual: Faktisk
   actual_performance: Faktisk prestanda
   budget: Budget
@@ -304,7 +266,7 @@ sv-SE:
   campaigns_small: kampanjer
   conversion: Konvertering
   conversion_label: Konvertering (%)
-  conversion_number: "%{value} konverterinsgrad"
+  conversion_number: ! '%{value} konverterinsgrad'
   create_campaign: Skapa kampanj
   end_date: Slutdatum
   finished_on: avslutad %{value}
@@ -312,11 +274,13 @@ sv-SE:
   no_start_date: startdatum ej angiven
   number_of_leads: Antal leads
   objectives: Målsättning
-  objectives_help: Ange förväntade antal leads, förväntad konverteringsgrad, förväntade intäkter och kampanjbudget. Dessa siffror tillåter dig att övervaka kampanjens faktiska prestanda.
+  objectives_help: Ange förväntade antal leads, förväntad konverteringsgrad, förväntade
+    intäkter och kampanjbudget. Dessa siffror tillåter dig att övervaka kampanjens
+    faktiska prestanda.
   objectives_small: campaign objectives
   revenue: Intäkter
   revenue_label: Intäkter (kr)
-  revenue_number: "%{value} intäkter"
+  revenue_number: ! '%{value} intäkter'
   save_campaign: Spara kampanj
   start_date: Startdatum
   started_ago: startade för %{value} sedan
@@ -327,9 +291,6 @@ sv-SE:
   was_supposed_to_finish: skulle ha varit avslutad %{value}
   was_supposed_to_start: skulle ha varit påbörjad för %{time_ago} sedan, dvs %{start_date}
   was_supposed_to_start_in: påbörjas om %{starts_in}, dvs %{start_date}
-
-  # Views -> Contacts.
-  #----------------------------------------------------------------------------
   alt_email_small: Alternativ
   blog: Hemsida/Blog
   contact: Kontakt
@@ -339,37 +300,48 @@ sv-SE:
   contacts_small: kontakter
   create_contact: Skapa kontakt
   department: Avdelning
-  department_small: '%{value} avdelning'
+  department_small: ! '%{value} avdelning'
   do_not_call: Ring ej
   extra_info: Övrig
   extra_info_small: övrig
   facebook: Facebook
   linked_in: LinkedIn
   myself: Mig själv
-  permissions_intro_private: Normalt har endast du tillgång till %{value}. Du kan ändra rättigheterna senare.
-  permissions_intro_public: Normalt har alla användare tillgång till %{value}. Du kan ändra rättigheterna senare.
-  permissions_intro_shared: Normalt har endast utvalda användare tillgågn till %{value}. Du kan ändra rättigheterna senare.
+  permissions_intro_private: Normalt har endast du tillgång till %{value}. Du kan
+    ändra rättigheterna senare.
+  permissions_intro_public: Normalt har alla användare tillgång till %{value}. Du
+    kan ändra rättigheterna senare.
+  permissions_intro_shared: Normalt har endast utvalda användare tillgågn till %{value}.
+    Du kan ändra rättigheterna senare.
   referred_by: Refererad av
   referred_by_small: refererad av
   save_contact: Spara kontakt
   twitter: Twitter
   web_presence: Webadresser
   web_presence_small: webadresser
-  works_at: "%{job_title} på %{company}"
-
-  # Views -> Leads.
-  #----------------------------------------------------------------------------
+  works_at: ! '%{job_title} på %{company}'
   convert: Konvertera
   convert_lead: Konvertera Lead
-  convert_lead_permissions_intro: Kontakträttigheterna kopieras från leaden som konverteras. Du kan ändra rättigheterna senare.
-  convert_lead_text: Genoma att konvertera leaden %{value}, så förvandlas leaden till en kontakt associerad med ett befintligt eller nyskapat konto. Statusen kommer att ändras automatiskt till konverterad.
+  convert_lead_permissions_intro: Kontakträttigheterna kopieras från leaden som konverteras.
+    Du kan ändra rättigheterna senare.
+  convert_lead_text: Genoma att konvertera leaden %{value}, så förvandlas leaden till
+    en kontakt associerad med ett befintligt eller nyskapat konto. Statusen kommer
+    att ändras automatiskt till konverterad.
   create_lead: Skapa lead
-  create_opp_for_contact: Du kan välja att skapa en affär med kontakten %{value} genom att namnge affären och ange nuvarande skede, beräknat avslutningsdatum, försäljningssannolikhet, affärens belopp, och erbjuden rabatt.
+  create_opp_for_contact: Du kan välja att skapa en affär med kontakten %{value} genom
+    att namnge affären och ange nuvarande skede, beräknat avslutningsdatum, försäljningssannolikhet,
+    affärens belopp, och erbjuden rabatt.
   lead: Lead
   lead_info_small: lead kontakt
-  lead_permissions_intro_private: Normalt kommer rättigheterna att bli kopierade från kampanjen eller så blir de privata rättigheter. Du kan ändra rättigherna på leaden senare.
-  lead_permissions_intro_public: Normalt kommer rättigheterna att bli kopierade från kampanjen eller så blir de publika rättigheter. Du kan ändra rättigheterna på leaden senare.
-  lead_permissions_intro_shared: Normalt kommer rättigheterna att bli kopierade från kampanjen eller så blir de delade rättigheter med specificerade användare. Du kan ändra rättigheterna på leaden senare.
+  lead_permissions_intro_private: Normalt kommer rättigheterna att bli kopierade från
+    kampanjen eller så blir de privata rättigheter. Du kan ändra rättigherna på leaden
+    senare.
+  lead_permissions_intro_public: Normalt kommer rättigheterna att bli kopierade från
+    kampanjen eller så blir de publika rättigheter. Du kan ändra rättigheterna på
+    leaden senare.
+  lead_permissions_intro_shared: Normalt kommer rättigheterna att bli kopierade från
+    kampanjen eller så blir de delade rättigheter med specificerade användare. Du
+    kan ändra rättigheterna på leaden senare.
   lead_small: lead
   lead_status_small: lead status
   lead_summary: Lead översikt
@@ -384,9 +356,6 @@ sv-SE:
   source: Källa
   status: Status
   total_leads: Totala Leads
-
-  # Views -> Opportunities.
-  #----------------------------------------------------------------------------
   amount: Belopp
   close_date: Slutdatum
   closed_ago_on: avslutad %{time_ago} sedan, dvs. %{date}
@@ -408,7 +377,7 @@ sv-SE:
   opportunity: Affär
   opportunity_small: affär
   opportunity_summary: Affärsöversikt
-  opportunity_summary_text: "%{amount} med rabatt %{discount} och sannolikhet %{probability}"
+  opportunity_summary_text: ! '%{amount} med rabatt %{discount} och sannolikhet %{probability}'
   past_due: förfallen, skulle ha varit avslutad %{value} sedan
   probability: Sannolikhet
   probability_number: och sannolikhet %{value}
@@ -416,9 +385,6 @@ sv-SE:
   stage: Skede
   total_opportunities: Totala Affärer
   weighted_amount: Beräknat belopp
-
-  # Views -> Tasks.
-  #----------------------------------------------------------------------------
   assign_to: Tilldela till
   assigned_tab: Tilldelade
   assigned_tasks: Tilldelade Ärenden
@@ -430,13 +396,13 @@ sv-SE:
   due: Förfaller
   feel_free: Tveka inte att
   move_to: flytta till
-  no_tasks: "Du har inga ärenden %{value}"
+  no_tasks: Du har inga ärenden %{value}
   no_tasks_pending: på Kö
   no_tasks_assigned: tilldelade
   no_tasks_completed: utförda
   pending_tab: På kö
   pending_tasks: Ärenden på kö
-  related: 'SV:'
+  related: ! 'SV:'
   save_task: Spara ärendet
   task_assigned: Ärendet har tilldelats till %{value}
   task_assigned_to: och tilldelats till %{value}
@@ -456,20 +422,17 @@ sv-SE:
   total_tasks: Antal %{value}
   view_assigned_tasks: visa tilldelade ärenden
   view_pending_tasks: visa ärenden på kö
-
-  # Views -> Home.
-  #----------------------------------------------------------------------------
-  action_commented: "har kommenterat:"
+  action_commented: ! 'har kommenterat:'
   action_completed: utförd
-  action_created: "har skapat:"
-  action_deleted: "har tagit bort:"
-  action_email: "har utväxlat e-post med:"
-  action_reassigned: "vidare tilldelat:"
-  action_rejected: "har avvisat:"
-  action_rescheduled: "har omplanerat:"
-  action_updated: "har uppdaterat:"
-  action_viewed: "har undersökt:"
-  action_won: "har vunnit:"
+  action_created: ! 'har skapat:'
+  action_deleted: ! 'har tagit bort:'
+  action_email: ! 'har utväxlat e-post med:'
+  action_reassigned: ! 'vidare tilldelat:'
+  action_rejected: ! 'har avvisat:'
+  action_rescheduled: ! 'har omplanerat:'
+  action_updated: ! 'har uppdaterat:'
+  action_viewed: ! 'har undersökt:'
+  action_won: ! 'har vunnit:'
   no_activity_records: Aktivitet poster saknas.
   recent_activity: Senaste aktiviteter
   recent_activity_options: Aktivitetsalternativ
@@ -479,9 +442,6 @@ sv-SE:
   subject_lead: lead
   subject_opportunity: affär
   subject_task: ärende
-
-  # Views -> Common.
-  #----------------------------------------------------------------------------
   add_note: Lägg till anteckning
   save_note: Spara anteckning
   add_note_help: Lägg till en ny antekning...
@@ -493,20 +453,20 @@ sv-SE:
   close_form: Stäng sidan
   confirm_delete: Är du säker på att du vill ta bort denna/detta %{value}?
   copy_permissions: Kopiera %{value} rättigheter
-  could_not_find: "Kunde inte hitta: %{value}. Tveka inte att"
-  could_not_find_matching: "Inga %{value} hittades som matchade"
+  could_not_find: ! 'Kunde inte hitta: %{value}. Tveka inte att'
+  could_not_find_matching: Inga %{value} hittades som matchade
   create_new: skapa nytt
   select_existing: välj befintligt
   delete: Ta bort
   discard: Kasta bort
   edit: Ändra
-  items_total: 'totalt: %{count}.'
+  items_total: ! 'totalt: %{count}.'
   less: Mindre...
   me: mig
   more: Mera...
   n_a: saknas
   name: Namn
-  no_match: "Inga %{value} hittades som matchade"
+  no_match: Inga %{value} hittades som matchade
   no_recent_items: Det finns inga nya poster att visa ännu.
   options: Alternativ
   permissions: Rättigheter
@@ -517,18 +477,15 @@ sv-SE:
   select_task: Välj ärende
   select_opportunity: Välj affär
   search_assets: Sök %{value}
-  time_ago: "%{value} sedan"
+  time_ago: ! '%{value} sedan'
   background_info: Bakgrund
   address: Adress
-  street1: Rad 1 # NEW
-  street2: Rad 2 # NEW
+  street1: Rad 1
+  street2: Rad 2
   city: Ort
   zipcode: Postkod
   state: Stat/region
   country: Land
-
-  # Views -> Layout.
-  #----------------------------------------------------------------------------
   about: Om
   about_dev_group: Diskussionsgrupp för utvecklare
   about_features: Funktioner och buggar
@@ -544,27 +501,16 @@ sv-SE:
   logout: Logga ut
   quick_find: Snabbsökning
   welcome: Välkommen
-
-  # Views -> Comments.
-  #----------------------------------------------------------------------------
   edit_comment: Ändra kommentar
   show: Visa
   update: Uppdatera
-
-  # Views -> Passwords.
-  #----------------------------------------------------------------------------
   confirm_password_intro: Skriv ditt nya lösenord och bekräfta det.
-  password_intro: Ange din e-postadress och instruktioner för att återställa ditt lösenord kommer att skickas til dig.
+  password_intro: Ange din e-postadress och instruktioner för att återställa ditt
+    lösenord kommer att skickas til dig.
   reset_password: Återställ lösenord
   update_password_and_login: Uppdatera lösenord och inloggingsuppgifter
-
-  # Views -> Admin
-  #----------------------------------------------------------------------------
   back_to_crm: Tillbaks till huvudprogrammet
   crm_admin_page: Administration
-
-  # Views -> Admin -> Users.
-  #----------------------------------------------------------------------------
   approve: Godkänn
   create_user: Skapa användare
   last_seen: senast inloggad %{value} sedan
@@ -575,9 +521,10 @@ sv-SE:
   user_active: Aktiv
   user_admin: Administrator
   user_awaits_approval: inväntar godkännandet
-  user_confirm_delete: En användare får tas bort endast om det inte finns relaterad kvarstående information.
+  user_confirm_delete: En användare får tas bort endast om det inte finns relaterad
+    kvarstående information.
   user_is_admin: Användaren är administrator
-  user_never_logged_in: "har inte loggat in ännu"
+  user_never_logged_in: har inte loggat in ännu
   user_signed_up: Registrerad
   user_signed_up_on: registrerade %{value}
   user_since: användare sedan %{value}
@@ -585,44 +532,33 @@ sv-SE:
   user_suspended_on: avstängd %{value}
   users: Användare
   users_small: användare
-
-  # Dropbox.
-  #----------------------------------------------------------------------------
   dropbox_notification_subject: Dropbox - e-postadress tillagd - %{subject}
   dropbox_notification_intro: E-postmeddelandet har lagts till i Dropbox
   dropbox_notification_to: Lagts till
   subject: Ämne
   body: Text
-
-  # Pluralizations.
-  #----------------------------------------------------------------------------
   pluralize:
     contact:
-      one: '1 kontakt'
-      other: '%{count} kontakter'
+      one: 1 kontakt
+      other: ! '%{count} kontakter'
     opportunity:
-      one: '1 affär'
-      other: '%{count} affärer'
+      one: 1 affär
+      other: ! '%{count} affärer'
     lead:
-      one: '1 lead'
-      other: '%{count} leads'
+      one: 1 lead
+      other: ! '%{count} leads'
     day:
-      one: '1 dag'
-      other: '%{count} dagar'
+      one: 1 dag
+      other: ! '%{count} dagar'
     login:
-      one: '1 inloggning'
-      other: '%{count} inloggningar'
-
-  # Custom date/time formats.
-  #----------------------------------------------------------------------------
+      one: 1 inloggning
+      other: ! '%{count} inloggningar'
   date:
     formats:
-      mmddyyyy: "%Y-%m-%d"
-      mmdd: "%b %e"
-      mmddyy: "%B %e, %Y"
-
-
+      mmddyyyy: ! '%Y-%m-%d'
+      mmdd: ! '%b %e'
+      mmddyy: ! '%B %e, %Y'
   time:
     formats:
-      mmddhhss: "%b %e, kl %H:%M"
-      mmddyyyy_hhmm: "%m/%d/%Y %l:%M %p"
+      mmddhhss: ! '%b %e, kl %H:%M'
+      mmddyyyy_hhmm: ! '%m/%d/%Y %l:%M %p'

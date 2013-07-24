@@ -1,20 +1,15 @@
+---
 pt-BR:
   language: Português do Brasil
-
-  # Generic terms.
-  #----------------------------------------------------------------------------
   all: Tudo
   at: at
   here: aqui
-  no_button: 'Não'
+  no_button: Não
   not_implemented: Ainda não implementado.
   or: ou
-  select_blank: '-- Selecione --'
-  select_none: '-- Nenhum --'
-  yes_button: 'Sim'
-
-  # Settings.
-  #----------------------------------------------------------------------------
+  select_blank: -- Selecione --
+  select_none: -- Nenhum --
+  yes_button: Sim
   tab_dashboard: Dashboard
   tab_tasks: Tarefas
   tab_campaigns: Campanhas
@@ -22,22 +17,18 @@ pt-BR:
   tab_accounts: Contas
   tab_contacts: Contatos
   tab_opportunities: Oportunidades
-
   admin_tab_users: Usuários
   admin_tab_settings: Configurações
   admin_tab_plugins: Plugins
-
   planned: Planejado
   started: Iniciado
   on_hold: Em espera
   completed: Terminado
   called_off: Called Off
-
   new: Novo
   contacted: Contactado
   converted: Convertido
   rejected: Rejeitado
-
   cold_call: Cold Call
   conference: Conferência
   online: Marketing Online
@@ -46,7 +37,6 @@ pt-BR:
   web: Website
   word_of_mouth: Boca-a-Boca
   other: Outros
-
   prospecting: Prospecção
   analysis: Análise
   presentation: Apresentação
@@ -55,16 +45,13 @@ pt-BR:
   final_review: Revisão final
   won: Fechado/Conquistado
   lost: Fechado/Perdido
-
   call: Ligação
   email: Email
   follow_up: Follow-up
   lunch: Almoço
   meeting: Encontro
   money: Dinheiro
-  presentation: Apresentação
   trip: Viagem
-
   overdue: Overdue
   due_asap: Assim que possível
   due_today: Hoje
@@ -72,25 +59,18 @@ pt-BR:
   due_this_week: Esta semana
   due_next_week: Próxima semana
   due_later: Depois
-  due_specific_date: Em Data Específica... # ?!
-
+  due_specific_date: Em Data Específica...
   completed_today: Hoje
   completed_yesterday: Ontem
   completed_last_week: Semana passada
   completed_this_month: Este mês
   completed_last_month: Mês passado
-
-  # Models/Activity.
-  #----------------------------------------------------------------------------
   one_hour: Uma hora
   one_day: Um dia
   two_days: Dois dias
   one_week: Uma semana
   two_weeks: Duas semanas
   one_month: Um mês
-
-  # Model Validations.
-  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -103,83 +83,86 @@ pt-BR:
         account:
           attributes:
             name:
-              missing_account_name: "^Por favor, informe um nome para a conta"
+              missing_account_name: ^Por favor, informe um nome para a conta
             access:
-              share_account: "^Por favor, informe usuários com quem desejas compartilhar esta conta."
+              share_account: ^Por favor, informe usuários com quem desejas compartilhar
+                esta conta.
         campaign:
           attributes:
             name:
-              missing_campaign_name: "^Por favor, informe uma node para a campanha."
+              missing_campaign_name: ^Por favor, informe uma node para a campanha.
             ends_on:
-              dates_not_in_sequence: "^Por favor, certifique-se que a data de término da campanha seja posterior a data de início."
+              dates_not_in_sequence: ^Por favor, certifique-se que a data de término
+                da campanha seja posterior a data de início.
             access:
-              share_campaign: "^Por favor, informe usuários com quem desejas compartilhar esta campanha."
+              share_campaign: ^Por favor, informe usuários com quem desejas compartilhar
+                esta campanha.
         contact:
           attributes:
             first_name:
-              missing_first_name: "^Por favor, informe o primeiro nome."
+              missing_first_name: ^Por favor, informe o primeiro nome.
             last_name:
-              missing_last_name: "^Por favor, informe o último nome."
+              missing_last_name: ^Por favor, informe o último nome.
             access:
-              share_contact: "^Por favor, informe usuários com quem desejas compartilhar este contato."
+              share_contact: ^Por favor, informe usuários com quem desejas compartilhar
+                este contato.
         lead:
           attributes:
             first_name:
-              missing_first_name: "^Por favor, informe o primeiro nome."
+              missing_first_name: ^Por favor, informe o primeiro nome.
             last_name:
-              missing_last_name: "^Por favor, informe o último nome."
+              missing_last_name: ^Por favor, informe o último nome.
             access:
-              share_lead: "^Por favor, informe usuários com quem desejas compartilhar este lead."
+              share_lead: ^Por favor, informe usuários com quem desejas compartilhar
+                este lead.
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: "^Por favor, informe um nome para a oportunidade."
+              missing_opportunity_name: ^Por favor, informe um nome para a oportunidade.
             access:
-              share_opportunity: "^Por favor, informe usuários com quem desejas compartilhar esta oportunidade."
+              share_opportunity: ^Por favor, informe usuários com quem desejas compartilhar
+                esta oportunidade.
         task:
           attributes:
             name:
-              missing_task_name: "^Por favor, informe um nome para a tarefa."
+              missing_task_name: ^Por favor, informe um nome para a tarefa.
             calendar:
-              invalid_date: "^Por favor, informe uma data válida."
+              invalid_date: ^Por favor, informe uma data válida.
         user:
           attributes:
             username:
-              missing_username: "^Por favor, informe o nome do usuário."
-              username_taken: "^Este usuário já está sendo usado."
+              missing_username: ^Por favor, informe o nome do usuário.
+              username_taken: ^Este usuário já está sendo usado.
             email:
-              missing_email: "^Por favor, informe o e-mail."
-              email_in_use: "^Já existe um usuário com este e-mail."
-
-  # dynamic_form plugin translations.
-  #----------------------------------------------------------------------------
+              missing_email: ^Por favor, informe o e-mail.
+              email_in_use: ^Já existe um usuário com este e-mail.
   errors:
     template:
       header:
-        one: "Não foi possível gravar %{model}: 1 erro"
-        other: "Não foi possível gravar %{model}: %{count} erros."
-      body: "Por favor, verifique o(s) seguinte(s) campo(s):"
-
+        one: ! 'Não foi possível gravar %{model}: 1 erro'
+        other: ! 'Não foi possível gravar %{model}: %{count} erros.'
+      body: ! 'Por favor, verifique o(s) seguinte(s) campo(s):'
   msg_account_suspended: A conta do usuário foi suspensa.
   password_reset_instruction: Instruções de redefinição da senha
-
-  # Controllers.
-  #----------------------------------------------------------------------------
-  msg_account_created: Sua conta foi criada e está aguardando a aprovação do administrador do sistema.
+  msg_account_created: Sua conta foi criada e está aguardando a aprovação do administrador
+    do sistema.
   msg_account_not_approved: Sua conta ainda não foi aprovada.
-  msg_asset_deleted: "%{value} foi removido."
+  msg_asset_deleted: ! '%{value} foi removido.'
   msg_asset_not_available: Este(a) %{value} não está mais disponível.
-  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
+  msg_asset_not_authorized: You are not authorized to view this %{value}.
   msg_assets_not_available: Estes(as) %{value} não estão mais disponíveis.
-  msg_asset_rejected: "%{value} foi rejeitado."
-  msg_bad_image_file: "^Não foi possível enviar ou redimensionar a imagem que você escolheu."
-  msg_cant_create_related: "Impossível criar %{asset} já que %{related} não está mais disponível."
-  msg_cant_delete_user: "^Não foi possível remover o usuário já que %{value} tem relacionamentos ativos."
-  msg_cant_do: "Impossível %{action} o %{asset} já que não está mais disponível."
+  msg_asset_rejected: ! '%{value} foi rejeitado.'
+  msg_bad_image_file: ^Não foi possível enviar ou redimensionar a imagem que você
+    escolheu.
+  msg_cant_create_related: Impossível criar %{asset} já que %{related} não está mais
+    disponível.
+  msg_cant_delete_user: ^Não foi possível remover o usuário já que %{value} tem relacionamentos
+    ativos.
+  msg_cant_do: Impossível %{action} o %{asset} já que não está mais disponível.
   msg_email_not_found: Nenhum usuário encontrado com este e-mail.
   msg_enter_new_password: Por favor, informe sua nova senha.
   msg_goodbye: Você saiu do sistema. Obrigado por usar o Fat Free CRM!
-  msg_invalid_password: "^Por favor informe uma senha válida"
+  msg_invalid_password: ^Por favor informe uma senha válida
   msg_invalig_login: Usuário e senha inválida.
   msg_last_login: Você entrou no sistema pela última vez em %{value}.
   msg_login_needed: Você precisa entrar no sistema para acessar esta página.
@@ -187,15 +170,14 @@ pt-BR:
   msg_password_changed: Sua senha mudou.
   msg_password_not_changed: Sua senha não mudou.
   msg_password_updated: A senha foi atualizada com sucesso.
-  msg_pwd_instructions_sent: Instruções para redefinir a sua senha foram enviadas a você. Por favor, verifique seu e-mail.
+  msg_pwd_instructions_sent: Instruções para redefinir a sua senha foram enviadas
+    a você. Por favor, verifique seu e-mail.
   msg_require_admin: É preciso ser um administrador para acessar esta página.
   msg_successful_signup: Cadastrado com sucesso, bem vindo(a) ao Fat Free CRM!
   msg_welcome: Bem vindo(a) ao Fat Free CRM!
-
-  # Options.
-  #----------------------------------------------------------------------------
-  "option_amount*probability": weighted amount
-  activity_options: Exibir atividades em %{models} feitas por %{user} no(s) último(s) %{period}.
+  option_amount*probability: weighted amount
+  activity_options: Exibir atividades em %{models} feitas por %{user} no(s) último(s)
+    %{period}.
   all_users: todos os usuários
   option_after: depois
   option_all: todos
@@ -219,12 +201,10 @@ pt-BR:
   option_target_leads: leads alvo
   option_target_revenue: receita alvo
   option_updated_at: data de atualização
-  show_per_page: Exibir %{number} %{models} por página usando o formato %{fmt}. 
+  show_per_page: Exibir %{number} %{models} por página usando o formato %{fmt}.
   sort_by: Sort %{models} by %{field}.
-  sort_by_displaying: Ordenar %{models} por %{field} exibindo o primeiro nome %{position} do último nome. 
-
-  # Views -> Profile.
-  #----------------------------------------------------------------------------
+  sort_by_displaying: Ordenar %{models} por %{field} exibindo o primeiro nome %{position}
+    do último nome.
   aim: AOL IM
   already_signed_up: Já é cadastrado?
   alt_email: Email alternativo
@@ -234,12 +214,12 @@ pt-BR:
   contact_info: Informações para contato
   current_password: Senha atual
   edit_profile: Editar perfil
-  # email: Email # <-- Already defined as the task type if Settings.
   first_name: Primeiro nome
   google: Google IM
   gravatar_help: Não conhece o Gravatar? Saiba mais sobre
   image_file: Arquivo de imagem
-  image_help: A imagem que você enviar será automaticamente redimensionada para 75 x 75 pixels. Os formatos suportados são GIF, JPG, and PNG.
+  image_help: A imagem que você enviar será automaticamente redimensionada para 75
+    x 75 pixels. Os formatos suportados são GIF, JPG, and PNG.
   job_title: Título
   last_name: Último nome
   login_now_link: Entre agora!
@@ -260,19 +240,14 @@ pt-BR:
   user: Usuário
   username: Usuário
   yahoo: Yahoo IM
-
-  # Views -> Authenticate.
-  #----------------------------------------------------------------------------
   forgot_password: Esqueceu a senha
   login: Login
   no_account: Não tem uma conta?
   remember_me: Me lembrar
   sign_up_now: Cadastre-se Agora!
-
-  # Views -> Accounts.
-  #----------------------------------------------------------------------------
   account: Conta
-  account_permissions_intro: Por padrão, somente você terá acesso a conta. Você pode mudar as permissões da conta depois.
+  account_permissions_intro: Por padrão, somente você terá acesso a conta. Você pode
+    mudar as permissões da conta depois.
   account_small: conta
   accounts: Contas
   accounts_options: Opções da conta
@@ -287,7 +262,7 @@ pt-BR:
   mobile_small: celular
   open_in_window: Abrir %{value} em uma nova janela
   phone_small: telefone
-  phone_toll_free: Toll-free phone 
+  phone_toll_free: Toll-free phone
   keep_private: manter privado, não compartilhar com os outros
   make_public: Compartilhar com todos
   same_as_billing: mesmo da cobrança
@@ -295,9 +270,6 @@ pt-BR:
   share_with: Compartilhar somente com algumas pessoas
   shipping_address: Endereço de entrega
   website: Website
-
-  # Views -> Campaigns.
-  #----------------------------------------------------------------------------
   actual: Atual
   actual_performance: Performance atual
   budget: Orçamento
@@ -312,7 +284,7 @@ pt-BR:
   campaigns_small: campanhas
   conversion: Conversão
   conversion_label: Conversão (%)
-  conversion_number: "%{value} convertidos" 
+  conversion_number: ! '%{value} convertidos'
   create_campaign: Nova campanha
   end_date: Data de término
   finished_on: finalizado em %{value}
@@ -320,11 +292,13 @@ pt-BR:
   no_start_date: data de início não informada
   number_of_leads: Número de leads
   objectives: Objetivos
-  objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
+  objectives_help: Please specify target number of leads, expected leads-to-opportunities
+    conversion ratio, target revenue, and campaign budget. These numbers will let
+    you track actual campaign performance.
   objectives_small: objetivos da campanha
   revenue: Receita
   revenue_label: Receita ($)
-  revenue_number: "%{value} em receita"
+  revenue_number: ! '%{value} em receita'
   save_campaign: Salvar campanha
   start_date: Data de início
   started_ago: iniciou há %{value} atrás
@@ -334,9 +308,6 @@ pt-BR:
   total_campaigns: Total Campaigns
   was_supposed_to_finish: deveria ter terminado a %{value}
   was_supposed_to_start: deveria ter começado há %{time_ago} atrás em %{start_date}
-    
-  # Views -> Contacts.
-  #----------------------------------------------------------------------------
   alt_email_small: Outro
   blog: Website/Blog
   contact: Contato
@@ -346,41 +317,46 @@ pt-BR:
   contacts_small: contatos
   create_contact: Novo contato
   department: Departamento
-  department_small: '%{value} departamento'
+  department_small: ! '%{value} departamento'
   do_not_call: Não ligar
   extra_info: Informações exttra
   extra_info_small: informação extra
   facebook: Facebook
   linked_in: LinkedIn
   myself: Eu
-
-  permissions_intro_private: Por padrão, somente você terá acesso em %{value}. Você pode mudar as permissões depois.
-  permissions_intro_public: Por padrão, todos os usuários terão acesso em %{value}. Você pode mudar as permissões depois..
-  permissions_intro_shared: Por padrão, somente os usuários selecionados terão acesso em %{value}. Você pode mudar as permissões depois..
-
+  permissions_intro_private: Por padrão, somente você terá acesso em %{value}. Você
+    pode mudar as permissões depois.
+  permissions_intro_public: Por padrão, todos os usuários terão acesso em %{value}.
+    Você pode mudar as permissões depois..
+  permissions_intro_shared: Por padrão, somente os usuários selecionados terão acesso
+    em %{value}. Você pode mudar as permissões depois..
   referred_by: Referred by
   referred_by_small: referred by
   save_contact: Salvar contato
   twitter: Twitter
   web_presence: Web Presence
   web_presence_small: web presence
-  works_at: "%{job_title} na %{company}"
-
-  # Views -> Leads.
-  #----------------------------------------------------------------------------
+  works_at: ! '%{job_title} na %{company}'
   convert: Converter
   convert_lead: Converter lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
+  convert_lead_permissions_intro: Contact permissions will be copied from the lead
+    being converted. You can change contact permissions later.
+  convert_lead_text: By converting the lead %{value} will become a contact associated
+    with the existing or newly created account. Lead status will be automatically
+    set to converted.
   create_lead: Novo lead
-  create_opp_for_contact: Você pode opcionalmente criar uma oportunidade para o contato %{value}  especificando o nome, fase atual, data estimada de fechamento, probabilidade de venda, valor do acordo, e o desconto oferecido.
+  create_opp_for_contact: Você pode opcionalmente criar uma oportunidade para o contato
+    %{value}  especificando o nome, fase atual, data estimada de fechamento, probabilidade
+    de venda, valor do acordo, e o desconto oferecido.
   lead: Lead
   lead_info_small: contato do lead
-
-  lead_permissions_intro_private: Por padrão, as permissões seráo copiadas da campanha ou ficarão privadas. Você pode mudar as permissões do 'lead' depois.
-  lead_permissions_intro_public: Por padrão, as permissões sérão copiadas do campanha ou ficarão públicas. Você pode mudar as permissões do 'lead' depois.
-  lead_permissions_intro_shared: Por padrão, as permissões serão compiadas da campanha ou serão compartilhadas com os usuários especificados. Você pode mudar as permissões do 'lead' depois.
-
+  lead_permissions_intro_private: Por padrão, as permissões seráo copiadas da campanha
+    ou ficarão privadas. Você pode mudar as permissões do 'lead' depois.
+  lead_permissions_intro_public: Por padrão, as permissões sérão copiadas do campanha
+    ou ficarão públicas. Você pode mudar as permissões do 'lead' depois.
+  lead_permissions_intro_shared: Por padrão, as permissões serão compiadas da campanha
+    ou serão compartilhadas com os usuários especificados. Você pode mudar as permissões
+    do 'lead' depois.
   lead_small: lead
   lead_status_small: situação do lead
   lead_summary: Lead Summary
@@ -395,9 +371,6 @@ pt-BR:
   source: Origem
   status: Situação
   total_leads: Total de leads
-
-  # Views -> Opportunities.
-  #----------------------------------------------------------------------------
   amount: Valor
   close_date: Close date
   closed_ago_on: fechada há %{time_ago} atrás em %{date}
@@ -419,17 +392,15 @@ pt-BR:
   opportunity: Oportunidade
   opportunity_small: oportunidade
   opportunity_summary: Oportunidade At a Glance
-  opportunity_summary_text: "%{amount} com desconto de %{discount} e probabilidade de %{probability}" 
+  opportunity_summary_text: ! '%{amount} com desconto de %{discount} e probabilidade
+    de %{probability}'
   past_due: past due, was expected to close %{value} ago
   probability: Probabilidade
-  probability_number:  e probabilidade de %{value}
+  probability_number: e probabilidade de %{value}
   save_opportunity: Salvar oportunidade
   stage: Fase
   total_opportunities: Total Opportunities
   weighted_amount: Weighted amount
-
-  # Views -> Tasks.
-  #----------------------------------------------------------------------------
   assign_to: Atribuida para
   assigned_tab: Atribuída
   assigned_tasks: Tarefas atribuídas
@@ -441,13 +412,13 @@ pt-BR:
   due: Prazo
   feel_free: Sinta-se livre para
   move_to: mover para
-  no_tasks: "Você não tem nenhum atividade %{value}"
+  no_tasks: Você não tem nenhum atividade %{value}
   no_tasks_pending: pendente
   no_tasks_assigned: atribuída
   no_tasks_completed: terminada
   pending_tab: Pendente
   pending_tasks: Tarefas pendentes
-  related: 're:'
+  related: ! 're:'
   save_task: Salvar atividade
   task_assigned: As tarefas foram atribuídas para %{value}
   task_assigned_to: e artibuída para %{value}
@@ -467,9 +438,6 @@ pt-BR:
   total_tasks: Total %{value}
   view_assigned_tasks: ver tarefas atribuídas
   view_pending_tasks: ver tarefas pendentes
- 
-  # Views -> Home.
-  #----------------------------------------------------------------------------
   action_commented: comentada em
   action_completed: terminado
   action_created: criado
@@ -490,49 +458,43 @@ pt-BR:
   subject_lead: lead
   subject_opportunity: oportunidade
   subject_task: tarefa
-
-  # Views -> Common.
-  #----------------------------------------------------------------------------
   add_note: Adicionar nota
   save_note: Salvar nota
   add_note_help: Adicionar nova nota...
   added_ago: adicionado(a) há %{value} atrás
-  added_by: adicionado(a) há %{time_ago} atrás por %{user} 
+  added_by: adicionado(a) há %{time_ago} atrás por %{user}
   back: Voltar
   cancel: Cancelar
   close_form: Fechar formulário
   confirm_delete: Tem certeza que deseja remover este %{value}?
-  copy_permissions: Copiar permissão %{value} 
-  could_not_find: "%{value} não encontrado. Sinta-se livre para"
-  could_not_find_matching: "Couldn't find %{value} matching"
+  copy_permissions: Copiar permissão %{value}
+  could_not_find: ! '%{value} não encontrado. Sinta-se livre para'
+  could_not_find_matching: Couldn't find %{value} matching
   create_new: cria um(a) novo(a)
   select_existing: selecione existentes
   delete: Remover
-  discard: Discard # TODO
+  discard: Discard
   edit: Editar
-  items_total: '%{count} total.'
+  items_total: ! '%{count} total.'
   less: Menos...
   me: mim
   more: Mais...
   n_a: N/A
   name: Nome
-  no_match: 'No %{value} match'
+  no_match: No %{value} match
   no_recent_items: Não existem itens recentes para exibir ainda.
   options: Opções
   permissions: Permissões
   please_retry: favor tente outra consulta.
   recent_items: Itens recentes
   search_assets: Buscar %{value}
-  time_ago: "há %{value} atrás"
+  time_ago: há %{value} atrás
   background_info: Informações gerais
   address: Endereço
   city: Ciudade
   zipcode: CEP
   state: Membro/Região
   country: Campo
-
-  # Views -> Layout.
-  #----------------------------------------------------------------------------
   about: Sobre
   about_dev_group: Grupo de discussão para desenvolvedores
   about_features: Funcionalidades e bugs
@@ -541,34 +503,24 @@ pt-BR:
   about_ffc_version: Fat Free CRM versão
   about_home_page: Home page
   about_project_page: Página do projeto
-  about_thank_you: Obrigado(a) por usar o Fat Free CRM! Nós apreciamos o seu negócio e esperamos que você goste de usar nosso software.
+  about_thank_you: Obrigado(a) por usar o Fat Free CRM! Nós apreciamos o seu negócio
+    e esperamos que você goste de usar nosso software.
   about_twitter: Twitter
   about_user_group: Grupo de discussão para usuários
   admin: Admin
   logout: Sair
   quick_find: Busca rápida
   welcome: Bem vindo(a)
-
-  # Views -> Comments.
-  #----------------------------------------------------------------------------
   edit_comment: Editando comentário
   show: Exibir
   update: Atualizar
-  
-  # Views -> Passwords.
-  #----------------------------------------------------------------------------
   confirm_password_intro: Por favor, digite sua nova senha e então confirme-a.
-  password_intro: Por favor, informe seu e-mail, e as instruções para redefinir a sua senha serão enviadas a você.
+  password_intro: Por favor, informe seu e-mail, e as instruções para redefinir a
+    sua senha serão enviadas a você.
   reset_password: Redefnir senha
   update_password_and_login: Atualizar senha e entrar.
-
-  # Views -> Admin
-  #----------------------------------------------------------------------------
   back_to_crm: Voltar ao Fat Free CRM
   crm_admin_page: Administração do Fat Free CRM
-
-  # Views -> Admin -> Users.
-  #----------------------------------------------------------------------------
   approve: Aprovar
   create_user: Novo usuário
   last_seen: entrou pela última vez há %{value} atrás
@@ -581,7 +533,7 @@ pt-BR:
   user_awaits_approval: aguarda sua aprovação
   user_confirm_delete: Um usuário só pode ser removido se não tiver relacionamentos.
   user_is_admin: Este usuário é administrador
-  user_never_logged_in: "ainda não entrou no sistema"
+  user_never_logged_in: ainda não entrou no sistema
   user_signed_up: Cadastrar-se
   user_signed_up_on: cadastrou-se em %{value}
   user_since: usuário desde %{value}
@@ -589,45 +541,36 @@ pt-BR:
   user_suspended_on: suspenso em %{value}
   users: Usuários
   users_small: usuários
-
-  # Dropbox.
-  #----------------------------------------------------------------------------
   dropbox_notification_subject: dropbox - E-mail Added - %{subject}
-  dropbox_notification_intro: Adicionado com sucesso o e-mail que você enviou para dropbox
+  dropbox_notification_intro: Adicionado com sucesso o e-mail que você enviou para
+    dropbox
   dropbox_notification_to: Adicionado a
   subject: Assunto
   body: Corpo
-
-  # Pluralizations.
-  #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: '1 comment' # TODO
-      other: '%{count} comments' # TODO
-    contact: 
-      one: '1 contato'
-      other: '%{count} contatos'
+      one: 1 comment
+      other: ! '%{count} comments'
+    contact:
+      one: 1 contato
+      other: ! '%{count} contatos'
     opportunity:
-      one: '1 oportunidade'
-      other: '%{count} oportunidades'
+      one: 1 oportunidade
+      other: ! '%{count} oportunidades'
     lead:
-      one: '1 lead'
-      other: '%{count} leads'
+      one: 1 lead
+      other: ! '%{count} leads'
     day:
-      one: '1 dia'
-      other: '%{count} dias'
+      one: 1 dia
+      other: ! '%{count} dias'
     login:
-      one: '1 login'
-      other: '%{count} logins'
-
-  # Custom date/time formats.
-  #----------------------------------------------------------------------------
+      one: 1 login
+      other: ! '%{count} logins'
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
-      mmdd: "%b %e"
-      mmddyy: "%b %e, %Y"
-
+      mmddyyyy: ! '%m/%d/%Y'
+      mmdd: ! '%b %e'
+      mmddyy: ! '%b %e, %Y'
   time:
     formats:
-      mmddhhss: "%b %e at %l:%M%p"
+      mmddhhss: ! '%b %e at %l:%M%p'
