@@ -101,16 +101,10 @@ class Setting < ActiveRecord::Base
 
     # Loads settings from YAML files
     def load_settings_from_yaml(file)
-      begin
-        YAML::ENGINE.yamler = 'syck' # remove this when files are converted to Psych
-        settings = YAML.load_file(file)
-        # Merge settings into current settings hash (recursively)
-        @@yaml_settings.deep_merge!(settings)
-      rescue Exception => ex
-        puts "Settings couldn't be loaded from #{file}: #{ex.message}"
-      end
-      yaml_settings
+      settings = YAML.load_file(file)
+      @@yaml_settings.deep_merge!(settings)
     end
+
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_setting, self)
