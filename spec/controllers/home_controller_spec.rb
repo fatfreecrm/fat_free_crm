@@ -157,8 +157,8 @@ describe HomeController do
   describe "activity_user" do
   
     before(:each) do
-      @user = mock(User, :id => 1, :is_a? => true)
-      @cur_user = mock(User)
+      @user = double(User, :id => 1, :is_a? => true)
+      @cur_user = double(User)
     end
   
     it "should find a user by email" do

@@ -95,7 +95,7 @@ describe LeadsController do
 
     describe "with mime type of JSON" do
       it "should render all leads as JSON" do
-        @controller.should_receive(:get_leads).and_return(leads = mock("Array of Leads"))
+        @controller.should_receive(:get_leads).and_return(leads = double("Array of Leads"))
         leads.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -106,7 +106,7 @@ describe LeadsController do
 
     describe "with mime type of XML" do
       it "should render all leads as xml" do
-        @controller.should_receive(:get_leads).and_return(leads = mock("Array of Leads"))
+        @controller.should_receive(:get_leads).and_return(leads = double("Array of Leads"))
         leads.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"

@@ -35,7 +35,7 @@ describe UsersController do
       end
 
       it "should render the requested user as JSON" do
-        User.should_receive(:find).and_return(user = mock("User"))
+        User.should_receive(:find).and_return(user = double("User"))
         user.should_receive(:to_json).and_return("generated JSON")
 
         get :show, :id => 42
@@ -56,7 +56,7 @@ describe UsersController do
       end
 
       it "should render the requested user as XML" do
-        User.should_receive(:find).and_return(user = mock("User"))
+        User.should_receive(:find).and_return(user = double("User"))
         user.should_receive(:to_xml).and_return("generated XML")
 
         get :show, :id => 42

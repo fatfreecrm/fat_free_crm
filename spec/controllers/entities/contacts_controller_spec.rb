@@ -70,7 +70,7 @@ describe ContactsController do
 
     describe "with mime type of JSON" do
       it "should render all contacts as JSON" do
-        @controller.should_receive(:get_contacts).and_return(contacts = mock("Array of Contacts"))
+        @controller.should_receive(:get_contacts).and_return(contacts = double("Array of Contacts"))
         contacts.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -81,7 +81,7 @@ describe ContactsController do
 
     describe "with mime type of XML" do
       it "should render all contacts as xml" do
-        @controller.should_receive(:get_contacts).and_return(contacts = mock("Array of Contacts"))
+        @controller.should_receive(:get_contacts).and_return(contacts = double("Array of Contacts"))
         contacts.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"

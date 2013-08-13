@@ -67,7 +67,7 @@ describe FatFreeCRM::MailProcessor::Base do
   describe "Discarding a message" do
     before(:each) do
       mock_connect
-      @uid = mock
+      @uid = double
       @crawler.send(:connect!)
     end
 
@@ -90,7 +90,7 @@ describe FatFreeCRM::MailProcessor::Base do
   describe "Archiving a message" do
     before(:each) do
       mock_connect
-      @uid = mock
+      @uid = double
       @crawler.send(:connect!)
     end
 
@@ -112,7 +112,7 @@ describe FatFreeCRM::MailProcessor::Base do
   #------------------------------------------------------------------------------
   describe "Validating email" do
     before(:each) do
-      @email = mock
+      @email = double
     end
 
     it "should be valid email if its contents type is text/plain" do
@@ -130,7 +130,7 @@ describe FatFreeCRM::MailProcessor::Base do
   describe "Finding email sender among users" do
     before(:each) do
       @from = [ "Aaron@Example.Com", "Ben@Example.com" ]
-      @email = mock
+      @email = double
       @email.stub(:from).and_return(@from)
     end
 

@@ -99,7 +99,7 @@ describe OpportunitiesController do
 
     describe "with mime type of JSON" do
       it "should render all opportunities as JSON" do
-        @controller.should_receive(:get_opportunities).and_return(opportunities = mock("Array of Opportunities"))
+        @controller.should_receive(:get_opportunities).and_return(opportunities = double("Array of Opportunities"))
         opportunities.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -110,7 +110,7 @@ describe OpportunitiesController do
 
     describe "with mime type of JSON" do
       it "should render all opportunities as JSON" do
-        @controller.should_receive(:get_opportunities).and_return(opportunities = mock("Array of Opportunities"))
+        @controller.should_receive(:get_opportunities).and_return(opportunities = double("Array of Opportunities"))
         opportunities.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -121,7 +121,7 @@ describe OpportunitiesController do
 
     describe "with mime type of XML" do
       it "should render all opportunities as xml" do
-        @controller.should_receive(:get_opportunities).and_return(opportunities = mock("Array of Opportunities"))
+        @controller.should_receive(:get_opportunities).and_return(opportunities = double("Array of Opportunities"))
         opportunities.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"

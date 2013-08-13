@@ -37,7 +37,7 @@ describe Opportunity do
 
   it "should be possible to create opportunity with the same name" do
     first  = FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user)
-    lambda { FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user) }.should_not raise_error(ActiveRecord::RecordInvalid)
+    expect { FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user) }.to_not raise_error()
   end
 
   it "have a default stage" do

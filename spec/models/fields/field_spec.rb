@@ -52,7 +52,7 @@ describe Field do
       :label => "Availability",
       :name  => "availability"
     )
-    object = mock('Object')
+    object = double('Object')
 
     #  as  |  value  |  expected
     [["check_boxes", [1, 2, 3],               "1, 2<br />3"],

@@ -1,5 +1,5 @@
 {
-  "command": "ruby -rubygems -rzeus/rails -eZeus.go",
+  "command": "ruby -rubygems -r./custom_plan -eZeus.go",
 
   "plan": {
     "boot": {
@@ -10,6 +10,7 @@
           "console": ["c"],
           "server": ["s"],
           "generate": ["g"],
+          "destroy": ["d"],
           "dbconsole": []
         },
         "test_environment": {

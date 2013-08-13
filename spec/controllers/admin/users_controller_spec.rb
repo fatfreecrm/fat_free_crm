@@ -241,7 +241,7 @@ describe Admin::UsersController do
 
       xhr :delete, :destroy, :id => @user.id
       flash[:warning].should_not == nil
-      lambda { User.find(@user) }.should_not raise_error(ActiveRecord::RecordNotFound)
+      expect { User.find(@user) }.not_to raise_error()
       response.should render_template("admin/users/destroy")
     end
   end

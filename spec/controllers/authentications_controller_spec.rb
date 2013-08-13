@@ -63,7 +63,7 @@ describe AuthenticationsController do
   describe "POST authentications" do
     before(:each) do
       @login = { :username => "user", :password => "pass", :remember_me => "0" }
-      @authentication = mock(Authentication, @login)
+      @authentication = double(Authentication, @login)
     end
 
     describe "successful authentication " do

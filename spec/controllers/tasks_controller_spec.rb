@@ -120,7 +120,7 @@ describe TasksController do
     TASK_STATUSES.each do |view|
 
       it "should render the requested task as JSON for #{view} view" do
-        Task.stub_chain(:tracked_by, :find).and_return(task = mock("Task"))
+        Task.stub_chain(:tracked_by, :find).and_return(task = double("Task"))
         task.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -129,7 +129,7 @@ describe TasksController do
       end
 
       it "should render the requested task as xml for #{view} view" do
-        Task.stub_chain(:tracked_by, :find).and_return(task = mock("Task"))
+        Task.stub_chain(:tracked_by, :find).and_return(task = double("Task"))
         task.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"

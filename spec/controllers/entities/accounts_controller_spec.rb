@@ -96,7 +96,7 @@ describe AccountsController do
 
     describe "with mime type of JSON" do
       it "should render all accounts as json" do
-        @controller.should_receive(:get_accounts).and_return(accounts = mock("Array of Accounts"))
+        @controller.should_receive(:get_accounts).and_return(accounts = double("Array of Accounts"))
         accounts.should_receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -107,7 +107,7 @@ describe AccountsController do
 
     describe "with mime type of XML" do
       it "should render all accounts as xml" do
-        @controller.should_receive(:get_accounts).and_return(accounts = mock("Array of Accounts"))
+        @controller.should_receive(:get_accounts).and_return(accounts = double("Array of Accounts"))
         accounts.should_receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"

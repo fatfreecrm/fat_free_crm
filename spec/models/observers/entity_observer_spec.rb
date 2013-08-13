@@ -11,7 +11,7 @@ describe EntityObserver do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
       let!(:entity)  { FactoryGirl.build(entity_type, :user => assigner, :assignee => assignee) }
-      let(:mail) { mock('mail', :deliver => true) }
+      let(:mail) { double('mail', :deliver => true) }
 
       before :each do
         PaperTrail.stub(:whodunnit).and_return(assigner)
@@ -40,7 +40,7 @@ describe EntityObserver do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
       let!(:entity)  { FactoryGirl.create(entity_type, :user => FactoryGirl.create(:user)) }
-      let(:mail) { mock('mail', :deliver => true) }
+      let(:mail) { double('mail', :deliver => true) }
 
       before :each do
         PaperTrail.stub(:whodunnit).and_return(assigner)

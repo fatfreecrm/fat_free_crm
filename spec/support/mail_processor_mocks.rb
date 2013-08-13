@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 module MockIMAP
   def mock_imap
-    @imap = mock
+    @imap = double
     @settings = @crawler.instance_variable_get("@settings")
     @settings[:address] = @mock_address
     Net::IMAP.stub(:new).with(@settings[:server], @settings[:port], @settings[:ssl]).and_return(@imap)
@@ -24,7 +24,7 @@ module MockIMAP
   end
 
   def mock_message(body)
-    @fetch_data = mock
+    @fetch_data = double
     @fetch_data.stub(:attr).and_return("RFC822" => body)
     @imap.stub(:uid_search).and_return([ :uid ])
     @imap.stub(:uid_fetch).and_return([ @fetch_data ])
