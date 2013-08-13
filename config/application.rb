@@ -6,9 +6,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rubygems'
-require 'yaml'
-YAML::ENGINE.yamler = 'syck'
-
 require 'rails/all'
 
 if defined?(Bundler)

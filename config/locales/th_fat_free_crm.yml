@@ -1,20 +1,15 @@
+---
 th:
   language: Thai (ไทย)
-
-  # Generic terms.
-  #----------------------------------------------------------------------------
   all: ทั้งหมด
   at: ที่
   here: ที่นี่
-  no_button: 'ไม่ใช่'
+  no_button: ไม่ใช่
   not_implemented: อยู่ระหว่างการพัฒนา.
   or: หรือ
-  select_blank: '-- เลือก --'
-  select_none: '-- ว่าง --'
-  yes_button: 'ใช่'
-
-  # Settings.
-  #----------------------------------------------------------------------------
+  select_blank: -- เลือก --
+  select_none: -- ว่าง --
+  yes_button: ใช่
   tab_dashboard: สรุปงาน
   tab_tasks: ภารกิจ
   tab_campaigns: แคมเปญ
@@ -22,22 +17,18 @@ th:
   tab_accounts: ลูกค้า
   tab_contacts: รายชื่อติดต่อ
   tab_opportunities: โอกาสปิดการขาย
-
   admin_tab_users: รายชื่อผู้ใช้
   admin_tab_settings: ตั้งค่า
   admin_tab_plugins: ส่วนเสริม
-
   planned: วางแผน
   started: เริ่มต้น
   on_hold: ระงับ
   completed: เสร็จสมบูรณ์
   called_off: เรียกว่าปิด
-
   new: สร้าง
   contacted: เป็นผู้ติดต่อ
   converted: แปลงแล้ว
   rejected: ปฏิเสธ
-
   cold_call: สุ่มโทร
   conference: สัมนา
   online: การตลาดออนไลท์
@@ -46,7 +37,6 @@ th:
   web: เว๊บไซต์
   word_of_mouth: บอกต่อ
   other: อื่นๆ
-
   prospecting: หวังจะได้เป็นลูกค้า
   analysis: วิเคระห์
   presentation: นำเสนอ
@@ -55,42 +45,32 @@ th:
   final_review: ตรวจรอบสุดท้าย
   won: ปิดมีกำไร
   lost: ปิดขาดทุน
-
   call: โทร
   email: อีเมล์
   follow_up: ติดตามงาน
   lunch: ทานข้าว
   meeting: ประชุม
   money: เก็บเงิน
-  presentation: นำเสนอ
   trip: เดินทาง
-
-  overdue: "เกินกำหนด"
-  due_asap: "เร็วที่สุดเท่าที่เป็นไปได้"
-  due_today: "วันนี้"
-  due_tomorrow: "พรุ่งนี้"
-  due_this_week: "อาทิตย์นี้"
-  due_next_week: "อาทิตย์หน้า"
-  due_later: "วันหลัง"
-  due_specific_date: On Specific Date... # TODO
-
-  completed_today: "วันนี้"
-  completed_yesterday: "เมื่อวานนี้"
-  completed_last_week: "อาทิตย์ก่อน"
-  completed_this_month: "เดือนนี้"
-  completed_last_month: "เดือนก่อน"
-
-  # Models/Activity.
-  #----------------------------------------------------------------------------
+  overdue: เกินกำหนด
+  due_asap: เร็วที่สุดเท่าที่เป็นไปได้
+  due_today: วันนี้
+  due_tomorrow: พรุ่งนี้
+  due_this_week: อาทิตย์นี้
+  due_next_week: อาทิตย์หน้า
+  due_later: วันหลัง
+  due_specific_date: On Specific Date...
+  completed_today: วันนี้
+  completed_yesterday: เมื่อวานนี้
+  completed_last_week: อาทิตย์ก่อน
+  completed_this_month: เดือนนี้
+  completed_last_month: เดือนก่อน
   one_hour: หนึ่งชั่วโมง
   one_day: หนึ่งวัน
   two_days: สองวัน
   one_week: หนึ่งสัปดาห์
   two_weeks: สองสัปดาห์
   one_month: หนึ่งเดือน
-
-  # Model Validations.
-  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -103,83 +83,76 @@ th:
         account:
           attributes:
             name:
-              missing_account_name: "^โปรดระบุบัญชีผู้ใช้."
+              missing_account_name: ^โปรดระบุบัญชีผู้ใช้.
             access:
-              share_account: "^โปรดระบุผู้ใช้ที่ต้องการใช้บัญชีร่วมกัน"
+              share_account: ^โปรดระบุผู้ใช้ที่ต้องการใช้บัญชีร่วมกัน
         campaign:
           attributes:
             name:
-              missing_campaign_name: "^โปรดระบุชื่อแคมเปญ"
+              missing_campaign_name: ^โปรดระบุชื่อแคมเปญ
             ends_on:
-              dates_not_in_sequence: "^โปรดตรวจสอบอีกครั้งว่าวันสิ้นสุดแคมเปญอยู่หลังจากวันเริ่มต้น."
+              dates_not_in_sequence: ^โปรดตรวจสอบอีกครั้งว่าวันสิ้นสุดแคมเปญอยู่หลังจากวันเริ่มต้น.
             access:
-              share_campaign: "^โปรดระบุผู้ใช้ที่ต้องการใช้แคมเปญร่วมกัน"
+              share_campaign: ^โปรดระบุผู้ใช้ที่ต้องการใช้แคมเปญร่วมกัน
         contact:
           attributes:
             first_name:
-              missing_first_name: "^โปรดระบุชื่อจริง"
+              missing_first_name: ^โปรดระบุชื่อจริง
             last_name:
-              missing_last_name: "^โปรดระบุนามสกุล"
+              missing_last_name: ^โปรดระบุนามสกุล
             access:
-              share_contact: "^โปรดระบุผู้ใช้ที่ต้องการใช้ที่อยู่ติดต่อร่วมกัน"
+              share_contact: ^โปรดระบุผู้ใช้ที่ต้องการใช้ที่อยู่ติดต่อร่วมกัน
         lead:
           attributes:
             first_name:
-              missing_first_name: "^โปรดระบุชื่อจริง"
+              missing_first_name: ^โปรดระบุชื่อจริง
             last_name:
-              missing_last_name: "^โปรดระบุนามสกุล"
+              missing_last_name: ^โปรดระบุนามสกุล
             access:
-              share_lead: "^โปรดระบุผู้ใช้ที่ต้องการใช้รายการผู้สนใจร่วมกัน"
+              share_lead: ^โปรดระบุผู้ใช้ที่ต้องการใช้รายการผู้สนใจร่วมกัน
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: "^โปรดระบุชื่อของโอกาสปิดการขาย"
+              missing_opportunity_name: ^โปรดระบุชื่อของโอกาสปิดการขาย
             access:
-              share_opportunity: "^โปรดระบุผู้ใช้ที่ต้องการใช้โอกาสปิดการขายร่วมกัน"
+              share_opportunity: ^โปรดระบุผู้ใช้ที่ต้องการใช้โอกาสปิดการขายร่วมกัน
         task:
           attributes:
             name:
-              missing_task_name: "^โปรดระบุชื่อภาระกิจ"
+              missing_task_name: ^โปรดระบุชื่อภาระกิจ
             calendar:
-              invalid_date: "^โปรดระบุวันที่ให้ถูกต้อง"
+              invalid_date: ^โปรดระบุวันที่ให้ถูกต้อง
         user:
           attributes:
             username:
-              missing_username: "^โปรดระบุชื่อผู้ใช้"
-              username_taken: "^ชื่อนี้ได้ถูกใช้แล้ว"
+              missing_username: ^โปรดระบุชื่อผู้ใช้
+              username_taken: ^ชื่อนี้ได้ถูกใช้แล้ว
             email:
-              missing_email: "^โปรดระบุอีเมล์ที่ใช้"
-              email_in_use: "^มีผู้ใช้อื่นที่ใช้อีเมล์นี้แล้ว"
-
-  # dynamic_form plugin translations.
-  #----------------------------------------------------------------------------
+              missing_email: ^โปรดระบุอีเมล์ที่ใช้
+              email_in_use: ^มีผู้ใช้อื่นที่ใช้อีเมล์นี้แล้ว
   errors:
     template:
       header:
-        one:   "พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้"
-        other: "พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้"
-      body: "โปรดตรวจสอบข้อมูลในช่องต่อไปนี้:"
-
+        one: พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้
+        other: พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้
+      body: ! 'โปรดตรวจสอบข้อมูลในช่องต่อไปนี้:'
   msg_account_suspended: บัญชีผู้ใช้ถูกระงับแล้ว.
   password_reset_instruction: ขั้นตอนการตั้งค่ารหัสผ่าน
-
-  # Controllers.
-  #----------------------------------------------------------------------------
   msg_account_created: บัญชีของคุณได้ถูกสร้างแล้ว และรอการอนุมัติโดยผู้ดูแลระบบ
   msg_account_not_approved: บัญชีของคุณยังไม่ได้รับการอนุมัติ
-  msg_asset_deleted: "%{value} ได้ถูกลบไปแล้ว"
+  msg_asset_deleted: ! '%{value} ได้ถูกลบไปแล้ว'
   msg_asset_not_available: เอกสาร %{value} ไม่มีในระบบ
-  msg_asset_not_authorized: You are not authorized to view this %{value}. # TODO
+  msg_asset_not_authorized: You are not authorized to view this %{value}.
   msg_assets_not_available: เอกสาร %{value} ไม่มีในระบบ.
-  msg_asset_rejected: "%{value} ได้ถูกปฏิเสธแล้ว"
-  msg_bad_image_file: "^ไม่สามารถอัปโหลดหรือเปลี่ยนขนาดของรูปภาพที่คุณระบุได้"
-  msg_cant_create_related: "ไม่สามารถสร้าง%{asset}ได้ เพราะ%{related}ไม่มีในระบบ"
-  msg_cant_delete_user: "^ไม่สามารถลบผู้ใช้ตั้งแต่ %{value} มีเอกสารที่อ้างอิงถึง"
-  msg_cant_do: "ไม่สามารถ%{action}ของ%{asset} เพราะไม่มีเอกสารแล้ว"
+  msg_asset_rejected: ! '%{value} ได้ถูกปฏิเสธแล้ว'
+  msg_bad_image_file: ^ไม่สามารถอัปโหลดหรือเปลี่ยนขนาดของรูปภาพที่คุณระบุได้
+  msg_cant_create_related: ไม่สามารถสร้าง%{asset}ได้ เพราะ%{related}ไม่มีในระบบ
+  msg_cant_delete_user: ^ไม่สามารถลบผู้ใช้ตั้งแต่ %{value} มีเอกสารที่อ้างอิงถึง
+  msg_cant_do: ไม่สามารถ%{action}ของ%{asset} เพราะไม่มีเอกสารแล้ว
   msg_email_not_found: ไม่มีผู้ใช้ที่ใช้อีเมล์นี้
   msg_enter_new_password: โปรดใส่ระหัสผ่านตัวใหม่
   msg_goodbye: คุณได้ออกจากระบบแล้ว ขอบคุณที่ใช้งานโปรแกรม Fat Free CRM
-  msg_invalid_password: "^โปรดระบุรหัสผ่านตัวปัจจุบันให้ถูกต้อง"
+  msg_invalid_password: ^โปรดระบุรหัสผ่านตัวปัจจุบันให้ถูกต้อง
   msg_invalig_login: ชื่อผู้ใช้ หรือ รหัสผ่าน ไม่ถูกต้อง
   msg_last_login: ครั้งสุดท้านที่คุณเข้าสู่ระบบคือ %{value}.
   msg_login_needed: คุณต้องเข้าสู่ระบบเพื่อเข้าหน้านี้
@@ -191,10 +164,7 @@ th:
   msg_require_admin: คุณต้องเป็นผู้ดูแลระบบเพื่อเข้าหน้านี้
   msg_successful_signup: สมัครสมาชิกเรียบร้อยแล้ว ยินดีต้อนรับสู่ Fat Free CRM
   msg_welcome: ยินดีต้อนรับสู่ Fat Free CRM
-
-  # Options.
-  #----------------------------------------------------------------------------
-  "option_amount*probability": จำนวนถ่วงน้ำหนัก
+  option_amount*probability: จำนวนถ่วงน้ำหนัก
   activity_options: แสดง%{models}ที่เกิดขึ้น โดย%{user} ในช่วง%{period}ที่ผ่านมา.
   all_users: ผู้ใช้ทุกคน
   option_after: หลัง
@@ -222,9 +192,6 @@ th:
   show_per_page: แสดง %{number} %{models} ต่อหนึ่งหน้า ในแบบ %{fmt}
   sort_by: เรียงลำดับ%{models} โดย %{field}.
   sort_by_displaying: เรียงลำดับ%{models} โดย %{field} แสดงชื่อจริง %{position} นามสกุล.
-
-  # Views -> Profile.
-  #----------------------------------------------------------------------------
   aim: AOL IM
   already_signed_up: เป็นสมาชิกอยู่แล้ว
   alt_email: อีเมล์ ทางเลือก
@@ -234,12 +201,12 @@ th:
   contact_info: ข้อมูลใช้ในการติดต่อ
   current_password: รหัสผ่านปัจจุบัน
   edit_profile: แก้ไขโพรไฟล์
-  # email: อีเมล์ # <-- Already defined as the task type if Settings.
   first_name: ชื่อจริง
   google: Google IM
   gravatar_help: หากไม่เข้าใจ Gravatars ลองเรียนรูป Gravatars ได้
   image_file: ไฟล์รูปภาพ
-  image_help: หลังจากอัปโหลดจะถูกเปลี่ยนขนาดเป็น 75x75 pixels และ รูปภาพที่ใช้จะต้องเป็น GIF, JPG หรือ PNG เท่านั้น
+  image_help: หลังจากอัปโหลดจะถูกเปลี่ยนขนาดเป็น 75x75 pixels และ รูปภาพที่ใช้จะต้องเป็น
+    GIF, JPG หรือ PNG เท่านั้น
   job_title: ตำแหน่ง
   last_name: นามสกุล
   login_now_link: เข้าสู่ระบบทันที !
@@ -260,19 +227,13 @@ th:
   user: ผู้ใช้
   username: ชื่อผู้ใช้
   yahoo: Yahoo IM
-
-  # Views -> Authenticate.
-  #----------------------------------------------------------------------------
   forgot_password: ลืมรหัสผ่าน
   login: เข้าระบบ
   no_account: ไม่มีชื่อในรายการสมาชิก
   remember_me: จำฉันไว้
   sign_up_now: สมัครสามาชิกได้เลย
-
-  # Views -> Accounts.
-  #----------------------------------------------------------------------------
   accounts: รายการลูกค้า
-  account_permissions_intro: "ในเบื่องต้น จะมีเฉพาะคุณที่สามารถเข้าถึงรายการได้ แต่คุณสามารถแก้เงื่อนไขได้ในภายหลัง"
+  account_permissions_intro: ในเบื่องต้น จะมีเฉพาะคุณที่สามารถเข้าถึงรายการได้ แต่คุณสามารถแก้เงื่อนไขได้ในภายหลัง
   accounts_small: รายการลูกค้า
   account: ลูกค้า
   accounts_options: ตัวเลือกสำหรับลูกค้า
@@ -295,9 +256,6 @@ th:
   share_with: กำหนดผู้ที่เห็นได้ดังต่อไปนี้
   shipping_address: ที่อยู่สำหรับส่งของ
   website: เว็บไซต์
-
-  # Views -> Campaigns.
-  #----------------------------------------------------------------------------
   actual: เกิดขึ้นจริง
   actual_performance: ประสิทธิที่เกิดขึ้นจริง
   budget: งบประมาณ
@@ -312,7 +270,7 @@ th:
   campaigns_small: รายการแคมเปญ
   conversion: การแปลง
   conversion_label: แปลง (%)
-  conversion_number: "แปลง %{value} ราย"
+  conversion_number: แปลง %{value} ราย
   create_campaign: เพิ่มแคมเปญ
   end_date: วันสิ้นสุด
   finished_on: เสร็จสมบูรณ์ %{value}
@@ -320,11 +278,13 @@ th:
   no_start_date: ไม่ระบุวันเริ่มต้น
   number_of_leads: จำนวนผู้สนใจ
   objectives: เป้าหมาย
-  objectives_help: โปรดระบุจำนวนผู้สนใจ ค่าความคาดหวังที่จะแปลงจากผู้สนใจไปเป็นผู้มีโอกาสปิดการขาย รายได้ที่จะได้รับ และ งบประมาณที่ต้องใช้ ตัวเลขเหล่านี้จะช่วยให้คุณติดตามประสิทธิภาพจริงๆ ของโครงการ
+  objectives_help: โปรดระบุจำนวนผู้สนใจ ค่าความคาดหวังที่จะแปลงจากผู้สนใจไปเป็นผู้มีโอกาสปิดการขาย
+    รายได้ที่จะได้รับ และ งบประมาณที่ต้องใช้ ตัวเลขเหล่านี้จะช่วยให้คุณติดตามประสิทธิภาพจริงๆ
+    ของโครงการ
   objectives_small: เป้าหมายของแคมเปญ
   revenue: รายได้
   revenue_label: รายได้ (฿)
-  revenue_number: "รายได้ %{value}"
+  revenue_number: รายได้ %{value}
   save_campaign: บันทึกแคมเปญ
   start_date: วันเริ่มต้น
   started_ago: เริ่มต้น%{value}ที่ผ่านมา
@@ -334,9 +294,6 @@ th:
   total_campaigns: จำนวนแคมเปณ
   was_supposed_to_finish: ควรจะเสร็จตั้งแต่ %{value}
   was_supposed_to_start: ควรจะเสร็จตั้งแต่ %{time_ago} ที่ผ่านมา คือ %{start_date}
-
-  # Views -> Contacts.
-  #----------------------------------------------------------------------------
   alt_email_small: อื่นๆ
   blog: website/blog
   contact: ที่อยู่ติดต่อ
@@ -346,19 +303,19 @@ th:
   contacts_small: ที่อยู่ติดต่อ
   create_contact: เพิ่มผู้ติดต่อ
   department: แผนก
-  department_small: 'แผนก %{value}'
+  department_small: แผนก %{value}
   do_not_call: ห้ามโทร
   extra_info: ข้อมูลเพิ่มเติม
   extra_info_small: ที่อยู่ติดต่อเพิ่มเติม
   facebook: Facebook
   linked_in: LinkedIn
   myself: ตัวฉัน
-
-  # TODO
-  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.  
-  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
-
+  permissions_intro_private: By default only you will have access to the %{value}.
+    You can change permissions later.
+  permissions_intro_public: By default all users will have access to the %{value}.
+    You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to
+    the %{value}. You can change permissions later.
   permissions_intro: เบื้องต้นจะมีเฉพาะคุณเท่านั้นที่เห็น %{value} แต่สามารถเปลี่ยนได้ในภายหลัง
   referred_by: แนะนำโดย
   referred_by_small: แนะนำโดย
@@ -366,24 +323,23 @@ th:
   twitter: Twitter
   web_presence: ผ่านเว็บ
   web_presence_small: ผ่านเว็บ
-  contacts_options: กรองที่อยู่ติดต่อ
-
-  # Views -> Leads.
-  #----------------------------------------------------------------------------
   convert: แปลง
   convert_lead: แปลงผู้สนใจ
-  convert_lead_permissions_intro: สิทธิ์ของที่อยู่ติดต่อจะคัดลอกมาจากผู้สนใจเมื่อมีการแปลงเกิดขึ้น แต่สามารถเปลี่ยนได้ในภายหลัง
-  convert_lead_text: การแปลงผู้สนใจ %{value} จะกลายที่อยู่ติดต่อใหม่ หรือใช้ที่อยู่ที่มีแล้ว หรือสร้างเพิ่มได้ อย่างไรก็ตามผู้สนใจจะถูกกำหนดสถานะเป็น แปลงแล้ว
+  convert_lead_permissions_intro: สิทธิ์ของที่อยู่ติดต่อจะคัดลอกมาจากผู้สนใจเมื่อมีการแปลงเกิดขึ้น
+    แต่สามารถเปลี่ยนได้ในภายหลัง
+  convert_lead_text: การแปลงผู้สนใจ %{value} จะกลายที่อยู่ติดต่อใหม่ หรือใช้ที่อยู่ที่มีแล้ว
+    หรือสร้างเพิ่มได้ อย่างไรก็ตามผู้สนใจจะถูกกำหนดสถานะเป็น แปลงแล้ว
   create_lead: เพิ่มผู้สนใจ
-  create_opp_for_contact: คุณสามารถสร้าง โอกาศปิดการขาย สำหรับ %{value} ผู้ติดต่อ โดยกำหนดชื่อ สถานะปัจจุบัน คาดการวันปิด โอกาสปิดการขาย มูลค่า และส่วนลด
+  create_opp_for_contact: คุณสามารถสร้าง โอกาศปิดการขาย สำหรับ %{value} ผู้ติดต่อ
+    โดยกำหนดชื่อ สถานะปัจจุบัน คาดการวันปิด โอกาสปิดการขาย มูลค่า และส่วนลด
   lead: ผู้สนใจ
   lead_info_small: ที่อยู่ผู้สนใจ
-
-  # TODO
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.  
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.  
-
+  lead_permissions_intro_private: By default permissions will be copied from the campaign
+    or set to private. You can change lead permissions later.
+  lead_permissions_intro_public: By default permissions will be copied from the campaign
+    or set to public. You can change lead permissions later.
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign
+    or shared with the specified users. You can change lead permissions later.
   lead_small: ผู้สนใจ
   lead_status_small: สถานะของผู้สนใจ
   lead_summary: สรุปผู้สนใจ
@@ -398,9 +354,6 @@ th:
   source: แหล่ง
   status: สถานะ
   total_leads: ผู้สนใจทั้งหมด
-
-  # Views -> Opportunities.
-  #----------------------------------------------------------------------------
   amount: รวม
   close_date: วันที่ปิด
   closed_ago_on: ปิด %{time_ago} ที่ผ่านมา ตั้งแต่ %{date}
@@ -422,7 +375,8 @@ th:
   opportunity: โอกาสปิดการขาย
   opportunity_small: โอกาสปิดการขาย
   opportunity_summary: สรุปโอกาสที่ได้อย่างรวดเร็ว
-  opportunity_summary_text: "%{amount} โดยมีส่วนลด %{discount} และความน่าจะเป็น %{probability}"
+  opportunity_summary_text: ! '%{amount} โดยมีส่วนลด %{discount} และความน่าจะเป็น
+    %{probability}'
   past_due: เลยกำหนด, คาดว่าจะปิดได้ %{value} ที่แล้ว
   probability: ความน่าจะเป็น
   probability_number: และมีความน่าจะเป็น %{value}
@@ -430,9 +384,6 @@ th:
   stage: ระดับสถานะ
   total_opportunities: โอกาสปิดการขายทั้งหมด
   weighted_amount: จำนวนถ่วงน้ำหนัก
-
-  # Views -> Tasks.
-  #----------------------------------------------------------------------------
   assign_to: มอบหมายให้
   assigned_tab: มอบหมาย
   assigned_tasks: มอบหมายภารกิจแล้ว
@@ -444,13 +395,13 @@ th:
   due: ครบกำหนด
   feel_free: กรอกข้อมูลได้เลย
   move_to: ย้ายไป
-  no_tasks: "คุณไม่มีภารกิจ%{value}"
-  no_tasks_pending: pending # TODO
-  no_tasks_assigned: assigned # TODO
-  no_tasks_completed: completed # TODO
+  no_tasks: คุณไม่มีภารกิจ%{value}
+  no_tasks_pending: pending
+  no_tasks_assigned: assigned
+  no_tasks_completed: completed
   pending_tab: งานค้าง
   pending_tasks: งานคงค้าง
-  related: 're:'
+  related: ! 're:'
   save_task: บันทึกภารกิจ
   task_assigned: ภารกิจได้ถูกมอบหมายให้ %{value}
   task_assigned_to: และได้มอบหมายให้ %{value}
@@ -470,20 +421,17 @@ th:
   total_tasks: ทั้งหมด %{value}
   view_assigned_tasks: ดูงานที่มอบหมายแล้ว
   view_pending_tasks: ดูงานคงค้าง
-
-  # Views -> Home.
-  #----------------------------------------------------------------------------
   action_commented: ใส่คำแนะนำ
   action_completed: เสร็จสมบูรณ์
   action_created: สร้าง
   action_deleted: ลบ
-  action_email: exchanged emails with # TODO
+  action_email: exchanged emails with
   action_reassigned: มอบหมายให้คนอื่น
   action_rejected: ยกเลิกแล้ว
   action_rescheduled: ใส่กำหนดการ
   action_updated: แก้ไข
   action_viewed: แสดง
-  action_won: won # TODO
+  action_won: won
   no_activity_records: ไม่พบบันทึกกิจกรรม
   recent_activity: กิจกรรมล่าสุด
   recent_activity_options: กิจกรรมล่าสุดเพิ่มเติม
@@ -493,11 +441,8 @@ th:
   subject_lead: ผู้สนใจ
   subject_opportunity: โอกาสปิดการขาย
   subject_task: ภารกิจ
-
-  # Views -> Common.
-  #----------------------------------------------------------------------------
   add_note: เพิ่มบันทึก
-  save_note: Save Note # TODO
+  save_note: Save Note
   add_note_help: Add a new note...
   added_ago: สร้าง %{value} ที่ผ่านมา
   added_by: สร้าง %{time_ago} ที่ผ่านมา โดย %{user}
@@ -506,17 +451,17 @@ th:
   close_form: ปิดฟอร์ม
   confirm_delete: คุณแน่ใจที่จะลบ%{value}หรือไม่
   copy_permissions: คัดลอก%{value}สิทธิ์
-  could_not_find: "ไม่พบ%{value} สามารถทดลอง"
-  could_not_find_matching: "ไม่พบ%{value}ที่ตรงกับคำค้นหา"
+  could_not_find: ไม่พบ%{value} สามารถทดลอง
+  could_not_find_matching: ไม่พบ%{value}ที่ตรงกับคำค้นหา
   create_new: สร้าง
-  select_existing: select existing # TODO
+  select_existing: select existing
   delete: ลบ
-  discard: Discard # TODO
+  discard: Discard
   edit: แก้ไข
-  items_total: '%{count} ทั้งหมด'
-  less: Less... # TODO
+  items_total: ! '%{count} ทั้งหมด'
+  less: Less...
   me: ฉัน
-  more: More... # TODO
+  more: More...
   n_a: N/A
   name: ชื่อ
   no_match: ไม่มี%{value}ที่ตรงกับ
@@ -526,16 +471,13 @@ th:
   please_retry: โปรดทดลองคำค้นหาอื่น
   recent_items: เอกสารล่าสุด
   search_assets: ค้นหา%{value}
-  ago: "%{value}ที่ผ่านมา"
+  ago: ! '%{value}ที่ผ่านมา'
   background_info: หลัง ข้อมูล
   address: ที่อยู่
   city: แถบค้าขายของลอนกดอน
   zipcode: รหัส ไปรษณีย์
   state: สภาพ
   country: ประเทศ
-    
-  # Views -> Layout.
-  #----------------------------------------------------------------------------
   about: เกี่ยวกับ
   about_dev_group: แหล่งสนทนาของนักพัฒนา
   about_features: คุณลักษณะ และข้อผิดพลาด
@@ -544,35 +486,23 @@ th:
   about_ffc_version: Fat Free CRM เวอร์ชัน
   about_home_page: หน้าแรก
   about_project_page: หน้าโครงการ
-  about_thank_you: ขอบคุณที่ใช้งาน Fat Free CRM! เรายินดีเป็นอย่างยิ่งกับธุรกิจของคุณ และหวังว่าคุณจะสนุกกับการใช้โปรแกรม
+  about_thank_you: ขอบคุณที่ใช้งาน Fat Free CRM! เรายินดีเป็นอย่างยิ่งกับธุรกิจของคุณ
+    และหวังว่าคุณจะสนุกกับการใช้โปรแกรม
   about_twitter: ติดตามบน Twitter
   about_user_group: แหล่งสนทนาของผู้ใช้
   admin: ผู้ดูแลระบบ
   logout: ออกจากระบบ
   quick_find: หาด่วน
   welcome: ยินดีต้อนรับ
-
-  # Views -> Comments.
-  #----------------------------------------------------------------------------
   edit_comment: แก้ไขข้อเสนอ
   show: แสดง
   update: ปรับปรุง
-
-  # Views -> Passwords.
-  #----------------------------------------------------------------------------
   confirm_password_intro: โปรดใส่รหัสผ่านใหม่ และกรอกรหัสอีกครั้งเพื่อความถูกต้อง
   password_intro: โปรดระบุอีเมล์ของท่าน จากนั้นขั้นตอนการเปลี่ยนรหัสผ่านจะส่งถึงท่านผ่านทางอีเมล์
   reset_password: เปลี่ยนรหัสผ่าน
   update_password_and_login: ปรับปรุงรหัสผ่านและเข้าสู่ระบบ
-
-  # Views -> Admin
-  #----------------------------------------------------------------------------
-  # TODO
   back_to_crm: Back to Fat Free CRM
   crm_admin_page: Fat Free CRM Administration
-
-  # Views -> Admin -> Users.
-  #----------------------------------------------------------------------------
   approve: อนุมัติ
   create_user: เพิ่มผู้ใช้
   last_seen: ดูล่าสุด%{value}ที่ผ่านมา
@@ -585,53 +515,43 @@ th:
   user_awaits_approval: รอการอนุมัติ
   user_confirm_delete: จะลบผู้ใช้ได้ก็ต่อเมื่อไม่มีเอกสารใดเกี่ยวข้องกับผู้ใช้คนนั้นๆ
   user_is_admin: ผู้ใช้คนนี้เป็นผู้ดูแลระบบ
-  user_never_logged_in: "ไม่เคยเข้ามาในระบบ"
+  user_never_logged_in: ไม่เคยเข้ามาในระบบ
   user_signed_up: สมัครสมาชิก
   user_signed_up_on: สมัครสมาชิกตั้งแต่ %{value}
   user_since: user since %{value}
   user_suspended: ระงับผู้ใช้
   user_suspended_on: ระงับตั้งแต่ %{value}
   users: ผู้ใช้
-  users_small: ผู้ใช้ # TODO
-
-  # Dropbox.
-  #----------------------------------------------------------------------------
+  users_small: ผู้ใช้
   dropbox_notification_subject: dropbox - อีเมล์ เพิ่ม - %{subject}
   dropbox_notification_intro: สำเร็จ เพิ่ม อีเมล ที่ คุณ ส่ง ไป dropbox
   dropbox_notification_to: เพิ่ม ลง ใน
   subject: สาขา วิชา
   body: ร่างกาย
-
-  # Pluralizations.
-  #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: '1 comment' # TODO
-      other: '%{count} comments' # TODO
+      one: 1 comment
+      other: ! '%{count} comments'
     contact:
-      one: 'ผู้ติดต่อหนึ่งคน'
-      other: '%{count} ผู้ติดต่อ'
+      one: ผู้ติดต่อหนึ่งคน
+      other: ! '%{count} ผู้ติดต่อ'
     opportunity:
-      one: 'โอกาศปิดการขายหนึ่งรายการ'
-      other: '%{count} โอกาศปิดการขาย'
+      one: โอกาศปิดการขายหนึ่งรายการ
+      other: ! '%{count} โอกาศปิดการขาย'
     lead:
-      one: 'ผู้สนใจหนึ่งคน'
-      other: '%{count} ผู้สนใจ'
+      one: ผู้สนใจหนึ่งคน
+      other: ! '%{count} ผู้สนใจ'
     day:
-      one: 'หนึ่งวัน'
-      other: '%{count} วัน'
+      one: หนึ่งวัน
+      other: ! '%{count} วัน'
     login:
-      one: 'เข้าสู่ระบบหนึ่งครั้ง'
-      other: 'เข้าสู่ระบบ %{count} ครั้ง'
-
-  # Custom date/time formats.
-  #----------------------------------------------------------------------------
+      one: เข้าสู่ระบบหนึ่งครั้ง
+      other: เข้าสู่ระบบ %{count} ครั้ง
   date:
     formats:
-      mmddyyyy: "%m/%d/%Y"
-      mmdd: "%b %e"
-      mmddyy: "%b %e, %Y"
-
+      mmddyyyy: ! '%m/%d/%Y'
+      mmdd: ! '%b %e'
+      mmddyy: ! '%b %e, %Y'
   time:
     formats:
-      mmddhhss: "%b %e at %l:%M%p"
+      mmddhhss: ! '%b %e at %l:%M%p'

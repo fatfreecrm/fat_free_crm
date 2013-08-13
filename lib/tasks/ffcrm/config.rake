@@ -25,20 +25,17 @@ namespace :ffcrm do
     #
     desc "Ensures all yaml files in the config folder are readable by Psych. If not, assumes file is in the Syck format and converts it for you [creates a new file]."
     task :syck_to_psych do
-      error_count = 0
-      total_files = 0
+      require 'fileutils'
+      require 'syck'
+      require 'psych'
       Dir[File.join(Rails.root, 'config', '**', '*.yml')].each do |file|
-        begin
-          Psych.load_file(file)
-        rescue Psych::SyntaxError => e
-          puts e # prints error message with line number
-          File.open("#{file}.new", 'w') {|f| f.puts Psych.dump(Syck.load_file(file)) }
-          puts "Have written Psych compatible file to #{file}.new"
-          error_count += 1
-        end
-        total_files += 1
+        YAML::ENGINE.yamler = 'syck'
+        puts "Converting #{file}"
+        yml = YAML.load( File.read(file) )
+        FileUtils.cp file, "#{file}.bak"
+        YAML::ENGINE.yamler = 'psych'
+        File.open(file, 'w'){ |file| file.write(YAML.dump(yml)) }
       end
-      puts "Scanned #{total_files} yml files. Found #{error_count} problems (see above)."
     end
 
   end
