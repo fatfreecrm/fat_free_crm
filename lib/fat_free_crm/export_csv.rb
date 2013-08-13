@@ -7,7 +7,7 @@ require "csv"
 
 module FatFreeCRM
   class ExportCSV
-  
+
     # CSV export. Based on to_csv Rails plugin by Ary Djmal
     # https://github.com/arydjmal/to_csv
     #----------------------------------------------------------------------------
@@ -16,7 +16,7 @@ module FatFreeCRM
       # Infer column types from the first item in the array
       klass = items.first.class
       columns = klass.columns.map(&:name).reject { |column| column =~ /password|token/ }
-      columns << 'tags'
+      columns << 'tags' if klass.taggable?
       CSV.generate do |csv|
         csv << columns.map { |column| klass.human_attribute_name(column) }
         items.each do |item|
@@ -30,6 +30,6 @@ module FatFreeCRM
         end
       end
     end
-  
+
   end
 end
