@@ -117,7 +117,7 @@ describe Admin::UsersController do
 
       it "assigns a newly created user as @user and renders [create] template" do
         @user = FactoryGirl.build(:user, :username => @username, :email => @email)
-        User.stub!(:new).and_return(@user)
+        User.stub(:new).and_return(@user)
 
         xhr :post, :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
         assigns[:user].should == @user
@@ -140,7 +140,7 @@ describe Admin::UsersController do
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and re-renders [create] template" do
         @user = FactoryGirl.build(:user, :username => "", :email => "")
-        User.stub!(:new).and_return(@user)
+        User.stub(:new).and_return(@user)
 
         xhr :post, :create, :user => {}
         assigns[:user].should == @user

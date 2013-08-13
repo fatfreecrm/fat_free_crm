@@ -304,7 +304,7 @@ describe AccountsController do
 
       it "should expose a newly created account as @account and render [create] template" do
         @account = FactoryGirl.build(:account, :name => "Hello world", :user => current_user)
-        Account.stub!(:new).and_return(@account)
+        Account.stub(:new).and_return(@account)
 
         xhr :post, :create, :account => { :name => "Hello world" }
         assigns(:account).should == @account
@@ -314,7 +314,7 @@ describe AccountsController do
       # Note: [Create Account] is shown only on Accounts index page.
       it "should reload accounts to update pagination" do
         @account = FactoryGirl.build(:account, :user => current_user)
-        Account.stub!(:new).and_return(@account)
+        Account.stub(:new).and_return(@account)
 
         xhr :post, :create, :account => { :name => "Hello" }
         assigns[:accounts].should == [ @account ]
@@ -322,7 +322,7 @@ describe AccountsController do
 
       it "should get data to update account sidebar" do
         @account = FactoryGirl.build(:account, :name => "Hello", :user => current_user)
-        Campaign.stub!(:new).and_return(@account)
+        Campaign.stub(:new).and_return(@account)
 
         xhr :post, :create, :account => { :name => "Hello" }
         assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
@@ -330,7 +330,7 @@ describe AccountsController do
 
       it "should add a new comment to the newly created account when specified" do
         @account = FactoryGirl.build(:account, :name => "Hello world", :user => current_user)
-        Account.stub!(:new).and_return(@account)
+        Account.stub(:new).and_return(@account)
 
         xhr :post, :create, :account => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
         assigns[:account].comments.map(&:comment).should include("Awesome comment is awesome")
@@ -340,7 +340,7 @@ describe AccountsController do
     describe "with invalid params" do
       it "should expose a newly created but unsaved account as @account and still render [create] template" do
         @account = FactoryGirl.build(:account, :name => nil, :user => nil)
-        Account.stub!(:new).and_return(@account)
+        Account.stub(:new).and_return(@account)
 
         xhr :post, :create, :account => {}
         assigns(:account).should == @account

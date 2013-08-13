@@ -22,7 +22,7 @@ describe "admin/field_groups/create" do
   end
 
   it "renders javascript for invalid field group" do
-    field_group.stub!(:valid?).and_return(false)
+    field_group.stub(:valid?).and_return(false)
     render
     view.should render_template("admin/field_groups/create")
     rendered.should have_text("effect(\"shake\", { duration:250, distance: 6 });")

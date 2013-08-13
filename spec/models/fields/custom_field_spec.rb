@@ -49,7 +49,7 @@ describe CustomField do
     columns = []
     %w(cf_test_field cf_test_field_2 cf_test_field_3 cf_test_field_4).each do |field|
       c.send(:generate_column_name).should == field
-      c.stub!(:klass_column_names).and_return( columns << field )
+      c.stub(:klass_column_names).and_return( columns << field )
     end
 
   end

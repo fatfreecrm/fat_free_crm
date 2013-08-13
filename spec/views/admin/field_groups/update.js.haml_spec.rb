@@ -22,7 +22,7 @@ describe "admin/field_groups/update" do
   end
 
   it "renders javascript for invalid field group" do
-    field_group.errors.stub!(:empty?).and_return(false)
+    field_group.errors.stub(:empty?).and_return(false)
     render
     rendered.should have_text("jQuery('##{dom_id(field_group, :edit)}').effect('shake', { distance:5 }, 250);")
   end

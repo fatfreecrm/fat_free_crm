@@ -22,7 +22,7 @@ describe EmailsController, "handling GET /emails" do
           it "should destroy the requested email and render [destroy] template" do
             @asset = FactoryGirl.create(asset)
             @email = FactoryGirl.create(:email, :mediator => @asset, :user => current_user)
-            Email.stub!(:new).and_return(@email)
+            Email.stub(:new).and_return(@email)
 
             xhr :delete, :destroy, :id => @email.id
             lambda { Email.find(@email) }.should raise_error(ActiveRecord::RecordNotFound)

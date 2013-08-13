@@ -17,8 +17,8 @@ end
 #----------------------------------------------------------------------------
 def login(user_stubs = {}, session_stubs = {})
   User.current_user = @current_user = FactoryGirl.create(:user, user_stubs)
-  @current_user_session = mock(Authentication, {:record => current_user}.merge(session_stubs))
-  Authentication.stub!(:find).and_return(@current_user_session)
+  @current_user_session = double(Authentication, {:record => current_user}.merge(session_stubs))
+  Authentication.stub(:find).and_return(@current_user_session)
   #set_timezone
 end
 alias :require_user :login
@@ -33,7 +33,7 @@ end
 def logout
   @current_user = nil
   @current_user_session = nil
-  Authentication.stub!(:find).and_return(nil)
+  Authentication.stub(:find).and_return(nil)
 end
 alias :require_no_user :logout
 

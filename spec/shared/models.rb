@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 require "cancan/matchers"
 
-shared_examples "exportable" do
+shared_examples_for "exportable" do
   it "Model#export returns all records with extra attributes added" do
 
     # User/assignee for the second record has no first/last name.

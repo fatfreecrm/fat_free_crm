@@ -12,7 +12,7 @@ describe CustomFieldDatePair do
     before(:each) do
       @from = CustomFieldDatePair.new(:name => 'cf_event_from')
       @to = CustomFieldDatePair.new(:name => 'cf_event_to')
-      @from.stub!(:paired_with).and_return(@to)
+      @from.stub(:paired_with).and_return(@to)
       @today = Date.today
       @today_str = @today.strftime(I18n.t("date.formats.mmddyy"))
     end
@@ -44,7 +44,7 @@ describe CustomFieldDatePair do
     before(:each) do
       @from = CustomFieldDatePair.new(:name => 'cf_event_from')
       @to = CustomFieldDatePair.new(:name => 'cf_event_to', :pair_id => 1)
-      CustomFieldPair.stub!(:find).and_return(@from)
+      CustomFieldPair.stub(:find).and_return(@from)
       @today = Date.today
       @today_str = @today.strftime(I18n.t("date.formats.mmddyy"))
     end

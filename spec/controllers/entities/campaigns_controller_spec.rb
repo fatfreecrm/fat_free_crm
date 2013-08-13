@@ -306,7 +306,7 @@ describe CampaignsController do
 
       it "should expose a newly created campaign as @campaign and render [create] template" do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => current_user)
-        Campaign.stub!(:new).and_return(@campaign)
+        Campaign.stub(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello" }
         assigns(:campaign).should == @campaign
@@ -315,7 +315,7 @@ describe CampaignsController do
 
       it "should get data to update campaign sidebar" do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => current_user)
-        Campaign.stub!(:new).and_return(@campaign)
+        Campaign.stub(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello" }
         assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
@@ -323,7 +323,7 @@ describe CampaignsController do
 
       it "should reload campaigns to update pagination" do
         @campaign = FactoryGirl.build(:campaign, :user => current_user)
-        Campaign.stub!(:new).and_return(@campaign)
+        Campaign.stub(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello" }
         assigns[:campaigns].should == [ @campaign ]
@@ -331,7 +331,7 @@ describe CampaignsController do
 
       it "should add a new comment to the newly created campaign when specified" do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello world", :user => current_user)
-        Campaign.stub!(:new).and_return(@campaign)
+        Campaign.stub(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
         @campaign.reload.comments.map(&:comment).should include("Awesome comment is awesome")
@@ -342,7 +342,7 @@ describe CampaignsController do
 
       it "should expose a newly created but unsaved campaign as @campaign and still render [create] template" do
         @campaign = FactoryGirl.build(:campaign, :id => nil, :name => nil, :user => current_user)
-        Campaign.stub!(:new).and_return(@campaign)
+        Campaign.stub(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => nil
         assigns(:campaign).should == @campaign

@@ -15,7 +15,7 @@ describe "/users/upload_avatar" do
   describe "no errors:" do
     before do
       @avatar = FactoryGirl.create(:avatar, :entity => current_user)
-      current_user.stub!(:avatar).and_return(@avatar)
+      current_user.stub(:avatar).and_return(@avatar)
       assign(:user, @user = current_user)
     end
 
@@ -31,7 +31,7 @@ describe "/users/upload_avatar" do
     before do
       @avatar = FactoryGirl.create(:avatar, :entity => current_user)
       @avatar.errors.add(:image, "error")
-      current_user.stub!(:avatar).and_return(@avatar)
+      current_user.stub(:avatar).and_return(@avatar)
       assign(:user, @user = current_user)
     end
 

@@ -210,7 +210,7 @@ describe LeadsController do
 
     it "should expose a new lead as @lead and render [new] template" do
       @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
-      Lead.stub!(:new).and_return(@lead)
+      Lead.stub(:new).and_return(@lead)
       @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
       xhr :get, :new
@@ -322,7 +322,7 @@ describe LeadsController do
 
       it "should expose a newly created lead as @lead and render [create] template" do
         @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
-        Lead.stub!(:new).and_return(@lead)
+        Lead.stub(:new).and_return(@lead)
         @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
@@ -341,7 +341,7 @@ describe LeadsController do
         @campaign.save
 
         @lead = FactoryGirl.build(:lead, :campaign => @campaign, :user => current_user, :access => "Shared")
-        Lead.stub!(:new).and_return(@lead)
+        Lead.stub(:new).and_return(@lead)
 
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones", :access => "Campaign", :user_ids => %w(7 8) }, :campaign => @campaign.id
         assigns(:lead).should == @lead
@@ -353,7 +353,7 @@ describe LeadsController do
 
       it "should get the data to update leads sidebar if called from leads index" do
         @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
-        Lead.stub!(:new).and_return(@lead)
+        Lead.stub(:new).and_return(@lead)
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
@@ -362,7 +362,7 @@ describe LeadsController do
 
       it "should reload leads to update pagination if called from leads index" do
         @lead = FactoryGirl.build(:lead, :user => current_user, :campaign => nil)
-        Lead.stub!(:new).and_return(@lead)
+        Lead.stub(:new).and_return(@lead)
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :post, :create, :lead => { :first_name => "Billy", :last_name => "Bones" }
@@ -380,7 +380,7 @@ describe LeadsController do
       
       it "should add a new comment to the newly created lead when specified" do
         @lead = FactoryGirl.create(:lead)
-        Lead.stub!(:new).and_return(@lead)
+        Lead.stub(:new).and_return(@lead)
         xhr :post, :create, :lead => { :first_name => "Test", :last_name => "Lead" }, :comment_body => "This is an important lead."
         @lead.reload.comments.map(&:comment).should include("This is an important lead.")
       end
@@ -390,7 +390,7 @@ describe LeadsController do
 
       it "should expose a newly created but unsaved lead as @lead and still render [create] template" do
         @lead = FactoryGirl.build(:lead, :user => current_user, :first_name => nil, :campaign => nil)
-        Lead.stub!(:new).and_return(@lead)
+        Lead.stub(:new).and_return(@lead)
         @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
         xhr :post, :create, :lead => { :first_name => nil }
@@ -730,9 +730,9 @@ describe LeadsController do
       @account = FactoryGirl.create(:account, :id => 123, :user => current_user)
       @opportunity = FactoryGirl.build(:opportunity, :user => current_user, :campaign => @lead.campaign,
                                    :account => @account)
-      Opportunity.stub!(:new).and_return(@opportunity)
+      Opportunity.stub(:new).and_return(@opportunity)
       @contact = FactoryGirl.build(:contact, :user => current_user, :lead => @lead)
-      Contact.stub!(:new).and_return(@contact)
+      Contact.stub(:new).and_return(@contact)
 
       xhr :put, :promote, :id => 42, :account => { :id => 123 }, :opportunity => { :name => "Hello" }
       @lead.reload.status.should == "converted"
@@ -755,11 +755,11 @@ describe LeadsController do
       @account = FactoryGirl.build(:account, :user => current_user, :access => "Shared")
       @account.permissions << FactoryGirl.create(:permission, :user => he,  :asset => @account)
       @account.permissions << FactoryGirl.create(:permission, :user => she, :asset => @account)
-      @account.stub!(:new).and_return(@account)
+      @account.stub(:new).and_return(@account)
       @opportunity = FactoryGirl.build(:opportunity, :user => current_user, :access => "Shared")
       @opportunity.permissions << FactoryGirl.create(:permission, :user => he,  :asset => @opportunity)
       @opportunity.permissions << FactoryGirl.create(:permission, :user => she, :asset => @opportunity)
-      @opportunity.stub!(:new).and_return(@opportunity)
+      @opportunity.stub(:new).and_return(@opportunity)
 
       xhr :put, :promote, :id => @lead.id, :access => "Lead", :account => { :name => "Hello", :access => "Lead", :user_id => current_user.id }, :opportunity => { :name => "World", :access => "Lead", :user_id => current_user.id }
       @account.access.should == "Shared"
@@ -809,7 +809,7 @@ describe LeadsController do
       @lead = FactoryGirl.create(:lead, :id => 42, :user => current_user, :status => "new")
       @account = FactoryGirl.create(:account, :id => 123, :user => current_user)
       @contact = FactoryGirl.build(:contact, :first_name => nil) # make it fail
-      Contact.stub!(:new).and_return(@contact)
+      Contact.stub(:new).and_return(@contact)
 
       xhr :put, :promote, :id => 42, :account => { :id => 123 }
       @lead.reload.status.should == "new"

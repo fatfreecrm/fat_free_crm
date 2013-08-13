@@ -162,28 +162,28 @@ describe HomeController do
     end
   
     it "should find a user by email" do
-      @cur_user.stub!(:pref).and_return(:activity_user => 'billy@example.com')
+      @cur_user.stub(:pref).and_return(:activity_user => 'billy@example.com')
       controller.instance_variable_set(:@current_user, @cur_user)
       User.should_receive(:where).with(:email => 'billy@example.com').and_return([@user])
       controller.send(:activity_user).should == 1
     end
     
     it "should find a user by first name or last name" do
-      @cur_user.stub!(:pref).and_return(:activity_user => 'Billy')
+      @cur_user.stub(:pref).and_return(:activity_user => 'Billy')
       controller.instance_variable_set(:@current_user, @cur_user)
       User.should_receive(:where).with("upper(first_name) LIKE upper('%Billy%') OR upper(last_name) LIKE upper('%Billy%')").and_return([@user])
       controller.send(:activity_user).should == 1
     end
     
     it "should find a user by first name and last name" do
-      @cur_user.stub!(:pref).and_return(:activity_user => 'Billy Elliot')
+      @cur_user.stub(:pref).and_return(:activity_user => 'Billy Elliot')
       controller.instance_variable_set(:@current_user, @cur_user)
       User.should_receive(:where).with("(upper(first_name) LIKE upper('%Billy%') AND upper(last_name) LIKE upper('%Elliot%')) OR (upper(first_name) LIKE upper('%Elliot%') AND upper(last_name) LIKE upper('%Billy%'))").and_return([@user])
       controller.send(:activity_user).should == 1
     end
     
     it "should return nil when 'all_users' is specified" do
-      @cur_user.stub!(:pref).and_return(:activity_user => 'all_users')
+      @cur_user.stub(:pref).and_return(:activity_user => 'all_users')
       controller.instance_variable_set(:@current_user, @cur_user)
       User.should_not_receive(:where)
       controller.send(:activity_user).should == nil

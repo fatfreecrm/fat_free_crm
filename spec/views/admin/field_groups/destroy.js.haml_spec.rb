@@ -15,7 +15,7 @@ describe "admin/field_groups/destroy" do
   let(:field_group) { FactoryGirl.build(:field_group) }
 
   it "renders destroy javascript" do
-    field_group.stub!(:destroyed?).and_return(true)
+    field_group.stub(:destroyed?).and_return(true)
     render
     view.should render_template("admin/field_groups/destroy")
     rendered.should have_text("slideUp(250)")

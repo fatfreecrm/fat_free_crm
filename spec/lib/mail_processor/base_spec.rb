@@ -116,12 +116,12 @@ describe FatFreeCRM::MailProcessor::Base do
     end
 
     it "should be valid email if its contents type is text/plain" do
-      @email.stub!(:content_type).and_return("text/plain")
+      @email.stub(:content_type).and_return("text/plain")
       @crawler.send(:is_valid?, @email).should == true
     end
 
     it "should be invalid email if its contents type is not text/plain" do
-      @email.stub!(:content_type).and_return("text/html")
+      @email.stub(:content_type).and_return("text/html")
       @crawler.send(:is_valid?, @email).should == false
     end
   end
@@ -131,7 +131,7 @@ describe FatFreeCRM::MailProcessor::Base do
     before(:each) do
       @from = [ "Aaron@Example.Com", "Ben@Example.com" ]
       @email = mock
-      @email.stub!(:from).and_return(@from)
+      @email.stub(:from).and_return(@from)
     end
 
     it "should find non-suspended user that matches From: field" do
