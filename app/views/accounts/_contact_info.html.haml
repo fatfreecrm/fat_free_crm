@@ -30,6 +30,10 @@
           .label.top Email:
           = f.text_field :email
       %tr
+        %td{ :colspan => 3 }
+          .label.top #{t :image}:
+          = f.text_field :image_url, :style => "width:500px"
+      %tr
         %td
           = render "shared/address", :f => f, :asset => @account, :type => :billing, :title => :billing_address
         %td= spacer
