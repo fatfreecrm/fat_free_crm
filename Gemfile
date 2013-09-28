@@ -71,7 +71,7 @@ group :test do
   gem 'database_cleaner'
   gem "acts_as_fu"
   gem 'factory_girl_rails'
-  gem 'zeus' unless ENV["CI"]
+#  gem 'zeus' unless ENV["CI"]
   gem 'coveralls', :require => false
 end
 

@@ -23,6 +23,7 @@
 #  background_info :string(255)
 #  rating          :integer         default(0), not null
 #  category        :string(32)
+#  image_url       :string(100)
 #
 
 require 'spec_helper'
@@ -125,16 +126,94 @@ describe Account do
   end
 
   describe "Before save" do
-    it "create new: should replace empty category string with nil" do
-      account = FactoryGirl.build(:account, :category => '')
-      account.save
-      account.category.should == nil
+    describe "category" do
+      it "create new: should replace empty category string with nil" do
+        account = FactoryGirl.build(:account, :category => '')
+        account.save
+        account.category.should == nil
+      end
+
+      it "update existing: should replace empty category string with nil" do
+        account = FactoryGirl.create(:account, :category => '')
+        account.save
+        account.category.should == nil
+      end
     end
 
-    it "update existing: should replace empty category string with nil" do
-      account = FactoryGirl.create(:account, :category => '')
-      account.save
-      account.category.should == nil
+    describe "image_url" do
+      it "create new: should create account when image_url has a value" do
+        account = FactoryGirl.create(:account, :image_url => 'http://www.markdaniels.com.au/image/logo.png')
+        account.save
+        account.image_url.should == 'http://www.markdaniels.com.au/image/logo.png'
+      end
+
+      it "create new: should create account when image_url is nil" do
+        account = FactoryGirl.create(:account, :image_url => nil)
+        account.save
+        account.image_url.should == nil
+      end
+
+      it "create new: should add http and create account when image_url does not have scheme" do
+        account = FactoryGirl.create(:account, :image_url => 'www.markdaniels.com.au/image/logo.png')
+        account.save
+        account.image_url.should == 'http://www.markdaniels.com.au/image/logo.png'
+      end
+
+      it "create new: should error when image_url has a valid server but invalid resource (image)" do
+        lambda {
+          account = FactoryGirl.create(:account, :image_url => 'www.markdaniels.com.au/image/logo1234.png')
+          account.save
+        }.should raise_error(Exception){ |ex|
+          ex.message.should == 'Validation failed: Unable to get response from image url.'
+        }
+      end
+
+      it "create new: should error as not a valid url (invalid scheme)" do
+        lambda {
+          account = FactoryGirl.create(:account, :image_url => 'fred:\\www.markdaniels.com.au/image/logo1234.png')
+          account.save
+        }.should raise_error(Exception){ |ex|
+          ex.message.should == 'Validation failed: image is not a valid url (bad URI(is not URI?): fred:\\www.markdaniels.com.au/image/logo1234.png).'
+        }
+      end
+
+      it 'Test URL being greater than 100' do
+        pending("Need a valid url greater than 100 or the check against the url removed")
+      end
+
+      it 'Test URL with https' do
+        pending("A valid https url (can this be done as would need security etc)")
+      end
+
+      it "update: should update account when image_url is null and is updated to a value" do
+        account = FactoryGirl.create(:account, :image_url => nil)
+        account.save
+        account.image_url.should == nil
+        account.image_url = 'http://www.markdaniels.com.au/image/logo.png'
+        account.save
+        account.image_url.should == 'http://www.markdaniels.com.au/image/logo.png'
+      end
+
+      it "update: should update account when image_url has a value and is updated to nil" do
+        account = FactoryGirl.create(:account, :image_url => 'http://www.markdaniels.com.au/image/logo.png')
+        account.save
+        account.image_url.should == 'http://www.markdaniels.com.au/image/logo.png'
+        account.image_url = nil
+        account.save
+        account.image_url.should == nil
+      end
+
+      it "update: should error when updated image_url has a valid server but invalid resource (image)" do
+        account = FactoryGirl.create(:account, :image_url => 'http://www.markdaniels.com.au/image/logo.png')
+        account.save
+        account.image_url.should == 'http://www.markdaniels.com.au/image/logo.png'
+        lambda {
+          account.image_url = 'www.markdaniels.com.au/image/logo1234.png'
+          account.save
+        }.should raise_error(Exception){ |ex|
+          ex.message.should == 'Validation failed: Unable to get response from image url.'
+        }
+      end
     end
   end
 
