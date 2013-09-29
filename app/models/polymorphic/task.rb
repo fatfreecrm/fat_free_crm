@@ -39,7 +39,7 @@ class Task < ActiveRecord::Base
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
   scope :my, lambda { |*args|
     options = args[0] || {}
-    user_option = options[:user] || User.current_user
+    user_option = (options.is_a?(Hash) ? options[:user] : options) || User.current_user
     includes(:assignee).
     where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user_option, user_option).
     order(options[:order] || 'name ASC').
