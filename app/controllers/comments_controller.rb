@@ -53,10 +53,10 @@ class CommentsController < ApplicationController
     model, id = @comment.commentable_type, @comment.commentable_id
     unless model.constantize.my.find_by_id(id)
       respond_to_related_not_found(model.downcase)
+    else
+      @comment.save
+      respond_with(@comment)
     end
-
-    @comment.save
-    respond_with(@comment)
   end
 
   # PUT /comments/1
