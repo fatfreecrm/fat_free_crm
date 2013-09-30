@@ -281,7 +281,7 @@ en-GB:
   shipping_address: Shipping address
   total_accounts: Total Accounts
   website: Website
-  image_url: Company Logo URL
+  image: Image
   actual: Actual
   actual_performance: Actual Performance
   budget: Budget
