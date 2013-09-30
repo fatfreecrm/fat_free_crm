@@ -32,25 +32,50 @@ ActiveRecord::Schema.define(:version => 20130916130848) do
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",             :limit => 64,  :default => "",       :null => false
-    t.string   "access",           :limit => 8,   :default => "Public"
-    t.string   "website",          :limit => 64
-    t.string   "toll_free_phone",  :limit => 32
-    t.string   "phone",            :limit => 32
-    t.string   "fax",              :limit => 32
+    t.string   "name",                                         :default => "",       :null => false
+    t.string   "access",                        :limit => 8,   :default => "Public"
+    t.string   "website",                       :limit => 200
+    t.string   "toll_free_phone",               :limit => 32
+    t.string   "phone",                         :limit => 32
+    t.string   "fax",                           :limit => 32
     t.datetime "deleted_at"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.string   "email",            :limit => 64
-    t.string   "background_info"
-    t.integer  "rating",                          :default => 0,        :null => false
-    t.string   "category",         :limit => 32
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
+    t.string   "email",                         :limit => 64
+    t.text     "background_info"
+    t.integer  "rating",                                       :default => 0,        :null => false
+    t.string   "category",                      :limit => 32
     t.text     "subscribed_users"
-    t.string   "image_url",        :limit => 100
+    t.integer  "parent_organization_id"
+    t.string   "vipa_location_code"
+    t.string   "vipa_parent_organisation_code"
+    t.string   "twitter_id"
+    t.string   "linkedin_id"
+    t.string   "logo_url"
+    t.string   "employee_count_range"
+    t.string   "founded_year"
+    t.string   "company_type"
+    t.text     "migration_note"
+    t.date     "last_linkedin_crawl"
+    t.text     "migration_notes"
+    t.string   "warning"
+    t.string   "scm_classification"
+    t.string   "scm_sub_classification"
+    t.string   "vipa_billing_client_code"
+    t.string   "vipa_reporting_client_code"
+    t.string   "vipa_reporting_contact_code"
+    t.string   "vipa_billing_contact_code"
+    t.string   "image_url",                     :limit => 100
   end
 
   add_index "accounts", ["assigned_to"], :name => "index_accounts_on_assigned_to"
   add_index "accounts", ["user_id", "name", "deleted_at"], :name => "index_accounts_on_user_id_and_name_and_deleted_at", :unique => true
+  add_index "accounts", ["vipa_billing_client_code"], :name => "index_accounts_on_vipa_billing_client_code"
+  add_index "accounts", ["vipa_billing_contact_code"], :name => "index_accounts_on_vipa_billing_contact_code"
+  add_index "accounts", ["vipa_location_code"], :name => "vipa_location_codes_in_accounts", :unique => true
+  add_index "accounts", ["vipa_reporting_client_code"], :name => "index_accounts_on_vipa_reporting_client_code"
+  add_index "accounts", ["vipa_reporting_contact_code"], :name => "index_accounts_on_vipa_reporting_contact_code"
+  add_index "accounts", ["warning"], :name => "index_accounts_on_warning"
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -147,33 +172,35 @@ ActiveRecord::Schema.define(:version => 20130916130848) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",       :limit => 64,  :default => "",       :null => false
-    t.string   "last_name",        :limit => 64,  :default => "",       :null => false
-    t.string   "access",           :limit => 8,   :default => "Public"
-    t.string   "title",            :limit => 64
-    t.string   "department",       :limit => 64
-    t.string   "source",           :limit => 32
-    t.string   "email",            :limit => 64
-    t.string   "alt_email",        :limit => 64
-    t.string   "phone",            :limit => 32
-    t.string   "mobile",           :limit => 32
-    t.string   "fax",              :limit => 32
-    t.string   "blog",             :limit => 128
-    t.string   "linkedin",         :limit => 128
-    t.string   "facebook",         :limit => 128
-    t.string   "twitter",          :limit => 128
+    t.string   "first_name",        :limit => 64,  :default => "",       :null => false
+    t.string   "last_name",         :limit => 64,  :default => "",       :null => false
+    t.string   "access",            :limit => 8,   :default => "Public"
+    t.string   "title",             :limit => 64
+    t.string   "department"
+    t.string   "source",            :limit => 32
+    t.string   "email",             :limit => 64
+    t.string   "alt_email",         :limit => 64
+    t.string   "phone",             :limit => 32
+    t.string   "mobile",            :limit => 32
+    t.string   "fax",               :limit => 32
+    t.string   "blog",              :limit => 128
+    t.string   "linkedin",          :limit => 128
+    t.string   "facebook",          :limit => 128
+    t.string   "twitter",           :limit => 128
     t.date     "born_on"
-    t.boolean  "do_not_call",                     :default => false,    :null => false
+    t.boolean  "do_not_call",                      :default => false,    :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
     t.string   "background_info"
-    t.string   "skype",            :limit => 128
+    t.string   "skype",             :limit => 128
     t.text     "subscribed_users"
+    t.string   "vipa_contact_code"
   end
 
   add_index "contacts", ["assigned_to"], :name => "index_contacts_on_assigned_to"
   add_index "contacts", ["user_id", "last_name", "deleted_at"], :name => "id_last_name_deleted", :unique => true
+  add_index "contacts", ["vipa_contact_code"], :name => "vipa_contact_codes_in_contacts", :unique => true
 
   create_table "emails", :force => true do |t|
     t.string   "imap_message_id",                                       :null => false
@@ -273,6 +300,7 @@ ActiveRecord::Schema.define(:version => 20130916130848) do
     t.string   "background_info"
     t.string   "skype",            :limit => 128
     t.text     "subscribed_users"
+    t.string   "department"
   end
 
   add_index "leads", ["assigned_to"], :name => "index_leads_on_assigned_to"

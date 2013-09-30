@@ -99,7 +99,7 @@ private
   #----------------------------------------------------------------------------
   def current_user
     unless @current_user
-      @current_user = (current_user_session && current_user_session.record)
+      @current_user = User.first #(current_user_session && current_user_session.record)
       if @current_user
         @current_user.set_individual_locale
         @current_user.set_single_access_token
