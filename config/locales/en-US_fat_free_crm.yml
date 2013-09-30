@@ -333,7 +333,7 @@ en-US:
   shipping_address: Shipping address
   total_accounts: Total Accounts
   website: Website
-  image: Image
+  image_url: Company Logo URL
   account_with_title_department: ! '%{title}, %{department} at %{account}'
   account_with_title: ! '%{title} at %{account}'
 
