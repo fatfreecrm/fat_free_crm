@@ -3,6 +3,10 @@
 - pipeline = @account.opportunities.pipeline.map(&:weighted_amount).compact.sum
 
 .panel#summary
+  - if @account.image_url
+
+    %span{:style => "float:right"}
+      %img{:src => @account.image_url, :class => 'gravatar', :width => 50, :height => 50}
   %h4= h(@account.name)
   - if @account.website
     %div
