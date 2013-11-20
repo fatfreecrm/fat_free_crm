@@ -3,7 +3,8 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_tasks) do
     unless @tasks.empty?
       # Header.
       xml.Row do
-        heads = %w{name
+        heads = %w{id
+                   name
                    due
                    date_created
                    date_updated
@@ -12,7 +13,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_tasks) do
                    assigned_to
                    category
                    background_info}
-        
+
         heads.each do |head|
           xml.Cell do
             xml.Data I18n.t(head),
@@ -20,11 +21,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_tasks) do
           end
         end
       end
-      
+
       # Rows.
       @tasks.map(&:second).flatten.each do |task|
         xml.Row do
-          data = [task.name,
+          data = [task.id,
+                  task.name,
                   I18n.t(task.computed_bucket),
                   task.created_at,
                   task.updated_at,
@@ -33,7 +35,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_tasks) do
                   task.assignee.try(:name),
                   task.category,
                   task.background_info]
-        
+
           data.each do |value|
             xml.Cell do
               xml.Data value,

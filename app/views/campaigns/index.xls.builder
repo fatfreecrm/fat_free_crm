@@ -3,7 +3,8 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_campaigns) do
     unless @campaigns.empty?
       # Header.
       xml.Row do
-        heads = [I18n.t('user'),
+        heads = [I18n.t('id'),
+                 I18n.t('user'),
                  I18n.t('assigned_to'),
                  I18n.t('name'),
                  I18n.t('access'),
@@ -21,12 +22,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_campaigns) do
                  I18n.t('background_info'),
                  I18n.t('date_created'),
                  I18n.t('date_updated')]
-        
+
         # Append custom field labels to header
         Campaign.fields.each do |field|
           heads << field.label
         end
-        
+
         heads.each do |head|
           xml.Cell do
             xml.Data head,
@@ -34,11 +35,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_campaigns) do
           end
         end
       end
-      
+
       # Campaign rows.
       @campaigns.each do |campaign|
         xml.Row do
-          data    = [campaign.user.try(:name),
+          data    = [campaign.id,
+                     campaign.user.try(:name),
                      campaign.assignee.try(:name),
                      campaign.name,
                      campaign.access,
@@ -56,12 +58,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_campaigns) do
                      campaign.background_info,
                      campaign.created_at,
                      campaign.updated_at]
-          
+
           # Append custom field values.
           Campaign.fields.each do |field|
             data << campaign.send(field.name)
           end
-          
+
           data.each do |value|
             xml.Cell do
               xml.Data value,

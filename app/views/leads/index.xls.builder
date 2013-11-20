@@ -3,7 +3,8 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
     unless @leads.empty?
       # Header.
       xml.Row do
-        heads = [I18n.t('user'),
+        heads = [I18n.t('id'),
+                 I18n.t('user'),
                  I18n.t('campaign'),
                  I18n.t('job_title'),
                  I18n.t('name'),
@@ -33,12 +34,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
                  I18n.t('zipcode'),
                  I18n.t('country'),
                  I18n.t('address')]
-        
+
         # Append custom field labels to header
         Lead.fields.each do |field|
           heads << field.label
         end
-        
+
         heads.each do |head|
           xml.Cell do
             xml.Data head,
@@ -46,12 +47,13 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
           end
         end
       end
-      
+
       # Lead rows.
       @leads.each do |lead|
         xml.Row do
           address = lead.business_address
-          data    = [lead.user.try(:name),
+          data    = [lead.id,
+                     lead.user.try(:name),
                      lead.campaign.try(:name),
                      lead.title,
                      lead.name,
@@ -81,12 +83,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
                      address.try(:zipcode),
                      address.try(:country),
                      address.try(:full_address)]
-          
+
           # Append custom field values.
           Lead.fields.each do |field|
             data << lead.send(field.name)
           end
-          
+
           data.each do |value|
             xml.Cell do
               xml.Data value,

@@ -3,7 +3,8 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
     unless @opportunities.empty?
       # Header.
       xml.Row do
-        heads = [I18n.t('user'),
+        heads = [I18n.t('id'),
+                 I18n.t('user'),
                  I18n.t('campaign'),
                  I18n.t('assigned_to'),
                  I18n.t('account'),
@@ -18,12 +19,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
                  I18n.t('option_closes_on'),
                  I18n.t('date_created'),
                  I18n.t('date_updated')]
-        
+
         # Append custom field labels to header
         Opportunity.fields.each do |field|
           heads << field.label
         end
-        
+
         heads.each do |head|
           xml.Cell do
             xml.Data head,
@@ -31,11 +32,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
           end
         end
       end
-      
+
       # Opportunity rows.
       @opportunities.each do |opportunity|
         xml.Row do
-          data = [opportunity.user.try(:name),
+          data = [opportunity.id,
+                  opportunity.user.try(:name),
                   opportunity.campaign.try(:name),
                   opportunity.assignee.try(:name),
                   opportunity.account.try(:name),
@@ -50,12 +52,12 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
                   opportunity.closes_on,
                   opportunity.created_at,
                   opportunity.updated_at]
-          
+
           # Append custom field values.
           Opportunity.fields.each do |field|
             data << opportunity.send(field.name)
           end
-          
+
           data.each do |value|
             xml.Cell do
               xml.Data value,
