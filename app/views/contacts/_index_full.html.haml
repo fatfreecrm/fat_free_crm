@@ -41,7 +41,7 @@
           == #{t :mobile_small}:
           %b= contact.mobile
           |
-      = t(:added_ago, time_ago_in_words(contact.created_at))
+      = t(:added, value: timeago(contact.created_at)).html_safe
     - if contact.tag_list.present?
       %dt
         .tags= tags_for_index(contact)

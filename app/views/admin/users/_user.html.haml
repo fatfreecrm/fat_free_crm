@@ -40,7 +40,7 @@
       - if user.awaits_approval?
         %b.cool #{t :user_awaits_approval}
       - elsif user.last_request_at
-        %span.cool #{t(:last_seen, time_ago_in_words(user.last_request_at))}
+        %span.cool= t(:last_seen2, timeago(user.last_request_at)).html_safe
       - else
         %span.warn #{t :user_never_logged_in}
     %dt{ :style => "padding: 2px 0px 0px 0px" }

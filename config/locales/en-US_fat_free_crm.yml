@@ -584,8 +584,10 @@ en-US:
   save_note: Save Note
   add_note_help: Add a new note...
   edit_note: Edit Note
+  added: added %{value}
   added_ago: added %{value} ago
   added_by: added %{time_ago} ago by %{user}
+  added_by2: added %{time_ago} by %{user}
   back: Back
   cancel: Cancel
   close_form: Close form
@@ -669,6 +671,7 @@ en-US:
   notifications_tooltip: Subscribers will receive new comments via email
   subscribe_via_email: Subscribe via email
   disable_email_subscriptions: Disable email subscription
+  added_note: added note %{value}
 
   # Views -> Emails.
   #----------------------------------------------------------------------------
@@ -702,6 +705,7 @@ en-US:
   approve: Approve
   create_user: Create User
   last_seen: last seen %{value} ago
+  last_seen2: last seen %{value}
   personal_information: Personal Information
   group_memberships: Group Memberships
   reactivate: Reactivate

@@ -9,6 +9,8 @@
     %style= yield :styles
 
     = javascript_include_tag :application
+    -# include timeago locales
+    = javascript_include_tag "jquery_timeago/jquery.timeago.#{I18n.locale}"
     = hook(:javascript_includes, self)
 
     %script{:type => "text/javascript"}= yield :javascript
@@ -22,4 +24,3 @@
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
       = yield :javascript_epilogue
-

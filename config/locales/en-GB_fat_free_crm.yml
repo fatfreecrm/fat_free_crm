@@ -487,8 +487,10 @@ en-GB:
   save_note: Save Note
   add_note_help: Add a new note...
   edit_note: Edit Note
+  added: added %{value}
   added_ago: added %{value} ago
   added_by: added %{time_ago} ago by %{user}
+  added_by2: added %{time_ago} by %{user}
   back: Back
   cancel: Cancel
   close_form: Close form
@@ -580,6 +582,7 @@ en-GB:
   notifications_tooltip: Subscribers will receive new comments via email
   subscribe_via_email: Subscribe via email
   disable_email_subscriptions: Disable email subscription
+  added_note: added note %{value}
   confirm_password_intro: Please type your new password and then confirm it.
   password_intro: Please specify your email address, and the instructions to reset
     your password will be sent to you.
@@ -598,6 +601,7 @@ en-GB:
   approve: Approve
   create_user: Create User
   last_seen: last seen %{value} ago
+  last_seen2: last seen %{value}
   personal_information: Personal Information
   reactivate: Reactivate
   save_user: Save User
