@@ -46,6 +46,9 @@ class Task < ActiveRecord::Base
     limit(options[:limit]) # nil selects all records
   }
 
+  scope :created_by,  lambda { |user| where(:user_id => user.id) }
+  scope :assigned_to, lambda { |user| where(:assigned_to => user.id) }
+
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.
   scope :assigned_by, lambda { |user|
     includes(:assignee).
