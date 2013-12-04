@@ -14,7 +14,7 @@
     }
   }
 
-  jQuery.timeago.settings.strings = {
+  jQuery.timeago.settings.locales['ru'] = {
     prefixAgo: null,
     prefixFromNow: "через",
     suffixAgo: "назад",

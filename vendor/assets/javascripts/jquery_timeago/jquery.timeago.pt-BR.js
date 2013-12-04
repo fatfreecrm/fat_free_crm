@@ -1,5 +1,5 @@
-// Brazilian Portuguese 
-jQuery.timeago.settings.strings = {
+// Brazilian Portuguese
+jQuery.timeago.settings.locales['pt-BR'] = {
    prefixAgo: "há",
    prefixFromNow: "em",
    suffixAgo: null,

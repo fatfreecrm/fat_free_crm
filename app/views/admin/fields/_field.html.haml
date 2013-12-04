@@ -11,7 +11,7 @@
     %b= field.label
     == (#{t("field_types.#{field.as}.title")})
 
-    = t(:added, value: timeago(field.created_at)).html_safe
+    = t(:added_ago, value: timeago(field.created_at)).html_safe
     = hook(:field_bottom, self, :field => field)
 
   .edit_field

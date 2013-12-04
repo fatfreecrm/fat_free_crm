@@ -1,5 +1,5 @@
 // Simplified Chinese
-jQuery.timeago.settings.strings = {
+jQuery.timeago.settings.locales['zh-CN'] = {
   prefixAgo: null,
   prefixFromNow: "从现在开始",
   suffixAgo: "之前",

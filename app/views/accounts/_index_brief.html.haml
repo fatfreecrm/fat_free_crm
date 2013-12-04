@@ -23,9 +23,9 @@
       = account.location << ", " unless account.location.blank?
       - user_name = account.user.try(:full_name)
       - if user_name
-        = t(:added_by2, :time_ago => timeago(account.created_at), :user => h(user_name)).html_safe << " | "
+        = t(:added_by, :time_ago => timeago(account.created_at), :user => h(user_name)).html_safe << " | "
       - else
-        = t(:added, :value => timeago(account.created_at)).html_safe << " | "
+        = t(:added_ago, :value => timeago(account.created_at)).html_safe << " | "
       = t('pluralize.contact', account.contacts.count) << " | "
       = t('pluralize.opportunity', account.opportunities.count)
 

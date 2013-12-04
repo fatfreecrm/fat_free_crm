@@ -1,5 +1,5 @@
 // English (Template)
-jQuery.timeago.settings.strings = {
+jQuery.timeago.settings.locales['en-GB'] = {
   prefixAgo: null,
   prefixFromNow: null,
   suffixAgo: "ago",

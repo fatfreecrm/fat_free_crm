@@ -53,7 +53,7 @@
           == #{t :mobile_small}:
           %b= lead.mobile
           |
-      = t(:added, value: timeago(lead.created_at)).html_safe
+      = t(:added_ago, value: timeago(lead.created_at)).html_safe
 
     - if lead.tag_list.present?
       %dt

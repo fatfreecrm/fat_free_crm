@@ -75,25 +75,6 @@ module FatFreeCRM
     # parameters by using an attr_accessible or attr_protected declaration.
     # config.active_record.whitelist_attributes = true
 
-    Rails.application.config.assets.precompile += %w(
-      jquery_timeago/jquery.timeago.cz.js
-      jquery_timeago/jquery.timeago.de.js
-      jquery_timeago/jquery.timeago.en-GB.js
-      jquery_timeago/jquery.timeago.en-US.js
-      jquery_timeago/jquery.timeago.es.js
-      jquery_timeago/jquery.timeago.fr-CA.js
-      jquery_timeago/jquery.timeago.fr.js
-      jquery_timeago/jquery.timeago.it.js
-      jquery_timeago/jquery.timeago.ja.js
-      jquery_timeago/jquery.timeago.js.js
-      jquery_timeago/jquery.timeago.pl.js
-      jquery_timeago/jquery.timeago.pt-BR.js
-      jquery_timeago/jquery.timeago.ru.js
-      jquery_timeago/jquery.timeago.sv-SE.js
-      jquery_timeago/jquery.timeago.th.js
-      jquery_timeago/jquery.timeago.zh-CN.js
-    )
-
     # Enable the asset pipeline
     config.assets.enabled = true
 

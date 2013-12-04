@@ -1,5 +1,5 @@
 // Italian
-jQuery.timeago.settings.strings = {
+jQuery.timeago.settings.locales['it'] = {
   suffixAgo: "fa",
   suffixFromNow: "da ora",
   seconds: "meno di un minuto",

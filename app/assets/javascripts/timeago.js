@@ -1,6 +1,8 @@
 // Run function on page load
 jQuery(document).ready(function() {
   jQuery.timeago.settings.allowFuture = true;
+  // our modification to choose correct language
+  jQuery.timeago.settings.strings = jQuery.timeago.settings.locales[crm.language]
   jQuery("span.timeago").timeago();
   // update every minute
   setInterval(function(){ jQuery("span.timeago").timeago(); }, 60000);

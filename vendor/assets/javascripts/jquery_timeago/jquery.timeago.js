@@ -42,6 +42,7 @@
       allowFuture: false,
       localeTitle: false,
       cutoff: 0,
+      locales: {}, // Added for FFCRM
       strings: {
         prefixAgo: null,
         prefixFromNow: null,

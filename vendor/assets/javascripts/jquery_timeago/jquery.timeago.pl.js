@@ -11,7 +11,7 @@
     }
   }
 
-  jQuery.timeago.settings.strings = {
+  jQuery.timeago.settings.locales['pl'] = {
     prefixAgo: null,
     prefixFromNow: "za",
     suffixAgo: "temu",

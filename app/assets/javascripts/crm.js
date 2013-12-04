@@ -10,6 +10,7 @@ var crm = {
   searchRequest : null,
   autocompleter : null,
   base_url      : "",
+  language      : 'en-US',
 
   //----------------------------------------------------------------------------
   find_form: function(class_name) {

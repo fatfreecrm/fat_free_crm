@@ -1,5 +1,5 @@
 // Swedish
-jQuery.timeago.settings.strings = {
+jQuery.timeago.settings.locales['sv-SE'] = {
   prefixAgo: "för",
   prefixFromNow: "om",
   suffixAgo: "sedan",
