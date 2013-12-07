@@ -17,6 +17,13 @@ GIT
     rails3-jquery-autocomplete (1.0.14)
       rails (>= 3.0)
 
+GIT
+  remote: git://github.com/rails/prototype-rails.git
+  revision: 2841450c007aa149ed15cfa9782d4a3a326e7ce2
+  specs:
+    prototype-rails (4.0.0)
+      rails (~> 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -374,6 +381,7 @@ DEPENDENCIES
   pg
   premailer
   protected_attributes
+  prototype-rails!
   pry-rails
   quiet_assets
   rails (~> 4.0.0)
