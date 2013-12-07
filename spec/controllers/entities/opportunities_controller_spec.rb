@@ -818,7 +818,7 @@ describe OpportunitiesController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:opportunity)
-        @attachment = FactoryGirl.create(:task, :asset => nil)
+        @connected_object = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
@@ -826,7 +826,7 @@ describe OpportunitiesController do
     describe "contacts" do
       before do
         @model = FactoryGirl.create(:opportunity)
-        @attachment = FactoryGirl.create(:contact)
+        @connected_object = FactoryGirl.create(:contact)
       end
       it_should_behave_like("attach")
     end
@@ -839,16 +839,16 @@ describe OpportunitiesController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:opportunity)
-        @attachment = FactoryGirl.create(:task, :asset => @model)
+        @connected_object = FactoryGirl.create(:task, :asset => @model)
       end
       it_should_behave_like("discard")
     end
 
     describe "contacts" do
       before do
-        @attachment = FactoryGirl.create(:contact)
+        @connected_object = FactoryGirl.create(:contact)
         @model = FactoryGirl.create(:opportunity)
-        @model.contacts << @attachment
+        @model.contacts << @connected_object
       end
       it_should_behave_like("discard")
     end

@@ -37,6 +37,8 @@
 #
 
 class Contact < ActiveRecord::Base
+  include Connectable
+
   belongs_to  :user
   belongs_to  :lead
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -127,24 +129,6 @@ class Contact < ActiveRecord::Base
     self.access = params[:contact][:access] if params[:contact][:access]
     self.attributes = params[:contact]
     self.save
-  end
-
-  # Attach given attachment to the contact if it hasn't been attached already.
-  #----------------------------------------------------------------------------
-  def attach!(attachment)
-    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      self.send(attachment.class.name.tableize) << attachment
-    end
-  end
-
-  # Discard given attachment from the contact.
-  #----------------------------------------------------------------------------
-  def discard!(attachment)
-    if attachment.is_a?(Task)
-      attachment.update_attribute(:asset, nil)
-    else # Opportunities
-      self.send(attachment.class.name.tableize).delete(attachment)
-    end
   end
 
   # Class methods.

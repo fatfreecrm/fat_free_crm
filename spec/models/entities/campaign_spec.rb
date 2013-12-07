@@ -54,7 +54,7 @@ describe Campaign do
       @campaign.attach!(@opportunity).should == nil
     end
 
-    it "should return non-empty list of attachments when attaching new asset" do
+    it "should return non-empty list of connected objects when attaching new asset" do
       @task = FactoryGirl.create(:task, :user => current_user)
       @lead = FactoryGirl.create(:lead)
       @opportunity = FactoryGirl.create(:opportunity)

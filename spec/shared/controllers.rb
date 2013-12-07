@@ -33,27 +33,27 @@ end
 
 shared_examples "attach" do
   it "should attach existing asset to the parent asset of different type" do
-    xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
-    @model.send(@attachment.class.name.tableize).should include(@attachment)
-    assigns[:attachment].should == @attachment
-    assigns[:attached].should == [ @attachment ]
-    if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
-      assigns[:campaign].should == @attachment.reload.campaign
+    xhr :put, :attach, :id => @model.id, :assets => @connected_object.class.name.tableize, :asset_id => @connected_object.id
+    @model.send(@connected_object.class.name.tableize).should include(@connected_object)
+    assigns[:connected_object].should == @connected_object
+    assigns[:attached].should == [ @connected_object ]
+    if @model.is_a?(Campaign) && (@connected_object.is_a?(Lead) || @connected_object.is_a?(Opportunity))
+      assigns[:campaign].should == @connected_object.reload.campaign
     end
-    if @model.is_a?(Account) && @attachment.respond_to?(:account) # Skip Tasks...
-      assigns[:account].should == @attachment.reload.account
+    if @model.is_a?(Account) && @connected_object.respond_to?(:account) # Skip Tasks...
+      assigns[:account].should == @connected_object.reload.account
     end
     response.should render_template("entities/attach")
   end
 
   it "should not attach the asset that is already attached" do
-    if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
-      @attachment.update_attribute(:campaign_id, @model.id)
+    if @model.is_a?(Campaign) && (@connected_object.is_a?(Lead) || @connected_object.is_a?(Opportunity))
+      @connected_object.update_attribute(:campaign_id, @model.id)
     else
-      @model.send(@attachment.class.name.tableize) << @attachment
+      @model.send(@connected_object.class.name.tableize) << @connected_object
     end
 
-    xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
+    xhr :put, :attach, :id => @model.id, :assets => @connected_object.class.name.tableize, :asset_id => @connected_object.id
     assigns[:attached].should == nil
     response.should render_template("entities/attach")
   end
@@ -61,24 +61,24 @@ shared_examples "attach" do
   it "should display flash warning when the model is no longer available" do
     @model.destroy
 
-    xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
+    xhr :put, :attach, :id => @model.id, :assets => @connected_object.class.name.tableize, :asset_id => @connected_object.id
     flash[:warning].should_not == nil
     response.body.should == "window.location.reload();"
   end
-  it "should display flash warning when the attachment is no longer available" do
-    @attachment.destroy
+  it "should display flash warning when the connected_object is no longer available" do
+    @connected_object.destroy
 
-    xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
+    xhr :put, :attach, :id => @model.id, :assets => @connected_object.class.name.tableize, :asset_id => @connected_object.id
     flash[:warning].should_not == nil
     response.body.should == "window.location.reload();"
   end
 end
 
 shared_examples "discard" do
-  it "should discard the attachment without deleting it" do
-    xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
-    assigns[:attachment].should == @attachment.reload                     # The attachment should still exist.
-    @model.reload.send("#{@attachment.class.name.tableize}").should == [] # But no longer associated with the model.
+  it "should discard the connected_object without deleting it" do
+    xhr :post, :discard, :id => @model.id, :connected_object => @connected_object.class.name, :connected_object_id => @connected_object.id
+    assigns[:connected_object].should == @connected_object.reload                     # The connected_object should still exist.
+    @model.reload.send("#{@connected_object.class.name.tableize}").should == [] # But no longer associated with the model.
     assigns[:account].should == @model if @model.is_a?(Account)
     assigns[:campaign].should == @model if @model.is_a?(Campaign)
 
@@ -88,15 +88,15 @@ shared_examples "discard" do
   it "should display flash warning when the model is no longer available" do
     @model.destroy
 
-    xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
+    xhr :post, :discard, :id => @model.id, :connected_object => @connected_object.class.name, :connected_object_id => @connected_object.id
     flash[:warning].should_not == nil
     response.body.should == "window.location.reload();"
   end
 
-  it "should display flash warning when the attachment is no longer available" do
-    @attachment.destroy
+  it "should display flash warning when the connected_object is no longer available" do
+    @connected_object.destroy
 
-    xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
+    xhr :post, :discard, :id => @model.id, :connected_object => @connected_object.class.name, :connected_object_id => @connected_object.id
     flash[:warning].should_not == nil
     response.body.should == "window.location.reload();"
   end

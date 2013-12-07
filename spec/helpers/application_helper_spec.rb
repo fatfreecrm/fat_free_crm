@@ -40,7 +40,7 @@ describe ApplicationHelper do
 
     link = helper.link_to_discard(lead)
     link.should =~ %r|leads/#{lead.id}/discard|
-    link.should =~ %r|attachment=Lead&amp;attachment_id=#{lead.id}|
+    link.should =~ %r|connected_object=Lead&amp;connected_object_id=#{lead.id}|
   end
 
   describe "shown_on_landing_page?" do
@@ -68,19 +68,19 @@ describe ApplicationHelper do
       helper.shown_on_landing_page?.should == false
     end
   end
-  
+
   describe "current_view_name" do
-  
+
     before(:each) do
       @user = mock_model(User)
       helper.stub(:current_user).and_return(@user)
       controller.stub(:params).and_return({'action' => 'show', 'controller' => 'contacts'})
     end
-  
+
     it "should return the contact 'show' outline stored in the user preferences" do
       @user.should_receive(:pref).and_return({:contacts_show_view => 'long'})
       helper.current_view_name.should == 'long'
     end
-  
+
   end
 end

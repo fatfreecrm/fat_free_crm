@@ -68,28 +68,28 @@ class Campaign < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.per_page ; 20 ; end
 
-  # Attach given attachment to the campaign if it hasn't been attached already.
+  # Attach given connected object  to the campaign if it hasn't been attached already.
   #----------------------------------------------------------------------------
-  def attach!(attachment)
-    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      if attachment.is_a?(Task)
-        self.send(attachment.class.name.tableize) << attachment
+  def attach!(connected_object)
+    unless self.send("#{connected_object.class.name.downcase}_ids").include?(connected_object.id)
+      if connected_object.is_a?(Task)
+        self.send(connected_object.class.name.tableize) << connected_object
       else # Leads, Opportunities
-        attachment.update_attribute(:campaign, self)
-        attachment.send("increment_#{attachment.class.name.tableize}_count")
-        [ attachment ]
+        connected_object.update_attribute(:campaign, self)
+        connected_object.send("increment_#{connected_object.class.name.tableize}_count")
+        [ connected_object ]
       end
     end
   end
 
-  # Discard given attachment from the campaign.
+  # Discard given connected object from the campaign.
   #----------------------------------------------------------------------------
-  def discard!(attachment)
-    if attachment.is_a?(Task)
-      attachment.update_attribute(:asset, nil)
+  def discard!(connected_object)
+    if connected_object.is_a?(Task)
+      connected_object.update_attribute(:asset, nil)
     else # Leads, Opportunities
-      attachment.send("decrement_#{attachment.class.name.tableize}_count")
-      attachment.update_attribute(:campaign, nil)
+      connected_object.send("decrement_#{connected_object.class.name.tableize}_count")
+      connected_object.update_attribute(:campaign, nil)
     end
   end
 

@@ -513,7 +513,7 @@ describe CampaignsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:campaign)
-        @attachment = FactoryGirl.create(:task, :asset => nil)
+        @connected_object = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
@@ -521,7 +521,7 @@ describe CampaignsController do
     describe "leads" do
       before do
         @model = FactoryGirl.create(:campaign)
-        @attachment = FactoryGirl.create(:lead, :campaign => nil)
+        @connected_object = FactoryGirl.create(:lead, :campaign => nil)
       end
       it_should_behave_like("attach")
     end
@@ -529,7 +529,7 @@ describe CampaignsController do
     describe "opportunities" do
       before do
         @model = FactoryGirl.create(:campaign)
-        @attachment = FactoryGirl.create(:opportunity, :campaign => nil)
+        @connected_object = FactoryGirl.create(:opportunity, :campaign => nil)
       end
       it_should_behave_like("attach")
     end
@@ -542,7 +542,7 @@ describe CampaignsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:campaign)
-        @attachment = FactoryGirl.create(:task, :asset => nil)
+        @connected_object = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
@@ -550,7 +550,7 @@ describe CampaignsController do
     describe "leads" do
       before do
         @model = FactoryGirl.create(:campaign)
-        @attachment = FactoryGirl.create(:lead, :campaign => nil)
+        @connected_object = FactoryGirl.create(:lead, :campaign => nil)
       end
       it_should_behave_like("attach")
     end
@@ -558,7 +558,7 @@ describe CampaignsController do
     describe "opportunities" do
       before do
         @model = FactoryGirl.create(:campaign)
-        @attachment = FactoryGirl.create(:opportunity, :campaign => nil)
+        @connected_object = FactoryGirl.create(:opportunity, :campaign => nil)
       end
       it_should_behave_like("attach")
     end
@@ -571,25 +571,25 @@ describe CampaignsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:campaign)
-        @attachment = FactoryGirl.create(:task, :asset => @model)
+        @connected_object = FactoryGirl.create(:task, :asset => @model)
       end
       it_should_behave_like("discard")
     end
 
     describe "leads" do
       before do
-        @attachment = FactoryGirl.create(:lead)
+        @connected_object = FactoryGirl.create(:lead)
         @model = FactoryGirl.create(:campaign)
-        @model.leads << @attachment
+        @model.leads << @connected_object
       end
       it_should_behave_like("discard")
     end
 
     describe "opportunities" do
       before do
-        @attachment = FactoryGirl.create(:opportunity)
+        @connected_object = FactoryGirl.create(:opportunity)
         @model = FactoryGirl.create(:campaign)
-        @model.opportunities << @attachment
+        @model.opportunities << @connected_object
       end
       it_should_behave_like("discard")
     end

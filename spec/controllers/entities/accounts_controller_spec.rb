@@ -509,7 +509,7 @@ describe AccountsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:account)
-        @attachment = FactoryGirl.create(:task, :asset => nil)
+        @connected_object = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
@@ -517,7 +517,7 @@ describe AccountsController do
     describe "contacts" do
       before do
         @model = FactoryGirl.create(:account)
-        @attachment = FactoryGirl.create(:contact, :account => nil)
+        @connected_object = FactoryGirl.create(:contact, :account => nil)
       end
       it_should_behave_like("attach")
     end
@@ -530,25 +530,25 @@ describe AccountsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:account)
-        @attachment = FactoryGirl.create(:task, :asset => @model)
+        @connected_object = FactoryGirl.create(:task, :asset => @model)
       end
       it_should_behave_like("discard")
     end
 
     describe "contacts" do
       before do
-        @attachment = FactoryGirl.create(:contact)
+        @connected_object = FactoryGirl.create(:contact)
         @model = FactoryGirl.create(:account)
-        @model.contacts << @attachment
+        @model.contacts << @connected_object
       end
       it_should_behave_like("discard")
     end
 
     describe "opportunities" do
       before do
-        @attachment = FactoryGirl.create(:opportunity)
+        @connected_object = FactoryGirl.create(:opportunity)
         @model = FactoryGirl.create(:account)
-        @model.opportunities << @attachment
+        @model.opportunities << @connected_object
       end
       # 'super from singleton method that is defined to multiple classes is not supported;'
       # TODO: Uncomment this when it is fixed in 1.9.3

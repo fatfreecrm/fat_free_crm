@@ -2,17 +2,17 @@
 
 - if @attached
   - if partial == "task"
-    - if @attachment.completed?
+    - if @connected_object.completed?
       - view = "completed"
-    - elsif @attachment.my?(current_user)
+    - elsif @connected_object.my?(current_user)
       - view = "pending"
     - else
       - view = "assigned"
-    jQuery('#tasks').prepend('#{ j render(:partial => "tasks/#{view}", :collection => [ @attachment ], :locals => { :bucket => @attachment.computed_bucket }) }');
+    jQuery('#tasks').prepend('#{ j render(:partial => "tasks/#{view}", :collection => [ @connected_object ], :locals => { :bucket => @connected_object.computed_bucket }) }');
 
 
   - else
-    jQuery('##{h params[:assets]}').prepend('#{ j render(:partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]) }');
+    jQuery('##{h params[:assets]}').prepend('#{ j render(:partial => "#{params[:assets]}/#{partial}", :collection => [ @connected_object ]) }');
     - if called_from_landing_page?(:accounts)
       = refresh_sidebar_for(:accounts, :show, :summary)
     - elsif called_from_landing_page?(:campaigns)
