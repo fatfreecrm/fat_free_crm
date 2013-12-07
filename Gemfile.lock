@@ -169,7 +169,7 @@ GEM
       slop (>= 2.4.4, < 3)
     pry-rails (0.1.6)
       pry
-    psych (1.3.4)
+    psych (2.0.0)
     quiet_assets (1.0.1)
       railties (~> 3.1)
     rack (1.4.5)
@@ -331,7 +331,7 @@ DEPENDENCIES
   premailer
   prototype-rails
   pry-rails
-  psych (~> 1)
+  psych
   quiet_assets
   rails (~> 3.2.12)
   rails3-jquery-autocomplete
