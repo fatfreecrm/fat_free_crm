@@ -6,6 +6,7 @@
 require 'rails/all'
 require 'jquery-rails'
 require 'select2-rails'
+require 'prototype-rails'
 require 'haml'
 require 'sass'
 require 'acts_as_commentable'
