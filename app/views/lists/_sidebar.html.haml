@@ -19,6 +19,7 @@
       = f.text_field :name, :size => 25
       = image_tag("/assets/info_tiny.png", :title => t(:list_name_info), :class => "input_info")
       = f.hidden_field :url
+      = f.hidden_field :is_global, :value => true
       %div
         = f.submit(t(:save), :id => "save_list", :style => "vertical-align: bottom;")
         #{t :or}
