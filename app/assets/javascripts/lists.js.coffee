@@ -11,8 +11,15 @@
       $(".save_list").show()
       $('.save_list #list_name').focus()
 
+    show_save_personal_form: ->
+      $(".save_peronal_list").show()
+      $('.save_peronal_list #list_name').focus()
+
     hide_save_form: ->
       $(".save_list").hide()
+
+    hide_save_personal_form: ->
+      $(".save_peronal_list").hide()
 
   $(document).ready ->
     lists = new Lists()
@@ -22,9 +29,19 @@
       $(".show_lists_save_form").hide()
       false
 
+    $(".show_personal_lists_save_form").live "click", ->
+      lists.show_save_personal_form()
+      $(".show_personal_lists_save_form").hide()
+      false
+
     $(".hide_lists_save_form").live "click", ->
       lists.hide_save_form()
       $(".show_lists_save_form").show()
+      false
+
+    $(".hide_lists_save_personal_form").live "click", ->
+      lists.hide_save_personal_form()
+      $(".show_personal_lists_save_form").show()
       false
 
     $("input#save_list").live "click", ->

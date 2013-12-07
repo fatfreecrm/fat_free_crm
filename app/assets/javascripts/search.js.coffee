@@ -52,6 +52,7 @@
 
         when 'advanced_search'
           $('#lists .show_lists_save_form').show()
+          $('#personal_lists .show_personal_lists_save_form').show()
           $("#advanced_search form input:submit").click()
           $('#filters').disable() # Disable filters panel (if present)
 
