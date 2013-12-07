@@ -62,4 +62,12 @@
       img_el = $(this).find('.delete_on_hover img')
       img_el.attr('src', "/assets/tab_icons/" + img_el.data('controller') + "_active.png")
 
+    # When mouseover on li, change asset icons to delete buttons
+    $("#personal_lists li").live "mouseover", ->
+      img_el = $(this).find('.delete_on_hover img')
+      img_el.attr('src', "/assets/delete.png")
+    $("#personal_lists li").live "mouseout", ->
+      img_el = $(this).find('.delete_on_hover img')
+      img_el.attr('src', "/assets/tab_icons/" + img_el.data('controller') + "_active.png")
+
 ) jQuery
