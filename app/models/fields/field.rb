@@ -33,9 +33,9 @@ class Field < ActiveRecord::Base
 
   belongs_to :field_group
 
-  scope :core_fields, where(:type => 'CoreField')
-  scope :custom_fields, where("type != 'CoreField'")
-  scope :without_pairs, where(:pair_id => nil)
+  scope :core_fields,   -> { where(:type => 'CoreField') }
+  scope :custom_fields, -> { where("type != 'CoreField'") }
+  scope :without_pairs, -> { where(:pair_id => nil) }
 
   delegate :klass, :klass_name, :klass_name=, :to => :field_group
 

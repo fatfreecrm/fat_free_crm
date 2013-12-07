@@ -39,13 +39,13 @@ class Campaign < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  scope :state, lambda { |filters|
+  scope :state, ->(filters) {
     where('status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters)
   }
-  scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
-  scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
+  scope :created_by,  ->(user) { where('user_id = ?' , user.id) }
+  scope :assigned_to, ->(user) { where('assigned_to = ?', user.id) }
 
-  scope :text_search, lambda { |query| search('name_cont' => query).result }
+  scope :text_search, ->(query) { search('name_cont' => query).result }
 
   uses_user_permissions
   acts_as_commentable

@@ -50,15 +50,15 @@ class Lead < ActiveRecord::Base
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true
 
-  scope :state, lambda { |filters|
+  scope :state, ->(filters) {
     where([ 'status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters ])
   }
-  scope :converted, where(:status => 'converted')
-  scope :for_campaign, lambda { |id| where('campaign_id = ?', id) }
-  scope :created_by, lambda { |user| where('user_id = ?' , user.id) }
-  scope :assigned_to, lambda { |user| where('assigned_to = ?' , user.id) }
+  scope :converted, -> { where(:status => 'converted') }
+  scope :for_campaign, ->(id) { where('campaign_id = ?', id) }
+  scope :created_by, ->(user) { where('user_id = ?' , user.id) }
+  scope :assigned_to, ->(user) { where('assigned_to = ?' , user.id) }
 
-  scope :text_search, lambda { |query| search('first_name_or_last_name_or_company_or_email_cont' => query).result }
+  scope :text_search, ->(query) { search('first_name_or_last_name_or_company_or_email_cont' => query).result }
 
   uses_user_permissions
   acts_as_commentable
