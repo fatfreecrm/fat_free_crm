@@ -19,7 +19,7 @@
       = f.text_field :name, :size => 25
       = image_tag("/assets/info_tiny.png", :title => t(:list_name_info), :class => "input_info")
       = f.hidden_field :url, :id => "personal_list_url"
-      %input{:type => "hidden", :name => "is_global", :value => false}
+      %input{:type => "hidden", :name => "is_global", :value => 0}
       %div
         = f.submit(t(:save), :id => "save_personal_list", :style => "vertical-align: bottom;")
         #{t :or}

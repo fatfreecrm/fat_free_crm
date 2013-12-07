@@ -8,6 +8,13 @@ class ListsController < ApplicationController
   # POST /lists
   #----------------------------------------------------------------------------
   def create
+
+    if params[:is_global].to_i.zero?
+      params[:list][:user_id] = current_user.id
+    else
+      params[:list][:user_id] = nil
+    end
+
     # Find any existing list with the same name (case insensitive)
     if @list = List.find(:first, :conditions => ["lower(name) = ?", params[:list][:name].downcase])
       @list.update_attributes(params[:list])
