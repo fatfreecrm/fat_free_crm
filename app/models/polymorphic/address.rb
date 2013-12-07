@@ -28,9 +28,9 @@ class Address < ActiveRecord::Base
 
   has_paper_trail :meta => { :related => :addressable }
 
-  scope :business, :conditions => "address_type='Business'"
-  scope :billing,  :conditions => "address_type='Billing'"
-  scope :shipping, :conditions => "address_type='Shipping'"
+  scope :business, -> { where("address_type='Business'") }
+  scope :billing,  -> { where("address_type='Billing'") }
+  scope :shipping, -> { where("address_type='Shipping'") }
 
   # Checks if the address is blank for both single and compound addresses.
   #----------------------------------------------------------------------------
