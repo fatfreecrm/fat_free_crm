@@ -42,6 +42,7 @@
       switch search_form
         when 'basic_search'
           $('#lists .show_lists_save_form').hide()
+          $('#personal_lists .show_personal_lists_save_form').hide()
           query_input = $('#basic_search input#query')
           if !query_input.is('.defaultTextActive')
             value = query_input.val()
