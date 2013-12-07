@@ -133,7 +133,8 @@ GEM
     guard-rspec (2.5.4)
       guard (>= 1.1)
       rspec (~> 2.11)
-    haml (3.1.7)
+    haml (4.0.4)
+      tilt
     headless (1.0.1)
     highline (1.6.15)
     hike (1.2.3)
@@ -331,7 +332,7 @@ DEPENDENCIES
   guard
   guard-rails
   guard-rspec
-  haml (~> 3)
+  haml
   headless
   jquery-rails (~> 2.1.4)
   nokogiri
@@ -354,7 +355,7 @@ DEPENDENCIES
   rb-inotify
   responds_to_parent (>= 1.1.0)
   rspec-rails
-  sass (~> 3)
+  sass
   sass-rails
   select2-rails
   selenium-webdriver
