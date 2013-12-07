@@ -6,12 +6,13 @@
 if defined?(FatFreeCRM::Application)
   FatFreeCRM::Application.configure do
     # Settings specified here will take precedence over those in config/application.rb
+    config.eager_load = true
 
     # Code is not reloaded between requests
     config.cache_classes = true
 
     # Full error reports are enabled, since this is an internal application.
-    config.consider_all_requests_local       = true
+    config.consider_all_requests_local       = false
     # Caching is turned on
     config.action_controller.perform_caching = true
 
