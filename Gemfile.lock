@@ -52,9 +52,9 @@ GEM
     addressable (2.3.3)
     arel (4.0.1)
     atomic (1.1.14)
-    authlogic (3.1.0)
-      activerecord (>= 3.0.7)
-      activerecord (>= 3.0.7)
+    authlogic (3.3.0)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
     builder (3.1.4)
     bundler_local_development (0.4.1)
       bundler
@@ -306,7 +306,7 @@ DEPENDENCIES
   acts_as_commentable (~> 3.0.1)
   acts_as_fu
   acts_as_list (~> 0.1.4)
-  authlogic (= 3.1.0)
+  authlogic (~> 3.3.0)
   bundler_local_development
   cancan
   capistrano
