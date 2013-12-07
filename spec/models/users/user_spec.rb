@@ -182,9 +182,9 @@ describe User do
     end
 
     it "should update I18n.locale if proference[:locale] is set" do
-      @user.preference[:locale] = :esperanto
+      @user.preference[:locale] = :es
       @user.set_individual_locale
-      I18n.locale.should == :esperanto
+      I18n.locale.should == :es
     end
 
     it "should not update I18n.locale if proference[:locale] is not set" do
