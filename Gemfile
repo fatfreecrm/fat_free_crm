@@ -75,16 +75,12 @@ group :heroku do
   gem 'rails_12factor'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-# group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-  gem 'execjs'
-  gem 'therubyracer', :platform => :ruby unless ENV["CI"]
-  gem 'rails3-jquery-autocomplete', github: 'crowdint/rails3-jquery-autocomplete'
-# end
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
+gem 'execjs'
+gem 'therubyracer', :platform => :ruby unless ENV["CI"]
+gem 'rails3-jquery-autocomplete', github: 'crowdint/rails3-jquery-autocomplete'
 
 gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4"
 
