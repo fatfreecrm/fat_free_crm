@@ -88,3 +88,9 @@ end
 # end
 
 gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4"
+
+# this is because we're not using Strong Parameters right now.
+gem "protected_attributes"
+
+# this is because observers are deprecated
+gem "rails-observers"
