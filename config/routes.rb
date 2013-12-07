@@ -8,18 +8,18 @@ Rails.application.routes.draw do
 
   root :to => 'home#index'
 
-  match 'activities' => 'home#index'
-  match 'admin'      => 'admin/users#index',       :as => :admin
-  match 'login'      => 'authentications#new',     :as => :login
-  match 'logout'     => 'authentications#destroy', :as => :logout
-  match 'profile'    => 'users#show',              :as => :profile
-  match 'signup'     => 'users#new',               :as => :signup
+  get 'activities' => 'home#index'
+  get 'admin'      => 'admin/users#index',       :as => :admin
+  get 'login'      => 'authentications#new',     :as => :login
+  delete 'logout'     => 'authentications#destroy', :as => :logout
+  get 'profile'    => 'users#show',              :as => :profile
+  get 'signup'     => 'users#new',               :as => :signup
 
-  match '/home/options',  :as => :options
-  match '/home/toggle',   :as => :toggle
-  match '/home/timeline', :as => :timeline
-  match '/home/timezone', :as => :timezone
-  match '/home/redraw',   :as => :redraw
+  get '/home/options',  :as => :options
+  get '/home/toggle',   :as => :toggle
+  patch '/home/timeline', :as => :timeline
+  get '/home/timezone', :as => :timezone
+  post '/home/redraw',   :as => :redraw
 
   resource  :authentication
   resources :comments, :except => [:new, :show]
@@ -32,12 +32,12 @@ Rails.application.routes.draw do
       post :filter
       get  :options
       get  :field_group
-      match :auto_complete
+      get :auto_complete
       post :redraw
       get :versions
     end
     member do
-      put  :attach
+      patch  :attach
       post :discard
       post :subscribe
       post :unsubscribe
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       get :versions
     end
     member do
-      put  :attach
+      patch  :attach
       post :discard
       post :subscribe
       post :unsubscribe
@@ -77,7 +77,7 @@ Rails.application.routes.draw do
       get :versions
     end
     member do
-      put  :attach
+      patch  :attach
       post :discard
       post :subscribe
       post :unsubscribe
@@ -100,9 +100,9 @@ Rails.application.routes.draw do
       post :discard
       post :subscribe
       post :unsubscribe
-      put  :attach
-      put  :promote
-      put  :reject
+      patch  :attach
+      patch  :promote
+      patch  :reject
     end
 
     get :autocomplete_account_name, :on => :collection
@@ -119,7 +119,7 @@ Rails.application.routes.draw do
       get :versions
     end
     member do
-      put  :attach
+      patch  :attach
       post :discard
       post :subscribe
       post :unsubscribe
@@ -133,7 +133,7 @@ Rails.application.routes.draw do
       post :auto_complete
     end
     member do
-      put :complete
+      patch :complete
     end
   end
 
@@ -141,15 +141,13 @@ Rails.application.routes.draw do
     member do
       get :avatar
       get :password
-      put :upload_avatar
-      put :change_password
+      patch :upload_avatar
+      patch :change_password
       post :redraw
     end
 
     collection do
-      match :auto_complete
-    end
-    collection do
+      get :auto_complete
       get :opportunities_overview
     end
   end
@@ -163,8 +161,8 @@ Rails.application.routes.draw do
       end
       member do
         get :confirm
-        put :suspend
-        put :reactivate
+        patch :suspend
+        patch :reactivate
       end
     end
 
