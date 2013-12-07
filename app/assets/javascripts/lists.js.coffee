@@ -49,6 +49,11 @@
       $("#list_url").val(window.location.pathname + '?' + $('form.ransack_search').serialize())
       true
 
+    $("input#save_peronal_list").live "click", ->
+      # Set value of hidden list_url field to serialized search form
+      $("#personal_list_url").val(window.location.pathname + '?' + $('form.ransack_search').serialize())
+      true
+
     # When mouseover on li, change asset icons to delete buttons
     $("#lists li").live "mouseover", ->
       img_el = $(this).find('.delete_on_hover img')

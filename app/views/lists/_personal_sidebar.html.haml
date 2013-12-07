@@ -18,9 +18,9 @@
     = simple_form_for(@list, :html => one_submit_only, :remote => true) do |f|
       = f.text_field :name, :size => 25
       = image_tag("/assets/info_tiny.png", :title => t(:list_name_info), :class => "input_info")
-      = f.hidden_field :url
-      = f.hidden_field :is_global, :value => false
+      = f.hidden_field :url, :id => "personal_list_url"
+      %input{:type => "hidden", :name => "is_global", :value => false}
       %div
-        = f.submit(t(:save), :id => "save_list", :style => "vertical-align: bottom;")
+        = f.submit(t(:save), :id => "save_personal_list", :style => "vertical-align: bottom;")
         #{t :or}
         = link_to(t(:cancel), '#', :class => "hide_lists_save_personal_form")
