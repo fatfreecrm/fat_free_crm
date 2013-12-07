@@ -62,22 +62,22 @@ class User < ActiveRecord::Base
   has_paper_trail :ignore => [:last_request_at, :perishable_token]
 
   # For some reason this does not play nice with has_paper_trail when set as default scope
-  scope :by_id, order('id DESC')
-  scope :except, lambda { |user| where('id != ?', user.id).by_name }
-  scope :by_name, order('first_name, last_name, email')
+  scope :by_id, -> { order('id DESC') }
+  scope :except, ->(user) { where('id != ?', user.id).by_name }
+  scope :by_name, -> { order('first_name, last_name, email') }
 
-  scope :text_search, lambda { |query|
+  scope :text_search, ->(query) {
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', :s => "%#{query}%")
   }
 
-  scope :my, lambda {
-    accessible_by(User.current_ability)
-  }
+  scope :my, -> { accessible_by(User.current_ability) }
 
-  scope :have_assigned_opportunities, joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to").
-                                      where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'").
-                                      select('DISTINCT(users.id), users.*')
+  scope :have_assigned_opportunities, -> {
+    joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to")
+    .where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
+    .select('DISTINCT(users.id), users.*')
+  }
 
   acts_as_authentic do |c|
     c.session_class = Authentication

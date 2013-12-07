@@ -43,20 +43,20 @@ class Account < ActiveRecord::Base
   accepts_nested_attributes_for :billing_address,  :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
   accepts_nested_attributes_for :shipping_address, :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
 
-  scope :state, lambda { |filters|
+  scope :state, ->(filters) {
     where('category IN (?)' + (filters.delete('other') ? ' OR category IS NULL' : ''), filters)
   }
-  scope :created_by, lambda { |user| where(:user_id => user.id) }
-  scope :assigned_to, lambda { |user| where(:assigned_to => user.id) }
+  scope :created_by,  ->(user) { where(:user_id => user.id) }
+  scope :assigned_to, ->(user) { where(:assigned_to => user.id) }
 
-  scope :text_search, lambda { |query| search('name_or_email_cont' => query).result }
+  scope :text_search, ->(query) { search('name_or_email_cont' => query).result }
 
-  scope :visible_on_dashboard, lambda { |user|
+  scope :visible_on_dashboard, ->(user) {
     # Show accounts which either belong to the user and are unassigned, or are assigned to the user
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id)
   }
 
-  scope :by_name, order(:name)
+  scope :by_name, -> { order(:name) }
 
   uses_user_permissions
   acts_as_commentable

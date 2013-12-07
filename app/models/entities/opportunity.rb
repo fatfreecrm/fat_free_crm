@@ -38,19 +38,19 @@ class Opportunity < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  scope :state, lambda { |filters|
+  scope :state, ->(filters) {
     where('stage IN (?)' + (filters.delete('other') ? ' OR stage IS NULL' : ''), filters)
   }
-  scope :created_by,  lambda { |user| where('user_id = ?', user.id) }
-  scope :assigned_to, lambda { |user| where('assigned_to = ?', user.id) }
-  scope :won,         where("opportunities.stage = 'won'")
-  scope :lost,        where("opportunities.stage = 'lost'")
-  scope :not_lost,    where("opportunities.stage <> 'lost'")
-  scope :pipeline,    where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')")
-  scope :unassigned,  where("opportunities.assigned_to IS NULL")
+  scope :created_by,  ->(user) { where('user_id = ?', user.id) }
+  scope :assigned_to, ->(user) { where('assigned_to = ?', user.id) }
+  scope :won,         -> { where("opportunities.stage = 'won'") }
+  scope :lost,        -> { where("opportunities.stage = 'lost'") }
+  scope :not_lost,    -> { where("opportunities.stage <> 'lost'") }
+  scope :pipeline,    -> { where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')") }
+  scope :unassigned,  -> { where("opportunities.assigned_to IS NULL") }
 
   # Search by name OR id
-  scope :text_search, lambda { |query|
+  scope :text_search, ->(query) {
     # postgresql does not like to compare string to integer field
     if query =~ /^\d+$/
       query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
@@ -60,13 +60,13 @@ class Opportunity < ActiveRecord::Base
     end
   }
 
-  scope :visible_on_dashboard, lambda { |user|
+  scope :visible_on_dashboard, ->(user) {
     # Show opportunities which either belong to the user and are unassigned, or are assigned to the user and haven't been closed (won/lost)
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id).where("opportunities.stage != 'won'").where("opportunities.stage != 'lost'")
   }
 
-  scope :by_closes_on, order(:closes_on)
-  scope :by_amount, order('opportunities.amount DESC')
+  scope :by_closes_on, -> { order(:closes_on) }
+  scope :by_amount,    -> { order('opportunities.amount DESC') }
 
   uses_user_permissions
   acts_as_commentable
