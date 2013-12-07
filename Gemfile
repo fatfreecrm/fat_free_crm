@@ -83,7 +83,6 @@ end
   gem 'uglifier'
   gem 'execjs'
   gem 'therubyracer', :platform => :ruby unless ENV["CI"]
-  gem 'prototype-rails', github: 'rails/prototype-rails'
   gem 'rails3-jquery-autocomplete', github: 'crowdint/rails3-jquery-autocomplete'
 # end
 
