@@ -182,6 +182,8 @@ GEM
     premailer (1.7.3)
       css_parser (>= 1.1.9)
       htmlentities (>= 4.0.0)
+    protected_attributes (1.0.5)
+      activemodel (>= 4.0.1, < 5.0)
     pry (0.9.9.4)
       coderay (~> 1.0.5)
       method_source (~> 0.7.1)
@@ -202,6 +204,8 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.2)
       sprockets-rails (~> 2.0.0)
+    rails-observers (0.1.2)
+      activemodel (~> 4.0)
     railties (4.0.2)
       actionpack (= 4.0.2)
       activesupport (= 4.0.2)
@@ -335,11 +339,13 @@ DEPENDENCIES
   paperclip
   pg
   premailer
+  protected_attributes
   prototype-rails!
   pry-rails
   psych
   quiet_assets
   rails (~> 4.0.0)
+  rails-observers
   rails3-jquery-autocomplete!
   ransack!
   ransack_ui (>= 1.1.0)
