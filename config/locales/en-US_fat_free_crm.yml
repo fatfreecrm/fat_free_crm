@@ -765,7 +765,7 @@ en-US:
 
   # Lists
   #----------------------------------------------------------------------------
-  lists: Lists
+  global_lists: Global Lists
   list: List
   no_saved_lists: No saved lists
   make_current_view_list: Make current view a list
