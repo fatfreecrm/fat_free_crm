@@ -52,8 +52,28 @@
     margin-bottom: 7px;
     margin-top: 3px;
   }
-  
-  #advanced_search .fields.sort { float:right; }
+
+  #advanced_search {
+    .combinator {
+      margin-top: 15px;
+    }
+
+    .filters {
+      margin-top: 15px;
+    }
+
+    .fields.condition {
+      margin: 10px 0;
+    }
+
+    .fields.sort {
+      float:right;
+    }
+
+    .submit-search {
+      margin-top: 20px;
+    }
+  }
 
 }
 
