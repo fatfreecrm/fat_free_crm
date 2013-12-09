@@ -238,14 +238,4 @@ describe Version, :versioning => true do
       @versions.map(&:event).sort.should == %w(create update)
     end
   end
-
-  describe "Exportable" do
-    before do
-    end
-    it_should_behave_like("exportable") do
-      v1 = FactoryGirl.create(:version, :whodunnit => FactoryGirl.create(:user).id, :item => FactoryGirl.create(:account))
-      v2 = FactoryGirl.create(:version, :whodunnit => FactoryGirl.create(:user, :first_name => nil, :last_name => nil).id, :item => FactoryGirl.create(:account))
-      let(:exported) { [v1,v2] }
-    end
-  end
 end
