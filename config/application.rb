@@ -47,7 +47,7 @@ module FatFreeCRM
 
     # Add migrations from all engines
     Railties.engines.each do |engine|
-      config.paths['db/migrate'] += engine.paths['db/migrate'].existent
+      # config.paths['db/migrate'] += engine.paths['db/migrate'].existent
     end
 
     # Only load the plugins named here, in the order given (default is alphabetical).
