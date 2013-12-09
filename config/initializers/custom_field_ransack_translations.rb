@@ -1,0 +1,14 @@
+# Load field names for custom fields, for Ransack search
+
+Rails.application.config.after_initialize do
+  I18n.backend.load_translations
+
+  translations = {ransack: { attributes: {}}}
+  CustomField.find_each do |custom_field|
+    model_key = custom_field.klass.model_name.singular
+    translations[:ransack][:attributes][model_key] ||= {}
+    translations[:ransack][:attributes][model_key][custom_field.name] = custom_field.label
+  end
+
+  I18n.backend.store_translations(Setting.locale.to_sym, translations)
+end

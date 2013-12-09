@@ -49,6 +49,7 @@
 class CustomField < Field
   after_validation :update_column, :on => :update
   before_create    :add_column
+  after_create     :add_ransack_translation
 
   SAFE_DB_TRANSITIONS = {
     :any => [['date', 'time', 'timestamp'], ['integer', 'float']],
@@ -127,6 +128,15 @@ class CustomField < Field
     connection.add_column(table_name, name, column_type, column_options)
     klass.reset_column_information
     klass.serialize_custom_fields!
+  end
+
+  # Adds custom field translation for Ransack
+  def add_ransack_translation
+    I18n.backend.store_translations(Setting.locale.to_sym, {
+      ransack: {attributes: {klass.model_name.singular => {name => label}}}
+    })
+    # Reset Ransack cache
+    Ransack::Helpers::FormBuilder.cached_searchable_attributes_for_base = {}
   end
 
   # Change database column type only if safe to do so
