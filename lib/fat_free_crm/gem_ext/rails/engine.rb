@@ -13,10 +13,3 @@ Rails::Engine.initializers.detect{|i| i.name == :add_view_paths }.
     end
   }
 )
-
-# Override I18n load paths so that plugin locales have higher priority.
-Rails::Engine.initializers.detect{|i| i.name == :add_locales }.
-  instance_variable_set("@block", Proc.new {
-    config.i18n.railties_load_path.concat( paths["config/locales"].to_a ).reverse!
-  }
-)
