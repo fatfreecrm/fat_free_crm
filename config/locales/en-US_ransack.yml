@@ -33,18 +33,18 @@ en-US:
       does_not_match: doesn't match
       does_not_match_any: doesn't match any
       does_not_match_all: doesn't match all
-      lt: less than
-      lt_any: less than any
-      lt_all: less than all
-      lteq: less than or equal to
-      lteq_any: less than or equal to any
-      lteq_all: less than or equal to all
-      gt: greater than
-      gt_any: greater than any
-      gt_all: greater than all
-      gteq: greater than or equal to
-      gteq_any: greater than or equal to any
-      gteq_all: greater than or equal to all
+      lt: is less than
+      lt_any: is less than any
+      lt_all: is less than all
+      lteq: is less than or equal to
+      lteq_any: is less than or equal to any
+      lteq_all: is less than or equal to all
+      gt: is greater than
+      gt_any: is greater than any
+      gt_all: is greater than all
+      gteq: is greater than or equal to
+      gteq_any: is greater than or equal to any
+      gteq_all: is greater than or equal to all
       in: is in
       in_any: is in any
       in_all: is in all

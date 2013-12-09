@@ -170,6 +170,15 @@ en-US:
           final_review: Final Review
           won: Closed/Won
           lost: Closed/Lost
+      account:
+        rating:
+          "0": "-"
+          "1": "★"
+          "2": "★★"
+          "3": "★★★"
+          "4": "★★★★"
+          "5": "★★★★★"
+
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions
 
