@@ -42,6 +42,16 @@ module FatFreeCRM
         end
       end
 
+      # Shows custom field select options in ransack search form
+      def ransack_column_select_options
+        field_groups.each_with_object({}) do |group, hash|
+          group.fields.select{|f| f.collection.present? }.each do |field|
+            hash[field.name] = field.collection.each_with_object({}) do |option, options|
+              options[option] = option
+            end
+          end
+        end
+      end
     end
 
     module InstanceMethods
