@@ -6,11 +6,11 @@
 
 # When comments are added to an entity, disable the add button
 # and add a spinner to indicate request is processing
-(($j) ->
+(($) ->
 
   addSpinnerToComments = ->
-    $j('div.new_comment').each ->
-      container = $j(this)
+    $('div.new_comment').each ->
+      container = $(this)
       unless container.hasClass('withSpinner')
         container.find('form').on 'submit', ->
           container.find('form [type=submit]').attr("disabled", "disabled")
@@ -30,8 +30,8 @@
       comment.focus()
 
   addOpenCloseToComments = ->
-    $j('div.new_comment').each ->
-      container = $j(this)
+    $('div.new_comment').each ->
+      container = $(this)
       unless container.hasClass('withOpenClose')
         baseId = container.attr('id').replace('_comment_new', '')
         post   = container.find('#' + baseId + '_post')
@@ -46,21 +46,13 @@
         container.addClass("withOpenClose")
 
   # Apply when document is loaded
-  $j(document).ready ->
+  $(document).ready ->
     addSpinnerToComments()
     addOpenCloseToComments()
 
   # Apply when jquery event (e.g. search) occurs
-  $j(document).ajaxComplete ->
+  $(document).ajaxComplete ->
     addSpinnerToComments()
     addOpenCloseToComments()
-
-  # Apply when protoype event (e.g. cancel edit) occurs
-  Ajax.Responders.register({
-    onComplete: ->
-      addSpinnerToComments()
-      addOpenCloseToComments()
-
-  })
 
 )(jQuery)

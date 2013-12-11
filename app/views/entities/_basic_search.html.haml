@@ -7,16 +7,18 @@
   %span.sorting_options
     -# sort_by_displaying: Sort {{models}} by {{field}} displaying first name {{position}} last name.
     = t(:sort_by, :models => t(:"#{controller_name}_small"), :field => link_to(current_sort_by, "#", :id => :sort_by)).html_safe
-  
-  :javascript
-    new Form.Element.Observer('query', 1.5, function(element, value) {
-      crm.search(value, '#{controller_name}');
-    });
 
-  :javascript
-    new crm.Menu({
-      trigger   : "sort_by",
-      fade      : 0.5,
-      appear    : 0.5,
-      menu_items: [ #{sort_by_menu_items.join(",")} ]
-    });
+:javascript
+  var searchTimeout;
+
+  jQuery('#query').on('change', function(element, value) {
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(function () { crm.search(value, '#{controller_name}'); }, 1500);
+  });
+
+  new crm.Menu({
+    trigger   : "#sort_by",
+    fade      : 500,
+    appear    : 500,
+    menu_items: [ #{sort_by_menu_items.join(",")} ]
+  });

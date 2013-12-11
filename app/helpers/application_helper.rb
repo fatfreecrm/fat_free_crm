@@ -63,7 +63,7 @@ module ApplicationHelper
   def load_select_popups_for(related, *assets)
     js = generate_js_for_popups(related, *assets)
     content_for(:javascript_epilogue) do
-      raw "document.observe('dom:loaded', function() { #{js} });"
+      raw "jQuery(function() { #{js} });"
     end
   end
 
@@ -91,7 +91,7 @@ module ApplicationHelper
     link_to(text,
       url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
-      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));",
+      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ jQuery('##{id}').css('display') != 'none');",
       :class => options[:class]
     )
   end
@@ -257,40 +257,41 @@ module ApplicationHelper
 
   # Ajax helper to refresh current index page once the user selects an option.
   #----------------------------------------------------------------------------
-  def redraw(option, value, url = nil)
+  def redraw(option, value, url = send("redraw_#{controller.controller_name}_path"))
     if value.is_a?(Array)
       param, value = value.first, value.last
     end
-    remote_function(
-      :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "'#{option}=#{param || value}'",
-      :condition => "$('#{option}').innerHTML != '#{value}'",
-      :loading   => "$('#{option}').update('#{value}'); $('loading').show()",
-      :complete  => "$('loading').hide()"
-    )
+    %Q{
+      if (jQuery('##{option}').html() != '#{value}') {
+        jQuery('##{option}').html('#{value}');
+        jQuery('#loading').show();
+        jQuery.post('#{url}', {#{option}: '#{param || value}'}, function () {
+          jQuery('#loading').hide();
+        });
+      }
+    }
   end
 
   #----------------------------------------------------------------------------
-  def options_menu_item(option, key, url = nil)
+  def options_menu_item(option, key, url = send("redraw_#{controller.controller_name}_path"))
     name = t("option_#{key}")
     "{ name: \"#{name.titleize}\", on_select: function() {" +
-    remote_function(
-      :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "'#{option}=#{key}&query=' + $(\"query\").value",
-      :condition => "$('#{option}').innerHTML != '#{name}'",
-      :loading   => "$('#{option}').update('#{name}'); $('loading').show()",
-      :complete  => "$('loading').hide()"
-    ) + "}}"
+    %Q{
+      if (jQuery('##{option}').html() != '#{name}') {
+        jQuery('##{option}').html('#{name}');
+        jQuery('#loading').show();
+        jQuery.post('#{url}', {#{option}: '#{key}', query: jQuery('#query').val()}, function () {
+          jQuery('#loading').hide();
+        });
+      }
+    } + "}}"
   end
 
   # Ajax helper to pass browser timezone offset to the server.
   #----------------------------------------------------------------------------
   def get_browser_timezone_offset
     unless session[:timezone_offset]
-      remote_function(
-        :url  => timezone_path,
-        :with => "'offset='+(new Date()).getTimezoneOffset()"
-      )
+      "jQuery.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
     end
   end
 
@@ -385,15 +386,18 @@ module ApplicationHelper
 
   def entity_filter_checkbox(name, value, count)
     checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
-    values = %Q{$$("input[name='#{name}[]']").findAll(function (el) { return el.checked }).pluck("value")}
-    params = h(%Q{"#{name}=" + #{values} + "&query=" + $("query").value})
-
-    onclick = remote_function(
-      :url      => { :action => :filter },
-      :with     => params,
-      :loading  => "$('loading').show()",
-      :complete => "$('loading').hide()"
-    )
+    url = url_for(:action => :filter)
+    onclick = %Q{
+      var query = jQuery('#query').val(),
+          values = [];
+      jQuery('input[name=&quot;#{name}[]&quot;]').filter(':checked').each(function () {
+        values.push(this.value);
+      });
+      jQuery('#loading').show();
+      jQuery.post('#{url}', {#{name}: values.join(','), query: query}, function () {
+        jQuery('#loading').hide();
+      });
+    }.html_safe
     check_box_tag("#{name}[]", value, checked, :id => value, :onclick => onclick)
   end
 

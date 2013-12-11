@@ -12,6 +12,6 @@
   = render "entities/permissions",      :f => f, :entity => @opportunity
 
   .buttonbar
-    = f.submit t(:create_opportunity), :onclick => %/$("account_assigned_to").value = $F("opportunity_assigned_to"); if ($("account_id").visible()) { $("account_id").enable(); }/
+    = f.submit t(:create_opportunity), :onclick => %/$("#account_assigned_to").val($("#opportunity_assigned_to").val()); if ($("#account_id").css('display') != 'none') { $("#account_id").enable(); }/
     #{t :or}
     = link_to_cancel new_opportunity_path

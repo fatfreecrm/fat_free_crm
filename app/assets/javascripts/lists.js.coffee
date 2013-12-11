@@ -21,7 +21,7 @@
     hide_save_personal_form: ->
       $(".save_peronal_list").hide()
 
-  $(document).ready ->
+  $ ->
     lists = new Lists()
 
     $(".show_lists_save_form").live "click", ->

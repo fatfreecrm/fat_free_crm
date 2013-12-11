@@ -11,12 +11,13 @@ module TasksHelper
   def task_filter_checkbox(view, filter, count)
     name = "filter_by_task_#{view}"
     checked = (session[name] ? session[name].split(",").include?(filter.to_s) : count > 0)
-    onclick = remote_function(
-      :url      => { :action => :filter, :view => view },
-      :with     => "'filter='+this.value+'&checked='+this.checked",
-      :loading  => "$('loading').show()",
-      :complete => "$('loading').hide()"
-    )
+    url = url_for(:action => :filter, :view => view)
+    onclick = %Q{
+      jQuery('#loading').show();
+      jQuery.post('#{url}', {filter: this.value, checked: this.checked}, function () {
+        jQuery('#loading').hide();
+      });
+    }
     check_box_tag("filters[]", filter, checked, :onclick => onclick, :id => "filters_#{filter.to_s.underscore}")
   end
 
@@ -45,8 +46,8 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_complete(pending, bucket)
-    onclick = %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "'bucket=#{bucket}'")
+    onclick = %Q{jQuery("##{dom_id(pending, :name)}").css(textDecoration: "line-through");}
+    onclick << %Q{jQuery.ajax(#{complete_task_path(pending)}, {type: 'PUT', data: {bucket: '#{bucket}'}});}
   end
 
   # Task summary for RSS/ATOM feed.

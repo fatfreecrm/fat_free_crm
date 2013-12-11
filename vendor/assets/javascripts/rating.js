@@ -96,7 +96,7 @@ var Ratable = Class.create({
     this.options.callback(this.element, this.rating);
     if (this.options.remote_url) {
       var parameters = new Template(this.options.remote_parameters).evaluate({id: this.element.id, rating: this.rating});
-      new Ajax.Request(this.options.remote_url, { method: this.options.remote_method, parameters: parameters });
+      jQuery.ajax(this.options.remote_url, { type: this.options.remote_method, data: parameters });
     }
   },  
 
