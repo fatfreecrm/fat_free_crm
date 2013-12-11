@@ -34,7 +34,7 @@ class Preference < ActiveRecord::Base
     return super(name, value) if name.to_s == "user_id" # set the value of belongs_to
 
     encoded = Base64.encode64(Marshal.dump(value))
-    if pref = Preference.find_by_name_and_user_id(name.to_s, self.user.id)
+    if pref = Preference.find_by(name: name.to_s, user_id: self.user.id)
       pref.update_attribute(:value, encoded)
     else
       Preference.create(:user => self.user, :name => name.to_s, :value => encoded)
