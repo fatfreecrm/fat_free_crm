@@ -69,7 +69,12 @@ module FatFreeCRM
       #--------------------------------------------------------------------------
       def remove_permissions
         # we don't use dependent => :destroy so must manually remove
-        permissions_to_remove = Permission.find_all_by_asset_id_and_asset_type(self.id, self.class)
+        if self.id && self.class
+          permissions_to_remove = Permission.where(asset_id: self.id, asset_class: self.class).all
+        else
+          permissions_to_remove = []
+        end
+
         permissions_to_remove.each {|p| (permissions.delete(p); p.destroy)}
       end
 
