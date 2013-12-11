@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get '/home/options',  :as => :options
   get '/home/toggle',   :as => :toggle
   patch '/home/timeline', :as => :timeline
-  get '/home/timezone', :as => :timezone
+  post '/home/timezone', :as => :timezone
   post '/home/redraw',   :as => :redraw
 
   resource  :authentication
