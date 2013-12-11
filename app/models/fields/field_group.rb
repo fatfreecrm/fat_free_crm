@@ -19,7 +19,7 @@
 #
 
 class FieldGroup < ActiveRecord::Base
-  has_many :fields, :order => :position
+  has_many :fields, -> { order :position }
   belongs_to :tag
   before_destroy :not_default_field_group, :move_fields_to_default_field_group
 
