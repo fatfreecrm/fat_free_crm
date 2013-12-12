@@ -5,6 +5,7 @@
 #------------------------------------------------------------------------------
 class List < ActiveRecord::Base
   validates_presence_of :name
+  belongs_to :user
 
   # Parses the controller from the url
   def controller
