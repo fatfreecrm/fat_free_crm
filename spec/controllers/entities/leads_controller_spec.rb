@@ -377,7 +377,7 @@ describe LeadsController do
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
         assigns[:campaign].should == @campaign
       end
-      
+
       it "should add a new comment to the newly created lead when specified" do
         @lead = FactoryGirl.create(:lead)
         Lead.stub(:new).and_return(@lead)
@@ -928,7 +928,7 @@ describe LeadsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:lead)
-        @attachment = FactoryGirl.create(:task, :asset => nil)
+        @connected_object = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
@@ -941,7 +941,7 @@ describe LeadsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:lead)
-        @attachment = FactoryGirl.create(:task, :asset => nil)
+        @connected_object = FactoryGirl.create(:task, :asset => nil)
       end
       it_should_behave_like("attach")
     end
@@ -952,9 +952,9 @@ describe LeadsController do
   #----------------------------------------------------------------------------
   describe "responding to POST discard" do
     before(:each) do
-      @attachment = FactoryGirl.create(:task, :assigned_to => current_user)
+      @connected_object = FactoryGirl.create(:task, :assigned_to => current_user)
       @model = FactoryGirl.create(:lead)
-      @model.tasks << @attachment
+      @model.tasks << @connected_object
     end
 
     it_should_behave_like("discard")

@@ -26,6 +26,8 @@
 #
 
 class Opportunity < ActiveRecord::Base
+  include Connectable
+
   belongs_to  :user
   belongs_to  :campaign
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -134,24 +136,6 @@ class Opportunity < ActiveRecord::Base
     self.access = params[:opportunity][:access] if params[:opportunity][:access]
     self.attributes = params[:opportunity]
     self.save
-  end
-
-  # Attach given attachment to the opportunity if it hasn't been attached already.
-  #----------------------------------------------------------------------------
-  def attach!(attachment)
-    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      self.send(attachment.class.name.tableize) << attachment
-    end
-  end
-
-  # Discard given attachment from the opportunity.
-  #----------------------------------------------------------------------------
-  def discard!(attachment)
-    if attachment.is_a?(Task)
-      attachment.update_attribute(:asset, nil)
-    else # Contacts
-      self.send(attachment.class.name.tableize).delete(attachment)
-    end
   end
 
   # Class methods.

@@ -132,7 +132,7 @@ module ApplicationHelper
     parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
 
     link_to(t(:discard),
-      url_for(:controller => parent, :action => :discard, :id => parent_id, :attachment => object.class.name, :attachment_id => object.id),
+      url_for(:controller => parent, :action => :discard, :id => parent_id, :connected_object => object.class.name, :connected_object => object.id),
       :method  => :post,
       :remote  => true
     )

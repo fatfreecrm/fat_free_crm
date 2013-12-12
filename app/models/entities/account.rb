@@ -26,6 +26,8 @@
 #
 
 class Account < ActiveRecord::Base
+  include Connectable
+
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_many    :account_contacts, :dependent => :destroy
@@ -88,24 +90,6 @@ class Account < ActiveRecord::Base
     return "" unless self[:billing_address]
     location = self[:billing_address].strip.split("\n").last
     location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ").strip if location
-  end
-
-  # Attach given attachment to the account if it hasn't been attached already.
-  #----------------------------------------------------------------------------
-  def attach!(attachment)
-    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      self.send(attachment.class.name.tableize) << attachment
-    end
-  end
-
-  # Discard given attachment from the account.
-  #----------------------------------------------------------------------------
-  def discard!(attachment)
-    if attachment.is_a?(Task)
-      attachment.update_attribute(:asset, nil)
-    else # Contacts, Opportunities
-      self.send(attachment.class.name.tableize).delete(attachment)
-    end
   end
 
   # Class methods.

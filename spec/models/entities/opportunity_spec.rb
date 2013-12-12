@@ -152,7 +152,7 @@ describe Opportunity do
       @opportunity.attach!(@contact).should == nil
     end
 
-    it "should return non-empty list of attachments when attaching new asset" do
+    it "should return non-empty list of connected objects when attaching new asset" do
       @task = FactoryGirl.create(:task, :user => current_user)
       @contact = FactoryGirl.create(:contact)
 
