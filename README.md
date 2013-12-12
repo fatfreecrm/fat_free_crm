@@ -54,8 +54,10 @@ Visit our website at http://www.fatfreecrm.com/
 
 ## System Requirements
 
-* Ruby v1.9.3 recommended (1.9.2 also works, ruby 2.0.0 does NOT)
-  * Note that Ruby v1.8.7 was supported until v0.11.4 (see https://github.com/fatfreecrm/fat_free_crm/tree/ruby1.8)
+* Ruby v1.9.3 recommended
+  * Ruby 1.9.2 also works but is not longer supported
+  * Ruby 2 is not supported yet but this is being worked on
+  * Ruby v1.8.7 was supported until v0.11.4 (see https://github.com/fatfreecrm/fat_free_crm/tree/ruby1.8)
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
 * ImageMagick (optional, only needed if you would like to use avatars)
 
@@ -81,7 +83,7 @@ Installing Fat Free CRM on Microsoft Windows
 ### [Running Fat Free CRM as a Rails Engine](http://guides.fatfreecrm.com/Running-as-a-Rails-Engine.html)
 
 Run the Fat Free CRM gem within a separate Rails application.
-This is the best way to deploy Fat Free CRM if you need to add plugins or make any customizations.
+This is the best way to deploy Fat Free CRM if you need to add plugins or make any customizations. Note that it is not yet simple to 'bolt' Fat Free CRM into your existing rails project, but we're heading in that direction.
 
 
 ## Upgrading from previous versions of Fat Free CRM
@@ -108,20 +110,18 @@ Please read the [Release Notes](http://guides.fatfreecrm.com/Release-Notes.html)
 
 ## For Developers
 
-Fat Free CRM can be customized by implementing callback hooks and extended by
-creating Rails Engines plugins. Check out these sample repositories demonstrating
-the concepts:
+Fat Free CRM is released under the MIT license and is freely available for you to use for your own purposes. We do encourage contributions to make Fat Free CRM even better. Send us a pull-request and we'll do our best to accomodate your needs.
 
-* http://github.com/michaeldv/crm_sample_plugin/tree/master
-* http://github.com/michaeldv/crm_sample_tabs/tree/master
-* http://github.com/michaeldv/crm_web_to_lead/tree/master
-* http://github.com/michaeldv/crm_tags/tree/master
+Specific features that are not 'Fat Free' in nature, can be added by creating Rails Engines. See the [wiki](http://github.com/fatfreecrm/fat_free_crm/wiki) for information on how to do this.
+
+Tests can easily be run by typing 'rake' but please note that they do take a while to run! Alternatively, you can see the test build status over at our [travis page](http://travis-ci.org/fatfreecrm/fat_free_crm)
+
 
 ## Main contributors
 
 * [Michael Dvorkin (@michaeldv)](https://github.com/michaeldv) - Founding creator
+* [Steve Kenworthy (@steveyken)](https://github.com/steveyken) - Maintainer
 * [Nathan Broadbent (@ndbroadbent)](https://github.com/ndbroadbent)
-* [Steve Kenworthy (@steveyken)](https://github.com/steveyken)
 
 See the [contributors graph](https://github.com/fatfreecrm/fat_free_crm/graphs/contributors) and the [contributors file](https://github.com/fatfreecrm/fat_free_crm/blob/master/CONTRIBUTORS) for further details.
 
