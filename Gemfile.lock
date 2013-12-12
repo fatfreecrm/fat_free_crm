@@ -152,7 +152,7 @@ GEM
       net-ssh (>= 1.99.1)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
-    paper_trail (2.6.3)
+    paper_trail (2.7.2)
       activerecord (~> 3.0)
       railties (~> 3.0)
     paperclip (3.4.1)
@@ -338,7 +338,7 @@ DEPENDENCIES
   headless
   jquery-rails (~> 2.1.4)
   nokogiri
-  paper_trail
+  paper_trail (~> 2.7.0)
   paperclip
   pg
   premailer
