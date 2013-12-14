@@ -72,8 +72,8 @@ class Lead < ActiveRecord::Base
   has_ransackable_associations %w(contact campaign tasks tags activities emails addresses comments)
   ransack_can_autocomplete
 
-  validates_presence_of :first_name, :message => :missing_first_name if Setting.require_first_names
-  validates_presence_of :last_name, :message => :missing_last_name if Setting.require_last_names
+  validates_presence_of :first_name, :message => :missing_first_name, :if => -> { Setting.require_first_names }
+  validates_presence_of :last_name,  :message => :missing_last_name,  :if => -> { Setting.require_last_names  }
   validate :users_for_shared_access
 
   after_create  :increment_leads_count
