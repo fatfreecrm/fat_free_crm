@@ -198,17 +198,12 @@ GEM
       thor (>= 0.14.6, < 2.0)
     raindrops (0.8.0)
     rake (10.1.0)
-    ransack (0.7.2)
+    ransack (1.1.0)
       actionpack (~> 3.0)
       activerecord (~> 3.0)
       polyamorous (~> 0.5.0)
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ffcrm (0.7.1)
-      actionpack (~> 3.0)
-      activerecord (~> 3.0)
-      chronic (~> 0.6.7)
-      polyamorous (~> 0.5.0)
     ransack_ui (1.2.0)
       ransack
       ransack_chronic (>= 1.1.0)
@@ -340,7 +335,6 @@ DEPENDENCIES
   quiet_assets
   rails (~> 3.2.12)
   rails3-jquery-autocomplete
-  ransack_ffcrm (~> 0.7.1)
   ransack_ui (>= 1.1.0)
   rb-fchange
   rb-fsevent
