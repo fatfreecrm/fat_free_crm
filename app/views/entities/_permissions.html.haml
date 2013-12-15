@@ -24,7 +24,7 @@
             %br
             = f.select :user_ids, user_options, {}, :multiple => true
             :javascript
-              new Chosen($('#{model}_user_ids'));
+              $('#{model}_user_ids').chosen();
 
         %tr
           %td
@@ -32,7 +32,7 @@
             %br
             = f.select :group_ids, group_options, {}, :multiple => true
             :javascript
-              new Chosen($('#{model}_group_ids'));
+              $('#{model}_group_ids').chosen();
 
     - if !edit and entity.is_a?(Lead)
       .radio_box

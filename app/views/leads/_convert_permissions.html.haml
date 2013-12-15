@@ -25,7 +25,7 @@
             %br
             = select :lead, :user_ids, user_options, {}, :multiple => true
             :javascript
-              new Chosen($('lead_user_ids'));
+              $('lead_user_ids').chosen();
 
         %tr
           %td
@@ -33,4 +33,4 @@
             %br
             = select :lead, :group_ids, group_options, {}, :multiple => true
             :javascript
-              new Chosen($('lead_group_ids'));
+              $('lead_group_ids').chosen();
