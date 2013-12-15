@@ -1,10 +1,10 @@
 - if @group.valid?
-  jQuery('#create_group_arrow').html(crm.COLLAPSED);
-  jQuery('#create_group_title').html('#{ j t(:groups) }');
-  jQuery('#create_group').slideUp(250);
-  jQuery('#groups').prepend('#{ j (render :partial => "group", :collection => [ @group ]) }');
-  jQuery('##{dom_id(@group)}').effect("highlight", { duration:1500 });
+  $('#create_group_arrow').html(crm.COLLAPSED);
+  $('#create_group_title').html('#{ j t(:groups) }');
+  $('#create_group').slideUp(250);
+  $('#groups').prepend('#{ j (render :partial => "group", :collection => [ @group ]) }');
+  $('##{dom_id(@group)}').effect("highlight", { duration:1500 });
 - else
-  jQuery('#create_group').html('#{ j render(:partial => "new") }');
-  jQuery('#create_group').effect("shake", { duration:250, distance: 6 });
-  jQuery('#group_name').focus();
+  $('#create_group').html('#{ j render(:partial => "new") }');
+  $('#create_group').effect("shake", { duration:250, distance: 6 });
+  $('#group_name').focus();

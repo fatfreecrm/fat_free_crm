@@ -1,10 +1,10 @@
 - if @user.valid?
-  jQuery('#create_user_arrow').html(crm.COLLAPSED);
-  jQuery('#create_user_title').html('#{t(:users)}');
-  jQuery('#create_user').slideUp(250);
-  jQuery('#users').prepend('#{ j (render :partial => "user", :collection => [ @user ]) }');
-  jQuery('##{dom_id(@user)}').effect("highlight", { duration:1500 });
+  $('#create_user_arrow').html(crm.COLLAPSED);
+  $('#create_user_title').html('#{t(:users)}');
+  $('#create_user').slideUp(250);
+  $('#users').prepend('#{ j (render :partial => "user", :collection => [ @user ]) }');
+  $('##{dom_id(@user)}').effect("highlight", { duration:1500 });
 - else
-  jQuery('#create_user').html('#{ j (render :partial => "new") }');
-  jQuery('#create_user').effect("shake", { duration:250, distance: 6 });
-  jQuery('#group_username').focus();
+  $('#create_user').html('#{ j (render :partial => "new") }');
+  $('#create_user').effect("shake", { duration:250, distance: 6 });
+  $('#group_username').focus();

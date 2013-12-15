@@ -1,6 +1,6 @@
 - entity_name = controller.controller_name.singularize.underscore
 - @entity = instance_variable_get("@#{entity_name}")
 
-jQuery('##{dom_id(@entity)}').css('background-color', '#ffe4e1').slideUp(250);
+$('##{dom_id(@entity)}').css('background-color', '#ffe4e1').slideUp(250);
 = refresh_sidebar(:index, :filters)
-jQuery('#paginate').replaceWith('#{ j render(:partial => "shared/paginate_with_per_page") }');
+$('#paginate').replaceWith('#{ j render(:partial => "shared/paginate_with_per_page") }');

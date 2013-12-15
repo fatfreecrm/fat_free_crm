@@ -1,3 +1,3 @@
 - contacts = entity.contacts.order('updated_at DESC').paginate(:page => params[:page], :per_page => 20)
-jQuery('#contacts').html('#{ j render(:partial => 'contacts/contact', :collection => contacts) }');
-jQuery('#contacts_pagination').html('#{ j will_paginate(contacts, :container => false, :params => {:action => :contacts}) }');
+$('#contacts').html('#{ j render(:partial => 'contacts/contact', :collection => contacts) }');
+$('#contacts_pagination').html('#{ j will_paginate(contacts, :container => false, :params => {:action => :contacts}) }');

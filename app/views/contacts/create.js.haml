@@ -3,21 +3,21 @@
 - create_id = "create_#{entity_name}"
 
 - if @entity.valid?
-  jQuery('##{create_id}_arrow').html(crm.COLLAPSED);
-  jQuery('##{create_id}_title').html('#{ j t(entity_name.pluralize) }');
-  jQuery('##{create_id}').slideUp(250);
-  jQuery('##{entity_name.pluralize}').prepend('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
-  jQuery('##{dom_id(@entity)}').effect("highlight", { duration:1500 });
+  $('##{create_id}_arrow').html(crm.COLLAPSED);
+  $('##{create_id}_title').html('#{ j t(entity_name.pluralize) }');
+  $('##{create_id}').slideUp(250);
+  $('##{entity_name.pluralize}').prepend('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+  $('##{dom_id(@entity)}').effect("highlight", { duration:1500 });
 
   - if called_from_index_page?
     = refresh_sidebar(:index)
-    jQuery('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
+    $('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
   - else
-    jQuery('#recently').html('#{ j render(:partial => "shared/recently") }');
+    $('#recently').html('#{ j render(:partial => "shared/recently") }');
   crm.flick('empty', 'remove');
 
 - else
-  jQuery('##{create_id}').html('#{ j render(:partial => "new") }');
+  $('##{create_id}').html('#{ j render(:partial => "new") }');
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
-  jQuery('##{create_id}').effect("shake", { duration:250, distance: 6 });
-  jQuery('#new_#{entity_name} input[type!=hidden]').first().focus();
+  $('##{create_id}').effect("shake", { duration:250, distance: 6 });
+  $('#new_#{entity_name} input[type!=hidden]').first().focus();

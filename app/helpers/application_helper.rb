@@ -63,7 +63,7 @@ module ApplicationHelper
   def load_select_popups_for(related, *assets)
     js = generate_js_for_popups(related, *assets)
     content_for(:javascript_epilogue) do
-      raw "jQuery(function() { #{js} });"
+      raw "$(function() { #{js} });"
     end
   end
 
@@ -91,7 +91,7 @@ module ApplicationHelper
     link_to(text,
       url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
-      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ jQuery('##{id}').css('display') != 'none');",
+      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ $('##{id}').css('display') != 'none');",
       :class => options[:class]
     )
   end
@@ -196,7 +196,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def one_submit_only(form='')
-    { :onsubmit => "jQuery('#'+this.id+' input[type=\\'submit\\']').disable()".html_safe }
+    { :onsubmit => "$('#'+this.id+' input[type=\\'submit\\']').disable()".html_safe }
   end
 
   #----------------------------------------------------------------------------
@@ -213,9 +213,9 @@ module ApplicationHelper
   def confirm_delete(model, params = {})
     question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>).html_safe
     yes = link_to(t(:yes_button), params[:url] || model, :method => :delete)
-    no = link_to_function(t(:no_button), "jQuery('#menu').html(jQuery('#confirm').html());")
-    text = "jQuery('#confirm').html( jQuery('#menu').html() );\n"
-    text << "jQuery('#menu').html('#{question} #{yes} : #{no}');"
+    no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
+    text = "$('#confirm').html( $('#menu').html() );\n"
+    text << "$('#menu').html('#{question} #{yes} : #{no}');"
     text.html_safe
   end
 
@@ -234,8 +234,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
-    text << "jQuery('#sidebar').html('#{ j render(:partial => "layouts/sidebar", :locals => { :view => view, :action => action }) }');"
-    text << "jQuery('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
+    text << "$('#sidebar').html('#{ j render(:partial => "layouts/sidebar", :locals => { :view => view, :action => action }) }');"
+    text << "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
 
@@ -262,11 +262,11 @@ module ApplicationHelper
       param, value = value.first, value.last
     end
     %Q{
-      if (jQuery('##{option}').html() != '#{value}') {
-        jQuery('##{option}').html('#{value}');
-        jQuery('#loading').show();
-        jQuery.post('#{url}', {#{option}: '#{param || value}'}, function () {
-          jQuery('#loading').hide();
+      if ($('##{option}').html() != '#{value}') {
+        $('##{option}').html('#{value}');
+        $('#loading').show();
+        $.post('#{url}', {#{option}: '#{param || value}'}, function () {
+          $('#loading').hide();
         });
       }
     }
@@ -277,11 +277,11 @@ module ApplicationHelper
     name = t("option_#{key}")
     "{ name: \"#{name.titleize}\", on_select: function() {" +
     %Q{
-      if (jQuery('##{option}').html() != '#{name}') {
-        jQuery('##{option}').html('#{name}');
-        jQuery('#loading').show();
-        jQuery.post('#{url}', {#{option}: '#{key}', query: jQuery('#query').val()}, function () {
-          jQuery('#loading').hide();
+      if ($('##{option}').html() != '#{name}') {
+        $('##{option}').html('#{name}');
+        $('#loading').show();
+        $.post('#{url}', {#{option}: '#{key}', query: $('#query').val()}, function () {
+          $('#loading').hide();
         });
       }
     } + "}}"
@@ -291,7 +291,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def get_browser_timezone_offset
     unless session[:timezone_offset]
-      "jQuery.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
+      "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
     end
   end
 
@@ -388,14 +388,14 @@ module ApplicationHelper
     checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
     url = url_for(:action => :filter)
     onclick = %Q{
-      var query = jQuery('#query').val(),
+      var query = $('#query').val(),
           values = [];
-      jQuery('input[name=&quot;#{name}[]&quot;]').filter(':checked').each(function () {
+      $('input[name=&quot;#{name}[]&quot;]').filter(':checked').each(function () {
         values.push(this.value);
       });
-      jQuery('#loading').show();
-      jQuery.post('#{url}', {#{name}: values.join(','), query: query}, function () {
-        jQuery('#loading').hide();
+      $('#loading').show();
+      $.post('#{url}', {#{name}: values.join(','), query: query}, function () {
+        $('#loading').hide();
       });
     }.html_safe
     check_box_tag("#{name}[]", value, checked, :id => value, :onclick => onclick)
@@ -472,7 +472,7 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  # Generate the html for jQuery.timeago function
+  # Generate the html for $.timeago function
   # <span class="timeago" datetime="2008-07-17T09:24:17Z">July 17, 2008</span>
   def timeago(time, options = {})
     options[:class] ||= "timeago"

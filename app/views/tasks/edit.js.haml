@@ -3,7 +3,7 @@
 - if params[:cancel].true?     # <----------------- Hide [Edit Task]
 
   - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
-  jQuery('##{id}').html('#{ j render(:partial => partial, :collection => [ @task ], :locals => { :bucket => @task.bucket }) }');
+  $('##{id}').html('#{ j render(:partial => partial, :collection => [ @task ], :locals => { :bucket => @task.bucket }) }');
 
 - else # <----------------------------------------  Show [Edit Task] form.
 
@@ -14,7 +14,7 @@
   - if @previous
     - if @previous.is_a?(Task)
       - partial = (@previous.assigned_to && @previous.assigned_to != current_user.id) ? "assigned" : "pending"
-      jQuery('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => partial, :collection => [ @previous ], :locals => { :bucket => nil }) }');
+      $('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => partial, :collection => [ @previous ], :locals => { :bucket => nil }) }');
     - else
       crm.flick('task_#{@previous}', 'remove');
 
@@ -22,5 +22,5 @@
   crm.highlight_off('#{id}');
 
   -# Show [Edit Task] form.
-  jQuery('##{id}').html('#{ j render(:partial => "edit") }');
-  jQuery('#task_name').focus();
+  $('##{id}').html('#{ j render(:partial => "edit") }');
+  $('#task_name').focus();

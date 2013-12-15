@@ -1,9 +1,9 @@
 - if @user.errors.empty?
   crm.flip_form('edit_profile');
   crm.set_title('edit_profile', '#{j t(:my_profile)}');
-  jQuery('#welcome_username').html('#{j current_user.name}');
-  jQuery('#profile').html('#{ j render(:partial => "user") }');
+  $('#welcome_username').html('#{j current_user.name}');
+  $('#profile').html('#{ j render(:partial => "user") }');
 - else
-  jQuery('#edit_profile').html('#{ j render(:partial => "profile") }');
-  jQuery('#edit_profile').effect("shake", { duration:250, distance: 6 });
-  jQuery('#user_email').focus();
+  $('#edit_profile').html('#{ j render(:partial => "profile") }');
+  $('#edit_profile').effect("shake", { duration:250, distance: 6 });
+  $('#user_email').focus();

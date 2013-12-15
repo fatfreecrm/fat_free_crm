@@ -8,14 +8,14 @@
       - view = "pending"
     - else
       - view = "assigned"
-    jQuery('#tasks').prepend('#{ j render(:partial => "tasks/#{view}", :collection => [ @attachment ], :locals => { :bucket => @attachment.computed_bucket }) }');
+    $('#tasks').prepend('#{ j render(:partial => "tasks/#{view}", :collection => [ @attachment ], :locals => { :bucket => @attachment.computed_bucket }) }');
 
 
   - else
-    jQuery('##{h params[:assets]}').prepend('#{ j render(:partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]) }');
+    $('##{h params[:assets]}').prepend('#{ j render(:partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]) }');
     - if called_from_landing_page?(:accounts)
       = refresh_sidebar_for(:accounts, :show, :summary)
     - elsif called_from_landing_page?(:campaigns)
       = refresh_sidebar_for(:campaigns, :show, :summary)
 
-jQuery('##{partial}_#{h params[:asset_id]}').effect("highlight", { duration:1500 });
+$('##{partial}_#{h params[:asset_id]}').effect("highlight", { duration:1500 });

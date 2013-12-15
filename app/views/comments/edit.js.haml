@@ -1,11 +1,11 @@
 - id = dom_id(@comment)
 
 - if params[:cancel].true?     # <----------------- Hide [Edit Comment]
-  jQuery('##{id}').replaceWith('#{ j render(:partial => "comment", :collection => [ @comment ]) }');
+  $('##{id}').replaceWith('#{ j render(:partial => "comment", :collection => [ @comment ]) }');
 
 - else # <----------------------------------------- Show [Edit Comment] form.
 
   -# Disable onMouseOver for the list item.
   crm.highlight_off('#{id}');
-  jQuery('##{id}').html('#{ j render(:partial => "edit", :locals => { :commentable => @comment.commentable }) }');
-  jQuery('##{dom_id(@comment, :text)}').focus();
+  $('##{id}').html('#{ j render(:partial => "edit", :locals => { :commentable => @comment.commentable }) }');
+  $('##{dom_id(@comment, :text)}').focus();

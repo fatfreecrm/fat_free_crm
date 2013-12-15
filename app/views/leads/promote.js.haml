@@ -8,19 +8,19 @@
     crm.set_title('convert_#{entity_name}', '#{h @entity.full_name}');
     = refresh_sidebar(:show, :summary)
   - else
-    jQuery('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
-    jQuery('##{id}').effect("highlight", { duration:1500 });
+    $('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+    $('##{id}').effect("highlight", { duration:1500 });
     - if called_from_index_page?
       = refresh_sidebar(:index, :filters)
     - elsif called_from_landing_page?("campaigns")
       = refresh_sidebar_for(:campaigns, :show, :summary)
       - if @opportunity.id # Make sure the opportunity has been saved.
-        jQuery('#opportunities').prepend('#{ j render(:partial => "opportunities/opportunity", :collection => [ @opportunity ]) }');
+        $('#opportunities').prepend('#{ j render(:partial => "opportunities/opportunity", :collection => [ @opportunity ]) }');
     - else
-      jQuery('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+      $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
 
 - else  
-  jQuery('##{id}').html('#{ j render(:partial => "convert") }');
+  $('##{id}').html('#{ j render(:partial => "convert") }');
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
-  jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
-  jQuery('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();
+  $('##{id}').effect("shake", { duration:250, distance: 6 });
+  $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();

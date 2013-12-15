@@ -96,7 +96,7 @@ var Ratable = Class.create({
     this.options.callback(this.element, this.rating);
     if (this.options.remote_url) {
       var parameters = new Template(this.options.remote_parameters).evaluate({id: this.element.id, rating: this.rating});
-      jQuery.ajax(this.options.remote_url, { type: this.options.remote_method, data: parameters });
+      $.ajax(this.options.remote_url, { type: this.options.remote_method, data: parameters });
     }
   },  
 
@@ -152,7 +152,7 @@ var Rating = Class.create({
 
   //---------------------------------------------------------------------------
   parse: function() {
-    $$(this.class_name).each(function(element) {
+    $(this.class_name).each(function(element) {
       if (!this.elements.include(element)) {
         this.elements.push(element);
         new Ratable(element, this.options);

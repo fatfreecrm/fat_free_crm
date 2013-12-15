@@ -1,9 +1,9 @@
 - id = dom_id(@field_group)
 
 - if @field_group.destroyed?
-  jQuery('##{id}').css('background-color', '#ffe4e1').slideUp(250);
+  $('##{id}').css('background-color', '#ffe4e1').slideUp(250);
 - else
-  jQuery('##{id}').effect("shake", { distance:5 }, 250);
-  jQuery('#flash').html('#{ j t(:msg_cant_delete_field_group) }');
+  $('##{id}').effect("shake", { distance:5 }, 250);
+  $('#flash').html('#{ j t(:msg_cant_delete_field_group) }');
   crm.flash('warning');
   - flash[:warning] = nil

@@ -1,14 +1,14 @@
 - if called_from_index_page? # Completing from pending tasks view -- fade out task partial and update sidebar.
 
-  jQuery('##{dom_id(@task, :tools)}').hide();
-  jQuery('##{dom_id(@task)}').fadeOut({ duration:500 });
+  $('##{dom_id(@task, :tools)}').hide();
+  $('##{dom_id(@task)}').fadeOut({ duration:500 });
   - if @empty_bucket
-    jQuery('#list_#{@empty_bucket}').fadeOut({ duration:500 });
+    $('#list_#{@empty_bucket}').fadeOut({ duration:500 });
   = refresh_sidebar(:index, :filters)
 
 - else # Completing from the Asset page -- replace task partial with completed one.
 
-  jQuery('##{dom_id(@task)}').hide();
-  jQuery('##{dom_id(@task)}').html('#{ j render(:partial => "tasks/completed", :collection => [ @task ], :locals => { :bucket => nil }) }');
-  jQuery('##{dom_id(@task)}').fadeIn({ duration:500 });
-  jQuery('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+  $('##{dom_id(@task)}').hide();
+  $('##{dom_id(@task)}').html('#{ j render(:partial => "tasks/completed", :collection => [ @task ], :locals => { :bucket => nil }) }');
+  $('##{dom_id(@task)}').fadeIn({ duration:500 });
+  $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');

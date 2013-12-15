@@ -1,3 +1,3 @@
 - opportunities = entity.opportunities.order('updated_at DESC').paginate(:page => params[:page], :per_page => 20)
-jQuery('#opportunities').html('#{ j render(:partial => 'opportunities/opportunity', :collection => opportunities) }');
-jQuery('#opportunities_pagination').html('#{ j will_paginate(opportunities, :container => false, :params => {:action => :opportunities}) }');
+$('#opportunities').html('#{ j render(:partial => 'opportunities/opportunity', :collection => opportunities) }');
+$('#opportunities_pagination').html('#{ j will_paginate(opportunities, :container => false, :params => {:action => :opportunities}) }');

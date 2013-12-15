@@ -6,7 +6,7 @@
 module SelectorHelpers
   def chosen_select(item_text, options)
     field_id = find_field(options[:from], :visible => false)[:id]
-    option_value = page.evaluate_script("jQuery(\"##{field_id} option:contains('#{item_text}')\").val()")#page.evaluate_script("$(\"##{field_id} option:contains('#{item_text}')\").val()")
+    option_value = page.evaluate_script("jQuery(\"##{field_id} option:contains('#{item_text}')\").val()")
     page.execute_script("jQuery('##{field_id}').val('#{option_value}')")
   end
 

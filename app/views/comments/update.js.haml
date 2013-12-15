@@ -1,9 +1,9 @@
 - id = dom_id(@comment)
 
 - if @comment.errors.empty?
-  jQuery('##{id}').replaceWith('#{ j render(:partial => "comment", :collection => [ @comment ]) }');
-  jQuery('##{id}').effect("highlight", { duration:1500 });
+  $('##{id}').replaceWith('#{ j render(:partial => "comment", :collection => [ @comment ]) }');
+  $('##{id}').effect("highlight", { duration:1500 });
 - else
-  jQuery('##{id}').html('#{ j render(:partial => "edit") }');
-  jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
-  jQuery('#comment_comment').focus();
+  $('##{id}').html('#{ j render(:partial => "edit") }');
+  $('##{id}').effect("shake", { duration:250, distance: 6 });
+  $('#comment_comment').focus();
