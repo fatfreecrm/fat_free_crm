@@ -179,11 +179,11 @@
     flip_subtitle: (el) ->
       $el = $(el)
       arrow = $el.find("small")
-      intro = $el.parent().next().find("small")
+      intro = $el.parent().next().children("small")
  
       # Optionally, the intro might be next to the link.
       intro = $el.next("small")  unless intro.length
-      section = $el.parent().next().find("div")
+      section = $el.parent().next().children("div")
       section.slideToggle(
         250
         =>
