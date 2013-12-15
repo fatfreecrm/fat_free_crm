@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'jquery-rails',        '~> 2.1.4' # pegs us to jQuery 1.8
   gem.add_dependency 'select2-rails'
   gem.add_dependency 'simple_form',         '~> 2.0.1'
-  gem.add_dependency 'will_paginate',       '~> 3.0.2'
+  gem.add_dependency 'will_paginate'
   gem.add_dependency 'paperclip'
   # Manually added paperclip gem dependency "cocaine" in order to fix load error: "no such file to load -- cocaine"
   gem.add_dependency 'cocaine'

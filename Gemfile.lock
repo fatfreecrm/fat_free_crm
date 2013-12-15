@@ -355,5 +355,5 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   valium
-  will_paginate (~> 3.0.2)
+  will_paginate
   zeus

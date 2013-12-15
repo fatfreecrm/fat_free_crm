@@ -77,11 +77,10 @@
 
     #----------------------------------------------------------------------------
     focus_on_first_field: ->
-      if $("form").length
-        first_element = $("form:input").first()
-        if first_element
-          first_element.focus()
-          first_element.value = first_element.value
+      first_element = $("form:input").first()
+      if first_element.length
+        first_element.focus()
+        first_element.val first_element.val()
       else $("#query").focus()
 
 
@@ -421,27 +420,21 @@
   $ ->
     crm.focus_on_first_field()
 
-    # the element in which we will on all clicks and capture
-    # ones originating from pagination links
-    container = $(document.body)
-    if container
-      createSpinner = ->
-        $("<img>",
-          src: img.src
-          class: "spinner"
-        )
-      img = new Image
-      img.src = crm.base_url + "/assets/loading.gif"
-      container.on "click", (event) ->
-        $el = $(event.target)
-        if $el.parent().hasClass("pagination")
-          $el.parent(".pagination").html createSpinner()
-          $.get $el.attr('href')
-          event.preventDefault()
-        if $el.parent().hasClass(".per_page_options")
-          $el.parent(".per_page_options").html createSpinner()
-          $.post $el.attr('href')
-          event.preventDefault()
+    createSpinner = ->
+      $("<img>",
+        src: img.src
+        class: "spinner"
+      )
+    img = new Image
+    img.src = crm.base_url + "/assets/loading.gif"
+
+    $(document).on 'ajax:send', '.pagination, .per_page_options', ->
+      $(this).find('a').disable()
+      $(this).append createSpinner()
+
+    $(document).on 'ajax:complete', '.pagination, .per_page_options', ->
+      $(this).find('a').enable()
+      $(this).children('.spinner').remove()
 
 
   # Admin Field Tabs

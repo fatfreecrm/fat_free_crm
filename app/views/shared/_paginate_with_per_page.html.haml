@@ -1,14 +1,11 @@
+= paginate :params => {:action => :index}
 
-= will_paginate :params => {:action => :index}
+.per_page_options
+  %span.per_page_label
+    = t('entities_per_page', :entity => t(controller_name))
 
-- entities = instance_variable_get("@#{controller_name}")
-- if entities.count > @per_page.to_i
-  .per_page_options
-    %span.per_page_label
-      = t('entities_per_page', :entity => t(controller_name))
-
-    - [ 10, 20, 30, 50 ].each do |count|
-      - if count == @per_page.to_i
-        %em.current= count
-      - else
-        = link_to count, send("redraw_#{controller.controller_name}_path", :per_page => count, :query => params[:query], :q => params[:q])
+  - [ 10, 20, 30, 50 ].each do |count|
+    - if count == @per_page.to_i
+      %em.current= count
+    - else
+      = link_to count, send("redraw_#{controller.controller_name}_path", :per_page => count, :query => params[:query], :q => params[:q]), :remote => true, 'data-method' => 'post'
