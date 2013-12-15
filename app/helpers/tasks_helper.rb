@@ -46,8 +46,8 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_complete(pending, bucket)
-    onclick = %Q{$("##{dom_id(pending, :name)}").css(textDecoration: "line-through");}
-    onclick << %Q{$.ajax(#{complete_task_path(pending)}, {type: 'PUT', data: {bucket: '#{bucket}'}});}
+    onclick = %Q{$("##{dom_id(pending, :name)}").css({textDecoration: "line-through"});}
+    onclick << %Q{$.ajax("#{complete_task_path(pending)}", {type: "PUT", data: {bucket: "#{bucket}"}});}
   end
 
   # Task summary for RSS/ATOM feed.
