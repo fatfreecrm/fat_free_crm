@@ -19,7 +19,7 @@ describe "admin/users/index" do
     
     rendered.should include("id=\\'user_#{amy.id}\\'")
     rendered.should include("id=\\'user_#{bob.id}\\'")
-    rendered.should include("jQuery('#paginate')")
+    rendered.should include("$('#paginate')")
   end
 
 end

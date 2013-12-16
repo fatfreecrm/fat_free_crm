@@ -34,14 +34,16 @@
     #   
     hide_form: (id) ->
       $("#facebook-list").remove()
-      arrow = $("#" + id + "_arrow") or $("#arrow")
+      arrow = $("#" + id + "_arrow")
+      arrow = $("#arrow") unless arrow.length
       arrow.html(@COLLAPSED)
       $("#" + id).hide().html("").css height: "auto"
 
 
     #----------------------------------------------------------------------------
     show_form: (id) ->
-      arrow = $("#" + id + "_arrow") or $("#arrow")
+      arrow = $("#" + id + "_arrow")
+      arrow = $("#arrow") unless arrow.length
       arrow.html(@EXPANDED)
       $("#" + id).slideDown(
         250
@@ -61,7 +63,8 @@
 
     #----------------------------------------------------------------------------
     set_title: (id, caption) ->
-      title = $("#" + id + "_title") or $("#title")
+      title = $("#" + id + "_title")
+      title = $("#title") unless title.length
       if typeof (caption) is "undefined"
         words = id.split("_")
         if words.length is 1
@@ -97,7 +100,7 @@
       $("#account_id_chzn").hide()
       $("#account_id").disable()
       $("#account_name").enable()
-      $("#account_name").clear()
+      $("#account_name").html ""
       $("#account_name").show()
       $("#account_name").focus()  if and_focus
 

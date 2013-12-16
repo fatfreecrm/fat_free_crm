@@ -31,7 +31,7 @@ describe "/campaigns/update" do
         rendered.should include("#sidebar")
         rendered.should have_text("Campaign Summary")
         rendered.should have_text("Recent Items")
-        rendered.should include("jQuery('#summary').effect('shake'")
+        rendered.should include("$('#summary').effect('shake'")
       end
     end
 
@@ -42,8 +42,8 @@ describe "/campaigns/update" do
 
       it "should replace [Edit Campaign] with campaign partial and highlight it" do
         render
-        rendered.should include("jQuery('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
-        rendered.should include(%Q/jQuery('#campaign_#{@campaign.id}').effect("highlight"/)
+        rendered.should include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+        rendered.should include(%Q/$('#campaign_#{@campaign.id}').effect("highlight"/)
       end
     end
   end # no errors
@@ -57,8 +57,8 @@ describe "/campaigns/update" do
 
       it "should redraw the [edit_campaign] form and shake it" do
         render
-        rendered.should include("jQuery('#edit_campaign').html")
-        rendered.should include(%Q/jQuery('#edit_campaign').effect("shake"/)
+        rendered.should include("$('#edit_campaign').html")
+        rendered.should include(%Q/$('#edit_campaign').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -71,8 +71,8 @@ describe "/campaigns/update" do
 
       it "should redraw the [edit_campaign] form and shake it" do
         render
-        rendered.should include("jQuery('#campaign_#{@campaign.id}').html")
-        rendered.should include(%Q/jQuery('#campaign_#{@campaign.id}').effect("shake"/)
+        rendered.should include("$('#campaign_#{@campaign.id}').html")
+        rendered.should include(%Q/$('#campaign_#{@campaign.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end

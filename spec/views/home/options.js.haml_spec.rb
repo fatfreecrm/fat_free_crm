@@ -21,8 +21,8 @@ describe "/home/options" do
 
     render
 
-    rendered.should include("jQuery('#options').html")
-    rendered.should include("onLoading:function(request){$(\\'asset\\').update(\\'campaign\\'); $(\\'loading\\').show()}")
+    rendered.should include("$('#options').html")
+    rendered.should include("$(\\'#asset\\').html(\\'campaign\\')")
     rendered.should include("crm.flip_form('options')")
     rendered.should include("crm.set_title('title', 'Recent Activity Options')")
   end
@@ -44,7 +44,7 @@ describe "/home/options" do
     params[:cancel] = "true"
     render
 
-    rendered.should_not include("jQuery('#options').html")
+    rendered.should_not include("$('#options').html")
     rendered.should include("crm.flip_form('options')")
     rendered.should include("crm.set_title('title', 'Recent Activity')")
   end

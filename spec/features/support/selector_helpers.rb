@@ -6,8 +6,8 @@
 module SelectorHelpers
   def chosen_select(item_text, options)
     field_id = find_field(options[:from], :visible => false)[:id]
-    option_value = page.evaluate_script("jQuery(\"##{field_id} option:contains('#{item_text}')\").val()")
-    page.execute_script("jQuery('##{field_id}').val('#{option_value}')")
+    option_value = page.evaluate_script("$(\"##{field_id} option:contains('#{item_text}')\").val()")
+    page.execute_script("$('##{field_id}').val('#{option_value}')")
   end
 
   def click_filter_tab(filter_name)
@@ -17,13 +17,13 @@ module SelectorHelpers
 
   def click_edit_for_task_id(task_id)
     within("#task_#{task_id}") do
-      page.execute_script "jQuery('#task_#{task_id} a')[0].click()"
+      page.execute_script "$('#task_#{task_id} a')[0].click()"
     end
   end
 
   def click_delete_for_task_id(task_id)
     within("#task_#{task_id}") do
-      page.execute_script "jQuery('#task_#{task_id} a')[1].click()"
+      page.execute_script "$('#task_#{task_id} a')[1].click()"
     end
   end
 end

@@ -21,7 +21,7 @@ describe "admin/users/create" do
 
       rendered.should include(@user.full_name)
       rendered.should include(@user.username)
-      rendered.should include(%Q/jQuery('#user_#{@user.id}').effect("highlight"/)
+      rendered.should include(%Q/$('#user_#{@user.id}').effect("highlight"/)
     end
 
     # it "should update pagination" do
@@ -36,7 +36,7 @@ describe "admin/users/create" do
       render
 
       rendered.should include('Please specify username')
-      rendered.should include(%Q/jQuery('#create_user').effect("shake"/)
+      rendered.should include(%Q/$('#create_user').effect("shake"/)
     end
   end
 

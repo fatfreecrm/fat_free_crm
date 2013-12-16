@@ -21,12 +21,12 @@ describe "/users/update" do
 
     it "should update Welcome, user!" do
       render
-      rendered.should include("jQuery('#welcome_username').html('#{@user.first_name}')")
+      rendered.should include("$('#welcome_username').html('#{@user.first_name}')")
     end
 
     it "should update actual user profile information" do
       render
-      rendered.should include("jQuery('#profile').html")
+      rendered.should include("$('#profile').html")
     end
   end # no errors
 
@@ -37,9 +37,9 @@ describe "/users/update" do
 
     it "should redraw the [Edit Profile] form and shake it" do
       render
-      rendered.should include("jQuery('#edit_profile').html")
-      rendered.should include(%Q/jQuery('#edit_profile').effect("shake"/)
-      rendered.should include("jQuery('#user_email').focus();")
+      rendered.should include("$('#edit_profile').html")
+      rendered.should include(%Q/$('#edit_profile').effect("shake"/)
+      rendered.should include("$('#user_email').focus();")
     end
 
   end # errors

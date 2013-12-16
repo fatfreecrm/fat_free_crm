@@ -37,8 +37,8 @@ describe "/users/upload_avatar" do
 
     it "should redraw the [Upload Avatar] form and shake it" do
       render
-      rendered.should include("jQuery('#upload_avatar').html")
-      rendered.should include(%Q/jQuery('#upload_avatar').effect("shake"/)
+      rendered.should include("$('#upload_avatar').html")
+      rendered.should include(%Q/$('#upload_avatar').effect("shake"/)
     end
   end # errors
 end

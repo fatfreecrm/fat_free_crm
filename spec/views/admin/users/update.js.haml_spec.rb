@@ -16,7 +16,7 @@ describe "admin/users/update" do
       render
 
       rendered.should include("user_#{@user.id}")
-      rendered.should include(%Q/jQuery('#user_#{@user.id}').effect("highlight"/)
+      rendered.should include(%Q/$('#user_#{@user.id}').effect("highlight"/)
     end
   end # no errors
 
@@ -29,8 +29,8 @@ describe "admin/users/update" do
       render
 
       rendered.should include("user_#{@user.id}")
-      rendered.should include(%Q/jQuery('#user_#{@user.id}').effect("shake"/)
-      rendered.should include(%Q/jQuery('#user_username').focus()/)
+      rendered.should include(%Q/$('#user_#{@user.id}').effect("shake"/)
+      rendered.should include(%Q/$('#user_username').focus()/)
     end
   end # errors
 end

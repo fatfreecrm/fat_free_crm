@@ -28,7 +28,7 @@ describe "/contacts/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("jQuery('#create_contact').html")
+      rendered.should include("$('#create_contact').html")
       rendered.should include("crm.create_or_select_account(false)")
     end
   end
@@ -38,7 +38,7 @@ describe "/contacts/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not include("jQuery('#create_contact').html")
+      rendered.should_not include("$('#create_contact').html")
       rendered.should include("crm.flip_form('create_contact');")
     end
   end

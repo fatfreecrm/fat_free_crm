@@ -15,23 +15,23 @@ describe "/leads/reject" do
   it "should refresh current lead partial" do
     render
 
-    rendered.should include("jQuery('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-    rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("highlight"/)
+    rendered.should include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+    rendered.should include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
   end
 
   it "should update sidebar filters when called from index page" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render
 
-    rendered.should include("jQuery('#sidebar').html")
-    rendered.should include("jQuery('#filters').effect('shake'")
+    rendered.should include("$('#sidebar').html")
+    rendered.should include("$('#filters').effect('shake'")
   end
 
   it "should update sidebar summary when called from landing page" do
     render
 
-    rendered.should include("jQuery('#sidebar').html")
-    rendered.should include("jQuery('#summary').effect('shake'")
+    rendered.should include("$('#sidebar').html")
+    rendered.should include("$('#summary').effect('shake'")
   end
 
   it "should update campaign sidebar if called from campaign landing page" do

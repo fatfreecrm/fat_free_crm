@@ -18,7 +18,7 @@ describe "/campaigns/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include("jQuery('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+    rendered.should include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
   end
 
   it "cancel from campaign landing page: should hide [Edit Campaign] form" do
@@ -34,7 +34,7 @@ describe "/campaigns/edit" do
     assign(:previous, previous = FactoryGirl.create(:campaign, :user => current_user))
 
     render
-    rendered.should include("jQuery('#campaign_#{previous.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{previous.id}\\'")
+    rendered.should include("$('#campaign_#{previous.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{previous.id}\\'")
   end
 
   it "edit: should remove previously open [Edit Campaign] if it's no longer available" do
@@ -51,14 +51,14 @@ describe "/campaigns/edit" do
     render
     rendered.should include(%Q/crm.highlight_off('campaign_#{@campaign.id}');/)
     rendered.should include("crm.hide_form('create_campaign')")
-    rendered.should include("jQuery('#campaign_#{@campaign.id}').html")
+    rendered.should include("$('#campaign_#{@campaign.id}').html")
   end
 
   it "edit from campaign landing page: should show [Edit Campaign] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should include("jQuery('#edit_campaign').html")
+    rendered.should include("$('#edit_campaign').html")
     rendered.should include("crm.flip_form('edit_campaign')")
   end
 

@@ -53,7 +53,7 @@ describe CampaignsController do
     end
 
     it "recognizes and generates #auto_complete" do
-      { :post => "/campaigns/auto_complete" }.should route_to( :controller => "campaigns", :action => "auto_complete" )
+      { :get => "/campaigns/auto_complete" }.should route_to( :controller => "campaigns", :action => "auto_complete" )
     end
 
     it "recognizes and generates #filter" do

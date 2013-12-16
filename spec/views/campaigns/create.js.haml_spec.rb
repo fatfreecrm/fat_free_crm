@@ -19,8 +19,8 @@ describe "/campaigns/create" do
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
-      rendered.should include("jQuery('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
-      rendered.should include(%Q/jQuery('#campaign_#{@campaign.id}').effect("highlight"/)
+      rendered.should include("$('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+      rendered.should include(%Q/$('#campaign_#{@campaign.id}').effect("highlight"/)
     end
 
     it "should update pagination" do
@@ -41,8 +41,8 @@ describe "/campaigns/create" do
 
       render
 
-      rendered.should include("jQuery('#create_campaign').html")
-      rendered.should include(%Q/jQuery('#create_campaign').effect("shake"/)
+      rendered.should include("$('#create_campaign').html")
+      rendered.should include(%Q/$('#create_campaign').effect("shake"/)
     end
   end
 

@@ -30,7 +30,7 @@ describe "/tasks/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("jQuery('#create_task').html")
+      rendered.should include("$('#create_task').html")
       rendered.should include("crm.flip_form('create_task');")
     end
   end
@@ -40,7 +40,7 @@ describe "/tasks/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not include("jQuery('#create_task').html")
+      rendered.should_not include("$('#create_task').html")
       rendered.should include("crm.flip_form('create_task');")
     end
   end

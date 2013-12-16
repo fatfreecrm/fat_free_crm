@@ -23,8 +23,8 @@ describe "/accounts/create" do
     end
 
     it "should hide [Create Account] form and insert account partial" do
-      rendered.should include("jQuery('#accounts').prepend('<li class=\\'account highlight\\' id=\\'account_#{@account.id}\\'")
-      rendered.should include(%Q/jQuery('#account_#{@account.id}').effect("highlight"/)
+      rendered.should include("$('#accounts').prepend('<li class=\\'account highlight\\' id=\\'account_#{@account.id}\\'")
+      rendered.should include(%Q/$('#account_#{@account.id}').effect("highlight"/)
     end
 
     it "should update pagination" do
@@ -45,7 +45,7 @@ describe "/accounts/create" do
       render
 
       rendered.should include("#create_account")
-      rendered.should include(%Q/jQuery('#create_account').effect("shake"/)
+      rendered.should include(%Q/$('#create_account').effect("shake"/)
     end
   end
 

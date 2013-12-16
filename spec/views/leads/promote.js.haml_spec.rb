@@ -37,7 +37,7 @@ describe "/leads/promote" do
         rendered.should include("#sidebar")
         rendered.should have_text("Lead Summary")
         rendered.should have_text("Recent Items")
-        rendered.should include("jQuery('#summary').effect('shake'")
+        rendered.should include("$('#summary').effect('shake'")
       end
     end
 
@@ -48,8 +48,8 @@ describe "/leads/promote" do
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
-        rendered.should include("jQuery('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-        rendered.should include("jQuery('#filters').effect('shake'")
+        rendered.should include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        rendered.should include("$('#filters').effect('shake'")
       end
 
       it "should update sidebar" do
@@ -57,7 +57,7 @@ describe "/leads/promote" do
         rendered.should include("#sidebar")
         rendered.should have_text("Lead Status")
         rendered.should have_text("Recent Items")
-        rendered.should include("jQuery('#filters').effect('shake'")
+        rendered.should include("$('#filters').effect('shake'")
       end
     end
 
@@ -71,8 +71,8 @@ describe "/leads/promote" do
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
-        rendered.should include("jQuery('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-        rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("highlight"/)
+        rendered.should include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        rendered.should include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
       end
 
       it "should update campaign sidebar" do
@@ -86,7 +86,7 @@ describe "/leads/promote" do
       it "should insert new opportunity if any" do
         render
 
-        rendered.should include("jQuery('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
+        rendered.should include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
       end
 
     end
@@ -104,8 +104,8 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should include("jQuery('#convert_lead').html")
-        rendered.should include(%Q/jQuery('#convert_lead').effect("shake"/)
+        rendered.should include("$('#convert_lead').html")
+        rendered.should include(%Q/$('#convert_lead').effect("shake"/)
       end
     end
 
@@ -116,8 +116,8 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should include("jQuery('#lead_#{@lead.id}').html")
-        rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("shake"/)
+        rendered.should include("$('#lead_#{@lead.id}').html")
+        rendered.should include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 
@@ -128,8 +128,8 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should include("jQuery('#lead_#{@lead.id}').html")
-        rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("shake"/)
+        rendered.should include("$('#lead_#{@lead.id}').html")
+        rendered.should include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 

@@ -17,7 +17,7 @@ describe "/leads/index" do
 
     render :template => 'leads/index', :formats => [:js]
     
-    rendered.should include("jQuery('#leads').html('<li class=\\'highlight lead\\' id=\\'lead_42\\'")
+    rendered.should include("$('#leads').html('<li class=\\'highlight lead\\' id=\\'lead_42\\'")
     rendered.should include("#paginate")
   end
 
@@ -26,7 +26,7 @@ describe "/leads/index" do
 
     render :template => 'leads/index', :formats => [:js]
     
-    rendered.should include("jQuery('#leads').html('<div id=\\'empty\\'>")
+    rendered.should include("$('#leads').html('<div id=\\'empty\\'>")
     rendered.should include("#paginate")
   end
 

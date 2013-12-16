@@ -24,7 +24,7 @@ describe "/tasks/edit" do
       assign(:task, @task)
 
       render
-      rendered.should include("jQuery('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      rendered.should include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
       if view == "pending"
         rendered.should include('type=\\"checkbox\\"')
       else
@@ -47,7 +47,7 @@ describe "/tasks/edit" do
       assign(:task, stub_task(view))
 
       render
-      rendered.should include("jQuery('#task_#{@previous.id}').replaceWith")
+      rendered.should include("$('#task_#{@previous.id}').replaceWith")
     end
 
     it "edit: should remove previous [Edit Task] form if previous task is not available" do
@@ -67,9 +67,9 @@ describe "/tasks/edit" do
 
       render
       rendered.should include("crm.highlight_off('task_#{@task.id}');")
-      rendered.should include("jQuery('#task_#{@task.id}').html")
+      rendered.should include("$('#task_#{@task.id}').html")
       rendered.should have_text("On Specific Date")
-      rendered.should include("jQuery('#task_name').focus();")
+      rendered.should include("$('#task_name').focus();")
     end
 
   end

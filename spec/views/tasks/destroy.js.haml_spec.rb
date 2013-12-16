@@ -27,17 +27,17 @@ describe "/tasks/destroy" do
 
         render
         rendered.should include("slideUp")
-        rendered.should include("jQuery('#list_due_asap').fadeOut")
+        rendered.should include("$('#list_due_asap').fadeOut")
       end
 
       it "should update tasks sidebar" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
         render
-        rendered.should include("jQuery('#sidebar').html")
+        rendered.should include("$('#sidebar').html")
         rendered.should have_text("Recent Items")
         rendered.should have_text("Completed")
-        rendered.should include("jQuery('#filters').effect('shake'")
+        rendered.should include("$('#filters').effect('shake'")
       end
     end
   end

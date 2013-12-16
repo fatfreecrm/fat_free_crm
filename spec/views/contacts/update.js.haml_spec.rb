@@ -32,7 +32,7 @@ describe "/contacts/update" do
         render
         rendered.should include("#sidebar")
         rendered.should have_text("Recent Items")
-        rendered.should include("jQuery('#summary').effect('shake'")
+        rendered.should include("$('#summary').effect('shake'")
       end
     end
 
@@ -45,8 +45,8 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render
-        rendered.should include("jQuery('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
-        rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("highlight"/)
+        rendered.should include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        rendered.should include(%Q/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -65,8 +65,8 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render
-        rendered.should include("jQuery('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
-        rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("highlight"/)
+        rendered.should include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        rendered.should include(%Q/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
       it "should update recently viewed items" do
@@ -88,9 +88,9 @@ describe "/contacts/update" do
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should include("jQuery('#edit_contact').html")
+        rendered.should include("$('#edit_contact').html")
         rendered.should include('crm.create_or_select_account(false)')
-        rendered.should include(%Q/jQuery('#edit_contact').effect("shake"/)
+        rendered.should include(%Q/$('#edit_contact').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -102,9 +102,9 @@ describe "/contacts/update" do
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should include("jQuery('#contact_#{@contact.id}').html")
+        rendered.should include("$('#contact_#{@contact.id}').html")
         rendered.should include('crm.create_or_select_account(false)')
-        rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("shake"/)
+        rendered.should include(%Q/$('#contact_#{@contact.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -121,8 +121,8 @@ describe "/contacts/update" do
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should include("jQuery('#contact_#{@contact.id}').html")
-        rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("shake"/)
+        rendered.should include("$('#contact_#{@contact.id}').html")
+        rendered.should include(%Q/$('#contact_#{@contact.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end

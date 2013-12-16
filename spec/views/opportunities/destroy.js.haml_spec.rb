@@ -25,7 +25,7 @@ describe "/opportunities/destroy" do
 
     rendered.should include("#sidebar")
     rendered.should have_text("Recent Items")
-    rendered.should include("jQuery('#filters').effect('shake'")
+    rendered.should include("$('#filters').effect('shake'")
   end
 
   it "should update pagination when called from opportunities index" do

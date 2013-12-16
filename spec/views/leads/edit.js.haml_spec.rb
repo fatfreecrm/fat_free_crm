@@ -19,7 +19,7 @@ describe "/leads/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include("jQuery('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+    rendered.should include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
   end
 
   it "cancel from lead landing page: should hide [Edit Lead] form" do
@@ -35,7 +35,7 @@ describe "/leads/edit" do
     assign(:previous, previous = FactoryGirl.create(:lead, :user => current_user))
 
     render
-    rendered.should include("jQuery('#lead_#{previous.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{previous.id}\\'")
+    rendered.should include("$('#lead_#{previous.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{previous.id}\\'")
   end
 
   it "edit: should remove previously open [Edit Lead] if it's no longer available" do
@@ -52,14 +52,14 @@ describe "/leads/edit" do
     render
     rendered.should include("crm.highlight_off('lead_#{@lead.id}');")
     rendered.should include("crm.hide_form('create_lead')")
-    rendered.should include("jQuery('#lead_#{@lead.id}').html")
+    rendered.should include("$('#lead_#{@lead.id}').html")
   end
 
   it "edit from lead landing page: should hide [Convert Lead] and show [Edit Lead] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should include("jQuery('#edit_lead').html")
+    rendered.should include("$('#edit_lead').html")
     rendered.should include("crm.hide_form('convert_lead'")
     rendered.should include("crm.flip_form('edit_lead'")
   end

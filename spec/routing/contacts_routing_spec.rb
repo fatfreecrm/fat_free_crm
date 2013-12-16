@@ -53,7 +53,7 @@ describe ContactsController do
     end
 
     it "recognizes and generates #auto_complete" do
-      { :post => "/contacts/auto_complete" }.should route_to( :controller => "contacts", :action => "auto_complete" )
+      { :get => "/contacts/auto_complete" }.should route_to( :controller => "contacts", :action => "auto_complete" )
     end
   end
 end

@@ -22,8 +22,8 @@ describe "/leads/create" do
     it "should hide [Create Lead] form and insert lead partial" do
       render
 
-      rendered.should include("jQuery('#leads').prepend('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-      rendered.should include(%Q/jQuery('#lead_#{@lead.id}').effect("highlight"/)
+      rendered.should include("$('#leads').prepend('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+      rendered.should include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
     end
 
     it "should update sidebar when called from leads index" do
@@ -33,7 +33,7 @@ describe "/leads/create" do
       rendered.should include("#sidebar")
       rendered.should have_text("Lead Statuses")
       rendered.should include("Recent Items")
-      rendered.should include("jQuery('#filters').effect('shake'")
+      rendered.should include("$('#filters').effect('shake'")
     end
 
     it "should update pagination when called from leads index" do
@@ -61,8 +61,8 @@ describe "/leads/create" do
 
       render
 
-      rendered.should include("jQuery('#create_lead').html")
-      rendered.should include(%Q/jQuery('#create_lead').effect("shake"/)
+      rendered.should include("$('#create_lead').html")
+      rendered.should include(%Q/$('#create_lead').effect("shake"/)
     end
   end
 end

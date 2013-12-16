@@ -18,7 +18,7 @@ describe "admin/field_groups/edit" do
     render
     view.should render_template("admin/field_groups/edit")
     rendered.should have_text("crm.show_form('#{dom_id(field_group, :edit)}')")
-    rendered.should have_text("jQuery('##{dom_id(field_group, :edit)}').html")
+    rendered.should have_text("$('##{dom_id(field_group, :edit)}').html")
   end
 
 end

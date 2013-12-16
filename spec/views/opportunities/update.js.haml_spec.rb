@@ -34,7 +34,7 @@ describe "/opportunities/update" do
         rendered.should include("#sidebar")
         rendered.should have_text("Opportunity At a Glance")
         rendered.should have_text("Recent Items")
-        rendered.should include("jQuery('#summary').effect('shake'")
+        rendered.should include("$('#summary').effect('shake'")
       end
     end
 
@@ -45,8 +45,8 @@ describe "/opportunities/update" do
 
       it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
         render
-        rendered.should include("jQuery('#opportunity_#{@opportunity.id}').replaceWith")
-        rendered.should include(%Q/jQuery('#opportunity_#{@opportunity.id}').effect("highlight"/)
+        rendered.should include("$('#opportunity_#{@opportunity.id}').replaceWith")
+        rendered.should include(%Q/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -54,7 +54,7 @@ describe "/opportunities/update" do
         rendered.should include("sidebar")
         rendered.should have_text("Opportunity Stages")
         rendered.should have_text("Recent Items")
-        rendered.should include("jQuery('#filters').effect('shake'")
+        rendered.should include("$('#filters').effect('shake'")
       end
     end
 
@@ -90,7 +90,7 @@ describe "/opportunities/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
         render
 
-        rendered.should include(%Q/jQuery('#opportunity_#{@opportunity.id}').effect("highlight"/)
+        rendered.should include(%Q/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
       end
     end
   end
@@ -107,9 +107,9 @@ describe "/opportunities/update" do
 
       it "should redraw the [edit_opportunity] form and shake it" do
         render
-        rendered.should include("jQuery('#edit_opportunity').html")
+        rendered.should include("$('#edit_opportunity').html")
         rendered.should include('crm.create_or_select_account(false)')
-        rendered.should include(%Q/jQuery('#edit_opportunity').effect("shake"/)
+        rendered.should include(%Q/$('#edit_opportunity').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -121,9 +121,9 @@ describe "/opportunities/update" do
 
       it "should redraw the [edit_opportunity] form and shake it" do
         render
-        rendered.should include("jQuery('#opportunity_#{@opportunity.id}').html")
+        rendered.should include("$('#opportunity_#{@opportunity.id}').html")
         rendered.should include('crm.create_or_select_account(false)')
-        rendered.should include(%Q/jQuery('#opportunity_#{@opportunity.id}').effect("shake"/)
+        rendered.should include(%Q/$('#opportunity_#{@opportunity.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -140,8 +140,8 @@ describe "/opportunities/update" do
 
       it "should redraw the [edit_opportunity] form and shake it" do
         render
-        rendered.should include("jQuery('#opportunity_#{@opportunity.id}').html")
-        rendered.should include(%Q/jQuery('#opportunity_#{@opportunity.id}').effect("shake"/)
+        rendered.should include("$('#opportunity_#{@opportunity.id}').html")
+        rendered.should include(%Q/$('#opportunity_#{@opportunity.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end

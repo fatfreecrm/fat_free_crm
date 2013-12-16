@@ -22,7 +22,7 @@ describe "/opportunities/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include("jQuery('#opportunity_#{@opportunity.id}').replaceWith")
+    rendered.should include("$('#opportunity_#{@opportunity.id}').replaceWith")
   end
 
   it "cancel from opportunity landing page: should hide [Edit Opportunity] form" do
@@ -38,7 +38,7 @@ describe "/opportunities/edit" do
     assign(:previous, previous = FactoryGirl.create(:opportunity, :user => current_user))
 
     render
-    rendered.should include("jQuery('#opportunity_#{previous.id}').replaceWith")
+    rendered.should include("$('#opportunity_#{previous.id}').replaceWith")
   end
 
   it "edit: remove previously open [Edit Opportunity] if it's no longer available" do
@@ -55,14 +55,14 @@ describe "/opportunities/edit" do
     render
     rendered.should include("crm.highlight_off('opportunity_#{@opportunity.id}');")
     rendered.should include("crm.hide_form('create_opportunity')")
-    rendered.should include("jQuery('#opportunity_#{@opportunity.id}').html")
+    rendered.should include("$('#opportunity_#{@opportunity.id}').html")
   end
 
   it "edit from opportunity landing page: should show [Edit Opportunity] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should include("jQuery('#edit_opportunity').html")
+    rendered.should include("$('#edit_opportunity').html")
     rendered.should include("crm.flip_form('edit_opportunity'")
   end
 

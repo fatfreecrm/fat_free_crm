@@ -20,7 +20,7 @@ describe "/contacts/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include("jQuery('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+    rendered.should include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
   end
 
   it "cancel from contact landing page: should hide [Edit Contact] form" do
@@ -36,7 +36,7 @@ describe "/contacts/edit" do
     assign(:previous, previous = FactoryGirl.create(:contact, :user => current_user))
 
     render
-    rendered.should include("jQuery('#contact_#{previous.id}').replaceWith")
+    rendered.should include("$('#contact_#{previous.id}').replaceWith")
   end
 
   it "edit: should hide and remove previously open [Edit Contact] if it's no longer available" do
@@ -53,7 +53,7 @@ describe "/contacts/edit" do
     render
     rendered.should include("crm.highlight_off('contact_#{@contact.id}');")
     rendered.should include("crm.hide_form('create_contact')")
-    rendered.should include("jQuery('#contact_#{@contact.id}').html")
+    rendered.should include("$('#contact_#{@contact.id}').html")
     rendered.should include("crm.create_or_select_account(false)")
   end
 
@@ -61,7 +61,7 @@ describe "/contacts/edit" do
     params[:cancel] = "false"
 
     render
-    rendered.should include("jQuery('#edit_contact').html")
+    rendered.should include("$('#edit_contact').html")
     rendered.should include("crm.flip_form('edit_contact'")
   end
 

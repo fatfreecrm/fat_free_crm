@@ -21,8 +21,8 @@ describe "/opportunities/create" do
     it "should hide [Create Opportunity] form and insert opportunity partial" do
       render
 
-      rendered.should include("jQuery('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}\\'")
-      rendered.should include(%Q/jQuery('#opportunity_#{@opportunity.id}').effect("highlight"/)
+      rendered.should include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}\\'")
+      rendered.should include(%Q/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
     end
 
     it "should update sidebar filters and recently viewed items when called from opportunities page" do
@@ -78,8 +78,8 @@ describe "/opportunities/create" do
 
       render
 
-      rendered.should include("jQuery('#create_opportunity').html")
-      rendered.should include(%Q/jQuery('#create_opportunity').effect("shake"/)
+      rendered.should include("$('#create_opportunity').html")
+      rendered.should include(%Q/$('#create_opportunity').effect("shake"/)
       rendered.should include("crm.create_or_select_account(false)")
     end
   end

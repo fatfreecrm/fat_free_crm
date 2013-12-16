@@ -25,7 +25,7 @@ describe "/campaigns/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("jQuery('#create_campaign').html")
+      rendered.should include("$('#create_campaign').html")
     end
 
     it "should call JavaScript functions to load Calendar popup" do
