@@ -5,6 +5,9 @@
 #------------------------------------------------------------------------------
 (($) ->
 
+  String::capitalize = ->
+    @[0].toUpperCase() + @.substring(1)
+
   window.crm =
     EXPANDED: "&#9660;"
     COLLAPSED: "&#9658;"
@@ -368,54 +371,27 @@
 
     #----------------------------------------------------------------------------
     auto_complete: (controller, related, focus) ->
-      if @autocompleter
-        Event.stopObserving @autocompleter.element
-        delete @autocompleter
-      @autocompleter = new Ajax.Autocompleter("auto_complete_query", "auto_complete_dropdown", @base_url + "/" + controller + "/auto_complete",
-        frequency: 0.25
-        parameters: (if (related) then ("related=" + related) else null)
-        onShow: (element, update) ->
+      $("#auto_complete_query").autocomplete(
+        source: (request, response) =>
+          $.get @base_url + "/" + controller + "/auto_complete.json", request, (data) ->
+            response $.map(data, (value, key) ->
+              label: value
+              value: key
+            )
 
-          # overridding onShow to include a fix for IE browsers
-          # see https://prototype.lighthouseapp.com/projects/8887/tickets/263-displayinline-fixes-positioning-of-autocomplete-results-div-in-ie8
-          update.style.display = (if (Prototype.Browser.IE) then "inline" else "absolute")
-
-          # below is default onShow from controls.js
-          if not update.style.position or update.style.position is "absolute"
-            update.style.position = "absolute"
-            Position.clone element, update,
-              setHeight: false
-              offsetTop: element.offsetHeight
-
-          $(update).fadeIn 150
-
-
-        # Autocomplete entry found.
         # Attach to related asset.
         # Quick Find: redirect to asset#show.
-        # Autocomplete entry not found: refresh current page.
-        afterUpdateElement: ((text, el) -> # Binding for this.base_url.
-          if el.id
+        select: (event, ui) => # Binding for this.base_url.
+          if ui.item
             if related
-              new Ajax.Request(@base_url + "/" + related + "/attach",
-                method: "put"
-                parameters:
+              $.ajax(@base_url + "/" + related + "/attach", type: 'PUT', data: {
                   assets: controller
-                  asset_id: escape(el.id)
-
-                onComplete: ->
-                  $("#jumpbox").hide()
+                  asset_id: ui.item.value
+                }, -> $("#jumpbox").hide()
               )
             else
-              window.location.href = @base_url + "/" + controller + "/" + escape(el.id)
-          else
-            $("#auto_complete_query").val ""
-            window.location.href = window.location.href
-        ).bind(this)
+              window.location.href = @base_url + "/" + controller + "/" + ui.item.value
       )
-      $("#auto_complete_dropdown").html ""
-      $("#auto_complete_query").value = ""
-      $("#auto_complete_query").focus()  if focus
 
   $ ->
     crm.focus_on_first_field()
