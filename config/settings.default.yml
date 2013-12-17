@@ -243,32 +243,32 @@
 :admin_tabs:
 - :active: true
   :text: :admin_tab_users
-  :icon: :fa-
+  :icon: :fa-user
   :url:
     :controller: admin/users
 - :active: true
   :text: :admin_tab_groups
-  :icon: :fa-
+  :icon: :fa-users
   :url:
     :controller: admin/groups
 - :active: false
   :text: :admin_tab_fields
-  :icon: :fa-
+  :icon: :fa-list-alt
   :url:
     :controller: admin/fields
 - :active: false
   :text: :admin_tab_tags
-  :icon: :fa-
+  :icon: :fa-tags
   :url:
     :controller: admin/tags
 - :active: false
   :text: :admin_tab_settings
-  :icon: :fa-
+  :icon: :fa-cogs
   :url:
     :controller: admin/settings
 - :active: false
   :text: :admin_tab_plugins
-  :icon: :fa-
+  :icon: :fa-plus-circle
   :url:
     :controller: admin/plugins
 
