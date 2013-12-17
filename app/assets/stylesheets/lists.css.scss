@@ -6,6 +6,7 @@
 // Place all the styles related to the Lists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#lists {
+#lists, #personal_lists {
 	i.fa {font-size: 130%}
+	a:hover {background:none; color:#0033cc}
 }

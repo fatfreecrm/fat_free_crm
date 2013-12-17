@@ -55,12 +55,11 @@
       true
 
     # When mouseover on li, change asset icons to delete buttons
-    $("#lists li").live "mouseover", ->
+    $("#lists li, #personal_lists li").live "mouseover", ->
       icon = $(this).find('.delete_on_hover i.fa')
       iconText = getIcon(icon.attr('data-controller'))
-      console.log(iconText);
       icon.removeClass(iconText).addClass('fa-times-circle')
-    $("#lists li").live "mouseout", ->
+    $("#lists li, #personal_lists li").live "mouseout", ->
       icon = $(this).find('.delete_on_hover i.fa')
       iconText = getIcon(icon.attr('data-controller'))
       icon.removeClass('fa-times-circle').addClass(iconText)
@@ -74,8 +73,6 @@
         when "contacts" then "fa-user"
         when "opportunities" then "fa-money"
         when "team" then "fa-globe"
-      
-
 
     # When mouseover on li, change asset icons to delete buttons
     $("#personal_lists li").live "mouseover", ->
