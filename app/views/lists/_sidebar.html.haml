@@ -9,7 +9,9 @@
       - @global_lists.sort.each_with_index do |list, i|
         %li[list]{ :class => i < @global_lists.size - 1 ? "" : "last" }
           %dt= link_to(truncate(list.name, :length => 25), list.url, :title => list.name)
-          %tt= link_to(image_tag("/assets/tab_icons/#{list.controller}_active.png", :"data-controller" => list.controller), url_for(list), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => "list_icon delete_on_hover")
+          %tt 
+            = link_to(url_for(list), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => "list_icon delete_on_hover") do
+              %i.fa{:"data-controller" => list.controller, class: get_icon(list.controller)}
 
   .show_lists_save_form{ hidden_if(!params[:q]) }
     = link_to(t(:make_current_view_list), '#')

@@ -478,4 +478,19 @@ module ApplicationHelper
     content_tag(:span, time.to_s, options.merge( title: time.getutc.iso8601)) if time
   end
 
+  #----------------------------------------------------------------------------
+  # Translate List name to FontAwesome icon text
+  def get_icon(name)
+    case name
+      when "tasks" then "fa-check-square-o"
+      when "campaigns" then "fa-bar-chart-o"
+      when "leads" then "fa-tasks"
+      when "accounts" then "fa-users"
+      when "contacts" then "fa-user"
+      when "opportunities" then "fa-money"
+      when "team" then "fa-globe"
+    end
+  end
+  
+
 end

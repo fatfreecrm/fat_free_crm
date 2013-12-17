@@ -56,11 +56,26 @@
 
     # When mouseover on li, change asset icons to delete buttons
     $("#lists li").live "mouseover", ->
-      img_el = $(this).find('.delete_on_hover img')
-      img_el.attr('src', "/assets/delete.png")
+      icon = $(this).find('.delete_on_hover i.fa')
+      iconText = getIcon(icon.attr('data-controller'))
+      console.log(iconText);
+      icon.removeClass(iconText).addClass('fa-times-circle')
     $("#lists li").live "mouseout", ->
-      img_el = $(this).find('.delete_on_hover img')
-      img_el.attr('src', "/assets/tab_icons/" + img_el.data('controller') + "_active.png")
+      icon = $(this).find('.delete_on_hover i.fa')
+      iconText = getIcon(icon.attr('data-controller'))
+      icon.removeClass('fa-times-circle').addClass(iconText)
+
+    getIcon = (listType) ->
+      switch (listType) 
+        when "tasks" then "fa-check-square-o"
+        when "campaigns" then "fa-bar-chart-o"
+        when "leads" then "fa-tasks"
+        when "accounts" then "fa-users"
+        when "contacts" then "fa-user"
+        when "opportunities" then "fa-money"
+        when "team" then "fa-globe"
+      
+
 
     # When mouseover on li, change asset icons to delete buttons
     $("#personal_lists li").live "mouseover", ->
@@ -71,3 +86,4 @@
       img_el.attr('src', "/assets/tab_icons/" + img_el.data('controller') + "_active.png")
 
 ) jQuery
+
