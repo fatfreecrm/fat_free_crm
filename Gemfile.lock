@@ -104,6 +104,8 @@ GEM
       railties (>= 3.0.0)
     ffaker (1.14.0)
     ffi (1.9.0)
+    font-awesome-rails (4.0.3.0)
+      railties (>= 3.2, < 5.0)
     guard (1.4.0)
       listen (>= 0.4.2)
       thor (>= 0.14.6)
@@ -318,6 +320,7 @@ DEPENDENCIES
   execjs
   factory_girl_rails
   ffaker (>= 1.12.0)
+  font-awesome-rails
   guard
   guard-rails
   guard-rspec
