@@ -200,34 +200,42 @@
 :tabs:
 - :active: true
   :text: :tab_dashboard
+  :icon: :fa-dashboard
   :url:
     :controller: home
 - :active: false
   :text: :tab_tasks
+  :icon: :fa-check-square-o
   :url:
     :controller: tasks
 - :active: false
   :text: :tab_campaigns
+  :icon: :fa-bar-chart-o
   :url:
     :controller: campaigns
 - :active: false
   :text: :tab_leads
+  :icon: :fa-tasks
   :url:
     :controller: leads
 - :active: false
   :text: :tab_accounts
+  :icon: :fa-users
   :url:
     :controller: accounts
 - :active: false
   :text: :tab_contacts
+  :icon: :fa-user
   :url:
     :controller: contacts
 - :active: false
   :text: :tab_opportunities
+  :icon: :fa-money
   :url:
     :controller: opportunities
 - :active: false
   :text: :tab_team
+  :icon: :fa-globe
   :url:
     :controller: users
     :action: opportunities_overview
@@ -235,26 +243,32 @@
 :admin_tabs:
 - :active: true
   :text: :admin_tab_users
+  :icon: :fa-
   :url:
     :controller: admin/users
 - :active: true
   :text: :admin_tab_groups
+  :icon: :fa-
   :url:
     :controller: admin/groups
 - :active: false
   :text: :admin_tab_fields
+  :icon: :fa-
   :url:
     :controller: admin/fields
 - :active: false
   :text: :admin_tab_tags
+  :icon: :fa-
   :url:
     :controller: admin/tags
 - :active: false
   :text: :admin_tab_settings
+  :icon: :fa-
   :url:
     :controller: admin/settings
 - :active: false
   :text: :admin_tab_plugins
+  :icon: :fa-
   :url:
     :controller: admin/plugins
 
