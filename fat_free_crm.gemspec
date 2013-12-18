@@ -33,6 +33,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'acts_as_list',        '~> 0.1.4'
   gem.add_dependency 'ffaker',              '>= 1.12.0'
   gem.add_dependency 'cancan'
+  gem.add_dependency 'font-awesome-rails'
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'responds_to_parent',  '>= 1.1.0'

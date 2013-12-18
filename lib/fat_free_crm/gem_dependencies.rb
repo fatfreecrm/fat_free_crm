@@ -27,6 +27,7 @@ require 'valium'
 require 'ffaker'
 require 'premailer'
 require 'nokogiri'
+require 'font-awesome-rails'
 
 # Load redcloth if available (for textile markup in emails)
 begin

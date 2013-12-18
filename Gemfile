@@ -91,4 +91,3 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
-gem "font-awesome-rails"
