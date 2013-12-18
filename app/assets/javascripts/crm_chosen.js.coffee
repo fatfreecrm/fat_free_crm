@@ -16,7 +16,7 @@
     )
 
   crm.ensure_chosen_account = ->
-    unless $("#account_id_chzn")
+    unless $("#account_id_chzn").length
       $("#account_id").ajaxChosen(
         allow_single_deselect: true
         show_on_activate: true
