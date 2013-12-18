@@ -20,16 +20,21 @@
 
 ul.format-buttons li {
   display: inline;
-  margin: 0 3px;
-
+  margin: 3px;
   a {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    opacity: 0.3;
+    color: gray;
+    i.fa {
+      font-size: 160%;
+      opacity: 0.3;
+    }
   }
-  a.active { opacity: 1; }
-  a:hover { opacity: 0.6; }
-  a:active { opacity: 1; }
-
+  a.active i.fa { opacity: 1; }
+  a:hover i.fa {
+    opacity: 1;
+  }
+  a:active i.fa { opacity: 1; }
+  a:hover {
+    background:none;
+    color:gray;
+  }
 }

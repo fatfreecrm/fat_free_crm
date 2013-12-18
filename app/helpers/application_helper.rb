@@ -463,7 +463,8 @@ module ApplicationHelper
         content_tag(:li) do
           url = (action == "index") ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
           link_to('#', :title => t(view.name, :default => view.title), :"data-view" => view.name, :"data-url" => url, :"data-context" => action, :class => classes) do
-            image_tag(view.icon || 'brief.png')
+            icon = view.icon || 'fa-bars'
+            content_tag(:i, nil, class: "fa #{icon}")
           end
         end
       end.join('').html_safe
@@ -491,6 +492,6 @@ module ApplicationHelper
       when "team" then "fa-globe"
     end
   end
-  
+
 
 end
