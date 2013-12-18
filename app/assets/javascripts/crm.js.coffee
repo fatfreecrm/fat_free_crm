@@ -48,8 +48,7 @@
       $("#" + id).slideDown(
         250
         ->
-          input = $("#" + id).find("input[type=text]")
-          input.focus()
+          $("#" + id).find(":input[type=text]:first").focus()
       )
 
 
@@ -83,7 +82,7 @@
 
     #----------------------------------------------------------------------------
     focus_on_first_field: ->
-      first_element = $("form:input").first()
+      first_element = $("form:input[type=text]:first")
       if first_element.length
         first_element.focus()
         first_element.val first_element.val()
@@ -263,7 +262,7 @@
     #----------------------------------------------------------------------------
     reschedule_task: (id, bucket) ->
       $("#task_bucket").val bucket
-      $("#edit_task_" + id + " input[type=\"submit\"]")[0].click()
+      $("#edit_task_" + id + " input[type=submit]")[0].click()
 
     
     #----------------------------------------------------------------------------
