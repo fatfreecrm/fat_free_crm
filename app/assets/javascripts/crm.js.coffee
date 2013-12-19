@@ -129,7 +129,7 @@
       
       # Disable chosen account select
       $("#account_id").disable()
-      Event.fire $("#account_id"), "liszt:updated"
+      $("#account_id").trigger "liszt:updated"
       $("#account_id_chzn").show()
       
       # Enable hidden account id select so that value is POSTed
@@ -309,7 +309,7 @@
     # Will be deprecated soon: html5 placeholder replaced it on address fields
     hide_hint: (el, value) ->
       $el = $(el)
-      if arguments_.length is 2
+      if arguments.length is 2
         $el.val value
       else
         $el.val("")  if $el.attr("hint") is "true"
@@ -326,23 +326,21 @@
 
     #----------------------------------------------------------------------------
     copy_address: (from, to) ->
-      $("#" + from + "_attributes_full_address").val $(to + "_attributes_full_address").val()
+      $("#" + from + "_attributes_full_address").val $("#" + to + "_attributes_full_address").val()
 
 
     #----------------------------------------------------------------------------
     copy_compound_address: (from, to) ->
-      for field in ["street1", "street2", "city", "state zipcode"]
+      for field in ["street1", "street2", "city", "state", "zipcode"]
         source = $("#" + from + "_attributes_" + field)
         destination = $("#" + to + "_attributes_" + field)
         @hide_hint destination, source.val()  unless source.attr("hint") is "true"
-      
-      # Country dropdown needs special treatment ;-)
-      $("#" + to + "_attributes_country").val $("#" + from + "_attributes_country").val()
-      
-      # Update Chosen select
-      Event.fire $("#" + to + "_attributes_country"), "liszt:updated"
 
-    
+      # Country dropdown needs special treatment ;-)
+      country = $("#" + from + "_attributes_country").select2("data")
+      $("#" + to + "_attributes_country").select2("data", country, true)
+
+
     #----------------------------------------------------------------------------
     search: (query, controller) ->
       list = controller # ex. "users"

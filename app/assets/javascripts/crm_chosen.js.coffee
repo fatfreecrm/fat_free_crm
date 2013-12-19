@@ -27,7 +27,7 @@
 
   # Prefer standard select2 dropdown for non-Ajaxy selectboxes
   add_select2_boxes = ->
-    $("select[name*='assigned_to'], select[name*='[country]'], .chzn-select" ).each ->
+    $("select[name*='assigned_to'], select[name*='[country]'], .chzn-select").each ->
       $(this).select2()
 
   # Apply pop up to merge links when document is loaded
