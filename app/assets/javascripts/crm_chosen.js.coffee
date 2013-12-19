@@ -9,9 +9,10 @@
   crm.chosen_taglist = (asset, controller, id)->
     $('#' + asset + '_tag_list').chosen(
       allow_option_creation: true
-      on_option_add: (tag) ->
+    ).on('change', (event, params = {}) ->
+      if tag = params.selected
         crm.load_field_group(controller, tag, id)
-      on_option_remove: (tag) ->
+      else if tag = params.deselected
         crm.remove_field_group(tag)
     )
 
