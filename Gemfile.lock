@@ -339,7 +339,6 @@ DEPENDENCIES
   premailer
   prototype-rails
   pry-rails
-  psych (~> 1)
   quiet_assets
   rails (~> 3.2.12)
   rails3-jquery-autocomplete
