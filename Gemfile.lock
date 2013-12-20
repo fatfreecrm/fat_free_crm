@@ -59,7 +59,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
-    chronic (0.6.7)
+    chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
@@ -206,7 +206,7 @@ GEM
       polyamorous (~> 0.6.0)
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ui (1.2.1)
+    ransack_ui (1.2.2)
       ransack
       ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)

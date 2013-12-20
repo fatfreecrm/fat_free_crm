@@ -7,31 +7,31 @@
 
   margin-top: 15px;
 
-	.tabs {
-		background: none;
+  .tabs {
+    background: none;
 
-		li {
-			a:link, a:visited {
-				background-color: #ddd;
-				color: #222;
-				font-weight: normal;
-			  font-size: 11px;
-			}
-			a:hover {
-				background-color: #ccc;
-			}
-			a.active {
-				background-color: #eee;
+    li {
+      a:link, a:visited {
+        background-color: #ddd;
+        color: #222;
+        font-weight: normal;
+        font-size: 11px;
+      }
+      a:hover {
+        background-color: #ccc;
+      }
+      a.active {
+        background-color: #eee;
         color: black;
-			}
-		}
-	}
+      }
+    }
+  }
 
-	.search_form {
-		border: none;
-		background-color: #eee;
-		padding: 10px;
-	}
+  .search_form {
+    border: none;
+    background-color: #eee;
+    padding: 10px;
+  }
 
   .options {
     float: right;
@@ -73,6 +73,10 @@
     .submit-search {
       margin-top: 20px;
     }
+  }
+
+  .pull-right {
+    float: none;
   }
 
 }
