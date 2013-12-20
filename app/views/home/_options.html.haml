@@ -4,7 +4,6 @@
 
   -# activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}
   = t(:activity_options, :models => link_to(t(@asset).singularize.downcase, "#", :id => :asset), :action_type => link_to(t(@action + "_past_participle").downcase, "#", :id => :event), :user => link_to(t(@user), "#", :id => :user), :period => link_to(t(@duration).downcase, "#", :id => :duration)).html_safe
-%p
 
 %script
   = render "assets_menu"

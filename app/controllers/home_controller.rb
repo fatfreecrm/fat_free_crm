@@ -35,8 +35,11 @@ class HomeController < ApplicationController
     current_user.pref[:activity_event] = params[:event] if params[:event]
     current_user.pref[:activity_user] = params[:user] if params[:user]
     current_user.pref[:activity_duration] = params[:duration] if params[:duration]
+    @activities = get_activities
 
-    render :index
+    respond_with(@activities) do |format|
+      format.js { render :index }
+    end
   end
 
   # GET /home/toggle                                                       AJAX

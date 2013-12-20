@@ -44,6 +44,7 @@
 
     #----------------------------------------------------------------------------
     show_popup: (e) ->
+      e.preventDefault()
       e.stopPropagation()
       @popup.css zIndex: @options.zindex
       
@@ -181,11 +182,13 @@
 
     #----------------------------------------------------------------------------
     show_menu: (e) ->
+      e.preventDefault()
       e.stopPropagation()
       $el = $(e.target)
-      x = $el.position().left + "px"
-      y = $el.position().top + $el.height() + "px"
-      x = ($el.position().left - (@options.width - $el.width() + 1)) + "px"  if @options.align is "right"
+      offset = $el.offset()
+      x = offset.left + "px"
+      y = offset.top + $el.height() + "px"
+      x = (offset.left - (@options.width - $el.width() + 1)) + "px"  if @options.align is "right"
       @menu.css
         left: x
         top: y
