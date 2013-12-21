@@ -6,15 +6,6 @@ source 'https://rubygems.org'
 # gem 'sqlite3'
 gem 'pg'
 
-# Allows easy switching between locally developed gems, and gems installed from rubygems.org
-# See README for more info at: https://github.com/ndbroadbent/bundler_local_development
-gem 'bundler_local_development', :group => :development, :require => false
-begin
-  require 'bundler_local_development'
-  Bundler.development_gems = [/^ffcrm_/, /ransack/]
-rescue LoadError
-end
-
 # Removes a gem dependency
 def remove(name)
   @dependencies.reject! {|d| d.name == name }
@@ -41,14 +32,12 @@ gem 'premailer', :require => false
 remove 'fat_free_crm'
 
 group :development do
-  gem 'thin'
-  gem 'quiet_assets'
-  gem 'capistrano'
-  gem 'capistrano_colors'
-
-  # Use zeus and guard gems to speed up development
-  # Run 'zeus start' and 'bundle exec guard' to get going
+  # don't load these gems in travis
   unless ENV["CI"]
+    gem 'thin'
+    gem 'quiet_assets'
+    gem 'capistrano', '~> 2'
+    gem 'capistrano_colors'
     gem 'guard'
     gem 'guard-rspec'
     gem 'guard-rails'
@@ -78,7 +67,6 @@ end
 group :heroku do
   gem 'unicorn', :platform => :ruby
 end
-
 
 # Gems used only for assets and not required
 # in production environments by default.
