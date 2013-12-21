@@ -72,8 +72,6 @@
   :authentication             : :plain
   :user_name                  : ""
   :password                   : ""
-#  :delivery_method            : :smtp   # This is the default. Can be :smtp, :sendmail, :test, :file
-
 
 # Settings for the Email dropbox (IMAP)
 # - Connection settings for the IMAP account, server and folders.
