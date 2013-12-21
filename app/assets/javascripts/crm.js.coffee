@@ -266,8 +266,8 @@
 
     
     #----------------------------------------------------------------------------
-    flick: (el, action) ->
-      $el = $(el)
+    flick: (id, action) ->
+      $el = $("#" + id)
       if $el.length
         switch action
           when "show"
@@ -416,16 +416,16 @@
   # Admin Field Tabs
   $(document).on "click", "*[data-tab-class]", (event) ->
     event.preventDefault()
-    $el = $(event.target)
+    $el = $(this)
 
-    for field in $(".fields")
-      $(field).hide()
+    $(".fields").each ->
+      $(this).hide()
 
-    for tab in $(".inline_tabs ul li")
-      $(tab).removeClass "selected"
+    $(".inline_tabs ul li").each ->
+      $(this).removeClass "selected"
 
     klass = $el.data("tab-class")
-    $(klass + "_section").show()
+    $("#" + klass + "_section").show()
     $el.addClass "selected"
 
 ) jQuery
