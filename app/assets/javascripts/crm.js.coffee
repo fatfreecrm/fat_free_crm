@@ -363,8 +363,8 @@
     #----------------------------------------------------------------------------
     jumper: (controller) ->
       name = controller.capitalize()
-      for link in $("#jumpbox_menu a")
-        $(link).toggleClass("selected", link.innerHTML is name)
+      $("#jumpbox_menu a").each ->
+        $(this).toggleClass("selected", link.innerHTML is name)
 
       @auto_complete controller, null, true
 
@@ -387,8 +387,9 @@
               $.ajax(@base_url + "/" + related + "/attach", type: 'PUT', data: {
                   assets: controller
                   asset_id: ui.item.value
-                }, -> $("#jumpbox").hide()
-              )
+                }
+              ).then ->
+                $("#auto_complete_query").val ""
             else
               window.location.href = @base_url + "/" + controller + "/" + ui.item.value
       )

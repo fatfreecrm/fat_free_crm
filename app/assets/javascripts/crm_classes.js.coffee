@@ -56,9 +56,7 @@
         @set_position e
         @options.after_show e
       else
-        @popup.show()
         @set_position e
-        @popup.hide()
         @popup.fadeIn(
           @options.appear
           @options.after_show
@@ -82,6 +80,7 @@
 
     #----------------------------------------------------------------------------
     hide_popup: (e) ->
+      e.preventDefault()  if e
       @options.before_hide e
       unless @options.fade
         @popup.hide()
@@ -94,12 +93,11 @@
 
     set_position: (e) ->
       if @options.under
-        position = $(@options.under).position()
         under = $(@options.under)
         popup = $(@popup)
-        y_offset = window.pageYOffset or document.documentElement.scrollTop or document.body.scrollTop
-        x = (position.left + under.width() - popup.width()) + "px"
-        y = (position.top + under.height() + y_offset) + "px"
+        offset = under.offset()
+        x = (offset.left + under.width() - popup.width()) + "px"
+        y = (offset.top + under.height()) + "px"
         @popup.css
           left: x
           top: y
