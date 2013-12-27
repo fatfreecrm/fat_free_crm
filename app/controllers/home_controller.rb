@@ -122,6 +122,9 @@ class HomeController < ApplicationController
   end
 
   #----------------------------------------------------------------------------
+  # TODO: this is ugly, ugly code. It's being security patched now but urgently
+  # needs refactoring to use user id instead. Permuations based on name or email
+  # yield incorrect results.
   def activity_user
     user = current_user.pref[:activity_user]
     if user && user != "all_users"
@@ -130,12 +133,11 @@ class HomeController < ApplicationController
         else # first_name middle_name last_name any_name
           name_query = if user.include?(" ")
             user.name_permutations.map{ |first, last|
-              "(upper(first_name) LIKE upper('%#{first}%') AND upper(last_name) LIKE upper('%#{last}%'))"
-            }.join(" OR ")
+              User.where(:first_name => first, :last_name => last)
+            }.map(&:to_a).flatten.first
           else
-            "upper(first_name) LIKE upper('%#{user}%') OR upper(last_name) LIKE upper('%#{user}%')"
+            [User.where(:first_name => user), User.where(:last_name => user)].map(&:to_a).flatten.first
           end
-          User.where(name_query).first
         end
     end
     user.is_a?(User) ? user.id : nil
