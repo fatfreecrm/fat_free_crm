@@ -137,7 +137,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, :id => /\d+/ do
+  resources :users, :id => /\d+/, :except => [:index, :destroy] do
     member do
       get :avatar
       get :password
