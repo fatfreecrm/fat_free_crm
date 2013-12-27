@@ -209,4 +209,18 @@ describe User do
       @user.single_access_token.should == "token"
     end
   end
+
+  describe "serialization" do
+
+    let(:user) { FactoryGirl.build(:user) }
+
+    it "to json" do
+      expect(user.to_json).to eql([user.name].to_json)
+    end
+
+    it "to xml" do
+      expect(user.to_xml).to eql([user.name].to_xml)
+    end
+
+  end
 end

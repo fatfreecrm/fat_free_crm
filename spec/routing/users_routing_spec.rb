@@ -8,8 +8,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe UsersController do
   describe "routing" do
 
-    it "recognizes and generates #index" do
-      { :get => "/users" }.should route_to(:controller => "users", :action => "index")
+    it "doesn't recognize #index" do
+      { :get => "/users" }.should_not be_routable
     end
 
     it "recognizes and generates #new as /signup" do
@@ -40,8 +40,8 @@ describe UsersController do
       { :put => "/opportunities/aaron" }.should_not be_routable
     end
 
-    it "recognizes and generates #destroy" do
-      { :delete => "/users/1" }.should route_to(:controller => "users", :action => "destroy", :id => "1")
+    it "doesn't recognize #destroy" do
+      { :delete => "/users/1" }.should_not be_routable
     end
 
     it "doesn't recognize #destroy with non-numeric id" do
@@ -81,4 +81,3 @@ describe UsersController do
     end
   end
 end
-

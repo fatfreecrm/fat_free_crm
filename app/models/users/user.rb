@@ -147,6 +147,14 @@ class User < ActiveRecord::Base
     super(value)
   end
 
+  def to_json(options = nil)
+    [name].to_json
+  end
+
+  def to_xml(options = nil)
+    [name].to_xml
+  end
+
   private
 
   # Suspend newly created user if signup requires an approval.
