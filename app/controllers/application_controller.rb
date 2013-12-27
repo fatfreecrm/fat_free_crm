@@ -5,6 +5,8 @@
 #------------------------------------------------------------------------------
 class ApplicationController < ActionController::Base
 
+  protect_from_forgery
+
   before_filter :set_context
   before_filter :clear_setting_cache
   before_filter "hook(:app_before_filter, self)"
