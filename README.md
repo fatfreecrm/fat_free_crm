@@ -54,6 +54,7 @@ Visit our website at http://www.fatfreecrm.com/
 
 ## System Requirements
 
+* FFCRM gem versions 0.12.1 or higher (previous versions had [**known security vulnerabilities**](https://github.com/fatfreecrm/fat_free_crm/wiki/Fixing-security-vulnerabilities-(27th-Dec-2013))
 * Ruby v2.0.0 recommended (it's faster!)
   * Ruby 1.9.3 is also compatible
   * Ruby 1.9.2 should be compatible but is not longer supported
