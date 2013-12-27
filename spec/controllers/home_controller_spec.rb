@@ -42,13 +42,13 @@ describe HomeController do
       assigns[:my_tasks].should == [task_1, task_2, task_3, task_4]
     end
 
-		it "should not display completed tasks" do
-			task_1 = FactoryGirl.create(:task, :user_id => current_user.id, :name => "Your first task", :bucket => "due_asap", :assigned_to => current_user.id)
-			task_2 = FactoryGirl.create(:task, :user_id => current_user.id, :name => "Completed task", :bucket => "due_asap", :completed_at => 1.days.ago, :completed_by => current_user.id, :assigned_to => current_user.id)
+    it "should not display completed tasks" do
+      task_1 = FactoryGirl.create(:task, :user_id => current_user.id, :name => "Your first task", :bucket => "due_asap", :assigned_to => current_user.id)
+      task_2 = FactoryGirl.create(:task, :user_id => current_user.id, :name => "Completed task", :bucket => "due_asap", :completed_at => 1.days.ago, :completed_by => current_user.id, :assigned_to => current_user.id)
 
-			get :index
-			assigns[:my_tasks].should == [task_1]
-		end
+      get :index
+      assigns[:my_tasks].should == [task_1]
+    end
 
     it "should get a list of my opportunities ordered by closes_on" do
       opportunity_1 = FactoryGirl.create(:opportunity, :name => "Your first opportunity", :closes_on => 15.days.from_now, :assigned_to => current_user.id, :stage => 'proposal')
@@ -153,42 +153,91 @@ describe HomeController do
       session[:hello].should == true
     end
   end
-  
+
   describe "activity_user" do
-  
+
     before(:each) do
       @user = double(User, :id => 1, :is_a? => true)
       @cur_user = double(User)
     end
-  
+
     it "should find a user by email" do
       @cur_user.stub(:pref).and_return(:activity_user => 'billy@example.com')
       controller.instance_variable_set(:@current_user, @cur_user)
       User.should_receive(:where).with(:email => 'billy@example.com').and_return([@user])
       controller.send(:activity_user).should == 1
     end
-    
+
     it "should find a user by first name or last name" do
       @cur_user.stub(:pref).and_return(:activity_user => 'Billy')
       controller.instance_variable_set(:@current_user, @cur_user)
       User.should_receive(:where).with("upper(first_name) LIKE upper('%Billy%') OR upper(last_name) LIKE upper('%Billy%')").and_return([@user])
       controller.send(:activity_user).should == 1
     end
-    
+
     it "should find a user by first name and last name" do
       @cur_user.stub(:pref).and_return(:activity_user => 'Billy Elliot')
       controller.instance_variable_set(:@current_user, @cur_user)
       User.should_receive(:where).with("(upper(first_name) LIKE upper('%Billy%') AND upper(last_name) LIKE upper('%Elliot%')) OR (upper(first_name) LIKE upper('%Elliot%') AND upper(last_name) LIKE upper('%Billy%'))").and_return([@user])
       controller.send(:activity_user).should == 1
     end
-    
+
     it "should return nil when 'all_users' is specified" do
       @cur_user.stub(:pref).and_return(:activity_user => 'all_users')
       controller.instance_variable_set(:@current_user, @cur_user)
       User.should_not_receive(:where)
       controller.send(:activity_user).should == nil
     end
-    
+
+  end
+
+  describe "timeline" do
+
+    before(:each) do
+      require_user
+    end
+
+    it "should collapse all comments and emails on a specific contact" do
+      comment = double(Comment)
+      Comment.should_receive(:find).with("1").and_return(comment)
+      comment.should_receive(:update_attribute).with(:state, 'Collapsed')
+      xhr :get, :timeline, :type => "comment", :id => "1", :state => "Collapsed"
+    end
+
+    it "should expand all comments and emails on a specific contact" do
+      comment = double(Comment)
+      Comment.should_receive(:find).with("1").and_return(comment)
+      comment.should_receive(:update_attribute).with(:state, 'Expanded')
+      xhr :get, :timeline, :type => "comment", :id => "1", :state => "Expanded"
+    end
+
+    it "should not do anything when state neither Expanded nor Collapsed" do
+      comment = double(Comment)
+      Comment.should_not_receive(:find).with("1")
+      xhr :get, :timeline, :type => "comment", :id => "1", :state => "Explode"
+    end
+
+    it "should collapse all comments and emails on Contact" do
+      where_stub = double
+      where_stub.should_receive(:update_all).with(:state => "Collapsed")
+      Comment.should_receive(:where).and_return(where_stub)
+      xhr :get, :timeline, :id => "1,2,3,4+", :state => "Collapsed"
+    end
+
+    it "should not allow an arbitary state (sanitizes input)" do
+      where_stub = double
+      where_stub.should_receive(:update_all).with(:state => "Expanded")
+      Comment.should_receive(:where).and_return(where_stub)
+      xhr :get, :timeline, :id => "1,2,3,4+", :state => "Expanded"
+    end
+
+    it "should not update an arbitary model (sanitizes input)" do
+      where_stub = double
+      where_stub.should_receive(:update_all).with(:state => "Expanded")
+      Comment.should_receive(:where).and_return(where_stub)
+      xhr :get, :timeline, :id => "1,2,3,4+", :state => "Expanded"
+    end
+
   end
 
 end

@@ -57,14 +57,19 @@ class HomeController < ApplicationController
   # GET /home/timeline                                                     AJAX
   #----------------------------------------------------------------------------
   def timeline
-    unless params[:type].empty?
-      model = params[:type].camelize.constantize
-      item = model.find(params[:id])
-      item.update_attribute(:state, params[:state])
-    else
-      comments, emails = params[:id].split("+")
-      Comment.update_all("state = '#{params[:state]}'", "id IN (#{comments})") unless comments.blank?
-      Email.update_all("state = '#{params[:state]}'", "id IN (#{emails})") unless emails.blank?
+    state = params[:state].to_s
+    if %w(Collapsed Expanded).include?(state)
+      if (model_type = params[:type].to_s).present?
+        if %w(comment email).include?(model_type)
+          model = model_type.camelize.constantize
+          item = model.find(params[:id])
+          item.update_attribute(:state, state)
+        end
+      else
+        comments, emails = params[:id].split("+")
+        Comment.where(:id => comments.split(',')).update_all(:state => state) unless comments.blank?
+        Email.where(:id => emails.split(',')).update_all(:state => state) unless emails.blank?
+      end
     end
 
     render :nothing => true
