@@ -50,7 +50,7 @@ private
   #
   # Takes { :related => 'campaigns/7' } or { :related => '5' }
   #   and returns array of object ids that should be excluded from search
-  #   assumes controller_name is an method on 'related' class that returns a collection
+  #   assumes controller_name is a method on 'related' class that returns a collection
   #----------------------------------------------------------------------------
   def auto_complete_ids_to_exclude(related)
     return [] if related.blank?
