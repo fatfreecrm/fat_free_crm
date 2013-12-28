@@ -21,10 +21,10 @@ Rails.application.routes.draw do
   match '/home/timezone', :as => :timezone
   match '/home/redraw',   :as => :redraw
 
-  resource  :authentication
-  resources :comments, :except => [:new, :show]
-  resources :emails
-  resources :passwords
+  resource  :authentication, :except => [:index, :edit]
+  resources :comments,       :except => [:new, :show]
+  resources :emails,         :only   => [:destroy]
+  resources :passwords,      :only   => [:new, :create, :edit, :update]
 
   resources :accounts, :id => /\d+/ do
     collection do
@@ -32,17 +32,17 @@ Rails.application.routes.draw do
       post :filter
       get  :options
       get  :field_group
-      match :auto_complete
+      post :auto_complete
       post :redraw
-      get :versions
+      get  :versions
     end
     member do
       put  :attach
       post :discard
       post :subscribe
       post :unsubscribe
-      get :contacts
-      get :opportunities
+      get  :contacts
+      get  :opportunities
     end
   end
 
@@ -54,15 +54,15 @@ Rails.application.routes.draw do
       get  :field_group
       post :auto_complete
       post :redraw
-      get :versions
+      get  :versions
     end
     member do
       put  :attach
       post :discard
       post :subscribe
       post :unsubscribe
-      get :leads
-      get :opportunities
+      get  :leads
+      get  :opportunities
     end
   end
 
@@ -74,14 +74,14 @@ Rails.application.routes.draw do
       get  :field_group
       post :auto_complete
       post :redraw
-      get :versions
+      get  :versions
     end
     member do
       put  :attach
       post :discard
       post :subscribe
       post :unsubscribe
-      get :opportunities
+      get  :opportunities
     end
   end
 
@@ -93,7 +93,8 @@ Rails.application.routes.draw do
       get  :field_group
       post :auto_complete
       post :redraw
-      get :versions
+      get  :versions
+      get  :autocomplete_account_name
     end
     member do
       get  :convert
@@ -104,8 +105,6 @@ Rails.application.routes.draw do
       put  :promote
       put  :reject
     end
-
-    get :autocomplete_account_name, :on => :collection
   end
 
   resources :opportunities, :id => /\d+/ do
@@ -123,7 +122,7 @@ Rails.application.routes.draw do
       post :discard
       post :subscribe
       post :unsubscribe
-      get :contacts
+      get  :contacts
     end
   end
 
@@ -133,24 +132,21 @@ Rails.application.routes.draw do
       post :auto_complete
     end
     member do
-      put :complete
+      put  :complete
     end
   end
 
   resources :users, :id => /\d+/, :except => [:index, :destroy] do
     member do
-      get :avatar
-      get :password
-      put :upload_avatar
-      put :change_password
+      get  :avatar
+      get  :password
+      put  :upload_avatar
+      put  :change_password
       post :redraw
     end
-
     collection do
-      match :auto_complete
-    end
-    collection do
-      get :opportunities_overview
+      post :auto_complete
+      get  :opportunities_overview
     end
   end
 
@@ -168,7 +164,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :field_groups, :except => :index do
+    resources :field_groups, :except => [:index, :show] do
       collection do
         post :sort
       end
@@ -187,7 +183,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :tags do
+    resources :tags, :except => [:show] do
       member do
         get :confirm
       end
@@ -196,9 +192,8 @@ Rails.application.routes.draw do
     resources :fields, :as => :custom_fields
     resources :fields, :as => :core_fields
 
-    resources :settings
-    resources :plugins
+    resources :settings, :only => :index
+    resources :plugins,  :only => :index
   end
 
-  get '/:controller/tagged/:id' => '#tagged'
 end
