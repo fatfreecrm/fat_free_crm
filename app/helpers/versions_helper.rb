@@ -8,7 +8,7 @@ module VersionsHelper
   # Parse the changes for each version
   #----------------------------------------------------------------------------
   def parse_version(attr_name, change)
-    if attr_name =~ /^cf_/ and (field = CustomField.where(:name => attr_name).first).present?
+    if attr_name =~ /\Acf_/ and (field = CustomField.where(:name => attr_name).first).present?
       label = field.label
       first = field.render(change.first)
       second = field.render(change.second)

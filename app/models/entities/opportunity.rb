@@ -51,9 +51,7 @@ class Opportunity < ActiveRecord::Base
 
   # Search by name OR id
   scope :text_search, ->(query) {
-    # postgresql does not like to compare string to integer field
-    if query =~ /^\d+$/
-      query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
+    if query =~ /\A\d+\z/
       where('upper(name) LIKE upper(:name) OR opportunities.id = :id', :name => "%#{query}%", :id => query)
     else
       search('name_cont' => query).result

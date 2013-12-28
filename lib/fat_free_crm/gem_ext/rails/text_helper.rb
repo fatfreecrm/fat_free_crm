@@ -86,7 +86,7 @@ module ActionView
               href
             else
               # don't include trailing punctuation character as part of the URL
-              while href.sub!(/[^\w\/-]$/, '')
+              while href.sub!(/[^\w\/-]\z/, '')
                 punctuation.push $&
                 if opening = BRACKETS[punctuation.last] and href.scan(opening).size > href.scan(punctuation.last).size
                   href << punctuation.pop
@@ -127,4 +127,3 @@ module ActionView
     end
   end
 end
-

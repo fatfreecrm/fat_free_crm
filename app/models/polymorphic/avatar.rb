@@ -45,7 +45,7 @@ class Avatar < ActiveRecord::Base
     if options[:width] && options[:height]
       options[:size] = [:width, :height].map{|d| options[d]}.join("x")
     elsif Avatar::STYLES.keys.include?(options[:size])
-      options[:size] = Avatar::STYLES[options[:size]].sub(/\#$/,'')
+      options[:size] = Avatar::STYLES[options[:size]].sub(/\#\z/,'')
     end
     options
   end
