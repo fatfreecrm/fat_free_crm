@@ -76,13 +76,6 @@ describe HomeController do
       assigns[:my_accounts].should == [account_1, account_4, account_3, account_2]
     end
 
-    it "should assign @hello and call hook" do
-      require_user
-      controller.should_receive(:hook).at_least(:once)
-
-      get :index
-      assigns[:hello].should == "Hello world"
-    end
   end
 
   # GET /home/options                                                      AJAX

@@ -10,9 +10,6 @@ class HomeController < ApplicationController
 
   #----------------------------------------------------------------------------
   def index
-    @hello = "Hello world" # The hook below can access controller's instance variables.
-    hook(:home_controller, self, :params => "it works!")
-
     @activities = get_activities
     @my_tasks = Task.visible_on_dashboard(current_user).by_due_at
     @my_opportunities = Opportunity.visible_on_dashboard(current_user).by_closes_on.by_amount
