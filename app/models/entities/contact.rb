@@ -45,7 +45,7 @@ class Contact < ActiveRecord::Base
   has_one     :account, :through => :account_contact
   has_many    :contact_opportunities, :dependent => :destroy
   has_many    :opportunities, :through => :contact_opportunities, :uniq => true, :order => "opportunities.id DESC"
-  has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
+  has_many    :tasks, :as => :asset, :dependent => :destroy
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Business'"
   has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
   has_many    :emails, :as => :mediator
@@ -59,8 +59,8 @@ class Contact < ActiveRecord::Base
 
   accepts_nested_attributes_for :business_address, :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
 
-  scope :created_by,  ->(user) { where("user_id = ?", user.id) }
-  scope :assigned_to, ->(user) { where("assigned_to = ?", user.id) }
+  scope :created_by,  ->(user) { where( user_id: user.id ) }
+  scope :assigned_to, ->(user) { where( assigned_to: user.id ) }
 
   scope :text_search, ->(query) {
     t = Contact.arel_table

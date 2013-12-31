@@ -33,4 +33,3 @@ module CampaignsHelper
     "#{t(campaign.status)}, " << [ status, metrics ].map { |str| strip_tags(str) }.join(' ').gsub("\n", '')
   end
 end
-

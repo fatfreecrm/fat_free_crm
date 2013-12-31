@@ -71,7 +71,6 @@ class Setting < ActiveRecord::Base
       end
     end
 
-
     # Set setting value
     #-------------------------------------------------------------------
     def []=(name, value)
@@ -81,7 +80,6 @@ class Setting < ActiveRecord::Base
       setting.save
       cache[name] = value
     end
-
 
     # Unrolls [ :one, :two ] settings array into [[ "One", :one ], [ "Two", :two ]]
     # picking symbol translations from locale. If setting is not a symbol but
@@ -97,7 +95,6 @@ class Setting < ActiveRecord::Base
       # instead of crashing the entire application.
       table_exists? rescue false
     end
-
 
     # Loads settings from YAML files
     def load_settings_from_yaml(file)

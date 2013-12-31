@@ -32,7 +32,7 @@
 class Campaign < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
+  has_many    :tasks, :as => :asset, :dependent => :destroy
   has_many    :leads, :dependent => :destroy, :order => "id DESC"
   has_many    :opportunities, :dependent => :destroy, :order => "id DESC"
   has_many    :emails, :as => :mediator
@@ -42,8 +42,8 @@ class Campaign < ActiveRecord::Base
   scope :state, ->(filters) {
     where('status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters)
   }
-  scope :created_by,  ->(user) { where('user_id = ?' , user.id) }
-  scope :assigned_to, ->(user) { where('assigned_to = ?', user.id) }
+  scope :created_by,  ->(user) { where( user_id: user.id ) }
+  scope :assigned_to, ->(user) { where( assigned_to: user.id ) }
 
   scope :text_search, ->(query) { search('name_cont' => query).result }
 

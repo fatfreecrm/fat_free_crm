@@ -31,4 +31,3 @@ module OpportunitiesHelper
     summary.compact.join(', ')
   end
 end
-

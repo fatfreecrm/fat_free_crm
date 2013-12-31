@@ -61,7 +61,6 @@ class User < ActiveRecord::Base
 
   has_paper_trail :ignore => [:last_request_at, :perishable_token]
 
-  # For some reason this does not play nice with has_paper_trail when set as default scope
   scope :by_id, -> { order('id DESC') }
   scope :except, ->(user) { where('id != ?', user.id).by_name }
   scope :by_name, -> { order('first_name, last_name, email') }

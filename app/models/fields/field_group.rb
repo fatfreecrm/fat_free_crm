@@ -46,6 +46,7 @@ class FieldGroup < ActiveRecord::Base
   end
 
   private
+
   # Can't delete default field group
   def not_default_field_group
     name != "custom_fields"
