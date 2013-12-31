@@ -21,7 +21,7 @@ class AccountContact < ActiveRecord::Base
 
   has_paper_trail :meta => { :related => :contact }, :ignore => [ :id, :created_at, :updated_at, :contact_id ]
 
-  validates :account_id, :presence => true
+  validates_presence_of :account_id, :contact_id
 
   ActiveSupport.run_load_hooks(:fat_free_crm_account_contact, self)
 end
