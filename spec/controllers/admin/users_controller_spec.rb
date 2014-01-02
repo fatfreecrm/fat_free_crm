@@ -54,10 +54,8 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET new" do
     it "assigns a new user as @user and renders [new] template" do
-      @user = User.new
-
       xhr :get, :new
-      assigns[:user].attributes.should == @user.attributes
+      expect(assigns[:user]).to be_new_record
       response.should render_template("admin/users/new")
     end
   end

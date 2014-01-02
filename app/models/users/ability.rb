@@ -9,11 +9,22 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+
+    # handle signup
+    can(:create, User) if User.can_signup?
+
     if user.present?
       entities = [Account, Campaign, Contact, Lead, Opportunity]
 
-      can :create, :all
-      can :read, [User] # for search autocomplete
+      # User
+      can :manage, User, id: user.id # can do any action on themselves
+
+      # Tasks
+      can :create, Task
+      can :manage, Task, user: user.id
+      can :manage, Task, assigned_to: user.id
+
+      # Entities
       can :manage, entities, :access => 'Public'
       can :manage, entities + [Task], :user_id => user.id
       can :manage, entities + [Task], :assigned_to => user.id

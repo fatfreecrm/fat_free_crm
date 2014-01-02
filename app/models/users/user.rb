@@ -187,6 +187,10 @@ class User < ActiveRecord::Base
       Ability.new(User.current_user)
     end
 
+    def can_signup?
+      [ :allowed, :needs_approval ].include? Setting.user_signup
+    end
+
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_user, self)
