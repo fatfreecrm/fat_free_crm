@@ -20,12 +20,15 @@
     = hook(:javascript_includes, self)
 
     :javascript
-      #{yield :javascript}
-      var _ffcrm_users = [
-      #{User.all.map{|u| "\"#{u.full_name} (@#{u.username})\"" }.join(",\n")}
-      ];
-
+      crm.language = "#{I18n.locale}"
       window.controller = "#{controller.controller_name}"
+
+    - if current_user.present?
+      :javascript
+        #{yield :javascript}
+        var _ffcrm_users = [
+        #{User.all.map{|u| "\"#{u.full_name} (@#{u.username})\"" }.join(",\n")}
+        ];
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
