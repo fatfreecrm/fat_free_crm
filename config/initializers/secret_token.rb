@@ -16,10 +16,10 @@
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
 
-if defined?(FatFreeCRM::Application)
-  if Rails.env == 'test'
-    FatFreeCRM::Application.config.secret_token = '51aa366864a80316a85cff0d3762347f4ae3d029d548bef034d56e82b1a2ffac5353ee6719d9b64e4354e2a0b1a901679f46a851c360a2ea377188e4b196b6b6'
-  else
-    raise "Please run 'rake ffcrm:secret' to generate a secret token."
-  end
+#
+# We should setup a secret token if FFCRM is running in application mode but NOT in engine mode.
+# This functionality has been extracted to lib so it can be tested.
+if FatFreeCRM.application?
+  require 'fat_free_crm/secret_token_generator'
+  FatFreeCRM::SecretTokenGenerator.setup!
 end
