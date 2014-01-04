@@ -27,6 +27,7 @@
 
 class Task < ActiveRecord::Base
   attr_accessor :calendar
+  ALLOWED_VIEWS = %w(pending assigned completed)
 
   belongs_to :user
   belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -171,6 +172,7 @@ class Task < ActiveRecord::Base
   # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
+    return {} unless ALLOWED_VIEWS.include?(view)
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     Hash[
       settings.map do |key, value|
@@ -182,7 +184,7 @@ class Task < ActiveRecord::Base
   # Returns bucket if it's empty (i.e. we have to hide it), nil otherwise.
   #----------------------------------------------------------------------------
   def self.bucket_empty?(bucket, user, view = "pending")
-    return false if bucket.blank?
+    return false if bucket.blank? or !ALLOWED_VIEWS.include?(view)
     if view == "assigned"
       assigned_by(user).send(bucket).pending.count
     else
@@ -193,6 +195,7 @@ class Task < ActiveRecord::Base
   # Returns task totals for each of the views as needed by tasks sidebar.
   #----------------------------------------------------------------------------
   def self.totals(user, view = "pending")
+    return {} unless ALLOWED_VIEWS.include?(view)
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     settings.inject({ :all => 0 }) do |hash, key|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)

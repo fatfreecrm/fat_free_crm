@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   # GET /tasks
   #----------------------------------------------------------------------------
   def index
-    @view = params[:view] || "pending"
+    @view = view
     @tasks = Task.find_all_grouped(current_user, @view)
 
     respond_with @tasks do |format|
@@ -25,14 +25,13 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @task = Task.tracked_by(current_user).find(params[:id])
-
     respond_with(@task)
   end
 
   # GET /tasks/new
   #----------------------------------------------------------------------------
   def new
-    @view = params[:view] || "pending"
+    @view = view
     @task = Task.new
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
@@ -52,7 +51,7 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
-    @view = params[:view] || "pending"
+    @view = view
     @task = Task.tracked_by(current_user).find(params[:id])
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
@@ -68,7 +67,7 @@ class TasksController < ApplicationController
   # POST /tasks
   #----------------------------------------------------------------------------
   def create
-    @view = params[:view] || "pending"
+    @view = view
     @task = Task.new(params[:task]) # NOTE: we don't display validation messages for tasks.
 
     respond_with(@task) do |format|
@@ -81,7 +80,7 @@ class TasksController < ApplicationController
   # PUT /tasks/1
   #----------------------------------------------------------------------------
   def update
-    @view = params[:view] || "pending"
+    @view = view
     @task = Task.tracked_by(current_user).find(params[:id])
     @task_before_update = @task.dup
 
@@ -107,7 +106,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   #----------------------------------------------------------------------------
   def destroy
-    @view = params[:view] || "pending"
+    @view = view
     @task = Task.tracked_by(current_user).find(params[:id])
     @task.destroy
 
@@ -142,7 +141,7 @@ class TasksController < ApplicationController
   # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------
   def filter
-    @view = params[:view] || "pending"
+    @view = view
 
     update_session do |filters|
       if params[:checked].true?
@@ -167,8 +166,7 @@ private
   # Collect data necessary to render filters sidebar.
   #----------------------------------------------------------------------------
   def update_sidebar
-    @view = params[:view]
-    @view = "pending" unless %w(pending assigned completed).include?(@view)
+    @view = view
     @task_total = Task.totals(current_user, @view)
 
     # Update filters session if we added, deleted, or completed a task.
@@ -189,4 +187,13 @@ private
       session[name] = filters unless filters.blank?
     end
   end
+
+  # Ensure view is allowed
+  #----------------------------------------------------------------------------
+  def view
+    view = params[:view]
+    views = Task::ALLOWED_VIEWS
+    views.include?(view) ? view : views.first
+  end
+
 end
