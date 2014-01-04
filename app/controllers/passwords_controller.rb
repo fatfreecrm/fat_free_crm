@@ -44,8 +44,9 @@ class PasswordsController < ApplicationController
     end
   end
 
-  #----------------------------------------------------------------------------
   private
+
+  #----------------------------------------------------------------------------
   def load_user_using_perishable_token
     @user = User.find_using_perishable_token(params[:id])
     unless @user
