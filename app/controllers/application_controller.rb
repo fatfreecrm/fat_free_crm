@@ -24,6 +24,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :respond_to_not_found
   rescue_from CanCan::AccessDenied,         :with => :respond_to_access_denied
 
+  include ERB::Util # to give us h and j methods
+
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
@@ -40,7 +42,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.any(:js, :html)   { render :partial => 'auto_complete' }
       format.json { render :json => @auto_complete.inject({}){|h,a|
-        h[a.id] = a.respond_to?(:full_name) ? a.full_name : a.name; h
+        h[a.id] = a.respond_to?(:full_name) ? j(a.full_name) : j(a.name); h
       }}
     end
   end
