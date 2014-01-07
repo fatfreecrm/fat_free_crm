@@ -21,7 +21,7 @@ module FatFreeCRM
           generate_and_persist_token!
         end
         FatFreeCRM::Application.config.secret_token = token
-        raise(FAIL_MESSAGE) if FatFreeCRM::Application.config.secret_token.blank?
+        raise(FAIL_MESSAGE) if FatFreeCRM::Application.config.secret_token.blank?# and !Rails.env.test?
       end
 
       private
