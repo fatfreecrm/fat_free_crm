@@ -189,7 +189,7 @@ en-US:
   msg_account_not_approved: Your account has not been approved yet.
   msg_asset_deleted: ! '%{value} has been deleted.'
   msg_asset_not_available: This %{value} is no longer available.
-  msg_asset_not_authorized: You are not authorized to view this %{value}.
+  msg_not_authorized: You are not authorized to take this action.
   msg_assets_not_available: The %{value} are not available.
   msg_asset_rejected: ! '%{value} has been rejected.'
   msg_bad_image_file: ^Could't upload or resize the image file you specified.

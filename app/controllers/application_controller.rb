@@ -24,6 +24,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :respond_to_not_found
   rescue_from CanCan::AccessDenied,         :with => :respond_to_access_denied
 
+  include ERB::Util # to give us h and j methods
+
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
@@ -40,7 +42,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.any(:js, :html)   { render :partial => 'auto_complete' }
       format.json { render :json => @auto_complete.inject({}){|h,a|
-        h[a.id] = a.respond_to?(:full_name) ? a.full_name : a.name; h
+        h[a.id] = a.respond_to?(:full_name) ? j(a.full_name) : j(a.name); h
       }}
     end
   end
@@ -145,7 +147,7 @@ private
 
   #----------------------------------------------------------------------------
   def can_signup?
-    [ :allowed, :needs_approval ].include? Setting.user_signup
+    User.can_signup?
   end
 
   #----------------------------------------------------------------------------
@@ -199,10 +201,10 @@ private
     flash[:warning] = t(:msg_asset_not_available, asset)
 
     respond_to do |format|
-      format.html { redirect_to :action => :index }
+      format.html { redirect_to(redirection_url) }
       format.js   { render(:update) { |page| page.reload } }
-      format.json { render :text => flash[:warning], :status => :not_found }
-      format.xml  { render :text => flash[:warning], :status => :not_found }
+      format.json { render :text => flash[:warning],  :status => :not_found }
+      format.xml  { render :xml => [flash[:warning]], :status => :not_found }
     end
   end
 
@@ -213,32 +215,32 @@ private
 
     url = send("#{related.pluralize}_path")
     respond_to do |format|
-      format.html { redirect_to url }
-      format.js   { render(:update) { |page| page.redirect_to url } }
-      format.json { render :text => flash[:warning], :status => :not_found }
-      format.xml  { render :text => flash[:warning], :status => :not_found }
+      format.html { redirect_to(url) }
+      format.js   { render(:update) { |page| page.redirect_to(url) } }
+      format.json { render :text => flash[:warning],  :status => :not_found }
+      format.xml  { render :xml => [flash[:warning]], :status => :not_found }
     end
   end
 
   #----------------------------------------------------------------------------
   def respond_to_access_denied
-    if self.action_name == "show"
-      flash[:warning] = t(:msg_asset_not_authorized, asset)
-
-    else
-      flick = case self.action_name
-        when "destroy" then "delete"
-        when "promote" then "convert"
-        else self.action_name
-      end
-      flash[:warning] = t(:msg_cant_do, :action => flick, :asset => asset)
-    end
-
+    flash[:warning] = t(:msg_not_authorized, default: 'You are not authorized to take this action.')
     respond_to do |format|
-      format.html { redirect_to :action => :index }
+      format.html { redirect_to(redirection_url) }
       format.js   { render(:update) { |page| page.reload } }
-      format.json { render :text => flash[:warning], :status => :unauthorized }
-      format.xml  { render :text => flash[:warning], :status => :unauthorized }
+      format.json { render :text => flash[:warning],  :status => :unauthorized }
+      format.xml  { render :xml => [flash[:warning]], :status => :unauthorized }
     end
   end
+
+  #----------------------------------------------------------------------------
+  def redirection_url
+    # Try to redirect somewhere sensible. Note: not all controllers have an index action
+    url = if current_user.present?
+      (respond_to?(:index) and self.action_name != 'index') ? { action: 'index' } : root_url
+    else
+      login_url
+    end
+  end
+
 end

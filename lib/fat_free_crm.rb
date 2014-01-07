@@ -9,12 +9,22 @@ module FatFreeCRM
     # Return either Application or Engine,
     # depending on how Fat Free CRM has been loaded
     def application
-      defined?(FatFreeCRM::Engine) ? Engine : Application
+      engine? ? Engine : Application
     end
 
     def root
       application.root
     end
+
+    # Are we running as an engine?
+    def engine?
+      defined?(FatFreeCRM::Engine).present?
+    end
+
+    def application?
+      !engine?
+    end
+
   end
 end
 

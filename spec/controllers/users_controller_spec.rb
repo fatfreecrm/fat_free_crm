@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe UsersController do
 
@@ -15,11 +15,9 @@ describe UsersController do
       require_user
     end
 
-    it "should expose the requested user as @user and render [show] template" do
-      @user = FactoryGirl.create(:user)
-
-      get :show, :id => @user.id
-      assigns[:user].should == @user
+    it "should render [show] template" do
+      get :show, :id => current_user.id
+      assigns[:user].should == current_user
       response.should render_template("users/show")
     end
 
@@ -29,16 +27,30 @@ describe UsersController do
       response.should render_template("users/show")
     end
 
+    it "should show user if admin user" do
+      @user = create(:user)
+      require_user(admin: true)
+      get :show, id: @user.id
+      assigns[:user].should == @user
+      response.should render_template("users/show")
+    end
+
+    it "should not show user if not admin user" do
+      @user = create(:user)
+      get :show, id: @user.id
+      response.should redirect_to(root_url)
+    end
+
     describe "with mime type of JSON" do
       before(:each) do
         request.env["HTTP_ACCEPT"] = "application/json"
       end
 
       it "should render the requested user as JSON" do
-        User.should_receive(:find).and_return(user = double("User"))
-        user.should_receive(:to_json).and_return("generated JSON")
+        User.should_receive(:find).and_return(current_user)
+        current_user.should_receive(:to_json).and_return("generated JSON")
 
-        get :show, :id => 42
+        get :show, :id => current_user.id
         response.body.should == "generated JSON"
       end
 
@@ -56,10 +68,10 @@ describe UsersController do
       end
 
       it "should render the requested user as XML" do
-        User.should_receive(:find).and_return(user = double("User"))
-        user.should_receive(:to_xml).and_return("generated XML")
+        User.should_receive(:find).and_return(current_user)
+        current_user.should_receive(:to_xml).and_return("generated XML")
 
-        get :show, :id => 42
+        get :show, :id => current_user.id
         response.body.should == "generated XML"
       end
 
@@ -79,7 +91,7 @@ describe UsersController do
 
     describe "if user is allowed to sign up" do
       it "should expose a new user as @user and render [new] template" do
-        @controller.should_receive(:can_signup?).and_return(true)
+        User.should_receive(:can_signup?).and_return(true)
         @user = FactoryGirl.build(:user)
         User.stub(:new).and_return(@user)
 
@@ -91,7 +103,7 @@ describe UsersController do
 
     describe "if user is not allowed to sign up" do
       it "should redirect to login_path" do
-        @controller.should_receive(:can_signup?).and_return(false)
+        User.should_receive(:can_signup?).and_return(false)
 
         get :new
         response.should redirect_to(login_path)
@@ -102,14 +114,27 @@ describe UsersController do
   # GET /users/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-    before(:each) do
-      require_user
-      @user = current_user
-    end
 
     it "should expose current user as @user and render [edit] template" do
+      require_user
+      @user = current_user
       xhr :get, :edit, :id => @user.id
       assigns[:user].should == current_user
+      response.should render_template("users/edit")
+    end
+
+    it "should not allow current user to edit another user" do
+      @user = create(:user)
+      require_user
+      xhr :get, :edit, :id => @user.id
+      expect(response.body).to eql("window.location.reload();")
+    end
+
+    it "should allow admin to edit another user" do
+      require_user(admin: true)
+      @user = create(:user)
+      xhr :get, :edit, :id => @user.id
+      assigns[:user].should == @user
       response.should render_template("users/edit")
     end
 
@@ -130,6 +155,7 @@ describe UsersController do
       end
 
       it "exposes a newly created user as @user and redirect to profile page" do
+        require_user(admin: true)
         post :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
         assigns[:user].should == @user
         flash[:notice].should =~ /welcome/
@@ -148,6 +174,7 @@ describe UsersController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and renders [new] template" do
+        require_user(admin: true)
         @user = FactoryGirl.build(:user, :username => "", :email => "")
         User.stub(:new).and_return(@user)
 
@@ -292,6 +319,7 @@ describe UsersController do
   describe "responding to PUT change_password" do
     before(:each) do
       require_user
+      User.stub(:find).and_return(current_user)
       @current_user_session.stub(:unauthorized_record=).and_return(current_user)
       @current_user_session.stub(:save).and_return(current_user)
       @user = current_user
