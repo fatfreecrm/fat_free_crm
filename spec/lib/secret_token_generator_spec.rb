@@ -13,22 +13,37 @@ describe FatFreeCRM::SecretTokenGenerator do
 
   describe "setup!" do
 
-    it "should not generate a token if one already exists" do
-      FatFreeCRM::SecretTokenGenerator.stub(:token).and_return(nil)
-      expect(FatFreeCRM::SecretTokenGenerator).to receive(:generate_and_persist_token!)
-      FatFreeCRM::Application.config.stub(:secret_token).and_return(token)
+    it "should not generate a new token if one exists" do
+      FatFreeCRM::SecretTokenGenerator.stub(:token_exists?).and_return(true)
+      FatFreeCRM::SecretTokenGenerator.should_not_receive(:new_token!)
       FatFreeCRM::SecretTokenGenerator.setup!
     end
 
-    it "should generate a token if none exists already" do
-      FatFreeCRM::SecretTokenGenerator.stub(:token).and_return(token)
-      expect(FatFreeCRM::SecretTokenGenerator).not_to receive(:generate_and_persist_token!)
+    it "should generate a token if none exists" do
+      FatFreeCRM::SecretTokenGenerator.stub(:token_exists?).and_return(false)
+      FatFreeCRM::SecretTokenGenerator.should_receive(:new_token!)
       FatFreeCRM::SecretTokenGenerator.setup!
     end
 
-    it "should raise an error if the token is still blank (should never happen)" do
-      FatFreeCRM::SecretTokenGenerator.stub(:token).and_return(nil)
-      lambda { FatFreeCRM::SecretTokenGenerator.setup! }.should raise_error(RuntimeError)
+    it "should generate a random token if not persisted" do
+      FatFreeCRM::SecretTokenGenerator.stub(:token_exists?).and_return(false)
+      FatFreeCRM::SecretTokenGenerator.stub(:new_token)
+      FatFreeCRM::SecretTokenGenerator.should_receive(:generate_token).exactly(:twice)
+      FatFreeCRM::SecretTokenGenerator.setup!
+    end
+
+  end
+
+  describe "token_exists?" do
+
+    it "should be true" do
+      Setting.stub(:secret_token).and_return(token)
+      FatFreeCRM::SecretTokenGenerator.send(:token_exists?).should eql(true)
+    end
+
+    it "should be false" do
+      Setting.stub(:secret_token).and_return(nil)
+      FatFreeCRM::SecretTokenGenerator.send(:token_exists?).should eql(false)
     end
 
   end
@@ -36,18 +51,27 @@ describe FatFreeCRM::SecretTokenGenerator do
   describe "token" do
 
     it "should delegate to Setting" do
-      expect(Setting).to receive(:secret_token).and_return(token)
-      expect(FatFreeCRM::SecretTokenGenerator.send(:token)).to eql(token)
+      Setting.should_receive(:secret_token).and_return(token)
+      FatFreeCRM::SecretTokenGenerator.send(:token).should eql(token)
     end
 
   end
 
-  describe "generate_and_persist_token!" do
+  describe "new_token!" do
+
+    it "should generate and set a new token" do
+      FatFreeCRM::SecretTokenGenerator.should_receive(:generate_token).and_return(token)
+      Setting.should_receive(:secret_token=).with(token)
+      FatFreeCRM::SecretTokenGenerator.send(:new_token!)
+    end
+
+  end
+
+  describe "generate_token!" do
 
     it "should generate a random token" do
-      expect(SecureRandom).to receive(:hex).with(64).and_return(token)
-      expect(Setting).to receive(:secret_token=).with(token)
-      FatFreeCRM::SecretTokenGenerator.send(:generate_and_persist_token!)
+      SecureRandom.should_receive(:hex).with(64).and_return(token)
+      FatFreeCRM::SecretTokenGenerator.send(:generate_token)
     end
 
   end

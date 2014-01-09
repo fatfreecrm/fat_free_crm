@@ -16,17 +16,19 @@ module FatFreeCRM
       # If there is no secret token defined, we generate one and save it as a setting
       # If a token has been already been saved, we tell Rails to use it and move on.
       def setup!
-        if token.blank?
+        if !token_exists?
           Rails.logger.info("No secret key defined yet... generating and saving to Setting.secret_token")
-          generate_and_persist_token!
+          new_token!
         end
-        FatFreeCRM::Application.config.secret_token = token
-        raise(FAIL_MESSAGE) if FatFreeCRM::Application.config.secret_token.blank?# and !Rails.env.test?
+        # If db isn't setup yet, token will return nil, provide a randomly generated one for now.
+        FatFreeCRM::Application.config.secret_token = ( token || generate_token )
       end
 
       private
 
-      FAIL_MESSAGE = ::I18n.t('secret_token_generator.fail_message', default: "There was a problem generating the secret token. Please see lib/fat_free_crm/secret_token_generator.rb")
+      def token_exists?
+        Setting.secret_token.present?
+      end
 
       #
       # Read the current token from settings
@@ -36,10 +38,14 @@ module FatFreeCRM
 
       #
       # Create a new secret token and save it as a setting.
-      def generate_and_persist_token!
+      def new_token!
         quietly do
-          Setting.secret_token = SecureRandom.hex(64)
+          Setting.secret_token = generate_token
         end
+      end
+
+      def generate_token
+        SecureRandom.hex(64)
       end
 
       #
