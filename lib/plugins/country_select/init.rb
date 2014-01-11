@@ -1,1 +1,0 @@
-require 'country_select'
