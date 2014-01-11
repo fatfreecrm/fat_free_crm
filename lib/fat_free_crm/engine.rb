@@ -7,9 +7,7 @@ module FatFreeCRM
   class Engine < ::Rails::Engine
     config.autoload_paths += Dir[root.join("app/models/**")] +
                              Dir[root.join("app/controllers/entities")]
-
-    config.to_prepare do
-      ActiveRecord::Base.observers = :lead_observer, :opportunity_observer, :task_observer
-    end
+    config.active_record.observers = [:lead_observer, :opportunity_observer,
+                                      :task_observer, :entity_observer]
   end
 end
