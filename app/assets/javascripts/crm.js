@@ -26,13 +26,7 @@ var crm = {
     crm.search(query, controller);
   },
 
-  /*
-   * remove any duplicate 'facebook-list' elements before running the 'BlindUp' effect.
-   * (The disappearing facebook-list takes precedence over the newly created facebook-list
-   * that is being AJAX loaded, and messes up the initialization.. )
-   */
   hide_form: function(id) {
-    if($('facebook-list')) $('facebook-list').remove();
     var arrow = $(id + "_arrow") || $("arrow");
     if (arrow) arrow.update(this.COLLAPSED);
     $(id).hide().update("").setStyle({height: 'auto'});
