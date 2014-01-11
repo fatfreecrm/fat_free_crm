@@ -120,7 +120,7 @@ private
       flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
       respond_to do |format|
         format.html { redirect_to login_url }
-        format.js   { render(:index) { |page| page.redirect_to login_url } }
+        format.js   { render :text => "window.location = '#{login_url}';" }
       end
     end
   end
