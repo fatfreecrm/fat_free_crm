@@ -19,7 +19,7 @@
         complete: ->
           $j('#loading').hide()
       )
-    else 
+    else
       # update the index view by firing off the searches again
 
       if $j('#search .tabs li a[data-search-form="advanced_search"].active').length == 1
@@ -36,6 +36,7 @@
           data:
             view: $j(this).data('view')
             query:   $('query').value
+            authenticity_token: $j('meta[name="csrf-token"]').attr('content')
           beforeSend: ->
             $j('#contacts').css({ opacity: 0.4 })
             $j('#loading').show()
