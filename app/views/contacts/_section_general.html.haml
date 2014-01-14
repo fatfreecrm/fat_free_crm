@@ -17,6 +17,7 @@
         = col(t(:tags), contact.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '))
 
     -# Show custom fields that are in the default field group
-    - custom_field_group = contact.field_groups.select{|f| f.name == 'custom_fields'}
-    - fields = custom_field_group.first.try(:fields).try(:without_pairs)
-    = render("fields/group_view", :fields => fields, :entity => contact) unless fields.nil?
+    - custom_field_group = contact.field_groups.select{|f| f.name == 'custom_fields'}.first
+    - if custom_field_group.present?
+      - fields = custom_field_group.fields.without_pairs
+      = render("fields/group_view", :fields => fields, :entity => contact) unless fields.nil?
