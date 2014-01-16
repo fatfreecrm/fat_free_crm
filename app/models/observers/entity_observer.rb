@@ -31,4 +31,6 @@ class EntityObserver < ActiveRecord::Observer
       User.find_by_id(user_id_or_user.to_i)
     end
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_entity_observer, self)
 end
