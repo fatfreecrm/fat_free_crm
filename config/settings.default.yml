@@ -66,6 +66,7 @@
 #------------------------------------------------------------------------------
 :smtp:
   :address                    : ""        # e.g. smtp.gmail.com
+  :from                       : ""        # e.g. no-reply@your-domain.com
   :enable_starttls_auto       : true      # true/false
   :port                       : ""        # e.g. 587
   :authentication             : :plain

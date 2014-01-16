@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
 
     mail :subject => "Fat Free CRM: " + I18n.t(:password_reset_instruction),
          :to => user.email,
-         :from => "Fat Free CRM <noreply@fatfreecrm.com>",
+         :from => from_address,
          :date => Time.now
   end
 
@@ -21,8 +21,14 @@ class UserMailer < ActionMailer::Base
     @assigner_name = assigner.name
     mail :subject => "Fat Free CRM: You have been assigned #{@entity_name} #{@entity_type}",
          :to => entity.assignee.email,
-         :from => "Fat Free CRM <notifications@fatfreecrm.com>"
+         :from => from_address
+  end
+
+  private
+
+  def from_address
+    from = Setting.smtp[:from]
+    !from.blank? ? from : "Fat Free CRM <noreply@fatfreecrm.com>"
   end
 
 end
-
