@@ -31,6 +31,9 @@
     $("select[name*='assigned_to'], select[name*='[country]'], .chzn-select").each ->
       $(this).select2()
 
+    $("select[name*='[user_ids]'], select[name*='[group_ids]']").each ->
+      $(this).chosen()
+
   # Apply pop up to merge links when document is loaded
   $(document).ready ->
     add_select2_boxes()

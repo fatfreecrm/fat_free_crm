@@ -23,16 +23,11 @@
             = f.label :user_ids, "#{t(:users)}:"
             %br
             = f.select :user_ids, user_options, {}, :multiple => true
-            :javascript
-              $('#{model}_user_ids').chosen();
-
         %tr
           %td
             = f.label :group_ids, "#{t(:groups)}:"
             %br
             = f.select :group_ids, group_options, {}, :multiple => true
-            :javascript
-              $('#{model}_group_ids').chosen();
 
     - if !edit and entity.is_a?(Lead)
       .radio_box

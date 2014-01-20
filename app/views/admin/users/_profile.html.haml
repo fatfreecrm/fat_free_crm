@@ -24,6 +24,7 @@
           = f.check_box(:admin, { :disabled => edit && @user == current_user })
           %label{:for => 'user_admin'}
             = t(:user_is_admin)
+
 .subtitle #{t :personal_information}
 .section
   %table
@@ -51,5 +52,3 @@
       %td
         .label #{t :groups}:
         = f.select :group_ids, Group.all.map {|g| [g.name, g.id]}, {}, :multiple => true
-        :javascript
-          $('#user_group_ids').chosen();
