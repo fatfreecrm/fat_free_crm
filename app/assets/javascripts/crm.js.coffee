@@ -98,7 +98,7 @@
       $("#account_create_title").show()
       $("#account_id_chzn").hide()
       $("#account_id").prop('disabled', true)
-      $("#account_name").enable()
+      $("#account_name").prop('disabled', false)
       $("#account_name").html ""
       $("#account_name").show()
       $("#account_name").focus()  if and_focus
@@ -113,7 +113,7 @@
       $("#account_select_title").show()
       $("#account_name").hide()
       $("#account_name").prop('disabled', true)
-      $("#account_id").enable()
+      $("#account_id").prop('disabled', false)
       $("#account_id_chzn").show()
 
 
@@ -133,7 +133,7 @@
       $("#account_id_chzn").show()
       
       # Enable hidden account id select so that value is POSTed
-      $("#account_id").enable()
+      $("#account_id").prop('disabled', false)
 
 
     #----------------------------------------------------------------------------
@@ -150,7 +150,7 @@
     create_contact: ->
       @clear_all_hints()  if $("#contact_business_address_attributes_country")
       $("#account_assigned_to").val $("contact_assigned_to").val()
-      $("#account_id").enable()  if $("#account_id:visible").length
+      $("#account_id").prop('disabled', false)  if $("#account_id:visible").length
 
 
     #----------------------------------------------------------------------------
@@ -170,7 +170,7 @@
     #----------------------------------------------------------------------------
     flip_campaign_permissions: (value) ->
       if value
-        $("#lead_access_campaign").enable()
+        $("#lead_access_campaign").prop('disabled', false)
         $("#lead_access_campaign").checked = 1
         $("#copy_permissions").css color: "#3f3f3f"
       else
@@ -411,7 +411,7 @@
       $(this).append createSpinner()
 
     $(document).on 'ajax:complete', '.pagination, .per_page_options', ->
-      $(this).find('a').enable()
+      $(this).find('a').prop('disabled', false)
       $(this).children('.spinner').remove()
 
 

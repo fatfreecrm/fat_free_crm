@@ -39,7 +39,7 @@
           else
             value = ""
           crm.search(value, window.controller)
-          $('#filters').enable() # Enable filters panel (if present)
+          $('#filters').prop('disabled', false) # Enable filters panel (if present)
 
         when 'advanced_search'
           $('#lists .show_lists_save_form').show()
