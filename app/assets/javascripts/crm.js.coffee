@@ -233,11 +233,11 @@
         emails_field = "#" + el_prefix + "_shown_emails"
         comment_new_field = "#" + el_prefix + "_comment_new"
 
-      for li in $(comment_new_field).siblings("li")
-        $li = $(li)
+      $(comment_new_field).siblings("li").each ->
+        $li = $(this)
         $a = $li.find("tt a.toggle")
         $dt = $li.find("dt")
-        unless typeof (a) is "undefined"
+        if $a.length
           if state is "Expanded"
             $($dt[0]).hide()
             $($dt[1]).show()
