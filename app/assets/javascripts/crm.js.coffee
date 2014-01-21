@@ -373,6 +373,7 @@
     auto_complete: (controller, related, focus) ->
       $("#auto_complete_query").autocomplete(
         source: (request, response) =>
+          request = {auto_complete_query: request['term'], related: related}
           $.get @base_url + "/" + controller + "/auto_complete.json", request, (data) ->
             response $.map(data, (value, key) ->
               label: value
