@@ -13,7 +13,7 @@
     = refresh_sidebar(:index)
     $('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
   - else
-    $('#recently').html('#{ j render(:partial => "shared/recently") }');
+    $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
   crm.flick('empty', 'remove');
 
 - else
