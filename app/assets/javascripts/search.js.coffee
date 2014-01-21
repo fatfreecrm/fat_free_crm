@@ -45,7 +45,7 @@
           $('#lists .show_lists_save_form').show()
           $('#personal_lists .show_personal_lists_save_form').show()
           $("#advanced_search form input:submit").click()
-          $('#filters').disable() # Disable filters panel (if present)
+          $('#filters').prop('disabled', true) # Disable filters panel (if present)
 
       return
 

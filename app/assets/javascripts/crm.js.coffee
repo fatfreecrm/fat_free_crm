@@ -97,7 +97,7 @@
       $("#account_select_title").hide()
       $("#account_create_title").show()
       $("#account_id_chzn").hide()
-      $("#account_id").disable()
+      $("#account_id").prop('disabled', true)
       $("#account_name").enable()
       $("#account_name").html ""
       $("#account_name").show()
@@ -112,7 +112,7 @@
       $("#account_create_title").hide()
       $("#account_select_title").show()
       $("#account_name").hide()
-      $("#account_name").disable()
+      $("#account_name").prop('disabled', true)
       $("#account_id").enable()
       $("#account_id_chzn").show()
 
@@ -125,10 +125,10 @@
       $("#account_select_title").hide()
       $("#account_disabled_title").show()
       $("#account_name").hide()
-      $("#account_name").disable()
+      $("#account_name").prop('disabled', true)
       
       # Disable chosen account select
-      $("#account_id").disable()
+      $("#account_id").prop('disabled', true)
       $("#account_id").trigger "liszt:updated"
       $("#account_id_chzn").show()
       
@@ -174,7 +174,7 @@
         $("#lead_access_campaign").checked = 1
         $("#copy_permissions").css color: "#3f3f3f"
       else
-        $("#lead_access_campaign").disable()
+        $("#lead_access_campaign").prop('disabled', true)
         $("#copy_permissions").css color: "grey"
         $("#lead_access_private").checked = 1
 
@@ -406,7 +406,7 @@
     img.src = crm.base_url + "/assets/loading.gif"
 
     $(document).on 'ajax:send', '.pagination, .per_page_options', ->
-      $(this).find('a').disable()
+      $(this).find('a').prop('disabled', true)
       $(this).append createSpinner()
 
     $(document).on 'ajax:complete', '.pagination, .per_page_options', ->

@@ -196,7 +196,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def one_submit_only(form='')
-    { :onsubmit => "$('#'+this.id+' input[type=\\'submit\\']').disable()".html_safe }
+    { :onsubmit => "$('#'+this.id+' input[type=submit]').prop('disabled', true)".html_safe }
   end
 
   #----------------------------------------------------------------------------
