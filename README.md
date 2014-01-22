@@ -51,10 +51,12 @@ Pull requests and bug reports are always welcome!
 
 Visit our website at http://www.fatfreecrm.com/
 
+## Important security note
+
+Please note that several severe vulnerabilities have been fixed recently. You should upgrade to versions 0.12.3 or 0.13.2 or higher. See the [**security vulnerabilities**](https://github.com/fatfreecrm/fat_free_crm/wiki/Security) page for more details.
 
 ## System Requirements
 
-* FFCRM gem versions 0.12.1 or higher (previous versions had [**known security vulnerabilities**](https://github.com/fatfreecrm/fat_free_crm/wiki/Fixing-security-vulnerabilities-(27th-Dec-2013))
 * Ruby v2.0.0 recommended (it's faster!)
   * Ruby 1.9.3 is also compatible
   * Ruby 1.9.2 should be compatible but is not longer supported
@@ -129,7 +131,7 @@ See the [contributors graph](https://github.com/fatfreecrm/fat_free_crm/graphs/c
 ## License
 
 Fat Free CRM
-Copyright (c) 2008-2013 Michael Dvorkin and contributors.
+Copyright (c) 2008-2014 Michael Dvorkin and contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
