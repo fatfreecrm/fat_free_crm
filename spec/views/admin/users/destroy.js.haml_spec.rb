@@ -38,7 +38,7 @@ describe "admin/users/destroy" do
     it "should shake user partial" do
       render
 
-      rendered.should include(%Q/jQuery('#user_#{@user.id}').effect('shake'/)
+      rendered.should include(%Q/$('#user_#{@user.id}').effect('shake'/)
     end
 
     it "should show flash message" do

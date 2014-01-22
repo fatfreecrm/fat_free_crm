@@ -17,8 +17,8 @@ describe "admin/field_groups/create" do
   it "renders javascript" do
     render
     view.should render_template("admin/field_groups/create")
-    rendered.should have_text("jQuery('##{field_group.klass_name.downcase}_create_field_group_arrow')")
-    rendered.should have_text("jQuery('##{dom_id(field_group)}').effect('highlight', { duration:1500 });")
+    rendered.should have_text("$('##{field_group.klass_name.downcase}_create_field_group_arrow')")
+    rendered.should have_text("$('##{dom_id(field_group)}').effect('highlight', { duration:1500 });")
   end
 
   it "renders javascript for invalid field group" do

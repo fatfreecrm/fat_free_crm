@@ -35,16 +35,16 @@ describe "/users/change_password" do
       @user.errors.add(:current_password, "error")
       render
 
-      rendered.should include("jQuery('#change_password').html")
-      rendered.should include(%Q/jQuery('#change_password').effect("shake"/)
-      rendered.should include("jQuery('#current_password').focus();")
+      rendered.should include("$('#change_password').html")
+      rendered.should include(%Q/$('#change_password').effect("shake"/)
+      rendered.should include("$('#current_password').focus();")
     end
 
     it "should redraw the [Change Password] form and correctly set focus" do
       @user.errors.add(:user_password, "error")
       render
 
-      rendered.should include("jQuery('#user_password').focus();")
+      rendered.should include("$('#user_password').focus();")
     end
 
   end # errors

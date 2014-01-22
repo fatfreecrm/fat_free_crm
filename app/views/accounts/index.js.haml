@@ -2,10 +2,10 @@
 - @entities = instance_variable_get("@#{entities}")
 
 - if @entities.any?
-  jQuery('##{entities}').html('#{ j render(@entities) }');
+  $('##{entities}').html('#{ j render(@entities) }');
 - else
-  jQuery('##{entities}').html('#{ j render(:partial => "shared/empty") }');
+  $('##{entities}').html('#{ j render(:partial => "shared/empty") }');
 
-jQuery('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
-jQuery('#export').html('#{ j render(:partial => "shared/export") }');
-jQuery('#search_results_count').html('#{ j render(:text => t('search_results_count', :count => @search_results_count)) }');
+$('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
+$('#export').html('#{ j render(:partial => "shared/export") }');
+$('#search_results_count').html('#{ j render(:text => t('search_results_count', :count => @search_results_count)) }');

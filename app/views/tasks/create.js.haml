@@ -1,39 +1,39 @@
 - if @task.valid?
-  jQuery('#create_task_arrow').html(crm.COLLAPSED);
-  jQuery('#create_task').slideUp(250);
+  $('#create_task_arrow').html(crm.COLLAPSED);
+  $('#create_task').slideUp(250);
 
   - if called_from_index_page?  # "Classic" [Create Task] form requested from the Tasks page.
-    jQuery('#title').html('#{ j (@view == "assigned" ? t(:assigned_tasks) : t(:tasks)) }');
+    $('#title').html('#{ j (@view == "assigned" ? t(:assigned_tasks) : t(:tasks)) }');
 
     -# Show flash if assigned to somebody else from the [Pending Tasks] page.
     - if @view == "pending" && @task.assigned_to && @task.assigned_to != current_user.id
-      jQuery('#flash').html('#{j t(:task_created)} #{j t(:task_assigned_to, @task.assignee.full_name)} (#{j link_to(t(:view_assigned_tasks), url_for(:view => "assigned"))}).');
+      $('#flash').html('#{j t(:task_created)} #{j t(:task_assigned_to, @task.assignee.full_name)} (#{j link_to(t(:view_assigned_tasks), url_for(:view => "assigned"))}).');
       crm.flash('notice', true);
-      jQuery('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+      $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
 
       - # Show flash if assigned to current user from the [Assigned Tasks] page.
     - elsif @view == "assigned" && @task.assigned_to.blank?
-      jQuery('#flash').html('#{j t(:task_created)} (#{j link_to(t(:view_pending_tasks), tasks_url)}).');
+      $('#flash').html('#{j t(:task_created)} (#{j link_to(t(:view_pending_tasks), tasks_url)}).');
       crm.flash('notice', true);
-      jQuery('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+      $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
 
     - else # Show newly created task by inserting its div into appropriate bucket; then update tasks sidebar.
       - bucket = @task.computed_bucket
-      jQuery('#list_#{bucket}').show();
-      jQuery('##{bucket}').before('#{ j render(:partial => @view, :collection => [ @task ], :locals => { :bucket => bucket }) }');
-      jQuery('##{dom_id(@task)}').effect("highlight", { duration:1500 });
+      $('#list_#{bucket}').show();
+      $('##{bucket}').before('#{ j render(:partial => @view, :collection => [ @task ], :locals => { :bucket => bucket }) }');
+      $('##{dom_id(@task)}').effect("highlight", { duration:1500 });
       = refresh_sidebar(:index, :filters)
 
     crm.flick('empty', 'remove');
 
   - else # Inline [Create Task] form reqested from any of the core asset landing pages.
-    jQuery('#create_task_title').html('#{ j t(:tasks) }');
+    $('#create_task_title').html('#{ j t(:tasks) }');
     - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
-    jQuery('#tasks').prepend('#{ j render(:partial => "tasks/#{partial}", :collection => [@task], :locals => { :bucket => nil }) }');
-    jQuery('##{dom_id(@task)}').effect("highlight", { duration:1500 });
-    jQuery('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+    $('#tasks').prepend('#{ j render(:partial => "tasks/#{partial}", :collection => [@task], :locals => { :bucket => nil }) }');
+    $('##{dom_id(@task)}').effect("highlight", { duration:1500 });
+    $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
 
 - else # Couldn't create the task -- validation failed.
-  jQuery('#create_task').effect("shake", { duration:250, distance: 6 });
-  jQuery('#task_name').focus();
-  jQuery('#new_task input[type=submit]').enable();
+  $('#create_task').effect("shake", { duration:250, distance: 6 });
+  $('#task_name').focus();
+  $('#new_task input[type=submit]').enable();

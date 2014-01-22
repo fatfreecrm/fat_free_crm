@@ -17,7 +17,7 @@ describe "/contacts/index" do
 
     render :template => 'contacts/index', :formats => [:js]
 
-    rendered.should include("jQuery('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
+    rendered.should include("$('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
     rendered.should include("#paginate")
   end
 
@@ -26,7 +26,7 @@ describe "/contacts/index" do
 
     render :template => 'contacts/index', :formats => [:js]
 
-    rendered.should include("jQuery('#contacts').html('<div id=\\'empty\\'>")
+    rendered.should include("$('#contacts').html('<div id=\\'empty\\'>")
     rendered.should include("#paginate")
   end
 

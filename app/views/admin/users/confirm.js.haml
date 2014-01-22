@@ -1,7 +1,7 @@
 - id = dom_id(@user, :confirm)
 
-if (jQuery('##{id}').size() > 0) {
+if ($('##{id}').size() > 0) {
 crm.flick('#{id}', 'remove');
 } else {
-jQuery('##{dom_id(@user)}').prepend('#{ j (render :partial => "confirm") }');
+$('##{dom_id(@user)}').prepend('#{ j (render :partial => "confirm") }');
 }

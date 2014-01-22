@@ -4,6 +4,6 @@
 
   - unless tabless_layout?
     \|
-    = link_to(t(:about_ffc), "#", :title => t(:about_ffc), :onclick => "Modalbox.show($('about'), { title: this.title }); return false;")
+    = link_to(t(:about_ffc), "#", :title => t(:about_ffc), :onclick => "$('#about').dialog({ title: this.title, modal: true }); return false;")
 %br
 = render "layouts/about"

@@ -1,7 +1,7 @@
 #about{ hidden }
   %h3
     #{t :about_ffc_version}
-    %span.cool== v#{FatFreeCRM::VERSION}
+    %span.cool== v#{FatFreeCRM::VERSION::STRING}
     == (#{ActiveRecord::Base.connection.adapter_name.downcase})
   %p
     #{t :about_thank_you}

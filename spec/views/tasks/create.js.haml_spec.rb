@@ -23,23 +23,23 @@ describe "/tasks/create" do
       end
 
       it "should hide [Create Task] form and insert task partial" do
-        rendered.should include(%Q/jQuery('#due_asap').before('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'>/)
-        rendered.should include(%Q/jQuery('#task_#{@task.id}').effect("highlight"/)
+        rendered.should include(%Q/$('#due_asap').before('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'>/)
+        rendered.should include(%Q/$('#task_#{@task.id}').effect("highlight"/)
       end
 
       it "should update tasks title" do
         if status == "assigned"
-          rendered.should include("jQuery('#title').html('Assigned Tasks');")
+          rendered.should include("$('#title').html('Assigned Tasks');")
         else
-          rendered.should include("jQuery('#title').html('Tasks');")
+          rendered.should include("$('#title').html('Tasks');")
         end
       end
 
       it "should update tasks sidebar" do
-        rendered.should include("jQuery('#sidebar').html")
+        rendered.should include("$('#sidebar').html")
         rendered.should have_text("Recent Items")
         rendered.should have_text("Sometime Later")
-        rendered.should include("jQuery('#filters').effect('shake'")
+        rendered.should include("$('#filters').effect('shake'")
       end
     end
   end
@@ -50,7 +50,7 @@ describe "/tasks/create" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
-    rendered.should include("jQuery('#flash').html")
+    rendered.should include("$('#flash').html")
     rendered.should include("crm.flash('notice', true)")
   end
 
@@ -70,7 +70,7 @@ describe "/tasks/create" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
-    rendered.should include("jQuery('#flash').html")
+    rendered.should include("$('#flash').html")
     rendered.should include("crm.flash('notice', true)")
   end
 
@@ -94,12 +94,12 @@ describe "/tasks/create" do
       end
 
       it "should update tasks title" do
-        rendered.should include("jQuery('#create_task_title').html('Tasks')")
+        rendered.should include("$('#create_task_title').html('Tasks')")
       end
 
       it "should insert #{status} partial and highlight it" do
-        rendered.should include("jQuery('#tasks').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'>")
-        rendered.should include(%Q/jQuery('#task_#{@task.id}').effect("highlight"/)
+        rendered.should include("$('#tasks').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'>")
+        rendered.should include(%Q/$('#task_#{@task.id}').effect("highlight"/)
       end
 
       it "should update recently viewed items" do
@@ -113,8 +113,8 @@ describe "/tasks/create" do
     assign(:task, FactoryGirl.build(:task, :name => nil)) # make it invalid
     render
 
-    rendered.should include(%Q/jQuery('#create_task').effect("shake"/)
-    rendered.should include(%/jQuery('#new_task input[type=submit]').enable()/)
+    rendered.should include(%Q/$('#create_task').effect("shake"/)
+    rendered.should include(%/$('#new_task input[type=submit]').enable()/)
 
   end
 

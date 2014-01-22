@@ -15,7 +15,7 @@ describe "admin/users/edit" do
     params[:cancel] = "true"
     render
 
-    rendered.should include("jQuery('#user_#{@user.id}').replaceWith")
+    rendered.should include("$('#user_#{@user.id}').replaceWith")
   end
 
   it "edit hides previously open [Edit User] and replaces it with user partial" do

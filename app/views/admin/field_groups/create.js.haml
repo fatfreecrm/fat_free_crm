@@ -4,17 +4,12 @@
 - container_id = "#{asset}_field_groups"
 
 - if @field_group.valid?
-  jQuery('##{id}_arrow').html(crm.COLLAPSED);
-  jQuery('##{id}').slideUp( { duration:250, complete: function() {jQuery(this).html('')} } );
-  jQuery('##{container_id}').after('#{ j(render :partial => "field_group", :collection => [ @field_group ]) }');
-
-  - group_list_ids = klass.field_groups.map {|field_group| dom_id(field_group, :fields)}
-  - klass.field_groups.each do |field_group|
-    jQuery('##{container_id}').after('#{ j(sortable_element(dom_id(field_group, :fields), :url => sort_admin_fields_path(:field_group_id => field_group.id), :containment => group_list_ids, :dropOnEmpty => true)) }');
-
-  jQuery('##{container_id}').after('#{ j(sortable_element(container_id, :url => sort_admin_field_groups_path(:asset => asset), :tag => :div)) }');
-  jQuery('##{dom_id(@field_group)}').effect('highlight', { duration:1500 });
+  $('##{id}_arrow').html(crm.COLLAPSED);
+  $('##{id}').slideUp( { duration:250, complete: function() {$(this).html('')} } );
+  $('##{container_id}').after('#{ j(render :partial => "field_group", :collection => [ @field_group ]) }');
+  $('##{dom_id(@field_group)}').effect('highlight', { duration:1500 });
+  crm.init_sortables();
 
 - else
-  jQuery('##{id}').html('#{ j render(:partial => "new") }');
-  jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
+  $('##{id}').html('#{ j render(:partial => "new") }');
+  $('##{id}').effect("shake", { duration:250, distance: 6 });

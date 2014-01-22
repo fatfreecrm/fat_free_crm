@@ -1,8 +1,8 @@
 - id = dom_id(@field)
 - if @field.destroyed?
-  jQuery('li##{id}').css('background-color', '#ffe4e1').slideUp(250);
+  $('li##{id}').css('background-color', '#ffe4e1').slideUp(250);
 - else
-  jQuery('li##{id}').effect("shake", { duration:250, distance: 6});
-  jQuery('#flash').html('#{ j flash[:warning] }')
-  jQuery(crm.flash('warning'))
+  $('li##{id}').effect("shake", { duration:250, distance: 6});
+  $('#flash').html('#{ j flash[:warning] }')
+  $(crm.flash('warning'))
   - flash[:warning] = nil

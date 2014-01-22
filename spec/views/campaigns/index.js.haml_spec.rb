@@ -17,7 +17,7 @@ describe "/campaigns/index" do
 
     render :template => 'campaigns/index', :formats => [:js]
     
-    rendered.should include("jQuery('#campaigns').html('<li class=\\'campaign highlight\\' id=\\'campaign_42\\'")
+    rendered.should include("$('#campaigns').html('<li class=\\'campaign highlight\\' id=\\'campaign_42\\'")
     rendered.should include("#paginate")
   end
 
@@ -26,7 +26,7 @@ describe "/campaigns/index" do
 
     render :template => 'campaigns/index', :formats => [:js]
     
-    rendered.should include("jQuery('#campaigns').html('<div id=\\'empty\\'>")
+    rendered.should include("$('#campaigns').html('<div id=\\'empty\\'>")
     rendered.should include("#paginate")
   end
 

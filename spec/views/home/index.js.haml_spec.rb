@@ -17,7 +17,7 @@ describe "/home/index" do
 
     render :template => 'home/index', :formats => [:js]
 
-    rendered.should include("jQuery('#activities').html")
+    rendered.should include("$('#activities').html")
     rendered.should include("li class=\\'version\\' id=\\'version_42\\'")
   end
 

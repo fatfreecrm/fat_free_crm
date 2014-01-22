@@ -347,7 +347,7 @@ class Chosen extends AbstractChosen
 
       @search_field.val ""
 
-      @form_field_jq.trigger "change"
+      @form_field_jq.trigger "change", {'selected': @form_field.options[item.options_index].value} if @is_multiple || @form_field.selectedIndex != @current_selectedIndex
       this.search_field_scale()
     else if @options.allow_option_creation
       new_option = @search_field.val()
@@ -384,7 +384,7 @@ class Chosen extends AbstractChosen
     this.result_clear_highlight()
     this.winnow_results()
 
-    @form_field_jq.trigger "change"
+    @form_field_jq.trigger "change", {deselected: @form_field.options[result_data.options_index].value}
     this.search_field_scale()
 
   single_deselect_control_build: ->

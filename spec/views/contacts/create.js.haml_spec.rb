@@ -21,8 +21,8 @@ describe "/contacts/create" do
     it "should hide [Create Contact] form and insert contact partial" do
       render
 
-      rendered.should include("jQuery('#contacts').prepend('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
-      rendered.should include(%Q/jQuery('#contact_#{@contact.id}').effect("highlight"/)
+      rendered.should include("$('#contacts').prepend('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+      rendered.should include(%Q/$('#contact_#{@contact.id}').effect("highlight"/)
     end
 
     it "should refresh sidebar when called from contacts index" do
@@ -57,8 +57,8 @@ describe "/contacts/create" do
 
       render
 
-      rendered.should include("jQuery('#create_contact').html")
-      rendered.should include(%Q/jQuery('#create_contact').effect("shake"/)
+      rendered.should include("$('#create_contact').html")
+      rendered.should include(%Q/$('#create_contact').effect("shake"/)
     end
   end
 

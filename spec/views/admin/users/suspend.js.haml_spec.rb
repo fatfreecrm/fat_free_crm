@@ -15,6 +15,6 @@ describe "admin/users/suspend" do
     render
 
     rendered.should include("user_#{@user.id}")
-    rendered.should include(%Q/jQuery('#user_#{@user.id}').effect("highlight"/)
+    rendered.should include(%Q/$('#user_#{@user.id}').effect("highlight"/)
   end
 end

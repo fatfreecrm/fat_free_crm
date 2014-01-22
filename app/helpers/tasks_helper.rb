@@ -11,12 +11,13 @@ module TasksHelper
   def task_filter_checkbox(view, filter, count)
     name = "filter_by_task_#{view}"
     checked = (session[name] ? session[name].split(",").include?(filter.to_s) : count > 0)
-    onclick = remote_function(
-      :url      => { :action => :filter, :view => view },
-      :with     => "'filter='+this.value+'&checked='+this.checked",
-      :loading  => "$('loading').show()",
-      :complete => "$('loading').hide()"
-    )
+    url = url_for(:action => :filter, :view => view)
+    onclick = %Q{
+      $('#loading').show();
+      $.post('#{url}', {filter: this.value, checked: this.checked}, function () {
+        $('#loading').hide();
+      });
+    }
     check_box_tag("filters[]", filter, checked, :onclick => onclick, :id => "filters_#{filter.to_s.underscore}")
   end
 
@@ -45,8 +46,8 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_complete(pending, bucket)
-    onclick = %Q/$("#{dom_id(pending, :name)}").style.textDecoration="line-through";/
-    onclick << remote_function(:url => complete_task_path(pending), :method => :put, :with => "'bucket=#{bucket}'")
+    onclick = %Q{$("##{dom_id(pending, :name)}").css({textDecoration: "line-through"});}
+    onclick << %Q{$.ajax("#{complete_task_path(pending)}", {type: "PUT", data: {bucket: "#{bucket}"}});}
   end
 
   # Task summary for RSS/ATOM feed.
@@ -79,8 +80,8 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def hide_task_and_possibly_bucket(task, bucket)
-    text = "jQuery('##{dom_id(task)}').remove();\n"
-    text << "jQuery('#list_#{h bucket.to_s}').fadeOut({ duration:500 });\n" if Task.bucket_empty?(bucket, current_user, @view)
+    text = "$('##{dom_id(task)}').remove();\n"
+    text << "$('#list_#{h bucket.to_s}').fadeOut({ duration:500 });\n" if Task.bucket_empty?(bucket, current_user, @view)
     text.html_safe
   end
 
@@ -88,21 +89,21 @@ module TasksHelper
   def replace_content(task, bucket = nil)
     partial = (task.assigned_to && task.assigned_to != current_user.id) ? "assigned" : "pending"
     html = render(:partial => "tasks/#{partial}", :collection => [ task ], :locals => { :bucket => bucket })
-    text = "jQuery('##{dom_id(task)}').html('#{ j html }');\n".html_safe
+    text = "$('##{dom_id(task)}').html('#{ j html }');\n".html_safe
   end
 
   #----------------------------------------------------------------------------
   def insert_content(task, bucket, view)
-    text = "jQuery('#list_#{bucket}').show();\n".html_safe
+    text = "$('#list_#{bucket}').show();\n".html_safe
     html = render(:partial => view, :collection => [ task ], :locals => { :bucket => bucket })
-    text << "jQuery('##{h bucket.to_s}').prepend('#{ j html }');\n".html_safe
-    text << "jQuery('##{dom_id(task)}').effect('highlight', { duration:1500 });\n".html_safe
+    text << "$('##{h bucket.to_s}').prepend('#{ j html }');\n".html_safe
+    text << "$('##{dom_id(task)}').effect('highlight', { duration:1500 });\n".html_safe
     text
   end
 
   #----------------------------------------------------------------------------
   def tasks_flash(message)
-    text = "jQuery('#flash').html('#{ message }');\n"
+    text = "$('#flash').html('#{ message }');\n"
     text << "crm.flash('notice', true)\n"
     text.html_safe
   end

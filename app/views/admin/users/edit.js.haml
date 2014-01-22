@@ -1,13 +1,13 @@
 - id = dom_id(@user)
 
 - if params[:cancel].true?     # <----------------- Hide [Edit User]
-  jQuery('##{id}').replaceWith('#{ j render(:partial => "user", :collection => [ @user ]) }');
+  $('##{id}').replaceWith('#{ j render(:partial => "user", :collection => [ @user ]) }');
 
 - else # <----------------------------------------  Show [Edit User] form.
 
   - if @previous                                    # Hide open [Edit User] form if any.
     - if @previous.is_a?(User)                      # Previous user still exists?
-      jQuery('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => "user", :collection => [ @previous ]) }');
+      $('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => "user", :collection => [ @previous ]) }');
     - else
       crm.flick('user_#{@previous}', 'remove');
 
@@ -16,5 +16,5 @@
   -# Show [Edit User] form.
   crm.highlight_off('#{id}');
   crm.hide_form('create_user');
-  jQuery('##{id}').html('#{ j render(:partial => "edit") }');
-  jQuery('#user_username').focus();
+  $('##{id}').html('#{ j render(:partial => "edit") }');
+  $('#user_username').focus();

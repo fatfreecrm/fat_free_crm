@@ -28,14 +28,7 @@
     .title
       = t(asset)
 
-    - container_id = "#{asset}_field_groups"
-    .list{ :id => container_id }
+    .list{ :id => "#{asset}_field_groups", 'data-sortable' =>  sort_admin_field_groups_path(:asset => asset) }
       = render :partial => "admin/field_groups/field_group", :collection => klass.field_groups, :locals => {:asset => asset, :klass => klass}
-
-    - group_list_ids = klass.field_groups.map {|field_group| dom_id(field_group, :fields)}
-    - klass.field_groups.each do |field_group|
-      = sortable_element(dom_id(field_group, :fields), :url => sort_admin_fields_path(:field_group_id => field_group.id), :containment => group_list_ids, :dropOnEmpty => true)
-
-    = sortable_element(container_id, :url => sort_admin_field_groups_path(:asset => asset), :tag => :div)
 
     .remote{ hidden.merge(:id => create_form_id) }

@@ -63,7 +63,7 @@ module ApplicationHelper
   def load_select_popups_for(related, *assets)
     js = generate_js_for_popups(related, *assets)
     content_for(:javascript_epilogue) do
-      raw "document.observe('dom:loaded', function() { #{js} });"
+      raw "$(function() { #{js} });"
     end
   end
 
@@ -91,7 +91,7 @@ module ApplicationHelper
     link_to(text,
       url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
       :remote => true,
-      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ Element.visible('#{id}'));",
+      :onclick => "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ ($('##{id}').css('display') != 'none'));",
       :class => options[:class]
     )
   end
@@ -196,7 +196,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def one_submit_only(form='')
-    { :onsubmit => "jQuery('#'+this.id+' input[type=\\'submit\\']').disable()".html_safe }
+    { :onsubmit => "$('#'+this.id+' input[type=submit]').prop('disabled', true)".html_safe }
   end
 
   #----------------------------------------------------------------------------
@@ -213,9 +213,9 @@ module ApplicationHelper
   def confirm_delete(model, params = {})
     question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>).html_safe
     yes = link_to(t(:yes_button), params[:url] || model, :method => :delete)
-    no = link_to_function(t(:no_button), "jQuery('#menu').html(jQuery('#confirm').html());")
-    text = "jQuery('#confirm').html( jQuery('#menu').html() );\n"
-    text << "jQuery('#menu').html('#{question} #{yes} : #{no}');"
+    no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
+    text = "$('#confirm').html( $('#menu').html() );\n"
+    text << "$('#menu').html('#{question} #{yes} : #{no}');"
     text.html_safe
   end
 
@@ -234,8 +234,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
-    text << "jQuery('#sidebar').html('#{ j render(:partial => "layouts/sidebar", :locals => { :view => view, :action => action }) }');"
-    text << "jQuery('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
+    text << "$('#sidebar').html('#{ j render(:partial => "layouts/sidebar", :locals => { :view => view, :action => action }) }');"
+    text << "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
 
@@ -257,40 +257,41 @@ module ApplicationHelper
 
   # Ajax helper to refresh current index page once the user selects an option.
   #----------------------------------------------------------------------------
-  def redraw(option, value, url = nil)
+  def redraw(option, value, url = send("redraw_#{controller.controller_name}_path"))
     if value.is_a?(Array)
       param, value = value.first, value.last
     end
-    remote_function(
-      :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "'#{option}=#{param || value}'",
-      :condition => "$('#{option}').innerHTML != '#{value}'",
-      :loading   => "$('#{option}').update('#{value}'); $('loading').show()",
-      :complete  => "$('loading').hide()"
-    )
+    %Q{
+      if ($('##{option}').html() != '#{value}') {
+        $('##{option}').html('#{value}');
+        $('#loading').show();
+        $.post('#{url}', {#{option}: '#{param || value}'}, function () {
+          $('#loading').hide();
+        });
+      }
+    }
   end
 
   #----------------------------------------------------------------------------
-  def options_menu_item(option, key, url = nil)
+  def options_menu_item(option, key, url = send("redraw_#{controller.controller_name}_path"))
     name = t("option_#{key}")
     "{ name: \"#{name.titleize}\", on_select: function() {" +
-    remote_function(
-      :url       => url || send("redraw_#{controller.controller_name}_path"),
-      :with      => "'#{option}=#{key}&query=' + $(\"query\").value",
-      :condition => "$('#{option}').innerHTML != '#{name}'",
-      :loading   => "$('#{option}').update('#{name}'); $('loading').show()",
-      :complete  => "$('loading').hide()"
-    ) + "}}"
+    %Q{
+      if ($('##{option}').html() != '#{name}') {
+        $('##{option}').html('#{name}');
+        $('#loading').show();
+        $.post('#{url}', {#{option}: '#{key}', query: $('#query').val()}, function () {
+          $('#loading').hide();
+        });
+      }
+    } + "}}"
   end
 
   # Ajax helper to pass browser timezone offset to the server.
   #----------------------------------------------------------------------------
   def get_browser_timezone_offset
     unless session[:timezone_offset]
-      remote_function(
-        :url  => timezone_path,
-        :with => "'offset='+(new Date()).getTimezoneOffset()"
-      )
+      "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
     end
   end
 
@@ -385,15 +386,18 @@ module ApplicationHelper
 
   def entity_filter_checkbox(name, value, count)
     checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
-    values = %Q{$$("input[name='#{name}[]']").findAll(function (el) { return el.checked }).pluck("value")}
-    params = h(%Q{"#{name}=" + #{values} + "&query=" + $("query").value})
-
-    onclick = remote_function(
-      :url      => { :action => :filter },
-      :with     => params,
-      :loading  => "$('loading').show()",
-      :complete => "$('loading').hide()"
-    )
+    url = url_for(:action => :filter)
+    onclick = %Q{
+      var query = $('#query').val(),
+          values = [];
+      $('input[name=&quot;#{name}[]&quot;]').filter(':checked').each(function () {
+        values.push(this.value);
+      });
+      $('#loading').show();
+      $.post('#{url}', {#{name}: values.join(','), query: query}, function () {
+        $('#loading').hide();
+      });
+    }.html_safe
     check_box_tag("#{name}[]", value, checked, :id => value, :onclick => onclick)
   end
 
@@ -468,7 +472,7 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  # Generate the html for jQuery.timeago function
+  # Generate the html for $.timeago function
   # <span class="timeago" datetime="2008-07-17T09:24:17Z">July 17, 2008</span>
   def timeago(time, options = {})
     options[:class] ||= "timeago"
@@ -487,6 +491,10 @@ module ApplicationHelper
       when "opportunities" then "fa-money"
       when "team" then "fa-globe"
     end
+  end
+
+  def paginate(params = {})
+    will_paginate({:renderer => RemoteLinkPaginationHelper::LinkRenderer}.merge(params))
   end
 
 end

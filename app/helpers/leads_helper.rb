@@ -31,9 +31,9 @@ module LeadsHelper
   def confirm_reject(lead)
     question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>)
     yes = link_to(t(:yes_button), reject_lead_path(lead), :method => :put)
-    no = link_to_function(t(:no_button), "jQuery('#menu').html(jQuery('#confirm').html());")
-    text = "jQuery('#confirm').html( jQuery('#menu').html() );\n"
-    text << "jQuery('#menu').html('#{question} #{yes} : #{no}');"
+    no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
+    text = "$('#confirm').html( $('#menu').html() );\n"
+    text << "$('#menu').html('#{question} #{yes} : #{no}');"
     text.html_safe
   end
 

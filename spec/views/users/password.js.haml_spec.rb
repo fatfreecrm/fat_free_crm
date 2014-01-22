@@ -24,12 +24,12 @@ describe "/users/password" do
   it "edit profile: should hide [Edit Profile] and [Upload Avatar] forms and show [Change Password]" do
     render
 
-    rendered.should include("jQuery('#change_password').html")
+    rendered.should include("$('#change_password').html")
     rendered.should include("crm.hide_form('edit_profile');")
     rendered.should include("crm.hide_form('upload_avatar');")
     rendered.should include("crm.flip_form('change_password');")
     rendered.should include("crm.set_title('change_password', 'Change Password');")
-    rendered.should include("jQuery('#current_password').focus();")
+    rendered.should include("$('#current_password').focus();")
   end
 
 end

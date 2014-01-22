@@ -5,13 +5,13 @@
 - empty_field_id = "empty_opportunity_field_group_#{@field.field_group_id}"
 
 - if @field.valid?
-  jQuery("##{id}_arrow").html(crm.COLLAPSED)
-  jQuery('##{create_field_id}').before('#{ j (render :partial => "field", :collection => [@field]) }')
-  jQuery('##{create_field_id}').before('#{ j (sortable_element(container_id, :url => sort_admin_fields_path(:field_group_id => @field.field_group_id))) }')
-  jQuery('##{custom_field_id}').effect("highlight", { duration:1500 });
-  jQuery("##{create_field_id}").hide();
-  jQuery("##{empty_field_id}").hide();
+  $("##{id}_arrow").html(crm.COLLAPSED)
+  $('##{create_field_id}').before('#{ j (render :partial => "field", :collection => [@field]) }')
+  $('##{custom_field_id}').effect("highlight", { duration:1500 });
+  $("##{create_field_id}").hide();
+  $("##{empty_field_id}").hide();
+  $('##{container_id}').sortable('reset');
 - else
-  jQuery('##{id}').html('#{ j render(:partial => "admin/fields/form", :locals => {:field_group_id => @field.field_group_id}) }')
-  jQuery('##{id}').effect("shake", { duration:250, distance: 6 });
-  jQuery('##{id}').find('input[type="text"]').first().focus()
+  $('##{id}').html('#{ j render(:partial => "admin/fields/form", :locals => {:field_group_id => @field.field_group_id}) }')
+  $('##{id}').effect("shake", { duration:250, distance: 6 });
+  $('##{id}').find('input[type="text"]').first().focus()

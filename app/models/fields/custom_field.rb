@@ -136,7 +136,7 @@ class CustomField < Field
       ransack: {attributes: {klass.model_name.singular => {name => label}}}
     })
     # Reset Ransack cache
-    Ransack::Helpers::FormBuilder.cached_searchable_attributes_for_base = {}
+    # Ransack::Helpers::FormBuilder.cached_searchable_attributes_for_base = {}
   end
 
   # Change database column type only if safe to do so

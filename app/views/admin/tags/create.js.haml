@@ -1,11 +1,11 @@
 - if @tag.valid?
-  jQuery('#create_tag_arrow').html(crm.COLLAPSED);
-  jQuery('#create_tag_title').html('#{ j t(:tags) }');
-  jQuery('#create_tag').slideUp(250);
-  jQuery('#tags').prepend('#{ j (render :partial => "tag", :collection => [ @tag ]) }');
-  jQuery('##{dom_id(@tag)}').effect("highlight", { duration:1500 });
+  $('#create_tag_arrow').html(crm.COLLAPSED);
+  $('#create_tag_title').html('#{ j t(:tags) }');
+  $('#create_tag').slideUp(250);
+  $('#tags').prepend('#{ j (render :partial => "tag", :collection => [ @tag ]) }');
+  $('##{dom_id(@tag)}').effect("highlight", { duration:1500 });
   crm.flick('empty', 'remove');
 - else
-  jQuery('#create_tag').html('#{ j render(:partial => 'new') }');
-  jQuery('#create_tag').effect("shake", { duration:250, distance: 6 });
-  jQuery('#tag_name').focus();
+  $('#create_tag').html('#{ j render(:partial => 'new') }');
+  $('#create_tag').effect("shake", { duration:250, distance: 6 });
+  $('#tag_name').focus();

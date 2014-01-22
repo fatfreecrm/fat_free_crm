@@ -18,7 +18,7 @@ describe "/opportunities/index" do
 
     render :template => 'opportunities/index', :formats => [:js]
 
-    rendered.should include("jQuery('#opportunities').html")
+    rendered.should include("$('#opportunities').html")
     rendered.should include("#paginate")
   end
 
@@ -27,7 +27,7 @@ describe "/opportunities/index" do
 
     render :template => 'opportunities/index', :formats => [:js]
 
-    rendered.should include("jQuery('#opportunities').html('<div id=\\'empty\\'>")
+    rendered.should include("$('#opportunities').html('<div id=\\'empty\\'>")
     rendered.should include("#paginate")
   end
 

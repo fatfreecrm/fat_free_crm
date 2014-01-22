@@ -2,13 +2,13 @@
 - id_prefix = "#{class_name}_#{@comment.commentable.id}"
 
 - if @comment.valid?
-  jQuery('##{id_prefix}_comment_new').after('#{ j (render :partial => "comment", :locals => { :comment => @comment }) }');
-  jQuery('##{dom_id(@comment)}').effect("highlight", { duration:1500 });
-  jQuery('##{id_prefix}_post').hide();
-  jQuery('##{id_prefix}_ask').show();
+  $('##{id_prefix}_comment_new').after('#{ j (render :partial => "comment", :locals => { :comment => @comment }) }');
+  $('##{dom_id(@comment)}').effect("highlight", { duration:1500 });
+  $('##{id_prefix}_post').hide();
+  $('##{id_prefix}_ask').show();
 
-jQuery('##{id_prefix}_shown_notes').val('#{ j @comment.commentable.comment_ids.join(',') }');
-jQuery('##{id_prefix}_comment_comment').val('');
-jQuery('##{id_prefix}_comment_comment').focus();
-jQuery('##{id_prefix}_post').find('form [type=submit]').removeAttr("disabled")
-jQuery('##{id_prefix}_post').find('.spinner').hide()
+$('##{id_prefix}_shown_notes').val('#{ j @comment.commentable.comment_ids.join(',') }');
+$('##{id_prefix}_comment_comment').val('');
+$('##{id_prefix}_comment_comment').focus();
+$('##{id_prefix}_post').find('form [type=submit]').removeAttr("disabled")
+$('##{id_prefix}_post').find('.spinner').hide()

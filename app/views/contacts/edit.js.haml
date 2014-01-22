@@ -8,7 +8,7 @@
     crm.flip_form('edit_#{entity_name}');
     crm.set_title('edit_#{entity_name}', '#{h @entity.name}');
   - else                                            # Called from index page...
-    jQuery('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+    $('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
 
 
 - else # <----------------------------------------- Show [Edit Contact] form.
@@ -16,7 +16,7 @@
   - if params[:cancel].blank?                       # Called from contacts list item...
     - if @previous                                  # Hide open [Edit Contact] form if any.
       - if @previous.is_a?(Contact)
-        jQuery('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @previous ]) }');
+        $('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @previous ]) }');
       - else
         crm.flick('#{entity_name}_#{@previous}', 'remove');
     -# Disable onMouseOver for the list item.
@@ -24,12 +24,12 @@
     -# Hide [Create] form if any.
     crm.hide_form('create_#{entity_name}');
     -# Show [Edit] form.
-    jQuery('##{id}').html('#{ j render(:partial => "edit") }');
+    $('##{id}').html('#{ j render(:partial => "edit") }');
 
   - elsif params[:cancel].false?                    # Called from title of the contact landing page...
-    jQuery('#edit_#{entity_name}').html('#{ j render(:partial => "edit") }');
+    $('#edit_#{entity_name}').html('#{ j render(:partial => "edit") }');
     crm.flip_form('edit_#{entity_name}');
     crm.set_title('edit_#{entity_name}', "#{t :edit} #{h @entity.full_name}");
 
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
-  jQuery('#new_#{entity_name} input[type!=hidden]').first().focus();
+  $('#new_#{entity_name} input[type!=hidden]').first().focus();

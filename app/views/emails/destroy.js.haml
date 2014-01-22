@@ -1,5 +1,5 @@
 - class_name = @email.mediator.class.name.downcase
 - id_prefix = "#{class_name}_#{@email.mediator.id}"
 
-jQuery('##{id_prefix}_shown_emails').val('#{ j @email.mediator.email_ids.join(',') }');
-jQuery('##{dom_id(@email)}').css('background-color', '#ffe4e1').slideUp(250);
+$('##{id_prefix}_shown_emails').val('#{ j @email.mediator.email_ids.join(',') }');
+$('##{dom_id(@email)}').css('background-color', '#ffe4e1').slideUp(250);

@@ -26,8 +26,8 @@ describe "/tasks/complete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include("jQuery('#task_#{@task.id}').fadeOut")
-      rendered.should include("jQuery('#list_due_asap').fadeOut")
+      rendered.should include("$('#task_#{@task.id}').fadeOut")
+      rendered.should include("$('#list_due_asap').fadeOut")
     end
 
     it "should update tasks sidebar" do
@@ -37,10 +37,10 @@ describe "/tasks/complete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include("jQuery('#sidebar').html")
+      rendered.should include("$('#sidebar').html")
       rendered.should have_text("Assigned")
       rendered.should have_text("Recent Items")
-      rendered.should include("jQuery('#filters').effect('shake'")
+      rendered.should include("$('#filters').effect('shake'")
     end
   end
 
@@ -50,7 +50,7 @@ describe "/tasks/complete" do
       assign(:task, @task)
 
       render
-      rendered.should include("jQuery('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      rendered.should include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
       rendered.should include('<strike>')
     end
 

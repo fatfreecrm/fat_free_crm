@@ -12,6 +12,6 @@
     = render "entities/permissions",      :f => f, :edit => true, :entity => @opportunity
 
     .buttonbar
-      = f.submit t(:save_opportunity), :onclick => %/$("account_assigned_to").value = $F("opportunity_assigned_to");/
+      = f.submit t(:save_opportunity), :onclick => %/$("#account_assigned_to").val($("#opportunity_assigned_to").val());/
       #{t :or}
       = link_to_cancel edit_opportunity_path(@opportunity)

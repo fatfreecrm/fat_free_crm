@@ -28,7 +28,7 @@ describe "/leads/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("jQuery('#create_lead').html")
+      rendered.should include("$('#create_lead').html")
       rendered.should include("crm.flip_form('create_lead')")
     end
   end

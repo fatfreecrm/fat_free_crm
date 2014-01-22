@@ -21,7 +21,7 @@ describe "/campaigns/destroy" do
   it "should update Campaigns sidebar" do
     rendered.should include("#sidebar")
     rendered.should have_text("Recent Items")
-    rendered.should include(%Q/jQuery('#filters').effect('shake'/)
+    rendered.should include(%Q/$('#filters').effect('shake'/)
   end
 
   it "should update pagination" do

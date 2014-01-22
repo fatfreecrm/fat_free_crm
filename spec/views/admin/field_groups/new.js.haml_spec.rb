@@ -19,7 +19,7 @@ describe "admin/field_groups/new" do
     view.should render_template("admin/field_groups/new")
     rendered.should have_text("crm.flick('empty', 'toggle')")
     rendered.should have_text("crm.flip_form('#{field_group.klass_name.downcase}_create_field_group')")
-    rendered.should have_text("jQuery('##{field_group.klass_name.downcase}_create_field_group').html")
+    rendered.should have_text("$('##{field_group.klass_name.downcase}_create_field_group').html")
   end
 
 end

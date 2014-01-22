@@ -30,9 +30,9 @@ describe "/accounts/update" do
 
       it "should update sidebar" do
         render
-        rendered.should include("jQuery('#sidebar').html")
+        rendered.should include("$('#sidebar').html")
         rendered.should have_text("Recent Items")
-        rendered.should include("jQuery('#summary').effect('shake'")
+        rendered.should include("$('#summary').effect('shake'")
       end
     end
 
@@ -53,7 +53,7 @@ describe "/accounts/update" do
         render
 
         rendered.should include("#account_#{@account.id}")
-        rendered.should include(%Q/jQuery('#account_#{@account.id}').effect("highlight"/)
+        rendered.should include(%Q/$('#account_#{@account.id}').effect("highlight"/)
       end
     end
   end # no errors
@@ -72,7 +72,7 @@ describe "/accounts/update" do
         render
 
         rendered.should include("#edit_account")
-        rendered.should include(%Q/jQuery('#edit_account').effect("shake"/)
+        rendered.should include(%Q/$('#edit_account').effect("shake"/)
         rendered.should include('focus()')
       end
     end
@@ -86,7 +86,7 @@ describe "/accounts/update" do
         render
 
         rendered.should include("account_#{@account.id}")
-        rendered.should include(%Q/jQuery('#account_#{@account.id}').effect("shake"/)
+        rendered.should include(%Q/$('#account_#{@account.id}').effect("shake"/)
         rendered.should include('focus()')
       end
     end

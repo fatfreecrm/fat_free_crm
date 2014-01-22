@@ -16,7 +16,7 @@ describe "admin/users/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("jQuery('#create_user').html")
+      rendered.should include("$('#create_user').html")
     end
   end
 

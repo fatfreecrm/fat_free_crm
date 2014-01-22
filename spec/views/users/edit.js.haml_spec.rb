@@ -24,7 +24,7 @@ describe "/users/edit" do
   it "edit profile: should hide [Upload Avatar] and [Change Password] forms and show [Edit Profile]" do
     render
 
-    rendered.should include("jQuery('#edit_profile').html")
+    rendered.should include("$('#edit_profile').html")
     rendered.should include("crm.hide_form('upload_avatar');")
     rendered.should include("crm.hide_form('change_password');")
     rendered.should include("crm.flip_form('edit_profile');")

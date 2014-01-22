@@ -10,13 +10,13 @@ shared_examples "auto complete" do
   end
 
   it "should do the search and find records that match autocomplete query" do
-    post :auto_complete, :auto_complete_query => @query
+    get :auto_complete, :auto_complete_query => @query
     assigns[:query].should == @query
     assigns[:auto_complete].should == @auto_complete_matches # Each controller must define it.
   end
 
   it "should save current autocomplete controller in a session" do
-    post :auto_complete, :auto_complete_query => @query
+    get :auto_complete, :auto_complete_query => @query
 
     # We don't save Admin/Users autocomplete controller in a session since Users are not
     # exposed through the Jumpbox.
