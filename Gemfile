@@ -66,6 +66,7 @@ end
 
 group :heroku do
   gem 'unicorn', :platform => :ruby
+  gem 'rails_12factor'
 end
 
 # Gems used only for assets and not required
