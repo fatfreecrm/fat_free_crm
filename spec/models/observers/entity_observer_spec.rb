@@ -6,16 +6,18 @@
 require 'spec_helper'
 
 describe EntityObserver do
+
+  before do
+    Setting.stub(:host).and_return('http://www.example.com')
+    PaperTrail.stub(:whodunnit).and_return(assigner)
+  end
+
   [:account, :contact, :lead, :opportunity].each do |entity_type|
     describe "on creation of #{entity_type}" do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
       let!(:entity)  { FactoryGirl.build(entity_type, :user => assigner, :assignee => assignee) }
       let(:mail) { double('mail', :deliver => true) }
-
-      before :each do
-        PaperTrail.stub(:whodunnit).and_return(assigner)
-      end
 
       after :each do
         entity.save
@@ -34,6 +36,12 @@ describe EntityObserver do
         entity.assignee = entity.user = assigner
         UserMailer.should_not_receive(:assigned_entity_notification)
       end
+
+      it "does not notify me if Setting.host has not been set" do
+        Setting.stub(:host).and_return('')
+        UserMailer.should_not_receive(:assigned_entity_notification)
+      end
+
     end
 
     describe "on update of #{entity_type}" do
@@ -41,10 +49,6 @@ describe EntityObserver do
       let(:assigner) { FactoryGirl.create(:user) }
       let!(:entity)  { FactoryGirl.create(entity_type, :user => FactoryGirl.create(:user)) }
       let(:mail) { double('mail', :deliver => true) }
-
-      before :each do
-        PaperTrail.stub(:whodunnit).and_return(assigner)
-      end
 
       it "notifies the new owner if the entity is re-assigned" do
         UserMailer.should_receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
@@ -66,5 +70,6 @@ describe EntityObserver do
         entity.update_attributes(:assignee => assigner)
       end
     end
+
   end
 end
