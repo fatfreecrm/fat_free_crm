@@ -19,7 +19,7 @@
     - @campaign.reload
     = refresh_sidebar_for(:campaigns, :show, :summary)
   - else # Opportunity created on Contact landing page: refresh recent items list.
-    $('#recently').html('#{ j render(:partial => "shared/recently") }');
+    $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
   crm.flick('empty', 'remove');
 
 - else
