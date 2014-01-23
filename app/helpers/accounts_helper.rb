@@ -29,7 +29,9 @@ module AccountsHelper
       accounts = ([@account] + Account.my.order(:name).limit(25)).compact.uniq
       collection_select :account, :id, accounts, :id, :name, options,
                         {:"data-placeholder" => t(:select_an_account),
-                         :style => "width:330px; display:none;" }
+                         :"data-url" => auto_complete_accounts_path(format: 'json'),
+                         :style => "width:330px; display:none;",
+                         :class => 'ajax_chosen' }
   end
 
   # Select an existing account or create a new one.

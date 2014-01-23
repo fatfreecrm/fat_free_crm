@@ -31,7 +31,7 @@
     #   * remove any duplicate 'facebook-list' elements before running the 'BlindUp' effect.
     #   * (The disappearing facebook-list takes precedence over the newly created facebook-list
     #   * that is being AJAX loaded, and messes up the initialization.. )
-    #   
+    #
     hide_form: (id) ->
       $("#facebook-list").remove()
       arrow = $("#" + id + "_arrow")
@@ -92,7 +92,7 @@
     # Hide accounts dropdown and show create new account edit field instead.
     #----------------------------------------------------------------------------
     create_account: (and_focus) ->
-      crm.ensure_chosen_account()
+      crm.makeAjaxChosen()
       $("#account_disabled_title").hide()
       $("#account_select_title").hide()
       $("#account_create_title").show()
@@ -107,7 +107,7 @@
     # Hide create account edit field and show accounts dropdown instead.
     #----------------------------------------------------------------------------
     select_account: (and_focus) ->
-      crm.ensure_chosen_account()
+      crm.makeAjaxChosen()
       $("#account_disabled_title").hide()
       $("#account_create_title").hide()
       $("#account_select_title").show()
@@ -120,18 +120,18 @@
     # Show accounts dropdown and disable it to prevent changing the account.
     #----------------------------------------------------------------------------
     select_existing_account: ->
-      crm.ensure_chosen_account()
+      crm.makeAjaxChosen()
       $("#account_create_title").hide()
       $("#account_select_title").hide()
       $("#account_disabled_title").show()
       $("#account_name").hide()
       $("#account_name").prop('disabled', true)
-      
+
       # Disable chosen account select
       $("#account_id").prop('disabled', true)
       $("#account_id").trigger "liszt:updated"
       $("#account_id_chzn").show()
-      
+
       # Enable hidden account id select so that value is POSTed
       $("#account_id").prop('disabled', false)
 
@@ -158,7 +158,7 @@
       @clear_all_hints()  if $("#contact_business_address_attributes_country")
       $("#account_assigned_to").val $("contact_assigned_to").val()
 
-    
+
     #----------------------------------------------------------------------------
     flip_calendar: (value) ->
       if value is "specific_time"
@@ -166,7 +166,7 @@
         $("#task_calendar").toggle() # Show editable date field.
         $("#task_calendar").focus() # Focus to invoke calendar popup.
 
-    
+
     #----------------------------------------------------------------------------
     flip_campaign_permissions: (value) ->
       if value
@@ -178,13 +178,13 @@
         $("#copy_permissions").css color: "grey"
         $("#lead_access_private").checked = 1
 
-    
+
     #----------------------------------------------------------------------------
     flip_subtitle: (el) ->
       $el = $(el)
       arrow = $el.find("small")
       intro = $el.parent().next().children("small")
- 
+
       # Optionally, the intro might be next to the link.
       intro = $el.next("small")  unless intro.length
       section = $el.parent().next().children("div")
@@ -258,13 +258,13 @@
           }
         )
 
-    
+
     #----------------------------------------------------------------------------
     reschedule_task: (id, bucket) ->
       $("#task_bucket").val bucket
       $("#edit_task_" + id + " input[type=submit]")[0].click()
 
-    
+
     #----------------------------------------------------------------------------
     flick: (id, action) ->
       $el = $("#" + id)
@@ -281,7 +281,7 @@
           when "toggle"
             $el.toggle()
 
-    
+
     #----------------------------------------------------------------------------
     flash: (type, sticky) ->
       $el = $("#flash")
@@ -294,7 +294,7 @@
 
       setTimeout (-> $el.fadeOut(500)), 3000  unless sticky
 
-    
+
     #----------------------------------------------------------------------------
     # Will be deprecated soon: html5 placeholder replaced it on address fields
     show_hint: (el, hint) ->
