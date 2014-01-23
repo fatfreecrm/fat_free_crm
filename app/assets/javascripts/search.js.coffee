@@ -21,7 +21,8 @@
 
     # Search tabs
     # -----------------------------------------------------
-    activate_search_form = (search_form) ->
+    $(document).on 'click', '#search .tabs a', ->
+      search_form = $(this).data('search-form')
       # Hide all
       $('#search .search_form').hide()
       $('#search .tabs li a').removeClass('active')
@@ -48,8 +49,5 @@
           $('#filters').prop('disabled', true) # Disable filters panel (if present)
 
       return
-
-    $("#search .tabs a").click ->
-      activate_search_form($(this).data('search-form'))
 
 ) jQuery
