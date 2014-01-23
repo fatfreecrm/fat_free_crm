@@ -383,6 +383,7 @@ en-US:
   was_supposed_to_finish: was supposed to finish on %{value}
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
   was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
+  select_a_campaign: Select a campaign
 
   # Views -> Contacts.
   #----------------------------------------------------------------------------
