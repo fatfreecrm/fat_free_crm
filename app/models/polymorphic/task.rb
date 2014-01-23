@@ -144,9 +144,7 @@ class Task < ActiveRecord::Base
   # set by Time.now.end_of_week.
   #----------------------------------------------------------------------------
   def at_specific_time?
-    self.due_at &&
-    (self.due_at.hour != 0 || self.due_at.min != 0 || self.due_at.sec != 0) &&
-    (self.due_at.hour != 23 && self.due_at.min != 59 && self.due_at.sec != 59)
+    self.due_at.present? && !due_end_of_day? && !due_beginning_of_day?
   end
 
   # Convert specific due_date to "due_today", "due_tomorrow", etc. bucket name.
@@ -225,6 +223,16 @@ class Task < ActiveRecord::Base
     else # due_later or due_asap
       nil
     end
+  end
+
+  #----------------------------------------------------------------------------
+  def due_end_of_day?
+    self.due_at.present? && (self.due_at == self.due_at.end_of_day)
+  end
+
+  #----------------------------------------------------------------------------
+  def due_beginning_of_day?
+    self.due_at.present? && (self.due_at == self.due_at.beginning_of_day)
   end
 
   #----------------------------------------------------------------------------
