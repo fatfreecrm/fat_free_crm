@@ -23,6 +23,10 @@
           checkEmpty()
       )
 
-  $ ->
+  $(document).ready ->
     crm.init_sortables()
+
+  $(document).ajaxComplete ->
+    crm.init_sortables()
+
 ) jQuery
