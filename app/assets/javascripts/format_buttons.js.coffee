@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 (($) ->
 
-  $('a[data-view]').live 'click', ->
+  $(document).on 'click', 'a[data-view]', ->
 
     if $(this).data('context') == 'show'
       # replace the '#main' div with the new 'show' contents
