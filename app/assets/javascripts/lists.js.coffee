@@ -24,42 +24,43 @@
   $ ->
     lists = new Lists()
 
-    $(".show_lists_save_form").live "click", ->
+    $(document).on "click", ".show_lists_save_form", ->
       lists.show_save_form()
       $(".show_lists_save_form").hide()
       false
 
-    $(".show_personal_lists_save_form").live "click", ->
+    $(document).on "click", ".show_personal_lists_save_form", ->
       lists.show_save_personal_form()
       $(".show_personal_lists_save_form").hide()
       false
 
-    $(".hide_lists_save_form").live "click", ->
+    $(document).on "click", ".hide_lists_save_form", ->
       lists.hide_save_form()
       $(".show_lists_save_form").show()
       false
 
-    $(".hide_lists_save_personal_form").live "click", ->
+    $(document).on "click", ".hide_lists_save_personal_form", ->
       lists.hide_save_personal_form()
       $(".show_personal_lists_save_form").show()
       false
 
-    $("input#save_list").live "click", ->
+    $(document).on "click", "input#save_list", ->
       # Set value of hidden list_url field to serialized search form
       $("#list_url").val(window.location.pathname + '?' + $('form.ransack_search').serialize())
       true
 
-    $("input#save_personal_list").live "click", ->
+    $(document).on "click", "input#save_personal_list", ->
       # Set value of hidden list_url field to serialized search form
       $("#personal_list_url").val(window.location.pathname + '?' + $('form.ransack_search').serialize())
       true
 
     # When mouseover on li, change asset icons to delete buttons
-    $("#lists li, #personal_lists li").live "mouseover", ->
+    $(document).on "mouseover", "#lists li, #personal_lists li", ->
       icon = $(this).find('.delete_on_hover i.fa')
       iconText = getIcon(icon.attr('data-controller'))
       icon.removeClass(iconText).addClass('fa-times-circle')
-    $("#lists li, #personal_lists li").live "mouseout", ->
+      
+    $(document).on "mouseout", "#lists li, #personal_lists li", ->
       icon = $(this).find('.delete_on_hover i.fa')
       iconText = getIcon(icon.attr('data-controller'))
       icon.removeClass('fa-times-circle').addClass(iconText)
