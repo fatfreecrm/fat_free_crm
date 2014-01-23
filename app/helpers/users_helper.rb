@@ -17,7 +17,7 @@ module UsersHelper
       %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw, :id => current_user))} } }]
     end
   end
-  
+
   def all_users
     User.by_name
   end
@@ -26,7 +26,8 @@ module UsersHelper
     user_options = user_options_for_select(users, myself)
     select(asset, :assigned_to, user_options,
            { :include_blank => t(:unassigned) },
-           { :style         => "width:160px"  })
+           { :style         => "width:160px",
+             :class => 'select2'              })
   end
 
   def user_options_for_select(users, myself)

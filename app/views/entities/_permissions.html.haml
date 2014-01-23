@@ -22,12 +22,12 @@
           %td
             = f.label :user_ids, "#{t(:users)}:"
             %br
-            = f.select :user_ids, user_options, {}, :multiple => true
+            = f.select :user_ids, user_options, {}, :multiple => true, :class => 'select2'
         %tr
           %td
             = f.label :group_ids, "#{t(:groups)}:"
             %br
-            = f.select :group_ids, group_options, {}, :multiple => true
+            = f.select :group_ids, group_options, {}, :multiple => true, :class => 'select2'
 
     - if !edit and entity.is_a?(Lead)
       .radio_box
