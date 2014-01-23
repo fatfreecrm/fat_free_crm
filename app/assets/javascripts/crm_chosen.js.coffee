@@ -7,18 +7,9 @@
 
   window.crm ||= {}
 
-  # Initialize chosen for multiselect tag list
-  crm.chosen_taglist = (asset, controller, id)->
-    $('#' + asset + '_tag_list').chosen(
-      allow_option_creation: true
-    ).on('change', (event, params = {}) ->
-      if tag = params.selected
-        crm.load_field_group(controller, tag, id)
-      else if tag = params.deselected
-        crm.remove_field_group(tag)
-    )
-
-  # Use ajax_chosen for selects that need to lookup values from server
+  # Use the 'ajax_chosen' class on select boxes that need to lookup values from server
+  # Each select should have a 'data-url' attribute to specify the autocomplete path
+  #----------------------------------------------------------------------------
   crm.makeAjaxChosen = ->
     $("select.ajax_chosen").each ->
       $(this).ajaxChosen({
