@@ -1,10 +1,9 @@
 - if @list.valid?
-  $('#lists').replaceWith('#{ j render(:partial => "lists/sidebar") }');
-  $('.show_lists_save_form').show();
-  $('#personal_lists').replaceWith('#{ j render(:partial => "lists/personal_sidebar") }');
-  $('.show_personal_lists_save_form').show();
+  $('#lists').replaceWith('#{ j render(partial: "lists/lists") }');
+  $('.list_save').show();
 
 - else # Couldn't create the saved list -- validation failed.
-  $('#new_list').effect("shake", { duration:250, distance: 6 });
-  $('#list_name').focus();
-  $('#save_list').enable();
+  $form = $('.lists .list_form:visible')
+  $form.effect("shake", { duration:250, distance: 6 });
+  $form.find("[name='list[name]']").focus();
+  $form.find("[type=submit]").prop('disabled', false);

@@ -6,7 +6,21 @@
 // Place all the styles related to the Lists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#lists, #personal_lists {
-	i.fa {font-size: 130%}
-	a:hover {background:none; color:#0033cc}
+
+.lists {
+  i.fa { font-size: 130% }
+  a:hover { background:none; color:#0033cc }
+  .list_icon { opacity: 0.5; }
+  img.input_info { vertical-align: middle; }
+  .list_save {
+    text-align: right;
+    margin: 10px 0 0;
+  }
+  .list_form {
+    margin: 10px 0 0;
+    input[type=submit] {
+      margin-top: 10px;
+      vertical-align: baseline;
+    }
+  }
 }

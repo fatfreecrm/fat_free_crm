@@ -395,6 +395,19 @@
               window.location.href = @base_url + "/" + controller + "/" + ui.item.value
       )
 
+    #----------------------------------------------------------------------------
+    # Define different icons for each entity type
+    get_icon: (listType) ->
+      switch (listType)
+        when "tasks" then "fa-check-square-o"
+        when "campaigns" then "fa-bar-chart-o"
+        when "leads" then "fa-tasks"
+        when "accounts" then "fa-users"
+        when "contacts" then "fa-user"
+        when "opportunities" then "fa-money"
+        when "team" then "fa-globe"
+
+
   $ ->
     crm.focus_on_first_field()
 

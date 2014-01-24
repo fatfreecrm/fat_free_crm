@@ -1,28 +1,29 @@
-- @global_lists = List.where(:user_id => nil)
-- @list = List.new
-.panel#lists
-  .caption #{t :global_lists}
+- personal ||= false
+- caption = personal ? :personal_lists : :global_lists
+
+.panel.lists
+  .caption #{t caption}
   %ul
-    - if @global_lists.none?
+    - if lists.none?
       %div #{t :no_saved_lists}
     - else
-      - @global_lists.sort.each_with_index do |list, i|
-        %li[list]{ :class => i < @global_lists.size - 1 ? "" : "last" }
-          %dt= link_to(truncate(list.name, :length => 25), h(list.url), :title => list.name)
+      - lists.sort.each_with_index do |item, i|
+        %li[item]{ :class => i < lists.size - 1 ? "" : "last" }
+          %dt= link_to(truncate(item.name, :length => 25), h(item.url), :title => item.name)
           %tt
-            = link_to(url_for(list), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => "list_icon delete_on_hover") do
-              %i.fa{:"data-controller" => list.controller, class: get_icon(list.controller)}
+            = link_to(url_for(item), :method => :delete, :confirm => t(:confirm_delete, value: 'list'), :remote => true, :class => "list_icon delete_on_hover") do
+              %i.fa{:"data-controller" => item.controller, class: get_icon(item.controller)}
 
-  .show_lists_save_form{ hidden_if(!params[:q]) }
+  .list_save{ hidden_if(!params[:q]) }
     = link_to(t(:make_current_view_list), '#')
 
-  .save_list{ hidden }
-    = simple_form_for(@list, :html => one_submit_only, :remote => true) do |f|
+  .list_form{ hidden }
+    = simple_form_for(List.new, :remote => true) do |f|
       = f.text_field :name, :size => 25
-      = image_tag("/assets/info_tiny.png", :title => t(:list_name_info), :class => "input_info")
+      = image_tag(asset_path('info_tiny.png'), :title => t(:list_name_info), class: "input_info")
       = f.hidden_field :url
-      %input{:type => "hidden", :name => "is_global", :value => 1}
+      %input{:type => "hidden", :name => "is_global", :value => (personal ? 0 : 1) }
       %div
-        = f.submit(t(:save), :id => "save_list", :style => "vertical-align: bottom;")
+        = f.submit( t(:save) )
         #{t :or}
-        = link_to(t(:cancel), '#', :class => "hide_lists_save_form")
+        = link_to(t(:cancel), '#', :class => "cancel")

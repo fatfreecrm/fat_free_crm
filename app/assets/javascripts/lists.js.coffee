@@ -4,75 +4,51 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 (($) ->
-  class @Lists
-    constructor: (@templates = {}) ->
 
-    show_save_form: ->
-      $(".save_list").show()
-      $('.save_list #list_name').focus()
+  # Open list save form
+  $(document).on "click", ".lists .list_save a", ->
+    $list = $(this).closest('.lists')
+    $list.find(".list_form").show().find("[name='list[name]']").focus()
+    $list.find(".list_save").hide()
+    false
 
-    show_save_personal_form: ->
-      $(".save_peronal_list").show()
-      $('.save_peronal_list #list_name').focus()
+  # Close list save form
+  $(document).on "click", ".lists .cancel", ->
+    $list = $(this).closest('.lists')
+    $list.find(".list_form").hide()
+    $list.find(".list_save").show()
+    false
 
-    hide_save_form: ->
-      $(".save_list").hide()
+  # Set value of hidden list[url] field to serialized search form
+  $(document).on "click", ".lists .list_form [type=submit]", ->
+    $form = $(this).closest('form')
+    $form.find("[name='list[url]']").val(window.location.pathname + '?' + $('form.ransack_search').serialize())
+    true
 
-    hide_save_personal_form: ->
-      $(".save_peronal_list").hide()
+  # Disable submit button when form is submitted
+  $(document).on "submit", ".lists .list_form [type=submit]", ->
+    $form = $(this).closest('form')
+    $form.find("[type=submit]").prop('disabled', true);
 
-  $ ->
-    lists = new Lists()
+  # On li mouseover, change icons to delete buttons
+  $(document).on "mouseover", ".lists li", ->
+    icon = $(this).find('.delete_on_hover i.fa')
+    iconText = crm.get_icon(icon.attr('data-controller'))
+    icon.removeClass(iconText).addClass('fa-times-circle')
 
-    $(document).on "click", ".show_lists_save_form", ->
-      lists.show_save_form()
-      $(".show_lists_save_form").hide()
-      false
+  # On li mouseout, change asset icons back
+  $(document).on "mouseout", ".lists li", ->
+    icon = $(this).find('.delete_on_hover i.fa')
+    iconText = crm.get_icon(icon.attr('data-controller'))
+    icon.removeClass('fa-times-circle').addClass(iconText)
 
-    $(document).on "click", ".show_personal_lists_save_form", ->
-      lists.show_save_personal_form()
-      $(".show_personal_lists_save_form").hide()
-      false
-
-    $(document).on "click", ".hide_lists_save_form", ->
-      lists.hide_save_form()
-      $(".show_lists_save_form").show()
-      false
-
-    $(document).on "click", ".hide_lists_save_personal_form", ->
-      lists.hide_save_personal_form()
-      $(".show_personal_lists_save_form").show()
-      false
-
-    $(document).on "click", "input#save_list", ->
-      # Set value of hidden list_url field to serialized search form
-      $("#list_url").val(window.location.pathname + '?' + $('form.ransack_search').serialize())
-      true
-
-    $(document).on "click", "input#save_personal_list", ->
-      # Set value of hidden list_url field to serialized search form
-      $("#personal_list_url").val(window.location.pathname + '?' + $('form.ransack_search').serialize())
-      true
-
-    # When mouseover on li, change asset icons to delete buttons
-    $(document).on "mouseover", "#lists li, #personal_lists li", ->
-      icon = $(this).find('.delete_on_hover i.fa')
-      iconText = getIcon(icon.attr('data-controller'))
-      icon.removeClass(iconText).addClass('fa-times-circle')
-      
-    $(document).on "mouseout", "#lists li, #personal_lists li", ->
-      icon = $(this).find('.delete_on_hover i.fa')
-      iconText = getIcon(icon.attr('data-controller'))
-      icon.removeClass('fa-times-circle').addClass(iconText)
-
-    getIcon = (listType) ->
-      switch (listType)
-        when "tasks" then "fa-check-square-o"
-        when "campaigns" then "fa-bar-chart-o"
-        when "leads" then "fa-tasks"
-        when "accounts" then "fa-users"
-        when "contacts" then "fa-user"
-        when "opportunities" then "fa-money"
-        when "team" then "fa-globe"
+  # On search tab click, toggle list save on/off
+  $(document).on 'click', '#search .tabs a', ->
+    search_form = $(this).data('search-form')
+    switch search_form
+      when 'basic_search'
+        $('.lists .list_save').hide()
+      when 'advanced_search'
+        $('.lists .list_save').show()
 
 ) jQuery
