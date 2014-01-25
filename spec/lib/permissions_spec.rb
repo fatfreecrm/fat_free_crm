@@ -13,7 +13,7 @@ describe FatFreeCRM::Permissions do
       string :access
     end
   end
-  
+
   describe "initialization" do
     it "should add 'has_many permissions' to the model" do
       entity = UserWithPermission.new
@@ -28,24 +28,18 @@ describe FatFreeCRM::Permissions do
     before(:each) do
       @entity = UserWithPermission.create(:access => "Shared")
     end
-    
+
     it "should assign permissions to the object" do
       @entity.permissions.size.should == 0
       @entity.update_attribute(:user_ids, ['1','2','3'])
       @entity.permissions.find_all_by_user_id([1,2,3]).size.should == 3
     end
-    
-    it "should assign permissions with the 'chosen' select box format" do
-      @entity.permissions.size.should == 0
-      @entity.update_attribute(:user_ids, ['', '1,2,3'])
-      @entity.permissions.find_all_by_user_id([1,2,3]).size.should == 3
-    end
-    
+
     it "should handle [] permissions" do
       @entity.update_attribute(:user_ids, [])
       @entity.permissions.size.should == 0
     end
-    
+
     it "should replace existing permissions" do
       @entity.permissions << FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
       @entity.permissions << FactoryGirl.create(:permission, :user_id => 2, :asset => @entity)
@@ -55,9 +49,9 @@ describe FatFreeCRM::Permissions do
       @entity.permissions.find_all_by_user_id([2]).size.should == 1
       @entity.permissions.find_all_by_user_id([3]).size.should == 1
     end
-    
+
   end
-  
+
   describe "group_ids" do
     before(:each) do
       @entity = UserWithPermission.create(:access => "Shared")
@@ -67,18 +61,12 @@ describe FatFreeCRM::Permissions do
       @entity.update_attribute(:group_ids, ['1','2','3'])
       @entity.permissions.find_all_by_group_id([1,2,3]).size.should == 3
     end
-    
-    it "should assign permissions with the 'chosen' select box format" do
-      @entity.permissions.size.should == 0
-      @entity.update_attribute(:group_ids, ['', '1,2,3'])
-      @entity.permissions.find_all_by_group_id([1,2,3]).size.should == 3
-    end
-    
+
     it "should handle [] permissions" do
       @entity.update_attribute(:group_ids, [])
       @entity.permissions.size.should == 0
     end
-    
+
     it "should replace existing permissions" do
       @entity.permissions << FactoryGirl.build(:permission, :group_id => 1, :user_id => nil, :asset => @entity)
       @entity.permissions << FactoryGirl.build(:permission, :group_id => 2, :user_id => nil, :asset => @entity)
@@ -124,7 +112,7 @@ describe FatFreeCRM::Permissions do
       entity.save_with_permissions
     end
   end
-  
+
   describe "update_with_permissions" do
     it "should raise deprecation warning and call update_attributes" do
       entity = UserWithPermission.new
@@ -145,5 +133,5 @@ describe FatFreeCRM::Permissions do
       entity.save_with_model_permissions(model)
     end
   end
-    
+
 end

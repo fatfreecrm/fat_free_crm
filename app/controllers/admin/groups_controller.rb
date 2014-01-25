@@ -35,7 +35,8 @@ class Admin::GroupsController < Admin::ApplicationController
   # POST /groups
   #----------------------------------------------------------------------------
   def create
-    @group.update_attributes(params[:group])
+    @group.attributes = params[:group]
+    @group.save
 
     respond_with(@group)
   end

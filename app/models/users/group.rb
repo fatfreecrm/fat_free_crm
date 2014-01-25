@@ -11,10 +11,5 @@ class Group < ActiveRecord::Base
 
   validates :name, :presence => true, :uniqueness => true
 
-  # TODO: Fix chosen bug that makes this necessary
-  def user_ids=(value)
-    super value.join.split(',')
-  end
-
   ActiveSupport.run_load_hooks(:fat_free_crm_group, self)
 end
