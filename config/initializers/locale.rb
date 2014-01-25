@@ -13,4 +13,5 @@ I18n.config.enforce_available_locales = false
 
 FatFreeCRM.application.config.after_initialize do
   I18n.default_locale = Setting.locale
+  I18n.fallbacks[:en] = [:"en-US"]
 end
