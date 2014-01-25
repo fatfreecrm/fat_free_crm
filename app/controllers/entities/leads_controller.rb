@@ -157,7 +157,7 @@ class LeadsController < EntitiesController
   # Handled by ApplicationController :auto_complete
 
 
-  # POST /leads/redraw                                                     AJAX
+  # GET /leads/redraw                                                      AJAX
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:leads_per_page] = params[:per_page] if params[:per_page]

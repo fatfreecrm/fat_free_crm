@@ -377,7 +377,7 @@ describe LeadsController do
         xhr :put, :create, :lead => { :first_name => "Billy", :last_name => "Bones"}, :campaign => @campaign.id
         assigns[:campaign].should == @campaign
       end
-      
+
       it "should add a new comment to the newly created lead when specified" do
         @lead = FactoryGirl.create(:lead)
         Lead.stub(:new).and_return(@lead)
@@ -970,11 +970,11 @@ describe LeadsController do
     it_should_behave_like("auto complete")
   end
 
-  # POST /leads/redraw                                                     AJAX
+  # GET /leads/redraw                                                      AJAX
   #----------------------------------------------------------------------------
-  describe "responding to POST redraw" do
+  describe "responding to GET redraw" do
     it "should save user selected lead preference" do
-      xhr :post, :redraw, :per_page => 42, :view => "long", :sort_by => "first_name", :naming => "after"
+      xhr :get, :redraw, :per_page => 42, :view => "long", :sort_by => "first_name", :naming => "after"
       current_user.preference[:leads_per_page].should == "42"
       current_user.preference[:leads_index_view].should  == "long"
       current_user.preference[:leads_sort_by].should  == "leads.first_name ASC"
@@ -982,13 +982,13 @@ describe LeadsController do
     end
 
     it "should set similar options for Contacts" do
-      xhr :post, :redraw, :sort_by => "first_name", :naming => "after"
+      xhr :get, :redraw, :sort_by => "first_name", :naming => "after"
       current_user.pref[:contacts_sort_by].should == "contacts.first_name ASC"
       current_user.pref[:contacts_naming].should == "after"
     end
 
     it "should reset current page to 1" do
-      xhr :post, :redraw, :per_page => 42, :view => "long", :sort_by => "first_name", :naming => "after"
+      xhr :get, :redraw, :per_page => 42, :view => "long", :sort_by => "first_name", :naming => "after"
       session[:leads_current_page].should == 1
     end
 
@@ -998,7 +998,7 @@ describe LeadsController do
         FactoryGirl.create(:lead, :first_name => "Bobby", :user => current_user)
       ]
 
-      xhr :post, :redraw, :per_page => 1, :sort_by => "first_name"
+      xhr :get, :redraw, :per_page => 1, :sort_by => "first_name"
       assigns(:leads).should == [ @leads.first ]
       response.should render_template("leads/index")
     end

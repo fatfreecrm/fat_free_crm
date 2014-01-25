@@ -116,7 +116,7 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # POST /contacts/redraw                                                  AJAX
+  # GET /contacts/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:contacts_per_page] = params[:per_page] if params[:per_page]

@@ -648,11 +648,11 @@ describe ContactsController do
     it_should_behave_like("auto complete")
   end
 
-  # POST /contacts/redraw                                                  AJAX
+  # GET /contacts/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST redraw" do
     it "should save user selected contact preference" do
-      xhr :post, :redraw, :per_page => 42, :view => "long", :sort_by => "first_name", :naming => "after"
+      xhr :get, :redraw, :per_page => 42, :view => "long", :sort_by => "first_name", :naming => "after"
       current_user.preference[:contacts_per_page].to_i.should == 42
       current_user.preference[:contacts_index_view].should  == "long"
       current_user.preference[:contacts_sort_by].should  == "contacts.first_name ASC"
@@ -660,13 +660,13 @@ describe ContactsController do
     end
 
     it "should set similar options for Leads" do
-      xhr :post, :redraw, :sort_by => "first_name", :naming => "after"
+      xhr :get, :redraw, :sort_by => "first_name", :naming => "after"
       current_user.pref[:leads_sort_by].should == "leads.first_name ASC"
       current_user.pref[:leads_naming].should == "after"
     end
 
     it "should reset current page to 1" do
-      xhr :post, :redraw, :per_page => 42, :view => "long", :sort_by => "first_name", :naming => "after"
+      xhr :get, :redraw, :per_page => 42, :view => "long", :sort_by => "first_name", :naming => "after"
       session[:contacts_current_page].should == 1
     end
 
@@ -676,7 +676,7 @@ describe ContactsController do
         FactoryGirl.create(:contact, :first_name => "Bobby", :user => current_user)
       ]
 
-      xhr :post, :redraw, :per_page => 1, :sort_by => "first_name"
+      xhr :get, :redraw, :per_page => 1, :sort_by => "first_name"
       assigns(:contacts).should == [ @contacts.first ]
       response.should render_template("contacts/index")
     end

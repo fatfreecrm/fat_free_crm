@@ -605,18 +605,18 @@ describe CampaignsController do
     it_should_behave_like("auto complete")
   end
 
-  # POST /campaigns/redraw                                                 AJAX
+  # GET  /campaigns/redraw                                                 AJAX
   #----------------------------------------------------------------------------
-  describe "responding to POST redraw" do
+  describe "responding to GET redraw" do
     it "should save user selected campaign preference" do
-      xhr :post, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
+      xhr :get, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
       current_user.preference[:campaigns_per_page].should == "42"
       current_user.preference[:campaigns_index_view].should  == "brief"
       current_user.preference[:campaigns_sort_by].should  == "campaigns.name ASC"
     end
 
     it "should reset current page to 1" do
-      xhr :post, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
+      xhr :get, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
       session[:campaigns_current_page].should == 1
     end
 
@@ -626,7 +626,7 @@ describe CampaignsController do
         FactoryGirl.create(:campaign, :name => "B", :user => current_user)
       ]
 
-      xhr :post, :redraw, :per_page => 1, :sort_by => "name"
+      xhr :get, :redraw, :per_page => 1, :sort_by => "name"
       assigns(:campaigns).should == [ @campaigns.first ]
       response.should render_template("campaigns/index")
     end

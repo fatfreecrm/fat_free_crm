@@ -98,7 +98,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # POST /accounts/redraw                                                  AJAX
+  # GET /accounts/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]

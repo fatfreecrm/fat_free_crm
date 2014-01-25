@@ -136,7 +136,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # POST /campaigns/redraw                                                 AJAX
+  # GET /campaigns/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:campaigns_per_page] = params[:per_page] if params[:per_page]

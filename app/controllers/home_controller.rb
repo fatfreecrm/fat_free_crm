@@ -28,7 +28,7 @@ class HomeController < ApplicationController
     end
   end
 
-  # POST /home/redraw                                                      AJAX
+  # GET /home/redraw                                                       AJAX
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:activity_asset] = params[:asset] if params[:asset]

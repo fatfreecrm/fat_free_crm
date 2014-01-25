@@ -106,15 +106,15 @@ describe HomeController do
     end
   end
 
-  # POST /home/redraw                                                      AJAX
+  # GET /home/redraw                                                       AJAX
   #----------------------------------------------------------------------------
-  describe "responding to POST redraw" do
+  describe "responding to GET redraw" do
     before(:each) do
       require_user
     end
 
     it "should save user selected options" do
-      xhr :post, :redraw, :asset => "tasks", :user => "Billy Bones", :duration => "two days"
+      xhr :get, :redraw, :asset => "tasks", :user => "Billy Bones", :duration => "two days"
       current_user.pref[:activity_asset].should == "tasks"
       current_user.pref[:activity_user].should == "Billy Bones"
       current_user.pref[:activity_duration].should == "two days"

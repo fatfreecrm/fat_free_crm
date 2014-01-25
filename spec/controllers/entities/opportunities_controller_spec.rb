@@ -864,18 +864,18 @@ describe OpportunitiesController do
     it_should_behave_like("auto complete")
   end
 
-  # POST /opportunities/redraw                                             AJAX
+  # GET /opportunities/redraw                                              AJAX
   #----------------------------------------------------------------------------
-  describe "responding to POST redraw" do
+  describe "responding to GET redraw" do
     it "should save user selected opportunity preference" do
-      xhr :post, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
+      xhr :get, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
       current_user.preference[:opportunities_per_page].should == "42"
       current_user.preference[:opportunities_index_view].should  == "brief"
       current_user.preference[:opportunities_sort_by].should  == "opportunities.name ASC"
     end
 
     it "should reset current page to 1" do
-      xhr :post, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
+      xhr :get, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
       session[:opportunities_current_page].should == 1
     end
 
@@ -885,7 +885,7 @@ describe OpportunitiesController do
         FactoryGirl.create(:opportunity, :name => "B", :user => current_user)
       ]
 
-      xhr :post, :redraw, :per_page => 1, :sort_by => "name"
+      xhr :get, :redraw, :per_page => 1, :sort_by => "name"
       assigns(:opportunities).should == [ @opportunities.first ]
       response.should render_template("opportunities/index")
     end

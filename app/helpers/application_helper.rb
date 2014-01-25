@@ -280,7 +280,7 @@ module ApplicationHelper
       if ($('##{option}').html() != '#{name}') {
         $('##{option}').html('#{name}');
         $('#loading').show();
-        $.post('#{url}', {#{option}: '#{key}', query: $('#query').val()}, function () {
+        $.get('#{url}', {#{option}: '#{key}', query: $('#query').val()}, function () {
           $('#loading').hide();
         });
       }

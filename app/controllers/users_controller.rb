@@ -116,7 +116,7 @@ class UsersController < ApplicationController
     respond_with(@user)
   end
 
-  # POST /users/1/redraw
+  # GET /users/1/redraw
   #----------------------------------------------------------------------------
   def redraw
     current_user.preference[:locale] = params[:locale]

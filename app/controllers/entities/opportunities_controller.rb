@@ -145,7 +145,7 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-  # POST /opportunities/redraw                                             AJAX
+  # GET /opportunities/redraw                                              AJAX
   #----------------------------------------------------------------------------
   def redraw
     @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
