@@ -301,12 +301,14 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { :class => 'gravatar', :size => :large }.merge(args)
-    args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
+
     if model.respond_to?(:avatar) and model.avatar.present?
       image_tag(model.avatar.image.url(args[:size]), args)
     else
+      args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
       gravatar_image_tag(model.email, args)
     end
+
   end
 
   # Returns default permissions intro.
