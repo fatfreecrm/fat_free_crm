@@ -3,4 +3,4 @@
   - opportunities = object.opportunities.order('updated_at desc').paginate(:page => 1, :per_page => 20)
   = render :partial => "opportunities/opportunity", :collection => opportunities
 
-= will_paginate opportunities, :id => 'opportunities_pagination', :params => {:action => :opportunities}
+= paginate( collection: opportunities, id: 'opportunities_pagination', params: { action: 'opportunities' } )

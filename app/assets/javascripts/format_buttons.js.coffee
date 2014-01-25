@@ -31,12 +31,10 @@
         # basic search
         $.ajax(
           url: $(this).data('url'),
-          type: "POST",
           dataType: "script"
           data:
             view: $(this).data('view')
             query: $('#query').val()
-            authenticity_token: $('meta[name="csrf-token"]').attr('content')
           beforeSend: ->
             $('#contacts').css({ opacity: 0.4 })
             $('#loading').show()

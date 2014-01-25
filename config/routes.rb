@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       get  :options
       get  :field_group
       match :auto_complete
-      post :redraw
+      get  :redraw
       get  :versions
     end
     member do
@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       get  :options
       get  :field_group
       match :auto_complete
-      post :redraw
+      get  :redraw
       get  :versions
     end
     member do
@@ -73,7 +73,7 @@ Rails.application.routes.draw do
       get  :options
       get  :field_group
       match :auto_complete
-      post :redraw
+      get  :redraw
       get  :versions
     end
     member do
@@ -92,7 +92,7 @@ Rails.application.routes.draw do
       get  :options
       get  :field_group
       match :auto_complete
-      post :redraw
+      get  :redraw
       get  :versions
       get  :autocomplete_account_name
     end
@@ -114,8 +114,8 @@ Rails.application.routes.draw do
       get  :options
       get  :field_group
       match :auto_complete
-      post :redraw
-      get :versions
+      get  :redraw
+      get  :versions
     end
     member do
       put  :attach
@@ -142,7 +142,7 @@ Rails.application.routes.draw do
       get  :password
       put  :upload_avatar
       put  :change_password
-      post :redraw
+      get  :redraw
     end
     collection do
       get  :opportunities_overview
@@ -176,10 +176,10 @@ Rails.application.routes.draw do
     resources :fields do
       collection do
         match :auto_complete
-        get :options
-        post :redraw
-        post :sort
-        get :subform
+        get   :options
+        get   :redraw
+        post  :sort
+        get   :subform
       end
     end
 

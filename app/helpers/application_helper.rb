@@ -493,8 +493,14 @@ module ApplicationHelper
     end
   end
 
-  def paginate(params = {})
-    will_paginate({:renderer => RemoteLinkPaginationHelper::LinkRenderer}.merge(params))
+  #----------------------------------------------------------------------------
+  # Ajaxification FTW!
+  # e.g. collection = Opportunity.my.scope
+  #         options = { renderer: {...} , params: {...}
+  def paginate(options = {})
+    collection = options.delete(:collection)
+    options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
+    will_paginate(collection, options)
   end
 
 end

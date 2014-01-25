@@ -411,36 +411,4 @@
   $ ->
     crm.focus_on_first_field()
 
-    createSpinner = ->
-      $("<img>",
-        src: img.src
-        class: "spinner"
-      )
-    img = new Image
-    img.src = crm.base_url + "/assets/loading.gif"
-
-    $(document).on 'ajax:send', '.pagination, .per_page_options', ->
-      $(this).find('a').prop('disabled', true)
-      $(this).append createSpinner()
-
-    $(document).on 'ajax:complete', '.pagination, .per_page_options', ->
-      $(this).find('a').prop('disabled', false)
-      $(this).children('.spinner').remove()
-
-
-  # Admin Field Tabs
-  $(document).on "click", "*[data-tab-class]", (event) ->
-    event.preventDefault()
-    $el = $(this)
-
-    $(".fields").each ->
-      $(this).hide()
-
-    $(".inline_tabs ul li").each ->
-      $(this).removeClass "selected"
-
-    klass = $el.data("tab-class")
-    $("#" + klass + "_section").show()
-    $el.addClass "selected"
-
 ) jQuery
