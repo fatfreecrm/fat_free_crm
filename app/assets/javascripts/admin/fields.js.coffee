@@ -6,7 +6,25 @@
 
 (($) ->
 
-  $('.fields select[name="field[as]"]').live 'change', ->
+  #----------------------------------------------------------------------------
+  # Custom field tabs switcher
+  $(document).on "click", "*[data-tab-class]", (event) ->
+    event.preventDefault()
+    $el = $(this)
+
+    $(".fields").each ->
+      $(this).hide()
+
+    $(".inline_tabs ul li").each ->
+      $(this).removeClass "selected"
+
+    klass = $el.data("tab-class")
+    $("#" + klass + "_section").show()
+    $el.addClass "selected"
+
+  #----------------------------------------------------------------------------
+  # Load custom field subform
+  $(document).on 'change', '.fields select[name="field[as]"]', ->
     $.ajax(
         url: '/admin/fields/subform?' + $(this).parents('form').serialize()
         dataType: 'html'
@@ -16,7 +34,9 @@
           $(this).find('input').first().focus()
     )
 
-  $('.fields a.create').live 'click', ->
+  #----------------------------------------------------------------------------
+  # Open new field form
+  $(document).on 'click', '.fields a.create', ->
     $('.edit_field').hide()
     field_group = $(this).closest('.field_group')
     field_group.find('.empty').hide()
@@ -24,13 +44,16 @@
     field_group.find('.create_field').slideDown().find('input[name="field[label]"]').focus()
     false
 
-  $('.create_field a.close, .create_field a.cancel').live 'click', ->
+  #----------------------------------------------------------------------------
+  # Close new field form
+  $(document).on 'click', '.create_field a.close, .create_field a.cancel', ->
     $(this).closest('.create_field').hide()
-    $(this).closest('.field_group').find('.empty').show()
     $(this).closest('.field_group').find('.create .arrow').html(crm.COLLAPSED)
     false
 
-  $('.fields a.edit').live 'click', ->
+  #----------------------------------------------------------------------------
+  # Edit an existing field
+  $(document).on 'click', '.fields a.edit', ->
     $('.edit_field').hide()
     $.ajax(
         url: $(this).attr('href')
@@ -40,10 +63,10 @@
     )
     false
 
-  $('.edit_field a.close, .edit_field a.cancel').live 'click', ->
+  #----------------------------------------------------------------------------
+  # Close edit field form
+  $(document).on 'click', '.edit_field a.close, .edit_field a.cancel', ->
     $(this).closest('.edit_field').hide()
     false
-
-  false
 
 ) jQuery
