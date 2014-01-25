@@ -164,7 +164,7 @@
       if value is "specific_time"
         $("#task_bucket").toggle() # Hide dropdown.
         $("#task_calendar").toggle() # Show editable date field.
-        $("#task_calendar").focus() # Focus to invoke calendar popup.
+        $("#task_calendar").datepicker().focus() # Focus to invoke calendar popup.
 
 
     #----------------------------------------------------------------------------
