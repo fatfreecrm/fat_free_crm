@@ -6,8 +6,9 @@
 
 (($) ->
 
-  toggleComment = (el) ->
-    $container = $(el).closest('div.new_comment')
+  # Show/hide the comment form
+  $(document).on 'click', '.new_comment a.cancel, input[name=post_new_note]', ->
+    $container = $(this).closest('div.new_comment')
     baseId  = $container.attr('id').replace('_comment_new', '')
     $post    = $container.find('#' + baseId + '_post')
     $ask     = $container.find('#' + baseId + '_ask')
@@ -20,14 +21,8 @@
       crm.textarea_user_autocomplete(baseId + '_comment_comment')
       $comment.focus()
 
-  # Show/hide the comment form
-  $(document).on 'click', '.new_comment a.cancel, input[name=post_new_note]', ->
-    toggleComment(this)
-
   # When comment form is submitted, disable the form button and show the spinner
-  $(document).on 'click', 'div.new_comment [type=submit]', ->
-    $(this).attr("disabled", "disabled")
-    $(this).prev('.spinner').show()
-    $(this).closest('form').submit()
+  $(document).on 'submit', 'form.new_comment', ->
+    $(this).find('input[type=submit]').attr("disabled", "disabled").prev('.spinner').show()
 
 )(jQuery)
