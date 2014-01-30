@@ -2,7 +2,10 @@
 %tr
   %td{ :valign => :top, :colspan => span }
     .label Tags:
-    = f.select :tag_list, Tag.all.map{|t| [t.name, t.name] }, {:value => f.object.tags.map{|t| t.name }}, {:multiple => true, :"data-placeholder" => t(:select_or_create_tags), :style => "width: 500px;"}
 
-    :javascript
-      crm.chosen_taglist('#{asset}', '#{controller_name}', '#{params[:id]}');
+    = f.select :tag_list, Tag.all.map{|t| [t.name, t.name] },
+      { value: f.object.tags.map{|t| t.name } },
+      { :multiple => true, :class => 'select2',
+        'data-placeholder' => t(:select_or_create_tags),
+        'data-url' => url_for(action: 'field_group'),
+        'data-asset-id' => f.object.try(:id) }

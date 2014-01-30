@@ -10,8 +10,8 @@
   window.crm ||= {}
 
   crm.make_select2 = ->
-    $("select.select2").each ->
-      $(this).select2({ 'width':'resolve' })
+    $(".select2").each ->
+      $(this).select2 'width':'resolve'
 
   $(document).ready ->
     crm.make_select2()
