@@ -227,6 +227,56 @@ describe Task do
     end
   end
 
+  describe "task.computed_bucket" do
+    context "when overdue" do
+      subject { described_class.new(:due_at => 1.days.ago, :bucket => "specific_time") }
+
+      it "returns a sensible value" do
+        subject.computed_bucket.should == "overdue"
+      end
+    end
+
+    context "when due today" do
+      subject { described_class.new(:due_at => Time.now, :bucket => "specific_time") }
+
+      it "returns a sensible value" do
+        subject.computed_bucket.should == "due_today"
+      end
+    end
+
+    context "when due tomorrow" do
+      subject { described_class.new(:due_at => 1.days.from_now.end_of_day, :bucket => "specific_time") }
+
+      it "returns a sensible value" do
+        subject.computed_bucket.should == "due_tomorrow"
+      end
+    end
+
+    context "when due this week" do
+      subject { described_class.new(:due_at => Time.zone.now.end_of_week, :bucket => "specific_time") }
+
+      it "returns a sensible value" do
+        subject.computed_bucket.should == "due_this_week"
+      end
+    end
+
+    context "when due next week" do
+      subject { described_class.new(:due_at => Time.zone.now.next_week, :bucket => "specific_time") }
+
+      it "returns a sensible value" do
+        subject.computed_bucket.should == "due_next_week"
+      end
+    end
+
+    context "when due later" do
+      subject { described_class.new(:due_at => 1.month.from_now, :bucket => "specific_time") }
+
+      it "returns a sensible value" do
+        subject.computed_bucket.should == "due_later"
+      end
+    end
+  end
+
   describe "task.at_specific_time?" do
     context "when the due date is at the beginning of the day" do
       subject { described_class.new(due_at: Time.zone.now.beginning_of_day) }
