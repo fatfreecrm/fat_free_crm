@@ -226,6 +226,32 @@ describe Task do
       task.tracked_by?(current_user).should == false
     end
   end
+
+  describe "task.at_specific_time?" do
+    context "when the due date is at the beginning of the day" do
+      subject { described_class.new(due_at: Time.zone.now.beginning_of_day) }
+
+      it "returns false" do
+        subject.at_specific_time?.should == false
+      end
+    end
+
+    context "when the due date is at the end of the day" do
+      subject { described_class.new(due_at: Time.zone.now.end_of_day) }
+
+      it "returns false" do
+        subject.at_specific_time?.should == false
+      end
+    end
+
+    context "when the due date is any other time" do
+      subject { described_class.new(due_at: Time.zone.parse("2014-01-01 18:36:43")) }
+
+      it "returns true" do
+        subject.at_specific_time?.should == true
+      end
+    end
+  end
   
   describe "Exportable" do
     describe "unassigned tasks" do
