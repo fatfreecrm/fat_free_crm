@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 # gem 'mysql2'
 # gem 'sqlite3'
 gem 'pg'
+gem 'ffcrm_export', path: "vendor/gems/ffcrm_export"
 
 # Removes a gem dependency
 def remove(name)

@@ -1,3 +1,10 @@
+PATH
+  remote: vendor/gems/ffcrm_export
+  specs:
+    ffcrm_export (0.0.1)
+      rails (~> 3.2.16)
+      squeel (~> 1.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -269,6 +276,10 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.8)
+    squeel (1.1.1)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      polyamorous (~> 0.6.0)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
     therubyracer (0.12.0)
@@ -328,6 +339,7 @@ DEPENDENCIES
   execjs
   factory_girl_rails
   ffaker (>= 1.12.0)
+  ffcrm_export!
   font-awesome-rails
   guard
   guard-rails
