@@ -3,7 +3,7 @@ module FfcrmExport
     def self.dump(date=nil)
       date ||= Date.today
       csv_string = CSV.generate do |csv|
-        csv << ["Identifier","Leads","Opportunities"]
+        csv << ["Identifier","Leads","Opportunities","Prospecting Meetings", "Calls", "Submitted RFPs", "Generated Revenue"]
         User.all.each do |user|
           lead_count = user.leads.where{ (created_at >= my{date.beginning_of_day}) & (created_at <= my{date.end_of_day}) }.count
           opportunity_count = user.opportunities.where{ (created_at >= my{date.beginning_of_day}) & (created_at <= my{date.end_of_day}) }.count
