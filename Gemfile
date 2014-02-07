@@ -1,3 +1,4 @@
+ruby "2.0.0"
 source 'https://rubygems.org'
 
 # Uncomment the database that you have configured in config/database.yml
@@ -5,6 +6,7 @@ source 'https://rubygems.org'
 # gem 'mysql2'
 # gem 'sqlite3'
 gem 'pg'
+gem 'ffcrm_export', path: "vendor/gems/ffcrm_export"
 
 # Removes a gem dependency
 def remove(name)
