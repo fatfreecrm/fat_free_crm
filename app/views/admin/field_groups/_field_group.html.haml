@@ -18,7 +18,7 @@
   .remote{ hidden.merge(:id => edit_form_id) }
 
   .list
-    %ul{ :id => dom_id(field_group, :fields), :class => 'fields', 'data-sortable' => sort_admin_fields_path(:field_group_id => field_group.id), 'data-sortable-connect-with' => '.fields', 'data-sortable-handle' => '.handle' }
+    %ul{ :id => dom_id(field_group, :fields), 'data-sortable' => sort_admin_fields_path(:field_group_id => field_group.id), 'data-sortable-connect-with' => '.fields', 'data-sortable-handle' => '.handle' }
       = render :partial => "admin/fields/field", :collection => field_group.fields.without_pairs
       %li.empty
         = t(:field_group_empty)
