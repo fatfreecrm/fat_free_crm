@@ -742,3 +742,18 @@ table.asset_attributes {
 .comment .buttons {
   padding-left: 40px;
 }
+
+// Jumpbox
+
+.ui-menu-item > a:not(.ui-state-focus) {
+  span.jumpbox-highlight {
+    background-color: lightyellow;
+    font-weight: bold;
+  }
+}
+
+.ui-state-focus { 
+  span.jumpbox-highlight {
+    background-color: darkgray;
+  }
+}
