@@ -26,7 +26,7 @@
 #  background_info :string(255)
 #
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe Task do
 
@@ -38,19 +38,19 @@ describe Task do
       task.should be_valid
       task.errors.should be_empty
     end
-  
+
     [ nil, Time.now.utc_offset + 3600 ].each do |offset|
       before do
         adjust_timezone(offset)
       end
-  
+
       it "should create a task with due date selected from dropdown within #{offset ? 'different' : 'current'} timezone" do
         task = FactoryGirl.create(:task, :due_at => Time.now.end_of_week, :bucket => "due_this_week")
         task.errors.should be_empty
         task.bucket.should == "due_this_week"
         task.due_at.should == Time.zone.now.end_of_week
       end
-  
+
       it "should create a task with due date selected from the calendar within #{offset ? 'different' : 'current'} timezone" do
         task = FactoryGirl.create(:task, :bucket => "specific_time", :calendar => "2020-03-20")
         task.errors.should be_empty
@@ -59,7 +59,7 @@ describe Task do
       end
     end
   end
-  
+
   describe "Task/Update" do
     it "should update task name" do
       task = FactoryGirl.create(:task, :name => "Hello")
@@ -67,14 +67,14 @@ describe Task do
       task.errors.should be_empty
       task.name.should == "World"
     end
-  
+
     it "should update task category" do
       task = FactoryGirl.create(:task, :category => "call")
       task.update_attributes({ :category => "email" })
       task.errors.should be_empty
       task.category.should == "email"
     end
-  
+
     it "should reassign the task to another person" do
       him = FactoryGirl.create(:user)
       her = FactoryGirl.create(:user)
@@ -84,7 +84,7 @@ describe Task do
       task.assigned_to.should == her.id
       task.assignee.should == her
     end
-  
+
     it "should reassign the task from another person to myself" do
       him = FactoryGirl.create(:user)
       task = FactoryGirl.create(:task, :assigned_to => him.id)
@@ -93,12 +93,12 @@ describe Task do
       task.assigned_to.should == nil
       task.assignee.should == nil
     end
-  
+
     [ nil, Time.now.utc_offset + 3600 ].each do |offset|
       before do
         adjust_timezone(offset)
       end
-  
+
       it "should update due date based on selected bucket within #{offset ? 'different' : 'current'} timezone" do
         task = FactoryGirl.create(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
         task.update_attributes( { :bucket => "due_this_week" } )
@@ -106,7 +106,7 @@ describe Task do
         task.bucket.should == "due_this_week"
         task.due_at.should == Time.zone.now.end_of_week
       end
-  
+
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
         task = FactoryGirl.create(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
         task.update_attributes( { :bucket => "specific_time", :calendar => "2020-03-20" } )
@@ -115,9 +115,9 @@ describe Task do
         task.due_at.to_i.should == Time.parse("2020-03-20").to_i
       end
     end
-  
+
   end
-  
+
   describe "Task/Complete" do
     it "should comlete a task that is overdue" do
       task = FactoryGirl.create(:task, :due_at => 2.days.ago, :bucket => "overdue")
@@ -126,7 +126,7 @@ describe Task do
       task.completed_at.should_not == nil
       task.completor.should == current_user
     end
-  
+
     it "should complete a task due sometime in the future" do
       task = FactoryGirl.create(:task, :due_at => Time.now.midnight.tomorrow, :bucket => "due_tomorrow")
       task.update_attributes(:completed_at => Time.now, :completed_by => current_user.id)
@@ -134,7 +134,7 @@ describe Task do
       task.completed_at.should_not == nil
       task.completor.should == current_user
     end
-  
+
     it "should complete a task that is due on specific date in the future" do
       task = FactoryGirl.create(:task, :calendar => "10/10/2022 12:00 AM", :bucket => "specific_time")
       task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
@@ -143,7 +143,7 @@ describe Task do
       task.completed_at.should_not == nil
       task.completor.should == current_user
     end
-  
+
     it "should complete a task that is due on specific date in the past" do
       task = FactoryGirl.create(:task, :calendar => "10/10/1992 12:00 AM", :bucket => "specific_time")
       task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
@@ -152,7 +152,7 @@ describe Task do
       task.completed_at.should_not == nil
       task.completor.should == current_user
     end
-  
+
     it "completion should preserve original due date" do
       due_at = Time.now - 42.days
       task = FactoryGirl.create(:task, :due_at => due_at, :bucket => "specific_time",
@@ -162,65 +162,65 @@ describe Task do
       task.due_at.should == due_at.utc.strftime('%Y-%m-%d %H:%M')
     end
   end
-  
+
   # named_scope :my, lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   describe "task.my?" do
     it "should match a task created by the user" do
       task = FactoryGirl.create(:task, :user => current_user, :assignee => nil)
       task.my?(current_user).should == true
     end
-  
+
     it "should match a task assigned to the user" do
       task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => current_user)
       task.my?(current_user).should == true
     end
-  
+
     it "should Not match a task not created by the user" do
       task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user))
       task.my?(current_user).should == false
     end
-  
+
     it "should Not match a task created by the user but assigned to somebody else" do
       task = FactoryGirl.create(:task, :user => current_user, :assignee => FactoryGirl.create(:user))
       task.my?(current_user).should == false
     end
   end
-  
+
   # named_scope :assigned_by, lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?", user.id, user.id ], :include => :assignee } }
   describe "task.assigned_by?" do
     it "should match a task assigned by the user to somebody else" do
       task = FactoryGirl.create(:task, :user => current_user, :assignee => FactoryGirl.create(:user))
       task.assigned_by?(current_user).should == true
     end
-  
+
     it "should Not match a task not created by the user" do
       task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user))
       task.assigned_by?(current_user).should == false
     end
-  
+
     it "should Not match a task not assigned to anybody" do
       task = FactoryGirl.create(:task, :assignee => nil)
       task.assigned_by?(current_user).should == false
     end
-  
+
     it "should Not match a task assigned to the user" do
       task = FactoryGirl.create(:task, :assignee => current_user)
       task.assigned_by?(current_user).should == false
     end
   end
-  
+
   # named_scope :tracked_by, lambda { |user| { :conditions => [ "user_id = ? OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   describe "task.tracked_by?" do
     it "should match a task created by the user" do
       task = FactoryGirl.create(:task, :user => current_user)
       task.tracked_by?(current_user).should == true
     end
-  
+
     it "should match a task assigned to the user" do
       task = FactoryGirl.create(:task, :assignee => current_user)
       task.tracked_by?(current_user).should == true
     end
-  
+
     it "should Not match a task that is neither created nor assigned to the user" do
       task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
       task.tracked_by?(current_user).should == false
@@ -228,6 +228,7 @@ describe Task do
   end
 
   describe "task.computed_bucket" do
+
     context "when overdue" do
       subject { described_class.new(:due_at => 1.days.ago, :bucket => "specific_time") }
 
@@ -253,10 +254,12 @@ describe Task do
     end
 
     context "when due this week" do
-      subject { described_class.new(:due_at => Time.zone.now.end_of_week, :bucket => "specific_time") }
-
       it "returns a sensible value" do
-        subject.computed_bucket.should == "due_this_week"
+        # Freeze time so tests will pass when run at the end of the week!!
+        Timecop.freeze(Time.local(2014, 1, 1, 16, 14)) do
+          task = described_class.new(:due_at => Time.zone.now.end_of_week, :bucket => "specific_time")
+          expect(task.computed_bucket).to eql("due_this_week")
+        end
       end
     end
 
@@ -302,7 +305,7 @@ describe Task do
       end
     end
   end
-  
+
   describe "Exportable" do
     describe "unassigned tasks" do
       before do
@@ -314,7 +317,7 @@ describe Task do
         let(:exported) { Task.all }
       end
     end
-  
+
     describe "assigned tasks" do
       before do
         Task.delete_all
@@ -325,7 +328,7 @@ describe Task do
         let(:exported) { Task.all }
       end
     end
-  
+
     describe "completed tasks" do
       before do
         Task.delete_all
@@ -337,7 +340,7 @@ describe Task do
       end
     end
   end
-  
+
   describe "#parse_calendar_date" do
 
     it "should parse the date" do

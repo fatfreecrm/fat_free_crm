@@ -13,6 +13,7 @@ require 'capybara/rails'
 require 'acts_as_fu'
 require 'factory_girl_rails'
 require 'ffaker'
+require 'timecop'
 
 require 'coveralls'
 Coveralls.wear!
