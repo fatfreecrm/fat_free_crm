@@ -75,8 +75,10 @@ class UsersController < ApplicationController
       render
     else
       if params[:avatar]
-        @user.avatar = Avatar.new(params[:avatar].merge(:entity => @user))
-        unless @user.save && @user.avatar.errors.blank?
+        avatar = Avatar.create(params[:avatar].merge(:entity => @user))
+        if avatar.valid?
+          @user.avatar = avatar
+        else
           @user.avatar.errors.clear
           @user.avatar.errors.add(:image, t(:msg_bad_image_file))
         end
