@@ -81,6 +81,9 @@ module FatFreeCRM
     # Don't initialize Rails environment
     config.assets.initialize_on_precompile = false
 
+    # Which extra assets to precompile
+    config.assets.precompile += %w(print.css)
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
