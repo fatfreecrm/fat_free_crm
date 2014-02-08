@@ -91,7 +91,7 @@
 
     # Hide accounts dropdown and show create new account edit field instead.
     #----------------------------------------------------------------------------
-    create_account: (and_focus) ->
+    create_account: ->
       crm.makeAjaxChosen()
       $("#account_disabled_title").hide()
       $("#account_select_title").hide()
@@ -101,17 +101,15 @@
       $("#account_name").prop('disabled', false)
       $("#account_name").html ""
       $("#account_name").show()
-      $("#account_name").focus()  if and_focus
 
 
     # Hide create account edit field and show accounts dropdown instead.
     #----------------------------------------------------------------------------
-    select_account: (and_focus) ->
+    select_account: ->
       crm.makeAjaxChosen()
       $("#account_disabled_title").hide()
       $("#account_create_title").hide()
       $("#account_select_title").show()
-      $("#account_id").show()
       $("#account_name").hide()
       $("#account_name").prop('disabled', true)
       $("#account_id").prop('disabled', false)
