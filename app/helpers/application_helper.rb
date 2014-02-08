@@ -179,7 +179,7 @@ module ApplicationHelper
     tabs = [ :campaigns, :accounts, :leads, :contacts, :opportunities ]
     current = tabs.first unless tabs.include?(current)
     tabs.map do |tab|
-      link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", :class => (tab == current ? 'selected' : ''))
+      link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", "html-data" => tab, :class => (tab == current ? 'selected' : ''))
     end.join(" | ").html_safe
   end
 

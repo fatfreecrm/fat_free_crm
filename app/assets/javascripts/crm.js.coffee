@@ -362,11 +362,12 @@
 
     #----------------------------------------------------------------------------
     jumper: (controller) ->
-      name = controller.capitalize()
+      name = controller
       $("#jumpbox_menu a").each ->
-        $(this).toggleClass("selected", link.innerHTML is name)
+        $(this).toggleClass("selected", $(this).attr('html-data') is name) #the internal controller name, so this can work with i18
 
       @auto_complete controller, null, true
+      $("#auto_complete_query").focus()
 
 
     #----------------------------------------------------------------------------
@@ -383,6 +384,7 @@
         # Attach to related asset.
         # Quick Find: redirect to asset#show.
         select: (event, ui) => # Binding for this.base_url.
+          event.preventDefault()
           if ui.item
             if related
               $.ajax(@base_url + "/" + related + "/attach", type: 'PUT', data: {
@@ -393,7 +395,17 @@
                 $("#auto_complete_query").val ""
             else
               window.location.href = @base_url + "/" + controller + "/" + ui.item.value
+        
+        focus: (event, ui) =>
+          event.preventDefault()
+          $("#auto_complete_query").val(ui.item.label)
       )
+      
+      $.extend $.ui.autocomplete::,
+        _renderItem: (ul, item) ->
+          term = new RegExp( "(" + @element.val() + ")", "gi" )
+          html = item.label.replace(term, "<span class=\"jumpbox-highlight\">$1</span>")
+          $("<li></li>").data("item.autocomplete", item).append($("<a></a>").html(html)).appendTo ul
 
     #----------------------------------------------------------------------------
     # Define different icons for each entity type
