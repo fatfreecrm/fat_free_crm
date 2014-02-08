@@ -358,6 +358,7 @@ DEPENDENCIES
   simple_form (~> 2.0.1)
   therubyracer
   thin
+  thor
   turbo-sprockets-rails3
   uglifier (>= 1.0.3)
   unicorn
