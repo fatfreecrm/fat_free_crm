@@ -152,21 +152,20 @@ class Task < ActiveRecord::Base
   def computed_bucket
     return self.bucket if self.bucket != "specific_time"
     case
-    when self.due_at < Time.zone.now.midnight
+    when overdue?
       "overdue"
-    when self.due_at >= Time.zone.now.midnight && self.due_at < Time.zone.now.midnight.tomorrow
+    when due_today?
       "due_today"
-    when self.due_at >= Time.zone.now.midnight.tomorrow && self.due_at < Time.zone.now.midnight.tomorrow + 1.day
+    when due_tomorrow?
       "due_tomorrow"
-    when self.due_at >= (Time.zone.now.midnight.tomorrow + 1.day) && self.due_at < Time.zone.now.next_week
+    when due_this_week? && !due_today? && !due_tomorrow?
       "due_this_week"
-    when self.due_at >= Time.zone.now.next_week && self.due_at < (Time.zone.now.next_week.end_of_week + 1.day)
+    when due_next_week?
       "due_next_week"
     else
       "due_later"
     end
   end
-
   # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
@@ -233,6 +232,31 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def due_beginning_of_day?
     self.due_at.present? && (self.due_at == self.due_at.beginning_of_day)
+  end
+
+  #----------------------------------------------------------------------------
+  def overdue?
+    self.due_at < Time.zone.now.midnight
+  end
+
+  #----------------------------------------------------------------------------
+  def due_today?
+    self.due_at.between?(Time.zone.now.midnight, Time.zone.now.end_of_day)
+  end
+
+  #----------------------------------------------------------------------------
+  def due_tomorrow?
+    self.due_at.between?(Time.zone.now.midnight.tomorrow, Time.zone.now.tomorrow.end_of_day)
+  end
+
+  #----------------------------------------------------------------------------
+  def due_this_week?
+    self.due_at.between?(Time.zone.now.beginning_of_week, Time.zone.now.end_of_week)
+  end
+
+  #----------------------------------------------------------------------------
+  def due_next_week?
+    self.due_at.between?(Time.zone.now.next_week, Time.zone.now.next_week.end_of_week)
   end
 
   #----------------------------------------------------------------------------
