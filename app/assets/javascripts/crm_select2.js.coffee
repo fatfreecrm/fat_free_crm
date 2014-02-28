@@ -13,6 +13,13 @@
     $(".select2").each ->
       $(this).select2 'width':'resolve'
 
+    $(".select2_tag").each ->
+      $(this).select2
+        'width':'resolve'
+        tags: $(this).data("tags")
+        placeholder: $(this).data("placeholder")
+        multiple: $(this).data("multiple")
+
   $(document).ready ->
     crm.make_select2()
 
