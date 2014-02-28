@@ -216,6 +216,43 @@ describe ContactsController do
     end
   end
 
+  # GET /contacts/field_group                                              AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to GET field_group" do
+
+    context "with an existing tag" do
+      before :each do
+        @tag = FactoryGirl.create(:tag)
+      end
+
+      it "should return with an existing tag name" do
+        xhr :get, :field_group, {:tag => @tag.name}
+        assigns[:tag].name == @tag.name
+      end
+
+      it "should have the same count of tags" do
+        xhr :get, :field_group, {:tag =>  @tag.name}
+        Tag.count.should equal(1)
+      end
+
+    end
+
+    context "without an existing tag" do
+      it "should return a new Tag with a new name" do
+        tag_name = "New-Tag"
+        xhr :get, :field_group, {:tag => tag_name}
+        assigns[:tag].name == tag_name
+      end
+
+      it "should create a new Tag with a new name" do
+        tag_name = "New-Tag-1"
+        xhr :get, :field_group, {:tag => tag_name}
+        Tag.count.should equal(1)
+      end
+    end
+
+  end
+
   # GET /contacts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
