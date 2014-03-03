@@ -200,7 +200,7 @@ en-US:
   msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
+  msg_goodbye: You have been logged out. Thank you for using aDash!
   msg_invalid_password: ^Please specify valid current password
   msg_invalig_login: Invalid username or password.
   msg_last_login: Your last login was on %{value}.
@@ -212,8 +212,8 @@ en-US:
   msg_pwd_instructions_sent: Instructions to reset your password have been sent to
     you. Please check your email.
   msg_require_admin: You must be Administrator to access this page.
-  msg_successful_signup: Successful signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
+  msg_successful_signup: Successful signup, welcome to aDash!
+  msg_welcome: Welcome to aDash!
 
   # Options.
   #----------------------------------------------------------------------------
@@ -647,12 +647,12 @@ en-US:
   about: About
   about_dev_group: Discussion group for developers
   about_features: Features and bugs
-  about_ffc: About Fat Free CRM
-  about_ffc_resources: Fat Free CRM resources (links open a new window)
-  about_ffc_version: Fat Free CRM version
+  about_ffc: About aDash
+  about_ffc_resources: aDash resources (links open a new window)
+  about_ffc_version: aDash version
   about_home_page: Home page
   about_project_page: Project page
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and
+  about_thank_you: Thank you for using aDash! We appreciate your business and
     hope you enjoy using the software.
   about_twitter: Twitter commit updates
   about_user_group: Discussion group for users
@@ -694,8 +694,8 @@ en-US:
 
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: Back to aDash
+  crm_admin_page: aDash Administration
 
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
