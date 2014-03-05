@@ -7,7 +7,9 @@
   .tools
     - if shown_on_landing_page?
       = link_to_discard(completed) + (current_user == completed.user ? ' | ' : '')
-    = link_to_task_delete(completed, bucket) if current_user == completed.user
+    - if current_user == completed.user
+      = link_to_task_revert_complete(completed, bucket)  + ' | '
+      = link_to_task_delete(completed, bucket)
 
   .indent
     %strike= auto_link h(completed.name)

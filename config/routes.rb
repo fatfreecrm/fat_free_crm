@@ -133,6 +133,7 @@ Rails.application.routes.draw do
     end
     member do
       put  :complete
+      put  :revert_complete
     end
   end
 

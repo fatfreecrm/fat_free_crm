@@ -7,11 +7,16 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TasksHelper do
 
-  #Delete this example and add some real ones or delete this file
-  it "should be included in the object returned by #helper" do
-    included_modules = (class << helper; self; end).send :included_modules
-    included_modules.should include(TasksHelper)
-  end
+	describe "responding with generated links" do
 
+		before do
+      @task = FactoryGirl.create(:task)
+    end
+
+		it "should render link to revert_complete of a task" do
+			link_to_task_revert_complete(@task, nil).should include(t(:task_revert_complete))
+		end
+
+	end
 end
 
