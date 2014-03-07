@@ -472,16 +472,16 @@ describe TasksController do
   # PUT /tasks/1/complete
   # PUT /leads/1/complete.xml                                              AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT revert_complete" do
+  describe "responding to PUT uncomplete" do
 
     it "should change task status, expose task as @task, and render template" do
       @task = FactoryGirl.create(:task, :completed_at => Time.now, :user => current_user)
 
-      xhr :put, :revert_complete, :id => @task.id
+      xhr :put, :uncomplete, :id => @task.id
       @task.reload.completed_at.should == nil
       assigns[:task].should == @task
       assigns[:task_total].should_not == nil
-      response.should render_template("tasks/revert_complete")
+      response.should render_template("tasks/uncomplete")
     end
 
 
@@ -490,7 +490,7 @@ describe TasksController do
         @task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => current_user, :completed_at => Time.now)
         @task.destroy
 
-        xhr :put, :revert_complete, :id => @task.id
+        xhr :put, :uncomplete, :id => @task.id
         flash[:warning].should_not == nil
         response.body.should == "window.location.reload();"
       end

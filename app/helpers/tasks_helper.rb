@@ -51,8 +51,8 @@ module TasksHelper
   end
 
   #----------------------------------------------------------------------------
-  def link_to_task_revert_complete(task, bucket)
-    link_to(t(:task_revert_complete), revert_complete_task_path(task, :bucket => bucket, :view => @view),
+  def link_to_task_uncomplete(task, bucket)
+    link_to(t(:task_uncomplete), uncomplete_task_path(task, :bucket => bucket, :view => @view),
       :method => :put, :remote => true)
   end
 

@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/revert_complete" do
+describe "/tasks/uncomplete" do
   include TasksHelper
 
   before do
@@ -13,7 +13,7 @@ describe "/tasks/revert_complete" do
     assign(:bucket, [])
   end
 
-  describe "revert complete from Tasks tab (completed view)" do
+  describe "uncomplete from Tasks tab (completed view)" do
     before do
       @task = FactoryGirl.create(:task)
       assign(:task, @task)
@@ -22,7 +22,7 @@ describe "/tasks/revert_complete" do
       assign(:task_total, stub_task_total("completed"))
     end
 
-    it "should slide up reverted (complete) task partial" do
+    it "should slide up uncompleted task partial" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render

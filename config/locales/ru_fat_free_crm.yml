@@ -425,7 +425,7 @@ ru:
   task_assigned: Это задание поручено %{value}
   task_assigned_to: и поручено %{value}
   task_completed: завершено
-  task_revert_complete: Восстановить полный
+  task_uncomplete: Bозвращаться
   task_completed_ago: завершено %{value} назад
   task_completed_by: завершил(а) %{user} %{time_ago} назад
   task_created: Задание добавлено

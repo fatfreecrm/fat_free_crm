@@ -134,9 +134,9 @@ class TasksController < ApplicationController
     respond_with(@task)
   end
 
-  # PUT /tasks/1/revert_complete
+  # PUT /tasks/1/uncomplete
   #----------------------------------------------------------------------------
-  def revert_complete
+  def uncomplete
     @task = Task.tracked_by(current_user).find(params[:id])
     @task.update_attributes(:completed_at => nil, :completed_by => nil) if @task
 
