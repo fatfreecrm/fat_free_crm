@@ -238,16 +238,16 @@ describe ContactsController do
     end
 
     context "without an existing tag" do
-      it "should return a new Tag with a new name" do
+      it "should not find a tag" do
         tag_name = "New-Tag"
         xhr :get, :field_group, {:tag => tag_name}
-        assigns[:tag].name == tag_name
+        assigns[:tag].should eql(nil)
       end
 
-      it "should create a new Tag with a new name" do
+      it "should have the same count of tags" do
         tag_name = "New-Tag-1"
         xhr :get, :field_group, {:tag => tag_name}
-        Tag.count.should equal(1)
+        Tag.count.should equal(0)
       end
     end
 
