@@ -22,8 +22,8 @@ module TagsHelper
 
   def tags_for_dashboard(model)
     content_tag(:ul) do
-      model.tag_list.each do |tag|
-        concat(content_tag(:li, tag))
+      model.tags.each do |tag|
+        concat(content_tag(:li, tag.name))
       end
     end.html_safe
   end
