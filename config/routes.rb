@@ -142,7 +142,7 @@ Rails.application.routes.draw do
       get  :password
       put  :upload_avatar
       put  :change_password
-      get  :redraw
+      post :redraw
     end
     collection do
       get  :opportunities_overview

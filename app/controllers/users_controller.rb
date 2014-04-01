@@ -122,7 +122,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     current_user.preference[:locale] = params[:locale]
-    render :text => %Q{window.location.href = "#{user_path(current_user)}";}
+    render :js => %Q{window.location.href = "#{user_path(current_user)}";}
   end
 
   # GET /users/opportunities_overview
