@@ -185,7 +185,13 @@ $sidebar_width: 210px;
         display: block;
         padding-top: 2px;
         input {
-          margin-right: 5px; } } } } }
+          margin-right: 5px; } }
+      div.input.radio_buttons > span {
+        display: block;
+        padding-top: 2px;
+        label { vertical-align: middle; margin-left: 5px; }
+        input {
+          margin-left: 5px; } } } } }
 
 .remote {
   border: 5px lightblue solid;
@@ -752,7 +758,7 @@ table.asset_attributes {
   }
 }
 
-.ui-state-focus { 
+.ui-state-focus {
   span.jumpbox-highlight {
     background-color: darkgray;
   }
