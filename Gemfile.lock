@@ -165,7 +165,7 @@ GEM
       cocaine (~> 0.5.3)
       mime-types
     pg (0.17.1)
-    polyamorous (1.0.0)
+    polyamorous (0.6.4)
       activerecord (>= 3.0)
     polyglot (0.3.4)
     premailer (1.8.2)
@@ -210,15 +210,13 @@ GEM
       thor (>= 0.14.6, < 2.0)
     raindrops (0.13.0)
     rake (10.2.2)
-    ransack (1.2.2)
+    ransack (1.1.0)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
-      activesupport (>= 3.0)
-      i18n
-      polyamorous (~> 1.0.0)
+      polyamorous (~> 0.6.0)
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ui (1.2.2)
+    ransack_ui (1.1.0)
       ransack
       ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
@@ -353,6 +351,7 @@ DEPENDENCIES
   rails (~> 3.2.12)
   rails3-jquery-autocomplete
   rails_12factor
+  ransack (= 1.1.0)
   ransack_ui (>= 1.1.0)
   rb-fchange
   rb-fsevent
