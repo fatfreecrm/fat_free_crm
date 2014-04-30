@@ -145,7 +145,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.5.3)
-    multi_json (1.9.2)
+    multi_json (1.9.3)
     net-scp (1.2.0)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -216,7 +216,7 @@ GEM
       polyamorous (~> 0.6.0)
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ui (1.1.0)
+    ransack_ui (1.2.2)
       ransack
       ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
