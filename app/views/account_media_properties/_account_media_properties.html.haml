@@ -1,0 +1,6 @@
+= section(object, :account_media_properties)
+.list#account_media_properties
+  - account_media_properties = object.account_media_properties.order('updated_at desc').paginate(:page => 1, :per_page => 20)
+  = render :partial => "account_media_properties/account_media_property", :collection => account_media_properties
+
+= paginate( collection: account_media_properties, id: 'account_media_properties_pagination', params: { action: 'account_media_properties' } )

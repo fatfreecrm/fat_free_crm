@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       post :unsubscribe
       get  :contacts
       get  :opportunities
+      get  :account_media_properties
     end
   end
 
@@ -64,6 +65,10 @@ Rails.application.routes.draw do
       get  :leads
       get  :opportunities
     end
+  end
+  
+  resources :account_media_properties, :id => /\d+/ do
+    
   end
 
   resources :contacts, :id => /\d+/ do
