@@ -277,16 +277,16 @@
 #
 #------------------------------------------------------------------------------
 account_category:
-  - :affiliate
-  - :competitor
+  - :publisher
+# - :competitor
   - :customer
   - :partner
   - :reseller
   - :vendor
 
 account_category_color:
-  :affiliate   : lavender
-  :competitor  : paleturquoise
+  :publisher   : lavender
+# :competitor  : paleturquoise
   :customer    : pink
   :partner     : bisque
   :reseller    : thistle

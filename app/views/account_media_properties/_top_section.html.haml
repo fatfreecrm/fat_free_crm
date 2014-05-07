@@ -1,0 +1,12 @@
+
+= hook(:contact_top_section, self, :f => f) do
+  .section
+    %table
+      %tr
+        %td
+          .label.top.req{ :class => nil } #{t :media_type}:
+          = f.text_field :media_type
+        %td= spacer
+        %td
+          .label.top{:class => nil } #{t :description}:
+          = f.text_field :description

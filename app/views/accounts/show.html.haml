@@ -21,6 +21,8 @@
 
     = render "opportunities/opportunities", :object => @account
 
+    = render "account_media_properties/account_media_properties", :object => @account
+
     = render "versions/versions", :object => @account
 
     = load_select_popups_for(@account, :tasks, :contacts, :opportunities)

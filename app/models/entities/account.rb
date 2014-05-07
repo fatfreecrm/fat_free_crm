@@ -37,6 +37,7 @@ class Account < ActiveRecord::Base
   has_one     :shipping_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Shipping'"
   has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
   has_many    :emails, :as => :mediator
+  has_many    :account_media_properties
 
   serialize :subscribed_users, Set
 

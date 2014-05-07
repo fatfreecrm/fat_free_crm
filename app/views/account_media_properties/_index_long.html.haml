@@ -1,0 +1,19 @@
+%li.highlight[account_media_property]
+
+  %ul.tools
+    - if can?(:destroy, account_media_property)
+      %li= link_to_delete(account_media_property)
+
+  .indentslim
+    = link_to_if can?(:read, account_media_property), account_media_property.media_type, account_media_property
+    %tt
+      = account_media_property.media_type
+
+    %dt{ :style => "padding: 2px 0px 0px 0px" }
+      - if can?(:read, account_media_property)
+        = account_media_property.description
+    
+    %dt{ :style => "padding: 2px 0px 0px 0px" }
+      = t(:added_ago, value: timeago(account_media_property.created_at)).html_safe
+
+

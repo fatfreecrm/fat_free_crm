@@ -31,6 +31,12 @@ gem 'premailer', :require => false
 # Remove fat_free_crm dependency, to stop it from being auto-required too early.
 remove 'fat_free_crm'
 
+group :production do
+  #recommended on heroku and fatfreecrm
+  gem 'rails_12factor'
+end
+
+
 group :development do
   # don't load these gems in travis
   unless ENV["CI"]

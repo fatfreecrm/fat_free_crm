@@ -1,0 +1,11 @@
+= simple_form_for(@account_media_property, :html => one_submit_only, :remote => true) do |f|
+  = link_to_close new_account_media_property_path
+
+  = f.error_messages :object_name => t('account_media_property')
+
+  = render "account_media_properties/top_section", :f => f
+
+  .buttonbar
+    = f.submit t(:create_account_media_property), :onclick => "crm.create_account_media_property()"
+    #{t :or}
+    = link_to_cancel new_account_media_property_path

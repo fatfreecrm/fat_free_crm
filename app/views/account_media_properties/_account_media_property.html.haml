@@ -1,0 +1,5 @@
+- if (params['controller'] == 'account_media_properties') and (template = template_for_current_view).present?
+  = render(template, :account_media_property => account_media_property)
+- else
+  -# default view
+  = render 'account_media_properties/index_long', :account_media_property => account_media_property
