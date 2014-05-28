@@ -31,6 +31,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @user.update_attributes(params[:user])
+    flash[:notice] = t(:profile_update)
     respond_with(@user)
   end
 

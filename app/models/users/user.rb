@@ -41,8 +41,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
     :encryptable, :recoverable, :rememberable, :trackable, stretches: 20
 
-  attr_accessible :username, :email, :password, :password_confirmation, :remember_me,
-    :first_name, :last_name, :title, :company, :group_ids
+  attr_accessible :username, :email, :password, :password_confirmation,
+    :remember_me, :first_name, :last_name, :title, :company, :group_ids,
+    :alt_email, :phone, :mobile, :aim, :yahoo, :google, :skype
 
   before_create  :check_if_needs_approval
   before_destroy :check_if_has_related_assets
