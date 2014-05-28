@@ -21,22 +21,18 @@
 #  yahoo               :string(32)
 #  google              :string(32)
 #  skype               :string(32)
-#  password_hash       :string(255)     default(""), not null
+#  encrypted_password  :string(255)     default(""), not null
 #  password_salt       :string(255)     default(""), not null
-#  persistence_token   :string(255)     default(""), not null
-#  perishable_token    :string(255)     default(""), not null
 #  last_sign_in_at     :datetime
-#  last_login_at       :datetime
-#  current_login_at    :datetime
-#  last_login_ip       :string(255)
-#  current_login_ip    :string(255)
-#  login_count         :integer         default(0), not null
+#  current_sign_in_at  :datetime
+#  last_sign_in_ip     :string(255)
+#  current_sign_in_ip  :string(255)
+#  sign_in_count       :integer         default(0), not null
 #  deleted_at          :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
 #  admin               :boolean         default(FALSE), not null
 #  suspended_at        :datetime
-#  single_access_token :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -65,7 +61,7 @@ class User < ActiveRecord::Base
   has_many    :lists
   has_and_belongs_to_many :groups
 
-  has_paper_trail :ignore => [:last_sign_in_at, :perishable_token]
+  has_paper_trail :ignore => [:last_sign_in_at]
 
   scope :by_id, -> { order('id DESC') }
   scope :except, ->(user) { where('id != ?', user.id).by_name }
@@ -83,10 +79,6 @@ class User < ActiveRecord::Base
     .where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
     .select('DISTINCT(users.id), users.*')
   }
-
-  # Store current user in the class so we could access it from the activity
-  # observer without extra authentication query.
-  # cattr_accessor :current_user
 
   validates :email, presence: { message: :missing_email },
     uniqueness: { message: :email_in_use },
@@ -137,12 +129,6 @@ class User < ActiveRecord::Base
     @preference ||= Preference.new(:user => self)
   end
   alias :pref :preference
-
-  #----------------------------------------------------------------------------
-  def deliver_password_reset_instructions!
-    reset_perishable_token!
-    UserMailer.password_reset_instructions(self).deliver
-  end
 
   # Override global I18n.locale if the user has individual local preference.
   #----------------------------------------------------------------------------

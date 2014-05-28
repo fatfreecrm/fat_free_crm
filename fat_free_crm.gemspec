@@ -23,7 +23,6 @@ Gem::Specification.new do |gem|
   # Manually added paperclip gem dependency "cocaine" in order to fix load error: "no such file to load -- cocaine"
   gem.add_dependency 'cocaine'
   gem.add_dependency 'paper_trail',         '~> 2.7.0' # not ready for v3 yet
-  # gem.add_dependency 'authlogic',           '3.1.0'
   gem.add_dependency 'devise',              '~> 3.2.4'
   gem.add_dependency 'devise-encryptable',  '~> 0.2.0'
   gem.add_dependency 'acts_as_commentable', '~> 3.0.1'

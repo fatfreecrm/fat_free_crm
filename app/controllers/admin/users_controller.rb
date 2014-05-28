@@ -61,7 +61,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.find(params[:id])
     @user.attributes = params[:user]
     @user.admin = (admin == "1") unless admin.nil?
-    # @user.save_without_session_maintenance
+    @user.save
 
     respond_with(@user)
   end
