@@ -4,14 +4,42 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 Rails.application.routes.draw do
+
+  resources :users, :id => /\d+/, :except => [:index, :destroy, :create] do
+    member do
+      get  :avatar
+      get  :password
+      put  :upload_avatar
+      put  :change_password
+      post :redraw
+    end
+    collection do
+      get  :opportunities_overview
+      match :auto_complete
+    end
+  end
+
+  devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions", :passwords => "passwords"}
+
+  devise_scope :user do
+    resources :users, :only => [:index, :show]
+    get "login", :to => "sessions#new", :as => :new_user_session
+    get "logout", :to => "sessions#destroy", :as => :logout
+    get "signup", :to => "registrations#new"
+    post "signup", :to => "registrations#create", :as => :user_registration
+    get "passwords", :to => "passwords#new", :as => :new_user_password
+    post "passwords", :to => "passwords#create", :as => :user_password
+    resources :passwords, :only => [:edit, :update]
+  end
+
   resources :lists
 
   root :to => 'home#index'
 
   match 'activities' => 'home#index'
   match 'admin'      => 'admin/users#index',       :as => :admin
-  match 'login'      => 'authentications#new',     :as => :login
-  match 'logout'     => 'authentications#destroy', :as => :logout
+  # match 'login'      => 'authentications#new',     :as => :login
+  # match 'logout'     => 'authentications#destroy', :as => :logout
   match 'profile'    => 'users#show',              :as => :profile
   match 'signup'     => 'users#new',               :as => :signup
 
@@ -21,7 +49,7 @@ Rails.application.routes.draw do
   match '/home/timezone', :as => :timezone
   match '/home/redraw',   :as => :redraw
 
-  resource  :authentication, :except => [:index, :edit]
+  # resource  :authentication, :except => [:index, :edit]
   resources :comments,       :except => [:new, :show]
   resources :emails,         :only   => [:destroy]
   resources :passwords,      :only   => [:new, :create, :edit, :update]
@@ -133,20 +161,6 @@ Rails.application.routes.draw do
     end
     member do
       put  :complete
-    end
-  end
-
-  resources :users, :id => /\d+/, :except => [:index, :destroy] do
-    member do
-      get  :avatar
-      get  :password
-      put  :upload_avatar
-      put  :change_password
-      post :redraw
-    end
-    collection do
-      get  :opportunities_overview
-      match :auto_complete
     end
   end
 
