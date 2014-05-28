@@ -27,7 +27,7 @@
 #  state           :string(16)      default("Expanded"), not null
 #
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe Email do
   before(:each) do

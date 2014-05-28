@@ -9,7 +9,7 @@ describe "/leads/edit" do
   include LeadsHelper
 
   before do
-    login_and_assign
+    login
     assign(:lead, @lead = FactoryGirl.create(:lead, :status => "new", :user => current_user))
     assign(:users, [ current_user ])
     assign(:campaigns, [ FactoryGirl.create(:campaign) ])

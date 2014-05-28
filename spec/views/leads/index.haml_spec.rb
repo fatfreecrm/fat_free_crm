@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/leads/index" do
   include LeadsHelper
@@ -13,7 +13,7 @@ describe "/leads/index" do
     assign :per_page, Lead.per_page
     assign :sort_by,  Lead.sort_by
     assign :ransack_search, Lead.search
-    login_and_assign
+    login
   end
 
   it "should render list of accounts if list of leads is not empty" do

@@ -14,10 +14,10 @@ describe EntityObserver do
 
   [:account, :contact, :lead, :opportunity].each do |entity_type|
     describe "on creation of #{entity_type}" do
-      let(:assignee) { FactoryGirl.create(:user) }
-      let(:assigner) { FactoryGirl.create(:user) }
-      let!(:entity)  { FactoryGirl.build(entity_type, :user => assigner, :assignee => assignee) }
-      let(:mail) { double('mail', :deliver => true) }
+      let(:assignee) { create(:user) }
+      let(:assigner) { create(:user) }
+      let!(:entity)  { build(entity_type, user: assigner, assignee: assignee) }
+      let(:mail) { double('mail', deliver: true) }
 
       after :each do
         entity.save
@@ -45,14 +45,14 @@ describe EntityObserver do
     end
 
     describe "on update of #{entity_type}" do
-      let(:assignee) { FactoryGirl.create(:user) }
-      let(:assigner) { FactoryGirl.create(:user) }
-      let!(:entity)  { FactoryGirl.create(entity_type, :user => FactoryGirl.create(:user)) }
-      let(:mail) { double('mail', :deliver => true) }
+      let(:assignee) { create(:user) }
+      let(:assigner) { create(:user) }
+      let!(:entity)  { create(entity_type, user: create(:user)) }
+      let(:mail) { double('mail', deliver: true) }
 
       it "notifies the new owner if the entity is re-assigned" do
         UserMailer.should_receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
-        entity.update_attributes(:assignee => assignee)
+        entity.update_attributes(assignee: assignee)
       end
 
       it "does not notify the owner if the entity is not re-assigned" do
@@ -62,12 +62,12 @@ describe EntityObserver do
 
       it "does not notify anyone if the entity becomes unassigned" do
         UserMailer.should_not_receive(:assigned_entity_notification)
-        entity.update_attributes(:assignee => nil)
+        entity.update_attributes(assignee: nil)
       end
 
       it "does not notify me if I re-assign an entity to myself" do
         UserMailer.should_not_receive(:assigned_entity_notification)
-        entity.update_attributes(:assignee => assigner)
+        entity.update_attributes(assignee: assigner)
       end
     end
 

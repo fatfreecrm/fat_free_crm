@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe ApplicationHelper do
 
@@ -14,28 +14,28 @@ describe ApplicationHelper do
 
   describe "link_to_emails" do
     it "should add Bcc: if dropbox address is set" do
-      Setting.stub(:email_dropbox).and_return({ :address => "drop@example.com" })
+      Setting.stub(:email_dropbox).and_return({ address: "drop@example.com" })
       helper.link_to_email("hello@example.com").should == '<a href="mailto:hello@example.com?bcc=drop@example.com" title="hello@example.com">hello@example.com</a>'
     end
 
     it "should not add Bcc: if dropbox address is not set" do
-      Setting.stub(:email_dropbox).and_return({ :address => nil })
+      Setting.stub(:email_dropbox).and_return({ address: nil })
       helper.link_to_email("hello@example.com").should == '<a href="mailto:hello@example.com" title="hello@example.com">hello@example.com</a>'
     end
 
     it "should truncate long emails" do
-      Setting.stub(:email_dropbox).and_return({ :address => nil })
+      Setting.stub(:email_dropbox).and_return({ address: nil })
       helper.link_to_email("hello@example.com", 5).should == '<a href="mailto:hello@example.com" title="hello@example.com">he...</a>'
     end
 
     it "should escape HTML entities" do
-      Setting.stub(:email_dropbox).and_return({ :address => 'dr&op@example.com' })
+      Setting.stub(:email_dropbox).and_return({ address: 'dr&op@example.com' })
       helper.link_to_email("hell&o@example.com").should == '<a href="mailto:hell&amp;o@example.com?bcc=dr&amp;op@example.com" title="hell&amp;o@example.com">hell&amp;o@example.com</a>'
     end
   end
 
   it "link_to_discard" do
-    lead = FactoryGirl.create(:lead)
+    lead = create(:lead)
     controller.request.stub(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
 
     link = helper.link_to_discard(lead)
@@ -68,19 +68,19 @@ describe ApplicationHelper do
       helper.shown_on_landing_page?.should == false
     end
   end
-  
+
   describe "current_view_name" do
-  
+
     before(:each) do
       @user = mock_model(User)
       helper.stub(:current_user).and_return(@user)
       controller.stub(:params).and_return({'action' => 'show', 'controller' => 'contacts'})
     end
-  
+
     it "should return the contact 'show' outline stored in the user preferences" do
-      @user.should_receive(:pref).and_return({:contacts_show_view => 'long'})
+      @user.should_receive(:pref).and_return({contacts_show_view: 'long'})
       helper.current_view_name.should == 'long'
     end
-  
+
   end
 end

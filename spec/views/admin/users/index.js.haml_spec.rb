@@ -7,7 +7,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/index" do
   before do
-    login_and_assign
+    login
   end
 
   it "renders [admin/user] template with @users collection" do
@@ -16,7 +16,7 @@ describe "admin/users/index" do
     assign(:users, [ amy, bob ].paginate)
 
     render :template => 'admin/users/index', :formats => [:js]
-    
+
     rendered.should include("id=\\'user_#{amy.id}\\'")
     rendered.should include("id=\\'user_#{bob.id}\\'")
     rendered.should include("$('#paginate')")

@@ -7,7 +7,7 @@ require 'spec_helper'
 
 describe "/opportunities/update" do
   before do
-    login_and_assign
+    login
 
     assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, :user => current_user, :assignee => FactoryGirl.create(:user)))
     assign(:users, [ current_user ])

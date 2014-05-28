@@ -8,7 +8,7 @@ require 'spec_helper'
 describe "/leads/create" do
   before do
     controller.controller_path = 'leads'
-    login_and_assign
+    login
     assign(:campaigns, [ FactoryGirl.create(:campaign) ])
   end
 

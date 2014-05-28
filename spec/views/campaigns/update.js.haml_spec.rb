@@ -7,7 +7,7 @@ require 'spec_helper'
 
 describe "/campaigns/update" do
   before do
-    login_and_assign
+    login
     assign(:campaign, @campaign = FactoryGirl.create(:campaign, :user => current_user))
     assign(:users, [ current_user ])
     assign(:status, Setting.campaign_status)

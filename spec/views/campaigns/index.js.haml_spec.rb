@@ -9,14 +9,14 @@ describe "/campaigns/index" do
   include CampaignsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   it "should render [campaign] template with @campaigns collection if there are campaigns" do
     assign(:campaigns, [ FactoryGirl.create(:campaign, :id => 42) ].paginate)
 
     render :template => 'campaigns/index', :formats => [:js]
-    
+
     rendered.should include("$('#campaigns').html('<li class=\\'campaign highlight\\' id=\\'campaign_42\\'")
     rendered.should include("#paginate")
   end
@@ -25,7 +25,7 @@ describe "/campaigns/index" do
     assign(:campaigns, [].paginate)
 
     render :template => 'campaigns/index', :formats => [:js]
-    
+
     rendered.should include("$('#campaigns').html('<div id=\\'empty\\'>")
     rendered.should include("#paginate")
   end

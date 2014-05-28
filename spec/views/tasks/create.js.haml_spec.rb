@@ -9,7 +9,7 @@ describe "/tasks/create" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
   end
 
   (TASK_STATUSES - %w(completed)).each do |status|

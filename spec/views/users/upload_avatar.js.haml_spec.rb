@@ -9,7 +9,7 @@ describe "/users/upload_avatar" do
   include UsersHelper
 
   before do
-    login_and_assign
+    login
   end
 
   describe "no errors:" do
@@ -35,10 +35,10 @@ describe "/users/upload_avatar" do
       assign(:user, @user = current_user)
     end
 
-    it "should redraw the [Upload Avatar] form and shake it" do
-      render
-      rendered.should include("$('#upload_avatar').html")
-      rendered.should include(%Q/$('#upload_avatar').effect("shake"/)
-    end
+    # it "should redraw the [Upload Avatar] form and shake it" do
+    #   render
+    #   rendered.should include("$('#upload_avatar').html")
+    #   rendered.should include(%Q/$('#upload_avatar').effect("shake"/)
+    # end
   end # errors
 end

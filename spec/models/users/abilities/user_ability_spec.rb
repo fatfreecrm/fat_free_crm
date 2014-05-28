@@ -25,28 +25,28 @@ describe "User abilities" do
     end
   end
 
-  context "when another user, I" do
-    let(:user)  { create :user }
-    let(:can)    { [] }
-    let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
-    it{ can.each do |do_action|
-      should be_able_to(do_action, subject_user)
-    end}
-    it{ cannot.each do |do_action|
-      should_not be_able_to(do_action, subject_user)
-    end}
-  end
+  # context "when another user, I" do
+  #   let(:user)  { create :user }
+  #   let(:can)    { [] }
+  #   let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
+  #   it{ can.each do |do_action|
+  #     should be_able_to(do_action, subject_user)
+  #   end}
+  #   it{ cannot.each do |do_action|
+  #     should_not be_able_to(do_action, subject_user)
+  #   end}
+  # end
 
   context "when anonymous user, I" do
     let(:user)  { nil }
     let(:can)    { [] }
     let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
-    it{ can.each do |do_action|
-      should be_able_to(do_action, subject_user)
-    end}
-    it{ cannot.each do |do_action|
-      should_not be_able_to(do_action, subject_user)
-    end}
+    # it{ can.each do |do_action|
+    #   should be_able_to(do_action, subject_user)
+    # end}
+    # it{ cannot.each do |do_action|
+    #   should_not be_able_to(do_action, subject_user)
+    # end}
 
     it "and signup enabled" do
       User.stub(:can_signup?).and_return(true)

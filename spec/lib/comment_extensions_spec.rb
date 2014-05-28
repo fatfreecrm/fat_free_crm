@@ -3,11 +3,11 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe FatFreeCRM::CommentExtensions do
   describe "add_comment_by_user" do
-    let(:user) { FactoryGirl.create(:user)}
+    let(:user) { create(:user)}
 
     before :each do
       build_model(:commentable_entity) do

@@ -9,7 +9,7 @@ describe "/users/update" do
   include UsersHelper
 
   before do
-    login_and_assign
+    login
     assign(:user, @user = current_user)
   end
 

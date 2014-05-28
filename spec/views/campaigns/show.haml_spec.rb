@@ -3,13 +3,13 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/campaigns/show" do
   include CampaignsHelper
 
   before do
-    login_and_assign
+    login
     @campaign = FactoryGirl.create(:campaign, :id => 42,
       :leads => [ FactoryGirl.create(:lead) ],
       :opportunities => [ FactoryGirl.create(:opportunity) ])

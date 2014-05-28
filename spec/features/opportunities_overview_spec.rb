@@ -12,8 +12,7 @@ feature 'Opportunities Overview', %q{
 } do
 
   background do
-    @me = FactoryGirl.create(:user)
-
+    @me = create(:user)
     login_as_user(@me)
   end
 
@@ -22,34 +21,33 @@ feature 'Opportunities Overview', %q{
     within ".tabs" do
       click_link "Team"
     end
-
     current_path.should == opportunity_overview_page
   end
 
   scenario "Viewing Opportunity Overview when all opportunities have been assigned" do
-    user1 = FactoryGirl.create(:user, :first_name => "Brian", :last_name => 'Doyle-Murray')
-    FactoryGirl.create(:opportunity, :name => "Acting", :stage => 'prospecting', :assignee => user1)
-    FactoryGirl.create(:opportunity, :name => "Directing", :stage => 'won', :assignee => user1)
+    user1 = create(:user, first_name: "Brian", last_name: 'Doyle-Murray')
+    create(:opportunity, name: "Acting", stage: 'prospecting', assignee: user1)
+    create(:opportunity, name: "Directing", stage: 'won', assignee: user1)
 
-    user2 = FactoryGirl.create(:user, :first_name => "Dean", :last_name => 'Stockwell')
-    account1 = FactoryGirl.create(:account, :name => 'Quantum Leap')
-    FactoryGirl.create(:opportunity, :name => "Leaping", :stage => 'prospecting', :account => account1, :assignee => user2)
-    FactoryGirl.create(:opportunity, :name => "Return Home", :stage => 'prospecting', :account => account1, :assignee => user2)
+    user2 = create(:user, first_name: "Dean", last_name: 'Stockwell')
+    account1 = create(:account, name: 'Quantum Leap')
+    create(:opportunity, name: "Leaping", stage: 'prospecting', account: account1, assignee: user2)
+    create(:opportunity, name: "Return Home", stage: 'prospecting', account: account1, assignee: user2)
 
-    user3 = FactoryGirl.create(:user, :first_name => "Chris", :last_name => 'Jarvis')
-    FactoryGirl.create(:opportunity, :stage => 'won', :assignee => user3)
-    FactoryGirl.create(:opportunity, :stage => 'lost', :assignee => user3)
+    user3 = create(:user, first_name: "Chris", last_name: 'Jarvis')
+    create(:opportunity, stage: 'won', assignee: user3)
+    create(:opportunity, stage: 'lost', assignee: user3)
 
     visit opportunity_overview_page
 
     within "#user_#{user1.id}" do
-      page.should have_selector('.title', :text => 'Brian Doyle-Murray')
+      page.should have_selector('.title', text: 'Brian Doyle-Murray')
       page.should have_content('Acting')
       page.should_not have_content('Directing')
     end
 
     within "#user_#{user2.id}" do
-      page.should have_selector('.title', :text => 'Dean Stockwell')
+      page.should have_selector('.title', text: 'Dean Stockwell')
       page.should have_content('Leaping from Quantum Leap')
       page.should have_content('Return Home from Quantum Leap')
     end
@@ -60,21 +58,21 @@ feature 'Opportunities Overview', %q{
   end
 
   scenario "Viewing Opportunity Overview when all opportunities are unassigned" do
-    FactoryGirl.create(:opportunity, :name => "Acting", :stage => 'prospecting', :assignee => nil)
-    FactoryGirl.create(:opportunity, :name => "Presenting", :stage => 'won', :assignee => nil)
+    create(:opportunity, name: "Acting", stage: 'prospecting', assignee: nil)
+    create(:opportunity, name: "Presenting", stage: 'won', assignee: nil)
 
     visit opportunity_overview_page
 
     within "#unassigned" do
-      page.should have_selector('.title', :text => 'Unassigned Opportunities')
+      page.should have_selector('.title', text: 'Unassigned Opportunities')
       page.should have_content('Acting')
       page.should_not have_content('Presenting')
     end
   end
 
   scenario "Viewing Opportunity Overview when there are no opportunities in the pipeline" do
-    FactoryGirl.create(:opportunity, :name => "Presenting", :stage => 'lost', :assignee => FactoryGirl.create(:user))
-    FactoryGirl.create(:opportunity, :name => "Eating", :stage => 'won', :assignee => nil)
+    create(:opportunity, name: "Presenting", stage: 'lost', assignee: create(:user))
+    create(:opportunity, name: "Eating", stage: 'won', assignee: nil)
 
     visit opportunity_overview_page
 

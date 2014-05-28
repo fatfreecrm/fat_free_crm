@@ -9,11 +9,11 @@ describe UsersController do
   describe "routing" do
 
     it "doesn't recognize #index" do
-      { :get => "/users" }.should_not be_routable
+      { :get => "/users" }.should route_to(:action=>"index", :controller=>"users")
     end
 
     it "recognizes and generates #new as /signup" do
-      { :get => "/signup" }.should route_to(:controller => "users", :action => "new")
+      { :get => "/signup" }.should route_to(:controller => "registrations", :action => "new")
     end
 
     it "recognizes and generates #show as /profile" do
@@ -29,7 +29,7 @@ describe UsersController do
     end
 
     it "recognizes and generates #create" do
-      { :post => "/users" }.should route_to(:controller => "users", :action => "create")
+      { :post => "/users" }.should route_to(:controller => "registrations", :action => "create")
     end
 
     it "recognizes and generates #update" do

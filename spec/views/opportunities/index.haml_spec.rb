@@ -3,13 +3,13 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/opportunities/index" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
     view.lookup_context.prefixes << 'entities'
     assign :stage, Setting.unroll(:opportunity_stage)
     assign :per_page, Opportunity.per_page

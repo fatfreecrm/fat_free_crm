@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 require "fat_free_crm/view_factory"
 
 describe FatFreeCRM::ViewFactory do
@@ -15,7 +15,7 @@ describe FatFreeCRM::ViewFactory do
   describe "initialization" do
 
     before(:each) do
-      @view_params = {:name => 'brief', :title => 'Brief View', :icon => 'fa-bars', :controllers => ['contacts'], :actions => ['show', 'index']}
+      @view_params = {name: 'brief', title: 'Brief View', icon: 'fa-bars', controllers: ['contacts'], actions: ['show', 'index']}
     end
 
     it "should initialize with required parameters" do
@@ -45,29 +45,27 @@ describe FatFreeCRM::ViewFactory do
   describe "views_for" do
 
     before(:each) do
-      @v1 = FatFreeCRM::ViewFactory.new :name => 'brief', :title => 'Brief View', :controllers => ['contacts'], :actions => ['show', 'index']
-      @v2 = FatFreeCRM::ViewFactory.new :name => 'long', :title => 'Long View', :controllers => ['contacts'], :actions => ['show']
-      @v3 = FatFreeCRM::ViewFactory.new :name => 'full', :title => 'Full View', :controllers => ['accounts'], :actions => ['show']
+      @v1 = FatFreeCRM::ViewFactory.new name: 'brief', title: 'Brief View', controllers: ['contacts'], actions: ['show', 'index']
+      @v2 = FatFreeCRM::ViewFactory.new name: 'long', title: 'Long View', controllers: ['contacts'], actions: ['show']
+      @v3 = FatFreeCRM::ViewFactory.new name: 'full', title: 'Full View', controllers: ['accounts'], actions: ['show']
     end
 
     it "should return 'brief' view for ContactsController#index" do
-      FatFreeCRM::ViewFactory.views_for(:controller => 'contacts', :action => 'index').should == [@v1]
+      FatFreeCRM::ViewFactory.views_for(controller: 'contacts', action: 'index').should == [@v1]
     end
 
     it "should return 'brief' and 'long' view for ContactsController#show" do
-      views = FatFreeCRM::ViewFactory.views_for(:controller => 'contacts', :action => 'show')
+      views = FatFreeCRM::ViewFactory.views_for(controller: 'contacts', action: 'show')
       views.should include(@v1)
       views.should include(@v2)
     end
 
     it "should return 'full' view for AccountsController#show" do
-      FatFreeCRM::ViewFactory.views_for(:controller => 'accounts', :action => 'show').should == [@v3]
+      FatFreeCRM::ViewFactory.views_for(controller: 'accounts', action: 'show').should == [@v3]
     end
 
     it "should return no views for TasksController#show" do
-      FatFreeCRM::ViewFactory.views_for(:controller => 'tasks', :action => 'show').should == []
+      FatFreeCRM::ViewFactory.views_for(controller: 'tasks', action: 'show').should == []
     end
-
   end
-
 end

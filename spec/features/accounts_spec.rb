@@ -11,8 +11,8 @@ feature 'Accounts', %q{
   I want to manage accounts
 } do
 
-  before(:each) do
-   do_login_if_not_already(:first_name => 'Bill', :last_name => 'Murray')
+  before do
+    do_login_if_not_already(:first_name => 'Bill', :last_name => 'Murray')
   end
 
   scenario 'should view a list of accounts' do
