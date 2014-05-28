@@ -1,10 +1,10 @@
-.standalone
-  = form_tag(passwords_path, one_submit_only) do
+.standalone#standalone
+  = simple_form_for(resource, as: resource_name, url: user_password_path(resource_name), html: { method: :post }) do |f|
     .title #{t :forgot_password}
     .intro #{t :password_intro}
     .section
       .label #{t :email}:
-      = text_field_tag :email
+      = f.input :email, required: true, autofocus: true, label: false
     %br
     .buttonbar
-      = submit_tag t(:reset_password), :id => "passwords_submit"
+      = f.button :submit, t(:reset_password), :id => "passwords_submit"

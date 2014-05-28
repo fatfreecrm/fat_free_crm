@@ -14,14 +14,14 @@ class Admin::ApplicationController < ApplicationController
   def auto_complete
     @query = params[:auto_complete_query]
     @auto_complete = klass.text_search(@query).limit(10)
-    render :partial => 'auto_complete'
+    render partial: 'auto_complete'
   end
 
 private
 
   #----------------------------------------------------------------------------
   def require_admin_user
-    require_user
+    authenticate_user!
     if current_user && !current_user.admin?
       flash[:notice] = t(:msg_require_admin)
       redirect_to root_path

@@ -34,10 +34,10 @@ module OpportunitiesHelper
   # Generates a select list with the first 25 campaigns
   # and prepends the currently selected campaign, if any.
   #----------------------------------------------------------------------------
-  def opportunity_campaign_select(options = {})
+  def opportunity_campaign_select(user, options = {})
     options[:selected] ||= @opportunity.campaign_id || 0
     selected_campaign = Campaign.find_by_id(options[:selected])
-    campaigns = ([selected_campaign] + Campaign.my.order(:name).limit(25)).compact.uniq
+    campaigns = ([selected_campaign] + Campaign.my(user).order(:name).limit(25)).compact.uniq
     collection_select :opportunity, :campaign_id, campaigns, :id, :name, options,
                       {:"data-placeholder" => t(:select_a_campaign),
                        :"data-url" => auto_complete_campaigns_path(format: 'json'),

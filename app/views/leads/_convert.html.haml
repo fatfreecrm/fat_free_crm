@@ -12,7 +12,7 @@
           #{t(:convert_lead_text, @lead.full_name)}
         %table
           %tr
-            %td= account_select_or_create(a)
+            %td= account_select_or_create(a, current_user)
             %td= spacer
             %td
               .label.req #{t :assigned_to}:

@@ -3,26 +3,24 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class PasswordsController < ApplicationController
+class PasswordsController < Devise::PasswordsController
 
-  before_filter :load_user_using_perishable_token, :only => [ :edit, :update ]
-  before_filter :require_no_user
-
-  #----------------------------------------------------------------------------
-  def new
-    # <-- render new.html.haml
-  end
+  respond_to :html
+  append_view_path 'app/views/devise'
 
   #----------------------------------------------------------------------------
   def create
-    @user = User.find_by_email(params[:email])
-    if @user
-      @user.deliver_password_reset_instructions!
+    self.resource = resource_class.send_reset_password_instructions(resource_params)
+
+    if resource.errors.empty?
       flash[:notice] = t(:msg_pwd_instructions_sent)
       redirect_to root_url
     else
+      # Redirect to custom page instead of displaying errors
+      # redirect_to my_custom_page_path
+      Rails.logger.info(resource.errors.inspect)
       flash[:notice] = t(:msg_email_not_found)
-      redirect_to :action => :new
+      redirect_to root_url
     end
   end
 
@@ -33,34 +31,17 @@ class PasswordsController < ApplicationController
 
   #----------------------------------------------------------------------------
   def update
-    if empty_password?
-      flash[:notice] = t(:msg_enter_new_password)
-      render :edit
-    elsif @user.update_attributes(params[:user])
-      flash[:notice] = t(:msg_password_updated)
-      redirect_to profile_url
+    self.resource = resource_class.reset_password_by_token(resource_params)
+    yield resource if block_given?
+
+    if resource.errors.empty?
+      resource.unlock_access! if unlockable?(resource)
+      flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
+      set_flash_message(:notice, flash_message) if is_flashing_format?
+      sign_in(resource_name, resource)
+      respond_with resource, location: after_resetting_password_path_for(resource)
     else
-      render :edit
+      respond_with resource
     end
-  end
-
-  private
-
-  #----------------------------------------------------------------------------
-  def load_user_using_perishable_token
-    @user = User.find_using_perishable_token(params[:id])
-    unless @user
-      flash[:notice] = <<-EOS
-        Sorry, we could not locate your user profile. Try to copy and paste the URL
-        from your email into your browser or restart the reset password process.
-      EOS
-      redirect_to root_url
-    end
-  end
-
-  #----------------------------------------------------------------------------
-  def empty_password?
-    (params[:user][:password] == params[:user][:password_confirmation]) &&
-    (params[:user][:password].blank?)      # "   ".blank? == true
   end
 end

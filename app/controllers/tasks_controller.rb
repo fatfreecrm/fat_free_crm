@@ -4,9 +4,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class TasksController < ApplicationController
-  before_filter :require_user
-  before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :update_sidebar, :only => :index
+  before_filter :set_current_tab, only: [ :index, :show ]
+  before_filter :update_sidebar, only: :index
 
   # GET /tasks
   #----------------------------------------------------------------------------
@@ -15,9 +14,9 @@ class TasksController < ApplicationController
     @tasks = Task.find_all_grouped(current_user, @view)
 
     respond_with @tasks do |format|
-      format.xls { render :layout => 'header' }
-      format.csv { render :csv => @tasks.map(&:second).flatten }
-      format.xml { render :xml => @tasks, :except => [:subscribed_users] }
+      format.xls { render layout: 'header' }
+      format.csv { render csv: @tasks.map(&:second).flatten }
+      format.xml { render xml: @tasks, except: [:subscribed_users] }
     end
   end
 
@@ -33,12 +32,12 @@ class TasksController < ApplicationController
   def new
     @view = view
     @task = Task.new
-    @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
+    @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, default: 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
 
     if params[:related]
       model, id = params[:related].split(/_(\d+)/)
-      if related = model.classify.constantize.my.find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@asset", related)
       else
         respond_to_related_not_found(model) and return
@@ -53,7 +52,7 @@ class TasksController < ApplicationController
   def edit
     @view = view
     @task = Task.tracked_by(current_user).find(params[:id])
-    @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, :default => 'On Specific Date...'), :specific_time ]
+    @bucket = Setting.unroll(:task_bucket)[1..-1] << [ t(:due_specific_date, default: 'On Specific Date...'), :specific_time ]
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
 
@@ -123,7 +122,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def complete
     @task = Task.tracked_by(current_user).find(params[:id])
-    @task.update_attributes(:completed_at => Time.now, :completed_by => current_user.id) if @task
+    @task.update_attributes(completed_at: Time.now, completed_by: current_user.id) if @task
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
     if Task.bucket_empty?(params[:bucket], current_user)

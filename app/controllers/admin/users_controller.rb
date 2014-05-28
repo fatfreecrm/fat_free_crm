@@ -4,15 +4,15 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::UsersController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/users')", :only => [ :index, :show ]
+  before_filter "set_current_tab('admin/users')", only: [ :index, :show ]
 
-  load_resource :except => [:create]
+  load_resource except: [:create]
 
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
-    @users = get_users(:page => params[:page])
+    @users = get_users(page: params[:page])
     respond_with(@users)
   end
 
@@ -48,8 +48,7 @@ class Admin::UsersController < Admin::ApplicationController
     admin = params[:user].delete(:admin)
     @user = User.new(params[:user])
     @user.admin = (admin == "1") unless admin.nil?
-    @user.save_without_session_maintenance
-
+    @user.save
     respond_with(@user)
   end
 
@@ -62,7 +61,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.find(params[:id])
     @user.attributes = params[:user]
     @user.admin = (admin == "1") unless admin.nil?
-    @user.save_without_session_maintenance
+    # @user.save_without_session_maintenance
 
     respond_with(@user)
   end
@@ -77,7 +76,8 @@ class Admin::UsersController < Admin::ApplicationController
   # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
-    flash[:warning] = t(:msg_cant_delete_user, @user.full_name) unless @user.destroy
+    success = @user.check_if_current_user(current_user) && @user.destroy
+    flash[:warning] = t(:msg_cant_delete_user, @user.full_name) unless success
 
     respond_with(@user)
   end
@@ -118,7 +118,7 @@ private
     scope = User.by_id
     scope = scope.merge(@search.result)
     scope = scope.text_search(current_query)      if current_query.present?
-    scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
+    scope = scope.paginate(page: current_page) if wants.html? || wants.js? || wants.xml?
     scope
   end
 end

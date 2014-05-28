@@ -5,12 +5,12 @@
 #------------------------------------------------------------------------------
 class UsersController < ApplicationController
 
-  before_filter :set_current_tab, :only => [ :show, :opportunities_overview ] # Don't hightlight any tabs.
+  before_filter :set_current_tab, only: [ :show, :opportunities_overview ] # Don't hightlight any tabs.
 
   check_authorization
   load_and_authorize_resource # handles all security
 
-  respond_to :html, :only => [ :show, :new ]
+  respond_to :html, only: [ :show, :new ]
 
   # GET /users/1
   # GET /users/1.js
@@ -18,30 +18,6 @@ class UsersController < ApplicationController
   def show
     @user = current_user if params[:id].nil?
     respond_with(@user)
-  end
-
-  # GET /users/new
-  # GET /users/new.js
-  #----------------------------------------------------------------------------
-  def new
-    respond_with(@user)
-  end
-
-  # POST /users
-  # POST /users.js
-  #----------------------------------------------------------------------------
-  def create
-    if @user.save
-      if Setting.user_signup == :needs_approval
-        flash[:notice] = t(:msg_account_created)
-        redirect_to login_url
-      else
-        flash[:notice] = t(:msg_successful_signup)
-        redirect_back_or_default profile_url
-      end
-    else
-      render :new
-    end
   end
 
   # GET /users/1/edit.js
@@ -75,7 +51,7 @@ class UsersController < ApplicationController
       render
     else
       if params[:avatar]
-        avatar = Avatar.create(params[:avatar].merge(:entity => @user))
+        avatar = Avatar.create(params[:avatar].merge(entity: @user))
         if avatar.valid?
           @user.avatar = avatar
         else
@@ -102,7 +78,7 @@ class UsersController < ApplicationController
   # PUT /users/1/change_password.js
   #----------------------------------------------------------------------------
   def change_password
-    if @user.valid_password?(params[:current_password], true) || @user.password_hash.blank?
+    if @user.valid_password?(params[:current_password])
       unless params[:user][:password].blank?
         @user.password = params[:user][:password]
         @user.password_confirmation = params[:user][:password_confirmation]
@@ -122,7 +98,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     current_user.preference[:locale] = params[:locale]
-    render :js => %Q{window.location.href = "#{user_path(current_user)}";}
+    render js: %Q{window.location.href = "#{user_path(current_user)}";}
   end
 
   # GET /users/opportunities_overview
