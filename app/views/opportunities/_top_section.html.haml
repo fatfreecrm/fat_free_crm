@@ -35,7 +35,7 @@
       %table
         %tr
           %td
-            != account_select_or_create(a) do |options|
+            != account_select_or_create(a, current_user) do |options|
               -# Add [-- None --] account choice when editing existing opportunity that has an account.
               - options[:selected] = @account.id || 0
               - options[:include_blank] = true #t(:select_none) unless @opportunity.new_record? || @opportunity.account.blank?
@@ -46,7 +46,7 @@
         %tr
           %td
             .label #{t :campaign}:
-            = opportunity_campaign_select( selected: (@campaign.try(:id) || @opportunity.campaign_id), include_blank: true )
+            = opportunity_campaign_select(current_user, selected: (@campaign.try(:id) || @opportunity.campaign_id), include_blank: true )
 
         - if Setting.background_info && Setting.background_info.include?(:opportunity)
           %tr

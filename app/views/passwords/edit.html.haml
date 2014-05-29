@@ -1,15 +1,18 @@
 .standalone
-  = form_for(@user, :url => password_path(params[:id]), :html => one_submit_only, :method => :put) do |f|
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
     .title #{t :reset_password}
 
     = f.error_messages :object_name => t('password')
 
     .intro #{t :confirm_password_intro}
+
+    = f.input :reset_password_token, as: :hidden, input_html: { value: params[:reset_password_token] }
+
     .section
       .label #{t :new_password}:
-      = f.password_field :password
+      = f.input :password, label: false, required: true, autofocus: true
       .label #{t :password_confirmation}:
-      = f.password_field :password_confirmation
+      = f.input :password_confirmation, label: false, required: true
     %br
     .buttonbar
       = f.submit t(:update_password_and_login)

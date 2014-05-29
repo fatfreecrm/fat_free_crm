@@ -9,7 +9,7 @@ describe "/opportunities/edit" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
 
     assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, :user => current_user))
     assign(:users, [ current_user ])

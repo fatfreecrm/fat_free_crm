@@ -7,7 +7,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/edit" do
   before do
-    login_and_assign(:admin => true)
+    login_admin
     assign(:user, @user = FactoryGirl.create(:user))
   end
 

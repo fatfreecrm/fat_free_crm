@@ -4,17 +4,17 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class LeadsController < EntitiesController
-  before_filter :get_data_for_sidebar, :only => :index
-  autocomplete :account, :name, :full => true
+  before_filter :get_data_for_sidebar, only: :index
+  autocomplete :account, :name, full: true
 
   # GET /leads
   #----------------------------------------------------------------------------
   def index
-    @leads = get_leads(:page => params[:page])
+    @leads = get_leads(page: params[:page])
 
     respond_with @leads do |format|
-       format.xls { render :layout => 'header' }
-       format.csv { render :csv => @leads }
+       format.xls { render layout: 'header' }
+       format.csv { render csv: @leads }
     end
   end
 
@@ -30,12 +30,12 @@ class LeadsController < EntitiesController
   # GET /leads/new
   #----------------------------------------------------------------------------
   def new
-    @lead.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
+    @lead.attributes = {user: current_user, access: Setting.default_access, assigned_to: nil}
     get_campaigns
 
     if params[:related]
       model, id = params[:related].split('_')
-      if related = model.classify.constantize.my.find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
         respond_to_related_not_found(model) and return
@@ -51,7 +51,7 @@ class LeadsController < EntitiesController
     get_campaigns
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my.find_by_id($1) || $1.to_i
+      @previous = Lead.my(current_user).find_by_id($1) || $1.to_i
     end
 
     respond_with(@lead)
@@ -85,7 +85,7 @@ class LeadsController < EntitiesController
       if @lead.update_with_lead_counters(params[:lead])
         update_sidebar
       else
-        @campaigns = Campaign.my.order('name')
+        @campaigns = Campaign.my(current_user).order('name')
       end
     end
   end
@@ -104,12 +104,12 @@ class LeadsController < EntitiesController
   # GET /leads/1/convert
   #----------------------------------------------------------------------------
   def convert
-    @account = Account.new(:user => current_user, :name => @lead.company, :access => "Lead")
-    @accounts = Account.my.order('name')
-    @opportunity = Opportunity.new(:user => current_user, :access => "Lead", :stage => "prospecting", :campaign => @lead.campaign, :source => @lead.source)
+    @account = Account.new(user: current_user, name: @lead.company, access: "Lead")
+    @accounts = Account.my(current_user).order('name')
+    @opportunity = Opportunity.new(user: current_user, access: "Lead", stage: "prospecting", campaign: @lead.campaign, source: @lead.source)
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my.find_by_id($1) || $1.to_i
+      @previous = Lead.my(current_user).find_by_id($1) || $1.to_i
     end
 
     respond_with(@lead)
@@ -119,7 +119,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def promote
     @account, @opportunity, @contact = @lead.promote(params)
-    @accounts = Account.my.order('name')
+    @accounts = Account.my(current_user).order('name')
     @stage = Setting.unroll(:opportunity_stage)
 
     respond_with(@lead) do |format|
@@ -127,8 +127,8 @@ class LeadsController < EntitiesController
         @lead.convert
         update_sidebar
       else
-        format.json { render :json => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @account.errors + @opportunity.errors + @contact.errors, :status => :unprocessable_entity }
+        format.json { render json: @account.errors + @opportunity.errors + @contact.errors, status: :unprocessable_entity }
+        format.xml  { render xml: @account.errors + @opportunity.errors + @contact.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -174,7 +174,7 @@ class LeadsController < EntitiesController
       current_user.pref[:contacts_naming] ||= params[:naming]
     end
 
-    @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
+    @leads = get_leads(page: 1, per_page: params[:per_page]) # Start one the first page.
     set_options # Refresh options
 
     respond_with(@leads) do |format|
@@ -186,7 +186,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:leads_filter] = params[:status]
-    @leads = get_leads(:page => 1, :per_page => params[:per_page]) # Start one the first page.
+    @leads = get_leads(page: 1, per_page: params[:per_page]) # Start one the first page.
 
     respond_with(@leads) do |format|
       format.js { render :index }
@@ -200,7 +200,7 @@ private
 
   #----------------------------------------------------------------------------
   def get_campaigns
-    @campaigns = Campaign.my.order('name')
+    @campaigns = Campaign.my(current_user).order('name')
   end
 
   def set_options
@@ -215,7 +215,7 @@ private
         get_data_for_sidebar                      # Get data for the sidebar.
         @leads = get_leads                        # Get leads for current page.
         if @leads.blank?                          # If no lead on this page then try the previous one.
-          @leads = get_leads(:page => current_page - 1) if current_page > 1
+          @leads = get_leads(page: current_page - 1) if current_page > 1
           render :index and return                # And reload the whole list even if it's empty.
         end
       else                                        # Called from related asset.
@@ -234,9 +234,9 @@ private
     if related
       instance_variable_set("@#{related}", @lead.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      @lead_status_total = { :all => Lead.my.count, :other => 0 }
+      @lead_status_total = { all: Lead.my(current_user).count, other: 0 }
       Setting.lead_status.each do |key|
-        @lead_status_total[key] = Lead.my.where(:status => key.to_s).count
+        @lead_status_total[key] = Lead.my(current_user).where(status: key.to_s).count
         @lead_status_total[:other] -= @lead_status_total[key]
       end
       @lead_status_total[:other] += @lead_status_total[:all]

@@ -9,7 +9,7 @@ describe "/campaigns/_edit" do
   include CampaignsHelper
 
   before do
-    login_and_assign
+    login
     assign(:campaign, @campaign = FactoryGirl.create(:campaign))
     assign(:users, [ current_user ])
   end

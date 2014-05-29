@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe 'FatFreeCRM::Fields' do
 
@@ -36,7 +36,6 @@ describe 'FatFreeCRM::Fields' do
   end
 
   describe "field_groups" do
-
     it "should call FieldGroup" do
       ActiveRecord::Base.connection.should_receive(:table_exists?).with('field_groups').and_return(true)
       dummy_scope = double
@@ -49,39 +48,34 @@ describe 'FatFreeCRM::Fields' do
       ActiveRecord::Base.connection.should_receive(:table_exists?).with('field_groups').and_return(false)
       Foo.new.field_groups.should == []
     end
-
   end
 
   describe "fields" do
-
-    before(:each) do
+    before do
       @f1 = double(Field)
       @f2 = double(Field)
       @f3 = double(Field)
-      @field_groups = [double(FieldGroup, :fields => [@f1, @f2]), double(FieldGroup, :fields => [@f3])]
+      @field_groups = [double(FieldGroup, fields: [@f1, @f2]), double(FieldGroup, fields: [@f3])]
     end
 
     it "should convert field_groups into a flattened list of fields" do
       Foo.should_receive(:field_groups).and_return(@field_groups)
       Foo.fields.should == [@f1, @f2, @f3]
     end
-
   end
 
   describe "serialize_custom_fields!" do
-
     before(:each) do
-      @f1 = double(Field, :as => 'check_boxes', :name => 'field1')
-      @f2 = double(Field, :as => 'date', :name => 'field2')
+      @f1 = double(Field, as: 'check_boxes', name: 'field1')
+      @f2 = double(Field, as: 'date', name: 'field2')
     end
 
     it "should serialize checkbox fields as Array" do
-      Foo.stub(:serialized_attributes).and_return( {:field1 => @f1, :field2 => @f2} )
+      Foo.stub(:serialized_attributes).and_return( {field1: @f1, field2: @f2} )
       Foo.should_receive(:fields).and_return([@f1, @f2])
       Foo.should_receive(:serialize).with(:field1, Array)
       Foo.serialize_custom_fields!
     end
-
   end
 
   it "should validate custom fields" do
@@ -91,10 +85,9 @@ describe 'FatFreeCRM::Fields' do
   end
 
   describe "custom_fields_validator" do
-
-    before(:each) do
+    before do
       @f1 = double(Field)
-      @field_groups = [ double(FieldGroup, :fields => [@f1]) ]
+      @field_groups = [ double(FieldGroup, fields: [@f1]) ]
     end
 
     it "should call custom_validator on each custom field" do
@@ -103,7 +96,5 @@ describe 'FatFreeCRM::Fields' do
       foo.should_receive(:field_groups).and_return(@field_groups)
       foo.should be_valid
     end
-
   end
-
 end

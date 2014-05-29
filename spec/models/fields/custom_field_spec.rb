@@ -25,7 +25,7 @@
 #
 
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe CustomField do
 
@@ -35,16 +35,16 @@ describe CustomField do
     Contact.should_receive(:reset_column_information)
     Contact.should_receive(:serialize_custom_fields!)
 
-    FactoryGirl.create(:custom_field,
+    create(:custom_field,
                        :as => "string",
                        :name => "cf_test_field",
                        :label => "Test Field",
-                       :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
+                       :field_group => create(:field_group, :klass_name => "Contact"))
   end
 
   it "should generate a unique column name for a custom field" do
-    field_group = FactoryGirl.build(:field_group, :klass_name => "Contact")
-    c = FactoryGirl.build(:custom_field, :label => "Test Field", :field_group => field_group)
+    field_group = build(:field_group, :klass_name => "Contact")
+    c = build(:custom_field, :label => "Test Field", :field_group => field_group)
 
     columns = []
     %w(cf_test_field cf_test_field_2 cf_test_field_3 cf_test_field_4).each do |field|
@@ -55,12 +55,12 @@ describe CustomField do
   end
 
   it "should evaluate the safety of database transitions" do
-    c = FactoryGirl.build(:custom_field, :as => "string")
+    c = build(:custom_field, :as => "string")
     c.send(:db_transition_safety, c.as, "email").should == :null
     c.send(:db_transition_safety, c.as, "text").should == :safe
     c.send(:db_transition_safety, c.as, "datetime").should == :unsafe
 
-    c = FactoryGirl.build(:custom_field, :as => "datetime")
+    c = build(:custom_field, :as => "datetime")
     c.send(:db_transition_safety, c.as, "date").should == :safe
     c.send(:db_transition_safety, c.as, "url").should == :unsafe
   end
@@ -68,7 +68,7 @@ describe CustomField do
   it "should return a safe list of types for the 'as' select options" do
     {"email"   => %w(check_boxes text string email url tel select radio),
      "integer" => %w(integer float)}.each do |type, expected_arr|
-      c = FactoryGirl.build(:custom_field, :as => type)
+      c = build(:custom_field, :as => type)
       opts = c.available_as
       opts.map(&:first).should =~ expected_arr
     end
@@ -81,9 +81,9 @@ describe CustomField do
                 with("contacts", "cf_test_field", 'text', {})
     Contact.should_receive(:reset_column_information).twice
     Contact.should_receive(:serialize_custom_fields!).twice
-    
-    field_group = FactoryGirl.create(:field_group, :klass_name => "Contact")
-    c = FactoryGirl.create(:custom_field,
+
+    field_group = create(:field_group, :klass_name => "Contact")
+    c = create(:custom_field,
                            :label => "Test Field",
                            :name => nil,
                            :as => "email",
@@ -103,13 +103,13 @@ describe CustomField do
       Contact.should_receive(:reset_column_information)
       Contact.should_receive(:serialize_custom_fields!)
 
-      contact = FactoryGirl.build(:contact)
+      contact = build(:contact)
       contact.cf_another_new_field.should == nil
     end
   end
 
   describe "validation" do
-  
+
     it "should have errors if custom field is required" do
       event = CustomField.new(:name => 'cf_event', :required => true)
       foo = double(:cf_event => nil)
@@ -117,7 +117,7 @@ describe CustomField do
       foo.should_receive(:errors).and_return(err)
       event.custom_validator(foo)
     end
-    
+
     it "should have errors if custom field is longer than maxlength" do
       event = CustomField.new(:name => 'cf_event', :maxlength => 5)
       foo = double(:cf_event => "This is too long")
@@ -125,7 +125,7 @@ describe CustomField do
       foo.should_receive(:errors).and_return(err)
       event.custom_validator(foo)
     end
-    
+
   end
-  
+
 end

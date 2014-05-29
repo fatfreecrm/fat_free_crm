@@ -20,7 +20,7 @@ describe CommentsController do
     COMMENTABLE.each do |asset|
       describe "(HTML)" do
         before(:each) do
-          @asset = FactoryGirl.create(asset)
+          @asset = create(asset)
         end
 
         it "should redirect to the asset landing page if the asset is found" do
@@ -37,8 +37,8 @@ describe CommentsController do
 
       describe "(JSON)" do
         before(:each) do
-          @asset = FactoryGirl.create(asset)
-          @asset.comments = [ FactoryGirl.create(:comment, :commentable => @asset) ]
+          @asset = create(asset)
+          @asset.comments = [ create(:comment, :commentable => @asset) ]
           request.env["HTTP_ACCEPT"] = "application/json"
         end
 
@@ -56,8 +56,8 @@ describe CommentsController do
 
       describe "(XML)" do
         before(:each) do
-          @asset = FactoryGirl.create(asset)
-          @asset.comments = [ FactoryGirl.create(:comment, :commentable => @asset) ]
+          @asset = create(asset)
+          @asset.comments = [ create(:comment, :commentable => @asset) ]
           request.env["HTTP_ACCEPT"] = "application/xml"
         end
 
@@ -82,11 +82,11 @@ describe CommentsController do
 
     COMMENTABLE.each do |asset|
       it "should expose the requested comment as @commment and render [edit] template" do
-        @asset = FactoryGirl.create(asset)
-        @comment = FactoryGirl.create(:comment, :id => 42, :commentable => @asset, :user => current_user)
+        @asset = create(asset)
+        @comment = create(:comment, id: 42, commentable: @asset, user: current_user)
         Comment.stub(:new).and_return(@comment)
 
-        xhr :get, :edit, :id => 42
+        xhr :get, :edit, id: 42
         assigns[:comment].should == @comment
         response.should render_template("comments/edit")
       end
@@ -102,11 +102,11 @@ describe CommentsController do
     describe "with valid params" do
       COMMENTABLE.each do |asset|
         it "should expose a newly created comment as @comment for the #{asset}" do
-          @asset = FactoryGirl.create(asset)
-          @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => current_user)
+          @asset = create(asset)
+          @comment = build(:comment, commentable: @asset, user: current_user)
           Comment.stub(:new).and_return(@comment)
 
-          xhr :post, :create, :comment => { :commentable_type => asset.to_s.classify, :commentable_id => @asset.id, :user_id => current_user.id, :comment => "Hello" }
+          xhr :post, :create, comment: { commentable_type: asset.to_s.classify, commentable_id: @asset.id, user_id: current_user.id, comment: "Hello" }
           assigns[:comment].should == @comment
           response.should render_template("comments/create")
         end
@@ -116,11 +116,11 @@ describe CommentsController do
     describe "with invalid params" do
       COMMENTABLE.each do |asset|
         it "should expose a newly created but unsaved comment as @comment for #{asset}" do
-          @asset = FactoryGirl.create(asset)
-          @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => current_user)
+          @asset = create(asset)
+          @comment = build(:comment, commentable: @asset, user: current_user)
           Comment.stub(:new).and_return(@comment)
 
-          xhr :post, :create, :comment => {}
+          xhr :post, :create, comment: {}
           assigns[:comment].should == @comment
           response.should render_template("comments/create")
         end
@@ -184,11 +184,11 @@ describe CommentsController do
       describe "with valid params" do
         COMMENTABLE.each do |asset|
           it "should destroy the requested comment and render [destroy] template" do
-            @asset = FactoryGirl.create(asset)
-            @comment = FactoryGirl.create(:comment, :commentable => @asset, :user => current_user)
+            @asset = create(asset)
+            @comment = create(:comment, commentable: @asset, user: current_user)
             Comment.stub(:new).and_return(@comment)
 
-            xhr :delete, :destroy, :id => @comment.id
+            xhr :delete, :destroy, id: @comment.id
             lambda { Comment.find(@comment) }.should raise_error(ActiveRecord::RecordNotFound)
             response.should render_template("comments/destroy")
           end

@@ -14,7 +14,7 @@
       %li= link_to_delete(contact)
 
   .indentslim
-    = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
+    = link_to_if can?(:read, contact), contact.full_name(current_user.preference[:contacts_naming]), contact
     %tt
       - if contact.title? && contact.department?
         == #{contact.title}, #{contact.department}

@@ -36,36 +36,36 @@
 #  skype           :string(128)
 #
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe Contact do
 
-  before { login }
+  let!(:current_user) { create :user }
 
   it "should create a new instance given valid attributes" do
-    Contact.create!(:first_name => "Billy", :last_name => "Bones")
+    Contact.create!(first_name: "Billy", last_name: "Bones")
   end
 
   describe "Update existing contact" do
-    before(:each) do
-      @account = FactoryGirl.create(:account)
-      @contact = FactoryGirl.create(:contact, :account => @account)
+    before do
+      @account = create(:account)
+      @contact = create(:contact, account: @account)
     end
 
     it "should create new account if requested so" do
       lambda { @contact.update_with_account_and_permissions({
-        :account => { :name => "New account" },
-        :contact => { :first_name => "Billy" }
+        account: { name: "New account" },
+        contact: { first_name: "Billy" }
       })}.should change(Account, :count).by(1)
       Account.last.name.should == "New account"
       @contact.first_name.should == "Billy"
     end
 
     it "should change account if another account was selected" do
-      @another_account = FactoryGirl.create(:account)
+      @another_account = create(:account)
       lambda { @contact.update_with_account_and_permissions({
-        :account => { :id => @another_account.id },
-        :contact => { :first_name => "Billy" }
+        account: { id: @another_account.id },
+        contact: { first_name: "Billy" }
       })}.should_not change(Account, :count)
       @contact.account.should == @another_account
       @contact.first_name.should == "Billy"
@@ -73,8 +73,8 @@ describe Contact do
 
     it "should drop existing Account if [create new account] is blank" do
       lambda { @contact.update_with_account_and_permissions({
-        :account => { :name => "" },
-        :contact => { :first_name => "Billy" }
+        account: { name: "" },
+        contact: { first_name: "Billy" }
       })}.should_not change(Account, :count)
       @contact.account.should == nil
       @contact.first_name.should == "Billy"
@@ -82,8 +82,8 @@ describe Contact do
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
       lambda { @contact.update_with_account_and_permissions({
-        :account => { :id => "" },
-        :contact => { :first_name => "Billy" }
+        account: { id: "" },
+        contact: { first_name: "Billy" }
       })}.should_not change(Account, :count)
       @contact.account.should == nil
       @contact.first_name.should == "Billy"
@@ -92,12 +92,12 @@ describe Contact do
 
   describe "Attach" do
     before do
-      @contact = FactoryGirl.create(:contact)
+      @contact = create(:contact)
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @contact, :user => current_user)
-      @opportunity = FactoryGirl.create(:opportunity)
+      @task = create(:task, asset: @contact, user: current_user)
+      @opportunity = create(:opportunity)
       @contact.opportunities << @opportunity
 
       @contact.attach!(@task).should == nil
@@ -105,8 +105,8 @@ describe Contact do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => current_user)
-      @opportunity = FactoryGirl.create(:opportunity)
+      @task = create(:task, user: current_user)
+      @opportunity = create(:opportunity)
 
       @contact.attach!(@task).should == [ @task ]
       @contact.attach!(@opportunity).should == [ @opportunity ]
@@ -115,11 +115,11 @@ describe Contact do
 
   describe "Discard" do
     before do
-      @contact = FactoryGirl.create(:contact)
+      @contact = create(:contact)
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @contact, :user => current_user)
+      @task = create(:task, asset: @contact, user: current_user)
       @contact.tasks.count.should == 1
 
       @contact.discard!(@task)
@@ -128,7 +128,7 @@ describe Contact do
     end
 
     it "should discard an opportunity" do
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
       @contact.opportunities << @opportunity
       @contact.opportunities.count.should == 1
 
@@ -142,8 +142,8 @@ describe Contact do
     describe "assigned contact" do
       before do
         Contact.delete_all
-        FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
-        FactoryGirl.create(:contact, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
+        create(:contact, user: create(:user), assignee: create(:user))
+        create(:contact, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil))
       end
       it_should_behave_like("exportable") do
         let(:exported) { Contact.all }
@@ -153,25 +153,25 @@ describe Contact do
     describe "unassigned contact" do
       before do
         Contact.delete_all
-        FactoryGirl.create(:contact, :user => FactoryGirl.create(:user), :assignee => nil)
-        FactoryGirl.create(:contact, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+        create(:contact, user: create(:user), assignee: nil)
+        create(:contact, user: create(:user, first_name: nil, last_name: nil), assignee: nil)
       end
       it_should_behave_like("exportable") do
         let(:exported) { Contact.all }
       end
     end
   end
-  
+
   describe "permissions" do
     it_should_behave_like Ability, Contact
   end
-  
+
   describe "text_search" do
-  
+
     before(:each) do
-      @contact = FactoryGirl.create(:contact, :first_name => "Bob", :last_name => "Dillion", :email => 'bob_dillion@example.com', :phone => '+1 123 456 789')
+      @contact = create(:contact, first_name: "Bob", last_name: "Dillion", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
     end
-    
+
     it "should search first_name" do
       Contact.text_search('Bob').should == [@contact]
     end
@@ -179,11 +179,11 @@ describe Contact do
     it "should search last_name" do
       Contact.text_search('Dillion').should == [@contact]
     end
-    
+
     it "should search whole name" do
       Contact.text_search('Bob Dillion').should == [@contact]
     end
-    
+
     it "should search whole name reversed" do
       Contact.text_search('Dillion Bob').should == [@contact]
     end
@@ -191,19 +191,19 @@ describe Contact do
     it "should search email" do
       Contact.text_search('example').should == [@contact]
     end
-    
+
     it "should search phone" do
       Contact.text_search('123').should == [@contact]
     end
-    
+
     it "should not break with a single quote" do
-      contact2 = FactoryGirl.create(:contact, :first_name => "Shamus", :last_name => "O'Connell", :email => 'bob_dillion@example.com', :phone => '+1 123 456 789')
+      contact2 = create(:contact, first_name: "Shamus", last_name: "O'Connell", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
       Contact.text_search("O'Connell").should == [contact2]
     end
-    
+
     it "should not break on special characters" do
       Contact.text_search('@$%#^@!').should == []
     end
-  
+
   end
 end

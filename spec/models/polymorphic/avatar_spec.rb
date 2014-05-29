@@ -18,26 +18,26 @@
 #  updated_at         :datetime
 #
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe Avatar do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
   end
 
   it "should create a new instance given valid attributes" do
-    FactoryGirl.create(:avatar, :entity => @user).should be_valid
+    create(:avatar, entity: @user).should be_valid
   end
 
   it "user should have one avatar as entity" do
-    avatar = FactoryGirl.create(:avatar, :entity => @user)
+    avatar = create(:avatar, entity: @user)
     @user.avatar.should == avatar
   end
 
   it "user might have many avatars as owner" do
     avatars = [
-      FactoryGirl.create(:avatar, :user=> @user, :entity => FactoryGirl.create(:user)),
-      FactoryGirl.create(:avatar, :user=> @user, :entity => FactoryGirl.create(:user))
+      create(:avatar, user: @user, entity: create(:user)),
+      create(:avatar, user: @user, entity: create(:user))
     ]
     @user.avatars.should == avatars
   end

@@ -25,9 +25,9 @@ module AccountsHelper
   # Generates a select list with the first 25 accounts
   # and prepends the currently selected account, if any.
   #----------------------------------------------------------------------------
-  def account_select(options = {})
+  def account_select(user, options = {})
       options[:selected] = (@account && @account.id) || 0
-      accounts = ([@account] + Account.my.order(:name).limit(25)).compact.uniq
+      accounts = ([@account] + Account.my(user).order(:name).limit(25)).compact.uniq
       collection_select :account, :id, accounts, :id, :name, options,
                         {:"data-placeholder" => t(:select_an_account),
                          :"data-url" => auto_complete_accounts_path(format: 'json'),
@@ -37,7 +37,7 @@ module AccountsHelper
 
   # Select an existing account or create a new one.
   #----------------------------------------------------------------------------
-  def account_select_or_create(form, &block)
+  def account_select_or_create(form, user, &block)
     options = {}
     yield options if block_given?
 
@@ -55,7 +55,7 @@ module AccountsHelper
       content_tag(:span, ':', :id => 'account_disabled_title').html_safe
     end.html_safe +
 
-    account_select(options).html_safe +
+    account_select(user, options).html_safe +
     form.text_field(:name, :style => 'width:324px; display:none;')
   end
 

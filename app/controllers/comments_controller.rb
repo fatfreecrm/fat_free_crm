@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CommentsController < ApplicationController
-  before_filter :require_user
 
   # GET /comments
   # GET /comments.json
@@ -13,7 +12,7 @@ class CommentsController < ApplicationController
   def index
     @commentable = extract_commentable_name(params)
     if @commentable
-      @asset = @commentable.classify.constantize.my.find(params[:"#{@commentable}_id"])
+      @asset = @commentable.classify.constantize.my(current_user).find(params[:"#{@commentable}_id"])
       @comments = @asset.comments.order("created_at DESC")
     end
     respond_with(@comments) do |format|
@@ -24,8 +23,8 @@ class CommentsController < ApplicationController
     flash[:warning] = t(:msg_assets_not_available, "notes")
     respond_to do |format|
       format.html { redirect_to root_url }
-      format.json { render :text => flash[:warning], :status => :not_found }
-      format.xml  { render :text => flash[:warning], :status => :not_found }
+      format.json { render text: flash[:warning], status: :not_found }
+      format.xml  { render text: flash[:warning], status: :not_found }
     end
   end
 
@@ -35,7 +34,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
 
     model, id = @comment.commentable_type, @comment.commentable_id
-    unless model.constantize.my.find_by_id(id)
+    unless model.constantize.my(current_user).find_by_id(id)
       respond_to_related_not_found(model.downcase)
     end
   end
@@ -46,12 +45,12 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     attributes = params[:comment] || {}
-    attributes.merge!(:user_id => current_user.id)
+    attributes.merge!(user_id: current_user.id)
     @comment = Comment.new(attributes)
 
     # Make sure commentable object exists and is accessible to the current user.
     model, id = @comment.commentable_type, @comment.commentable_id
-    unless model.constantize.my.find_by_id(id)
+    unless model.constantize.my(current_user).find_by_id(id)
       respond_to_related_not_found(model.downcase)
     else
       @comment.save

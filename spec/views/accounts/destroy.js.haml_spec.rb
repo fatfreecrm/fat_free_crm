@@ -9,7 +9,7 @@ describe "/accounts/destroy" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
     assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ].paginate)
     assign(:account_category_total, Hash.new(1))

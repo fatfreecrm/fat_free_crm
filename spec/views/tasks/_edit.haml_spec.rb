@@ -9,7 +9,7 @@ describe "/tasks/_edit" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
     assign(:task, FactoryGirl.create(:task, :asset => FactoryGirl.create(:account), :bucket => "due_asap"))
     assign(:users, [ current_user ])
     assign(:bucket, %w(due_asap due_today))

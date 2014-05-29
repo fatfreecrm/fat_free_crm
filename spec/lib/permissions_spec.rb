@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe FatFreeCRM::Permissions do
 
@@ -26,7 +26,7 @@ describe FatFreeCRM::Permissions do
 
   describe "user_ids" do
     before(:each) do
-      @entity = UserWithPermission.create(:access => "Shared")
+      @entity = UserWithPermission.create(access: "Shared")
     end
 
     it "should assign permissions to the object" do
@@ -41,8 +41,8 @@ describe FatFreeCRM::Permissions do
     end
 
     it "should replace existing permissions" do
-      @entity.permissions << FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
-      @entity.permissions << FactoryGirl.create(:permission, :user_id => 2, :asset => @entity)
+      @entity.permissions << create(:permission, user_id: 1, asset: @entity)
+      @entity.permissions << create(:permission, user_id: 2, asset: @entity)
       @entity.update_attribute(:user_ids, ['2','3'])
       @entity.permissions.size.should == 2
       @entity.permissions.find_all_by_user_id([1]).size.should == 0
@@ -54,7 +54,7 @@ describe FatFreeCRM::Permissions do
 
   describe "group_ids" do
     before(:each) do
-      @entity = UserWithPermission.create(:access => "Shared")
+      @entity = UserWithPermission.create(access: "Shared")
     end
     it "should assign permissions to the object" do
       @entity.permissions.size.should == 0
@@ -68,8 +68,8 @@ describe FatFreeCRM::Permissions do
     end
 
     it "should replace existing permissions" do
-      @entity.permissions << FactoryGirl.build(:permission, :group_id => 1, :user_id => nil, :asset => @entity)
-      @entity.permissions << FactoryGirl.build(:permission, :group_id => 2, :user_id => nil, :asset => @entity)
+      @entity.permissions << build(:permission, group_id: 1, user_id: nil, asset: @entity)
+      @entity.permissions << build(:permission, group_id: 2, user_id: nil, asset: @entity)
       @entity.permissions.size.should == 2
       @entity.update_attribute(:group_ids, ['3'])
       @entity.permissions.size.should == 1
@@ -79,23 +79,26 @@ describe FatFreeCRM::Permissions do
   end
 
   describe "access" do
-    before(:each) do
+    before do
       @entity = UserWithPermission.create
     end
+
     it "should delete all permissions if access is set to Public" do
-      perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       perm.should_receive(:destroy)
       Permission.should_receive(:find_all_by_asset_id_and_asset_type).with(@entity.id, @entity.class).and_return([perm])
       @entity.update_attribute(:access, 'Public')
     end
+
     it "should delete all permissions if access is set to Private" do
-      perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       perm.should_receive(:destroy)
       Permission.should_receive(:find_all_by_asset_id_and_asset_type).with(@entity.id, @entity.class).and_return([perm])
       @entity.update_attribute(:access, 'Private')
     end
+
     it "should not remove permissions if access is set to Shared" do
-      perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       perm.should_not_receive(:destroy)
       @entity.permissions << perm
       Permission.should_not_receive(:find_all_by_asset_id)
@@ -125,7 +128,7 @@ describe FatFreeCRM::Permissions do
   describe "save_with_model_permissions" do
     it "should copy permissions from original model" do
       entity = UserWithPermission.new
-      model = mock_model(Account, :access => "Shared", :user_ids => [1,2,3], :group_ids => [4,5,6])
+      model = mock_model(Account, access: "Shared", user_ids: [1,2,3], group_ids: [4,5,6])
       entity.should_receive(:access=).with("Shared")
       entity.should_receive(:user_ids=).with([1,2,3])
       entity.should_receive(:group_ids=).with([4,5,6])
@@ -133,5 +136,4 @@ describe FatFreeCRM::Permissions do
       entity.save_with_model_permissions(model)
     end
   end
-
 end

@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe "/accounts/index" do
   include AccountsHelper
@@ -13,7 +13,7 @@ describe "/accounts/index" do
     assign :per_page, Account.per_page
     assign :sort_by,  Account.sort_by
     assign :ransack_search, Account.search
-    login_and_assign
+    login
   end
 
   it "should render account name" do

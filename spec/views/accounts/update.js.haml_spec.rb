@@ -9,7 +9,7 @@ describe "/accounts/update" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
 
     assign(:account, @account = FactoryGirl.create(:account, :user => current_user))
     assign(:users, [ current_user ])

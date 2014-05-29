@@ -3,7 +3,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 require File.dirname(__FILE__) + '/sample_emails/dropbox'
 
 require "fat_free_crm/mail_processor/base"
@@ -135,19 +135,19 @@ describe FatFreeCRM::MailProcessor::Base do
     end
 
     it "should find non-suspended user that matches From: field" do
-      @user = FactoryGirl.create(:user, :email => @from.first, :suspended_at => nil)
+      @user = create(:user, email: @from.first, suspended_at: nil)
       @crawler.send(:sent_from_known_user?, @email).should == true
       @crawler.instance_variable_get("@sender").should == @user
     end
 
     it "should not find user if his email doesn't match From: field" do
-      FactoryGirl.create(:user, :email => "nobody@example.com")
+      create(:user, email: "nobody@example.com")
       @crawler.send(:sent_from_known_user?, @email).should == false
       @crawler.instance_variable_get("@sender").should == nil
     end
 
     it "should not find user if his email matches From: field but is suspended" do
-      FactoryGirl.create(:user, :email => @from.first, :suspended_at => Time.now)
+      create(:user, email: @from.first, suspended_at: Time.now)
       @crawler.send(:sent_from_known_user?, @email).should == false
       @crawler.instance_variable_get("@sender").should == nil
     end

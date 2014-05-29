@@ -7,7 +7,7 @@ require 'spec_helper'
 
 describe "/leads/update" do
   before do
-    login_and_assign
+    login
     assign(:lead, @lead = FactoryGirl.create(:lead, :user => current_user, :assignee => FactoryGirl.create(:user)))
     assign(:users, [ current_user ])
     assign(:campaigns, [ FactoryGirl.create(:campaign) ])

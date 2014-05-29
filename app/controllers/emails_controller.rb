@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class EmailsController < ApplicationController
-  before_filter :require_user
 
   # DELETE /emails/1
   # DELETE /emails/1.json

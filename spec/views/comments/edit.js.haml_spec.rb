@@ -9,15 +9,14 @@ describe "/comments/edit" do
   include CommentsHelper
 
   before do
+    login
     assign(:comment, stub_model(Comment,
       :id => 321,
       :new_record? => false,
       :commentable => stub_model(Contact, :id => '123')
     ))
     #params["contact_id"] = "123"
-    assign(:current_user, stub_model(User,
-      :email => 'test@example.com'
-    ))
+    assign(:current_user, current_user)
   end
 
   it "should render edit form" do

@@ -9,7 +9,7 @@ describe "/contacts/new" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
     @account = FactoryGirl.create(:account)
     assign(:contact, Contact.new(:user => current_user))
     assign(:users, [ current_user ])

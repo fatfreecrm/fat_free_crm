@@ -1,0 +1,9 @@
+<p>Welcome <%= @resource.username %>!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<% if Setting.user_signup == :needs_approval %>
+ <p><small>Note:  Your account will be activated once administrator approves it.</small></p>
+<% end %>

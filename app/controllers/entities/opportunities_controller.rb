@@ -5,17 +5,17 @@
 #------------------------------------------------------------------------------
 class OpportunitiesController < EntitiesController
   before_filter :load_settings
-  before_filter :get_data_for_sidebar, :only => :index
-  before_filter :set_params, :only => [ :index, :redraw, :filter ]
+  before_filter :get_data_for_sidebar, only: :index
+  before_filter :set_params, only: [ :index, :redraw, :filter ]
 
   # GET /opportunities
   #----------------------------------------------------------------------------
   def index
-    @opportunities = get_opportunities(:page => params[:page], :per_page => params[:per_page])
+    @opportunities = get_opportunities(page: params[:page], per_page: params[:per_page])
 
     respond_with @opportunities do |format|
-      format.xls { render :layout => 'header' }
-      format.csv { render :csv => @opportunities }
+      format.xls { render layout: 'header' }
+      format.csv { render csv: @opportunities }
     end
   end
 
@@ -31,13 +31,13 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/new
   #----------------------------------------------------------------------------
   def new
-    @opportunity.attributes = {:user => current_user, :stage => Opportunity.default_stage, :access => Setting.default_access, :assigned_to => nil}
-    @account     = Account.new(:user => current_user, :access => Setting.default_access)
-    @accounts    = Account.my.order('name')
+    @opportunity.attributes = {user: current_user, stage: Opportunity.default_stage, access: Setting.default_access, assigned_to: nil}
+    @account     = Account.new(user: current_user, access: Setting.default_access)
+    @accounts    = Account.my(current_user).order('name')
 
     if params[:related]
       model, id = params[:related].split('_')
-      if related = model.classify.constantize.my.find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
         @account = related.account if related.respond_to?(:account) && !related.account.nil?
         @campaign = related.campaign if related.respond_to?(:campaign)
@@ -52,11 +52,11 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
-    @account  = @opportunity.account || Account.new(:user => current_user)
-    @accounts = Account.my.order('name')
+    @account  = @opportunity.account || Account.new(user: current_user)
+    @accounts = Account.my(current_user).order('name')
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Opportunity.my.find_by_id($1) || $1.to_i
+      @previous = Opportunity.my(current_user).find_by_id($1) || $1.to_i
     end
 
     respond_with(@opportunity)
@@ -78,14 +78,14 @@ class OpportunitiesController < EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-        @accounts = Account.my.order('name')
+        @accounts = Account.my(current_user).order('name')
         unless params[:account][:id].blank?
           @account = Account.find(params[:account][:id])
         else
           if request.referer =~ /\/accounts\/(\d+)\z/
             @account = Account.find($1) # related account
           else
-            @account = Account.new(:user => current_user)
+            @account = Account.new(user: current_user)
           end
         end
         @contact = Contact.find(params[:contact]) unless params[:contact].blank?
@@ -107,11 +107,11 @@ class OpportunitiesController < EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-        @accounts = Account.my.order('name')
+        @accounts = Account.my(current_user).order('name')
         if @opportunity.account
           @account = Account.find(@opportunity.account.id)
         else
-          @account = Account.new(:user => current_user)
+          @account = Account.new(user: current_user)
         end
       end
     end
@@ -148,7 +148,7 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/redraw                                              AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
+    @opportunities = get_opportunities(page: 1, per_page: params[:per_page])
     set_options # Refresh options
 
     respond_with(@opportunities) do |format|
@@ -159,7 +159,7 @@ class OpportunitiesController < EntitiesController
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
-    @opportunities = get_opportunities(:page => 1, :per_page => params[:per_page])
+    @opportunities = get_opportunities(page: 1, per_page: params[:per_page])
     respond_with(@opportunities) do |format|
       format.js { render :index }
     end
@@ -177,7 +177,7 @@ private
         get_data_for_sidebar
         @opportunities = get_opportunities
         if @opportunities.blank?
-          @opportunities = get_opportunities(:page => current_page - 1) if current_page > 1
+          @opportunities = get_opportunities(page: current_page - 1) if current_page > 1
           render :index and return
         end
       else # Called from related asset.
@@ -196,9 +196,9 @@ private
     if related
       instance_variable_set("@#{related}", @opportunity.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      @opportunity_stage_total = { :all => Opportunity.my.count, :other => 0 }
+      @opportunity_stage_total = { all: Opportunity.my(current_user).count, other: 0 }
       @stage.each do |value, key|
-        @opportunity_stage_total[key] = Opportunity.my.where(:stage => key.to_s).count
+        @opportunity_stage_total[key] = Opportunity.my(current_user).where(stage: key.to_s).count
         @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
       end
       @opportunity_stage_total[:other] += @opportunity_stage_total[:all]

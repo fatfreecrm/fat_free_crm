@@ -9,7 +9,7 @@ describe "/contacts/update" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
 
     assign(:contact, @contact = FactoryGirl.create(:contact, :user => current_user))
     assign(:users, [ current_user ])

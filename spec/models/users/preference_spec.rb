@@ -15,21 +15,21 @@
 #  updated_at :datetime
 #
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe Preference do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
     @magoody = Base64.encode64(Marshal.dump("magoody"))
   end
 
   it "should create a new instance given valid attributes" do
-    Preference.create!(:user => @user, :name => "name", :value => "value")
+    Preference.create!(user: @user, name: "name", value: "value")
   end
 
   describe "get user preference" do
     it "should find and decode existing user preference by its name" do
-      @preference = FactoryGirl.create(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
+      @preference = create(:preference, user: @user, name: "thingymabob", value: @magoody)
       @user.preference[:thingymabob].should == "magoody"
       @user.preference["thingymabob"].should == "magoody"
     end
@@ -39,17 +39,17 @@ describe Preference do
     end
 
     it "should return correct user_id" do
-      @preference = FactoryGirl.create(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
+      @preference = create(:preference, user: @user, name: "thingymabob", value: @magoody)
       @user.preference[:user_id].should == @user.id
     end
 
     it "should disregard other user's preference with the same name" do
-      @preference = FactoryGirl.create(:preference, :user => FactoryGirl.create(:user), :name => "thingymabob", :value => @magoody)
+      @preference = create(:preference, user: create(:user), name: "thingymabob", value: @magoody)
       @user.preference[:thingymabob].should == nil
     end
-    
+
     it "should not fail is user is nil" do
-      @preference = FactoryGirl.create(:preference, :user => nil, :name => "thingymabob", :value => @magoody)
+      @preference = create(:preference, user: nil, name: "thingymabob", value: @magoody)
       @preference[:thingymabob].should == nil
     end
   end
@@ -61,7 +61,7 @@ describe Preference do
     end
 
     it "should update existing user preference" do
-      @preference = FactoryGirl.create(:preference, :user => @user, :name => "thingymabob", :value => @magoody)
+      @preference = create(:preference, user: @user, name: "thingymabob", value: @magoody)
       @user.preference[:thingymabob] = "thingy"
       @user.reload.preference[:thingymabob].should == "thingy"
     end

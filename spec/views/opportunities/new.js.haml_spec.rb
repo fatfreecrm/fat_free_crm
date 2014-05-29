@@ -9,7 +9,7 @@ describe "/opportunities/new" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
     @account = FactoryGirl.create(:account)
     assign(:opportunity, Opportunity.new(:user => current_user))
     assign(:users, [ current_user ])

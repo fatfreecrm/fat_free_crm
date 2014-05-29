@@ -9,7 +9,7 @@ describe "/tasks/destroy" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
   end
 
   TASK_STATUSES.each do |status|

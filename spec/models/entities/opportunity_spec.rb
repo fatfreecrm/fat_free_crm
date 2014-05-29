@@ -25,19 +25,19 @@
 #  background_info :string(255)
 #
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe Opportunity do
 
-  before { login }
+  let!(:current_user) { create :user }
 
   it "should create a new instance given valid attributes" do
-    Opportunity.create!(:name => "Opportunity", :stage => 'analysis')
+    Opportunity.create!(name: "Opportunity", stage: 'analysis')
   end
 
   it "should be possible to create opportunity with the same name" do
-    first  = FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user)
-    expect { FactoryGirl.create(:opportunity, :name => "Hello", :user => current_user) }.to_not raise_error()
+    first  = create(:opportunity, name: "Hello", user: current_user)
+    expect { create(:opportunity, name: "Hello", user: current_user) }.to_not raise_error()
   end
 
   it "have a default stage" do
@@ -51,24 +51,24 @@ describe Opportunity do
 
   describe "Update existing opportunity" do
     before(:each) do
-      @account = FactoryGirl.create(:account)
-      @opportunity = FactoryGirl.create(:opportunity, :account => @account)
+      @account = create(:account)
+      @opportunity = create(:opportunity, account: @account)
     end
 
     it "should create new account if requested so" do
       lambda { @opportunity.update_with_account_and_permissions({
-        :account => { :name => "New account" },
-        :opportunity => { :name => "Hello" }
+        account: { name: "New account" },
+        opportunity: { name: "Hello" }
       })}.should change(Account, :count).by(1)
       Account.last.name.should == "New account"
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
     it "should update the account another account was selected" do
-      @another_account = FactoryGirl.create(:account)
+      @another_account = create(:account)
       lambda { @opportunity.update_with_account_and_permissions({
-        :account => { :id => @another_account.id },
-        :opportunity => { :name => "Hello" }
+        account: { id: @another_account.id },
+        opportunity: { name: "Hello" }
       })}.should_not change(Account, :count)
       @opportunity.account.should == @another_account
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
@@ -76,8 +76,8 @@ describe Opportunity do
 
     it "should drop existing Account if [create new account] is blank" do
       lambda { @opportunity.update_with_account_and_permissions({
-        :account => { :name => "" },
-        :opportunity => { :name => "Hello" }
+        account: { name: "" },
+        opportunity: { name: "Hello" }
       })}.should_not change(Account, :count)
       @opportunity.account.should be_nil
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
@@ -85,23 +85,23 @@ describe Opportunity do
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
       lambda { @opportunity.update_with_account_and_permissions({
-        :account => { :id => "" },
-        :opportunity => { :name => "Hello" }
+        account: { id: "" },
+        opportunity: { name: "Hello" }
       })}.should_not change(Account, :count)
       @opportunity.account.should be_nil
       @opportunity.name.gsub(/#\d+ /,'').should == "Hello"
     end
 
     it "should set the probability to 0% if opportunity has been lost" do
-      opportunity = FactoryGirl.create(:opportunity, :stage => "prospecting", :probability => 25)
-      opportunity.update_attributes(:stage => 'lost')
+      opportunity = create(:opportunity, stage: "prospecting", probability: 25)
+      opportunity.update_attributes(stage: 'lost')
       opportunity.reload
       opportunity.probability.should == 0
     end
 
     it "should set the probablility to 100% if opportunity has been won" do
-      opportunity = FactoryGirl.create(:opportunity, :stage => "prospecting", :probability => 65)
-      opportunity.update_attributes(:stage => 'won')
+      opportunity = create(:opportunity, stage: "prospecting", probability: 65)
+      opportunity.update_attributes(stage: 'won')
       opportunity.reload
       opportunity.probability.should == 100
     end
@@ -111,12 +111,12 @@ describe Opportunity do
     it "should find non-closed opportunities" do
       Opportunity.delete_all
       @opportunities = [
-        FactoryGirl.create(:opportunity, :stage => "prospecting", :amount => 1),
-        FactoryGirl.create(:opportunity, :stage => "analysis", :amount => 1),
-        FactoryGirl.create(:opportunity, :stage => "won",      :amount => 2),
-        FactoryGirl.create(:opportunity, :stage => "won",      :amount => 2),
-        FactoryGirl.create(:opportunity, :stage => "lost",     :amount => 3),
-        FactoryGirl.create(:opportunity, :stage => "lost",     :amount => 3)
+        create(:opportunity, stage: "prospecting", amount: 1),
+        create(:opportunity, stage: "analysis", amount: 1),
+        create(:opportunity, stage: "won",      amount: 2),
+        create(:opportunity, stage: "won",      amount: 2),
+        create(:opportunity, stage: "lost",     amount: 3),
+        create(:opportunity, stage: "lost",     amount: 3)
       ]
       Opportunity.pipeline.sum(:amount).should ==  2
       Opportunity.won.sum(:amount).should      ==  4
@@ -125,8 +125,8 @@ describe Opportunity do
     end
 
     context "unassigned" do
-      let(:unassigned_opportunity){ FactoryGirl.create(:opportunity, :assignee => nil)}
-      let(:assigned_opportunity){ FactoryGirl.create(:opportunity, :assignee => FactoryGirl.create(:user))}
+      let(:unassigned_opportunity){ create(:opportunity, assignee: nil)}
+      let(:assigned_opportunity){ create(:opportunity, assignee: create(:user))}
 
       it "includes unassigned opportunities" do
         Opportunity.unassigned.should include(unassigned_opportunity)
@@ -140,12 +140,12 @@ describe Opportunity do
 
   describe "Attach" do
     before do
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @opportunity, :user => current_user)
-      @contact = FactoryGirl.create(:contact)
+      @task = create(:task, asset: @opportunity, user: current_user)
+      @contact = create(:contact)
       @opportunity.contacts << @contact
 
       @opportunity.attach!(@task).should == nil
@@ -153,8 +153,8 @@ describe Opportunity do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => current_user)
-      @contact = FactoryGirl.create(:contact)
+      @task = create(:task, user: current_user)
+      @contact = create(:contact)
 
       @opportunity.attach!(@task).should == [ @task ]
       @opportunity.attach!(@contact).should == [ @contact ]
@@ -163,11 +163,11 @@ describe Opportunity do
 
   describe "Discard" do
     before do
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @opportunity, :user => current_user)
+      @task = create(:task, asset: @opportunity, user: current_user)
       @opportunity.tasks.count.should == 1
 
       @opportunity.discard!(@task)
@@ -176,7 +176,7 @@ describe Opportunity do
     end
 
     it "should discard an contact" do
-      @contact = FactoryGirl.create(:contact)
+      @contact = create(:contact)
       @opportunity.contacts << @contact
       @opportunity.contacts.count.should == 1
 
@@ -190,8 +190,8 @@ describe Opportunity do
     describe "assigned opportunity" do
       before do
         Opportunity.delete_all
-        FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
-        FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
+        create(:opportunity, user: create(:user), assignee: create(:user))
+        create(:opportunity, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil))
       end
       it_should_behave_like("exportable") do
         let(:exported) { Opportunity.all }
@@ -201,8 +201,8 @@ describe Opportunity do
     describe "unassigned opportunity" do
       before do
         Opportunity.delete_all
-        FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user), :assignee => nil)
-        FactoryGirl.create(:opportunity, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+        create(:opportunity, user: create(:user), assignee: nil)
+        create(:opportunity, user: create(:user, first_name: nil, last_name: nil), assignee: nil)
       end
       it_should_behave_like("exportable") do
         let(:exported) { Opportunity.all }
@@ -217,14 +217,14 @@ describe Opportunity do
   describe "scopes" do
     context "visible_on_dashboard" do
       before :each do
-        @user = FactoryGirl.create(:user)
-        @o1 = FactoryGirl.create(:opportunity_in_pipeline, :user => @user, :stage => 'prospecting')
-        @o2 = FactoryGirl.create(:opportunity_in_pipeline, :user => @user, :assignee => FactoryGirl.create(:user), :stage => 'prospecting')
-        @o3 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'prospecting')
-        @o4 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user), :stage => 'prospecting')
-        @o5 = FactoryGirl.create(:opportunity_in_pipeline, :user => FactoryGirl.create(:user), :assignee => @user, :stage => 'prospecting')
-        @o6 = FactoryGirl.create(:opportunity, :assignee => @user, :stage => 'won')
-        @o7 = FactoryGirl.create(:opportunity, :assignee => @user, :stage => 'lost')
+        @user = create(:user)
+        @o1 = create(:opportunity_in_pipeline, user: @user, stage: 'prospecting')
+        @o2 = create(:opportunity_in_pipeline, user: @user, assignee: create(:user), stage: 'prospecting')
+        @o3 = create(:opportunity_in_pipeline, user: create(:user), assignee: @user, stage: 'prospecting')
+        @o4 = create(:opportunity_in_pipeline, user: create(:user), assignee: create(:user), stage: 'prospecting')
+        @o5 = create(:opportunity_in_pipeline, user: create(:user), assignee: @user, stage: 'prospecting')
+        @o6 = create(:opportunity, assignee: @user, stage: 'won')
+        @o7 = create(:opportunity, assignee: @user, stage: 'lost')
       end
 
       it "should show opportunities which have been created by the user and are unassigned" do
@@ -250,9 +250,9 @@ describe Opportunity do
     end
 
     context "by_closes_on" do
-      let(:o1) { FactoryGirl.create(:opportunity, :closes_on => 3.days.from_now) }
-      let(:o2) { FactoryGirl.create(:opportunity, :closes_on => 7.days.from_now) }
-      let(:o3) { FactoryGirl.create(:opportunity, :closes_on => 5.days.from_now) }
+      let(:o1) { create(:opportunity, closes_on: 3.days.from_now) }
+      let(:o2) { create(:opportunity, closes_on: 7.days.from_now) }
+      let(:o3) { create(:opportunity, closes_on: 5.days.from_now) }
 
       it "should show opportunities ordered by closes on" do
         Opportunity.by_closes_on.should == [o1, o3, o2]
@@ -260,9 +260,9 @@ describe Opportunity do
     end
 
     context "by_amount" do
-      let(:o1) { FactoryGirl.create(:opportunity, :amount =>  50000) }
-      let(:o2) { FactoryGirl.create(:opportunity, :amount =>  10000) }
-      let(:o3) { FactoryGirl.create(:opportunity, :amount => 750000) }
+      let(:o1) { create(:opportunity, amount:  50000) }
+      let(:o2) { create(:opportunity, amount:  10000) }
+      let(:o3) { create(:opportunity, amount: 750000) }
 
       it "should show opportunities ordered by amount" do
         Opportunity.by_amount.should == [o3, o1, o2]
@@ -270,9 +270,9 @@ describe Opportunity do
     end
 
     context "not lost" do
-      let(:o1) { FactoryGirl.create(:opportunity, :stage => 'won') }
-      let(:o2) { FactoryGirl.create(:opportunity, :stage => 'lost') }
-      let(:o3) { FactoryGirl.create(:opportunity, :stage => 'analysis') }
+      let(:o1) { create(:opportunity, stage: 'won') }
+      let(:o2) { create(:opportunity, stage: 'lost') }
+      let(:o3) { create(:opportunity, stage: 'analysis') }
 
       it "should show opportunities which are not lost" do
         Opportunity.not_lost.should include(o1, o3)
