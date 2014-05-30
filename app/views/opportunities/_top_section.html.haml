@@ -38,7 +38,7 @@
             != account_select_or_create(a) do |options|
               -# Add [-- None --] account choice when editing existing opportunity that has an account.
               - options[:selected] = @account.id || 0
-              - options[:include_blank] = true #t(:select_none) unless @opportunity.new_record? || @opportunity.account.blank?
+
           %td= spacer
           %td
             .label.req #{t :assigned_to}:

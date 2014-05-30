@@ -92,11 +92,10 @@
     # Hide accounts dropdown and show create new account edit field instead.
     #----------------------------------------------------------------------------
     create_account: ->
-      crm.makeAjaxChosen()
       $("#account_disabled_title").hide()
       $("#account_select_title").hide()
       $("#account_create_title").show()
-      $("#account_id_chzn").hide()
+      $("#s2id_account_id").hide()
       $("#account_id").prop('disabled', true)
       $("#account_name").prop('disabled', false)
       $("#account_name").html ""
@@ -106,20 +105,19 @@
     # Hide create account edit field and show accounts dropdown instead.
     #----------------------------------------------------------------------------
     select_account: ->
-      crm.makeAjaxChosen()
       $("#account_disabled_title").hide()
       $("#account_create_title").hide()
       $("#account_select_title").show()
       $("#account_name").hide()
       $("#account_name").prop('disabled', true)
       $("#account_id").prop('disabled', false)
-      $("#account_id_chzn").show()
+      $("#account_id").show()
+      $("#s2id_account_id").show()
 
 
     # Show accounts dropdown and disable it to prevent changing the account.
     #----------------------------------------------------------------------------
     select_existing_account: ->
-      crm.makeAjaxChosen()
       $("#account_create_title").hide()
       $("#account_select_title").hide()
       $("#account_id").hide()
@@ -130,7 +128,7 @@
       # Disable chosen account select
       $("#account_id").prop('disabled', true)
       $("#account_id").trigger "liszt:updated"
-      $("#account_id_chzn").show()
+      $("#s2id_account_id").show()
 
       # Enable hidden account id select so that value is POSTed
       $("#account_id").prop('disabled', false)
@@ -395,12 +393,12 @@
                 $("#auto_complete_query").val ""
             else
               window.location.href = @base_url + "/" + controller + "/" + ui.item.value
-        
+
         focus: (event, ui) =>
           event.preventDefault()
           $("#auto_complete_query").val(ui.item.label)
       )
-      
+
       $.extend $.ui.autocomplete::,
         _renderItem: (ul, item) ->
           term = new RegExp( "(" + @element.val() + ")", "gi" )
