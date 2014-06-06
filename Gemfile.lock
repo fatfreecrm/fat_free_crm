@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/crossroads/ffcrm_attachments.git
+  revision: 284baddc425ff70e8859f9da39da4ae2a60753df
+  branch: attachment-flow
+  specs:
+    ffcrm_attachments (0.0.1)
+      paperclip
+      rails (~> 3.2.14)
+      simple_form (~> 2.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -334,6 +344,7 @@ DEPENDENCIES
   execjs
   factory_girl_rails
   ffaker (>= 1.12.0)
+  ffcrm_attachments!
   font-awesome-rails
   guard
   guard-rails

@@ -8,6 +8,8 @@
     crm.flip_form('edit_#{entity_name}');
     crm.set_title('edit_#{entity_name}', '#{h @entity.full_name}');
     = refresh_sidebar(:show, :summary)
+    $('.attachments').empty();
+    $('.attachments').html('#{ j (hook(:show_files_section, self, @entity) {}) }');
   - else
     $('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
     $('##{id}').effect("highlight", { duration:1500 });

@@ -399,6 +399,7 @@ en-US:
   department: Department
   department_small: ! '%{value} department'
   do_not_call: Do not call
+  extra_doc: Extra Documents
   extra_info: Extra Information
   extra_info_small: extra contact
   facebook: Facebook

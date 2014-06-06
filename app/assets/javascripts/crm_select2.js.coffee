@@ -10,10 +10,10 @@
   window.crm ||= {}
 
   crm.make_select2 = ->
-    $(".select2").each ->
+    $("select.select2").each ->
       $(this).select2 'width':'resolve'
 
-    $(".select2_tag").each ->
+    $("select.select2_tag").each ->
       $(this).select2
         'width':'resolve'
         tags: $(this).data("tags")
