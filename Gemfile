@@ -41,7 +41,7 @@ group :development do
     gem 'guard'
     gem 'guard-rspec'
     gem 'guard-rails'
-    gem 'ffcrm_attachments', git: "https://github.com/crossroads/ffcrm_attachments.git", branch: "attachment-flow"
+    gem 'ffcrm_attachments', github: "crossroads/ffcrm_attachments", branch: "attachment-flow"
     gem 'rb-inotify', :require => false
     gem 'rb-fsevent', :require => false
     gem 'rb-fchange', :require => false
