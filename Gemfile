@@ -41,7 +41,6 @@ group :development do
     gem 'guard'
     gem 'guard-rspec'
     gem 'guard-rails'
-    gem 'ffcrm_attachments', github: "crossroads/ffcrm_attachments", branch: "attachment-flow"
     gem 'rb-inotify', :require => false
     gem 'rb-fsevent', :require => false
     gem 'rb-fchange', :require => false
@@ -82,3 +81,4 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
+gem 'ffcrm_attachments', github: "crossroads/ffcrm_attachments", branch: "attachment-flow"
