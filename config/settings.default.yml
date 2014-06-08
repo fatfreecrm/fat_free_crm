@@ -397,3 +397,5 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
+
+:attachment_size: '5 MB'
