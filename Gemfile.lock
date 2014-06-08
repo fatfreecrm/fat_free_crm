@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/crossroads/ffcrm_attachments.git
-  revision: c9cf1d6685f76ebbc5296fc2770db8151bf28126
+  revision: 1fbb1e9c9d90f2c48a3200644c44d47412c8bfc3
   branch: attachment-flow
   specs:
     ffcrm_attachments (0.0.1)
