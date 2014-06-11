@@ -1,9 +1,10 @@
 GIT
   remote: git://github.com/crossroads/ffcrm_attachments.git
-  revision: 1fbb1e9c9d90f2c48a3200644c44d47412c8bfc3
+  revision: 0cc76d11835b8c35c3d761d7ce86906eb4a4e84d
   branch: attachment-flow
   specs:
     ffcrm_attachments (0.0.1)
+      fat_free_crm
       paperclip
       rails (~> 3.2.14)
       simple_form (~> 2.0.1)
@@ -111,6 +112,34 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
+    fat_free_crm (0.13.2)
+      acts-as-taggable-on (~> 2.3.3)
+      acts_as_commentable (~> 3.0.1)
+      acts_as_list (~> 0.1.4)
+      authlogic (= 3.1.0)
+      cancan
+      cocaine
+      dynamic_form
+      email_reply_parser_ffcrm
+      ffaker (>= 1.12.0)
+      font-awesome-rails
+      haml (~> 3)
+      jquery-rails (~> 2.1.4)
+      nokogiri
+      paper_trail (~> 2.7.0)
+      paperclip
+      premailer
+      prototype-rails
+      psych (~> 1)
+      rails (~> 3.2.12)
+      rails3-jquery-autocomplete
+      ransack_ui (>= 1.1.0)
+      responds_to_parent (>= 1.1.0)
+      sass (~> 3)
+      select2-rails
+      simple_form (~> 2.0.1)
+      valium
+      will_paginate (~> 3.0.2)
     ffaker (1.24.0)
     ffi (1.9.3)
     font-awesome-rails (4.1.0.0)
@@ -124,7 +153,7 @@ GEM
       thor (>= 0.18.1)
     guard-rails (0.5.2)
       guard (~> 2.0)
-    guard-rspec (4.2.9)
+    guard-rspec (4.2.10)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     haml (3.1.8)
@@ -176,12 +205,15 @@ GEM
     premailer (1.8.2)
       css_parser (>= 1.3.5)
       htmlentities (>= 4.0.0)
-    pry (0.9.12.6)
-      coderay (~> 1.0)
-      method_source (~> 0.8)
+    prototype-rails (3.2.1)
+      rails (~> 3.2)
+    pry (0.10.0)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
       slop (~> 3.4)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
+    psych (1.3.4)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.4.5)
@@ -244,7 +276,7 @@ GEM
     rspec-expectations (3.0.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.0.0)
-    rspec-mocks (3.0.0)
+    rspec-mocks (3.0.1)
       rspec-support (~> 3.0.0)
     rspec-rails (3.0.1)
       actionpack (>= 3.0)
