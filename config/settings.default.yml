@@ -398,4 +398,6 @@ task_completed:
   - :completed_this_month
   - :completed_last_month
 
+# ffcrm_attachments plugin settings
 :attachment_size: '5 MB'
+:attachment_appears_on: 'left' # options: 'left' or 'right'
