@@ -401,3 +401,11 @@ task_completed:
 # ffcrm_attachments plugin settings
 :attachment_size: '5 MB'
 :attachment_appears_on: 'left' # options: 'left' or 'right'
+
+# ffcrm_attachments: s3 storage settings
+:storage_at_s3: false
+
+s3_credentials:
+  :access_key_id: ''
+  :secret_access_key: ''
+  :bucket: ''
