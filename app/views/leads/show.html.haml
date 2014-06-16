@@ -12,7 +12,7 @@
   = render :partial => "shared/timeline", :collection => @timeline
 
   - if Setting.attachment_appears_on == 'right'
-    .attachments= hook(:show_files_section, self, @contact) {}
+    .attachments= hook(:show_files_section, self, @lead) {}
 
   = hook(:show_lead_bottom, self) do
 

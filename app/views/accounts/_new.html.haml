@@ -1,4 +1,4 @@
-= simple_form_for(@account, :html => one_submit_only, :remote => true) do |f|
+= simple_form_for(@account, html: one_submit_only.merge({ multipart: true, id: "file_upload" }), remote: true) do |f|
   = link_to_close new_account_path
   = f.hidden_field :user_id
 
@@ -7,14 +7,15 @@
   = render "accounts/top_section",  :f => f
   = render "fields/edit_custom_field_group", :f => f
   = render "shared/add_comment", :f => f
+  = hook(:add_file_section, self, f) {}
   = render "accounts/contact_info", :f => f
   = render "fields/groups",  :f => f
   = render "entities/permissions",  :f => f, :entity => @account
 
   .buttonbar
     - if Setting.compound_address
-      = f.submit t(:create_account), :onclick => "crm.clear_all_hints()"
+      = f.submit t(:create_account), :onclick => "crm.clear_all_hints()", id: "submit_with_file"
     - else
-      = f.submit t(:create_account)
+      = f.submit t(:create_account), id: "submit_with_file"
     #{t :or}
     = link_to_cancel new_account_path

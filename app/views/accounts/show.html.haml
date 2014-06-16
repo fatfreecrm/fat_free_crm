@@ -1,7 +1,7 @@
 - if (template = template_for_current_view)
   = render(template, :account => @account)
 - else
-  
+
   -# default view
 
   = styles_for :task, :contact, :opportunity
@@ -12,6 +12,9 @@
 
   = render "comments/new", :commentable => @account
   = render :partial => "shared/timeline", :collection => @timeline
+
+  - if Setting.attachment_appears_on == 'right'
+    .attachments= hook(:show_files_section, self, @account) {}
 
   = hook(:show_account_bottom, self) do
 

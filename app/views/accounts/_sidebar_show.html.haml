@@ -55,3 +55,6 @@
       .tags= tags_for_index(@account)
 
   = hook(:show_account_sidebar_bottom, self, :account => @account)
+
+  - if Setting.attachment_appears_on == 'left'
+    = hook(:sidebar_files_section, self, @account) {}
