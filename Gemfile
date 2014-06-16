@@ -81,4 +81,3 @@ group :assets do
 end
 
 gem 'turbo-sprockets-rails3'
-gem 'ffcrm_attachments', github: "crossroads/ffcrm_attachments", branch: "attachment-flow"
