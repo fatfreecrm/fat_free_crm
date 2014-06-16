@@ -53,9 +53,12 @@
     = auto_link(simple_format @opportunity.background_info).html_safe
 
   = render "fields/sidebar_show", :asset => @opportunity
-  
+
   - if @opportunity.tag_list.present?
     %dt
       .tags= tags_for_index(@opportunity)
 
   = hook(:show_opportunity_sidebar_bottom, self, :opportunity => @opportunity)
+
+  - if Setting.attachment_appears_on == 'left'
+    = hook(:sidebar_files_section, self, @opportunity) {}
