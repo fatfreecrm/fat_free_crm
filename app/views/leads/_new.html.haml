@@ -1,4 +1,4 @@
-= simple_form_for(@lead, :html => one_submit_only, :remote => true) do |f|
+= simple_form_for(@lead, html: one_submit_only.merge({ multipart: true, id: "file_upload" }), remote: true) do |f|
   = link_to_close new_lead_path
   = f.hidden_field :user_id
   = hidden_field_tag "campaign", "#{@campaign.id if @campaign}"
@@ -10,14 +10,15 @@
   = render "leads/status",         :f => f
   = render "leads/contact",        :f => f
   = render "shared/add_comment",   :f => f
+  = hook(:add_file_section, self, f) {}
   = render "leads/web",            :f => f
   = render "fields/groups",        :f => f
   = render "entities/permissions", :f => f, :entity => @lead
 
   .buttonbar
     - if Setting.compound_address
-      = f.submit t(:create_lead), :onclick => "crm.clear_all_hints()"
+      = f.submit t(:create_lead), :onclick => "crm.clear_all_hints()", id: "submit_with_file"
     - else
-      = f.submit t(:create_lead)
+      = f.submit t(:create_lead), id: "submit_with_file"
     #{t :or}
     = link_to_cancel new_lead_path

@@ -7,9 +7,12 @@
   = styles_for :task
 
   = render 'leads/title_bar', :lead => @lead
-  
+
   = render "comments/new", :commentable => @lead
   = render :partial => "shared/timeline", :collection => @timeline
+
+  - if Setting.attachment_appears_on == 'right'
+    .attachments= hook(:show_files_section, self, @contact) {}
 
   = hook(:show_lead_bottom, self) do
 
