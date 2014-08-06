@@ -106,7 +106,7 @@ ru:
     currency:
       format:
         format: ! '%n %u'
-        unit: руб.
+        unit: грн.
         separator: .
         delimiter: ! ' '
         precision: 2

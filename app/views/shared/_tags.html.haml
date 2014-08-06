@@ -1,7 +1,7 @@
 - asset = controller_name.singularize
 %tr
   %td{ :valign => :top, :colspan => span }
-    .label Tags:
+    .label= t(:tags) + ":"
 
     = f.hidden_field :tag_list,
     {:class => "select2_tag", :data => {:tags => Tag.all.map{|t| t.name},
