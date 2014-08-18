@@ -50,7 +50,8 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2'
   gem 'headless'
-  gem 'debugger' unless ENV["CI"]
+  gem 'debugger', :platforms => 'mri_19' unless ENV["CI"]
+  gem 'byebug', :platforms => ['mri_20', 'mri_21'] unless ENV["CI"]
   gem 'pry-rails' unless ENV["CI"]
 end
 

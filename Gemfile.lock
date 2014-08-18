@@ -41,6 +41,9 @@ GEM
       activerecord (>= 3.0.7)
       activerecord (>= 3.0.7)
     builder (3.0.4)
+    byebug (3.2.0)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
     cancan (1.6.10)
     capistrano (2.15.5)
       highline
@@ -320,6 +323,7 @@ DEPENDENCIES
   acts_as_fu
   acts_as_list (~> 0.1.4)
   authlogic (= 3.1.0)
+  byebug
   cancan
   capistrano (~> 2)
   capistrano_colors
