@@ -11,7 +11,7 @@
   = render "comments/new", :commentable => @lead
   = render :partial => "shared/timeline", :collection => @timeline
 
-  = hook(:show_lead_bottom, self) do
+  = hook(:show_lead_bottom, self, {entity: @lead}) do
 
     = render :partial => "tasks/tasks", :locals => {:object => @lead}
 

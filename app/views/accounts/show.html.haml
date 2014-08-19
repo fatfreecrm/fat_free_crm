@@ -13,7 +13,7 @@
   = render "comments/new", :commentable => @account
   = render :partial => "shared/timeline", :collection => @timeline
 
-  = hook(:show_account_bottom, self) do
+  = hook(:show_account_bottom, self, {entity: @account}) do
 
     = render :partial => "tasks/tasks", :locals => {:object => @account}
 

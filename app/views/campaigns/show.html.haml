@@ -11,7 +11,7 @@
   = render "comments/new", :commentable => @campaign
   = render :partial => "shared/timeline", :collection => @timeline
 
-  = hook(:show_campaign_bottom, self) do
+  = hook(:show_campaign_bottom, self, {entity: @campaign}) do
 
     = render "tasks/tasks", :object => @campaign
 

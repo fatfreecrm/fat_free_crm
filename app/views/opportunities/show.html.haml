@@ -11,7 +11,7 @@
   = render "comments/new", :commentable => @opportunity
   = render :partial => "shared/timeline", :collection => @timeline
 
-  = hook(:show_opportunity_bottom, self) do
+  = hook(:show_opportunity_bottom, self, {entity: @opportunity}) do
 
     = render "tasks/tasks", :object => @opportunity
 
