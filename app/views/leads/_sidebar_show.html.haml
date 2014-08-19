@@ -63,3 +63,6 @@
       .tags= tags_for_index(@lead)
 
   = hook(:show_lead_sidebar_bottom, self, :lead => @lead)
+
+  - if Setting.attachment_appears_on == 'left'
+    = hook(:sidebar_files_section, self, @lead) {}

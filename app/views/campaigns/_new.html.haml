@@ -1,4 +1,4 @@
-= simple_form_for(@campaign, :html => one_submit_only, :remote => true) do |f|
+= simple_form_for(@campaign, html: one_submit_only.merge({ multipart: true, id: "file_upload" }), remote: true) do |f|
   = link_to_close new_campaign_path
   = f.hidden_field :user_id
 
@@ -7,11 +7,12 @@
   = render "campaigns/top_section", :f => f
   = render "fields/edit_custom_field_group", :f => f
   = render "shared/add_comment", :f => f
+  = hook(:add_file_section, self, f) {}
   = render "campaigns/objectives",  :f => f
   = render "fields/groups",         :f => f
   = render "entities/permissions",  :f => f, :entity => @campaign
 
   .buttonbar
-    = f.submit t(:create_campaign)
+    = f.submit t(:create_campaign), id: "submit_with_file"
     #{t :or}
     = link_to_cancel new_campaign_path

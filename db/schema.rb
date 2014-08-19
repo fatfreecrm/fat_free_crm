@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131207033244) do
+ActiveRecord::Schema.define(:version => 20131207062908) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -82,6 +82,17 @@ ActiveRecord::Schema.define(:version => 20131207033244) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
+
+  create_table "attachments", :force => true do |t|
+    t.integer  "entity_id"
+    t.string   "entity_type"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
 
   create_table "avatars", :force => true do |t|
     t.integer  "user_id"

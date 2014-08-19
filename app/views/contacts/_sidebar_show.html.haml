@@ -50,3 +50,6 @@
       .tags= tags_for_index(@contact)
 
   = hook(:show_contact_sidebar_bottom, self, :contact => @contact)
+
+  - if Setting.attachment_appears_on == 'left'
+    = hook(:sidebar_files_section, self, @contact) {}
