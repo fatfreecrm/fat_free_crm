@@ -10,6 +10,6 @@
 
 .list#profile= render "user"
 
-= hook(:show_user_bottom, self)
+= hook(:show_user_bottom, self) {}
 
 %iframe#uploading{ :name => "uploading", :style => "width:100px; height:10px; border:5px" }

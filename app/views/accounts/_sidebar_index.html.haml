@@ -17,4 +17,4 @@
     %div{:style => "float:right;"}
       %b= @account_category_total[:all]
     %b #{t :total_accounts}
-  = hook(:index_account_sidebar_bottom, self)
+  = hook(:index_account_sidebar_bottom, self) {}

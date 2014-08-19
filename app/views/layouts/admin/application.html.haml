@@ -9,7 +9,7 @@
     %style= yield :styles
 
     = javascript_include_tag :application
-    = hook(:javascript_includes, self)
+    = hook(:javascript_includes, self) {}
 
     %script{:type => "text/javascript"}= yield :javascript
     = csrf_meta_tag

@@ -26,4 +26,4 @@
       - if account.tags.any?
         %dt
           .tags= tags_for_dashboard(account)
-      = hook(:account_bottom, self, :account => account)
+      = hook(:account_bottom, self, :account => account) {}

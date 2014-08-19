@@ -6,7 +6,7 @@
     .strip{:style => "color: gray;"} #{t :other}
 
   %ul.tools
-    = hook(:account_tools_before, self, :account => account)
+    = hook(:account_tools_before, self, :account => account) {}
 
     - if can?(:update, account)
       %li= link_to_edit(account)
@@ -29,4 +29,4 @@
       = t('pluralize.contact', account.contacts.count) << " | "
       = t('pluralize.opportunity', account.opportunities.count)
 
-    = hook(:account_bottom, self, :account => account)
+    = hook(:account_bottom, self, :account => account) {}

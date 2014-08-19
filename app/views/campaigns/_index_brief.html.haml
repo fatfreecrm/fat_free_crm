@@ -12,4 +12,4 @@
     = link_to(campaign.name, campaign)
     = render "campaigns/status", :campaign => campaign
 
-    = hook(:campaign_bottom, self, :campaign => campaign)
+    = hook(:campaign_bottom, self, :campaign => campaign) {}
