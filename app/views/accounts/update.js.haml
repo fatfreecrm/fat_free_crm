@@ -15,3 +15,5 @@
   $('##{id}').html('#{ j render(:partial => "edit") }');
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();
+
+= hook(:account_update, self, {entity: @entity}) {}

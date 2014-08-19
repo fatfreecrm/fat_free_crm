@@ -18,3 +18,5 @@
     $('#campaign_ends_on').focus();
   - else
     $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();
+
+= hook(:campaign_update, self, {entity: @entity}) {}

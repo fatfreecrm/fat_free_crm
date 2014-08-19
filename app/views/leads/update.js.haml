@@ -24,3 +24,5 @@
     $('#lead_last_name').focus();
   - else
     $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();
+
+= hook(:lead_update, self, {entity: @entity}) {}
