@@ -10,7 +10,7 @@
   = render "shared/add_comment",        :f => f
   = render "fields/groups",             :f => f
   = render "entities/permissions",      :f => f, :entity => @opportunity
-  = hook(:opportunity_form, self, {f: f, entity: @opportunity}) {}
+  = hook(:entity_form, self, {f: f, entity: @opportunity}) {}
 
   .buttonbar
     = f.submit t(:create_opportunity), :onclick => %/$("#account_assigned_to").val($("#opportunity_assigned_to").val()); if ($("#account_id").css('display') != 'none') { $("#account_id").enable(); }/

@@ -10,7 +10,7 @@
     = render "fields/edit_custom_field_group", :f => f, :edit => true
     = render "fields/groups",             :f => f, :edit => true
     = render "entities/permissions",      :f => f, :edit => true, :entity => @opportunity
-    = hook(:opportunity_form, self, {f: f, entity: @opportunity}) {}
+    = hook(:entity_form, self, {f: f, entity: @opportunity}) {}
 
     .buttonbar
       = f.submit t(:save_opportunity), :onclick => %/$("#account_assigned_to").val($("#opportunity_assigned_to").val());/

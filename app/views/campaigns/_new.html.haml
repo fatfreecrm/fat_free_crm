@@ -10,7 +10,7 @@
   = render "campaigns/objectives",  :f => f
   = render "fields/groups",         :f => f
   = render "entities/permissions",  :f => f, :entity => @campaign
-  = hook(:campaign_form, self, {f: f, entity: @campaign}) {}
+  = hook(:entity_form, self, {f: f, entity: @campaign}) {}
 
   .buttonbar
     = f.submit t(:create_campaign)
