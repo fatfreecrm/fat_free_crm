@@ -23,6 +23,7 @@ class Ability
       can :create, Task
       can :manage, Task, user: user.id
       can :manage, Task, assigned_to: user.id
+      can :manage, Task, completed_by: user.id
 
       # Entities
       can :manage, entities, :access => 'Public'

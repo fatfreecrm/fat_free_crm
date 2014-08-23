@@ -7,7 +7,7 @@
   .tools
     - if shown_on_landing_page?
       = link_to_discard(completed) + (current_user == completed.user ? ' | ' : '')
-    - if current_user == completed.user
+    - if can?(:manage, completed)
       = link_to_task_uncomplete(completed, bucket)  + ' | '
       = link_to_task_delete(completed, bucket)
 
