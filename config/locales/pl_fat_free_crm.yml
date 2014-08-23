@@ -412,6 +412,7 @@ pl:
   task_assigned: Zadanie zostało przypisane do %{value}
   task_assigned_to: i przypisane do %{value}
   task_completed: zakończone
+  task_uncomplete: Przywróć
   task_completed_ago: zakończone %{value} temu
   task_completed_by: zakończone %{time_ago} temu przez %{user}
   task_created: Utworzono zadanie

@@ -420,6 +420,7 @@ it:
   task_assigned: Il lavoro e' stato assegnato a %{value}
   task_assigned_to: e assegnato a %{value}
   task_completed: completato
+  task_uncomplete: Ritornare
   task_completed_ago: completato %{value} fa
   task_completed_by: completato %{time_ago} fa (%{date}) da %{user}
   task_created: Il lavoro e' stato creato

@@ -423,6 +423,7 @@ fr-CA:
   task_assigned: La tâche à été assignée à %{value}
   task_assigned_to: et assignée à %{value}
   task_completed: complétée
+  task_uncomplete: Revenir
   task_completed_ago: complétée il y à %{value}
   task_completed_by: complétée il y à %{time_ago} par %{user}
   task_created: La tâche à été crée.

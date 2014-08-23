@@ -428,6 +428,7 @@ cz:
   task_assigned: Úkol byl přiřazen k %{value}
   task_assigned_to: a přiřazen k %{value}
   task_completed: dokončen
+  task_uncomplete: Vrátit se
   task_completed_ago: dokončen před %{value}
   task_completed_by: dokončen před %{time_ago} (%{date}) uživatelem %{user}
   task_created: Úkol byl vytvořen

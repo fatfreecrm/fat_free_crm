@@ -407,6 +407,7 @@ sv-SE:
   task_assigned: Ärendet har tilldelats till %{value}
   task_assigned_to: och tilldelats till %{value}
   task_completed: utfört
+  task_uncomplete: Återställ
   task_completed_ago: utfört %{value} sedan
   task_completed_by: utfört %{time_ago} sedan (%{date}) av %{user}
   task_created: Ärendet har skapats

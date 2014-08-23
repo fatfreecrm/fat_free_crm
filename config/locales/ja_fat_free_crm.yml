@@ -405,6 +405,7 @@ ja:
   task_assigned: The task has been assigned to %{value}
   task_assigned_to: and assigned to %{value}
   task_completed: 完了
+  task_uncomplete: 戻す
   task_completed_ago: ! '%{value} 前に完了'
   task_completed_by: ! '%{user} によって %{time_ago} 前に完了'
   task_created: タスクが作成されました

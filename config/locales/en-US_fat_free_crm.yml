@@ -529,6 +529,7 @@ en-US:
   task_assigned: The task has been assigned to %{value}
   task_assigned_to: and assigned to %{value}
   task_completed: completed
+  task_uncomplete: Uncomplete
   task_completed_ago: completed %{value} ago
   task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
   task_created: The task has been created

@@ -134,6 +134,21 @@ class TasksController < ApplicationController
     respond_with(@task)
   end
 
+  # PUT /tasks/1/uncomplete
+  #----------------------------------------------------------------------------
+  def uncomplete
+    @task = Task.tracked_by(current_user).find(params[:id])
+    @task.update_attributes(:completed_at => nil, :completed_by => nil) if @task
+
+    # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
+    if Task.bucket_empty?(params[:bucket], current_user, @view)
+      @empty_bucket = params[:bucket]
+    end
+
+    update_sidebar
+    respond_with(@task)
+  end
+
   # POST /tasks/auto_complete/query                                        AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete

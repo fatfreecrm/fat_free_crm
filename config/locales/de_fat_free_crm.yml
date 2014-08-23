@@ -607,6 +607,7 @@ de:
   no_button: Nein
   msg_asset_not_authorized: You are not authorized to view this %{value}.
   task_completed: erledigt
+  task_uncomplete: Zurückkehren
   google: Google IM
   twitter: Twitter
   back: Zurück

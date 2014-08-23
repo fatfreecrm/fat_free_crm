@@ -1,0 +1,12 @@
+- if @task.errors.empty?
+  $('##{dom_id(@task)}').slideUp(250);
+
+  - if @empty_bucket
+    $('#list_#{@empty_bucket}').fadeOut({ duration:500 });
+
+  - if called_from_index_page?
+    = refresh_sidebar(:index, :filters)
+- else # Errors
+  $('##{dom_id(@task)}').effect("shake", { duration:250, distance: 6 });
+  $('#task_name').focus();
+  $('#task_submit').enable();

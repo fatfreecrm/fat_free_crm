@@ -50,6 +50,12 @@ module TasksHelper
     onclick << %Q{$.ajax("#{complete_task_path(pending)}", {type: "PUT", data: {bucket: "#{bucket}"}});}
   end
 
+  #----------------------------------------------------------------------------
+  def link_to_task_uncomplete(task, bucket)
+    link_to(t(:task_uncomplete), uncomplete_task_path(task, :bucket => bucket, :view => @view),
+      :method => :put, :remote => true)
+  end
+
   # Task summary for RSS/ATOM feed.
   #----------------------------------------------------------------------------
   def task_summary(task)

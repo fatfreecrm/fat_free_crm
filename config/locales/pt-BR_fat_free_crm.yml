@@ -423,6 +423,7 @@ pt-BR:
   task_assigned: As tarefas foram atribuídas para %{value}
   task_assigned_to: e artibuída para %{value}
   task_completed: terminada
+  task_uncomplete: Reverter
   task_completed_ago: terminada há %{value} atrás
   task_completed_by: terminada há %{time_ago} atrás por %{user}
   task_created: A tarea foi criada

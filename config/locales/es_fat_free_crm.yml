@@ -425,6 +425,7 @@ es:
   task_assigned: La tarea ha sido encargada a %{value}
   task_assigned_to: y encargada a %{value}
   task_completed: completada
+  task_uncomplete: Revertir
   task_completed_ago: completada hace %{value}
   task_completed_by: completada %{time_ago} por %{user}
   task_created: La tarea ha sido creada

@@ -406,6 +406,7 @@ th:
   task_assigned: ภารกิจได้ถูกมอบหมายให้ %{value}
   task_assigned_to: และได้มอบหมายให้ %{value}
   task_completed: เสร็จสมบูรณ์
+  task_uncomplete: คืนกลับ
   task_completed_by: เสร็จ %{time_ago} ที่ผ่านมา โดย %{user}
   task_completed_ago: เสร็จ %{value} ที่ผ่านมา
   task_created: ภารกิจได้ถูกสร้างขึ้นแล้ว

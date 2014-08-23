@@ -413,6 +413,7 @@ zh-CN:
   task_assigned: 任务已经分配给 %{value}
   task_assigned_to: 并分配给 %{value}
   task_completed: 已完成
+  task_uncomplete: 还原
   task_completed_ago: 完成于 %{value} 以前
   task_completed_by: 由 %{user} 完成于 %{time_ago} 以前
   task_created: 任务已被创建

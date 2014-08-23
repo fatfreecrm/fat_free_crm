@@ -469,6 +469,35 @@ describe TasksController do
     end
   end
 
+  # PUT /tasks/1/complete
+  # PUT /leads/1/complete.xml                                              AJAX
+  #----------------------------------------------------------------------------
+  describe "responding to PUT uncomplete" do
+
+    it "should change task status, expose task as @task, and render template" do
+      @task = FactoryGirl.create(:task, :completed_at => Time.now, :user => current_user)
+
+      xhr :put, :uncomplete, :id => @task.id
+      @task.reload.completed_at.should == nil
+      assigns[:task].should == @task
+      assigns[:task_total].should_not == nil
+      response.should render_template("tasks/uncomplete")
+    end
+
+
+    describe "task got deleted" do
+      it "should reload current page with the flash message if the task got deleted" do
+        @task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => current_user, :completed_at => Time.now)
+        @task.destroy
+
+        xhr :put, :uncomplete, :id => @task.id
+        flash[:warning].should_not == nil
+        response.body.should == "window.location.reload();"
+      end
+
+    end
+  end
+
   # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do
