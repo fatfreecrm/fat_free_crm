@@ -251,7 +251,7 @@ GEM
       rspec-expectations (~> 2.99.0)
       rspec-mocks (~> 2.99.0)
     rubyzip (1.1.6)
-    sass (3.4.0)
+    sass (3.4.1)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
