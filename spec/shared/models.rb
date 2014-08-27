@@ -11,18 +11,18 @@ shared_examples_for "exportable" do
     # User/assignee for the second record has no first/last name.
     exported.size.should == 2
     if exported[0].respond_to?(:user_id)
-      exported[0].user_id_full_name.should == "#{exported[0].user.first_name} #{exported[0].user.last_name}"
-      exported[1].user_id_full_name.should == "#{exported[1].user.email}"
+      exported[0].user_id_full_name.should == exported[0].user.full_name
+      exported[1].user_id_full_name.should == exported[1].user.email
     end
 
     if exported[0].respond_to?(:assigned_to)
       if exported[0].assigned_to?
-        exported[0].assigned_to_full_name.should == "#{exported[0].assignee.first_name} #{exported[0].assignee.last_name}"
+        exported[0].assigned_to_full_name.should == exported[0].assignee.full_name
       else
         exported[0].assigned_to_full_name.should == ''
       end
       if exported[1].assigned_to?
-        exported[1].assigned_to_full_name.should == "#{exported[1].assignee.email}"
+        exported[1].assigned_to_full_name.should == exported[1].assignee.email
       else
         exported[1].assigned_to_full_name.should == ''
       end
@@ -30,12 +30,12 @@ shared_examples_for "exportable" do
 
     if exported[0].respond_to?(:completed_by)
       if exported[0].completed_by?
-        exported[0].completed_by_full_name.should == "#{exported[0].completor.first_name} #{exported[0].completor.last_name}"
+        exported[0].completed_by_full_name.should == exported[0].completor.full_name
       else
         exported[0].completed_by_full_name.should == ''
       end
       if exported[1].completed_by?
-        exported[1].completed_by_full_name.should == "#{exported[1].completor.email}"
+        exported[1].completed_by_full_name.should == exported[1].completor.email
       else
         exported[1].completed_by_full_name.should == ''
       end
