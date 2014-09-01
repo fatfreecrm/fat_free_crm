@@ -46,16 +46,16 @@ module AccountsHelper
 
       content_tag(:span, :id => 'account_create_title') do
         "(#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(); return false;'>#{t :select_existing}</a>):".html_safe
-      end.html_safe +
+      end +
 
       content_tag(:span, :id => 'account_select_title') do
         "(<a href='#' onclick='crm.create_account(); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):".html_safe
-      end.html_safe +
+      end +
 
-      content_tag(:span, ':', :id => 'account_disabled_title').html_safe
-    end.html_safe +
+      content_tag(:span, ':', :id => 'account_disabled_title')
+    end +
 
-    account_select(options).html_safe +
+    account_select(options) +
     form.text_field(:name, :style => 'width:324px; display:none;')
   end
 
@@ -72,7 +72,7 @@ module AccountsHelper
   def account_with_title_and_department(contact)
     text = if !contact.title.blank? && contact.account
         # works_at: "{{h(job_title)}} at {{h(company)}}"
-        content_tag :div, t(:works_at, :job_title => h(contact.title), :company => account_with_url_for(contact)).html_safe
+        content_tag :div, t(:works_at, :job_title => h(contact.title), :company => h(account_with_url_for(contact))).html_safe
       elsif !contact.title.blank?
         content_tag :div, h(contact.title)
       elsif contact.account

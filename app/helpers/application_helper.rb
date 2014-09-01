@@ -37,7 +37,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-      link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
+      link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{sanitize text}".html_safe,
         url_for(:controller => :home, :action => :toggle, :id => id),
         :remote => true,
         :onclick => "crm.flip_subtitle(this)"
@@ -109,7 +109,7 @@ module ApplicationHelper
     link_to(t(:edit),
       options[:url] || polymorphic_url(record, :action => :edit),
       :remote  => true,
-      :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{name}');".html_safe
+      :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{h name}');".html_safe
     )
   end
 
@@ -211,7 +211,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def confirm_delete(model, params = {})
-    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>).html_safe
+    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>)
     yes = link_to(t(:yes_button), params[:url] || model, :method => :delete)
     no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
     text = "$('#confirm').html( $('#menu').html() );\n"
@@ -250,7 +250,7 @@ module ApplicationHelper
         else
           url = "http://" << url unless url.match(/^https?:\/\//)
         end
-        link_to(image_tag("#{site}.gif", :size => "15x15"), url, :"data-popup" => true, :title => t(:open_in_window, url))
+        link_to(image_tag("#{site}.gif", :size => "15x15"), h(url), :"data-popup" => true, :title => t(:open_in_window, h(url)))
       end
     end.compact.join("\n").html_safe
   end
@@ -392,11 +392,11 @@ module ApplicationHelper
     onclick = %Q{
       var query = $('#query').val(),
           values = [];
-      $('input[name=&quot;#{name}[]&quot;]').filter(':checked').each(function () {
+      $('input[name=&quot;#{h name}[]&quot;]').filter(':checked').each(function () {
         values.push(this.value);
       });
       $('#loading').show();
-      $.post('#{url}', {#{name}: values.join(','), query: query}, function () {
+      $.post('#{url}', {#{h name}: values.join(','), query: query}, function () {
         $('#loading').hide();
       });
     }.html_safe
@@ -413,8 +413,8 @@ module ApplicationHelper
       else
         fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
       end
-    %Q^<th#{last ? " class=\"last\"" : ""}>#{h title}:</th>
-  <td#{last ? " class=\"last\"" : ""}>#{h fmt_value}</td>^.html_safe
+    last_class = (last ? 'last' : nil)
+    content_tag(:th, title, class: last_class) + content_tag(:td, fmt_value, class: last_class)
   end
 
   #----------------------------------------------------------------------------
@@ -422,7 +422,7 @@ module ApplicationHelper
   def section_title(id, hidden = true, text = nil, info_text = nil)
     text = id.to_s.split("_").last.capitalize if text == nil
     content_tag("div", :class => "subtitle show_attributes") do
-      content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{text}".html_safe,
+      content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{sanitize text}".html_safe,
         url_for(:controller => :home, :action => :toggle, :id => id),
         :remote  => true,
         :onclick => "crm.flip_subtitle(this)"
@@ -455,21 +455,23 @@ module ApplicationHelper
     action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
     views = FatFreeCRM::ViewFactory.views_for(:controller => controller, :action => action)
     return nil unless views.size > 1
+    lis = ''.html_safe
     content_tag :ul, :class => 'format-buttons' do
       views.collect do |view|
         classes = if (current_view_name == view.name) or (current_view_name == nil and view.template == nil) # nil indicates default template.
-            "#{view.name}-button active"
+            "#{h view.name}-button active"
           else
-            "#{view.name}-button"
+            "#{h view.name}-button"
           end
-        content_tag(:li) do
+        lis << content_tag(:li) do
           url = (action == "index") ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
-          link_to('#', :title => t(view.name, :default => view.title), :"data-view" => view.name, :"data-url" => url, :"data-context" => action, :class => classes) do
+          link_to('#', :title => t(view.name, :default => h(view.title)), :"data-view" => h(view.name), :"data-url" => h(url), :"data-context" => action, :class => classes) do
             icon = view.icon || 'fa-bars'
-            content_tag(:i, nil, class: "fa #{icon}")
+            content_tag(:i, nil, class: "fa #{h icon}")
           end
         end
-      end.join('').html_safe
+      end
+      lis
     end
   end
 
