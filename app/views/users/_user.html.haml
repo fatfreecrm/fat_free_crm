@@ -15,9 +15,9 @@
         = h(@user.company) unless @user.company.blank?
       %br
       %div
-        #{t :email}: #{auto_link(@user.email).html_safe}
+        #{t :email}: #{auto_link(@user.email)}
         - unless @user.alt_email.blank?
-          #{t :or} #{auto_link(@user.alt_email).html_safe}
+          #{t :or} #{auto_link(@user.alt_email)}
       - if !@user.phone.blank? && !@user.mobile.blank?
         %div #{t :phone}: <b>#{@user.phone}</b>, #{t :mobile}: <b>#{@user.mobile}</b>
       - else
