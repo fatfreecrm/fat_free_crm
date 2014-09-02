@@ -17,7 +17,7 @@
       = javascript_include_tag "jquery_ui_datepicker/jquery-ui-timepicker-#{I18n.locale}"
 
     = csrf_meta_tag
-    = hook(:javascript_includes, self) {}
+    = hook(:javascript_includes, self)
 
     :javascript
       crm.language = "#{I18n.locale}"
@@ -45,4 +45,4 @@
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
       = content_for :javascript_epilogue
-      = hook(:javascript_epilogue, self) {}
+      = hook(:javascript_epilogue, self)

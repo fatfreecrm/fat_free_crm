@@ -6,7 +6,7 @@
     .strip{:style => "color: gray;"} #{t :other}
 
   %ul.tools
-    = hook(:account_tools_before, self, :account => account) {}
+    = hook(:account_tools_before, self, :account => account)
 
     - if can?(:update, account)
       %li= link_to_edit(account)
@@ -39,4 +39,4 @@
       %dt
         .tags= tags_for_index(account)
 
-    = hook(:account_bottom, self, :account => account) {}
+    = hook(:account_bottom, self, :account => account)

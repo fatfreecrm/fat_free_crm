@@ -38,4 +38,4 @@
       - if opportunity.tags.any?
         %dt
           .tags= tags_for_dashboard(opportunity)
-      = hook(:opportunity_bottom, self, :opportunity => opportunity) {}
+      = hook(:opportunity_bottom, self, :opportunity => opportunity)

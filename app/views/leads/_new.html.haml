@@ -13,7 +13,7 @@
   = render "leads/web",            :f => f
   = render "fields/groups",        :f => f
   = render "entities/permissions", :f => f, :entity => @lead
-  = hook(:entity_form, self, {f: f, entity: @lead}) {}
+  = hook(:entity_form, self, {f: f, entity: @lead})
 
   .buttonbar
     - if Setting.compound_address
