@@ -5,7 +5,8 @@
   - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == current_user.id }.compact
   - if notification_emails_configured? && subscribed_users.any?
     = t(:following_users_will_be_notified) << ":"
-    = subscribed_user_links(subscribed_users)
+    - subscribed_users.each do |user|
+      = link_to user.full_name, user_path(user)
 
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].

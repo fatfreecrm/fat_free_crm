@@ -86,7 +86,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def hide_task_and_possibly_bucket(task, bucket)
-    text = "$('##{dom_id(task)}').remove();\n"
+    text = "$('##{h dom_id(task)}').remove();\n"
     text << "$('#list_#{h bucket.to_s}').fadeOut({ duration:500 });\n" if Task.bucket_empty?(bucket, current_user, @view)
     text.html_safe
   end
@@ -100,16 +100,16 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def insert_content(task, bucket, view)
-    text = "$('#list_#{bucket}').show();\n".html_safe
+    text = "$('#list_#{bucket}').show();\n"
     html = render(:partial => view, :collection => [ task ], :locals => { :bucket => bucket })
-    text << "$('##{h bucket.to_s}').prepend('#{ j html }');\n".html_safe
-    text << "$('##{dom_id(task)}').effect('highlight', { duration:1500 });\n".html_safe
-    text
+    text << "$('##{h bucket.to_s}').prepend('#{ j html }');\n"
+    text << "$('##{dom_id(task)}').effect('highlight', { duration:1500 });\n"
+    text.html_safe
   end
 
   #----------------------------------------------------------------------------
   def tasks_flash(message)
-    text = "$('#flash').html('#{ message }');\n"
+    text = "$('#flash').html('#{ sanitize(message) }');\n"
     text << "crm.flash('notice', true)\n"
     text.html_safe
   end

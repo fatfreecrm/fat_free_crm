@@ -5,6 +5,8 @@
 #------------------------------------------------------------------------------
 module Admin::FieldGroupsHelper
 
+  include ::ERB::Util
+
   def field_group_subtitle(field_group)
     asset = field_group.klass_name.downcase
     html = t(field_group.name, :default => h(field_group.label)).html_safe

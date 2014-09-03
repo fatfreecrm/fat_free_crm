@@ -25,7 +25,7 @@ module TagsHelper
       model.tags.each do |tag|
         concat(content_tag(:li, tag.name))
       end
-    end.html_safe
+    end
   end
 
 end
