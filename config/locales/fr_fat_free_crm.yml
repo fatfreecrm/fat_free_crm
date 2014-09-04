@@ -678,14 +678,9 @@ fr:
     sont déplacés vers la section par défaut.
   msg_cant_delete_field_group: Cette section ne peut pas être supprimée.
   admin_fields_info: ! 'Les champs personnalisés sont affichés dans des sections.
-
     Créez d''abord une nouvelle section, ou ajoutez les champs dans une section existante
-    ci-dessous.<br />
-
-    Vous pouvez faire glisser les champs pour ordonner leur présentation ou les faire
-    changer de section.
-
-'
+    ci-dessous. Vous pouvez faire glisser les champs pour ordonner leur présentation ou les faire
+    changer de section.'
   tags: Tags
   tag_small: tag
   tagged: taggé(es)

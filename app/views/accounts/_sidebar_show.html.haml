@@ -46,7 +46,7 @@
 
   - unless @account.background_info.blank?
     .caption #{t :background_info}
-    = auto_link(simple_format @account.background_info).html_safe
+    = auto_link(simple_format @account.background_info)
 
   = render "fields/sidebar_show", :asset => @account
 

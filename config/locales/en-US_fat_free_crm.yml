@@ -851,13 +851,9 @@ en-US:
     to the default field group.
   msg_cant_delete_field_group: Field Group could not be deleted.
   admin_fields_info: ! 'Custom fields are displayed in groups.
-
-    Create a new field group, or add fields to one of the groups below.<br />
-
+    Create a new field group, or add fields to one of the groups below.
     You can drag and drop fields to change their display order or move them between
-    field groups.
-
-'
+    field groups.'
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
   admin_fields_info2: ! 'It is strongly recommended you restart your server after

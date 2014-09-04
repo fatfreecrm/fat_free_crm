@@ -33,8 +33,8 @@ de:
   account_summary: Accountübersicht
   restrict_by_tag_info: Nur markierte %{assets} zeigen
   password_confirmation: Bestätige das Password
-  admin_fields_info: Benutzerdefinierte Felder werden in Gruppen angezeigt.\nErstelle
-    eine neue Feldgruppe, oder füge Felder zu einer der unteren Gruppen hinzu. <br/>\nDu
+  admin_fields_info: Benutzerdefinierte Felder werden in Gruppen angezeigt. Erstelle
+    eine neue Feldgruppe, oder füge Felder zu einer der unteren Gruppen hinzu. Du
     kannst die Reihenfolge per drag & drop ändern oder die Felder zwischen den Gruppen
     bewegen.
   was_supposed_to_start: angenommener Beginn vor %{time_ago} am %{start_date}
