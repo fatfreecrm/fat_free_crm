@@ -80,7 +80,7 @@
 
   - unless @campaign.background_info.blank?
     .caption #{t :background_info}
-    = auto_link(simple_format @campaign.background_info).html_safe
+    = auto_link(simple_format @campaign.background_info)
 
   = render "fields/sidebar_show", :asset => @campaign
 
