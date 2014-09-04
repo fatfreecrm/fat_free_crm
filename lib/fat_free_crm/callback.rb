@@ -30,7 +30,7 @@ module FatFreeCRM
     def self.hook(method, caller, context = {})
       str = ""
       responder(method).map do |m|
-        str << m.send(method, caller, context)
+        str << m.send(method, caller, context) if m.respond_to?(method)
       end
       str
     end
@@ -98,7 +98,7 @@ module FatFreeCRM
         is_view_hook = caller.is_haml?
 
         # If a block was given, hooks are able to replace, append or prepend view content.
-        if block_given? and is_view_hook
+        if is_view_hook
           hooks = FatFreeCRM::Callback.view_hook(method, caller, context)
           # Add content to the view in the following order:
           # -- before
@@ -108,7 +108,12 @@ module FatFreeCRM
           hooks[:before].each{|data| view_data << data }
           # Only render the original view block if there are no pending :replace operations
           if hooks[:replace].empty?
-            view_data << capture(&block)
+            view_data << if block_given?
+                capture(&block)
+              else
+                # legacy view hooks
+                FatFreeCRM::Callback.hook(method, caller, context)
+              end
           else
             hooks[:replace].each{|data| view_data << data }
           end
