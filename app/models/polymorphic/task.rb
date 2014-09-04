@@ -63,7 +63,7 @@ class Task < ActiveRecord::Base
     where('user_id = ? OR assigned_to = ?', user.id, user.id)
   }
 
-  # Show opportunities which either belong to the user and are unassigned, or are assigned to the user
+  # Show tasks which either belong to the user and are unassigned, or are assigned to the user
   scope :visible_on_dashboard, ->(user) {
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id).where('completed_at IS NULL')
   }

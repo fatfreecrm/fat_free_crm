@@ -9,8 +9,8 @@
     - if t('version.' + version.event, :default => 0) != 0
       = t('version.' + version.event, :item => item_type, :by => user_name, :default => version.event)
     - else
-      = auto_link(version.event).html_safe
-    %small= timeago(version.created_at).html_safe
+      = auto_link(version.event)
+    %small= timeago(version.created_at)
     %tt
       - version.changeset.each do |attr_name, change|
         - label, first, second = parse_version(attr_name, change)

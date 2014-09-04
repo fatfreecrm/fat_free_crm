@@ -50,10 +50,10 @@
 
   - unless @opportunity.background_info.blank?
     .caption #{t :background_info}
-    = auto_link(simple_format @opportunity.background_info).html_safe
+    = auto_link(simple_format @opportunity.background_info)
 
   = render "fields/sidebar_show", :asset => @opportunity
-  
+
   - if @opportunity.tag_list.present?
     %dt
       .tags= tags_for_index(@opportunity)

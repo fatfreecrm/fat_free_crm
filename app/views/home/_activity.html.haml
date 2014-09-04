@@ -1,4 +1,4 @@
-- user = link_to(h(activity.user.full_name), user_path(activity.user)) if activity.user
+- user = link_to(activity.user.full_name, user_path(activity.user)) if activity.user
 
 - subject = if (item = activity.related || activity.item)
   - if item.respond_to?(:full_name)
@@ -22,12 +22,14 @@
         - action = t('action_' + activity.event)
         - type = t('subject_' + activity.item_type.downcase)
         = link_to avatar_for(activity.user, :size => :thumb), user_path(activity.user)
-        = t("activity_text", :user => user, :action => action, :type => type, :subject => subject, :default => "#{user} #{action} #{type} #{subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
+        = t("activity_text", :user => h(user), :action => h(action), :type => h(type), :subject => h(subject), :default => "#{h user} #{h action} #{h type} #{h subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
         - if ((item = activity.item).class == Comment) and Setting.comments_visible_on_dashboard
           = t('action_create_comment', :comment => truncate(h(item.comment), :length => 90)).html_safe
       - else
         - type = t(activity.item_type.downcase)
         - if item.respond_to? :email
           = avatar_for(item, :size => "16x16")
-        = "#{type} #{subject}:".html_safe
-        = auto_link(t(activity.event)).html_safe
+        = type
+        = subject
+        = ":"
+        = auto_link(t(activity.event))

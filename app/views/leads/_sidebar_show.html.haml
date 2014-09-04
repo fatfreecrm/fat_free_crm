@@ -54,7 +54,7 @@
 
   - unless @lead.background_info.blank?
     .caption #{t :background_info}
-    = auto_link(simple_format @lead.background_info).html_safe
+    = auto_link(simple_format @lead.background_info)
 
   = render "fields/sidebar_show", :asset => @lead
 

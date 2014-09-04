@@ -7,5 +7,5 @@
 
   .indentslim
     = link_to comment.user.full_name, user_path(comment.user)
-    %tt= timeago(comment.created_at).html_safe
-    %dt= auto_link(simple_format comment.comment).html_safe
+    %tt= timeago(comment.created_at)
+    %dt= auto_link(simple_format comment.comment)

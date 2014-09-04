@@ -6,10 +6,10 @@
   .indent
     %label{ :id => dom_id(task, :name) }
       - if task.user.id != current_user.id
-        = t(:task_from, link_to(task.user.full_name, user_path(task.user))).html_safe << ':'
-      = link_to(h(task.name), tasks_path)
+        = t(:task_from, link_to(h(task.user.full_name), user_path(task.user))).html_safe << ':'
+      = link_to(task.name, tasks_path)
       - if task.asset_id?
-        == #{t :related} #{link_to(h(task.asset.name), polymorphic_url(task.asset))}
+        == #{t :related} #{link_to(task.asset.name, polymorphic_url(task.asset))}
       &ndash;
     %tt
       - if task.bucket == "due_asap"
@@ -45,4 +45,4 @@
 
     - unless task.background_info.blank?
       %div
-        %dt= h(task.background_info)
+        %dt= auto_link(simple_format task.background_info)

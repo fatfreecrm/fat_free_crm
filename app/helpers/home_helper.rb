@@ -27,7 +27,7 @@ module HomeHelper
   #----------------------------------------------------------------------------
   def sort_by_users
     users = [[ "all_users", t(:option_all_users) ]] + @all_users.map do |user|
-      escaped = escape_javascript(user.full_name)
+      escaped = sanitize(user.full_name)
       [ escaped, escaped ]
     end
 

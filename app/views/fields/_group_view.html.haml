@@ -4,4 +4,6 @@
     %tr
       - group.each do |field|
         = col(field.label, field.render_value(entity), (i == groups.size - 1) ? :last : nil)
-        = "<th class='last'></th><td class='last'></td>".html_safe if group.size == 1
+        - if group.size == 1
+          %th.last
+          %td.last
