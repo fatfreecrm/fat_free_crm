@@ -28,7 +28,7 @@ module FatFreeCRM
     # Invokes the hook named :method and captures its output.
     #--------------------------------------------------------------------------
     def self.hook(method, caller, context = {})
-      str = ""
+      str = "".html_safe
       responder(method).map do |m|
         str << m.send(method, caller, context) if m.respond_to?(method)
       end
