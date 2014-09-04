@@ -104,7 +104,7 @@ module FatFreeCRM
           # -- before
           # -- replace || original block
           # -- after
-          view_data = []
+          view_data = "".html_safe
           hooks[:before].each{|data| view_data << data }
           # Only render the original view block if there are no pending :replace operations
           if hooks[:replace].empty?
@@ -114,12 +114,11 @@ module FatFreeCRM
           end
           hooks[:after].each{|data| view_data << data }
 
-          view_data.join.html_safe
+          view_data
 
         else
           # Hooks called without blocks are either controller or legacy view hooks
-          data = FatFreeCRM::Callback.hook(method, caller, context)
-          is_view_hook ? data.join.html_safe : data
+          FatFreeCRM::Callback.hook(method, caller, context)
         end
       end
     end # module Helper
