@@ -20,17 +20,18 @@
       - elsif user != current_user
         = link_to_suspend(user) << " | "
       - else
-        = "<font color='silver'>#{t :suspend}!</font> | ".html_safe
+        %span.grayed #{t :suspend}!
+        = " | "
 
       - if user != current_user
         = link_to_confirm(user)
       - else
         %span.grayed #{t :delete}?
 
-    %span.black #{link_to(h(user.full_name), user)} (#{user.username})
+    %span.black #{link_to( user.full_name, user)} (#{user.username})
     %tt
-      = "- #{h(user.title)}" unless user.title.blank?
-      = " " + t(:at) + " " + h(user.company) unless user.company.blank?
+      = "- #{user.title}" unless user.title.blank?
+      = " " + t(:at) + " " + user.company unless user.company.blank?
 
       %span.black= "|"
       - if user.last_request_at && user.login_count > 0
@@ -45,8 +46,12 @@
         %span.warn #{t :user_never_logged_in}
     %dt{ :style => "padding: 2px 0px 0px 0px" }
       = link_to_email(user.email.to_s) << " | "
-      = "#{t :phone_small}: <b>".html_safe + user.phone << "</b> | ".html_safe if user.phone?
-      = "#{t :mobile_small}: <b>".html_safe + user.mobile << "</b> | ".html_safe if user.mobile?
+      - if user.phone?
+        = t(:phone_small) << ":"
+        = content_tag(:b, user.phone) << " | "
+      - if user.mobile?
+        = t(:mobile_small) << ":"
+        = content_tag(:b, user.mobile) << " | "
 
       - if !user.suspended?
         %span #{t(:user_since, l(user.created_at.to_date, :format => :mmddyy))}

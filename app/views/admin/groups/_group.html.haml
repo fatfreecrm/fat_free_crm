@@ -6,10 +6,11 @@
     - confirm = (count.zero? ? nil : "#{t(:confirm_group_delete, count)}")
     %li= link_to_delete [:admin, group], :confirm => confirm
 
-  %span 
+  %span
     =link_to(group.name, {:action => :edit, :id => group.id}, {:remote  => true,
           :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_group');"})
   %tt
     - if (users = group.users).present?
       == #{t('group_members')}:
-      = users.map{|user| link_to(h(user.full_name), user)}.join(', ').html_safe
+      - users.map do |user|
+        = link_to( h(user.full_name), user )
