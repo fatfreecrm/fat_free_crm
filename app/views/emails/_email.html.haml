@@ -12,17 +12,23 @@
     - if can?(:read, mediator)
       %tt
         - if email.sent_to.to_s.include?(", ")
-          = "To: ".html_safe << email.sent_to
+          = "To: "
+          = email.sent_to
         - else
-          = "To ".html_safe << link_to_email(email.sent_to)
-        = "from ".html_safe << link_to_email(email.sent_from) << ", sent on ".html_safe
-        = l(email.sent_at, :format => :mmddhhss)
-        = " | ".html_safe + link_to_function(email.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
+          = "To "
+          = link_to_email(email.sent_to)
+        = "from "
+        = link_to_email(email.sent_from)
+        = ", sent on "
+        = l(email.sent_at, :format => :mmddhhss) << " | "
+        = link_to_function(email.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", :class => "toggle")
 
       %dt{ hidden_if(email.expanded?), :id => dom_id(email, :truncated) }
         %p
           = h(email.subject)
-          %tt= (" - " << truncated).html_safe
+          %tt
+            = " - "
+            = truncated
 
       %dt.textile{ hidden_if(email.collapsed?), :id => dom_id(email, :formatted) }
         .email_content
