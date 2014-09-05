@@ -404,17 +404,26 @@ module ApplicationHelper
   end
 
   # Create a column in the 'asset_attributes' table.
+  # If a block is given, render it inside the td
   #----------------------------------------------------------------------------
-  def col(title, value, last = false, email = false)
-    # Parse and format urls as links.
-    fmt_value = (value.to_s || "").gsub("\n", "<br />")
-    fmt_value = if email
+  def col(title, value = nil, last = false, email = false, &block)
+    last_class = (last ? 'last' : nil)
+    out = content_tag(:th, title, class: last_class)
+    if block_given?
+      out << content_tag(:td, class: last_class) do
+        yield
+      end
+    else
+      # Parse and format urls as links.
+      fmt_value = (value.to_s || "").gsub("\n", "<br />")
+      fmt_value = if email
         link_to_email(fmt_value)
       else
         fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
       end
-    last_class = (last ? 'last' : nil)
-    content_tag(:th, title, class: last_class) + content_tag(:td, fmt_value, class: last_class)
+      out << content_tag(:td, fmt_value, class: last_class)
+    end
+    out
   end
 
   #----------------------------------------------------------------------------

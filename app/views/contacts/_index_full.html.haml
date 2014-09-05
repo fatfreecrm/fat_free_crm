@@ -22,7 +22,7 @@
         = contact.title if contact.title?
 
       - if (account = contact.account) and account.name?
-        == #{t :at} #{link_to_if can?(:read, account), account.name, account_path(account)}
+        = #{t :at} #{link_to_if can?(:read, account), account.name, account_path(account)}
 
       - if (lead = contact.lead) and lead.referred_by?
         &ndash;

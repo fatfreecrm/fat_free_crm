@@ -10,11 +10,13 @@
         = col(t(:email), contact.email, false, true)
         = col(t(:phone), contact.phone)
       %tr
-        = col(t(:account), account_with_url_for(contact))
+        = col(t(:account)) do
+          = account_with_url_for(contact)
         - assigned_to_user = User.find_by_id(contact.assigned_to)
         = col(t(:assigned_to), assigned_to_user ? link_to(assigned_to_user.name, url_for(assigned_to_user)) : "")
       %tr
-        = col(t(:tags), contact.tag_list.map{|tag| content_tag(:span, tag, :class => "fbtag")}.join(' '))
+        = col(t(:tags)) do
+          .tags= tags_for_index(contact)
 
     -# Show custom fields that are in the default field group
     - custom_field_group = contact.field_groups.select{|f| f.name == 'custom_fields'}.first
