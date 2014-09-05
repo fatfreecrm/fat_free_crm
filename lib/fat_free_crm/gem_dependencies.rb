@@ -28,6 +28,7 @@ require 'premailer'
 require 'nokogiri'
 require 'font-awesome-rails'
 require 'thor'
+require 'rails_autolink'
 
 # Load redcloth if available (for textile markup in emails)
 begin
