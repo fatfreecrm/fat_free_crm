@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131207033244) do
+ActiveRecord::Schema.define(:version => 20140916011927) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -440,6 +440,7 @@ ActiveRecord::Schema.define(:version => 20131207033244) do
     t.string   "related_type"
   end
 
+  add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
   add_index "versions", ["whodunnit"], :name => "index_versions_on_whodunnit"
 
