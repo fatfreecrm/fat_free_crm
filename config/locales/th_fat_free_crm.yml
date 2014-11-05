@@ -190,7 +190,7 @@ th:
   option_target_revenue: เป้าหมายของผลตอนแทน
   option_updated_at: วันที่แก้ไข
   show_per_page: แสดง %{number} %{models} ต่อหนึ่งหน้า ในแบบ %{fmt}
-  sort_by: เรียงลำดับ%{models} โดย %{field}.
+  sort_by: เรียงลำดับ% โดย {models}.
   sort_by_displaying: เรียงลำดับ%{models} โดย %{field} แสดงชื่อจริง %{position} นามสกุล.
   aim: AOL IM
   already_signed_up: เป็นสมาชิกอยู่แล้ว

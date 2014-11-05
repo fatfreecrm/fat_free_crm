@@ -202,7 +202,7 @@ fr-CA:
   option_target_revenue: revenus cibles
   option_updated_at: date de modification
   show_per_page: Voir %{number} %{models} par page au format %{fmt}.
-  sort_by: Trier %{models} par %{field}.
+  sort_by: Trier par %{models}.
   sort_by_displaying: Trier %{models} par %{field} afficher le prénom %{position}
     le nom.
   aim: AOL IM

@@ -203,7 +203,7 @@ cz:
   commented_past_participle: okomentované
   email_past_participle: email
   show_per_page: Zobraz %{number} %{models} za stránku užívající %{fmt} format.
-  sort_by: Setřiď %{models} podle %{field}.
+  sort_by: Setřiď %{models}.
   sort_by_displaying: Setřiď %{models} podle %{field} zobrazující jméno %{position}
     příjmení.
   aim: AOL IM

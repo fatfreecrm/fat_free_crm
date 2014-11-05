@@ -197,7 +197,7 @@ it:
   option_target_revenue: obiettivo gettito
   option_updated_at: data aggiornamento
   show_per_page: Mostra %{number} %{models} per pagina usando %{fmt} formato.
-  sort_by: Ordina %{models} per %{field}.
+  sort_by: Ordina per %{models}.
   sort_by_displaying: Ordina %{models} per %{field} mostrando nome %{position} cognome
   aim: AOL IM
   already_signed_up: Gia' iscritto?

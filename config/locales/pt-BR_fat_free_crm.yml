@@ -202,7 +202,7 @@ pt-BR:
   option_target_revenue: receita alvo
   option_updated_at: data de atualização
   show_per_page: Exibir %{number} %{models} por página usando o formato %{fmt}.
-  sort_by: Sort %{models} by %{field}.
+  sort_by: Sort by %{models}.
   sort_by_displaying: Ordenar %{models} por %{field} exibindo o primeiro nome %{position}
     do último nome.
   aim: AOL IM

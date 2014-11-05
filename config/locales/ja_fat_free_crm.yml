@@ -191,7 +191,7 @@ ja:
   option_target_revenue: target revenue
   option_updated_at: 更新日
   show_per_page: ! '%{fmt}書式で1ページ%{number}件ずつ%{models}を表示。'
-  sort_by: ! '%{field}で%{models}を並べ替える。'
+  sort_by: ! '%{field}でを並べ替える。'
   sort_by_displaying: 姓を名の%{position}に表示にして、%{field}で%{models}を並べ替える。
   aim: AOL IM
   already_signed_up: サインアップ済みですか?

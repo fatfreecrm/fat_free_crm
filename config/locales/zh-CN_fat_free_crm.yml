@@ -194,7 +194,7 @@ zh-CN:
   option_target_revenue: 目标收入
   option_updated_at: 更新日期
   show_per_page: 显示 %{number} %{models} 每页使用 %{fmt} 格式
-  sort_by: 用 %{field} 排序 %{models}
+  sort_by: 用 %{field}
   sort_by_displaying: 用 %{field} 排序 %{models}，显示名 %{position} 姓
   aim: AOL IM
   already_signed_up: 已申请？
