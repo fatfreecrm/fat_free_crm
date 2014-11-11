@@ -5,9 +5,11 @@ if Setting.database_and_table_exists?
 
     translations = {ransack: { attributes: {}}}
     CustomField.find_each do |custom_field|
-      model_key = custom_field.klass.model_name.singular
-      translations[:ransack][:attributes][model_key] ||= {}
-      translations[:ransack][:attributes][model_key][custom_field.name] = custom_field.label
+      if custom_field.field_group.present?
+        model_key = custom_field.klass.model_name.singular
+        translations[:ransack][:attributes][model_key] ||= {}
+        translations[:ransack][:attributes][model_key][custom_field.name] = custom_field.label
+      end
     end
 
     I18n.backend.store_translations(Setting.locale.to_sym, translations)
