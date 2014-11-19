@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140916011927) do
+ActiveRecord::Schema.define(:version => 20140916012922) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20140916011927) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
+
+  add_index "account_opportunities", ["account_id", "opportunity_id"], :name => "index_account_opportunities_on_account_id_and_opportunity_id"
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -140,6 +142,8 @@ ActiveRecord::Schema.define(:version => 20140916011927) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
   end
+
+  add_index "contact_opportunities", ["contact_id", "opportunity_id"], :name => "index_contact_opportunities_on_contact_id_and_opportunity_id"
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
