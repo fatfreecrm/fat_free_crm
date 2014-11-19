@@ -1,0 +1,14 @@
+<%
+  require "ffaker"
+  puts "Loading field_groups..."
+
+  klasses = %w(Contact Account Campaign Opportunity Lead)
+
+  for i in (1..klasses.size) do
+%>
+field_group_<%= i %>:
+  id          : <%= i %>
+  klass_name  : <%= klasses[i-1] %>
+  name        : "Extra"
+  position    : 1
+<% end %>
