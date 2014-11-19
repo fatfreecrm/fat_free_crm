@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
 
   scope :text_search, ->(query) {
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
-    where('upper(username) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', :s => "%#{query}%")
+    where('upper(username) LIKE upper(:s) OR upper(email) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', :s => "%#{query}%")
   }
 
   scope :my, -> { accessible_by(User.current_ability) }

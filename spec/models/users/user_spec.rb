@@ -223,4 +223,17 @@ describe User do
     end
 
   end
+
+  describe "text_search" do
+
+    it "should find user by email" do
+      create(:user, email: 'no-reply@example.com')
+      user = create(:user, email: 'test@example.com')
+      search = User.text_search('test')
+      expect(search.size).to eql(1)
+      expect(search.first).to eql(user)
+    end
+
+  end
+
 end
