@@ -3,50 +3,77 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-$:.unshift File.expand_path('./lib', ENV['rvm_path'])
 
-require 'rvm/capistrano'
-require 'bundler/capistrano'
-load    'deploy/assets'
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-set :application,     'fat_free_crm'
-set :repository,      'git://github.com/fatfreecrm/fat_free_crm.git'
-set :branch,          'master'
-set :scm,             :git
-set :deploy_to,       ''
-set :user,            ''
-set :use_sudo,        false
-set :rvm_type,        :user
-set :rvm_ruby_string, '1.9.3'
-server                '', :app, :web, :db, primary: true
+set :application, 'fat_free_crm'
+set :repo_url, 'git://github.com/fatfreecrm/fat_free_crm.git'
 
-# Use local key instead of key installed on the server.
-# If not working run "ssh-add ~/.ssh/id_rsa" on your local machine.
-ssh_options[:forward_agent] = true
+# Default branch is :master
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+
+# Default deploy_to directory is /var/www/my_app
+# set :deploy_to, '/var/www/my_app'
+
+# Default value for :scm is :git
+# set :scm, :git
+
+# Default value for :format is :pretty
+# set :format, :pretty
+
+# Default value for :log_level is :debug
+# set :log_level, :debug
+
+# Default value for :pty is false
+# set :pty, true
+
+# Default value for :linked_files is []
+set :linked_files, %w{config/database.yml config/settings.yml}
+
+# Default value for linked_dirs is []
+# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5
+# set :keep_releases, 5
+
+set :rvm_ruby_version, '2.1.5'
 
 namespace :deploy do
-  task :start, roles: :app do
-    run "touch #{current_release}/tmp/restart.txt"
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      # execute :touch, release_path.join('tmp/restart.txt')
+    end
   end
-  
-  task :stop, roles: :app do
-    # Do nothing.
+
+  after :publishing, :restart
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
   end
-  
-  desc 'Tell Passenger to restart the app.'
-  task :restart, roles: :app, except: { no_release: true } do
-    run "touch #{current_release}/tmp/restart.txt"
-    run "cd #{current_release} && passenger stop -p 3001"
-    run "cd #{current_release} && passenger start -a 127.0.0.1 -p 3001 -d -e production"
-  end
-  
-  desc 'Symlink shared configs and folders on each release.'
-  task :symlink_shared do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    run "ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
-    run "rm -rf #{release_path}/vendor/ruby"
-    run "ln -nfs #{shared_path}/bundle/ruby #{release_path}/vendor/ruby"
-  end
+
 end
 
-after 'deploy:finalize_update', 'deploy:symlink_shared'
+# cap production invoke[db:migrate]
+# cap production invoke[db:reset]
+desc "Invoke a rake command on the remote server: cap production invoke[db:migrate]"
+task :invoke, [:command] => 'deploy:set_rails_env' do |task, args|
+  on primary(:app) do
+    within current_path do
+      with :rails_env => fetch(:rails_env) do
+        rake args[:command]
+      end
+    end
+  end
+end
