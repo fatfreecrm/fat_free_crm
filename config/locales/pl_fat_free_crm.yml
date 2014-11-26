@@ -194,7 +194,7 @@ pl:
   option_target_revenue: zakładanej sprzedaży
   option_updated_at: daty aktualizacji
   show_per_page: Pokaż %{number} %{models}/stronę w widoku %{fmt}.
-  sort_by: Sortuj wg %{models}.
+  sort_by: Sortuj wg %{field}.
   sort_by_displaying: Sortuj %{models} wg %{field} wyświetlając imię %{position}.
   aim: AOL IM
   already_signed_up: Już zarejestrowany?

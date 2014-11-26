@@ -187,7 +187,7 @@ sv-SE:
   option_target_revenue: uppskattning intäkter
   option_updated_at: datum uppdaterad
   show_per_page: Visa %{number} %{models} per sida med formatet %{format}.
-  sort_by: Sortera på %{models}.
+  sort_by: Sortera på %{field}.
   sort_by_displaying: Sortera %{models} på %{field} och visa förnamn %{position} efternamn.
   aim: AOL IM
   already_signed_up: Är du redan registrerad?
