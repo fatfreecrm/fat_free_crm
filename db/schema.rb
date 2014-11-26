@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140916012922) do
+ActiveRecord::Schema.define(:version => 20141126031837) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -34,18 +34,18 @@ ActiveRecord::Schema.define(:version => 20140916012922) do
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",             :limit => 64, :default => "",       :null => false
-    t.string   "access",           :limit => 8,  :default => "Public"
+    t.string   "name",             :limit => 64,  :default => "",       :null => false
+    t.string   "access",           :limit => 8,   :default => "Public"
     t.string   "website",          :limit => 64
     t.string   "toll_free_phone",  :limit => 32
     t.string   "phone",            :limit => 32
     t.string   "fax",              :limit => 32
     t.datetime "deleted_at"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.string   "email",            :limit => 64
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.string   "email",            :limit => 254
     t.string   "background_info"
-    t.integer  "rating",                         :default => 0,        :null => false
+    t.integer  "rating",                          :default => 0,        :null => false
     t.string   "category",         :limit => 32
     t.text     "subscribed_users"
   end
@@ -156,8 +156,8 @@ ActiveRecord::Schema.define(:version => 20140916012922) do
     t.string   "title",            :limit => 64
     t.string   "department",       :limit => 64
     t.string   "source",           :limit => 32
-    t.string   "email",            :limit => 64
-    t.string   "alt_email",        :limit => 64
+    t.string   "email",            :limit => 254
+    t.string   "alt_email",        :limit => 254
     t.string   "phone",            :limit => 32
     t.string   "mobile",           :limit => 32
     t.string   "fax",              :limit => 32
@@ -260,8 +260,8 @@ ActiveRecord::Schema.define(:version => 20140916012922) do
     t.string   "source",           :limit => 32
     t.string   "status",           :limit => 32
     t.string   "referred_by",      :limit => 64
-    t.string   "email",            :limit => 64
-    t.string   "alt_email",        :limit => 64
+    t.string   "email",            :limit => 254
+    t.string   "alt_email",        :limit => 254
     t.string   "phone",            :limit => 32
     t.string   "mobile",           :limit => 32
     t.string   "blog",             :limit => 128
@@ -395,33 +395,33 @@ ActiveRecord::Schema.define(:version => 20140916012922) do
   add_index "tasks", ["user_id", "name", "deleted_at"], :name => "index_tasks_on_user_id_and_name_and_deleted_at", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "username",            :limit => 32, :default => "",    :null => false
-    t.string   "email",               :limit => 64, :default => "",    :null => false
+    t.string   "username",            :limit => 32,  :default => "",    :null => false
+    t.string   "email",               :limit => 254, :default => "",    :null => false
     t.string   "first_name",          :limit => 32
     t.string   "last_name",           :limit => 32
     t.string   "title",               :limit => 64
     t.string   "company",             :limit => 64
-    t.string   "alt_email",           :limit => 64
+    t.string   "alt_email",           :limit => 254
     t.string   "phone",               :limit => 32
     t.string   "mobile",              :limit => 32
     t.string   "aim",                 :limit => 32
     t.string   "yahoo",               :limit => 32
     t.string   "google",              :limit => 32
     t.string   "skype",               :limit => 32
-    t.string   "password_hash",                     :default => "",    :null => false
-    t.string   "password_salt",                     :default => "",    :null => false
-    t.string   "persistence_token",                 :default => "",    :null => false
-    t.string   "perishable_token",                  :default => "",    :null => false
+    t.string   "password_hash",                      :default => "",    :null => false
+    t.string   "password_salt",                      :default => "",    :null => false
+    t.string   "persistence_token",                  :default => "",    :null => false
+    t.string   "perishable_token",                   :default => "",    :null => false
     t.datetime "last_request_at"
     t.datetime "last_login_at"
     t.datetime "current_login_at"
     t.string   "last_login_ip"
     t.string   "current_login_ip"
-    t.integer  "login_count",                       :default => 0,     :null => false
+    t.integer  "login_count",                        :default => 0,     :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.boolean  "admin",                             :default => false, :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.boolean  "admin",                              :default => false, :null => false
     t.datetime "suspended_at"
     t.string   "single_access_token"
   end
