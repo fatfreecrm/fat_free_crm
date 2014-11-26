@@ -1,15 +1,3 @@
-= content_for(:javascript_epilogue) do
-  :plain
-    document.observe("dom:loaded", function() {
-      new Effect.Move("standalone", { x:0, y:-16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-        new Effect.Move("standalone", { x:0, y:16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-          new Effect.Move("standalone", { x:0, y:-8, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-            new Effect.Move("standalone", { x:0, y:8, mode:"relative", fps:100, duration:0.15 });
-          }});
-        }});
-      }});
-    });
-
 .standalone#standalone
   -# The following form gets submitted to #create when @authentication is nil,
   -# or to #update when @authentication is not nil (ex. suspended).

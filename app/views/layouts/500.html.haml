@@ -15,15 +15,3 @@
       %h3= link_to("Fat Free CRM", '/')
     %center
       %p.flash_exception#msg= exception
-
-  %script
-    :plain
-      document.observe("dom:loaded", function() {
-        new Effect.Move("msg", { x:0, y:-50, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-          new Effect.Move("msg", { x:0, y:50, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-            new Effect.Move("msg", { x:0, y:-25, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-              new Effect.Move("msg", { x:0, y:25, mode:"relative", fps:100, duration:0.15 });
-            }});
-          }});
-        }});
-      });
