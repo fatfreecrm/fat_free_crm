@@ -28,7 +28,7 @@
       - else
         - type = t(activity.item_type.downcase)
         - if item.respond_to? :email
-          = avatar_for(item, :size => "16x16")
+          = avatar_for(item, :size => :thumb)
         = type
         = subject
         = ":"
