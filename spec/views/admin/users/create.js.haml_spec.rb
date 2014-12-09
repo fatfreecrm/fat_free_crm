@@ -18,8 +18,6 @@ describe "admin/users/create" do
 
     it "should hide [Create User] form and insert user partial" do
       render
-
-      rendered.should include(@user.full_name)
       rendered.should include(@user.username)
       rendered.should include(%Q/$('#user_#{@user.id}').effect("highlight"/)
     end
