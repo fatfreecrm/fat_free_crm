@@ -1,0 +1,13 @@
+web:
+  build: .
+  user: app
+  command: "bundle exec rails server"
+  links:
+    - db
+  ports:
+    - "3000:3000"
+
+db:
+  image: postgres
+  ports:
+    - "5432"
