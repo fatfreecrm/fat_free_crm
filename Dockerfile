@@ -1,5 +1,9 @@
+# fig build
+# fig run web bundle exec rake db:create db:schema:load ffcrm:demo:load
+# fig up
+
 FROM phusion/passenger-ruby21
-MAINTAINER Ashwin Phatak "ashwinpphatak@gmail.com"
+MAINTAINER Steve Kenworthy
 
 ENV HOME /root
 
