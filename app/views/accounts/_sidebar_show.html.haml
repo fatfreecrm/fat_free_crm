@@ -38,9 +38,6 @@
     %dt= @account.category ? t(@account.category) : t(:other)
     %tt #{t :category}:
   %li
-    %span{:style => "float:right;"}= stars_for(@account)
-    %tt #{t :rating}:
-  %li
     %dt= @account.assigned_to ? truncate(@account.assignee.full_name, :length => 16) : nil
     %tt #{t :assigned_to}:
 

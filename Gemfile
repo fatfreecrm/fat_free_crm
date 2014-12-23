@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
+ruby '2.1.0'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-# gem 'mysql2'
+gem 'mysql2'
 # gem 'sqlite3'
-gem 'pg'
+# gem 'pg'
 
 # Removes a gem dependency
 def remove(name)
@@ -74,6 +75,8 @@ group :heroku do
   gem 'unicorn', :platform => :ruby
   gem 'rails_12factor'
 end
+
+gem 'rails_12factor', group: :production
 
 # Gems used only for assets and not required
 # in production environments by default.
