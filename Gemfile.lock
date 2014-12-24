@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: git://github.com/rails/prototype-rails.git
-  revision: 2841450c007aa149ed15cfa9782d4a3a326e7ce2
+  revision: c548aa41feca27055c3fc4d70ed4791dd7fee758
   specs:
     prototype-rails (4.0.0)
       rails (~> 4.0)
