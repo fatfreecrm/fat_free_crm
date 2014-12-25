@@ -47,7 +47,7 @@ class Ability
         end
 
         entities.each do |klass|
-          if (asset_ids = Permission.where(scope.and(t[:asset_type].eq(klass.name))).value_of(:asset_id)).any?
+          if (asset_ids = Permission.where(scope.and(t[:asset_type].eq(klass.name))).pluck(:asset_id)).any?
             can :manage, klass, :id => asset_ids
           end
         end

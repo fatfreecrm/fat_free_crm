@@ -48,7 +48,7 @@ shared_examples Ability do |klass|
   subject { ability }
   let(:ability){ Ability.new(user) }
   let(:user){ FactoryGirl.create(:user) }
-  let(:factory){ klass.model_name.underscore }
+  let(:factory){ klass.model_name.to_s.underscore }
 
   context "create" do
     it{ should be_able_to(:create, klass) }

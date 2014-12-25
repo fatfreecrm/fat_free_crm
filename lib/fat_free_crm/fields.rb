@@ -66,7 +66,7 @@ module FatFreeCRM
         self.field_groups.map(&:fields).flatten.each{|f| f.custom_validator(self) }
       end
 
-      def assign_attributes(new_attributes, options = {})
+      def assign_attributes(new_attributes)
         super
       # If attribute is unknown, a new custom field may have been added.
       # Refresh columns and try again.

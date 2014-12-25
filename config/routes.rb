@@ -52,7 +52,7 @@ Rails.application.routes.draw do
       post :filter
       get  :options
       get  :field_group
-      match :auto_complete
+      match :auto_complete, via: [:get, :post]
       get  :redraw
       get  :versions
     end
@@ -72,7 +72,7 @@ Rails.application.routes.draw do
       post :filter
       get  :options
       get  :field_group
-      match :auto_complete
+      match :auto_complete, via: [:get, :post]
       get  :redraw
       get  :versions
     end
@@ -91,7 +91,7 @@ Rails.application.routes.draw do
       post :filter
       get  :options
       get  :field_group
-      match :auto_complete
+      match :auto_complete, via: [:get, :post]
       get  :redraw
       get  :versions
       get  :autocomplete_account_name
@@ -113,7 +113,7 @@ Rails.application.routes.draw do
       post :filter
       get  :options
       get  :field_group
-      match :auto_complete
+      match :auto_complete, via: [:get, :post]
       get  :redraw
       get  :versions
     end
@@ -129,7 +129,7 @@ Rails.application.routes.draw do
   resources :tasks, :id => /\d+/ do
     collection do
       post :filter
-      match :auto_complete
+      match :auto_complete, via: [:get, :post]
     end
     member do
       patch :complete
@@ -155,7 +155,7 @@ Rails.application.routes.draw do
 
     resources :users do
       collection do
-        match :auto_complete
+        match :auto_complete, via: [:get, :post]
       end
       member do
         get :confirm
@@ -175,7 +175,7 @@ Rails.application.routes.draw do
 
     resources :fields do
       collection do
-        match :auto_complete
+        match :auto_complete, via: [:get, :post]
         get   :options
         get   :redraw
         post  :sort

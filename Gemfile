@@ -53,6 +53,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2'
+  gem 'rspec-activemodel-mocks'
   gem 'headless'
   gem 'debugger', :platforms => 'mri_19' unless ENV["CI"]
   gem 'byebug', :platforms => ['mri_20', 'mri_21'] unless ENV["CI"]
