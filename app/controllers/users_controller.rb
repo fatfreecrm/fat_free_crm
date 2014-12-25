@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   # PUT /users/1.js
   #----------------------------------------------------------------------------
   def update
-    @user.update_attributes(params[:user])
+    @user.update_attributes(resource_params)
     respond_with(@user)
   end
 
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
       render
     else
       if params[:avatar]
-        avatar = Avatar.create(params[:avatar].merge(:entity => @user))
+        avatar = Avatar.create(avatar_params)
         if avatar.valid?
           @user.avatar = avatar
         else
@@ -132,4 +132,29 @@ class UsersController < ApplicationController
     @unassigned_opportunities = Opportunity.my.unassigned.pipeline.order(:stage)
   end
 
+  private
+
+  def resource_params
+    params.require(:user).permit(
+      :username,
+      :email,
+      :first_name,
+      :last_name,
+      :title,
+      :company,
+      :alt_email,
+      :phone,
+      :mobile,
+      :aim,
+      :yahoo,
+      :google,
+      :skype
+    )
+  end
+
+  def avatar_params
+    params.require(:avatar)
+      .permit(:image)
+      .merge(entity: @user)
+  end
 end
