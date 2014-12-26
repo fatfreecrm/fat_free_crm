@@ -196,7 +196,10 @@ private
     if related
       instance_variable_set("@#{related}", @opportunity.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      @opportunity_stage_total = { :all => Opportunity.my.count, :other => 0 }
+      @opportunity_stage_total = HashWithIndifferentAccess[
+        :all => Opportunity.my.count,
+        :other => 0
+      ]
       @stage.each do |value, key|
         @opportunity_stage_total[key] = Opportunity.my.where(:stage => key.to_s).count
         @opportunity_stage_total[:other] -= @opportunity_stage_total[key]

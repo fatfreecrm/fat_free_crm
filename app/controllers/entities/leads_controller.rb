@@ -234,7 +234,10 @@ private
     if related
       instance_variable_set("@#{related}", @lead.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
-      @lead_status_total = { :all => Lead.my.count, :other => 0 }
+      @lead_status_total = HashWithIndifferentAccess[
+        :all => Lead.my.count,
+        :other => 0
+      ]
       Setting.lead_status.each do |key|
         @lead_status_total[key] = Lead.my.where(:status => key.to_s).count
         @lead_status_total[:other] -= @lead_status_total[key]
