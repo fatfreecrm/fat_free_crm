@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 require 'paper_trail'
 
-class Version < ActiveRecord::Base
+class Version < PaperTrail::Version
   ASSETS = %w(all tasks campaigns leads accounts contacts opportunities comments emails)
   EVENTS = %w(all_events create view update destroy)
   DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)

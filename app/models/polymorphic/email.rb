@@ -31,7 +31,7 @@ class Email < ActiveRecord::Base
   belongs_to :mediator, :polymorphic => true
   belongs_to :user
 
-  has_paper_trail :meta => { :related => :mediator },
+  has_paper_trail :class_name => 'Version', :meta => { :related => :mediator },
                   :ignore => [:state]
 
   def expanded?;  self.state == "Expanded";  end
